@@ -1,0 +1,59 @@
+org: llamafolio
+app: llamafolio-api
+service: llamafolio-api
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  stage: dev
+  region: eu-central-1
+  tracing:
+    apiGateway: true
+    lambda: true
+  memorySize: 256
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - xray:PutTraceSegments
+            - xray:PutTelemetryRecords
+          Resource: "*"
+        - Effect: "Allow"
+          Action:
+            - "s3:ListBucket"
+            - "s3:*Object*"
+          Resource: "*"
+
+  httpApi:
+    metrics: true
+    cors:
+      allowedMethods:
+        - GET
+
+functions:
+  getBalances:
+    handler: src/handlers/getBalances.handler
+    description: Get address balances
+    events:
+      - httpApi:
+          method: get
+          path: /balances/{address}
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  esbuild:
+    bundle: true
+    minify: false
+    concurrency: 4
+    # for debugging
+    #keepOutputDirectory: true
+  prune:
+    automatic: true
+    number: 5 # Number of versions to keep
+
+plugins:
+  - serverless-esbuild
+  - serverless-prune-plugin
