@@ -26,6 +26,13 @@ provider:
             - "s3:ListBucket"
             - "s3:*Object*"
           Resource: "*"
+  environment:
+    PGHOST: ${file(./env.js):PGHOST}
+    PGUSER: ${file(./env.js):PGUSER}
+    PGDATABASE: ${file(./env.js):PGDATABASE}
+    PGPASSWORD: ${file(./env.js):PGPASSWORD}
+    PGPORT: ${file(./env.js):PGPORT}
+    stage: ${self:custom.stage}
 
   httpApi:
     metrics: true
@@ -42,12 +49,22 @@ functions:
           method: get
           path: /balances/{address}
 
+  getHistory:
+    handler: src/handlers/getHistory.handler
+    description: Get address history
+    events:
+      - httpApi:
+          method: get
+          path: /history/{address}
+
 custom:
   stage: ${opt:stage, self:provider.stage}
   esbuild:
     bundle: true
     minify: false
     concurrency: 4
+    external:
+      - pg-native
     # for debugging
     #keepOutputDirectory: true
   prune:
