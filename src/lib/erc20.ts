@@ -1,7 +1,8 @@
 import BigNumber from "bignumber.js";
-const { multiCall } = require("@defillama/sdk/build/abi/index");
+import type { Token } from "../token";
+import { multiCall } from "@defillama/sdk/build/abi/index";
 import fetch from "node-fetch";
-const Multicall = require("./multicall");
+import { Multicall } from "./multicall";
 
 class ERC20Multicall extends Multicall {
   abis = {};
@@ -43,8 +44,8 @@ class ERC20Multicall extends Multicall {
 }
 
 // TODO: manage large multicall: make a class to accumulate and split into chunks if necessary
-export async function getBalances(tokens, account) {
-  const tokensByChain = {};
+export async function getBalances(tokens: Token[], account: string) {
+  const tokensByChain: any = {};
   for (const token of tokens) {
     if (tokensByChain[token.chain] === undefined) {
       tokensByChain[token.chain] = [];
@@ -81,16 +82,23 @@ export async function getBalances(tokens, account) {
     })
   );
 
-  const balances = chains.flatMap(
-    (chain, i) =>
-      chainBalances[i]?.output
-        // balance not 0
-        .filter((balanceRes) => balanceRes.success && balanceRes.output !== "0")
-        .map((balanceRes, i) => ({
-          ...tokensByChain[chain][i],
-          balance: balanceRes.output,
-        })) ?? []
-  );
+  const balances = [];
+  for (let i = 0; i < chains.length; i++) {
+    const chain = chains[i];
+
+    if (chainBalances[i]?.output) {
+      for (let j = 0; j < chainBalances[i].output.length; j++) {
+        const balanceRes = chainBalances[i].output[j];
+
+        if (balanceRes.success && balanceRes.output !== "0") {
+          balances.push({
+            ...tokensByChain[chain][j],
+            balance: balanceRes.output,
+          });
+        }
+      }
+    }
+  }
 
   const pricesRes = await fetch("https://coins.llama.fi/prices", {
     method: "POST",

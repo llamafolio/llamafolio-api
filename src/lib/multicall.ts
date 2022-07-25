@@ -1,5 +1,5 @@
-const { ethers } = require("ethers");
-const { Interface, FormatTypes } = require("ethers/lib/utils");
+import { ethers } from "ethers";
+import { Interface, FormatTypes } from "ethers/lib/utils";
 
 const iface = new Interface([
   {
@@ -18,7 +18,7 @@ let abi = iface.format(FormatTypes.full);
 console.log("=== ABI");
 console.log(abi);
 
-class Multicall {
+export class Multicall {
   constructor() {
     this.abis = {};
     this.calls = {};
@@ -31,14 +31,14 @@ class Multicall {
   execute() {}
 }
 
-module.exports = Multicall;
+const multiCall = new Multicall();
 
-const test = new Multicall();
-test.addCall(
-  "fantom",
-  "function balanceOf(uint id) view returns (tuple(string name, address addr) user)",
-  {
-    target: "0x...",
-    params: ["0x..."],
-  }
-);
+// const test = new Multicall();
+// test.addCall(
+//   "fantom",
+//   "function balanceOf(uint id) view returns (tuple(string name, address addr) user)",
+//   {
+//     target: "0x...",
+//     params: ["0x..."],
+//   }
+// );

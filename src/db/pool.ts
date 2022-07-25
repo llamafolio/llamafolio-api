@@ -1,4 +1,4 @@
-const { Pool } = require("pg");
+import { Pool } from "pg";
 
 // See: https://gist.github.com/streamich/6175853840fb5209388405910c6cc04b
 // connection details inherited from environment

@@ -1,4 +1,4 @@
-const chains = [
+export const chains = [
   "ethereum",
   "avalanche",
   "bsc",
@@ -9,7 +9,3 @@ const chains = [
   "celo",
   "gnosis",
 ];
-
-module.exports = {
-  chains,
-};
