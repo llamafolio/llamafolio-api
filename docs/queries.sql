@@ -24,3 +24,13 @@ $$;
 select * from all_transactions_history('\x0000000000000000000000000000000000000000')
 order by timestamp desc
 limit 25;
+
+-- Get transactions from and to given address, ordered by timestamp with aggregated token transfers
+SELECT *, 'fantom' as chain
+FROM (
+  SELECT *, fantom.transactions.hash as txhash FROM fantom.transactions INNER JOIN fantom.blocks on fantom.transactions.block_number = fantom.blocks.number
+  WHERE fantom.transactions.from_address = '\x0000000000000000000000000000000000000000' OR fantom.transactions.to_address = '\x0000000000000000000000000000000000000000'
+  ORDER BY fantom.blocks.timestamp desc
+  LIMIT 20
+) txs
+LEFT JOIN fantom.token_transfers on fantom.token_transfers.transaction_hash = txs.txhash;

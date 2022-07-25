@@ -1,5 +1,17 @@
 const { getBalances: getERC20Balances } = require("../../lib/erc20");
 
+// TODO: ?
+const __tokens = {
+  fantom: [
+    {
+      address: "0x39b3bd37208cbade74d0fcbdbb12d606295b430a",
+      name: "gFTM",
+      symbol: "gFTM",
+      decimals: 18,
+    },
+  ],
+};
+
 const tokens = [
   {
     chain: "fantom",
@@ -63,8 +75,18 @@ const tokens = [
     name: "gMIM",
     symbol: "gMIM",
     decimals: 18,
+    // if specified, use it, otherwise fetch it with our endpoint ?
+    // balance: ??
+    // if specified, use it, otherwise fetch it with our endpoint ?
+    // price: ??
   },
 ];
+
+// an adapter must specify the tokens involved, an optional way to get the balance and an optional way to get the price ?
+
+function getTokens() {
+  return tokens;
+}
 
 function getBalances(account) {
   return getERC20Balances(tokens, account);

@@ -1,20 +1,12 @@
-const { Pool } = require("pg");
-const { parseTransaction, strToBuf, bufToStr } = require("../lib/models");
-
-// See: https://gist.github.com/streamich/6175853840fb5209388405910c6cc04b
-// connection details inherited from environment
-const pool = new Pool({
-  max: 1,
-  min: 0,
-  idleTimeoutMillis: 120000,
-  connectionTimeoutMillis: 10000,
-});
+import { strToBuf, bufToStr } from "../lib/buf";
+import pool from "../db/pool";
+import { getBalances as getERC20Balances } from "../lib/erc20";
 
 module.exports.handler = async (event, context) => {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
   context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
 
-  let address = event.pathParameters?.address;
+  const address = event.pathParameters?.address;
   if (!address) {
     return {
       statusCode: 400,
@@ -27,28 +19,34 @@ module.exports.handler = async (event, context) => {
   const client = await pool.connect();
 
   try {
-    const transactionsRes = await client.query(
+    // TODO: filter ERC20 tokens
+    const tokensRes = await client.query(
       `
-select * from all_transactions_history($1::bytea)
-order by timestamp desc
-limit 25;
+select distinct(token_address), 'fantom' as chain from fantom.token_transfers
+where to_address = $1::bytea
+limit 100;
 `,
       [strToBuf(address)]
     );
 
-    const transactions = transactionsRes.rows.map(parseTransaction);
+    const tokens = tokensRes.rows.map((tokenTransfer) => ({
+      chain: tokenTransfer.chain,
+      address: bufToStr(tokenTransfer.token_address),
+    }));
+    const balances = await getERC20Balances(tokens, address);
 
     return {
       statusCode: 200,
       body: JSON.stringify({
-        data: transactions,
+        data: balances,
       }),
     };
-  } catch {
+  } catch (e) {
+    console.error("Failed to retrieve balances", e);
     return {
       statusCode: 500,
       body: JSON.stringify({
-        message: "Failed to retrieve history",
+        message: "Failed to retrieve balances",
       }),
     };
   } finally {
