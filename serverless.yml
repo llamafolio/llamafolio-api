@@ -57,6 +57,14 @@ functions:
           method: get
           path: /history/{address}
 
+  getSyncStatus:
+    handler: src/handlers/getSyncStatus.handler
+    description: Get sync status
+    events:
+      - httpApi:
+          method: get
+          path: /sync_status
+
 custom:
   stage: ${opt:stage, self:provider.stage}
   esbuild:

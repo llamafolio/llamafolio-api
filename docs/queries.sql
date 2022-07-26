@@ -1,3 +1,36 @@
+-- Blocks synced
+create or replace function blocks_synced()
+  RETURNS TABLE (
+      count bigint,
+      max bigint,
+      chain varchar
+  )
+  LANGUAGE plpgsql
+as
+$$
+declare
+    tables CURSOR FOR
+        SELECT chains.chain as _chain
+        FROM chains WHERE is_evm;
+    multichainQuery text := '';
+BEGIN 
+  FOR rec IN tables LOOP
+    multichainQuery := multichainQuery ||
+        format('SELECT count(*) as count, max(number) as max, %L::varchar as chain from %I.blocks', rec._chain, rec._chain) || 
+        ' union all ';
+  END LOOP;
+  
+  -- remove the last ' union all '
+  multichainQuery := left(multichainQuery, -10);
+  
+  return query execute multichainQuery;
+END
+$$;
+
+-- Usage:
+select * from blocks_synced();
+
+
 -- Multi chain transactions from and to given address, sorted by timestamp:
 CREATE OR REPLACE VIEW multichain_transactions AS 
 SELECT 
