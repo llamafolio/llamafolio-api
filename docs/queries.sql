@@ -1,6 +1,18 @@
 -- Multi chain transactions from and to given address, sorted by timestamp:
 CREATE OR REPLACE VIEW multichain_transactions AS 
-SELECT *, null::varchar AS chain, null::timestamp AS timestamp
+SELECT 
+    hash,
+    block_number,
+    from_address,
+    to_address,
+    "value",
+    gas_used,
+    cast(gas_price as decimal(38,0)), 
+    input_decoded_named_args,
+    input_decoded,
+    success,
+    null::varchar AS chain, 
+    null::timestamp AS timestamp
 FROM   ethereum.transactions
 WHERE  false;
 
@@ -15,7 +27,22 @@ declare
         FROM chains WHERE is_evm;
 BEGIN 
   FOR rec IN tables LOOP
-    return query EXECUTE format('SELECT %I.transactions.*, %L::varchar as chain, timestamp FROM %I.transactions inner join %I.blocks on block_number = number WHERE from_address = %L or to_address = %L', rec.chain, rec.chain, rec.chain, rec.chain, address, address);
+    return query EXECUTE format(
+        'SELECT
+            %I.transactions.hash,
+            block_number,
+            from_address,
+            to_address,
+            value,
+            %I.transactions.gas_used,
+            cast(gas_price as decimal(38,0)),
+            input_decoded_named_args,
+            input_decoded,
+            success,
+            %L::varchar as chain,
+            timestamp FROM %I.transactions 
+        inner join %I.blocks on block_number = number WHERE from_address = %L or to_address = %L', 
+        rec.chain, rec.chain, rec.chain, rec.chain, rec.chain, address, address);
   END LOOP;
 END
 $$;

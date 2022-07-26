@@ -40,7 +40,8 @@ limit 25;
         data: transactions,
       }),
     };
-  } catch {
+  } catch (e) {
+    console.error("Failed to retrieve history", e);
     return {
       statusCode: 500,
       body: JSON.stringify({
