@@ -13,10 +13,8 @@ const iface = new Interface([
   },
 ]);
 // jsonAbi = iface.format(FormatTypes.json);
+// ABI format conversion:
 let abi = iface.format(FormatTypes.full);
-
-console.log("=== ABI");
-console.log(abi);
 
 export class Multicall {
   constructor() {

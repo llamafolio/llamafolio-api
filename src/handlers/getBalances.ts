@@ -19,19 +19,29 @@ module.exports.handler = async (event, context) => {
   const client = await pool.connect();
 
   try {
-    // TODO: filter ERC20 tokens
+    // TODO: filter ERC20 tokens only
     const tokensRes = await client.query(
-      `
-select distinct(token_address), 'fantom' as chain from fantom.token_transfers
-where to_address = $1::bytea
-limit 100;
-`,
+      `select * from all_distinct_tokens_received($1::bytea) limit 500;`,
       [strToBuf(address)]
     );
+    // const [tokensRes, contractsRes] = await Promise.all([
+    //   client.query(
+    //     `select * from all_distinct_tokens_received($1::bytea) limit 500;`,
+    //     [strToBuf(address)]
+    //   ),
+    //   client.query(`select * from all_contract_interactions($1::bytea);`, [
+    //     strToBuf(address),
+    //   ]),
+    // ]);
 
-    const tokens = tokensRes.rows.map((tokenTransfer) => ({
-      chain: tokenTransfer.chain,
-      address: bufToStr(tokenTransfer.token_address),
+    // const contracts = contractsRes.rows.map((row) => ({
+    //   chain: row.chain,
+    //   address: bufToStr(row.contract_address),
+    // }));
+
+    const tokens = tokensRes.rows.map((row) => ({
+      chain: row.chain,
+      address: bufToStr(row.token_address),
     }));
     const balances = await getERC20Balances(tokens, address);
 

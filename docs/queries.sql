@@ -34,3 +34,66 @@ FROM (
   LIMIT 20
 ) txs
 LEFT JOIN fantom.token_transfers on fantom.token_transfers.transaction_hash = txs.txhash;
+
+
+-- Given an address, get all distinct contract addresses interacted with
+create or replace function all_contract_interactions(address bytea)
+  RETURNS TABLE (
+      contract_address bytea,
+      chain varchar
+  )
+  LANGUAGE plpgsql
+as
+$$
+declare
+    tables CURSOR FOR
+        SELECT chains.chain as _chain
+        FROM chains WHERE is_evm;
+    multichainQuery text := '';
+BEGIN 
+  FOR rec IN tables LOOP
+    multichainQuery := multichainQuery ||
+        format('SELECT contract_address, %L::varchar as chain FROM %I.logs join %I.transactions on hash = transaction_hash WHERE from_address = %L', rec._chain, rec._chain, rec._chain, address) || 
+        ' union all ';
+  END LOOP;
+  
+  -- remove the last ' union all '
+  multichainQuery := left(multichainQuery, -10);
+  
+  return query execute format('select distinct(contract_address), chain from ( %s ) as _', multichainQuery);
+END
+$$;
+
+-- Usage
+select * from all_contract_interactions('\x0000000000000000000000000000000000000000');
+
+
+-- Given an address, get all distinct token_address received
+create or replace function all_distinct_tokens_received(address bytea)
+  RETURNS TABLE (
+      token_address bytea,
+      chain varchar
+  )
+  LANGUAGE plpgsql
+as
+$$
+declare
+    tables CURSOR FOR
+        SELECT chains.chain as _chain
+        FROM chains WHERE is_evm;
+    multichainQuery text := '';
+BEGIN 
+  FOR rec IN tables LOOP
+    multichainQuery := multichainQuery ||
+        format('SELECT token_address, %L::varchar as chain FROM %I.token_transfers WHERE to_address = %L', rec._chain, rec._chain, address) || 
+        ' union all ';
+  END LOOP;
+  
+  -- remove the last ' union all '
+  multichainQuery := left(multichainQuery, -10);
+  
+  return query execute format('select distinct(token_address), chain from ( %s ) as _', multichainQuery);
+END
+$$;
+
+select * from all_distinct_tokens_received('\x0000000000000000000000000000000000000000') limit 500;
