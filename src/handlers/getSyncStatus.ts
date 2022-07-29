@@ -1,6 +1,6 @@
 import { providers } from "@defillama/sdk/build/general";
 import pool from "../db/pool";
-import { chainToDefiLlamaChain } from "../lib/chains";
+import { chainToDefiLlamaChain } from "../lib/chain";
 
 module.exports.handler = async (event, context) => {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178

@@ -31,59 +31,104 @@ $$;
 select * from blocks_synced();
 
 
--- Multi chain transactions from and to given address, sorted by timestamp:
-CREATE OR REPLACE VIEW multichain_transactions AS 
-SELECT 
-    hash,
-    block_number,
-    from_address,
-    to_address,
-    "value",
-    gas_used,
-    cast(gas_price as decimal(38,0)), 
-    input_decoded_named_args,
-    input_decoded,
-    success,
-    null::varchar AS chain, 
-    null::timestamp AS timestamp
-FROM   ethereum.transactions
-WHERE  false;
-
-create or replace function all_transactions_history(address bytea)
-  returns setof multichain_transactions
-  LANGUAGE plpgsql
+-- Multi chain transactions history from and to given address, sorted by block.timestamp, with token_transfers:
+create or replace function all_transactions_history(address bytea, _limit integer)
+	returns table (
+		"chain" varchar,
+		b_number bigint,
+		b_timestamp timestamp,
+		tx_hash bytea,
+		tx_from_address bytea,
+		tx_to_address bytea,
+		tx_value numeric,
+		tx_gas_used bigint,
+		tx_gas_price decimal(38,0),
+		tx_input_decoded_named_args boolean,
+		tx_input_decoded jsonb,
+		tx_success boolean,
+		tt_token_address bytea,
+		tt_from_address bytea,
+		tt_to_address bytea,
+		tt_value numeric,
+		tt_transaction_hash bytea
+	)
+	LANGUAGE plpgsql
 as
 $$
 declare
     tables CURSOR FOR
-        SELECT chain
+        SELECT chains.chain as _chain
         FROM chains WHERE is_evm;
+	multichainTxsQuery text := '';
+	multichainQuery text := '';
 BEGIN 
-  FOR rec IN tables LOOP
-    return query EXECUTE format(
-        'SELECT
-            %I.transactions.hash,
-            block_number,
-            from_address,
-            to_address,
-            value,
-            %I.transactions.gas_used,
-            cast(gas_price as decimal(38,0)),
-            input_decoded_named_args,
-            input_decoded,
-            success,
-            %L::varchar as chain,
-            timestamp FROM %I.transactions 
-        inner join %I.blocks on block_number = number WHERE from_address = %L or to_address = %L', 
-        rec.chain, rec.chain, rec.chain, rec.chain, rec.chain, address, address);
-  END LOOP;
+	FOR rec IN tables LOOP
+		multichainTxsQuery := multichainTxsQuery || 
+		format('
+			select 
+				%L::varchar as chain,
+				block_number as b_number,
+				timestamp as b_timestamp,
+				%I.transactions.hash as tx_hash,
+				%I.transactions.from_address as tx_from_address,
+				%I.transactions.to_address as tx_to_address,
+				%I.transactions.value as tx_value,
+				%I.transactions.gas_used as tx_gas_used,
+				cast(gas_price as decimal(38,0)) as tx_gas_price,
+				input_decoded_named_args as tx_input_decoded_named_args,
+				input_decoded as tx_input_decoded,
+				success as tx_success
+			from %I.transactions
+			inner join %I.blocks on block_number = number
+			where from_address = %L or to_address = %L',
+			rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, address, address
+		) || 
+		' union all ';
+	END LOOP;
+	
+	-- remove the last ' union all '
+	multichainTxsQuery := left(multichainTxsQuery, -10);
+	multichainTxsQuery := multichainTxsQuery || format(' limit %L', _limit);
+	
+	FOR rec IN tables LOOP
+    	multichainQuery := multichainQuery || format(
+			'select 
+				chain,
+				b_number,
+				b_timestamp,
+				tx_hash,
+				tx_from_address,
+				tx_to_address,
+				tx_value,
+				tx_gas_used,
+				tx_gas_price,
+				tx_input_decoded_named_args,
+				tx_input_decoded,
+				tx_success,
+				token_address as tt_token_address,
+				from_address as tt_from_address,
+				to_address as tt_to_address,
+				value as tt_value,
+				transaction_hash as tt_transaction_hash
+			from (
+				%s
+			) txs
+			left join %I.token_transfers
+			on txs.tx_hash = %I.token_transfers.transaction_hash',
+        multichainTxsQuery, rec._chain, rec._chain) ||
+		' union all ';
+	END LOOP;
+	
+	-- remove the last ' union all '
+	multichainQuery := left(multichainQuery, -10);
+	
+	return query execute multichainQuery;
 END
 $$;
 
 -- Usage:
-select * from all_transactions_history('\x0000000000000000000000000000000000000000')
-order by timestamp desc
-limit 25;
+select * from all_transactions_history('\x0000000000000000000000000000000000000000', 20)
+order by b_timestamp desc;
 
 -- Get transactions from and to given address, ordered by timestamp with aggregated token transfers
 SELECT *, 'fantom' as chain
