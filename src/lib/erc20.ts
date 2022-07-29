@@ -3,6 +3,7 @@ import type { Token } from "../token";
 import { multiCall } from "@defillama/sdk/build/abi/index";
 import fetch from "node-fetch";
 import { Multicall } from "./multicall";
+import { toDefiLlama } from "./chain";
 
 class ERC20Multicall extends Multicall {
   abis = {};
@@ -103,7 +104,9 @@ export async function getBalances(tokens: Token[], account: string) {
   const pricesRes = await fetch("https://coins.llama.fi/prices", {
     method: "POST",
     body: JSON.stringify({
-      coins: balances.map((balance) => `${balance.chain}:${balance.address}`),
+      coins: balances.map(
+        (balance) => `${toDefiLlama(balance.chain)}:${balance.address}`
+      ),
     }),
   });
   const prices = await pricesRes.json();

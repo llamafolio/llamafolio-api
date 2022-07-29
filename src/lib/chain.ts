@@ -10,7 +10,7 @@ export const chains = [
   "gnosis",
 ];
 
-export const chainToDefiLlamaChain = {
+export const chainToDefiLlamaChain: { [key: string]: string } = {
   ethereum: "ethereum",
   avalanche: "avax",
   bsc: "bsc",
@@ -21,3 +21,17 @@ export const chainToDefiLlamaChain = {
   celo: "celo",
   gnosis: "xdai",
 };
+
+// inverse mapping
+const defiLlamaChainToChain: { [key: string]: string } = {};
+for (const chain in chainToDefiLlamaChain) {
+  defiLlamaChainToChain[chainToDefiLlamaChain[chain]] = chain;
+}
+
+export function fromDefiLlama(chain: string): string | undefined {
+  return defiLlamaChainToChain[chain];
+}
+
+export function toDefiLlama(chain: string): string | undefined {
+  return chainToDefiLlamaChain[chain];
+}
