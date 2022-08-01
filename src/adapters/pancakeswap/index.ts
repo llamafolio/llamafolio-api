@@ -1,33 +1,22 @@
-import { pools } from "./pools";
-import { getBalances as getERC20Balances } from "../../lib/erc20";
+import { Adapter } from "../../lib/adapter";
 
-const adapter = {
+const adapter: Adapter = {
+  id: "pancakeswap",
   name: "PancakeSwap",
-  groups: [
-    {
-      chain: "bsc",
-      type: "Farming",
-      tokens: pools,
-    },
-  ],
-  async getBalances(account: string) {
-    const balances = await getERC20Balances(
-      this.groups.flatMap((group) => group.tokens),
-      account
-    );
-
-    const balanceByToken = {};
-    for (const balance of balances) {
-      balanceByToken[balance.address] = balance;
-    }
-
-    return this.groups.map((group) => {
-      const tokens = group.tokens.flatMap(
-        (token) => balanceByToken[token.address] || []
-      );
-      group.tokens = tokens;
-      return group;
-    });
+  description: "",
+  links: {
+    website: "https://pancakeswap.finance/",
+  },
+  async getContracts() {
+    return {
+      contracts: [],
+      revalidate: 60 * 60, // 1 hour
+    };
+  },
+  async getBalances(ctx) {
+    return {
+      balances: [],
+    };
   },
 };
 

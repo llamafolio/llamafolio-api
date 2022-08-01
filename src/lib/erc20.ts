@@ -1,4 +1,6 @@
-import { Call, Fetcher } from "./adapter";
+import BN from "bignumber.js";
+import { multiCall } from "@defillama/sdk/build/abi/index";
+import { BaseBalance, BaseContext } from "./adapter";
 
 export const abi = {
   balanceOf: {
@@ -40,61 +42,44 @@ export const abi = {
   },
 };
 
-export function getERC20Fetcher({
-  chain,
-  address,
-  symbol,
-  decimals,
-}: {
-  chain: string;
-  address: string;
-  symbol?: string;
-  decimals?: number;
-}): Fetcher {
-  return {
+export async function getERC20Balances(
+  ctx: BaseContext,
+  chain: string,
+  tokens: string[]
+): Promise<BaseBalance[]> {
+  const symbols = await multiCall({
+    chain,
+    calls: tokens.map((address) => ({
+      target: address,
+      params: [],
+    })),
+    abi: abi.symbol,
+  });
+
+  const decimals = await multiCall({
+    chain,
+    calls: tokens.map((address) => ({
+      target: address,
+      params: [],
+    })),
+    abi: abi.decimals,
+  });
+
+  const balances = await multiCall({
+    chain,
+    calls: tokens.map((address) => ({
+      target: address,
+      params: [ctx.address],
+    })),
+    abi: abi.balanceOf,
+  });
+
+  return tokens.map((address, i) => ({
+    // TODO: deal with .success
     chain,
     address,
-    getCalls(context) {
-      const calls: Call[] = [
-        {
-          chain,
-          target: address,
-          params: [context.account],
-          abi: abi.balanceOf,
-        },
-      ];
-
-      if (!symbol) {
-        calls.push({
-          chain,
-          target: address,
-          params: [],
-          abi: abi.symbol,
-        });
-      }
-
-      if (!decimals) {
-        calls.push({
-          chain,
-          target: address,
-          params: [],
-          abi: abi.decimals,
-        });
-      }
-
-      return calls;
-    },
-    async getBalances(context) {
-      return [
-        {
-          chain,
-          address: address,
-          amount: context.calls[0].output,
-          // TODO: resolve optional calls above
-          decimals: 18,
-          // decimals: parseInt(context.calls[1].output),
-        },
-      ];
-    },
-  };
+    symbol: symbols.output[i].output,
+    decimals: decimals.output[i].output,
+    amount: new BN(balances.output[i].output),
+  }));
 }

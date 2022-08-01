@@ -1,37 +1,48 @@
-import { BigNumber } from "ethers";
+import BN from "bignumber.js";
 import { providers } from "@defillama/sdk/build/general";
+import { Adapter, Balance } from "../../lib/adapter";
+import { chains, toDefiLlama } from "../../lib/chain";
 
-const BN_ZERO = BigNumber.from("0");
-
-const adapter = {
+const adapter: Adapter = {
   name: "Wallet",
-  async getBalances(account: string) {
-    const balances = await Promise.all(
-      Object.entries(providers)
-        // TODO: Remove this
-        .slice(0, 10)
-        .map(async ([chain, provider]) => {
-          try {
-            const balance = await provider.getBalance(account);
+  description: "",
+  links: {},
+  getContracts() {
+    return {
+      contracts: [],
+    };
+  },
+  async getBalances(ctx) {
+    const balances: (Balance | null)[] = await Promise.all(
+      chains.flatMap(async (chain) => {
+        const provider = providers[toDefiLlama(chain)!];
+        if (!provider) {
+          return [];
+        }
 
-            return {
-              chain,
-              // TODO:
-              decimals: 18,
-              // TODO: map chains - token(s)
-              symbol: chain.toLowerCase(),
-              balance,
-            };
-          } catch (error) {
-            console.error(`[${chain}]: could not getBalance`, error);
-            return null;
-          }
-        })
+        try {
+          const balance = await provider.getBalance(ctx.address);
+
+          return {
+            chain,
+            // TODO:
+            decimals: 18,
+            // TODO: map chains - token(s)
+            symbol: chain.toLowerCase(),
+            amount: new BN(balance.toString()),
+          };
+        } catch (error) {
+          console.error(`[${chain}]: could not getBalance`, error);
+          return null;
+        }
+      })
     );
 
-    return balances.filter(
-      (balanceRes) => balanceRes != null && balanceRes.balance.gt(BN_ZERO)
-    );
+    return {
+      balances: balances.filter(
+        (balanceRes) => balanceRes !== null && balanceRes.amount.gt(0)
+      ),
+    };
   },
 };
 
