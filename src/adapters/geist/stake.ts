@@ -1,7 +1,10 @@
 import BN from "bignumber.js";
+import BigNumber from "@ethersproject/bignumber"
 import { ethers } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
 import { Balance, BalanceContext, Contract } from "../../lib/adapter";
+import { getERC20Details } from "../../lib/erc20";
+
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
 
 export const multiFeeDistributionContract: Contract = {
@@ -25,18 +28,25 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     multiFeeDistribution.lockedBalances(ctx.address),
   ]);
 
+
+
+
   const rewards = [];
   for (const rewardData of claimableRewards) {
-    rewards.push({
+
+
+    let token = (await getERC20Details("fantom",[rewardData.token]))[0] //need to use multicall
+
+    let reward: Balance = {
       chain: "fantom",
       address: rewardData.token,
-      amount: new BN(rewardData.amount),
-      // TODO: are these gTokens or tokens ?
-      decimals: 18,
-      symbol: "TODO",
-      // decimals: tokens[rewardData.token].decimals,
-      // symbol: tokens[rewardData.token].symbol,
-    });
+      amount: rewardData.amount,
+      amountFormatted: rewardData.amount.toString(),
+      decimals: token.decimals,
+      symbol: token.symbol,
+      category: 'rewards'
+    };
+    balances.push(reward)
   }
 
   const lockedBalance: Balance = {
@@ -44,8 +54,9 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
     symbol: "GEIST",
     decimals: 18,
-    amount: new BN(lockedBalances.total),
-    category: "lock",
+    amount: lockedBalances.total,
+    amountFormatted: lockedBalances.total.toString(),
+    category: "lock-rewards",
     // expired locked
     // unlockable: lockedBalances.unlockable,
     // locked: lockedBalances.locked,
@@ -53,8 +64,7 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     // [amount_0, timestamp_0, amount_1, timestamp_1, ...]
     // lockData: lockedBalances.lockData,
   };
-  // TODO: figure out how to reconcile rewards from staking / locking
-  lockedBalance.rewards = rewards;
+
 
   balances.push(lockedBalance);
 

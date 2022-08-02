@@ -48,18 +48,19 @@ async function main() {
     .map((config) => config.balances)
     .flat();
 
-  console.log("All balances:", JSON.stringify(balances));
+
+  //console.log("All balances:", JSON.stringify(balances));
 
   // Filter empty nbalances
   balances = balances.filter((balance) => balance.amount.gt(0));
 
-  console.log("Non empty balances:", JSON.stringify(balances));
+
 
   const pricesRes = await fetch("https://coins.llama.fi/prices", {
     method: "POST",
     body: JSON.stringify({
       coins: balances.map(
-        (balance) => `${toDefiLlama(balance.chain)}:${balance.address}`
+        (balance) => `${toDefiLlama(balance.chain)}:${balance.address.toLowerCase()}`
       ),
     }),
   });
@@ -67,12 +68,10 @@ async function main() {
 
   const pricedBalances: (Balance | PricedBalance)[] = balances.map(
     (balance) => {
-      const key = `${balance.chain}:${balance.address}`;
+      const key = `${balance.chain}:${balance.address.toLowerCase()}`;
       const price = prices.coins[key];
       if (price !== undefined) {
-        const balanceAmount = balance.amount
-          .div(10 ** price.decimals)
-          .toNumber();
+        const balanceAmount = balance.amount / 10 ** balance.decimals
 
         return {
           ...balance,
@@ -92,7 +91,14 @@ async function main() {
     }
   );
 
-  console.log("Result:", JSON.stringify(pricedBalances));
+  
+
+  for (let index = 0; index < pricedBalances.length; index++) {
+    const balance = pricedBalances[index];
+    console.log(`Category ${balance.category} :: Token: ${balance.symbol} :: Balance is ${balance.amountFormatted / 10 ** balance.decimals} :: Balance $${balance.balanceUSD}`)
+  }
+
+
 }
 
 main();
