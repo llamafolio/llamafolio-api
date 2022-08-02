@@ -91,7 +91,7 @@ async function main() {
     }
   );
 
-  
+
 
   for (let index = 0; index < pricedBalances.length; index++) {
     const balance = pricedBalances[index];
