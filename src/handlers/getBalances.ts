@@ -36,13 +36,16 @@ export async function handler(event, context) {
         `select * from all_distinct_tokens_received($1::bytea) limit 500;`,
         [strToBuf(address)]
       ),
-      client.query(`select * from all_contract_interactions($1::bytea);`, [
+      // client.query(`select * from all_contract_interactions($1::bytea);`, [
+      //   strToBuf(address),
+      // ]),
+      client.query(`select * from distinct_transactions_to($1::bytea);`, [
         strToBuf(address),
       ]),
     ]);
 
     const contractAddresses: ChainAddress[] = contractsRes.rows.map(
-      (row) => `${row.chain}:${bufToStr(row.contract_address)}`
+      (row) => `${row.chain}:${bufToStr(row.to_address)}`
     );
 
     const adapters = await getAdapters(contractAddresses);
@@ -53,7 +56,7 @@ export async function handler(event, context) {
           adapter.getBalances({
             ...ctx,
             chain: contractsRes.rows[i].chain,
-            contract: bufToStr(contractsRes.rows[i].contract_address),
+            contract: bufToStr(contractsRes.rows[i].to_address),
           })
         )
       )

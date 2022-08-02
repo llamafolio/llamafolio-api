@@ -141,7 +141,7 @@ FROM (
 LEFT JOIN fantom.token_transfers on fantom.token_transfers.transaction_hash = txs.txhash;
 
 
--- Given an address, get all distinct contract addresses interacted with
+-- Given an address, get all distinct contract addresses interacted with (also looks at interaction through logs)
 create or replace function all_contract_interactions(address bytea)
   RETURNS TABLE (
       contract_address bytea,
@@ -172,6 +172,42 @@ $$;
 -- Usage
 select * from all_contract_interactions('\x0000000000000000000000000000000000000000');
 
+-- Given an address, returns distinct recipient of multichain transactions
+create or replace function distinct_transactions_to(address bytea)
+  RETURNS TABLE (
+      to_address bytea,
+      chain varchar
+  )
+  LANGUAGE plpgsql
+as
+$$
+declare
+    tables CURSOR FOR
+        SELECT chains.chain as _chain
+        FROM chains WHERE is_evm;
+    multichainQuery text := '';
+BEGIN 
+  FOR rec IN tables LOOP
+    multichainQuery := multichainQuery ||
+		format('
+			SELECT
+			   	to_address,
+			   	%L::varchar as chain 
+			FROM %I.transactions
+			WHERE from_address = %L', 
+		rec._chain, rec._chain, address) || 
+        ' union all ';
+  END LOOP;
+  
+  -- remove the last ' union all '
+  multichainQuery := left(multichainQuery, -10);
+  
+  return query execute format('select distinct(to_address), chain from ( %s ) as _', multichainQuery);
+END
+$$;
+
+-- Usage:
+select * from distinct_transactions_to('\x0000000000000000000000000000000000000000');
 
 -- Given an address, get all distinct token_address received
 create or replace function all_distinct_tokens_received(address bytea)
