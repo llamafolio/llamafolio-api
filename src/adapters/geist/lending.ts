@@ -51,6 +51,11 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
   for (let index = 0; index < aBalances.length; index++) {
     aBalances[index].amountFormatted = aBalances[index].amount.toString()
     aBalances[index].category = 'lending-supplied'
+    //save the details of the real token
+    aBalances[index].realToken = aBalances[index]
+    //substitute the token for it's "native" version
+    aBalances[index].address = lendingToken[index]
+
     let aBalanceFormat = aBalances[index]
     const aBalance: Balance = aBalanceFormat
     balances.push(aBalance);
@@ -63,6 +68,10 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
   for (let index = 0; index < stableDebtTokenAddressesBalances.length; index++) {
     stableDebtTokenAddressesBalances[index].amountFormatted = stableDebtTokenAddressesBalances[index].amount.toString()
     stableDebtTokenAddressesBalances[index].category = 'lending-borrowed'
+    stableDebtTokenAddressesBalances[index].realToken = stableDebtTokenAddressesBalances[index]
+    stableDebtTokenAddressesBalances[index].address = lendingToken[index]
+
+
     let aBalanceFormat = stableDebtTokenAddressesBalances[index]
     const aBalance: Balance = aBalanceFormat
     balances.push(aBalance);
@@ -75,6 +84,9 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
   for (let index = 0; index < variableDebtTokenAddressesBalances.length; index++) {
     variableDebtTokenAddressesBalances[index].amountFormatted = variableDebtTokenAddressesBalances[index].amount.toString()
     variableDebtTokenAddressesBalances[index].category = 'lending-borrowed-variable'
+    variableDebtTokenAddressesBalances[index].realToken = variableDebtTokenAddressesBalances[index]
+    variableDebtTokenAddressesBalances[index].address = lendingToken[index]
+
     let aBalanceFormat = variableDebtTokenAddressesBalances[index]
     const aBalance: Balance = aBalanceFormat
     balances.push(aBalance);
