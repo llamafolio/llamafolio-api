@@ -102,16 +102,16 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
   //call ClaimableReward()
   // this gets us the rewards from lending/borrowing
 
-  const earnedBalance: Balance = {
-    chain: "fantom",
-    address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
-    symbol: "GEIST",
-    decimals: 18,
-    amount: 0,
-    amountFormatted: 0,
-    category: "lending-rewards"
-  };
-  balances.push(earnedBalance);
+  // const lendingEarnedBalance: Balance = {
+  //   chain: "fantom",
+  //   address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
+  //   symbol: "GEIST",
+  //   decimals: 18,
+  //   amount: 0,
+  //   amountFormatted: 0,
+  //   category: "lending-rewards"
+  // };
+  // balances.push(lendingEarnedBalance);
 
   return balances;
 }

@@ -40,8 +40,8 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
   for (let index = 0; index < lendingToken.length; index++) {
     const tokenInfo = await dataProvider.getReserveTokensAddresses(lendingToken[index])
     aTokens.push(tokenInfo.aTokenAddress)
-    aTokens.push(tokenInfo.stableDebtTokenAddress)
-    aTokens.push(tokenInfo.variableDebtTokenAddress)
+    stableDebtTokenAddresses.push(tokenInfo.stableDebtTokenAddress)
+    variableDebtTokenAddresses.push(tokenInfo.variableDebtTokenAddress)
   }
 
 
