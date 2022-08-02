@@ -1,0 +1,98 @@
+import path from "path";
+import fetch from "node-fetch";
+import { toDefiLlama } from "../src/lib/chain";
+import {
+  Adapter,
+  getAdapters,
+  Balance,
+  BaseContext,
+  ChainAddress,
+  PricedBalance,
+} from "../src/lib/adapter";
+
+function help() {}
+
+async function main() {
+  // argv[0]: ts-node
+  // argv[1]: run-adapter.ts
+  // argv[2]: adapter
+  // argv[3]: address
+  if (process.argv.length < 3) {
+    console.error("Missing adapter argument");
+    return help();
+  }
+  if (process.argv.length < 4) {
+    console.error("Missing address argument");
+    return help();
+  }
+  const address = process.argv[3].toLowerCase();
+
+  const module = await import(
+    path.join(__dirname, "..", "src", "adapters", process.argv[2])
+  );
+  const adapter = module.default as Adapter;
+
+  const contracts = await adapter.getContracts();
+
+  let balances = (
+    await Promise.all(
+      contracts.contracts.map((contract) =>
+        adapter.getBalances({
+          address,
+          chain: contract.chain,
+          contract: contract.address,
+        })
+      )
+    )
+  )
+    .map((config) => config.balances)
+    .flat();
+
+  console.log("All balances:", JSON.stringify(balances));
+
+  // Filter empty nbalances
+  balances = balances.filter((balance) => balance.amount.gt(0));
+
+  console.log("Non empty balances:", JSON.stringify(balances));
+
+  const pricesRes = await fetch("https://coins.llama.fi/prices", {
+    method: "POST",
+    body: JSON.stringify({
+      coins: balances.map(
+        (balance) => `${toDefiLlama(balance.chain)}:${balance.address}`
+      ),
+    }),
+  });
+  const prices = await pricesRes.json();
+
+  const pricedBalances: (Balance | PricedBalance)[] = balances.map(
+    (balance) => {
+      const key = `${balance.chain}:${balance.address}`;
+      const price = prices.coins[key];
+      if (price !== undefined) {
+        const balanceAmount = balance.amount
+          .div(10 ** price.decimals)
+          .toNumber();
+
+        return {
+          ...balance,
+          decimals: price.decimals,
+          price: price.price,
+          balanceUSD: balanceAmount * price.price,
+          symbol: price.symbol,
+          timestamp: price.timestamp,
+        };
+      } else {
+        // TODO: Mising price and token info from Defillama API
+        console.log(
+          `Failed to get price on Defillama API for ${balance.chain}:${balance.address}`
+        );
+      }
+      return balance;
+    }
+  );
+
+  console.log("Result:", JSON.stringify(pricedBalances));
+}
+
+main();
