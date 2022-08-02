@@ -4,9 +4,7 @@ import pool from "../db/pool";
 import { getERC20Balances } from "../lib/erc20";
 import { toDefiLlama } from "../lib/chain";
 import {
-  Adapter,
   Balance,
-  BaseBalance,
   BaseContext,
   ChainAddress,
   getAdapters,

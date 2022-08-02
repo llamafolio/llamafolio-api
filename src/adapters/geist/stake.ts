@@ -24,18 +24,19 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     multiFeeDistribution.lockedBalances(ctx.address),
   ]);
 
-  // TODO: figure out where to put rewards
   const rewards = [];
   for (const rewardData of claimableRewards) {
     rewards.push({
       chain: "fantom",
       address: rewardData.token,
       amount: new BN(rewardData.amount),
-      decimals: 18,
+      // TODO: are these gTokens or tokens ?
+      decimals: tokens[rewardData.token].decimals,
+      symbol: tokens[rewardData.token].symbol,
     });
   }
 
-  const lockedToken: Balance = {
+  const lockedBalance: Balance = {
     chain: "fantom",
     address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
     symbol: "GEIST",
@@ -49,7 +50,10 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     // [amount_0, timestamp_0, amount_1, timestamp_1, ...]
     // lockData: lockedBalances.lockData,
   };
-  balances.push(lockedToken);
+  // TODO: figure out how to reconcile rewards from staking / locking
+  lockedBalance.rewards = rewards;
+
+  balances.push(lockedBalance);
 
   return balances;
 }
