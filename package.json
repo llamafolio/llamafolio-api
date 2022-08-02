@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "LlamaFolio API",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "adapter": "ts-node -T scripts/run-adapter.ts"
   },
   "keywords": [],
   "license": "ISC",

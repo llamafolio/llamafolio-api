@@ -92,3 +92,13 @@ const adapter = {
   }
 };
 ```
+
+# Local development
+
+To run an adapter:
+
+```bash
+npm run adapter adapter_name address
+```
+
+Replace `adapter_name` by the name of your adapter (ex: uniswap) and `address` by your address (ex: x0000000000000000000000000000000000000000)

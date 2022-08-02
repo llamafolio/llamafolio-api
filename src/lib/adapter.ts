@@ -49,6 +49,7 @@ export type BalancesConfig = {
 };
 
 export type Contract = {
+  name: string;
   chain: string;
   address: string;
 };
@@ -71,6 +72,10 @@ export type Links = {
 export interface Adapter {
   name: string;
   description: string;
+  // CoinGecko ID
+  coingecko?: string;
+  // DefiLlama ID
+  defillama: string;
   links: Links;
   getContracts: () => ContractsConfig | Promise<ContractsConfig>;
   getBalances: (

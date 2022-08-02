@@ -5,6 +5,7 @@ import { Balance, BalanceContext, Contract } from "../../lib/adapter";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
 
 export const multiFeeDistributionContract: Contract = {
+  name: "MultiFeeDistribution",
   chain: "fantom",
   address: "0x49c93a95dbcc9A6A4D8f77E59c038ce5020e82f8",
 };
@@ -31,8 +32,10 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
       address: rewardData.token,
       amount: new BN(rewardData.amount),
       // TODO: are these gTokens or tokens ?
-      decimals: tokens[rewardData.token].decimals,
-      symbol: tokens[rewardData.token].symbol,
+      decimals: 18,
+      symbol: "TODO",
+      // decimals: tokens[rewardData.token].decimals,
+      // symbol: tokens[rewardData.token].symbol,
     });
   }
 
