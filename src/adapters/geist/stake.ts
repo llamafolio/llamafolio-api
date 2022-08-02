@@ -10,6 +10,7 @@ import ChiefIncentivesABI from "./abis/ChiefIncentives.json";
 
 export const multiFeeDistributionContract: Contract = {
   name: "MultiFeeDistribution",
+  dName: "Geist Locker",
   chain: "fantom",
   address: "0x49c93a95dbcc9A6A4D8f77E59c038ce5020e82f8",
 };

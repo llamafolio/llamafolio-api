@@ -9,6 +9,7 @@ import DataProviderABI from "./abis/DataProvider.json";
 
 export const lendingPoolContract: Contract = {
   name: "LendingPool",
+  dName: "Geist Lending",
   chain: "fantom",
   address: "0x9FAD24f572045c7869117160A571B2e50b10d068",
 };
