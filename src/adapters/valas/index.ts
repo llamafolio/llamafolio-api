@@ -2,6 +2,8 @@ import { Adapter } from "../../lib/adapter";
 
 const adapter: Adapter = {
   name: "Valas Finance",
+  coingecko: "valas-finance",
+  defillama: "valas-finance",
   description: "",
   links: {
     website: "https://valasfinance.com/",
