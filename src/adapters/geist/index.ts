@@ -5,7 +5,6 @@ import {
 } from "./stake";
 
 const adapter: Adapter = {
-  id: "geist-finance",
   name: "Geist",
   description: "",
   links: {

@@ -1,7 +1,6 @@
 import { Adapter } from "../../lib/adapter";
 
 const adapter: Adapter = {
-  id: "pancakeswap",
   name: "PancakeSwap",
   description: "",
   links: {

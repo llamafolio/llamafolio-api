@@ -4,10 +4,10 @@ import pool from "../db/pool";
 import { getERC20Balances } from "../lib/erc20";
 import { toDefiLlama } from "../lib/chain";
 import {
+  getAdapters,
   Balance,
   BaseContext,
   ChainAddress,
-  getAdapters,
   PricedBalance,
 } from "../lib/adapter";
 
@@ -44,6 +44,7 @@ export async function handler(event, context) {
     const contractAddresses: ChainAddress[] = contractsRes.rows.map(
       (row) => `${row.chain}:${bufToStr(row.contract_address)}`
     );
+
     const adapters = await getAdapters(contractAddresses);
 
     const adaptersBalances = (

@@ -1,6 +1,5 @@
 import BN from "bignumber.js";
 import { adapters } from "../adapters";
-import { Token } from "../token";
 
 // TODO: enum
 export type Chain = string;
@@ -70,7 +69,6 @@ export type Links = {
 };
 
 export interface Adapter {
-  id: string;
   name: string;
   description: string;
   links: Links;
