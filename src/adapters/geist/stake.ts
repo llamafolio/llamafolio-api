@@ -4,6 +4,7 @@ import { providers } from "@defillama/sdk/build/general";
 import { Balance, BalanceContext, Contract } from "../../lib/adapter";
 import { getERC20Details } from "../../lib/erc20";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
+import ChiefIncentivesABI from "./abis/ChiefIncentives.json";
 
 
 
@@ -23,9 +24,21 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     provider
   );
 
-  const [claimableRewards, lockedBalances] = await Promise.all([
+  const chiefIncentives = new ethers.Contract(
+    "0x297FddC5c33Ef988dd03bd13e162aE084ea1fE57",
+    ChiefIncentivesABI,
+    provider
+  );
+
+
+
+
+
+  const [claimableRewards, lockedBalances, unlockedBalances, earnedBalances] = await Promise.all([
     multiFeeDistribution.claimableRewards(ctx.address),
     multiFeeDistribution.lockedBalances(ctx.address),
+    multiFeeDistribution.unlockedBalance(ctx.address),
+    multiFeeDistribution.earnedBalances(ctx.address)
   ]);
 
 
@@ -44,7 +57,7 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
       amountFormatted: rewardData.amount.toString(),
       decimals: token.decimals,
       symbol: token.symbol,
-      category: 'rewards'
+      category: 'lock-rewards'
     };
     balances.push(reward)
   }
@@ -56,17 +69,49 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     decimals: 18,
     amount: lockedBalances.total,
     amountFormatted: lockedBalances.total.toString(),
-    category: "lock-rewards",
-    // expired locked
-    // unlockable: lockedBalances.unlockable,
-    // locked: lockedBalances.locked,
-    // lock + expiry dates:
-    // [amount_0, timestamp_0, amount_1, timestamp_1, ...]
-    // lockData: lockedBalances.lockData,
+    category: "lock"
   };
-
-
   balances.push(lockedBalance);
+
+  const unlockedBalance: Balance = {
+    chain: "fantom",
+    address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
+    symbol: "GEIST",
+    decimals: 18,
+    amount: unlockedBalances,
+    amountFormatted: unlockedBalances.toString(),
+    category: "staked"
+  };
+  balances.push(unlockedBalance);
+
+  const earnedBalance: Balance = {
+    chain: "fantom",
+    address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
+    symbol: "GEIST",
+    decimals: 18,
+    amount: earnedBalances.total,
+    amountFormatted: earnedBalances.total.toString(),
+    category: "vest"
+  };
+  balances.push(earnedBalance);
+
+
+
+  const lmRewardsCount = await chiefIncentives.poolLength()
+  //loop through registeredTokens()
+  //call ClaimableReward()
+  // this gets us the rewards from lending/borrowing
+
+  const earnedBalance: Balance = {
+    chain: "fantom",
+    address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
+    symbol: "GEIST",
+    decimals: 18,
+    amount: 0,
+    amountFormatted: 0,
+    category: "lending-rewards"
+  };
+  balances.push(earnedBalance);
 
   return balances;
 }

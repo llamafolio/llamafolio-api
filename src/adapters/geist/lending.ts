@@ -7,14 +7,6 @@ import { getERC20Balances } from "../../lib/erc20";
 import LendingPoolABI from "./abis/LendingPool.json";
 import DataProviderABI from "./abis/DataProvider.json";
 
-
-async function getaTokens() {
-
-
-
-}
-
-
 export const lendingPoolContract: Contract = {
   name: "LendingPool",
   chain: "fantom",
