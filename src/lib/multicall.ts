@@ -9,7 +9,6 @@ export type Call = {
 
 export type MultiCallParams = Parameters<typeof multiCall>[0] & {
   batchSize?: number;
-  throwOnError?: boolean;
 };
 
 export async function multicall(params: MultiCallParams) {
@@ -31,14 +30,7 @@ export async function multicall(params: MultiCallParams) {
   const multicallRes: any[] = [];
   for (const chunkRes of chunksRes) {
     for (const res of chunkRes.output) {
-      if (!res.success) {
-        if (params.throwOnError) {
-          throw Error(`Multicall failed for ${JSON.stringify(res)}`);
-        }
-        console.log(`Multicall failed for ${JSON.stringify(res)}`);
-      } else {
-        multicallRes.push(res);
-      }
+      multicallRes.push(res);
     }
   }
 

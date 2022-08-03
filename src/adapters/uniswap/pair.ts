@@ -1,8 +1,46 @@
-import { multiCall } from "@defillama/sdk/build/abi/index";
+import { Contract } from "ethers";
+import { providers } from "@defillama/sdk/build/general";
+import { multicall } from "../../lib/multicall";
+import UniswapV2Factory from "./abis/UniswapV2Factory.json";
 
-async function getPoolsInfo(addresses: string[]) {
-  const symbols = await multiCall({
-    chain: "bsc",
+export async function getPairsInfo() {
+  const provider = providers["ethereum"];
+  const factory = new Contract(
+    "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+    UniswapV2Factory,
+    provider
+  );
+
+  // TODO: use logs table ?
+  const allPairsLength = Math.min(
+    (await factory.allPairsLength()).toNumber(),
+    10
+  );
+
+  const allPairsRes = await multicall({
+    chain: "ethereum",
+    calls: Array(allPairsLength)
+      .fill(undefined)
+      .map((_, i) => ({
+        target: factory.address,
+        params: [i],
+      })),
+    abi: {
+      constant: true,
+      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      name: "allPairs",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
+      payable: false,
+      stateMutability: "view",
+      type: "function",
+    },
+  });
+
+  const addresses = allPairsRes.map((res) => res.output);
+
+  // TODO: use getERC20Details
+  const symbols = await multicall({
+    chain: "ethereum",
     calls: addresses.map((address) => ({
       target: address,
       params: [],
@@ -18,8 +56,8 @@ async function getPoolsInfo(addresses: string[]) {
     },
   });
 
-  const decimals = await multiCall({
-    chain: "bsc",
+  const decimals = await multicall({
+    chain: "ethereum",
     calls: addresses.map((address) => ({
       target: address,
       params: [],
@@ -35,8 +73,8 @@ async function getPoolsInfo(addresses: string[]) {
     },
   });
 
-  const token0s = await multiCall({
-    chain: "bsc",
+  const token0s = await multicall({
+    chain: "ethereum",
     calls: addresses.map((address) => ({
       target: address,
       params: [],
@@ -52,8 +90,8 @@ async function getPoolsInfo(addresses: string[]) {
     },
   });
 
-  const token1s = await multiCall({
-    chain: "bsc",
+  const token1s = await multicall({
+    chain: "ethereum",
     calls: addresses.map((address) => ({
       target: address,
       params: [],
@@ -69,20 +107,19 @@ async function getPoolsInfo(addresses: string[]) {
     },
   });
 
-  const pools = addresses.map((_, i) => ({
-    // TODO: deal with names.success (boolean)
-    chain: "bsc",
+  const pairs = addresses.map((_, i) => ({
+    chain: "ethereum",
     address: addresses[i],
-    symbol: symbols.output[i].output,
-    decimals: decimals.output[i].output,
-    token0: token0s.output[i].output,
-    token1: token1s.output[i].output,
+    symbol: symbols[i].output,
+    decimals: decimals[i].output,
+    token0: token0s[i].output,
+    token1: token1s[i].output,
   }));
 
-  const symbols0 = await multiCall({
-    chain: "bsc",
-    calls: pools.map((pool) => ({
-      target: pool.token0,
+  const symbols0 = await multicall({
+    chain: "ethereum",
+    calls: pairs.map((pair) => ({
+      target: pair.token0,
       params: [],
     })),
     abi: {
@@ -96,10 +133,10 @@ async function getPoolsInfo(addresses: string[]) {
     },
   });
 
-  const symbols1 = await multiCall({
-    chain: "bsc",
-    calls: pools.map((pool) => ({
-      target: pool.token0,
+  const symbols1 = await multicall({
+    chain: "ethereum",
+    calls: pairs.map((pair) => ({
+      target: pair.token0,
       params: [],
     })),
     abi: {
@@ -113,10 +150,10 @@ async function getPoolsInfo(addresses: string[]) {
     },
   });
 
-  const decimals0 = await multiCall({
-    chain: "bsc",
-    calls: pools.map((pool) => ({
-      target: pool.token0,
+  const decimals0 = await multicall({
+    chain: "ethereum",
+    calls: pairs.map((pair) => ({
+      target: pair.token0,
       params: [],
     })),
     abi: {
@@ -130,10 +167,10 @@ async function getPoolsInfo(addresses: string[]) {
     },
   });
 
-  const decimals1 = await multiCall({
-    chain: "bsc",
-    calls: pools.map((pool) => ({
-      target: pool.token0,
+  const decimals1 = await multicall({
+    chain: "ethereum",
+    calls: pairs.map((pair) => ({
+      target: pair.token0,
       params: [],
     })),
     abi: {
@@ -147,17 +184,21 @@ async function getPoolsInfo(addresses: string[]) {
     },
   });
 
-  return pools.map((pool, i) => ({
-    ...pool,
+  return pairs.map((pair, i) => ({
+    ...pair,
     token0: {
-      address: pool.token0,
-      symbol: symbols0.output[i].output,
-      decimals: decimals0.output[i].output,
+      address: pair.token0,
+      symbol: symbols0[i].output,
+      decimals: decimals0[i].success
+        ? parseInt(decimals0[i].output)
+        : undefined,
     },
     token1: {
-      address: pool.token1,
-      symbol: symbols1.output[i].output,
-      decimals: decimals1.output[i].output,
+      address: pair.token1,
+      symbol: symbols1[i].output,
+      decimals: decimals1[i].success
+        ? parseInt(decimals1[i].output)
+        : undefined,
     },
   }));
 }
