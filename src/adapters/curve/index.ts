@@ -1,5 +1,5 @@
 import { Adapter } from "../../lib/adapter";
-import { getAllPools } from "./ethereum/pools";
+import { getAllPools } from "./pools";
 
 const adapter: Adapter = {
   name: "Curve",
