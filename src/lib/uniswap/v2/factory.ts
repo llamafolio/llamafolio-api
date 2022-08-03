@@ -2,6 +2,7 @@ import { Contract } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
 import { multicall } from "../../multicall";
 import UniswapV2Factory from "./abis/UniswapV2Factory.json";
+import { getERC20Details } from "../../erc20";
 
 export type GetPairsInfoParams = {
   chain: string;
@@ -42,42 +43,9 @@ export async function getPairsInfo({
 
   const addresses = allPairsRes.map((res) => res.output);
 
-  // TODO: use getERC20Details
-  const symbols = await multicall({
-    chain,
-    calls: addresses.map((address) => ({
-      target: address,
-      params: [],
-    })),
-    abi: {
-      constant: true,
-      inputs: [],
-      name: "symbol",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
-  });
+  const pairs = await getERC20Details(chain, addresses);
 
-  const decimals = await multicall({
-    chain,
-    calls: addresses.map((address) => ({
-      target: address,
-      params: [],
-    })),
-    abi: {
-      constant: true,
-      inputs: [],
-      name: "decimals",
-      outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const token0s = await multicall({
+  const token0sRes = await multicall({
     chain,
     calls: addresses.map((address) => ({
       target: address,
@@ -94,7 +62,7 @@ export async function getPairsInfo({
     },
   });
 
-  const token1s = await multicall({
+  const token1sRes = await multicall({
     chain,
     calls: addresses.map((address) => ({
       target: address,
@@ -111,98 +79,20 @@ export async function getPairsInfo({
     },
   });
 
-  const pairs = addresses.map((_, i) => ({
-    chain,
-    address: addresses[i],
-    symbol: symbols[i].output,
-    decimals: decimals[i].output,
-    token0: token0s[i].output,
-    token1: token1s[i].output,
-  }));
-
-  const symbols0 = await multicall({
-    chain,
-    calls: pairs.map((pair) => ({
-      target: pair.token0,
-      params: [],
-    })),
-    abi: {
-      constant: true,
-      inputs: [],
-      name: "symbol",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const symbols1 = await multicall({
-    chain,
-    calls: pairs.map((pair) => ({
-      target: pair.token0,
-      params: [],
-    })),
-    abi: {
-      constant: true,
-      inputs: [],
-      name: "symbol",
-      outputs: [{ internalType: "string", name: "", type: "string" }],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const decimals0 = await multicall({
-    chain,
-    calls: pairs.map((pair) => ({
-      target: pair.token0,
-      params: [],
-    })),
-    abi: {
-      constant: true,
-      inputs: [],
-      name: "decimals",
-      outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const decimals1 = await multicall({
-    chain,
-    calls: pairs.map((pair) => ({
-      target: pair.token0,
-      params: [],
-    })),
-    abi: {
-      constant: true,
-      inputs: [],
-      name: "decimals",
-      outputs: [{ internalType: "uint8", name: "", type: "uint8" }],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
-  });
+  const [token0s, token1s] = await Promise.all([
+    getERC20Details(
+      chain,
+      pairs.map((_, i) => token0sRes[i].output)
+    ),
+    getERC20Details(
+      chain,
+      pairs.map((_, i) => token1sRes[i].output)
+    ),
+  ]);
 
   return pairs.map((pair, i) => ({
     ...pair,
-    token0: {
-      address: pair.token0,
-      symbol: symbols0[i].output,
-      decimals: decimals0[i].success
-        ? parseInt(decimals0[i].output)
-        : undefined,
-    },
-    token1: {
-      address: pair.token1,
-      symbol: symbols1[i].output,
-      decimals: decimals1[i].success
-        ? parseInt(decimals1[i].output)
-        : undefined,
-    },
+    token0: token0s[i],
+    token1: token1s[i],
   }));
 }
