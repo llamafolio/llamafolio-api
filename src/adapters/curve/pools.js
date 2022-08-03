@@ -36,13 +36,13 @@ export async function getAllPools() {
   );
 
 
-  const calls = Object.values(registryIds).map(r => ({
-    params: r,
-    target: "0x0000000022d53366457f9d5e68ec105046fc4383"
-  }))
+  let calls = Object.values(registryIds).map(r => ({
+      params: [r],
+      target: "0x0000000022d53366457f9d5e68ec105046fc4383"
+    }))
 
 
-  const registeredTokensRes = await multicall({
+  const registriesListRes = await multicall({
     chain: "ethereum",
     calls: calls,
     abi: {
@@ -65,19 +65,45 @@ export async function getAllPools() {
       },
   });
 
+  const registriesList = registriesListRes
+    .filter(res => res.success)
+    .map(res => res.output);
 
-  const mainRegistry = await addressGetter.get_registry()
 
-  // const registryMain = new ethers.Contract(
-  //   "0x90E00ACe148ca3b23Ac1bC8C240C2a7Dd9c2d7f5",
-  //   MainRegistryABI,
-  //   provider
-  // );
-  //
-  //
-  // const poolCount = await registryMain.pool_count()
-  // console.log(poolCount)
-  //
-  //
+
+  const registryMain = new ethers.Contract(
+    registriesList[0],
+    MainRegistryABI,
+    provider
+  );
+
+
+  calls = Object.values(registryIds).map((r, i) => ({
+      target: registriesList[i]
+  }))
+
+  const registriesPoolCountRes = await multicall({
+    chain: "ethereum",
+    calls: calls,
+    abi: {
+      "stateMutability": "view",
+      "type": "function",
+      "name": "pool_count",
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "gas": 2138
+    },
+  });
+
+  const registriesPoolCount = registriesPoolCountRes
+    .filter(res => res.success)
+    .map(res => res.output);
+
+  console.log(registriesPoolCount)
 
 }
