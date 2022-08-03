@@ -14,7 +14,7 @@ export async function getPairsInfo() {
   // TODO: use logs table ?
   const allPairsLength = Math.min(
     (await factory.allPairsLength()).toNumber(),
-    10
+    100
   );
 
   const allPairsRes = await multicall({

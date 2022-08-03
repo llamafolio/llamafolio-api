@@ -12,7 +12,7 @@ export type MultiCallParams = Parameters<typeof multiCall>[0] & {
 };
 
 export async function multicall(params: MultiCallParams) {
-  const batchSize = params.batchSize || 50;
+  const batchSize = params.batchSize || 200;
   // split chunks
   const callsChunks = sliceIntoChunks(params.calls, batchSize);
 
