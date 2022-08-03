@@ -1,3 +1,4 @@
+import { multiCall } from "@defillama/sdk/build/abi/index";
 import BN from "bignumber.js";
 import { ethers } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
@@ -25,14 +26,11 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     provider
   );
 
-  const chiefIncentives = new ethers.Contract(
+  const chefIncentives = new ethers.Contract(
     "0x297FddC5c33Ef988dd03bd13e162aE084ea1fE57",
     ChiefIncentivesABI,
     provider
   );
-
-
-
 
 
   const [claimableRewards, lockedBalances, unlockedBalances, earnedBalances] = await Promise.all([
@@ -98,10 +96,51 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
 
 
 
-  const lmRewardsCount = await chiefIncentives.poolLength()
-  //loop through registeredTokens()
-  //call ClaimableReward()
-  // this gets us the rewards from lending/borrowing
+  const lmRewardsCount = (await chefIncentives.poolLength()).toNumber();
+
+  const registeredTokensRes = await multiCall({
+    chain: "fantom",
+    calls: Array(lmRewardsCount)
+      .fill(undefined)
+      .map((_, i) => ({
+        target: chefIncentives.address,
+        params: [i],
+      })),
+    abi: {
+      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      name: "registeredTokens",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+  });
+  const registeredTokensAddresses = registeredTokensRes.output.map((res) => res.output);
+
+  const lmClaimableRewards = await chefIncentives.claimableReward(
+    ctx.address,
+    registeredTokensAddresses
+  );
+
+  // collect aTokens underlyings
+  const underlyingTokensAddresses = await multiCall({
+    chain: 'fantom',
+    calls: registeredTokensAddresses.map(address => ({
+      target: address,
+      params: [],
+    })),
+    abi: {
+      inputs: [],
+      name: "UNDERLYING_ASSET_ADDRESS",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+  });
+
+  const lmRewards = lmClaimableRewards.map((reward, i) => ({
+    amount: reward,
+    underlying: underlyingTokensAddresses.output[i].output
+  }))
 
   // const lendingEarnedBalance: Balance = {
   //   chain: "fantom",
