@@ -1,5 +1,5 @@
 import { multicall } from "../../lib/multicall";
-import { ethers } from "ethers";
+import { ethers, BigNumber } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
 import { Balance, BalanceContext, Contract } from "../../lib/adapter";
 import { getERC20Details } from "../../lib/erc20";
@@ -138,9 +138,9 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
   }));
 
 
-  let totalLMRewards = new BN(0)
+  let totalLMRewards = BigNumber.from('0')
   for (let index = 0; index < lmRewards.length; index++) {
-    totalLMRewards = totalLMRewards.plus(lmRewards[index].amount.toString())
+    totalLMRewards = totalLMRewards.add(lmRewards[index].amount)
   }
 
 
