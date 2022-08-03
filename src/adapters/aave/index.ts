@@ -1,10 +1,12 @@
-import { Adapter } from "../../lib/adapter";
+import { Adapter, Contract } from "../../lib/adapter";
+import { getLendingPoolBalances } from "../../lib/aave/v2/lending";
 
-import {
-  getLendingPoolBalances,
-  lendingPoolContract,
-} from "./ethereum/v2/lending";
-
+const lendingPoolContract: Contract = {
+  name: "LendingPool",
+  dName: "AAVE Lending",
+  chain: "ethereum",
+  address: "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9",
+};
 
 const adapter: Adapter = {
   name: "Geist",
@@ -21,10 +23,11 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx) {
-
     if (ctx.contract === lendingPoolContract.address) {
       return {
-        balances: await getLendingPoolBalances(ctx),
+        balances: await getLendingPoolBalances(ctx, {
+          lendingPoolAddress: lendingPoolContract.address,
+        }),
       };
     }
 

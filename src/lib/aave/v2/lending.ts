@@ -1,19 +1,21 @@
-import { Balance, BalanceContext, Contract } from "../../adapter";
+import { Balance, BalanceContext } from "../../adapter";
 import { getERC20Balances } from "../../erc20";
-
 import { getReserveTokens } from "./tokens";
 
-export const lendingPoolContract: Contract = {
-  name: "LendingPool",
-  dName: "Geist Lending",
-  chain: "ethereum",
-  address: "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9",
+export type GetLendingPoolBalancesParams = {
+  lendingPoolAddress: string;
 };
 
-export async function getLendingPoolBalances(ctx: BalanceContext) {
+export async function getLendingPoolBalances(
+  ctx: BalanceContext,
+  params: GetLendingPoolBalancesParams
+) {
   const balances: Balance[] = [];
 
-  const reserveTokens = await getReserveTokens();
+  const reserveTokens = await getReserveTokens({
+    chain: ctx.chain,
+    lendingPoolAddress: params.lendingPoolAddress,
+  });
   const aTokens = reserveTokens.map(
     (reserveToken) => reserveToken.aTokenAddress
   );
@@ -25,7 +27,7 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
   );
 
   //fetch aTokens (supplied)
-  let aBalances = await getERC20Balances(ctx, "ethereum", aTokens);
+  let aBalances = await getERC20Balances(ctx, ctx.chain, aTokens);
 
   for (let index = 0; index < aBalances.length; index++) {
     aBalances[index].amount = aBalances[index].amount;
@@ -44,7 +46,7 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
 
   let stableDebtTokenAddressesBalances = await getERC20Balances(
     ctx,
-    "ethereum",
+    ctx.chain,
     stableDebtTokenAddresses
   );
 
@@ -69,7 +71,7 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
   //fetch variable debt tokens
   let variableDebtTokenAddressesBalances = await getERC20Balances(
     ctx,
-    "ethereum",
+    ctx.chain,
     variableDebtTokenAddresses
   );
 

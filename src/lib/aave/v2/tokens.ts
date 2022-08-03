@@ -4,15 +4,22 @@ import { multicall } from "../../multicall";
 import { BaseContract } from "../../adapter";
 import LendingPoolABI from "./abis/LendingPool.json";
 
-export type GetReserveTokensParams = BaseContract;
+export type GetReserveTokensParams = {
+  chain: string;
+  lendingPoolAddress: string;
+};
 
 export async function getReserveTokens({
   chain,
-  address,
+  lendingPoolAddress,
 }: GetReserveTokensParams) {
   const provider = providers[chain];
 
-  const lendingPool = new ethers.Contract(address, LendingPoolABI, provider);
+  const lendingPool = new ethers.Contract(
+    lendingPoolAddress,
+    LendingPoolABI,
+    provider
+  );
 
   const reservesList: string[] = await lendingPool.getReservesList();
 

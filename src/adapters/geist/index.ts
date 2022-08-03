@@ -1,14 +1,16 @@
-import { Adapter } from "../../lib/adapter";
+import { Adapter, Contract } from "../../lib/adapter";
+import { getLendingPoolBalances } from "../../lib/aave/v2/lending";
 import {
   getMultiFeeDistributionBalances,
   multiFeeDistributionContract,
 } from "./stake";
 
-import {
-  getLendingPoolBalances,
-  lendingPoolContract,
-} from "./lending";
-
+export const lendingPoolContract: Contract = {
+  name: "LendingPool",
+  dName: "Geist Lending",
+  chain: "fantom",
+  address: "0x9FAD24f572045c7869117160A571B2e50b10d068",
+};
 
 const adapter: Adapter = {
   name: "Geist",
@@ -33,7 +35,9 @@ const adapter: Adapter = {
 
     if (ctx.contract === lendingPoolContract.address) {
       return {
-        balances: await getLendingPoolBalances(ctx),
+        balances: await getLendingPoolBalances(ctx, {
+          lendingPoolAddress: lendingPoolContract.address,
+        }),
       };
     }
 
