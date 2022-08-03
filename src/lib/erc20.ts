@@ -1,5 +1,5 @@
 import BN from "bignumber.js";
-import { multiCall } from "@defillama/sdk/build/abi/index";
+import { multicall } from "./multicall";
 import { BaseBalance, BaseContext } from "./adapter";
 
 export const abi = {
@@ -47,7 +47,7 @@ export async function getERC20Balances(
   chain: string,
   tokens: string[]
 ): Promise<BaseBalance[]> {
-  const symbols = await multiCall({
+  const symbols = await multicall({
     chain,
     calls: tokens.map((address) => ({
       target: address,
@@ -56,7 +56,7 @@ export async function getERC20Balances(
     abi: abi.symbol,
   });
 
-  const decimals = await multiCall({
+  const decimals = await multicall({
     chain,
     calls: tokens.map((address) => ({
       target: address,
@@ -65,7 +65,7 @@ export async function getERC20Balances(
     abi: abi.decimals,
   });
 
-  const balances = await multiCall({
+  const balances = await multicall({
     chain,
     calls: tokens.map((address) => ({
       target: address,
@@ -78,19 +78,17 @@ export async function getERC20Balances(
     // TODO: deal with .success
     chain,
     address,
-    symbol: symbols.output[i].output,
-    decimals: decimals.output[i].output,
-    amount: new BN(balances.output[i].output),
+    symbol: symbols[i].output,
+    decimals: decimals[i].output,
+    amount: new BN(balances[i].output),
   }));
 }
-
-
 
 export async function getERC20Details(
   chain: string,
   tokens: string[]
 ): Promise<BaseBalance[]> {
-  const symbols = await multiCall({
+  const symbols = await multicall({
     chain,
     calls: tokens.map((address) => ({
       target: address,
@@ -99,7 +97,7 @@ export async function getERC20Details(
     abi: abi.symbol,
   });
 
-  const decimals = await multiCall({
+  const decimals = await multicall({
     chain,
     calls: tokens.map((address) => ({
       target: address,
@@ -109,10 +107,9 @@ export async function getERC20Details(
   });
 
   return tokens.map((address, i) => ({
-    // TODO: deal with .success
     chain,
     address,
-    symbol: symbols.output[i].output,
-    decimals: decimals.output[i].output,
+    symbol: symbols[i].output,
+    decimals: decimals[i].output,
   }));
 }

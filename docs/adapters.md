@@ -66,7 +66,7 @@ const adapter = {
   ...
   async getContracts() {
     const pooLength = await factory.poolLength();
-    const pools = await multiCall({
+    const pools = await multicall({
       chain: 'ethereum',
       calls: [],
       abi: {}

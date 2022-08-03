@@ -1,4 +1,4 @@
-import { multiCall } from "@defillama/sdk/build/abi/index";
+import { multicall } from "../../lib/multicall";
 import BN from "bignumber.js";
 import { ethers } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
@@ -6,8 +6,6 @@ import { Balance, BalanceContext, Contract } from "../../lib/adapter";
 import { getERC20Details } from "../../lib/erc20";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
 import ChiefIncentivesABI from "./abis/ChiefIncentives.json";
-
-
 
 export const multiFeeDistributionContract: Contract = {
   name: "MultiFeeDistribution",
@@ -32,22 +30,17 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     provider
   );
 
-
-  const [claimableRewards, lockedBalances, unlockedBalances, earnedBalances] = await Promise.all([
-    multiFeeDistribution.claimableRewards(ctx.address),
-    multiFeeDistribution.lockedBalances(ctx.address),
-    multiFeeDistribution.unlockedBalance(ctx.address),
-    multiFeeDistribution.earnedBalances(ctx.address)
-  ]);
-
-
-
+  const [claimableRewards, lockedBalances, unlockedBalances, earnedBalances] =
+    await Promise.all([
+      multiFeeDistribution.claimableRewards(ctx.address),
+      multiFeeDistribution.lockedBalances(ctx.address),
+      multiFeeDistribution.unlockedBalance(ctx.address),
+      multiFeeDistribution.earnedBalances(ctx.address),
+    ]);
 
   const rewards = [];
   for (const rewardData of claimableRewards) {
-
-
-    let token = (await getERC20Details("fantom",[rewardData.token]))[0] //need to use multicall
+    let token = (await getERC20Details("fantom", [rewardData.token]))[0]; //need to use multicall
 
     let reward: Balance = {
       chain: "fantom",
@@ -56,9 +49,9 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
       amountFormatted: rewardData.amount.toString(),
       decimals: token.decimals,
       symbol: token.symbol,
-      category: 'lock-rewards'
+      category: "lock-rewards",
     };
-    balances.push(reward)
+    balances.push(reward);
   }
 
   const lockedBalance: Balance = {
@@ -68,7 +61,7 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     decimals: 18,
     amount: lockedBalances.total,
     amountFormatted: lockedBalances.total.toString(),
-    category: "lock"
+    category: "lock",
   };
   balances.push(lockedBalance);
 
@@ -79,7 +72,7 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     decimals: 18,
     amount: unlockedBalances,
     amountFormatted: unlockedBalances.toString(),
-    category: "staked"
+    category: "staked",
   };
   balances.push(unlockedBalance);
 
@@ -90,15 +83,13 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     decimals: 18,
     amount: earnedBalances.total,
     amountFormatted: earnedBalances.total.toString(),
-    category: "vest"
+    category: "vest",
   };
   balances.push(earnedBalance);
 
-
-
   const lmRewardsCount = (await chefIncentives.poolLength()).toNumber();
 
-  const registeredTokensRes = await multiCall({
+  const registeredTokensRes = await multicall({
     chain: "fantom",
     calls: Array(lmRewardsCount)
       .fill(undefined)
@@ -114,7 +105,9 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
       type: "function",
     },
   });
-  const registeredTokensAddresses = registeredTokensRes.output.map((res) => res.output);
+  const registeredTokensAddresses = registeredTokensRes.map(
+    (res) => res.output
+  );
 
   const lmClaimableRewards = await chefIncentives.claimableReward(
     ctx.address,
@@ -122,9 +115,9 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
   );
 
   // collect aTokens underlyings
-  const underlyingTokensAddresses = await multiCall({
-    chain: 'fantom',
-    calls: registeredTokensAddresses.map(address => ({
+  const underlyingTokensAddresses = await multicall({
+    chain: "fantom",
+    calls: registeredTokensAddresses.map((address) => ({
       target: address,
       params: [],
     })),
@@ -139,8 +132,8 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
 
   const lmRewards = lmClaimableRewards.map((reward, i) => ({
     amount: reward,
-    underlying: underlyingTokensAddresses.output[i].output
-  }))
+    underlying: underlyingTokensAddresses[i].output,
+  }));
 
   // const lendingEarnedBalance: Balance = {
   //   chain: "fantom",

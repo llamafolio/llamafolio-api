@@ -1,5 +1,5 @@
 import { ethers } from "ethers";
-import { multiCall } from "@defillama/sdk/build/abi/index";
+import { multicall } from "../../lib/multicall";
 import { providers } from "@defillama/sdk/build/general";
 import LendingPoolABI from "./abis/LendingPool.json";
 
@@ -14,7 +14,7 @@ export async function getReserveTokens() {
 
   const reservesList: string[] = await lendingPool.getReservesList();
 
-  const reservesDataRes = await multiCall({
+  const reservesDataRes = await multicall({
     chain: "fantom",
     calls: reservesList.map((reserveTokenAddress) => ({
       target: lendingPool.address,
@@ -96,7 +96,7 @@ export async function getReserveTokens() {
     },
   });
 
-  const reservesData = reservesDataRes.output.map((res) => res.output);
+  const reservesData = reservesDataRes.map((res) => res.output);
   const reserveTokens = reservesData.map((reserveData, i) => ({
     underlyingTokenAddress: reservesList[i],
     aTokenAddress: reserveData.aTokenAddress,
