@@ -3,25 +3,25 @@ import { getERC20Balances } from "../../lib/erc20";
 import { getPairsInfo } from "../../lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
-  name: "Uniswap",
-  description:
-    "A fully decentralized protocol for automated liquidity provision on Ethereum.",
-  coingecko: "uniswap",
-  defillama: "uniswap",
+  name: "Spiritswap",
+  description: "",
+  coingecko: "spiritswap",
+  defillama: "spiritswap",
   links: {
-    website: "https://uniswap.org/",
+    website: "https://www.spiritswap.finance/",
+    doc: "https://docs.spiritswap.finance/spirit-swap/",
   },
   async getContracts() {
     return {
       contracts: await getPairsInfo({
-        chain: "ethereum",
-        factoryAddress: "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+        chain: "fantom",
+        factoryAddress: "0xEF45d134b73241eDa7703fa787148D9C9F4950b0",
       }),
       revalidate: 60 * 60,
     };
   },
   async getBalances(ctx) {
-    const balances = await getERC20Balances(ctx, "ethereum", [ctx.contract]);
+    const balances = await getERC20Balances(ctx, "fantom", [ctx.contract]);
 
     return {
       balances: balances.map((balance) => ({

@@ -150,7 +150,6 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     symbol: "GEIST",
     decimals: 18,
     amount: totalLMRewards,
-    amountFormatted: totalLMRewards.toString(),
     category: "lending-rewards"
   };
   balances.push(lendingEarnedBalance);
