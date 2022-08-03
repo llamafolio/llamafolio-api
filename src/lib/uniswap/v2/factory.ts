@@ -1,15 +1,19 @@
 import { Contract } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
-import { multicall } from "../../lib/multicall";
+import { multicall } from "../../multicall";
 import UniswapV2Factory from "./abis/UniswapV2Factory.json";
 
-export async function getPairsInfo() {
-  const provider = providers["ethereum"];
-  const factory = new Contract(
-    "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
-    UniswapV2Factory,
-    provider
-  );
+export type GetPairsInfoParams = {
+  chain: string;
+  factoryAddress: string;
+};
+
+export async function getPairsInfo({
+  chain,
+  factoryAddress,
+}: GetPairsInfoParams) {
+  const provider = providers[chain];
+  const factory = new Contract(factoryAddress, UniswapV2Factory, provider);
 
   // TODO: use logs table ?
   const allPairsLength = Math.min(
@@ -18,7 +22,7 @@ export async function getPairsInfo() {
   );
 
   const allPairsRes = await multicall({
-    chain: "ethereum",
+    chain,
     calls: Array(allPairsLength)
       .fill(undefined)
       .map((_, i) => ({
@@ -40,7 +44,7 @@ export async function getPairsInfo() {
 
   // TODO: use getERC20Details
   const symbols = await multicall({
-    chain: "ethereum",
+    chain,
     calls: addresses.map((address) => ({
       target: address,
       params: [],
@@ -57,7 +61,7 @@ export async function getPairsInfo() {
   });
 
   const decimals = await multicall({
-    chain: "ethereum",
+    chain,
     calls: addresses.map((address) => ({
       target: address,
       params: [],
@@ -74,7 +78,7 @@ export async function getPairsInfo() {
   });
 
   const token0s = await multicall({
-    chain: "ethereum",
+    chain,
     calls: addresses.map((address) => ({
       target: address,
       params: [],
@@ -91,7 +95,7 @@ export async function getPairsInfo() {
   });
 
   const token1s = await multicall({
-    chain: "ethereum",
+    chain,
     calls: addresses.map((address) => ({
       target: address,
       params: [],
@@ -108,7 +112,7 @@ export async function getPairsInfo() {
   });
 
   const pairs = addresses.map((_, i) => ({
-    chain: "ethereum",
+    chain,
     address: addresses[i],
     symbol: symbols[i].output,
     decimals: decimals[i].output,
@@ -117,7 +121,7 @@ export async function getPairsInfo() {
   }));
 
   const symbols0 = await multicall({
-    chain: "ethereum",
+    chain,
     calls: pairs.map((pair) => ({
       target: pair.token0,
       params: [],
@@ -134,7 +138,7 @@ export async function getPairsInfo() {
   });
 
   const symbols1 = await multicall({
-    chain: "ethereum",
+    chain,
     calls: pairs.map((pair) => ({
       target: pair.token0,
       params: [],
@@ -151,7 +155,7 @@ export async function getPairsInfo() {
   });
 
   const decimals0 = await multicall({
-    chain: "ethereum",
+    chain,
     calls: pairs.map((pair) => ({
       target: pair.token0,
       params: [],
@@ -168,7 +172,7 @@ export async function getPairsInfo() {
   });
 
   const decimals1 = await multicall({
-    chain: "ethereum",
+    chain,
     calls: pairs.map((pair) => ({
       target: pair.token0,
       params: [],
