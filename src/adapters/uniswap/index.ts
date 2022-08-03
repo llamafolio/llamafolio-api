@@ -1,5 +1,5 @@
 import { providers } from "@defillama/sdk/build/general";
-import { multiCall } from "@defillama/sdk/build/abi/index";
+import { multicall } from "../../lib/multicall";
 import { Contract } from "ethers";
 import { Adapter } from "../../lib/adapter";
 import UniswapV2Factory from "./abis/UniswapV2Factory.json";
@@ -18,9 +18,10 @@ const adapter: Adapter = {
     const provider = providers["ethereum"];
     const factory = new Contract(factoryAddress, UniswapV2Factory, provider);
 
-    const allPairsLength = (await factory.allPairsLength()).toNumber();
+    // TODO: 
+    const allPairsLength = Math.min((await factory.allPairsLength()).toNumber(), 100);
 
-    const allPairs = await multiCall({
+    const allPairs = await multicall({
       chain: "ethereum",
       calls: Array(allPairsLength)
         .fill(undefined)
