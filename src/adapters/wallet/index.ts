@@ -1,4 +1,3 @@
-import BN from "bignumber.js";
 import { providers } from "@defillama/sdk/build/general";
 import { Adapter, Balance } from "../../lib/adapter";
 import { chains, toDefiLlama } from "../../lib/chain";
@@ -29,7 +28,7 @@ const adapter: Adapter = {
             decimals: 18,
             // TODO: map chains - token(s)
             symbol: chain.toLowerCase(),
-            amount: new BN(balance.toString()),
+            amount: balance,
           };
         } catch (error) {
           console.error(`[${chain}]: could not getBalance`, error);

@@ -1,5 +1,6 @@
-import BN from "bignumber.js";
+import { BigNumber } from "ethers";
 import { adapters } from "../adapters";
+import { Token } from "./token";
 
 // TODO: enum
 export type Chain = string;
@@ -17,14 +18,17 @@ export type BalanceContext = BaseContext & {
   contract: string;
 };
 
-export type Category = "wallet" | "lend" | "borrow" | "farm" | "stake" | "lock";
+export type Category =
+  | "wallet"
+  | "lend"
+  | "borrow"
+  | "farm"
+  | "stake"
+  | "lock"
+  | "vest";
 
-export type BaseBalance = {
-  chain: string;
-  address: string;
-  amount: BN;
-  symbol: string;
-  decimals: number;
+export type BaseBalance = Token & {
+  amount: BigNumber;
 };
 
 export type Balance = BaseBalance & {

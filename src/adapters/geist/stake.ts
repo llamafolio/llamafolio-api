@@ -1,5 +1,4 @@
 import { multicall } from "../../lib/multicall";
-import BN from "bignumber.js";
 import { ethers } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
 import { Balance, BalanceContext, Contract } from "../../lib/adapter";
@@ -53,7 +52,6 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
       chain: "fantom",
       address: rewardData.token,
       amount: rewardData.amount,
-      amountFormatted: rewardData.amount.toString(),
       decimals: token.decimals,
       symbol: token.symbol,
       category: "lock-rewards",
@@ -67,7 +65,6 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     symbol: "GEIST",
     decimals: 18,
     amount: lockedBalances.total,
-    amountFormatted: lockedBalances.total.toString(),
     category: "lock",
   };
   balances.push(lockedBalance);
@@ -78,8 +75,7 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     symbol: "GEIST",
     decimals: 18,
     amount: unlockedBalances,
-    amountFormatted: unlockedBalances.toString(),
-    category: "staked",
+    category: "stake",
   };
   balances.push(unlockedBalance);
 
@@ -89,7 +85,6 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     symbol: "GEIST",
     decimals: 18,
     amount: earnedBalances.total,
-    amountFormatted: earnedBalances.total.toString(),
     category: "vest",
   };
   balances.push(earnedBalance);

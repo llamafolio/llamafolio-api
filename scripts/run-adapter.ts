@@ -48,19 +48,17 @@ async function main() {
     .map((config) => config.balances)
     .flat();
 
-
   //console.log("All balances:", JSON.stringify(balances));
 
   // Filter empty nbalances
   balances = balances.filter((balance) => balance.amount.gt(0));
 
-
-
   const pricesRes = await fetch("https://coins.llama.fi/prices", {
     method: "POST",
     body: JSON.stringify({
       coins: balances.map(
-        (balance) => `${toDefiLlama(balance.chain)}:${balance.address.toLowerCase()}`
+        (balance) =>
+          `${toDefiLlama(balance.chain)}:${balance.address.toLowerCase()}`
       ),
     }),
   });
@@ -71,7 +69,7 @@ async function main() {
       const key = `${balance.chain}:${balance.address.toLowerCase()}`;
       const price = prices.coins[key];
       if (price !== undefined) {
-        const balanceAmount = balance.amount / 10 ** balance.decimals
+        const balanceAmount = balance.amount / 10 ** balance.decimals;
 
         return {
           ...balance,
@@ -91,14 +89,14 @@ async function main() {
     }
   );
 
-
-
   for (let index = 0; index < pricedBalances.length; index++) {
     const balance = pricedBalances[index];
-    console.log(`Category ${balance.category} :: Token: ${balance.symbol} :: Balance is ${balance.amountFormatted / 10 ** balance.decimals} :: Balance $${balance.balanceUSD}`)
+    console.log(
+      `Category ${balance.category} :: Token: ${balance.symbol} :: Balance is ${
+        balance.amount / 10 ** balance.decimals
+      } :: Balance $${balance.balanceUSD}`
+    );
   }
-
-
 }
 
 main();
