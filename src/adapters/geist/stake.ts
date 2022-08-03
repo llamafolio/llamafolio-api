@@ -38,9 +38,16 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
       multiFeeDistribution.earnedBalances(ctx.address),
     ]);
 
+  const tokens = claimableRewards.map(
+      (res) => res.token
+    );
+  const tokenDetails = (await getERC20Details("fantom", tokens))
+
+
   const rewards = [];
   for (const rewardData of claimableRewards) {
-    let token = (await getERC20Details("fantom", [rewardData.token]))[0]; //need to use multicall
+
+    const token = tokenDetails.find(o => o.address === rewardData.token);
 
     let reward: Balance = {
       chain: "fantom",
@@ -135,16 +142,23 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     underlying: underlyingTokensAddresses[i].output,
   }));
 
-  // const lendingEarnedBalance: Balance = {
-  //   chain: "fantom",
-  //   address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
-  //   symbol: "GEIST",
-  //   decimals: 18,
-  //   amount: 0,
-  //   amountFormatted: 0,
-  //   category: "lending-rewards"
-  // };
-  // balances.push(lendingEarnedBalance);
+
+  let totalLMRewards = new BN(0)
+  for (let index = 0; index < lmRewards.length; index++) {
+    totalLMRewards = totalLMRewards.plus(lmRewards[index].amount.toString())
+  }
+
+
+  const lendingEarnedBalance: Balance = {
+    chain: "fantom",
+    address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
+    symbol: "GEIST",
+    decimals: 18,
+    amount: totalLMRewards,
+    amountFormatted: totalLMRewards.toString(),
+    category: "lending-rewards"
+  };
+  balances.push(lendingEarnedBalance);
 
   return balances;
 }
