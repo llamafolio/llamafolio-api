@@ -1,11 +1,8 @@
-import BN from "bignumber.js";
-import { ethers } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
 import { Balance, BalanceContext, Contract } from "../../lib/adapter";
 import { getERC20Balances } from "../../lib/erc20";
 
-import LendingPoolABI from "./abis/LendingPool.json";
-import DataProviderABI from "./abis/DataProvider.json";
+import { getReserveTokens } from "./tokens";
 
 export const lendingPoolContract: Contract = {
   name: "LendingPool",
@@ -18,32 +15,10 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
   const balances: Balance[] = [];
   const provider = providers["fantom"];
 
-  const lendingPool = new ethers.Contract(
-    "0x9FAD24f572045c7869117160A571B2e50b10d068",
-    LendingPoolABI,
-    provider
-  );
-
-  const lendingToken = await lendingPool.getReservesList()
-
-
-  const dataProvider = new ethers.Contract(
-    "0xf3B0611e2E4D2cd6aB4bb3e01aDe211c3f42A8C3",
-    DataProviderABI,
-    provider
-  );
-
-  //use multicall
-  let aTokens = []
-  let stableDebtTokenAddresses = []
-  let variableDebtTokenAddresses = []
-
-  for (let index = 0; index < lendingToken.length; index++) {
-    const tokenInfo = await dataProvider.getReserveTokensAddresses(lendingToken[index])
-    aTokens.push(tokenInfo.aTokenAddress)
-    stableDebtTokenAddresses.push(tokenInfo.stableDebtTokenAddress)
-    variableDebtTokenAddresses.push(tokenInfo.variableDebtTokenAddress)
-  }
+  const reserveTokens = await getReserveTokens();
+  const aTokens = reserveTokens.map(reserveToken => reserveToken.aTokenAddress);
+  const stableDebtTokenAddresses = reserveTokens.map(reserveToken => reserveToken.stableDebtTokenAddress);
+  const variableDebtTokenAddresses = reserveTokens.map(reserveToken => reserveToken.variableDebtTokenAddress);
 
 
   //fetch aTokens (supplied)
@@ -55,7 +30,7 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
     //save the details of the real token
     aBalances[index].realToken = aBalances[index]
     //substitute the token for it's "native" version
-    aBalances[index].address = lendingToken[index]
+    aBalances[index].address = reserveTokens[index].underlyingTokenAddress
 
     let aBalanceFormat = aBalances[index]
     const aBalance: Balance = aBalanceFormat
@@ -70,7 +45,7 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
     stableDebtTokenAddressesBalances[index].amountFormatted = stableDebtTokenAddressesBalances[index].amount.toString()
     stableDebtTokenAddressesBalances[index].category = 'lending-borrowed'
     stableDebtTokenAddressesBalances[index].realToken = stableDebtTokenAddressesBalances[index]
-    stableDebtTokenAddressesBalances[index].address = lendingToken[index]
+    stableDebtTokenAddressesBalances[index].address = reserveTokens[index].underlyingTokenAddress
 
 
     let aBalanceFormat = stableDebtTokenAddressesBalances[index]
@@ -86,7 +61,7 @@ export async function getLendingPoolBalances(ctx: BalanceContext) {
     variableDebtTokenAddressesBalances[index].amountFormatted = variableDebtTokenAddressesBalances[index].amount.toString()
     variableDebtTokenAddressesBalances[index].category = 'lending-borrowed-variable'
     variableDebtTokenAddressesBalances[index].realToken = variableDebtTokenAddressesBalances[index]
-    variableDebtTokenAddressesBalances[index].address = lendingToken[index]
+    variableDebtTokenAddressesBalances[index].address = reserveTokens[index].underlyingTokenAddress
 
     let aBalanceFormat = variableDebtTokenAddressesBalances[index]
     const aBalance: Balance = aBalanceFormat
