@@ -13,6 +13,8 @@ import {
 const adapter: Adapter = {
   name: "Geist",
   description: "",
+  coingecko: "geist-finance",
+  defillama: "geist-finance",
   links: {
     website: "https://geist.finance/",
     doc: "https://docs.geist.finance/",
