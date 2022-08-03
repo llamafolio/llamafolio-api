@@ -83,3 +83,36 @@ export async function getERC20Balances(
     amount: new BN(balances.output[i].output),
   }));
 }
+
+
+
+export async function getERC20Details(
+  chain: string,
+  tokens: string[]
+): Promise<BaseBalance[]> {
+  const symbols = await multiCall({
+    chain,
+    calls: tokens.map((address) => ({
+      target: address,
+      params: [],
+    })),
+    abi: abi.symbol,
+  });
+
+  const decimals = await multiCall({
+    chain,
+    calls: tokens.map((address) => ({
+      target: address,
+      params: [],
+    })),
+    abi: abi.decimals,
+  });
+
+  return tokens.map((address, i) => ({
+    // TODO: deal with .success
+    chain,
+    address,
+    symbol: symbols.output[i].output,
+    decimals: decimals.output[i].output,
+  }));
+}

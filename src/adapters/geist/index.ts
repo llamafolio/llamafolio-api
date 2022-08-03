@@ -4,6 +4,12 @@ import {
   multiFeeDistributionContract,
 } from "./stake";
 
+import {
+  getLendingPoolBalances,
+  lendingPoolContract,
+} from "./lending";
+
+
 const adapter: Adapter = {
   name: "Geist",
   description: "",
@@ -13,13 +19,19 @@ const adapter: Adapter = {
   },
   getContracts() {
     return {
-      contracts: [multiFeeDistributionContract],
+      contracts: [multiFeeDistributionContract, lendingPoolContract],
     };
   },
   async getBalances(ctx) {
     if (ctx.contract === multiFeeDistributionContract.address) {
       return {
         balances: await getMultiFeeDistributionBalances(ctx),
+      };
+    }
+
+    if (ctx.contract === lendingPoolContract.address) {
+      return {
+        balances: await getLendingPoolBalances(ctx),
       };
     }
 
