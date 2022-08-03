@@ -9,13 +9,13 @@ const lendingPoolContract: Contract = {
 };
 
 const adapter: Adapter = {
-  name: "Geist",
+  name: "AAVE",
   description: "",
-  coingecko: "geist-finance",
-  defillama: "geist-finance",
+  coingecko: "aave",
+  defillama: "aave",
   links: {
-    website: "https://geist.finance/",
-    doc: "https://docs.geist.finance/",
+    website: "https://app.aave.com/",
+    doc: "https://docs.aave.com/hub/",
   },
   getContracts() {
     return {
