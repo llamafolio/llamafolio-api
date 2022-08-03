@@ -43,10 +43,55 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
   const tokenDetails = (await getERC20Details("fantom", tokens))
 
 
+
+  const rewardRates = await multicall({
+    chain: "fantom",
+    calls: (
+      tokenDetails.map(t  => (
+        {
+          target: multiFeeDistribution.address,
+          params: t.address
+        }
+      ))
+    ),
+    abi: {
+      "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+      "name": "rewardData",
+      "outputs": [
+        { "internalType": "uint256", "name": "periodFinish", "type": "uint256" },
+        { "internalType": "uint256", "name": "rewardRate", "type": "uint256" },
+        {
+          "internalType": "uint256",
+          "name": "lastUpdateTime",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "rewardPerTokenStored",
+          "type": "uint256"
+        },
+        { "internalType": "uint256", "name": "balance", "type": "uint256" }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  });
+
+
   const rewards = [];
+  let count = 0
+
+  const stakedSupply = await multiFeeDistribution.totalSupply()
+
   for (const rewardData of claimableRewards) {
 
     const token = tokenDetails.find(o => o.address === rewardData.token);
+    const rewardRateThis = rewardRates[count]
+    count++
+
+
+    // let apy =  (604800 * (rData.rewardRate / decimal) * assetPrice * 365 / 7  /(geistPrice * totalSupply /1e18));
+
 
     let reward: Balance = {
       chain: "fantom",
@@ -55,6 +100,18 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
       decimals: token.decimals,
       symbol: token.symbol,
       category: "lock-rewards",
+      rewardRates: {
+        rewardRate: rewardRateThis.rewardRate,
+        rewardPeriod: 604800,
+        rewardToken: rewardData.token,
+        rewardDecimals: token.decimals,
+        rewardSymbol: token.symbol,
+        //below is the token that you stake or lock to receive the above reward, it is required to calculate an APR
+        stakedToken: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
+        stakedSymbol: "GEIST",
+        stakedDecimals: 18,
+        stakedSupply: stakedSupply
+      }
     };
     balances.push(reward);
   }
