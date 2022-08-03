@@ -20,6 +20,7 @@
     "serverless-esbuild": "^1.31.0",
     "serverless-prune-plugin": "^2.0.1",
     "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.0.0",
     "typescript": "^4.7.4"
   }
 }

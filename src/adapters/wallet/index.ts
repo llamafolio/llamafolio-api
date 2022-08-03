@@ -1,6 +1,6 @@
 import { providers } from "@defillama/sdk/build/general";
-import { Adapter, Balance } from "../../lib/adapter";
-import { chains, toDefiLlama } from "../../lib/chain";
+import { Adapter, Balance } from "@lib/adapter";
+import { chains, toDefiLlama } from "@lib/chain";
 
 const adapter: Adapter = {
   name: "Wallet",

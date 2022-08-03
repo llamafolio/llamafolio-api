@@ -1,5 +1,5 @@
-import { strToBuf, bufToStr } from "../lib/buf";
-import pool from "../db/pool";
+import { strToBuf, bufToStr } from "@lib/buf";
+import pool from "@db/pool";
 
 type TokenTransfer = {
   token_address: string;

@@ -1,8 +1,8 @@
-import { multicall } from "../../lib/multicall";
+import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
-import { Balance, BalanceContext, Contract } from "../../lib/adapter";
-import { getERC20Details } from "../../lib/erc20";
+import { Balance, BalanceContext, Contract } from "@lib/adapter";
+import { getERC20Details } from "@lib/erc20";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
 import ChiefIncentivesABI from "./abis/ChiefIncentives.json";
 

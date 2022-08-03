@@ -1,14 +1,7 @@
 import path from "path";
 import fetch from "node-fetch";
 import { toDefiLlama } from "../src/lib/chain";
-import {
-  Adapter,
-  getAdapters,
-  Balance,
-  BaseContext,
-  ChainAddress,
-  PricedBalance,
-} from "../src/lib/adapter";
+import { Adapter, Balance, PricedBalance } from "../src/lib/adapter";
 
 function help() {}
 

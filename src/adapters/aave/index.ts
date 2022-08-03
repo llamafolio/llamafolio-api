@@ -1,5 +1,5 @@
-import { Adapter, Contract } from "../../lib/adapter";
-import { getLendingPoolBalances } from "../../lib/aave/v2/lending";
+import { Adapter, Contract } from "@lib/adapter";
+import { getLendingPoolBalances } from "@lib/aave/v2/lending";
 
 const lendingPoolContract: Contract = {
   name: "LendingPool",

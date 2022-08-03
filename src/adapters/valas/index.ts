@@ -1,4 +1,4 @@
-import { Adapter } from "../../lib/adapter";
+import { Adapter } from "@lib/adapter";
 
 const adapter: Adapter = {
   name: "Valas Finance",

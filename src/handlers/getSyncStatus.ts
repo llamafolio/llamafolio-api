@@ -1,6 +1,6 @@
 import { providers } from "@defillama/sdk/build/general";
-import pool from "../db/pool";
-import { toDefiLlama } from "../lib/chain";
+import pool from "@db/pool";
+import { toDefiLlama } from "@lib/chain";
 
 export async function handler(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178

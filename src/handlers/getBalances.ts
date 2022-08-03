@@ -1,15 +1,15 @@
 import fetch from "node-fetch";
-import { strToBuf, bufToStr } from "../lib/buf";
-import pool from "../db/pool";
-import { getERC20Balances } from "../lib/erc20";
-import { toDefiLlama } from "../lib/chain";
+import { strToBuf, bufToStr } from "@lib/buf";
+import pool from "@db/pool";
+import { getERC20Balances } from "@lib/erc20";
+import { toDefiLlama } from "@lib/chain";
 import {
   getAdapters,
   Balance,
   BaseContext,
   ChainAddress,
   PricedBalance,
-} from "../lib/adapter";
+} from "@lib/adapter";
 
 export async function handler(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
