@@ -1,6 +1,7 @@
-import BN from "bignumber.js";
+import { BigNumber } from "ethers";
 import { multicall } from "./multicall";
 import { BaseBalance, BaseContext } from "./adapter";
+import { Token } from "./token";
 
 export const abi = {
   balanceOf: {
@@ -74,20 +75,35 @@ export async function getERC20Balances(
     abi: abi.balanceOf,
   });
 
-  return tokens.map((address, i) => ({
-    // TODO: deal with .success
-    chain,
-    address,
-    symbol: symbols[i].output,
-    decimals: decimals[i].output,
-    amount: new BN(balances[i].output),
-  }));
+  return tokens
+    .filter((address, i) => {
+      if (!symbols[i].success) {
+        console.error(`Could not get symbol for token ${chain}:${address}`);
+        return false;
+      }
+      if (!decimals[i].success) {
+        console.error(`Could not get decimals for token ${chain}:${address}`);
+        return false;
+      }
+      if (!balances[i].success) {
+        console.error(`Could not get balanceOf for token ${chain}:${address}`);
+        return false;
+      }
+      return true;
+    })
+    .map((address, i) => ({
+      chain,
+      address,
+      symbol: symbols[i].output,
+      decimals: parseInt(decimals[i].output),
+      amount: BigNumber.from(balances[i].output),
+    }));
 }
 
 export async function getERC20Details(
   chain: string,
   tokens: string[]
-): Promise<BaseBalance[]> {
+): Promise<Token[]> {
   const symbols = await multicall({
     chain,
     calls: tokens.map((address) => ({
@@ -106,10 +122,22 @@ export async function getERC20Details(
     abi: abi.decimals,
   });
 
-  return tokens.map((address, i) => ({
-    chain,
-    address,
-    symbol: symbols[i].output,
-    decimals: decimals[i].output,
-  }));
+  return tokens
+    .filter((address, i) => {
+      if (!symbols[i].success) {
+        console.error(`Could not get symbol for token ${chain}:${address}`);
+        return false;
+      }
+      if (!decimals[i].success) {
+        console.error(`Could not get decimals for token ${chain}:${address}`);
+        return false;
+      }
+      return true;
+    })
+    .map((address, i) => ({
+      chain,
+      address,
+      symbol: symbols[i].output,
+      decimals: parseInt(decimals[i].output),
+    }));
 }

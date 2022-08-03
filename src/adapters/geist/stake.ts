@@ -1,6 +1,5 @@
 import { multicall } from "../../lib/multicall";
-import BN from "bignumber.js";
-import { ethers } from "ethers";
+import { ethers, BigNumber } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
 import { Balance, BalanceContext, Contract } from "../../lib/adapter";
 import { getERC20Details } from "../../lib/erc20";
@@ -53,7 +52,6 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
       chain: "fantom",
       address: rewardData.token,
       amount: rewardData.amount,
-      amountFormatted: rewardData.amount.toString(),
       decimals: token.decimals,
       symbol: token.symbol,
       category: "lock-rewards",
@@ -67,7 +65,6 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     symbol: "GEIST",
     decimals: 18,
     amount: lockedBalances.total,
-    amountFormatted: lockedBalances.total.toString(),
     category: "lock",
   };
   balances.push(lockedBalance);
@@ -78,8 +75,7 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     symbol: "GEIST",
     decimals: 18,
     amount: unlockedBalances,
-    amountFormatted: unlockedBalances.toString(),
-    category: "staked",
+    category: "stake",
   };
   balances.push(unlockedBalance);
 
@@ -89,7 +85,6 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     symbol: "GEIST",
     decimals: 18,
     amount: earnedBalances.total,
-    amountFormatted: earnedBalances.total.toString(),
     category: "vest",
   };
   balances.push(earnedBalance);
@@ -143,9 +138,9 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
   }));
 
 
-  let totalLMRewards = new BN(0)
+  let totalLMRewards = BigNumber.from('0')
   for (let index = 0; index < lmRewards.length; index++) {
-    totalLMRewards = totalLMRewards.plus(lmRewards[index].amount.toString())
+    totalLMRewards = totalLMRewards.add(lmRewards[index].amount)
   }
 
 
