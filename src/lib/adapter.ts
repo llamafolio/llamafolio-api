@@ -52,10 +52,13 @@ export type BalancesConfig = {
   revalidate?: number;
 };
 
-export type Contract = {
-  name: string;
+export type BaseContract = {
   chain: string;
   address: string;
+};
+
+export type Contract = BaseContract & {
+  name: string;
 };
 
 export type ContractsConfig = {
