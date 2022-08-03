@@ -1,4 +1,5 @@
 import { Adapter } from "../../lib/adapter";
+import { getERC20Balances } from "../../lib/erc20";
 import { getPairsInfo } from "./pair";
 
 const adapter: Adapter = {
@@ -13,9 +14,15 @@ const adapter: Adapter = {
   async getContracts() {
     return { contracts: await getPairsInfo(), revalidate: 60 * 60 };
   },
-  async getBalances() {
+  async getBalances(ctx) {
+    const balances = await getERC20Balances(ctx, "ethereum", [ctx.contract]);
+
     return {
-      balances: [],
+      balances: balances.map((balance) => ({
+        ...balance,
+        amountFormatted: balance.amount.toString(),
+        category: "farm",
+      })),
     };
   },
 };
