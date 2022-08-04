@@ -1,4 +1,4 @@
-import { multicall } from "../../lib/multicall";
+import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
 import AddressGetterABI from "./abis/AddressGetter.json";
