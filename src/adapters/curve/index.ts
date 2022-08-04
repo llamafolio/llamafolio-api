@@ -21,16 +21,17 @@ const adapter: Adapter = {
   },
   async getBalances(ctx) {
 
-
     //do pools only
-    const balances = await getERC20Balances(ctx, "ethereum", [ctx.contract]);
+    let balances = await getERC20Balances(ctx, "ethereum", [ctx.contract]);
 
+    //dont call below when getting pool balances (?)
     const gaugeBalances = await getGaugeBalances(ctx, "ethereum");
+    balances = balances.concat(gaugeBalances)
 
     return {
       balances: balances.map((balance) => ({
         ...balance,
-        category: "liquidity-provider",
+        category: (balance.category!== undefined) ? balance.category : "liquidity-provider",
       })),
     };
   },
