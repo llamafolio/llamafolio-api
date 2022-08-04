@@ -28,6 +28,7 @@ const chains = [
 
 export async function getAllPools() {
 
+  const chain = "ethereum"
   const provider = providers["ethereum"];
 
   const addressGetter = new ethers.Contract(
@@ -208,7 +209,7 @@ export async function getAllPools() {
       .map(res => res.output);
 
 
-   const gauges = await getGauges()
+   //const gauges = await getGauges(chain)
 
 
    const formattedPools = mainRegistryPoolsList.map((address, i) => ({
@@ -221,5 +222,5 @@ export async function getAllPools() {
    }));
 
 
-   return formattedPools.concat(gauges)
+   return formattedPools
 }

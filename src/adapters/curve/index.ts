@@ -1,6 +1,8 @@
 import { Adapter } from "@lib/adapter";
 import { getAllPools } from "./pools";
+import { getGaugeBalances } from "./gauges"
 import { getERC20Balances } from "@lib/erc20";
+
 
 const adapter: Adapter = {
   name: "Curve",
@@ -18,7 +20,12 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx) {
+
+
+    //do pools only
     const balances = await getERC20Balances(ctx, "ethereum", [ctx.contract]);
+
+    const gaugeBalances = await getGaugeBalances(ctx, "ethereum");
 
     return {
       balances: balances.map((balance) => ({
