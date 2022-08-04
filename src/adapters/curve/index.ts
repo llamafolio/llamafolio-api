@@ -1,4 +1,4 @@
-import { Adapter } from "../../lib/adapter";
+import { Adapter } from "@lib/adapter";
 import { getAllPools } from "./pools";
 
 const adapter: Adapter = {
