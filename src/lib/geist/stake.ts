@@ -1,31 +1,38 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
-import { Balance, BalanceContext, Contract } from "@lib/adapter";
+import { Balance, BalanceContext } from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
+import { Token } from "@lib/token";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
-import ChiefIncentivesABI from "./abis/ChiefIncentives.json";
+import ChefIncentivesControllerABI from "./abis/ChefIncentivesController.json";
 
-export const multiFeeDistributionContract: Contract = {
-  name: "MultiFeeDistribution",
-  dName: "Geist Locker",
-  chain: "fantom",
-  address: "0x49c93a95dbcc9A6A4D8f77E59c038ce5020e82f8",
+export type GetMultiFeeDistributionBalancesParams = {
+  multiFeeDistributionAddress: string;
+  chefIncentivesControllerAddress: string;
+  stakingToken: Token;
 };
 
-export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
+export async function getMultiFeeDistributionBalances(
+  ctx: BalanceContext,
+  {
+    multiFeeDistributionAddress,
+    chefIncentivesControllerAddress,
+    stakingToken,
+  }: GetMultiFeeDistributionBalancesParams
+) {
   const balances: Balance[] = [];
-  const provider = providers["fantom"];
+  const provider = providers[ctx.chain];
 
   const multiFeeDistribution = new ethers.Contract(
-    "0x49c93a95dbcc9A6A4D8f77E59c038ce5020e82f8",
+    multiFeeDistributionAddress,
     MultiFeeDistributionABI,
     provider
   );
 
   const chefIncentives = new ethers.Contract(
-    "0x297FddC5c33Ef988dd03bd13e162aE084ea1fE57",
-    ChiefIncentivesABI,
+    chefIncentivesControllerAddress,
+    ChefIncentivesControllerABI,
     provider
   );
 
@@ -37,64 +44,51 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
       multiFeeDistribution.earnedBalances(ctx.address),
     ]);
 
-  const tokens = claimableRewards.map(
-      (res) => res.token
-    );
-  const tokenDetails = (await getERC20Details("fantom", tokens))
-
-
+  const tokens = claimableRewards.map((res) => res.token);
+  const tokenDetails = await getERC20Details(ctx.chain, tokens);
 
   const rewardRates = await multicall({
-    chain: "fantom",
-    calls: (
-      tokenDetails.map(t  => (
-        {
-          target: multiFeeDistribution.address,
-          params: t.address
-        }
-      ))
-    ),
+    chain: ctx.chain,
+    calls: tokenDetails.map((t) => ({
+      target: multiFeeDistribution.address,
+      params: t.address,
+    })),
     abi: {
-      "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
-      "name": "rewardData",
-      "outputs": [
-        { "internalType": "uint256", "name": "periodFinish", "type": "uint256" },
-        { "internalType": "uint256", "name": "rewardRate", "type": "uint256" },
+      inputs: [{ internalType: "address", name: "", type: "address" }],
+      name: "rewardData",
+      outputs: [
+        { internalType: "uint256", name: "periodFinish", type: "uint256" },
+        { internalType: "uint256", name: "rewardRate", type: "uint256" },
         {
-          "internalType": "uint256",
-          "name": "lastUpdateTime",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "lastUpdateTime",
+          type: "uint256",
         },
         {
-          "internalType": "uint256",
-          "name": "rewardPerTokenStored",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "rewardPerTokenStored",
+          type: "uint256",
         },
-        { "internalType": "uint256", "name": "balance", "type": "uint256" }
+        { internalType: "uint256", name: "balance", type: "uint256" },
       ],
-      "stateMutability": "view",
-      "type": "function"
-    }
+      stateMutability: "view",
+      type: "function",
+    },
   });
 
+  let count = 0;
 
-  const rewards = [];
-  let count = 0
-
-  const stakedSupply = await multiFeeDistribution.totalSupply()
+  const stakedSupply = await multiFeeDistribution.totalSupply();
 
   for (const rewardData of claimableRewards) {
-
-    const token = tokenDetails.find(o => o.address === rewardData.token);
-    const rewardRateThis = rewardRates[count]
-    count++
-
+    const token = tokenDetails.find((o) => o.address === rewardData.token);
+    const rewardRateThis = rewardRates[count];
+    count++;
 
     // let apy =  (604800 * (rData.rewardRate / decimal) * assetPrice * 365 / 7  /(geistPrice * totalSupply /1e18));
 
-
     let reward: Balance = {
-      chain: "fantom",
+      chain: ctx.chain,
       address: rewardData.token,
       amount: rewardData.amount,
       decimals: token.decimals,
@@ -107,40 +101,40 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
         rewardDecimals: token.decimals,
         rewardSymbol: token.symbol,
         //below is the token that you stake or lock to receive the above reward, it is required to calculate an APR
-        stakedToken: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
-        stakedSymbol: "GEIST",
-        stakedDecimals: 18,
-        stakedSupply: stakedSupply
-      }
+        stakedToken: stakingToken.address,
+        stakedSymbol: stakingToken.symbol,
+        stakedDecimals: stakingToken.decimals,
+        stakedSupply: stakedSupply,
+      },
     };
     balances.push(reward);
   }
 
   const lockedBalance: Balance = {
-    chain: "fantom",
-    address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
-    symbol: "GEIST",
-    decimals: 18,
+    chain: ctx.chain,
+    address: stakingToken.address,
+    symbol: stakingToken.symbol,
+    decimals: stakingToken.decimals,
     amount: lockedBalances.total,
     category: "lock",
   };
   balances.push(lockedBalance);
 
   const unlockedBalance: Balance = {
-    chain: "fantom",
-    address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
-    symbol: "GEIST",
-    decimals: 18,
+    chain: ctx.chain,
+    address: stakingToken.address,
+    symbol: stakingToken.symbol,
+    decimals: stakingToken.decimals,
     amount: unlockedBalances,
     category: "stake",
   };
   balances.push(unlockedBalance);
 
   const earnedBalance: Balance = {
-    chain: "fantom",
-    address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
-    symbol: "GEIST",
-    decimals: 18,
+    chain: ctx.chain,
+    address: stakingToken.address,
+    symbol: stakingToken.symbol,
+    decimals: stakingToken.decimals,
     amount: earnedBalances.total,
     category: "vest",
   };
@@ -149,7 +143,7 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
   const lmRewardsCount = (await chefIncentives.poolLength()).toNumber();
 
   const registeredTokensRes = await multicall({
-    chain: "fantom",
+    chain: ctx.chain,
     calls: Array(lmRewardsCount)
       .fill(undefined)
       .map((_, i) => ({
@@ -175,7 +169,7 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
 
   // collect aTokens underlyings
   const underlyingTokensAddresses = await multicall({
-    chain: "fantom",
+    chain: ctx.chain,
     calls: registeredTokensAddresses.map((address) => ({
       target: address,
       params: [],
@@ -194,20 +188,18 @@ export async function getMultiFeeDistributionBalances(ctx: BalanceContext) {
     underlying: underlyingTokensAddresses[i].output,
   }));
 
-
-  let totalLMRewards = BigNumber.from('0')
+  let totalLMRewards = BigNumber.from("0");
   for (let index = 0; index < lmRewards.length; index++) {
-    totalLMRewards = totalLMRewards.add(lmRewards[index].amount)
+    totalLMRewards = totalLMRewards.add(lmRewards[index].amount);
   }
 
-
   const lendingEarnedBalance: Balance = {
-    chain: "fantom",
-    address: "0xd8321AA83Fb0a4ECd6348D4577431310A6E0814d",
-    symbol: "GEIST",
-    decimals: 18,
+    chain: ctx.chain,
+    address: stakingToken.address,
+    symbol: stakingToken.symbol,
+    decimals: stakingToken.decimals,
     amount: totalLMRewards,
-    category: "lending-rewards"
+    category: "lending-rewards",
   };
   balances.push(lendingEarnedBalance);
 
