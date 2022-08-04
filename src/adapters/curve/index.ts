@@ -1,5 +1,6 @@
 import { Adapter } from "@lib/adapter";
 import { getAllPools } from "./pools";
+import { getERC20Balances } from "@lib/erc20";
 
 const adapter: Adapter = {
   name: "Curve",
@@ -16,16 +17,16 @@ const adapter: Adapter = {
       revalidate: 60 * 60,
     };
   },
-  // async getBalances(ctx) {
-  //   const balances = await getERC20Balances(ctx, "ethereum", [ctx.contract]);
-  //
-  //   return {
-  //     balances: balances.map((balance) => ({
-  //       ...balance,
-  //       category: "farm",
-  //     })),
-  //   };
-  // },
+  async getBalances(ctx) {
+    const balances = await getERC20Balances(ctx, "ethereum", [ctx.contract]);
+
+    return {
+      balances: balances.map((balance) => ({
+        ...balance,
+        category: "liquidity-provider",
+      })),
+    };
+  },
 };
 
 export default adapter;
