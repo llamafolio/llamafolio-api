@@ -19,6 +19,7 @@ const typeKeys = {
 export async function getGaugeBalances(ctx, chain, contracts) {
 
     const gauges = await getGauges(chain)
+    console.log(gauges.length)
 
     let calls = []
     for (let index = 0; index < gauges.length; index++) {
@@ -47,7 +48,21 @@ export async function getGaugeBalances(ctx, chain, contracts) {
       .filter(res => res.success)
       .map(res => res.output);
 
-    console.log(gaugeBalancesList)
+    let balances = []
+    for (let index = 0; index < gaugeBalancesList.length; index++) {
+      balances.push(
+        {
+          chain: chain,
+          address: gauges[index].address,
+          symbol: "Curve Gauge",
+          decimals: 18,
+          amount: BigNumber.from(gaugeBalancesList[index]),
+          category: "stake",
+        }
+      )
+    }
+
+    return balances;
 
 }
 
