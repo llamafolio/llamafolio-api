@@ -15,12 +15,46 @@ const typeKeys = {
   10: 'fundraising-gauge'
 }
 
-export async function getGauges() {
 
+export async function getGaugeBalances(ctx, chain, contracts) {
 
-  const provider = providers["ethereum"];
+    const gauges = await getGauges(chain)
 
-  const chain = "ethereum" //use ctx there in future
+    let calls = []
+    for (let index = 0; index < gauges.length; index++) {
+      const element = gauges[index];
+      calls.push({
+        params: [ctx.address],
+        target: gauges[index].address
+      })
+    }
+
+    const gaugeBalancesListRes = await multicall({
+      chain: "ethereum",
+      calls: calls,
+      abi:  {
+          constant: true,
+          inputs: [{ internalType: "address", name: "", type: "address" }],
+          name: "balanceOf",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          payable: false,
+          stateMutability: "view",
+          type: "function",
+        }
+    });
+
+    const gaugeBalancesList = gaugeBalancesListRes
+      .filter(res => res.success)
+      .map(res => res.output);
+
+    console.log(gaugeBalancesList)
+
+}
+
+export async function getGauges(chain) {
+
+  const provider = providers[chain];
+
 
   const gaugeController = new ethers.Contract(
     "0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB",
@@ -57,8 +91,7 @@ export async function getGauges() {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "gas": 2160
+        "type": "function"
       },
   });
 
@@ -92,8 +125,7 @@ export async function getGauges() {
           }
         ],
         "stateMutability": "view",
-        "type": "function",
-        "gas": 1625
+        "type": "function"
       }
   });
 
@@ -116,6 +148,7 @@ export async function getGauges() {
       })
     }
   }
-  
+
+
   return gauges;
 }
