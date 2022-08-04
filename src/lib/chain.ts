@@ -1,3 +1,5 @@
+import { Token } from "@lib/token";
+
 export const chains = [
   "ethereum",
   "avalanche",
@@ -35,3 +37,10 @@ export function fromDefiLlama(chain: string): string | undefined {
 export function toDefiLlama(chain: string): string | undefined {
   return chainToDefiLlamaChain[chain];
 }
+
+export const tokens: Token[] = [
+  { chain: "ethereum", address: "", symbol: "ETH", decimals: 18 },
+  { chain: "fantom", address: "", symbol: "FTM", decimals: 18 },
+  { chain: "bsc", address: "", symbol: "BNB", decimals: 18 },
+  { chain: "avalanche", address: "", symbol: "AVAX", decimals: 18 },
+];
