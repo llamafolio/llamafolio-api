@@ -1,6 +1,7 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
+import { getGauges } from './gauges'
 import AddressGetterABI from "./abis/AddressGetter.json";
 import MainRegistryABI from "./abis/MainRegistry.json";
 
@@ -207,14 +208,18 @@ export async function getAllPools() {
       .map(res => res.output);
 
 
+   const gauges = await getGauges()
+
+
    const formattedPools = mainRegistryPoolsList.map((address, i) => ({
      name: mainPoolsDetailsNames[i],
      dName: `${mainPoolsDetailsNames[i]} Curve Pool`,
      chain: "ethereum",
+     type: 'pool',
      address: mainPoolLPTokens[i],
      poolAddress: address
    }));
 
 
-   return formattedPools
+   return formattedPools.concat(gauges)
 }
