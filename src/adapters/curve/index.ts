@@ -19,10 +19,10 @@ const adapter: Adapter = {
       revalidate: 60 * 60,
     };
   },
-  async getBalances(ctx) {
+  async getBalances(ctx, contracts) {
 
     //do pools only
-    let balances = await getERC20Balances(ctx, "ethereum", [ctx.contract]);
+    let balances = await getERC20Balances(ctx, "ethereum", contracts.map(c => c.address));
 
     //dont call below when getting pool balances (?)
     const gaugeBalances = await getGaugeBalances(ctx, "ethereum");
