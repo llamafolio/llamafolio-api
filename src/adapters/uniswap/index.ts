@@ -20,8 +20,12 @@ const adapter: Adapter = {
       revalidate: 60 * 60,
     };
   },
-  async getBalances(ctx) {
-    const balances = await getERC20Balances(ctx, "ethereum", [ctx.contract]);
+  async getBalances(ctx, contracts) {
+    const balances = await getERC20Balances(
+      ctx,
+      "ethereum",
+      contracts.map((c) => c.address)
+    );
 
     return {
       balances: balances.map((balance) => ({

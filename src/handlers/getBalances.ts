@@ -7,8 +7,8 @@ import {
   getAdapters,
   Balance,
   BaseContext,
-  ChainAddress,
   PricedBalance,
+  BaseContract,
 } from "@lib/adapter";
 
 export async function handler(event, context) {
@@ -44,21 +44,16 @@ export async function handler(event, context) {
       ]),
     ]);
 
-    const contractAddresses: ChainAddress[] = contractsRes.rows.map(
-      (row) => `${row.chain}:${bufToStr(row.to_address)}`
-    );
+    const contracts: BaseContract[] = contractsRes.rows.map((row) => ({
+      chain: row.chain,
+      address: bufToStr(row.to_address),
+    }));
 
-    const adapters = await getAdapters(contractAddresses);
+    const adapters = await getAdapters(contracts);
 
     const adaptersBalances = (
       await Promise.all(
-        adapters.map((adapter, i) =>
-          adapter.getBalances({
-            ...ctx,
-            chain: contractsRes.rows[i].chain,
-            contract: bufToStr(contractsRes.rows[i].to_address),
-          })
-        )
+        adapters.map((adapter) => adapter.getBalances(ctx, contracts))
       )
     )
       .map((config) => config.balances)

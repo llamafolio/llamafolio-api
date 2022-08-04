@@ -45,27 +45,24 @@ const adapter: Adapter = {
       contracts: [multiFeeDistributionContract, lendingPoolContract],
     };
   },
-  async getBalances(ctx) {
-    if (ctx.contract === multiFeeDistributionContract.address) {
-      return {
-        balances: await getMultiFeeDistributionBalances(ctx, {
-          multiFeeDistributionAddress: multiFeeDistributionContract.address,
-          chefIncentivesControllerAddress:
-            chefIncentivesControllerContract.address,
-          stakingToken: geistToken,
-        }),
-      };
-    }
+  async getBalances(ctx, contracts) {
+    const [multiFeeDistributionContract, lendingPoolContract] = contracts;
 
-    if (ctx.contract === lendingPoolContract.address) {
-      return {
-        balances: await getLendingPoolBalances(ctx, {
-          lendingPoolAddress: lendingPoolContract.address,
-        }),
-      };
-    }
+    const balances = await Promise.all([
+      getMultiFeeDistributionBalances(ctx, {
+        chain: multiFeeDistributionContract.chain,
+        multiFeeDistributionAddress: multiFeeDistributionContract.address,
+        chefIncentivesControllerAddress:
+          chefIncentivesControllerContract.address,
+        stakingToken: geistToken,
+      }),
+      getLendingPoolBalances(ctx, {
+        chain: lendingPoolContract.chain,
+        lendingPoolAddress: lendingPoolContract.address,
+      }),
+    ]);
 
-    return { balances: [] };
+    return { balances: balances.flat() };
   },
 };
 

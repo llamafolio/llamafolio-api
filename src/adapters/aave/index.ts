@@ -22,16 +22,17 @@ const adapter: Adapter = {
       contracts: [lendingPoolContract],
     };
   },
-  async getBalances(ctx) {
-    if (ctx.contract === lendingPoolContract.address) {
-      return {
-        balances: await getLendingPoolBalances(ctx, {
-          lendingPoolAddress: lendingPoolContract.address,
-        }),
-      };
-    }
+  async getBalances(ctx, contracts) {
+    const [lendingPoolContract] = contracts;
 
-    return { balances: [] };
+    const balances = await getLendingPoolBalances(ctx, {
+      chain: lendingPoolContract.chain,
+      lendingPoolAddress: lendingPoolContract.address,
+    });
+
+    return {
+      balances,
+    };
   },
 };
 

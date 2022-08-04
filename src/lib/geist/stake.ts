@@ -1,28 +1,30 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
-import { Balance, BalanceContext } from "@lib/adapter";
+import { Balance, BaseContext } from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
 import ChefIncentivesControllerABI from "./abis/ChefIncentivesController.json";
 
 export type GetMultiFeeDistributionBalancesParams = {
+  chain: string;
   multiFeeDistributionAddress: string;
   chefIncentivesControllerAddress: string;
   stakingToken: Token;
 };
 
 export async function getMultiFeeDistributionBalances(
-  ctx: BalanceContext,
+  ctx: BaseContext,
   {
+    chain,
     multiFeeDistributionAddress,
     chefIncentivesControllerAddress,
     stakingToken,
   }: GetMultiFeeDistributionBalancesParams
 ) {
   const balances: Balance[] = [];
-  const provider = providers[ctx.chain];
+  const provider = providers[chain];
 
   const multiFeeDistribution = new ethers.Contract(
     multiFeeDistributionAddress,
@@ -45,10 +47,10 @@ export async function getMultiFeeDistributionBalances(
     ]);
 
   const tokens = claimableRewards.map((res) => res.token);
-  const tokenDetails = await getERC20Details(ctx.chain, tokens);
+  const tokenDetails = await getERC20Details(chain, tokens);
 
   const rewardRates = await multicall({
-    chain: ctx.chain,
+    chain,
     calls: tokenDetails.map((t) => ({
       target: multiFeeDistribution.address,
       params: t.address,
@@ -88,7 +90,7 @@ export async function getMultiFeeDistributionBalances(
     // let apy =  (604800 * (rData.rewardRate / decimal) * assetPrice * 365 / 7  /(geistPrice * totalSupply /1e18));
 
     let reward: Balance = {
-      chain: ctx.chain,
+      chain,
       address: rewardData.token,
       amount: rewardData.amount,
       decimals: token.decimals,
@@ -111,7 +113,7 @@ export async function getMultiFeeDistributionBalances(
   }
 
   const lockedBalance: Balance = {
-    chain: ctx.chain,
+    chain,
     address: stakingToken.address,
     symbol: stakingToken.symbol,
     decimals: stakingToken.decimals,
@@ -121,7 +123,7 @@ export async function getMultiFeeDistributionBalances(
   balances.push(lockedBalance);
 
   const unlockedBalance: Balance = {
-    chain: ctx.chain,
+    chain,
     address: stakingToken.address,
     symbol: stakingToken.symbol,
     decimals: stakingToken.decimals,
@@ -131,7 +133,7 @@ export async function getMultiFeeDistributionBalances(
   balances.push(unlockedBalance);
 
   const earnedBalance: Balance = {
-    chain: ctx.chain,
+    chain,
     address: stakingToken.address,
     symbol: stakingToken.symbol,
     decimals: stakingToken.decimals,
@@ -143,7 +145,7 @@ export async function getMultiFeeDistributionBalances(
   const lmRewardsCount = (await chefIncentives.poolLength()).toNumber();
 
   const registeredTokensRes = await multicall({
-    chain: ctx.chain,
+    chain,
     calls: Array(lmRewardsCount)
       .fill(undefined)
       .map((_, i) => ({
@@ -169,7 +171,7 @@ export async function getMultiFeeDistributionBalances(
 
   // collect aTokens underlyings
   const underlyingTokensAddresses = await multicall({
-    chain: ctx.chain,
+    chain,
     calls: registeredTokensAddresses.map((address) => ({
       target: address,
       params: [],
@@ -194,7 +196,7 @@ export async function getMultiFeeDistributionBalances(
   }
 
   const lendingEarnedBalance: Balance = {
-    chain: ctx.chain,
+    chain,
     address: stakingToken.address,
     symbol: stakingToken.symbol,
     decimals: stakingToken.decimals,

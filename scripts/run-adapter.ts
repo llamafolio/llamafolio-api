@@ -1,7 +1,12 @@
 import path from "path";
 import fetch from "node-fetch";
 import { toDefiLlama } from "../src/lib/chain";
-import { Adapter, Balance, PricedBalance } from "../src/lib/adapter";
+import {
+  Adapter,
+  Balance,
+  BaseContext,
+  PricedBalance,
+} from "../src/lib/adapter";
 
 function help() {}
 
@@ -20,26 +25,18 @@ async function main() {
   }
   const address = process.argv[3].toLowerCase();
 
+  const ctx: BaseContext = { address };
+
   const module = await import(
     path.join(__dirname, "..", "src", "adapters", process.argv[2])
   );
   const adapter = module.default as Adapter;
 
-  const contracts = await adapter.getContracts();
+  const contractsRes = await adapter.getContracts();
 
-  let balances = (
-    await Promise.all(
-      contracts.contracts.map((contract) =>
-        adapter.getBalances({
-          address,
-          chain: contract.chain,
-          contract: contract.address,
-        })
-      )
-    )
-  )
-    .map((config) => config.balances)
-    .flat();
+  const balancesRes = await adapter.getBalances(ctx, contractsRes.contracts);
+
+  let balances = balancesRes.balances;
 
   //console.log("All balances:", JSON.stringify(balances));
 

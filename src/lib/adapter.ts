@@ -13,11 +13,6 @@ export type BaseContext = {
   address: string;
 };
 
-export type BalanceContext = BaseContext & {
-  chain: string;
-  contract: string;
-};
-
 export type Category =
   | "wallet"
   | "lend"
@@ -86,13 +81,14 @@ export interface Adapter {
   links: Links;
   getContracts: () => ContractsConfig | Promise<ContractsConfig>;
   getBalances: (
-    ctx: BalanceContext
+    ctx: BaseContext,
+    contracts: BaseContract[]
   ) => BalancesConfig | Promise<BalancesConfig>;
 }
 
 // TODO: get adapters from a real storage cache + add logic to revalidate
 // so we never have to run the getContracts promise during an API call
-export async function getAdapters(addresses: ChainAddress[]) {
+export async function getAdapters(contracts: BaseContract[]) {
   const fake_cache: { [key: string]: Adapter } = {};
 
   const adaptersContracts = await Promise.all(
@@ -106,5 +102,7 @@ export async function getAdapters(addresses: ChainAddress[]) {
     }
   }
 
-  return addresses.flatMap((address) => fake_cache[address] || []);
+  return contracts.flatMap(
+    (contract) => fake_cache[`${contract.chain}:${contract.address}`] || []
+  );
 }

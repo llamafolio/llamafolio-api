@@ -1,6 +1,6 @@
 import { providers } from "@defillama/sdk/build/general";
-import { Adapter, Balance } from "@lib/adapter";
-import { chains, toDefiLlama, tokens } from "@lib/chain";
+import { Adapter } from "@lib/adapter";
+import { toDefiLlama, tokens } from "@lib/chain";
 
 const adapter: Adapter = {
   name: "Wallet",
@@ -11,30 +11,23 @@ const adapter: Adapter = {
       contracts: tokens,
     };
   },
-  async getBalances(ctx) {
-    // TODO: deal with chains that have multiple coins
-    const token = tokens.find((token) => token.chain === ctx.chain);
-    if (!token) {
-      return { balances: [] };
-    }
-
-    const provider = providers[toDefiLlama(ctx.chain)!];
-    if (!provider) {
-      return { balances: [] };
-    }
-
-    const balance = await provider.getBalance(ctx.address);
+  async getBalances(ctx, coins) {
+    const balances = await Promise.all(
+      coins.map(async (coin) => {
+        const provider = providers[toDefiLlama(coin.chain)!];
+        const balance = await provider.getBalance(ctx.address);
+        return {
+          chain: coin.chain,
+          address: "",
+          decimals: coin.decimals,
+          symbol: coin.symbol,
+          amount: balance,
+        };
+      })
+    );
 
     return {
-      balances: [
-        {
-          chain: ctx.chain,
-          address: "",
-          decimals: token.decimals,
-          symbol: token.symbol,
-          amount: balance,
-        },
-      ],
+      balances,
     };
   },
 };
