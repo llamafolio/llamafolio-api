@@ -61,6 +61,7 @@ export async function getGaugeBalances(ctx, chain, contracts) {
             decimals: 18,
             amount: BigNumber.from(balance.output),
             category: "stake",
+            priceSubstitute: gauges[index].priceSubstitute
           }
         )
       } else {
@@ -215,6 +216,7 @@ export async function getGauges(chain) {
       if (tokenDetail) {
         gauges[index].name = tokenDetail.symbol
         gauges[index].dName = `Curve.fi Gauge ${tokenDetail.symbol}`
+        gauges[index].priceSubstitute = token.output
       } else {
         console.log(`Could not load LP token for gauge: ${gauges[index].address}`)
       }

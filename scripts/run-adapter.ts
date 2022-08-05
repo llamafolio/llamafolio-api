@@ -48,7 +48,7 @@ async function main() {
     body: JSON.stringify({
       coins: balances.map(
         (balance) =>
-          `${toDefiLlama(balance.chain)}:${balance.address.toLowerCase()}`
+          `${toDefiLlama(balance.chain)}:${(balance.priceSubstitute)?balance.priceSubstitute.toLowerCase():balance.address.toLowerCase()}`
       ),
     }),
   });
@@ -56,7 +56,7 @@ async function main() {
 
   const pricedBalances: (Balance | PricedBalance)[] = balances.map(
     (balance) => {
-      const key = `${balance.chain}:${balance.address.toLowerCase()}`;
+      const key = `${balance.chain}:${(balance.priceSubstitute)?balance.priceSubstitute.toLowerCase():balance.address.toLowerCase()}`;
       const price = prices.coins[key];
       if (price !== undefined) {
         const balanceAmount = balance.amount / 10 ** balance.decimals;
