@@ -3,6 +3,7 @@ import { ethers, BigNumber } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
 import GaugeControllerAbi from "./abis/GaugeController.json";
 import { getERC20Details } from "@lib/erc20";
+import { CATEGORIES } from "@lib/category";
 
 const typeKeys = {
   0: 'ethereum',
@@ -60,7 +61,7 @@ export async function getGaugeBalances(ctx, chain, contracts) {
             symbol: gauges[index].name,
             decimals: 18,
             amount: BigNumber.from(balance.output),
-            category: "stake",
+            category: CATEGORIES['stake'].category,
             priceSubstitute: gauges[index].priceSubstitute
           }
         )

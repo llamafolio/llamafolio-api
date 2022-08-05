@@ -1,4 +1,4 @@
-export const CATEGORIES = [
+export const CATEGORIES = {
   "wallet": {
     id: 0,
     category: "wallet",
@@ -44,4 +44,4 @@ export const CATEGORIES = [
     category: "farm",
     description: "Assets used to yield rewards on a protocol"
   },
-]
+}

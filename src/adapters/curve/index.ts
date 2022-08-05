@@ -2,6 +2,7 @@ import { Adapter } from "@lib/adapter";
 import { getAllPools } from "./pools";
 import { getGaugeBalances } from "./gauges"
 import { getERC20Balances } from "@lib/erc20";
+import { CATEGORIES } from "@lib/category";
 
 
 const adapter: Adapter = {
@@ -28,7 +29,7 @@ const adapter: Adapter = {
     return {
       balances: balances.map((balance) => ({
         ...balance,
-        category: (balance.category!== undefined) ? balance.category : "liquidity-provider",
+        category: (balance.category !== undefined) ? balance.category : CATEGORIES['lp'].category,
       })),
     };
   },
