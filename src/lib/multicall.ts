@@ -1,12 +1,5 @@
 import { multiCall } from "@defillama/sdk/build/abi/index";
 
-export type Call = {
-  chain: string;
-  target: string;
-  params: any[];
-  abi: object | string;
-};
-
 export type MultiCallParams = Parameters<typeof multiCall>[0] & {
   batchSize?: number;
 };

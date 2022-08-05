@@ -1,9 +1,10 @@
-import { Balance, BaseContext } from "../../adapter";
-import { getERC20Balances } from "../../erc20";
+import { Chain } from "@defillama/sdk/build/general";
+import { Balance, BaseContext } from "@lib/adapter";
+import { getERC20Balances } from "@lib/erc20";
 import { getReserveTokens } from "./tokens";
 
 export type GetLendingPoolBalancesParams = {
-  chain: string;
+  chain: Chain;
   lendingPoolAddress: string;
 };
 
@@ -27,72 +28,60 @@ export async function getLendingPoolBalances(
     (reserveToken) => reserveToken.variableDebtTokenAddress
   );
 
-  //fetch aTokens (supplied)
-  let aBalances = await getERC20Balances(ctx, params.chain, aTokens);
+  const [
+    aBalances,
+    stableDebtTokenAddressesBalances,
+    variableDebtTokenAddressesBalances,
+  ] = await Promise.all([
+    getERC20Balances(ctx, params.chain, aTokens),
+    getERC20Balances(ctx, params.chain, stableDebtTokenAddresses),
+    getERC20Balances(ctx, params.chain, variableDebtTokenAddresses),
+  ]);
 
-  for (let index = 0; index < aBalances.length; index++) {
-    aBalances[index].amount = aBalances[index].amount;
-    aBalances[index].category = "lending-supplied";
-    //save the details of the real token
-    aBalances[index].realToken = aBalances[index];
-    //substitute the token for it's "native" version
-    aBalances[index].address = reserveTokens[index].underlyingTokenAddress;
+  for (let i = 0; i < aBalances.length; i++) {
+    const aBalance = aBalances[i];
 
-    let aBalanceFormat = aBalances[index];
-    const aBalance: Balance = aBalanceFormat;
-    balances.push(aBalance);
+    balances.push({
+      chain: aBalance.chain,
+      // address: aBalance.address,
+      //substitute the token for it's "native" version
+      address: reserveTokens[i].underlyingTokenAddress,
+      symbol: aBalance.symbol,
+      decimals: aBalance.decimals,
+      amount: aBalance.amount,
+      category: "lend",
+    });
   }
 
-  //fetch debt tokens
+  for (let i = 0; i < stableDebtTokenAddressesBalances.length; i++) {
+    const stableDebtTokenAddressesBalance = stableDebtTokenAddressesBalances[i];
 
-  let stableDebtTokenAddressesBalances = await getERC20Balances(
-    ctx,
-    params.chain,
-    stableDebtTokenAddresses
-  );
-
-  for (
-    let index = 0;
-    index < stableDebtTokenAddressesBalances.length;
-    index++
-  ) {
-    stableDebtTokenAddressesBalances[index].amount =
-      stableDebtTokenAddressesBalances[index].amount;
-    stableDebtTokenAddressesBalances[index].category = "lending-borrowed";
-    stableDebtTokenAddressesBalances[index].realToken =
-      stableDebtTokenAddressesBalances[index];
-    stableDebtTokenAddressesBalances[index].address =
-      reserveTokens[index].underlyingTokenAddress;
-
-    let aBalanceFormat = stableDebtTokenAddressesBalances[index];
-    const aBalance: Balance = aBalanceFormat;
-    balances.push(aBalance);
+    balances.push({
+      chain: stableDebtTokenAddressesBalance.chain,
+      // address: stableDebtTokenAddressesBalance.address,
+      //substitute the token for it's "native" version
+      address: reserveTokens[i].underlyingTokenAddress,
+      symbol: stableDebtTokenAddressesBalance.symbol,
+      decimals: stableDebtTokenAddressesBalance.decimals,
+      amount: stableDebtTokenAddressesBalance.amount,
+      category: "borrow-stable",
+    });
   }
 
-  //fetch variable debt tokens
-  let variableDebtTokenAddressesBalances = await getERC20Balances(
-    ctx,
-    params.chain,
-    variableDebtTokenAddresses
-  );
+  for (let i = 0; i < variableDebtTokenAddressesBalances.length; i++) {
+    const variableDebtTokenAddressesBalance =
+      variableDebtTokenAddressesBalances[i];
 
-  for (
-    let index = 0;
-    index < variableDebtTokenAddressesBalances.length;
-    index++
-  ) {
-    variableDebtTokenAddressesBalances[index].amount =
-      variableDebtTokenAddressesBalances[index].amount;
-    variableDebtTokenAddressesBalances[index].category =
-      "lending-borrowed-variable";
-    variableDebtTokenAddressesBalances[index].realToken =
-      variableDebtTokenAddressesBalances[index];
-    variableDebtTokenAddressesBalances[index].address =
-      reserveTokens[index].underlyingTokenAddress;
-
-    let aBalanceFormat = variableDebtTokenAddressesBalances[index];
-    const aBalance: Balance = aBalanceFormat;
-    balances.push(aBalance);
+    balances.push({
+      chain: variableDebtTokenAddressesBalance.chain,
+      // address: variableDebtTokenAddressesBalance.address,
+      //substitute the token for it's "native" version
+      address: reserveTokens[i].underlyingTokenAddress,
+      symbol: variableDebtTokenAddressesBalance.symbol,
+      decimals: variableDebtTokenAddressesBalance.decimals,
+      amount: variableDebtTokenAddressesBalance.amount,
+      category: "borrow-variable",
+    });
   }
 
   return balances;

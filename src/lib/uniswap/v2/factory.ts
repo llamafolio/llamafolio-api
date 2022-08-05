@@ -1,11 +1,11 @@
 import { Contract } from "ethers";
-import { providers } from "@defillama/sdk/build/general";
+import { providers, Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import UniswapV2Factory from "./abis/UniswapV2Factory.json";
 import { getERC20Details } from "@lib/erc20";
 
 export type GetPairsInfoParams = {
-  chain: string;
+  chain: Chain;
   factoryAddress: string;
 };
 
