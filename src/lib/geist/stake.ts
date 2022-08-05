@@ -1,6 +1,6 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { providers } from "@defillama/sdk/build/general";
+import { providers, Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext } from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
@@ -8,7 +8,7 @@ import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
 import ChefIncentivesControllerABI from "./abis/ChefIncentivesController.json";
 
 export type GetMultiFeeDistributionBalancesParams = {
-  chain: string;
+  chain: Chain;
   multiFeeDistributionAddress: string;
   chefIncentivesControllerAddress: string;
   stakingToken: Token;
@@ -46,7 +46,7 @@ export async function getMultiFeeDistributionBalances(
       multiFeeDistribution.earnedBalances(ctx.address),
     ]);
 
-  const tokens = claimableRewards.map((res) => res.token);
+  const tokens = claimableRewards.map((res: any) => res.token);
   const tokenDetails = await getERC20Details(chain, tokens);
 
   const rewardRates = await multicall({
@@ -84,6 +84,9 @@ export async function getMultiFeeDistributionBalances(
 
   for (const rewardData of claimableRewards) {
     const token = tokenDetails.find((o) => o.address === rewardData.token);
+    if (!token) {
+      continue;
+    }
     const rewardRateThis = rewardRates[count];
     count++;
 
@@ -96,6 +99,7 @@ export async function getMultiFeeDistributionBalances(
       decimals: token.decimals,
       symbol: token.symbol,
       category: "lock-rewards",
+      // TODO: rewards interface
       rewardRates: {
         rewardRate: rewardRateThis.rewardRate,
         rewardPeriod: 604800,
@@ -164,7 +168,7 @@ export async function getMultiFeeDistributionBalances(
     (res) => res.output
   );
 
-  const lmClaimableRewards = await chefIncentives.claimableReward(
+  const lmClaimableRewards: BigNumber[] = await chefIncentives.claimableReward(
     ctx.address,
     registeredTokensAddresses
   );
@@ -201,7 +205,7 @@ export async function getMultiFeeDistributionBalances(
     symbol: stakingToken.symbol,
     decimals: stakingToken.decimals,
     amount: totalLMRewards,
-    category: "lending-rewards",
+    category: "lend-rewards",
   };
   balances.push(lendingEarnedBalance);
 

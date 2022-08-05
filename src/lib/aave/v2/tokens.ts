@@ -1,11 +1,10 @@
 import { ethers } from "ethers";
-import { providers } from "@defillama/sdk/build/general";
+import { providers, Chain } from "@defillama/sdk/build/general";
 import { multicall } from "../../multicall";
-import { BaseContract } from "../../adapter";
 import LendingPoolABI from "./abis/LendingPool.json";
 
 export type GetReserveTokensParams = {
-  chain: string;
+  chain: Chain;
   lendingPoolAddress: string;
 };
 

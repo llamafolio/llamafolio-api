@@ -3,7 +3,7 @@ import { getLendingPoolBalances } from "@lib/aave/v2/lending";
 
 const lendingPoolContract: Contract = {
   name: "LendingPool",
-  dName: "AAVE Lending",
+  displayName: "AAVE Lending",
   chain: "ethereum",
   address: "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9",
 };

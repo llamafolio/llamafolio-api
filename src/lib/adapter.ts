@@ -1,13 +1,7 @@
+import { Chain } from "@defillama/sdk/build/general";
 import { BigNumber } from "ethers";
-import { adapters } from "../adapters";
-import { Token } from "./token";
-
-// TODO: enum
-export type Chain = string;
-// TODO: 0x...
-export type Hex = string;
-
-export type ChainAddress = `${Chain}:${Hex}`;
+import { adapters } from "@adapters/index";
+import { Token } from "@lib/token";
 
 export type BaseContext = {
   address: string;
@@ -16,10 +10,14 @@ export type BaseContext = {
 export type Category =
   | "wallet"
   | "lend"
+  | "lend-rewards"
   | "borrow"
+  | "borrow-stable"
+  | "borrow-variable"
   | "farm"
   | "stake"
   | "lock"
+  | "lock-rewards"
   | "vest";
 
 export type BaseBalance = Token & {
@@ -32,6 +30,7 @@ export type Balance = BaseBalance & {
   // ex: "unlockable", "expiry" for "lock" etc
   underlying?: BaseBalance[];
   rewards?: BaseBalance[];
+  rewardRates?: any;
 
   children?: Balance[];
 };
@@ -39,6 +38,7 @@ export type Balance = BaseBalance & {
 export type PricedBalance = Balance & {
   price: number;
   balanceUSD: number;
+  // price updated at
   timestamp: number;
 };
 
@@ -48,12 +48,13 @@ export type BalancesConfig = {
 };
 
 export type BaseContract = {
-  chain: string;
+  chain: Chain;
   address: string;
 };
 
 export type Contract = BaseContract & {
-  name: string;
+  name?: string;
+  displayName?: string;
 };
 
 export type ContractsConfig = {

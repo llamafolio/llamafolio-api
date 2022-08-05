@@ -1,3 +1,4 @@
+import { Chain } from "@defillama/sdk/build/general";
 import { Token } from "@lib/token";
 
 export const chains = [
@@ -12,7 +13,7 @@ export const chains = [
   "gnosis",
 ];
 
-export const chainToDefiLlamaChain: { [key: string]: string } = {
+export const chainToDefiLlamaChain: { [key: string]: Chain } = {
   ethereum: "ethereum",
   avalanche: "avax",
   bsc: "bsc",
@@ -42,5 +43,5 @@ export const tokens: Token[] = [
   { chain: "ethereum", address: "", symbol: "ETH", decimals: 18 },
   { chain: "fantom", address: "", symbol: "FTM", decimals: 18 },
   { chain: "bsc", address: "", symbol: "BNB", decimals: 18 },
-  { chain: "avalanche", address: "", symbol: "AVAX", decimals: 18 },
+  { chain: "avax", address: "", symbol: "AVAX", decimals: 18 },
 ];

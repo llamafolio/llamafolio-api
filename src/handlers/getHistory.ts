@@ -1,3 +1,4 @@
+import { Chain } from "@defillama/sdk/build/general";
 import { strToBuf, bufToStr } from "@lib/buf";
 import pool from "@db/pool";
 
@@ -9,7 +10,7 @@ type TokenTransfer = {
 };
 
 type Transaction = {
-  chain: string;
+  chain: Chain;
   block_number: string;
   timestamp: string;
   hash: string;
