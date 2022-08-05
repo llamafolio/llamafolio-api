@@ -79,6 +79,7 @@ async function main() {
     }
   );
 
+  console.log(`Found ${pricedBalances.length} non zero balances`)
   for (let index = 0; index < pricedBalances.length; index++) {
     const balance = pricedBalances[index];
     console.log(

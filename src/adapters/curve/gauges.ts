@@ -2,6 +2,7 @@ import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
 import GaugeControllerAbi from "./abis/GaugeController.json";
+import { getERC20Details } from "@lib/erc20";
 
 const typeKeys = {
   0: 'ethereum',
@@ -19,7 +20,6 @@ const typeKeys = {
 export async function getGaugeBalances(ctx, chain, contracts) {
 
     const gauges = await getGauges(chain)
-    console.log(gauges.length)
 
     let calls = []
     for (let index = 0; index < gauges.length; index++) {
@@ -50,16 +50,22 @@ export async function getGaugeBalances(ctx, chain, contracts) {
 
     let balances = []
     for (let index = 0; index < gaugeBalancesList.length; index++) {
-      balances.push(
-        {
-          chain: chain,
-          address: gauges[index].address,
-          symbol: "Curve Gauge",
-          decimals: 18,
-          amount: BigNumber.from(gaugeBalancesList[index]),
-          category: "stake",
-        }
-      )
+
+      const balance = gaugeBalancesListRes.find((o) => o.input.target === gauges[index].address);
+      if (balance.output !== null) {
+        balances.push(
+          {
+            chain: chain,
+            address: gauges[index].address,
+            symbol: gauges[index].name,
+            decimals: 18,
+            amount: BigNumber.from(balance.output),
+            category: "stake",
+          }
+        )
+      } else {
+        console.log(`Failed to get balance for ${gauges[index].address}`)
+      }
     }
 
     return balances;
@@ -149,21 +155,71 @@ export async function getGauges(chain) {
     .map(res => res.output);
 
   const gauges = []
+
   for (var i = 0; i < gaugesList.length; i++) {
 
+    const gaugeType = gaugeTypesRes.find((o) => o.input.params[0] === gaugesList[i]);
 
-    if (typeKeys[gaugeTypes[i]] === chain) {
-      gauges.push({
-        name: 'Curve Gauge', //get lp token name
-        dName: `Curve Gauge`,
-        chain: "ethereum",
-        type: 'gauge',
-        address: gaugesList[i],
-        poolAddress: gaugesList[i]
-      })
+    if (gaugeType.output !== null) {
+      if (typeKeys[gaugeType.output] === chain) {
+        gauges.push({
+          chain: chain,
+          type: 'gauge',
+          address: gaugesList[i],
+          poolAddress: gaugesList[i]
+        })
+      }
     }
   }
 
+  console.log(`Found ${gauges.length} gauges on ${chain}`)
+
+
+  calls = []
+  for (let index = 0; index < gauges.length; index++) {
+    calls.push(
+      {
+        target: gauges[index].address,
+      }
+    )
+  }
+
+  const lpTokensRes = await multicall({
+    chain: "ethereum",
+    calls: calls,
+    abi: {
+        "stateMutability": "view",
+        "type": "function",
+        "name": "lp_token",
+        "inputs": [],
+        "outputs": [
+          {
+            "name": "",
+            "type": "address"
+          }
+        ]
+      }
+  });
+
+  const lpTokens = lpTokensRes
+    .filter(res => res.success)
+    .map(res => res.output);
+
+    const lpTokenDetails = await getERC20Details(chain, lpTokens)
+
+    for (let index = 0; index < gauges.length; index++) {
+
+      const token = lpTokensRes.find((o) => o.input.target === gauges[index].address);
+      const tokenDetail = lpTokenDetails.find((o) => o.address === token.output);
+
+      if (tokenDetail) {
+        gauges[index].name = tokenDetail.symbol
+        gauges[index].dName = `Curve.fi Gauge ${tokenDetail.symbol}`
+      } else {
+        console.log(`Could not load LP token for gauge: ${gauges[index].address}`)
+      }
+
+    }
 
   return gauges;
 }
