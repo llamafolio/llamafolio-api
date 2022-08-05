@@ -15,6 +15,8 @@ export type Category =
   | "borrow-stable"
   | "borrow-variable"
   | "farm"
+  | "lp"
+  | "lp-stable"
   | "stake"
   | "lock"
   | "lock-rewards"

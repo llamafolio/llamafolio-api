@@ -1,9 +1,12 @@
+// @ts-nocheck
+
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { providers } from "@defillama/sdk/build/general";
+import { Chain, providers } from "@defillama/sdk/build/general";
 import GaugeControllerAbi from "./abis/GaugeController.json";
 import { getERC20Details } from "@lib/erc20";
 import { CATEGORIES } from "@lib/category";
+import { BaseContext } from "@lib/adapter";
 
 const typeKeys = {
   0: 'ethereum',
@@ -18,7 +21,7 @@ const typeKeys = {
 }
 
 
-export async function getGaugeBalances(ctx, chain, contracts) {
+export async function getGaugeBalances(ctx: BaseContext, chain: Chain) {
 
     const gauges = await getGauges(chain)
 

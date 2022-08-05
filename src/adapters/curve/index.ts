@@ -1,4 +1,4 @@
-import { Adapter } from "@lib/adapter";
+import { Adapter, Balance, Contract } from "@lib/adapter";
 import { getAllPools } from "./pools";
 import { getGaugeBalances } from "./gauges"
 import { getERC20Balances } from "@lib/erc20";
@@ -16,7 +16,7 @@ const adapter: Adapter = {
   },
   async getContracts() {
     return {
-      contracts: await getAllPools(),
+      contracts: await getAllPools() as Contract[],
       revalidate: 60 * 60,
     };
   },
@@ -29,7 +29,7 @@ const adapter: Adapter = {
     return {
       balances: balances.map((balance) => ({
         ...balance,
-        category: (balance.category !== undefined) ? balance.category : CATEGORIES['lp'].category,
+        category: ((balance as Balance).category !== undefined) ? (balance as Balance).category : CATEGORIES['lp']?.category!,
       })),
     };
   },

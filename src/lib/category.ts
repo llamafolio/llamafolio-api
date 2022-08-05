@@ -1,4 +1,13 @@
-export const CATEGORIES = {
+import { Category } from '@lib/adapter';
+
+export type CategoryInfo = {
+  id: number;
+  category: Category;
+  description: string;
+}
+
+// TODO: remove Partial
+export const CATEGORIES: Partial<Record<Category, CategoryInfo>> = {
   "wallet": {
     id: 0,
     category: "wallet",
