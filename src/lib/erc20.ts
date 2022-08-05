@@ -1,7 +1,8 @@
 import { BigNumber } from "ethers";
-import { multicall } from "./multicall";
-import { BaseBalance, BaseContext } from "./adapter";
-import { Token } from "./token";
+import { Chain } from "@defillama/sdk/build/general";
+import { multicall } from "@lib/multicall";
+import { BaseBalance, BaseContext } from "@lib/adapter";
+import { Token } from "@lib/token";
 
 export const abi = {
   balanceOf: {
@@ -45,7 +46,7 @@ export const abi = {
 
 export async function getERC20Balances(
   ctx: BaseContext,
-  chain: string,
+  chain: Chain,
   tokens: string[]
 ): Promise<BaseBalance[]> {
   const symbols = await multicall({
@@ -101,7 +102,7 @@ export async function getERC20Balances(
 }
 
 export async function getERC20Details(
-  chain: string,
+  chain: Chain,
   tokens: string[]
 ): Promise<Token[]> {
   const symbols = await multicall({

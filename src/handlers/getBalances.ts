@@ -10,6 +10,7 @@ import {
   PricedBalance,
   BaseContract,
 } from "@lib/adapter";
+import { getERC20Prices } from "@lib/price";
 
 export async function handler(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
@@ -84,15 +85,7 @@ export async function handler(event, context) {
       .concat(erc20Balances)
       .filter((balance) => balance.amount.gt(0));
 
-    const pricesRes = await fetch("https://coins.llama.fi/prices", {
-      method: "POST",
-      body: JSON.stringify({
-        coins: balances.map(
-          (balance) => `${toDefiLlama(balance.chain)}:${balance.address}`
-        ),
-      }),
-    });
-    const prices = await pricesRes.json();
+    const prices = await getERC20Prices(balances);
 
     const pricedBalances: (Balance | PricedBalance)[] = balances.map(
       (balance) => {

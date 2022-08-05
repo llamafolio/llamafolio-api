@@ -7,6 +7,7 @@ import {
   BaseContext,
   PricedBalance,
 } from "../src/lib/adapter";
+import { getERC20Prices } from "../src/lib/price";
 
 function help() {}
 
@@ -43,16 +44,7 @@ async function main() {
   // Filter empty nbalances
   balances = balances.filter((balance) => balance.amount.gt(0));
 
-  const pricesRes = await fetch("https://coins.llama.fi/prices", {
-    method: "POST",
-    body: JSON.stringify({
-      coins: balances.map(
-        (balance) =>
-          `${toDefiLlama(balance.chain)}:${(balance.priceSubstitute)?balance.priceSubstitute.toLowerCase():balance.address.toLowerCase()}`
-      ),
-    }),
-  });
-  const prices = await pricesRes.json();
+  const prices = await getERC20Prices(balances);
 
   const pricedBalances: (Balance | PricedBalance)[] = balances.map(
     (balance) => {

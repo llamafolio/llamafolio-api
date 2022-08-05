@@ -5,21 +5,21 @@ import { Token } from "@lib/token";
 
 const lendingPoolContract: Contract = {
   name: "LendingPool",
-  dName: "Geist Lending",
+  displayName: "Geist Lending",
   chain: "fantom",
   address: "0x9FAD24f572045c7869117160A571B2e50b10d068",
 };
 
 const multiFeeDistributionContract: Contract = {
   name: "MultiFeeDistribution",
-  dName: "Geist Locker",
+  displayName: "Geist Locker",
   chain: "fantom",
   address: "0x49c93a95dbcc9A6A4D8f77E59c038ce5020e82f8",
 };
 
 const chefIncentivesControllerContract: Contract = {
   name: "ChefIncentivesController",
-  dName: "Geist incentives controller",
+  displayName: "Geist incentives controller",
   chain: "fantom",
   address: "0x297FddC5c33Ef988dd03bd13e162aE084ea1fE57",
 };
