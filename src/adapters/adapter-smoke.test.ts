@@ -26,11 +26,16 @@ describe("getContracts basic validations", () => {
       const adapter = adapters[i];
       const config = adaptersContractsConfigs[i];
 
+      if (config.revalidate != null) {
+        expect(typeof config.revalidate).toBe("number");
+        expect(config.revalidate).toBeGreaterThan(0);
+      }
+
       for (const contract of config.contracts) {
         expect(chains).toContain(contract.chain);
 
         // "wallet" lists coins instead of tokens
-        if (adapter.name !== "Wallet") {
+        if (adapter.id !== "wallet") {
           expect(ethers.utils.isAddress(contract.address)).toBe(true);
         }
       }

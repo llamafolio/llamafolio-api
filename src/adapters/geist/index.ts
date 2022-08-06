@@ -32,6 +32,7 @@ const geistToken: Token = {
 };
 
 const adapter: Adapter = {
+  id: 'geist',
   name: "Geist",
   description: "",
   coingecko: "geist-finance",
@@ -46,6 +47,7 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
+    // TODO: this doesn't work, "getBalances" can be called with only 1 contract (in this case lendingPoolContract for instance)
     const [multiFeeDistributionContract, lendingPoolContract] = contracts;
 
     const balances = await Promise.all([

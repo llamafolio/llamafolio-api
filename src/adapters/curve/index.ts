@@ -6,6 +6,7 @@ import { CATEGORIES } from "@lib/category";
 
 
 const adapter: Adapter = {
+  id: 'curve',
   name: "Curve",
   description:
     "A fully decentralized protocol for automated liquidity provision on Ethereum.",

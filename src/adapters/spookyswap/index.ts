@@ -3,6 +3,7 @@ import { getERC20Balances } from "@lib/erc20";
 import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
+  id: "spookyswap",
   name: "SpookySwap",
   description:
     "All in one decentralized exchange for leveraging diversified funds across ecosystems, with the speed of Fantom Opera",
