@@ -32,6 +32,7 @@ const valasToken: Token = {
 };
 
 const adapter: Adapter = {
+  id: "valas",
   name: "Valas Finance",
   coingecko: "valas-finance",
   defillama: "valas-finance",

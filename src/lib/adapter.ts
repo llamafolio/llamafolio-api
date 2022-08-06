@@ -75,12 +75,13 @@ export type Links = {
 };
 
 export interface Adapter {
+  id: string;
   name: string;
   description: string;
   // CoinGecko ID
   coingecko?: string;
   // DefiLlama ID
-  defillama: string;
+  defillama?: string;
   links: Links;
   getContracts: () => ContractsConfig | Promise<ContractsConfig>;
   getBalances: (

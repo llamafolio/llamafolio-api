@@ -4,6 +4,7 @@ import { toDefiLlama, tokens } from "@lib/chain";
 import { Token } from "@lib/token";
 
 const adapter: Adapter = {
+  id: "wallet",
   name: "Wallet",
   description: "",
   defillama: "",

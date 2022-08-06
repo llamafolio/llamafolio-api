@@ -3,6 +3,7 @@ import { getERC20Balances } from "@lib/erc20";
 import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
+  id: "trader-joe",
   name: "Trader Joe",
   description: "One-stop-shop decentralized trading on Avalanche",
   coingecko: "joe",

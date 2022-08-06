@@ -3,6 +3,7 @@ import { getERC20Balances } from "@lib/erc20";
 import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
+  id: "pancakeswap",
   name: "PancakeSwap",
   description: "",
   defillama: "pancakeswap",

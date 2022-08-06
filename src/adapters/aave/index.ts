@@ -9,6 +9,7 @@ const lendingPoolContract: Contract = {
 };
 
 const adapter: Adapter = {
+  id: "aave",
   name: "AAVE",
   description: "",
   coingecko: "aave",

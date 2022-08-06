@@ -3,6 +3,7 @@ import { getERC20Balances } from "@lib/erc20";
 import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
+  id: "pangolin",
   name: "Pangolin",
   description: "Pangolin is a community-driven DEX that runs on Avalanche.",
   coingecko: "pangolin",
