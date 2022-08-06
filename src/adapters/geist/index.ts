@@ -1,4 +1,4 @@
-import { Adapter, Contract } from "@lib/adapter";
+import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
 import { getLendingPoolBalances } from "@lib/aave/v2/lending";
 import { getMultiFeeDistributionBalances } from "@lib/geist/stake";
 import { Token } from "@lib/token";
@@ -32,7 +32,7 @@ const geistToken: Token = {
 };
 
 const adapter: Adapter = {
-  id: 'geist',
+  id: "geist",
   name: "Geist",
   description: "",
   coingecko: "geist-finance",
@@ -47,24 +47,26 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-    // TODO: this doesn't work, "getBalances" can be called with only 1 contract (in this case lendingPoolContract for instance)
-    const [multiFeeDistributionContract, lendingPoolContract] = contracts;
+    function resolver(contract: Contract) {
+      if (contract.address === multiFeeDistributionContract.address) {
+        return getMultiFeeDistributionBalances(ctx, {
+          chain: multiFeeDistributionContract.chain,
+          multiFeeDistributionAddress: multiFeeDistributionContract.address,
+          chefIncentivesControllerAddress:
+            chefIncentivesControllerContract.address,
+          stakingToken: geistToken,
+        });
+      }
 
-    const balances = await Promise.all([
-      getMultiFeeDistributionBalances(ctx, {
-        chain: multiFeeDistributionContract.chain,
-        multiFeeDistributionAddress: multiFeeDistributionContract.address,
-        chefIncentivesControllerAddress:
-          chefIncentivesControllerContract.address,
-        stakingToken: geistToken,
-      }),
-      getLendingPoolBalances(ctx, {
-        chain: lendingPoolContract.chain,
-        lendingPoolAddress: lendingPoolContract.address,
-      }),
-    ]);
+      if (contract.address === lendingPoolContract.address) {
+        return getLendingPoolBalances(ctx, {
+          chain: lendingPoolContract.chain,
+          lendingPoolAddress: lendingPoolContract.address,
+        });
+      }
+    }
 
-    return { balances: balances.flat() };
+    return { balances: await resolveContractsBalances(resolver, contracts) };
   },
 };
 

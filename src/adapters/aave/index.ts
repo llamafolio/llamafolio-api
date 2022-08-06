@@ -1,4 +1,4 @@
-import { Adapter, Contract } from "@lib/adapter";
+import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
 import { getLendingPoolBalances } from "@lib/aave/v2/lending";
 
 const lendingPoolContract: Contract = {
@@ -24,16 +24,16 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-    const [lendingPoolContract] = contracts;
+    function resolver(contract: Contract) {
+      if (contract.address === lendingPoolContract.address) {
+        return getLendingPoolBalances(ctx, {
+          chain: lendingPoolContract.chain,
+          lendingPoolAddress: lendingPoolContract.address,
+        });
+      }
+    }
 
-    const balances = await getLendingPoolBalances(ctx, {
-      chain: lendingPoolContract.chain,
-      lendingPoolAddress: lendingPoolContract.address,
-    });
-
-    return {
-      balances,
-    };
+    return { balances: await resolveContractsBalances(resolver, contracts) };
   },
 };
 

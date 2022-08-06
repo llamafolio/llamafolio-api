@@ -1,4 +1,4 @@
-import { Adapter, Contract } from "@lib/adapter";
+import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
 import { getLendingPoolBalances } from "@lib/aave/v2/lending";
 import { getMultiFeeDistributionBalances } from "@lib/geist/stake";
 import { Token } from "@lib/token";
@@ -47,23 +47,26 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-    const [multiFeeDistributionContract, lendingPoolContract] = contracts;
+    function resolver(contract: Contract) {
+      if (contract.address === multiFeeDistributionContract.address) {
+        return getMultiFeeDistributionBalances(ctx, {
+          multiFeeDistributionAddress: multiFeeDistributionContract.address,
+          chain: multiFeeDistributionContract.chain,
+          chefIncentivesControllerAddress:
+            chefIncentivesControllerContract.address,
+          stakingToken: valasToken,
+        });
+      }
 
-    const balances = await Promise.all([
-      getMultiFeeDistributionBalances(ctx, {
-        multiFeeDistributionAddress: multiFeeDistributionContract.address,
-        chain: multiFeeDistributionContract.chain,
-        chefIncentivesControllerAddress:
-          chefIncentivesControllerContract.address,
-        stakingToken: valasToken,
-      }),
-      getLendingPoolBalances(ctx, {
-        chain: lendingPoolContract.chain,
-        lendingPoolAddress: lendingPoolContract.address,
-      }),
-    ]);
+      if (contract.address === lendingPoolContract.address) {
+        return getLendingPoolBalances(ctx, {
+          chain: lendingPoolContract.chain,
+          lendingPoolAddress: lendingPoolContract.address,
+        });
+      }
+    }
 
-    return { balances: balances.flat() };
+    return { balances: await resolveContractsBalances(resolver, contracts) };
   },
 };
 

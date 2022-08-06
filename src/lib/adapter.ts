@@ -2,6 +2,7 @@ import { Chain } from "@defillama/sdk/build/general";
 import { BigNumber } from "ethers";
 import { adapters } from "@adapters/index";
 import { Token } from "@lib/token";
+import { isNotNullish } from "@lib/type";
 
 export type BaseContext = {
   address: string;
@@ -109,4 +110,15 @@ export async function getAdapters(contracts: BaseContract[]) {
   return contracts.flatMap(
     (contract) => fake_cache[`${contract.chain}:${contract.address}`] || []
   );
+}
+
+export async function resolveContractsBalances(
+  resolver: (contract: Contract) => Promise<Balance[]> | undefined | null,
+  contracts: Contract[]
+) {
+  const balances = await Promise.all(
+    contracts.map(resolver).filter(isNotNullish)
+  );
+
+  return balances.flat();
 }
