@@ -1,16 +1,18 @@
-import fetch from "node-fetch";
+import format from "pg-format";
 import { strToBuf, bufToStr } from "@lib/buf";
 import pool from "@db/pool";
 import { getERC20Balances } from "@lib/erc20";
 import { toDefiLlama } from "@lib/chain";
 import {
-  getAdapters,
   Balance,
   BaseContext,
+  Contract,
   PricedBalance,
   BaseContract,
 } from "@lib/adapter";
 import { getERC20Prices } from "@lib/price";
+import { adapterById } from "@adapters/index";
+import { isNotNullish } from "@lib/type";
 
 export async function handler(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
@@ -50,11 +52,37 @@ export async function handler(event, context) {
       address: bufToStr(row.to_address),
     }));
 
-    const adapters = await getAdapters(contracts);
+    // TODO: investigate joining this with `distinct_transactions_to`
+    const adaptersContractsRes = await client.query(
+      format(
+        "select adapter_id, chain, address, data from (values %L) AS lookup(key, val) join adapters_contracts c on c.chain = key::varchar and c.address = val::bytea;",
+        contracts.map((c) => [c.chain, c.address])
+      ),
+      []
+    );
+
+    const contractsByAdapterId: { [key: string]: Contract[] } = {};
+
+    for (const row of adaptersContractsRes.rows) {
+      if (!contractsByAdapterId[row.adapter_id]) {
+        contractsByAdapterId[row.adapter_id] = [];
+      }
+      contractsByAdapterId[row.adapter_id].push({
+        chain: row.chain,
+        address: bufToStr(row.address),
+      });
+    }
+
+    const adapterIds = Object.keys(contractsByAdapterId);
+    const adapters = adapterIds
+      .map((id) => adapterById[id])
+      .filter(isNotNullish);
 
     const adaptersBalances = (
       await Promise.all(
-        adapters.map((adapter) => adapter.getBalances(ctx, contracts))
+        adapters.map((adapter) =>
+          adapter.getBalances(ctx, contractsByAdapterId[adapter.id])
+        )
       )
     )
       .map((config) => config.balances)
@@ -72,7 +100,9 @@ export async function handler(event, context) {
 
     const chains = Object.keys(tokensByChain);
     const erc20ChainsBalances = await Promise.all(
-      chains.map((chain) => getERC20Balances(ctx, chain, tokensByChain[chain]))
+      chains.map((chain) =>
+        getERC20Balances(ctx, toDefiLlama(chain)!, tokensByChain[chain])
+      )
     );
     const erc20Balances: Balance[] = erc20ChainsBalances.flatMap((balances) =>
       balances.map((balance) => ({
@@ -92,18 +122,26 @@ export async function handler(event, context) {
         const key = `${balance.chain}:${balance.address}`;
         const price = prices.coins[key];
         if (price !== undefined) {
-          const balanceAmount = balance.amount
-            .div(10 ** price.decimals)
-            .toNumber();
+          try {
+            const balanceAmount = balance.amount
+              .div(10 ** price.decimals)
+              .toNumber();
 
-          return {
-            ...balance,
-            decimals: price.decimals,
-            price: price.price,
-            balanceUSD: balanceAmount * price.price,
-            symbol: price.symbol,
-            timestamp: price.timestamp,
-          };
+            return {
+              ...balance,
+              decimals: price.decimals,
+              price: price.price,
+              balanceUSD: balanceAmount * price.price,
+              symbol: price.symbol,
+              timestamp: price.timestamp,
+            };
+          } catch (error) {
+            console.log(
+              `Failed to get balanceUSD for ${balance.chain}:${balance.address}`,
+              error
+            );
+            return balance;
+          }
         } else {
           // TODO: Mising price and token info from Defillama API
           console.log(

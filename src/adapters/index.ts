@@ -24,3 +24,8 @@ export const adapters: Adapter[] = [
   valas,
   wallet,
 ];
+
+export const adapterById: { [key: string]: Adapter } = {};
+for (const adapter of adapters) {
+  adapterById[adapter.id] = adapter;
+}

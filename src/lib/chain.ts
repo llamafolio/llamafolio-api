@@ -35,7 +35,7 @@ export function fromDefiLlama(chain: string): string | undefined {
   return defiLlamaChainToChain[chain];
 }
 
-export function toDefiLlama(chain: string): string | undefined {
+export function toDefiLlama(chain: string): Chain | undefined {
   return chainToDefiLlamaChain[chain];
 }
 

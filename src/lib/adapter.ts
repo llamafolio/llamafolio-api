@@ -1,6 +1,5 @@
 import { Chain } from "@defillama/sdk/build/general";
 import { BigNumber } from "ethers";
-import { adapters } from "@adapters/index";
 import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
 
@@ -89,27 +88,6 @@ export interface Adapter {
     ctx: BaseContext,
     contracts: BaseContract[]
   ) => BalancesConfig | Promise<BalancesConfig>;
-}
-
-// TODO: get adapters from a real storage cache + add logic to revalidate
-// so we never have to run the getContracts promise during an API call
-export async function getAdapters(contracts: BaseContract[]) {
-  const fake_cache: { [key: string]: Adapter } = {};
-
-  const adaptersContracts = await Promise.all(
-    adapters.map((adapter) => adapter.getContracts())
-  );
-
-  for (let i = 0; i < adaptersContracts.length; i++) {
-    for (const contract of adaptersContracts[i].contracts) {
-      const key = `${contract.chain}:${contract.address}`;
-      fake_cache[key] = adapters[i];
-    }
-  }
-
-  return contracts.flatMap(
-    (contract) => fake_cache[`${contract.chain}:${contract.address}`] || []
-  );
 }
 
 export async function resolveContractsBalances(
