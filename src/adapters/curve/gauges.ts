@@ -65,7 +65,8 @@ export async function getGaugeBalances(ctx: BaseContext, chain: Chain) {
             decimals: 18,
             amount: BigNumber.from(balance.output),
             category: CATEGORIES['stake'].category,
-            priceSubstitute: gauges[index].priceSubstitute
+            priceSubstitute: gauges[index].priceSubstitute,
+            yieldsAddress: gauges[index].priceSubstitute
           }
         )
       } else {

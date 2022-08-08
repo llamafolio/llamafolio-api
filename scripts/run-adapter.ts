@@ -1,5 +1,7 @@
 import path from "path";
 import fetch from "node-fetch";
+import millify from "millify";
+
 import { toDefiLlama } from "../src/lib/chain";
 import {
   Adapter,
@@ -44,6 +46,15 @@ async function main() {
   // Filter empty nbalances
   balances = balances.filter((balance) => balance.amount.gt(0));
 
+
+  const response = await fetch('https://yields.llama.fi/pools');
+  const yieldsDetails = (await response.json()).data;
+
+  const formattedYields = []
+  for (let index = 0; index < yieldsDetails.length; index++) {
+    formattedYields[yieldsDetails[index].pool.toLowerCase()] = yieldsDetails[index]
+  }
+
   const prices = await getERC20Prices(balances);
 
   const pricedBalances: (Balance | PricedBalance)[] = balances.map(
@@ -52,7 +63,6 @@ async function main() {
       const price = prices.coins[key];
       if (price !== undefined) {
         const balanceAmount = balance.amount / 10 ** balance.decimals;
-
         return {
           ...balance,
           decimals: price.decimals,
@@ -64,22 +74,35 @@ async function main() {
       } else {
         // TODO: Mising price and token info from Defillama API
         console.log(
-          `Failed to get price on Defillama API for ${balance.chain}:${balance.address}`
+          `Failed to get price on Defillama API for ${key}`
         );
       }
       return balance;
     }
   );
 
+
   console.log(`Found ${pricedBalances.length} non zero balances`)
+  const data = []
   for (let index = 0; index < pricedBalances.length; index++) {
     const balance = pricedBalances[index];
-    console.log(
-      `Category ${balance.category} :: Token: ${balance.symbol} :: Balance is ${
-        balance.amount / 10 ** balance.decimals
-      } :: Balance $${balance.balanceUSD}`
-    );
+
+    const key = `${balance.yieldsAddress?.toLowerCase()}-${balance.chain}`
+    const subKey = `${balance.yieldsAddress?.toLowerCase()}`
+    const yieldObject = formattedYields[key] || formattedYields[subKey]
+    data.push({
+      address: balance.address,
+      category: balance.category,
+      token: balance.symbol,
+      balance: millify(balance.amount / 10 ** balance.decimals),
+      'balance usd': millify((balance.balanceUSD !== undefined)?balance.balanceUSD:0),
+      'yield': `${yieldObject?.apy.toFixed(2)}%`,
+      'il': `${yieldObject?.ilRisk}`,
+    })
+
   }
+
+  console.table(data)
 }
 
 main();

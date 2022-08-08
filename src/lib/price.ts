@@ -7,7 +7,7 @@ export async function getERC20Prices(tokens: Token[]) {
     method: "POST",
     body: JSON.stringify({
       coins: tokens.map(
-        (token) => `${toDefiLlama(token.chain)}:${token.address.toLowerCase()}`
+        (token) => `${toDefiLlama(token.chain)}:${(token.priceSubstitute)?token.priceSubstitute.toLowerCase():token.address.toLowerCase()}`
       ),
     }),
   });
