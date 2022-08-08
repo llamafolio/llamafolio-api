@@ -84,6 +84,8 @@ async function main() {
 
   console.log(`Found ${pricedBalances.length} non zero balances`)
   const data = []
+
+
   for (let index = 0; index < pricedBalances.length; index++) {
     const balance = pricedBalances[index];
 
@@ -95,10 +97,23 @@ async function main() {
       category: balance.category,
       token: balance.symbol,
       balance: millify(balance.amount / 10 ** balance.decimals),
-      'balance usd': millify((balance.balanceUSD !== undefined)?balance.balanceUSD:0),
-      'yield': `${yieldObject?.apy.toFixed(2)}%`,
-      'il': `${yieldObject?.ilRisk}`,
+      'balance usd': `$${millify((balance.balanceUSD !== undefined)?balance.balanceUSD:0)}`,
+      'yield': `${(yieldObject !== undefined)?yieldObject?.apy.toFixed(2)+"%":'-'}`,
+      'il': `${(yieldObject !== undefined)?yieldObject?.ilRisk:'-'}`,
+      parent: `${balance.parent}`,
     })
+    if (balance.rewards) {
+      data.push({
+        address: balance.address,
+        category: balance.rewards.category,
+        token: balance.symbol,
+        balance: millify(balance.amount / 10 ** balance.decimals),
+        'balance usd': millify((balance.balanceUSD !== undefined)?balance.balanceUSD:0),
+        'yield': `-`,
+        'il': `-`,
+        parent: `${balance.parent}`,
+      })
+    }
 
   }
 

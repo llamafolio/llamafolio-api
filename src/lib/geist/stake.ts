@@ -99,6 +99,7 @@ export async function getMultiFeeDistributionBalances(
       decimals: token.decimals,
       symbol: token.symbol,
       category: "lock-rewards",
+      parent: "lock",
       // TODO: rewards interface
       rewardRates: {
         rewardRate: rewardRateThis.rewardRate,
@@ -206,6 +207,7 @@ export async function getMultiFeeDistributionBalances(
     decimals: stakingToken.decimals,
     amount: totalLMRewards,
     category: "lend-rewards",
+    parent: "lend"
   };
   balances.push(lendingEarnedBalance);
 

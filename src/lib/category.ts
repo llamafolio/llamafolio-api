@@ -53,4 +53,9 @@ export const CATEGORIES: Partial<Record<Category, CategoryInfo>> = {
     category: "farm",
     description: "Assets used to yield rewards on a protocol"
   },
+  "liquidity-mining": {
+    id: 9,
+    category: "liquidity-mining",
+    description: "Rewards for providing liquidity to a protocol"
+  },
 }

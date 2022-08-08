@@ -48,11 +48,67 @@ export async function getGaugeBalances(ctx: BaseContext, chain: Chain) {
         }
     });
 
+
     const gaugeBalancesList = gaugeBalancesListRes
       .filter(res => res.success)
       .map(res => res.output);
 
+
+    calls = []
+    for (let index = 0; index < gauges.length; index++) {
+      const element = gauges[index];
+      calls.push({
+        params: [ctx.address],
+        target: gauges[index].address
+      })
+    }
+    const claimableTokensRes = await multicall({
+      chain: "ethereum",
+      calls: calls,
+      abi: {
+            "stateMutability": "nonpayable",
+            "type": "function",
+            "name": "claimable_tokens",
+            "inputs": [
+              {
+                "name": "addr",
+                "type": "address"
+              }
+            ],
+            "outputs": [
+              {
+                "name": "",
+                "type": "uint256"
+              }
+            ],
+            "gas": 2683603
+        }
+    });
+
     let balances = []
+
+    const pendingRewards = []
+    for (let index =  0; index < claimableTokensRes.length; index++) {
+      let claimableBalance = claimableTokensRes[index].output
+      balances.push(
+        {
+          chain: chain,
+          category: CATEGORIES['liquidity-mining'].category,
+          symbol: "CRV",
+          parent: "stake",
+          poolGenerating: claimableTokensRes[index].input.target.toLowerCase(),
+          decimals: 18,
+          address: claimableTokensRes[index].input.target,
+          priceSubstitute: "0xD533a949740bb3306d119CC777fa900bA034cd52",
+          amount: BigNumber.from((claimableBalance > 0)?claimableBalance:0)
+        }
+
+      )
+    }
+
+
+
+
     for (let index = 0; index < gaugeBalancesList.length; index++) {
 
       const balance = gaugeBalancesListRes.find((o) => o.input.target === gauges[index].address);
@@ -66,7 +122,7 @@ export async function getGaugeBalances(ctx: BaseContext, chain: Chain) {
             amount: BigNumber.from(balance.output),
             category: CATEGORIES['stake'].category,
             priceSubstitute: gauges[index].priceSubstitute,
-            yieldsAddress: gauges[index].priceSubstitute
+            yieldsAddress: gauges[index].priceSubstitute,
           }
         )
       } else {
