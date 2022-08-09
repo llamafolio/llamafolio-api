@@ -64,7 +64,7 @@ functions:
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler
     description: Get sync status
-    timeout: 20
+    timeout: 29
     events:
       - httpApi:
           method: get
