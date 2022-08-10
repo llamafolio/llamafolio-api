@@ -11,6 +11,7 @@ export const chains = [
   "harmony",
   "celo",
   "gnosis",
+  "optimism",
 ];
 
 export const chainToDefiLlamaChain: { [key: string]: Chain } = {
@@ -23,6 +24,7 @@ export const chainToDefiLlamaChain: { [key: string]: Chain } = {
   harmony: "harmony",
   celo: "celo",
   gnosis: "xdai",
+  optimism: "optimism",
 };
 
 // inverse mapping
