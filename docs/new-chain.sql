@@ -1,6 +1,6 @@
--- Queries examples
+-- Replace functions when adding new chain support
 
--- Blocks synced
+-- Stats on indexer syncing
 create or replace function blocks_synced()
   RETURNS TABLE (
       count bigint,
@@ -28,10 +28,6 @@ BEGIN
   return query execute multichainQuery;
 END
 $$;
-
--- Usage:
-select * from blocks_synced();
-
 
 -- Multi chain transactions history from and to given address, sorted by block.timestamp, with token_transfers:
 create or replace function all_transactions_history(address bytea, _limit integer)
@@ -128,21 +124,6 @@ BEGIN
 END
 $$;
 
--- Usage:
-select * from all_transactions_history('\x0000000000000000000000000000000000000000', 20)
-order by b_timestamp desc;
-
--- Get transactions from and to given address, ordered by timestamp with aggregated token transfers
-SELECT *, 'fantom' as chain
-FROM (
-  SELECT *, fantom.transactions.hash as txhash FROM fantom.transactions INNER JOIN fantom.blocks on fantom.transactions.block_number = fantom.blocks.number
-  WHERE fantom.transactions.from_address = '\x0000000000000000000000000000000000000000' OR fantom.transactions.to_address = '\x0000000000000000000000000000000000000000'
-  ORDER BY fantom.blocks.timestamp desc
-  LIMIT 20
-) txs
-LEFT JOIN fantom.token_transfers on fantom.token_transfers.transaction_hash = txs.txhash;
-
-
 -- Given an address, get all distinct contract addresses interacted with (also looks at interaction through logs)
 create or replace function all_contract_interactions(address bytea)
   RETURNS TABLE (
@@ -170,9 +151,6 @@ BEGIN
   return query execute format('select distinct(contract_address), chain from ( %s ) as _', multichainQuery);
 END
 $$;
-
--- Usage
-select * from all_contract_interactions('\x0000000000000000000000000000000000000000');
 
 -- Given an address, returns distinct recipient of multichain transactions
 create or replace function distinct_transactions_to(address bytea)
@@ -208,9 +186,6 @@ BEGIN
 END
 $$;
 
--- Usage:
-select * from distinct_transactions_to('\x0000000000000000000000000000000000000000');
-
 -- Given an address, get all distinct token_address received
 create or replace function all_distinct_tokens_received(address bytea)
   RETURNS TABLE (
@@ -238,5 +213,3 @@ BEGIN
   return query execute format('select distinct(token_address), chain from ( %s ) as _', multichainQuery);
 END
 $$;
-
-select * from all_distinct_tokens_received('\x0000000000000000000000000000000000000000') limit 500;
