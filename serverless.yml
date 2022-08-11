@@ -77,7 +77,7 @@ functions:
       - schedule: rate(10 minutes)
 
   revalidateAdapterContracts:
-    handler: src/handlers/revalidate-adapters.revalidateAdapterContracts
+    handler: src/handlers/revalidateAdapters.revalidateAdapterContracts
     description: Revalidate adapter contracts
 
 custom:
