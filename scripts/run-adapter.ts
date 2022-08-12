@@ -2,7 +2,6 @@ import path from "path";
 import fetch from "node-fetch";
 import millify from "millify";
 
-import { toDefiLlama } from "../src/lib/chain";
 import {
   Adapter,
   Balance,

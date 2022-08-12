@@ -1,6 +1,5 @@
 import { providers } from "@defillama/sdk/build/general";
 import pool from "@db/pool";
-import { toDefiLlama } from "@lib/chain";
 
 export async function handler(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
@@ -21,7 +20,7 @@ export async function handler(event, context) {
 
         const res = { ...row, count, max };
 
-        const chain = toDefiLlama(row.chain)!;
+        const chain = row.chain;
         const provider = providers[chain];
         if (!provider) {
           return res;

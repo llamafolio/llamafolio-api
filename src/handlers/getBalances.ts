@@ -2,7 +2,6 @@ import format from "pg-format";
 import { strToBuf, bufToStr } from "@lib/buf";
 import pool from "@db/pool";
 import { getERC20Balances } from "@lib/erc20";
-import { toDefiLlama } from "@lib/chain";
 import {
   Balance,
   BaseContext,
@@ -101,7 +100,7 @@ export async function handler(event, context) {
     const chains = Object.keys(tokensByChain);
     const erc20ChainsBalances = await Promise.all(
       chains.map((chain) =>
-        getERC20Balances(ctx, toDefiLlama(chain)!, tokensByChain[chain])
+        getERC20Balances(ctx, chain, tokensByChain[chain])
       )
     );
     const erc20Balances: Balance[] = erc20ChainsBalances.flatMap((balances) =>
