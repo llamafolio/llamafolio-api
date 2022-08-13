@@ -2,16 +2,53 @@ import format from "pg-format";
 import { strToBuf, bufToStr } from "@lib/buf";
 import pool from "@db/pool";
 import { getERC20Balances } from "@lib/erc20";
-import {
-  Balance,
-  BaseContext,
-  Contract,
-  PricedBalance,
-  BaseContract,
-} from "@lib/adapter";
+import { Balance, BaseContext, Contract, PricedBalance } from "@lib/adapter";
 import { getERC20Prices } from "@lib/price";
 import { adapterById } from "@adapters/index";
 import { isNotNullish } from "@lib/type";
+import { toJSON } from "@lib/balance";
+
+async function getAdaptersBalances(ctx, client, contracts: [string, Buffer][]) {
+  if (contracts.length === 0) {
+    return [];
+  }
+
+  // TODO: investigate joining this with `distinct_transactions_to`
+  const adaptersContractsRes = await client.query(
+    format(
+      "select adapter_id, chain, address, data from (values %L) AS lookup(key, val) join adapters_contracts c on c.chain = key::varchar and c.address = val::bytea;",
+      contracts
+    ),
+    []
+  );
+
+  const contractsByAdapterId: { [key: string]: Contract[] } = {};
+
+  for (const row of adaptersContractsRes.rows) {
+    if (!contractsByAdapterId[row.adapter_id]) {
+      contractsByAdapterId[row.adapter_id] = [];
+    }
+    contractsByAdapterId[row.adapter_id].push({
+      chain: row.chain,
+      address: bufToStr(row.address),
+    });
+  }
+
+  const adapterIds = Object.keys(contractsByAdapterId);
+  const adapters = adapterIds.map((id) => adapterById[id]).filter(isNotNullish);
+
+  const adaptersBalances = (
+    await Promise.all(
+      adapters.map((adapter) =>
+        adapter.getBalances(ctx, contractsByAdapterId[adapter.id])
+      )
+    )
+  )
+    .map((config) => config.balances)
+    .flat();
+
+  return adaptersBalances;
+}
 
 export async function handler(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
@@ -46,46 +83,12 @@ export async function handler(event, context) {
       ]),
     ]);
 
-    const contracts: BaseContract[] = contractsRes.rows.map((row) => ({
-      chain: row.chain,
-      address: bufToStr(row.to_address),
-    }));
+    const contracts = contractsRes.rows.map((row) => [
+      row.chain,
+      row.to_address,
+    ]);
 
-    // TODO: investigate joining this with `distinct_transactions_to`
-    const adaptersContractsRes = await client.query(
-      format(
-        "select adapter_id, chain, address, data from (values %L) AS lookup(key, val) join adapters_contracts c on c.chain = key::varchar and c.address = val::bytea;",
-        contracts.map((c) => [c.chain, c.address])
-      ),
-      []
-    );
-
-    const contractsByAdapterId: { [key: string]: Contract[] } = {};
-
-    for (const row of adaptersContractsRes.rows) {
-      if (!contractsByAdapterId[row.adapter_id]) {
-        contractsByAdapterId[row.adapter_id] = [];
-      }
-      contractsByAdapterId[row.adapter_id].push({
-        chain: row.chain,
-        address: bufToStr(row.address),
-      });
-    }
-
-    const adapterIds = Object.keys(contractsByAdapterId);
-    const adapters = adapterIds
-      .map((id) => adapterById[id])
-      .filter(isNotNullish);
-
-    const adaptersBalances = (
-      await Promise.all(
-        adapters.map((adapter) =>
-          adapter.getBalances(ctx, contractsByAdapterId[adapter.id])
-        )
-      )
-    )
-      .map((config) => config.balances)
-      .flat();
+    const adaptersBalances = await getAdaptersBalances(ctx, client, contracts);
 
     const tokensByChain: { [key: string]: string[] } = {};
     for (const row of tokensRes.rows) {
@@ -99,9 +102,7 @@ export async function handler(event, context) {
 
     const chains = Object.keys(tokensByChain);
     const erc20ChainsBalances = await Promise.all(
-      chains.map((chain) =>
-        getERC20Balances(ctx, chain, tokensByChain[chain])
-      )
+      chains.map((chain) => getERC20Balances(ctx, chain, tokensByChain[chain]))
     );
     const erc20Balances: Balance[] = erc20ChainsBalances.flatMap((balances) =>
       balances.map((balance) => ({
@@ -156,7 +157,7 @@ export async function handler(event, context) {
     return {
       statusCode: 200,
       body: JSON.stringify({
-        data: pricedBalances,
+        data: pricedBalances.map(toJSON),
       }),
     };
   } catch (e) {

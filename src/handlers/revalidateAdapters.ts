@@ -2,6 +2,7 @@ import format from "pg-format";
 import pool from "@db/pool";
 import { adapters } from "@adapters/index";
 import { invokeLambda, wrapScheduledLambda } from "@lib/lambda";
+import { strToBuf } from "@lib/buf";
 
 async function revalidateAdaptersContracts(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
@@ -101,7 +102,12 @@ export async function revalidateAdapterContracts(event, context) {
   const insertAdapterValues = [[adapter.id, expire_at]];
 
   const insertAdapterContractsValues = config.contracts.map(
-    ({ chain, address, ...data }) => [adapter.id, chain, address, data]
+    ({ chain, address, ...data }) => [
+      adapter.id,
+      chain,
+      strToBuf(address),
+      data,
+    ]
   );
 
   try {
