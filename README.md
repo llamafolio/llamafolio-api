@@ -8,10 +8,10 @@ To learn more about adapters, check our [docs](https://docs.llamafolio.com).
 
 ## Command Line Testing
 
-To test your adapter, simply the command below which will output most details an adapter can find
+To test your adapter, run the command below which will output most details an adapter can find
 
-```
-$ npm run adapter curve 0x0000000000000000000000000000000000000000
+```bash
+npm run adapter curve 0x0000000000000000000000000000000000000000
 ```
 
 ## API
