@@ -17,6 +17,7 @@ const adapter: Adapter = {
       contracts: await getPairsInfo({
         chain: "fantom",
         factoryAddress: "0xEF45d134b73241eDa7703fa787148D9C9F4950b0",
+        length: 100,
       }),
       revalidate: 60 * 60,
     };

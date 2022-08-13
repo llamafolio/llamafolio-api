@@ -17,6 +17,7 @@ const adapter: Adapter = {
       contracts: await getPairsInfo({
         chain: "ethereum",
         factoryAddress: "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
+        length: 100,
       }),
       revalidate: 60 * 60,
     };

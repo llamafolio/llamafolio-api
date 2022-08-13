@@ -7,20 +7,22 @@ import { getERC20Details } from "@lib/erc20";
 export type GetPairsInfoParams = {
   chain: Chain;
   factoryAddress: string;
+  // optional number of pairs
+  length?: number;
 };
 
 export async function getPairsInfo({
   chain,
   factoryAddress,
+  length,
 }: GetPairsInfoParams) {
   const provider = providers[chain];
   const factory = new Contract(factoryAddress, UniswapV2Factory, provider);
 
-  // TODO: use logs table ?
-  const allPairsLength = Math.min(
-    (await factory.allPairsLength()).toNumber(),
-    10
-  );
+  let allPairsLength = (await factory.allPairsLength()).toNumber();
+  if (length !== undefined) {
+    allPairsLength = Math.min(allPairsLength, length);
+  }
 
   const allPairsRes = await multicall({
     chain,
