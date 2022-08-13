@@ -71,7 +71,7 @@ functions:
           path: /sync_status
 
   scheduledRevalidateAdaptersContracts:
-    handler: src/handlers/revalidate-adapters.scheduledRevalidateAdaptersContracts
+    handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts
     description: Revalidate expired adapters contracts
     events:
       - schedule: rate(10 minutes)
