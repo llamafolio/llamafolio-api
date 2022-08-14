@@ -1,6 +1,7 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { ApiGatewayManagementApi, DynamoDB, Lambda } from "aws-sdk";
 import { invokeLambda } from "@lib/lambda";
+import { isHex } from "@lib/buf";
 
 export const handleRequests: APIGatewayProxyHandler = async (event) => {
   const dynamodb = new DynamoDB.DocumentClient();
@@ -38,6 +39,14 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
     case "getBalances":
       const payload = JSON.parse(body).data;
       const address = payload.address;
+      if (!isHex(address)) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            message: "Invalid address parameter, expected hex",
+          }),
+        };
+      }
 
       await invokeLambda(
         `llamafolio-api-${process.env.stage}-websocketGetBalances`,

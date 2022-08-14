@@ -1,6 +1,6 @@
 import { ApiGatewayManagementApi } from "aws-sdk";
 import format from "pg-format";
-import { strToBuf, bufToStr } from "@lib/buf";
+import { strToBuf, bufToStr, isHex } from "@lib/buf";
 import pool from "@db/pool";
 import { getERC20Balances } from "@lib/erc20";
 import { Balance, BaseContext, Contract, PricedBalance } from "@lib/adapter";
@@ -61,6 +61,14 @@ export async function handler(event, context) {
       statusCode: 400,
       body: JSON.stringify({
         message: "Missing address parameter",
+      }),
+    };
+  }
+  if (!isHex(address)) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "Invalid address parameter, expected hex",
       }),
     };
   }
@@ -188,6 +196,14 @@ export async function websocketHandler(event, context) {
       }),
     };
   }
+  if (!isHex(address)) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "Invalid address parameter, expected hex",
+      }),
+    };
+  }
 
   const ctx: BaseContext = { address };
 
@@ -282,10 +298,6 @@ export async function websocketHandler(event, context) {
     const apiGatewayManagementApi = new ApiGatewayManagementApi({
       endpoint: process.env.APIG_ENDPOINT,
     });
-
-    const data = {
-      res: "Get balances response from websocket",
-    };
 
     await apiGatewayManagementApi
       .postToConnection({

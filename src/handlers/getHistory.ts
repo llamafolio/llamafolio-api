@@ -1,5 +1,5 @@
 import { Chain } from "@defillama/sdk/build/general";
-import { strToBuf, bufToStr } from "@lib/buf";
+import { strToBuf, bufToStr, isHex } from "@lib/buf";
 import pool from "@db/pool";
 
 type TokenTransfer = {
@@ -34,6 +34,14 @@ export async function handler(event, context) {
       statusCode: 400,
       body: JSON.stringify({
         message: "Missing address parameter",
+      }),
+    };
+  }
+  if (!isHex(address)) {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        message: "Invalid address parameter, expected hex",
       }),
     };
   }

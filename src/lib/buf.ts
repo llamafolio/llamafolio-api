@@ -1,3 +1,8 @@
+export function isHex(str: string) {
+  const regexp = /^0x[0-9A-F]+$/i;
+  return regexp.test(str);
+}
+
 /**
  *
  * @param {string} str ex: "0xabc123"
