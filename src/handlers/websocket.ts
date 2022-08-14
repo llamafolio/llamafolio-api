@@ -12,7 +12,9 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
 
   switch (routeKey) {
     case "$connect":
-      const ttl = new Date().getTime() / 1000 + 3600;
+      // 1 hour ttl
+      const ttl = Math.ceil(new Date().getTime() / 1000) + 3600;
+
       await dynamodb
         .put({
           TableName,
