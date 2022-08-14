@@ -37,6 +37,16 @@ provider:
     PGPASSWORD: ${file(./env.js):PGPASSWORD}
     PGPORT: ${file(./env.js):PGPORT}
     stage: ${self:custom.stage}
+    tableName: ${self:custom.tableName}
+    # AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    APIG_ENDPOINT:
+      Fn::Join:
+        - ''
+        - - Ref: WebsocketsApi
+          - .execute-api.
+          - Ref: AWS::Region
+          - .amazonaws.com/
+          - ${self:provider.stage}
 
   httpApi:
     metrics: true
@@ -80,6 +90,25 @@ functions:
     handler: src/handlers/revalidateAdapters.revalidateAdapterContracts
     description: Revalidate adapter contracts
 
+  websocketRequests:
+    handler: src/handlers/websocket.handleRequests
+    role: handleWebsocketRequestsRole
+    events:
+      - websocket:
+          route: $connect
+      - websocket:
+          route: $disconnect
+      - websocket:
+          route: getBalances
+      - websocket:
+          # Fallback
+          route: $default
+
+  websocketGetBalances:
+    handler: src/handlers/getBalances.websocketHandler
+    role: websocketGetBalancesRole
+    timeout: 120
+
 custom:
   stage: ${opt:stage, self:provider.stage}
   esbuild:
@@ -94,6 +123,11 @@ custom:
   prune:
     automatic: true
     number: 5 # Number of versions to keep
+  tableName: ${self:custom.stage}-llamafolio-table
+
+resources:
+  - ${file(resources/dynamodb.yml)}
+  - ${file(resources/roles.yml)}
 
 plugins:
   - serverless-esbuild
