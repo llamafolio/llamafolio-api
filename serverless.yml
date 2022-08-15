@@ -39,14 +39,14 @@ provider:
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     # AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    APIG_ENDPOINT:
-      Fn::Join:
-        - ''
-        - - Ref: WebsocketsApi
-          - .execute-api.
-          - Ref: AWS::Region
-          - .amazonaws.com/
-          - ${self:provider.stage}
+    # APIG_ENDPOINT:
+    #   Fn::Join:
+    #     - ''
+    #     - - Ref: WebsocketsApi
+    #       - .execute-api.
+    #       - Ref: AWS::Region
+    #       - .amazonaws.com/
+    #       - ${self:provider.stage}
 
   httpApi:
     metrics: true

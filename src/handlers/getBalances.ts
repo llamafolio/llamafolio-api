@@ -8,6 +8,7 @@ import { getERC20Prices } from "@lib/price";
 import { adapterById } from "@adapters/index";
 import { isNotNullish } from "@lib/type";
 import { toJSON } from "@lib/balance";
+import { badRequest, serverError, success } from "./response";
 
 async function getAdaptersBalances(ctx, client, contracts: [string, Buffer][]) {
   if (contracts.length === 0) {
@@ -57,20 +58,10 @@ export async function handler(event, context) {
 
   const address = event.pathParameters?.address;
   if (!address) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        message: "Missing address parameter",
-      }),
-    };
+    return badRequest("Missing address parameter");
   }
   if (!isHex(address)) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        message: "Invalid address parameter, expected hex",
-      }),
-    };
+    return badRequest("Invalid address parameter, expected hex");
   }
 
   const ctx: BaseContext = { address };
@@ -163,20 +154,9 @@ export async function handler(event, context) {
 
     // TODO: group tokens per adapter and category and sort them by price
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        data: pricedBalances.map(toJSON),
-      }),
-    };
+    return success({ data: pricedBalances.map(toJSON) });
   } catch (e) {
-    console.error("Failed to retrieve balances", e);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: "Failed to retrieve balances",
-      }),
-    };
+    return serverError("Failed to retrieve balances");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);
@@ -189,20 +169,10 @@ export async function websocketHandler(event, context) {
 
   const { connectionId, address } = event;
   if (!address) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        message: "Missing address parameter",
-      }),
-    };
+    return badRequest("Missing address parameter");
   }
   if (!isHex(address)) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        message: "Invalid address parameter, expected hex",
-      }),
-    };
+    return badRequest("Invalid address parameter, expected hex");
   }
 
   const ctx: BaseContext = { address };
@@ -308,21 +278,9 @@ export async function websocketHandler(event, context) {
       })
       .promise();
 
-    return {
-      statusCode: 200,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
-      body: JSON.stringify({}),
-    };
+    return success({});
   } catch (e) {
-    console.error("Failed to retrieve balances", e);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: "Failed to retrieve balances",
-      }),
-    };
+    return serverError("Failed to retrieve balances");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);

@@ -3,6 +3,7 @@ import pool from "@db/pool";
 import { adapters } from "@adapters/index";
 import { invokeLambda, wrapScheduledLambda } from "@lib/lambda";
 import { strToBuf } from "@lib/buf";
+import { serverError, success } from "./response";
 
 async function revalidateAdaptersContracts(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
@@ -49,20 +50,11 @@ async function revalidateAdaptersContracts(event, context) {
       }
     }
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        data: revalidateAdapterIdsArr,
-      }),
-    };
+    return success({
+      data: revalidateAdapterIdsArr,
+    });
   } catch (e) {
-    console.error("Failed to revalidate adapters contracts", e);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: "Failed to revalidate adapters contracts",
-      }),
-    };
+    return serverError("Failed to revalidate adapters contracts");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);
@@ -81,12 +73,9 @@ export async function revalidateAdapterContracts(event, context) {
 
   const adapter = adapters.find((adapter) => adapter.id === event.adapterId);
   if (!adapter) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: `Failed to revalidate adapter contracts, could not find adapter with id: ${event.adapterId}`,
-      }),
-    };
+    return serverError(
+      `Failed to revalidate adapter contracts, could not find adapter with id: ${event.adapterId}`
+    );
   }
 
   const config = await adapter.getContracts();
@@ -143,13 +132,7 @@ export async function revalidateAdapterContracts(event, context) {
     await client.query("COMMIT");
   } catch (e) {
     await client.query("ROLLBACK");
-    console.error("Failed to revalidate adapter contracts", e);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: "Failed to revalidate adapter contracts",
-      }),
-    };
+    return serverError("Failed to revalidate adapter contracts");
   } finally {
     client.release(true);
   }

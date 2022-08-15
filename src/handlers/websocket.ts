@@ -1,7 +1,8 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { ApiGatewayManagementApi, DynamoDB, Lambda } from "aws-sdk";
+import { ApiGatewayManagementApi, DynamoDB } from "aws-sdk";
 import { invokeLambda } from "@lib/lambda";
 import { isHex } from "@lib/buf";
+import { badRequest, success } from "./response";
 
 export const handleRequests: APIGatewayProxyHandler = async (event) => {
   const dynamodb = new DynamoDB.DocumentClient();
@@ -39,13 +40,11 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
     case "getBalances":
       const payload = JSON.parse(body).data;
       const address = payload.address;
+      if (!address) {
+        return badRequest("Missing address parameter");
+      }
       if (!isHex(address)) {
-        return {
-          statusCode: 400,
-          body: JSON.stringify({
-            message: "Invalid address parameter, expected hex",
-          }),
-        };
+        return badRequest("Invalid address parameter, expected hex");
       }
 
       await invokeLambda(
@@ -71,11 +70,5 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
         .promise();
   }
 
-  return {
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-    },
-    body: JSON.stringify({}),
-  };
+  return success({});
 };

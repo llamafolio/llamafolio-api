@@ -1,6 +1,7 @@
 import { Chain } from "@defillama/sdk/build/general";
 import { strToBuf, bufToStr, isHex } from "@lib/buf";
 import pool from "@db/pool";
+import { badRequest, serverError, success } from "./response";
 
 type TokenTransfer = {
   token_address: string;
@@ -30,20 +31,10 @@ export async function handler(event, context) {
 
   let address = event.pathParameters?.address;
   if (!address) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        message: "Missing address parameter",
-      }),
-    };
+    return badRequest("Missing address parameter");
   }
   if (!isHex(address)) {
-    return {
-      statusCode: 400,
-      body: JSON.stringify({
-        message: "Invalid address parameter, expected hex",
-      }),
-    };
+    return badRequest("Invalid address parameter, expected hex");
   }
 
   const client = await pool.connect();
@@ -89,13 +80,7 @@ order by b_timestamp desc;
       const hash = bufToStr(row.tt_transaction_hash);
 
       if (!transactionByChainHash[`${chain}:${hash}`]) {
-        console.error(`Failed to find transaction with hash ${hash}`);
-        return {
-          statusCode: 500,
-          body: JSON.stringify({
-            message: `Failed to find transaction with hash ${hash}`,
-          }),
-        };
+        return serverError(`Failed to find transaction with hash ${hash}`);
       }
 
       transactionByChainHash[`${chain}:${hash}`].token_transfers.push({
@@ -106,20 +91,9 @@ order by b_timestamp desc;
       });
     }
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        data: Object.values(transactionByChainHash),
-      }),
-    };
+    return success({ data: Object.values(transactionByChainHash) });
   } catch (e) {
-    console.error("Failed to retrieve history", e);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: "Failed to retrieve history",
-      }),
-    };
+    return serverError("Failed to retrieve history");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);

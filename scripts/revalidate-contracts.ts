@@ -76,7 +76,6 @@ async function main() {
     await client.query("COMMIT");
   } catch (e) {
     await client.query("ROLLBACK");
-    console.error("Failed to revalidate adapter contracts", e);
     return {
       statusCode: 500,
       body: JSON.stringify({

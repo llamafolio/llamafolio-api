@@ -1,5 +1,6 @@
 import { providers } from "@defillama/sdk/build/general";
 import pool from "@db/pool";
+import { serverError, success } from "./response";
 
 export async function handler(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
@@ -35,20 +36,11 @@ export async function handler(event, context) {
       })
     );
 
-    return {
-      statusCode: 200,
-      body: JSON.stringify({
-        data: blocksSynced,
-      }),
-    };
+    return success({
+      data: blocksSynced,
+    });
   } catch (e) {
-    console.error("Failed to retrieve sync status", e);
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        message: "Failed to retrieve sync status",
-      }),
-    };
+    return serverError("Failed to retrieve sync status");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);
