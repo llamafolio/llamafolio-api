@@ -71,6 +71,22 @@ functions:
           method: get
           path: /history/{address}
 
+  getAdapters:
+    handler: src/handlers/getAdapters.handler
+    description: Get adapters
+    events:
+      - httpApi:
+          method: get
+          path: /adapters
+
+  getContract:
+    handler: src/handlers/getContracts.getContract
+    description: Get contract
+    events:
+      - httpApi:
+          method: get
+          path: /contracts/{address}
+
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler
     description: Get sync status
