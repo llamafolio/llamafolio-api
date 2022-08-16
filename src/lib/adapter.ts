@@ -75,6 +75,7 @@ export type Links = {
 };
 
 export interface Adapter {
+  // Unique adapter identifier
   id: string;
   name: string;
   description: string;

@@ -13,6 +13,11 @@ describe("getContracts basic validations", () => {
     // TODO: independent timers to check that no adapter takes more than x seconds to load
   }, 50_000);
 
+  test("adapter ids must be unique", () => {
+    const uniqueIds = new Set(adapters.map((adapter) => adapter.id));
+    expect(uniqueIds.size).toEqual(adapters.length);
+  });
+
   test("should return at least 1 contract", () => {
     for (const config of adaptersContractsConfigs) {
       expect(config.contracts.length).toBeGreaterThan(0);
