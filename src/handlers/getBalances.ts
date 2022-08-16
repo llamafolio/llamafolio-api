@@ -273,6 +273,7 @@ export async function websocketHandler(event, context) {
       .postToConnection({
         ConnectionId: connectionId,
         Data: JSON.stringify({
+          event: "getBalances",
           data: pricedBalances.map(toJSON),
         }),
       })

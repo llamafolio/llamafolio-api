@@ -56,6 +56,13 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
       );
       break;
 
+    case "getSyncStatus":
+      await invokeLambda(
+        `llamafolio-api-${process.env.stage}-websocketGetSyncStatus`,
+        { connectionId: connectionId }
+      );
+      break;
+
     case "$default":
     default:
       const apiGatewayManagementApi = new ApiGatewayManagementApi({

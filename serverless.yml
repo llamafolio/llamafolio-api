@@ -38,15 +38,15 @@ provider:
     PGPORT: ${file(./env.js):PGPORT}
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
-    # AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    # APIG_ENDPOINT:
-    #   Fn::Join:
-    #     - ''
-    #     - - Ref: WebsocketsApi
-    #       - .execute-api.
-    #       - Ref: AWS::Region
-    #       - .amazonaws.com/
-    #       - ${self:provider.stage}
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    APIG_ENDPOINT:
+      Fn::Join:
+        - ''
+        - - Ref: WebsocketsApi
+          - .execute-api.
+          - Ref: AWS::Region
+          - .amazonaws.com/
+          - ${self:provider.stage}
 
   httpApi:
     metrics: true
@@ -117,11 +117,18 @@ functions:
       - websocket:
           route: getBalances
       - websocket:
+          route: getSyncStatus
+      - websocket:
           # Fallback
           route: $default
 
   websocketGetBalances:
     handler: src/handlers/getBalances.websocketHandler
+    role: websocketGetBalancesRole
+    timeout: 120
+
+  websocketGetSyncStatus:
+    handler: src/handlers/getSyncStatus.websocketHandler
     role: websocketGetBalancesRole
     timeout: 120
 
