@@ -2,39 +2,26 @@ import { Chain } from "@defillama/sdk/build/general";
 import { BigNumber } from "ethers";
 import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
+import { Category } from "@lib/category";
 
 export type BaseContext = {
   address: string;
 };
 
-export type Category =
-  | "wallet"
-  | "lend"
-  | "lend-rewards"
-  | "borrow"
-  | "borrow-stable"
-  | "borrow-variable"
-  | "farm"
-  | "lp"
-  | "lp-stable"
-  | "stake"
-  | "lock"
-  | "lock-rewards"
-  | "vest";
-
 export type BaseBalance = Token & {
   amount: BigNumber;
 };
 
+export type RewardBalance = BaseBalance & {
+  rates?: any;
+};
+
 export type Balance = BaseBalance & {
   category: Category;
-  // TODO: below fields depend on category
-  // ex: "unlockable", "expiry" for "lock" etc
-  underlying?: BaseBalance[];
-  rewards?: BaseBalance[];
-  rewardRates?: any;
-
   children?: Balance[];
+  rewards?: BaseBalance[];
+  stable?: boolean;
+  rates?: any;
 };
 
 export type PricedBalance = Balance & {
@@ -42,6 +29,12 @@ export type PricedBalance = Balance & {
   balanceUSD: number;
   // price updated at
   timestamp: number;
+};
+
+export type CategoryBalances = {
+  title: string;
+  totalUSD: number;
+  balances: Balance[];
 };
 
 export type BalancesConfig = {

@@ -1,7 +1,7 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { providers, Chain } from "@defillama/sdk/build/general";
-import { Balance, BaseContext } from "@lib/adapter";
+import { Balance, BaseContext, RewardBalance } from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
@@ -48,6 +48,10 @@ export async function getMultiFeeDistributionBalances(
 
   const tokens = claimableRewards.map((res: any) => res.token);
   const tokenDetails = await getERC20Details(chain, tokens);
+  const tokenByAddress: { [key: string]: Token } = {};
+  for (const token of tokenDetails) {
+    tokenByAddress[token.address] = token;
+  }
 
   const rewardRates = await multicall({
     chain,
@@ -78,17 +82,16 @@ export async function getMultiFeeDistributionBalances(
     },
   });
 
-  let count = 0;
-
   const stakedSupply = await multiFeeDistribution.totalSupply();
 
-  for (const rewardData of claimableRewards) {
-    const token = tokenDetails.find((o) => o.address === rewardData.token);
+  for (let i = 0; i < claimableRewards.length; i++) {
+    const rewardData = claimableRewards[i];
+
+    const token = tokenByAddress[rewardData.token];
     if (!token) {
       continue;
     }
-    const rewardRateThis = rewardRates[count];
-    count++;
+    const rewardRate = rewardRates[i];
 
     // let apy =  (604800 * (rData.rewardRate / decimal) * assetPrice * 365 / 7  /(geistPrice * totalSupply /1e18));
 
@@ -98,15 +101,14 @@ export async function getMultiFeeDistributionBalances(
       amount: rewardData.amount,
       decimals: token.decimals,
       symbol: token.symbol,
-      category: "lock-rewards",
-      parent: "lock",
+      category: "reward",
       // TODO: rewards interface
-      rewardRates: {
-        rewardRate: rewardRateThis.rewardRate,
-        rewardPeriod: 604800,
-        rewardToken: rewardData.token,
-        rewardDecimals: token.decimals,
-        rewardSymbol: token.symbol,
+      rates: {
+        rate: rewardRate.rewardRate,
+        period: 604800,
+        token: rewardData.token,
+        decimals: token.decimals,
+        symbol: token.symbol,
         //below is the token that you stake or lock to receive the above reward, it is required to calculate an APR
         stakedToken: stakingToken.address,
         stakedSymbol: stakingToken.symbol,
@@ -207,7 +209,7 @@ export async function getMultiFeeDistributionBalances(
     decimals: stakingToken.decimals,
     amount: totalLMRewards,
     category: "lend-rewards",
-    parent: "lend"
+    parent: "lend",
   };
   balances.push(lendingEarnedBalance);
 

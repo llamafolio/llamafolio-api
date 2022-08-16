@@ -64,7 +64,8 @@ export async function getLendingPoolBalances(
       symbol: stableDebtTokenAddressesBalance.symbol,
       decimals: stableDebtTokenAddressesBalance.decimals,
       amount: stableDebtTokenAddressesBalance.amount,
-      category: "borrow-stable",
+      category: "borrow",
+      stable: true,
     });
   }
 
@@ -80,7 +81,8 @@ export async function getLendingPoolBalances(
       symbol: variableDebtTokenAddressesBalance.symbol,
       decimals: variableDebtTokenAddressesBalance.decimals,
       amount: variableDebtTokenAddressesBalance.amount,
-      category: "borrow-variable",
+      category: "borrow",
+      stable: false,
     });
   }
 
