@@ -68,7 +68,7 @@ export type Links = {
 };
 
 export interface Adapter {
-  // Unique adapter identifier
+  // Unique adapter identifier. Use DeFiLlama slug if applicable
   id: string;
   name: string;
   description: string;

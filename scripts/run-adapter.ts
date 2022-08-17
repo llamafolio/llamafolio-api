@@ -9,10 +9,11 @@ import {
   PricedBalance,
   CategoryBalances,
 } from "../src/lib/adapter";
-import { Category } from "../src/lib/category";
 import { getERC20Prices } from "../src/lib/price";
 
-function help() {}
+function help() {
+  console.log("npm run {adapter} {address}");
+}
 
 async function main() {
   // argv[0]: ts-node
@@ -42,7 +43,11 @@ async function main() {
 
   let balances = balancesRes.balances;
   // Filter empty balances
-  balances = balances.filter((balance) => balance.amount.gt(0));
+  balances = balances.filter(
+    (balance) =>
+      balance.amount.gt(0) ||
+      balance.rewards?.some((reward) => reward.amount.gt(0))
+  );
 
   const yieldsRes = await fetch("https://yields.llama.fi/pools");
   const yieldsData = (await yieldsRes.json()).data;
@@ -82,10 +87,8 @@ async function main() {
 
   console.log(`Found ${pricedBalances.length} non zero balances`);
 
-  const data = [];
-
   // group by category
-  const balancesByCategory: Partial<Record<Category, Balance[]>> = {};
+  const balancesByCategory: Record<string, Balance[]> = {};
   for (const balance of pricedBalances) {
     if (!balancesByCategory[balance.category]) {
       balancesByCategory[balance.category] = [];
@@ -125,7 +128,9 @@ async function main() {
 
   for (const categoryBalances of categoriesBalances) {
     console.log(
-      `Category: ${categoryBalances.title}, totalUSD: ${categoryBalances.totalUSD}`
+      `Category: ${categoryBalances.title}, totalUSD: ${millify(
+        categoryBalances.totalUSD
+      )} (${categoryBalances.totalUSD})`
     );
 
     const data: any[] = [];
@@ -136,7 +141,7 @@ async function main() {
       const yieldObject =
         yieldsByPoolAddress[key] || yieldsByPoolAddress[subKey];
 
-      data.push({
+      const d = {
         address: balance.address,
         category: balance.category,
         symbol: balance.symbol,
@@ -148,10 +153,13 @@ async function main() {
           yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + "%" : "-"
         }`,
         il: `${yieldObject !== undefined ? yieldObject?.ilRisk : "-"}`,
-      });
+        rewards: balance.rewards,
+      };
+
+      data.push(d);
     }
 
-    console.table(data);
+    console.dir(data, { depth: null });
   }
 }
 

@@ -53,6 +53,28 @@ export async function getMultiFeeDistributionBalances(
     tokenByAddress[token.address] = token;
   }
 
+  const lockedBalance: Balance = {
+    chain,
+    address: stakingToken.address,
+    symbol: stakingToken.symbol,
+    decimals: stakingToken.decimals,
+    amount: lockedBalances.total,
+    category: "lock",
+    rewards: [],
+  };
+  balances.push(lockedBalance);
+
+  const unlockedBalance: Balance = {
+    chain,
+    address: stakingToken.address,
+    symbol: stakingToken.symbol,
+    decimals: stakingToken.decimals,
+    amount: unlockedBalances,
+    category: "stake",
+    rewards: [],
+  };
+  balances.push(unlockedBalance);
+
   const rewardRates = await multicall({
     chain,
     calls: tokenDetails.map((t) => ({
@@ -116,28 +138,15 @@ export async function getMultiFeeDistributionBalances(
         stakedSupply: stakedSupply,
       },
     };
-    balances.push(reward);
+
+    // staking only
+    if (!lockedBalance.amount.gt(0) && unlockedBalance.amount.gt(0)) {
+      unlockedBalance.rewards?.push(reward);
+    } else {
+      // if both staking and locking, can't tell if aTokens rewards come from one or the other
+      lockedBalance.rewards?.push(reward);
+    }
   }
-
-  const lockedBalance: Balance = {
-    chain,
-    address: stakingToken.address,
-    symbol: stakingToken.symbol,
-    decimals: stakingToken.decimals,
-    amount: lockedBalances.total,
-    category: "lock",
-  };
-  balances.push(lockedBalance);
-
-  const unlockedBalance: Balance = {
-    chain,
-    address: stakingToken.address,
-    symbol: stakingToken.symbol,
-    decimals: stakingToken.decimals,
-    amount: unlockedBalances,
-    category: "stake",
-  };
-  balances.push(unlockedBalance);
 
   const earnedBalance: Balance = {
     chain,
