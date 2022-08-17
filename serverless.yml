@@ -41,7 +41,7 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     APIG_ENDPOINT:
       Fn::Join:
-        - ''
+        - ""
         - - Ref: WebsocketsApi
           - .execute-api.
           - Ref: AWS::Region
@@ -86,6 +86,14 @@ functions:
       - httpApi:
           method: get
           path: /contracts/{address}
+
+  getCategories:
+    handler: src/handlers/getCategories.handler
+    description: Get categories
+    events:
+      - httpApi:
+          method: get
+          path: /categories
 
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler
