@@ -7,7 +7,6 @@ import { Balance, BaseContext, Contract, PricedBalance } from "@lib/adapter";
 import { getERC20Prices } from "@lib/price";
 import { adapterById } from "@adapters/index";
 import { isNotNullish } from "@lib/type";
-import { toJSON } from "@lib/balance";
 import { badRequest, serverError, success } from "./response";
 
 async function getAdaptersBalances(ctx, client, contracts: [string, Buffer][]) {
@@ -154,7 +153,7 @@ export async function handler(event, context) {
 
     // TODO: group tokens per adapter and category and sort them by price
 
-    return success({ data: pricedBalances.map(toJSON) });
+    return success({ data: pricedBalances });
   } catch (e) {
     return serverError("Failed to retrieve balances");
   } finally {
@@ -274,7 +273,7 @@ export async function websocketHandler(event, context) {
         ConnectionId: connectionId,
         Data: JSON.stringify({
           event: "getBalances",
-          data: pricedBalances.map(toJSON),
+          data: pricedBalances,
         }),
       })
       .promise();

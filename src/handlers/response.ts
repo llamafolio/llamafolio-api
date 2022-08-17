@@ -1,3 +1,13 @@
+import { BigNumber } from "ethers";
+
+Object.defineProperties(BigNumber.prototype, {
+  toJSON: {
+    value: function (this: BigNumber) {
+      return this.toString();
+    },
+  },
+});
+
 export type ResponseOptions = {
   statusCode: number;
   body: {
@@ -7,6 +17,7 @@ export type ResponseOptions = {
     [key: string]: any;
   };
   maxAge?: number;
+  replacer?: (key: string, value: any) => any;
 };
 
 export type Response = {
@@ -17,11 +28,16 @@ export type Response = {
   };
 };
 
+function defaultReplacer(_key: string, value: any) {
+  return value;
+}
+
 export function response({
   statusCode,
   body,
   headers,
   maxAge,
+  replacer = defaultReplacer,
 }: ResponseOptions) {
   const response: Response = {
     statusCode,
@@ -30,7 +46,7 @@ export function response({
       "Access-Control-Allow-Origin": "*",
       ...headers,
     },
-    body: JSON.stringify(body),
+    body: JSON.stringify(body, replacer),
   };
 
   if (maxAge !== undefined) {

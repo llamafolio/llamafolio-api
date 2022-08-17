@@ -1,5 +1,6 @@
 import path from "path";
 import fetch from "node-fetch";
+import { BigNumber } from "ethers";
 import millify from "millify";
 
 import {
@@ -10,6 +11,14 @@ import {
   CategoryBalances,
 } from "../src/lib/adapter";
 import { getERC20Prices } from "../src/lib/price";
+
+Object.defineProperties(BigNumber.prototype, {
+  toJSON: {
+    value: function (this: BigNumber) {
+      return this.toString();
+    },
+  },
+});
 
 function help() {
   console.log("npm run {adapter} {address}");
@@ -146,7 +155,7 @@ async function main() {
         category: balance.category,
         symbol: balance.symbol,
         balance: millify(balance.amount / 10 ** balance.decimals),
-        "balance usd": `$${millify(
+        balanceUSD: `$${millify(
           balance.balanceUSD !== undefined ? balance.balanceUSD : 0
         )}`,
         yield: `${
@@ -159,7 +168,7 @@ async function main() {
       data.push(d);
     }
 
-    console.dir(data, { depth: null });
+    console.dir(JSON.parse(JSON.stringify(data)), { depth: null });
   }
 }
 
