@@ -29,6 +29,10 @@ async function main() {
   // argv[1]: run-adapter.ts
   // argv[2]: adapter
   // argv[3]: address
+
+  const startTime = Date.now()
+
+
   if (process.argv.length < 3) {
     console.error("Missing adapter argument");
     return help();
@@ -167,6 +171,9 @@ async function main() {
 
       data.push(d);
     }
+
+    const endTime = Date.now()
+    console.log(`Completed in ${endTime - startTime}ms`)
 
     console.dir(JSON.parse(JSON.stringify(data)), { depth: null });
   }
