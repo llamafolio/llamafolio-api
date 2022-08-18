@@ -1,13 +1,33 @@
+import { BigNumber } from "ethers";
 import { ApiGatewayManagementApi } from "aws-sdk";
 import format from "pg-format";
 import { strToBuf, bufToStr, isHex } from "@lib/buf";
 import pool from "@db/pool";
 import { getERC20Balances } from "@lib/erc20";
-import { Balance, BaseContext, Contract, PricedBalance } from "@lib/adapter";
+import {
+  Balance,
+  BaseContext,
+  Contract,
+  PricedBalance,
+  CategoryBalances,
+  Adapter,
+} from "@lib/adapter";
 import { getERC20Prices } from "@lib/price";
 import { adapterById } from "@adapters/index";
 import { isNotNullish } from "@lib/type";
 import { badRequest, serverError, success } from "./response";
+import { decimalsBN, sum } from "@lib/math";
+
+type AdapterBalance = Balance & { adapterId: string };
+type PricedAdapterBalance = PricedBalance & { adapterId: string };
+
+type AdapterBalancesResponse = Pick<
+  Adapter,
+  "id" | "name" | "description" | "coingecko" | "defillama" | "links"
+> & {
+  categories: any[];
+  totalUSD: number;
+};
 
 async function getAdaptersBalances(ctx, client, contracts: [string, Buffer][]) {
   if (contracts.length === 0) {
@@ -38,14 +58,19 @@ async function getAdaptersBalances(ctx, client, contracts: [string, Buffer][]) {
   const adapterIds = Object.keys(contractsByAdapterId);
   const adapters = adapterIds.map((id) => adapterById[id]).filter(isNotNullish);
 
-  const adaptersBalances = (
+  const adaptersBalances: AdapterBalance[] = (
     await Promise.all(
       adapters.map((adapter) =>
         adapter.getBalances(ctx, contractsByAdapterId[adapter.id])
       )
     )
   )
-    .map((config) => config.balances)
+    .map((config, i) =>
+      config.balances.map((balance) => ({
+        ...balance,
+        adapterId: adapters[i].id,
+      }))
+    )
     .flat();
 
   return adaptersBalances;
@@ -103,11 +128,13 @@ export async function handler(event, context) {
     const erc20ChainsBalances = await Promise.all(
       chains.map((chain) => getERC20Balances(ctx, chain, tokensByChain[chain]))
     );
-    const erc20Balances: Balance[] = erc20ChainsBalances.flatMap((balances) =>
-      balances.map((balance) => ({
-        ...balance,
-        category: "wallet",
-      }))
+    const erc20Balances: AdapterBalance[] = erc20ChainsBalances.flatMap(
+      (balances) =>
+        balances.map((balance) => ({
+          ...balance,
+          category: "wallet",
+          adapterId: "wallet",
+        }))
     );
 
     const balances = adaptersBalances
@@ -116,21 +143,24 @@ export async function handler(event, context) {
 
     const prices = await getERC20Prices(balances);
 
-    const pricedBalances: (Balance | PricedBalance)[] = balances.map(
-      (balance) => {
+    const pricedBalances: (AdapterBalance | PricedAdapterBalance)[] =
+      balances.map((balance) => {
         const key = `${balance.chain}:${balance.address}`;
         const price = prices.coins[key];
         if (price !== undefined) {
           try {
-            const balanceAmount = balance.amount
-              .div(10 ** price.decimals)
-              .toNumber();
+            const balanceAmount = decimalsBN(balance.amount, price.decimals);
 
             return {
               ...balance,
               decimals: price.decimals,
               price: price.price,
-              balanceUSD: balanceAmount * price.price,
+              // 6 decimals precision
+              balanceUSD: balanceAmount
+                .mul(
+                  decimalsBN(BigNumber.from(Math.round(price.price * 1e6)), 6)
+                )
+                .toNumber(),
               symbol: price.symbol,
               timestamp: price.timestamp,
             };
@@ -148,12 +178,79 @@ export async function handler(event, context) {
           );
         }
         return balance;
+      });
+
+    // group balances by adapter
+    const balancesByAdapterId: {
+      [key: string]: (AdapterBalance | PricedAdapterBalance)[];
+    } = {};
+    for (const balance of pricedBalances) {
+      if (!balancesByAdapterId[balance.adapterId]) {
+        balancesByAdapterId[balance.adapterId] = [];
       }
-    );
+      balancesByAdapterId[balance.adapterId].push(balance);
+    }
 
-    // TODO: group tokens per adapter and category and sort them by price
+    const data: AdapterBalancesResponse[] = [];
 
-    return success({ data: pricedBalances });
+    for (const adapterId in balancesByAdapterId) {
+      const adapter: AdapterBalancesResponse = {
+        ...adapterById[adapterId],
+        totalUSD: 0,
+        categories: [],
+      };
+
+      // group by category
+      const balancesByCategory: Record<
+        string,
+        (AdapterBalance | PricedAdapterBalance)[]
+      > = {};
+      for (const balance of balancesByAdapterId[adapterId]) {
+        if (!balancesByCategory[balance.category]) {
+          balancesByCategory[balance.category] = [];
+        }
+        balancesByCategory[balance.category].push(balance);
+      }
+
+      const categoriesBalances: CategoryBalances[] = [];
+      for (const category in balancesByCategory) {
+        const cat: CategoryBalances = {
+          title: category,
+          totalUSD: 0,
+          balances: [],
+        };
+
+        for (const balance of balancesByCategory[category]) {
+          cat.totalUSD += balance.balanceUSD || 0;
+          cat.balances.push(balance);
+        }
+
+        // sort by balanceUSD
+        cat.balances.sort((a, b) => {
+          if (a.balanceUSD != null && b.balanceUSD == null) {
+            return -1;
+          }
+          if (a.balanceUSD == null && b.balanceUSD != null) {
+            return 1;
+          }
+          return b.balanceUSD - a.balanceUSD;
+        });
+
+        categoriesBalances.push(cat);
+      }
+
+      // sort categories by total balances
+      categoriesBalances.sort((a, b) => b.totalUSD - a.totalUSD);
+
+      adapter.categories = categoriesBalances;
+      adapter.totalUSD = sum(adapter.categories.map((b) => b.totalUSD));
+      data.push(adapter);
+    }
+
+    // sort adapters
+    data.sort((a, b) => b.totalUSD - a.totalUSD);
+
+    return success({ totalUSD: sum(data.map((d) => d.totalUSD)), data });
   } catch (e) {
     return serverError("Failed to retrieve balances");
   } finally {
@@ -214,11 +311,13 @@ export async function websocketHandler(event, context) {
     const erc20ChainsBalances = await Promise.all(
       chains.map((chain) => getERC20Balances(ctx, chain, tokensByChain[chain]))
     );
-    const erc20Balances: Balance[] = erc20ChainsBalances.flatMap((balances) =>
-      balances.map((balance) => ({
-        ...balance,
-        category: "wallet",
-      }))
+    const erc20Balances: AdapterBalance[] = erc20ChainsBalances.flatMap(
+      (balances) =>
+        balances.map((balance) => ({
+          ...balance,
+          category: "wallet",
+          adapterId: "wallet",
+        }))
     );
 
     const balances = adaptersBalances
@@ -227,21 +326,24 @@ export async function websocketHandler(event, context) {
 
     const prices = await getERC20Prices(balances);
 
-    const pricedBalances: (Balance | PricedBalance)[] = balances.map(
-      (balance) => {
+    const pricedBalances: (AdapterBalance | PricedAdapterBalance)[] =
+      balances.map((balance) => {
         const key = `${balance.chain}:${balance.address}`;
         const price = prices.coins[key];
         if (price !== undefined) {
           try {
-            const balanceAmount = balance.amount
-              .div(10 ** price.decimals)
-              .toNumber();
+            const balanceAmount = decimalsBN(balance.amount, price.decimals);
 
             return {
               ...balance,
               decimals: price.decimals,
               price: price.price,
-              balanceUSD: balanceAmount * price.price,
+              // 6 decimals precision
+              balanceUSD: balanceAmount
+                .mul(
+                  decimalsBN(BigNumber.from(Math.round(price.price * 1e6)), 6)
+                )
+                .toNumber(),
               symbol: price.symbol,
               timestamp: price.timestamp,
             };
@@ -259,10 +361,77 @@ export async function websocketHandler(event, context) {
           );
         }
         return balance;
-      }
-    );
+      });
 
-    // TODO: group tokens per adapter and category and sort them by price
+    // group balances by adapter
+    const balancesByAdapterId: {
+      [key: string]: (AdapterBalance | PricedAdapterBalance)[];
+    } = {};
+    for (const balance of pricedBalances) {
+      if (!balancesByAdapterId[balance.adapterId]) {
+        balancesByAdapterId[balance.adapterId] = [];
+      }
+      balancesByAdapterId[balance.adapterId].push(balance);
+    }
+
+    const data: AdapterBalancesResponse[] = [];
+
+    for (const adapterId in balancesByAdapterId) {
+      const adapter: AdapterBalancesResponse = {
+        ...adapterById[adapterId],
+        totalUSD: 0,
+        categories: [],
+      };
+
+      // group by category
+      const balancesByCategory: Record<
+        string,
+        (AdapterBalance | PricedAdapterBalance)[]
+      > = {};
+      for (const balance of balancesByAdapterId[adapterId]) {
+        if (!balancesByCategory[balance.category]) {
+          balancesByCategory[balance.category] = [];
+        }
+        balancesByCategory[balance.category].push(balance);
+      }
+
+      const categoriesBalances: CategoryBalances[] = [];
+      for (const category in balancesByCategory) {
+        const cat: CategoryBalances = {
+          title: category,
+          totalUSD: 0,
+          balances: [],
+        };
+
+        for (const balance of balancesByCategory[category]) {
+          cat.totalUSD += balance.balanceUSD || 0;
+          cat.balances.push(balance);
+        }
+
+        // sort by balanceUSD
+        cat.balances.sort((a, b) => {
+          if (a.balanceUSD != null && b.balanceUSD == null) {
+            return -1;
+          }
+          if (a.balanceUSD == null && b.balanceUSD != null) {
+            return 1;
+          }
+          return b.balanceUSD - a.balanceUSD;
+        });
+
+        categoriesBalances.push(cat);
+      }
+
+      // sort categories by total balances
+      categoriesBalances.sort((a, b) => b.totalUSD - a.totalUSD);
+
+      adapter.categories = categoriesBalances;
+      adapter.totalUSD = sum(adapter.categories.map((b) => b.totalUSD));
+      data.push(adapter);
+    }
+
+    // sort adapters
+    data.sort((a, b) => b.totalUSD - a.totalUSD);
 
     const apiGatewayManagementApi = new ApiGatewayManagementApi({
       endpoint: process.env.APIG_ENDPOINT,
@@ -273,7 +442,7 @@ export async function websocketHandler(event, context) {
         ConnectionId: connectionId,
         Data: JSON.stringify({
           event: "getBalances",
-          data: pricedBalances,
+          data: { totalUSD: sum(data.map((d) => d.totalUSD)), data },
         }),
       })
       .promise();
