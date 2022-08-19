@@ -194,11 +194,11 @@ async function main() {
       data.push(d);
     }
 
-    const endTime = Date.now()
     console.table(data);
 
   }
-
+  
+  const endTime = Date.now()
   console.log(`Completed in ${endTime - startTime}ms`)
 
 }
