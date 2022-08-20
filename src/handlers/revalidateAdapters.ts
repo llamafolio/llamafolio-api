@@ -54,6 +54,7 @@ async function revalidateAdaptersContracts(event, context) {
       data: revalidateAdapterIdsArr,
     });
   } catch (e) {
+    console.error("Failed to revalidate adapters contracts", e);
     return serverError("Failed to revalidate adapters contracts");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
@@ -73,6 +74,9 @@ export async function revalidateAdapterContracts(event, context) {
 
   const adapter = adapters.find((adapter) => adapter.id === event.adapterId);
   if (!adapter) {
+    console.error(
+      `Failed to revalidate adapter contracts, could not find adapter with id: ${event.adapterId}`
+    );
     return serverError(
       `Failed to revalidate adapter contracts, could not find adapter with id: ${event.adapterId}`
     );
@@ -132,6 +136,7 @@ export async function revalidateAdapterContracts(event, context) {
     await client.query("COMMIT");
   } catch (e) {
     await client.query("ROLLBACK");
+    console.error("Failed to revalidate adapter contracts", e);
     return serverError("Failed to revalidate adapter contracts");
   } finally {
     client.release(true);

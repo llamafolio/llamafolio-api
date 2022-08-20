@@ -41,6 +41,7 @@ export async function handler(event, context) {
       data: blocksSynced,
     });
   } catch (e) {
+    console.error("Failed to retrieve sync status", e);
     return serverError("Failed to retrieve sync status");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
@@ -100,6 +101,7 @@ export async function websocketHandler(event, context) {
 
     return success({});
   } catch (e) {
+    console.error("Failed to retrieve balances", e);
     return serverError("Failed to retrieve balances");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769

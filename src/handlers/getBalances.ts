@@ -252,6 +252,7 @@ export async function handler(event, context) {
 
     return success({ totalUSD: sum(data.map((d) => d.totalUSD)), data });
   } catch (e) {
+    console.error("Failed to retrieve balances", e);
     return serverError("Failed to retrieve balances");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
@@ -449,6 +450,7 @@ export async function websocketHandler(event, context) {
 
     return success({});
   } catch (e) {
+    console.error("Failed to retrieve balances", e);
     return serverError("Failed to retrieve balances");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769

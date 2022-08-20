@@ -28,6 +28,7 @@ export async function handler(event, context) {
 
     return success({ data: adaptersContractsRes.rows });
   } catch (e) {
+    console.error("Failed to retrieve adapters", e);
     return serverError("Failed to retrieve adapters");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769

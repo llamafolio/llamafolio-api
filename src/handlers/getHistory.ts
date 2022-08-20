@@ -37,9 +37,16 @@ export async function handler(event, context) {
     return badRequest("Invalid address parameter, expected hex");
   }
 
-  let ts_before = new Date(event.queryStringParameters?.ts_before);
-  if (Number.isNaN(ts_before.getTime())) {
-    ts_before = new Date();
+  let before = new Date();
+  if (event.queryStringParameters?.before) {
+    const time = parseInt(event.queryStringParameters?.before);
+    if (Number.isNaN(time)) {
+      return badRequest("Invalid before query parameter, expected UNIX time");
+    }
+    before = new Date(time * 1000);
+    if (Number.isNaN(before.getTime())) {
+      return badRequest("Invalid before query parameter, expected UNIX time");
+    }
   }
 
   const client = await pool.connect();
@@ -50,7 +57,7 @@ export async function handler(event, context) {
 select * from all_transactions_history($1::bytea, $2, $3::timestamp)
 order by b_timestamp desc;
 `,
-      [strToBuf(address), 20, ts_before.toISOString()]
+      [strToBuf(address), 20, before.toISOString()]
     );
 
     const transactionByChainHash: { [key: string]: Transaction } = {};
@@ -85,6 +92,7 @@ order by b_timestamp desc;
       const hash = bufToStr(row.tt_transaction_hash);
 
       if (!transactionByChainHash[`${chain}:${hash}`]) {
+        console.error(`Failed to find transaction with hash ${hash}`);
         return serverError(`Failed to find transaction with hash ${hash}`);
       }
 
@@ -97,11 +105,19 @@ order by b_timestamp desc;
     }
 
     const data = Object.values(transactionByChainHash);
+    const payload: { data: Transaction[]; nextCursor?: number } = {
+      data,
+      nextCursor: undefined,
+    };
 
-    const nextCursor = new Date(data[data.length - 1].timestamp).toISOString();
+    const nextCursorTimestamp = data[data.length - 1]?.timestamp;
+    if (nextCursorTimestamp) {
+      payload.nextCursor = new Date(nextCursorTimestamp).getTime() / 1000;
+    }
 
-    return success({ data, nextCursor });
+    return success(payload);
   } catch (e) {
+    console.error("Failed to retrieve history", e);
     return serverError("Failed to retrieve history");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
