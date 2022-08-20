@@ -34,7 +34,7 @@ select * from blocks_synced();
 
 
 -- Multi chain transactions history from and to given address, sorted by block.timestamp, with token_transfers:
-create or replace function all_transactions_history(address bytea, _limit integer)
+create or replace function all_transactions_history(address bytea, _limit integer, _timestamp_before timestamp)
 	returns table (
 		"chain" varchar,
 		b_number bigint,
@@ -82,15 +82,15 @@ BEGIN
 				success as tx_success
 			from %I.transactions
 			inner join %I.blocks on block_number = number
-			where from_address = %L or to_address = %L',
-			rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, address, address
+			where (from_address = %L or to_address = %L) and (timestamp < %L::timestamp)',
+			rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, rec._chain, address, address, _timestamp_before
 		) || 
 		' union all ';
 	END LOOP;
 	
 	-- remove the last ' union all '
 	multichainTxsQuery := left(multichainTxsQuery, -10);
-	multichainTxsQuery := multichainTxsQuery || format(' limit %L', _limit);
+	multichainTxsQuery := multichainTxsQuery || format('limit %L', _limit);
 	
 	FOR rec IN tables LOOP
     	multichainQuery := multichainQuery || format(
@@ -124,7 +124,7 @@ BEGIN
 	-- remove the last ' union all '
 	multichainQuery := left(multichainQuery, -10);
 	
-	return query execute multichainQuery;
+	return query execute multichainQuery || ' order by b_timestamp desc';
 END
 $$;
 

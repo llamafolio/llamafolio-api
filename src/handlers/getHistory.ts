@@ -37,15 +37,20 @@ export async function handler(event, context) {
     return badRequest("Invalid address parameter, expected hex");
   }
 
+  let ts_before = new Date(event.queryStringParameters?.ts_before);
+  if (Number.isNaN(ts_before.getTime())) {
+    ts_before = new Date();
+  }
+
   const client = await pool.connect();
 
   try {
     const transactionsRes = await client.query(
       `
-select * from all_transactions_history($1::bytea, $2)
+select * from all_transactions_history($1::bytea, $2, $3::timestamp)
 order by b_timestamp desc;
 `,
-      [strToBuf(address), 20]
+      [strToBuf(address), 20, ts_before.toISOString()]
     );
 
     const transactionByChainHash: { [key: string]: Transaction } = {};
@@ -91,7 +96,11 @@ order by b_timestamp desc;
       });
     }
 
-    return success({ data: Object.values(transactionByChainHash) });
+    const data = Object.values(transactionByChainHash);
+
+    const nextCursor = new Date(data[data.length - 1].timestamp).toISOString();
+
+    return success({ data, nextCursor });
   } catch (e) {
     return serverError("Failed to retrieve history");
   } finally {
