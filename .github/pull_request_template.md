@@ -1,10 +1,4 @@
-<!--
-Thanks for your interest in the project. Bugs filed and PRs submitted are appreciated!
-
-Please make sure you're familiar with and follow the instructions in the [contributing guidelines](https://github.com/llamafolio/llamafolio-api#contribution-guidelines).
-
-Please fill out the information below to expedite the review and (hopefully) merge of your pull request!
--->
+<!-- 🦙🦙 Thanks for contributing ! 🦙🦙 -->
 
 ## Adapter
 
