@@ -1,6 +1,6 @@
 <!-- 🦙🦙 Thanks for contributing ! 🦙🦙 -->
 
-<!-- Please specify the adapter name in the title -->
+<!-- Please specify the adapter id in the title -->
 
 <!-- If you're creating a new adapter, please make sure the `links` field is well specified: this info will help us review it -->
 
