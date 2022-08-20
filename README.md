@@ -25,3 +25,9 @@ You can invoke your function locally by using the following command:
 ```bash
 serverless invoke local --function hello
 ```
+
+## Contribution Guidelines
+
+To start contributing to the project, read our [docs](https://docs.llamafolio.com) for guided tutorials and check the instructions here
+
+- [Contributing](./docs/contributing.md)
