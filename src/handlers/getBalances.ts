@@ -16,7 +16,7 @@ import { getERC20Prices } from "@lib/price";
 import { adapterById } from "@adapters/index";
 import { isNotNullish } from "@lib/type";
 import { badRequest, serverError, success } from "./response";
-import { decimalsBN, sum } from "@lib/math";
+import { mulPrice, sum } from "@lib/math";
 
 type AdapterBalance = Balance & { adapterId: string };
 type PricedAdapterBalance = PricedBalance & { adapterId: string };
@@ -88,97 +88,35 @@ export async function handler(event, context) {
     return badRequest("Invalid address parameter, expected hex");
   }
 
-  const ctx: BaseContext = { address };
-
   const client = await pool.connect();
 
   try {
-    const [tokensRes, contractsRes] = await Promise.all([
-      // TODO: filter ERC20 tokens only
-      client.query(
-        `select * from all_distinct_tokens_received($1::bytea) limit 500;`,
-        [strToBuf(address)]
-      ),
-      // client.query(`select * from all_contract_interactions($1::bytea);`, [
-      //   strToBuf(address),
-      // ]),
-      client.query(`select * from distinct_transactions_to($1::bytea);`, [
-        strToBuf(address),
-      ]),
-    ]);
-
-    const contracts = contractsRes.rows.map((row) => [
-      row.chain,
-      row.to_address,
-    ]);
-
-    const adaptersBalances = await getAdaptersBalances(ctx, client, contracts);
-
-    const tokensByChain: { [key: string]: string[] } = {};
-    for (const row of tokensRes.rows) {
-      const chain = row.chain;
-      const address = bufToStr(row.token_address);
-      if (!tokensByChain[chain]) {
-        tokensByChain[chain] = [];
-      }
-      tokensByChain[chain].push(address);
-    }
-
-    const chains = Object.keys(tokensByChain);
-    const erc20ChainsBalances = await Promise.all(
-      chains.map((chain) => getERC20Balances(ctx, chain, tokensByChain[chain]))
+    const balancesRes = await client.query(
+      `
+select * from (
+  select timestamp from balances 
+  where from_address = $1::bytea
+  order by timestamp desc 
+  limit 1
+) ts
+inner join balances on balances.timestamp = ts.timestamp;`,
+      [strToBuf(address)]
     );
-    const erc20Balances: AdapterBalance[] = erc20ChainsBalances.flatMap(
-      (balances) =>
-        balances.map((balance) => ({
-          ...balance,
-          category: "wallet",
-          adapterId: "wallet",
-        }))
-    );
-
-    const balances = adaptersBalances
-      .concat(erc20Balances)
-      .filter((balance) => balance.amount.gt(0));
-
-    const prices = await getERC20Prices(balances);
 
     const pricedBalances: (AdapterBalance | PricedAdapterBalance)[] =
-      balances.map((balance) => {
-        const key = `${balance.chain}:${balance.address}`;
-        const price = prices.coins[key];
-        if (price !== undefined) {
-          try {
-            const balanceAmount = decimalsBN(balance.amount, price.decimals);
-
-            return {
-              ...balance,
-              decimals: price.decimals,
-              price: price.price,
-              // 6 decimals precision
-              balanceUSD: balanceAmount
-                .mul(
-                  decimalsBN(BigNumber.from(Math.round(price.price * 1e6)), 6)
-                )
-                .toNumber(),
-              symbol: price.symbol,
-              timestamp: price.timestamp,
-            };
-          } catch (error) {
-            console.log(
-              `Failed to get balanceUSD for ${balance.chain}:${balance.address}`,
-              error
-            );
-            return balance;
-          }
-        } else {
-          // TODO: Mising price and token info from Defillama API
-          console.log(
-            `Failed to get price on Defillama API for ${balance.chain}:${balance.address}`
-          );
-        }
-        return balance;
-      });
+      balancesRes.rows.map((d) => ({
+        chain: d.chain,
+        address: bufToStr(d.address),
+        symbol: d.symbol,
+        decimals: d.decimals,
+        amount: d.amount,
+        category: d.category,
+        adapterId: d.adapter_id,
+        price: parseFloat(d.price),
+        priceTimestamp: d.price_timestamp,
+        balanceUSD: parseFloat(d.balance_usd),
+        timestamp: d.timestamp,
+      }));
 
     // group balances by adapter
     const balancesByAdapterId: {
@@ -274,6 +212,8 @@ export async function websocketHandler(event, context) {
 
   const ctx: BaseContext = { address };
 
+  const now = new Date();
+
   const client = await pool.connect();
 
   try {
@@ -333,18 +273,17 @@ export async function websocketHandler(event, context) {
         const price = prices.coins[key];
         if (price !== undefined) {
           try {
-            const balanceAmount = decimalsBN(balance.amount, price.decimals);
-
             return {
               ...balance,
               decimals: price.decimals,
               price: price.price,
               // 6 decimals precision
-              balanceUSD: balanceAmount
-                .mul(
-                  decimalsBN(BigNumber.from(Math.round(price.price * 1e6)), 6)
-                )
-                .toNumber(),
+              balanceUSD: mulPrice(
+                balance.amount,
+                price.decimals,
+                price.price,
+                6
+              ),
               symbol: price.symbol,
               timestamp: price.timestamp,
             };
@@ -363,6 +302,32 @@ export async function websocketHandler(event, context) {
         }
         return balance;
       });
+
+    // insert balances
+    const insertBalancesValues = pricedBalances.map((d) => [
+      strToBuf(address),
+      d.chain,
+      strToBuf(d.address),
+      d.symbol,
+      d.decimals,
+      d.amount.toString(),
+      d.category,
+      d.adapterId,
+      (d as PricedBalance).price,
+      (d as PricedBalance).timestamp
+        ? new Date((d as PricedBalance).timestamp)
+        : undefined,
+      (d as PricedBalance).balanceUSD,
+      now,
+    ]);
+
+    await client.query(
+      format(
+        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, balance_usd, timestamp) VALUES %L;",
+        insertBalancesValues
+      ),
+      []
+    );
 
     // group balances by adapter
     const balancesByAdapterId: {
