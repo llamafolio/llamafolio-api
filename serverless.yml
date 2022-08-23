@@ -123,15 +123,15 @@ functions:
       - websocket:
           route: $disconnect
       - websocket:
-          route: getBalances
+          route: updateBalances
       - websocket:
           route: getSyncStatus
       - websocket:
           # Fallback
           route: $default
 
-  websocketGetBalances:
-    handler: src/handlers/getBalances.websocketHandler
+  websocketUpdateBalances:
+    handler: src/handlers/getBalances.websocketUpdateHandler
     role: websocketGetBalancesRole
     timeout: 120
 

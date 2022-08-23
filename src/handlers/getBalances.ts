@@ -198,7 +198,7 @@ inner join balances on balances.timestamp = ts.timestamp;`,
   }
 }
 
-export async function websocketHandler(event, context) {
+export async function websocketUpdateHandler(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
   context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
 
@@ -407,7 +407,7 @@ export async function websocketHandler(event, context) {
       .postToConnection({
         ConnectionId: connectionId,
         Data: JSON.stringify({
-          event: "getBalances",
+          event: "updateBalances",
           data: { totalUSD: sum(data.map((d) => d.totalUSD)), data },
         }),
       })
@@ -415,8 +415,8 @@ export async function websocketHandler(event, context) {
 
     return success({});
   } catch (e) {
-    console.error("Failed to retrieve balances", e);
-    return serverError("Failed to retrieve balances");
+    console.error("Failed to update balances", e);
+    return serverError("Failed to update balances");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);

@@ -37,7 +37,7 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
         .promise();
       break;
 
-    case "getBalances":
+    case "updateBalances":
       const payload = JSON.parse(body).data;
       const address = payload.address;
       if (!address) {
@@ -48,7 +48,7 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
       }
 
       await invokeLambda(
-        `llamafolio-api-${process.env.stage}-websocketGetBalances`,
+        `llamafolio-api-${process.env.stage}-websocketUpdateBalances`,
         {
           connectionId: connectionId,
           address,
