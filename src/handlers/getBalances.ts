@@ -13,7 +13,7 @@ import {
   Adapter,
 } from "@lib/adapter";
 import { getERC20Prices } from "@lib/price";
-import { adapterById } from "@adapters/index";
+import { adapters, adapterById } from "@adapters/index";
 import { isNotNullish } from "@lib/type";
 import { badRequest, serverError, success } from "./response";
 import { mulPrice, sum } from "@lib/math";
@@ -25,8 +25,7 @@ type AdapterBalancesResponse = Pick<
   Adapter,
   "id" | "name" | "description" | "coingecko" | "defillama" | "links"
 > & {
-  categories: any[];
-  totalUSD: number;
+  data: (AdapterBalance | PricedAdapterBalance)[];
 };
 
 async function getAdaptersBalances(ctx, client, contracts: [string, Buffer][]) {
@@ -56,7 +55,45 @@ async function getAdaptersBalances(ctx, client, contracts: [string, Buffer][]) {
   }
 
   const adapterIds = Object.keys(contractsByAdapterId);
-  const adapters = adapterIds.map((id) => adapterById[id]).filter(isNotNullish);
+  const _adapters = adapterIds
+    .map((id) => adapterById[id])
+    .filter(isNotNullish);
+
+  const adaptersBalances: AdapterBalance[] = (
+    await Promise.all(
+      _adapters.map((adapter) =>
+        adapter.getBalances(ctx, contractsByAdapterId[adapter.id])
+      )
+    )
+  )
+    .map((config, i) =>
+      config.balances.map((balance) => ({
+        ...balance,
+        adapterId: _adapters[i].id,
+      }))
+    )
+    .flat();
+
+  return adaptersBalances;
+}
+
+async function getAllAdaptersBalances(ctx, client) {
+  const adaptersContractsRes = await client.query(
+    "select * from adapters_contracts;",
+    []
+  );
+
+  const contractsByAdapterId: { [key: string]: Contract[] } = {};
+
+  for (const row of adaptersContractsRes.rows) {
+    if (!contractsByAdapterId[row.adapter_id]) {
+      contractsByAdapterId[row.adapter_id] = [];
+    }
+    contractsByAdapterId[row.adapter_id].push({
+      chain: row.chain,
+      address: bufToStr(row.address),
+    });
+  }
 
   const adaptersBalances: AdapterBalance[] = (
     await Promise.all(
@@ -120,75 +157,19 @@ inner join balances on balances.timestamp = ts.timestamp;`,
 
     // group balances by adapter
     const balancesByAdapterId: {
-      [key: string]: (AdapterBalance | PricedAdapterBalance)[];
+      [key: string]: AdapterBalancesResponse;
     } = {};
     for (const balance of pricedBalances) {
       if (!balancesByAdapterId[balance.adapterId]) {
-        balancesByAdapterId[balance.adapterId] = [];
-      }
-      balancesByAdapterId[balance.adapterId].push(balance);
-    }
-
-    const data: AdapterBalancesResponse[] = [];
-
-    for (const adapterId in balancesByAdapterId) {
-      const adapter: AdapterBalancesResponse = {
-        ...adapterById[adapterId],
-        totalUSD: 0,
-        categories: [],
-      };
-
-      // group by category
-      const balancesByCategory: Record<
-        string,
-        (AdapterBalance | PricedAdapterBalance)[]
-      > = {};
-      for (const balance of balancesByAdapterId[adapterId]) {
-        if (!balancesByCategory[balance.category]) {
-          balancesByCategory[balance.category] = [];
-        }
-        balancesByCategory[balance.category].push(balance);
-      }
-
-      const categoriesBalances: CategoryBalances[] = [];
-      for (const category in balancesByCategory) {
-        const cat: CategoryBalances = {
-          title: category,
-          totalUSD: 0,
-          balances: [],
+        balancesByAdapterId[balance.adapterId] = {
+          ...adapterById[balance.adapterId],
+          data: [],
         };
-
-        for (const balance of balancesByCategory[category]) {
-          cat.totalUSD += balance.balanceUSD || 0;
-          cat.balances.push(balance);
-        }
-
-        // sort by balanceUSD
-        cat.balances.sort((a, b) => {
-          if (a.balanceUSD != null && b.balanceUSD == null) {
-            return -1;
-          }
-          if (a.balanceUSD == null && b.balanceUSD != null) {
-            return 1;
-          }
-          return b.balanceUSD - a.balanceUSD;
-        });
-
-        categoriesBalances.push(cat);
       }
-
-      // sort categories by total balances
-      categoriesBalances.sort((a, b) => b.totalUSD - a.totalUSD);
-
-      adapter.categories = categoriesBalances;
-      adapter.totalUSD = sum(adapter.categories.map((b) => b.totalUSD));
-      data.push(adapter);
+      balancesByAdapterId[balance.adapterId].data.push(balance);
     }
 
-    // sort adapters
-    data.sort((a, b) => b.totalUSD - a.totalUSD);
-
-    return success({ totalUSD: sum(data.map((d) => d.totalUSD)), data });
+    return success({ data: Object.values(balancesByAdapterId) });
   } catch (e) {
     console.error("Failed to retrieve balances", e);
     return serverError("Failed to retrieve balances");
@@ -217,7 +198,7 @@ export async function websocketUpdateHandler(event, context) {
   const client = await pool.connect();
 
   try {
-    const [tokensRes, contractsRes] = await Promise.all([
+    const [tokensRes /*contractsRes*/] = await Promise.all([
       // TODO: filter ERC20 tokens only
       client.query(
         `select * from all_distinct_tokens_received($1::bytea) limit 500;`,
@@ -226,17 +207,19 @@ export async function websocketUpdateHandler(event, context) {
       // client.query(`select * from all_contract_interactions($1::bytea);`, [
       //   strToBuf(address),
       // ]),
-      client.query(`select * from distinct_transactions_to($1::bytea);`, [
-        strToBuf(address),
-      ]),
+      // client.query(`select * from distinct_transactions_to($1::bytea);`, [
+      //   strToBuf(address),
+      // ]),
     ]);
 
-    const contracts = contractsRes.rows.map((row) => [
-      row.chain,
-      row.to_address,
-    ]);
+    // const contracts = contractsRes.rows.map((row) => [
+    //   row.chain,
+    //   row.to_address,
+    // ]);
 
-    const adaptersBalances = await getAdaptersBalances(ctx, client, contracts);
+    // TODO: optimization when chains are synced: only run the adapters of protocols the user interacted with
+    // const adaptersBalances = await getAdaptersBalances(ctx, client, contracts);
+    const adaptersBalances = await getAllAdaptersBalances(ctx, client);
 
     const tokensByChain: { [key: string]: string[] } = {};
     for (const row of tokensRes.rows) {
@@ -331,73 +314,17 @@ export async function websocketUpdateHandler(event, context) {
 
     // group balances by adapter
     const balancesByAdapterId: {
-      [key: string]: (AdapterBalance | PricedAdapterBalance)[];
+      [key: string]: AdapterBalancesResponse;
     } = {};
     for (const balance of pricedBalances) {
       if (!balancesByAdapterId[balance.adapterId]) {
-        balancesByAdapterId[balance.adapterId] = [];
-      }
-      balancesByAdapterId[balance.adapterId].push(balance);
-    }
-
-    const data: AdapterBalancesResponse[] = [];
-
-    for (const adapterId in balancesByAdapterId) {
-      const adapter: AdapterBalancesResponse = {
-        ...adapterById[adapterId],
-        totalUSD: 0,
-        categories: [],
-      };
-
-      // group by category
-      const balancesByCategory: Record<
-        string,
-        (AdapterBalance | PricedAdapterBalance)[]
-      > = {};
-      for (const balance of balancesByAdapterId[adapterId]) {
-        if (!balancesByCategory[balance.category]) {
-          balancesByCategory[balance.category] = [];
-        }
-        balancesByCategory[balance.category].push(balance);
-      }
-
-      const categoriesBalances: CategoryBalances[] = [];
-      for (const category in balancesByCategory) {
-        const cat: CategoryBalances = {
-          title: category,
-          totalUSD: 0,
-          balances: [],
+        balancesByAdapterId[balance.adapterId] = {
+          ...adapterById[balance.adapterId],
+          data: [],
         };
-
-        for (const balance of balancesByCategory[category]) {
-          cat.totalUSD += balance.balanceUSD || 0;
-          cat.balances.push(balance);
-        }
-
-        // sort by balanceUSD
-        cat.balances.sort((a, b) => {
-          if (a.balanceUSD != null && b.balanceUSD == null) {
-            return -1;
-          }
-          if (a.balanceUSD == null && b.balanceUSD != null) {
-            return 1;
-          }
-          return b.balanceUSD - a.balanceUSD;
-        });
-
-        categoriesBalances.push(cat);
       }
-
-      // sort categories by total balances
-      categoriesBalances.sort((a, b) => b.totalUSD - a.totalUSD);
-
-      adapter.categories = categoriesBalances;
-      adapter.totalUSD = sum(adapter.categories.map((b) => b.totalUSD));
-      data.push(adapter);
+      balancesByAdapterId[balance.adapterId].data.push(balance);
     }
-
-    // sort adapters
-    data.sort((a, b) => b.totalUSD - a.totalUSD);
 
     const apiGatewayManagementApi = new ApiGatewayManagementApi({
       endpoint: process.env.APIG_ENDPOINT,
@@ -408,7 +335,7 @@ export async function websocketUpdateHandler(event, context) {
         ConnectionId: connectionId,
         Data: JSON.stringify({
           event: "updateBalances",
-          data: { totalUSD: sum(data.map((d) => d.totalUSD)), data },
+          data: Object.values(balancesByAdapterId),
         }),
       })
       .promise();
