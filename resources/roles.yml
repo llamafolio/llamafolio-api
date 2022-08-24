@@ -46,10 +46,10 @@ Resources:
                   - lambda:InvokeFunction
                 Resource:
                   - "*"
-  websocketGetBalancesRole:
+  handleWebsocketRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: ${self:service}-${self:provider.stage}-websocketGetBalancesRole
+      RoleName: ${self:service}-${self:provider.stage}-handleWebsocketRole
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
