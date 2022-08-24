@@ -14,10 +14,3 @@ export const chains: Chain[] = [
   "xdai",
   "optimism",
 ];
-
-export const tokens: Token[] = [
-  { chain: "ethereum", address: "", symbol: "ETH", decimals: 18 },
-  { chain: "fantom", address: "", symbol: "FTM", decimals: 18 },
-  { chain: "bsc", address: "", symbol: "BNB", decimals: 18 },
-  { chain: "avax", address: "", symbol: "AVAX", decimals: 18 },
-];

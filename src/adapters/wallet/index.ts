@@ -1,6 +1,7 @@
-import { providers } from "@defillama/sdk/build/general";
+import fetch from "node-fetch";
+import { Chain, providers } from "@defillama/sdk/build/general";
 import { Adapter, Balance } from "@lib/adapter";
-import { tokens } from "@lib/chain";
+import { chains } from "@lib/chain";
 import { Token } from "@lib/token";
 
 const adapter: Adapter = {
@@ -9,9 +10,32 @@ const adapter: Adapter = {
   description: "",
   defillama: "",
   links: {},
-  getContracts() {
+  async getContracts() {
+    const chainsInfoRes = await fetch("https://chainid.network/chains.json");
+    const chainsInfo = await chainsInfoRes.json();
+
+    const chainById: { [key: string]: Chain } = {};
+    for (const chain of chains) {
+      chainById[providers[chain].network.chainId] = chain;
+    }
+
+    const coinByChain: { [key: string]: Token } = {};
+    for (const chainInfo of chainsInfo) {
+      if (chainInfo.chainId in chainById) {
+        if (!coinByChain[chainInfo.chain] && !chainInfo.parent) {
+          coinByChain[chainInfo.chain] = {
+            ...chainInfo.nativeCurrency,
+            chain: chainById[chainInfo.chainId],
+          };
+        }
+      }
+    }
+
+    const coins = Object.values(coinByChain);
+
     return {
-      contracts: tokens,
+      contracts: coins,
+      revalidate: 60 * 60 * 24,
     };
   },
   async getBalances(ctx, contracts) {
