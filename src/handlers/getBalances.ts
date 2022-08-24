@@ -169,7 +169,10 @@ inner join balances on balances.timestamp = ts.timestamp;`,
       balancesByAdapterId[balance.adapterId].data.push(balance);
     }
 
-    return success({ data: Object.values(balancesByAdapterId) });
+    const data = Object.values(balancesByAdapterId);
+    let updatedAt = data[0]?.data?.[0].timestamp ?? new Date().toISOString();
+
+    return success({ updatedAt, data });
   } catch (e) {
     console.error("Failed to retrieve balances", e);
     return serverError("Failed to retrieve balances");
@@ -192,8 +195,6 @@ export async function websocketUpdateHandler(event, context) {
   }
 
   const ctx: BaseContext = { address };
-
-  const now = new Date();
 
   const client = await pool.connect();
 
@@ -286,6 +287,8 @@ export async function websocketUpdateHandler(event, context) {
         return balance;
       });
 
+    const now = new Date();
+
     // insert balances
     const insertBalancesValues = pricedBalances.map((d) => [
       strToBuf(address),
@@ -326,6 +329,8 @@ export async function websocketUpdateHandler(event, context) {
       balancesByAdapterId[balance.adapterId].data.push(balance);
     }
 
+    const data = Object.values(balancesByAdapterId);
+
     const apiGatewayManagementApi = new ApiGatewayManagementApi({
       endpoint: process.env.APIG_ENDPOINT,
     });
@@ -335,7 +340,8 @@ export async function websocketUpdateHandler(event, context) {
         ConnectionId: connectionId,
         Data: JSON.stringify({
           event: "updateBalances",
-          data: Object.values(balancesByAdapterId),
+          updatedAt: now.toISOString(),
+          data,
         }),
       })
       .promise();
