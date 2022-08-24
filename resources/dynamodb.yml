@@ -8,7 +8,7 @@ Resources:
         - AttributeName: PK
           AttributeType: S
         - AttributeName: SK
-          AttributeType: N
+          AttributeType: S
       KeySchema:
         - AttributeName: PK
           KeyType: HASH

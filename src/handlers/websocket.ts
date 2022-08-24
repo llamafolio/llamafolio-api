@@ -12,6 +12,9 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
     requestContext: { connectionId, routeKey },
   } = event;
 
+  const PK = `CI#${connectionId}`;
+  const SK = `CI#${connectionId}`;
+
   switch (routeKey) {
     case "$connect":
       // 1 hour ttl
@@ -20,10 +23,7 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
       await dynamodb
         .put({
           TableName,
-          Item: {
-            PK: connectionId,
-            SK: ttl,
-          },
+          Item: { PK, SK, ttl },
         })
         .promise();
       break;
@@ -32,7 +32,7 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
       await dynamodb
         .delete({
           TableName,
-          Key: { connectionId },
+          Key: { PK, SK },
         })
         .promise();
       break;
