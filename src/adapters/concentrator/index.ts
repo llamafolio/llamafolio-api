@@ -10,7 +10,6 @@ const concentratorIFOContract: Contract = {
   address: "0x3cf54f3a1969be9916dad548f3c084331c4450b5",
 };
 
-
 const adapter: Adapter = {
   id: "concentrator",
   name: "Concentrator",
