@@ -44,6 +44,7 @@ export function response({
     headers: {
       "Content-Type": "application/json",
       "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
       ...headers,
     },
     body: JSON.stringify(body, replacer),
@@ -58,7 +59,7 @@ export function response({
 
 export function success(
   body: ResponseOptions["body"],
-  options?: ResponseOptions
+  options?: Partial<ResponseOptions>
 ) {
   return response({
     ...options,
