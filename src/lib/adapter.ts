@@ -84,14 +84,6 @@ export interface Adapter {
   ) => BalancesConfig | Promise<BalancesConfig>;
 }
 
-export interface AdapterResolver {
-  getContracts: () => Contract[] | Promise<Contract[]>;
-  getBalances: (
-    ctx: BaseContext,
-    contracts: BaseContract[]
-  ) => Balance[] | Promise<Balance[]>;
-}
-
 export async function resolveContractsBalances(
   resolver: (contract: Contract) => Promise<Balance[]> | undefined | null,
   contracts: Contract[]
@@ -101,23 +93,4 @@ export async function resolveContractsBalances(
   );
 
   return balances.flat();
-}
-
-export function mergeAdaptersResolvers(adapterResolvers: AdapterResolver[]) {
-  return {
-    async getContracts() {
-      const balances = await Promise.all(
-        adapterResolvers.map((resolver) => resolver.getContracts())
-      );
-
-      return balances.flat();
-    },
-    async getBalances(ctx: BaseContext, contracts: BaseContract[]) {
-      const balances = await Promise.all(
-        adapterResolvers.map((resolver) => resolver.getBalances(ctx, contracts))
-      );
-
-      return balances.flat();
-    },
-  };
 }
