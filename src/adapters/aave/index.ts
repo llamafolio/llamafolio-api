@@ -1,12 +1,13 @@
-import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
-import { getLendingPoolBalances } from "@lib/aave/v2/lending";
+import { Adapter, mergeAdaptersResolvers } from "@lib/adapter";
+import avalanche from "./avalanche";
+import ethereum from "./ethereum";
+import polygon from "./polygon";
 
-const lendingPoolContract: Contract = {
-  name: "LendingPool",
-  displayName: "AAVE Lending",
-  chain: "ethereum",
-  address: "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9",
-};
+const multichainResolver = mergeAdaptersResolvers([
+  avalanche,
+  ethereum,
+  polygon,
+]);
 
 const adapter: Adapter = {
   id: "aave",
@@ -18,22 +19,13 @@ const adapter: Adapter = {
     website: "https://app.aave.com/",
     doc: "https://docs.aave.com/hub/",
   },
-  getContracts() {
+  async getContracts() {
     return {
-      contracts: [lendingPoolContract],
+      contracts: await multichainResolver.getContracts(),
     };
   },
   async getBalances(ctx, contracts) {
-    function resolver(contract: Contract) {
-      if (contract.address === lendingPoolContract.address) {
-        return getLendingPoolBalances(ctx, {
-          chain: lendingPoolContract.chain,
-          lendingPoolAddress: lendingPoolContract.address,
-        });
-      }
-    }
-
-    return { balances: await resolveContractsBalances(resolver, contracts) };
+    return { balances: await multichainResolver.getBalances(ctx, contracts) };
   },
 };
 
