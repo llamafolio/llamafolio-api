@@ -1,6 +1,4 @@
 import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
-import { getLendingPoolBalances } from "@lib/aave/v2/lending";
-import { getMultiFeeDistributionBalances } from "@lib/geist/stake";
 import { getIFOBalances } from "./ifo";
 
 const concentratorIFOContract: Contract = {
@@ -26,18 +24,13 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-    const balances = await getIFOBalances(
-      ctx,
-      "ethereum",
-      contracts.map((c) => c.address)
-    );
+    function resolver(contract: Contract) {
+      if (contract.address === concentratorIFOContract.address) {
+        return getIFOBalances(ctx, "ethereum");
+      }
+    }
 
-    return {
-      balances: balances.map((balance) => ({
-        ...balance,
-        category: "lp",
-      })),
-    };
+    return { balances: await resolveContractsBalances(resolver, contracts) };
   },
 };
 

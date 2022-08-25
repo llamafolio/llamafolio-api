@@ -2,9 +2,10 @@
 
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { providers } from "@defillama/sdk/build/general";
 import ConcentratorIFOAbi from "./abis/IFO.json";
 import { getERC20Details } from "@lib/erc20";
+import { Balance } from "@lib/adapter";
 
 export async function getIFOBalances(ctx, chain) {
   const provider = providers["ethereum"];
@@ -161,7 +162,7 @@ export async function getIFOBalances(ctx, chain) {
 
   const lpTokenDetails = await getERC20Details(chain, lpTokens);
 
-  const balances = [];
+  const balances: Balance[] = [];
   for (let index = 0; index < poolBalances.length; index++) {
     const poolBalance = poolBalances[index];
     if (poolBalance > 0) {
