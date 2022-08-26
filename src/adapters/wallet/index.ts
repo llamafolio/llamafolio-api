@@ -1,6 +1,6 @@
-import { Contract, ethers } from "ethers";
+import { ethers } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
-import { Adapter, Balance } from "@lib/adapter";
+import { Adapter, Balance, Contract } from "@lib/adapter";
 import { Token } from "@lib/token";
 import { getERC20BalanceOf } from "@lib/erc20";
 import tokensByChain from "@llamafolio/tokens";

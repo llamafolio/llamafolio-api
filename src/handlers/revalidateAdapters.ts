@@ -3,6 +3,7 @@ import pool from "@db/pool";
 import { adapters } from "@adapters/index";
 import { invokeLambda, wrapScheduledLambda } from "@lib/lambda";
 import { strToBuf } from "@lib/buf";
+import { sliceIntoChunks } from "@lib/array";
 import { serverError, success } from "./response";
 
 async function revalidateAdaptersContracts(event, context) {
@@ -99,7 +100,8 @@ export async function revalidateAdapterContracts(event, context) {
       adapter.id,
       chain,
       strToBuf(address),
-      data,
+      // \\u0000 cannot be converted to text
+      JSON.parse(JSON.stringify(data).replace(/\\u0000/g, "")),
     ]
   );
 
@@ -125,12 +127,16 @@ export async function revalidateAdapterContracts(event, context) {
     );
 
     // Insert new contracts
-    await client.query(
-      format(
-        "INSERT INTO adapters_contracts (adapter_id, chain, address, data) VALUES %L;",
-        insertAdapterContractsValues
-      ),
-      []
+    await Promise.all(
+      sliceIntoChunks(insertAdapterContractsValues, 200).map((chunk) =>
+        client.query(
+          format(
+            "INSERT INTO adapters_contracts (adapter_id, chain, address, data) VALUES %L ON CONFLICT DO NOTHING;",
+            chunk
+          ),
+          []
+        )
+      )
     );
 
     await client.query("COMMIT");

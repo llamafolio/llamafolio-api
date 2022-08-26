@@ -199,19 +199,19 @@ export async function websocketUpdateHandler(event, context) {
   const client = await pool.connect();
 
   try {
-    const [tokensRes /*contractsRes*/] = await Promise.all([
-      // TODO: filter ERC20 tokens only
-      client.query(
-        `select * from all_distinct_tokens_received($1::bytea) limit 500;`,
-        [strToBuf(address)]
-      ),
-      // client.query(`select * from all_contract_interactions($1::bytea);`, [
-      //   strToBuf(address),
-      // ]),
-      // client.query(`select * from distinct_transactions_to($1::bytea);`, [
-      //   strToBuf(address),
-      // ]),
-    ]);
+    // const [tokensRes /*contractsRes*/] = await Promise.all([
+    // TODO: filter ERC20 tokens only
+    // client.query(
+    //   `select * from all_distinct_tokens_received($1::bytea) limit 500;`,
+    //   [strToBuf(address)]
+    // ),
+    // client.query(`select * from all_contract_interactions($1::bytea);`, [
+    //   strToBuf(address),
+    // ]),
+    // client.query(`select * from distinct_transactions_to($1::bytea);`, [
+    //   strToBuf(address),
+    // ]),
+    // ]);
 
     // const contracts = contractsRes.rows.map((row) => [
     //   row.chain,
@@ -222,31 +222,32 @@ export async function websocketUpdateHandler(event, context) {
     // const adaptersBalances = await getAdaptersBalances(ctx, client, contracts);
     const adaptersBalances = await getAllAdaptersBalances(ctx, client);
 
-    const tokensByChain: { [key: string]: string[] } = {};
-    for (const row of tokensRes.rows) {
-      const chain = row.chain;
-      const address = bufToStr(row.token_address);
-      if (!tokensByChain[chain]) {
-        tokensByChain[chain] = [];
-      }
-      tokensByChain[chain].push(address);
-    }
+    // TODO: optimization when chains are synced: only run the wallet adapter with received tokens, not the full list
+    // const tokensByChain: { [key: string]: string[] } = {};
+    // for (const row of tokensRes.rows) {
+    //   const chain = row.chain;
+    //   const address = bufToStr(row.token_address);
+    //   if (!tokensByChain[chain]) {
+    //     tokensByChain[chain] = [];
+    //   }
+    //   tokensByChain[chain].push(address);
+    // }
 
-    const chains = Object.keys(tokensByChain);
-    const erc20ChainsBalances = await Promise.all(
-      chains.map((chain) => getERC20Balances(ctx, chain, tokensByChain[chain]))
-    );
-    const erc20Balances: AdapterBalance[] = erc20ChainsBalances.flatMap(
-      (balances) =>
-        balances.map((balance) => ({
-          ...balance,
-          category: "wallet",
-          adapterId: "wallet",
-        }))
-    );
+    // const chains = Object.keys(tokensByChain);
+    // const erc20ChainsBalances = await Promise.all(
+    //   chains.map((chain) => getERC20Balances(ctx, chain, tokensByChain[chain]))
+    // );
+    // const erc20Balances: AdapterBalance[] = erc20ChainsBalances.flatMap(
+    //   (balances) =>
+    //     balances.map((balance) => ({
+    //       ...balance,
+    //       category: "wallet",
+    //       adapterId: "wallet",
+    //     }))
+    // );
 
     const balances = adaptersBalances
-      .concat(erc20Balances)
+      // .concat(erc20Balances)
       .filter((balance) => balance.amount.gt(0));
 
     const prices = await getERC20Prices(balances);

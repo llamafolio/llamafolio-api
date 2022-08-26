@@ -1,4 +1,5 @@
 import { multiCall } from "@defillama/sdk/build/abi/index";
+import { sliceIntoChunks } from "@lib/array";
 
 export type MultiCallParams = Parameters<typeof multiCall>[0] & {
   batchSize?: number;
@@ -28,13 +29,4 @@ export async function multicall(params: MultiCallParams) {
   }
 
   return multicallRes;
-}
-
-function sliceIntoChunks<T>(arr: T[], chunkSize: number) {
-  const res = [];
-  for (let i = 0; i < arr.length; i += chunkSize) {
-    const chunk = arr.slice(i, i + chunkSize);
-    res.push(chunk);
-  }
-  return res;
 }
