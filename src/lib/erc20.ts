@@ -3,6 +3,7 @@ import { Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import { BaseBalance, BaseContext } from "@lib/adapter";
 import { Token } from "@lib/token";
+import { isNotNullish } from "./type";
 
 export const abi = {
   balanceOf: {
@@ -78,27 +79,58 @@ export async function getERC20Balances(
 
   return tokens
     .filter((address, i) => {
-      if (!symbols[i].success) {
+      if (!symbols[i].success || symbols[i].output == null) {
         console.error(`Could not get symbol for token ${chain}:${address}`);
         return false;
       }
-      if (!decimals[i].success) {
+      if (!decimals[i].success || decimals[i].output == null) {
         console.error(`Could not get decimals for token ${chain}:${address}`);
         return false;
       }
-      if (!balances[i].success) {
+      if (!balances[i].success || balances[i].output == null) {
         console.error(`Could not get balanceOf for token ${chain}:${address}`);
         return false;
       }
       return true;
     })
-    .map((address, i) => ({
-      chain,
-      address,
-      symbol: symbols[i].output,
-      decimals: parseInt(decimals[i].output),
-      amount: BigNumber.from(balances[i].output),
-    }));
+    .map((address, i) => {
+      return {
+        chain,
+        address,
+        symbol: symbols[i].output,
+        decimals: parseInt(decimals[i].output),
+        amount: BigNumber.from(balances[i].output || "0"),
+      };
+    });
+}
+
+export async function getERC20BalanceOf(
+  ctx: BaseContext,
+  chain: Chain,
+  tokens: Token[]
+): Promise<BaseBalance[]> {
+  const balances = await multicall({
+    chain,
+    calls: tokens.map((token) => ({
+      target: token.address,
+      params: [ctx.address],
+    })),
+    abi: abi.balanceOf,
+  });
+
+  return tokens
+    .map((token, i) => {
+      if (!balances[i].success || balances[i].output == null) {
+        console.error(
+          `Could not get balanceOf for token ${chain}:${token.address}`
+        );
+        return null;
+      }
+
+      (token as BaseBalance).amount = BigNumber.from(balances[i].output || "0");
+      return token as BaseBalance;
+    })
+    .filter(isNotNullish);
 }
 
 export async function getERC20Details(
