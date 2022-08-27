@@ -7,10 +7,9 @@ import {
   Adapter,
   Balance,
   BaseContext,
-  PricedBalance,
   CategoryBalances,
 } from "../src/lib/adapter";
-import { getERC20Prices } from "../src/lib/price";
+import { getPricedBalances } from "../src/lib/price";
 
 Object.defineProperties(BigNumber.prototype, {
   toJSON: {
@@ -30,8 +29,7 @@ async function main() {
   // argv[2]: adapter
   // argv[3]: address
 
-  const startTime = Date.now()
-
+  const startTime = Date.now();
 
   if (process.argv.length < 3) {
     console.error("Missing adapter argument");
@@ -54,14 +52,6 @@ async function main() {
 
   const balancesRes = await adapter.getBalances(ctx, contractsRes.contracts);
 
-  let balances = balancesRes.balances;
-  // Filter empty balances
-  balances = balances.filter(
-    (balance) =>
-      balance.amount.gt(0) ||
-      balance.rewards?.some((reward) => reward.amount.gt(0))
-  );
-
   const yieldsRes = await fetch("https://yields.llama.fi/pools");
   const yieldsData = (await yieldsRes.json()).data;
 
@@ -70,33 +60,7 @@ async function main() {
     yieldsByPoolAddress[yieldsData[i].pool.toLowerCase()] = yieldsData[i];
   }
 
-  const prices = await getERC20Prices(balances);
-
-  const pricedBalances: (Balance | PricedBalance)[] = balances.map(
-    (balance) => {
-      const key = `${balance.chain}:${
-        balance.priceSubstitute
-          ? balance.priceSubstitute.toLowerCase()
-          : balance.address.toLowerCase()
-      }`;
-      const price = prices.coins[key];
-      if (price !== undefined) {
-        const balanceAmount = balance.amount / 10 ** balance.decimals;
-        return {
-          ...balance,
-          decimals: price.decimals,
-          price: price.price,
-          balanceUSD: balanceAmount * price.price,
-          symbol: price.symbol,
-          timestamp: price.timestamp,
-        };
-      } else {
-        // TODO: Mising price and token info from Defillama API
-        console.log(`Failed to get price on Defillama API for ${key}`);
-      }
-      return balance;
-    }
-  );
+  const pricedBalances = await getPricedBalances(balancesRes.balances);
 
   console.log(`Found ${pricedBalances.length} non zero balances`);
 
@@ -166,7 +130,7 @@ async function main() {
           yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + "%" : "-"
         }`,
         il: `${yieldObject !== undefined ? yieldObject?.ilRisk : "-"}`,
-        rewards: (balance.rewards !== undefined)?true:false,
+        rewards: balance.rewards !== undefined ? true : false,
       };
 
       if (balance.rewards) {
@@ -181,13 +145,14 @@ async function main() {
               rewardR.balanceUSD !== undefined ? rewardR.balanceUSD : 0
             )}`,
             yield: `${
-              yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + "%" : "-"
+              yieldObject !== undefined
+                ? yieldObject?.apy.toFixed(2) + "%"
+                : "-"
             }`,
-            il: `${yieldObject !== undefined ? yieldObject?.ilRisk : "-"}`
-          }
+            il: `${yieldObject !== undefined ? yieldObject?.ilRisk : "-"}`,
+          };
 
-          data.push(r)
-
+          data.push(r);
         }
       }
 
@@ -195,12 +160,10 @@ async function main() {
     }
 
     console.table(data);
-
   }
-  
-  const endTime = Date.now()
-  console.log(`Completed in ${endTime - startTime}ms`)
 
+  const endTime = Date.now();
+  console.log(`Completed in ${endTime - startTime}ms`);
 }
 
 main();

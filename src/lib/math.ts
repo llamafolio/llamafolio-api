@@ -23,20 +23,11 @@ export function sum(nums: number[]) {
   return res;
 }
 
-export function mulPrice(
-  amount: BigNumber,
-  decimals: number,
-  price: number,
-  precision = 6
-) {
-  const amount_decimals = decimalsBN(amount, decimals);
+export function mulPrice(amountBN: BigNumber, decimals: number, price: number) {
+  const floatChars = amountBN.toString().split("");
+  floatChars.splice(-decimals, 0, ".");
 
-  const priceBN = amount_decimals
-    .mul(BigNumber.from(Math.round(price * 10 ** precision)))
-    .toString();
+  const amount = parseFloat(floatChars.join(""));
 
-  const floatChars = priceBN.split("");
-  floatChars.splice(-precision, 0, ".");
-
-  return parseFloat(floatChars.join(""));
+  return amount * price;
 }

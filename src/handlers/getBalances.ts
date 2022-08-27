@@ -1,22 +1,18 @@
-import { BigNumber } from "ethers";
 import { ApiGatewayManagementApi } from "aws-sdk";
 import format from "pg-format";
 import { strToBuf, bufToStr, isHex } from "@lib/buf";
 import pool from "@db/pool";
-import { getERC20Balances } from "@lib/erc20";
 import {
   Balance,
   BaseContext,
   Contract,
   PricedBalance,
-  CategoryBalances,
   Adapter,
 } from "@lib/adapter";
-import { getERC20Prices } from "@lib/price";
+import { getPricedBalances } from "@lib/price";
 import { adapters, adapterById } from "@adapters/index";
 import { isNotNullish } from "@lib/type";
 import { badRequest, serverError, success } from "./response";
-import { mulPrice, sum } from "@lib/math";
 
 type AdapterBalance = Balance & { adapterId: string };
 type PricedAdapterBalance = PricedBalance & { adapterId: string };
@@ -92,6 +88,7 @@ async function getAllAdaptersBalances(ctx, client) {
     contractsByAdapterId[row.adapter_id].push({
       chain: row.chain,
       address: bufToStr(row.address),
+      ...row.data,
     });
   }
 
@@ -246,47 +243,10 @@ export async function websocketUpdateHandler(event, context) {
     //     }))
     // );
 
-    const balances = adaptersBalances
-      // .concat(erc20Balances)
-      .filter((balance) => balance.amount.gt(0));
+    const balances = adaptersBalances;
+    // .concat(erc20Balances);
 
-    const prices = await getERC20Prices(balances);
-
-    const pricedBalances: (AdapterBalance | PricedAdapterBalance)[] =
-      balances.map((balance) => {
-        const key = `${balance.chain}:${balance.address}`;
-        const price = prices.coins[key];
-        if (price !== undefined) {
-          try {
-            return {
-              ...balance,
-              decimals: price.decimals,
-              price: price.price,
-              // 6 decimals precision
-              balanceUSD: mulPrice(
-                balance.amount,
-                price.decimals,
-                price.price,
-                6
-              ),
-              symbol: price.symbol,
-              timestamp: price.timestamp,
-            };
-          } catch (error) {
-            console.log(
-              `Failed to get balanceUSD for ${balance.chain}:${balance.address}`,
-              error
-            );
-            return balance;
-          }
-        } else {
-          // TODO: Mising price and token info from Defillama API
-          console.log(
-            `Failed to get price on Defillama API for ${balance.chain}:${balance.address}`
-          );
-        }
-        return balance;
-      });
+    const pricedBalances = await getPricedBalances(balances);
 
     const now = new Date();
 

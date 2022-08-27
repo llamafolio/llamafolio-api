@@ -1,6 +1,5 @@
-import { ethers } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
-import { Adapter, Balance, Contract } from "@lib/adapter";
+import { Adapter, Balance, BaseBalance, Contract } from "@lib/adapter";
 import { Token } from "@lib/token";
 import { getERC20BalanceOf } from "@lib/erc20";
 import tokensByChain from "@llamafolio/tokens";
@@ -31,7 +30,7 @@ const adapter: Adapter = {
 
     for (const token of contracts) {
       // native chain coin
-      if (token.address === ethers.constants.AddressZero) {
+      if (token.native) {
         coins.push(token as Token);
         continue;
       }
@@ -47,13 +46,8 @@ const adapter: Adapter = {
       coins.map(async (token) => {
         const provider = providers[token.chain];
         const balance = await provider.getBalance(ctx.address);
-        return {
-          chain: token.chain,
-          address: "",
-          decimals: token.decimals,
-          symbol: token.symbol,
-          amount: balance,
-        };
+        (token as BaseBalance).amount = balance;
+        return token;
       })
     );
 
