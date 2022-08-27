@@ -95,15 +95,6 @@ functions:
           method: get
           path: /categories
 
-  getSyncStatus:
-    handler: src/handlers/getSyncStatus.handler
-    description: Get sync status
-    timeout: 29
-    events:
-      - httpApi:
-          method: get
-          path: /sync_status
-
   scheduledRevalidateAdaptersContracts:
     handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts
     description: Revalidate expired adapters contracts
