@@ -7,7 +7,8 @@ export type Category =
   | "lock"
   | "lp"
   | "farm"
-  | "reward";
+  | "reward"
+  | "vestable-reward";
 
 export type CategoryInfo = {
   category: string; // allow adapter-based extra categories
@@ -60,5 +61,10 @@ export const Categories: Record<Category, CategoryInfo> = {
     category: "reward",
     title: "Rewards",
     description: "Assets rewarded by a protocol",
+  },
+  "vestable-reward": {
+    category: "vestable-reward",
+    title: "Vestable Rewards",
+    description: "Vested assets rewarded by a protocol",
   },
 };

@@ -1,5 +1,5 @@
 import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
-import { getLendingPoolBalances } from "@lib/aave/v2/lending";
+import { getLendingPoolBalances } from "@lib/geist/lending";
 import { getMultiFeeDistributionBalances } from "@lib/geist/stake";
 import { Token } from "@lib/token";
 
@@ -52,8 +52,6 @@ const adapter: Adapter = {
         return getMultiFeeDistributionBalances(ctx, {
           chain: multiFeeDistributionContract.chain,
           multiFeeDistributionAddress: multiFeeDistributionContract.address,
-          chefIncentivesControllerAddress:
-            chefIncentivesControllerContract.address,
           stakingToken: geistToken,
         });
       }
@@ -62,6 +60,9 @@ const adapter: Adapter = {
         return getLendingPoolBalances(ctx, {
           chain: lendingPoolContract.chain,
           lendingPoolAddress: lendingPoolContract.address,
+          chefIncentivesControllerAddress:
+            chefIncentivesControllerContract.address,
+          stakingToken: geistToken,
         });
       }
     }

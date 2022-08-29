@@ -13,15 +13,17 @@ export type BaseBalance = Token & {
 };
 
 export type RewardBalance = BaseBalance & {
+  claimable: BigNumber;
   rates?: any;
 };
 
-export type Balance = BaseBalance & {
+export type BalanceType = "debt" | "reward";
+
+export type Balance = (BaseBalance | RewardBalance) & {
+  type?: BalanceType;
   category: Category;
-  children?: Balance[];
   rewards?: BaseBalance[];
   stable?: boolean;
-  rates?: any;
 };
 
 export type PricedBalance = Balance & {

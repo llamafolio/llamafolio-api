@@ -1,26 +1,38 @@
 import { ethers, BigNumber } from "ethers";
-import { Chain } from "@defillama/sdk/build/general";
+import { providers, Chain } from "@defillama/sdk/build/general";
+import { multicall } from "@lib/multicall";
 import { Balance, BaseContext } from "@lib/adapter";
-import { getERC20Balances } from "@lib/erc20";
-import { getReserveTokens } from "./tokens";
+import { getERC20Balances, getERC20Details } from "@lib/erc20";
+import { getReserveTokens } from "@lib/aave/v2/tokens";
+import { Token } from "@lib/token";
 import ChefIncentivesControllerABI from "./abis/ChefIncentivesController.json";
 
 export type GetLendingPoolBalancesParams = {
   chain: Chain;
   lendingPoolAddress: string;
   chefIncentivesControllerAddress: string;
+  stakingToken: Token;
 };
 
 export async function getLendingPoolBalances(
   ctx: BaseContext,
-  params: GetLendingPoolBalancesParams
+  {
+    chain,
+    lendingPoolAddress,
+    chefIncentivesControllerAddress,
+    stakingToken,
+  }: GetLendingPoolBalancesParams
 ) {
   const balances: Balance[] = [];
+  const provider = providers[chain];
 
   const reserveTokens = await getReserveTokens({
-    chain: params.chain,
-    lendingPoolAddress: params.lendingPoolAddress,
+    chain,
+    lendingPoolAddress,
   });
+  const underlyingTokensAddresses = reserveTokens.map(
+    (reserveToken) => reserveToken.underlyingTokenAddress
+  );
   const aTokens = reserveTokens.map(
     (reserveToken) => reserveToken.aTokenAddress
   );
@@ -32,25 +44,23 @@ export async function getLendingPoolBalances(
   );
 
   const [
+    underlyingTokens,
     aBalances,
     stableDebtTokenAddressesBalances,
     variableDebtTokenAddressesBalances,
   ] = await Promise.all([
-    getERC20Balances(ctx, params.chain, aTokens),
-    getERC20Balances(ctx, params.chain, stableDebtTokenAddresses),
-    getERC20Balances(ctx, params.chain, variableDebtTokenAddresses),
+    getERC20Details(chain, underlyingTokensAddresses),
+    getERC20Balances(ctx, chain, aTokens),
+    getERC20Balances(ctx, chain, stableDebtTokenAddresses),
+    getERC20Balances(ctx, chain, variableDebtTokenAddresses),
   ]);
 
   for (let i = 0; i < aBalances.length; i++) {
     const aBalance = aBalances[i];
 
     balances.push({
-      chain: aBalance.chain,
-      // address: aBalance.address,
       //substitute the token for it's "native" version
-      address: reserveTokens[i].underlyingTokenAddress,
-      symbol: aBalance.symbol,
-      decimals: aBalance.decimals,
+      ...underlyingTokens[i],
       amount: aBalance.amount,
       category: "lend",
     });
@@ -60,14 +70,11 @@ export async function getLendingPoolBalances(
     const stableDebtTokenAddressesBalance = stableDebtTokenAddressesBalances[i];
 
     balances.push({
-      chain: stableDebtTokenAddressesBalance.chain,
-      // address: stableDebtTokenAddressesBalance.address,
       //substitute the token for it's "native" version
-      address: reserveTokens[i].underlyingTokenAddress,
-      symbol: stableDebtTokenAddressesBalance.symbol,
-      decimals: stableDebtTokenAddressesBalance.decimals,
+      ...underlyingTokens[i],
       amount: stableDebtTokenAddressesBalance.amount,
       category: "borrow",
+      type: "debt",
       stable: true,
     });
   }
@@ -77,19 +84,16 @@ export async function getLendingPoolBalances(
       variableDebtTokenAddressesBalances[i];
 
     balances.push({
-      chain: variableDebtTokenAddressesBalance.chain,
-      // address: variableDebtTokenAddressesBalance.address,
       //substitute the token for it's "native" version
-      address: reserveTokens[i].underlyingTokenAddress,
-      symbol: variableDebtTokenAddressesBalance.symbol,
-      decimals: variableDebtTokenAddressesBalance.decimals,
+      ...underlyingTokens[i],
       amount: variableDebtTokenAddressesBalance.amount,
       category: "borrow",
+      type: "debt",
       stable: false,
     });
   }
 
-  // Lending rewards
+  // lending / borrowing rewards
   const chefIncentives = new ethers.Contract(
     chefIncentivesControllerAddress,
     ChefIncentivesControllerABI,
@@ -123,42 +127,21 @@ export async function getLendingPoolBalances(
     registeredTokensAddresses
   );
 
-  // collect aTokens underlyings
-  const underlyingTokensAddresses = await multicall({
-    chain,
-    calls: registeredTokensAddresses.map((address) => ({
-      target: address,
-      params: [],
-    })),
-    abi: {
-      inputs: [],
-      name: "UNDERLYING_ASSET_ADDRESS",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const lmRewards = lmClaimableRewards.map((reward, i) => ({
-    amount: reward,
-    underlying: underlyingTokensAddresses[i].output,
-  }));
-
   let totalLMRewards = BigNumber.from("0");
-  for (let index = 0; index < lmRewards.length; index++) {
-    totalLMRewards = totalLMRewards.add(lmRewards[index].amount);
+  for (let index = 0; index < lmClaimableRewards.length; index++) {
+    totalLMRewards = totalLMRewards.add(lmClaimableRewards[index]);
   }
 
-  const lendingEarnedBalance: Balance = {
-    chain: params.chain,
+  const rewardBalance: Balance = {
+    chain,
     address: stakingToken.address,
     symbol: stakingToken.symbol,
     decimals: stakingToken.decimals,
     amount: totalLMRewards,
-    category: "lend-rewards",
-    parent: "lend",
+    category: "vestable-reward",
+    type: "reward",
   };
-  balances.push(lendingEarnedBalance);
+  balances.push(rewardBalance);
 
   return balances;
 }

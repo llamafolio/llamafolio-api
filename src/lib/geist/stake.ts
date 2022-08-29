@@ -5,12 +5,10 @@ import { Balance, BaseContext, RewardBalance } from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
-import ChefIncentivesControllerABI from "./abis/ChefIncentivesController.json";
 
 export type GetMultiFeeDistributionBalancesParams = {
   chain: Chain;
   multiFeeDistributionAddress: string;
-  chefIncentivesControllerAddress: string;
   stakingToken: Token;
 };
 
@@ -19,7 +17,6 @@ export async function getMultiFeeDistributionBalances(
   {
     chain,
     multiFeeDistributionAddress,
-    chefIncentivesControllerAddress,
     stakingToken,
   }: GetMultiFeeDistributionBalancesParams
 ) {
@@ -29,12 +26,6 @@ export async function getMultiFeeDistributionBalances(
   const multiFeeDistribution = new ethers.Contract(
     multiFeeDistributionAddress,
     MultiFeeDistributionABI,
-    provider
-  );
-
-  const chefIncentives = new ethers.Contract(
-    chefIncentivesControllerAddress,
-    ChefIncentivesControllerABI,
     provider
   );
 
@@ -157,70 +148,6 @@ export async function getMultiFeeDistributionBalances(
     category: "vest",
   };
   balances.push(earnedBalance);
-
-  const lmRewardsCount = (await chefIncentives.poolLength()).toNumber();
-
-  const registeredTokensRes = await multicall({
-    chain,
-    calls: Array(lmRewardsCount)
-      .fill(undefined)
-      .map((_, i) => ({
-        target: chefIncentives.address,
-        params: [i],
-      })),
-    abi: {
-      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      name: "registeredTokens",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-  const registeredTokensAddresses = registeredTokensRes.map(
-    (res) => res.output
-  );
-
-  const lmClaimableRewards: BigNumber[] = await chefIncentives.claimableReward(
-    ctx.address,
-    registeredTokensAddresses
-  );
-
-  // collect aTokens underlyings
-  const underlyingTokensAddresses = await multicall({
-    chain,
-    calls: registeredTokensAddresses.map((address) => ({
-      target: address,
-      params: [],
-    })),
-    abi: {
-      inputs: [],
-      name: "UNDERLYING_ASSET_ADDRESS",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const lmRewards = lmClaimableRewards.map((reward, i) => ({
-    amount: reward,
-    underlying: underlyingTokensAddresses[i].output,
-  }));
-
-  let totalLMRewards = BigNumber.from("0");
-  for (let index = 0; index < lmRewards.length; index++) {
-    totalLMRewards = totalLMRewards.add(lmRewards[index].amount);
-  }
-
-  const lendingEarnedBalance: Balance = {
-    chain,
-    address: stakingToken.address,
-    symbol: stakingToken.symbol,
-    decimals: stakingToken.decimals,
-    amount: totalLMRewards,
-    category: "lend-rewards",
-    parent: "lend",
-  };
-  balances.push(lendingEarnedBalance);
 
   return balances;
 }
