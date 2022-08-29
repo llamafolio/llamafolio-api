@@ -1,5 +1,4 @@
 import { Chain } from "@defillama/sdk/build/general";
-import { Token } from "@lib/token";
 
 // Currently supported chains
 export const chains: Chain[] = [

@@ -3,6 +3,7 @@ import { ApiGatewayManagementApi, DynamoDB } from "aws-sdk";
 import { invokeLambda } from "@lib/lambda";
 import { isHex } from "@lib/buf";
 import { badRequest, success } from "./response";
+import { isNotNullish } from "@lib/type";
 
 export const handleRequests: APIGatewayProxyHandler = async (event) => {
   const dynamodb = new DynamoDB.DocumentClient();
@@ -11,6 +12,9 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
     body,
     requestContext: { connectionId, routeKey },
   } = event;
+  if (!isNotNullish(connectionId)) {
+    return badRequest("Missing connectionId parameter");
+  }
 
   const PK = `CI#${connectionId}`;
   const SK = `CI#${connectionId}`;
@@ -38,7 +42,7 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
       break;
 
     case "updateBalances":
-      const payload = JSON.parse(body).data;
+      const payload = JSON.parse(body!)?.data;
       const address = payload.address;
       if (!address) {
         return badRequest("Missing address parameter");
