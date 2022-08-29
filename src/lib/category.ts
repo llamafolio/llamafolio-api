@@ -65,6 +65,6 @@ export const Categories: Record<Category, CategoryInfo> = {
   "vestable-reward": {
     category: "vestable-reward",
     title: "Vestable Rewards",
-    description: "Vested assets rewarded by a protocol",
+    description: "Vestable assets rewarded by a protocol",
   },
 };
