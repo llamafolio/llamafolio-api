@@ -25,6 +25,25 @@ type AdapterBalancesResponse = Pick<
   data: (AdapterBalance | PricedAdapterBalance)[];
 };
 
+function groupBalancesByAdapter(
+  balances: (AdapterBalance | PricedAdapterBalance)[]
+) {
+  const balancesByAdapterId: {
+    [key: string]: AdapterBalancesResponse;
+  } = {};
+  for (const balance of balances) {
+    if (!balancesByAdapterId[balance.adapterId]) {
+      balancesByAdapterId[balance.adapterId] = {
+        ...adapterById[balance.adapterId],
+        data: [],
+      };
+    }
+    balancesByAdapterId[balance.adapterId].data.push(balance);
+  }
+
+  return Object.values(balancesByAdapterId);
+}
+
 async function getAdaptersBalances(ctx, client, contracts: [string, Buffer][]) {
   if (contracts.length === 0) {
     return [];
@@ -165,21 +184,7 @@ inner join balances on balances.timestamp = ts.timestamp;`,
             : undefined,
       }));
 
-    // group balances by adapter
-    const balancesByAdapterId: {
-      [key: string]: AdapterBalancesResponse;
-    } = {};
-    for (const balance of pricedBalances) {
-      if (!balancesByAdapterId[balance.adapterId]) {
-        balancesByAdapterId[balance.adapterId] = {
-          ...adapterById[balance.adapterId],
-          data: [],
-        };
-      }
-      balancesByAdapterId[balance.adapterId].data.push(balance);
-    }
-
-    const data = Object.values(balancesByAdapterId);
+    const data = groupBalancesByAdapter(pricedBalances);
     let updatedAt = data[0]?.data?.[0].timestamp ?? new Date().toISOString();
 
     return success({ updatedAt, data });
@@ -293,21 +298,7 @@ export async function websocketUpdateHandler(event, context) {
       []
     );
 
-    // group balances by adapter
-    const balancesByAdapterId: {
-      [key: string]: AdapterBalancesResponse;
-    } = {};
-    for (const balance of pricedBalances) {
-      if (!balancesByAdapterId[balance.adapterId]) {
-        balancesByAdapterId[balance.adapterId] = {
-          ...adapterById[balance.adapterId],
-          data: [],
-        };
-      }
-      balancesByAdapterId[balance.adapterId].data.push(balance);
-    }
-
-    const data = Object.values(balancesByAdapterId);
+    const data = groupBalancesByAdapter(pricedBalances);
 
     const apiGatewayManagementApi = new ApiGatewayManagementApi({
       endpoint: process.env.APIG_ENDPOINT,
