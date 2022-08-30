@@ -1,7 +1,7 @@
 import { Adapter, Balance, Contract } from "@lib/adapter";
 import { getAllPools } from "./pools";
 import { getGaugeBalances } from "./gauges";
-import { getLockedBalance } from "./locker";
+import { getLockedBalances } from "./locker";
 import { getERC20Balances } from "@lib/erc20";
 
 const adapter: Adapter = {
@@ -29,9 +29,8 @@ const adapter: Adapter = {
     const gaugeBalances = await getGaugeBalances(ctx, "ethereum");
     balances = balances.concat(gaugeBalances);
 
-    const lockedBalance = await getLockedBalance(ctx, "ethereum");
-    balances = balances.concat(lockedBalance);
-
+    const lockedBalances = await getLockedBalances(ctx, "ethereum");
+    balances = balances.concat(lockedBalances);
 
     return {
       balances: balances.map((balance) => ({

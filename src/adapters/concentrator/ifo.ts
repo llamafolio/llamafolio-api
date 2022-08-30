@@ -181,16 +181,17 @@ export async function getIFOBalances(ctx, chain) {
         decimals: tokenDetail.decimals,
         address: tokenDetail.address,
         amount: BigNumber.from(poolBalance),
-        rewards: [
-          {
-            chain: chain,
-            category: "lp-rewards",
-            symbol: "CTR",
-            decimals: 18,
-            address: "0xb3ad645db386d7f6d753b2b9c3f4b853da6890b8",
-            amount: BigNumber.from(pendingReward.output),
-          },
-        ],
+      });
+
+      balances.push({
+        chain,
+        category: "lp",
+        symbol: "CTR",
+        decimals: 18,
+        address: "0xb3ad645db386d7f6d753b2b9c3f4b853da6890b8",
+        amount: BigNumber.from(pendingReward.output),
+        reward: true,
+        parent: tokenDetail.address,
       });
     }
   }

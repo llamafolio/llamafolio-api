@@ -150,6 +150,11 @@ inner join balances on balances.timestamp = ts.timestamp;`,
         priceTimestamp: d.price_timestamp,
         balanceUSD: parseFloat(d.balance_usd),
         timestamp: d.timestamp,
+        reward: d.reward,
+        debt: d.debt,
+        stable: d.stable,
+        parent: d.parent ? bufToStr(d.parent) : undefined,
+        claimable: d.claimable,
       }));
 
     // group balances by adapter
@@ -266,11 +271,16 @@ export async function websocketUpdateHandler(event, context) {
         : undefined,
       (d as PricedBalance).balanceUSD,
       now,
+      d.reward,
+      d.debt,
+      d.stable,
+      d.parent ? strToBuf(d.parent) : undefined,
+      d.claimable?.toString(),
     ]);
 
     await client.query(
       format(
-        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, balance_usd, timestamp) VALUES %L;",
+        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, balance_usd, timestamp, reward, debt, stable, parent, claimable) VALUES %L;",
         insertBalancesValues
       ),
       []

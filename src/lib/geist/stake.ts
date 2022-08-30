@@ -51,7 +51,6 @@ export async function getMultiFeeDistributionBalances(
     decimals: stakingToken.decimals,
     amount: lockedBalances.total,
     category: "lock",
-    rewards: [],
   };
   balances.push(lockedBalance);
 
@@ -62,7 +61,6 @@ export async function getMultiFeeDistributionBalances(
     decimals: stakingToken.decimals,
     amount: unlockedBalances,
     category: "stake",
-    rewards: [],
   };
   balances.push(unlockedBalance);
 
@@ -115,6 +113,8 @@ export async function getMultiFeeDistributionBalances(
       decimals: token.decimals,
       symbol: token.symbol,
       category: "reward",
+      reward: true,
+      claimable: rewardData.amount,
       // TODO: rewards interface
       rates: {
         rate: rewardRate.rewardRate,
@@ -132,11 +132,15 @@ export async function getMultiFeeDistributionBalances(
 
     // staking only
     if (!lockedBalance.amount.gt(0) && unlockedBalance.amount.gt(0)) {
-      unlockedBalance.rewards?.push(reward);
+      (reward as RewardBalance).parent = unlockedBalance.address;
+      reward.category = "stake";
     } else {
       // if both staking and locking, can't tell if aTokens rewards come from one or the other
-      lockedBalance.rewards?.push(reward);
+      (reward as RewardBalance).parent = lockedBalance.address;
+      reward.category = "lock";
     }
+
+    balances.push(reward);
   }
 
   const earnedBalance: Balance = {

@@ -74,7 +74,7 @@ export async function getLendingPoolBalances(
       ...underlyingTokens[i],
       amount: stableDebtTokenAddressesBalance.amount,
       category: "borrow",
-      type: "debt",
+      debt: true,
       stable: true,
     });
   }
@@ -88,7 +88,7 @@ export async function getLendingPoolBalances(
       ...underlyingTokens[i],
       amount: variableDebtTokenAddressesBalance.amount,
       category: "borrow",
-      type: "debt",
+      debt: true,
       stable: false,
     });
   }
@@ -139,7 +139,8 @@ export async function getLendingPoolBalances(
     decimals: stakingToken.decimals,
     amount: totalLMRewards,
     category: "vestable-reward",
-    type: "reward",
+    reward: true,
+    debt: false,
   };
   balances.push(rewardBalance);
 

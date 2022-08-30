@@ -65,7 +65,7 @@ export async function getPricedBalances(
     (balance) => {
       const key = getTokenKey(balance);
       if (!key) {
-        console.log(`Failed to get price token key for ${balance}`);
+        console.log("Failed to get price token key for balance", balance);
         return balance;
       }
 

@@ -130,31 +130,11 @@ async function main() {
           yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + "%" : "-"
         }`,
         il: `${yieldObject !== undefined ? yieldObject?.ilRisk : "-"}`,
-        rewards: balance.rewards !== undefined ? true : false,
+        reward: balance.reward,
+        stable: balance.stable,
+        debt: balance.debt,
+        parent: balance.parent,
       };
-
-      if (balance.rewards) {
-        for (let index = 0; index < balance.rewards.length; index++) {
-          const rewardR = balance.rewards[index];
-          const r = {
-            address: rewardR.address,
-            category: rewardR.category,
-            symbol: rewardR.symbol,
-            balance: millify(rewardR.amount / 10 ** rewardR.decimals),
-            balanceUSD: `$${millify(
-              rewardR.balanceUSD !== undefined ? rewardR.balanceUSD : 0
-            )}`,
-            yield: `${
-              yieldObject !== undefined
-                ? yieldObject?.apy.toFixed(2) + "%"
-                : "-"
-            }`,
-            il: `${yieldObject !== undefined ? yieldObject?.ilRisk : "-"}`,
-          };
-
-          data.push(r);
-        }
-      }
 
       data.push(d);
     }
