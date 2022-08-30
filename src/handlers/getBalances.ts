@@ -13,6 +13,7 @@ import { getPricedBalances } from "@lib/price";
 import { adapters, adapterById } from "@adapters/index";
 import { isNotNullish } from "@lib/type";
 import { badRequest, serverError, success } from "./response";
+import { mulPrice } from "@lib/math";
 
 type AdapterBalance = Balance & { adapterId: string };
 type PricedAdapterBalance = PricedBalance & { adapterId: string };
@@ -148,13 +149,20 @@ inner join balances on balances.timestamp = ts.timestamp;`,
         adapterId: d.adapter_id,
         price: parseFloat(d.price),
         priceTimestamp: d.price_timestamp,
-        balanceUSD: parseFloat(d.balance_usd),
+        balanceUSD:
+          d.amount != null && d.decimals != null && d.price != null
+            ? mulPrice(d.amount, d.decimals, d.price)
+            : undefined,
         timestamp: d.timestamp,
         reward: d.reward,
         debt: d.debt,
         stable: d.stable,
         parent: d.parent ? bufToStr(d.parent) : undefined,
         claimable: d.claimable,
+        claimableUSD:
+          d.claimable != null && d.decimals != null && d.price != null
+            ? mulPrice(d.claimable, d.decimals, d.price)
+            : undefined,
       }));
 
     // group balances by adapter
@@ -269,7 +277,6 @@ export async function websocketUpdateHandler(event, context) {
       (d as PricedBalance).timestamp
         ? new Date((d as PricedBalance).timestamp)
         : undefined,
-      (d as PricedBalance).balanceUSD,
       now,
       d.reward,
       d.debt,
@@ -280,7 +287,7 @@ export async function websocketUpdateHandler(event, context) {
 
     await client.query(
       format(
-        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, balance_usd, timestamp, reward, debt, stable, parent, claimable) VALUES %L;",
+        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable) VALUES %L;",
         insertBalancesValues
       ),
       []
