@@ -13,6 +13,8 @@ export type BaseBalance = Token & {
 };
 
 export type RewardBalance = BaseBalance & {
+  // claimable amount. Can be lower than balance amount but not higher.
+  // ex: vested reward of 1000 but only 100 currently claimable.
   claimable: BigNumber;
   rates?: any;
   parent?: string;

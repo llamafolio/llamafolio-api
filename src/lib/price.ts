@@ -1,8 +1,8 @@
 import fetch from "node-fetch";
 import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
-import { Balance, PricedBalance } from "@lib/adapter";
-import { mulPrice } from "@lib/math";
+import { Balance, PricedBalance, RewardBalance } from "@lib/adapter";
+import { BN_ZERO, mulPrice } from "@lib/math";
 
 // Defillama prices API requires a prefix to know where the token comes from.
 // It can be a chain or a market provider like coingecko
@@ -47,17 +47,8 @@ export async function getPricedBalances(
   // Filter empty balances
   balances = balances.filter(
     (balance) =>
-      balance.amount.gt(0) ||
-      balance.rewards?.some((reward) => reward.amount.gt(0))
+      balance.amount.gt(0) || (balance as RewardBalance).claimable?.gt(0)
   );
-
-  const balanceByKey: { [key: string]: Balance } = {};
-  for (const balance of balances) {
-    const key = getTokenKey(balance);
-    if (key) {
-      balanceByKey[key] = balance;
-    }
-  }
 
   const prices = await getTokenPrices(balances);
 
@@ -70,30 +61,26 @@ export async function getPricedBalances(
       }
 
       const price = prices.coins[key];
-      if (price !== undefined) {
-        try {
-          return {
-            ...price,
-            ...balance,
-            balanceUSD: mulPrice(
-              balance.amount,
-              price.decimals || balance.decimals,
-              price.price
-            ),
-          };
-        } catch (error) {
-          console.log(
-            `Failed to get balanceUSD for ${balance.chain}:${balance.address}`,
-            error
-          );
-          return balance;
-        }
-      } else {
+      if (price === undefined) {
         // TODO: Mising price and token info from Defillama API
         console.log(`Failed to get price on Defillama API for ${key}`);
+        return balance;
       }
 
-      return balance;
+      return {
+        ...price,
+        ...balance,
+        balanceUSD: mulPrice(
+          balance.amount,
+          price.decimals || balance.decimals,
+          price.price
+        ),
+        claimableUSD: mulPrice(
+          (balance as RewardBalance).claimable || BN_ZERO,
+          price.decimals || balance.decimals,
+          price.price
+        ),
+      };
     }
   );
 

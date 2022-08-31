@@ -199,7 +199,7 @@ export async function getAllPools() {
 
   const formattedPools = mainRegistryPoolsList.map((address, i) => ({
     name: mainPoolsDetailsNames[i],
-    dName: `${mainPoolsDetailsNames[i]} Curve Pool`,
+    displayName: `${mainPoolsDetailsNames[i]} Curve Pool`,
     chain: "ethereum",
     type: "pool",
     address: mainPoolLPTokens[i],
