@@ -17,11 +17,11 @@ function getChainContracts(
 }
 
 const adapter: Adapter = {
-  id: "aave",
-  name: "AAVE",
+  id: "aave-v2",
+  name: "AAVE V2",
   description: "",
   coingecko: "aave",
-  defillama: "aave",
+  defillama: "aave-v2",
   links: {
     website: "https://app.aave.com/",
     doc: "https://docs.aave.com/hub/",
