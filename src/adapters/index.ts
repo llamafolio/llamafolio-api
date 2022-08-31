@@ -1,5 +1,6 @@
 import aave from "@adapters/aave";
 import concentrator from "@adapters/concentrator";
+import convex from "@adapters/convex";
 import curve from "@adapters/curve";
 import geist from "@adapters/geist";
 import pancakeswap from "@adapters/pancakeswap";
@@ -15,6 +16,7 @@ import { Adapter } from "@lib/adapter";
 export const adapters: Adapter[] = [
   aave,
   concentrator,
+  convex,
   curve,
   geist,
   pancakeswap,

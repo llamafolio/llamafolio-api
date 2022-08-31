@@ -50,7 +50,7 @@ export async function getAllPools() {
 
   const formattedPools = poolInfo.map((address, i) => ({
     name: `cvx${tokenDetails[i].symbol}`,
-    dName: `${tokenDetails[i].symbol} Convex Pool`,
+    displayName: `${tokenDetails[i].symbol} Convex Pool`,
     chain: "ethereum",
     type: "stake",
     address: address.token,
@@ -177,18 +177,20 @@ export async function getPoolBalances(ctx, chain, contracts) {
       const pendingCRV = BigNumber.from(earnedR[i] > 0 ? earnedR[i] : 0)
       balances.push({
         chain: chain,
-        category: "stake-rewards",
+        category: "stake",
         symbol: "CRV",
         decimals: 18,
+        reward: true,
         parent: contracts[i].crvRewards,
         address: "0xD533a949740bb3306d119CC777fa900bA034cd52",
         amount: pendingCRV,
       });
       balances.push({
         chain: chain,
-        category: "stake-rewards",
+        category: "stake",
         symbol: "CVX",
         decimals: 18,
+        reward: true,
         parent: contracts[i].crvRewards,
         address: CVX,
         amount: pendingCRV.mul(ratios[0]).div(ratios[1]),
@@ -215,9 +217,10 @@ export async function getPoolBalances(ctx, chain, contracts) {
             const rDetails = await getERC20Details(chain, [ await poolReward.rewardToken() ])
             balances.push({
               chain: chain,
-              category: "stake-rewards",
+              category: "stake",
               symbol:  rDetails[0].symbol,
               decimals: rDetails[0].decimals,
+              reward: true,
               parent: contracts[i].crvRewards,
               address: rDetails[0].address,
               amount: BigNumber.from(earnedBalance),
