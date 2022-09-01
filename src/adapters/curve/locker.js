@@ -34,7 +34,7 @@ export async function getLockedBalances(ctx, chain) {
     },
     {
       chain,
-      category: "locked",
+      category: "rewards",
       symbol: "3CRV",
       decimals: 18,
       address: "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490",

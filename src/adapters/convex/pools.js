@@ -236,7 +236,7 @@ export async function getPoolBalances(ctx, chain, contracts) {
 }
 
 //CALCULATE THE RATIO OF CRV:CVX MINTED
-async function getCVXRatio(provider) {
+export async function getCVXRatio(provider) {
 
   const ERC20Abi = [
     {
