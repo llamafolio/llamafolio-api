@@ -26,8 +26,8 @@ You can invoke your function locally by using the following command:
 serverless invoke local --function hello
 ```
 
-## Contribution Guidelines
+## Contributing and listing your protocol
 
 To start contributing to the project, read our [docs](https://docs.llamafolio.com) for guided tutorials and check the instructions here
 
-- [Contributing](./docs/contributing.md)
+- [Follow those instructions](./docs/contributing.md) to create your adapter and list your protocol on LlamaFolio, most adapters can be created in under an hour!
