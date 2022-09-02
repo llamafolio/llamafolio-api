@@ -5,8 +5,6 @@ import { getPairsInfo } from "@lib/uniswap/v2/factory";
 const adapter: Adapter = {
   id: "uniswap",
   name: "Uniswap",
-  description:
-    "A fully decentralized protocol for automated liquidity provision on Ethereum.",
   coingecko: "uniswap",
   defillama: "uniswap",
   links: {
