@@ -113,12 +113,13 @@ async function main() {
     const data: any[] = [];
 
     for (const balance of categoryBalances.balances) {
-      const key = `${balance.yieldsAddress?.toLowerCase()}-${balance.chain}`;
+      const key = `${balance.yieldsAddress?.toLowerCase()}-${(balance.chain === 'avax')?"avalanche":balance.chain}`;
       const subKey = `${balance.yieldsAddress?.toLowerCase()}`;
       const yieldObject =
         yieldsByPoolAddress[key] || yieldsByPoolAddress[subKey];
 
       const d = {
+        chain: balance.chain,
         address: balance.address,
         category: balance.category,
         symbol: balance.symbol,

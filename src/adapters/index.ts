@@ -8,6 +8,7 @@ import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
 import spiritswap from "@adapters/spiritswap";
 import spookyswap from "@adapters/spookyswap";
+import stargate from "@adapters/stargate";
 import traderjoe from "@adapters/traderjoe";
 import uniswap from "@adapters/uniswap";
 import valas from "@adapters/valas";
@@ -25,6 +26,7 @@ export const adapters: Adapter[] = [
   pangolin,
   spiritswap,
   spookyswap,
+  stargate,
   traderjoe,
   uniswap,
   valas,
