@@ -102,8 +102,8 @@ inner join balances on balances.timestamp = ts.timestamp;`,
     let updatedAt = data[0]?.data?.[0].timestamp;
 
     return success({ updatedAt, data });
-  } catch (e) {
-    console.error("Failed to retrieve balances", e);
+  } catch (error) {
+    console.error("Failed to retrieve balances", { error, address });
     return serverError("Failed to retrieve balances");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
@@ -146,6 +146,10 @@ export async function websocketUpdateAdaptersHandler(event, context) {
     // ]);
 
     // TODO: optimization when chains are synced: only run the adapters of protocols the user interacted with
+    console.log("Update adapters balances", {
+      adapterIds: adapters.map((a) => a.id),
+      address,
+    });
 
     const now = new Date();
 
@@ -181,8 +185,8 @@ export async function websocketUpdateAdaptersHandler(event, context) {
       .promise();
 
     return success({});
-  } catch (e) {
-    console.error("Failed to update balances", e);
+  } catch (error) {
+    console.error("Failed to update balances", { error, address });
     return serverError("Failed to update balances");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
@@ -232,9 +236,20 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
       })
     );
 
+    console.log("Update adapter balances", {
+      adapterId: adapter.id,
+      address,
+    });
+
     const balancesConfig = await adapter.getBalances(ctx, contracts || []);
 
     const pricedBalances = await getPricedBalances(balancesConfig.balances);
+
+    console.log("Found balances", {
+      adapterId: adapter.id,
+      address,
+      pricedBalances,
+    });
 
     const now = new Date(timestamp);
 
@@ -286,8 +301,8 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
       .promise();
 
     return success({});
-  } catch (e) {
-    console.error("Failed to update balances", e);
+  } catch (error) {
+    console.error("Failed to update balances", { error, address, adapterId });
     return serverError("Failed to update balances");
   } finally {
     // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
