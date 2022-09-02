@@ -62,22 +62,23 @@ export async function getPricedBalances(
 
       const price = prices.coins[key];
       if (price === undefined) {
-        // TODO: Mising price and token info from Defillama API
         console.log(`Failed to get price on Defillama API for ${key}`);
+        return balance;
+      }
+
+      const decimals = balance.decimals || price.decimals;
+      if (decimals === undefined) {
+        console.log(`Failed to get decimals for ${key}`);
         return balance;
       }
 
       return {
         ...price,
         ...balance,
-        balanceUSD: mulPrice(
-          balance.amount,
-          balance.decimals || price.decimals,
-          price.price
-        ),
+        balanceUSD: mulPrice(balance.amount, decimals, price.price),
         claimableUSD: mulPrice(
           (balance as RewardBalance).claimable || BN_ZERO,
-          balance.decimals || price.decimals,
+          decimals,
           price.price
         ),
       };
