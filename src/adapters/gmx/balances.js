@@ -27,7 +27,9 @@ export async function getBalances(ctx, chain, contracts) {
             decimals: sGLP.decimals,
             address: sGLP.address,
             amount: BigNumber.from(sGLP.amount),
-            priceSubstitute: "0x4277f8F2c384827B5273592FF7CeBd9f2C1ac258"
+            priceSubstitute: "0x4277f8F2c384827B5273592FF7CeBd9f2C1ac258",
+            yieldsAddress: "0x1aDDD80E6039594eE970E5872D247bf0414C8903"
+
       })
 
       const GMXStaker = new ethers.Contract(
@@ -56,6 +58,9 @@ export async function getBalances(ctx, chain, contracts) {
         GMXStakerAbi,
         provider
       );
+
+
+      //you can stake GMX and esGMX
       const stakedGMX = await GMXStaker.depositBalances(ctx.address, GMXTokens[0])
 
       balances.push({
@@ -65,6 +70,7 @@ export async function getBalances(ctx, chain, contracts) {
             decimals: 18,
             address: GMXTokens[0],
             amount: BigNumber.from(stakedGMX),
+            yieldsAddress: "0x908C4D94D34924765f1eDc22A1DD098397c59dD4"
       })
 
       const stakedesGMX = await GMXStaker.depositBalances(ctx.address, GMXTokens[1])
@@ -80,6 +86,7 @@ export async function getBalances(ctx, chain, contracts) {
       })
 
 
+      //either assets earn ETH and GMX
       const pendingesGMXRewards = await GMXStaker.claimable(ctx.address)
       balances.push({
             chain,
