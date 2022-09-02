@@ -4,6 +4,7 @@ import convex from "@adapters/convex";
 import curve from "@adapters/curve";
 import geist from "@adapters/geist";
 import gmx from "@adapters/gmx";
+import lido from "@adapters/lido";
 import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
 import spiritswap from "@adapters/spiritswap";
@@ -22,6 +23,7 @@ export const adapters: Adapter[] = [
   curve,
   geist,
   gmx,
+  lido,
   pancakeswap,
   pangolin,
   spiritswap,
