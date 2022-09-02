@@ -147,6 +147,8 @@ export async function websocketUpdateAdaptersHandler(event, context) {
 
     // TODO: optimization when chains are synced: only run the adapters of protocols the user interacted with
 
+    const now = new Date();
+
     // run each adapter in a Lambda
     await Promise.all(
       adapters.map((adapter) =>
@@ -156,6 +158,7 @@ export async function websocketUpdateAdaptersHandler(event, context) {
             connectionId,
             address,
             adapterId: adapter.id,
+            timestamp: now.getTime(),
           }
         )
       )
@@ -170,8 +173,8 @@ export async function websocketUpdateAdaptersHandler(event, context) {
         ConnectionId: connectionId,
         Data: JSON.stringify({
           event: "updateBalances",
-          updatedAt: new Date().toISOString(),
-          data: 'test',
+          updatedAt: now.toISOString(),
+          data: "end",
         }),
       })
       .promise();
@@ -196,7 +199,7 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
   context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
 
-  const { connectionId, address, adapterId } = event;
+  const { connectionId, address, adapterId, timestamp } = event;
   const adapter = adapterById[adapterId];
   if (!address) {
     return badRequest("Missing address parameter");
@@ -232,7 +235,7 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
 
     const pricedBalances = await getPricedBalances(balancesConfig.balances);
 
-    const now = new Date();
+    const now = new Date(timestamp);
 
     // insert balances
     const insertBalancesValues = pricedBalances.map((d) => [
@@ -243,7 +246,7 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
       d.decimals,
       d.amount.toString(),
       d.category,
-      d.adapterId,
+      adapterId,
       (d as PricedBalance).price,
       (d as PricedBalance).timestamp
         ? new Date((d as PricedBalance).timestamp)
