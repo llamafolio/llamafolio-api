@@ -124,12 +124,12 @@ functions:
   websocketUpdateAdaptersBalances:
     handler: src/handlers/getBalances.websocketUpdateAdaptersHandler
     role: handleWebsocketRequestsRole
-    timeout: 120
+    timeout: 300
 
   websocketUpdateAdapterBalances:
     handler: src/handlers/getBalances.websocketUpdateAdapterBalancesHandler
     role: handleWebsocketRequestsRole
-    timeout: 120
+    timeout: 300
 
   websocketGetSyncStatus:
     handler: src/handlers/getSyncStatus.websocketHandler

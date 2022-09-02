@@ -159,7 +159,8 @@ export async function websocketUpdateAdaptersHandler(event, context) {
             address,
             adapterId: adapter.id,
             timestamp: now.getTime(),
-          }
+          },
+          "RequestResponse"
         )
       )
     );
@@ -231,7 +232,7 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
       })
     );
 
-    const balancesConfig = await adapter.getBalances(ctx, contracts);
+    const balancesConfig = await adapter.getBalances(ctx, contracts || []);
 
     const pricedBalances = await getPricedBalances(balancesConfig.balances);
 
