@@ -121,14 +121,19 @@ functions:
           # Fallback
           route: $default
 
-  websocketUpdateBalances:
-    handler: src/handlers/getBalances.websocketUpdateHandler
-    role: handleWebsocketRole
-    timeout: 120
+  websocketUpdateAdaptersBalances:
+    handler: src/handlers/getBalances.websocketUpdateAdaptersHandler
+    role: handleWebsocketRequestsRole
+    timeout: 300
+
+  websocketUpdateAdapterBalances:
+    handler: src/handlers/getBalances.websocketUpdateAdapterBalancesHandler
+    role: handleWebsocketRequestsRole
+    timeout: 300
 
   websocketGetSyncStatus:
     handler: src/handlers/getSyncStatus.websocketHandler
-    role: handleWebsocketRole
+    role: handleWebsocketRequestsRole
     timeout: 120
 
 custom:
