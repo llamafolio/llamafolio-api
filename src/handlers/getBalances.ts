@@ -99,7 +99,7 @@ inner join balances on balances.timestamp = ts.timestamp;`,
       }));
 
     const data = groupBalancesByAdapter(pricedBalances);
-    let updatedAt = data[0]?.data?.[0].timestamp ?? new Date().toISOString();
+    let updatedAt = data[0]?.data?.[0].timestamp;
 
     return success({ updatedAt, data });
   } catch (e) {
