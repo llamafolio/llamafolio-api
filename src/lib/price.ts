@@ -72,12 +72,12 @@ export async function getPricedBalances(
         ...balance,
         balanceUSD: mulPrice(
           balance.amount,
-          price.decimals || balance.decimals,
+          balance.decimals || price.decimals,
           price.price
         ),
         claimableUSD: mulPrice(
           (balance as RewardBalance).claimable || BN_ZERO,
-          price.decimals || balance.decimals,
+          balance.decimals || price.decimals,
           price.price
         ),
       };
