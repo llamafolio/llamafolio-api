@@ -60,14 +60,7 @@ export async function handler(event, context) {
 
   try {
     const balancesRes = await client.query(
-      `
-select * from (
-  select timestamp from balances 
-  where from_address = $1::bytea
-  order by timestamp desc 
-  limit 1
-) ts
-inner join balances on balances.timestamp = ts.timestamp;`,
+      `select * from balances where from_address = $1::bytea;`,
       [strToBuf(address)]
     );
 
@@ -101,7 +94,7 @@ inner join balances on balances.timestamp = ts.timestamp;`,
     const data = groupBalancesByAdapter(pricedBalances);
     let updatedAt = data[0]?.data?.[0].timestamp;
 
-    return success({ updatedAt, data }, { maxAge: 2 * 60 });
+    return success({ updatedAt, data });
   } catch (error) {
     console.error("Failed to retrieve balances", { error, address });
     return serverError("Failed to retrieve balances");
@@ -150,7 +143,7 @@ export async function websocketUpdateAdaptersHandler(event, context) {
     });
 
     const balancesRes = await client.query(
-      `select timestamp from balances where from_address = $1::bytea order by timestamp desc limit 1;`,
+      `select timestamp from balances where from_address = $1::bytea limit 1;`,
       [strToBuf(address)]
     );
 
@@ -306,6 +299,15 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
       d.claimable?.toString(),
     ]);
 
+    await client.query("BEGIN");
+
+    // Delete old balances
+    await client.query(
+      "delete from balances where from_address = $1::bytea and adapter_id = $2",
+      [strToBuf(address), adapterId]
+    );
+
+    // Insert new balances
     await client.query(
       format(
         "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable) VALUES %L;",
@@ -313,6 +315,8 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
       ),
       []
     );
+
+    await client.query("COMMIT");
 
     const data = { ...adapter, data: pricedBalances };
 
@@ -333,6 +337,7 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
 
     return success({});
   } catch (error) {
+    await client.query("ROLLBACK");
     console.error("Failed to update balances", { error, address, adapterId });
     return serverError("Failed to update balances");
   } finally {
