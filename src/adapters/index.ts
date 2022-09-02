@@ -2,6 +2,7 @@ import aaveV2 from "@adapters/aave/v2";
 import concentrator from "@adapters/concentrator";
 import convex from "@adapters/convex";
 import curve from "@adapters/curve";
+import euler from "@adapters/euler";
 import geist from "@adapters/geist";
 import gmx from "@adapters/gmx";
 import lido from "@adapters/lido";
@@ -21,6 +22,7 @@ export const adapters: Adapter[] = [
   concentrator,
   convex,
   curve,
+  euler,
   geist,
   gmx,
   lido,

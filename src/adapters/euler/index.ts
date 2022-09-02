@@ -1,11 +1,12 @@
 import { Adapter, Balance, Contract } from "@lib/adapter";
+import { getPositions } from "./markets"
 
 //example contract object
 const contract: Contract = {
-  name: "",
-  displayName: "",
+  name: "eulerMarkets",
+  displayName: "Markets Euler",
   chain: "ethereum",
-  address: "0x3cf54f3a1969be9916dad548f3c084331c4450b5",
+  address: "0x3520d5a913427E6F0D6A83E07ccD4A4da316e4d3",
 };
 
 const adapter: Adapter = {
@@ -23,10 +24,10 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-    let balances = await getBalances(ctx, "ethereum", contracts); //any method to check all the contracts retrieved above
+    let balances = await getPositions(ctx, "ethereum", contracts); //any method to check all the contracts retrieved above
 
     return {
-      balances
+      balances,
     };
   },
 };
