@@ -45,41 +45,43 @@ export async function getPairsInfo({
 
   const addresses = allPairsRes.map((res) => res.output);
 
-  const pairs = await getERC20Details(chain, addresses);
+  const [pairs, token0sRes, token1sRes] = await Promise.all([
+    getERC20Details(chain, addresses),
 
-  const token0sRes = await multicall({
-    chain,
-    calls: addresses.map((address) => ({
-      target: address,
-      params: [],
-    })),
-    abi: {
-      constant: true,
-      inputs: [],
-      name: "token0",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
-  });
+    multicall({
+      chain,
+      calls: addresses.map((address) => ({
+        target: address,
+        params: [],
+      })),
+      abi: {
+        constant: true,
+        inputs: [],
+        name: "token0",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        payable: false,
+        stateMutability: "view",
+        type: "function",
+      },
+    }),
 
-  const token1sRes = await multicall({
-    chain,
-    calls: addresses.map((address) => ({
-      target: address,
-      params: [],
-    })),
-    abi: {
-      constant: true,
-      inputs: [],
-      name: "token1",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
-  });
+    multicall({
+      chain,
+      calls: addresses.map((address) => ({
+        target: address,
+        params: [],
+      })),
+      abi: {
+        constant: true,
+        inputs: [],
+        name: "token1",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        payable: false,
+        stateMutability: "view",
+        type: "function",
+      },
+    }),
+  ]);
 
   const [token0s, token1s] = await Promise.all([
     getERC20Details(

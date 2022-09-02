@@ -137,23 +137,24 @@ export async function getERC20Details(
   chain: Chain,
   tokens: string[]
 ): Promise<Token[]> {
-  const symbols = await multicall({
-    chain,
-    calls: tokens.map((address) => ({
-      target: address,
-      params: [],
-    })),
-    abi: abi.symbol,
-  });
+  const calls = tokens.map((address) => ({
+    target: address,
+    params: [],
+  }));
 
-  const decimals = await multicall({
-    chain,
-    calls: tokens.map((address) => ({
-      target: address,
-      params: [],
-    })),
-    abi: abi.decimals,
-  });
+  const [symbols, decimals] = await Promise.all([
+    multicall({
+      chain,
+      calls,
+      abi: abi.symbol,
+    }),
+
+    multicall({
+      chain,
+      calls,
+      abi: abi.decimals,
+    }),
+  ]);
 
   return tokens
     .filter((address, i) => {

@@ -1,5 +1,5 @@
 import { Adapter } from "@lib/adapter";
-import { getERC20Balances } from "@lib/erc20";
+import { getERC20BalanceOf } from "@lib/erc20";
 import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
@@ -23,11 +23,7 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-    const balances = await getERC20Balances(
-      ctx,
-      "avax",
-      contracts.map((c) => c.address)
-    );
+    const balances = await getERC20BalanceOf(ctx, "avax", contracts);
 
     return {
       balances: balances.map((balance) => ({
