@@ -11,6 +11,15 @@ const stETH: Contract = {
   coingeckoId: "staked-ether",
 };
 
+const wstETH: Contract = {
+  name: "wstETH",
+  displayName: "Wrapped liquid staked Ether 2.0",
+  address: "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+  symbol: "wstETH",
+  decimals: 18,
+  coingeckoId: "wrapped-steth",
+};
+
 const adapter: Adapter = {
   id: "lido",
   name: "Lido",
@@ -22,7 +31,7 @@ const adapter: Adapter = {
   },
   getContracts() {
     return {
-      contracts: [stETH],
+      contracts: [stETH, wstETH],
     };
   },
   async getBalances(ctx, contracts) {
