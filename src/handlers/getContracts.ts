@@ -26,17 +26,20 @@ export async function getContract(event, context) {
       return notFound();
     }
 
-    return success({
-      data: {
-        // TODO: resolve name in case multiple adapters use the same contract
-        name: adaptersContractsRes.rows[0].name,
-        display_name: adaptersContractsRes.rows[0].display_name,
-        adapters: adaptersContractsRes.rows.map((row) => ({
-          id: row.adapter_id,
-          chain: row.chain,
-        })),
+    return success(
+      {
+        data: {
+          // TODO: resolve name in case multiple adapters use the same contract
+          name: adaptersContractsRes.rows[0].name,
+          display_name: adaptersContractsRes.rows[0].display_name,
+          adapters: adaptersContractsRes.rows.map((row) => ({
+            id: row.adapter_id,
+            chain: row.chain,
+          })),
+        },
       },
-    });
+      { maxAge: 2 * 60 }
+    );
   } catch (e) {
     console.error("Failed to retrieve adapters", e);
     return serverError("Failed to retrieve adapters");

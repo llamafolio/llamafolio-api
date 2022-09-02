@@ -101,7 +101,7 @@ inner join balances on balances.timestamp = ts.timestamp;`,
     const data = groupBalancesByAdapter(pricedBalances);
     let updatedAt = data[0]?.data?.[0].timestamp;
 
-    return success({ updatedAt, data });
+    return success({ updatedAt, data }, { maxAge: 2 * 60 });
   } catch (error) {
     console.error("Failed to retrieve balances", { error, address });
     return serverError("Failed to retrieve balances");

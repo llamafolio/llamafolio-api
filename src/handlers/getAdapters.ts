@@ -26,7 +26,7 @@ export async function handler(event, context) {
       return notFound();
     }
 
-    return success({ data: adaptersContractsRes.rows });
+    return success({ data: adaptersContractsRes.rows }, { maxAge: 2 * 60 });
   } catch (e) {
     console.error("Failed to retrieve adapters", e);
     return serverError("Failed to retrieve adapters");

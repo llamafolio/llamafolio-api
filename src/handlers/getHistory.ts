@@ -115,7 +115,7 @@ order by b_timestamp desc;
       payload.nextCursor = new Date(nextCursorTimestamp).getTime() / 1000;
     }
 
-    return success(payload);
+    return success(payload, { maxAge: 2 * 60 });
   } catch (e) {
     console.error("Failed to retrieve history", e);
     return serverError("Failed to retrieve history");
