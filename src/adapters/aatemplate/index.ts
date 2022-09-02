@@ -11,8 +11,6 @@ const contract: Contract = {
 const adapter: Adapter = {
   id: "",
   name: "",
-  description:
-    "",
   coingecko: "",
   defillama: "",
   links: {

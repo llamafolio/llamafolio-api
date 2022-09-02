@@ -13,7 +13,6 @@ const adapter: Adapter = {
   name: "Concentrator",
   coingecko: "concentrator",
   defillama: "concentrator",
-  description: "",
   links: {
     website: "https://concentrator.aladdin.club/",
     doc: "https://github.com/AladdinDAO",

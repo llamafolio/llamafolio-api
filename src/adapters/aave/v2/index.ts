@@ -19,7 +19,6 @@ function getChainContracts(
 const adapter: Adapter = {
   id: "aave-v2",
   name: "AAVE V2",
-  description: "",
   coingecko: "aave",
   defillama: "aave-v2",
   links: {

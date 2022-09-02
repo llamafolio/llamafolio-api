@@ -3,6 +3,7 @@ import concentrator from "@adapters/concentrator";
 import convex from "@adapters/convex";
 import curve from "@adapters/curve";
 import geist from "@adapters/geist";
+import gmx from "@adapters/gmx";
 import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
 import spiritswap from "@adapters/spiritswap";
@@ -19,6 +20,7 @@ export const adapters: Adapter[] = [
   convex,
   curve,
   geist,
+  gmx,
   pancakeswap,
   pangolin,
   spiritswap,
