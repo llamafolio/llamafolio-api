@@ -145,6 +145,41 @@ export async function websocketUpdateAdaptersHandler(event, context) {
     //   row.to_address,
     // ]);
 
+    const apiGatewayManagementApi = new ApiGatewayManagementApi({
+      endpoint: process.env.APIG_ENDPOINT,
+    });
+
+    const balancesRes = await client.query(
+      `select timestamp from balances where from_address = $1::bytea order by timestamp desc limit 1;`,
+      [strToBuf(address)]
+    );
+
+    if (balancesRes.rows.length === 1) {
+      const lastUpdatedAt = new Date(balancesRes.rows[0].timestamp).getTime();
+      const now = new Date().getTime();
+      // 2 minutes delay
+      if (now - lastUpdatedAt < 2 * 60 * 1000) {
+        console.log("Update adapters balances cache", {
+          now,
+          lastUpdatedAt,
+          address,
+        });
+
+        await apiGatewayManagementApi
+          .postToConnection({
+            ConnectionId: connectionId,
+            Data: JSON.stringify({
+              event: "updateBalances",
+              updatedAt: new Date(lastUpdatedAt).toISOString(),
+              data: "cache",
+            }),
+          })
+          .promise();
+
+        return success({});
+      }
+    }
+
     // TODO: optimization when chains are synced: only run the adapters of protocols the user interacted with
     console.log("Update adapters balances", {
       adapterIds: adapters.map((a) => a.id),
@@ -168,10 +203,6 @@ export async function websocketUpdateAdaptersHandler(event, context) {
         )
       )
     );
-
-    const apiGatewayManagementApi = new ApiGatewayManagementApi({
-      endpoint: process.env.APIG_ENDPOINT,
-    });
 
     await apiGatewayManagementApi
       .postToConnection({
