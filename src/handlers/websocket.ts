@@ -52,7 +52,7 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
       }
 
       await invokeLambda(
-        `llamafolio-api-${process.env.stage}-websocketUpdateBalances`,
+        `llamafolio-api-${process.env.stage}-websocketUpdateAdaptersBalances`,
         {
           connectionId: connectionId,
           address,

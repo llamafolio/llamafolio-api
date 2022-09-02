@@ -1,11 +1,17 @@
 import aws from "aws-sdk";
 
-export function invokeLambda(functioName: string, event: any) {
+type InvocationType = "RequestResponse" | "Event" | "DryRun";
+
+export function invokeLambda(
+  functioName: string,
+  event: any,
+  invocationType?: InvocationType
+) {
   return new Promise((resolve, _reject) => {
     new aws.Lambda().invoke(
       {
         FunctionName: functioName,
-        InvocationType: "Event",
+        InvocationType: invocationType || "Event",
         Payload: JSON.stringify(event, null, 2), // pass params
       },
       function (error, data) {

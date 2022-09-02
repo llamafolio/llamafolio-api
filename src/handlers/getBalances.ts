@@ -5,15 +5,15 @@ import pool from "@db/pool";
 import {
   Balance,
   BaseContext,
-  Contract,
+  BaseContract,
   PricedBalance,
   Adapter,
 } from "@lib/adapter";
 import { getPricedBalances } from "@lib/price";
 import { adapters, adapterById } from "@adapters/index";
-import { isNotNullish } from "@lib/type";
 import { badRequest, serverError, success } from "./response";
 import { mulPrice } from "@lib/math";
+import { invokeLambda } from "@lib/lambda";
 
 type AdapterBalance = Balance & { adapterId: string };
 type PricedAdapterBalance = PricedBalance & { adapterId: string };
@@ -42,92 +42,6 @@ function groupBalancesByAdapter(
   }
 
   return Object.values(balancesByAdapterId);
-}
-
-async function getAdaptersBalances(ctx, client, contracts: [string, Buffer][]) {
-  if (contracts.length === 0) {
-    return [];
-  }
-
-  // TODO: investigate joining this with `distinct_transactions_to`
-  const adaptersContractsRes = await client.query(
-    format(
-      "select adapter_id, chain, address, data from (values %L) AS lookup(key, val) join adapters_contracts c on c.chain = key::varchar and c.address = val::bytea;",
-      contracts
-    ),
-    []
-  );
-
-  const contractsByAdapterId: { [key: string]: Contract[] } = {};
-
-  for (const row of adaptersContractsRes.rows) {
-    if (!contractsByAdapterId[row.adapter_id]) {
-      contractsByAdapterId[row.adapter_id] = [];
-    }
-    contractsByAdapterId[row.adapter_id].push({
-      chain: row.chain,
-      address: bufToStr(row.address),
-    });
-  }
-
-  const adapterIds = Object.keys(contractsByAdapterId);
-  const _adapters = adapterIds
-    .map((id) => adapterById[id])
-    .filter(isNotNullish);
-
-  const adaptersBalances: AdapterBalance[] = (
-    await Promise.all(
-      _adapters.map((adapter) =>
-        adapter.getBalances(ctx, contractsByAdapterId[adapter.id])
-      )
-    )
-  )
-    .map((config, i) =>
-      config.balances.map((balance) => ({
-        ...balance,
-        adapterId: _adapters[i].id,
-      }))
-    )
-    .flat();
-
-  return adaptersBalances;
-}
-
-async function getAllAdaptersBalances(ctx, client) {
-  const adaptersContractsRes = await client.query(
-    "select * from adapters_contracts;",
-    []
-  );
-
-  const contractsByAdapterId: { [key: string]: Contract[] } = {};
-
-  for (const row of adaptersContractsRes.rows) {
-    if (!contractsByAdapterId[row.adapter_id]) {
-      contractsByAdapterId[row.adapter_id] = [];
-    }
-    contractsByAdapterId[row.adapter_id].push({
-      chain: row.chain,
-      address: bufToStr(row.address),
-      ...row.data,
-    });
-  }
-
-  const adaptersBalances: AdapterBalance[] = (
-    await Promise.all(
-      adapters.map((adapter) =>
-        adapter.getBalances(ctx, contractsByAdapterId[adapter.id])
-      )
-    )
-  )
-    .map((config, i) =>
-      config.balances.map((balance) => ({
-        ...balance,
-        adapterId: adapters[i].id,
-      }))
-    )
-    .flat();
-
-  return adaptersBalances;
 }
 
 export async function handler(event, context) {
@@ -197,7 +111,7 @@ inner join balances on balances.timestamp = ts.timestamp;`,
   }
 }
 
-export async function websocketUpdateHandler(event, context) {
+export async function websocketUpdateAdaptersHandler(event, context) {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
   context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
 
@@ -208,8 +122,6 @@ export async function websocketUpdateHandler(event, context) {
   if (!isHex(address)) {
     return badRequest("Invalid address parameter, expected hex");
   }
-
-  const ctx: BaseContext = { address };
 
   const client = await pool.connect();
 
@@ -234,39 +146,97 @@ export async function websocketUpdateHandler(event, context) {
     // ]);
 
     // TODO: optimization when chains are synced: only run the adapters of protocols the user interacted with
-    // const adaptersBalances = await getAdaptersBalances(ctx, client, contracts);
-    const adaptersBalances = await getAllAdaptersBalances(ctx, client);
-
-    // TODO: optimization when chains are synced: only run the wallet adapter with received tokens, not the full list
-    // const tokensByChain: { [key: string]: string[] } = {};
-    // for (const row of tokensRes.rows) {
-    //   const chain = row.chain;
-    //   const address = bufToStr(row.token_address);
-    //   if (!tokensByChain[chain]) {
-    //     tokensByChain[chain] = [];
-    //   }
-    //   tokensByChain[chain].push(address);
-    // }
-
-    // const chains = Object.keys(tokensByChain);
-    // const erc20ChainsBalances = await Promise.all(
-    //   chains.map((chain) => getERC20Balances(ctx, chain, tokensByChain[chain]))
-    // );
-    // const erc20Balances: AdapterBalance[] = erc20ChainsBalances.flatMap(
-    //   (balances) =>
-    //     balances.map((balance) => ({
-    //       ...balance,
-    //       category: "wallet",
-    //       adapterId: "wallet",
-    //     }))
-    // );
-
-    const balances = adaptersBalances;
-    // .concat(erc20Balances);
-
-    const pricedBalances = await getPricedBalances(balances);
 
     const now = new Date();
+
+    // run each adapter in a Lambda
+    await Promise.all(
+      adapters.map((adapter) =>
+        invokeLambda(
+          `llamafolio-api-${process.env.stage}-websocketUpdateAdapterBalances`,
+          {
+            connectionId,
+            address,
+            adapterId: adapter.id,
+            timestamp: now.getTime(),
+          },
+          "RequestResponse"
+        )
+      )
+    );
+
+    const apiGatewayManagementApi = new ApiGatewayManagementApi({
+      endpoint: process.env.APIG_ENDPOINT,
+    });
+
+    await apiGatewayManagementApi
+      .postToConnection({
+        ConnectionId: connectionId,
+        Data: JSON.stringify({
+          event: "updateBalances",
+          updatedAt: now.toISOString(),
+          data: "end",
+        }),
+      })
+      .promise();
+
+    return success({});
+  } catch (e) {
+    console.error("Failed to update balances", e);
+    return serverError("Failed to update balances");
+  } finally {
+    // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
+    client.release(true);
+  }
+}
+
+/**
+ * getBalances of given adapter, and push the response to the websocket connection
+ * @param event
+ * @param context
+ * @returns
+ */
+export async function websocketUpdateAdapterBalancesHandler(event, context) {
+  // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
+  context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
+
+  const { connectionId, address, adapterId, timestamp } = event;
+  const adapter = adapterById[adapterId];
+  if (!address) {
+    return badRequest("Missing address parameter");
+  }
+  if (!isHex(address)) {
+    return badRequest("Invalid address parameter, expected hex");
+  }
+  if (!adapter) {
+    return badRequest(
+      `Invalid adapterId parameter, adapter '${adapterId}' not found`
+    );
+  }
+
+  const ctx: BaseContext = { address };
+
+  const client = await pool.connect();
+
+  try {
+    const adaptersContractsRes = await client.query(
+      "select * from adapters_contracts where adapter_id = $1;",
+      [adapterId]
+    );
+
+    const contracts: BaseContract[] = adaptersContractsRes.rows.map(
+      (row: any) => ({
+        chain: row.chain,
+        address: bufToStr(row.address),
+        ...row.data,
+      })
+    );
+
+    const balancesConfig = await adapter.getBalances(ctx, contracts || []);
+
+    const pricedBalances = await getPricedBalances(balancesConfig.balances);
+
+    const now = new Date(timestamp);
 
     // insert balances
     const insertBalancesValues = pricedBalances.map((d) => [
@@ -277,7 +247,7 @@ export async function websocketUpdateHandler(event, context) {
       d.decimals,
       d.amount.toString(),
       d.category,
-      d.adapterId,
+      adapterId,
       (d as PricedBalance).price,
       (d as PricedBalance).timestamp
         ? new Date((d as PricedBalance).timestamp)
@@ -298,7 +268,7 @@ export async function websocketUpdateHandler(event, context) {
       []
     );
 
-    const data = groupBalancesByAdapter(pricedBalances);
+    const data = { ...adapter, data: pricedBalances };
 
     const apiGatewayManagementApi = new ApiGatewayManagementApi({
       endpoint: process.env.APIG_ENDPOINT,
