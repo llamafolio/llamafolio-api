@@ -1,6 +1,5 @@
 import { Adapter, Balance, Contract } from "@lib/adapter";
-import { getBalances } from "./balances"
-
+import { getBalances } from "./balances";
 
 //example contract object
 const vtxLocker: Contract = {
@@ -11,12 +10,12 @@ const vtxLocker: Contract = {
 };
 
 const adapter: Adapter = {
-  id: "",
-  name: "",
-  coingecko: "",
-  defillama: "",
+  id: "vector-finance",
+  name: "Vector Finance",
+  defillama: "vector-finance",
+  coingecko: "vector-finance",
   links: {
-    website: "",
+    website: "https://vectorfinance.io/",
   },
   async getContracts() {
     return {
@@ -25,11 +24,10 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-
-    let balances = await getBalances(ctx, "avax", contracts); 
+    let balances = await getBalances(ctx, "avax", contracts);
 
     return {
-      balances
+      balances,
     };
   },
 };
