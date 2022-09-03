@@ -67,10 +67,7 @@ const adapter: Adapter = {
     let balances = await getBalances(ctx, contracts);
 
     return {
-      balances: balances.map((balance) => ({
-        ...balance,
-        category: "stake",
-      })),
+      balances,
     };
   },
 };

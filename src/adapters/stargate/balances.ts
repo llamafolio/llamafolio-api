@@ -84,8 +84,6 @@ export async function getBalances(ctx, contracts) {
         calls: calls,
         abi: {"inputs":[{"internalType":"uint256","name":"","type":"uint256"},{"internalType":"address","name":"","type":"address"}],"name":"userInfo","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"rewardDebt","type":"uint256"}],"stateMutability":"view","type":"function"},
       });
-
-
       const balancesD = balancesDRes
         .filter((res) => res.success)
         .map((res) => res.output);
@@ -107,6 +105,48 @@ export async function getBalances(ctx, contracts) {
             })
           }
         }
+
+
+      calls = [];
+      for (let d = 0; d < poolInfo.length; d++) {
+        calls.push({
+          params: [d, ctx.address],
+          target: MasterChef.address,
+        });
+      }
+      const rewardAddress = (chain === 'optimism') ? "0x4200000000000000000000000000000000000042": await MasterChef.stargate()
+      const rewardSymbol = (chain === 'optimism') ? "OP": "STG"
+
+      const abi = (chain === 'optimism') ?
+      {"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"_user","type":"address"}],"name":"pendingEmissionToken","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
+      :
+      {"inputs":[{"internalType":"uint256","name":"_pid","type":"uint256"},{"internalType":"address","name":"_user","type":"address"}],"name":"pendingStargate","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
+
+      const pendingSTGRes = await multicall({
+        chain: chain,
+        calls: calls,
+        abi: abi,
+      });
+
+      const pendingSTG = pendingSTGRes
+        .filter((res) => res.success)
+        .map((res) => res.output);
+
+        for (let x = 0; x < pendingSTG.length; x++) {
+          const pendingSTGs = pendingSTG[x];
+          if (pendingSTGs > 0) {
+            balances.push({
+                  chain,
+                  category: "rewards",
+                  symbol: rewardSymbol,
+                  decimals: 18,
+                  address:  rewardAddress,
+                  amount: BigNumber.from(pendingSTGs),
+                  parent: poolInfo[x].lpToken
+            })
+          }
+        }
+
     }
 
     return balances;
