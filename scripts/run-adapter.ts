@@ -56,9 +56,13 @@ async function main() {
   const yieldsData = (await yieldsRes.json()).data;
 
   const yieldsByPoolAddress: { [key: string]: any } = {};
+  const yieldsByKeys: { [key: string]: any } = {};
+
   for (let i = 0; i < yieldsData.length; i++) {
     yieldsByPoolAddress[yieldsData[i].pool.toLowerCase()] = yieldsData[i];
+    yieldsByKeys[yieldsData[i].pool] = yieldsData[i];
   }
+
 
   const pricedBalances = await getPricedBalances(balancesRes.balances);
 
@@ -113,10 +117,13 @@ async function main() {
     const data: any[] = [];
 
     for (const balance of categoryBalances.balances) {
+
       const key = `${balance.yieldsAddress?.toLowerCase()}-${(balance.chain === 'avax')?"avalanche":balance.chain}`;
       const subKey = `${balance.yieldsAddress?.toLowerCase()}`;
+      const nonAddressKey = `${balance.yieldsKey}`; //in a case where a yields key may be a string instead of an address
+
       const yieldObject =
-        yieldsByPoolAddress[key] || yieldsByPoolAddress[subKey];
+        yieldsByPoolAddress[key] || yieldsByPoolAddress[subKey] || yieldsByKeys[nonAddressKey];
 
       const d = {
         chain: balance.chain,

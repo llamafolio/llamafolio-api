@@ -8,6 +8,7 @@ import gmx from "@adapters/gmx";
 import lido from "@adapters/lido";
 import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
+import shibaswap from "@adapters/shibaswap";
 import spiritswap from "@adapters/spiritswap";
 import spookyswap from "@adapters/spookyswap";
 import stargate from "@adapters/stargate";

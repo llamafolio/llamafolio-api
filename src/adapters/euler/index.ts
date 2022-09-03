@@ -10,12 +10,12 @@ const contract: Contract = {
 };
 
 const adapter: Adapter = {
-  id: "",
-  name: "",
-  coingecko: "",
-  defillama: "",
+  id: "euler",
+  name: "Euler Finance",
+  coingecko: "euler",
+  defillama: "euler",
   links: {
-    website: "",
+    website: "https://www.euler.finance/",
   },
   async getContracts() {
     return {
