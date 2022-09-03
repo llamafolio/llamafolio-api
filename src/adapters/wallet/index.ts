@@ -2,7 +2,7 @@ import { Chain, providers } from "@defillama/sdk/build/general";
 import { Adapter, Balance, BaseBalance, Contract } from "@lib/adapter";
 import { Token } from "@lib/token";
 import { getERC20BalanceOf } from "@lib/erc20";
-import tokensByChain from "@llamafolio/tokens";
+import { chains as tokensByChain } from "@llamafolio/tokens";
 
 const adapter: Adapter = {
   id: "wallet",
