@@ -1,4 +1,5 @@
 import aaveV2 from "@adapters/aave/v2";
+import compoundV2 from "@adapters/compound/v2";
 import concentrator from "@adapters/concentrator";
 import convex from "@adapters/convex";
 import curve from "@adapters/curve";
@@ -21,6 +22,7 @@ import { Adapter } from "@lib/adapter";
 
 export const adapters: Adapter[] = [
   aaveV2,
+  compoundV2,
   concentrator,
   convex,
   curve,
