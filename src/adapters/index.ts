@@ -15,6 +15,7 @@ import stargate from "@adapters/stargate";
 import traderjoe from "@adapters/traderjoe";
 import uniswap from "@adapters/uniswap";
 import valas from "@adapters/valas";
+import vector from "@adapters/vector";
 import wallet from "@adapters/wallet";
 import { Adapter } from "@lib/adapter";
 
@@ -29,12 +30,14 @@ export const adapters: Adapter[] = [
   lido,
   pancakeswap,
   pangolin,
+  shibaswap,
   spiritswap,
   spookyswap,
   stargate,
   traderjoe,
   uniswap,
   valas,
+  vector,
   wallet,
 ];
 
