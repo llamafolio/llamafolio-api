@@ -4,14 +4,6 @@ import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
   id: "sushiswap",
-  name: "SushiSwap",
-  description:
-    "A fully decentralized protocol for automated liquidity provision on Ethereum.",
-  coingecko: "sushi",
-  defillama: "sushiswap",
-  links: {
-    website: "https://sushi.com/",
-  },
   async getContracts() {
     return {
       contracts: await getPairsInfo({

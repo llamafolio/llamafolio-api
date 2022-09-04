@@ -2,15 +2,7 @@ import { Adapter, Balance, Contract } from "@lib/adapter";
 import { getAllPools, getPoolBalances } from "./pools";
 
 const adapter: Adapter = {
-  id: "convex",
-  name: "Convex Finance",
-  description:
-    "Convex simplifies your Curve-boosting experience to maximize your yields.",
-  coingecko: "convex-finance",
-  defillama: "convex-finance",
-  links: {
-    website: "https://www.convexfinance.com/",
-  },
+  id: "convex-finance",
   async getContracts() {
     return {
       contracts: (await getAllPools()) as Contract[],

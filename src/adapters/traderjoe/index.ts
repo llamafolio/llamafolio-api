@@ -4,13 +4,6 @@ import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
   id: "trader-joe",
-  name: "Trader Joe",
-  coingecko: "joe",
-  defillama: "trader-joe",
-  links: {
-    website: "https://traderjoexyz.com",
-    doc: "https://docs.traderjoexyz.com",
-  },
   async getContracts() {
     return {
       contracts: await getPairsInfo({

@@ -10,13 +10,6 @@ const concentratorIFOContract: Contract = {
 
 const adapter: Adapter = {
   id: "concentrator",
-  name: "Concentrator",
-  coingecko: "concentrator",
-  defillama: "concentrator",
-  links: {
-    website: "https://concentrator.aladdin.club/",
-    doc: "https://github.com/AladdinDAO",
-  },
   getContracts() {
     return {
       contracts: [concentratorIFOContract],

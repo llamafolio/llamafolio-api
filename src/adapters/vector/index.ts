@@ -11,12 +11,6 @@ const vtxLocker: Contract = {
 
 const adapter: Adapter = {
   id: "vector-finance",
-  name: "Vector Finance",
-  defillama: "vector-finance",
-  coingecko: "vector-finance",
-  links: {
-    website: "https://vectorfinance.io/",
-  },
   async getContracts() {
     return {
       contracts: [vtxLocker],

@@ -6,10 +6,6 @@ import { chains as tokensByChain } from "@llamafolio/tokens";
 
 const adapter: Adapter = {
   id: "wallet",
-  name: "Wallet",
-  description: "",
-  defillama: "",
-  links: {},
   getContracts() {
     const contracts: Contract[] = [];
 

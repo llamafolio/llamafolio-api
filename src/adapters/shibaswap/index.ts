@@ -4,19 +4,10 @@ import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 // * * *
 // Missing rewards BONE and things
-// 
-
-
-
+//
 
 const adapter: Adapter = {
   id: "shibaswap",
-  name: "ShibaSwap",
-  coingecko: "bone-shibaswap",
-  defillama: "shibaswap",
-  links: {
-    website: "https://shibaswap.com/#/",
-  },
   async getContracts() {
     return {
       contracts: await getPairsInfo({

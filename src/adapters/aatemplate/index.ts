@@ -9,16 +9,11 @@ const contract: Contract = {
 };
 
 const adapter: Adapter = {
+  // DefiLlama slug
   id: "",
-  name: "",
-  coingecko: "",
-  defillama: "",
-  links: {
-    website: "",
-  },
   async getContracts() {
     return {
-      contracts: [contract],  //this should be an array of all contracts getBalances will look at
+      contracts: [contract], //this should be an array of all contracts getBalances will look at
       revalidate: 60 * 60,
     };
   },
@@ -26,7 +21,7 @@ const adapter: Adapter = {
     let balances = await getBalances(ctx, "ethereum", contracts); //any method to check all the contracts retrieved above
 
     return {
-      balances
+      balances,
     };
   },
 };

@@ -4,14 +4,6 @@ import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
   id: "pancakeswap",
-  name: "PancakeSwap",
-  description: "",
-  defillama: "pancakeswap",
-  coingecko: "pancakeswap-token",
-  links: {
-    website: "https://pancakeswap.finance/",
-    doc: "https://docs.pancakeswap.finance/",
-  },
   async getContracts() {
     return {
       contracts: await getPairsInfo({

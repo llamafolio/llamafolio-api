@@ -23,13 +23,6 @@ const wstETH: Contract = {
 
 const adapter: Adapter = {
   id: "lido",
-  name: "Lido",
-  description: "",
-  defillama: "lido",
-  coingecko: "lido-dao",
-  links: {
-    website: "https://lido.fi/",
-  },
   getContracts() {
     return {
       contracts: [stETH, wstETH],
