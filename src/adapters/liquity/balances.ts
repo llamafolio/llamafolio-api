@@ -39,7 +39,7 @@ export async function getBalances(ctx, chain, contracts) {
         symbol: "LUSD",
         decimals: 18,
         address: contract.address,
-        priceSubtitute: "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+        priceSubstitute: "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
         amount: BigNumber.from(LUSDBalance),
       });
 
