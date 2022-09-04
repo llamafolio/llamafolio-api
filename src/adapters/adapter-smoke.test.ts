@@ -1,17 +1,53 @@
 import { ethers } from "ethers";
+import fetch from "node-fetch";
 import { adapters } from "@adapters/index";
 import { providers } from "@defillama/sdk/build/general";
 import { ContractsConfig } from "@lib/adapter";
+
+function race(promise: Promise<any> | any, ms: number) {
+  return Promise.race([
+    promise,
+    new Promise((_resolve, reject) => setTimeout(() => reject(), ms)),
+  ]);
+}
+
+async function fetchProtocols() {
+  const res = await fetch("https://api.llama.fi/protocols");
+  return res.json();
+}
+
+describe("metadata basic validations", () => {
+  const protocolById: { [key: string]: any } = {};
+  let protocols: any[] = [];
+
+  beforeAll(async () => {
+    protocols = await fetchProtocols();
+
+    for (const protocol of protocols) {
+      if (protocol.slug) {
+        protocolById[protocol.slug] = protocol;
+      }
+    }
+
+    test("adapter protocol must exist on defillama", () => {
+      for (const adapter of adapters) {
+        const protocol = protocolById[adapter.id];
+        expect(protocol).toBeDefined();
+      }
+    });
+  });
+});
 
 describe("getContracts basic validations", () => {
   let adaptersContractsConfigs: ContractsConfig[] = [];
 
   beforeAll(async () => {
+    // Get adapters contracts:
+    // getContracts should run under 5 minutes
     adaptersContractsConfigs = await Promise.all(
-      adapters.map((adapter) => adapter.getContracts())
+      adapters.map((adapter) => race(adapter.getContracts(), 60 * 5 * 1000))
     );
-    // TODO: independent timers to check that no adapter takes more than x seconds to load
-  }, 50_000);
+  });
 
   test("adapter ids must be unique", () => {
     const uniqueIds = new Set(adapters.map((adapter) => adapter.id));

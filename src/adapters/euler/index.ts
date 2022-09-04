@@ -1,5 +1,5 @@
 import { Adapter, Balance, Contract } from "@lib/adapter";
-import { getPositions } from "./markets"
+import { getPositions } from "./markets";
 
 //example contract object
 const contract: Contract = {
@@ -11,15 +11,9 @@ const contract: Contract = {
 
 const adapter: Adapter = {
   id: "euler",
-  name: "Euler Finance",
-  coingecko: "euler",
-  defillama: "euler",
-  links: {
-    website: "https://www.euler.finance/",
-  },
   async getContracts() {
     return {
-      contracts: [contract],  //this should be an array of all contracts getBalances will look at
+      contracts: [contract], //this should be an array of all contracts getBalances will look at
       revalidate: 60 * 60,
     };
   },

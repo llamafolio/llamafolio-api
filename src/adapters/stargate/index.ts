@@ -1,5 +1,5 @@
 import { Adapter, Balance, Contract } from "@lib/adapter";
-import { getBalances } from "./balances"
+import { getBalances } from "./balances";
 
 //example contract object
 const contracts = [
@@ -47,16 +47,8 @@ const contracts = [
   },
 ];
 
-
-
 const adapter: Adapter = {
   id: "stargate",
-  name: "Stargate Finance",
-  coingecko: "stargate-finance",
-  defillama: "stargate",
-  links: {
-    website: "https://stargate.finance/",
-  },
   async getContracts() {
     return {
       contracts: contracts,

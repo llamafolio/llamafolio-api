@@ -4,15 +4,6 @@ import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
   id: "spookyswap",
-  name: "SpookySwap",
-  description:
-    "All in one decentralized exchange for leveraging diversified funds across ecosystems, with the speed of Fantom Opera",
-  coingecko: "spookyswap",
-  defillama: "spookyswap",
-  links: {
-    website: "https://spooky.fi",
-    doc: "https://docs.spooky.fi",
-  },
   async getContracts() {
     return {
       contracts: await getPairsInfo({

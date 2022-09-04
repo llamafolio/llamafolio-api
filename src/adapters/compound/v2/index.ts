@@ -97,13 +97,6 @@ async function getMarkets(
 
 const adapter: Adapter = {
   id: "compound",
-  name: "Compound",
-  defillama: "compound",
-  coingecko: "compound-governance-token",
-  links: {
-    website: "https://compound.finance/",
-    doc: "https://docs.compound.finance/",
-  },
   async getContracts() {
     const markets = await getMarkets("ethereum", {
       comptrollerAddress: "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b",

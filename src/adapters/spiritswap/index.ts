@@ -4,14 +4,6 @@ import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
   id: "spiritswap",
-  name: "Spiritswap",
-  description: "",
-  coingecko: "spiritswap",
-  defillama: "spiritswap",
-  links: {
-    website: "https://www.spiritswap.finance/",
-    doc: "https://docs.spiritswap.finance/spirit-swap/",
-  },
   async getContracts() {
     return {
       contracts: await getPairsInfo({

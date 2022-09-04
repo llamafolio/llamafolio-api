@@ -60,26 +60,12 @@ export type ContractsConfig = {
   revalidate?: number;
 };
 
-export type Links = {
-  website?: string;
-  doc?: string;
-  github?: string;
-  twitter?: string;
-  telegram?: string;
-  discord?: string;
-  medium?: string;
-};
-
 export interface Adapter {
-  // Unique adapter identifier. Use DeFiLlama slug if applicable
+  /**
+   * DefiLlama slug.
+   * @see https://docs.llama.fi/list-your-project/submit-a-project to submit your adapter on DefiLlama.
+   */
   id: string;
-  name: string;
-  description: string;
-  // CoinGecko ID
-  coingecko?: string;
-  // DefiLlama ID
-  defillama?: string;
-  links: Links;
   getContracts: () => ContractsConfig | Promise<ContractsConfig>;
   getBalances: (
     ctx: BaseContext,

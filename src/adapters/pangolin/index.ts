@@ -4,14 +4,6 @@ import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
   id: "pangolin",
-  name: "Pangolin",
-  description: "Pangolin is a community-driven DEX that runs on Avalanche.",
-  coingecko: "pangolin",
-  defillama: "pangolin",
-  links: {
-    website: "https://pangolin.exchange",
-    doc: "https://docs.pangolin.exchange",
-  },
   async getContracts() {
     return {
       contracts: await getPairsInfo({

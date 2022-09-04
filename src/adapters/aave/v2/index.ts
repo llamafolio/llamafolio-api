@@ -18,13 +18,6 @@ function getChainContracts(
 
 const adapter: Adapter = {
   id: "aave-v2",
-  name: "AAVE V2",
-  coingecko: "aave",
-  defillama: "aave-v2",
-  links: {
-    website: "https://app.aave.com/",
-    doc: "https://docs.aave.com/hub/",
-  },
   getContracts() {
     const chainsContracts = [
       getChainContracts("avax", {

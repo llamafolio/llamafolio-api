@@ -32,15 +32,7 @@ const valasToken: Token = {
 };
 
 const adapter: Adapter = {
-  id: "valas",
-  name: "Valas Finance",
-  coingecko: "valas-finance",
-  defillama: "valas-finance",
-  description: "",
-  links: {
-    website: "https://valasfinance.com/",
-    doc: "https://docs.valasfinance.com/",
-  },
+  id: "valas-finance",
   getContracts() {
     return {
       contracts: [multiFeeDistributionContract, lendingPoolContract],
