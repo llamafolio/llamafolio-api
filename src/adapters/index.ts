@@ -8,6 +8,7 @@ import euler from "@adapters/euler";
 import geist from "@adapters/geist";
 import gmx from "@adapters/gmx";
 import lido from "@adapters/lido";
+import liquity from "@adapters/liquity";
 import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
 import shibaswap from "@adapters/shibaswap";
@@ -32,6 +33,7 @@ export const adapters: Adapter[] = [
   geist,
   gmx,
   lido,
+  liquity,
   pancakeswap,
   pangolin,
   shibaswap,
