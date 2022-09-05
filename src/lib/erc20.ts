@@ -3,6 +3,7 @@ import { Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import { BaseBalance, BaseContext } from "@lib/adapter";
 import { Token } from "@lib/token";
+import { getToken } from "@llamafolio/tokens";
 import { isNotNullish } from "./type";
 
 export const abi = {
@@ -88,7 +89,17 @@ export async function getERC20Details(
   chain: Chain,
   tokens: string[]
 ): Promise<Token[]> {
-  const calls = tokens.map((address) => ({
+  const found: { [key: string]: Token } = {};
+  for (const address of tokens) {
+    const tokenInfo = getToken(chain, address.toLowerCase());
+    if (tokenInfo) {
+      found[address] = tokenInfo;
+    }
+  }
+
+  const missingTokens = tokens.filter((address) => !found[address]);
+
+  const calls = missingTokens.map((address) => ({
     target: address,
     params: [],
   }));
@@ -126,30 +137,32 @@ export async function getERC20Details(
         ethers.utils.parseBytes32String(bytes32SymbolRes.output);
     }
 
-    for (let i = 0; i < tokens.length; i++) {
-      if (tokens[i] in bytes32SymbolByAddress) {
+    for (let i = 0; i < missingTokens.length; i++) {
+      if (missingTokens[i] in bytes32SymbolByAddress) {
         symbols[i].success = true;
-        symbols[i].output = bytes32SymbolByAddress[tokens[i]];
+        symbols[i].output = bytes32SymbolByAddress[missingTokens[i]];
       }
     }
   }
 
-  return tokens
-    .filter((address, i) => {
-      if (!symbols[i].success) {
-        console.error(`Could not get symbol for token ${chain}:${address}`);
-        return false;
-      }
-      if (!decimals[i].success) {
-        console.error(`Could not get decimals for token ${chain}:${address}`);
-        return false;
-      }
-      return true;
-    })
-    .map((address, i) => ({
+  for (let i = 0; i < missingTokens.length; i++) {
+    const address = missingTokens[i];
+    if (!symbols[i].success) {
+      console.error(`Could not get symbol for token ${chain}:${address}`);
+      continue;
+    }
+    if (!decimals[i].success) {
+      console.error(`Could not get decimals for token ${chain}:${address}`);
+      continue;
+    }
+
+    found[address] = {
       chain,
       address,
       symbol: symbols[i].output,
       decimals: parseInt(decimals[i].output),
-    }));
+    };
+  }
+
+  return tokens.map((address) => found[address]).filter(isNotNullish);
 }
