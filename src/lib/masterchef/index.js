@@ -97,7 +97,7 @@ export async function returnMasterChefDetails(ctx, chain, contract, pendingRewar
     const row = balancesDRes[i]
     if (row.output.amount > 0) {
       masterChefBalances.push({
-        address: poolInfo[i].lpToken,
+        poolInfo: poolInfo[i],
         amount: row.output.amount,
         token: tokenDetails[rewardCount],
         rewardDebt: row.output.rewardDebt,
