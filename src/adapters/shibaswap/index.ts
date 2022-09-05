@@ -50,10 +50,7 @@ const adapter: Adapter = {
     balances = balances.concat(stakeBalances);
 
     return {
-      balances: balances.map((balance) => ({
-        ...balance,
-        category: "farm",
-      })),
+      balances,
     };
   },
 };

@@ -2,6 +2,7 @@ import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
 import { getERC20Balances, getERC20Details } from "@lib/erc20";
+import { returnMasterChefDetails } from "@lib/masterchef/index";
 
 import LockerAbi from "./abis/Locker.json";
 import StakerAbi from "./abis/Staker.json";
@@ -55,6 +56,33 @@ export async function getBalances(ctx, chain, contracts) {
         amount: BigNumber.from(stakedBone),
       });
 
+
+    }
+
+    if (contract.name === 'masterChef') {
+      const masterDetails = await returnMasterChefDetails(ctx, chain, contract.address, "pendingBone")
+      for (let yy = 0; yy < masterDetails.length; yy++) {
+        const masterRow = masterDetails[yy];
+        balances.push({
+          chain: chain,
+          category: "lp",
+          symbol: masterRow.token.symbol,
+          decimals: masterRow.token.decimals,
+          address: masterRow.token.address,
+          amount: BigNumber.from(masterRow.amount),
+        });
+        if (masterRow.rewardsPending > 0) {
+          balances.push({
+            chain: chain,
+            category: "rewards",
+            symbol: "BONE",
+            decimals: 18,
+            address: "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
+            amount: BigNumber.from(masterRow.rewardsPending),
+            parent: masterRow.token.address
+          });
+        }
+      }
 
     }
 
