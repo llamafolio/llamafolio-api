@@ -4,16 +4,17 @@ import { multicall } from "@lib/multicall";
 import { getERC20Details } from "@lib/erc20"
 
 
+//retrieves details about underlying balances given an array of LP tokens
+
 export async function getUnderlyingBalancesUniswap(tokens, ctx, chain) {
 
-  let calls = [];
-  for (let index = 0; index < tokens.length; index++) {
-    const token = tokens[index];
-    calls.push({
+
+  let calls = tokens.map((token) => {
+    return {
       params: [],
       target: token.address,
-    });
-  }
+    }
+  })
 
   const token0Res = await multicall({
     chain: chain,
@@ -163,6 +164,110 @@ export async function getUnderlyingBalancesUniswap(tokens, ctx, chain) {
     }
 
     return tokens
+}
+
+
+//retrieves underlying balances from a balance array where token0 and token1 have already been fetched
+//mapped tokens must have been formatted by the getAllPairs method from the uniswap library
+
+export async function getUnderlyingBalancesFromTokensUniswap(ctx, chain, mappedTokens) {
+
+
+  let calls = mappedTokens.map((token) => {
+    return {
+      params: [],
+      target: token.address
+    }
+  })
+
+  let balanceCalls = mappedTokens.flatMap((bToken) => [{
+    params: [bToken.address],
+    target: bToken.token0.address
+  }, {
+    params: [bToken.address],
+    target: bToken.token1.address
+  }]);
+
+
+  const totalSupplyRes = await multicall({
+    chain: chain,
+    calls: calls,
+    abi: {
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+  });
+
+  const totalSupply = totalSupplyRes
+    .filter((res) => res.success)
+    .map((res) => BigNumber.from(res.output));
+
+    const balancesOfRes = await multicall({
+      chain: chain,
+      calls: balanceCalls,
+      abi: {
+          "inputs": [
+            {
+              "internalType": "address",
+              "name": "",
+              "type": "address"
+            }
+          ],
+          "name": "balanceOf",
+          "outputs": [
+            {
+              "internalType": "uint256",
+              "name": "",
+              "type": "uint256"
+            }
+          ],
+          "stateMutability": "view",
+          "type": "function"
+        },
+    });
+
+    const balancesOf = balancesOfRes
+      .filter((res) => res.success)
+      .map((res) => BigNumber.from(res.output));
+
+
+  let balancesLoop = 0
+  for (let index = 0; index < mappedTokens.length; index++) {
+    const mappedRow = mappedTokens[index];
+
+    const balance0 = balancesOf[balancesLoop].mul(mappedRow.amount).div(totalSupply[index])
+    balancesLoop++
+    const balance1 = balancesOf[balancesLoop].mul(mappedRow.amount).div(totalSupply[index])
+    balancesLoop++
+
+    mappedTokens[index].underlyingDetails = [
+      {
+        address: mappedRow.token0.address,
+        symbol: mappedRow.token0.symbol,
+        decimals: mappedRow.token0.decimals,
+        amount: balance0
+      },
+      {
+        address: mappedRow.token1.address,
+        symbol: mappedRow.token1.symbol,
+        decimals: mappedRow.token1.decimals,
+        amount: balance1
+      }
+    ]
+
+  }
+
+  return mappedTokens
+
 }
 
 

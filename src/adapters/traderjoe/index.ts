@@ -1,5 +1,5 @@
 import { Adapter } from "@lib/adapter";
-import { getERC20BalanceOf } from "@lib/erc20";
+import { getERC20BalanceOfWithUnderlying } from "@lib/erc20";
 import { getPairsInfo } from "@lib/uniswap/v2/factory";
 
 const adapter: Adapter = {
@@ -15,12 +15,12 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-    const balances = await getERC20BalanceOf(ctx, "avax", contracts);
+    const balances = await getERC20BalanceOfWithUnderlying(ctx, "avax", contracts);
 
     return {
       balances: balances.map((balance) => ({
         ...balance,
-        category: "farm",
+        category: "lp",
       })),
     };
   },
