@@ -162,7 +162,6 @@ export async function getUnderlyingBalancesUniswap(tokens, ctx, chain) {
 
     }
 
-    console.log(tokens[0].details, 'tokens')
     return tokens
 }
 
