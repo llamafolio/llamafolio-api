@@ -33,6 +33,7 @@ export async function getBalances(ctx, chain, contracts) {
           decimals: masterRow.token.decimals,
           address: masterRow.token.address,
           amount: BigNumber.from(masterRow.amount),
+          yieldsAddress: masterRow.token.address
         });
 
         fetchUnderlyings.push({
