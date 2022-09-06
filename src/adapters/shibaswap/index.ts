@@ -4,9 +4,6 @@ import { getPairsInfo } from "@lib/uniswap/v2/factory";
 import { getBalances } from "./balances";
 
 
-// * * *
-// Missing rewards BONE and things
-//
 const lockerContract: Contract = {
   name: "locker",
   displayName: "Locker",

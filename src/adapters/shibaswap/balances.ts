@@ -3,6 +3,7 @@ import { ethers, BigNumber } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
 import { getERC20Balances, getERC20Details } from "@lib/erc20";
 import { returnMasterChefDetails } from "@lib/masterchef/index";
+import { getUnderlyingBalancesUniswap } from "@lib/underlying";
 
 import LockerAbi from "./abis/Locker.json";
 import StakerAbi from "./abis/Staker.json";
@@ -61,6 +62,9 @@ export async function getBalances(ctx, chain, contracts) {
 
     if (contract.name === 'masterChef') {
       const masterDetails = await returnMasterChefDetails(ctx, chain, contract.address, "pendingBone")
+
+      const fetchUnderlyings = []
+
       for (let yy = 0; yy < masterDetails.length; yy++) {
         const masterRow = masterDetails[yy];
         balances.push({
@@ -71,6 +75,12 @@ export async function getBalances(ctx, chain, contracts) {
           address: masterRow.token.address,
           amount: BigNumber.from(masterRow.amount),
         });
+
+        fetchUnderlyings.push({
+          address: masterRow.token.address,
+          amount: BigNumber.from(masterRow.amount)
+        })
+
         if (masterRow.rewardsPending > 0) {
           balances.push({
             chain: chain,
@@ -83,6 +93,8 @@ export async function getBalances(ctx, chain, contracts) {
           });
         }
       }
+
+      const underlyingBalances = await getUnderlyingBalancesUniswap(fetchUnderlyings, ctx, chain)
 
     }
 
