@@ -79,7 +79,7 @@ export async function getUnderlyingBalancesUniswap(tokens, ctx, chain) {
 
     const totalSupply = totalSupplyRes
       .filter((res) => res.success)
-      .map((res) => res.output);
+      .map((res) => BigNumber.from(res.output));
 
 
     calls = [];
@@ -125,7 +125,7 @@ export async function getUnderlyingBalancesUniswap(tokens, ctx, chain) {
 
     const balancesOf = balancesOfRes
       .filter((res) => res.success)
-      .map((res) => res.output);
+      .map((res) => BigNumber.from(res.output));
 
 
     let balancesLoop = 0
@@ -135,14 +135,14 @@ export async function getUnderlyingBalancesUniswap(tokens, ctx, chain) {
       const token = tokens[index];
 
       //NOTE needs proper formatting to match the balance format
-      const percentageOfOwnership = token.amount / totalSupply[index] //returns zero when using BigNumber??
+      const lpTotalSupply = BigNumber.from(totalSupply[index])
       let tokenBalances = {}
       const token0Detail = tokenDetails.find((o) => o.address === token0Array[index].toLowerCase());
       const token1Detail = tokenDetails.find((o) => o.address === token1Array[index].toLowerCase());
 
-      tokenBalances["token0_userBalance"] = balancesOf[balancesLoop] * percentageOfOwnership
+      tokenBalances["token0_userBalance"] = balancesOf[balancesLoop].mul(token.amount).div(lpTotalSupply)
       balancesLoop++
-      tokenBalances["token1_userBalance"] = balancesOf[balancesLoop] * percentageOfOwnership
+      tokenBalances["token1_userBalance"] = balancesOf[balancesLoop].mul(token.amount).div(lpTotalSupply)
       balancesLoop++
 
       tokens[index].details = [
