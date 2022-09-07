@@ -144,6 +144,16 @@ async function main() {
         parent: balance.parent,
       };
 
+      if (balance.underlyingDetails) {
+        let underlyingDetail = []
+        for (let kk = 0; kk < balance.underlyingDetails.length; kk++) {
+          const underlying = balance.underlyingDetails[kk];
+          underlyingDetail.push(`${millify(underlying.amount / 10 ** underlying.decimals)} ${underlying.symbol}`)
+        }
+        d.underlying = underlyingDetail.join(" + ")
+      }
+
+
       data.push(d);
     }
 
