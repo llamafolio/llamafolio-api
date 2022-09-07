@@ -49,18 +49,20 @@ export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
 export async function getPricedBalances(
   balances: Balance[]
 ): Promise<(Balance | PricedBalance)[]> {
-  // Collect underlyings and filter empty balances
-  const priced: BaseBalance[] = [];
+  // Filter empty balances
+  balances = balances.filter(
+    (balance) =>
+      balance.amount.gt(0) || (balance as RewardBalance).claimable?.gt(0)
+  );
+
+  const priced: BaseBalance[] = balances.slice();
+  // add underlyings
   for (const balance of balances) {
     if (balance.underlyings) {
       for (const underlying of balance.underlyings) {
         if (underlying.amount.gt(0)) {
           priced.push(underlying);
         }
-      }
-    } else {
-      if (balance.amount.gt(0) || (balance as RewardBalance).claimable?.gt(0)) {
-        priced.push(balance);
       }
     }
   }
@@ -107,9 +109,9 @@ export async function getPricedBalances(
           balanceUSD: sum(pricedUnderlyings.map((b) => b.balanceUSD || 0)),
           underlyings: pricedUnderlyings,
         };
-      } else {
-        return getPricedBalance(balance);
       }
+
+      return getPricedBalance(balance);
     }
   );
 

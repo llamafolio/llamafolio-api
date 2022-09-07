@@ -10,7 +10,7 @@ import MasterChefAbi from "./abis/MasterChef.json";
 //pendingRewardMethod == tends to vary from contract to contract
 
 
-export async function returnMasterChefDetails(ctx, chain, contract, pendingRewardMethod = null) {
+export async function returnMasterChefDetails(ctx: BaseContext, chain: Chain, contract, pendingRewardMethod = null) {
 
 
   const provider = providers[chain]
