@@ -94,7 +94,7 @@ export async function getBalances(ctx, chain, contracts) {
         }
       }
 
-      const underlyingBalances = await getUnderlyingBalancesUniswap(fetchUnderlyings, ctx, chain)
+      const underlyingBalances = await getUnderlyingBalancesUniswap(chain, fetchUnderlyings);
 
       for (let t = 0; t < balances.length; t++) {
         const underlyingDetail = underlyingBalances.find((o) => o.address.toLowerCase() === balances[t].address.toLowerCase());
