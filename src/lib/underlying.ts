@@ -1,12 +1,13 @@
-import { ethers, BigNumber } from "ethers";
+import { BigNumber } from "ethers";
 import { Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import { getERC20Details } from "@lib/erc20"
+import { BaseBalance } from "@lib/adapter";
 
 
 //retrieves details about underlying balances given an array of LP tokens
 
-export async function getUnderlyingBalancesUniswap(tokens, ctx, chain) {
+export async function getUnderlyingBalancesUniswap(chain: Chain, tokens: BaseBalance[]) {
 
 
   let calls = tokens.map((token) => {
@@ -130,12 +131,10 @@ export async function getUnderlyingBalancesUniswap(tokens, ctx, chain) {
 
 
     let balancesLoop = 0
-    const balancesImproved = []
     for (let index = 0; index < tokens.length; index++) {
 
       const token = tokens[index];
 
-      //NOTE needs proper formatting to match the balance format
       const lpTotalSupply = BigNumber.from(totalSupply[index])
       let tokenBalances = {}
       const token0Detail = tokenDetails.find((o) => o.address === token0Array[index].toLowerCase());
@@ -249,14 +248,16 @@ export async function getUnderlyingBalancesFromTokensUniswap(ctx, chain, mappedT
     const balance1 = balancesOf[balancesLoop].mul(mappedRow.amount).div(totalSupply[index])
     balancesLoop++
 
-    mappedTokens[index].underlyingDetails = [
+    mappedTokens[index].underlyings = [
       {
+        chain,
         address: mappedRow.token0.address,
         symbol: mappedRow.token0.symbol,
         decimals: mappedRow.token0.decimals,
         amount: balance0
       },
       {
+        chain,
         address: mappedRow.token1.address,
         symbol: mappedRow.token1.symbol,
         decimals: mappedRow.token1.decimals,

@@ -10,8 +10,4 @@ export type Token = {
   // optional token used to retrieve price.
   // ex: WETH -> ETH
   priceSubstitute?: string;
-  // optional underlying tokens.
-  // ex: aToken -> token (AAVE)
-  // ex: Uniswap Pair -> [token0, token1]
-  underlyings?: Token[];
 };

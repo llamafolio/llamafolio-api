@@ -25,6 +25,10 @@ export type Balance = (BaseBalance | RewardBalance) & {
   reward?: boolean;
   debt?: boolean;
   stable?: boolean;
+  // optional underlying tokens.
+  // ex: aToken -> token (AAVE)
+  // ex: Uniswap Pair -> [token0, token1]
+  underlyings?: BaseBalance[];
 };
 
 export type PricedBalance = Balance & {

@@ -4,7 +4,7 @@ import { multicall } from "@lib/multicall";
 import { BaseBalance, BaseContext } from "@lib/adapter";
 import { Token } from "@lib/token";
 import { getToken } from "@llamafolio/tokens";
-import { getUnderlyingBalancesFromTokensUniswap } from "@lib/underlying"
+import { getUnderlyingBalancesFromTokensUniswap } from "@lib/underlying";
 import { isNotNullish } from "./type";
 
 export const abi = {
@@ -86,10 +86,13 @@ export async function getERC20BalanceOf(
     .filter(isNotNullish);
 }
 
-
 //fetches balances with underlying for uniswap v2 and forks
 
-export async function getERC20BalanceOfWithUnderlying(ctx, chain, tokens) {
+export async function getERC20BalanceOfWithUnderlying(
+  ctx: BaseContext,
+  chain: Chain,
+  tokens: Token[]
+) {
   const balances = await multicall({
     chain,
     calls: tokens.map((token) => ({
@@ -109,15 +112,15 @@ export async function getERC20BalanceOfWithUnderlying(ctx, chain, tokens) {
       }
 
       if (balances[i].output > 0) {
-        (token as BaseBalance).amount = BigNumber.from(balances[i].output || "0");
+        (token as BaseBalance).amount = BigNumber.from(
+          balances[i].output || "0"
+        );
         return token as BaseBalance;
       }
-
     })
     .filter(isNotNullish);
 
-  return await getUnderlyingBalancesFromTokensUniswap(ctx, chain, mappedTokens)
-
+  return getUnderlyingBalancesFromTokensUniswap(ctx, chain, mappedTokens);
 }
 
 export async function getERC20Details(
