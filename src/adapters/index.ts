@@ -11,6 +11,7 @@ import lido from "@adapters/lido";
 import liquity from "@adapters/liquity";
 import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
+import rocketpool from "@adapters/rocket-pool";
 import shibaswap from "@adapters/shibaswap";
 import spiritswap from "@adapters/spiritswap";
 import spookyswap from "@adapters/spookyswap";
@@ -36,6 +37,7 @@ export const adapters: Adapter[] = [
   liquity,
   pancakeswap,
   pangolin,
+  rocketpool,
   shibaswap,
   spiritswap,
   spookyswap,
