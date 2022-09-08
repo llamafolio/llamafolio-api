@@ -332,6 +332,7 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
       d.claimable?.toString(),
       d.balanceUSD,
       d.claimableUSD,
+      d.type,
     ]);
 
     await client.query("BEGIN");
@@ -345,7 +346,7 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
     // Insert new balances
     await client.query(
       format(
-        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable, balance_usd, claimable_usd) VALUES %L;",
+        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable, balance_usd, claimable_usd, type) VALUES %L;",
         insertBalancesValues
       ),
       []
