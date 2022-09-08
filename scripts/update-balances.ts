@@ -86,6 +86,8 @@ async function main() {
       d.stable,
       d.parent ? strToBuf(d.parent) : undefined,
       d.claimable?.toString(),
+      d.balanceUSD,
+      d.claimableUSD
     ]);
 
     await client.query("BEGIN");
@@ -99,7 +101,7 @@ async function main() {
     // Insert new balances
     await client.query(
       format(
-        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable) VALUES %L;",
+        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable, balance_usd, claimable_usd) VALUES %L;",
         insertBalancesValues
       ),
       []

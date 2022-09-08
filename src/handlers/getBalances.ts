@@ -75,20 +75,14 @@ export async function handler(event, context) {
         adapterId: d.adapter_id,
         price: parseFloat(d.price),
         priceTimestamp: d.price_timestamp,
-        balanceUSD:
-          d.amount != null && d.decimals != null && d.price != null
-            ? mulPrice(d.amount, d.decimals, d.price)
-            : undefined,
+        balanceUSD: d.balance_usd,
         timestamp: d.timestamp,
         reward: d.reward,
         debt: d.debt,
         stable: d.stable,
         parent: d.parent ? bufToStr(d.parent) : undefined,
         claimable: d.claimable,
-        claimableUSD:
-          d.claimable != null && d.decimals != null && d.price != null
-            ? mulPrice(d.claimable, d.decimals, d.price)
-            : undefined,
+        claimableUSD: d.claimable_usd,
       }));
 
     const data = groupBalancesByAdapter(pricedBalances);
@@ -297,6 +291,8 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
       d.stable,
       d.parent ? strToBuf(d.parent) : undefined,
       d.claimable?.toString(),
+      d.balanceUSD,
+      d.claimableUSD,
     ]);
 
     await client.query("BEGIN");
@@ -310,7 +306,7 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
     // Insert new balances
     await client.query(
       format(
-        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable) VALUES %L;",
+        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable, balance_usd, claimable_usd) VALUES %L;",
         insertBalancesValues
       ),
       []
