@@ -3,6 +3,8 @@ import { providers, Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import UniswapV2Factory from "./abis/UniswapV2Factory.json";
 import { getERC20Details } from "@lib/erc20";
+import { Token } from "@lib/token";
+import { isNotNullish } from "@lib/type";
 
 export type GetPairsInfoParams = {
   chain: Chain;
@@ -43,7 +45,9 @@ export async function getPairsInfo({
     },
   });
 
-  const addresses = allPairsRes.map((res) => res.output);
+  const addresses = allPairsRes
+    .filter((res) => res.success)
+    .map((res) => res.output.toLowerCase());
 
   const [pairs, token0sRes, token1sRes] = await Promise.all([
     getERC20Details(chain, addresses),
@@ -83,20 +87,69 @@ export async function getPairsInfo({
     }),
   ]);
 
+  const token0Addresses = token0sRes
+    .filter((res) => res.success)
+    .map((res) => res.output.toLowerCase());
+
+  const token1Addresses = token1sRes
+    .filter((res) => res.success)
+    .map((res) => res.output.toLowerCase());
+
   const [token0s, token1s] = await Promise.all([
-    getERC20Details(
-      chain,
-      pairs.map((_, i) => token0sRes[i].output)
-    ),
-    getERC20Details(
-      chain,
-      pairs.map((_, i) => token1sRes[i].output)
-    ),
+    getERC20Details(chain, token0Addresses),
+    getERC20Details(chain, token1Addresses),
   ]);
 
-  return pairs.map((pair, i) => ({
-    ...pair,
-    token0: token0s[i],
-    token1: token1s[i],
-  }));
+  // map token0 and token1 to their pairs
+  const underlyingsByPairAddress: {
+    [key: string]: { token0?: string; token1?: string };
+  } = {};
+  const token0ByAddress: { [key: string]: Token } = {};
+  const token1ByAddress: { [key: string]: Token } = {};
+
+  for (const token0Res of token0sRes) {
+    if (token0Res.success) {
+      if (!underlyingsByPairAddress[token0Res.input.target]) {
+        underlyingsByPairAddress[token0Res.input.target] = {};
+      }
+      underlyingsByPairAddress[token0Res.input.target].token0 =
+        token0Res.output.toLowerCase();
+    }
+  }
+
+  for (const token1Res of token1sRes) {
+    if (token1Res.success) {
+      if (!underlyingsByPairAddress[token1Res.input.target]) {
+        underlyingsByPairAddress[token1Res.input.target] = {};
+      }
+      underlyingsByPairAddress[token1Res.input.target].token1 =
+        token1Res.output.toLowerCase();
+    }
+  }
+
+  for (const token0 of token0s) {
+    token0ByAddress[token0.address] = token0;
+  }
+
+  for (const token1 of token1s) {
+    token1ByAddress[token1.address] = token1;
+  }
+
+  return pairs
+    .map((pair) => {
+      const underlyings = underlyingsByPairAddress[pair.address];
+      if (!underlyings?.token0 || !underlyings?.token1) {
+        return null;
+      }
+
+      const token0 = token0ByAddress[underlyings.token0];
+      const token1 = token0ByAddress[underlyings.token1];
+
+      if (!token0 || !token1) {
+        return null;
+      }
+
+      return { ...pair, token0, token1 };
+    })
+    .filter(isNotNullish);
 }
