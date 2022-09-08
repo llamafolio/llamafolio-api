@@ -75,14 +75,14 @@ export async function handler(event, context) {
         adapterId: d.adapter_id,
         price: parseFloat(d.price),
         priceTimestamp: d.price_timestamp,
-        balanceUSD: d.balance_usd,
+        balanceUSD: d.balance_usd ? parseFloat(d.balance_usd) : undefined,
         timestamp: d.timestamp,
         reward: d.reward,
         debt: d.debt,
         stable: d.stable,
         parent: d.parent ? bufToStr(d.parent) : undefined,
         claimable: d.claimable,
-        claimableUSD: d.claimable_usd,
+        claimableUSD: d.claimable_usd ? parseFloat(d.claimable_usd) : undefined,
       }));
 
     const data = groupBalancesByAdapter(pricedBalances);
