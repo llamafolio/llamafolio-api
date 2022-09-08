@@ -1,9 +1,9 @@
 import { Adapter, Contract } from "@lib/adapter";
 import { getERC20BalanceOf } from "@lib/erc20";
 
-const stETH: Contract = {
+const rETH: Contract = {
   name: "rETH",
-  displayName: "Liquid staked Ether 2.0",
+  displayName: "Rocket Pool ETH",
   chain: "ethereum",
   address: "0xae78736Cd615f374D3085123A210448E74Fc6393",
   symbol: "rETH",
