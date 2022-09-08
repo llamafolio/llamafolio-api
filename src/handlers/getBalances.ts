@@ -12,7 +12,6 @@ import {
 import { getPricedBalances } from "@lib/price";
 import { adapters, adapterById } from "@adapters/index";
 import { badRequest, serverError, success } from "./response";
-import { mulPrice } from "@lib/math";
 import { invokeLambda } from "@lib/lambda";
 
 type AdapterBalance = Balance & { adapterId: string };
@@ -24,6 +23,32 @@ type AdapterBalancesResponse = Pick<
 > & {
   data: (AdapterBalance | PricedAdapterBalance)[];
 };
+
+// link underlyings with their parents
+function groupBalanceUnderlyings(balances: PricedBalance[]) {
+  const parents = balances.filter((balance) => balance.type !== "underlying");
+  const underlyings = balances.filter(
+    (balance) => balance.type === "underlying"
+  );
+
+  const parentByAddress: { [key: string]: string } = {};
+  for (const parent of parents) {
+    parentByAddress[parent.address] = parent;
+  }
+
+  for (const underlying of underlyings) {
+    const parent = parentByAddress[underlying.parent];
+    if (!parent) {
+      continue;
+    }
+    if (!parent.underlyings) {
+      parent.underlyings = [];
+    }
+    parent.underlyings.push(underlying);
+  }
+
+  return parents;
+}
 
 function groupBalancesByAdapter(
   balances: (AdapterBalance | PricedAdapterBalance)[]
@@ -83,9 +108,12 @@ export async function handler(event, context) {
         parent: d.parent ? bufToStr(d.parent) : undefined,
         claimable: d.claimable,
         claimableUSD: d.claimable_usd ? parseFloat(d.claimable_usd) : undefined,
+        type: d.type,
       }));
 
-    const data = groupBalancesByAdapter(pricedBalances);
+    const data = groupBalancesByAdapter(
+      groupBalanceUnderlyings(pricedBalances)
+    );
     let updatedAt = data[0]?.data?.[0].timestamp;
 
     return success({ updatedAt, data });
@@ -270,6 +298,17 @@ export async function websocketUpdateAdapterBalancesHandler(event, context) {
     });
 
     const now = new Date(timestamp);
+
+    // insert underlyings
+    for (const balance of pricedBalances) {
+      if (balance.underlyings) {
+        for (const underlyingBalance of balance.underlyings) {
+          underlyingBalance.parent = balance.address;
+          underlyingBalance.type = "underlying";
+          pricedBalances.push(underlyingBalance);
+        }
+      }
+    }
 
     // insert balances
     const insertBalancesValues = pricedBalances.map((d) => [

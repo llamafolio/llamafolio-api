@@ -66,6 +66,17 @@ async function main() {
 
     const now = new Date();
 
+    // insert underlyings
+    for (const balance of pricedBalances) {
+      if (balance.underlyings) {
+        for (const underlyingBalance of balance.underlyings) {
+          underlyingBalance.parent = balance.address;
+          underlyingBalance.type = "underlying";
+          pricedBalances.push(underlyingBalance);
+        }
+      }
+    }
+
     // insert balances
     const insertBalancesValues = pricedBalances.map((d) => [
       strToBuf(address),
@@ -87,7 +98,8 @@ async function main() {
       d.parent ? strToBuf(d.parent) : undefined,
       d.claimable?.toString(),
       d.balanceUSD,
-      d.claimableUSD
+      d.claimableUSD,
+      d.type,
     ]);
 
     await client.query("BEGIN");
@@ -101,7 +113,7 @@ async function main() {
     // Insert new balances
     await client.query(
       format(
-        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable, balance_usd, claimable_usd) VALUES %L;",
+        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable, balance_usd, claimable_usd, type) VALUES %L;",
         insertBalancesValues
       ),
       []
