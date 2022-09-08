@@ -89,6 +89,7 @@ export async function getGaugeBalances(ctx: BaseContext, chain: Chain) {
       chain: chain,
       category: "liquidity-mining",
       symbol: "CRV",
+      reward: true,
       parent: "stake",
       poolGenerating: claimableTokensRes[index].input.target.toLowerCase(),
       decimals: 18,

@@ -49,6 +49,7 @@ export async function getBalances(ctx, chain, contracts) {
             decimals: 18,
             address: "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
             amount: BigNumber.from(masterRow.rewardsPending),
+            reward: true,
             parent: masterRow.token.address
           });
         }

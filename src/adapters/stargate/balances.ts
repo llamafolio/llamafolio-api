@@ -142,6 +142,7 @@ export async function getBalances(ctx, contracts) {
                   decimals: 18,
                   address:  rewardAddress,
                   amount: BigNumber.from(pendingSTGs),
+                  reward: true,
                   parent: poolInfo[x].lpToken
             })
           }

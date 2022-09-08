@@ -50,6 +50,7 @@ export async function getBalances(ctx, chain, contracts) {
         decimals: 18,
         address: "0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
         amount: BigNumber.from(LQTYBalance),
+        reward: true,
         parent: contract.address
       });
 
@@ -60,6 +61,7 @@ export async function getBalances(ctx, chain, contracts) {
         decimals: 18,
         address: "0x0000000000000000000000000000000000000000",
         amount: BigNumber.from(ETHBalance),
+        reward: true,
         parent: contract.address
       });
 

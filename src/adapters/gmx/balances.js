@@ -46,6 +46,7 @@ export async function getBalances(ctx, chain, contracts) {
             decimals: 18,
             address: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
             amount: BigNumber.from(pendingETHRewards),
+            reward: true,
             parent: sGLP.address
       })
 
@@ -95,6 +96,7 @@ export async function getBalances(ctx, chain, contracts) {
             decimals: 18,
             address: GMXTokens[0],
             amount: BigNumber.from(pendingesGMXRewards),
+            reward: true,
             parent: "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a"
       })
 
@@ -112,6 +114,7 @@ export async function getBalances(ctx, chain, contracts) {
             decimals: 18,
             address: "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
             amount: BigNumber.from(pendingETHRewardsFromGMX),
+            reward: true,
             parent: GMXTokens[0]
       })
 
