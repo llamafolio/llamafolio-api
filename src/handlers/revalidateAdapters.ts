@@ -118,26 +118,30 @@ export async function revalidateAdapterContracts(event, context) {
     );
 
     // Insert adapter if not exists
-    await client.query(
-      format(
-        "INSERT INTO adapters (id, contracts_expire_at) VALUES %L ON CONFLICT DO NOTHING;",
-        insertAdapterValues
-      ),
-      []
-    );
+    if (insertAdapterValues.length > 0) {
+      await client.query(
+        format(
+          "INSERT INTO adapters (id, contracts_expire_at) VALUES %L ON CONFLICT DO NOTHING;",
+          insertAdapterValues
+        ),
+        []
+      );
+    }
 
     // Insert new contracts
-    await Promise.all(
-      sliceIntoChunks(insertAdapterContractsValues, 200).map((chunk) =>
-        client.query(
-          format(
-            "INSERT INTO adapters_contracts (adapter_id, chain, address, data) VALUES %L ON CONFLICT DO NOTHING;",
-            chunk
-          ),
-          []
+    if (insertAdapterContractsValues.length > 0) {
+      await Promise.all(
+        sliceIntoChunks(insertAdapterContractsValues, 200).map((chunk) =>
+          client.query(
+            format(
+              "INSERT INTO adapters_contracts (adapter_id, chain, address, data) VALUES %L ON CONFLICT DO NOTHING;",
+              chunk
+            ),
+            []
+          )
         )
-      )
-    );
+      );
+    }
 
     await client.query("COMMIT");
   } catch (e) {

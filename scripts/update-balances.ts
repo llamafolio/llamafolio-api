@@ -111,13 +111,15 @@ async function main() {
     );
 
     // Insert new balances
-    await client.query(
-      format(
-        "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable, balance_usd, claimable_usd, type) VALUES %L;",
-        insertBalancesValues
-      ),
-      []
-    );
+    if (insertBalancesValues.length > 0) {
+      await client.query(
+        format(
+          "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable, balance_usd, claimable_usd, type) VALUES %L;",
+          insertBalancesValues
+        ),
+        []
+      );
+    }
 
     await client.query("COMMIT");
   } catch (e) {
