@@ -1,8 +1,7 @@
-import { Adapter } from "@lib/adapter";
+import { Adapter, Contract } from "@lib/adapter";
 import { getERC20BalanceOfWithUnderlying } from "@lib/erc20";
 import { getPairsInfo } from "@lib/uniswap/v2/factory";
 import { getBalances } from "./balances";
-
 
 const masterChef: Contract = {
   name: "masterChef",
@@ -10,7 +9,6 @@ const masterChef: Contract = {
   chain: "ethereum",
   address: "0xc2edad668740f1aa35e4d8f227fb8e17dca888cd",
 };
-
 
 const adapter: Adapter = {
   id: "sushiswap",
@@ -25,14 +23,18 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-    let balances = await getERC20BalanceOfWithUnderlying(ctx, "ethereum", contracts);
-    const stakeBalances = await getBalances(ctx, "ethereum", [masterChef])
-    balances = balances.concat(stakeBalances);
+    let balances = await getERC20BalanceOfWithUnderlying(
+      ctx,
+      "ethereum",
+      contracts
+    );
+    // const stakeBalances = await getBalances(ctx, "ethereum", [masterChef]);
+    // balances = balances.concat(stakeBalances);
 
     return {
       balances: balances.map((balance) => ({
         ...balance,
-        category: (!balance.category) ? "lp": balance.category,
+        category: !balance.category ? "lp" : balance.category,
       })),
     };
   },

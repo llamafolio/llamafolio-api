@@ -17,6 +17,7 @@ import shibaswap from "@adapters/shibaswap";
 import spiritswap from "@adapters/spiritswap";
 import spookyswap from "@adapters/spookyswap";
 import stargate from "@adapters/stargate";
+import sushiswap from "@adapters/sushiswap";
 import traderjoe from "@adapters/traderjoe";
 import uniswap from "@adapters/uniswap";
 import valas from "@adapters/valas";
@@ -44,6 +45,7 @@ export const adapters: Adapter[] = [
   spiritswap,
   spookyswap,
   stargate,
+  sushiswap,
   traderjoe,
   uniswap,
   valas,
