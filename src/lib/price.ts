@@ -60,7 +60,7 @@ export async function getPricedBalances(
   for (const balance of balances) {
     if (balance.underlyings) {
       for (const underlying of balance.underlyings) {
-        if (underlying.amount.gt(0)) {
+        if (underlying.amount?.gt(0)) {
           priced.push(underlying);
         }
       }

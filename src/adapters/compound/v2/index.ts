@@ -1,7 +1,7 @@
 import { BigNumber, ethers } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
-import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
-import { abi, getERC20Details, getERC20BalanceOf } from "@lib/erc20";
+import { Adapter, Contract } from "@lib/adapter";
+import { getERC20Details, getERC20BalanceOf } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 import ComptrollerABI from "./abis/Comptroller.json";
 import { Token } from "@lib/token";
@@ -169,13 +169,19 @@ const adapter: Adapter = {
 
     const cTokensSupplyBalances = cTokensBalances
       .filter((bal) => exchangeRateCurrentBycTokenAddress[bal.address])
-      .map((bal) => ({
-        ...bal,
-        amount: bal.amount
+      .map((bal) => {
+        // add amount
+        const amount = bal.amount
           .mul(exchangeRateCurrentBycTokenAddress[bal.address])
-          .div(BN_TEN.pow(bal.underlyings[0].decimals + 10)),
-        category: "lend",
-      }));
+          .div(BN_TEN.pow(bal.underlyings[0].decimals + 10));
+        bal.underlyings[0].amount = amount;
+
+        return {
+          ...bal,
+          amount,
+          category: "lend",
+        };
+      });
 
     const cTokensBorrowBalances = cTokensBorrowBalanceCurrentRes
       .filter((res) => res.success)
@@ -185,10 +191,14 @@ const adapter: Adapter = {
           return null;
         }
 
+        // add amount
+        const amount = BigNumber.from(res.output);
+        cToken.underlyings[0].amount = amount;
+
         return {
           ...cToken,
-          amount: BigNumber.from(res.output),
-          decimals: cToken.decimals + 10,
+          amount,
+          decimals: cToken.underlyings[0].decimals,
           category: "borrow",
           debt: true,
         };
