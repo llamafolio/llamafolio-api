@@ -147,42 +147,6 @@ export async function getERC20Details(
     multicall({ chain, calls, abi: abi.decimals }),
   ]);
 
-  const failedStringSymbols = symbols.filter((res) => !res.success);
-  if (failedStringSymbols.length > 0) {
-    // best effort at decoding non-standard symbols
-    const bytes32SymbolsRes = await multicall({
-      chain,
-      calls: failedStringSymbols.map((res) => ({
-        target: res.input.target,
-        params: [],
-      })),
-      abi: {
-        constant: true,
-        inputs: [],
-        name: "symbol",
-        outputs: [{ name: "", type: "bytes32" }],
-        payable: false,
-        stateMutability: "view",
-        type: "function",
-      },
-    });
-
-    const bytes32Symbols = bytes32SymbolsRes.filter((res) => res.success);
-
-    const bytes32SymbolByAddress: { [key: string]: string } = {};
-    for (const bytes32SymbolRes of bytes32Symbols) {
-      bytes32SymbolByAddress[bytes32SymbolRes.input.target] =
-        ethers.utils.parseBytes32String(bytes32SymbolRes.output);
-    }
-
-    for (let i = 0; i < missingTokens.length; i++) {
-      if (missingTokens[i] in bytes32SymbolByAddress) {
-        symbols[i].success = true;
-        symbols[i].output = bytes32SymbolByAddress[missingTokens[i]];
-      }
-    }
-  }
-
   for (let i = 0; i < missingTokens.length; i++) {
     const address = missingTokens[i];
     if (!symbols[i].success) {
