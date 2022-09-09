@@ -7,7 +7,6 @@ import {
   BaseContext,
   BaseContract,
   PricedBalance,
-  Adapter,
 } from "@lib/adapter";
 import { getPricedBalances } from "@lib/price";
 import { adapters, adapterById } from "@adapters/index";
@@ -17,10 +16,8 @@ import { invokeLambda } from "@lib/lambda";
 type AdapterBalance = Balance & { adapterId: string };
 type PricedAdapterBalance = PricedBalance & { adapterId: string };
 
-type AdapterBalancesResponse = Pick<
-  Adapter,
-  "id" | "name" | "description" | "coingecko" | "defillama" | "links"
-> & {
+type AdapterBalancesResponse = {
+  id: string;
   data: (AdapterBalance | PricedAdapterBalance)[];
 };
 
@@ -59,7 +56,7 @@ function groupBalancesByAdapter(
   for (const balance of balances) {
     if (!balancesByAdapterId[balance.adapterId]) {
       balancesByAdapterId[balance.adapterId] = {
-        ...adapterById[balance.adapterId],
+        id: balance.adapterId,
         data: [],
       };
     }
