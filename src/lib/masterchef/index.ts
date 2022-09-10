@@ -1,52 +1,75 @@
+import { BigNumber, ethers } from "ethers";
 import { providers, Chain } from "@defillama/sdk/build/general";
-import { BaseContext } from "@lib/adapter";
-import { getERC20Details } from "@lib/erc20";
-import { ethers } from "ethers";
+import { Balance, BaseContext } from "@lib/adapter";
 import { multicall } from "@lib/multicall";
+import { Token } from "@lib/token";
 
 import MasterChefAbi from "./abis/MasterChef.json";
 
-//pendingRewardMethod == tends to vary from contract to contract
+export type GetMasterChefPoolsInfoParams = {
+  chain: Chain;
+  masterChefAddress: string;
+};
 
-export async function returnMasterChefDetails(
-  ctx: BaseContext,
-  chain: Chain,
-  contract: string,
-  pendingRewardMethod = null
-) {
+export async function getMasterChefPoolsInfo({
+  chain,
+  masterChefAddress,
+}: GetMasterChefPoolsInfoParams) {
   const provider = providers[chain];
-  const masterChef = new ethers.Contract(contract, MasterChefAbi, provider);
+  const masterChef = new ethers.Contract(
+    masterChefAddress,
+    MasterChefAbi,
+    provider
+  );
 
   const poolLength = await masterChef.poolLength();
 
-  let calls = [];
-  for (let d = 0; d < poolLength; d++) {
+  const calls = [];
+  for (let i = 0; i < poolLength; i++) {
     calls.push({
-      params: [d],
-      target: contract,
+      params: [i],
+      target: masterChefAddress,
     });
   }
 
-  const poolInfoRes = await multicall({
-    chain: chain,
-    calls: calls,
+  const poolsInfoRes = await multicall({
+    chain,
+    calls,
     abi: poolInfoAbi,
   });
 
-  const poolInfo = poolInfoRes
+  const poolsInfo = poolsInfoRes
     .filter((res) => res.success)
-    .map((res) => res.output);
+    .map((res) => ({ ...res.output, pid: res.input.params[0] }));
 
-  calls = [];
-  for (let d = 0; d < poolInfo.length; d++) {
-    calls.push({
-      params: [d, ctx.address],
+  return poolsInfo;
+}
+
+export type GetMasterChefBalancesParams = {
+  chain: Chain;
+  masterChefAddress: string;
+  tokens: Token[];
+  rewardToken: Token;
+};
+
+export async function getMasterChefBalances(
+  ctx: BaseContext,
+  { chain, masterChefAddress, tokens, rewardToken }: GetMasterChefBalancesParams
+) {
+  const provider = providers[chain];
+  const masterChef = new ethers.Contract(
+    masterChefAddress,
+    MasterChefAbi,
+    provider
+  );
+
+  // token amounts
+  const userInfoRes = await multicall({
+    chain,
+    calls: tokens.map((token) => ({
+      params: [token.pid, ctx.address],
       target: masterChef.address,
-    });
-  }
-  const balancesDRes = await multicall({
-    chain: chain,
-    calls: calls,
+    })),
     abi: {
       inputs: [
         { internalType: "uint256", name: "", type: "uint256" },
@@ -61,67 +84,44 @@ export async function returnMasterChefDetails(
       type: "function",
     },
   });
-  const balancesD = balancesDRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
 
-  const masterChefBalances = [];
-  const nonZeroBalances = [];
-  const nonZeroTokens = [];
-  for (var i = 0; i < balancesDRes.length; i++) {
-    const row = balancesDRes[i];
-    if (row.output.amount > 0) {
-      nonZeroBalances.push(row.input.params[0]);
-      nonZeroTokens.push(poolInfo[i].lpToken);
+  const resBalances: Balance[] = [];
+
+  for (let i = 0; i < userInfoRes.length; i++) {
+    const res = userInfoRes[i];
+    if (res.success) {
+      resBalances.push({
+        ...tokens[i],
+        category: "farm",
+        amount: BigNumber.from(res.output.amount),
+      });
     }
   }
 
-  const tokenDetails = await getERC20Details(chain, nonZeroTokens);
-
-  pendingRewardAbi = !pendingRewardMethod
-    ? pendingRewardAbi
-    : JSON.parse(
-        JSON.stringify(pendingRewardAbi).replace(
-          "pendingSushi",
-          pendingRewardMethod
-        )
-      );
-
-  calls = [];
-  for (let d = 0; d < nonZeroBalances.length; d++) {
-    calls.push({
-      params: [nonZeroBalances[d], ctx.address],
-      target: masterChef.address,
-    });
-  }
+  // rewards
   const pendingRewardsRes = await multicall({
-    chain: chain,
-    calls: calls,
+    chain,
+    calls: resBalances.map((token) => ({
+      params: [token.pid, ctx.address],
+      target: masterChef.address,
+    })),
     abi: pendingRewardAbi,
   });
 
-  const pendingRewards = pendingRewardsRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  let rewardCount = 0;
-  for (var i = 0; i < balancesDRes.length; i++) {
-    const row = balancesDRes[i];
-    if (row.output.amount > 0) {
-      masterChefBalances.push({
-        poolInfo: poolInfo[i],
-        amount: row.output.amount,
-        token: tokenDetails[rewardCount],
-        rewardDebt: row.output.rewardDebt,
-        pid: row.input.params[0],
-        rewardsPending: pendingRewards[rewardCount],
+  for (let i = 0; i < pendingRewardsRes.length; i++) {
+    const res = pendingRewardsRes[i];
+    if (res.success) {
+      resBalances.push({
+        ...rewardToken,
+        category: "reward",
+        reward: true,
+        amount: BigNumber.from(res.output),
+        claimable: BigNumber.from(res.output),
       });
-
-      rewardCount++;
     }
   }
 
-  return masterChefBalances;
+  return resBalances;
 }
 
 let pendingRewardAbi = {
