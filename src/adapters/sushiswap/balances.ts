@@ -1,28 +1,28 @@
-import { multicall } from "@lib/multicall";
-import { ethers, BigNumber } from "ethers";
+import { BigNumber } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
-import { getERC20Balances, getERC20Details } from "@lib/erc20";
-import { returnMasterChefDetails } from "@lib/masterchef/index";
-import { getUnderlyingBalancesUniswap } from "@lib/underlying";
+import { returnMasterChefDetails } from "@lib/masterchef";
+import { getUnderlyingBalances } from "@lib/uniswap/v2/pair";
+import { Balance, BaseContext, BaseContract } from "@lib/adapter";
 
-import LockerAbi from "./abis/Locker.json";
-import StakerAbi from "./abis/Staker.json";
-
-
-
-export async function getBalances(ctx, chain, contracts) {
-
-  const provider = providers[chain]
-  const balances = []
+export async function getBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contracts: BaseContract[]
+) {
+  let balances: Balance[] = [];
 
   for (let index = 0; index < contracts.length; index++) {
     const contract = contracts[index];
 
+    if (contract.name === "masterChef") {
+      const masterDetails = await returnMasterChefDetails(
+        ctx,
+        chain,
+        contract.address,
+        "pendingSushi"
+      );
 
-    if (contract.name === 'masterChef') {
-      const masterDetails = await returnMasterChefDetails(ctx, chain, contract.address, "pendingSushi")
-
-      const fetchUnderlyings = []
+      const fetchUnderlyings = [];
 
       for (let yy = 0; yy < masterDetails.length; yy++) {
         const masterRow = masterDetails[yy];
@@ -33,39 +33,35 @@ export async function getBalances(ctx, chain, contracts) {
           decimals: masterRow.token.decimals,
           address: masterRow.token.address,
           amount: BigNumber.from(masterRow.amount),
-          yieldsAddress: masterRow.token.address
+          yieldsAddress: masterRow.token.address,
         });
 
         fetchUnderlyings.push({
-          address: masterRow.token.address,
-          amount: BigNumber.from(masterRow.amount)
-        })
+          ...masterRow.token,
+          amount: BigNumber.from(masterRow.amount),
+        });
 
         if (masterRow.rewardsPending > 0) {
           balances.push({
             chain: chain,
-            category: "rewards",
+            category: "reward",
             symbol: "SUSHI",
             decimals: 18,
             address: "0x9813037ee2218799597d83D4a5B6F3b6778218d9",
             amount: BigNumber.from(masterRow.rewardsPending),
             reward: true,
-            parent: masterRow.token.address
+            parent: masterRow.token.address,
           });
         }
       }
 
-      const underlyingBalances = await getUnderlyingBalancesUniswap(chain, fetchUnderlyings)
-
-      for (let t = 0; t < balances.length; t++) {
-        const underlyingDetail = underlyingBalances.find((o) => o.address.toLowerCase() === balances[t].address.toLowerCase());
-        if (underlyingDetail) {
-          balances[t].underlyingDetails = underlyingDetail.details
-        }
-      }
+      // const underlyingBalances = await getUnderlyingBalances(
+      //   chain,
+      //   fetchUnderlyings
+      // );
+      // balances = balances.concat(underlyingBalances);
     }
   }
 
-  return balances
-
+  return balances;
 }

@@ -1,5 +1,6 @@
 import { Adapter, Contract } from "@lib/adapter";
-import { getERC20BalanceOfWithUnderlying } from "@lib/erc20";
+import { getERC20BalanceOf } from "@lib/erc20";
+import { getUnderlyingBalances } from "@lib/uniswap/v2/pair";
 import { getPairsInfo } from "@lib/uniswap/v2/factory";
 import { getBalances } from "./balances";
 
@@ -23,13 +24,11 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-    let balances = await getERC20BalanceOfWithUnderlying(
-      ctx,
-      "ethereum",
-      contracts
-    );
-    // const stakeBalances = await getBalances(ctx, "ethereum", [masterChef]);
-    // balances = balances.concat(stakeBalances);
+    let balances = await getERC20BalanceOf(ctx, "ethereum", contracts);
+    balances = await getUnderlyingBalances("ethereum", balances);
+
+    const stakeBalances = await getBalances(ctx, "ethereum", [masterChef]);
+    balances = balances.concat(stakeBalances);
 
     return {
       balances: balances.map((balance) => ({

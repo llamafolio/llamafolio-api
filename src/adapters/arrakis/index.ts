@@ -1,8 +1,7 @@
 import { Adapter, Balance, Contract } from "@lib/adapter";
-import { getVaults } from "./contracts"
-import { getBalances } from "./balances"
+import { getVaults } from "./contracts";
+import { getBalances } from "./balances";
 
-//example contract object
 const factoryArrakis: Contract = {
   name: "factory",
   displayName: "Arrakis Factory",
@@ -14,12 +13,12 @@ const adapter: Adapter = {
   id: "arrakis-finance",
   async getContracts() {
     return {
-      contracts: await getVaults(factoryArrakis), //this should be an array of all contracts getBalances will look at
+      contracts: await getVaults(factoryArrakis),
       revalidate: 60 * 60,
     };
   },
   async getBalances(ctx, contracts) {
-    let balances = await getBalances(ctx, "ethereum", contracts); //any method to check all the contracts retrieved above
+    let balances = await getBalances(ctx, "ethereum", contracts);
 
     return {
       balances,

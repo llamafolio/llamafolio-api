@@ -2,73 +2,83 @@ import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
 import { getERC20Balances, getERC20Details } from "@lib/erc20";
-import { getUnderlyingBalancesUniswap } from "@lib/underlying";
+import { getUnderlyingBalances as getUnderlyingBalancesUniswap } from "@lib/uniswap/v2/pair";
+import { BaseContext, Contract } from "@lib/adapter";
 
 import VaultAbi from "./abis/Vault.json";
 
-export async function getBalances(ctx, chain, contracts) {
-
-  const balances = []
+export async function getBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contracts: Contract[]
+) {
+  const balances = [];
   let addressses = contracts.map((contract) => {
-    return contract.address
-  })
+    return contract.address;
+  });
 
   addressses = [...new Set(addressses)];
 
+  const balancesRaw = await getERC20Balances(ctx, chain, addressses);
 
-  const balancesRaw = await getERC20Balances(ctx, chain,addressses)
-
-  let fetchUnderlyings = balancesRaw.map(balance => {
+  let fetchUnderlyings = balancesRaw.map((balance) => {
     if (balance.amount.gt(0)) {
       return {
         address: balance.address,
-        amount: BigNumber.from(balance.amount)
-      }
+        amount: BigNumber.from(balance.amount),
+      };
     } else {
-      return null
+      return null;
     }
-  })
+  });
 
-  let nonZeroBalances = balancesRaw.map(balance => {
+  let nonZeroBalances = balancesRaw.map((balance) => {
     if (balance.amount.gt(0)) {
-      return balance
+      return balance;
     } else {
-      return null
+      return null;
     }
-  })
+  });
 
-  fetchUnderlyings = fetchUnderlyings.filter(function(e){return e});
-  nonZeroBalances = nonZeroBalances.filter(function(e){return e});
+  fetchUnderlyings = fetchUnderlyings.filter(function (e) {
+    return e;
+  });
+  nonZeroBalances = nonZeroBalances.filter(function (e) {
+    return e;
+  });
 
-  const underlyingBalances = await getUnderlyingBalancesUniswap(chain, fetchUnderlyings)
+  const underlyingBalances = await getUnderlyingBalancesUniswap(
+    chain,
+    fetchUnderlyings
+  );
 
   let calls = underlyingBalances.map((p) => {
     return {
       params: [],
-      target: p.address
-    }
-  })
+      target: p.address,
+    };
+  });
 
   const getUnderlyingBalancesRes = await multicall({
     chain: "ethereum",
     calls: calls,
-    abi:  {
-      "inputs": [],
-      "name": "getUnderlyingBalances",
-      "outputs": [
+    abi: {
+      inputs: [],
+      name: "getUnderlyingBalances",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "amount0Current",
-          "type": "uint256"
+          internalType: "uint256",
+          name: "amount0Current",
+          type: "uint256",
         },
         {
-          "internalType": "uint256",
-          "name": "amount1Current",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "amount1Current",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
+      stateMutability: "view",
+      type: "function",
     },
   });
 
@@ -76,38 +86,40 @@ export async function getBalances(ctx, chain, contracts) {
     .filter((res) => res.success)
     .map((res) => res.output);
 
-    const totalSupplyRes = await multicall({
-      chain: chain,
-      calls: calls,
-      abi: {
-        "inputs": [],
-        "name": "totalSupply",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-    });
+  const totalSupplyRes = await multicall({
+    chain: chain,
+    calls: calls,
+    abi: {
+      inputs: [],
+      name: "totalSupply",
+      outputs: [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  });
 
-    const totalSupply = totalSupplyRes
-      .filter((res) => res.success)
-      .map((res) => BigNumber.from(res.output));
+  const totalSupply = totalSupplyRes
+    .filter((res) => res.success)
+    .map((res) => BigNumber.from(res.output));
 
-      for (let index = 0; index < underlyingBalances.length; index++) {
-        const underlyingBalance = underlyingBalances[index];
-        for (let c = 0; c < underlyingBalance.details.length; c++) {
-          const underlyingBalanceDetail = underlyingBalance[c];
-          underlyingBalances[index].details[c].amount = BigNumber.from(getUnderlyingBalances[index]["amount"+c+"Current"]).mul(nonZeroBalances[index].amount).div(totalSupply[index])
-          underlyingBalances[index].details[c].chain = chain
-
-        }
-      }
-
+  for (let index = 0; index < underlyingBalances.length; index++) {
+    const underlyingBalance = underlyingBalances[index];
+    for (let c = 0; c < underlyingBalance.details.length; c++) {
+      const underlyingBalanceDetail = underlyingBalance[c];
+      underlyingBalances[index].details[c].amount = BigNumber.from(
+        getUnderlyingBalances[index]["amount" + c + "Current"]
+      )
+        .mul(nonZeroBalances[index].amount)
+        .div(totalSupply[index]);
+      underlyingBalances[index].details[c].chain = chain;
+    }
+  }
 
   for (let index = 0; index < underlyingBalances.length; index++) {
     const element = underlyingBalances[index];
@@ -125,5 +137,4 @@ export async function getBalances(ctx, chain, contracts) {
   }
 
   return balances;
-
 }

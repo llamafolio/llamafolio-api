@@ -4,7 +4,7 @@ import { multicall } from "@lib/multicall";
 import { BaseBalance, BaseContext } from "@lib/adapter";
 import { Token } from "@lib/token";
 import { getToken } from "@llamafolio/tokens";
-import { getUnderlyingBalancesFromTokensUniswap } from "@lib/underlying";
+import { getUnderlyingBalances } from "@lib/uniswap/v2/pair";
 import { isNotNullish } from "./type";
 
 export const abi = {
@@ -120,7 +120,7 @@ export async function getERC20BalanceOfWithUnderlying(
     })
     .filter(isNotNullish);
 
-  return getUnderlyingBalancesFromTokensUniswap(ctx, chain, mappedTokens);
+  return getUnderlyingBalances(chain, mappedTokens);
 }
 
 export async function getERC20Details(

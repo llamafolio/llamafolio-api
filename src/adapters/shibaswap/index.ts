@@ -1,8 +1,7 @@
-import { Adapter } from "@lib/adapter";
+import { Adapter, Contract } from "@lib/adapter";
 import { getERC20BalanceOf } from "@lib/erc20";
 import { getPairsInfo } from "@lib/uniswap/v2/factory";
 import { getBalances } from "./balances";
-
 
 const lockerContract: Contract = {
   name: "locker",
@@ -24,9 +23,6 @@ const masterChef: Contract = {
   address: "0x94235659cf8b805b2c658f9ea2d6d6ddbb17c8d7",
 };
 
-
-
-
 const adapter: Adapter = {
   id: "shibaswap",
   async getContracts() {
@@ -34,16 +30,19 @@ const adapter: Adapter = {
       contracts: await getPairsInfo({
         chain: "ethereum",
         factoryAddress: "0x115934131916C8b277DD010Ee02de363c09d037c",
-        length: 10
+        length: 10,
       }),
       revalidate: 60 * 60,
     };
   },
   async getBalances(ctx, contracts) {
-
     let balances = await getERC20BalanceOf(ctx, "ethereum", contracts);
 
-    const stakeBalances = await getBalances(ctx, "ethereum", [lockerContract, stakerContract, masterChef])
+    const stakeBalances = await getBalances(ctx, "ethereum", [
+      lockerContract,
+      stakerContract,
+      masterChef,
+    ]);
     balances = balances.concat(stakeBalances);
 
     return {
