@@ -11,7 +11,7 @@ export type Category =
   | "vestable-reward";
 
 export type CategoryInfo = {
-  category: string; // allow adapter-based extra categories
+  category: Category;
   title: string;
   description: string;
 };
