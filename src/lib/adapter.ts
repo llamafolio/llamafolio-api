@@ -49,15 +49,16 @@ export type BalancesConfig = {
   revalidate?: number;
 };
 
-export type BaseContract = {
+export interface BaseContract {
   chain: Chain;
   address: string;
-};
+}
 
-export type Contract = BaseContract & {
+export interface Contract extends BaseContract {
   name?: string;
   displayName?: string;
-};
+  [key: string | number]: unknown;
+}
 
 export type ContractsConfig = {
   contracts: Contract[];
