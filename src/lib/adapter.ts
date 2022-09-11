@@ -4,6 +4,9 @@ import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
 import { Category } from "@lib/category";
 
+export type ContractType = "reward" | "debt" | "underlying";
+export type ContractStandard = "erc20" | "erc721";
+
 export type BaseContext = {
   address: string;
 };
@@ -51,14 +54,22 @@ export type BalancesConfig = {
 };
 
 export interface BaseContract {
+  type?: ContractType;
+  standard?: ContractStandard;
+  name?: string;
+  displayName?: string;
   chain: Chain;
   address: string;
+  symbol?: string;
+  decimals?: number;
+  category?: string;
+  stable?: boolean;
 }
 
 export interface Contract extends BaseContract {
-  name?: string;
-  displayName?: string;
-  [key: string | number]: unknown;
+  rewards?: BaseContract[];
+  underlyings?: BaseContract[];
+  [key: string | number]: any;
 }
 
 export type ContractsConfig = {

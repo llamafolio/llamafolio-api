@@ -1,13 +1,9 @@
 import path from "path";
 import format from "pg-format";
+import { selectContractsByAdapterId } from "../src/db/contracts";
 import pool from "../src/db/pool";
-import {
-  Adapter,
-  BaseContext,
-  BaseContract,
-  PricedBalance,
-} from "../src/lib/adapter";
-import { strToBuf, bufToStr } from "../src/lib/buf";
+import { Adapter, BaseContext, PricedBalance } from "../src/lib/adapter";
+import { strToBuf } from "../src/lib/buf";
 import { getPricedBalances } from "../src/lib/price";
 
 function help() {}
@@ -36,22 +32,12 @@ async function main() {
   const client = await pool.connect();
 
   try {
-    const adaptersContractsRes = await client.query(
-      "select * from contracts where adapter_id = $1;",
-      [adapter.id]
-    );
-
-    const contracts: BaseContract[] = adaptersContractsRes.rows.map(
-      (row: any) => ({
-        chain: row.chain,
-        address: bufToStr(row.address),
-        ...row.data,
-      })
-    );
+    const contracts = await selectContractsByAdapterId(client, adapter.id);
 
     console.log("Update adapter balances", {
       adapterId: adapter.id,
       address,
+      contracts: contracts.length,
     });
 
     const balancesConfig = await adapter.getBalances(ctx, contracts || []);

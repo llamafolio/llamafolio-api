@@ -1,9 +1,10 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { ApiGatewayManagementApi } from "aws-sdk";
 import format from "pg-format";
-import { strToBuf, bufToStr, isHex } from "@lib/buf";
+import { strToBuf, isHex } from "@lib/buf";
 import pool from "@db/pool";
-import { BaseContext, BaseContract, PricedBalance } from "@lib/adapter";
+import { selectContractsByAdapterId } from "@db/contracts";
+import { BaseContext, PricedBalance } from "@lib/adapter";
 import { getPricedBalances } from "@lib/price";
 import { adapters, adapterById } from "@adapters/index";
 import { badRequest, serverError, success } from "./response";
@@ -150,22 +151,12 @@ export const websocketUpdateAdapterBalancesHandler: APIGatewayProxyHandler =
     const client = await pool.connect();
 
     try {
-      const adaptersContractsRes = await client.query(
-        "select * from contracts where adapter_id = $1;",
-        [adapterId]
-      );
-
-      const contracts: BaseContract[] = adaptersContractsRes.rows.map(
-        (row: any) => ({
-          chain: row.chain,
-          address: bufToStr(row.address),
-          ...row.data,
-        })
-      );
+      const contracts = await selectContractsByAdapterId(client, adapter.id);
 
       console.log("Update adapter balances", {
         adapterId: adapter.id,
         address,
+        contracts: contracts.length,
       });
 
       const balancesConfig = await adapter.getBalances(ctx, contracts || []);
