@@ -1,4 +1,4 @@
-import { ethers, BigNumber } from "ethers";
+import { BigNumber } from "ethers";
 import { Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import { BaseBalance, BaseContext } from "@lib/adapter";

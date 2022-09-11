@@ -1,5 +1,4 @@
 import { multiCall } from "@defillama/sdk/build/abi/index";
-import { sliceIntoChunks } from "@lib/array";
 
 export type MultiCallParams = Parameters<typeof multiCall>[0];
 
