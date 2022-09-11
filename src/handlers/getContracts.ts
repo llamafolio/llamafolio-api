@@ -1,10 +1,10 @@
+import { APIGatewayProxyHandler } from "aws-lambda";
 import pool from "@db/pool";
 import { isHex, strToBuf } from "@lib/buf";
 import { badRequest, notFound, serverError, success } from "./response";
 
-export async function getContract(event, context) {
-  // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
-  context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
+export const getContract: APIGatewayProxyHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
 
   const address = event.pathParameters?.address;
   if (!address) {
@@ -44,7 +44,6 @@ export async function getContract(event, context) {
     console.error("Failed to retrieve adapters", e);
     return serverError("Failed to retrieve adapters");
   } finally {
-    // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);
   }
-}
+};

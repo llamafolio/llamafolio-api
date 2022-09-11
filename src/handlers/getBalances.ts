@@ -1,3 +1,4 @@
+import { APIGatewayProxyHandler } from "aws-lambda";
 import { strToBuf, isHex } from "@lib/buf";
 import pool from "@db/pool";
 import { Balance, PricedBalance } from "@lib/adapter";
@@ -57,9 +58,8 @@ function groupBalancesByAdapter(
   return Object.values(balancesByAdapterId);
 }
 
-export async function handler(event, context) {
-  // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
-  context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
+export const handler: APIGatewayProxyHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
 
   const address = event.pathParameters?.address;
   if (!address) {
@@ -90,7 +90,6 @@ export async function handler(event, context) {
     console.error("Failed to retrieve balances", { error, address });
     return serverError("Failed to retrieve balances");
   } finally {
-    // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);
   }
-}
+};

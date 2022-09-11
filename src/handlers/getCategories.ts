@@ -1,7 +1,7 @@
 import { Categories } from "@lib/category";
 import { success } from "./response";
 
-export async function handler(event, context) {
+export function handler() {
   return success(
     {
       data: Object.values(Categories),

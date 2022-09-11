@@ -1,3 +1,4 @@
+import { APIGatewayProxyHandler } from "aws-lambda";
 import format from "pg-format";
 import pool from "@db/pool";
 import { adapters } from "@adapters/index";
@@ -6,9 +7,11 @@ import { strToBuf } from "@lib/buf";
 import { sliceIntoChunks } from "@lib/array";
 import { serverError, success } from "./response";
 
-async function revalidateAdaptersContracts(event, context) {
-  // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
-  context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
+const revalidateAdaptersContracts: APIGatewayProxyHandler = async (
+  _event,
+  context
+) => {
+  context.callbackWaitsForEmptyEventLoop = false;
 
   const client = await pool.connect();
 
@@ -58,18 +61,19 @@ async function revalidateAdaptersContracts(event, context) {
     console.error("Failed to revalidate adapters contracts", e);
     return serverError("Failed to revalidate adapters contracts");
   } finally {
-    // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);
   }
-}
+};
 
 export const scheduledRevalidateAdaptersContracts = wrapScheduledLambda(
   revalidateAdaptersContracts
 );
 
-export async function revalidateAdapterContracts(event, context) {
-  // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
-  context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
+export const revalidateAdapterContracts: APIGatewayProxyHandler = async (
+  event,
+  context
+) => {
+  context.callbackWaitsForEmptyEventLoop = false;
 
   const client = await pool.connect();
 
@@ -144,6 +148,8 @@ export async function revalidateAdapterContracts(event, context) {
     }
 
     await client.query("COMMIT");
+
+    return success({});
   } catch (e) {
     await client.query("ROLLBACK");
     console.error("Failed to revalidate adapter contracts", e);
@@ -151,4 +157,4 @@ export async function revalidateAdapterContracts(event, context) {
   } finally {
     client.release(true);
   }
-}
+};

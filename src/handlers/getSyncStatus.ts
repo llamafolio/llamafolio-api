@@ -1,11 +1,14 @@
+import { APIGatewayProxyHandler } from "aws-lambda";
 import { ApiGatewayManagementApi } from "aws-sdk";
 import { providers } from "@defillama/sdk/build/general";
 import pool from "@db/pool";
 import { serverError, success } from "./response";
 
-export async function websocketHandler(event, context) {
-  // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
-  context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
+export const websocketHandler: APIGatewayProxyHandler = async (
+  event,
+  context
+) => {
+  context.callbackWaitsForEmptyEventLoop = false;
 
   const { connectionId } = event;
 
@@ -58,7 +61,6 @@ export async function websocketHandler(event, context) {
     console.error("Failed to retrieve balances", e);
     return serverError("Failed to retrieve balances");
   } finally {
-    // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);
   }
-}
+};

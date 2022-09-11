@@ -1,3 +1,4 @@
+import { APIGatewayProxyHandler } from "aws-lambda";
 import { Chain } from "@defillama/sdk/build/general";
 import { strToBuf, bufToStr, isHex } from "@lib/buf";
 import pool from "@db/pool";
@@ -25,9 +26,8 @@ type Transaction = {
   token_transfers: TokenTransfer[];
 };
 
-export async function handler(event, context) {
-  // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178
-  context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
+export const handler: APIGatewayProxyHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false;
 
   let address = event.pathParameters?.address;
   if (!address) {
@@ -120,7 +120,6 @@ order by b_timestamp desc;
     console.error("Failed to retrieve history", e);
     return serverError("Failed to retrieve history");
   } finally {
-    // https://github.com/brianc/node-postgres/issues/1180#issuecomment-270589769
     client.release(true);
   }
-}
+};

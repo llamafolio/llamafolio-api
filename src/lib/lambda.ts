@@ -1,4 +1,5 @@
 import aws from "aws-sdk";
+import { APIGatewayProxyHandler } from "aws-lambda";
 
 type InvocationType = "RequestResponse" | "Event" | "DryRun";
 
@@ -23,12 +24,8 @@ export function invokeLambda(
 }
 
 export function wrapScheduledLambda(
-  lambdaFunc: (event: any, context: AWSLambda.Context) => Promise<any>
-): (
-  event: void,
-  context?: any,
-  callback?: any
-) => Promise<void | undefined> | void {
+  lambdaFunc: APIGatewayProxyHandler
+): APIGatewayProxyHandler {
   if (process.env.stage !== "prod") {
     return () => {
       console.log("This lambda is getting ignored, stage is not prod");
