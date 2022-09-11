@@ -10,6 +10,7 @@ import {
 } from "@lib/adapter";
 import { getPricedBalances } from "@lib/price";
 import { adapters, adapterById } from "@adapters/index";
+import { fromStorage } from "@db/balances";
 import { badRequest, serverError, success } from "./response";
 import { invokeLambda } from "@lib/lambda";
 
@@ -87,26 +88,7 @@ export async function handler(event, context) {
     );
 
     const pricedBalances: (AdapterBalance | PricedAdapterBalance)[] =
-      balancesRes.rows.map((d) => ({
-        chain: d.chain,
-        address: bufToStr(d.address),
-        symbol: d.symbol,
-        decimals: d.decimals,
-        amount: d.amount,
-        category: d.category,
-        adapterId: d.adapter_id,
-        price: parseFloat(d.price),
-        priceTimestamp: d.price_timestamp,
-        balanceUSD: d.balance_usd ? parseFloat(d.balance_usd) : undefined,
-        timestamp: d.timestamp,
-        reward: d.reward,
-        debt: d.debt,
-        stable: d.stable,
-        parent: d.parent ? bufToStr(d.parent) : undefined,
-        claimable: d.claimable,
-        claimableUSD: d.claimable_usd ? parseFloat(d.claimable_usd) : undefined,
-        type: d.type,
-      }));
+      fromStorage(balancesRes.rows);
 
     const data = groupBalancesByAdapter(
       groupBalanceUnderlyings(pricedBalances)
