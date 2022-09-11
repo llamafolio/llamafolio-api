@@ -122,12 +122,12 @@ functions:
           route: $default
 
   websocketUpdateAdaptersBalances:
-    handler: src/handlers/getBalances.websocketUpdateAdaptersHandler
+    handler: src/handlers/updateBalances.websocketUpdateAdaptersHandler
     role: handleWebsocketRequestsRole
     timeout: 300
 
   websocketUpdateAdapterBalances:
-    handler: src/handlers/getBalances.websocketUpdateAdapterBalancesHandler
+    handler: src/handlers/updateBalances.websocketUpdateAdapterBalancesHandler
     role: handleWebsocketRequestsRole
     timeout: 300
 
