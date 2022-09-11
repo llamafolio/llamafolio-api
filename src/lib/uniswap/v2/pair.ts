@@ -5,12 +5,15 @@ import { Balance } from "@lib/adapter";
 
 /**
  * Retrieves underlying balances of Uniswap V2 like Pair contract balance.
- * `amount`, `token0` and `token1` must be defined.
+ * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
  */
 export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
   // filter empty balances
   balances = balances.filter(
-    (balance) => balance.amount?.gt(0) && balance.token0 && balance.token1
+    (balance) =>
+      balance.amount?.gt(0) &&
+      balance.underlyings?.[0] &&
+      balance.underlyings?.[1]
   );
 
   const [token0sBalanceOfRes, token1sBalanceOfRes, totalSupplyRes] =
@@ -19,7 +22,7 @@ export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
         chain,
         calls: balances.map((bToken) => ({
           params: [bToken.address],
-          target: bToken.token0.address,
+          target: bToken.underlyings![0].address,
         })),
         abi: {
           inputs: [
@@ -46,7 +49,7 @@ export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
         chain,
         calls: balances.map((bToken) => ({
           params: [bToken.address],
-          target: bToken.token1.address,
+          target: bToken.underlyings![1].address,
         })),
         abi: {
           inputs: [
@@ -124,16 +127,16 @@ export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
     balances[i].underlyings = [
       {
         chain,
-        address: balances[i].token0.address,
-        symbol: balances[i].token0.symbol,
-        decimals: balances[i].token0.decimals,
+        address: balances[i].underlyings![0].address,
+        symbol: balances[i].underlyings![0].symbol,
+        decimals: balances[i].underlyings![0].decimals,
         amount: balance0,
       },
       {
         chain,
-        address: balances[i].token1.address,
-        symbol: balances[i].token1.symbol,
-        decimals: balances[i].token1.decimals,
+        address: balances[i].underlyings![1].address,
+        symbol: balances[i].underlyings![1].symbol,
+        decimals: balances[i].underlyings![1].decimals,
         amount: balance1,
       },
     ];

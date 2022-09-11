@@ -149,7 +149,7 @@ export async function getPairsInfo({
         return null;
       }
 
-      return { ...pair, token0, token1 };
+      return { ...pair, underlyings: [token0, token1] };
     })
     .filter(isNotNullish);
 }

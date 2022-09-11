@@ -37,7 +37,7 @@ async function main() {
 
   try {
     const adaptersContractsRes = await client.query(
-      "select * from adapters_contracts where adapter_id = $1;",
+      "select * from contracts where adapter_id = $1;",
       [adapter.id]
     );
 

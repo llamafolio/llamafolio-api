@@ -18,7 +18,7 @@ export const getContract: APIGatewayProxyHandler = async (event, context) => {
 
   try {
     const adaptersContractsRes = await client.query(
-      `select adapter_id, chain, data -> 'name' as name, data -> 'displayName' as display_name from adapters_contracts where address = $1::bytea;`,
+      `select adapter_id, chain, data -> 'name' as name, data -> 'displayName' as display_name from contracts where address = $1::bytea;`,
       [strToBuf(address)]
     );
 

@@ -100,10 +100,33 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (
   const insertAdapterValues = [[adapter.id, expire_at]];
 
   const insertAdapterContractsValues = config.contracts.map(
-    ({ chain, address, ...data }) => [
-      adapter.id,
+    ({
+      name,
+      displayName,
+      chain,
+      address,
+      symbol,
+      decimals,
+      category,
+      type,
+      stable,
+      rewards,
+      underlyings,
+      ...data
+    }) => [
+      name?.toString(),
+      displayName?.toString(),
       chain,
       strToBuf(address),
+      symbol,
+      decimals,
+      category,
+      adapter.id,
+      type,
+      stable,
+      // TODO: validation
+      rewards ? JSON.stringify(rewards) : undefined,
+      underlyings ? JSON.stringify(underlyings) : undefined,
       // \\u0000 cannot be converted to text
       JSON.parse(JSON.stringify(data).replace(/\\u0000/g, "")),
     ]
@@ -115,7 +138,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (
     // Delete old contracts
     await client.query(
       format(
-        "DELETE FROM adapters_contracts WHERE adapter_id IN %L;",
+        "DELETE FROM contracts WHERE adapter_id IN %L;",
         deleteOldAdapterContractsValues
       ),
       []
@@ -138,7 +161,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (
         sliceIntoChunks(insertAdapterContractsValues, 200).map((chunk) =>
           client.query(
             format(
-              "INSERT INTO adapters_contracts (adapter_id, chain, address, data) VALUES %L ON CONFLICT DO NOTHING;",
+              "INSERT INTO contracts (name, display_name, chain, address, symbol, decimals, category, adapter_id, type, stable, rewards, underlyings, data) VALUES %L ON CONFLICT DO NOTHING;",
               chunk
             ),
             []

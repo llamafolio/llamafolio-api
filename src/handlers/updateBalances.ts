@@ -151,7 +151,7 @@ export const websocketUpdateAdapterBalancesHandler: APIGatewayProxyHandler =
 
     try {
       const adaptersContractsRes = await client.query(
-        "select * from adapters_contracts where adapter_id = $1;",
+        "select * from contracts where adapter_id = $1;",
         [adapterId]
       );
 

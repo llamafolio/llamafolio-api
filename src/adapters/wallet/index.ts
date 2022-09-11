@@ -1,3 +1,4 @@
+import { ethers } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
 import { Adapter, Balance, BaseBalance, Contract } from "@lib/adapter";
 import { Token } from "@lib/token";
@@ -27,7 +28,7 @@ const adapter: Adapter = {
 
     for (const token of contracts) {
       // native chain coin
-      if (token.native) {
+      if (token.address === ethers.constants.AddressZero) {
         coins.push(token as Token);
         continue;
       }

@@ -16,8 +16,6 @@ export type RewardBalance = BaseBalance & {
   // claimable amount. Can be lower than balance amount but not higher.
   // ex: vested reward of 1000 but only 100 currently claimable.
   claimable: BigNumber;
-  rates?: any;
-  parent?: string;
 };
 
 export type Balance = (BaseBalance | RewardBalance) & {
@@ -25,6 +23,9 @@ export type Balance = (BaseBalance | RewardBalance) & {
   reward?: boolean;
   debt?: boolean;
   stable?: boolean;
+  rates?: any;
+  // optional rewards
+  rewards?: RewardBalance[];
   // optional underlying tokens.
   // ex: aToken -> token (AAVE)
   // ex: Uniswap Pair -> [token0, token1]
