@@ -49,9 +49,9 @@ export function fromStorage(balances: BalanceStorage[]) {
 
     const key = `${c.adapterId}#${c.chain}#${c.address}#${c.category}`;
 
-    if (balance.type === "reward") {
+    if (balance.type === "reward" && balance.parent) {
       rewards.push(c);
-    } else if (balance.type === "underlying") {
+    } else if (balance.type === "underlying" && balance.parent) {
       underlyings.push(c);
     } else {
       balanceByKey[key] = c;
@@ -175,7 +175,7 @@ export function toStorage(
           standard: reward.standard,
           name: reward.name,
           display_name: reward.displayName,
-          chain: reward.chain,
+          chain: reward.chain || chain,
           address: strToBuf(reward.address),
           symbol: reward.symbol,
           decimals: reward.decimals,

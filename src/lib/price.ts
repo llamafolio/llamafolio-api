@@ -56,6 +56,21 @@ export async function getPricedBalances(
   );
 
   const priced: BaseBalance[] = balances.slice();
+
+  // add rewards
+  for (const balance of balances) {
+    if (balance.rewards) {
+      for (const reward of balance.rewards) {
+        if (
+          reward.amount?.gt(0) ||
+          (reward as RewardBalance).claimable?.gt(0)
+        ) {
+          priced.push(reward);
+        }
+      }
+    }
+  }
+
   // add underlyings
   for (const balance of balances) {
     if (balance.underlyings) {
@@ -92,16 +107,22 @@ export async function getPricedBalances(
       ...price,
       ...balance,
       balanceUSD: mulPrice(balance.amount, decimals, price.price),
-      claimableUSD: mulPrice(
-        (balance as RewardBalance).claimable || BN_ZERO,
-        decimals,
-        price.price
-      ),
+      claimableUSD: (balance as RewardBalance).claimable
+        ? mulPrice(
+            (balance as RewardBalance).claimable || BN_ZERO,
+            decimals,
+            price.price
+          )
+        : undefined,
     };
   }
 
   const pricedBalances: (Balance | PricedBalance)[] = balances.map(
     (balance) => {
+      if (balance.rewards) {
+        const pricedRewards = balance.rewards.map(getPricedBalance);
+        balance.rewards = pricedRewards;
+      }
       if (balance.underlyings) {
         const pricedUnderlyings = balance.underlyings.map(getPricedBalance);
         return {

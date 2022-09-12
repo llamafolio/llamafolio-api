@@ -141,11 +141,21 @@ async function main() {
           yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + "%" : "-"
         }`,
         il: `${yieldObject !== undefined ? yieldObject?.ilRisk : "-"}`,
-        reward: balance.reward,
         stable: balance.stable,
         debt: balance.debt,
         parent: balance.parent,
       };
+
+      if (balance.rewards) {
+        d.reward = balance.rewards
+          .map(
+            (reward) =>
+              `${millify(reward.amount / 10 ** reward.decimals)} ${
+                reward.symbol
+              }`
+          )
+          .join(" + ");
+      }
 
       if (balance.underlyings) {
         d.underlying = balance.underlyings

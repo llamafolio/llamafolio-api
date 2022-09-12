@@ -128,23 +128,28 @@ export async function getBalances(ctx, contracts) {
         abi: abi,
       });
 
-      const pendingSTG = pendingSTGRes
-        .filter((res) => res.success)
-        .map((res) => res.output);
+        for (let i = 0; i < pendingSTGRes.length; i++) {
+          if (pendingSTGRes[i].success) {
+            const pendingSTGs = BigNumber.from(pendingSTGRes[i].output || 0);
+            if (pendingSTGs.gt(0)) {
+              const parent = balances.find(bal => bal.category === 'stake' && bal.chain === chain && bal.address === poolInfo[i].lpToken);
+              if (!parent) {
+                continue;
+              }
 
-        for (let x = 0; x < pendingSTG.length; x++) {
-          const pendingSTGs = pendingSTG[x];
-          if (pendingSTGs > 0) {
-            balances.push({
-                  chain,
-                  category: "rewards",
-                  symbol: rewardSymbol,
-                  decimals: 18,
-                  address:  rewardAddress,
-                  amount: BigNumber.from(pendingSTGs),
-                  reward: true,
-                  parent: poolInfo[x].lpToken
-            })
+              if (!parent.rewards) {
+                parent.rewards = [];
+              }
+              parent.rewards.push({
+                chain,
+                category: "stake",
+                symbol: rewardSymbol,
+                decimals: 18,
+                address:  rewardAddress,
+                amount: BigNumber.from(pendingSTGs),
+                type: "reward"
+              });
+            }
           }
         }
 

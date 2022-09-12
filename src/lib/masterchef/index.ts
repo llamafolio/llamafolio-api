@@ -90,11 +90,12 @@ export async function getMasterChefBalances(
   for (let i = 0; i < userInfoRes.length; i++) {
     const res = userInfoRes[i];
     if (res.success) {
-      resBalances.push({
+      const balance: Balance = {
         ...tokens[i],
         category: "farm",
         amount: BigNumber.from(res.output.amount),
-      });
+      };
+      resBalances.push(balance);
     }
   }
 
@@ -111,10 +112,14 @@ export async function getMasterChefBalances(
   for (let i = 0; i < pendingRewardsRes.length; i++) {
     const res = pendingRewardsRes[i];
     if (res.success) {
-      resBalances.push({
+      const parent = resBalances[i];
+      if (!parent.rewards) {
+        parent.rewards = [];
+      }
+      parent.rewards.push({
         ...rewardToken,
         category: "reward",
-        reward: true,
+        type: "reward",
         amount: BigNumber.from(res.output),
         claimable: BigNumber.from(res.output),
       });

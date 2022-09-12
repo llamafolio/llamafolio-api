@@ -41,28 +41,22 @@ export async function getBalances(ctx, chain, contracts) {
         address: contract.address,
         priceSubstitute: "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
         amount: BigNumber.from(LUSDBalance),
-      });
-
-      balances.push({
-        chain: chain,
-        category: "rewards",
-        symbol: "LQTY",
-        decimals: 18,
-        address: "0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
-        amount: BigNumber.from(LQTYBalance),
-        reward: true,
-        parent: contract.address
-      });
-
-      balances.push({
-        chain: chain,
-        category: "rewards",
-        symbol: "ETH",
-        decimals: 18,
-        address: "0x0000000000000000000000000000000000000000",
-        amount: BigNumber.from(ETHBalance),
-        reward: true,
-        parent: contract.address
+        rewards: [
+          {
+            chain,
+            symbol: "LQTY",
+            decimals: 18,
+            address: "0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
+            amount: BigNumber.from(LQTYBalance),
+          },
+          {
+            chain,
+            symbol: "ETH",
+            decimals: 18,
+            address: "0x0000000000000000000000000000000000000000",
+            amount: BigNumber.from(ETHBalance),
+          }
+        ]
       });
 
 

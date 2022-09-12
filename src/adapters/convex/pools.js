@@ -160,7 +160,7 @@ export async function getPoolBalances(ctx, chain, contracts) {
     console.log(ratios, 'ratios')
 
   for (var i = 0; i < contracts.length; i++) {
-    balances.push({
+    const balance = {
       chain: chain,
       category: "stake",
       symbol: contracts[i].name,
@@ -168,33 +168,32 @@ export async function getPoolBalances(ctx, chain, contracts) {
       address: contracts[i].crvRewards,
       priceSubstitute: contracts[i].lptoken,
       amount: BigNumber.from(balancesR[i] > 0 ? balancesR[i] : 0),
-    });
+    };
 
+    balances.push(balance);
 
 
     if (earnedR[i] > 0) {
 
-      const pendingCRV = BigNumber.from(earnedR[i] > 0 ? earnedR[i] : 0)
-      balances.push({
-        chain: chain,
-        category: "stake",
-        symbol: "CRV",
-        decimals: 18,
-        reward: true,
-        parent: contracts[i].crvRewards,
-        address: "0xD533a949740bb3306d119CC777fa900bA034cd52",
-        amount: pendingCRV,
-      });
-      balances.push({
-        chain: chain,
-        category: "stake",
-        symbol: "CVX",
-        decimals: 18,
-        reward: true,
-        parent: contracts[i].crvRewards,
-        address: CVX,
-        amount: pendingCRV.mul(ratios[0]).div(ratios[1]),
-      });
+      const pendingCRV = BigNumber.from(earnedR[i]);
+      balance.rewards = [
+        {
+          chain,
+          category: "stake",
+          symbol: "CRV",
+          decimals: 18,
+          address: "0xD533a949740bb3306d119CC777fa900bA034cd52",
+          amount: pendingCRV,
+        },
+        {
+          chain: chain,
+          category: "stake",
+          symbol: "CVX",
+          decimals: 18,
+          address: CVX,
+          amount: pendingCRV.mul(ratios[0]).div(ratios[1]),
+        }
+      ];
 
       const pool = new ethers.Contract(
         contracts[i].crvRewards,
@@ -215,13 +214,11 @@ export async function getPoolBalances(ctx, chain, contracts) {
 
           if (earnedBalance > 0) {
             const rDetails = await getERC20Details(chain, [ await poolReward.rewardToken() ])
-            balances.push({
-              chain: chain,
+            balance.rewards.push({
+              chain,
               category: "stake",
               symbol:  rDetails[0].symbol,
               decimals: rDetails[0].decimals,
-              reward: true,
-              parent: contracts[i].crvRewards,
               address: rDetails[0].address,
               amount: BigNumber.from(earnedBalance),
             });

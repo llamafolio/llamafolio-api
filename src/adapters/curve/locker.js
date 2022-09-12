@@ -1,7 +1,5 @@
-import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { providers } from "@defillama/sdk/build/general";
-import { getGauges } from "./gauges";
 import LockerABI from "./abis/Locker.json";
 import FeeDistributorAbi from "./abis/FeeDistributor.json";
 
@@ -23,24 +21,22 @@ export async function getLockedBalances(ctx, chain) {
   const lockedBalance = await locker.locked(ctx.address);
   const claimableBalance = await feeDistributor.claim(ctx.address);
 
-  return [
-    {
-      chain,
-      category: "locked",
-      symbol: "CRV",
-      decimals: 18,
-      address: "0xD533a949740bb3306d119CC777fa900bA034cd52",
-      amount: BigNumber.from(lockedBalance.amount),
-    },
-    {
-      chain,
-      category: "rewards",
-      symbol: "3CRV",
-      decimals: 18,
-      address: "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490",
-      amount: BigNumber.from(claimableBalance),
-      reward: true,
-      parent: "0xD533a949740bb3306d119CC777fa900bA034cd52",
-    },
-  ];
+  return {
+    chain,
+    category: "locked",
+    symbol: "CRV",
+    decimals: 18,
+    address: "0xD533a949740bb3306d119CC777fa900bA034cd52",
+    amount: BigNumber.from(lockedBalance.amount),
+    rewards: [
+      {
+        chain,
+        category: "rewards",
+        symbol: "3CRV",
+        decimals: 18,
+        address: "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490",
+        amount: BigNumber.from(claimableBalance),
+      },
+    ],
+  };
 }

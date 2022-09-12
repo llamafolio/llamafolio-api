@@ -113,7 +113,7 @@ export async function getMultiFeeDistributionBalances(
       decimals: token.decimals,
       symbol: token.symbol,
       category: "reward",
-      reward: true,
+      type: "reward",
       claimable: rewardData.amount,
       // TODO: rewards interface
       rates: {

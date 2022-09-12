@@ -174,25 +174,29 @@ export async function getIFOBalances(ctx, chain) {
           o.input.params[0] === correspondingKeys[poolDetails[index].lpToken]
       );
 
-      balances.push({
+      const balance: Balance = {
         chain: chain,
         category: "lp",
         symbol: tokenDetail.symbol,
         decimals: tokenDetail.decimals,
         address: tokenDetail.address,
         amount: BigNumber.from(poolBalance),
-      });
+      };
 
-      balances.push({
-        chain,
-        category: "lp",
-        symbol: "CTR",
-        decimals: 18,
-        address: "0xb3ad645db386d7f6d753b2b9c3f4b853da6890b8",
-        amount: BigNumber.from(pendingReward.output),
-        reward: true,
-        parent: tokenDetail.address,
-      });
+      balances.push(balance);
+
+      if (pendingReward) {
+        balances.rewards = [
+          {
+            chain,
+            category: "lp",
+            symbol: "CTR",
+            decimals: 18,
+            address: "0xb3ad645db386d7f6d753b2b9c3f4b853da6890b8",
+            amount: BigNumber.from(pendingReward.output),
+          },
+        ];
+      }
     }
   }
 

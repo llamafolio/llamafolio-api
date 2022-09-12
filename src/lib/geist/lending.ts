@@ -139,8 +139,7 @@ export async function getLendingPoolBalances(
     decimals: stakingToken.decimals,
     amount: totalLMRewards,
     category: "vestable-reward",
-    reward: true,
-    debt: false,
+    type: "reward",
   };
   balances.push(rewardBalance);
 
