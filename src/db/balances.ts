@@ -44,6 +44,7 @@ export function fromStorage(balances: BalanceStorage[]) {
       balanceUSD: balance.balance_usd
         ? parseFloat(balance.balance_usd)
         : undefined,
+      timestamp: balance.timestamp,
       ...balance.data,
     };
 
