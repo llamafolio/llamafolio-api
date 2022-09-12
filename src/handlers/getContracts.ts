@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import pool from "@db/pool";
 import { isHex, strToBuf } from "@lib/buf";
-import { badRequest, notFound, serverError, success } from "./response";
+import { badRequest, notFound, serverError, success } from "@handlers/response";
 
 export const getContract: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false;

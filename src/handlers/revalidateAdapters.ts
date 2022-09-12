@@ -4,7 +4,7 @@ import pool from "@db/pool";
 import { insertContracts } from "@db/contracts";
 import { adapters } from "@adapters/index";
 import { invokeLambda, wrapScheduledLambda } from "@lib/lambda";
-import { serverError, success } from "./response";
+import { serverError, success } from "@handlers/response";
 
 const revalidateAdaptersContracts: APIGatewayProxyHandler = async (
   _event,

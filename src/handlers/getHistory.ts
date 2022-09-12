@@ -2,7 +2,7 @@ import { APIGatewayProxyHandler } from "aws-lambda";
 import { Chain } from "@defillama/sdk/build/general";
 import { strToBuf, bufToStr, isHex } from "@lib/buf";
 import pool from "@db/pool";
-import { badRequest, serverError, success } from "./response";
+import { badRequest, serverError, success } from "@handlers/response";
 
 type TokenTransfer = {
   token_address: string;

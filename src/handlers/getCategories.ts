@@ -1,5 +1,5 @@
 import { Categories } from "@lib/category";
-import { success } from "./response";
+import { success } from "@handlers/response";
 
 export function handler() {
   return success(

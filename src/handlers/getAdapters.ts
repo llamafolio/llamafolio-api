@@ -1,7 +1,7 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import pool from "@db/pool";
 import { isHex, strToBuf } from "@lib/buf";
-import { badRequest, notFound, serverError, success } from "./response";
+import { badRequest, notFound, serverError, success } from "@handlers/response";
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   // https://github.com/brianc/node-postgres/issues/930#issuecomment-230362178

@@ -2,7 +2,7 @@ import { APIGatewayProxyHandler } from "aws-lambda";
 import { ApiGatewayManagementApi } from "aws-sdk";
 import { providers } from "@defillama/sdk/build/general";
 import pool from "@db/pool";
-import { serverError, success } from "./response";
+import { serverError, success } from "@handlers/response";
 
 export const websocketHandler: APIGatewayProxyHandler = async (
   event,

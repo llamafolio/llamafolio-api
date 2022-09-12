@@ -2,7 +2,7 @@ import { APIGatewayProxyHandler } from "aws-lambda";
 import { ApiGatewayManagementApi, DynamoDB } from "aws-sdk";
 import { invokeLambda } from "@lib/lambda";
 import { isHex } from "@lib/buf";
-import { badRequest, success } from "./response";
+import { badRequest, success } from "@handlers/response";
 import { isNotNullish } from "@lib/type";
 
 export const handleRequests: APIGatewayProxyHandler = async (event) => {

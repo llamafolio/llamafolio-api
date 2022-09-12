@@ -3,7 +3,7 @@ import { isHex } from "@lib/buf";
 import pool from "@db/pool";
 import { Balance, PricedBalance } from "@lib/adapter";
 import { selectBalancesByFromAddress } from "@db/balances";
-import { badRequest, serverError, success } from "./response";
+import { badRequest, serverError, success } from "@handlers/response";
 
 type AdapterBalance = Balance & { adapterId: string };
 type PricedAdapterBalance = PricedBalance & { adapterId: string };

@@ -6,7 +6,7 @@ import { selectContractsByAdapterId } from "@db/contracts";
 import { BaseContext } from "@lib/adapter";
 import { getPricedBalances } from "@lib/price";
 import { adapters, adapterById } from "@adapters/index";
-import { badRequest, serverError, success } from "./response";
+import { badRequest, serverError, success } from "@handlers/response";
 import { invokeLambda } from "@lib/lambda";
 import { insertBalances } from "@db/balances";
 
