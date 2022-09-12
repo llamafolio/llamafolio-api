@@ -1,7 +1,22 @@
 import { BigNumber } from "ethers";
 import { Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
-import { Balance } from "@lib/adapter";
+import { Balance, BaseContext, Contract } from "@lib/adapter";
+import { getERC20BalanceOf } from "@lib/erc20";
+
+/**
+ * Retrieves pairs balances (with underlyings) of Uniswap V2 like Pair.
+ * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
+ */
+export async function getPairsBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contracts: Contract[]
+) {
+  let balances = await getERC20BalanceOf(ctx, chain, contracts);
+
+  return getUnderlyingBalances(chain, balances);
+}
 
 /**
  * Retrieves underlying balances of Uniswap V2 like Pair contract balance.

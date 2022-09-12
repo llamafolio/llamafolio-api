@@ -1,7 +1,6 @@
 import { Adapter, Contract } from "@lib/adapter";
-import { getERC20BalanceOf } from "@lib/erc20";
-import { getUnderlyingBalances } from "@lib/uniswap/v2/pair";
-import { getPairsInfo } from "@lib/uniswap/v2/factory";
+import { getPairsBalances, getUnderlyingBalances } from "@lib/uniswap/v2/pair";
+import { getPairsContracts } from "@lib/uniswap/v2/factory";
 import { getMasterChefPoolsInfo, getMasterChefBalances } from "@lib/masterchef";
 import { isNotNullish } from "@lib/type";
 import { Token } from "@lib/token";
@@ -23,8 +22,8 @@ const sushi: Token = {
 const adapter: Adapter = {
   id: "sushiswap",
   async getContracts() {
-    const [pairsInfo, masterChefPoolsInfo] = await Promise.all([
-      getPairsInfo({
+    const [pairs, masterChefPoolsInfo] = await Promise.all([
+      getPairsContracts({
         chain: "ethereum",
         factoryAddress: "0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac",
         length: 100,
@@ -38,7 +37,7 @@ const adapter: Adapter = {
 
     // retrieve master chef pools details from lpToken addresses
     const pairByAddress: { [key: string]: Contract } = {};
-    for (const pair of pairsInfo) {
+    for (const pair of pairs) {
       pairByAddress[pair.address.toLowerCase()] = pair;
     }
 
@@ -53,7 +52,7 @@ const adapter: Adapter = {
       .filter(isNotNullish);
 
     const contracts = [
-      ...pairsInfo.map((c) => ({ ...c, category: "lp" })),
+      ...pairs.map((c) => ({ ...c, category: "lp" })),
       ...masterChefPools.map((c) => ({ ...c, category: "farm" })),
     ];
 
@@ -74,8 +73,7 @@ const adapter: Adapter = {
       }
     }
 
-    let lpBalances = await getERC20BalanceOf(ctx, "ethereum", lp);
-    lpBalances = await getUnderlyingBalances("ethereum", lpBalances);
+    const pairs = await getPairsBalances(ctx, "ethereum", lp);
 
     let masterChefBalances = await getMasterChefBalances(ctx, {
       chain: "ethereum",
@@ -88,7 +86,7 @@ const adapter: Adapter = {
       masterChefBalances
     );
 
-    const balances = lpBalances.concat(masterChefBalances);
+    const balances = pairs.concat(masterChefBalances);
 
     return {
       balances,

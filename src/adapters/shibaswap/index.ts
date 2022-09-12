@@ -1,7 +1,6 @@
 import { Adapter, Contract } from "@lib/adapter";
-import { getERC20BalanceOf } from "@lib/erc20";
-import { getUnderlyingBalances } from "@lib/uniswap/v2/pair";
-import { getPairsInfo } from "@lib/uniswap/v2/factory";
+import { getPairsBalances, getUnderlyingBalances } from "@lib/uniswap/v2/pair";
+import { getPairsContracts } from "@lib/uniswap/v2/factory";
 import { getMasterChefPoolsInfo, getMasterChefBalances } from "@lib/masterchef";
 import { isNotNullish } from "@lib/type";
 import { Token } from "@lib/token";
@@ -38,7 +37,7 @@ const adapter: Adapter = {
   id: "shibaswap",
   async getContracts() {
     const [pairsInfo, masterChefPoolsInfo] = await Promise.all([
-      getPairsInfo({
+      getPairsContracts({
         chain: "ethereum",
         factoryAddress: "0x115934131916C8b277DD010Ee02de363c09d037c",
         length: 100,
@@ -105,10 +104,9 @@ const adapter: Adapter = {
 
     balances = balances.concat(lockerBalances);
 
-    let lpBalances = await getERC20BalanceOf(ctx, "ethereum", lp);
-    lpBalances = await getUnderlyingBalances("ethereum", lpBalances);
+    const pairs = await getPairsBalances(ctx, "ethereum", lp);
 
-    balances = balances.concat(lpBalances);
+    balances = balances.concat(pairs);
 
     let masterChefBalances = await getMasterChefBalances(ctx, {
       chain: "ethereum",

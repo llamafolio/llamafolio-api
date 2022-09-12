@@ -5,19 +5,20 @@ import UniswapV2Factory from "./abis/UniswapV2Factory.json";
 import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
+import { Category } from "@lib/category";
 
-export type GetPairsInfoParams = {
+export type getPairsContractsParams = {
   chain: Chain;
   factoryAddress: string;
   // optional number of pairs
   length?: number;
 };
 
-export async function getPairsInfo({
+export async function getPairsContracts({
   chain,
   factoryAddress,
   length,
-}: GetPairsInfoParams) {
+}: getPairsContractsParams) {
   const provider = providers[chain];
   const factory = new Contract(factoryAddress, UniswapV2Factory, provider);
 
@@ -149,7 +150,11 @@ export async function getPairsInfo({
         return null;
       }
 
-      return { ...pair, underlyings: [token0, token1] };
+      return {
+        ...pair,
+        category: "lp" as Category,
+        underlyings: [token0, token1],
+      };
     })
     .filter(isNotNullish);
 }
