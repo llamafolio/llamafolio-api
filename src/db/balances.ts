@@ -188,6 +188,7 @@ export function toStorage(
             : undefined,
           amount: reward.amount.toString(),
           balance_usd: reward.balanceUSD,
+          timestamp,
           parent: c.address,
           // data: {
           //   claimable,
@@ -196,6 +197,7 @@ export function toStorage(
         });
       }
     }
+
     if (underlyings && underlyings.length > 0) {
       for (const underlying of underlyings) {
         res.push({
@@ -217,6 +219,7 @@ export function toStorage(
             : undefined,
           amount: underlying.amount.toString(),
           balance_usd: underlying.balanceUSD,
+          timestamp,
           parent: c.address,
         });
       }
