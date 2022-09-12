@@ -11,9 +11,16 @@ export type BaseContext = {
   address: string;
 };
 
-export type BaseBalance = Token & {
+export interface BaseBalance extends BaseContract {
   amount: BigNumber;
-};
+}
+
+export interface BasePricedBalance extends BaseBalance {
+  price: number;
+  balanceUSD: number;
+  // price updated at
+  timestamp: number;
+}
 
 export type RewardBalance = BaseBalance & {
   // claimable amount. Can be lower than balance amount but not higher.
@@ -21,26 +28,19 @@ export type RewardBalance = BaseBalance & {
   claimable: BigNumber;
 };
 
-export type Balance = (BaseBalance | RewardBalance) & {
-  category: Category;
-  reward?: boolean;
-  debt?: boolean;
-  stable?: boolean;
-  rates?: any;
+export interface Balance extends BaseBalance {
   // optional rewards
-  rewards?: RewardBalance[];
+  rewards?: BaseBalance[];
   // optional underlying tokens.
   // ex: aToken -> token (AAVE)
   // ex: Uniswap Pair -> [token0, token1]
   underlyings?: BaseBalance[];
-};
+}
 
-export type PricedBalance = Balance & {
-  price: number;
-  balanceUSD: number;
-  // price updated at
-  timestamp: number;
-};
+export interface PricedBalance extends BasePricedBalance {
+  rewards?: BasePricedBalance[];
+  underlyings?: BasePricedBalance[];
+}
 
 export type CategoryBalances = {
   title: string;
@@ -54,15 +54,17 @@ export type BalancesConfig = {
 };
 
 export interface BaseContract {
+  // discriminators
   type?: ContractType;
   standard?: ContractStandard;
+  category?: Category;
+
   name?: string;
   displayName?: string;
   chain: Chain;
   address: string;
   symbol?: string;
   decimals?: number;
-  category?: string;
   stable?: boolean;
 }
 

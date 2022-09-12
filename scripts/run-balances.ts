@@ -1,8 +1,8 @@
 import path from "path";
 import pool from "../src/db/pool";
-import { Adapter, BaseContext, BaseContract } from "../src/lib/adapter";
+import { Adapter, BaseContext } from "../src/lib/adapter";
 import { getPricedBalances } from "../src/lib/price";
-import { fromStorage } from "../src/db/contracts";
+import { selectContractsByAdapterId } from "../src/db/contracts";
 
 function help() {}
 
@@ -31,12 +31,7 @@ async function main() {
   const client = await pool.connect();
 
   try {
-    const contractsRes = await client.query(
-      "select * from contracts where adapter_id = $1;",
-      [adapter.id]
-    );
-
-    const contracts: BaseContract[] = contractsRes.rows.map(fromStorage);
+    const contracts = await selectContractsByAdapterId(client, adapter.id);
 
     const balancesConfig = await adapter.getBalances(ctx, contracts || []);
 

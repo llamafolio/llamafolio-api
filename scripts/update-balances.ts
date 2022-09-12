@@ -1,8 +1,8 @@
 import path from "path";
-import format from "pg-format";
 import { selectContractsByAdapterId } from "../src/db/contracts";
 import pool from "../src/db/pool";
-import { Adapter, BaseContext, PricedBalance } from "../src/lib/adapter";
+import { insertBalances } from "../src/db/balances";
+import { Adapter, BaseContext } from "../src/lib/adapter";
 import { strToBuf } from "../src/lib/buf";
 import { getPricedBalances } from "../src/lib/price";
 
@@ -10,8 +10,9 @@ function help() {}
 
 async function main() {
   // argv[0]: ts-node
-  // argv[1]: revalidate-adapter.ts
+  // argv[1]: update-balances.ts
   // argv[2]: adapter
+  // argv[3]: address
   if (process.argv.length < 3) {
     console.error("Missing adapter argument");
     return help();
@@ -52,42 +53,6 @@ async function main() {
 
     const now = new Date();
 
-    // insert underlyings
-    for (const balance of pricedBalances) {
-      if (balance.underlyings) {
-        for (const underlyingBalance of balance.underlyings) {
-          underlyingBalance.parent = balance.address;
-          underlyingBalance.type = "underlying";
-          pricedBalances.push(underlyingBalance);
-        }
-      }
-    }
-
-    // insert balances
-    const insertBalancesValues = pricedBalances.map((d) => [
-      strToBuf(address),
-      d.chain,
-      strToBuf(d.address),
-      d.symbol,
-      d.decimals,
-      d.amount.toString(),
-      d.category,
-      adapter.id,
-      (d as PricedBalance).price,
-      (d as PricedBalance).timestamp
-        ? new Date((d as PricedBalance).timestamp)
-        : undefined,
-      now,
-      d.reward,
-      d.debt,
-      d.stable,
-      d.parent ? strToBuf(d.parent) : undefined,
-      d.claimable?.toString(),
-      d.balanceUSD,
-      d.claimableUSD,
-      d.type,
-    ]);
-
     await client.query("BEGIN");
 
     // Delete old balances
@@ -97,15 +62,7 @@ async function main() {
     );
 
     // Insert new balances
-    if (insertBalancesValues.length > 0) {
-      await client.query(
-        format(
-          "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable, balance_usd, claimable_usd, type) VALUES %L;",
-          insertBalancesValues
-        ),
-        []
-      );
-    }
+    await insertBalances(client, pricedBalances, adapter.id, address, now);
 
     await client.query("COMMIT");
   } catch (e) {

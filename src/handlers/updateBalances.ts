@@ -1,14 +1,14 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { ApiGatewayManagementApi } from "aws-sdk";
-import format from "pg-format";
 import { strToBuf, isHex } from "@lib/buf";
 import pool from "@db/pool";
 import { selectContractsByAdapterId } from "@db/contracts";
-import { BaseContext, PricedBalance } from "@lib/adapter";
+import { BaseContext } from "@lib/adapter";
 import { getPricedBalances } from "@lib/price";
 import { adapters, adapterById } from "@adapters/index";
 import { badRequest, serverError, success } from "./response";
 import { invokeLambda } from "@lib/lambda";
+import { insertBalances } from "@db/balances";
 
 export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
   event,
@@ -171,42 +171,6 @@ export const websocketUpdateAdapterBalancesHandler: APIGatewayProxyHandler =
 
       const now = new Date(timestamp);
 
-      // insert underlyings
-      for (const balance of pricedBalances) {
-        if (balance.underlyings) {
-          for (const underlyingBalance of balance.underlyings) {
-            underlyingBalance.parent = balance.address;
-            underlyingBalance.type = "underlying";
-            pricedBalances.push(underlyingBalance);
-          }
-        }
-      }
-
-      // insert balances
-      const insertBalancesValues = pricedBalances.map((d) => [
-        strToBuf(address),
-        d.chain,
-        strToBuf(d.address),
-        d.symbol,
-        d.decimals,
-        d.amount.toString(),
-        d.category,
-        adapterId,
-        (d as PricedBalance).price,
-        (d as PricedBalance).timestamp
-          ? new Date((d as PricedBalance).timestamp)
-          : undefined,
-        now,
-        d.reward,
-        d.debt,
-        d.stable,
-        d.parent ? strToBuf(d.parent) : undefined,
-        d.claimable?.toString(),
-        d.balanceUSD,
-        d.claimableUSD,
-        d.type,
-      ]);
-
       await client.query("BEGIN");
 
       // Delete old balances
@@ -216,15 +180,7 @@ export const websocketUpdateAdapterBalancesHandler: APIGatewayProxyHandler =
       );
 
       // Insert new balances
-      if (insertBalancesValues.length > 0) {
-        await client.query(
-          format(
-            "INSERT INTO balances (from_address, chain, address, symbol, decimals, amount, category, adapter_id, price, price_timestamp, timestamp, reward, debt, stable, parent, claimable, balance_usd, claimable_usd, type) VALUES %L;",
-            insertBalancesValues
-          ),
-          []
-        );
-      }
+      await insertBalances(client, pricedBalances, adapter.id, address, now);
 
       await client.query("COMMIT");
 

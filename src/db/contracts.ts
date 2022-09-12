@@ -91,36 +91,20 @@ export function fromStorage(contracts: ContractStorage[]) {
 }
 
 export function toRow(contract: ContractStorage) {
-  const {
-    type,
-    standard,
-    name,
-    display_name,
-    chain,
-    address,
-    symbol,
-    decimals,
-    category,
-    adapter_id,
-    stable,
-    parent,
-    data,
-  } = contract;
-
   return [
-    type,
-    standard,
-    category,
-    name,
-    display_name,
-    chain,
-    address,
-    symbol,
-    decimals,
-    adapter_id,
-    stable,
-    parent,
-    data,
+    contract.type,
+    contract.standard,
+    contract.category,
+    contract.name,
+    contract.display_name,
+    contract.chain,
+    contract.address,
+    contract.symbol,
+    contract.decimals,
+    contract.adapter_id,
+    contract.stable,
+    contract.parent,
+    contract.data,
   ];
 }
 

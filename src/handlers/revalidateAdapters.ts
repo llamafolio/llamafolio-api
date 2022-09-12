@@ -1,10 +1,9 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import format from "pg-format";
 import pool from "@db/pool";
+import { insertContracts } from "@db/contracts";
 import { adapters } from "@adapters/index";
 import { invokeLambda, wrapScheduledLambda } from "@lib/lambda";
-import { strToBuf } from "@lib/buf";
-import { sliceIntoChunks } from "@lib/array";
 import { serverError, success } from "./response";
 
 const revalidateAdaptersContracts: APIGatewayProxyHandler = async (
@@ -99,39 +98,6 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (
 
   const insertAdapterValues = [[adapter.id, expire_at]];
 
-  const insertAdapterContractsValues = config.contracts.map(
-    ({
-      name,
-      displayName,
-      chain,
-      address,
-      symbol,
-      decimals,
-      category,
-      type,
-      stable,
-      rewards,
-      underlyings,
-      ...data
-    }) => [
-      name?.toString(),
-      displayName?.toString(),
-      chain,
-      strToBuf(address),
-      symbol,
-      decimals,
-      category,
-      adapter.id,
-      type,
-      stable,
-      // TODO: validation
-      rewards ? JSON.stringify(rewards) : undefined,
-      underlyings ? JSON.stringify(underlyings) : undefined,
-      // \\u0000 cannot be converted to text
-      JSON.parse(JSON.stringify(data).replace(/\\u0000/g, "")),
-    ]
-  );
-
   try {
     await client.query("BEGIN");
 
@@ -156,19 +122,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (
     }
 
     // Insert new contracts
-    if (insertAdapterContractsValues.length > 0) {
-      await Promise.all(
-        sliceIntoChunks(insertAdapterContractsValues, 200).map((chunk) =>
-          client.query(
-            format(
-              "INSERT INTO contracts (name, display_name, chain, address, symbol, decimals, category, adapter_id, type, stable, rewards, underlyings, data) VALUES %L ON CONFLICT DO NOTHING;",
-              chunk
-            ),
-            []
-          )
-        )
-      );
-    }
+    await insertContracts(client, config.contracts, adapter.id);
 
     await client.query("COMMIT");
 
