@@ -95,6 +95,14 @@ functions:
           method: get
           path: /categories
 
+  getInfoStats:
+    handler: src/handlers/getInfoStats.handler
+    description: Get stats on supported protocols, chains and tokens
+    events:
+      - httpApi:
+          method: get
+          path: /info/stats
+
   scheduledRevalidateAdaptersContracts:
     handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts
     description: Revalidate expired adapters contracts
