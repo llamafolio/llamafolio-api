@@ -51,7 +51,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
     });
 
     const balancesRes = await client.query(
-      `select timestamp from balances where from_address = $1::bytea limit 1;`,
+      `select timestamp from balances where from_address = $1::bytea order by timestamp desc limit 1;`,
       [strToBuf(address)]
     );
 

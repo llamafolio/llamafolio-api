@@ -113,7 +113,6 @@ export function toRow(balance: BalanceStorage) {
   ];
 }
 
-// TODO: run table migration
 export function toStorage(
   balances: PricedBalance[],
   adapterId: string,
