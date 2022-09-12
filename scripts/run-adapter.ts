@@ -3,13 +3,14 @@ import fetch from "node-fetch";
 import { BigNumber } from "ethers";
 import millify from "millify";
 
-import {
-  Adapter,
-  Balance,
-  BaseContext,
-  CategoryBalances,
-} from "../src/lib/adapter";
+import { Adapter, Balance, BaseContext } from "../src/lib/adapter";
 import { getPricedBalances } from "../src/lib/price";
+
+type CategoryBalances = {
+  title: string;
+  totalUSD: number;
+  balances: Balance[];
+};
 
 Object.defineProperties(BigNumber.prototype, {
   toJSON: {
@@ -62,7 +63,6 @@ async function main() {
     yieldsByPoolAddress[yieldsData[i].pool.toLowerCase()] = yieldsData[i];
     yieldsByKeys[yieldsData[i].pool] = yieldsData[i];
   }
-
 
   const pricedBalances = await getPricedBalances(balancesRes.balances);
 
@@ -117,13 +117,16 @@ async function main() {
     const data: any[] = [];
 
     for (const balance of categoryBalances.balances) {
-
-      const key = `${balance.yieldsAddress?.toLowerCase()}-${(balance.chain === 'avax')?"avalanche":balance.chain}`;
+      const key = `${balance.yieldsAddress?.toLowerCase()}-${
+        balance.chain === "avax" ? "avalanche" : balance.chain
+      }`;
       const subKey = `${balance.yieldsAddress?.toLowerCase()}`;
       const nonAddressKey = `${balance.yieldsKey}`; //in a case where a yields key may be a string instead of an address
 
       const yieldObject =
-        yieldsByPoolAddress[key] || yieldsByPoolAddress[subKey] || yieldsByKeys[nonAddressKey];
+        yieldsByPoolAddress[key] ||
+        yieldsByPoolAddress[subKey] ||
+        yieldsByKeys[nonAddressKey];
 
       const d = {
         chain: balance.chain,
@@ -145,9 +148,15 @@ async function main() {
       };
 
       if (balance.underlyings) {
-        d.underlying = balance.underlyings.map(underlying => `${millify(underlying.amount / 10 ** underlying.decimals)} ${underlying.symbol}`).join(" + ")
+        d.underlying = balance.underlyings
+          .map(
+            (underlying) =>
+              `${millify(underlying.amount / 10 ** underlying.decimals)} ${
+                underlying.symbol
+              }`
+          )
+          .join(" + ");
       }
-
 
       data.push(d);
     }

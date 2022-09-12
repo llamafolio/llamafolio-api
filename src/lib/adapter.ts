@@ -1,6 +1,5 @@
 import { Chain } from "@defillama/sdk/build/general";
 import { BigNumber } from "ethers";
-import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
 import { Category } from "@lib/category";
 
@@ -41,12 +40,6 @@ export interface PricedBalance extends BasePricedBalance {
   rewards?: BasePricedBalance[];
   underlyings?: BasePricedBalance[];
 }
-
-export type CategoryBalances = {
-  title: string;
-  totalUSD: number;
-  balances: Balance[];
-};
 
 export type BalancesConfig = {
   balances: Balance[];

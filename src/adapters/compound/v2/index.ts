@@ -200,7 +200,7 @@ const adapter: Adapter = {
           amount,
           decimals: cToken.underlyings[0].decimals,
           category: "borrow",
-          debt: true,
+          type: "debt",
         };
       })
       .filter(isNotNullish);

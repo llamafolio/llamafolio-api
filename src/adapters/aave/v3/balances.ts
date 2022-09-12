@@ -106,7 +106,7 @@ export async function getBalances(ctx, contracts) {
           decimals: tokenDetails[c].decimals,
           address: tokenDetails[c].address,
           amount: BigNumber.from(balance),
-          debt: true
+          type: "debt"
         });
       }
 

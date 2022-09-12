@@ -96,7 +96,7 @@ export async function getBalances(ctx, chain, contracts) {
           chain: chain,
           category: "borrow",
           symbol: "LUSD",
-          debt: true,
+          debt: "true",
           decimals: 18,
           address: "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
           amount: BigNumber.from(TroveDetails.debt),

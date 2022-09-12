@@ -74,7 +74,7 @@ export async function getLendingPoolBalances(
       ...underlyingTokens[i],
       amount: stableDebtTokenAddressesBalance.amount,
       category: "borrow",
-      debt: true,
+      type: "debt",
       stable: true,
     });
   }
@@ -88,7 +88,7 @@ export async function getLendingPoolBalances(
       ...underlyingTokens[i],
       amount: variableDebtTokenAddressesBalance.amount,
       category: "borrow",
-      debt: true,
+      type: "debt",
       stable: false,
     });
   }
