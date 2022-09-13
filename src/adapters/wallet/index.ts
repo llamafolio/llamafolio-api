@@ -13,8 +13,7 @@ const adapter: Adapter = {
 
     for (const chain in tokensByChain) {
       for (const token of tokensByChain[chain]) {
-        token.chain = chain;
-        contracts.push(token);
+        contracts.push({ ...token, chain: chain as Chain });
       }
     }
 

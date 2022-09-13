@@ -2,7 +2,6 @@ import { success } from "@handlers/response";
 import { adapters } from "@adapters/index";
 import { chains } from "@lib/chain";
 import { sum } from "@lib/math";
-import { Token } from "@lib/token";
 import { chains as tokensByChain } from "@llamafolio/tokens";
 
 /**
@@ -15,9 +14,7 @@ export async function handler() {
         protocols: adapters.length,
         chains: chains.length,
         tokens: sum(
-          Object.values(tokensByChain).map(
-            (tokens) => (tokens as Token[]).length
-          )
+          Object.values(tokensByChain).map((tokens) => tokens.length)
         ),
       },
     },
