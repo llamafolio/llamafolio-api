@@ -61,6 +61,7 @@ export async function getLendingPoolBalances(
       //substitute the token for it's "native" version
       ...underlyingTokens[i],
       amount: stableDebtTokenAddressesBalance.amount,
+      type: "debt",
       category: "borrow",
       stable: true,
     });
@@ -74,6 +75,7 @@ export async function getLendingPoolBalances(
       //substitute the token for it's "native" version
       ...underlyingTokens[i],
       amount: variableDebtTokenAddressesBalance.amount,
+      type: "debt",
       category: "borrow",
       stable: false,
     });

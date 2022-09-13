@@ -75,6 +75,7 @@ export async function getPositions(ctx, chain, contracts) {
       balances.push({
         chain: chain,
         category: "borrow",
+        type: "debt",
         symbol: marketsRaw[i].symbol,
         decimals: marketsRaw[i].decimals,
         address: marketsRaw[i].address,
