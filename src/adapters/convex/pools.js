@@ -156,8 +156,7 @@ export async function getPoolBalances(ctx, chain, contracts) {
 
   let balances = []
   const ratios = await getCVXRatio(provider)
-    console.log(ratios[0].toString(), 'ratios')
-    console.log(ratios, 'ratios')
+
 
   for (var i = 0; i < contracts.length; i++) {
     const balance = {
@@ -267,8 +266,8 @@ export async function getCVXRatio(provider) {
   if (currentCliff > CVX_EMISSION_TOTAL_CLIFFS) {
     return [0,1]; //cvx rewards will be 0
   }
-  console.log(CVX_EMISSION_TOTAL_CLIFFS, 'CVX_EMISSION_TOTAL_CLIFFS')
-  console.log(currentCliff, 'currentCliff')
+
+
   const reduction = CVX_EMISSION_TOTAL_CLIFFS - currentCliff
   return [reduction.toFixed(2) * 100, CVX_EMISSION_TOTAL_CLIFFS * 100] //*100 cause bignumber is a bitch
 
