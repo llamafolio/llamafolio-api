@@ -4,6 +4,41 @@ import { multicall } from "@lib/multicall";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20BalanceOf } from "@lib/erc20";
 
+export const abi = {
+  balanceOf: {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "balanceOf",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  totalSupply: {
+    inputs: [],
+    name: "totalSupply",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+};
+
 /**
  * Retrieves pairs balances (with underlyings) of Uniswap V2 like Pair.
  * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
@@ -39,25 +74,7 @@ export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
           params: [bToken.address],
           target: bToken.underlyings![0].address,
         })),
-        abi: {
-          inputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          name: "balanceOf",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
+        abi: abi.balanceOf,
       }),
 
       multicall({
@@ -66,25 +83,7 @@ export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
           params: [bToken.address],
           target: bToken.underlyings![1].address,
         })),
-        abi: {
-          inputs: [
-            {
-              internalType: "address",
-              name: "",
-              type: "address",
-            },
-          ],
-          name: "balanceOf",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
+        abi: abi.balanceOf,
       }),
 
       multicall({
@@ -93,19 +92,7 @@ export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
           params: [],
           target: token.address,
         })),
-        abi: {
-          inputs: [],
-          name: "totalSupply",
-          outputs: [
-            {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
-            },
-          ],
-          stateMutability: "view",
-          type: "function",
-        },
+        abi: abi.totalSupply,
       }),
     ]);
 
