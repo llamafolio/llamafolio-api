@@ -1,27 +1,21 @@
 import { Chain } from "@defillama/sdk/build/general";
-import { Balance, BaseContext } from "@lib/adapter";
-import { getERC20Balances, getERC20Details } from "@lib/erc20";
+import { Balance, BaseContext, Contract } from "@lib/adapter";
+import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
+import { Token } from "@lib/token";
+import { BigNumber } from "ethers";
 import { getReserveTokens } from "./tokens";
 
-export type GetLendingPoolBalancesParams = {
-  chain: Chain;
-  lendingPoolAddress: string;
-};
-
-export async function getLendingPoolBalances(
-  ctx: BaseContext,
-  params: GetLendingPoolBalancesParams
+export async function getLendingPoolContracts(
+  chain: Chain,
+  lendingPoolAddress: string
 ) {
-  const balances: Balance[] = [];
+  const contracts: Contract[] = [];
 
-  const reserveTokens = await getReserveTokens({
-    chain: params.chain,
-    lendingPoolAddress: params.lendingPoolAddress,
-  });
+  const reserveTokens = await getReserveTokens({ chain, lendingPoolAddress });
   const underlyingTokensAddresses = reserveTokens.map(
     (reserveToken) => reserveToken.underlyingTokenAddress
   );
-  const aTokens = reserveTokens.map(
+  const aTokensAddresses = reserveTokens.map(
     (reserveToken) => reserveToken.aTokenAddress
   );
   const stableDebtTokenAddresses = reserveTokens.map(
@@ -31,54 +25,70 @@ export async function getLendingPoolBalances(
     (reserveToken) => reserveToken.variableDebtTokenAddress
   );
 
-  const [
-    underlyingTokens,
-    aBalances,
-    stableDebtTokenAddressesBalances,
-    variableDebtTokenAddressesBalances,
-  ] = await Promise.all([
-    getERC20Details(params.chain, underlyingTokensAddresses),
-    getERC20Balances(ctx, params.chain, aTokens),
-    getERC20Balances(ctx, params.chain, stableDebtTokenAddresses),
-    getERC20Balances(ctx, params.chain, variableDebtTokenAddresses),
-  ]);
+  const [underlyingTokens, aTokens, stableDebtTokens, variableDebtTokens] =
+    await Promise.all([
+      getERC20Details(chain, underlyingTokensAddresses),
+      getERC20Details(chain, aTokensAddresses),
+      getERC20Details(chain, stableDebtTokenAddresses),
+      getERC20Details(chain, variableDebtTokenAddresses),
+    ]);
 
-  for (let i = 0; i < aBalances.length; i++) {
-    const aBalance = aBalances[i];
+  for (let i = 0; i < aTokens.length; i++) {
+    const aToken = aTokens[i];
 
-    balances.push({
-      //substitute the token for it's "native" version
-      ...underlyingTokens[i],
-      amount: aBalance.amount,
+    contracts.push({
+      ...aToken,
+      priceSubstitute: underlyingTokens[i].address,
+      underlyings: [underlyingTokens[i]],
       category: "lend",
     });
   }
 
-  for (let i = 0; i < stableDebtTokenAddressesBalances.length; i++) {
-    const stableDebtTokenAddressesBalance = stableDebtTokenAddressesBalances[i];
+  for (let i = 0; i < stableDebtTokens.length; i++) {
+    const stableDebtToken = stableDebtTokens[i];
 
-    balances.push({
-      //substitute the token for it's "native" version
-      ...underlyingTokens[i],
-      amount: stableDebtTokenAddressesBalance.amount,
+    contracts.push({
+      ...stableDebtToken,
+      priceSubstitute: underlyingTokens[i].address,
+      underlyings: [underlyingTokens[i]],
       type: "debt",
       category: "borrow",
       stable: true,
     });
   }
 
-  for (let i = 0; i < variableDebtTokenAddressesBalances.length; i++) {
-    const variableDebtTokenAddressesBalance =
-      variableDebtTokenAddressesBalances[i];
+  for (let i = 0; i < variableDebtTokens.length; i++) {
+    const variableDebtToken = variableDebtTokens[i];
 
-    balances.push({
-      //substitute the token for it's "native" version
-      ...underlyingTokens[i],
-      amount: variableDebtTokenAddressesBalance.amount,
+    contracts.push({
+      ...variableDebtToken,
+      priceSubstitute: underlyingTokens[i].address,
+      underlyings: [underlyingTokens[i]],
       type: "debt",
       category: "borrow",
       stable: false,
     });
+  }
+
+  return contracts;
+}
+
+export async function getLendingPoolBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contracts: Contract[]
+) {
+  const balances: Balance[] = await getERC20BalanceOf(
+    ctx,
+    chain,
+    contracts as Token[]
+  );
+
+  // use the same amount for underlyings
+  for (const balance of balances) {
+    if (balance.amount.gt(0) && balance.underlyings) {
+      balance.underlyings[0].amount = BigNumber.from(balance.amount);
+    }
   }
 
   return balances;
