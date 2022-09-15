@@ -1,5 +1,8 @@
-import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
-import { getLendingPoolBalances } from "@lib/geist/lending";
+import { Adapter, Contract } from "@lib/adapter";
+import {
+  getLendingPoolContracts,
+  getLendingPoolBalances,
+} from "@lib/geist/lending";
 import { getMultiFeeDistributionBalances } from "@lib/geist/stake";
 import { Token } from "@lib/token";
 
@@ -33,33 +36,44 @@ const valasToken: Token = {
 
 const adapter: Adapter = {
   id: "valas-finance",
-  getContracts() {
+  async getContracts() {
+    const lendingPoolContracts = await getLendingPoolContracts({
+      chain: "bsc",
+      lendingPoolAddress: lendingPoolContract.address,
+      chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+      rewardToken: valasToken,
+    });
+
     return {
-      contracts: [multiFeeDistributionContract, lendingPoolContract],
+      contracts: lendingPoolContracts,
     };
   },
   async getBalances(ctx, contracts) {
-    function resolver(contract: Contract) {
-      if (contract.address === multiFeeDistributionContract.address) {
-        return getMultiFeeDistributionBalances(ctx, {
-          multiFeeDistributionAddress: multiFeeDistributionContract.address,
-          chain: multiFeeDistributionContract.chain,
-          stakingToken: valasToken,
-        });
+    const lendingPoolBalances = await getLendingPoolBalances(
+      ctx,
+      "bsc",
+      contracts,
+      {
+        chefIncentivesControllerAddress:
+          chefIncentivesControllerContract.address,
       }
+    );
 
-      if (contract.address === lendingPoolContract.address) {
-        return getLendingPoolBalances(ctx, {
-          chain: lendingPoolContract.chain,
-          lendingPoolAddress: lendingPoolContract.address,
-          chefIncentivesControllerAddress:
-            chefIncentivesControllerContract.address,
-          stakingToken: valasToken,
-        });
+    const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(
+      ctx,
+      "bsc",
+      contracts,
+      {
+        multiFeeDistributionAddress: multiFeeDistributionContract.address,
+        stakingToken: valasToken,
       }
-    }
+    );
 
-    return { balances: await resolveContractsBalances(resolver, contracts) };
+    const balances = lendingPoolBalances.concat(multiFeeDistributionBalances);
+
+    return {
+      balances,
+    };
   },
 };
 

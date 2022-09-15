@@ -1,5 +1,8 @@
-import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
-import { getLendingPoolBalances } from "@lib/geist/lending";
+import { Adapter, Contract } from "@lib/adapter";
+import {
+  getLendingPoolContracts,
+  getLendingPoolBalances,
+} from "@lib/geist/lending";
 import { getMultiFeeDistributionBalances } from "@lib/geist/stake";
 import { Token } from "@lib/token";
 
@@ -33,33 +36,44 @@ const geistToken: Token = {
 
 const adapter: Adapter = {
   id: "geist-finance",
-  getContracts() {
+  async getContracts() {
+    const lendingPoolContracts = await getLendingPoolContracts({
+      chain: "fantom",
+      lendingPoolAddress: lendingPoolContract.address,
+      chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+      rewardToken: geistToken,
+    });
+
     return {
-      contracts: [multiFeeDistributionContract, lendingPoolContract],
+      contracts: lendingPoolContracts,
     };
   },
   async getBalances(ctx, contracts) {
-    function resolver(contract: Contract) {
-      if (contract.address === multiFeeDistributionContract.address) {
-        return getMultiFeeDistributionBalances(ctx, {
-          chain: multiFeeDistributionContract.chain,
-          multiFeeDistributionAddress: multiFeeDistributionContract.address,
-          stakingToken: geistToken,
-        });
+    const lendingPoolBalances = await getLendingPoolBalances(
+      ctx,
+      "fantom",
+      contracts,
+      {
+        chefIncentivesControllerAddress:
+          chefIncentivesControllerContract.address,
       }
+    );
 
-      if (contract.address === lendingPoolContract.address) {
-        return getLendingPoolBalances(ctx, {
-          chain: lendingPoolContract.chain,
-          lendingPoolAddress: lendingPoolContract.address,
-          chefIncentivesControllerAddress:
-            chefIncentivesControllerContract.address,
-          stakingToken: geistToken,
-        });
+    const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(
+      ctx,
+      "fantom",
+      contracts,
+      {
+        multiFeeDistributionAddress: multiFeeDistributionContract.address,
+        stakingToken: geistToken,
       }
-    }
+    );
 
-    return { balances: await resolveContractsBalances(resolver, contracts) };
+    const balances = lendingPoolBalances.concat(multiFeeDistributionBalances);
+
+    return {
+      balances,
+    };
   },
 };
 

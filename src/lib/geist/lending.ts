@@ -1,99 +1,44 @@
 import { ethers, BigNumber } from "ethers";
 import { providers, Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
-import { Balance, BaseContext } from "@lib/adapter";
-import { getERC20Balances, getERC20Details } from "@lib/erc20";
-import { getReserveTokens } from "@lib/aave/v2/tokens";
+import { Balance, BaseContext, Contract, RewardBalance } from "@lib/adapter";
+import {
+  getLendingPoolContracts as getAaveLendingPoolContracts,
+  getLendingPoolBalances as getAaveLendingPoolBalances,
+} from "@lib/aave/v2/lending";
 import { Token } from "@lib/token";
 import ChefIncentivesControllerABI from "./abis/ChefIncentivesController.json";
+import { isNotNullish } from "@lib/type";
 
-export type GetLendingPoolBalancesParams = {
+export type GetLendingPoolContractsParams = {
   chain: Chain;
   lendingPoolAddress: string;
   chefIncentivesControllerAddress: string;
-  stakingToken: Token;
+  rewardToken: Token;
 };
 
-export async function getLendingPoolBalances(
-  ctx: BaseContext,
-  {
-    chain,
-    lendingPoolAddress,
-    chefIncentivesControllerAddress,
-    stakingToken,
-  }: GetLendingPoolBalancesParams
-) {
-  const balances: Balance[] = [];
+/**
+ * Get AAVE LendingPool lending and borrowing contracts with rewards from ChefIncentives
+ */
+export async function getLendingPoolContracts({
+  chain,
+  lendingPoolAddress,
+  chefIncentivesControllerAddress,
+  rewardToken,
+}: GetLendingPoolContractsParams) {
   const provider = providers[chain];
 
-  const reserveTokens = await getReserveTokens({
+  const aaveLendingPoolContracts = await getAaveLendingPoolContracts(
     chain,
-    lendingPoolAddress,
-  });
-  const underlyingTokensAddresses = reserveTokens.map(
-    (reserveToken) => reserveToken.underlyingTokenAddress
-  );
-  const aTokens = reserveTokens.map(
-    (reserveToken) => reserveToken.aTokenAddress
-  );
-  const stableDebtTokenAddresses = reserveTokens.map(
-    (reserveToken) => reserveToken.stableDebtTokenAddress
-  );
-  const variableDebtTokenAddresses = reserveTokens.map(
-    (reserveToken) => reserveToken.variableDebtTokenAddress
+    lendingPoolAddress
   );
 
-  const [
-    underlyingTokens,
-    aBalances,
-    stableDebtTokenAddressesBalances,
-    variableDebtTokenAddressesBalances,
-  ] = await Promise.all([
-    getERC20Details(chain, underlyingTokensAddresses),
-    getERC20Balances(ctx, chain, aTokens),
-    getERC20Balances(ctx, chain, stableDebtTokenAddresses),
-    getERC20Balances(ctx, chain, variableDebtTokenAddresses),
-  ]);
-
-  for (let i = 0; i < aBalances.length; i++) {
-    const aBalance = aBalances[i];
-
-    balances.push({
-      //substitute the token for it's "native" version
-      ...underlyingTokens[i],
-      amount: aBalance.amount,
-      category: "lend",
-    });
+  const aaveLendingPoolContractsByAddress: { [key: string]: Contract } = {};
+  for (const contract of aaveLendingPoolContracts) {
+    aaveLendingPoolContractsByAddress[contract.address] = contract;
   }
 
-  for (let i = 0; i < stableDebtTokenAddressesBalances.length; i++) {
-    const stableDebtTokenAddressesBalance = stableDebtTokenAddressesBalances[i];
-
-    balances.push({
-      //substitute the token for it's "native" version
-      ...underlyingTokens[i],
-      amount: stableDebtTokenAddressesBalance.amount,
-      category: "borrow",
-      type: "debt",
-      stable: true,
-    });
-  }
-
-  for (let i = 0; i < variableDebtTokenAddressesBalances.length; i++) {
-    const variableDebtTokenAddressesBalance =
-      variableDebtTokenAddressesBalances[i];
-
-    balances.push({
-      //substitute the token for it's "native" version
-      ...underlyingTokens[i],
-      amount: variableDebtTokenAddressesBalance.amount,
-      category: "borrow",
-      type: "debt",
-      stable: false,
-    });
-  }
-
-  // lending / borrowing rewards
+  // add ChefIncentives rewards
   const chefIncentives = new ethers.Contract(
     chefIncentivesControllerAddress,
     ChefIncentivesControllerABI,
@@ -122,26 +67,65 @@ export async function getLendingPoolBalances(
     (res) => res.output
   );
 
-  const lmClaimableRewards: BigNumber[] = await chefIncentives.claimableReward(
+  for (const address of registeredTokensAddresses) {
+    const contract = aaveLendingPoolContractsByAddress[address];
+    if (contract) {
+      const reward: Contract = {
+        ...rewardToken,
+        category: "reward",
+        type: "reward",
+      };
+      contract.rewards = [reward];
+    }
+  }
+
+  return aaveLendingPoolContracts;
+}
+
+export type GetLendingPoolBalancesParams = {
+  chefIncentivesControllerAddress: string;
+};
+
+export async function getLendingPoolBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contracts: Contract[],
+  { chefIncentivesControllerAddress }: GetLendingPoolBalancesParams
+) {
+  const provider = providers[chain];
+
+  const balances = await getAaveLendingPoolBalances(ctx, chain, contracts);
+
+  const balanceByAddress: { [key: string]: Balance } = {};
+  for (const balance of balances) {
+    balanceByAddress[balance.address] = balance;
+  }
+
+  // lending / borrowing rewards
+  const chefIncentives = new ethers.Contract(
+    chefIncentivesControllerAddress,
+    ChefIncentivesControllerABI,
+    provider
+  );
+
+  const registeredTokensAddresses = contracts
+    .map((contract) => contract.address)
+    .filter(isNotNullish);
+
+  const claimableRewards: BigNumber[] = await chefIncentives.claimableReward(
     ctx.address,
     registeredTokensAddresses
   );
 
-  let totalLMRewards = BigNumber.from("0");
-  for (let index = 0; index < lmClaimableRewards.length; index++) {
-    totalLMRewards = totalLMRewards.add(lmClaimableRewards[index]);
+  // Attach ChefIncentives rewards
+  for (let i = 0; i < claimableRewards.length; i++) {
+    const balance = balanceByAddress[registeredTokensAddresses[i]];
+    if (balance && balance.rewards?.[0]) {
+      const reward = balance.rewards[0] as RewardBalance;
+      reward.amount = claimableRewards[i];
+      reward.claimable = claimableRewards[i];
+    }
   }
-
-  const rewardBalance: Balance = {
-    chain,
-    address: stakingToken.address,
-    symbol: stakingToken.symbol,
-    decimals: stakingToken.decimals,
-    amount: totalLMRewards,
-    category: "vestable-reward",
-    type: "reward",
-  };
-  balances.push(rewardBalance);
 
   return balances;
 }

@@ -1,27 +1,32 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { providers, Chain } from "@defillama/sdk/build/general";
-import { Balance, BaseContext, RewardBalance } from "@lib/adapter";
+import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
 
 export type GetMultiFeeDistributionBalancesParams = {
-  chain: Chain;
   multiFeeDistributionAddress: string;
   stakingToken: Token;
 };
 
 export async function getMultiFeeDistributionBalances(
   ctx: BaseContext,
+  chain: Chain,
+  lendingPoolContracts: Contract[],
   {
-    chain,
     multiFeeDistributionAddress,
     stakingToken,
   }: GetMultiFeeDistributionBalancesParams
 ) {
   const balances: Balance[] = [];
   const provider = providers[chain];
+
+  const lendingPoolContractByAddress: { [key: string]: Contract } = {};
+  for (const contract of lendingPoolContracts) {
+    lendingPoolContractByAddress[contract.address] = contract;
+  }
 
   const multiFeeDistribution = new ethers.Contract(
     multiFeeDistributionAddress,
@@ -115,9 +120,8 @@ export async function getMultiFeeDistributionBalances(
       category: "reward",
       type: "reward",
       claimable: rewardData.amount,
-      // TODO: rewards interface
       rates: {
-        rate: rewardRate.rewardRate,
+        rate: rewardRate.output.rewardRate,
         period: 604800,
         token: rewardData.token,
         decimals: token.decimals,
@@ -130,14 +134,11 @@ export async function getMultiFeeDistributionBalances(
       },
     };
 
-    // staking only
-    if (!lockedBalance.amount.gt(0) && unlockedBalance.amount.gt(0)) {
-      (reward as RewardBalance).parent = unlockedBalance.address;
-      reward.category = "stake";
-    } else {
-      // if both staking and locking, can't tell if aTokens rewards come from one or the other
-      (reward as RewardBalance).parent = lockedBalance.address;
-      reward.category = "lock";
+    // reuse contracts from LendingPool to connect reward tokens with their underlyings
+    const underlyings =
+      lendingPoolContractByAddress[rewardData.token]?.underlyings;
+    if (underlyings) {
+      reward.underlyings = [{ ...underlyings[0], amount: rewardData.amount }];
     }
 
     balances.push(reward);
