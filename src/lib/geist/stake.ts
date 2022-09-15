@@ -25,7 +25,7 @@ export async function getMultiFeeDistributionBalances(
 
   const lendingPoolContractByAddress: { [key: string]: Contract } = {};
   for (const contract of lendingPoolContracts) {
-    lendingPoolContractByAddress[contract.address] = contract;
+    lendingPoolContractByAddress[contract.address.toLowerCase()] = contract;
   }
 
   const multiFeeDistribution = new ethers.Contract(
@@ -136,7 +136,7 @@ export async function getMultiFeeDistributionBalances(
 
     // reuse contracts from LendingPool to connect reward tokens with their underlyings
     const underlyings =
-      lendingPoolContractByAddress[rewardData.token]?.underlyings;
+      lendingPoolContractByAddress[rewardData.token.toLowerCase()]?.underlyings;
     if (underlyings) {
       reward.underlyings = [{ ...underlyings[0], amount: rewardData.amount }];
     }
