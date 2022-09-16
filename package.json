@@ -4,6 +4,7 @@
   "description": "LlamaFolio API",
   "scripts": {
     "adapter": "ts-node -T scripts/run-adapter.ts",
+    "create-adapter": "ts-node -T scripts/create-adapter.ts",
     "test": "jest",
     "update-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build"
   },
