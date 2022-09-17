@@ -106,6 +106,9 @@ export async function getPricedBalances(
     return {
       ...price,
       ...balance,
+      priceTimestamp: price.timestamp
+        ? new Date(price.timestamp * 1000)
+        : undefined,
       balanceUSD: mulPrice(balance.amount, decimals, price.price),
       claimableUSD: (balance as RewardBalance).claimable
         ? mulPrice(
