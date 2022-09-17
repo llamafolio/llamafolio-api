@@ -25,7 +25,6 @@ export function fromStorage(balances: BalanceStorage[]) {
 
   for (const balance of balances) {
     const c = {
-      fromAddress: bufToStr(balance.from_address),
       type: balance.type,
       standard: balance.standard,
       name: balance.name,
