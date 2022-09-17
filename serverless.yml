@@ -51,8 +51,14 @@ provider:
   httpApi:
     metrics: true
     cors:
+      allowedOrigins: "*"
+      allowedHeaders:
+        - Content-Type
+        - Authorization
       allowedMethods:
+        - OPTIONS
         - GET
+      maxAge: 31536000
 
 functions:
   getBalances:
@@ -165,5 +171,6 @@ resources:
   - ${file(resources/roles.yml)}
 
 plugins:
+  - serverless-offline
   - serverless-esbuild
   - serverless-prune-plugin
