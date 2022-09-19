@@ -9,14 +9,14 @@ const masterChef: Contract = {
   name: "masterChef",
   displayName: "MasterChef",
   chain: "bsc",
-  address: "0x73feaa1eE314F8c655E354234017bE2193C9E24E", //legacy masterchef
+  address: "0x73feaa1eE314F8c655E354234017bE2193C9E24E",
 };
 
 const masterChef2: Contract = {
   name: "masterChef",
   displayName: "MasterChef 2",
   chain: "bsc",
-  address: "0xa5f8C5Dbd5F286960b9d90548680aE5ebFf07652",
+  address: "0xa5f8C5Dbd5F286960b9d90548680aE5ebFf07652", //legacy masterchef
 };
 
 
@@ -35,16 +35,17 @@ const adapter: Adapter = {
       getPairsContracts({
         chain: "bsc",
         factoryAddress: "0xca143ce32fe78f1f7019d7d551a6402fc5350c73",
-        length: 100,
+        length: 4000,
       }),
 
       getMasterChefPoolsInfo({
         chain: "bsc",
-        masterChefAddress: masterChef.address,
+        masterChefAddress: masterChef.address
       }),
       getMasterChefPoolsInfo({
         chain: "bsc",
         masterChefAddress: masterChef2.address,
+        methodName: "lpToken" //lpToken address is in a different method from poolInfo
       }),
     ]);
 
@@ -53,7 +54,6 @@ const adapter: Adapter = {
     for (const pair of pairs) {
       pairByAddress[pair.address.toLowerCase()] = pair;
     }
-
     const masterChefPools = masterChefPoolsInfo
       .map((pool) => {
         const pair = pairByAddress[pool.lpToken.toLowerCase()];
@@ -73,11 +73,11 @@ const adapter: Adapter = {
           return { ...pair, pid: pool.pid };
         })
         .filter(isNotNullish);
-
+        
     const contracts = [
       ...pairs.map((c) => ({ ...c, category: "lp" })),
       ...masterChefPools.map((c) => ({ ...c, category: "farm" })),
-      ...masterChefPools2.map((c) => ({ ...c, category: "farm" })),
+      ...masterChefPools2.map((c) => ({ ...c, category: "farm2" })),
     ];
 
     return {
@@ -88,19 +88,22 @@ const adapter: Adapter = {
   async getBalances(ctx, contracts) {
     const lp = [];
     const farm = [];
+    const farmOld = [];
 
     for (const contract of contracts) {
       if (contract.category === "lp") {
         lp.push(contract);
       } else if (contract.category === "farm") {
         farm.push(contract);
+      } else if (contract.category === "farm2") {
+        farmOld.push(contract);
       }
     }
 
 
     const pairs = await getPairsBalances(ctx, "bsc", lp);
 
-    //old masterchef
+    //new masterchef
     let masterChefBalances = await getMasterChefBalances(ctx, {
       chain: "bsc",
       masterChefAddress: masterChef.address,
@@ -114,12 +117,11 @@ const adapter: Adapter = {
       masterChefBalances
     );
 
-
-    //new masterchef
+    //old masterchef
     let masterChefBalances2 = await getMasterChefBalances(ctx, {
       chain: "bsc",
       masterChefAddress: masterChef2.address,
-      tokens: farm,
+      tokens: farmOld,
       rewardToken: cake,
       pendingRewardName: "pendingCake"
     });
@@ -136,5 +138,7 @@ const adapter: Adapter = {
     };
   },
 };
+
+
 
 export default adapter;

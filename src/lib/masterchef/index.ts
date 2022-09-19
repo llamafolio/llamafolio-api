@@ -14,6 +14,7 @@ export type GetMasterChefPoolsInfoParams = {
 export async function getMasterChefPoolsInfo({
   chain,
   masterChefAddress,
+  methodName
 }: GetMasterChefPoolsInfoParams) {
   const provider = providers[chain];
   const masterChef = new ethers.Contract(
@@ -35,12 +36,24 @@ export async function getMasterChefPoolsInfo({
   const poolsInfoRes = await multicall({
     chain,
     calls,
-    abi: poolInfoAbi,
+    abi: (methodName === "poolInfo" || methodName == null)?poolInfoAbi:lpTokenAbi,
   });
 
-  const poolsInfo = poolsInfoRes
-    .filter((res) => res.success)
-    .map((res) => ({ ...res.output, pid: res.input.params[0] }));
+
+  let poolsInfo = []
+
+  if ((methodName === "poolInfo" || methodName == null)) {
+
+
+    poolsInfo = poolsInfoRes
+      .filter((res) => res.success)
+      .map((res) => ({ ...res.output, pid: res.input.params[0] }))
+  } else {
+
+    poolsInfo = poolsInfoRes
+      .filter((res) => res.success)
+      .map((res) => ({ "lpToken": res.output, pid: res.input.params[0] }))
+  }
 
   return poolsInfo;
 }
@@ -62,6 +75,7 @@ export async function getMasterChefBalances(
     MasterChefAbi,
     provider
   );
+
 
   // token amounts
   const userInfoRes = await multicall({
@@ -158,7 +172,7 @@ let pendingRewardAbi = {
   type: "function",
 };
 
-const poolInfoAbi = {
+let poolInfoAbi = {
   inputs: [
     {
       internalType: "uint256",
@@ -192,3 +206,23 @@ const poolInfoAbi = {
   stateMutability: "view",
   type: "function",
 };
+
+let lpTokenAbi =   {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "lpToken",
+    "outputs": [
+      {
+        "internalType": "contract IBEP20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
