@@ -80,6 +80,7 @@ const adapter: Adapter = {
       masterChefAddress: masterChef.address,
       tokens: farm,
       rewardToken: sushi,
+      pendingRewardName: "pendingSushi"
     });
     masterChefBalances = await getUnderlyingBalances(
       "ethereum",

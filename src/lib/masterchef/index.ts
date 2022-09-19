@@ -54,7 +54,7 @@ export type GetMasterChefBalancesParams = {
 
 export async function getMasterChefBalances(
   ctx: BaseContext,
-  { chain, masterChefAddress, tokens, rewardToken }: GetMasterChefBalancesParams
+  { chain, masterChefAddress, tokens, rewardToken, pendingRewardName }: GetMasterChefBalancesParams
 ) {
   const provider = providers[chain];
   const masterChef = new ethers.Contract(
@@ -99,6 +99,9 @@ export async function getMasterChefBalances(
     }
   }
 
+
+  pendingRewardAbi = JSON.parse(JSON.stringify(pendingRewardAbi).replace("pendingSushi", pendingRewardName))
+
   // rewards
   const pendingRewardsRes = await multicall({
     chain,
@@ -108,6 +111,7 @@ export async function getMasterChefBalances(
     })),
     abi: pendingRewardAbi,
   });
+
 
   for (let i = 0; i < pendingRewardsRes.length; i++) {
     const res = pendingRewardsRes[i];
