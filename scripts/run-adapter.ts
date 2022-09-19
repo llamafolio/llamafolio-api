@@ -53,15 +53,17 @@ async function main() {
 
   const balancesRes = await adapter.getBalances(ctx, contractsRes.contracts);
 
-  const yieldsRes = await fetch("https://yields.llama.fi/pools");
+  const yieldsRes = await fetch("https://yields.llama.fi/poolsOld");
   const yieldsData = (await yieldsRes.json()).data;
 
   const yieldsByPoolAddress: { [key: string]: any } = {};
   const yieldsByKeys: { [key: string]: any } = {};
+  const yieldsByNewKeys: { [key: string]: any } = {};
 
   for (let i = 0; i < yieldsData.length; i++) {
-    yieldsByPoolAddress[yieldsData[i].pool.toLowerCase()] = yieldsData[i];
-    yieldsByKeys[yieldsData[i].pool] = yieldsData[i];
+    yieldsByPoolAddress[yieldsData[i].pool_old.toLowerCase()] = yieldsData[i];
+    yieldsByKeys[yieldsData[i].pool_old] = yieldsData[i];
+    yieldsByNewKeys[yieldsData[i].pool] = yieldsData[i];
   }
 
   const pricedBalances = await getPricedBalances(balancesRes.balances);
@@ -122,11 +124,14 @@ async function main() {
       }`;
       const subKey = `${balance.yieldsAddress?.toLowerCase()}`;
       const nonAddressKey = `${balance.yieldsKey}`; //in a case where a yields key may be a string instead of an address
+      const newKey = `${balance.newYieldKey?.toLowerCase()}`; //new unique identifiers recently introduced on llamayield
 
       const yieldObject =
+        yieldsByNewKeys[newKey] ||
         yieldsByPoolAddress[key] ||
         yieldsByPoolAddress[subKey] ||
         yieldsByKeys[nonAddressKey];
+
 
       const d = {
         chain: balance.chain,

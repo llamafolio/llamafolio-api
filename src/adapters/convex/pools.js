@@ -63,6 +63,8 @@ export async function getAllPools() {
 
 export async function getPoolBalances(ctx, chain, contracts) {
 
+  contracts = contracts.slice(2) //remove booster and locker
+
   const addresses = contracts.map((r) => (r.crvRewards));
   const provider = providers[chain];
 
@@ -167,6 +169,7 @@ export async function getPoolBalances(ctx, chain, contracts) {
       address: contracts[i].crvRewards,
       priceSubstitute: contracts[i].lptoken,
       amount: BigNumber.from(balancesR[i] > 0 ? balancesR[i] : 0),
+      yieldsAddress: contracts[i].lptoken
     };
 
     balances.push(balance);
