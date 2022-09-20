@@ -101,6 +101,14 @@ functions:
           method: get
           path: /categories
 
+  getSyncStatus:
+    handler: src/handlers/getSyncStatus.handler
+    description: Get sync status
+    events:
+      - httpApi:
+          method: get
+          path: /sync_status
+
   getInfoStats:
     handler: src/handlers/getInfoStats.handler
     description: Get stats on supported protocols, chains and tokens
@@ -130,8 +138,6 @@ functions:
       - websocket:
           route: updateBalances
       - websocket:
-          route: getSyncStatus
-      - websocket:
           # Fallback
           route: $default
 
@@ -144,11 +150,6 @@ functions:
     handler: src/handlers/updateBalances.websocketUpdateAdapterBalancesHandler
     role: handleWebsocketRequestsRole
     timeout: 300
-
-  websocketGetSyncStatus:
-    handler: src/handlers/getSyncStatus.websocketHandler
-    role: handleWebsocketRequestsRole
-    timeout: 120
 
 custom:
   stage: ${opt:stage, self:provider.stage}

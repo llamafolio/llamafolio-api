@@ -18,7 +18,10 @@ declare
 BEGIN 
   FOR rec IN tables LOOP
     multichainQuery := multichainQuery ||
-        format('SELECT count(*) as count, max(number) as max, %L::varchar as chain from %I.blocks', rec._chain, rec._chain) || 
+        format('select reltuples::bigint as count,
+			   (select max(number) from %I.blocks) as max,
+			   %L::varchar as chain
+			   from pg_class where oid = ''%I.blocks''::regclass', rec._chain, rec._chain, rec._chain) || 
         ' union all ';
   END LOOP;
   
