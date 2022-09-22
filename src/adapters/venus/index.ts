@@ -17,8 +17,6 @@ const adapter: Adapter = {
     };
   },
   async getBalances(ctx, contracts) {
-    console.log("=== CONtracts", contracts);
-
     const markets = await getMarketsBalances(ctx, "bsc", contracts);
 
     return {
