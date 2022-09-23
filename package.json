@@ -5,6 +5,7 @@
   "scripts": {
     "adapter": "ts-node -T scripts/run-adapter.ts",
     "create-adapter": "ts-node -T scripts/create-adapter.ts",
+    "find-user": "ts-node -T scripts/find-user.ts",
     "test": "jest",
     "update-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build"
   },
