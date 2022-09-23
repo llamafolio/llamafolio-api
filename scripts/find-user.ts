@@ -1,7 +1,13 @@
-import { fetchOpenSeaUser } from "../src/labels/opensea/index"
-import { fetchENSName } from "../src/labels/ens/index"
-import { fetchLlamaLabels } from "../src/labels/llamalabels/index"
+import { fetchOpenSeaUser } from "../src/labels/opensea";
+import { fetchENSName } from "../src/labels/ens";
+import { fetchLlamaFolioLabel } from "../src/labels/llamafolio";
+import { LabelSource } from "../src/labels";
 
+type Label = {
+  label: string;
+  source: LabelSource;
+  type: string;
+};
 
 function help() {}
 
@@ -16,55 +22,64 @@ async function main() {
   }
   const address = process.argv[2].toLowerCase();
 
-  let llamaLabels = await fetchLlamaLabels(address)
+  const [llamaFolioLabels, openSea, ens] = await Promise.all([
+    fetchLlamaFolioLabel(address),
+    fetchOpenSeaUser(address),
+    fetchENSName(address),
+  ]);
 
-  const foundNames = []
-  const foundLinks = []
+  const foundNames: Label[] = [];
+  const foundLinks: Label[] = [];
 
-  if (llamaLabels) {
-    llamaLabels = llamaLabels[0]
-    for (let index = 0; index < llamaLabels.labels.length; index++) {
-      const label = llamaLabels.labels[index];
-      foundNames.push({
-        "source": "llamafolio",
-        "type": "label",
-        "label": label
-      })
+  console.log(llamaFolioLabels);
+
+  if (llamaFolioLabels) {
+    if (llamaFolioLabels.labels) {
+      for (const label of llamaFolioLabels.labels) {
+        foundNames.push({
+          label,
+          source: "llamafolio",
+          type: "label",
+        });
+      }
     }
 
-
-    for (const [key, value] of Object.entries(llamaLabels.links)) {
-      foundLinks.push({
-        "source": "llamafolio",
-        "type": key,
-        "label": value
-      })
+    if (llamaFolioLabels.links) {
+      for (const key in llamaFolioLabels.links) {
+        foundLinks.push({
+          source: "llamafolio",
+          label: llamaFolioLabels.links[key],
+          type: key,
+        });
+      }
     }
   }
 
-
-
-  foundNames.push(
-    {
-      "source": "opensea",
-      "type": "label",
-      "label": await fetchOpenSeaUser(address)
-    },
-    {
-      "source": "ens_main",
-      "type": "label",
-      "label": await fetchENSName(address)
-    }
-  )
-  console.log('Found labels: ')
-  console.table(foundNames.filter(e => e.label !== null))
-
-  if (foundLinks.length) {
-    console.log('Found links: ')
-    console.table(foundLinks)
+  if (openSea) {
+    foundNames.push({
+      source: "opensea",
+      type: "label",
+      label: openSea,
+    });
   }
 
+  if (ens) {
+    foundNames.push({
+      source: "ens",
+      type: "label",
+      label: ens,
+    });
+  }
 
+  if (foundNames.length > 0) {
+    console.log("Found labels: ");
+    console.table(foundNames);
+  }
+
+  if (foundLinks.length > 0) {
+    console.log("Found links: ");
+    console.table(foundLinks);
+  }
 }
 
 main()
