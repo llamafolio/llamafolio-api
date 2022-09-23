@@ -57,10 +57,13 @@ async function main() {
     }
   )
   console.log('Found labels: ')
-  console.table(foundNames)
+  console.table(foundNames.filter(e => e.label !== null))
 
-  console.log('Found links: ')
-  console.table(foundLinks)
+  if (foundLinks.length) {
+    console.log('Found links: ')
+    console.table(foundLinks)
+  }
+
 
 }
 
