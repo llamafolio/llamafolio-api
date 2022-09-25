@@ -3,11 +3,10 @@ import { Adapter } from "@lib/adapter";
 import { abi } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 import { Token } from "@lib/token";
-import { ChainableTemporaryCredentials } from "aws-sdk";
 import { BigNumber } from "ethers";
 
 const lendingPool = [
-  // "0x1Ed460D149D48FA7d91703bf4890F97220C09437", // Truefi BUSD pool
+  "0x1Ed460D149D48FA7d91703bf4890F97220C09437", // Truefi BUSD pool
   "0xA991356d261fbaF194463aF6DF8f0464F8f1c742", // Truefi USDC pool
   "0x6002b1dcB26E7B1AA797A17551C6F487923299d7", // Truefi USDT pool
   "0x97cE06c3e3D027715b2d6C22e67D5096000072E5", // Truefi TUSD pool
@@ -216,8 +215,7 @@ const adapter: Adapter = {
           return {
             ...item,
             address: item.underlying,
-            parent: farmingAddress,
-            rewards: [item.claimable],
+            rewards: [{address: truefiAddress, symbol: "TRU", decimals: 8, amount: item.claimable}],
             amount: (item.amount.mul(item.poolValue).div(item.totalSupply)),
             category: "farm"
           }
@@ -226,12 +224,9 @@ const adapter: Adapter = {
     }
 
     let farmingBalances = await getFarmingBalances(ctx)
-
-
     let lendingBalances = await getlendingBalances(ctx);
     
     let balances = [...farmingBalances, ...lendingBalances]
-    console.log(balances)
 
     return {
       balances,
