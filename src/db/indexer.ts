@@ -8,11 +8,11 @@ const pool = new Pool({
   min: 0,
   idleTimeoutMillis: 120000,
   connectionTimeoutMillis: 10000,
-  host: env.DB_PGHOST,
-  user: env.DB_PGUSER,
-  database: env.DB_PGDATABASE,
-  password: env.DB_PGPASSWORD,
-  port: env.DB_PGPORT,
+  host: env.INDEXER_PGHOST,
+  user: env.INDEXER_PGUSER,
+  database: env.INDEXER_PGDATABASE,
+  password: env.INDEXER_PGPASSWORD,
+  port: env.INDEXER_PGPORT,
 });
 
 export default pool;
