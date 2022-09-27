@@ -9,6 +9,7 @@ import curve from "@adapters/curve";
 import euler from "@adapters/euler";
 import geist from "@adapters/geist";
 import gmx from "@adapters/gmx";
+import hex from "@adapters/hex";
 import lido from "@adapters/lido";
 import liquity from "@adapters/liquity";
 import pancakeswap from "@adapters/pancakeswap";
@@ -39,6 +40,7 @@ export const adapters: Adapter[] = [
   euler,
   geist,
   gmx,
+  hex,
   lido,
   liquity,
   pancakeswap,
