@@ -5,7 +5,7 @@ import { Token } from "@lib/token";
 import { abi } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 
-export async function getStMaticInfos  (ctx:BaseContext, chain:Chain, contracts:any) {
+export async function getStMaticBalances  (ctx:BaseContext, chain:Chain, contracts:any) {
     const balance:Balance[] = []
 
     const callBalances = contracts.map((token:Token) => ({

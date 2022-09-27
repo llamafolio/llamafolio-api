@@ -1,7 +1,7 @@
 import { Adapter, Contract } from "@lib/adapter";
 import { getERC20BalanceOf } from "@lib/erc20";
 import { Token } from "@lib/token";
-import { getStMaticInfos } from './balances'
+import { getStMaticBalances } from './balances'
 
 
 const underlyings:Token = {
@@ -57,7 +57,7 @@ const adapter: Adapter = {
       contracts.filter((contract) => contract.chain === "ethereum")
     );
 
-    const polygonBalances = await getStMaticInfos(ctx, "ethereum", contracts.filter((contract) => contract.chain === "polygon"));
+    const polygonBalances = await getStMaticBalances(ctx, "ethereum", contracts.filter((contract) => contract.chain === "polygon"));
 
     const balances = [...ethereumBalances, ...polygonBalances];
 
