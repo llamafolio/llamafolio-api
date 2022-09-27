@@ -20,6 +20,7 @@ import spookyswap from "@adapters/spookyswap";
 import stargate from "@adapters/stargate";
 import sushiswap from "@adapters/sushiswap";
 import traderjoe from "@adapters/traderjoe";
+import truefi from "@adapters/truefi";
 import uniswap from "@adapters/uniswap";
 import valas from "@adapters/valas";
 import vector from "@adapters/vector";
@@ -49,6 +50,7 @@ export const adapters: Adapter[] = [
   stargate,
   sushiswap,
   traderjoe,
+  truefi,
   uniswap,
   valas,
   vector,
