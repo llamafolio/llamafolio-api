@@ -1,58 +1,87 @@
-import { Adapter, Contract } from "@lib/adapter";
-import { getSNXBalancesETH } from "./balancesEth";
-import { getSNXBalancesOPT} from "./balancesOpt"
+import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
 import { Token } from "@lib/token";
+import { getLendBorrowBalances } from "./lend";
 
-const underlyingsEth: Token = {
+const SNXEthereum: Token = {
   chain: "ethereum",
   decimals: 18,
   address: "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
   symbol: "SNX",
-}
+};
 
-const SNXEth: Contract = {
+const sUSDEthereum: Token = {
+  symbol: "sUSD",
+  address: "0x57Ab1ec28D129707052df4dF418D58a2D46d5f51",
+  decimals: 18,
+  chain: "ethereum",
+};
+
+const SynthetixEthereum: Contract = {
   name: "Synthetix",
   chain: "ethereum",
   symbol: "SNX",
   decimals: 18,
-  address: "0x08F30Ecf2C15A783083ab9D5b9211c22388d0564",
-  underlyings : [underlyingsEth]
+  address: "0x08f30ecf2c15a783083ab9d5b9211c22388d0564",
+  underlyings: [SNXEthereum],
 };
 
-const underlyingsOpt: Token = {
+const SNXOptimism: Token = {
   chain: "optimism",
   decimals: 18,
-  address: "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4",
+  address: "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
   symbol: "SNX",
-}
+};
 
-const SNXOpt: Contract = {
+const sUSDOptimism: Token = {
+  symbol: "sUSD",
+  address: "0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9",
+  decimals: 18,
+  chain: "optimism",
+};
+
+const SynthetixOptimism: Contract = {
   name: "Synthetix",
   chain: "optimism",
   symbol: "SNX",
   decimals: 18,
-  address: "0xFE8E48Bf36ccC3254081eC8C65965D1c8b2E744D",
-  underlyings : [underlyingsOpt]
+  address: "0xfe8e48bf36ccc3254081ec8c65965d1c8b2e744d",
+  underlyings: [SNXOptimism],
 };
 
 const adapter: Adapter = {
   id: "synthetix",
   async getContracts() {
     return {
-      contracts: [SNXEth, SNXOpt],
+      contracts: [SynthetixEthereum, SynthetixOptimism],
     };
   },
   async getBalances(ctx, contracts) {
+    function resolver(contract: Contract) {
+      if (
+        contract.chain === SynthetixEthereum.chain &&
+        contract.address === SynthetixEthereum.address
+      ) {
+        return getLendBorrowBalances(ctx, "ethereum", {
+          synthetixContract: SynthetixEthereum,
+          feePoolAddress: "0x3b2f389aee480238a49e3a9985cd6815370712eb",
+          sUSD: sUSDEthereum,
+        });
+      }
 
-    const ethBalances = await getSNXBalancesETH(ctx, "ethereum", contracts.filter((contract) => contract.chain === "ethereum"));
-    const optBalances = await getSNXBalancesOPT(ctx, "optimism", contracts.filter((contract) => contract.chain === "optimism"))
-
-
-    const balances = [...ethBalances, ...optBalances]
-
+      if (
+        contract.chain === SynthetixOptimism.chain &&
+        contract.address === SynthetixOptimism.address
+      ) {
+        return getLendBorrowBalances(ctx, "optimism", {
+          synthetixContract: SynthetixOptimism,
+          feePoolAddress: "0xD3739A5F06747e148E716Dcb7147B9BA15b70fcc",
+          sUSD: sUSDOptimism,
+        });
+      }
+    }
 
     return {
-      balances,
+      balances: await resolveContractsBalances(resolver, contracts),
     };
   },
 };
