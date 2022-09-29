@@ -1,5 +1,5 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import pool from "@db/indexer";
+import pool from "@db/pool";
 import { serverError, success } from "@handlers/response";
 
 export const handler: APIGatewayProxyHandler = async (_event, context) => {

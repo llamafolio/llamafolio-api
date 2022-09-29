@@ -31,16 +31,11 @@ provider:
             - "lambda:InvokeFunction"
           Resource: "*"
   environment:
-    DB_PGHOST: ${file(./env.js):DB_PGHOST}
-    DB_PGUSER: ${file(./env.js):DB_PGUSER}
-    DB_PGDATABASE: ${file(./env.js):DB_PGDATABASE}
-    DB_PGPASSWORD: ${file(./env.js):DB_PGPASSWORD}
-    DB_PGPORT: ${file(./env.js):DB_PGPORT}
-    INDEXER_PGHOST: ${file(./env.js):INDEXER_PGHOST}
-    INDEXER_PGUSER: ${file(./env.js):INDEXER_PGUSER}
-    INDEXER_PGDATABASE: ${file(./env.js):INDEXER_PGDATABASE}
-    INDEXER_PGPASSWORD: ${file(./env.js):INDEXER_PGPASSWORD}
-    INDEXER_PGPORT: ${file(./env.js):INDEXER_PGPORT}
+    PGHOST: ${file(./env.js):PGHOST}
+    PGUSER: ${file(./env.js):PGUSER}
+    PGDATABASE: ${file(./env.js):PGDATABASE}
+    PGPASSWORD: ${file(./env.js):PGPASSWORD}
+    PGPORT: ${file(./env.js):PGPORT}
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
