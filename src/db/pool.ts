@@ -8,11 +8,6 @@ const pool = new Pool({
   min: 0,
   idleTimeoutMillis: 120000,
   connectionTimeoutMillis: 10000,
-  host: env.DB_PGHOST,
-  user: env.DB_PGUSER,
-  database: env.DB_PGDATABASE,
-  password: env.DB_PGPASSWORD,
-  port: env.DB_PGPORT,
 });
 
 export default pool;
