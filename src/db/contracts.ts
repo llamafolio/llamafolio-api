@@ -222,3 +222,37 @@ export function insertContracts(
     )
   );
 }
+
+/**
+ * Get a list of all unique protocols and contracts a given account interacted with
+ * @param client
+ * @param address
+ */
+export async function getAllContractsInteractions(
+  client: PoolClient,
+  address: string
+) {
+  const res = await client.query(
+    "select * from all_contract_interactions($1) where adapter_id <> 'wallet';",
+    [strToBuf(address)]
+  );
+
+  return fromStorage(res.rows);
+}
+
+/**
+ * Get a list of all unique tokens received by a given account
+ * @param client
+ * @param address
+ */
+export async function getAllTokensInteractions(
+  client: PoolClient,
+  address: string
+) {
+  const res = await client.query(
+    "select * from all_contract_interactions($1);",
+    [strToBuf(address)]
+  );
+
+  return fromStorage(res.rows);
+}

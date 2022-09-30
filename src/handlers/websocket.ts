@@ -1,9 +1,10 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { ApiGatewayManagementApi, DynamoDB } from "aws-sdk";
+import { DynamoDB } from "aws-sdk";
 import { invokeLambda } from "@lib/lambda";
 import { isHex } from "@lib/buf";
 import { badRequest, success } from "@handlers/response";
 import { isNotNullish } from "@lib/type";
+import { apiGatewayManagementApi } from "@handlers/apiGateway";
 
 export const handleRequests: APIGatewayProxyHandler = async (event) => {
   const dynamodb = new DynamoDB.DocumentClient();
@@ -62,10 +63,6 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
 
     case "$default":
     default:
-      const apiGatewayManagementApi = new ApiGatewayManagementApi({
-        endpoint: process.env.APIG_ENDPOINT,
-      });
-
       await apiGatewayManagementApi
         .postToConnection({
           ConnectionId: connectionId,

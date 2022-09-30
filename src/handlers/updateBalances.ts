@@ -1,14 +1,19 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { ApiGatewayManagementApi } from "aws-sdk";
+import format from "pg-format";
 import { strToBuf, isHex } from "@lib/buf";
 import pool from "@db/pool";
-import { selectContractsByAdapterId } from "@db/contracts";
-import { BaseContext } from "@lib/adapter";
+import { BaseContext, Contract } from "@lib/adapter";
 import { getPricedBalances } from "@lib/price";
-import { adapters, adapterById } from "@adapters/index";
+import { adapterById } from "@adapters/index";
 import { badRequest, serverError, success } from "@handlers/response";
-import { invokeLambda } from "@lib/lambda";
 import { insertBalances } from "@db/balances";
+import {
+  getAllContractsInteractions,
+  getAllTokensInteractions,
+} from "@db/contracts";
+import { isNotNullish } from "@lib/type";
+import type { AdapterBalancesResponse } from "@handlers/getBalances";
+import { apiGatewayManagementApi } from "@handlers/apiGateway";
 
 export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
   event,
@@ -24,32 +29,14 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
     return badRequest("Invalid address parameter, expected hex");
   }
 
+  const ctx: BaseContext = { address };
+
+  console.log("Update balances of address", ctx.address);
+
   const client = await pool.connect();
 
   try {
-    // const [tokensRes /*contractsRes*/] = await Promise.all([
-    // TODO: filter ERC20 tokens only
-    // client.query(
-    //   `select * from all_distinct_tokens_received($1::bytea) limit 500;`,
-    //   [strToBuf(address)]
-    // ),
-    // client.query(`select * from all_contract_interactions($1::bytea);`, [
-    //   strToBuf(address),
-    // ]),
-    // client.query(`select * from distinct_transactions_to($1::bytea);`, [
-    //   strToBuf(address),
-    // ]),
-    // ]);
-
-    // const contracts = contractsRes.rows.map((row) => [
-    //   row.chain,
-    //   row.to_address,
-    // ]);
-
-    const apiGatewayManagementApi = new ApiGatewayManagementApi({
-      endpoint: process.env.APIG_ENDPOINT,
-    });
-
+    // Early return if balances last update was < 1 minute ago
     const balancesRes = await client.query(
       `select timestamp from balances where from_address = $1::bytea order by timestamp desc limit 1;`,
       [strToBuf(address)]
@@ -58,8 +45,8 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
     if (balancesRes.rows.length === 1) {
       const lastUpdatedAt = new Date(balancesRes.rows[0].timestamp).getTime();
       const now = new Date().getTime();
-      // 2 minutes delay
-      if (now - lastUpdatedAt < 2 * 60 * 1000) {
+      // 1 minute delay
+      if (now - lastUpdatedAt < 1 * 60 * 1000) {
         console.log("Update adapters balances cache", {
           now,
           lastUpdatedAt,
@@ -81,29 +68,106 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
       }
     }
 
-    // TODO: optimization when chains are synced: only run the adapters of protocols the user interacted with
-    console.log("Update adapters balances", {
-      adapterIds: adapters.map((a) => a.id),
-      address,
-    });
+    // Fetch all protocols (with their associated contracts) that the user interacted with
+    // and all unique tokens he received
+    const [tokens, contracts] = await Promise.all([
+      getAllContractsInteractions(client, ctx.address),
+      getAllTokensInteractions(client, ctx.address),
+    ]);
+
+    const contractsByAdapterId: { [key: string]: Contract[] } = {};
+    for (const contract of contracts) {
+      if (!contract.adapterId) {
+        console.error(`Missing adapterId in contract`, contract);
+        continue;
+      }
+      if (!contractsByAdapterId[contract.adapterId]) {
+        contractsByAdapterId[contract.adapterId] = [];
+      }
+      contractsByAdapterId[contract.adapterId].push(contract);
+    }
+    contractsByAdapterId["wallet"] = tokens;
+
+    console.log(
+      "Interacted with protocols:",
+      Object.keys(contractsByAdapterId)
+    );
+
+    // Run adapters `getBalances` only with the contracts the user interacted with
+    const adaptersBalances = await Promise.all(
+      Object.keys(contractsByAdapterId)
+        .map(async (adapterId) => {
+          const adapter = adapterById[adapterId];
+          if (!adapter) {
+            console.error(`Could not find adapter with id`, adapterId);
+            return null;
+          }
+
+          const balancesConfig = await adapter.getBalances(
+            ctx,
+            contractsByAdapterId[adapterId] || []
+          );
+
+          // Tag balances with adapterId
+          for (const balance of balancesConfig.balances) {
+            balance.adapterId = adapterId;
+          }
+
+          return balancesConfig.balances;
+        })
+        .filter(isNotNullish)
+    );
+
+    // Ungroup balances to make only 1 call to the price API
+    const balances = adaptersBalances.flat().filter(isNotNullish);
+    const pricedBalances = await getPricedBalances(balances);
+
+    console.log("Found balances:", pricedBalances);
+
+    // Group balances back by adapter
+    const pricedBalancesByAdapterId: { [key: string]: any[] } = {};
+    for (const pricedBalance of pricedBalances) {
+      if (!pricedBalancesByAdapterId[pricedBalance.adapterId]) {
+        pricedBalancesByAdapterId[pricedBalance.adapterId] = [];
+      }
+      pricedBalancesByAdapterId[pricedBalance.adapterId].push(pricedBalance);
+    }
 
     const now = new Date();
 
-    // run each adapter in a Lambda
+    // Update balances
+    await client.query("BEGIN");
+
+    // Delete old balances
+    await client.query(
+      format(
+        "delete from balances where from_address = %L::bytea",
+        strToBuf(address)
+      ),
+      []
+    );
+
+    // Insert new balances
     await Promise.all(
-      adapters.map((adapter) =>
-        invokeLambda(
-          `llamafolio-api-${process.env.stage}-websocketUpdateAdapterBalances`,
-          {
-            connectionId,
-            address,
-            adapterId: adapter.id,
-            timestamp: now.getTime(),
-          },
-          "RequestResponse"
+      Object.keys(pricedBalancesByAdapterId).map((adapterId) =>
+        insertBalances(
+          client,
+          pricedBalancesByAdapterId[adapterId],
+          adapterId,
+          address,
+          now
         )
       )
     );
+
+    await client.query("COMMIT");
+
+    const data: AdapterBalancesResponse[] = Object.keys(
+      pricedBalancesByAdapterId
+    ).map((adapterId) => ({
+      id: adapterId,
+      data: pricedBalancesByAdapterId[adapterId],
+    }));
 
     await apiGatewayManagementApi
       .postToConnection({
@@ -111,7 +175,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
         Data: JSON.stringify({
           event: "updateBalances",
           updatedAt: now.toISOString(),
-          data: "end",
+          data,
         }),
       })
       .promise();
@@ -124,89 +188,3 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
     client.release(true);
   }
 };
-
-/**
- * getBalances of given adapter, and push the response to the websocket connection
- */
-export const websocketUpdateAdapterBalancesHandler: APIGatewayProxyHandler =
-  async (event, context) => {
-    context.callbackWaitsForEmptyEventLoop = false;
-
-    const { connectionId, address, adapterId, timestamp } = event;
-    const adapter = adapterById[adapterId];
-    if (!address) {
-      return badRequest("Missing address parameter");
-    }
-    if (!isHex(address)) {
-      return badRequest("Invalid address parameter, expected hex");
-    }
-    if (!adapter) {
-      return badRequest(
-        `Invalid adapterId parameter, adapter '${adapterId}' not found`
-      );
-    }
-
-    const ctx: BaseContext = { address };
-
-    const client = await pool.connect();
-
-    try {
-      const contracts = await selectContractsByAdapterId(client, adapter.id);
-
-      console.log("Update adapter balances", {
-        adapterId: adapter.id,
-        address,
-        contracts: contracts.length,
-      });
-
-      const balancesConfig = await adapter.getBalances(ctx, contracts || []);
-
-      const pricedBalances = await getPricedBalances(balancesConfig.balances);
-
-      console.log("Found balances", {
-        adapterId: adapter.id,
-        address,
-        pricedBalances,
-      });
-
-      const now = new Date(timestamp);
-
-      await client.query("BEGIN");
-
-      // Delete old balances
-      await client.query(
-        "delete from balances where from_address = $1::bytea and adapter_id = $2",
-        [strToBuf(address), adapterId]
-      );
-
-      // Insert new balances
-      await insertBalances(client, pricedBalances, adapter.id, address, now);
-
-      await client.query("COMMIT");
-
-      const data = { ...adapter, data: pricedBalances };
-
-      const apiGatewayManagementApi = new ApiGatewayManagementApi({
-        endpoint: process.env.APIG_ENDPOINT,
-      });
-
-      await apiGatewayManagementApi
-        .postToConnection({
-          ConnectionId: connectionId,
-          Data: JSON.stringify({
-            event: "updateBalances",
-            updatedAt: now.toISOString(),
-            data,
-          }),
-        })
-        .promise();
-
-      return success({});
-    } catch (error) {
-      await client.query("ROLLBACK");
-      console.error("Failed to update balances", { error, address, adapterId });
-      return serverError("Failed to update balances");
-    } finally {
-      client.release(true);
-    }
-  };

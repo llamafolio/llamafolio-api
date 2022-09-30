@@ -9,7 +9,9 @@ export function invokeLambda(
   invocationType?: InvocationType
 ) {
   return new Promise((resolve, _reject) => {
-    new aws.Lambda().invoke(
+    new aws.Lambda({
+      endpoint: process.env.IS_OFFLINE ? "http://localhost:3002" : undefined,
+    }).invoke(
       {
         FunctionName: functioName,
         InvocationType: invocationType || "Event",

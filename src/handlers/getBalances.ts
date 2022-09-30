@@ -5,10 +5,10 @@ import { Balance, PricedBalance } from "@lib/adapter";
 import { selectBalancesByFromAddress } from "@db/balances";
 import { badRequest, serverError, success } from "@handlers/response";
 
-type AdapterBalance = Balance & { adapterId: string };
-type PricedAdapterBalance = PricedBalance & { adapterId: string };
+export type AdapterBalance = Balance & { adapterId: string };
+export type PricedAdapterBalance = PricedBalance & { adapterId: string };
 
-type AdapterBalancesResponse = {
+export type AdapterBalancesResponse = {
   id: string;
   data: (AdapterBalance | PricedAdapterBalance)[];
 };
