@@ -34,11 +34,18 @@ const NXM: Contract = {
   decimals: 18,
 };
 
+const wNXM: Contract = {
+  name: "Wrapped NXM",
+  chain: "ethereum",
+  address: "0x0d438f3b5175bebc262bf23753c1e53d03432bde",
+  decimals: 18,
+};
+
 const adapter: Adapter = {
   id: "nexus-mutual",
   async getContracts() {
     return {
-      contracts: [NXM],
+      contracts: [NXM, wNXM],
 
     };
   },
