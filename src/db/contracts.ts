@@ -269,7 +269,7 @@ export async function getAllTokensInteractions(
   address: string
 ) {
   const res = await client.query(
-    "select * from all_contract_interactions($1);",
+    "select * from all_token_received($1);",
     [strToBuf(address)]
   );
 

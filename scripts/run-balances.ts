@@ -2,7 +2,10 @@ import path from "path";
 import pool from "../src/db/pool";
 import { Adapter, BaseContext } from "../src/lib/adapter";
 import { getPricedBalances } from "../src/lib/price";
-import { getContractsInteractions } from "../src/db/contracts";
+import {
+  getAllTokensInteractions,
+  getContractsInteractions,
+} from "../src/db/contracts";
 
 function help() {}
 
@@ -31,11 +34,10 @@ async function main() {
   const client = await pool.connect();
 
   try {
-    const contracts = await getContractsInteractions(
-      client,
-      ctx.address,
-      adapter.id
-    );
+    const contracts =
+      adapter.id === "wallet"
+        ? await getAllTokensInteractions(client, ctx.address)
+        : await getContractsInteractions(client, ctx.address, adapter.id);
 
     console.log("Contracts:", JSON.stringify(contracts, null, 2));
 
