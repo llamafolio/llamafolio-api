@@ -2,7 +2,7 @@ import path from "path";
 import pool from "../src/db/pool";
 import { Adapter, BaseContext } from "../src/lib/adapter";
 import { getPricedBalances } from "../src/lib/price";
-import { selectContractsByAdapterId } from "../src/db/contracts";
+import { getContractsInteractions } from "../src/db/contracts";
 
 function help() {}
 
@@ -31,13 +31,19 @@ async function main() {
   const client = await pool.connect();
 
   try {
-    const contracts = await selectContractsByAdapterId(client, adapter.id);
+    const contracts = await getContractsInteractions(
+      client,
+      ctx.address,
+      adapter.id
+    );
+
+    console.log("Contracts:", JSON.stringify(contracts, null, 2));
 
     const balancesConfig = await adapter.getBalances(ctx, contracts || []);
 
     const pricedBalances = await getPricedBalances(balancesConfig.balances);
 
-    console.log(JSON.stringify(pricedBalances, null, 2));
+    console.log("Balances:", JSON.stringify(pricedBalances, null, 2));
   } catch (e) {
     console.log("Failed to run balances", e);
   } finally {

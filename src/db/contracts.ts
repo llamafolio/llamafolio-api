@@ -224,6 +224,25 @@ export function insertContracts(
 }
 
 /**
+ * Get a list of all contracts a given account interacted with for a given protocol
+ * @param client
+ * @param address
+ * @param adapterId
+ */
+export async function getContractsInteractions(
+  client: PoolClient,
+  address: string,
+  adapterId: string
+) {
+  const res = await client.query(
+    "select * from all_contract_interactions($1) where adapter_id = $2;",
+    [strToBuf(address), adapterId]
+  );
+
+  return fromStorage(res.rows);
+}
+
+/**
  * Get a list of all unique protocols and contracts a given account interacted with
  * @param client
  * @param address
