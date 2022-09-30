@@ -31,6 +31,8 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
 
   const ctx: BaseContext = { address };
 
+  console.log("Update balances of address", ctx.address);
+
   const client = await pool.connect();
 
   try {
