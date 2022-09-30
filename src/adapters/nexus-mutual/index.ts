@@ -1,31 +1,7 @@
+import { ethers, BigNumber } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
-import { Adapter, Contract, Balance, BaseContext} from "@lib/adapter";
-import { ethers } from "ethers";
-import abiNXM from "./abi/abi.json"
-import { BigNumber } from "ethers";
-
-const poolAddress = "0x84EdfFA16bb0b9Ab1163abb0a13Ff0744c11272f"
-
-export async function getStakeBalances(ctx:BaseContext, chain:Chain) {
-  const provider = providers[chain];
-
-  const stakeContracts = new ethers.Contract(
-    "0x84EdfFA16bb0b9Ab1163abb0a13Ff0744c11272f",
-    abiNXM,
-    provider
-  );
-
-  const stakeAmount = await stakeContracts.stakerDeposit(ctx.address)
-  const claimableAmount = await stakeContracts.stakerReward(ctx.address)
-
-  const stakeBalances = {
-    ...NXM,
-    amount: BigNumber.from(stakeAmount),
-    rewards: [{...NXM, amount: BigNumber.from(claimableAmount)}],
-    category: "stake"
-  }
-  return stakeBalances
-}
+import { Adapter, Contract, Balance, BaseContext } from "@lib/adapter";
+import abiNXM from "./abi/abi.json";
 
 const NXM: Contract = {
   name: "NXM",
@@ -41,19 +17,41 @@ const wNXM: Contract = {
   decimals: 18,
 };
 
+export async function getStakeBalances(ctx: BaseContext, chain: Chain) {
+  const provider = providers[chain];
+
+  const stakeContracts = new ethers.Contract(
+    "0x84EdfFA16bb0b9Ab1163abb0a13Ff0744c11272f",
+    abiNXM,
+    provider
+  );
+
+  const [stakeAmount, claimableAmount] = await Promise.all([
+    stakeContracts.stakerDeposit(ctx.address),
+    stakeContracts.stakerReward(ctx.address),
+  ]);
+
+  const stakeBalances: Balance = {
+    ...NXM,
+    amount: BigNumber.from(stakeAmount),
+    rewards: [{ ...NXM, amount: BigNumber.from(claimableAmount) }],
+    category: "stake",
+  };
+
+  return [stakeBalances];
+}
+
 const adapter: Adapter = {
   id: "nexus-mutual",
   async getContracts() {
     return {
       contracts: [NXM, wNXM],
-
     };
   },
-  async getBalances(ctx:BaseContext, contracts) {
-
+  async getBalances(ctx: BaseContext, contracts) {
     let stakeBalances = await getStakeBalances(ctx, "ethereum");
 
-    let balances = [stakeBalances]
+    let balances = stakeBalances;
 
     return {
       balances,
