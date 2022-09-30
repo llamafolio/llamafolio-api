@@ -148,29 +148,33 @@ LEFT JOIN fantom.token_transfers on fantom.token_transfers.transaction_hash = tx
 
 -- Given an address, get all distinct contract addresses interacted with (also looks at interaction through logs)
 create or replace function all_contract_interactions(address bytea)
-  RETURNS TABLE (
-      contract_address bytea,
-      chain varchar
-  )
-  LANGUAGE plpgsql
+	RETURNS setof public.contracts
+	LANGUAGE plpgsql
 as
 $$
 declare
     tables CURSOR FOR
         SELECT chains.chain as _chain
-        FROM chains WHERE is_evm;
+		-- TODO: put polygon back
+        FROM chains WHERE is_evm and chain <> 'polygon';
     multichainQuery text := '';
 BEGIN 
-  FOR rec IN tables LOOP
-    multichainQuery := multichainQuery ||
-        format('SELECT contract_address, %L::varchar as chain FROM %I.logs join %I.transactions on hash = transaction_hash WHERE from_address = %L', rec._chain, rec._chain, rec._chain, address) || 
-        ' union all ';
-  END LOOP;
+	FOR rec IN tables LOOP
+		multichainQuery := multichainQuery ||
+			format('SELECT contract_address, %L::varchar as chain
+				FROM %I.transactions t
+				INNER JOIN %I.logs l ON t.hash = l.transaction_hash
+				WHERE t.from_address = %L', 
+				rec._chain, rec._chain, rec._chain, address
+			) || 
+		' union all ';
+	END LOOP;
   
-  -- remove the last ' union all '
-  multichainQuery := left(multichainQuery, -10);
+	-- remove the last ' union all '
+	multichainQuery := left(multichainQuery, -10);
   
-  return query execute format('select distinct(contract_address), chain from ( %s ) as _', multichainQuery);
+	return query execute format('SELECT DISTINCT ON (chain, contract_address) c.* FROM ( %s ) AS uc
+								INNER JOIN contracts c ON c.address = uc.contract_address AND c.chain = uc.chain', multichainQuery);
 END
 $$;
 
@@ -243,3 +247,33 @@ END
 $$;
 
 select * from all_distinct_tokens_received('\x0000000000000000000000000000000000000000') limit 500;
+
+-- All tokens contracts received by an account
+create or replace function all_token_received(address bytea)
+	RETURNS setof public.contracts
+	LANGUAGE plpgsql
+as
+$$
+declare
+    tables CURSOR FOR
+        SELECT chains.chain as _chain
+        FROM chains WHERE is_evm;
+    multichainQuery text := '';
+BEGIN 
+	FOR rec IN tables LOOP
+		multichainQuery := multichainQuery ||
+			format('SELECT token_address, %L::varchar as chain
+				FROM %I.token_transfers t
+				WHERE t.to_address = %L', 
+				rec._chain, rec._chain, address
+			) || 
+		' union all ';
+	END LOOP;
+  
+	-- remove the last ' union all '
+	multichainQuery := left(multichainQuery, -10);
+  
+	return query execute format('SELECT DISTINCT ON (chain, token_address) c.* FROM ( %s ) AS uc
+								INNER JOIN contracts c ON c.address = uc.token_address AND c.chain = uc.chain AND adapter_id = %L', multichainQuery, 'wallet');
+END
+$$;
