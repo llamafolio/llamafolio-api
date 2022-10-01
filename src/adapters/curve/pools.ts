@@ -1,9 +1,10 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { providers } from "@defillama/sdk/build/general";
+import { Chain, providers } from "@defillama/sdk/build/general";
 import { getGauges } from "./gauges";
 import AddressGetterABI from "./abis/AddressGetter.json";
 import MainRegistryABI from "./abis/MainRegistry.json";
+import { getERC20Details } from "@lib/erc20";
 
 const registryIds = {
   stableswap: 0,
@@ -197,14 +198,19 @@ export async function getAllPools() {
 
   //const gauges = await getGauges(chain)
 
-  const formattedPools = mainRegistryPoolsList.map((address, i) => ({
-    name: mainPoolsDetailsNames[i],
-    displayName: `${mainPoolsDetailsNames[i]} Curve Pool`,
-    chain: "ethereum",
-    type: "pool",
-    address: mainPoolLPTokens[i],
-    poolAddress: address,
-  }));
+  const formattedPools = getERC20Details(
+    chain,
+    mainRegistryPoolsList
+      .filter(() => mainPoolLPTokens[i] != null)
+      .map((address, i) => ({
+        name: mainPoolsDetailsNames[i],
+        displayName: `${mainPoolsDetailsNames[i]} Curve Pool`,
+        chain: "ethereum",
+        type: "pool",
+        address: mainPoolLPTokens[i],
+        poolAddress: address,
+      }))
+  );
 
   return formattedPools;
 }
