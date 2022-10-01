@@ -154,7 +154,10 @@ export async function getMarketsBalances(
   }
 
   const cTokensSupplyBalances = cTokensBalances
-    .filter((bal) => exchangeRateCurrentBycTokenAddress[bal.address])
+    .filter(
+      (bal) =>
+        exchangeRateCurrentBycTokenAddress[bal.address] && bal.underlyings?.[0]
+    )
     .map((bal) => {
       // add amount
       const amount = bal.amount
@@ -173,7 +176,7 @@ export async function getMarketsBalances(
     .filter((res) => res.success)
     .map((res) => {
       const cToken = cTokenByAddress[res.input.target];
-      if (!cToken) {
+      if (!cToken || !cToken.underlyings?.[0]) {
         return null;
       }
 

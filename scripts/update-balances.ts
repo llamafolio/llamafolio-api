@@ -28,6 +28,8 @@ async function main() {
   const client = await pool.connect();
 
   try {
+    // Fetch all protocols (with their associated contracts) that the user interacted with
+    // and all unique tokens he received
     const [contracts, tokens] = await Promise.all([
       getAllContractsInteractions(client, ctx.address),
       getAllTokensInteractions(client, ctx.address),

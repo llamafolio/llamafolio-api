@@ -70,7 +70,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
 
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
-    const [tokens, contracts] = await Promise.all([
+    const [contracts, tokens] = await Promise.all([
       getAllContractsInteractions(client, ctx.address),
       getAllTokensInteractions(client, ctx.address),
     ]);
