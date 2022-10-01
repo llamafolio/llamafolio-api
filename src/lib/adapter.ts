@@ -88,7 +88,9 @@ export interface Adapter {
 }
 
 export async function resolveContractsBalances(
-  resolver: (contract: Contract) => Promise<Balance[]> | undefined | null,
+  resolver: (
+    contract: Contract
+  ) => Promise<Balance[] | Balance> | undefined | null,
   contracts: Contract[]
 ) {
   const balances = await Promise.all(

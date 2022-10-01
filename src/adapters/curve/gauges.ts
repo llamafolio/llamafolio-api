@@ -1,11 +1,9 @@
-// @ts-nocheck
-
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
 import GaugeControllerAbi from "./abis/GaugeController.json";
 import { getERC20Details } from "@lib/erc20";
-import { BaseContext } from "@lib/adapter";
+import { Balance, BaseContext, Contract } from "@lib/adapter";
 
 const typeKeys = {
   0: "ethereum",
@@ -19,109 +17,7 @@ const typeKeys = {
   10: "fundraising-gauge",
 };
 
-export async function getGaugeBalances(ctx: BaseContext, chain: Chain) {
-  const gauges = await getGauges(chain);
-
-  let calls = [];
-  for (let index = 0; index < gauges.length; index++) {
-    const element = gauges[index];
-    calls.push({
-      params: [ctx.address],
-      target: gauges[index].address,
-    });
-  }
-
-  const gaugeBalancesListRes = await multicall({
-    chain: "ethereum",
-    calls: calls,
-    abi: {
-      constant: true,
-      inputs: [{ internalType: "address", name: "", type: "address" }],
-      name: "balanceOf",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const gaugeBalancesList = gaugeBalancesListRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  calls = [];
-  for (let index = 0; index < gauges.length; index++) {
-    const element = gauges[index];
-    calls.push({
-      params: [ctx.address],
-      target: gauges[index].address,
-    });
-  }
-  const claimableTokensRes = await multicall({
-    chain: "ethereum",
-    calls: calls,
-    abi: {
-      stateMutability: "nonpayable",
-      type: "function",
-      name: "claimable_tokens",
-      inputs: [
-        {
-          name: "addr",
-          type: "address",
-        },
-      ],
-      outputs: [
-        {
-          name: "",
-          type: "uint256",
-        },
-      ],
-      gas: 2683603,
-    },
-  });
-
-  let balances = [];
-
-  const pendingRewards = [];
-  for (let index = 0; index < claimableTokensRes.length; index++) {
-    let claimableBalance = claimableTokensRes[index].output;
-    balances.push({
-      chain: chain,
-      category: "liquidity-mining",
-      symbol: "CRV",
-      type: "reward",
-      poolGenerating: claimableTokensRes[index].input.target.toLowerCase(),
-      decimals: 18,
-      address: claimableTokensRes[index].input.target,
-      priceSubstitute: "0xD533a949740bb3306d119CC777fa900bA034cd52",
-      amount: BigNumber.from(claimableBalance > 0 ? claimableBalance : 0),
-    });
-  }
-
-  for (let index = 0; index < gaugeBalancesList.length; index++) {
-    const balance = gaugeBalancesListRes.find(
-      (o) => o.input.target === gauges[index].address
-    );
-    if (balance.output !== null) {
-      balances.push({
-        chain: chain,
-        address: gauges[index].address,
-        symbol: gauges[index].name,
-        decimals: 18,
-        amount: BigNumber.from(balance.output),
-        category: "stake",
-        priceSubstitute: gauges[index].priceSubstitute,
-        yieldsAddress: gauges[index].priceSubstitute,
-      });
-    } else {
-      console.log(`Failed to get balance for ${gauges[index].address}`);
-    }
-  }
-
-  return balances;
-}
-
-export async function getGauges(chain) {
+export async function getGaugesContracts(chain: Chain) {
   const provider = providers[chain];
 
   const gaugeController = new ethers.Contract(
@@ -141,8 +37,8 @@ export async function getGauges(chain) {
   }
 
   const gaugesListRes = await multicall({
-    chain: "ethereum",
-    calls: calls,
+    chain,
+    calls,
     abi: {
       name: "gauges",
       outputs: [
@@ -175,8 +71,8 @@ export async function getGauges(chain) {
   }
 
   const gaugeTypesRes = await multicall({
-    chain: "ethereum",
-    calls: calls,
+    chain,
+    calls,
     abi: {
       name: "gauge_types",
       outputs: [
@@ -196,11 +92,7 @@ export async function getGauges(chain) {
     },
   });
 
-  const gaugeTypes = gaugeTypesRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  const gauges = [];
+  const gauges: Contract[] = [];
 
   for (var i = 0; i < gaugesList.length; i++) {
     const gaugeType = gaugeTypesRes.find(
@@ -222,15 +114,15 @@ export async function getGauges(chain) {
   console.log(`Found ${gauges.length} gauges on ${chain}`);
 
   calls = [];
-  for (let index = 0; index < gauges.length; index++) {
+  for (let i = 0; i < gauges.length; i++) {
     calls.push({
-      target: gauges[index].address,
+      target: gauges[i].address,
     });
   }
 
   const lpTokensRes = await multicall({
-    chain: "ethereum",
-    calls: calls,
+    chain,
+    calls,
     abi: {
       stateMutability: "view",
       type: "function",
@@ -251,22 +143,124 @@ export async function getGauges(chain) {
 
   const lpTokenDetails = await getERC20Details(chain, lpTokens);
 
-  for (let index = 0; index < gauges.length; index++) {
+  for (let i = 0; i < gauges.length; i++) {
     const token = lpTokensRes.find(
-      (o) => o.input.target === gauges[index].address
+      (o) => o.input.target.toLowerCase() === gauges[i].address.toLowerCase()
     );
-    const tokenDetail = lpTokenDetails.find((o) => o.address === token.output);
+
+    const tokenDetail = lpTokenDetails.find(
+      (o) => o.address.toLowerCase() === token?.output?.toLowerCase()
+    );
 
     if (tokenDetail) {
-      gauges[index].name = tokenDetail.symbol;
-      gauges[index].dName = `Curve.fi Gauge ${tokenDetail.symbol}`;
-      gauges[index].priceSubstitute = token.output;
+      gauges[i].name = tokenDetail.symbol;
+      gauges[i].displayName = `Curve.fi Gauge ${tokenDetail.symbol}`;
+      gauges[i].priceSubstitute = token.output;
+      gauges[i].underlyings = [tokenDetail];
     } else {
-      console.log(
-        `Could not load LP token for gauge: ${gauges[index].address}`
-      );
+      console.log(`Could not load LP token for gauge: ${gauges[i].address}`);
     }
   }
 
   return gauges;
+}
+
+export async function getGaugeBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  gauges: Contract[]
+) {
+  const balances: Balance[] = [];
+
+  let calls = [];
+  for (let i = 0; i < gauges.length; i++) {
+    calls.push({
+      params: [ctx.address],
+      target: gauges[i].address,
+    });
+  }
+
+  const gaugeBalancesListRes = await multicall({
+    chain,
+    calls,
+    abi: {
+      constant: true,
+      inputs: [{ internalType: "address", name: "", type: "address" }],
+      name: "balanceOf",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      payable: false,
+      stateMutability: "view",
+      type: "function",
+    },
+  });
+
+  calls = [];
+  for (let i = 0; i < gauges.length; i++) {
+    calls.push({
+      params: [ctx.address],
+      target: gauges[i].address,
+    });
+  }
+  const claimableTokensRes = await multicall({
+    chain,
+    calls,
+    abi: {
+      stateMutability: "nonpayable",
+      type: "function",
+      name: "claimable_tokens",
+      inputs: [
+        {
+          name: "addr",
+          type: "address",
+        },
+      ],
+      outputs: [
+        {
+          name: "",
+          type: "uint256",
+        },
+      ],
+      gas: 2683603,
+    },
+  });
+
+  for (let i = 0; i < gauges.length; i++) {
+    if (!gaugeBalancesListRes[i].success && !claimableTokensRes[i].success) {
+      console.log(`Failed to get balance for ${gauges[i].address}`);
+      continue;
+    }
+
+    const balance = {
+      ...gauges[i],
+      category: "stake",
+      yieldsAddress: gauges[i].priceSubstitute,
+    };
+
+    // amount
+    balance.amount = BigNumber.from(gaugeBalancesListRes[i].output || "0");
+    // underlyings
+    if (balance.underlyings?.[0]) {
+      balance.underlyings[0].amount = balance.amount;
+    }
+
+    // CRV rewards
+    if (claimableTokensRes[i].success && claimableTokensRes[i].output) {
+      const claimableBalance = BigNumber.from(claimableTokensRes[i].output);
+
+      balance.rewards = [
+        {
+          chain,
+          symbol: "CRV",
+          decimals: 18,
+          address: "0xD533a949740bb3306d119CC777fa900bA034cd52",
+          amount: claimableBalance,
+          claimable: claimableBalance,
+        },
+      ];
+    }
+
+    balances.push(balance);
+  }
+
+  return balances;
 }
