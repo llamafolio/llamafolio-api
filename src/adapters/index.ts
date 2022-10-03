@@ -24,6 +24,7 @@ import sushiswap from "@adapters/sushiswap";
 import traderjoe from "@adapters/traderjoe";
 import truefi from "@adapters/truefi";
 import uniswap from "@adapters/uniswap";
+import uwuLend from "@adapters/uwu-lend";
 import valas from "@adapters/valas";
 import vector from "@adapters/vector";
 import wallet from "@adapters/wallet";
@@ -56,6 +57,7 @@ export const adapters: Adapter[] = [
   traderjoe,
   truefi,
   uniswap,
+  uwuLend,
   valas,
   vector,
   wallet,
