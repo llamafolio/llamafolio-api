@@ -2,7 +2,8 @@ import { BigNumber } from "ethers";
 import { Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
-import { getERC20BalanceOf } from "@lib/erc20";
+import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
+import { call } from "@defillama/sdk/build/abi";
 
 export const abi = {
   balanceOf: {
@@ -38,6 +39,48 @@ export const abi = {
     type: "function",
   },
 };
+
+export async function getUnderlyingsContract(contract: Contract) {
+  const [token0Address, token1Address] = await Promise.all([
+    call({
+      chain: contract.chain,
+      target: contract.address,
+      params: [],
+      abi: {
+        constant: true,
+        inputs: [],
+        name: "token0",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        payable: false,
+        stateMutability: "view",
+        type: "function",
+      },
+    }),
+    call({
+      chain: contract.chain,
+      target: contract.address,
+      params: [],
+      abi: {
+        constant: true,
+        inputs: [],
+        name: "token1",
+        outputs: [{ internalType: "address", name: "", type: "address" }],
+        payable: false,
+        stateMutability: "view",
+        type: "function",
+      },
+    }),
+  ]);
+
+  const underlyings = await getERC20Details(contract.chain, [
+    token0Address.output,
+    token1Address.output,
+  ]);
+
+  contract.underlyings = underlyings;
+
+  return contract;
+}
 
 /**
  * Retrieves pairs balances (with underlyings) of Uniswap V2 like Pair.
