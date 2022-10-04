@@ -80,5 +80,3 @@ const adapter: Adapter = {
 };
 
 export default adapter;
-
-adapter.getContracts();
