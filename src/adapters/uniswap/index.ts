@@ -74,7 +74,7 @@ const adapter: Adapter = {
     lpBalances = await getUnderlyingBalances("ethereum", lpBalances);
 
     return {
-      balances: lpBalances,
+      balances: lpBalances.map((balance) => ({ ...balance, category: "farm" })),
     };
   },
 };
