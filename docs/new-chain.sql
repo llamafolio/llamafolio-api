@@ -153,9 +153,19 @@ BEGIN
   
 	-- remove the last ' union all '
 	multichainQuery := left(multichainQuery, -10);
-  
-	return query execute format('SELECT DISTINCT ON (chain, contract_address) c.* FROM ( %s ) AS uc
-								INNER JOIN contracts c ON c.address = uc.contract_address AND c.chain = uc.chain', multichainQuery);
+	
+	return query execute format('
+								SELECT DISTINCT ON (c.chain, c.address) c.* FROM ( %s ) AS uc
+								INNER JOIN contracts c ON (
+									c.chain = uc.chain AND
+									c.address = uc.contract_address
+								) UNION ALL
+								SELECT DISTINCT ON (c.chain, c.address) c.* FROM ( %s ) AS uc
+								INNER JOIN contracts c ON (
+									c.chain = uc.chain AND
+									c.parent = uc.contract_address
+								)
+								', multichainQuery, multichainQuery);
 END
 $$;
 

@@ -164,6 +164,7 @@ export function toStorage(contracts: Contract[], adapterId: string) {
         });
       }
     }
+
     if (underlyings && underlyings.length > 0) {
       for (const underlying of underlyings) {
         res.push({
@@ -268,10 +269,9 @@ export async function getAllTokensInteractions(
   client: PoolClient,
   address: string
 ) {
-  const res = await client.query(
-    "select * from all_token_received($1);",
-    [strToBuf(address)]
-  );
+  const res = await client.query("select * from all_token_received($1);", [
+    strToBuf(address),
+  ]);
 
   return fromStorage(res.rows);
 }
