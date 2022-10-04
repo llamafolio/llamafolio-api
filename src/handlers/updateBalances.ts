@@ -97,30 +97,64 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
     const adaptersBalances = await Promise.all(
       Object.keys(contractsByAdapterId)
         .map(async (adapterId) => {
-          const adapter = adapterById[adapterId];
-          if (!adapter) {
-            console.error(`Could not find adapter with id`, adapterId);
+          try {
+            const adapter = adapterById[adapterId];
+            if (!adapter) {
+              console.error(`Could not find adapter with id`, adapterId);
+              return null;
+            }
+
+            const balancesConfig = await adapter.getBalances(
+              ctx,
+              contractsByAdapterId[adapterId] || []
+            );
+
+            // Tag balances with adapterId
+            for (const balance of balancesConfig.balances) {
+              balance.adapterId = adapterId;
+            }
+
+            return balancesConfig.balances;
+          } catch (error) {
+            console.error(`[${adapterId}]: Failed to getBalances`, error);
             return null;
           }
-
-          const balancesConfig = await adapter.getBalances(
-            ctx,
-            contractsByAdapterId[adapterId] || []
-          );
-
-          // Tag balances with adapterId
-          for (const balance of balancesConfig.balances) {
-            balance.adapterId = adapterId;
-          }
-
-          return balancesConfig.balances;
         })
         .filter(isNotNullish)
     );
 
     // Ungroup balances to make only 1 call to the price API
     const balances = adaptersBalances.flat().filter(isNotNullish);
-    const pricedBalances = await getPricedBalances(balances);
+
+    // Filter out balances with invalid amounts
+    const sanitizedBalances = balances.filter((balance) => {
+      if (!balance.amount) {
+        console.error(`Missing balance amount`, balance);
+        return false;
+      }
+
+      if (balance.underlyings) {
+        for (const underlying of balance.underlyings) {
+          if (!underlying.amount) {
+            console.error(`Missing underlying balance amount`, balance);
+            return false;
+          }
+        }
+      }
+
+      if (balance.rewards) {
+        for (const reward of balance.rewards) {
+          if (!reward.amount) {
+            console.error(`Missing reward balance amount`, balance);
+            return false;
+          }
+        }
+      }
+
+      return true;
+    });
+
+    const pricedBalances = await getPricedBalances(sanitizedBalances);
 
     console.log("Found balances:", pricedBalances);
 
