@@ -1,18 +1,68 @@
+import { gql, request } from "graphql-request";
 import { Adapter, Contract } from "@lib/adapter";
 import { getERC20BalanceOf } from "@lib/erc20";
-import { getPairsContracts } from "@lib/uniswap/v2/factory";
 import { getUnderlyingBalances } from "@lib/uniswap/v2/pair";
+
+async function getPoolsHighestVolume() {
+  const contracts: Contract[] = [];
+
+  const url = "https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2";
+
+  const query = gql`
+    query pairsQuery {
+      pairs(first: 500, orderBy: volumeUSD, orderDirection: desc) {
+        id
+        token0 {
+          id
+          symbol
+          decimals
+        }
+        token1 {
+          id
+          symbol
+          decimals
+        }
+      }
+    }
+  `;
+
+  const res = await request(url, query);
+
+  for (const pair of res.pairs) {
+    if (!pair.id || !pair.token0?.id || !pair.token1?.id) {
+      continue;
+    }
+
+    contracts.push({
+      chain: "ethereum",
+      address: pair.id.toLowerCase(),
+      name: "Uniswap V2",
+      symbol: "UNIV2",
+      decimals: 18,
+      underlyings: [
+        {
+          chain: "ethereum",
+          address: pair.token0.id.toLowerCase(),
+          symbol: pair.token0.symbol,
+          decimals: parseInt(pair.token0.decimals),
+        },
+        {
+          chain: "ethereum",
+          address: pair.token1.id.toLowerCase(),
+          symbol: pair.token1.symbol,
+          decimals: parseInt(pair.token1.decimals),
+        },
+      ],
+    });
+  }
+
+  return contracts;
+}
 
 const adapter: Adapter = {
   id: "uniswap",
   async getContracts() {
-    const pairs: Contract[] = (
-      await getPairsContracts({
-        chain: "ethereum",
-        factoryAddress: "0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f",
-        length: 100,
-      })
-    ).map((contract) => ({ ...contract, category: "farm" }));
+    const pairs = await getPoolsHighestVolume();
 
     return {
       contracts: pairs,
@@ -30,3 +80,5 @@ const adapter: Adapter = {
 };
 
 export default adapter;
+
+adapter.getContracts();
