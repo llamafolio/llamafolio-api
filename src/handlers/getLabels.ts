@@ -10,7 +10,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const data: { [key: string]: any } = {};
 
   for (const address of addresses) {
-    const label = getLabel(address);
+    const label = getLabel(address.toLowerCase());
 
     if (label) {
       data[address] = label;
