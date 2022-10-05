@@ -28,6 +28,7 @@ import uniswap from "@adapters/uniswap";
 import uwuLend from "@adapters/uwu-lend";
 import valas from "@adapters/valas";
 import vector from "@adapters/vector";
+import venus from "@adapters/venus";
 import wallet from "@adapters/wallet";
 import { Adapter } from "@lib/adapter";
 
@@ -62,6 +63,7 @@ export const adapters: Adapter[] = [
   uwuLend,
   valas,
   vector,
+  venus,
   wallet,
 ];
 
