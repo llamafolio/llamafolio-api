@@ -63,9 +63,17 @@ async function main() {
               return null;
             }
 
-            const balancesConfig = await adapter.getBalances(
-              ctx,
-              contractsByAdapterId[adapterId] || []
+            const hrstart = process.hrtime();
+
+            const contracts = contractsByAdapterId[adapterId] || [];
+            const balancesConfig = await adapter.getBalances(ctx, contracts);
+
+            const hrend = process.hrtime(hrstart);
+
+            console.log(
+              `[${adapterId}] getBalances ${contracts.length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
+              hrend[0],
+              hrend[1] / 1000000
             );
 
             // tag balances with adapterId
@@ -113,9 +121,17 @@ async function main() {
       return true;
     });
 
+    const hrstart = process.hrtime();
+
     const pricedBalances = await getPricedBalances(sanitizedBalances);
 
-    console.log("Found balances:", pricedBalances);
+    const hrend = process.hrtime(hrstart);
+
+    console.log(
+      `getPricedBalances ${sanitizedBalances.length} balances, found ${pricedBalances.length} balances in %ds %dms`,
+      hrend[0],
+      hrend[1] / 1000000
+    );
 
     // group balances back by adapter
     const pricedBalancesByAdapterId: { [key: string]: any[] } = {};
