@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@defillama/sdk": "^2.3.79",
+    "@llamafolio/labels": "file:./llamafolio-labels",
     "@llamafolio/tokens": "file:./llamafolio-tokens",
     "aws-sdk": "^2.1189.0",
     "dotenv": "^16.0.1",
