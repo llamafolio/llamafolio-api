@@ -117,6 +117,14 @@ functions:
           method: get
           path: /info/stats
 
+  getLabels:
+    handler: src/handlers/getLabels.handler
+    description: Get labels
+    events:
+      - httpApi:
+          method: get
+          path: /labels/{address}
+
   scheduledRevalidateAdaptersContracts:
     handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts
     description: Revalidate expired adapters contracts
