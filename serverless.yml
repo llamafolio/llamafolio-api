@@ -61,22 +61,6 @@ provider:
       maxAge: 31536000
 
 functions:
-  getBalances:
-    handler: src/handlers/getBalances.handler
-    description: Get address balances
-    events:
-      - httpApi:
-          method: get
-          path: /balances/{address}
-
-  getHistory:
-    handler: src/handlers/getHistory.handler
-    description: Get address history
-    events:
-      - httpApi:
-          method: get
-          path: /history/{address}
-
   getAdapters:
     handler: src/handlers/getAdapters.handler
     description: Get adapters
@@ -85,13 +69,13 @@ functions:
           method: get
           path: /adapters
 
-  getContract:
-    handler: src/handlers/getContracts.getContract
-    description: Get contract
+  getBalances:
+    handler: src/handlers/getBalances.handler
+    description: Get address balances
     events:
       - httpApi:
           method: get
-          path: /contracts/{address}
+          path: /balances/{address}
 
   getCategories:
     handler: src/handlers/getCategories.handler
@@ -101,13 +85,21 @@ functions:
           method: get
           path: /categories
 
-  getSyncStatus:
-    handler: src/handlers/getSyncStatus.handler
-    description: Get sync status
+  getContract:
+    handler: src/handlers/getContracts.getContract
+    description: Get contract
     events:
       - httpApi:
           method: get
-          path: /sync_status
+          path: /contracts/{address}
+
+  getHistory:
+    handler: src/handlers/getHistory.handler
+    description: Get address history
+    events:
+      - httpApi:
+          method: get
+          path: /history/{address}
 
   getInfoStats:
     handler: src/handlers/getInfoStats.handler
@@ -124,6 +116,22 @@ functions:
       - httpApi:
           method: get
           path: /labels/{address}
+
+  getSyncStatus:
+    handler: src/handlers/getSyncStatus.handler
+    description: Get sync status
+    events:
+      - httpApi:
+          method: get
+          path: /sync_status
+
+  getTokens:
+    handler: src/handlers/getTokens.handler
+    description: Get tokens
+    events:
+      - httpApi:
+          method: get
+          path: /tokens/{address}
 
   scheduledRevalidateAdaptersContracts:
     handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts

@@ -3,7 +3,7 @@ import { success } from "@handlers/response";
 import { getLabel } from "@llamafolio/labels";
 
 /**
- * Get label of given address
+ * Get labels of given addresses
  */
 export const handler: APIGatewayProxyHandler = async (event) => {
   const addresses = event.pathParameters?.address?.split(",") ?? [];
