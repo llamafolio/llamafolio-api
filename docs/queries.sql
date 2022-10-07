@@ -290,10 +290,15 @@ declare
 BEGIN 
 	FOR rec IN tables LOOP
 		multichainQuery := multichainQuery ||
-			format('SELECT token_address, %L::varchar as chain
+			format('
+				(SELECT token_address, %L::varchar as chain
 				FROM %I.token_transfers t
-				WHERE t.to_address = %L', 
-				rec._chain, rec._chain, address
+				WHERE t.to_address = %L)
+				UNION ALL 
+				(SELECT %L::bytea as token_address, %L::varchar AS chain 
+				FROM %I.transactions 
+				WHERE to_address = %L AND value > 0 LIMIT 1)',
+				rec._chain, rec._chain, address, '\x0000000000000000000000000000000000000000', rec._chain, rec._chain, address
 			) || 
 		' union all ';
 	END LOOP;

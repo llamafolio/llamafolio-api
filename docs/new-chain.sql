@@ -230,3 +230,39 @@ BEGIN
   return query execute format('select distinct(token_address), chain from ( %s ) as _', multichainQuery);
 END
 $$;
+
+
+-- All tokens contracts received by an account
+create or replace function all_token_received(address bytea)
+	RETURNS setof public.contracts
+	LANGUAGE plpgsql
+as
+$$
+declare
+    tables CURSOR FOR
+        SELECT chains.chain as _chain
+        FROM chains WHERE is_evm;
+    multichainQuery text := '';
+BEGIN 
+	FOR rec IN tables LOOP
+		multichainQuery := multichainQuery ||
+			format('
+				(SELECT token_address, %L::varchar as chain
+				FROM %I.token_transfers t
+				WHERE t.to_address = %L)
+				UNION ALL 
+				(SELECT %L::bytea as token_address, %L::varchar AS chain 
+				FROM %I.transactions 
+				WHERE to_address = %L AND value > 0 LIMIT 1)',
+				rec._chain, rec._chain, address, '\x0000000000000000000000000000000000000000', rec._chain, rec._chain, address
+			) || 
+		' union all ';
+	END LOOP;
+  
+	-- remove the last ' union all '
+	multichainQuery := left(multichainQuery, -10);
+  
+	return query execute format('SELECT DISTINCT ON (chain, token_address) c.* FROM ( %s ) AS uc
+								INNER JOIN contracts c ON c.address = uc.token_address AND c.chain = uc.chain AND adapter_id = %L', multichainQuery, 'wallet');
+END
+$$;
