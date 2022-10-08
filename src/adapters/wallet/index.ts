@@ -5,6 +5,7 @@ import { Token } from "@lib/token";
 import { getERC20BalanceOf } from "@lib/erc20";
 import { chains as tokensByChain } from "@llamafolio/tokens";
 import { isNotNullish } from "@lib/type";
+import { ContractsMap } from "@lib/map";
 
 const adapter: Adapter = {
   id: "wallet",
@@ -23,7 +24,7 @@ const adapter: Adapter = {
   },
   async getBalances(ctx, contracts) {
     const coins: Token[] = [];
-    const tokensByChain: { [key: string]: Token[] } = {};
+    const tokensMap = new ContractsMap<Token>();
 
     for (const token of contracts) {
       // native chain coin
@@ -33,10 +34,7 @@ const adapter: Adapter = {
       }
 
       // token
-      if (!tokensByChain[token.chain]) {
-        tokensByChain[token.chain] = [];
-      }
-      tokensByChain[token.chain]?.push(token as Token);
+      tokensMap.add(token);
     }
 
     const coinsBalances = (
@@ -60,8 +58,8 @@ const adapter: Adapter = {
 
     const tokensBalances = (
       await Promise.all(
-        Object.keys(tokensByChain).map((chain) =>
-          getERC20BalanceOf(ctx, chain as Chain, tokensByChain[chain])
+        tokensMap.map(([chain, tokens]) =>
+          getERC20BalanceOf(ctx, chain, tokens)
         )
       )
     ).flat();
