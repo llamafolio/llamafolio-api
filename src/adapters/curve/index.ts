@@ -12,10 +12,8 @@ import {
 const adapter: Adapter = {
   id: "curve",
   async getContracts() {
-    const [pools, gauges] = await Promise.all([
-      getAllPools(),
-      getGaugesContracts("ethereum"),
-    ]);
+    const pools = await getAllPools();
+    const gauges = await getGaugesContracts("ethereum", pools);
     const locker = getLockerContracts();
 
     return {
@@ -35,7 +33,10 @@ const adapter: Adapter = {
       ) {
         promises.push(getLockedBalances(ctx, "ethereum"));
       } else if (contract.type === "pool") {
-        pools.push({ ...contract, category: "lp" });
+        pools.push({
+          ...contract,
+          category: "lp",
+        });
       } else if (contract.type === "gauge") {
         gauges.push(contract);
       }

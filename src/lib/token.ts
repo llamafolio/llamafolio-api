@@ -1,5 +1,7 @@
 import { Chain } from "@defillama/sdk/build/general";
 
+export const ETH_ADDR = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
+
 export type Token = {
   chain: Chain;
   address: string;
