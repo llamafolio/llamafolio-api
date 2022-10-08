@@ -1,9 +1,99 @@
-import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
+import { multicall } from "@lib/multicall";
 import { Chain, providers } from "@defillama/sdk/build/general";
-import GaugeControllerAbi from "./abis/GaugeController.json";
-import { getERC20Details } from "@lib/erc20";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
+import GaugeControllerAbi from "./abis/GaugeController.json";
+import { isNotNullish } from "@lib/type";
+import { getBalances } from "@lib/balance";
+
+const abi = {
+  gauges: {
+    name: "gauges",
+    outputs: [
+      {
+        type: "address",
+        name: "",
+      },
+    ],
+    inputs: [
+      {
+        type: "uint256",
+        name: "arg0",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  gauge_types: {
+    name: "gauge_types",
+    outputs: [
+      {
+        type: "int128",
+        name: "",
+      },
+    ],
+    inputs: [
+      {
+        type: "address",
+        name: "_addr",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  lp_token: {
+    stateMutability: "view",
+    type: "function",
+    name: "lp_token",
+    inputs: [],
+    outputs: [
+      {
+        name: "",
+        type: "address",
+      },
+    ],
+  },
+  balance_of: {
+    constant: true,
+    inputs: [{ internalType: "address", name: "", type: "address" }],
+    name: "balanceOf",
+    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    payable: false,
+    stateMutability: "view",
+    type: "function",
+  },
+  claimable_tokens: {
+    stateMutability: "nonpayable",
+    type: "function",
+    name: "claimable_tokens",
+    inputs: [
+      {
+        name: "addr",
+        type: "address",
+      },
+    ],
+    outputs: [
+      {
+        name: "",
+        type: "uint256",
+      },
+    ],
+    gas: 2683603,
+  },
+  totalSupply: {
+    stateMutability: "view",
+    type: "function",
+    name: "totalSupply",
+    inputs: [],
+    outputs: [
+      {
+        name: "",
+        type: "uint256",
+      },
+    ],
+    gas: 3240,
+  },
+};
 
 const typeKeys = {
   0: "ethereum",
@@ -17,11 +107,11 @@ const typeKeys = {
   10: "fundraising-gauge",
 };
 
-export async function getGaugesContracts(chain: Chain) {
+export async function getGaugesContracts(chain: Chain, pools: Contract[]) {
   const provider = providers[chain];
 
   const gaugeController = new ethers.Contract(
-    "0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB",
+    "0x2f50d538606fa9edd2b11e2446beb18c9d5846bb",
     GaugeControllerAbi,
     provider
   );
@@ -39,23 +129,7 @@ export async function getGaugesContracts(chain: Chain) {
   const gaugesListRes = await multicall({
     chain,
     calls,
-    abi: {
-      name: "gauges",
-      outputs: [
-        {
-          type: "address",
-          name: "",
-        },
-      ],
-      inputs: [
-        {
-          type: "uint256",
-          name: "arg0",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
+    abi: abi.gauges,
   });
 
   const gaugesList = gaugesListRes
@@ -65,7 +139,7 @@ export async function getGaugesContracts(chain: Chain) {
   calls = [];
   for (var i = 0; i < gaugesList.length; i++) {
     calls.push({
-      params: gaugesList[i],
+      params: [gaugesList[i]],
       target: gaugeController.address,
     });
   }
@@ -73,41 +147,21 @@ export async function getGaugesContracts(chain: Chain) {
   const gaugeTypesRes = await multicall({
     chain,
     calls,
-    abi: {
-      name: "gauge_types",
-      outputs: [
-        {
-          type: "int128",
-          name: "",
-        },
-      ],
-      inputs: [
-        {
-          type: "address",
-          name: "_addr",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
+    abi: abi.gauge_types,
   });
 
   const gauges: Contract[] = [];
 
-  for (var i = 0; i < gaugesList.length; i++) {
-    const gaugeType = gaugeTypesRes.find(
-      (o) => o.input.params[0] === gaugesList[i]
-    );
-
-    if (gaugeType.output !== null) {
-      if (typeKeys[gaugeType.output] === chain) {
-        gauges.push({
-          chain: chain,
-          type: "gauge",
-          address: gaugesList[i],
-          poolAddress: gaugesList[i],
-        });
-      }
+  for (var i = 0; i < gaugeTypesRes.length; i++) {
+    if (
+      gaugeTypesRes[i].success &&
+      typeKeys[gaugeTypesRes[i].output] === chain
+    ) {
+      gauges.push({
+        chain,
+        type: "gauge",
+        address: gaugesList[i],
+      });
     }
   }
 
@@ -123,46 +177,45 @@ export async function getGaugesContracts(chain: Chain) {
   const lpTokensRes = await multicall({
     chain,
     calls,
-    abi: {
-      stateMutability: "view",
-      type: "function",
-      name: "lp_token",
-      inputs: [],
-      outputs: [
-        {
-          name: "",
-          type: "address",
-        },
-      ],
-    },
+    abi: abi.lp_token,
   });
 
-  const lpTokens = lpTokensRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  const lpTokenDetails = await getERC20Details(chain, lpTokens);
-
-  for (let i = 0; i < gauges.length; i++) {
-    const token = lpTokensRes.find(
-      (o) => o.input.target.toLowerCase() === gauges[i].address.toLowerCase()
-    );
-
-    const tokenDetail = lpTokenDetails.find(
-      (o) => o.address.toLowerCase() === token?.output?.toLowerCase()
-    );
-
-    if (tokenDetail) {
-      gauges[i].name = tokenDetail.symbol;
-      gauges[i].displayName = `Curve.fi Gauge ${tokenDetail.symbol}`;
-      gauges[i].priceSubstitute = token.output;
-      gauges[i].underlyings = [tokenDetail];
-    } else {
-      console.log(`Could not load LP token for gauge: ${gauges[i].address}`);
-    }
+  // get pools from lpTokens
+  const poolByAddress: { [key: string]: Contract } = {};
+  for (const pool of pools) {
+    poolByAddress[pool.address.toLowerCase()] = pool;
   }
 
-  return gauges;
+  return gauges
+    .map((gauge, i) => {
+      if (!lpTokensRes[i].success) {
+        console.log(`Could not load LP token for gauge: ${gauge.address}`);
+        return null;
+      }
+
+      const lpTokenAddress = lpTokensRes[i].output?.toLowerCase();
+
+      const pool = poolByAddress[lpTokenAddress];
+      if (!pool) {
+        console.log(`Could not load pool for gauge: ${gauge.address}`);
+        return null;
+      }
+
+      // gauge.name = tokenDetail.symbol;
+      // gauge.displayName = `Curve.fi Gauge ${tokenDetail.symbol}`;
+      // gauges[i].priceSubstitute = token.output;
+      // gauges[i].underlyings = [tokenDetail];
+
+      return {
+        ...gauge,
+        // name:
+        priceSubstitute: lpTokenAddress,
+        lpToken: lpTokenAddress,
+        underlyings: pool.underlyings,
+        poolAddress: pool.poolAddress,
+      };
+    })
+    .filter(isNotNullish);
 }
 
 export async function getGaugeBalances(
@@ -183,15 +236,20 @@ export async function getGaugeBalances(
   const gaugeBalancesListRes = await multicall({
     chain,
     calls,
-    abi: {
-      constant: true,
-      inputs: [{ internalType: "address", name: "", type: "address" }],
-      name: "balanceOf",
-      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
+    abi: abi.balance_of,
+  });
+
+  calls = [];
+  for (let i = 0; i < gauges.length; i++) {
+    calls.push({
+      params: [],
+      target: gauges[i].address,
+    });
+  }
+  const totalSupplyRes = await multicall({
+    chain,
+    calls,
+    abi: abi.totalSupply,
   });
 
   calls = [];
@@ -204,28 +262,11 @@ export async function getGaugeBalances(
   const claimableTokensRes = await multicall({
     chain,
     calls,
-    abi: {
-      stateMutability: "nonpayable",
-      type: "function",
-      name: "claimable_tokens",
-      inputs: [
-        {
-          name: "addr",
-          type: "address",
-        },
-      ],
-      outputs: [
-        {
-          name: "",
-          type: "uint256",
-        },
-      ],
-      gas: 2683603,
-    },
+    abi: abi.claimable_tokens,
   });
 
   for (let i = 0; i < gauges.length; i++) {
-    if (!gaugeBalancesListRes[i].success && !claimableTokensRes[i].success) {
+    if (!gaugeBalancesListRes[i].success || !totalSupplyRes[i].success) {
       console.log(`Failed to get balance for ${gauges[i].address}`);
       continue;
     }
@@ -236,11 +277,33 @@ export async function getGaugeBalances(
       yieldsAddress: gauges[i].priceSubstitute,
     };
 
+    const stakedAmount = BigNumber.from(gaugeBalancesListRes[i].output || "0");
+    const totalSupply = BigNumber.from(totalSupplyRes[i].output);
+
     // amount
-    balance.amount = BigNumber.from(gaugeBalancesListRes[i].output || "0");
-    // underlyings
-    if (balance.underlyings?.[0]) {
-      balance.underlyings[0].amount = balance.amount;
+    balance.amount = stakedAmount;
+
+    // Underlyings
+    if (
+      stakedAmount.gt(0) &&
+      balance.underlyings?.length > 0 &&
+      totalSupply.gt(0)
+    ) {
+      const underlyingBalances = await getBalances(
+        {
+          address: balance.poolAddress,
+        },
+        balance.underlyings
+      );
+
+      // no error when fetching balances
+      if (underlyingBalances.length === balance.underlyings.length) {
+        for (let i = 0; i < balance.underlyings?.length; i++) {
+          balance.underlyings[i].amount = stakedAmount
+            .mul(underlyingBalances[i].amount)
+            .div(totalSupply);
+        }
+      }
     }
 
     // CRV rewards

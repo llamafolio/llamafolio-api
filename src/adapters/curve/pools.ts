@@ -1,12 +1,117 @@
-import { multicall } from "@lib/multicall";
-import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
-import { getGauges } from "./gauges";
-import AddressGetterABI from "./abis/AddressGetter.json";
-import MainRegistryABI from "./abis/MainRegistry.json";
+import { ethers } from "ethers";
 import { getERC20Details } from "@lib/erc20";
+import { Contract } from "@lib/adapter";
+import { Calls, multicall } from "@lib/multicall";
+import { ETH_ADDR, Token } from "@lib/token";
+
+const abi = {
+  get_address: {
+    name: "get_address",
+    outputs: [
+      {
+        type: "address",
+        name: "",
+      },
+    ],
+    inputs: [
+      {
+        type: "uint256",
+        name: "_id",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+    gas: 1308,
+  },
+  pool_count: {
+    stateMutability: "view",
+    type: "function",
+    name: "pool_count",
+    inputs: [],
+    outputs: [
+      {
+        name: "",
+        type: "uint256",
+      },
+    ],
+    gas: 2138,
+  },
+  pool_list: {
+    stateMutability: "view",
+    type: "function",
+    name: "pool_list",
+    inputs: [
+      {
+        name: "arg0",
+        type: "uint256",
+      },
+    ],
+    outputs: [
+      {
+        name: "",
+        type: "address",
+      },
+    ],
+    gas: 2217,
+  },
+  get_pool_name: {
+    stateMutability: "view",
+    type: "function",
+    name: "get_pool_name",
+    inputs: [
+      {
+        name: "_pool",
+        type: "address",
+      },
+    ],
+    outputs: [
+      {
+        name: "",
+        type: "string",
+      },
+    ],
+    gas: 8323,
+  },
+  get_lp_token: {
+    stateMutability: "view",
+    type: "function",
+    name: "get_lp_token",
+    inputs: [
+      {
+        name: "arg0",
+        type: "address",
+      },
+    ],
+    outputs: [
+      {
+        name: "",
+        type: "address",
+      },
+    ],
+    gas: 2473,
+  },
+  get_underlying_coins: {
+    stateMutability: "view",
+    type: "function",
+    name: "get_underlying_coins",
+    inputs: [
+      {
+        name: "_pool",
+        type: "address",
+      },
+    ],
+    outputs: [
+      {
+        name: "",
+        type: "address[8]",
+      },
+    ],
+    gas: 12194,
+  },
+};
 
 const registryIds = {
+  // 0x90E00ACe148ca3b23Ac1bC8C240C2a7Dd9c2d7f5
   stableswap: 0,
   stableFactory: 3,
   crypto: 5,
@@ -26,80 +131,38 @@ const chains = [
 ];
 
 export async function getAllPools() {
-  const chain = "ethereum";
-  const provider = providers["ethereum"];
-
-  const addressGetter = new ethers.Contract(
-    "0x0000000022d53366457f9d5e68ec105046fc4383",
-    AddressGetterABI,
-    provider
-  );
-
-  let calls = Object.values(registryIds).map((r) => ({
+  let calls: Calls = Object.values(registryIds).map((r) => ({
     params: [r],
+    // address getter
     target: "0x0000000022d53366457f9d5e68ec105046fc4383",
   }));
 
   const registriesListRes = await multicall({
     chain: "ethereum",
-    calls: calls,
-    abi: {
-      name: "get_address",
-      outputs: [
-        {
-          type: "address",
-          name: "",
-        },
-      ],
-      inputs: [
-        {
-          type: "uint256",
-          name: "_id",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-      gas: 1308,
-    },
+    calls,
+    abi: abi.get_address,
   });
 
   const registriesList = registriesListRes
     .filter((res) => res.success)
     .map((res) => res.output);
 
-  calls = Object.values(registryIds).map((r, i) => ({
-    target: registriesList[i],
+  calls = registriesList.map((registryAddress) => ({
+    target: registryAddress,
   }));
 
   const registriesPoolCountRes = await multicall({
     chain: "ethereum",
-    calls: calls,
-    abi: {
-      stateMutability: "view",
-      type: "function",
-      name: "pool_count",
-      inputs: [],
-      outputs: [
-        {
-          name: "",
-          type: "uint256",
-        },
-      ],
-      gas: 2138,
-    },
+    calls,
+    abi: abi.pool_count,
   });
 
   const registriesPoolCount = registriesPoolCountRes
     .filter((res) => res.success)
     .map((res) => res.output);
 
-  const registryMain = new ethers.Contract(
-    registriesList[0],
-    MainRegistryABI,
-    provider
-  );
-
   calls = [];
+  // TODO: handle registriesPoolCount[0] (stableswap registry) if call failed above
   for (var i = 0; i < registriesPoolCount[0]; i++) {
     calls.push({
       params: [i],
@@ -109,25 +172,8 @@ export async function getAllPools() {
 
   const mainRegistryPoolsRes = await multicall({
     chain: "ethereum",
-    calls: calls,
-    abi: {
-      stateMutability: "view",
-      type: "function",
-      name: "pool_list",
-      inputs: [
-        {
-          name: "arg0",
-          type: "uint256",
-        },
-      ],
-      outputs: [
-        {
-          name: "",
-          type: "address",
-        },
-      ],
-      gas: 2217,
-    },
+    calls,
+    abi: abi.pool_list,
   });
 
   const mainRegistryPoolsList = mainRegistryPoolsRes
@@ -142,75 +188,105 @@ export async function getAllPools() {
     });
   }
 
-  const mainPoolsDetailsNamesRes = await multicall({
+  // Get pools details
+  const [mainPoolsDetailsNamesRes, mainPoolLPTokensRes] = await Promise.all([
+    multicall({
+      chain: "ethereum",
+      calls,
+      abi: abi.get_pool_name,
+    }),
+
+    multicall({
+      chain: "ethereum",
+      calls,
+      abi: abi.get_lp_token,
+    }),
+  ]);
+
+  // pools without underlyings details
+  const basePools = [];
+
+  for (let i = 0; i < mainRegistryPoolsList.length; i++) {
+    if (
+      !mainPoolsDetailsNamesRes[i].success ||
+      !mainPoolLPTokensRes[i].success
+    ) {
+      console.log("Failed to get pool details", mainRegistryPoolsList[i]);
+      continue;
+    }
+
+    const poolName = mainPoolsDetailsNamesRes[i].output;
+    const lpToken = mainPoolLPTokensRes[i].output;
+
+    basePools.push({
+      name: poolName,
+      displayName: `${poolName} Curve Pool`,
+      chain: "ethereum",
+      type: "pool",
+      address: lpToken,
+      poolAddress: mainRegistryPoolsList[i],
+      underlyings: [],
+    });
+  }
+
+  // Get underlyings details
+  const underlyingCoinsRes = await multicall({
     chain: "ethereum",
-    calls: calls,
-    abi: {
-      stateMutability: "view",
-      type: "function",
-      name: "get_pool_name",
-      inputs: [
-        {
-          name: "_pool",
-          type: "address",
-        },
-      ],
-      outputs: [
-        {
-          name: "",
-          type: "string",
-        },
-      ],
-      gas: 8323,
-    },
+    calls: basePools.map((pool) => ({
+      target: registriesList[0],
+      params: [pool.poolAddress],
+    })),
+    abi: abi.get_underlying_coins,
   });
 
-  const mainPoolsDetailsNames = mainPoolsDetailsNamesRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
+  const underlyingCoinsAddresses: string[] = [];
+  for (let i = 0; i < underlyingCoinsRes.length; i++) {
+    if (underlyingCoinsRes[i].success) {
+      for (let address of underlyingCoinsRes[i].output) {
+        // response is backfilled with zero address: [address0,address1,0x0,0x0...]
+        if (address !== ethers.constants.AddressZero) {
+          if (address.toLowerCase() === ETH_ADDR) {
+            address = ethers.constants.AddressZero;
+          }
+          underlyingCoinsAddresses.push(address);
+          basePools[i].underlyings?.push(address);
+        }
+      }
+    }
+  }
 
-  const mainPoolLPTokensRes = await multicall({
-    chain: "ethereum",
-    calls: calls,
-    abi: {
-      stateMutability: "view",
-      type: "function",
-      name: "get_lp_token",
-      inputs: [
-        {
-          name: "arg0",
-          type: "address",
-        },
-      ],
-      outputs: [
-        {
-          name: "",
-          type: "address",
-        },
-      ],
-      gas: 2473,
-    },
-  });
-
-  const mainPoolLPTokens = mainPoolLPTokensRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  //const gauges = await getGauges(chain)
-
-  const formattedPools = getERC20Details(
-    chain,
-    mainRegistryPoolsList
-      .filter(() => mainPoolLPTokens[i] != null)
-      .map((address, i) => ({
-        name: mainPoolsDetailsNames[i],
-        displayName: `${mainPoolsDetailsNames[i]} Curve Pool`,
-        chain: "ethereum",
-        type: "pool",
-        address: mainPoolLPTokens[i],
-        poolAddress: address,
-      }))
+  const underlyingsDetails = await getERC20Details(
+    "ethereum",
+    underlyingCoinsAddresses
   );
 
-  return formattedPools;
+  const underlyingTokenByAddress: { [key: string]: Token } = {};
+  for (const token of underlyingsDetails) {
+    token.address = token.address.toLowerCase();
+    underlyingTokenByAddress[token.address] = token;
+  }
+
+  const pools: Contract[] = [];
+
+  for (let i = 0; i < basePools.length; i++) {
+    const basePool = basePools[i];
+
+    // map addresses to their tokens
+    const underlyingsTokens = basePool.underlyings.map(
+      (address: string) => underlyingTokenByAddress[address.toLowerCase()]
+    );
+
+    if (underlyingsTokens.length < basePool.underlyings.length) {
+      console.error("Failed to get underlyings tokens of pool", basePool);
+      continue;
+    }
+
+    const pool: Contract = {
+      ...basePool,
+      underlyings: underlyingsTokens,
+    };
+    pools.push(pool);
+  }
+
+  return pools;
 }
