@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { BigNumber, utils } from "ethers";
 
 export const BN_ZERO = BigNumber.from("0");
 export const BN_TEN = BigNumber.from("10");
@@ -24,10 +24,9 @@ export function sum(nums: number[]) {
 }
 
 export function mulPrice(amountBN: BigNumber, decimals: number, price: number) {
-  const floatChars = amountBN.toString().split("");
-  floatChars.splice(-decimals, 0, ".");
+  const priceBN = utils.parseUnits(price.toString(), decimals);
 
-  const amount = parseFloat(floatChars.join(""));
+  const mulBN = amountBN.mul(priceBN);
 
-  return amount * price;
+  return parseFloat(utils.formatUnits(mulBN, 2 * decimals));
 }

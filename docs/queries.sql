@@ -192,7 +192,7 @@ BEGIN
 	multichainQuery := left(multichainQuery, -10);
 	
 	return query execute format('
-								SELECT DISTINCT ON (c.chain, c.address, c.parent, c.type) c.* FROM (
+								SELECT DISTINCT ON (c.chain, c.address, c.parent, c.type, c.category) c.* FROM (
 									SELECT c.* FROM ( %s ) AS uc
 									INNER JOIN contracts c ON (
 										c.chain = uc.chain AND
