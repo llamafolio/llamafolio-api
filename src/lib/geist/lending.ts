@@ -9,6 +9,7 @@ import {
 import { Token } from "@lib/token";
 import ChefIncentivesControllerABI from "./abis/ChefIncentivesController.json";
 import { isNotNullish } from "@lib/type";
+import { range } from "@lib/array";
 
 export type GetLendingPoolContractsParams = {
   chain: Chain;
@@ -49,12 +50,10 @@ export async function getLendingPoolContracts({
 
   const registeredTokensRes = await multicall({
     chain,
-    calls: Array(lmRewardsCount)
-      .fill(undefined)
-      .map((_, i) => ({
-        target: chefIncentives.address,
-        params: [i],
-      })),
+    calls: range(0, lmRewardsCount).map((_, i) => ({
+      target: chefIncentives.address,
+      params: [i],
+    })),
     abi: {
       inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
       name: "registeredTokens",

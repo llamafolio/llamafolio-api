@@ -24,9 +24,17 @@ export function sum(nums: number[]) {
 }
 
 export function mulPrice(amountBN: BigNumber, decimals: number, price: number) {
-  const priceBN = utils.parseUnits(price.toString(), decimals);
+  try {
+    const priceBN = utils.parseUnits(price.toFixed(decimals), decimals);
 
-  const mulBN = amountBN.mul(priceBN);
+    const mulBN = amountBN.mul(priceBN);
 
-  return parseFloat(utils.formatUnits(mulBN, 2 * decimals));
+    return parseFloat(utils.formatUnits(mulBN, 2 * decimals));
+  } catch (err) {
+    console.error(
+      `Failed to mulPrice ${amountBN.toString()}, ${decimals}, ${price}`,
+      err
+    );
+    return 0;
+  }
 }

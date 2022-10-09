@@ -6,6 +6,7 @@ import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
 import { Category } from "@lib/category";
+import { range } from "@lib/array";
 
 export type getPairsContractsParams = {
   chain: Chain;
@@ -29,12 +30,10 @@ export async function getPairsContracts({
 
   const allPairsRes = await multicall({
     chain,
-    calls: Array(allPairsLength)
-      .fill(undefined)
-      .map((_, i) => ({
-        target: factory.address,
-        params: [i],
-      })),
+    calls: range(0, allPairsLength).map((_, i) => ({
+      target: factory.address,
+      params: [i],
+    })),
     abi: {
       constant: true,
       inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
