@@ -77,6 +77,23 @@ export async function getMarketsContracts(
         };
       }
 
+      /** There are no vBNB underlyings as mentioned on the Venus documentation, see more there: https://docs.venus.io/docs/getstarted#protocol-math 
+       and price does not exist on Defillama API
+      */
+
+      if (
+        chain === "bsc" &&
+        token.address.toLowerCase() ===
+          "0xa07c5b74c9b40447a954e1466938b865b6bbea36"
+      ) {
+        underlyingToken = {
+          chain,
+          symbol: "BNB",
+          decimals: 18,
+          address: "0xa07c5b74c9b40447a954e1466938b865b6bbea36",
+        };
+      }
+
       if (!underlyingToken) {
         return null;
       }
