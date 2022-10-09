@@ -1,15 +1,14 @@
 import { Chain } from "@defillama/sdk/build/general";
-import { Adapter, Balance, BaseContext, Contract } from "@lib/adapter";
-// import { getUnderlyingsContract } from "@lib/uniswap/v2/pair";
-import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
+import { Adapter, BaseContext, Contract } from "@lib/adapter";
 import { BigNumber } from "ethers";
-import { Token } from "@lib/token";
 import { call } from "@defillama/sdk/build/abi";
 
 const stakingContract = "0xbcd7254a1d759efa08ec7c3291b2e85c5dcc12ce";
+const compoundContract = "0x3ab16af1315dc6c95f83cbf522fecf98d00fd9ba";
 
 const getStakedBalances = async (ctx: BaseContext, chain: Chain) => {
-  const [rewardsBalanceRes, stakeBalanceRes] = await Promise.all([
+  const balance:any[] = []
+  const [rewardsBalanceRes, stakeBalanceOfRes, yieldBalancesOfRes] = await Promise.all([
     call({
       chain,
       target: stakingContract,
@@ -35,18 +34,42 @@ const getStakedBalances = async (ctx: BaseContext, chain: Chain) => {
         type: "function",
       },
     }),
+    
+    call({
+      chain,
+      target: compoundContract,
+      params: [ctx.address],
+      abi: {
+        inputs: [{ internalType: "address", name: "user", type: "address" }],
+        name: "calculateSharesValueInLOOKS",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+    })
   ]);
 
-  const stakeBalance = BigNumber.from(stakeBalanceRes.output);
+  const stakeBalanceOf = BigNumber.from(stakeBalanceOfRes.output);
   const rewardsBalance = BigNumber.from(rewardsBalanceRes.output);
+  const yieldBalanceOf = BigNumber.from(yieldBalancesOfRes.output); 
 
-  const balance = {
+  const stakebalance = {
     ...LooksRare,
-    amount: stakeBalance,
-    rewards: [{...underlyings, amount: rewardsBalance}],
-    category: "stake"
+    amount: stakeBalanceOf,
+    rewards: [{ ...underlyings, amount: rewardsBalance }],
+    category: "stake",
+  };
+  balance.push(stakebalance)
+
+  const yieldBalance = {
+    ...LooksRare,
+    amount: yieldBalanceOf,
+    yieldsAddress: compoundContract,
+    category: "yield"
   }
-  return balance
+  balance.push(yieldBalance)
+
+  return balance;
 };
 
 const underlyings: Contract = {
@@ -69,13 +92,11 @@ const adapter: Adapter = {
   id: "looksrare",
   async getContracts() {
     return {
-      contracts: [LooksRare],
+      contracts: [],
     };
   },
-  async getBalances(ctx, contracts) {
-    const stakingBalances = await getStakedBalances(ctx, "ethereum")
-
-    let balances = [stakingBalances];
+  async getBalances(ctx) {
+    let balances = await getStakedBalances(ctx, "ethereum");;
 
     return {
       balances,
