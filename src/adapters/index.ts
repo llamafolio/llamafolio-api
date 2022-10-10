@@ -12,6 +12,7 @@ import gmx from "@adapters/gmx";
 import hex from "@adapters/hex";
 import lido from "@adapters/lido";
 import liquity from "@adapters/liquity";
+import looksRare from "@adapters/looksrare";
 import nexusMutual from "@adapters/nexus-mutual";
 import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
@@ -47,6 +48,7 @@ export const adapters: Adapter[] = [
   hex,
   lido,
   liquity,
+  looksRare,
   nexusMutual,
   pancakeswap,
   pangolin,
