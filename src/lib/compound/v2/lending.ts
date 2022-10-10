@@ -79,7 +79,7 @@ export async function getMarketsContracts(
     .map((token, i) => {
       const underlyingTokenAddress =
         underlyingTokensAddressesRes[i].output?.toLowerCase() ||
-        underlyingAddressByMarketAddress?.[token.address];
+        underlyingAddressByMarketAddress?.[token.address?.toLowerCase()];
       let underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
 
       if (!underlyingToken) {
