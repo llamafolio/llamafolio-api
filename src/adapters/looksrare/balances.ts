@@ -4,76 +4,78 @@ import { BigNumber } from "ethers";
 import { call } from "@defillama/sdk/build/abi";
 import { Balance } from "@lib/adapter";
 
-const stakingContract = "0xbcd7254a1d759efa08ec7c3291b2e85c5dcc12ce";
-const compoundContract = "0x3ab16af1315dc6c95f83cbf522fecf98d00fd9ba";
-
-export const getStakedBalances = async (
+export const getStakeBalances = async (
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  stakingContract: Contract,
+  looksContract: Contract
 ) => {
-  const balance: Balance[] = [];
-  const [rewardsBalanceOfRes, stakeBalanceOfRes, yieldBalancesOfRes] =
-    await Promise.all([
-      call({
-        chain,
-        target: stakingContract,
-        params: ctx.address,
-        abi: {
-          inputs: [{ internalType: "address", name: "user", type: "address" }],
-          name: "calculatePendingRewards",
-          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-          stateMutability: "view",
-          type: "function",
-        },
-      }),
+  const [stakeBalanceOfRes, rewardsBalanceOfRes] = await Promise.all([
+    call({
+      chain,
+      target: stakingContract.address,
+      params: ctx.address,
+      abi: {
+        inputs: [{ internalType: "address", name: "user", type: "address" }],
+        name: "calculateSharesValueInLOOKS",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+    }),
 
-      call({
-        chain,
-        target: stakingContract,
-        params: ctx.address,
-        abi: {
-          inputs: [{ internalType: "address", name: "user", type: "address" }],
-          name: "calculateSharesValueInLOOKS",
-          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-          stateMutability: "view",
-          type: "function",
-        },
-      }),
-
-      call({
-        chain,
-        target: compoundContract,
-        params: [ctx.address],
-        abi: {
-          inputs: [{ internalType: "address", name: "user", type: "address" }],
-          name: "calculateSharesValueInLOOKS",
-          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-          stateMutability: "view",
-          type: "function",
-        },
-      }),
-    ]);
+    call({
+      chain,
+      target: stakingContract.address,
+      params: ctx.address,
+      abi: {
+        inputs: [{ internalType: "address", name: "user", type: "address" }],
+        name: "calculatePendingRewards",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+    }),
+  ]);
 
   const stakeBalanceOf = BigNumber.from(stakeBalanceOfRes.output);
   const rewardsBalanceOf = BigNumber.from(rewardsBalanceOfRes.output);
-  const yieldBalanceOf = BigNumber.from(yieldBalancesOfRes.output);
 
-  const stakebalance = {
-    ...contract,
+  const stakebalance: Balance = {
+    ...looksContract,
     amount: stakeBalanceOf,
-    rewards: [{ ...contract.underlying, amount: rewardsBalanceOf }],
+    rewards: [{ ...stakingContract.rewards?.[0], amount: rewardsBalanceOf }],
     category: "stake",
   };
-  balance.push(stakebalance);
 
-  const yieldBalance = {
-    ...contract,
-    amount: yieldBalanceOf,
-    yieldsAddress: compoundContract,
-    category: "yield",
+  return stakebalance;
+};
+
+export const getCompounderBalances = async (
+  ctx: BaseContext,
+  chain: Chain,
+  compounder: Contract,
+  looksContract: Contract
+) => {
+  const sharesValue = await call({
+    chain,
+    target: compounder.address,
+    params: [ctx.address],
+    abi: {
+      inputs: [{ internalType: "address", name: "user", type: "address" }],
+      name: "calculateSharesValueInLOOKS",
+      outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      stateMutability: "view",
+      type: "function",
+    },
+  });
+
+  const compounderBalance: Balance = {
+    ...looksContract,
+    amount: BigNumber.from(sharesValue.output),
+    yieldsAddress: compounder.address,
+    category: "farm",
   };
-  balance.push(yieldBalance);
 
-  return balance;
+  return compounderBalance;
 };
