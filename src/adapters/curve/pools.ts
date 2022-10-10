@@ -1,8 +1,13 @@
-import { ethers } from "ethers";
-import { getERC20Details } from "@lib/erc20";
-import { Contract } from "@lib/adapter";
+import { ethers, BigNumber } from "ethers";
+import {
+  getERC20BalanceOf,
+  getERC20Details,
+  abi as erc20Abi,
+} from "@lib/erc20";
+import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { Calls, multicall } from "@lib/multicall";
 import { ETH_ADDR, Token } from "@lib/token";
+import { Chain } from "@defillama/sdk/build/general";
 
 const abi = {
   get_address: {
@@ -108,6 +113,19 @@ const abi = {
     ],
     gas: 12194,
   },
+  totalSupply: {
+    stateMutability: "view",
+    type: "function",
+    name: "totalSupply",
+    inputs: [],
+    outputs: [
+      {
+        name: "",
+        type: "uint256",
+      },
+    ],
+    gas: 3240,
+  },
 };
 
 const registryIds = {
@@ -130,7 +148,7 @@ const chains = [
   "moonbeam",
 ];
 
-export async function getAllPools() {
+export async function getPoolsContracts() {
   let calls: Calls = Object.values(registryIds).map((r) => ({
     params: [r],
     // address getter
@@ -289,4 +307,92 @@ export async function getAllPools() {
   }
 
   return pools;
+}
+
+export async function getPoolsBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contracts: Contract[]
+) {
+  const balances: Balance[] = [];
+
+  const nonEmptyPools = (await getERC20BalanceOf(ctx, chain, contracts)).filter(
+    (pool) => pool.amount.gt(0)
+  );
+
+  const totalSupplyRes = await multicall({
+    chain,
+    calls: nonEmptyPools.map((contract) => ({
+      target: contract.address,
+    })),
+    abi: abi.totalSupply,
+  });
+
+  // collect underlyings and get their balances
+  let calls: Calls = [];
+  for (let i = 0; i < nonEmptyPools.length; i++) {
+    const pool = nonEmptyPools[i];
+    if (pool.underlyings) {
+      for (let j = 0; j < pool.underlyings.length; j++) {
+        const underlying = pool.underlyings[j];
+        calls.push({
+          params: [pool.poolAddress],
+          target: underlying.address,
+        });
+      }
+    }
+  }
+
+  const underlyingsBalances = await multicall({
+    chain,
+    calls,
+    abi: erc20Abi.balanceOf,
+  });
+
+  // map back underlying amounts to their pools
+  for (let i = 0; i < underlyingsBalances.length; i++) {
+    if (underlyingsBalances[i].success) {
+      const poolAddress = underlyingsBalances[i].input.params[0];
+      const underlyingAddress =
+        underlyingsBalances[i].input.target.toLowerCase();
+
+      const pool = nonEmptyPools.find(
+        (pool) => pool.poolAddress === poolAddress
+      );
+
+      if (pool) {
+        const underlying = pool.underlyings?.find(
+          (underlying: Contract) =>
+            underlying.address.toLowerCase() === underlyingAddress
+        );
+
+        if (underlying) {
+          underlying.amount = BigNumber.from(underlyingsBalances[i].output);
+        }
+      }
+    }
+  }
+
+  // update underlying amounts with LP supply ratio
+  for (let i = 0; i < nonEmptyPools.length; i++) {
+    if (
+      totalSupplyRes[i].success &&
+      nonEmptyPools[i].underlyings?.length > 0 &&
+      nonEmptyPools[i].underlyings.every((underlying) =>
+        underlying.amount?.gt(0)
+      )
+    ) {
+      const totalSupply = BigNumber.from(totalSupplyRes[i].output);
+
+      for (const underlying of nonEmptyPools[i].underlyings) {
+        underlying.amount = nonEmptyPools[i].amount
+          .mul(underlying.amount)
+          .div(totalSupply);
+      }
+
+      balances.push(nonEmptyPools[i]);
+    }
+  }
+
+  return balances;
 }
