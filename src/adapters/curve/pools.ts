@@ -1,4 +1,5 @@
 import { ethers, BigNumber } from "ethers";
+import { Chain } from "@defillama/sdk/build/general";
 import {
   getERC20BalanceOf,
   getERC20Details,
@@ -7,7 +8,7 @@ import {
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { Calls, multicall } from "@lib/multicall";
 import { ETH_ADDR, Token } from "@lib/token";
-import { Chain } from "@defillama/sdk/build/general";
+import { getBalancesCalls } from "@lib/balance";
 
 const abi = {
   get_address: {
@@ -343,11 +344,7 @@ export async function getPoolsBalances(
     }
   }
 
-  const underlyingsBalances = await multicall({
-    chain,
-    calls,
-    abi: erc20Abi.balanceOf,
-  });
+  const underlyingsBalances = await getBalancesCalls(chain, calls);
 
   // map back underlying amounts to their pools
   for (let i = 0; i < underlyingsBalances.length; i++) {
