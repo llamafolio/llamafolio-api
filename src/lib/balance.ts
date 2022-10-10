@@ -2,8 +2,9 @@ import { ethers } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
 import { BaseContext, BaseContract, BaseBalance } from "@lib/adapter";
 import { Token } from "@lib/token";
-import { getERC20BalanceOf } from "@lib/erc20";
+import { getERC20BalanceOf, abi as erc20Abi } from "@lib/erc20";
 import { isNotNullish } from "@lib/type";
+import { Call, multicall, MultiCallResult } from "@lib/multicall";
 
 export async function getBalances(ctx: BaseContext, contracts: BaseContract[]) {
   const coins: Token[] = [];
@@ -51,4 +52,61 @@ export async function getBalances(ctx: BaseContext, contracts: BaseContract[]) {
   ).flat();
 
   return coinsBalances.concat(tokensBalances);
+}
+
+export async function getBalancesCalls(chain: Chain, calls: Call[]) {
+  const coinsCallsAddresses: string[] = [];
+  const tokensCalls: Call[] = [];
+  const res: MultiCallResult[] = [];
+
+  for (const call of calls) {
+    if (call.target === ethers.constants.AddressZero) {
+      // native chain coin
+      coinsCallsAddresses.push(call.params[0]);
+    } else {
+      // token
+      tokensCalls.push(call);
+    }
+  }
+
+  const coinsBalancesRes = await Promise.all(
+    coinsCallsAddresses.map(async (address) => {
+      try {
+        const provider = providers[chain];
+        const balance = await provider.getBalance(address);
+        return balance;
+      } catch (err) {
+        console.error(`Failed to get coin balance for chain ${chain}`, err);
+        return null;
+      }
+    })
+  );
+
+  const tokensBalancesRes = await multicall({
+    chain,
+    calls: tokensCalls,
+    abi: erc20Abi.balanceOf,
+  });
+
+  let coinIdx = 0;
+  let tokenIdx = 0;
+  for (let i = 0; i < calls.length; i++) {
+    const call = calls[i];
+
+    if (call.target === ethers.constants.AddressZero) {
+      // native chain coin
+      res.push({
+        success: coinsBalancesRes[coinIdx] != null,
+        input: calls[i],
+        output: coinsBalancesRes[coinIdx]?.toString(),
+      });
+      coinIdx++;
+    } else {
+      // token
+      res.push(tokensBalancesRes[tokenIdx]);
+      tokenIdx++;
+    }
+  }
+
+  return res;
 }

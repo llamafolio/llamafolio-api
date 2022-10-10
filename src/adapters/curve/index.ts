@@ -1,7 +1,6 @@
 import { Adapter, Balance, Contract } from "@lib/adapter";
-import { getERC20BalanceOf } from "@lib/erc20";
 import { isNotNullish } from "@lib/type";
-import { getAllPools } from "./pools";
+import { getPoolsBalances, getPoolsContracts } from "./pools";
 import { getGaugeBalances, getGaugesContracts } from "./gauges";
 import {
   getLockedBalances,
@@ -12,7 +11,7 @@ import {
 const adapter: Adapter = {
   id: "curve",
   async getContracts() {
-    const pools = await getAllPools();
+    const pools = await getPoolsContracts();
     const gauges = await getGaugesContracts("ethereum", pools);
     const locker = getLockerContracts();
 
@@ -42,7 +41,7 @@ const adapter: Adapter = {
       }
     }
 
-    promises.push(getERC20BalanceOf(ctx, "ethereum", pools));
+    promises.push(getPoolsBalances(ctx, "ethereum", pools));
 
     promises.push(getGaugeBalances(ctx, "ethereum", gauges));
 

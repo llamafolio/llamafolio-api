@@ -3,6 +3,7 @@ import { multiCall } from "@defillama/sdk/build/abi/index";
 export type MultiCallParams = Parameters<typeof multiCall>[0];
 
 export type Calls = MultiCallParams["calls"];
+export type Call = Calls[number];
 
 export type MultiCallResult = {
   success: boolean;
