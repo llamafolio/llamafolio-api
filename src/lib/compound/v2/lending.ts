@@ -8,9 +8,20 @@ import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
 import { BN_TEN } from "@lib/math";
 
+export interface GetMarketsContractsProps {
+  comptrollerAddress: string;
+  /**
+   * map of underlying tokens by address not defined in Comptroller markets (ex: cETH -> WETH).
+   */
+  underlyingAddressByMarketAddress?: { [key: string]: string };
+}
+
 export async function getMarketsContracts(
   chain: Chain,
-  { comptrollerAddress }: { comptrollerAddress: string }
+  {
+    comptrollerAddress,
+    underlyingAddressByMarketAddress = {},
+  }: GetMarketsContractsProps
 ) {
   const provider = providers[chain];
 
@@ -43,9 +54,16 @@ export async function getMarketsContracts(
     }),
   ]);
 
-  const underlyingTokensAddresses = underlyingTokensAddressesRes
+  const underlyingTokensAddresses: string[] = underlyingTokensAddressesRes
     .filter((res) => res.success)
     .map((res) => res.output);
+
+  if (underlyingAddressByMarketAddress) {
+    for (const marketAddress in underlyingAddressByMarketAddress) {
+      const underlyingAddress = underlyingAddressByMarketAddress[marketAddress];
+      underlyingTokensAddresses.push(underlyingAddress);
+    }
+  }
 
   const underlyingTokens = await getERC20Details(
     chain,
@@ -60,24 +78,12 @@ export async function getMarketsContracts(
   return cTokens
     .map((token, i) => {
       const underlyingTokenAddress =
-        underlyingTokensAddressesRes[i].output?.toLowerCase();
+        underlyingTokensAddressesRes[i].output?.toLowerCase() ||
+        underlyingAddressByMarketAddress?.[token.address];
       let underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
 
-      // cETH -> WETH
-      if (
-        chain === "ethereum" &&
-        token.address.toLowerCase() ===
-          "0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5"
-      ) {
-        underlyingToken = {
-          chain,
-          symbol: "WETH",
-          decimals: 18,
-          address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
-        };
-      }
-
       if (!underlyingToken) {
+        console.log("Failed to get underlying token for market", token);
         return null;
       }
 
@@ -168,6 +174,7 @@ export async function getMarketsBalances(
       return {
         ...bal,
         amount,
+        underlyings: [{ ...bal.underlyings[0], decimals: bal.decimals }],
         category: "lend",
       };
     });
