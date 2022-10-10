@@ -90,7 +90,7 @@ export async function getMarketsContracts(
           chain,
           symbol: "BNB",
           decimals: 18,
-          address: "0xa07c5b74c9b40447a954e1466938b865b6bbea36",
+          address: "ethers.constants.AddressZero",
         };
       }
 
@@ -185,6 +185,7 @@ export async function getMarketsBalances(
       return {
         ...bal,
         amount,
+        underlyings: [{...bal.underlyings[0], decimals: bal.decimals}],
         category: "lend",
       };
     });
