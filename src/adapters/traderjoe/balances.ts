@@ -47,10 +47,7 @@ const JOE: Token = {
   coingeckoId: "joe",
 };
 
-export async function getStakeBalance(
-  ctx: BaseContext,
-  chain: Chain,
-) {
+export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
   let balances: Balance[] = [];
 
   const [sJOEbalanceOfRes, veJOEbalanceOfRes, rJOEbalanceOfRes] =
@@ -186,7 +183,7 @@ export async function getStakeBalance(
       ...JOE,
       address: pool[i],
       amount: stakeAmount[i],
-      rewards: [{ ...JOE.rewards[i], amount: rewardsAmount[i] }],
+      rewards: [{ ...JOE.rewards?.[i], amount: rewardsAmount[i] }],
       category: "stake",
     };
     balances.push(balance);
