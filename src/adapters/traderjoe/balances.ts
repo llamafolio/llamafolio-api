@@ -1,20 +1,55 @@
 import { Chain } from "@defillama/sdk/build/general";
 import { BaseContext } from "@lib/adapter";
-import { BigNumber } from "ethers";
+import { BaseContract, BigNumber } from "ethers";
 import { Contract, Balance } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";
+interface Token extends Contract {
+  name: string;
+}
 
-const usdcToken = "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e";
 const pool = [
-  "0x1a731b2299e22fbac282e7094eda41046343cb51", // sJOE stake
-  "0x25D85E17dD9e544F6E9F8D44F99602dbF5a97341", // veJOE stake
-  "0x102D195C3eE8BF8A9A89d63FB3659432d3174d81", // rJOE stake
+  "0x1a731b2299e22fbac282e7094eda41046343cb51", // sJOE contract
+  "0x25D85E17dD9e544F6E9F8D44F99602dbF5a97341", // veJOE contract
+  "0x102D195C3eE8BF8A9A89d63FB3659432d3174d81", // rJOE contract
 ];
+
+const USDC: Token = {
+  name: "USD Coin",
+  chain: "avax",
+  decimals: 6,
+  address: "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
+  symbol: "USDC",
+};
+
+const veJOE: Token = {
+  name: "VeJoeToken",
+  chain: "avax",
+  decimals: 18,
+  address: "0x3cabf341943Bc8466245e4d6F1ae0f8D071a1456",
+  symbol: "veJOE",
+};
+
+const rJOE: Token = {
+  name: "RocketJoeToken",
+  chain: "avax",
+  decimals: 18,
+  address: "0x5483ce08659fABF0277f9314868Cc4f78687BD08",
+  symbol: "rJOE",
+};
+
+const JOE: Token = {
+  name: "TraderJoe Token",
+  chain: "avax",
+  address: "0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd",
+  symbol: "JOE",
+  decimals: 18,
+  rewards: [USDC, veJOE, rJOE],
+  coingeckoId: "joe",
+};
 
 export async function getStakeBalance(
   ctx: BaseContext,
   chain: Chain,
-  contracts: Contract
 ) {
   let balances: Balance[] = [];
 
@@ -23,7 +58,7 @@ export async function getStakeBalance(
       call({
         chain,
         target: pool[0],
-        params: [ctx.address, usdcToken],
+        params: [ctx.address, USDC.address],
         abi: {
           inputs: [
             { internalType: "address", name: "_user", type: "address" },
@@ -96,7 +131,7 @@ export async function getStakeBalance(
     call({
       chain,
       target: pool[0],
-      params: [ctx.address, usdcToken],
+      params: [ctx.address, USDC.address],
       abi: {
         inputs: [
           { internalType: "address", name: "_user", type: "address" },
@@ -148,10 +183,10 @@ export async function getStakeBalance(
 
   for (let i = 0; i < pool.length; i++) {
     const balance = {
-      ...contracts,
+      ...JOE,
       address: pool[i],
       amount: stakeAmount[i],
-      rewards: [{ ...contracts.rewards[i], amount: rewardsAmount[i] }],
+      rewards: [{ ...JOE.rewards[i], amount: rewardsAmount[i] }],
       category: "stake",
     };
     balances.push(balance);
