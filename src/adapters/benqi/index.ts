@@ -6,10 +6,6 @@ import {
 import { ethers } from "ethers";
 import { getStakeBalances } from "./balances";
 
-/** 0xcf1347dad4dd90fa73448d191950639c657ff0e2,
- *  0x513c7e3a9c69ca3e22550ef58ac1c0088e918fff
- */
-
 const sAVAX: Contract = {
   name: "Staked AVAX",
   chain: "avax",
