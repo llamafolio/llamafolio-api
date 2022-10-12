@@ -1,13 +1,13 @@
 import { Chain } from "@defillama/sdk/build/general";
 import { BaseContext } from "@lib/adapter";
-import { BaseContract, BigNumber } from "ethers";
+import { BigNumber } from "ethers";
 import { Contract, Balance } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";
 interface Token extends Contract {
   name: string;
 }
 
-const pool = [
+const pools = [
   "0x1a731b2299e22fbac282e7094eda41046343cb51", // sJOE contract
   "0x25D85E17dD9e544F6E9F8D44F99602dbF5a97341", // veJOE contract
   "0x102D195C3eE8BF8A9A89d63FB3659432d3174d81", // rJOE contract
@@ -54,7 +54,7 @@ export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
     await Promise.all([
       call({
         chain,
-        target: pool[0],
+        target: pools[0],
         params: [ctx.address, USDC.address],
         abi: {
           inputs: [
@@ -77,7 +77,7 @@ export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
 
       call({
         chain,
-        target: pool[1],
+        target: pools[1],
         params: [ctx.address],
         abi: {
           inputs: [{ internalType: "address", name: "", type: "address" }],
@@ -103,7 +103,7 @@ export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
 
       call({
         chain,
-        target: pool[2],
+        target: pools[2],
         params: [ctx.address],
         abi: {
           inputs: [{ internalType: "address", name: "", type: "address" }],
@@ -127,7 +127,7 @@ export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
   const [sJOErewardsRes, veJOErewardsRes, rJOErewardsRes] = await Promise.all([
     call({
       chain,
-      target: pool[0],
+      target: pools[0],
       params: [ctx.address, USDC.address],
       abi: {
         inputs: [
@@ -147,7 +147,7 @@ export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
 
     call({
       chain,
-      target: pool[1],
+      target: pools[1],
       params: [ctx.address],
       abi: {
         inputs: [{ internalType: "address", name: "_user", type: "address" }],
@@ -160,7 +160,7 @@ export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
 
     call({
       chain,
-      target: pool[2],
+      target: pools[2],
       params: [ctx.address],
       abi: {
         inputs: [{ internalType: "address", name: "_user", type: "address" }],
@@ -178,10 +178,10 @@ export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
 
   const rewardsAmount = [sJOErewards, veJOErewards, rJOErewards];
 
-  for (let i = 0; i < pool.length; i++) {
-    const balance = {
+  for (let i = 0; i < pools.length; i++) {
+    const balance: Balance = {
       ...JOE,
-      address: pool[i],
+      address: pools[i],
       amount: stakeAmount[i],
       rewards: [{ ...JOE.rewards?.[i], amount: rewardsAmount[i] }],
       category: "stake",
