@@ -44,7 +44,7 @@ const adapter: Adapter = {
     const poolsOPT: Contract[] = [];
     const poolsFTM: Contract[] = [];
 
-    contracts.map((contract) => {
+    for (const contract of contracts) {
       switch (contract.chain) {
         case "ethereum":
           poolsETH.push(contract);
@@ -65,14 +65,17 @@ const adapter: Adapter = {
         default:
           null;
       }
-    });
+    }
 
-    let balancesETH = await getMarketsBalances(ctx, "ethereum", poolsETH);
-    let balancesAVAX = await getMarketsBalances(ctx, "avax", poolsAVAX);
-    let balancesOPT = await getMarketsBalances(ctx, "optimism", poolsOPT);
-    let balancesFTM = await getMarketsBalances(ctx, "fantom", poolsFTM);
+    const [balancesETH, balancesAVAX, balancesOPT, balancesFTM] =
+      await Promise.all([
+        getMarketsBalances(ctx, "ethereum", poolsETH),
+        getMarketsBalances(ctx, "avax", poolsAVAX),
+        getMarketsBalances(ctx, "optimism", poolsOPT),
+        getMarketsBalances(ctx, "fantom", poolsFTM),
+      ]);
 
-    let balances = [
+    const balances = [
       ...balancesETH,
       ...balancesAVAX,
       ...balancesOPT,
