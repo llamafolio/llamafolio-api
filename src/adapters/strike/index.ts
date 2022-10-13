@@ -19,7 +19,6 @@ const adapter: Adapter = {
 
     return {
       contracts: poolsMarkets,
-      revalidate: 60 * 60,
     };
   },
   async getBalances(ctx, contracts) {
