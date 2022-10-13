@@ -1,6 +1,6 @@
 import { Chain } from "@defillama/sdk/build/general";
 import { BigNumber } from "ethers";
-import { Contract } from "@lib/adapter";
+import { Balance, Contract } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";
 import { BaseContext } from "@lib/adapter";
 
@@ -64,9 +64,10 @@ export async function getStakeBalances(
 
   const amount = balanceOf.mul(poolValue).div(totalSupply);
 
-  return {
+  const balance: Balance = {
     ...contract,
     amount,
     underlyings: [{ ...WAVAX, amount }],
   };
+  return balance;
 }
