@@ -2,6 +2,8 @@ import aaveV2 from "@adapters/aave/v2";
 import aaveV3 from "@adapters/aave/v3";
 import abracadabra from "@adapters/abracadabra";
 import arrakis from "@adapters/arrakis";
+import benqiLending from "@adapters/benqi-lending";
+import benqiStakedAvax from "@adapters/benqi-staked-avax";
 import compoundV2 from "@adapters/compound/v2";
 import concentrator from "@adapters/concentrator";
 import convex from "@adapters/convex";
@@ -38,6 +40,8 @@ export const adapters: Adapter[] = [
   aaveV3,
   abracadabra,
   arrakis,
+  benqiLending,
+  benqiStakedAvax,
   compoundV2,
   concentrator,
   convex,
