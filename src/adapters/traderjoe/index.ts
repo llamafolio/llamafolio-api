@@ -7,6 +7,7 @@ import { Contract } from "@lib/adapter";
 import { getStakeBalance } from "./balances";
 import { getPairsContracts } from "@lib/uniswap/v2/factory";
 import { getPairsBalances } from "@lib/uniswap/v2/pair";
+import { isNotNullish } from "@lib/type";
 
 const sJOE: Contract = {
   name: "sJOE staking",
@@ -36,44 +37,27 @@ const adapter: Adapter = {
       comptrollerAddress: "0xdc13687554205E5b89Ac783db14bb5bba4A1eDaC",
     });
 
-    const poolsMarkets: Contract[] = markets.map((contract) => {
-      return {
-        ...contract,
-        type: "market",
-      };
-    });
-
-    const pairs = await getPairsContracts({
+    const pools = await getPairsContracts({
       chain: "avax",
       factoryAddress: "0x9Ad6C38BE94206cA50bb0d90783181662f0Cfa10",
       length: 100,
     });
 
-    const uniPools: Contract[] = pairs.map((contract) => {
-      return {
-        ...contract,
-        type: "pool",
-      };
-    });
-
     return {
-      contracts: [...poolsMarkets, ...uniPools, sJOE, veJOE, rJOE],
+      contracts: { markets, pools, sJOE, veJOE, rJOE },
       revalidate: 60 * 60,
     };
   },
-
-  async getBalances(ctx, contracts) {
-    const marketsPool = contracts.filter(
-      (contract) => contract.type === "market"
-    );
-    const marketsBalances = await getMarketsBalances(ctx, "avax", marketsPool);
-
-    const uniPools = contracts.filter((contract) => contract.type === "pool");
-    const pairsBalances = await getPairsBalances(ctx, "avax", uniPools);
-
-    const stakeBalances = await getStakeBalance(ctx, "avax");
-
-    const balances = [...marketsBalances, ...stakeBalances, ...pairsBalances];
+  async getBalances(ctx, { markets, pools }) {
+    const balances = (
+      await Promise.all([
+        getMarketsBalances(ctx, "avax", markets || []),
+        getPairsBalances(ctx, "avax", pools || []),
+        getStakeBalance(ctx, "avax"),
+      ])
+    )
+      .flat()
+      .filter(isNotNullish);
 
     return {
       balances,

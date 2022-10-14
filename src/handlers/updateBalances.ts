@@ -2,6 +2,7 @@ import { APIGatewayProxyHandler } from "aws-lambda";
 import format from "pg-format";
 import { strToBuf, isHex } from "@lib/buf";
 import pool from "@db/pool";
+import { groupContracts } from "@db/contracts";
 import { BaseContext, Contract } from "@lib/adapter";
 import { getPricedBalances } from "@lib/price";
 import { adapterById } from "@adapters/index";
@@ -106,7 +107,8 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
 
             const hrstart = process.hrtime();
 
-            const contracts = contractsByAdapterId[adapterId] || [];
+            const contracts =
+              groupContracts(contractsByAdapterId[adapterId]) || [];
             const balancesConfig = await adapter.getBalances(ctx, contracts);
 
             const hrend = process.hrtime(hrstart);
