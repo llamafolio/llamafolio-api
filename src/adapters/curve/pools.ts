@@ -241,7 +241,6 @@ export async function getPoolsContracts() {
       name: poolName,
       displayName: `${poolName} Curve Pool`,
       chain: "ethereum",
-      type: "pool",
       address: lpToken,
       poolAddress: mainRegistryPoolsList[i],
       underlyings: [],
@@ -387,7 +386,7 @@ export async function getPoolsBalances(
           .div(totalSupply);
       }
 
-      balances.push(nonEmptyPools[i]);
+      balances.push({ ...nonEmptyPools[i], category: "lp" });
     }
   }
 
