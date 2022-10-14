@@ -20,7 +20,7 @@ import nexusMutual from "@adapters/nexus-mutual";
 import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
 import rocketpool from "@adapters/rocket-pool";
-import scream from "@adapters/scream"
+import scream from "@adapters/scream";
 import shibaswap from "@adapters/shibaswap";
 import spiritswap from "@adapters/spiritswap";
 import spookyswap from "@adapters/spookyswap";
