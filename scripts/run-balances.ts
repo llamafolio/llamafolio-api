@@ -5,6 +5,7 @@ import { getPricedBalances } from "../src/lib/price";
 import {
   getAllTokensInteractions,
   getContractsInteractions,
+  groupContracts,
 } from "../src/db/contracts";
 
 function help() {}
@@ -41,7 +42,10 @@ async function main() {
 
     console.log("Contracts:", JSON.stringify(contracts, null, 2));
 
-    const balancesConfig = await adapter.getBalances(ctx, contracts || []);
+    const balancesConfig = await adapter.getBalances(
+      ctx,
+      groupContracts(contracts) || []
+    );
 
     const pricedBalances = await getPricedBalances(balancesConfig.balances);
 

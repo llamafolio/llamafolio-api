@@ -202,10 +202,10 @@ export async function selectContractsByAdapterId(
 
 export function insertContracts(
   client: PoolClient,
-  contracts: Contract[],
+  contracts: Contract[] | { [key: string]: Contract | Contract[] },
   adapterId: string
 ) {
-  const values = toStorage(contracts, adapterId).map(toRow);
+  const values = toStorage(flattenContracts(contracts), adapterId).map(toRow);
 
   if (values.length === 0) {
     return;
@@ -274,4 +274,51 @@ export async function getAllTokensInteractions(
   ]);
 
   return fromStorage(res.rows);
+}
+
+export function flattenContracts(
+  contracts: Contract[] | { [key: string]: Contract | Contract[] }
+) {
+  if (Array.isArray(contracts)) {
+    return contracts;
+  }
+
+  const contractsList: Contract[] = [];
+  for (const key in contracts) {
+    if (Array.isArray(contracts[key])) {
+      const keyContracts = contracts[key] as Contract[];
+      for (const contract of keyContracts) {
+        contractsList.push({ ...contract, __key: key, __key_is_array: true });
+      }
+    } else if (contracts[key]) {
+      const contract = contracts[key] as Contract;
+      contractsList.push({ ...contract, __key: key, __key_is_array: false });
+    }
+  }
+
+  return contractsList;
+}
+
+export function groupContracts(contracts: Contract[]) {
+  const contractsMap: { [key: string]: Contract | Contract[] } = {};
+
+  for (const contract of contracts) {
+    if (contract.__key != null) {
+      if (contract.__key_is_array) {
+        if (!contractsMap[contract.__key]) {
+          contractsMap[contract.__key] = [];
+        }
+        contractsMap[contract.__key].push(contract);
+      } else {
+        contractsMap[contract.__key] = contract;
+      }
+    }
+  }
+
+  // contracts either all have a __key or none of them do
+  if (Object.keys(contractsMap).length > 0) {
+    return contractsMap;
+  }
+
+  return contracts;
 }

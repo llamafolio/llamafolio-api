@@ -5,6 +5,7 @@ import {
 } from "../src/db/contracts";
 import pool from "../src/db/pool";
 import { insertBalances } from "../src/db/balances";
+import { groupContracts } from "../src/db/contracts";
 import { adapterById } from "../src/adapters";
 import { BaseContext, Contract } from "../src/lib/adapter";
 import { strToBuf } from "../src/lib/buf";
@@ -65,7 +66,8 @@ async function main() {
 
             const hrstart = process.hrtime();
 
-            const contracts = contractsByAdapterId[adapterId] || [];
+            const contracts =
+              groupContracts(contractsByAdapterId[adapterId]) || [];
             const balancesConfig = await adapter.getBalances(ctx, contracts);
 
             const hrend = process.hrtime(hrstart);

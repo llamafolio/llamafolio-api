@@ -4,6 +4,7 @@ import { BigNumber } from "ethers";
 import millify from "millify";
 
 import { Adapter, Balance, BaseContext } from "../src/lib/adapter";
+import { groupContracts } from "../src/db/contracts";
 import { getPricedBalances } from "../src/lib/price";
 
 type CategoryBalances = {
@@ -51,7 +52,10 @@ async function main() {
 
   const contractsRes = await adapter.getContracts();
 
-  const balancesRes = await adapter.getBalances(ctx, contractsRes.contracts);
+  const balancesRes = await adapter.getBalances(
+    ctx,
+    groupContracts(contractsRes.contracts) || []
+  );
 
   const yieldsRes = await fetch("https://yields.llama.fi/poolsOld");
   const yieldsData = (await yieldsRes.json()).data;
@@ -131,7 +135,6 @@ async function main() {
         yieldsByPoolAddress[key] ||
         yieldsByPoolAddress[subKey] ||
         yieldsByKeys[nonAddressKey];
-
 
       const d = {
         chain: balance.chain,

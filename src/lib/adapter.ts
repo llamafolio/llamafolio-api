@@ -83,7 +83,7 @@ export interface Adapter {
   getContracts: () => ContractsConfig | Promise<ContractsConfig>;
   getBalances: (
     ctx: BaseContext,
-    contracts: BaseContract[]
+    contracts: Contract[] | { [key: string]: Contract | Contract[] }
   ) => BalancesConfig | Promise<BalancesConfig>;
 }
 
