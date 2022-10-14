@@ -4,8 +4,8 @@ import { getPoolsBalances, getPoolsContracts } from "./pools";
 import { getGaugeBalances, getGaugesContracts } from "./gauges";
 import {
   getLockedBalances,
-  lockerContracts,
-  getLockerContracts,
+  lockerContract,
+  feeDistributorContract,
 } from "./locker";
 
 const adapter: Adapter = {
@@ -13,40 +13,33 @@ const adapter: Adapter = {
   async getContracts() {
     const pools = await getPoolsContracts();
     const gauges = await getGaugesContracts("ethereum", pools);
-    const locker = getLockerContracts();
+    const locker = lockerContract;
 
     return {
-      contracts: [...pools, ...locker, ...gauges],
+      contracts: { pools, gauges, locker },
       revalidate: 60 * 60,
     };
   },
-  async getBalances(ctx, contracts) {
-    const promises: Promise<Balance[] | Balance>[] = [];
-    const pools: Contract[] = [];
-    const gauges: Contract[] = [];
-
-    for (const contract of contracts) {
-      if (
-        contract.chain === "ethereum" &&
-        contract.address === lockerContracts["ethereum"]["locker"].address
-      ) {
-        promises.push(getLockedBalances(ctx, "ethereum"));
-      } else if (contract.type === "pool") {
-        pools.push({
-          ...contract,
-          category: "lp",
-        });
-      } else if (contract.type === "gauge") {
-        gauges.push(contract);
-      }
-    }
-
-    promises.push(getPoolsBalances(ctx, "ethereum", pools));
-
-    promises.push(getGaugeBalances(ctx, "ethereum", gauges));
+  async getBalances(ctx, { pools, gauges, locker }) {
+    const balances = (
+      await Promise.all([
+        locker
+          ? getLockedBalances(
+              ctx,
+              "ethereum",
+              locker.address,
+              feeDistributorContract.address
+            )
+          : null,
+        getPoolsBalances(ctx, "ethereum", pools),
+        getGaugeBalances(ctx, "ethereum", gauges),
+      ])
+    )
+      .flat()
+      .filter(isNotNullish);
 
     return {
-      balances: (await Promise.all(promises)).flat().filter(isNotNullish),
+      balances,
     };
   },
 };

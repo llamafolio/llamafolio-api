@@ -157,11 +157,7 @@ export async function getGaugesContracts(chain: Chain, pools: Contract[]) {
       gaugeTypesRes[i].success &&
       typeKeys[gaugeTypesRes[i].output] === chain
     ) {
-      gauges.push({
-        chain,
-        type: "gauge",
-        address: gaugesList[i],
-      });
+      gauges.push({ chain, address: gaugesList[i] });
     }
   }
 
