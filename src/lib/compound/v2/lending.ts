@@ -78,8 +78,11 @@ export async function getMarketsContracts(
   return cTokens
     .map((token, i) => {
       const underlyingTokenAddress =
-        underlyingTokensAddressesRes[i].output?.toLowerCase() ||
-        underlyingAddressByMarketAddress?.[token.address?.toLowerCase()];
+        underlyingTokensAddressesRes[i].output?.toLowerCase() ===
+        "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+          ? ethers.constants.AddressZero
+          : underlyingTokensAddressesRes[i].output?.toLowerCase() ||
+            underlyingAddressByMarketAddress?.[token.address?.toLowerCase()];
       let underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
 
       if (!underlyingToken) {
