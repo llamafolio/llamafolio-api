@@ -4,7 +4,7 @@ import { multicall } from "@lib/multicall";
 import { BaseBalance, BaseContext } from "@lib/adapter";
 import { Token } from "@lib/token";
 import { getToken } from "@llamafolio/tokens";
-import { isNotNullish } from "./type";
+import { isNotNullish } from "@lib/type";
 
 export const abi = {
   balanceOf: {
@@ -93,7 +93,7 @@ export async function getERC20Details(
   for (const address of tokens) {
     const tokenInfo = getToken(chain, address.toLowerCase());
     if (tokenInfo) {
-      found[address] = tokenInfo;
+      found[address] = tokenInfo as Token;
     }
   }
 
