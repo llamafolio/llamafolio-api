@@ -1,8 +1,8 @@
 import aaveV2 from "@adapters/aave/v2";
 import aaveV3 from "@adapters/aave/v3";
 import abracadabra from "@adapters/abracadabra";
-import apeswapamm from "@adapters/apeswap-amm";
-import apeswaplending from "@adapters/apeswap-lending";
+import apeswapAmm from "@adapters/apeswap-amm";
+import apeswapLending from "@adapters/apeswap-lending";
 import arrakis from "@adapters/arrakis";
 import benqiLending from "@adapters/benqi-lending";
 import benqiStakedAvax from "@adapters/benqi-staked-avax";
@@ -44,8 +44,8 @@ export const adapters: Adapter[] = [
   aaveV2,
   aaveV3,
   abracadabra,
-  apeswapamm,
-  apeswaplending,
+  apeswapAmm,
+  apeswapLending,
   arrakis,
   benqiLending,
   benqiStakedAvax,
