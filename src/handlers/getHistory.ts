@@ -138,7 +138,12 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     // remove last ' union all '
     tokenTransfersQuery = tokenTransfersQuery.slice(0, -10);
 
-    const tokenTransfersRes = await client.query(tokenTransfersQuery);
+    const tokenTransfersRes = await client.query(
+      format(
+        "select distinct on (chain, tt_transaction_hash, tt_log_index) t.* from ( %s ) as t",
+        tokenTransfersQuery
+      )
+    );
 
     // aggregate token transfers on transactions
     for (const row of tokenTransfersRes.rows) {
