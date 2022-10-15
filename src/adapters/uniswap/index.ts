@@ -1,5 +1,5 @@
 import { gql, request } from "graphql-request";
-import { Adapter, Contract } from "@lib/adapter";
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import { getERC20BalanceOf } from "@lib/erc20";
 import { getUnderlyingBalances } from "@lib/uniswap/v2/pair";
 
@@ -59,24 +59,31 @@ async function getPoolsHighestVolume() {
   return contracts;
 }
 
+const getContracts = async () => {
+  const pairs = await getPoolsHighestVolume();
+
+  return {
+    contracts: pairs,
+    revalidate: 60 * 60,
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  let lpBalances = await getERC20BalanceOf(ctx, "ethereum", contracts);
+  lpBalances = await getUnderlyingBalances("ethereum", lpBalances);
+
+  return {
+    balances: lpBalances.map((balance) => ({ ...balance, category: "farm" })),
+  };
+};
+
 const adapter: Adapter = {
   id: "uniswap",
-  async getContracts() {
-    const pairs = await getPoolsHighestVolume();
-
-    return {
-      contracts: pairs,
-      revalidate: 60 * 60,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    let lpBalances = await getERC20BalanceOf(ctx, "ethereum", contracts);
-    lpBalances = await getUnderlyingBalances("ethereum", lpBalances);
-
-    return {
-      balances: lpBalances.map((balance) => ({ ...balance, category: "farm" })),
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

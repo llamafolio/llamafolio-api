@@ -4,7 +4,7 @@ import { Chain, providers } from "@defillama/sdk/build/general";
 import { getERC20Balances, getERC20Details } from "@lib/erc20";
 
 
-export async function getBalances(ctx, chain, contracts) {
+export async function getStakeBalances(ctx, chain, contracts) {
 
   const balances = []
 

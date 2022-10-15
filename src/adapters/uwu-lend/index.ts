@@ -1,4 +1,4 @@
-import { Adapter, Contract } from "@lib/adapter";
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import {
   getLendingPoolContracts,
   getLendingPoolBalances,
@@ -34,46 +34,52 @@ const UwU: Token = {
   symbol: "UwU",
 };
 
+const getContracts = async () => {
+  const lendingPoolContracts = await getLendingPoolContracts({
+    chain: "ethereum",
+    lendingPoolAddress: lendingPoolContract.address,
+    chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+    rewardToken: UwU,
+  });
+
+  return {
+    contracts: lendingPoolContracts,
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  const lendingPoolBalances = await getLendingPoolBalances(
+    ctx,
+    "ethereum",
+    contracts,
+    {
+      chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+    }
+  );
+
+  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(
+    ctx,
+    "ethereum",
+    contracts,
+    {
+      multiFeeDistributionAddress: multiFeeDistributionContract.address,
+    }
+  );
+
+  const balances = lendingPoolBalances.concat(multiFeeDistributionBalances);
+
+  return {
+    balances,
+  };
+};
+
 const adapter: Adapter = {
   id: "uwu-lend",
-  async getContracts() {
-    const lendingPoolContracts = await getLendingPoolContracts({
-      chain: "ethereum",
-      lendingPoolAddress: lendingPoolContract.address,
-      chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
-      rewardToken: UwU,
-    });
-
-    return {
-      contracts: lendingPoolContracts,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    const lendingPoolBalances = await getLendingPoolBalances(
-      ctx,
-      "ethereum",
-      contracts,
-      {
-        chefIncentivesControllerAddress:
-          chefIncentivesControllerContract.address,
-      }
-    );
-
-    const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(
-      ctx,
-      "ethereum",
-      contracts,
-      {
-        multiFeeDistributionAddress: multiFeeDistributionContract.address,
-      }
-    );
-
-    const balances = lendingPoolBalances.concat(multiFeeDistributionBalances);
-
-    return {
-      balances,
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

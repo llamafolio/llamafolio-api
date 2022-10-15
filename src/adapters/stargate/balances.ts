@@ -5,9 +5,10 @@ import { getERC20Balances, getERC20Details } from "@lib/erc20";
 
 import MasterChefAbi from "./abis/MasterChef.json";
 import StakingTokenAbi from "./abis/StakingToken.json";
+import { Balance, BaseContext, Contract } from "@lib/adapter";
 
 
-export async function getBalances(ctx, contracts) {
+export async function getStakeBalances(ctx: BaseContext, contracts: Contract[]): Promise<Balance[]> {
 
 
     const balances = []

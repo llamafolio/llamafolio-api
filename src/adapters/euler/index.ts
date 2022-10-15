@@ -1,7 +1,6 @@
-import { Adapter, Balance, Contract } from "@lib/adapter";
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import { getPositions } from "./markets";
 
-//example contract object
 const contract: Contract = {
   name: "eulerMarkets",
   displayName: "Markets Euler",
@@ -9,21 +8,28 @@ const contract: Contract = {
   address: "0x3520d5a913427E6F0D6A83E07ccD4A4da316e4d3",
 };
 
+const getContracts = () => {
+  return {
+    contracts: [contract],
+    revalidate: 60 * 60,
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  let balances = await getPositions(ctx, "ethereum", contracts);
+
+  return {
+    balances,
+  };
+};
+
 const adapter: Adapter = {
   id: "euler",
-  async getContracts() {
-    return {
-      contracts: [contract], //this should be an array of all contracts getBalances will look at
-      revalidate: 60 * 60,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    let balances = await getPositions(ctx, "ethereum", contracts); //any method to check all the contracts retrieved above
-
-    return {
-      balances,
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

@@ -7,7 +7,7 @@ import StabilityPoolAbi from "./abis/StabilityPool.json";
 import TroveManagerAbi from "./abis/TroveManager.json";
 
 
-export async function getBalances(ctx, chain, contracts) {
+export async function getStakeBalances(ctx, chain, contracts) {
 
   const balances = []
 

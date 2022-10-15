@@ -1,7 +1,6 @@
-import { Adapter, Balance, Contract } from "@lib/adapter";
-import { getBalances } from "./balances"
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
+import { getStakeBalances } from "./balances";
 
-//example contract object
 const stabilityPool: Contract = {
   name: "stabPool",
   displayName: "Stability Pool",
@@ -15,24 +14,28 @@ const troveManager: Contract = {
   address: "0xa39739ef8b0231dbfa0dcda07d7e29faabcf4bb2",
 };
 
+const getContracts = () => {
+  return {
+    contracts: [stabilityPool, troveManager],
+    revalidate: 60 * 60,
+  };
+};
 
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  let balances = await getStakeBalances(ctx, "ethereum", contracts);
+
+  return {
+    balances,
+  };
+};
 
 const adapter: Adapter = {
   id: "liquity",
-  async getContracts() {
-    return {
-      contracts: [stabilityPool, troveManager],  //this should be an array of all contracts getBalances will look at
-      revalidate: 60 * 60,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    let balances = await getBalances(ctx, "ethereum", contracts);
-
-
-    return {
-      balances
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

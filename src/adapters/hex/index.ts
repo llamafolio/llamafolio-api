@@ -5,6 +5,7 @@ import {
   Adapter,
   Balance,
   Contract,
+  GetBalancesHandler,
   resolveContractsBalances,
 } from "@lib/adapter";
 import abi from "./abi/hex.json";
@@ -69,25 +70,31 @@ const getStakeBalances = async (ctx: any, chain: Chain) => {
   return [stakeBalance];
 };
 
+const getContracts = () => {
+  return {
+    contracts: [HEX],
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  function resolver(contract: Contract) {
+    if (contract.address === HEX.address) {
+      return getStakeBalances(ctx, "ethereum");
+    }
+  }
+
+  return {
+    balances: await resolveContractsBalances(resolver, contracts),
+  };
+};
+
 const adapter: Adapter = {
   id: "hex",
-  getContracts() {
-    return {
-      contracts: [HEX],
-    };
-  },
-
-  async getBalances(ctx, contracts) {
-    function resolver(contract: Contract) {
-      if (contract.address === HEX.address) {
-        return getStakeBalances(ctx, "ethereum");
-      }
-    }
-
-    return {
-      balances: await resolveContractsBalances(resolver, contracts),
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

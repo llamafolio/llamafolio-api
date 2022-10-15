@@ -5,13 +5,9 @@ import { getERC20Details, getERC20Balances } from "@lib/erc20";
 
 import BoosterAbi from "./abis/Booster.json";
 import PoolAbi from "./abis/Pool.json";
-import RewardPoolAbi from "./abis/VirtualBalanceRewardPool.json"
+import RewardPoolAbi from "./abis/VirtualBalanceRewardPool.json";
 
-
-
-const CVX = "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b"
-
-
+const CVX = "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b";
 
 export async function getAllPools() {
   const chain = "ethereum";
@@ -23,7 +19,7 @@ export async function getAllPools() {
     provider
   );
 
-  const poolCount = await booster.poolLength()
+  const poolCount = await booster.poolLength();
 
   let calls = [];
   for (let index = 0; index < poolCount.toNumber(); index++) {
@@ -33,20 +29,31 @@ export async function getAllPools() {
     });
   }
 
-
   const poolInfoRes = await multicall({
     chain: "ethereum",
     calls: calls,
-    abi: {"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"poolInfo","outputs":[{"internalType":"address","name":"lptoken","type":"address"},{"internalType":"address","name":"token","type":"address"},{"internalType":"address","name":"gauge","type":"address"},{"internalType":"address","name":"crvRewards","type":"address"},{"internalType":"address","name":"stash","type":"address"},{"internalType":"bool","name":"shutdown","type":"bool"}],"stateMutability":"view","type":"function"},
+    abi: {
+      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      name: "poolInfo",
+      outputs: [
+        { internalType: "address", name: "lptoken", type: "address" },
+        { internalType: "address", name: "token", type: "address" },
+        { internalType: "address", name: "gauge", type: "address" },
+        { internalType: "address", name: "crvRewards", type: "address" },
+        { internalType: "address", name: "stash", type: "address" },
+        { internalType: "bool", name: "shutdown", type: "bool" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
   });
 
   const poolInfo = poolInfoRes
     .filter((res) => res.success)
     .map((res) => res.output);
 
-  let tokens = poolInfo.map((r) => (r.lptoken));
+  let tokens = poolInfo.map((r) => r.lptoken);
   const tokenDetails = await getERC20Details(chain, tokens);
-
 
   const formattedPools = poolInfo.map((address, i) => ({
     name: `cvx${tokenDetails[i].symbol}`,
@@ -55,19 +62,17 @@ export async function getAllPools() {
     type: "stake",
     address: address.token,
     lptoken: address.lptoken,
-    crvRewards: address.crvRewards
+    crvRewards: address.crvRewards,
   }));
 
   return formattedPools;
 }
 
 export async function getPoolBalances(ctx, chain, contracts) {
+  contracts = contracts.slice(2); //remove booster and locker
 
-  contracts = contracts.slice(2) //remove booster and locker
-
-  const addresses = contracts.map((r) => (r.crvRewards));
+  const addresses = contracts.map((r) => r.crvRewards);
   const provider = providers[chain];
-
 
   let calls = [];
   for (let index = 0; index < contracts.length; index++) {
@@ -76,7 +81,6 @@ export async function getPoolBalances(ctx, chain, contracts) {
       target: contracts[index].crvRewards,
     });
   }
-
 
   const balancesRes = await multicall({
     chain: "ethereum",
@@ -96,35 +100,33 @@ export async function getPoolBalances(ctx, chain, contracts) {
     .filter((res) => res.success)
     .map((res) => res.output);
 
-
   const earnedRes = await multicall({
     chain: "ethereum",
     calls: calls,
-    abi:{
-        "inputs": [
-          {
-            "internalType": "address",
-            "name": "account",
-            "type": "address"
-          }
-        ],
-        "name": "earned",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
+    abi: {
+      inputs: [
+        {
+          internalType: "address",
+          name: "account",
+          type: "address",
+        },
+      ],
+      name: "earned",
+      outputs: [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
   });
 
   const earnedR = earnedRes
     .filter((res) => res.success)
     .map((res) => res.output);
-
 
   calls = [];
   for (let index = 0; index < contracts.length; index++) {
@@ -137,28 +139,27 @@ export async function getPoolBalances(ctx, chain, contracts) {
   const extraRewardsRes = await multicall({
     chain: "ethereum",
     calls: calls,
-    abi:  {
-        "inputs": [],
-        "name": "extraRewardsLength",
-        "outputs": [
-          {
-            "internalType": "uint256",
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
+    abi: {
+      inputs: [],
+      name: "extraRewardsLength",
+      outputs: [
+        {
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
   });
 
   const extraRewards = extraRewardsRes
     .filter((res) => res.success)
     .map((res) => res.output);
 
-  let balances = []
-  const ratios = await getCVXRatio(provider)
-
+  let balances = [];
+  const ratios = await getCVXRatio(provider);
 
   for (var i = 0; i < contracts.length; i++) {
     const balance = {
@@ -169,14 +170,12 @@ export async function getPoolBalances(ctx, chain, contracts) {
       address: contracts[i].crvRewards,
       priceSubstitute: contracts[i].lptoken,
       amount: BigNumber.from(balancesR[i] > 0 ? balancesR[i] : 0),
-      yieldsAddress: contracts[i].lptoken
+      yieldsAddress: contracts[i].lptoken,
     };
 
     balances.push(balance);
 
-
     if (earnedR[i] > 0) {
-
       const pendingCRV = BigNumber.from(earnedR[i]);
       balance.rewards = [
         {
@@ -194,7 +193,7 @@ export async function getPoolBalances(ctx, chain, contracts) {
           decimals: 18,
           address: CVX,
           amount: pendingCRV.mul(ratios[0]).div(ratios[1]),
-        }
+        },
       ];
 
       const pool = new ethers.Contract(
@@ -204,7 +203,7 @@ export async function getPoolBalances(ctx, chain, contracts) {
       );
 
       if (extraRewards[i] > 0) {
-        const extraRewardsAddresses = []
+        const extraRewardsAddresses = [];
         for (var d = 0; d < extraRewards[i]; d++) {
           const poolReward = new ethers.Contract(
             await pool.extraRewards(d),
@@ -212,67 +211,60 @@ export async function getPoolBalances(ctx, chain, contracts) {
             provider
           );
 
-           const earnedBalance = await poolReward.earned(ctx.address)
+          const earnedBalance = await poolReward.earned(ctx.address);
 
           if (earnedBalance > 0) {
-            const rDetails = await getERC20Details(chain, [ await poolReward.rewardToken() ])
+            const rDetails = await getERC20Details(chain, [
+              await poolReward.rewardToken(),
+            ]);
             balance.rewards.push({
               chain,
               category: "stake",
-              symbol:  rDetails[0].symbol,
+              symbol: rDetails[0].symbol,
               decimals: rDetails[0].decimals,
               address: rDetails[0].address,
               amount: BigNumber.from(earnedBalance),
             });
           }
-
         }
       }
     }
   }
 
-  return balances
+  return balances;
 }
 
 //CALCULATE THE RATIO OF CRV:CVX MINTED
 export async function getCVXRatio(provider) {
-
   const ERC20Abi = [
     {
-      "inputs": [],
-      "name": "totalSupply",
-      "outputs": [
+      inputs: [],
+      name: "totalSupply",
+      outputs: [
         {
-          "internalType": "uint256",
-          "name": "",
-          "type": "uint256"
-        }
+          internalType: "uint256",
+          name: "",
+          type: "uint256",
+        },
       ],
-      "stateMutability": "view",
-      "type": "function"
-    }
+      stateMutability: "view",
+      type: "function",
+    },
   ];
 
   const CVX_EMISSION_CLIFF_DISTANCE = 1e5;
   const CVX_EMISSION_TOTAL_CLIFFS = 1e3;
   const CVX_MAX_SUPPLY = 1e8;
   const CVX_DECIMALS = 1e18;
-  const token = new ethers.Contract(
-    CVX,
-    ERC20Abi,
-    provider
-  );
-  const SUPPLY = ( await token.totalSupply() ) / 10 ** 18
+  const token = new ethers.Contract(CVX, ERC20Abi, provider);
+  const SUPPLY = (await token.totalSupply()) / 10 ** 18;
   const currentCliff = SUPPLY / CVX_EMISSION_CLIFF_DISTANCE;
-  const remainingCvxUntilMaxSupply = CVX_MAX_SUPPLY - SUPPLY
+  const remainingCvxUntilMaxSupply = CVX_MAX_SUPPLY - SUPPLY;
 
   if (currentCliff > CVX_EMISSION_TOTAL_CLIFFS) {
-    return [0,1]; //cvx rewards will be 0
+    return [0, 1]; //cvx rewards will be 0
   }
 
-
-  const reduction = CVX_EMISSION_TOTAL_CLIFFS - currentCliff
-  return [reduction.toFixed(2) * 100, CVX_EMISSION_TOTAL_CLIFFS * 100] //*100 cause bignumber is a bitch
-
-
+  const reduction = CVX_EMISSION_TOTAL_CLIFFS - currentCliff;
+  return [reduction.toFixed(2) * 100, CVX_EMISSION_TOTAL_CLIFFS * 100]; //*100 cause bignumber is a bitch
 }
