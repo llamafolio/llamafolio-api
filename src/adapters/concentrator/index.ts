@@ -1,4 +1,9 @@
-import { Adapter, Contract, resolveContractsBalances } from "@lib/adapter";
+import {
+  Adapter,
+  Contract,
+  GetBalancesHandler,
+  resolveContractsBalances,
+} from "@lib/adapter";
 import { getIFOBalances } from "./ifo";
 
 const concentratorIFOContract: Contract = {
@@ -8,22 +13,29 @@ const concentratorIFOContract: Contract = {
   address: "0x3cf54f3a1969be9916dad548f3c084331c4450b5",
 };
 
+const getContracts = () => {
+  return {
+    contracts: [concentratorIFOContract],
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  function resolver(contract: Contract) {
+    if (contract.address === concentratorIFOContract.address) {
+      return getIFOBalances(ctx, "ethereum");
+    }
+  }
+
+  return { balances: await resolveContractsBalances(resolver, contracts) };
+};
+
 const adapter: Adapter = {
   id: "concentrator",
-  getContracts() {
-    return {
-      contracts: [concentratorIFOContract],
-    };
-  },
-  async getBalances(ctx, contracts) {
-    function resolver(contract: Contract) {
-      if (contract.address === concentratorIFOContract.address) {
-        return getIFOBalances(ctx, "ethereum");
-      }
-    }
-
-    return { balances: await resolveContractsBalances(resolver, contracts) };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

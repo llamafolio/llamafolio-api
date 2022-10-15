@@ -1,4 +1,4 @@
-import { Adapter, Balance, Contract } from "@lib/adapter";
+import { Adapter, Balance, Contract, GetBalancesHandler } from "@lib/adapter";
 import { getStakeBalances } from "./balances";
 
 const sAVAX: Contract = {
@@ -11,26 +11,33 @@ const sAVAX: Contract = {
   category: "stake",
 };
 
+const getContracts = () => {
+  return {
+    contracts: [sAVAX],
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  const promises: Promise<Balance>[] = [];
+
+  for (const contract of contracts) {
+    if (contract.address === sAVAX.address) {
+      promises.push(getStakeBalances(ctx, "avax", contract));
+    }
+  }
+
+  return {
+    balances: await Promise.all(promises),
+  };
+};
+
 const adapter: Adapter = {
   id: "benqi-staked-avax",
-  async getContracts() {
-    return {
-      contracts: [sAVAX],
-    };
-  },
-  async getBalances(ctx, contracts) {
-    const promises: Promise<Balance>[] = [];
-
-    for (const contract of contracts) {
-      if (contract.address === sAVAX.address) {
-        promises.push(getStakeBalances(ctx, "avax", contract));
-      }
-    }
-
-    return {
-      balances: await Promise.all(promises),
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

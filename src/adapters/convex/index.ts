@@ -1,8 +1,6 @@
-import { Adapter, Balance, Contract } from "@lib/adapter";
-
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import { getAllPools, getPoolBalances } from "./pools";
-import { getStakeBalances } from "./stake"
-
+import { getStakeBalances } from "./stake";
 
 const lockerContract: Contract = {
   name: "Locker",
@@ -18,27 +16,36 @@ const cvxCRVStakerContract: Contract = {
   address: "0x3fe65692bfcd0e6cf84cb1e7d24108e434a7587e",
 };
 
+const getContracts = async () => {
+  return {
+    contracts: [lockerContract, cvxCRVStakerContract].concat(
+      await getAllPools()
+    ),
+    revalidate: 60 * 60,
+  };
+};
 
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  let balances = await getPoolBalances(ctx, "ethereum", contracts);
+
+  const stakersBalances = await getStakeBalances(ctx, "ethereum", [
+    lockerContract,
+    cvxCRVStakerContract,
+  ]);
+  balances = balances.concat(stakersBalances);
+
+  return {
+    balances: balances,
+  };
+};
 
 const adapter: Adapter = {
   id: "convex-finance",
-  async getContracts() {
-    return {
-      contracts: [lockerContract, cvxCRVStakerContract].concat(await getAllPools()),
-      revalidate: 60 * 60,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    let balances = await getPoolBalances(ctx, "ethereum", contracts);
-
-    const stakersBalances = await getStakeBalances(ctx, "ethereum", [lockerContract, cvxCRVStakerContract]);
-    balances = balances.concat(stakersBalances);
-
-
-    return {
-      balances: balances
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

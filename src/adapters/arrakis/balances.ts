@@ -7,7 +7,7 @@ import { BaseContext, Contract } from "@lib/adapter";
 
 import VaultAbi from "./abis/Vault.json";
 
-export async function getBalances(
+export async function getLpBalances(
   ctx: BaseContext,
   chain: Chain,
   contracts: Contract[]

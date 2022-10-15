@@ -69,10 +69,23 @@ export interface Contract extends BaseContract {
   [key: string | number]: any;
 }
 
-export type ContractsConfig = {
-  contracts: Contract[];
+type ContractsConfig = {
+  contracts: Contract[] | { [key: string]: Contract | Contract[] };
   revalidate?: number;
 };
+
+export type GetContractsHandler = () =>
+  | ContractsConfig
+  | Promise<ContractsConfig>;
+
+export type GetBalancesHandler<C extends GetContractsHandler> = (
+  ctx: BaseContext,
+  contracts: InferGetBalancesType<C>
+) => BalancesConfig | Promise<BalancesConfig>;
+
+type InferGetBalancesType<T extends (args: any) => any> = Awaited<
+  ReturnType<T>
+>["contracts"];
 
 export interface Adapter {
   /**
@@ -80,11 +93,8 @@ export interface Adapter {
    * @see https://docs.llama.fi/list-your-project/submit-a-project to submit your adapter on DefiLlama.
    */
   id: string;
-  getContracts: () => ContractsConfig | Promise<ContractsConfig>;
-  getBalances: (
-    ctx: BaseContext,
-    contracts: Contract[] | { [key: string]: Contract | Contract[] }
-  ) => BalancesConfig | Promise<BalancesConfig>;
+  getContracts: GetContractsHandler;
+  getBalances: GetBalancesHandler<GetContractsHandler>;
 }
 
 export async function resolveContractsBalances(

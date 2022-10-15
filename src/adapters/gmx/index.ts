@@ -1,6 +1,5 @@
-import { Adapter, Balance, Contract } from "@lib/adapter";
-import { getBalances } from "./balances";
-import GMXStakerAbi from "./abis/GMXStaker.json";
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
+import { getStakeBalances } from "./balances";
 
 const glpStaker: Contract = {
   name: "sGLP",
@@ -16,21 +15,28 @@ const gmxStaker: Contract = {
   address: "0x908c4d94d34924765f1edc22a1dd098397c59dd4",
 };
 
+const getContracts = async () => {
+  return {
+    contracts: [glpStaker, gmxStaker],
+    revalidate: 60 * 60,
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  const balances = await getStakeBalances(ctx, "arbitrum", contracts);
+
+  return {
+    balances,
+  };
+};
+
 const adapter: Adapter = {
   id: "gmx",
-  async getContracts() {
-    return {
-      contracts: [glpStaker, gmxStaker],
-      revalidate: 60 * 60,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    const balances = await getBalances(ctx, "arbitrum", contracts);
-
-    return {
-      balances,
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

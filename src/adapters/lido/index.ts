@@ -1,15 +1,14 @@
-import { Adapter, Contract } from "@lib/adapter";
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import { getERC20BalanceOf } from "@lib/erc20";
 import { Token } from "@lib/token";
-import { getStMaticBalances } from './balances'
+import { getStMaticBalances } from "./balances";
 
-
-const underlyings:Token = {
+const underlyings: Token = {
   address: "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
   chain: "ethereum",
   symbol: "MATIC",
-  decimals: 18
-}
+  decimals: 18,
+};
 
 const stETH: Contract = {
   name: "stETH",
@@ -42,29 +41,39 @@ const stMATIC: Contract = {
   underlyings: [underlyings],
 };
 
+const getContracts = () => {
+  return {
+    contracts: [stETH, wstETH, stMATIC],
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  const ethereumBalances = await getERC20BalanceOf(
+    ctx,
+    "ethereum",
+    contracts.filter((contract) => contract.chain === "ethereum")
+  );
+
+  const polygonBalances = await getStMaticBalances(
+    ctx,
+    "ethereum",
+    contracts.filter((contract) => contract.chain === "polygon")
+  );
+
+  const balances = [...ethereumBalances, ...polygonBalances];
+
+  return {
+    balances: balances.map((bal) => ({ ...bal, category: "stake" })),
+  };
+};
+
 const adapter: Adapter = {
   id: "lido",
-  getContracts() {
-    return {
-      contracts: [stETH, wstETH, stMATIC],
-    };
-  },
-  async getBalances(ctx, contracts) {
-
-    const ethereumBalances = await getERC20BalanceOf(
-      ctx,
-      "ethereum",
-      contracts.filter((contract) => contract.chain === "ethereum")
-    );
-
-    const polygonBalances = await getStMaticBalances(ctx, "ethereum", contracts.filter((contract) => contract.chain === "polygon"));
-
-    const balances = [...ethereumBalances, ...polygonBalances];
-
-    return {
-      balances: balances.map((bal) => ({ ...bal, category: "stake" })),
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

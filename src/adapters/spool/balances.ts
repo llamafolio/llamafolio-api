@@ -21,7 +21,7 @@ import { getERC20Balances, getERC20Details } from "@lib/erc20";
 // USDT Lower Risk
 //https://etherscan.io/address/0xe140bb5f424a53e0687bfc10f6845a5672d7e242#writeProxyContract​
 
-export async function getBalances(ctx, chain, contracts) {
+export async function getPoolsBalances(ctx, chain, contracts) {
 
   let calls = contracts.map((contract) => {
     return {

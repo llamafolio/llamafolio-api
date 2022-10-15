@@ -1,4 +1,10 @@
-import { Adapter, Balance, BaseContext, Contract } from "@lib/adapter";
+import {
+  Adapter,
+  Balance,
+  BaseContext,
+  Contract,
+  GetBalancesHandler,
+} from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 import { Token } from "@lib/token";
@@ -245,44 +251,51 @@ async function getChainBalances(
   return [...lendBalances, ...borrowBalances];
 }
 
+const getContracts = async () => {
+  const chainsConctracts = await Promise.all([
+    getChainContracts("ethereum"),
+    getChainContracts("fantom"),
+    getChainContracts("avax"),
+    // getChainContracts("arbitrum"),
+  ]);
+
+  return {
+    contracts: chainsConctracts.flat(),
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  const contractsByChain: Record<Chains, Contract[]> = {
+    ethereum: [],
+    fantom: [],
+    avax: [],
+    // arbitrum: [],
+  };
+
+  for (const contract of contracts) {
+    contractsByChain[contract.chain as Chains].push(contract);
+  }
+
+  const chainsBalances = await Promise.all([
+    getChainBalances(ctx, "ethereum", contractsByChain["ethereum"]),
+    getChainBalances(ctx, "fantom", contractsByChain["fantom"]),
+    getChainBalances(ctx, "avax", contractsByChain["avax"]),
+    // getChainBalances(ctx, "arbitrum", contractsByChain["arbitrum"]),
+  ]);
+
+  return {
+    balances: chainsBalances.flat(),
+  };
+};
+
 const adapter: Adapter = {
   // DefiLlama slug
   id: "abracadabra",
-  async getContracts() {
-    const chainsConctracts = await Promise.all([
-      getChainContracts("ethereum"),
-      getChainContracts("fantom"),
-      getChainContracts("avax"),
-      // getChainContracts("arbitrum"),
-    ]);
-
-    return {
-      contracts: chainsConctracts.flat(),
-    };
-  },
-  async getBalances(ctx, contracts) {
-    const contractsByChain: Record<Chains, Contract[]> = {
-      ethereum: [],
-      fantom: [],
-      avax: [],
-      // arbitrum: [],
-    };
-
-    for (const contract of contracts) {
-      contractsByChain[contract.chain as Chains].push(contract);
-    }
-
-    const chainsBalances = await Promise.all([
-      getChainBalances(ctx, "ethereum", contractsByChain["ethereum"]),
-      getChainBalances(ctx, "fantom", contractsByChain["fantom"]),
-      getChainBalances(ctx, "avax", contractsByChain["avax"]),
-      // getChainBalances(ctx, "arbitrum", contractsByChain["arbitrum"]),
-    ]);
-
-    return {
-      balances: chainsBalances.flat(),
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;
