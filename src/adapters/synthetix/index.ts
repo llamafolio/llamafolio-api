@@ -1,10 +1,6 @@
-import {
-  Adapter,
-  Contract,
-  GetBalancesHandler,
-  resolveContractsBalances,
-} from "@lib/adapter";
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import { Token } from "@lib/token";
+import { isNotNullish } from "@lib/type";
 import { getLendBorrowBalances } from "./lend";
 
 const SNXEthereum: Token = {
@@ -55,40 +51,38 @@ const SynthetixOptimism: Contract = {
 
 const getContracts = async () => {
   return {
-    contracts: [SynthetixEthereum, SynthetixOptimism],
+    contracts: { SynthetixEthereum, SynthetixOptimism },
   };
 };
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
-  contracts
+  { SynthetixEthereum, SynthetixOptimism }
 ) => {
-  function resolver(contract: Contract) {
-    if (
-      contract.chain === SynthetixEthereum.chain &&
-      contract.address === SynthetixEthereum.address
-    ) {
-      return getLendBorrowBalances(ctx, "ethereum", {
-        synthetixContract: SynthetixEthereum,
-        feePoolAddress: "0x3b2f389aee480238a49e3a9985cd6815370712eb",
-        sUSD: sUSDEthereum,
-      });
-    }
+  const balances = (
+    await Promise.all([
+      SynthetixEthereum
+        ? getLendBorrowBalances(ctx, "ethereum", {
+            synthetixContract: SynthetixEthereum,
+            feePoolAddress: "0x3b2f389aee480238a49e3a9985cd6815370712eb",
+            sUSD: sUSDEthereum,
+          })
+        : null,
 
-    if (
-      contract.chain === SynthetixOptimism.chain &&
-      contract.address === SynthetixOptimism.address
-    ) {
-      return getLendBorrowBalances(ctx, "optimism", {
-        synthetixContract: SynthetixOptimism,
-        feePoolAddress: "0xD3739A5F06747e148E716Dcb7147B9BA15b70fcc",
-        sUSD: sUSDOptimism,
-      });
-    }
-  }
+      SynthetixOptimism
+        ? getLendBorrowBalances(ctx, "optimism", {
+            synthetixContract: SynthetixOptimism,
+            feePoolAddress: "0xD3739A5F06747e148E716Dcb7147B9BA15b70fcc",
+            sUSD: sUSDOptimism,
+          })
+        : null,
+    ])
+  )
+    .flat()
+    .filter(isNotNullish);
 
   return {
-    balances: await resolveContractsBalances(resolver, contracts),
+    balances,
   };
 };
 

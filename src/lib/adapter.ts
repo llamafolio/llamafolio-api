@@ -1,6 +1,5 @@
 import { Chain } from "@defillama/sdk/build/general";
 import { BigNumber } from "ethers";
-import { isNotNullish } from "@lib/type";
 import { Category } from "@lib/category";
 
 export type ContractType = "reward" | "debt" | "underlying";
@@ -95,17 +94,4 @@ export interface Adapter {
   id: string;
   getContracts: GetContractsHandler;
   getBalances: GetBalancesHandler<GetContractsHandler>;
-}
-
-export async function resolveContractsBalances(
-  resolver: (
-    contract: Contract
-  ) => Promise<Balance[] | Balance> | undefined | null,
-  contracts: Contract[]
-) {
-  const balances = await Promise.all(
-    contracts.map(resolver).filter(isNotNullish)
-  );
-
-  return balances.flat();
 }
