@@ -36,6 +36,7 @@ import valas from "@adapters/valas";
 import vector from "@adapters/vector";
 import venus from "@adapters/venus";
 import wallet from "@adapters/wallet";
+import wepiggy from "@adapters/wepiggy";
 import { Adapter } from "@lib/adapter";
 
 export const adapters: Adapter[] = [
@@ -77,6 +78,7 @@ export const adapters: Adapter[] = [
   vector,
   venus,
   wallet,
+  wepiggy,
 ];
 
 export const adapterById: { [key: string]: Adapter } = {};
