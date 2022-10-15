@@ -2,7 +2,7 @@ import { Chain } from "@defillama/sdk/build/general";
 
 export const ETH_ADDR = "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee";
 
-export type Token = {
+export interface Token {
   chain: Chain;
   address: string;
   symbol: string;
@@ -12,4 +12,4 @@ export type Token = {
   // optional token used to retrieve price.
   // ex: WETH -> ETH
   priceSubstitute?: string;
-};
+}

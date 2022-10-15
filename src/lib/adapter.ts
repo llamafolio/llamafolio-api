@@ -5,9 +5,9 @@ import { Category } from "@lib/category";
 export type ContractType = "reward" | "debt" | "underlying";
 export type ContractStandard = "erc20" | "erc721";
 
-export type BaseContext = {
+export interface BaseContext {
   address: string;
-};
+}
 
 export interface BaseBalance extends BaseContract {
   amount: BigNumber;
@@ -20,13 +20,13 @@ export interface BasePricedBalance extends BaseBalance {
   timestamp: number;
 }
 
-export type RewardBalance = BaseBalance & {
+export interface RewardBalance extends BaseBalance {
   // claimable amount. Can be lower than balance amount but not higher.
   // ex: vested reward of 1000 but only 100 currently claimable.
   claimable: BigNumber;
   // TODO: rewards interface
   rates?: any;
-};
+}
 
 export interface Balance extends BaseBalance {
   // optional rewards
@@ -42,10 +42,10 @@ export interface PricedBalance extends BasePricedBalance {
   underlyings?: BasePricedBalance[];
 }
 
-export type BalancesConfig = {
+export interface BalancesConfig {
   balances: Balance[];
   revalidate?: number;
-};
+}
 
 export interface BaseContract {
   // discriminators
@@ -68,10 +68,10 @@ export interface Contract extends BaseContract {
   [key: string | number]: any;
 }
 
-type ContractsConfig = {
+export interface ContractsConfig {
   contracts: Contract[] | { [key: string]: Contract | Contract[] };
   revalidate?: number;
-};
+}
 
 export type GetContractsHandler = () =>
   | ContractsConfig
@@ -79,12 +79,8 @@ export type GetContractsHandler = () =>
 
 export type GetBalancesHandler<C extends GetContractsHandler> = (
   ctx: BaseContext,
-  contracts: InferGetBalancesType<C>
+  contracts: Awaited<ReturnType<C>>["contracts"]
 ) => BalancesConfig | Promise<BalancesConfig>;
-
-type InferGetBalancesType<T extends (args: any) => any> = Awaited<
-  ReturnType<T>
->["contracts"];
 
 export interface Adapter {
   /**
