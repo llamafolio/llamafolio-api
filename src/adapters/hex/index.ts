@@ -1,13 +1,7 @@
 import { BigNumber } from "ethers";
 import { ethers } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
-import {
-  Adapter,
-  Balance,
-  Contract,
-  GetBalancesHandler,
-  resolveContractsBalances,
-} from "@lib/adapter";
+import { Adapter, Balance, Contract, GetBalancesHandler } from "@lib/adapter";
 import abi from "./abi/hex.json";
 import { multicall } from "@lib/multicall";
 import { range } from "@lib/array";
@@ -72,22 +66,22 @@ const getStakeBalances = async (ctx: any, chain: Chain) => {
 
 const getContracts = () => {
   return {
-    contracts: [HEX],
+    contracts: { HEX },
   };
 };
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
-  contracts
+  { HEX }
 ) => {
-  function resolver(contract: Contract) {
-    if (contract.address === HEX.address) {
-      return getStakeBalances(ctx, "ethereum");
-    }
+  if (HEX) {
+    return {
+      balances: await getStakeBalances(ctx, "ethereum"),
+    };
   }
 
   return {
-    balances: await resolveContractsBalances(resolver, contracts),
+    balances: [],
   };
 };
 
