@@ -4,7 +4,6 @@ import { BigNumber } from "ethers";
 import millify from "millify";
 
 import { Adapter, Balance, BaseContext } from "../src/lib/adapter";
-import { groupContracts } from "../src/db/contracts";
 import { getPricedBalances } from "../src/lib/price";
 
 type CategoryBalances = {
@@ -54,7 +53,7 @@ async function main() {
 
   const balancesRes = await adapter.getBalances(
     ctx,
-    groupContracts(contractsRes.contracts) || []
+    contractsRes.contracts || []
   );
 
   const yieldsRes = await fetch("https://yields.llama.fi/poolsOld");
