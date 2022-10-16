@@ -1,4 +1,4 @@
-import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
+import { Adapter, GetBalancesHandler } from "@lib/adapter";
 import {
   getMarketsContracts,
   getMarketsBalances,
