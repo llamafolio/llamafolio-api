@@ -1,14 +1,16 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
-import { getERC20Balances, getERC20Details } from "@lib/erc20";
+import { providers } from "@defillama/sdk/build/general";
+import { getERC20Details } from "@lib/erc20";
 
 import PoolAbi from "./abis/Pool.json";
-import DataProviderAbi from "./abis/DataProvider.json";
-import { Balance } from "@lib/adapter";
+import { Balance, BaseContext, Contract } from "@lib/adapter";
 
-export async function getLendingBalances(ctx, contracts): Promise<Balance[]> {
-  const balances = [];
+export async function getLendingBalances(
+  ctx: BaseContext,
+  contracts: Contract[]
+) {
+  const balances: Balance[] = [];
   for (let index = 0; index < contracts.length; index++) {
     const chain = contracts[index].chain;
 
@@ -55,7 +57,6 @@ export async function getLendingBalances(ctx, contracts): Promise<Balance[]> {
       }
     }
 
-    let getATokenAddressRes = [];
     if (aTokensToGet.length > 0) {
       calls = [];
       for (let r = 0; r < aTokensToGet.length; r++) {
@@ -65,48 +66,53 @@ export async function getLendingBalances(ctx, contracts): Promise<Balance[]> {
         });
       }
 
-      getATokenAddressRes = await multicall({
+      let getATokenAddressRes = await multicall({
         chain: chain,
         calls: calls,
         abi: abiReserveTokens,
       });
-    }
 
-    for (let c = 0; c < getUserDetails.length; c++) {
-      const userRow = getUserDetails[c];
-      if (userRow.currentATokenBalance > 0) {
-        const aToken = getATokenAddressRes.find(
-          (o) =>
-            o.input.params[0].toLowerCase() ===
-            tokenDetails[c].address.toLowerCase()
-        );
-        balances.push({
-          chain: chain,
-          category: "lend",
-          symbol: tokenDetails[c].symbol,
-          decimals: tokenDetails[c].decimals,
-          address: tokenDetails[c].address,
-          amount: BigNumber.from(userRow.currentATokenBalance),
-          yieldsKey: `${aToken.output.aTokenAddress.toLowerCase()}-${
-            chain === "avax" ? "avalanche" : chain
-          }`, //need to get aToken address here
-        });
-      }
+      for (let c = 0; c < getUserDetails.length; c++) {
+        const userRow = getUserDetails[c];
+        if (userRow.currentATokenBalance > 0) {
+          const aToken = getATokenAddressRes.find(
+            (o) =>
+              o.input.params[0].toLowerCase() ===
+              tokenDetails[c].address.toLowerCase()
+          );
+          balances.push({
+            chain: chain,
+            category: "lend",
+            symbol: tokenDetails[c].symbol,
+            decimals: tokenDetails[c].decimals,
+            address: tokenDetails[c].address,
+            amount: BigNumber.from(userRow.currentATokenBalance),
+            yieldsKey: aToken
+              ? `${aToken.output.aTokenAddress.toLowerCase()}-${
+                  chain === "avax" ? "avalanche" : chain
+                }`
+              : undefined, //need to get aToken address here
+          } as Balance);
+        }
 
-      if (userRow.currentVariableDebt > 0 || userRow.scaledVariableDebt > 0) {
-        const balance =
-          userRow.currentVariableDebt > 0
-            ? userRow.currentVariableDebt
-            : userRow.scaledVariableDebt;
-        balances.push({
-          chain: chain,
-          category: "borrow",
-          symbol: tokenDetails[c].symbol,
-          decimals: tokenDetails[c].decimals,
-          address: tokenDetails[c].address,
-          amount: BigNumber.from(balance),
-          type: "debt",
-        });
+        if (userRow.currentVariableDebt > 0 || userRow.scaledVariableDebt > 0) {
+          const amount =
+            userRow.currentVariableDebt > 0
+              ? userRow.currentVariableDebt
+              : userRow.scaledVariableDebt;
+
+          const balance: Balance = {
+            chain: chain,
+            category: "borrow",
+            symbol: tokenDetails[c].symbol,
+            decimals: tokenDetails[c].decimals,
+            address: tokenDetails[c].address,
+            amount: BigNumber.from(amount),
+            type: "debt",
+          };
+
+          balances.push(balance);
+        }
       }
     }
   }

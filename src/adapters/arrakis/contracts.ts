@@ -1,11 +1,11 @@
 import { multicall } from "@lib/multicall";
-import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
-import { getERC20Balances, getERC20Details } from "@lib/erc20";
-
+import { ethers } from "ethers";
+import { providers } from "@defillama/sdk/build/general";
+import { Contract } from "@lib/adapter";
+import { getPairsDetails } from "@lib/uniswap/v2/factory";
 import FactoryAbi from "./abis/Factory.json";
 
-export async function getVaults(factoryArrakis) {
+export async function getVaults(factoryArrakis: Contract) {
   const provider = providers[factoryArrakis.chain];
   const contract = new ethers.Contract(
     factoryArrakis.address,
@@ -13,23 +13,21 @@ export async function getVaults(factoryArrakis) {
     provider
   );
 
-  const allMainPools = await contract.getGelatoPools();
+  const allMainPools: string[] = await contract.getGelatoPools();
 
-  const formattedPools = allMainPools.map((address, i) => ({
+  const formattedPools: Contract[] = allMainPools.map((address) => ({
     name: "pool",
-    displayName: `Arrakis Pool`,
+    displayName: "Arrakis Pool",
     chain: "ethereum",
     address: address,
   }));
 
-  const deployers = await contract.getDeployers();
+  const deployers: string[] = await contract.getDeployers();
 
-  let calls = deployers.map((deployer) => {
-    return {
-      params: [deployer],
-      target: factoryArrakis.address,
-    };
-  });
+  const calls = deployers.map((deployer) => ({
+    params: [deployer],
+    target: factoryArrakis.address,
+  }));
 
   const getAllPoolsRes = await multicall({
     chain: "ethereum",
@@ -67,12 +65,12 @@ export async function getVaults(factoryArrakis) {
     }
   }
 
-  const customPools = customPoolsFetch.map((address, i) => ({
+  const customPools: Contract[] = customPoolsFetch.map((address) => ({
     name: "pool",
-    displayName: `Arrakis Pool`,
+    displayName: "Arrakis Pool",
     chain: "ethereum",
     address: address,
   }));
 
-  return formattedPools.concat(customPools);
+  return getPairsDetails("ethereum", formattedPools.concat(customPools));
 }

@@ -75,7 +75,7 @@ const markets: Record<Chains, Record<string, string>> = {
 async function getChainContracts(chain: Chains) {
   const cauldrons = markets[chain];
   if (!cauldrons) {
-    return { contracts: [] };
+    return [];
   }
 
   const underlyings = await getERC20Details(chain, Object.values(cauldrons));
