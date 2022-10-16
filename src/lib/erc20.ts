@@ -1,7 +1,7 @@
 import { BigNumber } from "ethers";
 import { Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
-import { BaseBalance, BaseContext } from "@lib/adapter";
+import { Balance, BaseBalance, BaseContext } from "@lib/adapter";
 import { Token } from "@lib/token";
 import { getToken } from "@llamafolio/tokens";
 import { isNotNullish } from "@lib/type";
@@ -60,7 +60,7 @@ export async function getERC20BalanceOf(
   ctx: BaseContext,
   chain: Chain,
   tokens: Token[]
-): Promise<BaseBalance[]> {
+): Promise<Balance[]> {
   const balances = await multicall({
     chain,
     calls: tokens.map((token) => ({
@@ -79,8 +79,8 @@ export async function getERC20BalanceOf(
         return null;
       }
 
-      (token as BaseBalance).amount = BigNumber.from(balances[i].output || "0");
-      return token as BaseBalance;
+      (token as Balance).amount = BigNumber.from(balances[i].output || "0");
+      return token as Balance;
     })
     .filter(isNotNullish);
 }

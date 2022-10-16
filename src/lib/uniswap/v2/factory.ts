@@ -1,12 +1,13 @@
-import { Contract } from "ethers";
+import { ethers } from "ethers";
 import { providers, Chain } from "@defillama/sdk/build/general";
+import { Contract } from "@lib/adapter";
 import { multicall } from "@lib/multicall";
-import UniswapV2Factory from "./abis/UniswapV2Factory.json";
 import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
 import { Category } from "@lib/category";
 import { range } from "@lib/array";
+import UniswapV2Factory from "./abis/UniswapV2Factory.json";
 
 export type getPairsContractsParams = {
   chain: Chain;
@@ -21,7 +22,11 @@ export async function getPairsContracts({
   length,
 }: getPairsContractsParams) {
   const provider = providers[chain];
-  const factory = new Contract(factoryAddress, UniswapV2Factory, provider);
+  const factory = new ethers.Contract(
+    factoryAddress,
+    UniswapV2Factory,
+    provider
+  );
 
   let allPairsLength = (await factory.allPairsLength()).toNumber();
   if (length !== undefined) {
@@ -45,9 +50,15 @@ export async function getPairsContracts({
     },
   });
 
-  const addresses = allPairsRes
+  const pairs: Contract[] = allPairsRes
     .filter((res) => res.success)
-    .map((res) => res.output.toLowerCase());
+    .map((res) => ({ chain, address: res.output.toLowerCase() }));
+
+  return getPairsDetails(chain, pairs);
+}
+
+export async function getPairsDetails(chain: Chain, contracts: Contract[]) {
+  const addresses = contracts.map((contract) => contract.address);
 
   const [pairs, token0sRes, token1sRes] = await Promise.all([
     getERC20Details(chain, addresses),
