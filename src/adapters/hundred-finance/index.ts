@@ -84,11 +84,11 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
 ) => {
   const [balancesETH, balancesFTM, balancesPOLY, balancesARB, balancesOPT] =
     await Promise.all([
-      getMarketsBalances(ctx, "ethereum", poolsMarketsETH),
-      getMarketsBalances(ctx, "fantom", poolsMarketsFTM),
-      getMarketsBalances(ctx, "polygon", poolsMarketsPOLY),
-      getMarketsBalances(ctx, "arbitrum", poolsMarketsARB),
-      getMarketsBalances(ctx, "optimism", poolsMarketsOPT),
+      getMarketsBalances(ctx, "ethereum", poolsMarketsETH || []),
+      getMarketsBalances(ctx, "fantom", poolsMarketsFTM || []),
+      getMarketsBalances(ctx, "polygon", poolsMarketsPOLY || []),
+      getMarketsBalances(ctx, "arbitrum", poolsMarketsARB || []),
+      getMarketsBalances(ctx, "optimism", poolsMarketsOPT || []),
     ]);
 
   const balances = [
