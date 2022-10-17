@@ -1,13 +1,12 @@
 import { call } from "@defillama/sdk/build/abi";
 import { Chain } from "@defillama/sdk/build/general";
 import { Contract } from "@lib/adapter";
-import { getERC20Details } from "@lib/erc20";
+import { range } from "@lib/array";
+import { getERC20Details2 } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 import { BigNumber } from "ethers";
 
 export async function getPoolsContracts(chain: Chain, contract: Contract) {
-  const contractsAddresses: string[] = [];
-
   const poolsLengthRes = await call({
     chain,
     target: contract.address,
@@ -23,41 +22,42 @@ export async function getPoolsContracts(chain: Chain, contract: Contract) {
 
   const poolsLength = poolsLengthRes.output;
 
-  for (let i = 0; i < poolsLength; i++) {
-    const poolsAddressesRes = await call({
-      chain,
+  const poolsInfoRes = await multicall({
+    chain,
+    calls: range(0, poolsLength).map((i) => ({
       target: contract.address,
       params: [i],
-      abi: {
-        inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        name: "poolInfo",
-        outputs: [
-          { internalType: "address", name: "stakeToken", type: "address" },
-          { internalType: "uint256", name: "allocPoint", type: "uint256" },
-          {
-            internalType: "uint256",
-            name: "lastRewardBlock",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "accAlpacaPerShare",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "accAlpacaPerShareTilBonusEnd",
-            type: "uint256",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-    });
-    const poolsAddresses = poolsAddressesRes.output.stakeToken;
-    contractsAddresses.push(poolsAddresses);
-  }
-  return contractsAddresses;
+    })),
+    abi: {
+      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+      name: "poolInfo",
+      outputs: [
+        { internalType: "address", name: "stakeToken", type: "address" },
+        { internalType: "uint256", name: "allocPoint", type: "uint256" },
+        {
+          internalType: "uint256",
+          name: "lastRewardBlock",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "accAlpacaPerShare",
+          type: "uint256",
+        },
+        {
+          internalType: "uint256",
+          name: "accAlpacaPerShareTilBonusEnd",
+          type: "uint256",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  });
+
+  return poolsInfoRes
+    .filter((res) => res.success)
+    .map((res) => res.output.stakeToken);
 }
 
 export async function getContractsInfos(
@@ -108,32 +108,29 @@ export async function getContractsInfos(
       }),
     ]);
 
-  const contractsAddresses = contractsAddressesRes
-    // .filter((res) => res.success)
-    .map((res, index) => ({
-      associatedWithPoolNumber: index,
-      data: res.output
-    }))
+  const contractsAddresses = contractsAddressesRes.map((res) => res.output);
 
-    console.log(contractsAddresses)
+  const contractsInfos = await getERC20Details2(chain, contractsAddresses);
 
-  const contractsInfos = await getERC20Details(chain, contractsAddresses);
+  for (let i = 0; i < poolsContracts.length; i++) {
+    if (
+      contractsInfos[i] &&
+      totalTokenRes[i].success &&
+      totalSupplyRes[i].success
+    ) {
+      const totalToken = BigNumber.from(totalTokenRes[i].output);
+      const totalSupply = BigNumber.from(totalSupplyRes[i].output);
 
-  const totalToken = totalTokenRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output));
-
-  const totalSupply = totalSupplyRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output))
-    .filter((res) => res._hex !== "0x00");
-
-  for (let i = 0; i < contractsInfos.length; i++) {
-    const contract = {
-      ...contractsInfos[i],
-      APY: totalToken[i].div(totalSupply[i]),
-    };
-    contracts.push(contract);
+      // division by 0
+      if (totalSupply.gt(0)) {
+        const contract = {
+          ...contractsInfos[i],
+          APY: totalToken.div(totalSupply),
+        };
+        contracts.push(contract);
+      }
+    }
   }
+
   return contracts;
 }

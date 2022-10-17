@@ -130,3 +130,54 @@ export async function getERC20Details(
 
   return tokens.map((address) => found[address]).filter(isNotNullish);
 }
+
+export async function getERC20Details2(
+  chain: Chain,
+  tokens: (string | null)[]
+): Promise<(Token | null)[]> {
+  const found: { [key: string]: Token } = {};
+  for (const address of tokens) {
+    if (!address) {
+      continue;
+    }
+    const tokenInfo = getToken(chain, address.toLowerCase());
+    if (tokenInfo) {
+      found[address] = tokenInfo as Token;
+    }
+  }
+
+  const missingTokens = tokens.filter(
+    (address) => address && !found[address]
+  ) as string[];
+
+  const calls = missingTokens.map((address) => ({
+    target: address,
+    params: [],
+  }));
+
+  const [symbols, decimals] = await Promise.all([
+    multicall({ chain, calls, abi: abi.symbol }),
+    multicall({ chain, calls, abi: abi.decimals }),
+  ]);
+
+  for (let i = 0; i < missingTokens.length; i++) {
+    const address = missingTokens[i];
+    if (!symbols[i].success) {
+      console.error(`Could not get symbol for token ${chain}:${address}`);
+      continue;
+    }
+    if (!decimals[i].success) {
+      console.error(`Could not get decimals for token ${chain}:${address}`);
+      continue;
+    }
+
+    found[address] = {
+      chain,
+      address,
+      symbol: symbols[i].output,
+      decimals: parseInt(decimals[i].output),
+    };
+  }
+
+  return tokens.map((address) => (address != null && found[address]) || null);
+}
