@@ -20,10 +20,10 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
   contracts
 ) => {
-  // const balances = await getFarmBalances(ctx, "bsc", contracts || []);
+  const balances = await getFarmBalances(ctx, "bsc", contracts || []);
 
   return {
-    // balances,
+    balances,
   };
 };
 

@@ -121,16 +121,14 @@ export async function getContractsInfos(
       const totalToken = BigNumber.from(totalTokenRes[i].output);
       const totalSupply = BigNumber.from(totalSupplyRes[i].output);
 
-      // division by 0
-      if (totalSupply.gt(0)) {
-        const contract = {
-          ...contractsInfos[i],
-          APY: totalToken.div(totalSupply),
-        };
-        contracts.push(contract);
-      }
+      const contract = {
+        ...contractsInfos[i],
+        associatedWithPoolNumber: i,
+        totalToken,
+        totalSupply,
+      };
+      contracts.push(contract);
     }
   }
-
   return contracts;
 }
