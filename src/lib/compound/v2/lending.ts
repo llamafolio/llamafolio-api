@@ -1,6 +1,6 @@
 import { BigNumber, ethers } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
-import { BaseContext, Contract } from "@lib/adapter";
+import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20Details, getERC20BalanceOf } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 import ComptrollerABI from "./abis/Comptroller.json";
@@ -78,8 +78,8 @@ export async function getMarketsContracts(
   return cTokens
     .map((token, i) => {
       const underlyingTokenAddress =
-        underlyingTokensAddressesRes[i].output?.toLowerCase() ||
-        underlyingAddressByMarketAddress?.[token.address?.toLowerCase()];
+        underlyingAddressByMarketAddress?.[token.address?.toLowerCase()] ||
+        underlyingTokensAddressesRes[i].output?.toLowerCase();
       let underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
 
       if (!underlyingToken) {
@@ -100,7 +100,7 @@ export async function getMarketsBalances(
   ctx: BaseContext,
   chain: Chain,
   contracts: Contract[]
-) {
+): Promise<Balance[]> {
   const cTokenByAddress: { [key: string]: Contract } = {};
   for (const contract of contracts) {
     cTokenByAddress[contract.address] = contract;

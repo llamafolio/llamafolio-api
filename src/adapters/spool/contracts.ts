@@ -6,7 +6,7 @@ import { getERC20Balances, getERC20Details } from "@lib/erc20";
 import ControllerAbi from "./abis/Controller.json";
 
 
-export async function getContracts(spoolController) {
+export async function getPoolsContracts(spoolController) {
 
     const provider = providers["ethereum"]
     const contract = new ethers.Contract(

@@ -1,17 +1,19 @@
 import { Adapter, GetBalancesHandler } from "@lib/adapter";
 import {
-  getMarketsContracts,
   getMarketsBalances,
+  getMarketsContracts,
 } from "@lib/compound/v2/lending";
+import { ETH_ADDR } from "@lib/token";
+import { ethers } from "ethers";
 
 const getContracts = async () => {
-  const poolsMarkets = await getMarketsContracts("ethereum", {
-    // Strike comptroller
-    comptrollerAddress: "0xe2e17b2cbbf48211fa7eb8a875360e5e39ba2602",
+  const poolsMarkets = await getMarketsContracts("bsc", {
+    // Apeswap Unitroller
+    comptrollerAddress: "0xad48b2c9dc6709a560018c678e918253a65df86e",
     underlyingAddressByMarketAddress: {
-      // sETH -> WETH
-      "0xbee9cf658702527b0acb2719c1faa29edc006a92":
-        "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      // oBNB -> BNB
+      "0x34878f6a484005aa90e7188a546ea9e52b538f6f":
+        ethers.constants.AddressZero,
     },
   });
 
@@ -24,7 +26,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
   contracts
 ) => {
-  let balances = await getMarketsBalances(ctx, "ethereum", contracts);
+  let balances = await getMarketsBalances(ctx, "bsc", contracts);
 
   return {
     balances,
@@ -32,7 +34,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
 };
 
 const adapter: Adapter = {
-  id: "strike",
+  id: "apeswap-lending",
   getContracts,
   getBalances,
 };

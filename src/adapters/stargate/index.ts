@@ -1,8 +1,7 @@
-import { Adapter, Balance, Contract } from "@lib/adapter";
-import { getBalances } from "./balances";
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
+import { getStakeBalances } from "./balances";
 
-//example contract object
-const contracts = [
+const contracts: Contract[] = [
   {
     name: "lpStaking",
     displayName: "LP Staking Pool Mainnet",
@@ -47,21 +46,28 @@ const contracts = [
   },
 ];
 
+const getContracts = () => {
+  return {
+    contracts: contracts,
+    revalidate: 60 * 60,
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  let balances = await getStakeBalances(ctx, contracts);
+
+  return {
+    balances,
+  };
+};
+
 const adapter: Adapter = {
   id: "stargate",
-  async getContracts() {
-    return {
-      contracts: contracts,
-      revalidate: 60 * 60,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    let balances = await getBalances(ctx, contracts);
-
-    return {
-      balances,
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

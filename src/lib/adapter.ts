@@ -1,14 +1,13 @@
 import { Chain } from "@defillama/sdk/build/general";
 import { BigNumber } from "ethers";
-import { isNotNullish } from "@lib/type";
 import { Category } from "@lib/category";
 
 export type ContractType = "reward" | "debt" | "underlying";
 export type ContractStandard = "erc20" | "erc721";
 
-export type BaseContext = {
+export interface BaseContext {
   address: string;
-};
+}
 
 export interface BaseBalance extends BaseContract {
   amount: BigNumber;
@@ -21,13 +20,13 @@ export interface BasePricedBalance extends BaseBalance {
   timestamp: number;
 }
 
-export type RewardBalance = BaseBalance & {
+export interface RewardBalance extends BaseBalance {
   // claimable amount. Can be lower than balance amount but not higher.
   // ex: vested reward of 1000 but only 100 currently claimable.
   claimable: BigNumber;
   // TODO: rewards interface
   rates?: any;
-};
+}
 
 export interface Balance extends BaseBalance {
   // optional rewards
@@ -43,10 +42,10 @@ export interface PricedBalance extends BasePricedBalance {
   underlyings?: BasePricedBalance[];
 }
 
-export type BalancesConfig = {
+export interface BalancesConfig {
   balances: Balance[];
   revalidate?: number;
-};
+}
 
 export interface BaseContract {
   // discriminators
@@ -69,10 +68,19 @@ export interface Contract extends BaseContract {
   [key: string | number]: any;
 }
 
-export type ContractsConfig = {
-  contracts: Contract[];
+export interface ContractsConfig {
+  contracts: Contract[] | { [key: string]: Contract | Contract[] };
   revalidate?: number;
-};
+}
+
+export type GetContractsHandler = () =>
+  | ContractsConfig
+  | Promise<ContractsConfig>;
+
+export type GetBalancesHandler<C extends GetContractsHandler> = (
+  ctx: BaseContext,
+  contracts: Awaited<ReturnType<C>>["contracts"]
+) => BalancesConfig | Promise<BalancesConfig>;
 
 export interface Adapter {
   /**
@@ -80,22 +88,6 @@ export interface Adapter {
    * @see https://docs.llama.fi/list-your-project/submit-a-project to submit your adapter on DefiLlama.
    */
   id: string;
-  getContracts: () => ContractsConfig | Promise<ContractsConfig>;
-  getBalances: (
-    ctx: BaseContext,
-    contracts: Contract[] | { [key: string]: Contract | Contract[] }
-  ) => BalancesConfig | Promise<BalancesConfig>;
-}
-
-export async function resolveContractsBalances(
-  resolver: (
-    contract: Contract
-  ) => Promise<Balance[] | Balance> | undefined | null,
-  contracts: Contract[]
-) {
-  const balances = await Promise.all(
-    contracts.map(resolver).filter(isNotNullish)
-  );
-
-  return balances.flat();
+  getContracts: GetContractsHandler;
+  getBalances: GetBalancesHandler<GetContractsHandler>;
 }

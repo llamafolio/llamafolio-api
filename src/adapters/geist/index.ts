@@ -1,4 +1,4 @@
-import { Adapter, Contract } from "@lib/adapter";
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import {
   getLendingPoolContracts,
   getLendingPoolBalances,
@@ -34,47 +34,53 @@ const geistToken: Token = {
   decimals: 18,
 };
 
+const getContracts = async () => {
+  const lendingPoolContracts = await getLendingPoolContracts({
+    chain: "fantom",
+    lendingPoolAddress: lendingPoolContract.address,
+    chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+    rewardToken: geistToken,
+  });
+
+  return {
+    contracts: lendingPoolContracts,
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  const lendingPoolBalances = await getLendingPoolBalances(
+    ctx,
+    "fantom",
+    contracts,
+    {
+      chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+    }
+  );
+
+  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(
+    ctx,
+    "fantom",
+    contracts,
+    {
+      multiFeeDistributionAddress: multiFeeDistributionContract.address,
+      stakingToken: geistToken,
+    }
+  );
+
+  const balances = lendingPoolBalances.concat(multiFeeDistributionBalances);
+
+  return {
+    balances,
+  };
+};
+
 const adapter: Adapter = {
   id: "geist-finance",
-  async getContracts() {
-    const lendingPoolContracts = await getLendingPoolContracts({
-      chain: "fantom",
-      lendingPoolAddress: lendingPoolContract.address,
-      chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
-      rewardToken: geistToken,
-    });
-
-    return {
-      contracts: lendingPoolContracts,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    const lendingPoolBalances = await getLendingPoolBalances(
-      ctx,
-      "fantom",
-      contracts,
-      {
-        chefIncentivesControllerAddress:
-          chefIncentivesControllerContract.address,
-      }
-    );
-
-    const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(
-      ctx,
-      "fantom",
-      contracts,
-      {
-        multiFeeDistributionAddress: multiFeeDistributionContract.address,
-        stakingToken: geistToken,
-      }
-    );
-
-    const balances = lendingPoolBalances.concat(multiFeeDistributionBalances);
-
-    return {
-      balances,
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

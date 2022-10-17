@@ -1,4 +1,4 @@
-import { Adapter, Contract } from "@lib/adapter";
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import { getPairsBalances, getUnderlyingBalances } from "@lib/uniswap/v2/pair";
 import { getPairsContracts } from "@lib/uniswap/v2/factory";
 import { getMasterChefPoolsInfo, getMasterChefBalances } from "@lib/masterchef";
@@ -33,98 +33,97 @@ const bone: Token = {
   address: "0x9813037ee2218799597d83d4a5b6f3b6778218d9",
 };
 
-const adapter: Adapter = {
-  id: "shibaswap",
-  async getContracts() {
-    const [pairsInfo, masterChefPoolsInfo] = await Promise.all([
-      getPairsContracts({
-        chain: "ethereum",
-        factoryAddress: "0x115934131916C8b277DD010Ee02de363c09d037c",
-        length: 100,
-      }),
+const getContracts = async () => {
+  const [pairsInfo, masterChefPoolsInfo] = await Promise.all([
+    getPairsContracts({
+      chain: "ethereum",
+      factoryAddress: "0x115934131916C8b277DD010Ee02de363c09d037c",
+      length: 100,
+    }),
 
-      getMasterChefPoolsInfo({
-        chain: "ethereum",
-        masterChefAddress: masterChef.address,
-      }),
-    ]);
-
-    // retrieve master chef pools details from lpToken addresses
-    const pairByAddress: { [key: string]: Contract } = {};
-    for (const pair of pairsInfo) {
-      pairByAddress[pair.address.toLowerCase()] = pair;
-    }
-
-    const masterChefPools = masterChefPoolsInfo
-      .map((pool) => {
-        const pair = pairByAddress[pool.lpToken.toLowerCase()];
-        if (!pair) {
-          return null;
-        }
-        return { ...pair, pid: pool.pid };
-      })
-      .filter(isNotNullish);
-
-    const contracts = [
-      ...pairsInfo.map((c) => ({ ...c, category: "lp" })),
-      ...masterChefPools.map((c) => ({ ...c, category: "farm" })),
-    ];
-
-    return {
-      contracts,
-      revalidate: 60 * 60,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    let balances = [];
-    const lp = [];
-    const farm = [];
-
-    for (const contract of contracts) {
-      if (contract.category === "lp") {
-        lp.push(contract);
-      } else if (contract.category === "farm") {
-        farm.push(contract);
-      }
-    }
-
-    let stakerBalances = await getStakerBalances(
-      ctx,
-      "ethereum",
-      staker.address
-    );
-
-    balances = balances.concat(stakerBalances);
-
-    let lockerBalances = await getLockerBalances(
-      ctx,
-      "ethereum",
-      locker.address
-    );
-
-    balances = balances.concat(lockerBalances);
-
-    const pairs = await getPairsBalances(ctx, "ethereum", lp);
-
-    balances = balances.concat(pairs);
-
-    let masterChefBalances = await getMasterChefBalances(ctx, {
+    getMasterChefPoolsInfo({
       chain: "ethereum",
       masterChefAddress: masterChef.address,
-      tokens: farm,
-      rewardToken: bone,
-    });
-    masterChefBalances = await getUnderlyingBalances(
-      "ethereum",
-      masterChefBalances
-    );
+    }),
+  ]);
 
-    balances = balances.concat(masterChefBalances);
+  // retrieve master chef pools details from lpToken addresses
+  const pairByAddress: { [key: string]: Contract } = {};
+  for (const pair of pairsInfo) {
+    pairByAddress[pair.address.toLowerCase()] = pair;
+  }
 
-    return {
-      balances,
-    };
-  },
+  const masterChefPools = masterChefPoolsInfo
+    .map((pool) => {
+      const pair = pairByAddress[pool.lpToken.toLowerCase()];
+      if (!pair) {
+        return null;
+      }
+      return { ...pair, pid: pool.pid };
+    })
+    .filter(isNotNullish);
+
+  const contracts = [
+    ...pairsInfo.map((c) => ({ ...c, category: "lp" })),
+    ...masterChefPools.map((c) => ({ ...c, category: "farm" })),
+  ];
+
+  return {
+    contracts,
+    revalidate: 60 * 60,
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  let balances = [];
+  const lp = [];
+  const farm = [];
+
+  for (const contract of contracts) {
+    if (contract.category === "lp") {
+      lp.push(contract);
+    } else if (contract.category === "farm") {
+      farm.push(contract);
+    }
+  }
+
+  let stakerBalances = await getStakerBalances(ctx, "ethereum", staker.address);
+
+  balances = balances.concat(stakerBalances);
+
+  let lockerBalances = await getLockerBalances(ctx, "ethereum", locker.address);
+
+  balances = balances.concat(lockerBalances);
+
+  const pairs = await getPairsBalances(ctx, "ethereum", lp);
+
+  balances = balances.concat(pairs);
+
+  let masterChefBalances = await getMasterChefBalances(ctx, {
+    chain: "ethereum",
+    masterChefAddress: masterChef.address,
+    tokens: farm,
+    rewardToken: bone,
+  });
+  masterChefBalances = await getUnderlyingBalances(
+    "ethereum",
+    masterChefBalances
+  );
+
+  balances = balances.concat(masterChefBalances);
+
+  return {
+    balances,
+  };
+};
+
+const adapter: Adapter = {
+  id: "shibaswap",
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

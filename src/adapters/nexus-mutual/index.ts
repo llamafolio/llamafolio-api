@@ -1,6 +1,12 @@
 import { ethers, BigNumber } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
-import { Adapter, Contract, Balance, BaseContext } from "@lib/adapter";
+import {
+  Adapter,
+  Contract,
+  Balance,
+  BaseContext,
+  GetBalancesHandler,
+} from "@lib/adapter";
 import abiNXM from "./abi/abi.json";
 
 const NXM: Contract = {
@@ -41,22 +47,29 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain) {
   return [stakeBalances];
 }
 
+const getContracts = () => {
+  return {
+    contracts: [NXM, wNXM],
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx: BaseContext,
+  contracts
+) => {
+  let stakeBalances = await getStakeBalances(ctx, "ethereum");
+
+  let balances = stakeBalances;
+
+  return {
+    balances,
+  };
+};
+
 const adapter: Adapter = {
   id: "nexus-mutual",
-  async getContracts() {
-    return {
-      contracts: [NXM, wNXM],
-    };
-  },
-  async getBalances(ctx: BaseContext, contracts) {
-    let stakeBalances = await getStakeBalances(ctx, "ethereum");
-
-    let balances = stakeBalances;
-
-    return {
-      balances,
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

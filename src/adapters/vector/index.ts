@@ -1,7 +1,6 @@
-import { Adapter, Balance, Contract } from "@lib/adapter";
-import { getBalances } from "./balances";
+import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
+import { getLockerBalances } from "./balances";
 
-//example contract object
 const vtxLocker: Contract = {
   name: "vectorLocker",
   displayName: "VTX Locker",
@@ -9,21 +8,28 @@ const vtxLocker: Contract = {
   address: "0x574679Ec54972cf6d705E0a71467Bb5BB362919D",
 };
 
+const getContracts = () => {
+  return {
+    contracts: [vtxLocker],
+    revalidate: 60 * 60,
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  let balances = await getLockerBalances(ctx, "avax", contracts);
+
+  return {
+    balances,
+  };
+};
+
 const adapter: Adapter = {
   id: "vector-finance",
-  async getContracts() {
-    return {
-      contracts: [vtxLocker],
-      revalidate: 60 * 60,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    let balances = await getBalances(ctx, "avax", contracts);
-
-    return {
-      balances,
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;

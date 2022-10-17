@@ -1,84 +1,76 @@
 import { multicall } from "@lib/multicall";
-import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
-import { getERC20Balances, getERC20Details } from "@lib/erc20";
-
+import { ethers } from "ethers";
+import { providers } from "@defillama/sdk/build/general";
+import { Contract } from "@lib/adapter";
+import { getPairsDetails } from "@lib/uniswap/v2/factory";
 import FactoryAbi from "./abis/Factory.json";
 
+export async function getVaults(factoryArrakis: Contract) {
+  const provider = providers[factoryArrakis.chain];
+  const contract = new ethers.Contract(
+    factoryArrakis.address,
+    FactoryAbi,
+    provider
+  );
 
-export async function getVaults(factoryArrakis) {
+  const allMainPools: string[] = await contract.getGelatoPools();
 
-    const provider = providers[factoryArrakis.chain]
-    const contract = new ethers.Contract(
-      factoryArrakis.address,
-      FactoryAbi,
-      provider
-    );
+  const formattedPools: Contract[] = allMainPools.map((address) => ({
+    name: "pool",
+    displayName: "Arrakis Pool",
+    chain: "ethereum",
+    address: address,
+  }));
 
-    const allMainPools = await contract.getGelatoPools()
+  const deployers: string[] = await contract.getDeployers();
 
-    const formattedPools = allMainPools.map((address, i) => ({
-      name: "pool",
-      displayName: `Arrakis Pool`,
-      chain: "ethereum",
-      address: address
-    }));
+  const calls = deployers.map((deployer) => ({
+    params: [deployer],
+    target: factoryArrakis.address,
+  }));
 
-    const deployers = await contract.getDeployers()
-
-    let calls = deployers.map((deployer) => {
-      return {
-        params: [deployer],
-        target: factoryArrakis.address
-      }
-    })
-
-    const getAllPoolsRes = await multicall({
-      chain: "ethereum",
-      calls: calls,
-      abi:   {
-          "inputs": [
-            {
-              "internalType": "address",
-              "name": "deployer",
-              "type": "address"
-            }
-          ],
-          "name": "getPools",
-          "outputs": [
-            {
-              "internalType": "address[]",
-              "name": "",
-              "type": "address[]"
-            }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-    });
-
-    const getAllPools = getAllPoolsRes
-      .filter((res) => res.success)
-      .map((res) => res.output);
-
-    const customPoolsFetch = []
-    for (let index = 0; index < getAllPools.length; index++) {
-      const pools = getAllPools[index];
-      for (let i = 0; i < pools.length; i++) {
-        customPoolsFetch.push(pools[i])
-      }
-    }
-
-    const customPools = customPoolsFetch.map((address, i) => (
+  const getAllPoolsRes = await multicall({
+    chain: "ethereum",
+    calls: calls,
+    abi: {
+      inputs: [
         {
-          name: "pool",
-          displayName: `Arrakis Pool`,
-          chain: "ethereum",
-          address: address
-        }
-    ));
+          internalType: "address",
+          name: "deployer",
+          type: "address",
+        },
+      ],
+      name: "getPools",
+      outputs: [
+        {
+          internalType: "address[]",
+          name: "",
+          type: "address[]",
+        },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  });
 
+  const getAllPools = getAllPoolsRes
+    .filter((res) => res.success)
+    .map((res) => res.output);
 
-    return formattedPools.concat(customPools)
+  const customPoolsFetch = [];
+  for (let index = 0; index < getAllPools.length; index++) {
+    const pools = getAllPools[index];
+    for (let i = 0; i < pools.length; i++) {
+      customPoolsFetch.push(pools[i]);
+    }
+  }
 
+  const customPools: Contract[] = customPoolsFetch.map((address) => ({
+    name: "pool",
+    displayName: "Arrakis Pool",
+    chain: "ethereum",
+    address: address,
+  }));
+
+  return getPairsDetails("ethereum", formattedPools.concat(customPools));
 }

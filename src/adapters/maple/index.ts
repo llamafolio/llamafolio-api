@@ -1,22 +1,29 @@
-import { Adapter, Balance, Contract } from "@lib/adapter";
+import { Adapter, Balance, Contract, GetBalancesHandler } from "@lib/adapter";
 import { getContractsFromGraph } from "./contracts";
-import { getBalances } from "./balances";
+import { getStakeBalances } from "./balances";
+
+const getContracts = async () => {
+  return {
+    contracts: await getContractsFromGraph(),
+    revalidate: 60 * 60,
+  };
+};
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  contracts
+) => {
+  let balances = await getStakeBalances(ctx, "ethereum", contracts);
+
+  return {
+    balances: balances,
+  };
+};
 
 const adapter: Adapter = {
   id: "maple",
-  async getContracts() {
-    return {
-      contracts: await getContractsFromGraph(),
-      revalidate: 60 * 60,
-    };
-  },
-  async getBalances(ctx, contracts) {
-    let balances = await getBalances(ctx, "ethereum", contracts);
-
-    return {
-      balances: balances,
-    };
-  },
+  getContracts,
+  getBalances,
 };
 
 export default adapter;
