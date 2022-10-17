@@ -14,6 +14,7 @@ import euler from "@adapters/euler";
 import geist from "@adapters/geist";
 import gmx from "@adapters/gmx";
 import hex from "@adapters/hex";
+import hundredFinance from "@adapters/hundred-finance";
 import ironBank from "@adapters/iron-bank";
 import lido from "@adapters/lido";
 import liquity from "@adapters/liquity";
@@ -58,6 +59,7 @@ export const adapters: Adapter[] = [
   geist,
   gmx,
   hex,
+  hundredFinance,
   ironBank,
   lido,
   liquity,
