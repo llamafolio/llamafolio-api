@@ -46,7 +46,7 @@ const getContracts = async () => {
         // pETH -> wETH
         "0x17933112e9780abd0f27f2b7d9dda9e840d43159":
           "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
-        // pbtc -> wBTC
+        // pBTC -> wBTC
         "0x3393cd223f59f32cc0cc845de938472595ca48a1":
           "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
       },
