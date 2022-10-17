@@ -3,7 +3,6 @@ import {
   getMarketsBalances,
   getMarketsContracts,
 } from "@lib/compound/v2/lending";
-import { ETH_ADDR } from "@lib/token";
 import { ethers } from "ethers";
 
 const getContracts = async () => {
@@ -26,7 +25,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
   contracts
 ) => {
-  let balances = await getMarketsBalances(ctx, "bsc", contracts);
+  let balances = await getMarketsBalances(ctx, "bsc", contracts || []);
 
   return {
     balances,
