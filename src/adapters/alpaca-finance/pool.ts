@@ -118,7 +118,7 @@ export async function getContractsInfos(
   return contracts;
 }
 
-// misceallaneous
+// miscellaneous
 const abiBSC = {
   inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
   name: "poolInfo",
