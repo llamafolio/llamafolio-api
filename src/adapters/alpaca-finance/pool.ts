@@ -2,7 +2,7 @@ import { call } from "@defillama/sdk/build/abi";
 import { Chain } from "@defillama/sdk/build/general";
 import { Contract } from "@lib/adapter";
 import { range } from "@lib/array";
-import { getERC20Details2 } from "@lib/erc20";
+import { getERC20Details, getERC20Details2 } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 import { BigNumber } from "ethers";
 
@@ -22,42 +22,24 @@ export async function getPoolsContracts(chain: Chain, contract: Contract) {
 
   const poolsLength = poolsLengthRes.output;
 
-  const poolsInfoRes = await multicall({
+  const poolsContractsInfoRes = await multicall({
     chain,
     calls: range(0, poolsLength).map((i) => ({
       target: contract.address,
       params: [i],
     })),
-    abi: {
-      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      name: "poolInfo",
-      outputs: [
-        { internalType: "address", name: "stakeToken", type: "address" },
-        { internalType: "uint256", name: "allocPoint", type: "uint256" },
-        {
-          internalType: "uint256",
-          name: "lastRewardBlock",
-          type: "uint256",
-        },
-        {
-          internalType: "uint256",
-          name: "accAlpacaPerShare",
-          type: "uint256",
-        },
-        {
-          internalType: "uint256",
-          name: "accAlpacaPerShareTilBonusEnd",
-          type: "uint256",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
+    abi: chain === "bsc" ? abiBSC : abiFTM,
   });
 
-  return poolsInfoRes
+  return poolsContractsInfoRes
     .filter((res) => res.success)
-    .map((res) => res.output.stakeToken);
+    .map((res) => {
+      if (chain === "bsc") {
+        return res.output.stakeToken;
+      } else {
+        return res.output;
+      }
+    });
 }
 
 export async function getContractsInfos(
@@ -71,7 +53,7 @@ export async function getContractsInfos(
     params: [],
   }));
 
-  const [contractsAddressesRes, totalTokenRes, totalSupplyRes] =
+  const [underlyingsAddressesRes, totalTokenRes, totalSupplyRes] =
     await Promise.all([
       multicall({
         chain,
@@ -108,13 +90,15 @@ export async function getContractsInfos(
       }),
     ]);
 
-  const contractsAddresses = contractsAddressesRes.map((res) => res.output);
+  const contractsInfos = await getERC20Details(chain, poolsContracts);
 
-  const contractsInfos = await getERC20Details2(chain, contractsAddresses);
+  const underlyingsAddresses = underlyingsAddressesRes.map((res) => res.output);
+
+  const underlyings = await getERC20Details2(chain, underlyingsAddresses);
 
   for (let i = 0; i < poolsContracts.length; i++) {
     if (
-      contractsInfos[i] &&
+      underlyings[i] &&
       totalTokenRes[i].success &&
       totalSupplyRes[i].success
     ) {
@@ -126,9 +110,51 @@ export async function getContractsInfos(
         associatedWithPoolNumber: i,
         totalToken,
         totalSupply,
+        underlyings: [underlyings[i]],
       };
       contracts.push(contract);
     }
   }
   return contracts;
 }
+
+// misceallaneous
+const abiBSC = {
+  inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+  name: "poolInfo",
+  outputs: [
+    { internalType: "address", name: "stakeToken", type: "address" },
+    { internalType: "uint256", name: "allocPoint", type: "uint256" },
+    {
+      internalType: "uint256",
+      name: "lastRewardBlock",
+      type: "uint256",
+    },
+    {
+      internalType: "uint256",
+      name: "accAlpacaPerShare",
+      type: "uint256",
+    },
+    {
+      internalType: "uint256",
+      name: "accAlpacaPerShareTilBonusEnd",
+      type: "uint256",
+    },
+  ],
+  stateMutability: "view",
+  type: "function",
+};
+
+const abiFTM = {
+  inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+  name: "stakingToken",
+  outputs: [
+    {
+      internalType: "contract IERC20Upgradeable",
+      name: "",
+      type: "address",
+    },
+  ],
+  stateMutability: "view",
+  type: "function",
+};
