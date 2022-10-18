@@ -1,6 +1,8 @@
 import aaveV2 from "@adapters/aave/v2";
 import aaveV3 from "@adapters/aave/v3";
 import abracadabra from "@adapters/abracadabra";
+import apeswapAmm from "@adapters/apeswap-amm";
+import apeswapLending from "@adapters/apeswap-lending";
 import arrakis from "@adapters/arrakis";
 import benqiLending from "@adapters/benqi-lending";
 import benqiStakedAvax from "@adapters/benqi-staked-avax";
@@ -12,6 +14,7 @@ import euler from "@adapters/euler";
 import geist from "@adapters/geist";
 import gmx from "@adapters/gmx";
 import hex from "@adapters/hex";
+import hundredFinance from "@adapters/hundred-finance";
 import inverseFinance from "@adapters/inverse-finance";
 import ironBank from "@adapters/iron-bank";
 import lido from "@adapters/lido";
@@ -37,12 +40,15 @@ import valas from "@adapters/valas";
 import vector from "@adapters/vector";
 import venus from "@adapters/venus";
 import wallet from "@adapters/wallet";
+import wepiggy from "@adapters/wepiggy";
 import { Adapter } from "@lib/adapter";
 
 export const adapters: Adapter[] = [
   aaveV2,
   aaveV3,
   abracadabra,
+  apeswapAmm,
+  apeswapLending,
   arrakis,
   benqiLending,
   benqiStakedAvax,
@@ -54,6 +60,7 @@ export const adapters: Adapter[] = [
   geist,
   gmx,
   hex,
+  hundredFinance,
   inverseFinance,
   ironBank,
   lido,
@@ -79,6 +86,7 @@ export const adapters: Adapter[] = [
   vector,
   venus,
   wallet,
+  wepiggy,
 ];
 
 export const adapterById: { [key: string]: Adapter } = {};
