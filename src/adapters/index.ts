@@ -22,6 +22,7 @@ import looksRare from "@adapters/looksrare";
 import nexusMutual from "@adapters/nexus-mutual";
 import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
+import radiant from "@adapters/radiant";
 import rocketpool from "@adapters/rocket-pool";
 import scream from "@adapters/scream";
 import shibaswap from "@adapters/shibaswap";
@@ -67,6 +68,7 @@ export const adapters: Adapter[] = [
   nexusMutual,
   pancakeswap,
   pangolin,
+  radiant,
   rocketpool,
   scream,
   shibaswap,
