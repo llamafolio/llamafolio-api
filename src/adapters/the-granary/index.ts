@@ -111,25 +111,25 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
       getSuppliedBorrowedBalances(
         ctx,
         "fantom",
-        poolsContractsFTM,
+        poolsContractsFTM || [],
         dataProviderFTM
       ),
       getSuppliedBorrowedBalances(
         ctx,
         "avax",
-        poolsContractsAVAX,
+        poolsContractsAVAX || [],
         dataProviderAVAX
       ),
       getSuppliedBorrowedBalances(
         ctx,
         "optimism",
-        poolsContractsOPT,
+        poolsContractsOPT || [],
         dataProviderOPT
       ),
       getSuppliedBorrowedBalances(
         ctx,
         "ethereum",
-        poolsContractsETH,
+        poolsContractsETH || [],
         dataProviderETH
       ),
     ]);
