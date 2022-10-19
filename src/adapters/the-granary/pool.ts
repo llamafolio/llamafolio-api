@@ -4,21 +4,16 @@ import { getERC20Details } from "@lib/erc20";
 import { call } from "@defillama/sdk/build/abi";
 import { multicall } from "@lib/multicall";
 
-const DataProvider: Contract = {
-  name: "DataProvider FTM",
-  chain: "fantom",
-  address: "0x3132870d08f736505FF13B19199be17629085072",
-};
-
 export async function getContractsFromUnderlyingsLendingPool(
   chain: Chain,
-  contract: Contract
+  lendingPoolContract: Contract,
+  dataProvider: Contract
 ) {
   const contracts: Contract[] = [];
 
   const underlyingsAddressesRes = await call({
     chain,
-    target: contract.address,
+    target: lendingPoolContract.address,
     params: [],
     abi: {
       inputs: [],
@@ -34,7 +29,7 @@ export async function getContractsFromUnderlyingsLendingPool(
   const underlyings = await getERC20Details(chain, underlyingsAddresses);
 
   const calls = underlyings.map((token) => ({
-    target: DataProvider.address,
+    target: dataProvider.address,
     params: [token.address],
   }));
 
@@ -62,9 +57,9 @@ export async function getContractsFromUnderlyingsLendingPool(
     },
   });
 
-  const contractsAddresses = contractsAddressesRes.map(
-    (res) => res.output.aTokenAddress
-  );
+  const contractsAddresses = contractsAddressesRes
+    .filter((res) => res.success)
+    .map((res) => res.output.aTokenAddress);
 
   const contractsInfos = await getERC20Details(chain, contractsAddresses);
 

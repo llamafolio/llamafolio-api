@@ -3,21 +3,16 @@ import { Contract, Balance, BaseContext } from "@lib/adapter";
 import { multicall } from "@lib/multicall";
 import { BigNumber } from "ethers";
 
-const DataProvider: Contract = {
-  name: "DataProvider FTM",
-  chain: "fantom",
-  address: "0x3132870d08f736505FF13B19199be17629085072",
-};
-
 export async function getSuppliedBorrowedBalances(
   ctx: BaseContext,
   chain: Chain,
-  contracts: Contract[],
+  poolsContracts: Contract[],
+  dataProvider: Contract
 ) {
   const balances: Balance[] = [];
 
-  const calls = contracts.map((token: Contract) => ({
-    target: DataProvider.address,
+  const calls = poolsContracts.map((token: Contract) => ({
+    target: dataProvider.address,
     params: [token.underlyings?.[0].address, ctx.address],
   }));
 
@@ -82,24 +77,24 @@ export async function getSuppliedBorrowedBalances(
     .filter((res) => res.success)
     .map((res) => res.output);
 
-  for (let i = 0; i < contracts.length; i++) {
+  for (let i = 0; i < poolsContracts.length; i++) {
     const suppliedBalances = BigNumber.from(balancesOf[i].currentATokenBalance);
     const borrowedBalances = BigNumber.from(balancesOf[i].currentVariableDebt);
 
-    const supplied:Balance = {
-      ...contracts[i],
+    const supplied: Balance = {
+      ...poolsContracts[i],
       amount: suppliedBalances,
       underlyings: [
-        { ...contracts[i].underlyings?.[0], amount: suppliedBalances },
+        { ...poolsContracts[i].underlyings?.[0], amount: suppliedBalances },
       ],
       category: "lend",
     };
 
-    const borrowed:Balance = {
-      ...contracts[i],
+    const borrowed: Balance = {
+      ...poolsContracts[i],
       amount: borrowedBalances,
       underlyings: [
-        { ...contracts[i].underlyings?.[0], amount: borrowedBalances },
+        { ...poolsContracts[i].underlyings?.[0], amount: borrowedBalances },
       ],
       category: "borrow",
     };
