@@ -146,7 +146,8 @@ export async function getFarmingBalances(
   const USDCAmount = balanceOf.mul(share.USDC).div(10 ** 8);
 
   const balance: Balance = {
-    ...contract,
+    address: "0x24699312CB27C26Cfc669459D670559E5E44EE60",
+    chain,
     amount: balanceOf,
     symbol: `TOR-DAI-USDC`,
     decimals: 18,
