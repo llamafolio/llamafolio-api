@@ -28,7 +28,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
 };
 
 const adapter: Adapter = {
-  id: "olympus-dao",
+  id: "nemesis-dao",
   getContracts,
   getBalances,
 };
