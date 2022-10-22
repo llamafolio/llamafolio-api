@@ -20,6 +20,7 @@ import ironBank from "@adapters/iron-bank";
 import lido from "@adapters/lido";
 import liquity from "@adapters/liquity";
 import looksRare from "@adapters/looksrare";
+import nemesisDao from "@adapters/nemesis-dao";
 import nexusMutual from "@adapters/nexus-mutual";
 import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
@@ -67,6 +68,7 @@ export const adapters: Adapter[] = [
   lido,
   liquity,
   looksRare,
+  nemesisDao,
   nexusMutual,
   pancakeswap,
   pangolin,
