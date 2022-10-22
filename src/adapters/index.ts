@@ -27,6 +27,7 @@ import radiant from "@adapters/radiant";
 import rocketpool from "@adapters/rocket-pool";
 import scream from "@adapters/scream";
 import shibaswap from "@adapters/shibaswap";
+import spartacus from "@adapters/spartacus";
 import spiritswap from "@adapters/spiritswap";
 import spookyswap from "@adapters/spookyswap";
 import stargate from "@adapters/stargate";
@@ -74,6 +75,7 @@ export const adapters: Adapter[] = [
   rocketpool,
   scream,
   shibaswap,
+  spartacus,
   spiritswap,
   spookyswap,
   stargate,
