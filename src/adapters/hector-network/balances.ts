@@ -78,8 +78,10 @@ export async function getStakeBalances(
   const amount = BigNumber.from(formattedBalanceOfRes.output);
 
   const balance: Balance = {
-    ...contract,
-    rewards: undefined,
+    chain,
+    address: contract.address,
+    symbol: contract.symbol,
+    decimals: 9,
     amount,
     underlyings: [{ ...HEC, amount }],
     category: "stake",
