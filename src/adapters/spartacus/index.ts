@@ -1,5 +1,5 @@
 import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
-import { getStakeBalances } from "./balances";
+import { getStakeBalances, getBondBalances } from "./balances";
 
 const sSPA: Contract = {
   name: "Staked Spartacus",
@@ -10,17 +10,38 @@ const sSPA: Contract = {
   symbol: "sSPA",
 };
 
+const DaiBond: Contract = {
+  name: "Spartacus Bond Depository",
+  chain: "fantom",
+  address: "0x5D449738986ab34280373502031D1513581Cb649",
+  symbol: "DAI BOND",
+};
+
+const SpaDaiLpBond: Contract = {
+  name: "Spartacus Bond Depository",
+  chain: "fantom",
+  address: "0x8927a01AcBb4820f848711e2B7353d62172053b9",
+  symbol: "SPA-DAI LP BOND",
+};
+
 const getContracts = async () => {
+  const bond: Contract[] = [DaiBond, SpaDaiLpBond];
+
   return {
-    contracts: { sSPA },
+    contracts: { sSPA, bond },
   };
 };
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
-  { sSPA }
+  { sSPA, bond }
 ) => {
-  const balances = await getStakeBalances(ctx, "fantom", sSPA);
+  const [stakeBalances, bondBalances] = await Promise.all([
+    getStakeBalances(ctx, "fantom", sSPA),
+    getBondBalances(ctx, "fantom", bond),
+  ]);
+
+  const balances = [...stakeBalances, ...bondBalances];
 
   return {
     balances,
