@@ -43,6 +43,7 @@ import stargate from "@adapters/stargate";
 import strike from "@adapters/strike";
 import sushiswap from "@adapters/sushiswap";
 import synthetix from "@adapters/synthetix";
+import templedao from "@adapters/templedao";
 import traderjoe from "@adapters/traderjoe";
 import truefi from "@adapters/truefi";
 import uniswap from "@adapters/uniswap";
@@ -101,6 +102,7 @@ export const adapters: Adapter[] = [
   strike,
   sushiswap,
   synthetix,
+  templedao,
   traderjoe,
   truefi,
   uniswap,
