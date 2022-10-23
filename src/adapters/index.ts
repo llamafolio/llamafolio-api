@@ -21,6 +21,7 @@ import lido from "@adapters/lido";
 import liquity from "@adapters/liquity";
 import looksRare from "@adapters/looksrare";
 import nexusMutual from "@adapters/nexus-mutual";
+import olympusDao from "@adapters/olympus-dao";
 import pancakeswap from "@adapters/pancakeswap";
 import pangolin from "@adapters/pangolin";
 import radiant from "@adapters/radiant";
@@ -68,6 +69,7 @@ export const adapters: Adapter[] = [
   liquity,
   looksRare,
   nexusMutual,
+  olympusDao,
   pancakeswap,
   pangolin,
   radiant,
