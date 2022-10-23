@@ -40,7 +40,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
 };
 
 const adapter: Adapter = {
-  id: "olympus-dao",
+  id: "klima-dao",
   getContracts,
   getBalances,
 };
