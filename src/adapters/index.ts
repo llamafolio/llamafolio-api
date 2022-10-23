@@ -17,6 +17,7 @@ import hex from "@adapters/hex";
 import hundredFinance from "@adapters/hundred-finance";
 import inverseFinance from "@adapters/inverse-finance";
 import ironBank from "@adapters/iron-bank";
+import klimaDao from "@adapters/klima-dao";
 import lido from "@adapters/lido";
 import liquity from "@adapters/liquity";
 import looksRare from "@adapters/looksrare";
@@ -64,6 +65,7 @@ export const adapters: Adapter[] = [
   hundredFinance,
   inverseFinance,
   ironBank,
+  klimaDao,
   lido,
   liquity,
   looksRare,
