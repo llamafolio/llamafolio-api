@@ -92,7 +92,7 @@ export async function getPositions(ctx, chain, contracts): Promise<Balance[]> {
       decimals: marketsRaw[i].decimals,
       address: marketsRaw[i].address,
       amount: BigNumber.from(borrowBalance.amount),
-      yieldsAddress: `${marketsRaw[i].address.toLowerCase()}-euler`,
+      yieldKey: `${marketsRaw[i].address.toLowerCase()}-euler`,
     });
   }
 
@@ -105,7 +105,7 @@ export async function getPositions(ctx, chain, contracts): Promise<Balance[]> {
       decimals: 18, //seems all lending is 18 but borrow isn't?
       address: marketsRaw[i].address,
       amount: BigNumber.from(lendBalance.amount),
-      yieldsAddress: `${marketsRaw[i].address.toLowerCase()}-euler`,
+      yieldKey: `${marketsRaw[i].address.toLowerCase()}-euler`,
     });
   }
 

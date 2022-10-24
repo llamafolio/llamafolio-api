@@ -39,7 +39,7 @@ export async function getStakeBalances(
         address: sGLP.address,
         amount: BigNumber.from(sGLP.amount),
         priceSubstitute: "0x4277f8F2c384827B5273592FF7CeBd9f2C1ac258",
-        yieldsAddress: "0x1aDDD80E6039594eE970E5872D247bf0414C8903",
+        yieldKey: "0x1aDDD80E6039594eE970E5872D247bf0414C8903",
         rewards: [
           {
             chain,
@@ -85,7 +85,7 @@ export async function getStakeBalances(
         decimals: 18,
         address: GMXTokens[0],
         amount: BigNumber.from(stakedGMX),
-        yieldsAddress: "0x908C4D94D34924765f1eDc22A1DD098397c59dD4",
+        yieldKey: "0x908C4D94D34924765f1eDc22A1DD098397c59dD4",
         rewards: [
           {
             chain,

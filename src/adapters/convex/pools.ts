@@ -170,7 +170,7 @@ export async function getPoolBalances(ctx, chain, contracts) {
       address: contracts[i].crvRewards,
       priceSubstitute: contracts[i].lptoken,
       amount: BigNumber.from(balancesR[i] > 0 ? balancesR[i] : 0),
-      yieldsAddress: contracts[i].lptoken,
+      yieldKey: contracts[i].lptoken,
     };
 
     balances.push(balance);

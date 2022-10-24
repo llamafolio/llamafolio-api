@@ -122,12 +122,12 @@ async function main() {
     const data: any[] = [];
 
     for (const balance of categoryBalances.balances) {
-      const key = `${balance.yieldsAddress?.toLowerCase()}-${
+      const key = `${balance.yieldKey?.toLowerCase()}-${
         balance.chain === "avax" ? "avalanche" : balance.chain
       }`;
-      const subKey = `${balance.yieldsAddress?.toLowerCase()}`;
-      const nonAddressKey = `${balance.yieldsKey}`; //in a case where a yields key may be a string instead of an address
-      const newKey = `${balance.newYieldKey?.toLowerCase()}`; //new unique identifiers recently introduced on llamayield
+      const subKey = `${balance.yieldKey?.toLowerCase()}`;
+      const nonAddressKey = `${balance.yieldKey}`; //in a case where a yields key may be a string instead of an address
+      const newKey = `${balance.yieldKey?.toLowerCase()}`; //new unique identifiers recently introduced on llamayield
 
       const yieldObject =
         yieldsByNewKeys[newKey] ||

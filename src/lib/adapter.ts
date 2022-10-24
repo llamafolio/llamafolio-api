@@ -60,6 +60,9 @@ export interface BaseContract {
   symbol?: string;
   decimals?: number;
   stable?: boolean;
+
+  // DefiLlama yields API identifier. Matches pool or pool_old
+  yieldKey?: string;
 }
 
 export interface Contract extends BaseContract {

@@ -101,7 +101,7 @@ export async function getStakeBalances(ctx: BaseContext, contracts: Contract[]):
                   address:  poolInfo[c].lpToken,
                   amount: BigNumber.from(balance.amount),
                   priceSubstitute: tokenDetailsImproved[c].address,
-                  yieldsAddress: poolInfo[c].lpToken
+                  yieldKey: poolInfo[c].lpToken
 
             })
           }
