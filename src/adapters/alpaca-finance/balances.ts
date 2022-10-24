@@ -86,7 +86,7 @@ export async function getFarmingBalances(
           .mul(contracts[i].totalToken)
           .div(contracts[i].totalSupply);
 
-        const balance = {
+        const balance: Balance = {
           ...contracts[i],
           amount,
           underlyings: [{ ...contracts[i].underlyings?.[0], amount }],
@@ -95,7 +95,7 @@ export async function getFarmingBalances(
               ? { ...AlpacaBSC, amount: pendingRewards }
               : { ...AlpacaFTM, amount: pendingRewards },
           ],
-          category: "farming",
+          category: "farm",
         };
         balances.push(balance);
       }
@@ -127,11 +127,11 @@ export async function getDepositBalances(
         .mul(contracts[i].totalToken)
         .div(contracts[i].totalSupply);
 
-      const balance = {
+      const balance: Balance = {
         ...contracts[i],
         amount,
         underlyings: [{ ...contracts[i].underlyings?.[0], amount }],
-        category: "deposit",
+        category: "lp",
       };
       balances.push(balance);
     }
