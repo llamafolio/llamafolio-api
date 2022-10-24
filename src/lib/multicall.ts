@@ -5,17 +5,17 @@ export type MultiCallParams = Parameters<typeof multiCall>[0];
 export type Calls = MultiCallParams["calls"];
 export type Call = Calls[number];
 
-export type MultiCallResult = {
+export type MultiCallResult<T = any> = {
   success: boolean;
   input: {
     target: string;
     params: any[];
   };
-  output: any;
+  output: T | null;
 };
 
-export async function multicall(params: MultiCallParams) {
+export async function multicall<T = any>(params: MultiCallParams) {
   const multicallRes = await multiCall(params);
 
-  return multicallRes.output as MultiCallResult[];
+  return multicallRes.output as MultiCallResult<T>[];
 }
