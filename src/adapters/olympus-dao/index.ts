@@ -28,8 +28,8 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   { sOHM, gOHM }
 ) => {
   const [stakeBalances, formattedBalance] = await Promise.all([
-    getStakeBalances(ctx, "ethereum", sOHM),
-    getFormattedStakeBalances(ctx, "ethereum", gOHM),
+    getStakeBalances(ctx, "ethereum", sOHM || []),
+    getFormattedStakeBalances(ctx, "ethereum", gOHM || []),
   ]);
 
   const balances = [...stakeBalances, ...formattedBalance];
