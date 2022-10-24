@@ -90,11 +90,13 @@ export async function getContractsInfos(
       }),
     ]);
 
-  const contractsInfos = await getERC20Details(chain, poolsContracts);
-
-  const underlyingsAddresses = underlyingsAddressesRes.map((res) => res.output);
-
-  const underlyings = await getERC20Details2(chain, underlyingsAddresses);
+  const [contractsInfos, underlyings] = await Promise.all([
+    getERC20Details(chain, poolsContracts),
+    getERC20Details2(
+      chain,
+      underlyingsAddressesRes.map((res) => res.output)
+    ),
+  ]);
 
   for (let i = 0; i < poolsContracts.length; i++) {
     if (
