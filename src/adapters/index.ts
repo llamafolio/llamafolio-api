@@ -5,6 +5,7 @@ import alpacaFinance from '@adapters/alpaca-finance';
 import apeswapAmm from "@adapters/apeswap-amm";
 import apeswapLending from "@adapters/apeswap-lending";
 import arrakis from "@adapters/arrakis";
+import atlasUSV from "@adapters/atlas-usv";
 import benqiLending from "@adapters/benqi-lending";
 import benqiStakedAvax from "@adapters/benqi-staked-avax";
 import compoundV2 from "@adapters/compound/v2";
@@ -54,6 +55,7 @@ export const adapters: Adapter[] = [
   apeswapAmm,
   apeswapLending,
   arrakis,
+  atlasUSV,
   benqiLending,
   benqiStakedAvax,
   compoundV2,
