@@ -37,8 +37,8 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   { sSPA, bond }
 ) => {
   const [stakeBalances, bondBalances] = await Promise.all([
-    getStakeBalances(ctx, "fantom", sSPA),
-    getBondBalances(ctx, "fantom", bond),
+    getStakeBalances(ctx, "fantom", sSPA || []),
+    getBondBalances(ctx, "fantom", bond || []),
   ]);
 
   const balances = [...stakeBalances, ...bondBalances];
