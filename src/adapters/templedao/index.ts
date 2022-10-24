@@ -55,7 +55,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   { OG_TEMPLE, vaults }
 ) => {
   const [stakeBalances, lockedBalances] = await Promise.all([
-    getStakeBalances(ctx, "ethereum", OG_TEMPLE),
+    getStakeBalances(ctx, "ethereum", OG_TEMPLE || []),
     getLockedBalances(ctx, "ethereum", vaults || []),
   ]);
 
