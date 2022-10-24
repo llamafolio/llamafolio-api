@@ -1,7 +1,7 @@
 import aaveV2 from "@adapters/aave/v2";
 import aaveV3 from "@adapters/aave/v3";
 import abracadabra from "@adapters/abracadabra";
-import alpacaFinance from '@adapters/alpaca-finance';
+import alpacaFinance from "@adapters/alpaca-finance";
 import apeswapAmm from "@adapters/apeswap-amm";
 import apeswapLending from "@adapters/apeswap-lending";
 import arrakis from "@adapters/arrakis";
@@ -19,6 +19,7 @@ import hundredFinance from "@adapters/hundred-finance";
 import inverseFinance from "@adapters/inverse-finance";
 import ironBank from "@adapters/iron-bank";
 import lido from "@adapters/lido";
+import lifeDao from "@adapters/life-dao";
 import liquity from "@adapters/liquity";
 import looksRare from "@adapters/looksrare";
 import nexusMutual from "@adapters/nexus-mutual";
@@ -67,6 +68,7 @@ export const adapters: Adapter[] = [
   inverseFinance,
   ironBank,
   lido,
+  lifeDao,
   liquity,
   looksRare,
   nexusMutual,
