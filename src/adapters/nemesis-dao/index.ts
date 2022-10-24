@@ -20,7 +20,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
   { sNMS }
 ) => {
-  const balances = await getStakeBalances(ctx, "bsc", sNMS);
+  const balances = await getStakeBalances(ctx, "bsc", sNMS || []);
 
   return {
     balances,
