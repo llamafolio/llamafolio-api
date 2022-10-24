@@ -28,8 +28,8 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   { sKLIMA, wsKLIMA }
 ) => {
   const [stakeBalances, formattedBalance] = await Promise.all([
-    getStakeBalances(ctx, "polygon", sKLIMA),
-    getFormattedStakeBalances(ctx, "polygon", wsKLIMA),
+    getStakeBalances(ctx, "polygon", sKLIMA || []),
+    getFormattedStakeBalances(ctx, "polygon", wsKLIMA || []),
   ]);
 
   const balances = [...stakeBalances, ...formattedBalance];
