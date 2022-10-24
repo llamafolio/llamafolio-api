@@ -32,7 +32,7 @@ export async function getStakeBalances(ctx, chain, contracts) {
         address: contract.address,
         priceSubstitute: "0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7",
         amount: BigNumber.from(stakedBalance),
-        newYieldKey: "ef32dd3b-a03b-4f79-9b65-8420d7e04ad0",
+        yieldKey: "ef32dd3b-a03b-4f79-9b65-8420d7e04ad0",
       });
 
       const crvBalance = await cvxCRVStaker.earned(ctx.address);

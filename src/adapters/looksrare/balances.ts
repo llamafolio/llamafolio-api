@@ -73,7 +73,7 @@ export const getCompounderBalances = async (
   const compounderBalance: Balance = {
     ...looksContract,
     amount: BigNumber.from(sharesValue.output),
-    yieldsAddress: compounder.address,
+    yieldKey: compounder.address,
     category: "farm",
   };
 

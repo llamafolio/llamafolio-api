@@ -87,7 +87,7 @@ export async function getLendingBalances(
             decimals: tokenDetails[c].decimals,
             address: tokenDetails[c].address,
             amount: BigNumber.from(userRow.currentATokenBalance),
-            yieldsKey: aToken
+            yieldKey: aToken
               ? `${aToken.output.aTokenAddress.toLowerCase()}-${
                   chain === "avax" ? "avalanche" : chain
                 }`

@@ -270,7 +270,7 @@ export async function getGaugeBalances(
     const balance = {
       ...gauges[i],
       category: "stake",
-      yieldsAddress: gauges[i].priceSubstitute,
+      yieldKey: gauges[i].priceSubstitute,
     };
 
     const stakedAmount = BigNumber.from(gaugeBalancesListRes[i].output || "0");

@@ -30,7 +30,7 @@ export async function getStakeBalances(ctx, chain, contracts) {
       address: balanceRow.address,
       priceSubstitute: contracts[index].underlyingTokens,
       amount: BigNumber.from(balanceRow.amount),
-      yieldsAddress: erc20[index]
+      yieldKey: erc20[index]
     })
   }
 

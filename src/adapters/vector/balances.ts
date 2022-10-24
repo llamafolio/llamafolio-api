@@ -63,7 +63,7 @@ export async function getLockerBalances(
           address: "0x5817d4f0b62a59b17f75207da1848c2ce75e7af4",
           amount: BigNumber.from(lockedBalance.amount),
           lockEnd: lockedBalance.endTime,
-          yieldsKey: `vector-VTX-locking`,
+          yieldKey: `vector-VTX-locking`,
         });
       }
     }
