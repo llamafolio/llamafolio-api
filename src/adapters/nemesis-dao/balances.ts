@@ -6,7 +6,6 @@ import { BigNumber } from "ethers";
 
 const NMS: Contract = {
   name: "Nemesis DAO",
-  displayName: "Nemesis DAO",
   chain: "bsc",
   address: "0x8AC9DC3358A2dB19fDd57f433ff45d1fc357aFb3",
   decimals: 9,

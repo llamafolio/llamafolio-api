@@ -3,7 +3,6 @@ import { getStakeBalances } from "./balances";
 
 const sNMS: Contract = {
   name: "Staked Nemesis",
-  displayName: "Staked Nemesis",
   chain: "bsc",
   address: "0xb91bfdb8b41120586ccb391f5cee0dae4482334f",
   decimals: 9,
