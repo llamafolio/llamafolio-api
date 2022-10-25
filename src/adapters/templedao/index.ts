@@ -3,7 +3,6 @@ import { getStakeBalances, getLockedBalances } from "./balances";
 
 const OG_TEMPLE: Contract = {
   name: "OGTemple",
-  displayName: "Governance OHM",
   chain: "ethereum",
   address: "0x654590f810f01b51dc7b86915d4632977e49ea33",
   decimals: 18,
@@ -67,7 +66,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
 };
 
 const adapter: Adapter = {
-  id: "olympus-dao",
+  id: "templedao",
   getContracts,
   getBalances,
 };
