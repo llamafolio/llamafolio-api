@@ -2,7 +2,6 @@ import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import {
   getLendingPoolContracts,
   getLendingPoolBalances,
-  
 } from "@lib/aave/v2/lending";
 import { getStakeBalances, getStakeBalancerPoolBalances } from "./balances";
 
@@ -76,11 +75,11 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     stakeBalances_ETH,
     stakeABPTBalances_ETH,
   ] = await Promise.all([
-    getLendingPoolBalances(ctx, "avax", LendingPools_Avax),
-    getLendingPoolBalances(ctx, "ethereum", LendingPools_ETH),
-    getLendingPoolBalances(ctx, "polygon", LendingPools_Polygon),
-    getStakeBalances(ctx, "ethereum", StkAAVE_ETH),
-    getStakeBalancerPoolBalances(ctx, "ethereum", stkABPT_ETH),
+    getLendingPoolBalances(ctx, "avax", LendingPools_Avax || []),
+    getLendingPoolBalances(ctx, "ethereum", LendingPools_ETH || []),
+    getLendingPoolBalances(ctx, "polygon", LendingPools_Polygon || []),
+    getStakeBalances(ctx, "ethereum", StkAAVE_ETH || []),
+    getStakeBalancerPoolBalances(ctx, "ethereum", stkABPT_ETH || []),
   ]);
 
   const balances = [
@@ -88,7 +87,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     ...lendingPoolBalances_ETH,
     ...lendingPoolBalances_Polygon,
     ...stakeBalances_ETH,
-    ...stakeABPTBalances_ETH
+    ...stakeABPTBalances_ETH,
   ];
 
   return {
