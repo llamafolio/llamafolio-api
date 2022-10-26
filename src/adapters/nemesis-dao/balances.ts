@@ -4,19 +4,15 @@ import { call } from "@defillama/sdk/build/abi";
 import { abi } from "@lib/erc20";
 import { BigNumber } from "ethers";
 
-const NMS: Contract = {
-  name: "Nemesis DAO",
-  chain: "bsc",
-  address: "0x8AC9DC3358A2dB19fDd57f433ff45d1fc357aFb3",
-  decimals: 9,
-  symbol: "NMS",
-};
-
 export async function getStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
@@ -34,7 +30,7 @@ export async function getStakeBalances(
     symbol: contract.symbol,
     decimals: 9,
     amount: balanceOf,
-    underlyings: [{ ...NMS, amount: balanceOf }],
+    underlyings: [{ ...contract.underlyings?.[0], amount: balanceOf }],
     category: "stake",
   };
 
