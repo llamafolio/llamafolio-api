@@ -23,6 +23,7 @@ import lido from "@adapters/lido";
 import lifeDao from "@adapters/life-dao";
 import liquity from "@adapters/liquity";
 import looksRare from "@adapters/looksrare";
+import nemesisDao from "@adapters/nemesis-dao";
 import nexusMutual from "@adapters/nexus-mutual";
 import olympusDao from "@adapters/olympus-dao";
 import pancakeswap from "@adapters/pancakeswap";
@@ -75,6 +76,7 @@ export const adapters: Adapter[] = [
   lifeDao,
   liquity,
   looksRare,
+  nemesisDao,
   nexusMutual,
   olympusDao,
   pancakeswap,
