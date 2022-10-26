@@ -15,10 +15,10 @@ const sLF: Contract = {
   address: "0x769F19A9A449E523fC1F1f7B73051B3bC3C52738",
   symbol: "sLF",
   decimals: 9,
-  underlyings: [LF]
+  underlyings: [LF],
 };
 
-const getContracts = async () => {
+const getContracts = () => {
   return {
     contracts: { sLF },
   };
