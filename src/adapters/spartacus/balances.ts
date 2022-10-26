@@ -5,38 +5,33 @@ import { abi } from "@lib/erc20";
 import { BigNumber } from "ethers";
 import { multicall } from "@lib/multicall";
 
-const SPA: Contract = {
-  name: "Spartacus ",
-  displayName: "Spartacus ",
-  chain: "fantom",
-  address: "0x5602df4A94eB6C680190ACCFA2A475621E0ddBdc",
-  decimals: 9,
-  symbol: "SPA",
-};
-
 export async function getStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  sSPA: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
     chain,
-    target: sSPA.address,
+    target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
   });
 
-  const balanceOf = BigNumber.from(balanceOfRes.output);
+  const amount = BigNumber.from(balanceOfRes.output);
 
   const balance: Balance = {
     chain,
-    address: sSPA.address,
-    symbol: sSPA.symbol,
+    address: contract.address,
+    symbol: contract.symbol,
     decimals: 9,
-    amount: balanceOf,
-    underlyings: [{ ...SPA, amount: balanceOf }],
+    amount,
+    underlyings: [{ ...contract.underlyings?.[0], amount }],
     category: "stake",
   };
 
@@ -101,14 +96,28 @@ export async function getBondBalances(
     .map((res) => BigNumber.from(res.output));
 
   for (let i = 0; i < contracts.length; i++) {
+    if (!contracts[i].underlyings?.[0] || !contracts[i].rewards?.[0]) {
+      return [];
+    }
+
+    const underlyings = contracts[i].underlyings?.map((underlying) => ({
+      ...underlying,
+      amount: vestingBalanceOf[i],
+    }));
+
+    const rewards = contracts[i].rewards?.map((reward) => ({
+      ...reward,
+      amount: pendingBalanceOf[i],
+    }));
+
     const balance: Balance = {
       chain,
-      decimals: SPA.decimals,
+      decimals: 9,
       symbol: contracts[i].symbol,
       address: contracts[i].address,
       amount: vestingBalanceOf[i],
-      underlyings: [{ ...SPA, amount: vestingBalanceOf[i] }],
-      rewards: [{ ...SPA, amount: pendingBalanceOf[i] }],
+      underlyings,
+      rewards,
       category: "vest",
     };
     balances.push(balance);
