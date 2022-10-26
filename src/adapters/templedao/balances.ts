@@ -5,18 +5,9 @@ import { abi } from "@lib/erc20";
 import { BigNumber } from "ethers";
 import { multicall } from "@lib/multicall";
 
-export interface BalanceWithExtraProps extends Balance {
-  lockEnd: string;
+interface BalanceWithExtraProps extends Balance {
+  lockEnd: Date;
 }
-
-const TEMPLE: Contract = {
-  name: "Temple",
-  displayName: "Temple Token",
-  chain: "ethereum",
-  address: "0x470ebf5f030ed85fc1ed4c2d36b9dd02e77cf1b7",
-  decimals: 18,
-  symbol: "TEMPLE ",
-};
 
 const TempleStaking: Contract = {
   name: "Temple staking",
@@ -27,8 +18,12 @@ const TempleStaking: Contract = {
 export async function getStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
@@ -63,7 +58,7 @@ export async function getStakeBalances(
     symbol: contract.symbol,
     decimals: contract.decimals,
     amount: formattedBalance,
-    underlyings: [{ ...TEMPLE, amount: formattedBalance }],
+    underlyings: [{ ...contract.underlyings?.[0], amount: formattedBalance }],
     category: "stake",
   };
 
@@ -132,9 +127,18 @@ export async function getLockedBalances(
     .map((res) => res.output * 1000);
 
   for (let i = 0; i < contracts.length; i++) {
+    if (!contracts[i].underlyings?.[0]) {
+      return [];
+    }
+
+    const underlyings = contracts[i].underlyings?.map((underlying) => ({
+      ...underlying,
+      amount: balancesLocked[i],
+    }));
+
     const lockedBalance = new Date(
       startLocked[i] + endLocked[i]
-    ).toLocaleDateString("en-US");
+    ) // .toLocaleDateString("en-US");
 
     const balance: BalanceWithExtraProps = {
       chain,
@@ -142,10 +146,11 @@ export async function getLockedBalances(
       symbol: contracts[i].symbol,
       address: contracts[i].address,
       amount: balancesLocked[i],
-      underlyings: [{ ...TEMPLE, amount: balancesLocked[i] }],
+      underlyings,
       lockEnd: lockedBalance,
       category: "lock",
     };
+
     balances.push(balance);
   }
   return balances;
