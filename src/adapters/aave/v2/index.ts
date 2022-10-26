@@ -35,7 +35,7 @@ const stkABPT_ETH: Contract = {
   name: "Staked Aave Balance Pool Token",
   address: "0xa1116930326d21fb917d5a27f1e9943a9595fb47",
   chain: "ethereum",
-  symbol: "stkAAVE",
+  symbol: "stkABPT",
   decimals: 18,
   underlyings: [BPT],
 };
