@@ -16,7 +16,7 @@ const sKLIMA: Contract = {
   address: "0xb0C22d8D350C67420f06F48936654f567C73E8C8",
   symbol: "sKLIMA",
   decimals: 9,
-  underlyings: [KLIMA]
+  underlyings: [KLIMA],
 };
 const wsKLIMA: Contract = {
   name: "Wrapped KLIMA",
@@ -24,7 +24,7 @@ const wsKLIMA: Contract = {
   address: "0x6f370dba99E32A3cAD959b341120DB3C9E280bA6",
   symbol: "wsKLIMA",
   decimals: 18,
-  underlyings: [KLIMA]
+  underlyings: [KLIMA],
 };
 
 const getContracts = () => {
