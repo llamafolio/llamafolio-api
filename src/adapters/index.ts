@@ -13,6 +13,7 @@ import concentrator from "@adapters/concentrator";
 import convex from "@adapters/convex";
 import curve from "@adapters/curve";
 import euler from "@adapters/euler";
+import floorDao from "@adapters/floor-dao";
 import geist from "@adapters/geist";
 import gmx from "@adapters/gmx";
 import hex from "@adapters/hex";
@@ -67,6 +68,7 @@ export const adapters: Adapter[] = [
   convex,
   curve,
   euler,
+  floorDao,
   geist,
   gmx,
   hex,
