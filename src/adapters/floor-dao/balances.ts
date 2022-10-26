@@ -5,19 +5,15 @@ import { abi } from "@lib/erc20";
 import { call } from "@defillama/sdk/build/abi";
 import { BigNumber } from "ethers/lib/ethers";
 
-const FLOOR: Contract = {
-  name: "Floor",
-  chain: "ethereum",
-  address: "0xf59257E961883636290411c11ec5Ae622d19455e",
-  decimals: 9,
-  symbol: "FLOOR ",
-};
-
 export async function getStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
@@ -35,7 +31,7 @@ export async function getStakeBalances(
     symbol: contract.symbol,
     decimals: 9,
     amount,
-    underlyings: [{ ...FLOOR, amount }],
+    underlyings: [{ ...contract.underlyings?.[0], amount }],
     category: "stake",
   };
   balances.push(balance);
@@ -46,8 +42,12 @@ export async function getStakeBalances(
 export async function getFormattedStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
@@ -80,7 +80,7 @@ export async function getFormattedStakeBalances(
     symbol: contract.symbol,
     decimals: 9,
     amount: formattedBalanceOf,
-    underlyings: [{ ...FLOOR, amount: formattedBalanceOf }],
+    underlyings: [{ ...contract.underlyings?.[0], amount: formattedBalanceOf }],
     category: "stake",
   };
 
