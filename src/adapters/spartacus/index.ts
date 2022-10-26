@@ -39,20 +39,20 @@ const SpaDaiLpBond: Contract = {
 };
 
 const getContracts = () => {
-  const bond: Contract[] = [DaiBond, SpaDaiLpBond];
+  const bonds: Contract[] = [DaiBond, SpaDaiLpBond];
 
   return {
-    contracts: { sSPA, bond },
+    contracts: { sSPA, bonds },
   };
 };
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
-  { sSPA, bond }
+  { sSPA, bonds }
 ) => {
   const [stakeBalances, bondBalances] = await Promise.all([
     getStakeBalances(ctx, "fantom", sSPA),
-    getBondBalances(ctx, "fantom", bond || []),
+    getBondBalances(ctx, "fantom", bonds || []),
   ]);
 
   const balances = [...stakeBalances, ...bondBalances];
