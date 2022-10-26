@@ -7,20 +7,15 @@ import { abi, getERC20Details } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 import { range } from "@lib/array";
 
-const TIME: Contract = {
-  name: "Time",
-  displayName: "Time Token",
-  chain: "avax",
-  address: "0xb54f16fb19478766a268f172c9480f8da1a7c9c3",
-  decimals: 9,
-  symbol: "TIME",
-};
-
 export async function getFormattedStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
@@ -53,7 +48,7 @@ export async function getFormattedStakeBalances(
     symbol: contract.symbol,
     decimals: 9,
     amount: formattedBalanceOf,
-    underlyings: [{ ...TIME, amount: formattedBalanceOf }],
+    underlyings: [{ ...contract.underlyings?.[0], amount: formattedBalanceOf }],
     category: "stake",
   };
 
@@ -65,8 +60,12 @@ export async function getFormattedStakeBalances(
 export async function getFarmBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract) {
+    return [];
+  }
+
   const balances: Balance[] = [];
   const rewards: Balance[] = [];
 
@@ -149,22 +148,21 @@ export async function getFarmBalances(
       ...tokens[i],
       amount: rewardsBalanceOf[i],
     };
-    rewards.push(reward);
-  }
-
-  for (let i = 0; i < rewardTokenLength; i++) {
-    if (rewards[i].amount.gt(0)) {
-      const balance: Balance = {
-        chain,
-        decimals: contract.token.decimals,
-        address: contract.token.address,
-        symbol: contract.token.symbol,
-        amount: balanceOf,
-        rewards: [rewards[i]],
-        category: "farm",
-      };
-      balances.push(balance);
+    if (reward.amount.gt(0)) {
+      rewards.push(reward);
     }
   }
+
+  const balance: Balance = {
+    chain,
+    decimals: contract.token.decimals,
+    address: contract.token.address,
+    symbol: contract.token.symbol,
+    amount: balanceOf,
+    rewards: [...rewards],
+    category: "farm",
+  };
+  balances.push(balance);
+
   return balances;
 }
