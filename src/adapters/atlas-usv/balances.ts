@@ -26,6 +26,7 @@ export async function getStakeBalance(
 
     const balance: Balance = {
       ...contract,
+      rewards: undefined,
       amount,
       underlyings: [{ ...contract.underlyings?.[0], amount }],
       category: "stake",
