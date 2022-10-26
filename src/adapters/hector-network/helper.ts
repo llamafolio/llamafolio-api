@@ -41,9 +41,5 @@ export async function getRatioTokens(chain: Chain) {
   const DAI = DAIAmount.mul(10 ** 8).div(totalToken);
   const USDC = USDCAmount.mul(10 ** 8).div(totalToken);
 
-  return {
-    TOR,
-    DAI,
-    USDC,
-  };
+  return [TOR, DAI, USDC];
 }

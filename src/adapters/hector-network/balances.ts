@@ -5,52 +5,14 @@ import { BigNumber } from "ethers";
 import { abi } from "@lib/erc20";
 import { getRatioTokens } from "./helper";
 
-const HEC: Contract = {
-  name: "Hector",
-  displayName: "Hector",
-  chain: "fantom",
-  address: "0x5C4FDfc5233f935f20D2aDbA572F770c2E377Ab0",
-  decimals: 9,
-  symbol: "HEC",
-};
-
-const TOR: Contract = {
-  name: "TOR",
-  chain: "fantom",
-  address: "0x74e23df9110aa9ea0b6ff2faee01e740ca1c642e",
-  decimals: 18,
-  symbol: "TOR",
-};
-
-const DAI: Contract = {
-  name: "Dai Stablecoin",
-  chain: "fantom",
-  address: "0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e",
-  decimals: 18,
-  symbol: "DAI",
-};
-
-const USDC: Contract = {
-  name: "USD Coin",
-  chain: "fantom",
-  address: "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
-  decimals: 18,
-  symbol: "USDC",
-};
-
-const wFTM: Contract = {
-  name: "Wrapped Fantom",
-  chain: "fantom",
-  address: "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
-  decimals: 18,
-  symbol: "wFTM",
-};
-
 export async function getStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
@@ -83,7 +45,7 @@ export async function getStakeBalances(
     symbol: contract.symbol,
     decimals: 9,
     amount,
-    underlyings: [{ ...HEC, amount }],
+    underlyings: [{ ...contract.underlyings?.[0], amount }],
     category: "stake",
   };
 
@@ -94,8 +56,18 @@ export async function getStakeBalances(
 export async function getFarmingBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
+
+  const curveContract: Contract = contract.underlyings?.[0];
+
+  if (!curveContract.underlyings || !curveContract.rewards?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
@@ -132,33 +104,30 @@ export async function getFarmingBalances(
     },
   });
 
-  const balanceOf = BigNumber.from(balanceOfRes.output._torWithdrawAmount);
+  const amount = BigNumber.from(balanceOfRes.output._torWithdrawAmount);
   const rewardsBalanceOf = BigNumber.from(
     balanceOfRes.output._earnedRewardAmount
   );
 
-  const share = await getRatioTokens("fantom");
+  const shares = await getRatioTokens("fantom");
 
   /**
-   * div by the same amount of mul we choosen on the helper
+   * div by the same amount of mul we've choosen on the helper
    */
 
-  const TORAmount = balanceOf.mul(share.TOR).div(10 ** 8);
-  const DAIAmount = balanceOf.mul(share.DAI).div(10 ** 8);
-  const USDCAmount = balanceOf.mul(share.USDC).div(10 ** 8);
+  const underlyings = curveContract.underlyings?.map((token, i) => ({
+    ...token,
+    amount: amount.mul(shares[i]).div(10 ** 8),
+  }));
 
   const balance: Balance = {
-    address: "0x24699312CB27C26Cfc669459D670559E5E44EE60",
+    address: curveContract.address,
     chain,
-    amount: balanceOf,
+    amount,
     symbol: `TOR-DAI-USDC`,
     decimals: 18,
-    underlyings: [
-      { ...TOR, amount: TORAmount },
-      { ...DAI, amount: DAIAmount },
-      { ...USDC, amount: USDCAmount },
-    ],
-    rewards: [{ ...wFTM, amount: rewardsBalanceOf }],
+    underlyings,
+    rewards: [{ ...curveContract.rewards[0], amount: rewardsBalanceOf }],
     category: "farm",
   };
 
