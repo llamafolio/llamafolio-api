@@ -19,7 +19,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
   { sLF }
 ) => {
-  const balances = await getStakeBalances(ctx, "avax", sLF || []);
+  const balances = await getStakeBalances(ctx, "avax", sLF);
 
   return {
     balances,

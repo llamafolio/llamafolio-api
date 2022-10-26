@@ -18,6 +18,9 @@ export async function getStakeBalances(
   chain: Chain,
   contract: Contract
 ) {
+  if (!contract) {
+    return [];
+  }
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
