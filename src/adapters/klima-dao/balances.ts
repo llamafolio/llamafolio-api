@@ -5,20 +5,15 @@ import { abi } from "@lib/erc20";
 import { call } from "@defillama/sdk/build/abi";
 import { BigNumber } from "ethers/lib/ethers";
 
-const KLIMA: Contract = {
-  name: "Klima DAO",
-  displayName: "Klima DAO",
-  chain: "polygon",
-  address: "0x4e78011Ce80ee02d2c3e649Fb657E45898257815",
-  symbol: "KLIMA",
-  decimals: 9,
-};
-
 export async function getStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
@@ -36,7 +31,7 @@ export async function getStakeBalances(
     decimals: contract.decimals,
     symbol: contract.symbol,
     amount,
-    underlyings: [{ ...KLIMA, amount }],
+    underlyings: [{ ...contract.underlyings?.[0], amount }],
     category: "stake",
   };
   balances.push(balance);
@@ -47,8 +42,12 @@ export async function getStakeBalances(
 export async function getFormattedStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
@@ -81,7 +80,7 @@ export async function getFormattedStakeBalances(
     symbol: contract.symbol,
     decimals: 9,
     amount: formattedBalanceOf,
-    underlyings: [{ ...KLIMA, amount: formattedBalanceOf }],
+    underlyings: [{ ...contract.underlyings?.[0], amount: formattedBalanceOf }],
     category: "stake",
   };
 
