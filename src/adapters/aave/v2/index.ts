@@ -5,12 +5,30 @@ import {
 } from "@lib/aave/v2/lending";
 import { getStakeBalances, getStakeBalancerPoolBalances } from "./balances";
 
+const Aave: Contract = {
+  name: "Aave Token",
+  address: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
+  chain: "ethereum",
+  symbol: "AAVE",
+  decimals: 18,
+};
+
+const BPT: Contract = {
+  name: "Balancer Pool Token",
+  address: "0xc697051d1c6296c24ae3bcef39aca743861d9a81",
+  chain: "ethereum",
+  symbol: "BPT-Aave-wETH",
+  rewards: [Aave]
+};
+
 const StkAAVE_ETH: Contract = {
   name: "Staked Aave",
   address: "0x4da27a545c0c5b758a6ba100e3a049001de870f5",
   chain: "ethereum",
   symbol: "stkAAVE",
   decimals: 18,
+  underlyings: [Aave],
+  rewards: [Aave],
 };
 
 const stkABPT_ETH: Contract = {
@@ -19,6 +37,7 @@ const stkABPT_ETH: Contract = {
   chain: "ethereum",
   symbol: "stkAAVE",
   decimals: 18,
+  underlyings: [BPT],
 };
 
 const LendingPool_Avax: Contract = {
@@ -78,8 +97,8 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     getLendingPoolBalances(ctx, "avax", LendingPools_Avax || []),
     getLendingPoolBalances(ctx, "ethereum", LendingPools_ETH || []),
     getLendingPoolBalances(ctx, "polygon", LendingPools_Polygon || []),
-    getStakeBalances(ctx, "ethereum", StkAAVE_ETH || []),
-    getStakeBalancerPoolBalances(ctx, "ethereum", stkABPT_ETH || []),
+    getStakeBalances(ctx, "ethereum", StkAAVE_ETH),
+    getStakeBalancerPoolBalances(ctx, "ethereum", stkABPT_ETH),
   ]);
 
   const balances = [

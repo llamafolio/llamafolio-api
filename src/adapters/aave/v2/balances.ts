@@ -5,19 +5,15 @@ import { abi } from "@lib/erc20";
 import { BigNumber } from "ethers";
 import { getUnderlyingsBalances } from "./helper";
 
-const Aave: Contract = {
-  name: "Aave Token",
-  address: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
-  chain: "ethereum",
-  symbol: "AAVE",
-  decimals: 18,
-};
-
 export async function getStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0] || !contract.rewards?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const [balanceOfRes, rewardsRes] = await Promise.all([
@@ -52,24 +48,8 @@ export async function getStakeBalances(
     symbol: contract.symbol,
     amount,
     category: "stake",
-    underlyings: [
-      {
-        chain,
-        address: Aave.address,
-        decimals: Aave.decimals,
-        symbol: Aave.symbol,
-        amount,
-      },
-    ],
-    rewards: [
-      {
-        chain,
-        address: Aave.address,
-        decimals: Aave.decimals,
-        symbol: Aave.symbol,
-        amount: rewards,
-      },
-    ],
+    underlyings: [{ ...contract.underlyings?.[0], amount }],
+    rewards: [{ ...contract.rewards?.[0], amount: rewards }],
   };
   balances.push(balance);
 
@@ -79,8 +59,18 @@ export async function getStakeBalances(
 export async function getStakeBalancerPoolBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return [];
+  }
+
+  const underlyingContract: Contract = contract.underlyings?.[0];
+
+  if (!underlyingContract.rewards?.[0]) {
+    return [];
+  }
+
   const balances: Balance[] = [];
 
   const [balanceOfRes, rewardsRes] = await Promise.all([
@@ -108,7 +98,11 @@ export async function getStakeBalancerPoolBalances(
   const balanceOf = BigNumber.from(balanceOfRes.output);
   const rewards = BigNumber.from(rewardsRes.output);
 
-  const underlyings = await getUnderlyingsBalances(chain, balanceOf);
+  const underlyings = await getUnderlyingsBalances(
+    chain,
+    balanceOf,
+    contract.underlyings?.[0]
+  );
 
   const balance: Balance = {
     chain,
@@ -117,15 +111,7 @@ export async function getStakeBalancerPoolBalances(
     symbol: contract.symbol,
     amount: BigNumber.from(balanceOf),
     underlyings,
-    rewards: [
-      {
-        chain,
-        address: Aave.address,
-        decimals: Aave.decimals,
-        symbol: Aave.symbol,
-        amount: rewards,
-      },
-    ],
+    rewards: [{ ...underlyingContract.rewards?.[0], amount: rewards }],
     category: "stake",
   };
   balances.push(balance);

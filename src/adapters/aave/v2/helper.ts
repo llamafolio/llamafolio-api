@@ -5,35 +5,20 @@ import { call } from "@defillama/sdk/build/abi";
 import { getERC20Details } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 
-const Aave: Contract = {
-  name: "Aave Token",
-  address: "0x7Fc66500c84A76Ad7e9c93437bFc5Ac33E2DDaE9",
-  chain: "ethereum",
-  symbol: "AAVE",
-  decimals: 18,
-};
+export async function getUnderlyingsBalances(
+  chain: Chain,
+  balance: BigNumber,
+  contract?: Contract
+) {
+  if (!contract) {
+    return [];
+  }
 
-const wETH: Contract = {
-  name: "Aave Token",
-  address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-  chain: "ethereum",
-  symbol: "WETH",
-  decimals: 18,
-};
-
-const BPT: Contract = {
-  name: "Balancer Pool Token",
-  address: "0xc697051d1c6296c24ae3bcef39aca743861d9a81",
-  chain: "ethereum",
-  symbol: "BPT-Aave-wETH",
-};
-
-export async function getUnderlyingsBalances(chain: Chain, balance: BigNumber) {
   const underlyingsBalances: Balance[] = [];
 
   const underlyingsTokensAddressesRes = await call({
     chain,
-    target: BPT.address,
+    target: contract.address,
     params: [],
     abi: {
       constant: true,
@@ -57,7 +42,7 @@ export async function getUnderlyingsBalances(chain: Chain, balance: BigNumber) {
   const [underlyingsRateRes, normalizedWeightRes] = await Promise.all([
     call({
       chain,
-      target: BPT.address,
+      target: contract.address,
       params: [underlyingsTokensAddresses[0], underlyingsTokensAddresses[1]],
       abi: {
         constant: true,
@@ -78,7 +63,7 @@ export async function getUnderlyingsBalances(chain: Chain, balance: BigNumber) {
     multicall({
       chain,
       calls: underlyingsTokens.map((token) => ({
-        target: BPT.address,
+        target: contract.address,
         params: [token.address],
       })),
       abi: {
@@ -98,46 +83,56 @@ export async function getUnderlyingsBalances(chain: Chain, balance: BigNumber) {
     .filter((res) => res.success)
     .map((res) => res.output);
 
+  const DECIMALS_TOKENS_POOL = 10 ** 18;
+
   /**
    *   UnderlyingsRate represents the weight of their price relative to each other
-   *   ex: UnderlyingsRate * Aave = wETH -->  (17Aave(USD) = 1wETH(USD))
+   *   ex: UnderlyingsRate * Aave = wETH, if UnderlyingsRate = 17 then -->  (17Aave(USD) = 1wETH(USD))
    *   NormalizedWeight represents the rate of each assets in pool
-   *   ex: Aave(80%) - wETH(20%)
+   *   ex: Underlyings_0_(80%) - Underlyings_1_(20%)
+   *   Finally, underlying_0_weightRatio represents how much tokens_0_ we need to equal tokens_1_ in pool
    */
 
-  const AaveWeightRatio =
-    (normalizedWeight[0] / normalizedWeight[1]) * (underlyingsRate / 10 ** 18);
-
-  const ratio = Math.round((AaveWeightRatio / (AaveWeightRatio + 1)) * 10 ** 4); // * 10 **4  to prevent underflow since BigNumber doesnt like floating number.
+  const underlying_0_weightRatio =
+    (normalizedWeight[0] / normalizedWeight[1]) *
+    (underlyingsRate / DECIMALS_TOKENS_POOL);
 
   /**
-   *  Need to find logic for retrieve APY
+   * ratio represents the percentage share of token_0_ in pool, (1-ratio) represents token_1_
    */
 
-  const APY = 1.07;
+  const ratio = Math.round(
+    (underlying_0_weightRatio / (underlying_0_weightRatio + 1)) * 10 ** 4
+  ); // mul 10 ** 4 to prevent underflow error since BigNumber doesn't really like floating number
+
+  /**
+   *  /!\  -  Need to find logic for retrieve APY
+   */
+
+  const APY = 1.085;
 
   balance = balance.mul(APY * 10 ** 3); // * 10 ** 3 to prevent underflow from floating APY number
 
-  const amount_Aave = balance.mul(ratio);
-  const amount_ETH = balance.mul(10 ** 4 - ratio);
+  const underlying_0_amount = balance.mul(ratio);
+  const underlying_1_amount = balance.mul(10 ** 4 - ratio);
 
-  const aave_Balances: any = {
+  const underlying_0_balance: Balance = {
     chain,
-    address: Aave.address,
-    decimals: Aave.decimals,
-    symbol: Aave.symbol,
-    amount: amount_Aave.div(10 ** 10),
+    address: underlyingsTokens[0].address,
+    decimals: underlyingsTokens[0].decimals,
+    symbol: underlyingsTokens[0].symbol,
+    amount: underlying_0_amount.div(10 ** 10),
   };
-  underlyingsBalances.push(aave_Balances);
 
-  const eth_Balances: any = {
+  const underlying_1_balance: Balance = {
     chain,
-    address: wETH.address,
-    decimals: wETH.decimals,
-    symbol: wETH.symbol,
-    amount: amount_ETH.div(10 ** 10),
+    address: underlyingsTokens[1].address,
+    decimals: underlyingsTokens[1].decimals,
+    symbol: underlyingsTokens[1].symbol,
+    amount: underlying_1_amount.div(10 ** 10),
   };
-  underlyingsBalances.push(eth_Balances);
+
+  underlyingsBalances.push(underlying_0_balance, underlying_1_balance);
 
   return underlyingsBalances;
 }
