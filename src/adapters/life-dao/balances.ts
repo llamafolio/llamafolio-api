@@ -16,11 +16,12 @@ const LF: Contract = {
 export async function getStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  contract: Contract
+  contract?: Contract
 ) {
   if (!contract) {
     return [];
   }
+
   const balances: Balance[] = [];
 
   const balanceOfRes = await call({
