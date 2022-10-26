@@ -10,7 +10,7 @@ export async function getStakeBalance(
   chain: Chain,
   contract?: Contract
 ) {
-  if (!contract) {
+  if (!contract || !contract.underlyings?.[0]) {
     return;
   }
 
