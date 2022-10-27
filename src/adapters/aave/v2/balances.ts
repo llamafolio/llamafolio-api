@@ -14,46 +14,52 @@ export async function getStakeBalances(
     return [];
   }
 
-  const balances: Balance[] = [];
+  try {
+    const balances: Balance[] = [];
 
-  const [balanceOfRes, rewardsRes] = await Promise.all([
-    call({
+    const [balanceOfRes, rewardsRes] = await Promise.all([
+      call({
+        chain,
+        target: contract.address,
+        params: [ctx.address],
+        abi: abi.balanceOf,
+      }),
+
+      call({
+        chain,
+        target: contract.address,
+        params: [ctx.address],
+        abi: {
+          inputs: [
+            { internalType: "address", name: "staker", type: "address" },
+          ],
+          name: "getTotalRewardsBalance",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+      }),
+    ]);
+
+    const amount = BigNumber.from(balanceOfRes.output);
+    const rewards = BigNumber.from(rewardsRes.output);
+
+    const balance: Balance = {
       chain,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
+      address: contract.address,
+      decimals: contract.decimals,
+      symbol: contract.symbol,
+      amount,
+      category: "stake",
+      underlyings: [{ ...contract.underlyings?.[0], amount }],
+      rewards: [{ ...contract.rewards?.[0], amount: rewards }],
+    };
+    balances.push(balance);
 
-    call({
-      chain,
-      target: contract.address,
-      params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: "address", name: "staker", type: "address" }],
-        name: "getTotalRewardsBalance",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
-  ]);
-
-  const amount = BigNumber.from(balanceOfRes.output);
-  const rewards = BigNumber.from(rewardsRes.output);
-
-  const balance: Balance = {
-    chain,
-    address: contract.address,
-    decimals: contract.decimals,
-    symbol: contract.symbol,
-    amount,
-    category: "stake",
-    underlyings: [{ ...contract.underlyings?.[0], amount }],
-    rewards: [{ ...contract.rewards?.[0], amount: rewards }],
-  };
-  balances.push(balance);
-
-  return balances;
+    return balances;
+  } catch (error) {
+    return [];
+  }
 }
 
 export async function getStakeBalancerPoolBalances(
@@ -71,49 +77,55 @@ export async function getStakeBalancerPoolBalances(
     return [];
   }
 
-  const balances: Balance[] = [];
+  try {
+    const balances: Balance[] = [];
 
-  const [balanceOfRes, rewardsRes] = await Promise.all([
-    call({
+    const [balanceOfRes, rewardsRes] = await Promise.all([
+      call({
+        chain,
+        target: contract.address,
+        params: [ctx.address],
+        abi: abi.balanceOf,
+      }),
+
+      call({
+        chain,
+        target: contract.address,
+        params: [ctx.address],
+        abi: {
+          inputs: [
+            { internalType: "address", name: "staker", type: "address" },
+          ],
+          name: "getTotalRewardsBalance",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+      }),
+    ]);
+
+    const balanceOf = BigNumber.from(balanceOfRes.output);
+    const rewards = BigNumber.from(rewardsRes.output);
+
+    const underlyings = await getUnderlyingsBalances(
       chain,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
+      balanceOf,
+      contract.underlyings?.[0]
+    );
 
-    call({
+    const balance: Balance = {
       chain,
-      target: contract.address,
-      params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: "address", name: "staker", type: "address" }],
-        name: "getTotalRewardsBalance",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
-  ]);
-
-  const balanceOf = BigNumber.from(balanceOfRes.output);
-  const rewards = BigNumber.from(rewardsRes.output);
-
-  const underlyings = await getUnderlyingsBalances(
-    chain,
-    balanceOf,
-    contract.underlyings?.[0]
-  );
-
-  const balance: Balance = {
-    chain,
-    address: contract.address,
-    decimals: contract.decimals,
-    symbol: contract.symbol,
-    amount: BigNumber.from(balanceOf),
-    underlyings,
-    rewards: [{ ...underlyingContract.rewards?.[0], amount: rewards }],
-    category: "stake",
-  };
-  balances.push(balance);
-  return balances;
+      address: contract.address,
+      decimals: contract.decimals,
+      symbol: contract.symbol,
+      amount: BigNumber.from(balanceOf),
+      underlyings,
+      rewards: [{ ...underlyingContract.rewards?.[0], amount: rewards }],
+      category: "stake",
+    };
+    balances.push(balance);
+    return balances;
+  } catch (error) {
+    return [];
+  }
 }
