@@ -69,8 +69,8 @@ const getContracts = async () => {
     contracts: {
       poolAvaxContracts,
       poolAvax,
-      //   poolOptimismContracts,
-      //   poolOptimism,
+      // poolOptimismContracts,
+      // poolOptimism,
       poolPolygonContracts,
       poolPolygon,
       poolFantomContracts,
@@ -103,11 +103,31 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     poolBalances_FTM,
     poolBalances_Arbitrum,
   ] = await Promise.all([
-    getLendingPoolBalances(ctx, "avax", poolAvaxContracts || []),
-    // getLendingPoolBalances(ctx, "optimism", poolOptimismContracts || []),
-    getLendingPoolBalances(ctx, "polygon", poolPolygonContracts || []),
-    getLendingPoolBalances(ctx, "fantom", poolFantomContracts || []),
-    getLendingPoolBalances(ctx, "arbitrum", poolArbitrumContracts || []),
+    getLendingPoolBalances(ctx, "avax", poolAvaxContracts || [], poolAvax),
+    // getLendingPoolBalances(
+    //   ctx,
+    //   "optimism",
+    //   poolOptimismContracts || [],
+    //   poolOptimism
+    // ),
+    getLendingPoolBalances(
+      ctx,
+      "polygon",
+      poolPolygonContracts || [],
+      poolPolygon
+    ),
+    getLendingPoolBalances(
+      ctx,
+      "fantom",
+      poolFantomContracts || [],
+      poolFantom
+    ),
+    getLendingPoolBalances(
+      ctx,
+      "arbitrum",
+      poolArbitrumContracts || [],
+      poolArbitrum
+    ),
   ]);
 
   const [

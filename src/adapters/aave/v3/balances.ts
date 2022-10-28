@@ -1,6 +1,5 @@
-import { ethers, BigNumber } from "ethers";
-import { providers, Chain } from "@defillama/sdk/build/general";
-import { multicall } from "@lib/multicall";
+import { BigNumber } from "ethers";
+import { Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
@@ -30,9 +29,9 @@ export async function getLendingPoolContracts(
       },
     });
 
-    const underlyingsAddresses: string[] = reserveListRes.output;
+    const reservesList: string[] = reserveListRes.output;
 
-    const calls = underlyingsAddresses.map((address) => ({
+    const calls = reservesList.map((address) => ({
       target: lendingPool.poolDataProvider,
       params: [address],
     }));
@@ -65,15 +64,20 @@ export async function getLendingPoolContracts(
       .filter((res) => res.success)
       .map((res) => res.output);
 
-    const lendTokensAddresses = reserveTokensAddresses.map(
-      (token) => token.aTokenAddress
-    );
-    const borrowTokensAddresses = reserveTokensAddresses.map(
-      (token) => token.variableDebtTokenAddress
-    );
+    const underlyingTokensAddresses: string[] = [];
+    const lendTokensAddresses: string[] = [];
+    const borrowTokensAddresses: string[] = [];
+
+    for (let i = 0; i < reserveTokensAddresses.length; i++) {
+      const reserveTokensAddress = reserveTokensAddresses[i];
+
+      underlyingTokensAddresses.push(reservesList[i].toLowerCase());
+      lendTokensAddresses.push(reserveTokensAddress.aTokenAddress);
+      borrowTokensAddresses.push(reserveTokensAddress.variableDebtTokenAddress);
+    }
 
     const [underlyingsTokens, lendTokens, borrowTokens] = await Promise.all([
-      getERC20Details(chain, underlyingsAddresses),
+      getERC20Details(chain, underlyingTokensAddresses),
       getERC20Details(chain, lendTokensAddresses),
       getERC20Details(chain, borrowTokensAddresses),
     ]);
@@ -112,22 +116,70 @@ export async function getLendingPoolContracts(
 export async function getLendingPoolBalances(
   ctx: BaseContext,
   chain: Chain,
-  contracts: Contract[]
+  contracts: Contract[],
+  lendingPool?: Contract
 ) {
-  const balances: Balance[] = await getERC20BalanceOf(
-    ctx,
-    chain,
-    contracts as Token[]
-  );
-
-  // use the same amount for underlyings
-  for (const balance of balances) {
-    if (balance.amount.gt(0) && balance.underlyings) {
-      balance.underlyings[0].amount = BigNumber.from(balance.amount);
-    }
+  if (!lendingPool) {
+    return [];
   }
 
-  return balances;
+  try {
+    const balances: Balance[] = await getERC20BalanceOf(
+      ctx,
+      chain,
+      contracts as Token[]
+    );
+
+    // use the same amount for underlyings
+    for (const balance of balances) {
+      if (balance.amount.gt(0) && balance.underlyings) {
+        balance.underlyings[0].amount = BigNumber.from(balance.amount);
+      }
+    }
+
+    const UserHealthRes = await call({
+      chain,
+      target: lendingPool.address,
+      params: [ctx.address],
+      abi: {
+        inputs: [{ internalType: "address", name: "user", type: "address" }],
+        name: "getUserAccountData",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "totalCollateralBase",
+            type: "uint256",
+          },
+          { internalType: "uint256", name: "totalDebtBase", type: "uint256" },
+          {
+            internalType: "uint256",
+            name: "availableBorrowsBase",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "currentLiquidationThreshold",
+            type: "uint256",
+          },
+          { internalType: "uint256", name: "ltv", type: "uint256" },
+          { internalType: "uint256", name: "healthFactor", type: "uint256" },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    });
+
+    const UserHealth = UserHealthRes.output.healthFactor / 10 ** 18;
+    console.log(
+      `User: ${ctx.address} - Aave_V3_Chain_${chain}_Health: ${
+        UserHealth > 10 ? 10 : UserHealth
+      }`
+    );
+
+    return balances;
+  } catch (error) {
+    return [];
+  }
 }
 
 export async function getRewardsPoolBalances(
