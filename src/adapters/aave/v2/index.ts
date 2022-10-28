@@ -147,9 +147,9 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     lendingPoolBalances_ETH,
     lendingPoolBalances_Polygon,
   ] = await Promise.all([
-    getLendingPoolBalances(ctx, "avax", LendingPoolsContracts_Avax || []),
-    getLendingPoolBalances(ctx, "ethereum", LendingPoolsContracts_ETH || []),
-    getLendingPoolBalances(ctx, "polygon", LendingPoolsContracts_Polygon || []),
+    getLendingPoolBalances(ctx, "avax", LendingPoolsContracts_Avax || [], LendingPool_Avax),
+    getLendingPoolBalances(ctx, "ethereum", LendingPoolsContracts_ETH || [], LendingPool_ETH),
+    getLendingPoolBalances(ctx, "polygon", LendingPoolsContracts_Polygon || [], LendingPool_Polygon),
   ]);
 
   const [
