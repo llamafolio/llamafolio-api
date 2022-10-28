@@ -171,9 +171,9 @@ export async function getLendingPoolBalances(
 
     const UserHealth = UserHealthRes.output.healthFactor / 10 ** 18;
     console.log(
-      `User: ${ctx.address} - Aave_V3_Chain_${chain}_Health: ${
-        UserHealth > 10 ? 10 : UserHealth
-      }`
+      `User: ${ctx.address} - Adapter: ${
+        process.argv[2]
+      } - Chain: ${chain} - HealthFactor: ${UserHealth > 10 ? 10 : UserHealth}`
     );
 
     return balances;

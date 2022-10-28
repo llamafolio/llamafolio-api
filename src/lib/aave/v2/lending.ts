@@ -272,9 +272,9 @@ export async function getLendingPoolBalances(
 
     const UserHealth = UserHealthRes.output.healthFactor / 10 ** 18;
     console.log(
-      `User: ${ctx.address} - Health_${chain}_chain: ${
-        UserHealth > 10 ? 10 : UserHealth
-      }`
+      `User: ${ctx.address} - Adapter: ${
+        process.argv[2]
+      } - Chain: ${chain} - HealthFactor: ${UserHealth > 10 ? 10 : UserHealth}`
     );
 
     return balances;
