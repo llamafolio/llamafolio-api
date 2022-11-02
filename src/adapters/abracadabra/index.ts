@@ -81,14 +81,14 @@ const Cauldron: Record<Chains, string[]> = {
 };
 
 const getContracts = async () => {
-  const [mStakeContract_Eth, mStakeContract_Avax, mStakeContract_Fantom] =
+  const [mStakeContracts_Eth, mStakeContracts_Avax, mStakeContracts_Fantom] =
     await Promise.all([
       getMStakeContract("ethereum", mSPELL_Eth),
       getMStakeContract("avax", mSPELL_Avax),
       getMStakeContract("fantom", mSPELL_Fantom),
     ]);
 
-  const sStakeContract_Eth = await getSStakeContract("ethereum", sSPELL_Eth);
+  const sStakeContracts_Eth = await getSStakeContract("ethereum", sSPELL_Eth);
 
   const [marketsContracts_Eth, marketsContracts_Avax, marketsContracts_Fantom] =
     await Promise.all([
@@ -99,10 +99,10 @@ const getContracts = async () => {
 
   return {
     contracts: {
-      mStakeContract_Eth,
-      mStakeContract_Avax,
-      mStakeContract_Fantom,
-      sStakeContract_Eth,
+      mStakeContracts_Eth,
+      mStakeContracts_Avax,
+      mStakeContracts_Fantom,
+      sStakeContracts_Eth,
       marketsContracts_Eth,
       marketsContracts_Avax,
       marketsContracts_Fantom,
@@ -113,10 +113,10 @@ const getContracts = async () => {
 const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
   {
-    mStakeContract_Eth,
-    mStakeContract_Avax,
-    mStakeContract_Fantom,
-    sStakeContract_Eth,
+    mStakeContracts_Eth,
+    mStakeContracts_Avax,
+    mStakeContracts_Fantom,
+    sStakeContracts_Eth,
     marketsContracts_Eth,
     marketsContracts_Avax,
     marketsContracts_Fantom,
@@ -124,15 +124,15 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
 ) => {
   const [mStakeBalances_Eth, mStakeBalances_Avax, mStakeBalances_Fantom] =
     await Promise.all([
-      getMStakeBalance(ctx, "ethereum", mStakeContract_Eth || []),
-      getMStakeBalance(ctx, "avax", mStakeContract_Avax || []),
-      getMStakeBalance(ctx, "fantom", mStakeContract_Fantom || []),
+      getMStakeBalance(ctx, "ethereum", mStakeContracts_Eth || []),
+      getMStakeBalance(ctx, "avax", mStakeContracts_Avax || []),
+      getMStakeBalance(ctx, "fantom", mStakeContracts_Fantom || []),
     ]);
 
   const sStakeBalances_Eth = await getSStakeBalance(
     ctx,
     "ethereum",
-    sStakeContract_Eth || []
+    sStakeContracts_Eth || []
   );
 
   const [marketsBalances_Eth, marketsBalances_Avax, marketsBalances_Fantom] =
