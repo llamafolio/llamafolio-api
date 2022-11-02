@@ -1,58 +1,174 @@
-import { Chain } from "@defillama/sdk/build/general"
-import { BaseContext, Balance } from "@lib/adapter"
+import { Chain } from "@defillama/sdk/build/general";
+import { BaseContext, Balance, Contract } from "@lib/adapter";
 import { BigNumber } from "ethers";
-import { Token } from "@lib/token";
 import { abi } from "@lib/erc20";
-import { multicall } from "@lib/multicall";
+import { call } from "@defillama/sdk/build/abi";
 
-export async function getStMaticBalances  (ctx:BaseContext, chain:Chain, contracts:any) {
-    const balance:Balance[] = []
+export async function getWStEthStakeBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contract?: Contract
+) {
+  const balances: Balance[] = [];
 
-    const callBalances = contracts.map((token:Token) => ({
-      target: token.address,
-      params: [ctx.address]
-    }))
-  
-    const balanceOf = await multicall({
-      chain,
-      calls: callBalances,
-      abi: abi.balanceOf
-    })
-  
-    for (let i = 0; i < contracts.length; i++) {
-      if(!balanceOf[i].success) {
-        continue;
-      }
-      const callConverter = contracts.map((token:Token) => ({
-        target: token.address,
-        params: [balanceOf[i].output]
-      }))
-  
-      const convertStMaticToMatic = await multicall ({
-        chain,
-        calls: callConverter,
-        abi : {
-          "inputs": [
-            { "internalType": "uint256", "name": "_balance", "type": "uint256" }
-          ],
-          "name": "convertStMaticToMatic",
-          "outputs": [
-            { "internalType": "uint256", "name": "", "type": "uint256" },
-            { "internalType": "uint256", "name": "", "type": "uint256" },
-            { "internalType": "uint256", "name": "", "type": "uint256" }
-          ],
-          "stateMutability": "view",
-          "type": "function"
-        },
-      })
-      const formatedBalance = convertStMaticToMatic[0].output
-      const amount = BigNumber.from(formatedBalance[0])
-  
-      balance.push({
-        ...contracts[i],
-        amount,
-        underlyings: [{...contracts[i].underlyings[0], amount}]
-      })
-    }
-    return balance
+  if (!contract) {
+    return [];
   }
+
+  try {
+    const balanceOfRes = await call({
+      chain,
+      target: contract.address,
+      params: [ctx.address],
+      abi: abi.balanceOf,
+    });
+
+    const converterWStEthToStEthRes = await call({
+      chain: "ethereum",
+      target: "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0", // Universal logic to convert wstEth for all bridge (Optimism + Arbitrum)
+      params: [balanceOfRes.output],
+      abi: {
+        inputs: [
+          { internalType: "uint256", name: "_wstETHAmount", type: "uint256" },
+        ],
+        name: "getStETHByWstETH",
+        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        stateMutability: "view",
+        type: "function",
+      },
+    });
+
+    const formattedBalanceOf = BigNumber.from(converterWStEthToStEthRes.output);
+
+    if (!contract.underlyings?.[0]) {
+      return [];
+    }
+
+    const balance: Balance = {
+      chain,
+      decimals: contract.decimals,
+      symbol: contract.symbol,
+      address: contract.address,
+      amount: formattedBalanceOf,
+      underlyings: [
+        { ...contract.underlyings?.[0], amount: formattedBalanceOf },
+      ],
+      category: "stake",
+    };
+
+    balances.push(balance);
+
+    return balances;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function getStEthStakeBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contract?: Contract
+) {
+  const balances: Balance[] = [];
+
+  if (!contract) {
+    return [];
+  }
+
+  try {
+    const balanceOfRes = await call({
+      chain,
+      target: contract.address,
+      params: [ctx.address],
+      abi: abi.balanceOf,
+    });
+
+    const balanceOf = BigNumber.from(balanceOfRes.output);
+
+    if (!contract.underlyings?.[0]) {
+      return [];
+    }
+
+    const balance: Balance = {
+      chain,
+      decimals: contract.decimals,
+      symbol: contract.symbol,
+      address: contract.address,
+      amount: balanceOf,
+      underlyings: [{ ...contract.underlyings?.[0], amount: balanceOf }],
+      category: "stake",
+    };
+
+    balances.push(balance);
+
+    return balances;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function getStMaticBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contract?: Contract
+) {
+  const balances: Balance[] = [];
+
+  if (!contract) {
+    return [];
+  }
+
+  try {
+    const balanceOfRes = await call({
+      chain,
+      target: contract.address,
+      params: [ctx.address],
+      abi: abi.balanceOf,
+    });
+
+    const converterWStEthToStEthRes = await call({
+      chain,
+      target: contract.address,
+      params: [balanceOfRes.output],
+      abi: {
+        inputs: [
+          { internalType: "uint256", name: "_balance", type: "uint256" },
+        ],
+        name: "convertStMaticToMatic",
+        outputs: [
+          { internalType: "uint256", name: "", type: "uint256" },
+          { internalType: "uint256", name: "", type: "uint256" },
+          { internalType: "uint256", name: "", type: "uint256" },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    });
+
+    const formattedBalanceOf = BigNumber.from(
+      converterWStEthToStEthRes.output[0]
+    );
+
+    if (!contract.underlyings?.[0]) {
+      return [];
+    }
+
+    const balance: Balance = {
+      chain,
+      decimals: contract.decimals,
+      symbol: contract.symbol,
+      address: contract.address,
+      amount: formattedBalanceOf,
+      underlyings: [
+        { ...contract.underlyings?.[0], amount: formattedBalanceOf },
+      ],
+      category: "stake",
+    };
+
+    balances.push(balance);
+
+    return balances;
+  } catch (error) {
+    return [];
+  }
+}
