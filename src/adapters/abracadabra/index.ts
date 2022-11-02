@@ -1,298 +1,163 @@
-import {
-  Adapter,
-  Balance,
-  BaseContext,
-  Contract,
-  GetBalancesHandler,
-} from "@lib/adapter";
-import { getERC20Details } from "@lib/erc20";
-import { multicall } from "@lib/multicall";
-import { Token } from "@lib/token";
-import { BigNumber } from "ethers";
+import { Adapter, GetBalancesHandler, Contract } from "@lib/adapter";
+import { getMarketsContracts, getMarketsBalances } from "./markets";
+import { getMStakeContract, getMStakeBalance } from "./mStake";
+import { getSStakeContract, getSStakeBalance } from "./sStake";
 
-type Chains = "ethereum" | "fantom" | "avax" /*| "arbitrum"*/;
-
-const bentoBoxes: Record<Chains, string> = {
-  ethereum: "0xf5bce5077908a1b7370b9ae04adc565ebd643966",
-  fantom: "0xf5bce5077908a1b7370b9ae04adc565ebd643966",
-  avax: "0xf4f46382c2be1603dc817551ff9a7b333ed1d18f",
-  // arbitrum: "0x74c764d41b77dbbb4fe771dab1939b00b146894a",
+const mSPELL_Eth: Contract = {
+  name: "mSpellStaking",
+  chain: "ethereum",
+  address: "0xbD2fBaf2dc95bD78Cf1cD3c5235B33D1165E6797",
+  decimals: 18,
+  symbol: "mSPELL",
 };
 
-const magicInternetMoneys: Record<Chains, string> = {
-  ethereum: "0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3",
-  fantom: "0x82f0b8b456c1a451378467398982d4834b6829c1",
-  avax: "0x130966628846bfd36ff31a822705796e8cb8c18d",
-  // arbitrum: "0xfea7a6a0b346362bf88a9e4a88416b77a57d6c2a",
+const mSPELL_Avax: Contract = {
+  name: "mSpellStaking",
+  chain: "avax",
+  address: "0xBd84472B31d947314fDFa2ea42460A2727F955Af",
+  decimals: 18,
+  symbol: "mSPELL",
 };
 
-// chain -> cauldron -> collateral
-const markets: Record<Chains, Record<string, string>> = {
-  ethereum: {
-    "0x7b7473a76d6ae86ce19f7352a1e89f6c9dc39020":
-      "0xdbdb4d16eda451d0503b854cf79d55697f90c8df",
-    "0x806e16ec797c69afa8590a55723ce4cc1b54050e":
-      "0xd92494cb921e5c0d3a39ea88d0147bbd82e51008",
-    "0x05500e2ee779329698df35760bedcaac046e7c27":
-      "0x4e15361fd6b4bb609fa63c81a2be19d873717870",
-    "0x003d5a75d284824af736df51933be522de9eed0f":
-      "0xca76543cf381ebbb277be79574059e32108e3e65",
-    "0x98a84eff6e008c5ed0289655ccdca899bcb6b99f":
-      "0x8798249c2e607446efb7ad49ec89dd1865ff4272",
-    "0xebfde87310dc22404d918058faa4d56dc4e93f0a":
-      "0x27b7b1ad7288079a66d12350c828d3c00a6f07d7",
-    "0x0bca8ebcb26502b013493bf8fe53aa2b1ed401c1":
-      "0xdcd90c7f6324cfa40d7169ef80b12031770b4325",
-    "0x6cbafee1fab76ca5b5e144c43b3b50d42b7c8c8f":
-      "0x5f18c75abdae578b483e5f43f12a39cf75b973a9",
-    "0x551a7cff4de931f32893c928bbc3d25bf1fc5147":
-      "0x7da96a3891add058ada2e826306d812c638d87a7",
-    "0x920d9bd936da4eafb5e25c6bdc9f6cb528953f9f":
-      "0xa258c4606ca8206d8aa700ce2143d7db854d168c",
-    "0xffbf4892822e0d552cff317f65e1ee7b5d3d9ae6":
-      "0xe14d13d8b3b85af791b2aadd661cdbd5e6097db1",
-    "0x6ff9061bb8f97d948942cef376d98b51fa38b91f":
-      "0xa9fe4601811213c340e850ea305481aff02f5b28",
-    "0xbb02a884621fb8f5bfd263a67f58b65df5b090f3":
-      "0x8798249c2e607446efb7ad49ec89dd1865ff4272",
-  },
-  fantom: {
-    "0x8e45af6743422e488afacdad842ce75a09eaed34":
-      "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
-    "0xd4357d43545f793101b592bacab89943dc89d11b":
-      "0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83",
-  },
-  avax: {
-    "0x3cfed0439ab822530b1ffbd19536d897ef30d2a2":
-      "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
-  },
-  // arbitrum: {
-  //   "0xc89958b03a55b5de2221acb25b58b89a000215e6":
-  //     "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
-  // },
+const mSPELL_Fantom: Contract = {
+  name: "mSpellStaking",
+  chain: "fantom",
+  address: "0xa668762fb20bcd7148Db1bdb402ec06Eb6DAD569",
+  decimals: 18,
+  symbol: "mSPELL",
 };
 
-async function getChainContracts(chain: Chains) {
-  const cauldrons = markets[chain];
-  if (!cauldrons) {
-    return [];
-  }
+const sSPELL_Eth: Contract = {
+  name: "sSpellStaking",
+  chain: "ethereum",
+  address: "0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9",
+  decimals: 18,
+  symbol: "sSPELL",
+};
 
-  const underlyings = await getERC20Details(chain, Object.values(cauldrons));
-  const underlyingByAddress: { [key: string]: Token } = {};
-  for (const underlying of underlyings) {
-    underlyingByAddress[underlying.address] = underlying;
-  }
+type Chains = "ethereum" | "fantom" | "avax";
 
-  const contracts: Contract[] = [];
-  for (const cauldron in cauldrons) {
-    const contract: Contract = {
-      chain,
-      address: cauldron,
-    };
-
-    const underlying = underlyingByAddress[cauldrons[cauldron]];
-    if (underlying) {
-      contract.underlyings = [underlying];
-    }
-
-    contracts.push(contract);
-  }
-
-  return contracts;
-}
-
-async function getChainBalances(
-  ctx: BaseContext,
-  chain: Chains,
-  contracts: Contract[]
-) {
-  const [
-    magicInternetMoneyRes,
-    userBorrowParts,
-    totalBorrows,
-    userCollateralShares,
-  ] = await Promise.all([
-    getERC20Details(chain, [magicInternetMoneys[chain]]),
-
-    multicall({
-      chain,
-      calls: contracts.map((contract) => ({
-        target: contract.address,
-        params: [ctx.address],
-      })),
-      abi: {
-        inputs: [{ internalType: "address", name: "", type: "address" }],
-        name: "userBorrowPart",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
-
-    multicall({
-      chain,
-      calls: contracts.map((contract) => ({
-        target: contract.address,
-        params: [],
-      })),
-      abi: {
-        inputs: [],
-        name: "totalBorrow",
-        outputs: [
-          { internalType: "uint128", name: "elastic", type: "uint128" },
-          { internalType: "uint128", name: "base", type: "uint128" },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
-
-    multicall({
-      chain,
-      calls: contracts.map((contract) => ({
-        target: contract.address,
-        params: [ctx.address],
-      })),
-      abi: {
-        inputs: [{ internalType: "address", name: "", type: "address" }],
-        name: "userCollateralShare",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
-  ]);
-
-  const magicInternetMoney = magicInternetMoneyRes[0];
-
-  const lendCalls = [];
-  const lendCallsContracts = [];
-
-  for (let i = 0; i < contracts.length; i++) {
-    // filter out errors in calls
-    if (!userCollateralShares[i].success) {
-      continue;
-    }
-
-    lendCalls.push({
-      target: bentoBoxes[chain],
-      params: [
-        contracts[i].underlyings?.[0].address,
-        userCollateralShares[i].output,
-        false,
-      ],
-    });
-    lendCallsContracts.push(contracts[i]);
-  }
-
-  const supplyRes = await multicall({
-    chain,
-    calls: lendCalls,
-    abi: {
-      inputs: [
-        { internalType: "contract IERC20", name: "token", type: "address" },
-        { internalType: "uint256", name: "share", type: "uint256" },
-        { internalType: "bool", name: "roundUp", type: "bool" },
-      ],
-      name: "toAmount",
-      outputs: [{ internalType: "uint256", name: "amount", type: "uint256" }],
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const lendBalances: Balance[] = [];
-
-  for (let i = 0; i < supplyRes.length; i++) {
-    if (supplyRes[i].success) {
-      const sup = BigNumber.from(supplyRes[i].output);
-
-      const contract = lendCallsContracts[i];
-
-      if (contract && contract.underlyings?.[0]) {
-        lendBalances.push({
-          ...contract,
-          underlyings: [{ ...contract.underlyings[0], amount: sup }],
-          amount: sup,
-          category: "lend",
-          rewards: undefined,
-        });
-      }
-    }
-  }
-
-  const borrowBalances: Balance[] = [];
-
-  // successfully fetched MIM info
-  if (magicInternetMoney) {
-    for (let i = 0; i < contracts.length; i++) {
-      // filter out errors in calls
-      if (!userBorrowParts[i].success || !totalBorrows[i].success) {
-        continue;
-      }
-
-      const contract = contracts[i];
-
-      const amount = BigNumber.from(userBorrowParts[i].output)
-        .mul(totalBorrows[i].output.elastic)
-        .div(totalBorrows[i].output.base);
-
-      borrowBalances.push({
-        ...contract,
-        underlyings: [{ ...magicInternetMoney, amount }],
-        amount,
-        category: "borrow",
-        rewards: undefined,
-      });
-    }
-  }
-
-  return [...lendBalances, ...borrowBalances];
-}
+const Cauldron: Record<Chains, string[]> = {
+  ethereum: [
+    "0x7ce7d9ed62b9a6c5ace1c6ec9aeb115fa3064757",
+    "0x7b7473a76D6ae86CE19f7352A1E89F6C9dc39020",
+    "0xf179fe36a36B32a4644587B8cdee7A23af98ed37",
+    "0x05500e2Ee779329698DF35760bEdcAAC046e7C27",
+    "0x003d5A75d284824Af736df51933be522DE9Eed0f",
+    "0x98a84EfF6e008c5ed0289655CcdCa899bcb6B99F",
+    "0xEBfDe87310dc22404d918058FAa4D56DC4E93f0A",
+    "0x0BCa8ebcB26502b013493Bf8fE53aA2B1ED401C1",
+    "0x920D9BD936Da4eAFb5E25c6bDC9f6CB528953F9f",
+    "0x252dCf1B621Cc53bc22C256255d2bE5C8c32EaE4",
+    "0xc1879bf24917ebE531FbAA20b0D05Da027B592ce",
+    "0x9617b633EF905860D919b88E1d9d9a6191795341",
+    "0xCfc571f3203756319c231d3Bc643Cee807E74636",
+    "0x3410297D89dCDAf4072B805EFc1ef701Bb3dd9BF",
+    "0x257101F20cB7243E2c7129773eD5dBBcef8B34E0",
+    "0x390Db10e65b5ab920C19149C919D970ad9d18A41",
+    "0x5ec47EE69BEde0b6C2A2fC0D9d094dF16C192498",
+    "0xd31E19A0574dBF09310c3B06f3416661B4Dc7324",
+    "0xc6B2b3fE7c3D7a6f823D9106E22e66660709001e",
+    "0x53375adD9D2dFE19398eD65BAaEFfe622760A9A6",
+    "0x8227965A7f42956549aFaEc319F4E444aa438Df5",
+  ],
+  avax: [
+    "0x3CFEd0439aB822530b1fFBd19536d897EF30D2a2",
+    "0x3b63f81Ad1fc724E44330b4cf5b5B6e355AD964B",
+    "0x95cCe62C3eCD9A33090bBf8a9eAC50b699B54210",
+    "0x35fA7A723B3B39f15623Ff1Eb26D8701E7D6bB21",
+    "0x0a1e6a80E93e62Bd0D3D3BFcF4c362C40FB1cF3D",
+    "0x2450Bf8e625e98e14884355205af6F97E3E68d07",
+    "0xAcc6821d0F368b02d223158F8aDA4824dA9f28E3",
+  ],
+  fantom: [
+    "0x7208d9F9398D7b02C5C22c334c2a7A3A98c0A45d",
+    "0x4fdfFa59bf8dda3F4d5b38F260EAb8BFaC6d7bC1",
+    "0x8E45Af6743422e488aFAcDad842cE75A09eaEd34",
+    "0xd4357d43545F793101b592bACaB89943DC89d11b",
+    "0xed745b045f9495B8bfC7b58eeA8E0d0597884e12",
+    "0xa3Fc1B4b7f06c2391f7AD7D4795C1cD28A59917e",
+  ],
+};
 
 const getContracts = async () => {
-  const chainsConctracts = await Promise.all([
-    getChainContracts("ethereum"),
-    getChainContracts("fantom"),
-    getChainContracts("avax"),
-    // getChainContracts("arbitrum"),
-  ]);
+  const [mStakeContract_Eth, mStakeContract_Avax, mStakeContract_Fantom] =
+    await Promise.all([
+      getMStakeContract("ethereum", mSPELL_Eth),
+      getMStakeContract("avax", mSPELL_Avax),
+      getMStakeContract("fantom", mSPELL_Fantom),
+    ]);
+
+  const sStakeContract_Eth = await getSStakeContract("ethereum", sSPELL_Eth);
+
+  const [marketsContracts_Eth, marketsContracts_Avax, marketsContracts_Fantom] =
+    await Promise.all([
+      getMarketsContracts("ethereum", Cauldron.ethereum),
+      getMarketsContracts("avax", Cauldron.avax),
+      getMarketsContracts("fantom", Cauldron.fantom),
+    ]);
 
   return {
-    contracts: chainsConctracts.flat(),
+    contracts: {
+      mStakeContract_Eth,
+      mStakeContract_Avax,
+      mStakeContract_Fantom,
+      sStakeContract_Eth,
+      marketsContracts_Eth,
+      marketsContracts_Avax,
+      marketsContracts_Fantom,
+    },
   };
 };
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
-  contracts
-) => {
-  const contractsByChain: Record<Chains, Contract[]> = {
-    ethereum: [],
-    fantom: [],
-    avax: [],
-    // arbitrum: [],
-  };
-
-  for (const contract of contracts) {
-    contractsByChain[contract.chain as Chains].push(contract);
+  {
+    mStakeContract_Eth,
+    mStakeContract_Avax,
+    mStakeContract_Fantom,
+    sStakeContract_Eth,
+    marketsContracts_Eth,
+    marketsContracts_Avax,
+    marketsContracts_Fantom,
   }
+) => {
+  const [mStakeBalances_Eth, mStakeBalances_Avax, mStakeBalances_Fantom] =
+    await Promise.all([
+      getMStakeBalance(ctx, "ethereum", mStakeContract_Eth || []),
+      getMStakeBalance(ctx, "avax", mStakeContract_Avax || []),
+      getMStakeBalance(ctx, "fantom", mStakeContract_Fantom || []),
+    ]);
 
-  const chainsBalances = await Promise.all([
-    getChainBalances(ctx, "ethereum", contractsByChain["ethereum"]),
-    getChainBalances(ctx, "fantom", contractsByChain["fantom"]),
-    getChainBalances(ctx, "avax", contractsByChain["avax"]),
-    // getChainBalances(ctx, "arbitrum", contractsByChain["arbitrum"]),
-  ]);
+  const sStakeBalances_Eth = await getSStakeBalance(
+    ctx,
+    "ethereum",
+    sStakeContract_Eth || []
+  );
+
+  const [marketsBalances_Eth, marketsBalances_Avax, marketsBalances_Fantom] =
+    await Promise.all([
+      getMarketsBalances(ctx, "ethereum", marketsContracts_Eth || []),
+      getMarketsBalances(ctx, "avax", marketsContracts_Avax || []),
+      getMarketsBalances(ctx, "fantom", marketsContracts_Fantom || []),
+    ]);
+
+  const balances = [
+    ...mStakeBalances_Eth,
+    ...mStakeBalances_Avax,
+    ...mStakeBalances_Fantom,
+    ...sStakeBalances_Eth,
+    ...marketsBalances_Eth,
+    ...marketsBalances_Avax,
+    ...marketsBalances_Fantom,
+  ];
 
   return {
-    balances: chainsBalances.flat(),
+    balances,
   };
 };
 
 const adapter: Adapter = {
-  // DefiLlama slug
   id: "abracadabra",
   getContracts,
   getBalances,
