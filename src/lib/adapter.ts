@@ -42,9 +42,23 @@ export interface PricedBalance extends BasePricedBalance {
   underlyings?: BasePricedBalance[];
 }
 
+export interface Metadata {
+  healthFactor?: number;
+}
+
 export interface BalancesConfig {
   balances: Balance[];
-  revalidate?: number;
+  // Metadata
+  arbitrum?: Metadata;
+  avax?: Metadata;
+  bsc?: Metadata;
+  celo?: Metadata;
+  ethereum?: Metadata;
+  fantom?: Metadata;
+  harmony?: Metadata;
+  polygon?: Metadata;
+  optimism?: Metadata;
+  xdai?: Metadata;
 }
 
 export interface BaseContract {

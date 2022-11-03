@@ -238,7 +238,23 @@ export async function getLendingPoolBalances(
       }
     }
 
-    const UserHealthRes = await call({
+    return balances;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function getLendingPoolHealthFactor(
+  ctx: BaseContext,
+  chain: Chain,
+  lendingPool?: Contract
+) {
+  if (!lendingPool) {
+    return;
+  }
+
+  try {
+    const userAccountDataRes = await call({
       chain,
       target: lendingPool.address,
       params: [ctx.address],
@@ -270,15 +286,20 @@ export async function getLendingPoolBalances(
       },
     });
 
-    const UserHealth = UserHealthRes.output.healthFactor / 10 ** 18;
-    console.log(
-      `User: ${ctx.address} - Adapter: ${
-        process.argv[2]
-      } - Chain: ${chain} - HealthFactor: ${UserHealth > 10 ? 10 : UserHealth}`
+    // no borrowed balance
+    if (
+      ethers.constants.MaxUint256.eq(userAccountDataRes.output.healthFactor)
+    ) {
+      return;
+    }
+
+    const healthFactor = parseFloat(
+      ethers.utils.formatUnits(userAccountDataRes.output.healthFactor, 18)
     );
 
-    return balances;
+    // TODO: return other metadata like LTV, available borrow etc
+    return healthFactor;
   } catch (error) {
-    return [];
+    return;
   }
 }

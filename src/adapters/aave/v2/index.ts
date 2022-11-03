@@ -2,6 +2,7 @@ import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import {
   getLendingPoolContracts,
   getLendingPoolBalances,
+  getLendingPoolHealthFactor,
 } from "@lib/aave/v2/lending";
 import { getStakeBalances, getStakeBalancerPoolBalances } from "./balances";
 import { getLendingRewardsBalances } from "./rewards";
@@ -147,9 +148,24 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     lendingPoolBalances_ETH,
     lendingPoolBalances_Polygon,
   ] = await Promise.all([
-    getLendingPoolBalances(ctx, "avax", LendingPoolsContracts_Avax || [], LendingPool_Avax),
-    getLendingPoolBalances(ctx, "ethereum", LendingPoolsContracts_ETH || [], LendingPool_ETH),
-    getLendingPoolBalances(ctx, "polygon", LendingPoolsContracts_Polygon || [], LendingPool_Polygon),
+    getLendingPoolBalances(
+      ctx,
+      "avax",
+      LendingPoolsContracts_Avax || [],
+      LendingPool_Avax
+    ),
+    getLendingPoolBalances(
+      ctx,
+      "ethereum",
+      LendingPoolsContracts_ETH || [],
+      LendingPool_ETH
+    ),
+    getLendingPoolBalances(
+      ctx,
+      "polygon",
+      LendingPoolsContracts_Polygon || [],
+      LendingPool_Polygon
+    ),
   ]);
 
   const [
@@ -188,8 +204,24 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     ...rewardsPoolBalances_Polygon,
   ];
 
+  const [healthFactorAvax, healthFactorEthereum, healthFactorPolygon] =
+    await Promise.all([
+      getLendingPoolHealthFactor(ctx, "avax", LendingPool_Avax),
+      getLendingPoolHealthFactor(ctx, "ethereum", LendingPool_ETH),
+      getLendingPoolHealthFactor(ctx, "polygon", LendingPool_Polygon),
+    ]);
+
   return {
     balances,
+    avax: {
+      healthFactor: healthFactorAvax,
+    },
+    ethereum: {
+      healthFactor: healthFactorEthereum,
+    },
+    polygon: {
+      healthFactor: healthFactorPolygon,
+    },
   };
 };
 
