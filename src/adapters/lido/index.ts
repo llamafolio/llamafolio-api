@@ -17,11 +17,28 @@ const MATIC: Token = {
   decimals: 18,
 };
 
-const wETH: Token = {
-  address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+const WETH_Ethereum: Token = {
+  address: "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
   chain: "ethereum",
-  symbol: "wETH",
+  symbol: "WETH",
   decimals: 18,
+  coingeckoId: "weth",
+};
+
+const WETH_Arbitrum: Token = {
+  address: "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+  chain: "ethereum",
+  symbol: "WETH",
+  decimals: 18,
+  coingeckoId: "weth",
+};
+
+const WETH_Optimism: Token = {
+  address: "0x4200000000000000000000000000000000000006",
+  chain: "ethereum",
+  symbol: "WETH",
+  decimals: 18,
+  coingeckoId: "weth",
 };
 
 /**
@@ -36,7 +53,7 @@ const stETH: Contract = {
   symbol: "stETH",
   decimals: 18,
   coingeckoId: "staked-ether",
-  underlyings: [wETH],
+  underlyings: [WETH_Ethereum],
 };
 
 const wstETH: Contract = {
@@ -47,7 +64,7 @@ const wstETH: Contract = {
   symbol: "wstETH",
   decimals: 18,
   coingeckoId: "wrapped-steth",
-  underlyings: [wETH],
+  underlyings: [WETH_Ethereum],
 };
 
 const stMATIC: Contract = {
@@ -73,7 +90,7 @@ const wstETH_Arbitrum: Contract = {
   symbol: "wstETH",
   decimals: 18,
   coingeckoId: "wrapped-steth",
-  underlyings: [wETH],
+  underlyings: [WETH_Arbitrum],
 };
 
 /**
@@ -88,7 +105,7 @@ const wstETH_Optimism: Contract = {
   symbol: "wstETH",
   decimals: 18,
   coingeckoId: "wrapped-steth",
-  underlyings: [wETH],
+  underlyings: [WETH_Optimism],
 };
 
 /**
