@@ -211,6 +211,49 @@ $$;
 -- Usage
 select * from all_contract_interactions('\x0000000000000000000000000000000000000000');
 
+-- Same query as all_contract_interactions except it relies on token_transfers instead of going deep through the logs
+create or replace function all_contract_interactions_tt(address bytea)
+	RETURNS setof public.contracts
+	LANGUAGE plpgsql
+as
+$$
+declare
+    tables CURSOR FOR
+        SELECT chains.chain as _chain
+        FROM chains WHERE is_evm;
+    multichainQuery text := '';
+BEGIN 
+	FOR rec IN tables LOOP
+		multichainQuery := multichainQuery ||
+			format('
+				SELECT %L::varchar as chain, tt.token_address as contract_address
+				FROM %I.token_transfers tt
+				WHERE tt.from_address = %L OR tt.to_address = %L
+				', rec._chain, rec._chain, address, address
+			) || 
+		' union all ';
+	END LOOP;
+  
+	-- remove the last ' union all '
+	multichainQuery := left(multichainQuery, -10);
+	
+	return query execute format('
+								SELECT DISTINCT ON (c.chain, c.address, c.parent, c.type, c.category) c.* FROM (
+									SELECT c.* FROM ( %s ) AS uc
+									INNER JOIN contracts c ON (
+										c.chain = uc.chain AND
+										c.address = uc.contract_address
+									) UNION ALL
+									SELECT c.* FROM ( %s ) AS uc
+									INNER JOIN contracts c ON (
+										c.chain = uc.chain AND
+										c.parent = uc.contract_address
+									)
+							   	) c
+								', multichainQuery, multichainQuery);
+END
+$$;
+
 -- Given an address, returns distinct recipient of multichain transactions
 create or replace function distinct_transactions_to(address bytea)
   RETURNS TABLE (

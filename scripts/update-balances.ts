@@ -1,6 +1,6 @@
 import format from "pg-format";
 import {
-  getAllContractsInteractions,
+  getAllContractsInteractionsTokenTransfers,
   getAllTokensInteractions,
 } from "../src/db/contracts";
 import pool from "../src/db/pool";
@@ -32,7 +32,7 @@ async function main() {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
     const [contracts, tokens] = await Promise.all([
-      getAllContractsInteractions(client, ctx.address),
+      getAllContractsInteractionsTokenTransfers(client, ctx.address),
       getAllTokensInteractions(client, ctx.address),
     ]);
 

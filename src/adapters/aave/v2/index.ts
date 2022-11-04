@@ -121,11 +121,8 @@ const getContracts = async () => {
   return {
     contracts: {
       LendingPoolsContracts_Avax,
-      LendingPool_Avax,
       LendingPoolsContracts_ETH,
-      LendingPool_ETH,
       LendingPoolsContracts_Polygon,
-      LendingPool_Polygon,
       IncentiveController_ETH,
       StkAAVE_ETH,
       stkABPT_ETH,
@@ -137,11 +134,8 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
   {
     LendingPoolsContracts_Avax,
-    LendingPool_Avax,
     LendingPoolsContracts_ETH,
-    LendingPool_ETH,
     LendingPoolsContracts_Polygon,
-    LendingPool_Polygon,
     StkAAVE_ETH,
     stkABPT_ETH,
   }

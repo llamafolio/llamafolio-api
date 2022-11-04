@@ -68,15 +68,10 @@ const getContracts = async () => {
   return {
     contracts: {
       poolAvaxContracts,
-      poolAvax,
       // poolOptimismContracts,
-      // poolOptimism,
       poolPolygonContracts,
-      poolPolygon,
       poolFantomContracts,
-      poolFantom,
       poolArbitrumContracts,
-      poolArbitrum,
     },
   };
 };
@@ -89,11 +84,6 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     poolPolygonContracts,
     poolFantomContracts,
     poolArbitrumContracts,
-    poolAvax,
-    // poolOptimism,
-    poolPolygon,
-    poolFantom,
-    poolArbitrum,
   }
 ) => {
   const [

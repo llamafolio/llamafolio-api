@@ -261,6 +261,41 @@ export async function getAllContractsInteractions(
 }
 
 /**
+ * Get a list of all unique protocols and contracts a given account interacted with
+ * @param client
+ * @param address
+ */
+export async function getAllContractsInteractionsTokenTransfers(
+  client: PoolClient,
+  address: string
+) {
+  const res = await client.query(
+    "select * from all_contract_interactions_tt($1) where adapter_id <> 'wallet';",
+    [strToBuf(address)]
+  );
+
+  return fromStorage(res.rows);
+}
+
+/**
+ * Get a list of all unique protocols and contracts a given account interacted with
+ * @param client
+ * @param address
+ */
+export async function getContractsInteractionsTokenTransfers(
+  client: PoolClient,
+  address: string,
+  adapterId: string
+) {
+  const res = await client.query(
+    "select * from all_contract_interactions_tt($1) where adapter_id = $2;",
+    [strToBuf(address), adapterId]
+  );
+
+  return fromStorage(res.rows);
+}
+
+/**
  * Get a list of all unique tokens received by a given account
  * @param client
  * @param address
