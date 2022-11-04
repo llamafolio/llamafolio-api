@@ -3,6 +3,17 @@ import { Contract } from "@lib/adapter";
 import { getPoolsContracts, getPoolsBalances } from "./pools";
 import { Token } from "@lib/token";
 import { getLockerBalances } from "./locker";
+import { getGaugesContracts, getGaugesBalances } from "./gauge";
+
+/**
+ * ========== GAUGE ==========
+ */
+
+const GaugeController: Contract = {
+  name: "Curve.fi: Gauge Controller",
+  chain: "ethereum",
+  address: "0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB",
+};
 
 /**
  * ========== LOCKER ==========
@@ -52,23 +63,29 @@ const MetaRegistry: Contract = {
 
 const getContracts = async () => {
   const pools = await getPoolsContracts("ethereum", MetaRegistry);
+  const gaugeContracts = await getGaugesContracts(
+    "ethereum",
+    pools,
+    GaugeController
+  );
 
   return {
-    contracts: { pools, MetaRegistry, lockerContract },
+    contracts: { pools, MetaRegistry, lockerContract, gaugeContracts },
     revalidate: 60 * 60,
   };
 };
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
-  { pools, MetaRegistry, lockerContract }
+  { pools, MetaRegistry, lockerContract, gaugeContracts }
 ) => {
-  const [lockedBalances, poolsBalances] = await Promise.all([
+  const [lockedBalances, poolsBalances, farmBalances] = await Promise.all([
     getLockerBalances(ctx, "ethereum", lockerContract),
     getPoolsBalances(ctx, "ethereum", pools || [], MetaRegistry),
+    getGaugesBalances(ctx, "ethereum", gaugeContracts as Contract[]),
   ]);
 
-  const balances = [...lockedBalances, ...poolsBalances];
+  const balances = [...lockedBalances, ...poolsBalances, ...farmBalances];
 
   return {
     balances,
