@@ -5,6 +5,7 @@ import millify from "millify";
 
 import { Adapter, Balance, BaseContext } from "../src/lib/adapter";
 import { getPricedBalances } from "../src/lib/price";
+import { chains } from "../src/lib/chain";
 
 type CategoryBalances = {
   title: string;
@@ -180,6 +181,15 @@ async function main() {
 
     console.table(data);
   }
+
+  const metadata: any[] = [];
+  for (const chain of chains) {
+    if (balancesRes[chain]) {
+      metadata.push({ chain, ...balancesRes[chain] });
+    }
+  }
+  console.log("Metadata:");
+  console.table(metadata);
 
   const endTime = Date.now();
   console.log(`Completed in ${endTime - startTime}ms`);
