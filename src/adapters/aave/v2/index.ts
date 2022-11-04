@@ -4,7 +4,7 @@ import {
   getLendingPoolBalances,
   getLendingPoolHealthFactor,
 } from "@lib/aave/v2/lending";
-import { getStakeBalances, getStakeBalancerPoolBalances } from "./balances";
+import { getStakeBalances, getStakeBalancerPoolBalances } from "./stake";
 import { getLendingRewardsBalances } from "./rewards";
 
 /**
@@ -27,6 +27,14 @@ const BPT: Contract = {
   rewards: [Aave],
 };
 
+const ABPT: Contract = {
+  name: "Aave Balance Pool Token",
+  address: "0x41A08648C3766F9F9d85598fF102a08f4ef84F84",
+  chain: "ethereum",
+  symbol: "ABPT",
+  decimals: 18,
+};
+
 /**
  * ========== ETHEREUM ==========
  */
@@ -47,7 +55,7 @@ const stkABPT_ETH: Contract = {
   chain: "ethereum",
   symbol: "stkABPT",
   decimals: 18,
-  underlyings: [BPT],
+  underlyings: [ABPT],
 };
 
 const IncentiveController_ETH: Contract = {
