@@ -150,8 +150,7 @@ async function main() {
         }`,
         il: `${yieldObject !== undefined ? yieldObject?.ilRisk : "-"}`,
         stable: balance.stable,
-        debt: balance.debt,
-        parent: balance.parent,
+        type: balance.type,
       };
 
       if (balance.rewards) {
