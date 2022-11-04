@@ -147,11 +147,14 @@ async function main() {
         yield: `${
           yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + "%" : "-"
         }`,
-        il: `${yieldObject !== undefined ? yieldObject?.ilRisk : "-"}`,
-        stable: balance.stable,
-        debt: balance.debt,
-        parent: balance.parent,
+        // il: `${yieldObject !== undefined ? yieldObject?.ilRisk : "-"}`,
+        // stable: balance.stable,
+        // debt: balance.debt,
+        // parent: balance.parent,
       };
+      if ((balance.category === "lock") | "vest") {
+        d.timelock = balance.lockEnd;
+      }
 
       if (balance.rewards) {
         d.reward = balance.rewards

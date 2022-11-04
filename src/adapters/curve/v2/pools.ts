@@ -20,7 +20,6 @@ export async function getPoolsContracts(chain: Chain, contract?: Contract) {
       chain,
       target: contract.address,
       params: [],
-
       abi: {
         stateMutability: "view",
         type: "function",
