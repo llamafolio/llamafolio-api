@@ -6,7 +6,7 @@ import { multicall } from "@lib/multicall";
 import { ethers } from "ethers";
 import { ETH_ADDR, Token } from "@lib/token";
 import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
-import { BigNumber, utils } from "ethers/lib/ethers";
+import { BigNumber } from "ethers";
 
 export async function getPoolsContracts(chain: Chain, contract?: Contract) {
   const pools: Contract[] = [];
@@ -176,88 +176,88 @@ export async function getPoolsBalances(
     return [];
   }
 
-  interface BalanceWithExtraProps extends Balance {
-    coins?: Token[];
-  }
+  try {
+    const nonEmptyPools: Contract[] = (
+      await getERC20BalanceOf(ctx, chain, contracts as Token[])
+    ).filter((pool) => pool.amount.gt(0));
 
-  // try {
-  const nonEmptyPools: Contract[] = (
-    await getERC20BalanceOf(ctx, chain, contracts as Token[])
-  ).filter((pool) => pool.amount.gt(0));
+    for (let i = 0; i < nonEmptyPools.length; i++) {
+      const [totalSupplyRes, underlyingsBalancesRes] = await Promise.all([
+        call({
+          chain,
+          target: nonEmptyPools[i].address,
+          params: [],
+          abi: {
+            stateMutability: "view",
+            type: "function",
+            name: "totalSupply",
+            inputs: [],
+            outputs: [
+              {
+                name: "",
+                type: "uint256",
+              },
+            ],
+            gas: 3240,
+          },
+        }),
 
-  for (let i = 0; i < nonEmptyPools.length; i++) {
-    const [totalSupplyRes, underlyingsBalancesRes] = await Promise.all([
-      call({
+        call({
+          chain,
+          target: registry.address,
+          params: [nonEmptyPools[i].poolAddress],
+          abi: {
+            stateMutability: "view",
+            type: "function",
+            name: "get_underlying_balances",
+            inputs: [{ name: "_pool", type: "address" }],
+            outputs: [{ name: "", type: "uint256[8]" }],
+          },
+        }),
+      ]);
+
+      const underlyingsBalances = underlyingsBalancesRes.output.map(
+        (res: string) => BigNumber.from(res)
+      );
+
+      const totalSupply = BigNumber.from(totalSupplyRes.output);
+      const coins = await getERC20Details(chain, nonEmptyPools[i].coins);
+
+      nonEmptyPools[i].underlyings = await getERC20Details(
         chain,
-        target: nonEmptyPools[i].address,
-        params: [],
-        abi: {
-          stateMutability: "view",
-          type: "function",
-          name: "totalSupply",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-            },
-          ],
-          gas: 3240,
-        },
-      }),
+        nonEmptyPools[i].underlyings as any
+      );
 
-      call({
+      /**
+       *  Updating pool amounts from the fraction of each underlyings
+       */
+
+      const formattedUnderlyings = nonEmptyPools[i].underlyings?.map(
+        (underlying, x) => ({
+          ...underlying,
+          amount:
+            underlying.decimals &&
+            nonEmptyPools[i].amount
+              .mul(underlyingsBalances[x].mul(10 ** (18 - underlying.decimals)))
+              .div(totalSupply),
+          decimals: 18,
+        })
+      );
+
+      const balance: Balance = {
         chain,
-        target: registry.address,
-        params: [nonEmptyPools[i].poolAddress],
-        abi: {
-          stateMutability: "view",
-          type: "function",
-          name: "get_underlying_balances",
-          inputs: [{ name: "_pool", type: "address" }],
-          outputs: [{ name: "", type: "uint256[8]" }],
-        },
-      }),
-    ]);
-
-    const underlyingsBalances = underlyingsBalancesRes.output;
-    const totalSupply = totalSupplyRes.output;
-
-    const coins = await getERC20Details(chain, nonEmptyPools[i].coins);
-
-    nonEmptyPools[i].underlyings = await getERC20Details(
-      chain,
-      nonEmptyPools[i].underlyings as any
-    );
-
-    /**
-     *  Updating pool amounts from the fraction of each underlyings
-     */
-
-    nonEmptyPools[i].underlyings = nonEmptyPools[i].underlyings?.map(
-      (underlying, x) => ({
-        ...underlying,
-        amount: nonEmptyPools[i].amount
-          .mul(
-            Math.round(
-              ((underlyingsBalances[x] * 10 ** (18 - underlying.decimals)) /
-                totalSupply) *
-                10 ** 8 // to prevent underflow since BigNumber doesnt support floating number
-            )
-          )
-          .div(10 ** 8), // to prevent underflow since BigNumber doesnt support floating number
+        address: nonEmptyPools[i].address,
+        amount: nonEmptyPools[i].amount,
+        symbol: coins.map((coin) => coin.symbol).join("-"),
+        underlyings: formattedUnderlyings,
         decimals: 18,
-      })
-    );
+        category: "lp",
+      };
 
-    const balance = {
-      ...nonEmptyPools[i],
-      symbol: coins.map((coin) => coin.symbol).join("-"),
-      decimals: 18,
-      category: "lp",
-    };
-
-    balances.push(balance);
+      balances.push(balance);
+    }
+    return balances;
+  } catch (error) {
+    return [];
   }
-  return balances;
 }
