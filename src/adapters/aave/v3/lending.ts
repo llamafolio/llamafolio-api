@@ -1,4 +1,4 @@
-import { BigNumber } from "ethers";
+import { ethers, BigNumber } from "ethers";
 import { Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
@@ -137,45 +137,6 @@ export async function getLendingPoolBalances(
       }
     }
 
-    const UserHealthRes = await call({
-      chain,
-      target: lendingPool.address,
-      params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: "address", name: "user", type: "address" }],
-        name: "getUserAccountData",
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "totalCollateralBase",
-            type: "uint256",
-          },
-          { internalType: "uint256", name: "totalDebtBase", type: "uint256" },
-          {
-            internalType: "uint256",
-            name: "availableBorrowsBase",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "currentLiquidationThreshold",
-            type: "uint256",
-          },
-          { internalType: "uint256", name: "ltv", type: "uint256" },
-          { internalType: "uint256", name: "healthFactor", type: "uint256" },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-    });
-
-    const UserHealth = UserHealthRes.output.healthFactor / 10 ** 18;
-    console.log(
-      `User: ${ctx.address} - Adapter: ${
-        process.argv[2]
-      } - Chain: ${chain} - HealthFactor: ${UserHealth > 10 ? 10 : UserHealth}`
-    );
-
     return balances;
   } catch (error) {
     return [];
@@ -239,5 +200,66 @@ export async function getRewardsPoolBalances(
     return rewards;
   } catch (error) {
     return [];
+  }
+}
+
+export async function getLendingPoolHealthFactor(
+  ctx: BaseContext,
+  chain: Chain,
+  lendingPool?: Contract
+) {
+  if (!lendingPool) {
+    return;
+  }
+
+  try {
+    const userAccountDataRes = await call({
+      chain,
+      target: lendingPool.address,
+      params: [ctx.address],
+      abi: {
+        inputs: [{ internalType: "address", name: "user", type: "address" }],
+        name: "getUserAccountData",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "totalCollateralBase",
+            type: "uint256",
+          },
+          { internalType: "uint256", name: "totalDebtBase", type: "uint256" },
+          {
+            internalType: "uint256",
+            name: "availableBorrowsBase",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "currentLiquidationThreshold",
+            type: "uint256",
+          },
+          { internalType: "uint256", name: "ltv", type: "uint256" },
+          { internalType: "uint256", name: "healthFactor", type: "uint256" },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    });
+
+    // no borrowed balance
+    if (
+      ethers.constants.MaxUint256.eq(userAccountDataRes.output.healthFactor)
+    ) {
+      return;
+    }
+
+    const healthFactor = parseFloat(
+      ethers.utils.formatUnits(userAccountDataRes.output.healthFactor, 18)
+    );
+
+    // TODO: return other metadata like LTV, available borrow etc
+    return healthFactor;
+  } catch (error) {
+    console.log("Failed to get aave-v3 lending pool health factory", error);
+    return;
   }
 }

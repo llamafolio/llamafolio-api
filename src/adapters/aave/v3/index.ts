@@ -2,8 +2,9 @@ import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import {
   getLendingPoolContracts,
   getLendingPoolBalances,
+  getLendingPoolHealthFactor,
   getRewardsPoolBalances,
-} from "./balances";
+} from "./lending";
 
 const poolAvax: Contract = {
   name: "poolAvax",
@@ -154,6 +155,18 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     ),
   ]);
 
+  const [
+    healthFactorArbitrum,
+    healthFactorAvax,
+    healthFactorFantom,
+    healthFactorPolygon,
+  ] = await Promise.all([
+    getLendingPoolHealthFactor(ctx, "arbitrum", poolArbitrum),
+    getLendingPoolHealthFactor(ctx, "avax", poolAvax),
+    getLendingPoolHealthFactor(ctx, "fantom", poolFantom),
+    getLendingPoolHealthFactor(ctx, "polygon", poolPolygon),
+  ]);
+
   const balances = [
     ...poolBalances_Avax,
     // ...poolBalances_OP,
@@ -169,6 +182,18 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
 
   return {
     balances,
+    arbitrum: {
+      healthFactor: healthFactorArbitrum,
+    },
+    avax: {
+      healthFactor: healthFactorAvax,
+    },
+    fantom: {
+      healthFactor: healthFactorFantom,
+    },
+    polygon: {
+      healthFactor: healthFactorPolygon,
+    },
   };
 };
 

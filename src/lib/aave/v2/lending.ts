@@ -300,6 +300,7 @@ export async function getLendingPoolHealthFactor(
     // TODO: return other metadata like LTV, available borrow etc
     return healthFactor;
   } catch (error) {
+    console.log("Failed to get aave-v2 lending pool health factory", error);
     return;
   }
 }
