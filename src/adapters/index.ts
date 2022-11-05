@@ -16,7 +16,7 @@ import euler from "@adapters/euler";
 import floorDao from "@adapters/floor-dao";
 import geist from "@adapters/geist";
 import gmx from "@adapters/gmx";
-import granary from "@adapters/granary";
+import granaryFinance from "@adapters/granary-finance";
 import hex from "@adapters/hex";
 import hundredFinance from "@adapters/hundred-finance";
 import inverseFinance from "@adapters/inverse-finance";
@@ -73,7 +73,7 @@ export const adapters: Adapter[] = [
   floorDao,
   geist,
   gmx,
-  granary,
+  granaryFinance,
   hex,
   hundredFinance,
   inverseFinance,
