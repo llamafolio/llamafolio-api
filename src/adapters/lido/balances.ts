@@ -1,6 +1,6 @@
+import { BigNumber } from "ethers";
 import { Chain } from "@defillama/sdk/build/general";
 import { BaseContext, Balance, Contract } from "@lib/adapter";
-import { BigNumber } from "ethers";
 import { abi } from "@lib/erc20";
 import { call } from "@defillama/sdk/build/abi";
 
@@ -11,7 +11,7 @@ export async function getWStEthStakeBalances(
 ) {
   const balances: Balance[] = [];
 
-  if (!contract) {
+  if (!contract || !contract.underlyings?.[0]) {
     return [];
   }
 
@@ -25,7 +25,7 @@ export async function getWStEthStakeBalances(
 
     const converterWStEthToStEthRes = await call({
       chain: "ethereum",
-      target: "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0", // Universal logic to convert wstEth for all bridge (Optimism + Arbitrum)
+      target: "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
       params: [balanceOfRes.output],
       abi: {
         inputs: [
@@ -39,10 +39,6 @@ export async function getWStEthStakeBalances(
     });
 
     const formattedBalanceOf = BigNumber.from(converterWStEthToStEthRes.output);
-
-    if (!contract.underlyings?.[0]) {
-      return [];
-    }
 
     const balance: Balance = {
       chain,
@@ -114,7 +110,7 @@ export async function getStMaticBalances(
 ) {
   const balances: Balance[] = [];
 
-  if (!contract) {
+  if (!contract || !contract.underlyings?.[0]) {
     return [];
   }
 
@@ -148,10 +144,6 @@ export async function getStMaticBalances(
     const formattedBalanceOf = BigNumber.from(
       converterWStEthToStEthRes.output[0]
     );
-
-    if (!contract.underlyings?.[0]) {
-      return [];
-    }
 
     const balance: Balance = {
       chain,
