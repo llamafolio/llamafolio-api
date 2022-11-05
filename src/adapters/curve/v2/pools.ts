@@ -131,18 +131,30 @@ export async function getPoolsContracts(chain: Chain, contract?: Contract) {
 
     for (let i = 0; i < coinsAddressesRes.length; i++) {
       coinsAddresses.push(
-        coinsAddressesRes[i].filter(
-          (coin: string) =>
-            coin.toLowerCase() !== ethers.constants.AddressZero &&
-            coin.toLowerCase() !== ETH_ADDR
-        )
+        coinsAddressesRes[i]
+          .filter(
+            (coin: string) =>
+              coin.toLowerCase() !== ethers.constants.AddressZero
+            // coin.toLowerCase() !== ETH_ADDR
+          )
+          .map((coin: string) =>
+            coin.toLowerCase() === ETH_ADDR
+              ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+              : coin
+          )
       );
       underlyingsAddresses.push(
-        underlyingsAddressesRes[i].filter(
-          (coin: string) =>
-            coin.toLowerCase() !== ethers.constants.AddressZero &&
-            coin.toLowerCase() !== ETH_ADDR
-        )
+        underlyingsAddressesRes[i]
+          .filter(
+            (coin: string) =>
+              coin.toLowerCase() !== ethers.constants.AddressZero
+            // coin.toLowerCase() !== ETH_ADDR
+          )
+          .map((coin: string) =>
+            coin.toLowerCase() === ETH_ADDR
+              ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+              : coin
+          )
       );
     }
 
@@ -152,7 +164,7 @@ export async function getPoolsContracts(chain: Chain, contract?: Contract) {
         name: poolsDetailsNames[i],
         address: poolsLPTokens[i],
         poolAddress: nonDuplicatePoolAddresses[i],
-        coins: coinsAddresses[i],
+        tokens: coinsAddresses[i],
         underlyings: underlyingsAddresses[i],
       });
     }
@@ -170,6 +182,10 @@ export async function getPoolsBalances(
   registry?: Contract
 ) {
   const balances: Balance[] = [];
+
+  interface BalanceWithExtraProps extends Balance {
+    tokens: Token[];
+  }
 
   if (!registry) {
     return [];
@@ -220,7 +236,8 @@ export async function getPoolsBalances(
       );
 
       const totalSupply = BigNumber.from(totalSupplyRes.output);
-      const coins = await getERC20Details(chain, nonEmptyPools[i].coins);
+      
+      const token = await getERC20Details(chain, nonEmptyPools[i].tokens);
 
       nonEmptyPools[i].underlyings = await getERC20Details(
         chain,
@@ -243,11 +260,12 @@ export async function getPoolsBalances(
         })
       );
 
-      const balance: Balance = {
+      const balance: BalanceWithExtraProps = {
         chain,
         address: nonEmptyPools[i].address,
         amount: nonEmptyPools[i].amount,
-        symbol: coins.map((coin) => coin.symbol).join("-"),
+        symbol: token.map((coin) => coin.symbol).join("-"),
+        tokens: token.map((coin) => coin),
         underlyings: formattedUnderlyings,
         decimals: 18,
         category: "lp",

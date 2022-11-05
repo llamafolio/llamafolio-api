@@ -1,11 +1,12 @@
 import { BigNumber } from "ethers";
-import { multicall } from "@lib/multicall";
+import { Calls, multicall } from "@lib/multicall";
 import { Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";
 import { range } from "@lib/array";
 import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
+import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
 
 const CRVToken: Token = {
   chain: "ethereum",
@@ -166,6 +167,7 @@ export async function getGaugesContracts(
         return {
           ...gauge,
           lpToken: lpTokensAddresses[i],
+          tokens: pool.tokens,
           underlyings: pool.underlyings,
           poolAddress: pool.poolAddress,
         };
@@ -183,78 +185,92 @@ export async function getGaugesBalances(
 ) {
   const balances: Balance[] = [];
 
-  const nonNullContracts = contracts.filter((contract) => contract !== null);
+  interface BalanceWithExtraProps extends Balance {
+    poolAddress: string;
+    tokens: Token[];
+    underlyings: any;
+  }
 
-  const [gaugeBalancesListRes, totalSupplyRes, claimableTokensRes] =
-    await Promise.all([
-      multicall({
-        chain,
-        calls: nonNullContracts.map((contract) => ({
-          target: contract.address,
-          params: [ctx.address],
-        })),
-        abi: {
-          constant: true,
-          inputs: [{ internalType: "address", name: "", type: "address" }],
-          name: "balanceOf",
-          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-          payable: false,
-          stateMutability: "view",
-          type: "function",
-        },
-      }),
+  const nonEmptyPools: Contract[] = (
+    await getERC20BalanceOf(ctx, chain, contracts as Token[])
+  ).filter((pool) => pool.amount.gt(0));
 
-      multicall({
-        chain,
-        calls: nonNullContracts.map((contract) => ({
-          target: contract.address,
-          params: [],
-        })),
-        abi: {
-          stateMutability: "view",
-          type: "function",
-          name: "totalSupply",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-            },
-          ],
-          gas: 3240,
-        },
-      }),
+  let calls: Calls = [];
+  const call = nonEmptyPools.map((contract) => {
+    if (contract.underlyings)
+      for (let i = 0; i < contract.underlyings.length; i++) {
+        calls.push({
+          target: contract.poolAddress,
+          params: [i],
+        });
+      }
+  });
 
-      multicall({
-        chain,
-        calls: nonNullContracts.map((contract) => ({
-          target: contract.address,
-          params: [ctx.address],
-        })),
-        abi: {
-          stateMutability: "nonpayable",
-          type: "function",
-          name: "claimable_tokens",
-          inputs: [
-            {
-              name: "addr",
-              type: "address",
-            },
-          ],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-            },
-          ],
-          gas: 2683603,
-        },
-      }),
-    ]);
+  const [
+    /* gaugeBalancesListRes ,*/ totalSupplyRes,
+    claimableTokensRes,
+    underlyingsBalancesRes,
+  ] = await Promise.all([
+    multicall({
+      chain,
+      calls: nonEmptyPools.map((contract) => ({
+        target: contract.address,
+        params: [],
+      })),
+      abi: {
+        stateMutability: "view",
+        type: "function",
+        name: "totalSupply",
+        inputs: [],
+        outputs: [
+          {
+            name: "",
+            type: "uint256",
+          },
+        ],
+        gas: 3240,
+      },
+    }),
 
-  const gaugeBalancesList = gaugeBalancesListRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output));
+    multicall({
+      chain,
+      calls: nonEmptyPools.map((contract) => ({
+        target: contract.address,
+        params: [ctx.address],
+      })),
+      abi: {
+        stateMutability: "nonpayable",
+        type: "function",
+        name: "claimable_tokens",
+        inputs: [
+          {
+            name: "addr",
+            type: "address",
+          },
+        ],
+        outputs: [
+          {
+            name: "",
+            type: "uint256",
+          },
+        ],
+        gas: 2683603,
+      },
+    }),
+
+    multicall({
+      chain,
+      calls,
+      abi: {
+        name: "balances",
+        outputs: [{ type: "uint256", name: "" }],
+        inputs: [{ type: "uint256", name: "i" }],
+        stateMutability: "view",
+        type: "function",
+        gas: 5076,
+      },
+    }),
+  ]);
 
   const totalSupply = totalSupplyRes
     .filter((res) => res.success)
@@ -262,40 +278,54 @@ export async function getGaugesBalances(
 
   const claimableTokens = claimableTokensRes
     .filter((res) => res.success)
-    .map((res) => res.output);
+    .map((res) => BigNumber.from(res.output));
 
-  for (let i = 0; i < nonNullContracts.length; i++) {
-    // const formattedUnderlyings = nonNullContracts[i].underlyings?.map(
-    //     (underlying, x) => ({
-    //       ...underlying,
-    //       amount:
-    //         underlying.decimals &&
-    //         nonNullContracts[i].amount
-    //           .mul(underlyingsBalances[x].mul(10 ** (18 - underlying.decimals)))
-    //           .div(totalSupply),
-    //       decimals: 18,
-    //     })
-    //   );
-    if (gaugeBalancesList[i] && gaugeBalancesList[i] !== undefined) {
-      const balance: Balance = {
-        // ...nonNullContracts[i],
+  const underlyingsBalances = underlyingsBalancesRes
+    .filter((res) => res.success)
+    .map((res) => BigNumber.from(res.output));
+
+  for (let i = 0; i < nonEmptyPools.length; i++) {
+    const contract = nonEmptyPools[i];
+
+    contract.tokens = await getERC20Details(chain, contract.tokens);
+
+    contract.underlyings = await getERC20Details(
+      chain,
+      contract.underlyings as any
+    );
+
+    /**
+     *  Updating pool amounts from the fraction of each underlyings
+     */
+
+    const formattedUnderlyings = contract.underlyings?.map((underlying, x) => ({
+      ...underlying,
+      amount:
+        underlying.decimals &&
+        contract.amount
+          .mul(underlyingsBalances[x].mul(10 ** (18 - underlying.decimals)))
+          .div(totalSupply[0]),
+      decimals: 18,
+    }));
+
+    if (contract.amount !== undefined) {
+      const balance: BalanceWithExtraProps = {
         chain,
         decimals: 18,
-        address: nonNullContracts[i].address,
-        amount: gaugeBalancesList[i],
+        symbol: contract.tokens?.map((token: Token) => token.symbol).join("-"),
+        address: contract.address,
+        poolAddress: contract.poolAddress,
+        tokens: contract.tokens,
+        underlyings: formattedUnderlyings,
+        rewards: [{ ...CRVToken, amount: claimableTokens[0] }],
+        amount: contract.amount,
         category: "farm",
-        yieldKey: nonNullContracts[i].lpToken,
+        yieldKey: contract.lpToken,
       };
 
-      //   if (claimableTokensRes[i] && claimableTokensRes[i] !== undefined) {
-      //     balance.rewards = [{ ...CRVToken, amount: claimableTokens[i] }];
-      //   }
-
-      //   if (balance.rewards !== undefined) {
-      //     balances.push(balance);
-      //   }
       balances.push(balance);
     }
   }
+  console.log(balances)
   return balances;
 }
