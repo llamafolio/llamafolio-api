@@ -16,6 +16,7 @@ import euler from "@adapters/euler";
 import floorDao from "@adapters/floor-dao";
 import geist from "@adapters/geist";
 import gmx from "@adapters/gmx";
+import granary from "@adapters/granary";
 import hex from "@adapters/hex";
 import hundredFinance from "@adapters/hundred-finance";
 import inverseFinance from "@adapters/inverse-finance";
@@ -41,7 +42,6 @@ import stargate from "@adapters/stargate";
 import strike from "@adapters/strike";
 import sushiswap from "@adapters/sushiswap";
 import synthetix from "@adapters/synthetix";
-import theGranary from "@adapters/the-granary";
 import traderjoe from "@adapters/traderjoe";
 import truefi from "@adapters/truefi";
 import uniswap from "@adapters/uniswap";
@@ -73,6 +73,7 @@ export const adapters: Adapter[] = [
   floorDao,
   geist,
   gmx,
+  granary,
   hex,
   hundredFinance,
   inverseFinance,
@@ -98,7 +99,6 @@ export const adapters: Adapter[] = [
   strike,
   sushiswap,
   synthetix,
-  theGranary,
   traderjoe,
   truefi,
   uniswap,

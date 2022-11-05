@@ -147,7 +147,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
 };
 
 const adapter: Adapter = {
-  id: "the-granary",
+  id: "granary-finance",
   getContracts,
   getBalances,
 };
