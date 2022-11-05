@@ -7,12 +7,9 @@ import { call, multiCall } from "@defillama/sdk/build/abi";
 
 export async function getLendingPoolContracts(
   chain: Chain,
-  lendingPool?: Contract
+  lendingPool: Contract,
+  poolDataProvider: Contract
 ) {
-  if (!lendingPool) {
-    return [];
-  }
-
   try {
     const contracts: Contract[] = [];
 
@@ -32,7 +29,7 @@ export async function getLendingPoolContracts(
     const reservesList: string[] = reserveListRes.output;
 
     const calls = reservesList.map((address) => ({
-      target: lendingPool.poolDataProvider,
+      target: poolDataProvider.address,
       params: [address],
     }));
 
@@ -116,13 +113,8 @@ export async function getLendingPoolContracts(
 export async function getLendingPoolBalances(
   ctx: BaseContext,
   chain: Chain,
-  contracts: Contract[],
-  lendingPool?: Contract
+  contracts: Contract[]
 ) {
-  if (!lendingPool) {
-    return [];
-  }
-
   try {
     const balances: Balance[] = await getERC20BalanceOf(
       ctx,
@@ -143,23 +135,19 @@ export async function getLendingPoolBalances(
   }
 }
 
-export async function getRewardsPoolBalances(
+export async function getLendingRewardsBalances(
   ctx: BaseContext,
   chain: Chain,
-  contracts: Contract[],
-  lendingPool?: Contract
+  incentiveController: Contract,
+  contracts: Contract[]
 ) {
-  if (!lendingPool) {
-    return [];
-  }
-
   try {
     const rewards: Balance[] = [];
     const assets: any = contracts.map((contract: Contract) => contract.address);
 
     const rewardsListsRes = await call({
       chain,
-      target: lendingPool.incentiveController,
+      target: incentiveController.address,
       params: [assets, ctx.address],
       abi: {
         inputs: [
@@ -206,12 +194,8 @@ export async function getRewardsPoolBalances(
 export async function getLendingPoolHealthFactor(
   ctx: BaseContext,
   chain: Chain,
-  lendingPool?: Contract
+  lendingPool: Contract
 ) {
-  if (!lendingPool) {
-    return;
-  }
-
   try {
     const userAccountDataRes = await call({
       chain,
