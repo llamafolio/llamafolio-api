@@ -37,8 +37,8 @@ const valasToken: Token = {
 const getContracts = async () => {
   const lendingPoolContracts = await getLendingPoolContracts({
     chain: "bsc",
-    lendingPoolAddress: lendingPoolContract.address,
-    chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+    lendingPool: lendingPoolContract,
+    chefIncentivesController: chefIncentivesControllerContract,
     rewardToken: valasToken,
   });
 
@@ -56,7 +56,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     "bsc",
     contracts,
     {
-      chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+      chefIncentivesController: chefIncentivesControllerContract,
     }
   );
 

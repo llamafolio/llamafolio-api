@@ -1,13 +1,19 @@
 import { ethers, BigNumber } from "ethers";
-import { providers, Chain } from "@defillama/sdk/build/general";
+import { Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import { call } from "@defillama/sdk/build/abi";
-import LendingPoolABI from "./abis/LendingPool.json";
 
 const abi = {
+  getReservesList: {
+    inputs: [],
+    name: "getReservesList",
+    outputs: [{ internalType: "address[]", name: "", type: "address[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
   getReserveData: {
     inputs: [{ internalType: "address", name: "asset", type: "address" }],
     name: "getReserveData",
@@ -86,23 +92,18 @@ const abi = {
 
 export async function getLendingPoolContracts(
   chain: Chain,
-  lendingPoolAddress?: string
+  lendingPool: Contract
 ) {
-  if (!lendingPoolAddress) {
-    return [];
-  }
-
   try {
     const contracts: Contract[] = [];
-    const provider = providers[chain];
 
-    const lendingPool = new ethers.Contract(
-      lendingPoolAddress,
-      LendingPoolABI,
-      provider
-    );
+    const reservesListRes = await call({
+      chain,
+      target: lendingPool.address,
+      abi: abi.getReservesList,
+    });
 
-    const reservesList: string[] = await lendingPool.getReservesList();
+    const reservesList: string[] = reservesListRes.output;
 
     const reservesDataRes = await multicall({
       chain,
@@ -217,13 +218,8 @@ export async function getLendingPoolContracts(
 export async function getLendingPoolBalances(
   ctx: BaseContext,
   chain: Chain,
-  contracts: Contract[],
-  lendingPool?: Contract
+  contracts: Contract[]
 ) {
-  if (!lendingPool) {
-    return [];
-  }
-
   try {
     const balances: Balance[] = await getERC20BalanceOf(
       ctx,
@@ -234,7 +230,10 @@ export async function getLendingPoolBalances(
     // use the same amount for underlyings
     for (const balance of balances) {
       if (balance.amount.gt(0) && balance.underlyings) {
-        balance.underlyings[0].amount = BigNumber.from(balance.amount);
+        balance.underlyings[0] = {
+          ...balance.underlyings[0],
+          amount: BigNumber.from(balance.amount),
+        };
       }
     }
 
@@ -247,12 +246,8 @@ export async function getLendingPoolBalances(
 export async function getLendingPoolHealthFactor(
   ctx: BaseContext,
   chain: Chain,
-  lendingPool?: Contract
+  lendingPool: Contract
 ) {
-  if (!lendingPool) {
-    return;
-  }
-
   try {
     const userAccountDataRes = await call({
       chain,

@@ -7,12 +7,9 @@ export async function getLendingRewardsBalances(
   ctx: BaseContext,
   chain: Chain,
   contracts: Contract[],
-  lendingPoolContract?: Contract
+  incentiveControllerContract: Contract,
+  rewardToken: Contract
 ) {
-  if (!lendingPoolContract || !lendingPoolContract.rewards?.[0]) {
-    return [];
-  }
-
   try {
     const assetsAddressesList: any = contracts
       .filter((contract) => contract.category === "lend")
@@ -22,7 +19,7 @@ export async function getLendingRewardsBalances(
 
     const userRewardsRes = await call({
       chain,
-      target: lendingPoolContract.rewards?.[0].address,
+      target: incentiveControllerContract.address,
       params: [assetsAddressesList, ctx.address],
       abi: {
         inputs: [
@@ -38,24 +35,18 @@ export async function getLendingRewardsBalances(
 
     const userRewards = BigNumber.from(userRewardsRes.output);
 
-    const lendingPoolContractRewards: Contract =
-      lendingPoolContract.rewards?.[0];
-    const underlyings = lendingPoolContractRewards.underlyings?.[0];
-
-    if (underlyings) {
-      const reward: Balance = {
-        chain: underlyings.chain,
-        address: underlyings.address,
-        decimals: underlyings.decimals,
-        symbol: underlyings.symbol,
-        amount: userRewards,
-        category: "reward",
-      };
-      rewards.push(reward);
-    }
+    const reward: Balance = {
+      chain: rewardToken.chain,
+      address: rewardToken.address,
+      decimals: rewardToken.decimals,
+      symbol: rewardToken.symbol,
+      amount: userRewards,
+      category: "reward",
+    };
+    rewards.push(reward);
 
     return rewards;
   } catch (error) {
-    return []
+    return [];
   }
 }

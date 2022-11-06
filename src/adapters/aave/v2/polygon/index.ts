@@ -12,11 +12,23 @@ const lendingPool: Contract = {
   chain: "polygon",
 };
 
+const WMATIC: Contract = {
+  address: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+  chain: "polygon",
+  name: "Wrapped Matic",
+  symbol: "WMATIC",
+  decimals: 18,
+  coingeckoId: "wmatic",
+};
+
+const incentiveController: Contract = {
+  name: "Aave Incentive Controller",
+  address: "0x357D51124f59836DeD84c8a1730D72B749d8BC23",
+  chain: "polygon",
+};
+
 export const getContracts = async () => {
-  const poolsPolygon = await getLendingPoolContracts(
-    "polygon",
-    lendingPool.address
-  );
+  const poolsPolygon = await getLendingPoolContracts("polygon", lendingPool);
 
   return {
     contracts: {
@@ -31,12 +43,13 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
 ) => {
   const [lendingPoolBalances, rewardsPoolBalances, healthFactor] =
     await Promise.all([
-      getLendingPoolBalances(ctx, "polygon", poolsPolygon || [], lendingPool),
+      getLendingPoolBalances(ctx, "polygon", poolsPolygon || []),
       getLendingRewardsBalances(
         ctx,
         "polygon",
         poolsPolygon || [],
-        lendingPool
+        incentiveController,
+        WMATIC
       ),
       getLendingPoolHealthFactor(ctx, "polygon", lendingPool),
     ]);

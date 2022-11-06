@@ -12,10 +12,7 @@ const lendingPool: Contract = {
 };
 
 export const getContracts = async () => {
-  const poolsFantom = await getLendingPoolContracts(
-    "fantom",
-    lendingPool.address
-  );
+  const poolsFantom = await getLendingPoolContracts("fantom", lendingPool);
 
   return {
     contracts: {
@@ -29,7 +26,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
   { poolsFantom }
 ) => {
   const [lendingPoolBalances, healthFactor] = await Promise.all([
-    getLendingPoolBalances(ctx, "fantom", poolsFantom || [], lendingPool),
+    getLendingPoolBalances(ctx, "fantom", poolsFantom || []),
     getLendingPoolHealthFactor(ctx, "fantom", lendingPool),
   ]);
 

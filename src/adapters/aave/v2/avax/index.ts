@@ -12,8 +12,23 @@ const lendingPool: Contract = {
   chain: "avax",
 };
 
+const WAVAX: Contract = {
+  chain: "avax",
+  address: "0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7",
+  name: "Wrapped AVAX",
+  symbol: "WAVAX",
+  decimals: 18,
+  coingeckoId: "wrapped-avax",
+};
+
+const incentiveController: Contract = {
+  name: "Aave Incentive Controller",
+  address: "0x01d83fe6a10d2f2b7af17034343746188272cac9",
+  chain: "avax",
+};
+
 export const getContracts = async () => {
-  const poolsAvax = await getLendingPoolContracts("avax", lendingPool.address);
+  const poolsAvax = await getLendingPoolContracts("avax", lendingPool);
 
   return {
     contracts: {
@@ -28,8 +43,14 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
 ) => {
   const [lendingPoolBalances, rewardsPoolBalances, healthFactor] =
     await Promise.all([
-      getLendingPoolBalances(ctx, "avax", poolsAvax || [], lendingPool),
-      getLendingRewardsBalances(ctx, "avax", poolsAvax || [], lendingPool),
+      getLendingPoolBalances(ctx, "avax", poolsAvax || []),
+      getLendingRewardsBalances(
+        ctx,
+        "avax",
+        poolsAvax || [],
+        incentiveController,
+        WAVAX
+      ),
       getLendingPoolHealthFactor(ctx, "avax", lendingPool),
     ]);
 

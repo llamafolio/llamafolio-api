@@ -13,8 +13,8 @@ import { range } from "@lib/array";
 
 export type GetLendingPoolContractsParams = {
   chain: Chain;
-  lendingPoolAddress: string;
-  chefIncentivesControllerAddress: string;
+  lendingPool: Contract;
+  chefIncentivesController: Contract;
   rewardToken: Token;
 };
 
@@ -23,15 +23,15 @@ export type GetLendingPoolContractsParams = {
  */
 export async function getLendingPoolContracts({
   chain,
-  lendingPoolAddress,
-  chefIncentivesControllerAddress,
+  lendingPool,
+  chefIncentivesController,
   rewardToken,
 }: GetLendingPoolContractsParams) {
   const provider = providers[chain];
 
   const aaveLendingPoolContracts = await getAaveLendingPoolContracts(
     chain,
-    lendingPoolAddress
+    lendingPool
   );
 
   const aaveLendingPoolContractsByAddress: { [key: string]: Contract } = {};
@@ -41,7 +41,7 @@ export async function getLendingPoolContracts({
 
   // add ChefIncentives rewards
   const chefIncentives = new ethers.Contract(
-    chefIncentivesControllerAddress,
+    chefIncentivesController.address,
     ChefIncentivesControllerABI,
     provider
   );
@@ -82,14 +82,14 @@ export async function getLendingPoolContracts({
 }
 
 export type GetLendingPoolBalancesParams = {
-  chefIncentivesControllerAddress: string;
+  chefIncentivesController: Contract;
 };
 
 export async function getLendingPoolBalances(
   ctx: BaseContext,
   chain: Chain,
   contracts: Contract[],
-  { chefIncentivesControllerAddress }: GetLendingPoolBalancesParams
+  { chefIncentivesController }: GetLendingPoolBalancesParams
 ) {
   const provider = providers[chain];
 
@@ -102,7 +102,7 @@ export async function getLendingPoolBalances(
 
   // lending / borrowing rewards
   const chefIncentives = new ethers.Contract(
-    chefIncentivesControllerAddress,
+    chefIncentivesController.address,
     ChefIncentivesControllerABI,
     provider
   );

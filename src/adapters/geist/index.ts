@@ -37,8 +37,8 @@ const geistToken: Token = {
 const getContracts = async () => {
   const lendingPoolContracts = await getLendingPoolContracts({
     chain: "fantom",
-    lendingPoolAddress: lendingPoolContract.address,
-    chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+    lendingPool: lendingPoolContract,
+    chefIncentivesController: chefIncentivesControllerContract,
     rewardToken: geistToken,
   });
 
@@ -56,7 +56,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     "fantom",
     contracts,
     {
-      chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+      chefIncentivesController: chefIncentivesControllerContract,
     }
   );
 

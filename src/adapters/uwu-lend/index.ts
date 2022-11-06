@@ -37,8 +37,8 @@ const UwU: Token = {
 const getContracts = async () => {
   const lendingPoolContracts = await getLendingPoolContracts({
     chain: "ethereum",
-    lendingPoolAddress: lendingPoolContract.address,
-    chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+    lendingPool: lendingPoolContract,
+    chefIncentivesController: chefIncentivesControllerContract,
     rewardToken: UwU,
   });
 
@@ -56,7 +56,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     "ethereum",
     contracts,
     {
-      chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+      chefIncentivesController: chefIncentivesControllerContract,
     }
   );
 

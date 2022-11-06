@@ -51,11 +51,14 @@ const lendingPool: Contract = {
   chain: "ethereum",
 };
 
+const incentiveController: Contract = {
+  name: "Aave Incentive Controller",
+  address: "0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5",
+  chain: "ethereum",
+};
+
 export const getContracts = async () => {
-  const poolsEthereum = await getLendingPoolContracts(
-    "ethereum",
-    lendingPool.address
-  );
+  const poolsEthereum = await getLendingPoolContracts("ethereum", lendingPool);
 
   return {
     contracts: {
@@ -77,15 +80,15 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
     stakeBalances,
     stakeBalancerBalances,
   ] = await Promise.all([
-    getLendingPoolBalances(ctx, "ethereum", poolsEthereum || [], lendingPool),
+    getLendingPoolBalances(ctx, "ethereum", poolsEthereum || []),
     getLendingRewardsBalances(
       ctx,
       "ethereum",
       poolsEthereum || [],
-      lendingPool
+      incentiveController,
+      stkAAVE
     ),
     getLendingPoolHealthFactor(ctx, "ethereum", lendingPool),
-
     getStakeBalances(ctx, "ethereum", stkAAVE),
     getStakeBalancerPoolBalances(ctx, "ethereum", stkABPT),
   ]);

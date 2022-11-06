@@ -37,8 +37,8 @@ const radiantToken: Token = {
 const getContracts = async () => {
   const lendingPoolContracts = await getLendingPoolContracts({
     chain: "arbitrum",
-    lendingPoolAddress: lendingPoolContract.address,
-    chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+    lendingPool: lendingPoolContract,
+    chefIncentivesController: chefIncentivesControllerContract,
     rewardToken: radiantToken,
   });
 
@@ -56,7 +56,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     "arbitrum",
     contracts,
     {
-      chefIncentivesControllerAddress: chefIncentivesControllerContract.address,
+      chefIncentivesController: chefIncentivesControllerContract,
     }
   );
 
