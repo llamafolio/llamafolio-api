@@ -211,7 +211,7 @@ $$;
 -- Usage
 select * from all_contract_interactions('\x0000000000000000000000000000000000000000');
 
--- Same query as all_contract_interactions except it relies on token_transfers instead of going deep through the logs
+-- Same query as all_contract_interactions except it relies on transactions and token_transfers instead of going deep through the logs
 create or replace function all_contract_interactions_tt(address bytea)
 	RETURNS setof public.contracts
 	LANGUAGE plpgsql
@@ -226,10 +226,13 @@ BEGIN
 	FOR rec IN tables LOOP
 		multichainQuery := multichainQuery ||
 			format('
-				SELECT %L::varchar as chain, tt.token_address as contract_address
+				(SELECT %L::varchar as chain, tt.token_address as contract_address
 				FROM %I.token_transfers tt
-				WHERE tt.from_address = %L OR tt.to_address = %L
-				', rec._chain, rec._chain, address, address
+				WHERE tt.from_address = %L OR tt.to_address = %L) UNION ALL
+				(SELECT %L::varchar as chain, t.to_address as contract_address
+				FROM %I.transactions t
+				WHERE t.from_address = %L)
+				', rec._chain, rec._chain, address, address, rec._chain, rec._chain, address
 			) || 
 		' union all ';
 	END LOOP;
