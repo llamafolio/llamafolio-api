@@ -35,8 +35,11 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
       continue;
     }
 
-    // token
-    tokensMap.add(token);
+    // llamafolio-tokens registers all tokens to help get metadata but some are protocol specific (ex: stETH, aTokens).
+    // wallet flag indicates wallet-only tokens
+    if (token.wallet) {
+      tokensMap.add(token);
+    }
   }
 
   const coinsBalances = (
