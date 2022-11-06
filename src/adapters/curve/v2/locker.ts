@@ -11,6 +11,8 @@ export async function getLockerBalances(
   const balances: Balance[] = [];
 
   if (!contract || !contract.rewards || !contract.underlyings) {
+    console.log("Missing locker contract");
+
     return [];
   }
 
@@ -91,6 +93,8 @@ export async function getLockerBalances(
     balances.push(balance);
     return balances;
   } catch (error) {
+    console.log("Failed to get locker balances");
+
     return [];
   }
 }

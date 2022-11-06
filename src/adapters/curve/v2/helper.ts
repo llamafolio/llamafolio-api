@@ -7,8 +7,8 @@ import { BigNumber } from "ethers";
 
 export interface BalanceWithExtraProps extends Balance {
   tokens?: Token[];
-  poolAddress?: string
-  lpToken?: string
+  poolAddress?: string;
+  lpToken?: string;
 }
 
 export async function getCurveBalances(
@@ -87,9 +87,9 @@ export async function getCurveBalances(
           amount:
             underlying.decimals &&
             nonEmptyPools[i].amount
-              .mul(underlyingsBalances[x].mul(10 ** (18 - underlying.decimals)))
+              .mul(underlyingsBalances[x])
               .div(totalSupply),
-          decimals: 18,
+          decimals: underlying.decimals,
         })
       );
 

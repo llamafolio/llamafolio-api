@@ -28,7 +28,7 @@ export async function getGaugesContracts(
       1: "fantom",
       2: "polygon",
       4: "xDai",
-      5: "ethereum (crypto pools)",
+      5: "ethereum", // (crypto pools),
       7: "arbitrum",
       8: "avalanche",
       9: "harmony",
@@ -192,7 +192,7 @@ export async function getGaugesBalances(
     return [];
   }
 
-  try {
+  // try {
     const nonEmptyPools: Contract[] = (
       await getERC20BalanceOf(ctx, chain, contracts as Token[])
     ).filter((pool) => pool.amount.gt(0));
@@ -254,9 +254,9 @@ export async function getGaugesBalances(
       balances.push(balance);
     }
     return balances;
-  } catch (error) {
-    console.log("Failed to get gauges balances");
+  // } catch (error) {
+  //   console.log("Failed to get gauges balances");
 
-    return [];
-  }
+  //   return [];
+  // }
 }
