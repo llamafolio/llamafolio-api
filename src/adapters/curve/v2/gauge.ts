@@ -1,19 +1,13 @@
 import { BigNumber } from "ethers";
-import { Calls, multicall } from "@lib/multicall";
+import { multicall } from "@lib/multicall";
 import { Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";
 import { range } from "@lib/array";
 import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
-import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
-
-const CRVToken: Token = {
-  chain: "ethereum",
-  address: "0xD533a949740bb3306d119CC777fa900bA034cd52",
-  decimals: 18,
-  symbol: "CRV",
-};
+import { BalanceWithExtraProps, getCurveBalances } from "./helper";
+import { getERC20BalanceOf } from "@lib/erc20";
 
 export async function getGaugesContracts(
   chain: Chain,
@@ -23,6 +17,8 @@ export async function getGaugesContracts(
   const gauges: Contract[] = [];
 
   if (!gaugeController) {
+    console.log("Missing gauge controller contract");
+
     return [];
   }
 
@@ -143,9 +139,11 @@ export async function getGaugesContracts(
       },
     });
 
-    const lpTokensAddresses = lpTokensAddressesRes
-      .filter((res) => res.success)
-      .map((res) => res.output.toLowerCase());
+    const lpTokensAddresses = lpTokensAddressesRes.map((res) => res.output);
+
+    gauges.map((gauge, i) => {
+      gauge.lpToken = lpTokensAddresses[i];
+    });
 
     const poolByAddress: { [key: string]: Contract } = {};
     for (const pool of pools) {
@@ -158,7 +156,7 @@ export async function getGaugesContracts(
           return null;
         }
 
-        const pool = poolByAddress[lpTokensAddresses[i]];
+        const pool = poolByAddress[lpTokensAddresses[i].toLowerCase()];
 
         if (!pool) {
           return null;
@@ -174,6 +172,8 @@ export async function getGaugesContracts(
       })
       .filter(isNotNullish);
   } catch (error) {
+    console.log("Failed to get gauges contracts");
+
     return [];
   }
 }
@@ -181,60 +181,32 @@ export async function getGaugesContracts(
 export async function getGaugesBalances(
   ctx: BaseContext,
   chain: Chain,
-  contracts: Contract[]
+  contracts: Contract[],
+  registry?: Contract
 ) {
   const balances: Balance[] = [];
 
-  interface BalanceWithExtraProps extends Balance {
-    poolAddress: string;
-    tokens: Token[];
-    underlyings: any;
+  if (!registry) {
+    console.log("Missing registry contract");
+
+    return [];
   }
 
-  const nonEmptyPools: Contract[] = (
-    await getERC20BalanceOf(ctx, chain, contracts as Token[])
-  ).filter((pool) => pool.amount.gt(0));
+  try {
+    const nonEmptyPools: Contract[] = (
+      await getERC20BalanceOf(ctx, chain, contracts as Token[])
+    ).filter((pool) => pool.amount.gt(0));
 
-  let calls: Calls = [];
-  const call = nonEmptyPools.map((contract) => {
-    if (contract.underlyings)
-      for (let i = 0; i < contract.underlyings.length; i++) {
-        calls.push({
-          target: contract.poolAddress,
-          params: [i],
-        });
-      }
-  });
-
-  const [
-    /* gaugeBalancesListRes ,*/ totalSupplyRes,
-    claimableTokensRes,
-    underlyingsBalancesRes,
-  ] = await Promise.all([
-    multicall({
+    const getGaugesBalances = await getCurveBalances(
+      ctx,
       chain,
-      calls: nonEmptyPools.map((contract) => ({
-        target: contract.address,
-        params: [],
-      })),
-      abi: {
-        stateMutability: "view",
-        type: "function",
-        name: "totalSupply",
-        inputs: [],
-        outputs: [
-          {
-            name: "",
-            type: "uint256",
-          },
-        ],
-        gas: 3240,
-      },
-    }),
+      nonEmptyPools,
+      registry
+    );
 
-    multicall({
+    const claimableCurveTokensRes = await multicall({
       chain,
-      calls: nonEmptyPools.map((contract) => ({
+      calls: getGaugesBalances.map((contract) => ({
         target: contract.address,
         params: [ctx.address],
       })),
@@ -256,76 +228,35 @@ export async function getGaugesBalances(
         ],
         gas: 2683603,
       },
-    }),
+    });
 
-    multicall({
-      chain,
-      calls,
-      abi: {
-        name: "balances",
-        outputs: [{ type: "uint256", name: "" }],
-        inputs: [{ type: "uint256", name: "i" }],
-        stateMutability: "view",
-        type: "function",
-        gas: 5076,
-      },
-    }),
-  ]);
+    const claimableCurveTokens = claimableCurveTokensRes
+      .filter((res) => res.success)
+      .map((res) => BigNumber.from(res.output));
 
-  const totalSupply = totalSupplyRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output));
+    for (let i = 0; i < getGaugesBalances.length; i++) {
+      const gauge = getGaugesBalances[i];
 
-  const claimableTokens = claimableTokensRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output));
+      if (!registry.rewards?.[0]) {
+        return [];
+      }
 
-  const underlyingsBalances = underlyingsBalancesRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output));
-
-  for (let i = 0; i < nonEmptyPools.length; i++) {
-    const contract = nonEmptyPools[i];
-
-    contract.tokens = await getERC20Details(chain, contract.tokens);
-
-    contract.underlyings = await getERC20Details(
-      chain,
-      contract.underlyings as any
-    );
-
-    /**
-     *  Updating pool amounts from the fraction of each underlyings
-     */
-
-    const formattedUnderlyings = contract.underlyings?.map((underlying, x) => ({
-      ...underlying,
-      amount:
-        underlying.decimals &&
-        contract.amount
-          .mul(underlyingsBalances[x].mul(10 ** (18 - underlying.decimals)))
-          .div(totalSupply[0]),
-      decimals: 18,
-    }));
-
-    if (contract.amount !== undefined) {
       const balance: BalanceWithExtraProps = {
-        chain,
-        decimals: 18,
-        symbol: contract.tokens?.map((token: Token) => token.symbol).join("-"),
-        address: contract.address,
-        poolAddress: contract.poolAddress,
-        tokens: contract.tokens,
-        underlyings: formattedUnderlyings,
-        rewards: [{ ...CRVToken, amount: claimableTokens[0] }],
-        amount: contract.amount,
+        ...gauge,
+        poolAddress: nonEmptyPools[i].poolAddress,
+        lpToken: nonEmptyPools[i].lpToken,
+        rewards: [
+          { ...registry.rewards?.[0], amount: claimableCurveTokens[i] },
+        ],
+        yieldKey: nonEmptyPools[i].lpToken,
         category: "farm",
-        yieldKey: contract.lpToken,
       };
-
       balances.push(balance);
     }
+    return balances;
+  } catch (error) {
+    console.log("Failed to get gauges balances");
+
+    return [];
   }
-  console.log(balances)
-  return balances;
 }

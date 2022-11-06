@@ -4,14 +4,15 @@ import { BaseContext, Contract, Balance } from "@lib/adapter";
 import { range } from "@lib/array";
 import { multicall } from "@lib/multicall";
 import { ethers } from "ethers";
-import { ETH_ADDR, Token } from "@lib/token";
-import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
-import { BigNumber } from "ethers";
+import { ETH_ADDR } from "@lib/token";
+import { BalanceWithExtraProps, getCurveBalances } from "./helper";
 
 export async function getPoolsContracts(chain: Chain, contract?: Contract) {
   const pools: Contract[] = [];
 
   if (!contract) {
+    console.log("Missing registry contract");
+
     return [];
   }
 
@@ -171,6 +172,8 @@ export async function getPoolsContracts(chain: Chain, contract?: Contract) {
 
     return pools;
   } catch (error) {
+    console.log("Failed to get pools contracts");
+
     return [];
   }
 }
@@ -183,98 +186,33 @@ export async function getPoolsBalances(
 ) {
   const balances: Balance[] = [];
 
-  interface BalanceWithExtraProps extends Balance {
-    tokens: Token[];
-  }
-
   if (!registry) {
+    console.log("Missing registry contract");
+
     return [];
   }
 
   try {
-    const nonEmptyPools: Contract[] = (
-      await getERC20BalanceOf(ctx, chain, contracts as Token[])
-    ).filter((pool) => pool.amount.gt(0));
+    const poolsBalances = await getCurveBalances(
+      ctx,
+      chain,
+      contracts,
+      registry
+    );
 
-    for (let i = 0; i < nonEmptyPools.length; i++) {
-      const [totalSupplyRes, underlyingsBalancesRes] = await Promise.all([
-        call({
-          chain,
-          target: nonEmptyPools[i].address,
-          params: [],
-          abi: {
-            stateMutability: "view",
-            type: "function",
-            name: "totalSupply",
-            inputs: [],
-            outputs: [
-              {
-                name: "",
-                type: "uint256",
-              },
-            ],
-            gas: 3240,
-          },
-        }),
-
-        call({
-          chain,
-          target: registry.address,
-          params: [nonEmptyPools[i].poolAddress],
-          abi: {
-            stateMutability: "view",
-            type: "function",
-            name: "get_underlying_balances",
-            inputs: [{ name: "_pool", type: "address" }],
-            outputs: [{ name: "", type: "uint256[8]" }],
-          },
-        }),
-      ]);
-
-      const underlyingsBalances = underlyingsBalancesRes.output.map(
-        (res: string) => BigNumber.from(res)
-      );
-
-      const totalSupply = BigNumber.from(totalSupplyRes.output);
-      
-      const token = await getERC20Details(chain, nonEmptyPools[i].tokens);
-
-      nonEmptyPools[i].underlyings = await getERC20Details(
-        chain,
-        nonEmptyPools[i].underlyings as any
-      );
-
-      /**
-       *  Updating pool amounts from the fraction of each underlyings
-       */
-
-      const formattedUnderlyings = nonEmptyPools[i].underlyings?.map(
-        (underlying, x) => ({
-          ...underlying,
-          amount:
-            underlying.decimals &&
-            nonEmptyPools[i].amount
-              .mul(underlyingsBalances[x].mul(10 ** (18 - underlying.decimals)))
-              .div(totalSupply),
-          decimals: 18,
-        })
-      );
+    for (let i = 0; i < poolsBalances.length; i++) {
+      const pool = poolsBalances[i];
 
       const balance: BalanceWithExtraProps = {
-        chain,
-        address: nonEmptyPools[i].address,
-        amount: nonEmptyPools[i].amount,
-        symbol: token.map((coin) => coin.symbol).join("-"),
-        tokens: token.map((coin) => coin),
-        underlyings: formattedUnderlyings,
-        decimals: 18,
+        ...pool,
         category: "lp",
       };
-
       balances.push(balance);
     }
     return balances;
   } catch (error) {
+    console.log("Failed to get pools balances");
+
     return [];
   }
 }
