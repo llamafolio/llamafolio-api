@@ -34,7 +34,7 @@ export async function getCurveBalances(
       const [totalSupplyRes, underlyingsBalancesRes] = await Promise.all([
         call({
           chain,
-          target: nonEmptyPools[i].address,
+          target: nonEmptyPools[i].lpToken,
           params: [],
           abi: {
             stateMutability: "view",
@@ -67,6 +67,8 @@ export async function getCurveBalances(
 
       const underlyingsBalances: BigNumber[] =
         underlyingsBalancesRes.output.map((res: string) => BigNumber.from(res));
+
+      underlyingsBalances.filter((amount) => amount.gt(0));
 
       const totalSupply = BigNumber.from(totalSupplyRes.output);
 
@@ -105,6 +107,7 @@ export async function getCurveBalances(
 
       balances.push(balance);
     }
+
     return balances;
   } catch (error) {
     console.log("Failed to get pools balances");

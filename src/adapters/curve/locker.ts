@@ -1,57 +1,100 @@
-import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { BigNumber } from "ethers";
+import { Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
-import LockerABI from "./abis/Locker.json";
-import FeeDistributorAbi from "./abis/FeeDistributor.json";
+import { call } from "@defillama/sdk/build/abi";
 
-export const lockerContract: Contract = {
-  chain: "ethereum",
-  address: "0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2",
-  name: "Locker",
-};
-
-export const feeDistributorContract: Contract = {
-  chain: "ethereum",
-  address: "0xa464e6dcda8ac41e03616f95f4bc98a13b8922dc",
-  name: "FeeDistributor",
-};
-
-export async function getLockedBalances(
+export async function getLockerBalances(
   ctx: BaseContext,
   chain: Chain,
-  lockerAddress: string,
-  feeDistributorAddress: string
-): Promise<Balance> {
-  const provider = providers["ethereum"];
+  contract?: Contract
+) {
+  const balances: Balance[] = [];
 
-  const locker = new ethers.Contract(lockerAddress, LockerABI, provider);
+  if (!contract || !contract.rewards || !contract.underlyings) {
+    console.log("Missing locker contract");
 
-  const feeDistributor = new ethers.Contract(
-    feeDistributorAddress,
-    FeeDistributorAbi,
-    provider
-  );
+    return [];
+  }
 
-  const [lockedBalance, claimableBalance] = await Promise.all([
-    locker.locked(ctx.address),
-    feeDistributor.claim(ctx.address),
-  ]);
+  interface BalanceWithExtraProps extends Balance {
+    lockEnd: string;
+  }
 
-  return {
-    chain,
-    category: "lock",
-    symbol: "CRV",
-    decimals: 18,
-    address: "0xd533a949740bb3306d119cc777fa900ba034cd52",
-    amount: BigNumber.from(lockedBalance.amount),
-    rewards: [
-      {
+  try {
+    const [lockerBalanceRes, claimableBalanceRes] = await Promise.all([
+      call({
         chain,
-        symbol: "3CRV",
-        decimals: 18,
-        address: "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
-        amount: BigNumber.from(claimableBalance),
-      },
-    ],
-  };
+        target: contract.address,
+        params: [ctx.address],
+        abi: {
+          name: "locked",
+          outputs: [
+            {
+              type: "int128",
+              name: "amount",
+            },
+            {
+              type: "uint256",
+              name: "end",
+            },
+          ],
+          inputs: [
+            {
+              type: "address",
+              name: "arg0",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      }),
+
+      call({
+        chain,
+        target: contract.rewards?.[0].address,
+        params: [ctx.address],
+        abi: {
+          name: "claim",
+          outputs: [
+            {
+              type: "uint256",
+              name: "",
+            },
+          ],
+          inputs: [
+            {
+              type: "address",
+              name: "_addr",
+            },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      }),
+    ]);
+
+    const lockerBalance = BigNumber.from(lockerBalanceRes.output.amount);
+    const lockEnd = lockerBalanceRes.output.end;
+    const claimableBalance = BigNumber.from(claimableBalanceRes.output);
+
+    const balance: BalanceWithExtraProps = {
+      chain,
+      symbol: contract.underlyings?.[0].symbol,
+      decimals: contract.underlyings?.[0].decimals,
+      address: contract.underlyings?.[0].address,
+      amount: lockerBalance,
+      lockEnd,
+      rewards: [
+        { ...contract.rewards?.[0].underlyings?.[0], amount: claimableBalance },
+      ],
+      category: "lock",
+    };
+
+    balances.push(balance);
+    return balances;
+  } catch (error) {
+    console.log("Failed to get locker balances");
+
+    return [];
+  }
 }
