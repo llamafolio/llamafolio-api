@@ -1,5 +1,6 @@
 import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
-import { getStakeBalances } from "./balances";
+import { getLendBalances } from "@adapters/liquity/lend";
+import { getFarmBalances } from "@adapters/liquity/farm";
 
 const stabilityPool: Contract = {
   name: "stabPool",
@@ -7,6 +8,7 @@ const stabilityPool: Contract = {
   chain: "ethereum",
   address: "0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
 };
+
 const troveManager: Contract = {
   name: "trove",
   displayName: "Trove Manager",
@@ -16,19 +18,22 @@ const troveManager: Contract = {
 
 const getContracts = () => {
   return {
-    contracts: [stabilityPool, troveManager],
+    contracts: { stabilityPool, troveManager },
     revalidate: 60 * 60,
   };
 };
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
-  contracts
+  { stabilityPool, troveManager }
 ) => {
-  let balances = await getStakeBalances(ctx, "ethereum", contracts);
+  const [lendBalances, stakeBalances] = await Promise.all([
+    getLendBalances(ctx, "ethereum", troveManager),
+    getFarmBalances(ctx, "ethereum", stabilityPool),
+  ]);
 
   return {
-    balances,
+    balances: lendBalances.concat(stakeBalances),
   };
 };
 
