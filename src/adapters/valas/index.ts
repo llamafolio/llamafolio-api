@@ -65,7 +65,8 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     "bsc",
     contracts,
     {
-      multiFeeDistributionAddress: multiFeeDistributionContract.address,
+      multiFeeDistribution: multiFeeDistributionContract,
+      lendingPool: lendingPoolContract,
       stakingToken: valasToken,
     }
   );
