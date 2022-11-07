@@ -1,14 +1,14 @@
 import { BigNumber, ethers } from "ethers";
 import { Chain, providers } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
-import StabilityPoolAbi from "./abis/StabilityPool.json";
+import LQTYStakingAbi from "./abis/LQTYStaking.json";
 
-export async function getFarmBalances(
+export async function getStakeBalances(
   ctx: BaseContext,
   chain: Chain,
-  stabilityPool?: Contract
+  lqtyStaking?: Contract
 ) {
-  if (!stabilityPool) {
+  if (!lqtyStaking) {
     return [];
   }
 
@@ -17,46 +17,45 @@ export async function getFarmBalances(
 
     const provider = providers[chain];
 
-    const StabilityPool = new ethers.Contract(
-      stabilityPool.address,
-      StabilityPoolAbi,
+    const LQTYStaking = new ethers.Contract(
+      lqtyStaking.address,
+      LQTYStakingAbi,
       provider
     );
 
-    const [LUSDBalance, ETHBalance, LQTYBalance] = await Promise.all([
-      StabilityPool.getCompoundedLUSDDeposit(ctx.address),
-      StabilityPool.getDepositorETHGain(ctx.address),
-      StabilityPool.getDepositorLQTYGain(ctx.address),
+    const [LQTYBalance, ETHBalance, LUSDBalance] = await Promise.all([
+      LQTYStaking.stakes(ctx.address),
+      LQTYStaking.getPendingETHGain(ctx.address),
+      LQTYStaking.getPendingLUSDGain(ctx.address),
     ]);
 
-    const amount = BigNumber.from(LUSDBalance);
+    const amount = BigNumber.from(LQTYBalance);
 
     balances.push({
       chain: chain,
-      category: "farm",
-      address: stabilityPool.address,
-      symbol: "LUSD",
+      category: "stake",
+      address: lqtyStaking.address,
+      symbol: "LQTY",
       decimals: 18,
       amount,
-      stable: true,
       underlyings: [
         {
           chain,
-          address: "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
-          name: "LUSD",
-          symbol: "LUSD",
+          address: "0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D",
+          name: "LQTY",
+          symbol: "LQTY",
           decimals: 18,
-          stable: true,
           amount,
         },
       ],
       rewards: [
         {
           chain,
-          symbol: "LQTY",
+          symbol: "LUSD",
           decimals: 18,
-          address: "0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d",
-          amount: BigNumber.from(LQTYBalance),
+          address: "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
+          amount: BigNumber.from(LUSDBalance),
+          stable: true,
         },
         {
           chain,
