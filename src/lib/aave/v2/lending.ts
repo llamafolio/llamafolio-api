@@ -141,6 +141,7 @@ export async function getLendingPoolContracts(
       }
     }
 
+    // TODO: 1 multicall to get all ERC20 details at once
     const [underlyingTokens, aTokens, stableDebtTokens, variableDebtTokens] =
       await Promise.all([
         getERC20Details(chain, underlyingTokensAddresses),

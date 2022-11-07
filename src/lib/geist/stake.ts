@@ -1,13 +1,16 @@
 import { multicall } from "@lib/multicall";
-import { ethers, BigNumber } from "ethers";
+import { ethers } from "ethers";
 import { providers, Chain } from "@defillama/sdk/build/general";
-import { Balance, BaseContext, Contract } from "@lib/adapter";
+import { Balance, BaseContext, Contract, RewardBalance } from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
+import { getLendingPoolContracts as getAaveLendingPoolContracts } from "@lib/aave/v2/lending";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
+import { ContractsMap } from "@lib/map";
 
 export type GetMultiFeeDistributionBalancesParams = {
-  multiFeeDistributionAddress: string;
+  lendingPool: Contract;
+  multiFeeDistribution: Contract;
   stakingToken: Token;
 };
 
@@ -15,11 +18,9 @@ export async function getMultiFeeDistributionBalances(
   ctx: BaseContext,
   chain: Chain,
   lendingPoolContracts: Contract[],
-  {
-    multiFeeDistributionAddress,
-    stakingToken,
-  }: GetMultiFeeDistributionBalancesParams
+  params: GetMultiFeeDistributionBalancesParams
 ) {
+  const rewardsBalances: Balance[] = [];
   const balances: Balance[] = [];
   const provider = providers[chain];
 
@@ -29,7 +30,7 @@ export async function getMultiFeeDistributionBalances(
   }
 
   const multiFeeDistribution = new ethers.Contract(
-    multiFeeDistributionAddress,
+    params.multiFeeDistribution.address,
     MultiFeeDistributionABI,
     provider
   );
@@ -51,9 +52,9 @@ export async function getMultiFeeDistributionBalances(
 
   const lockedBalance: Balance = {
     chain,
-    address: stakingToken.address,
-    symbol: stakingToken.symbol,
-    decimals: stakingToken.decimals,
+    address: params.stakingToken.address,
+    symbol: params.stakingToken.symbol,
+    decimals: params.stakingToken.decimals,
     amount: lockedBalances.total,
     category: "lock",
   };
@@ -61,9 +62,9 @@ export async function getMultiFeeDistributionBalances(
 
   const unlockedBalance: Balance = {
     chain,
-    address: stakingToken.address,
-    symbol: stakingToken.symbol,
-    decimals: stakingToken.decimals,
+    address: params.stakingToken.address,
+    symbol: params.stakingToken.symbol,
+    decimals: params.stakingToken.decimals,
     amount: unlockedBalances,
     category: "stake",
   };
@@ -111,7 +112,7 @@ export async function getMultiFeeDistributionBalances(
 
     // let apy =  (604800 * (rData.rewardRate / decimal) * assetPrice * 365 / 7  /(geistPrice * totalSupply /1e18));
 
-    let reward: Balance = {
+    const reward: RewardBalance = {
       chain,
       address: rewardData.token,
       amount: rewardData.amount,
@@ -127,32 +128,57 @@ export async function getMultiFeeDistributionBalances(
         decimals: token.decimals,
         symbol: token.symbol,
         //below is the token that you stake or lock to receive the above reward, it is required to calculate an APR
-        stakedToken: stakingToken.address,
-        stakedSymbol: stakingToken.symbol,
-        stakedDecimals: stakingToken.decimals,
+        stakedToken: params.stakingToken.address,
+        stakedSymbol: params.stakingToken.symbol,
+        stakedDecimals: params.stakingToken.decimals,
         stakedSupply: stakedSupply,
       },
     };
 
-    // reuse contracts from LendingPool to connect reward tokens with their underlyings
+    // try to reuse contracts from LendingPool to connect reward tokens with their underlyings
     const underlyings =
       lendingPoolContractByAddress[rewardData.token.toLowerCase()]?.underlyings;
     if (underlyings) {
       reward.underlyings = [{ ...underlyings[0], amount: rewardData.amount }];
     }
 
-    balances.push(reward);
+    rewardsBalances.push(reward);
+  }
+
+  // fix missing rewards underlyings:
+  // rewards accumulate in all gTokens and the account may not have interacted with all of them (for ex if never claimed rewards)
+  const missingRewardsUnderlyings = rewardsBalances.filter(
+    (balance) => !balance.underlyings
+  );
+  if (missingRewardsUnderlyings.length > 0) {
+    const gTokens = await getAaveLendingPoolContracts(
+      chain,
+      params.lendingPool
+    );
+
+    const gTokensMap = new ContractsMap<Contract>(gTokens);
+
+    for (const rewardsBalance of rewardsBalances) {
+      if (!rewardsBalance.underlyings) {
+        const gToken = gTokensMap.get(rewardsBalance);
+        if (gToken && gToken.underlyings?.[0]) {
+          rewardsBalance.underlyings = [
+            { ...gToken.underlyings[0], amount: rewardsBalance.amount },
+          ];
+        }
+      }
+    }
   }
 
   const earnedBalance: Balance = {
     chain,
-    address: stakingToken.address,
-    symbol: stakingToken.symbol,
-    decimals: stakingToken.decimals,
+    address: params.stakingToken.address,
+    symbol: params.stakingToken.symbol,
+    decimals: params.stakingToken.decimals,
     amount: earnedBalances.total,
     category: "vest",
   };
   balances.push(earnedBalance);
 
-  return balances;
+  return balances.concat(rewardsBalances);
 }

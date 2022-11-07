@@ -11,15 +11,23 @@ export interface Contract {
 export class ContractsMap<V> {
   _chains = new Map<Chain | string, Map<string, V>>();
 
-  constructor(iterable?: Iterable<[Contract, V]>) {
+  constructor(iterable?: Iterable<[Contract, V] | Contract>) {
     if (iterable) {
-      for (const [key, value] of iterable) {
-        this.set(key, value);
+      for (const kv of iterable) {
+        if (Array.isArray(kv)) {
+          this.set(kv[0], kv[1]);
+        } else {
+          this.add(kv);
+        }
       }
     }
   }
 
-  set(key: Contract, value: V) {
+  set(key: Contract, value?: V) {
+    if (value === undefined) {
+      value = key as V;
+    }
+
     const chain = key.chain;
     const address = key.address.toLowerCase();
     if (!this._chains.has(chain)) {
