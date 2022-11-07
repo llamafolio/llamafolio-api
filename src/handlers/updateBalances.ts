@@ -114,7 +114,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
             const hrend = process.hrtime(hrstart);
 
             console.log(
-              `[${adapterId}] getBalances ${contracts.length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
+              `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
               hrend[0],
               hrend[1] / 1000000
             );
