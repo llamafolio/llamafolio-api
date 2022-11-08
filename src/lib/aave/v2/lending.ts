@@ -1,12 +1,19 @@
 import { ethers, BigNumber } from "ethers";
-import { providers, Chain } from "@defillama/sdk/build/general";
+import { Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
-import LendingPoolABI from "./abis/LendingPool.json";
+import { call } from "@defillama/sdk/build/abi";
 
 const abi = {
+  getReservesList: {
+    inputs: [],
+    name: "getReservesList",
+    outputs: [{ internalType: "address[]", name: "", type: "address[]" }],
+    stateMutability: "view",
+    type: "function",
+  },
   getReserveData: {
     inputs: [{ internalType: "address", name: "asset", type: "address" }],
     name: "getReserveData",
@@ -85,124 +92,128 @@ const abi = {
 
 export async function getLendingPoolContracts(
   chain: Chain,
-  lendingPoolAddress: string
+  lendingPool: Contract
 ) {
-  const contracts: Contract[] = [];
-  const provider = providers[chain];
+  try {
+    const contracts: Contract[] = [];
 
-  const lendingPool = new ethers.Contract(
-    lendingPoolAddress,
-    LendingPoolABI,
-    provider
-  );
-
-  const reservesList: string[] = await lendingPool.getReservesList();
-
-  const reservesDataRes = await multicall({
-    chain,
-    calls: reservesList.map((reserveTokenAddress) => ({
+    const reservesListRes = await call({
+      chain,
       target: lendingPool.address,
-      params: [reserveTokenAddress],
-    })),
-    abi: abi.getReserveData,
-  });
+      abi: abi.getReservesList,
+    });
 
-  const underlyingTokensAddresses: string[] = [];
-  const aTokensAddresses: string[] = [];
-  const stableDebtTokenAddresses: string[] = [];
-  const variableDebtTokenAddresses: string[] = [];
-  const underlyingTokenAddressByAddress: { [key: string]: string } = {};
+    const reservesList: string[] = reservesListRes.output;
 
-  for (let i = 0; i < reservesDataRes.length; i++) {
-    if (reservesDataRes[i].success) {
-      const reserveData = reservesDataRes[i].output;
+    const reservesDataRes = await multicall({
+      chain,
+      calls: reservesList.map((reserveTokenAddress) => ({
+        target: lendingPool.address,
+        params: [reserveTokenAddress],
+      })),
+      abi: abi.getReserveData,
+    });
 
-      const underlyingTokenAddress = reservesList[i].toLowerCase();
+    const underlyingTokensAddresses: string[] = [];
+    const aTokensAddresses: string[] = [];
+    const stableDebtTokenAddresses: string[] = [];
+    const variableDebtTokenAddresses: string[] = [];
+    const underlyingTokenAddressByAddress: { [key: string]: string } = {};
 
-      underlyingTokensAddresses.push(underlyingTokenAddress);
-      aTokensAddresses.push(reserveData.aTokenAddress);
-      stableDebtTokenAddresses.push(reserveData.stableDebtTokenAddress);
-      variableDebtTokenAddresses.push(reserveData.variableDebtTokenAddress);
+    for (let i = 0; i < reservesDataRes.length; i++) {
+      if (reservesDataRes[i].success) {
+        const reserveData = reservesDataRes[i].output;
 
-      // map aTokens, stable debt tokens and variable debt tokens to their underlyings
-      underlyingTokenAddressByAddress[reserveData.aTokenAddress] =
-        underlyingTokenAddress;
-      underlyingTokenAddressByAddress[reserveData.stableDebtTokenAddress] =
-        underlyingTokenAddress;
-      underlyingTokenAddressByAddress[reserveData.variableDebtTokenAddress] =
-        underlyingTokenAddress;
+        const underlyingTokenAddress = reservesList[i].toLowerCase();
+
+        underlyingTokensAddresses.push(underlyingTokenAddress);
+        aTokensAddresses.push(reserveData.aTokenAddress);
+        stableDebtTokenAddresses.push(reserveData.stableDebtTokenAddress);
+        variableDebtTokenAddresses.push(reserveData.variableDebtTokenAddress);
+
+        // map aTokens, stable debt tokens and variable debt tokens to their underlyings
+        underlyingTokenAddressByAddress[reserveData.aTokenAddress] =
+          underlyingTokenAddress;
+        underlyingTokenAddressByAddress[reserveData.stableDebtTokenAddress] =
+          underlyingTokenAddress;
+        underlyingTokenAddressByAddress[reserveData.variableDebtTokenAddress] =
+          underlyingTokenAddress;
+      }
     }
-  }
 
-  const [underlyingTokens, aTokens, stableDebtTokens, variableDebtTokens] =
-    await Promise.all([
-      getERC20Details(chain, underlyingTokensAddresses),
-      getERC20Details(chain, aTokensAddresses),
-      getERC20Details(chain, stableDebtTokenAddresses),
-      getERC20Details(chain, variableDebtTokenAddresses),
-    ]);
+    // TODO: 1 multicall to get all ERC20 details at once
+    const [underlyingTokens, aTokens, stableDebtTokens, variableDebtTokens] =
+      await Promise.all([
+        getERC20Details(chain, underlyingTokensAddresses),
+        getERC20Details(chain, aTokensAddresses),
+        getERC20Details(chain, stableDebtTokenAddresses),
+        getERC20Details(chain, variableDebtTokenAddresses),
+      ]);
 
-  const underlyingTokenByAddress: { [key: string]: Token } = {};
-  for (const token of underlyingTokens) {
-    underlyingTokenByAddress[token.address] = token;
-  }
-
-  for (let i = 0; i < aTokens.length; i++) {
-    const aToken = aTokens[i];
-
-    const underlyingTokenAddress =
-      underlyingTokenAddressByAddress[aToken.address];
-    const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
-
-    if (underlyingToken) {
-      contracts.push({
-        ...aToken,
-        priceSubstitute: underlyingToken.address,
-        underlyings: [underlyingToken],
-        category: "lend",
-      });
+    const underlyingTokenByAddress: { [key: string]: Token } = {};
+    for (const token of underlyingTokens) {
+      underlyingTokenByAddress[token.address] = token;
     }
-  }
 
-  for (let i = 0; i < stableDebtTokens.length; i++) {
-    const stableDebtToken = stableDebtTokens[i];
+    for (let i = 0; i < aTokens.length; i++) {
+      const aToken = aTokens[i];
 
-    const underlyingTokenAddress =
-      underlyingTokenAddressByAddress[stableDebtToken.address];
-    const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
+      const underlyingTokenAddress =
+        underlyingTokenAddressByAddress[aToken.address];
+      const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
 
-    if (underlyingToken) {
-      contracts.push({
-        ...stableDebtToken,
-        priceSubstitute: underlyingToken.address,
-        underlyings: [underlyingToken],
-        type: "debt",
-        category: "borrow",
-        stable: true,
-      });
+      if (underlyingToken) {
+        contracts.push({
+          ...aToken,
+          priceSubstitute: underlyingToken.address,
+          underlyings: [underlyingToken],
+          category: "lend",
+        });
+      }
     }
-  }
 
-  for (let i = 0; i < variableDebtTokens.length; i++) {
-    const variableDebtToken = variableDebtTokens[i];
+    for (let i = 0; i < stableDebtTokens.length; i++) {
+      const stableDebtToken = stableDebtTokens[i];
 
-    const underlyingTokenAddress =
-      underlyingTokenAddressByAddress[variableDebtToken.address];
-    const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
+      const underlyingTokenAddress =
+        underlyingTokenAddressByAddress[stableDebtToken.address];
+      const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
 
-    if (underlyingToken) {
-      contracts.push({
-        ...variableDebtToken,
-        priceSubstitute: underlyingToken.address,
-        underlyings: [underlyingToken],
-        type: "debt",
-        category: "borrow",
-        stable: false,
-      });
+      if (underlyingToken) {
+        contracts.push({
+          ...stableDebtToken,
+          priceSubstitute: underlyingToken.address,
+          underlyings: [underlyingToken],
+          type: "debt",
+          category: "borrow",
+          stable: true,
+        });
+      }
     }
-  }
 
-  return contracts;
+    for (let i = 0; i < variableDebtTokens.length; i++) {
+      const variableDebtToken = variableDebtTokens[i];
+
+      const underlyingTokenAddress =
+        underlyingTokenAddressByAddress[variableDebtToken.address];
+      const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
+
+      if (underlyingToken) {
+        contracts.push({
+          ...variableDebtToken,
+          priceSubstitute: underlyingToken.address,
+          underlyings: [underlyingToken],
+          type: "debt",
+          category: "borrow",
+          stable: false,
+        });
+      }
+    }
+
+    return contracts;
+  } catch (error) {
+    return [];
+  }
 }
 
 export async function getLendingPoolBalances(
@@ -210,18 +221,82 @@ export async function getLendingPoolBalances(
   chain: Chain,
   contracts: Contract[]
 ) {
-  const balances: Balance[] = await getERC20BalanceOf(
-    ctx,
-    chain,
-    contracts as Token[]
-  );
+  try {
+    const balances: Balance[] = await getERC20BalanceOf(
+      ctx,
+      chain,
+      contracts as Token[]
+    );
 
-  // use the same amount for underlyings
-  for (const balance of balances) {
-    if (balance.amount.gt(0) && balance.underlyings) {
-      balance.underlyings[0].amount = BigNumber.from(balance.amount);
+    // use the same amount for underlyings
+    for (const balance of balances) {
+      if (balance.amount.gt(0) && balance.underlyings) {
+        balance.underlyings[0] = {
+          ...balance.underlyings[0],
+          amount: BigNumber.from(balance.amount),
+        };
+      }
     }
-  }
 
-  return balances;
+    return balances;
+  } catch (error) {
+    return [];
+  }
+}
+
+export async function getLendingPoolHealthFactor(
+  ctx: BaseContext,
+  chain: Chain,
+  lendingPool: Contract
+) {
+  try {
+    const userAccountDataRes = await call({
+      chain,
+      target: lendingPool.address,
+      params: [ctx.address],
+      abi: {
+        inputs: [{ internalType: "address", name: "user", type: "address" }],
+        name: "getUserAccountData",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "totalCollateralBase",
+            type: "uint256",
+          },
+          { internalType: "uint256", name: "totalDebtBase", type: "uint256" },
+          {
+            internalType: "uint256",
+            name: "availableBorrowsBase",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "currentLiquidationThreshold",
+            type: "uint256",
+          },
+          { internalType: "uint256", name: "ltv", type: "uint256" },
+          { internalType: "uint256", name: "healthFactor", type: "uint256" },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    });
+
+    // no borrowed balance
+    if (
+      ethers.constants.MaxUint256.eq(userAccountDataRes.output.healthFactor)
+    ) {
+      return;
+    }
+
+    const healthFactor = parseFloat(
+      ethers.utils.formatUnits(userAccountDataRes.output.healthFactor, 18)
+    );
+
+    // TODO: return other metadata like LTV, available borrow etc
+    return healthFactor;
+  } catch (error) {
+    console.log("Failed to get aave-v2 lending pool health factory", error);
+    return;
+  }
 }

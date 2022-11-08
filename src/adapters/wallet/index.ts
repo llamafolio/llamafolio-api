@@ -12,7 +12,11 @@ const getContracts = () => {
 
   for (const chain in tokensByChain) {
     for (const token of tokensByChain[chain]) {
-      contracts.push({ ...token, chain: chain as Chain });
+      // llamafolio-tokens registers all tokens to help get metadata but some are protocol specific (ex: stETH, aTokens).
+      // wallet flag indicates wallet-only tokens
+      if (token.wallet) {
+        contracts.push({ ...token, chain: chain as Chain });
+      }
     }
   }
 
@@ -35,7 +39,6 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
       continue;
     }
 
-    // token
     tokensMap.add(token);
   }
 

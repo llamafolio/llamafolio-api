@@ -4,7 +4,7 @@ import { Adapter, BaseContext } from "../src/lib/adapter";
 import { getPricedBalances } from "../src/lib/price";
 import {
   getAllTokensInteractions,
-  getContractsInteractions,
+  getContractsInteractionsTokenTransfers,
   groupContracts,
 } from "../src/db/contracts";
 
@@ -38,9 +38,13 @@ async function main() {
     const contracts =
       adapter.id === "wallet"
         ? await getAllTokensInteractions(client, ctx.address)
-        : await getContractsInteractions(client, ctx.address, adapter.id);
+        : await getContractsInteractionsTokenTransfers(
+            client,
+            ctx.address,
+            adapter.id
+          );
 
-    console.log("Contracts:", JSON.stringify(contracts, null, 2));
+    console.log("Contracts:", groupContracts(contracts) || []);
 
     const balancesConfig = await adapter.getBalances(
       ctx,

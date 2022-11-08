@@ -16,6 +16,7 @@ import euler from "@adapters/euler";
 import floorDao from "@adapters/floor-dao";
 import geist from "@adapters/geist";
 import gmx from "@adapters/gmx";
+import granaryFinance from "@adapters/granary-finance";
 import hex from "@adapters/hex";
 import hundredFinance from "@adapters/hundred-finance";
 import inverseFinance from "@adapters/inverse-finance";
@@ -36,6 +37,7 @@ import scream from "@adapters/scream";
 import shibaswap from "@adapters/shibaswap";
 import spiritswap from "@adapters/spiritswap";
 import spookyswap from "@adapters/spookyswap";
+import stakewise from "@adapters/stakewise";
 import stargate from "@adapters/stargate";
 import strike from "@adapters/strike";
 import sushiswap from "@adapters/sushiswap";
@@ -71,6 +73,7 @@ export const adapters: Adapter[] = [
   floorDao,
   geist,
   gmx,
+  granaryFinance,
   hex,
   hundredFinance,
   inverseFinance,
@@ -90,6 +93,7 @@ export const adapters: Adapter[] = [
   scream,
   shibaswap,
   spiritswap,
+  stakewise,
   spookyswap,
   stargate,
   strike,

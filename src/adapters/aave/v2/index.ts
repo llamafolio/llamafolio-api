@@ -1,28 +1,22 @@
-import { Chain } from "@defillama/sdk/build/general";
-import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
-import {
-  getLendingPoolContracts,
-  getLendingPoolBalances,
-} from "@lib/aave/v2/lending";
+import { Adapter, GetBalancesHandler } from "@lib/adapter";
+import * as avax from "@adapters/aave/v2/avax";
+import * as ethereum from "@adapters/aave/v2/ethereum";
+import * as polygon from "@adapters/aave/v2/polygon";
 
 const getContracts = async () => {
-  const chainsContracts = await Promise.all([
-    getLendingPoolContracts(
-      "avax",
-      "0x4f01aed16d97e3ab5ab2b501154dc9bb0f1a5a2c"
-    ),
-    getLendingPoolContracts(
-      "ethereum",
-      "0x7d2768de32b0b80b7a3454c06bdac94a69ddc7a9"
-    ),
-    getLendingPoolContracts(
-      "polygon",
-      "0x8dff5e27ea6b7ac08ebfdf9eb090f32ee9a30fcf"
-    ),
-  ]);
+  const [avaxContracts, ethereumContracts, polygonContracts] =
+    await Promise.all([
+      avax.getContracts(),
+      ethereum.getContracts(),
+      polygon.getContracts(),
+    ]);
 
   return {
-    contracts: chainsContracts.flat(),
+    contracts: {
+      ...avaxContracts.contracts,
+      ...ethereumContracts.contracts,
+      ...polygonContracts.contracts,
+    },
   };
 };
 
@@ -30,26 +24,22 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
   contracts
 ) => {
-  const contractsByChain: Partial<Record<Chain, Contract[]>> = {};
+  const [avaxBalances, ethereumBalances, polygonBalances] = await Promise.all([
+    avax.getBalances(ctx, contracts),
+    ethereum.getBalances(ctx, contracts),
+    polygon.getBalances(ctx, contracts),
+  ]);
 
-  for (const contract of contracts) {
-    if (!contractsByChain[contract.chain]) {
-      contractsByChain[contract.chain] = [];
-    }
-    contractsByChain[contract.chain]?.push(contract);
-  }
-
-  const chainsBalances = await Promise.all(
-    Object.keys(contractsByChain).map((chain) =>
-      getLendingPoolBalances(
-        ctx,
-        chain as Chain,
-        contractsByChain[chain as Chain] || []
-      )
-    )
-  );
-
-  return { balances: chainsBalances.flat() };
+  return {
+    ...avaxBalances,
+    ...ethereumBalances,
+    ...polygonBalances,
+    balances: [
+      ...avaxBalances.balances,
+      ...ethereumBalances.balances,
+      ...polygonBalances.balances,
+    ],
+  };
 };
 
 const adapter: Adapter = {

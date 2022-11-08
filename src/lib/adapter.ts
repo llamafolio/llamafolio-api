@@ -20,14 +20,6 @@ export interface BasePricedBalance extends BaseBalance {
   timestamp: number;
 }
 
-export interface RewardBalance extends BaseBalance {
-  // claimable amount. Can be lower than balance amount but not higher.
-  // ex: vested reward of 1000 but only 100 currently claimable.
-  claimable: BigNumber;
-  // TODO: rewards interface
-  rates?: any;
-}
-
 export interface Balance extends BaseBalance {
   // optional rewards
   rewards?: BaseBalance[];
@@ -37,14 +29,36 @@ export interface Balance extends BaseBalance {
   underlyings?: BaseBalance[];
 }
 
+export interface RewardBalance extends Balance {
+  // claimable amount. Can be lower than balance amount but not higher.
+  // ex: vested reward of 1000 but only 100 currently claimable.
+  claimable: BigNumber;
+  // TODO: rewards interface
+  rates?: any;
+}
+
 export interface PricedBalance extends BasePricedBalance {
   rewards?: BasePricedBalance[];
   underlyings?: BasePricedBalance[];
 }
 
+export interface Metadata {
+  healthFactor?: number;
+}
+
 export interface BalancesConfig {
   balances: Balance[];
-  revalidate?: number;
+  // Metadata
+  arbitrum?: Metadata;
+  avax?: Metadata;
+  bsc?: Metadata;
+  celo?: Metadata;
+  ethereum?: Metadata;
+  fantom?: Metadata;
+  harmony?: Metadata;
+  polygon?: Metadata;
+  optimism?: Metadata;
+  xdai?: Metadata;
 }
 
 export interface BaseContract {
