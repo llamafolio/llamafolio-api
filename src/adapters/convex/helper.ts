@@ -184,10 +184,12 @@ export async function getUnderlyingsRewardsBalances(
   const balances: Balance[] = [];
 
   for (let i = 0; i < contracts.length; i++) {
+    const contract = contracts[i];
+
     const [totalSupplyRes, underlyingsBalancesRes] = await Promise.all([
       call({
         chain,
-        target: contracts[i].lpToken,
+        target: contract.lpToken,
         params: [],
         abi: {
           stateMutability: "view",
@@ -207,7 +209,7 @@ export async function getUnderlyingsRewardsBalances(
       call({
         chain,
         target: MetaRegistry.address,
-        params: [contracts[i].poolAddress],
+        params: [contract.poolAddress],
         abi: {
           stateMutability: "view",
           type: "function",
@@ -230,21 +232,19 @@ export async function getUnderlyingsRewardsBalances(
      *  Updating pool amounts from the fraction of each underlyings
      */
 
-    const formattedUnderlyings = contracts[i].underlyings?.map(
-      (underlying, x) => ({
-        ...underlying,
-        amount:
-          underlying.decimals &&
-          contracts[i].amount.mul(underlyingsBalances[x]).div(totalSupply),
-        decimals: underlying.decimals,
-      })
-    );
+    const formattedUnderlyings = contract.underlyings?.map((underlying, x) => ({
+      ...underlying,
+      amount:
+        underlying.decimals &&
+        contract.amount.mul(underlyingsBalances[x]).div(totalSupply),
+      decimals: underlying.decimals,
+    }));
 
     if (formattedUnderlyings) {
       for (let y = 0; y < formattedUnderlyings.length; y++) {
         const balance: BalanceWithExtraProps = {
           chain,
-          symbol: contracts[i].tokens[y].symbol,
+          symbol: contract.tokens[y].symbol,
           address: formattedUnderlyings[y].address,
           amount: formattedUnderlyings[y].amount,
           decimals: formattedUnderlyings[y].decimals,

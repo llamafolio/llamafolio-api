@@ -1,115 +1,211 @@
 import { multicall } from "@lib/multicall";
-import { ethers, BigNumber } from "ethers";
-import { providers } from "@defillama/sdk/build/general";
-import { getERC20Details, getERC20Balances } from "@lib/erc20";
-import { getCVXRatio } from "./pools";
+import { BigNumber } from "ethers";
+import { getERC20Details, abi } from "@lib/erc20";
+import { getCVXRatio } from "./helper";
+import { BaseContext, Contract, Balance } from "@lib/adapter";
+import { Chain } from "@defillama/sdk/build/general";
+import { call } from "@defillama/sdk/build/abi";
+import { range } from "@lib/array";
+import {
+  getPoolsContractsFromLpTokens,
+  getUnderlyingsRewardsBalances,
+} from "./helper";
 
-import StakerAbi from "./abis/Staker.json";
-import LockerAbi from "./abis/Locker.json";
+export async function getStakeBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contract?: Contract
+) {
+  const balances: Balance[] = [];
 
-const CVX = "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b";
+  if (!contract || !contract.underlyings?.[0] || !contract.rewards) {
+    console.log("Missing or Incorrect staking contract");
 
-export async function getStakeBalances(ctx, chain, contracts) {
-  const provider = providers[chain];
-  const balances = [];
-  for (var i = 0; i < contracts.length; i++) {
-    const contract = contracts[i];
-
-    if (contract.name === "cvxCRVStaker") {
-      const cvxCRVStaker = new ethers.Contract(
-        contract.address,
-        StakerAbi,
-        provider
-      );
-
-      const stakedBalance = await cvxCRVStaker.balanceOf(ctx.address);
-
-      balances.push({
-        chain: chain,
-        category: "stake",
-        symbol: "cvxCRV",
-        decimals: 18,
-        address: contract.address,
-        priceSubstitute: "0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7",
-        amount: BigNumber.from(stakedBalance),
-        yieldKey: "ef32dd3b-a03b-4f79-9b65-8420d7e04ad0",
-      });
-
-      const crvBalance = await cvxCRVStaker.earned(ctx.address);
-
-      balances.push({
-        chain: chain,
-        category: "rewards",
-        symbol: "CRV",
-        decimals: 18,
-        address: "0xD533a949740bb3306d119CC777fa900bA034cd52",
-        amount: BigNumber.from(crvBalance),
-        parent: contract.address,
-      });
-
-      const ratios = await getCVXRatio(provider);
-      balances.push({
-        chain: chain,
-        category: "rewards",
-        symbol: "CVX",
-        decimals: 18,
-        address: CVX,
-        amount: crvBalance.mul(ratios[0]).div(ratios[1]),
-        parent: contract.address,
-      });
-
-      const threeCRVBalance = await cvxCRVStaker.rewards(ctx.address);
-      balances.push({
-        chain: chain,
-        category: "rewards",
-        symbol: "3CRV",
-        decimals: 18,
-        address: "0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490",
-        amount: threeCRVBalance,
-        parent: contract.address,
-      });
-    }
-
-    if (contract.name === "Locker") {
-      const cvxLocker = new ethers.Contract(
-        contract.address,
-        LockerAbi,
-        provider
-      );
-
-      const lockedBalance = await cvxLocker.balanceOf(ctx.address);
-      balances.push({
-        chain: chain,
-        category: "lock",
-        symbol: "CVX",
-        decimals: 18,
-        address: contract.address,
-        priceSubstitute: CVX,
-        amount: BigNumber.from(lockedBalance),
-      });
-
-      const claimableRewards = await cvxLocker.claimableRewards(ctx.address);
-
-      const checkTokens = claimableRewards.map((t) => {
-        return t.token;
-      });
-
-      const tokens = await getERC20Details(chain, checkTokens);
-
-      for (var rrr = 0; rrr < claimableRewards.length; rrr++) {
-        const aReward = claimableRewards[i];
-        balances.push({
-          chain: chain,
-          category: "rewards",
-          symbol: tokens[rrr].symbol,
-          decimals: tokens[rrr].decimals,
-          address: aReward.token,
-          amount: BigNumber.from(aReward.amount),
-          parent: contract.address,
-        });
-      }
-    }
+    return [];
   }
 
-  return balances;
+  try {
+    const [stakeBalanceRes, earnedBalanceRes, extraRewardsLengthRes] =
+      await Promise.all([
+        call({
+          chain,
+          target: contract.address,
+          params: [ctx.address],
+          abi: abi.balanceOf,
+        }),
+
+        call({
+          chain,
+          target: contract.address,
+          params: [ctx.address],
+          abi: {
+            inputs: [
+              {
+                internalType: "address",
+                name: "account",
+                type: "address",
+              },
+            ],
+            name: "earned",
+            outputs: [
+              {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+              },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+        }),
+
+        call({
+          chain,
+          target: contract.address,
+          params: [],
+          abi: {
+            inputs: [],
+            name: "extraRewardsLength",
+            outputs: [
+              {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+              },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+        }),
+      ]);
+
+    const extraRewardsTokenRes = await multicall({
+      chain,
+      calls: range(0, extraRewardsLengthRes.output).map((i) => ({
+        target: contract.address,
+        params: [i],
+      })),
+      abi: {
+        inputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        name: "extraRewards",
+        outputs: [
+          {
+            internalType: "address",
+            name: "",
+            type: "address",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    });
+
+    const extraRewardsToken = extraRewardsTokenRes
+      .filter((res) => res.success)
+      .map((res) => res.output);
+
+    const [earnedExtraRewardsRes, extraRewardsTokensAddressesRes] =
+      await Promise.all([
+        multicall({
+          chain,
+          calls: extraRewardsToken.map((contract) => ({
+            target: contract,
+            params: [ctx.address],
+          })),
+          abi: {
+            inputs: [
+              { internalType: "address", name: "account", type: "address" },
+            ],
+            name: "earned",
+            outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+            stateMutability: "view",
+            type: "function",
+          },
+        }),
+
+        multicall({
+          chain,
+          calls: extraRewardsToken.map((contract) => ({
+            target: contract,
+            params: [],
+          })),
+          abi: {
+            inputs: [],
+            name: "rewardToken",
+            outputs: [
+              { internalType: "contract IERC20", name: "", type: "address" },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+        }),
+      ]);
+
+    const amount = BigNumber.from(stakeBalanceRes.output);
+    const earnedBalances = BigNumber.from(earnedBalanceRes.output);
+    const extraRewardsTokensAddresses = extraRewardsTokensAddressesRes
+      .filter((res) => res.success)
+      .map((res) => res.output);
+
+    const rewardsTokens = await getERC20Details(
+      chain,
+      extraRewardsTokensAddresses
+    );
+
+    const earnedExtraRewards = earnedExtraRewardsRes
+      .filter((res) => res.success)
+      .map((res) => BigNumber.from(res.output));
+
+    const formattedRewards: any = await getCVXRatio(
+      chain,
+      contract.rewards?.[1],
+      earnedBalances
+    );
+
+    for (let i = 0; i < rewardsTokens.length; i++) {
+      const token = rewardsTokens[i];
+      const earnedExtraReward = earnedExtraRewards[i];
+
+      const detailedToken: any = await getPoolsContractsFromLpTokens(
+        chain,
+        token
+      );
+
+      detailedToken[i].amount = earnedExtraReward;
+
+      const detailedTokenBalances = await getUnderlyingsRewardsBalances(
+        chain,
+        detailedToken
+      );
+
+      balances.push({
+        chain,
+        address: contract.underlyings?.[0].address,
+        symbol: contract.underlyings?.[0].symbol,
+        decimals: contract.underlyings?.[0].decimals,
+        amount,
+        rewards: [
+          { ...contract.rewards?.[0], amount: earnedBalances },
+          { ...contract.rewards?.[1], amount: formattedRewards },
+          detailedTokenBalances[0], // 3crv --> DAI
+          detailedTokenBalances[1], // 3crv --> USDC
+          detailedTokenBalances[2], // 3crv --> USDT
+        ],
+        category: "stake",
+        yieldKey: "ef32dd3b-a03b-4f79-9b65-8420d7e04ad0",
+      });
+    }
+
+    return balances;
+  } catch (error) {
+    console.log("Failed to get stake balance");
+
+    return [];
+  }
 }

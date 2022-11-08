@@ -11,7 +11,6 @@ import { getERC20BalanceOf } from "@lib/erc20";
 import { Token } from "@lib/token";
 import { BalanceWithExtraProps } from "@adapters/curve/helper";
 import { getCVXRatio } from "./helper";
-import { isNotNullish } from "@lib/type";
 
 const CRV: Token = {
   chain: "ethereum",
@@ -56,7 +55,7 @@ export async function getPoolsContract(chain: Chain, contract?: Contract) {
       },
     });
 
-    const poolInfoRes = await multicall({
+    const poolInfosRes = await multicall({
       chain,
       calls: range(0, poolsCountRes.output).map((i) => ({
         target: contract.address,
@@ -78,11 +77,11 @@ export async function getPoolsContract(chain: Chain, contract?: Contract) {
       },
     });
 
-    const poolInfo = poolInfoRes
+    const poolInfos = poolInfosRes
       .filter((res) => res.success)
       .map((res) => res.output);
 
-    const lptokensAddresses = poolInfo.map((lp) => lp.lptoken);
+    const lptokensAddresses = poolInfos.map((lp) => lp.lptoken);
     const lpTokens = await getERC20Details(chain, lptokensAddresses);
 
     const poolAddressFromLpTokenRes = await multicall({
@@ -107,13 +106,15 @@ export async function getPoolsContract(chain: Chain, contract?: Contract) {
 
     for (let i = 0; i < lpTokens.length; i++) {
       const lpToken = lpTokens[i];
+      const poolInfo = poolInfos[i];
+      const poolAddress = poolAddressFromLpToken[i];
 
       const pool: Contract = {
         ...lpToken,
-        address: poolInfo[i].crvRewards,
-        poolAddress: poolAddressFromLpToken[i],
-        lpToken: poolInfo[i].lptoken,
-        rewards: poolInfo[i].crvRewards,
+        address: poolInfo.crvRewards,
+        poolAddress: poolAddress,
+        lpToken: poolInfo.lptoken,
+        rewards: poolInfo.crvRewards,
       };
       pools.push(pool);
     }
@@ -183,6 +184,8 @@ export async function getPoolsBalances(
     const underlyingsAddresses = [];
 
     for (let i = 0; i < coinsAddressesRes.length; i++) {
+      const nonEmptyPool = nonEmptyPools[i];
+
       /**
        *  Retrieve underlyings & coins used from pools
        */
@@ -213,7 +216,7 @@ export async function getPoolsBalances(
       );
 
       pools.push({
-        ...nonEmptyPools[i],
+        ...nonEmptyPool,
         tokens: coinsAddresses[i],
         underlyings: underlyingsAddresses[i],
       });
@@ -296,7 +299,7 @@ export async function getPoolsBalances(
        *  Rewards logics
        */
 
-      const [rewardsEarnedRes, extraRewardsRes] = await Promise.all([
+      const [CRVrewardsEarnedRes, extraRewardsEarnedRes] = await Promise.all([
         multicall({
           chain,
           calls: nonEmptyPools.map((pool) => ({
@@ -346,29 +349,29 @@ export async function getPoolsBalances(
         }),
       ]);
 
-      const rewardsEarned = rewardsEarnedRes
-        .filter((res) => res.success)
-        .map((res) => BigNumber.from(res.output));
+      const CRVrewardsEarned = CRVrewardsEarnedRes.filter(
+        (res) => res.success
+      ).map((res) => BigNumber.from(res.output));
 
-      const extraRewards = extraRewardsRes
+      const extraRewardsEarned = extraRewardsEarnedRes
         .filter((res) => res.success)
         .map((res) => res.output);
 
-      if (rewardsEarned[i].gt(0)) {
-        const formattedRewards: any = await getCVXRatio(
+      if (CRVrewardsEarned[i].gt(0)) {
+        const CVXRewards: any = await getCVXRatio(
           chain,
           CVX,
-          rewardsEarned[i]
+          CRVrewardsEarned[i]
         );
 
         balance.rewards = [
-          { ...CRV, amount: rewardsEarned[i] },
-          { ...CVX, amount: formattedRewards },
+          { ...CRV, amount: CRVrewardsEarned[i] },
+          { ...CVX, amount: CVXRewards },
         ];
       }
 
-      if (extraRewards[i] > 0) {
-        for (let x = 0; x < extraRewards[i]; x++) {
+      if (extraRewardsEarned[i] > 0) {
+        for (let x = 0; x < extraRewardsEarned[i]; x++) {
           const extraRewardsContractAddressesRes = await call({
             chain,
             target: nonEmptyPools[i].address,
