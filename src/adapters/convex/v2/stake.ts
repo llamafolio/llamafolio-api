@@ -6,6 +6,10 @@ import { BaseContext, Contract, Balance } from "@lib/adapter";
 import { Chain } from "@defillama/sdk/build/general";
 import { call } from "@defillama/sdk/build/abi";
 import { range } from "@lib/array";
+import {
+  getPoolsContractsFromLpTokens,
+  getUnderlyingsRewardsBalances,
+} from "./helper";
 
 export async function getStakeBalances(
   ctx: BaseContext,
@@ -168,6 +172,18 @@ export async function getStakeBalances(
       const token = rewardsTokens[i];
       const earnedExtraReward = earnedExtraRewards[i];
 
+      const detailedToken: any = await getPoolsContractsFromLpTokens(
+        chain,
+        token
+      );
+
+      detailedToken[i].amount = earnedExtraReward;
+
+      const detailedTokenBalances = await getUnderlyingsRewardsBalances(
+        chain,
+        detailedToken
+      );
+
       balances.push({
         chain,
         address: contract.underlyings?.[0].address,
@@ -177,7 +193,7 @@ export async function getStakeBalances(
         rewards: [
           { ...contract.rewards?.[0], amount: earnedBalances },
           { ...contract.rewards?.[1], amount: formattedRewards },
-          { ...token, amount: earnedExtraReward },
+          { ...detailedTokenBalances[0] },
         ],
         category: "stake",
         yieldKey: "ef32dd3b-a03b-4f79-9b65-8420d7e04ad0",
@@ -187,7 +203,7 @@ export async function getStakeBalances(
     return balances;
   } catch (error) {
     console.log("Failed to get stake balance");
-    
-    return []
+
+    return [];
   }
 }
