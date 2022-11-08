@@ -193,7 +193,9 @@ export async function getStakeBalances(
         rewards: [
           { ...contract.rewards?.[0], amount: earnedBalances },
           { ...contract.rewards?.[1], amount: formattedRewards },
-          { ...detailedTokenBalances[0] },
+          detailedTokenBalances[0], // 3crv --> DAI
+          detailedTokenBalances[1], // 3crv --> USDC
+          detailedTokenBalances[2], // 3crv --> USDT
         ],
         category: "stake",
         yieldKey: "ef32dd3b-a03b-4f79-9b65-8420d7e04ad0",
