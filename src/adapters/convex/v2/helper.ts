@@ -71,108 +71,110 @@ export async function getPoolsContractsFromLpTokens(
     return [];
   }
 
-  // try {
-  const getPoolAddressFromLpTokenRes = await call({
-    chain,
-    target: MetaRegistry.address,
-    params: [lpToken.address],
-    abi: {
-      stateMutability: "view",
-      type: "function",
-      name: "get_pool_from_lp_token",
-      inputs: [{ name: "arg0", type: "address" }],
-      outputs: [{ name: "", type: "address" }],
-      gas: 2443,
-    },
-  });
+  try {
+    const getPoolAddressFromLpTokenRes = await call({
+      chain,
+      target: MetaRegistry.address,
+      params: [lpToken.address],
+      abi: {
+        stateMutability: "view",
+        type: "function",
+        name: "get_pool_from_lp_token",
+        inputs: [{ name: "arg0", type: "address" }],
+        outputs: [{ name: "", type: "address" }],
+        gas: 2443,
+      },
+    });
 
-  const poolAddressFromLpToken = getPoolAddressFromLpTokenRes.output;
+    const poolAddressFromLpToken = getPoolAddressFromLpTokenRes.output;
 
-  const calls = [poolAddressFromLpToken].map((address: string) => ({
-    target: MetaRegistry.address,
-    params: [address],
-  }));
+    const calls = [poolAddressFromLpToken].map((address: string) => ({
+      target: MetaRegistry.address,
+      params: [address],
+    }));
 
-  const [coinsAddressesResponse, underlyingsAddressesResponse] =
-    await Promise.all([
-      multicall({
-        chain,
-        calls,
-        abi: {
-          stateMutability: "view",
-          type: "function",
-          name: "get_coins",
-          inputs: [{ name: "_pool", type: "address" }],
-          outputs: [{ name: "", type: "address[8]" }],
-        },
-      }),
+    const [coinsAddressesResponse, underlyingsAddressesResponse] =
+      await Promise.all([
+        multicall({
+          chain,
+          calls,
+          abi: {
+            stateMutability: "view",
+            type: "function",
+            name: "get_coins",
+            inputs: [{ name: "_pool", type: "address" }],
+            outputs: [{ name: "", type: "address[8]" }],
+          },
+        }),
 
-      multicall({
-        chain,
-        calls,
-        abi: {
-          stateMutability: "view",
-          type: "function",
-          name: "get_underlying_coins",
-          inputs: [{ name: "_pool", type: "address" }],
-          outputs: [{ name: "", type: "address[8]" }],
-        },
-      }),
-    ]);
+        multicall({
+          chain,
+          calls,
+          abi: {
+            stateMutability: "view",
+            type: "function",
+            name: "get_underlying_coins",
+            inputs: [{ name: "_pool", type: "address" }],
+            outputs: [{ name: "", type: "address[8]" }],
+          },
+        }),
+      ]);
 
-  const coinsAddressesRes = coinsAddressesResponse
-    .filter((res) => res.success)
-    .map((res) => res.output);
+    const coinsAddressesRes = coinsAddressesResponse
+      .filter((res) => res.success)
+      .map((res) => res.output);
 
-  const underlyingsAddressesRes = underlyingsAddressesResponse
-    .filter((res) => res.success)
-    .map((res) => res.output);
+    const underlyingsAddressesRes = underlyingsAddressesResponse
+      .filter((res) => res.success)
+      .map((res) => res.output);
 
-  const coinsAddresses = [];
-  const underlyingsAddresses = [];
+    const coinsAddresses = [];
+    const underlyingsAddresses = [];
 
-  for (let i = 0; i < coinsAddressesRes.length; i++) {
-    coinsAddresses.push(
-      coinsAddressesRes[i]
-        .filter(
-          (coin: string) => coin.toLowerCase() !== ethers.constants.AddressZero
-        )
-        .map((coin: string) =>
-          coin.toLowerCase() === ETH_ADDR
-            ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-            : coin
-        )
-    );
-    underlyingsAddresses.push(
-      underlyingsAddressesRes[i]
-        .filter(
-          (coin: string) => coin.toLowerCase() !== ethers.constants.AddressZero
-        )
-        .map((coin: string) =>
-          coin.toLowerCase() === ETH_ADDR
-            ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-            : coin
-        )
-    );
+    for (let i = 0; i < coinsAddressesRes.length; i++) {
+      coinsAddresses.push(
+        coinsAddressesRes[i]
+          .filter(
+            (coin: string) =>
+              coin.toLowerCase() !== ethers.constants.AddressZero
+          )
+          .map((coin: string) =>
+            coin.toLowerCase() === ETH_ADDR
+              ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+              : coin
+          )
+      );
+      underlyingsAddresses.push(
+        underlyingsAddressesRes[i]
+          .filter(
+            (coin: string) =>
+              coin.toLowerCase() !== ethers.constants.AddressZero
+          )
+          .map((coin: string) =>
+            coin.toLowerCase() === ETH_ADDR
+              ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+              : coin
+          )
+      );
+    }
+
+    const tokens = await getERC20Details(chain, coinsAddresses[0]);
+    const underlyings = await getERC20Details(chain, underlyingsAddresses[0]);
+
+    pools.push({
+      ...lpToken,
+      lpToken: lpToken.address,
+      poolAddress: poolAddressFromLpToken,
+      tokens,
+      underlyings,
+    });
+
+    return pools;
+  } catch (error) {
+    console.log("Failed to get details pool from curve");
+
+    return [];
   }
-
-  const tokens = await getERC20Details(chain, coinsAddresses[0]);
-  const underlyings = await getERC20Details(chain, underlyingsAddresses[0]);
-
-  pools.push({
-    ...lpToken,
-    lpToken: lpToken.address,
-    poolAddress: poolAddressFromLpToken,
-    tokens,
-    underlyings,
-  });
-
-  return pools;
-  // } catch (error) {
-  //   console.log("Failed to get details pool from curve");
-
-  //   return [];
-  // }
 }
 
 export async function getUnderlyingsRewardsBalances(

@@ -111,7 +111,6 @@ export async function getPoolsContract(chain: Chain, contract: Contract) {
     };
     pools.push(pool);
   }
-  console.log(pools);
 
   return pools.filter(isNotNullish);
 }
@@ -128,238 +127,324 @@ export async function getPoolsBalances(
     await getERC20BalanceOf(ctx, chain, contracts as Token[])
   ).filter((pool) => pool.amount.gt(0));
 
-  //     console.log(nonEmptyPools);
+  const calls = nonEmptyPools.map((pool) => ({
+    target: MetaRegistry.address,
+    params: [pool.poolAddress],
+  }));
 
-  //   const calls = nonEmptyPools.map((pool) => ({
-  //     target: MetaRegistry.address,
-  //     params: [pool.poolAddress],
-  //   }));
+  const [
+    coinsAddressesResponse,
+    underlyingsAddressesResponse,
+    rewardsEarnedRes,
+    extraRewardsRes,
+  ] = await Promise.all([
+    multicall({
+      chain,
+      calls,
+      abi: {
+        stateMutability: "view",
+        type: "function",
+        name: "get_coins",
+        inputs: [{ name: "_pool", type: "address" }],
+        outputs: [{ name: "", type: "address[8]" }],
+      },
+    }),
 
-  //   const [
-  //     coinsAddressesResponse,
-  //     underlyingsAddressesResponse,
-  //     rewardsEarnedRes,
-  //     extraRewardsRes,
-  //   ] = await Promise.all([
-  //     multicall({
-  //       chain,
-  //       calls,
-  //       abi: {
-  //         stateMutability: "view",
-  //         type: "function",
-  //         name: "get_coins",
-  //         inputs: [{ name: "_pool", type: "address" }],
-  //         outputs: [{ name: "", type: "address[8]" }],
-  //       },
-  //     }),
+    multicall({
+      chain,
+      calls,
+      abi: {
+        stateMutability: "view",
+        type: "function",
+        name: "get_underlying_coins",
+        inputs: [{ name: "_pool", type: "address" }],
+        outputs: [{ name: "", type: "address[8]" }],
+      },
+    }),
 
-  //     multicall({
-  //       chain,
-  //       calls,
-  //       abi: {
-  //         stateMutability: "view",
-  //         type: "function",
-  //         name: "get_underlying_coins",
-  //         inputs: [{ name: "_pool", type: "address" }],
-  //         outputs: [{ name: "", type: "address[8]" }],
-  //       },
-  //     }),
+    multicall({
+      chain,
+      calls: nonEmptyPools.map((pool) => ({
+        target: pool.address,
+        params: [ctx.address],
+      })),
+      abi: {
+        inputs: [
+          {
+            internalType: "address",
+            name: "account",
+            type: "address",
+          },
+        ],
+        name: "earned",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    }),
 
-  //     multicall({
-  //       chain,
-  //       calls: nonEmptyPools.map((pool) => ({
-  //         target: pool.address,
-  //         params: [ctx.address],
-  //       })),
-  //       abi: {
-  //         inputs: [
-  //           {
-  //             internalType: "address",
-  //             name: "account",
-  //             type: "address",
-  //           },
-  //         ],
-  //         name: "earned",
-  //         outputs: [
-  //           {
-  //             internalType: "uint256",
-  //             name: "",
-  //             type: "uint256",
-  //           },
-  //         ],
-  //         stateMutability: "view",
-  //         type: "function",
-  //       },
-  //     }),
+    multicall({
+      chain,
+      calls: nonEmptyPools.map((pool) => ({
+        target: pool.address,
+        params: [],
+      })),
+      abi: {
+        inputs: [],
+        name: "extraRewardsLength",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    }),
+  ]);
 
-  //     multicall({
-  //       chain,
-  //       calls: nonEmptyPools.map((pool) => ({
-  //         target: pool.address,
-  //         params: [],
-  //       })),
-  //       abi: {
-  //         inputs: [],
-  //         name: "extraRewardsLength",
-  //         outputs: [
-  //           {
-  //             internalType: "uint256",
-  //             name: "",
-  //             type: "uint256",
-  //           },
-  //         ],
-  //         stateMutability: "view",
-  //         type: "function",
-  //       },
-  //     }),
-  //   ]);
+  const coinsAddressesRes = coinsAddressesResponse
+    .filter((res) => res.success)
+    .map((res) => res.output);
 
-  //   const coinsAddressesRes = coinsAddressesResponse
-  //     .filter((res) => res.success)
-  //     .map((res) => res.output);
+  const underlyingsAddressesRes = underlyingsAddressesResponse
+    .filter((res) => res.success)
+    .map((res) => res.output);
 
-  //   const underlyingsAddressesRes = underlyingsAddressesResponse
-  //     .filter((res) => res.success)
-  //     .map((res) => res.output);
+  const rewardsEarned = rewardsEarnedRes
+    .filter((res) => res.success)
+    .map((res) => BigNumber.from(res.output));
 
-  //   const rewardsEarned = rewardsEarnedRes
-  //     .filter((res) => res.success)
-  //     .map((res) => BigNumber.from(res.output));
+  const extraRewards = extraRewardsRes
+    .filter((res) => res.success)
+    .map((res) => res.output);
 
-  //   const extraRewards = extraRewardsRes
-  //     .filter((res) => res.success)
-  //     .map((res) => BigNumber.from(res.output));
+  const coinsAddresses = [];
+  const underlyingsAddresses = [];
 
-  //   const coinsAddresses = [];
-  //   const underlyingsAddresses = [];
+  for (let i = 0; i < coinsAddressesRes.length; i++) {
+    /**
+     *  Retrieve underlyings & coins used from pools
+     */
 
-  //   for (let i = 0; i < coinsAddressesRes.length; i++) {
-  //     /**
-  //      *  Retrieve underlyings & coins used from pools
-  //      */
+    coinsAddresses.push(
+      coinsAddressesRes[i]
+        .filter(
+          (coin: string) => coin.toLowerCase() !== ethers.constants.AddressZero
+        )
+        .map((coin: string) =>
+          coin.toLowerCase() === ETH_ADDR
+            ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+            : coin
+        )
+    );
+    underlyingsAddresses.push(
+      underlyingsAddressesRes[i]
+        .filter(
+          (coin: string) => coin.toLowerCase() !== ethers.constants.AddressZero
+        )
+        .map((coin: string) =>
+          coin.toLowerCase() === ETH_ADDR
+            ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+            : coin
+        )
+    );
 
-  //     coinsAddresses.push(
-  //       coinsAddressesRes[i]
-  //         .filter(
-  //           (coin: string) => coin.toLowerCase() !== ethers.constants.AddressZero
-  //         )
-  //         .map((coin: string) =>
-  //           coin.toLowerCase() === ETH_ADDR
-  //             ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-  //             : coin
-  //         )
-  //     );
-  //     underlyingsAddresses.push(
-  //       underlyingsAddressesRes[i]
-  //         .filter(
-  //           (coin: string) => coin.toLowerCase() !== ethers.constants.AddressZero
-  //         )
-  //         .map((coin: string) =>
-  //           coin.toLowerCase() === ETH_ADDR
-  //             ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-  //             : coin
-  //         )
-  //     );
+    pools.push({
+      ...nonEmptyPools[i],
+      tokens: coinsAddresses[i],
+      underlyings: underlyingsAddresses[i],
+    });
 
-  //     pools.push({
-  //       ...nonEmptyPools[i],
-  //       tokens: coinsAddresses[i],
-  //       underlyings: underlyingsAddresses[i],
-  //     });
+    const [totalSupplyRes, underlyingsBalancesRes] = await Promise.all([
+      call({
+        chain,
+        target: pools[i].lpToken,
+        params: [],
+        abi: {
+          stateMutability: "view",
+          type: "function",
+          name: "totalSupply",
+          inputs: [],
+          outputs: [
+            {
+              name: "",
+              type: "uint256",
+            },
+          ],
+          gas: 3240,
+        },
+      }),
 
-  //     const [totalSupplyRes, underlyingsBalancesRes] = await Promise.all([
-  //       call({
-  //         chain,
-  //         target: pools[i].lpToken,
-  //         params: [],
-  //         abi: {
-  //           stateMutability: "view",
-  //           type: "function",
-  //           name: "totalSupply",
-  //           inputs: [],
-  //           outputs: [
-  //             {
-  //               name: "",
-  //               type: "uint256",
-  //             },
-  //           ],
-  //           gas: 3240,
-  //         },
-  //       }),
+      call({
+        chain,
+        target: MetaRegistry.address,
+        params: [pools[i].poolAddress],
+        abi: {
+          stateMutability: "view",
+          type: "function",
+          name: "get_underlying_balances",
+          inputs: [{ name: "_pool", type: "address" }],
+          outputs: [{ name: "", type: "uint256[8]" }],
+        },
+      }),
+    ]);
 
-  //       call({
-  //         chain,
-  //         target: MetaRegistry.address,
-  //         params: [pools[i].poolAddress],
-  //         abi: {
-  //           stateMutability: "view",
-  //           type: "function",
-  //           name: "get_underlying_balances",
-  //           inputs: [{ name: "_pool", type: "address" }],
-  //           outputs: [{ name: "", type: "uint256[8]" }],
-  //         },
-  //       }),
-  //     ]);
+    const underlyingsBalances: BigNumber[] = underlyingsBalancesRes.output.map(
+      (res: string) => BigNumber.from(res)
+    );
 
-  //     const underlyingsBalances: BigNumber[] = underlyingsBalancesRes.output.map(
-  //       (res: string) => BigNumber.from(res)
-  //     );
+    underlyingsBalances.filter((amount) => amount.gt(0));
 
-  //     underlyingsBalances.filter((amount) => amount.gt(0));
+    const totalSupply = BigNumber.from(totalSupplyRes.output);
 
-  //     const totalSupply = BigNumber.from(totalSupplyRes.output);
+    const token = await getERC20Details(chain, pools[i].tokens);
 
-  //     const token = await getERC20Details(chain, pools[i].tokens);
+    pools[i].underlyings = await getERC20Details(
+      chain,
+      pools[i].underlyings as any
+    );
 
-  //     pools[i].underlyings = await getERC20Details(
-  //       chain,
-  //       pools[i].underlyings as any
-  //     );
+    /**
+     *  Updating pool amounts from the fraction of each underlyings
+     */
 
-  //     /**
-  //      *  Updating pool amounts from the fraction of each underlyings
-  //      */
+    const formattedUnderlyings = pools[i].underlyings?.map((underlying, x) => ({
+      ...underlying,
+      amount:
+        underlying.decimals &&
+        pools[i].amount.mul(underlyingsBalances[x]).div(totalSupply),
+      decimals: underlying.decimals,
+    }));
 
-  //     const formattedUnderlyings = pools[i].underlyings?.map((underlying, x) => ({
-  //       ...underlying,
-  //       amount:
-  //         underlying.decimals &&
-  //         pools[i].amount.mul(underlyingsBalances[x]).div(totalSupply),
-  //       decimals: underlying.decimals,
-  //     }));
+    const balance: BalanceWithExtraProps = {
+      chain,
+      address: pools[i].address,
+      amount: pools[i].amount,
+      symbol: token.map((coin) => coin.symbol).join("-"),
+      tokens: token.map((coin) => coin),
+      underlyings: formattedUnderlyings,
+      decimals: 18,
+      category: "stake",
+      yieldKey: pools[i].lpToken,
+    };
 
-  //     const balance: BalanceWithExtraProps = {
-  //       chain,
-  //       address: pools[i].address,
-  //       amount: pools[i].amount,
-  //       symbol: token.map((coin) => coin.symbol).join("-"),
-  //       tokens: token.map((coin) => coin),
-  //       underlyings: formattedUnderlyings,
-  //       decimals: 18,
-  //       category: "stake",
-  //       yieldKey: pools[i].lpToken,
-  //     };
+    /**
+     *  Rewards logics
+     */
 
-  //     /**
-  //      *  Rewards logics
-  //      */
+    if (rewardsEarned[i].gt(0)) {
+      const formattedRewards: any = await getCVXRatio(
+        chain,
+        CVX,
+        rewardsEarned[i]
+      );
 
-  //     if (rewardsEarned[i].gt(0)) {
-  //       const formattedRewards: any = await getCVXRatio(
-  //         chain,
-  //         CVX,
-  //         rewardsEarned[i]
-  //       );
+      balance.rewards = [
+        { ...CRV, amount: rewardsEarned[i] },
+        { ...CVX, amount: formattedRewards },
+      ];
+    }
 
-  //       balance.rewards = [
-  //         { ...CRV, amount: rewardsEarned[i] },
-  //         { ...CVX, amount: formattedRewards },
-  //       ];
-  //     }
+    if (extraRewards[i] > 0) {
+      for (let x = 0; x < extraRewards.length; x++) {
+        const extraRewardsContractAddressesRes = await call({
+          chain,
+          target: nonEmptyPools[i].address,
+          params: [x],
+          abi: {
+            inputs: [
+              {
+                internalType: "uint256",
+                name: "",
+                type: "uint256",
+              },
+            ],
+            name: "extraRewards",
+            outputs: [
+              {
+                internalType: "address",
+                name: "",
+                type: "address",
+              },
+            ],
+            stateMutability: "view",
+            type: "function",
+          },
+        });
 
-  //     balances.push(balance);
-  //   }
-  //   console.log(balances);
+        const extraRewardsContractAddresses =
+          extraRewardsContractAddressesRes.output;
 
-  //   return balances;
+        const [earnedExtraRewardsRes, extraRewardsTokensRes] =
+          await Promise.all([
+            call({
+              chain,
+              target: extraRewardsContractAddresses,
+              params: [ctx.address],
+              abi: {
+                inputs: [
+                  {
+                    internalType: "address",
+                    name: "account",
+                    type: "address",
+                  },
+                ],
+                name: "earned",
+                outputs: [
+                  {
+                    internalType: "uint256",
+                    name: "",
+                    type: "uint256",
+                  },
+                ],
+                stateMutability: "view",
+                type: "function",
+              },
+            }),
+
+            call({
+              chain,
+              target: extraRewardsContractAddresses,
+              params: [],
+              abi: {
+                inputs: [],
+                name: "rewardToken",
+                outputs: [
+                  {
+                    internalType: "contract IERC20",
+                    name: "",
+                    type: "address",
+                  },
+                ],
+                stateMutability: "view",
+                type: "function",
+              },
+            }),
+          ]);
+
+        const earnedExtraRewards = BigNumber.from(earnedExtraRewardsRes.output);
+        const extraRewardsTokensDetails = await getERC20Details(chain, [
+          extraRewardsTokensRes.output,
+        ]);
+
+        balance.rewards?.push({
+          ...extraRewardsTokensDetails[i],
+          amount: earnedExtraRewards,
+        });
+      }
+    }
+
+    balances.push(balance);
+  }
+
+  return balances;
 }
