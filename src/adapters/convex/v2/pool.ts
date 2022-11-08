@@ -1,6 +1,6 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { abi, getERC20Details } from "@lib/erc20";
+import { getERC20Details } from "@lib/erc20";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { Chain } from "@defillama/sdk/build/general";
 import { call } from "@defillama/sdk/build/abi";
@@ -27,92 +27,103 @@ const CVX: Token = {
   decimals: 18,
 };
 
-export async function getPoolsContract(chain: Chain, contract: Contract) {
+export async function getPoolsContract(chain: Chain, contract?: Contract) {
   const pools: Contract[] = [];
 
-  const poolsCountRes = await call({
-    chain,
-    target: contract.address,
-    params: [],
-    abi: {
-      inputs: [],
-      name: "poolLength",
-      outputs: [
-        {
-          internalType: "uint256",
-          name: "",
-          type: "uint256",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-  });
+  if (!contract) {
+    console.log("Missing or incorrect contract");
 
-  const poolInfoRes = await multicall({
-    chain,
-    calls: range(0, poolsCountRes.output).map((i) => ({
-      target: contract.address,
-      params: [i],
-    })),
-    abi: {
-      inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-      name: "poolInfo",
-      outputs: [
-        { internalType: "address", name: "lptoken", type: "address" },
-        { internalType: "address", name: "token", type: "address" },
-        { internalType: "address", name: "gauge", type: "address" },
-        { internalType: "address", name: "crvRewards", type: "address" },
-        { internalType: "address", name: "stash", type: "address" },
-        { internalType: "bool", name: "shutdown", type: "bool" },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const poolInfo = poolInfoRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  const lptokensAddresses = poolInfo.map((lp) => lp.lptoken);
-  const lpTokens = await getERC20Details(chain, lptokensAddresses);
-
-  const poolAddressFromLpTokenRes = await multicall({
-    chain,
-    calls: lpTokens.map((token) => ({
-      target: MetaRegistry.address,
-      params: [token.address],
-    })),
-    abi: {
-      stateMutability: "view",
-      type: "function",
-      name: "get_pool_from_lp_token",
-      inputs: [{ name: "arg0", type: "address" }],
-      outputs: [{ name: "", type: "address" }],
-      gas: 2443,
-    },
-  });
-
-  const poolAddressFromLpToken = poolAddressFromLpTokenRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  for (let i = 0; i < lpTokens.length; i++) {
-    const lpToken = lpTokens[i];
-
-    const pool: Contract = {
-      ...lpToken,
-      //   address: poolInfo[i].token,
-      address: poolInfo[i].crvRewards,
-      poolAddress: poolAddressFromLpToken[i],
-      lpToken: poolInfo[i].lptoken,
-      rewards: poolInfo[i].crvRewards,
-    };
-    pools.push(pool);
+    return [];
   }
 
-  return pools.filter(isNotNullish);
+  try {
+    const poolsCountRes = await call({
+      chain,
+      target: contract.address,
+      params: [],
+      abi: {
+        inputs: [],
+        name: "poolLength",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    });
+
+    const poolInfoRes = await multicall({
+      chain,
+      calls: range(0, poolsCountRes.output).map((i) => ({
+        target: contract.address,
+        params: [i],
+      })),
+      abi: {
+        inputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        name: "poolInfo",
+        outputs: [
+          { internalType: "address", name: "lptoken", type: "address" },
+          { internalType: "address", name: "token", type: "address" },
+          { internalType: "address", name: "gauge", type: "address" },
+          { internalType: "address", name: "crvRewards", type: "address" },
+          { internalType: "address", name: "stash", type: "address" },
+          { internalType: "bool", name: "shutdown", type: "bool" },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    });
+
+    const poolInfo = poolInfoRes
+      .filter((res) => res.success)
+      .map((res) => res.output);
+
+    const lptokensAddresses = poolInfo.map((lp) => lp.lptoken);
+    const lpTokens = await getERC20Details(chain, lptokensAddresses);
+
+    const poolAddressFromLpTokenRes = await multicall({
+      chain,
+      calls: lpTokens.map((token) => ({
+        target: MetaRegistry.address,
+        params: [token.address],
+      })),
+      abi: {
+        stateMutability: "view",
+        type: "function",
+        name: "get_pool_from_lp_token",
+        inputs: [{ name: "arg0", type: "address" }],
+        outputs: [{ name: "", type: "address" }],
+        gas: 2443,
+      },
+    });
+
+    const poolAddressFromLpToken = poolAddressFromLpTokenRes
+      .filter((res) => res.success)
+      .map((res) => res.output);
+
+    for (let i = 0; i < lpTokens.length; i++) {
+      const lpToken = lpTokens[i];
+
+      const pool: Contract = {
+        ...lpToken,
+        address: poolInfo[i].crvRewards,
+        poolAddress: poolAddressFromLpToken[i],
+        lpToken: poolInfo[i].lptoken,
+        rewards: poolInfo[i].crvRewards,
+      };
+      pools.push(pool);
+    }
+
+    return pools;
+  } catch (error) {
+    console.log("Failed to get pool contract");
+
+    return [];
+  }
 }
 
 export async function getPoolsBalances(
@@ -123,328 +134,338 @@ export async function getPoolsBalances(
   const balances: Balance[] = [];
   const pools: Contract[] = [];
 
-  const nonEmptyPools: Contract[] = (
-    await getERC20BalanceOf(ctx, chain, contracts as Token[])
-  ).filter((pool) => pool.amount.gt(0));
+  try {
+    const nonEmptyPools: Contract[] = (
+      await getERC20BalanceOf(ctx, chain, contracts as Token[])
+    ).filter((pool) => pool.amount.gt(0));
 
-  const calls = nonEmptyPools.map((pool) => ({
-    target: MetaRegistry.address,
-    params: [pool.poolAddress],
-  }));
-
-  const [
-    coinsAddressesResponse,
-    underlyingsAddressesResponse,
-    rewardsEarnedRes,
-    extraRewardsRes,
-  ] = await Promise.all([
-    multicall({
-      chain,
-      calls,
-      abi: {
-        stateMutability: "view",
-        type: "function",
-        name: "get_coins",
-        inputs: [{ name: "_pool", type: "address" }],
-        outputs: [{ name: "", type: "address[8]" }],
-      },
-    }),
-
-    multicall({
-      chain,
-      calls,
-      abi: {
-        stateMutability: "view",
-        type: "function",
-        name: "get_underlying_coins",
-        inputs: [{ name: "_pool", type: "address" }],
-        outputs: [{ name: "", type: "address[8]" }],
-      },
-    }),
-
-    multicall({
-      chain,
-      calls: nonEmptyPools.map((pool) => ({
-        target: pool.address,
-        params: [ctx.address],
-      })),
-      abi: {
-        inputs: [
-          {
-            internalType: "address",
-            name: "account",
-            type: "address",
-          },
-        ],
-        name: "earned",
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
-
-    multicall({
-      chain,
-      calls: nonEmptyPools.map((pool) => ({
-        target: pool.address,
-        params: [],
-      })),
-      abi: {
-        inputs: [],
-        name: "extraRewardsLength",
-        outputs: [
-          {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
-          },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
-  ]);
-
-  const coinsAddressesRes = coinsAddressesResponse
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  const underlyingsAddressesRes = underlyingsAddressesResponse
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  const rewardsEarned = rewardsEarnedRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output));
-
-  const extraRewards = extraRewardsRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  const coinsAddresses = [];
-  const underlyingsAddresses = [];
-
-  for (let i = 0; i < coinsAddressesRes.length; i++) {
-    /**
-     *  Retrieve underlyings & coins used from pools
-     */
-
-    coinsAddresses.push(
-      coinsAddressesRes[i]
-        .filter(
-          (coin: string) => coin.toLowerCase() !== ethers.constants.AddressZero
-        )
-        .map((coin: string) =>
-          coin.toLowerCase() === ETH_ADDR
-            ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-            : coin
-        )
-    );
-    underlyingsAddresses.push(
-      underlyingsAddressesRes[i]
-        .filter(
-          (coin: string) => coin.toLowerCase() !== ethers.constants.AddressZero
-        )
-        .map((coin: string) =>
-          coin.toLowerCase() === ETH_ADDR
-            ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
-            : coin
-        )
-    );
-
-    pools.push({
-      ...nonEmptyPools[i],
-      tokens: coinsAddresses[i],
-      underlyings: underlyingsAddresses[i],
-    });
-
-    const [totalSupplyRes, underlyingsBalancesRes] = await Promise.all([
-      call({
-        chain,
-        target: pools[i].lpToken,
-        params: [],
-        abi: {
-          stateMutability: "view",
-          type: "function",
-          name: "totalSupply",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-            },
-          ],
-          gas: 3240,
-        },
-      }),
-
-      call({
-        chain,
-        target: MetaRegistry.address,
-        params: [pools[i].poolAddress],
-        abi: {
-          stateMutability: "view",
-          type: "function",
-          name: "get_underlying_balances",
-          inputs: [{ name: "_pool", type: "address" }],
-          outputs: [{ name: "", type: "uint256[8]" }],
-        },
-      }),
-    ]);
-
-    const underlyingsBalances: BigNumber[] = underlyingsBalancesRes.output.map(
-      (res: string) => BigNumber.from(res)
-    );
-
-    underlyingsBalances.filter((amount) => amount.gt(0));
-
-    const totalSupply = BigNumber.from(totalSupplyRes.output);
-
-    const token = await getERC20Details(chain, pools[i].tokens);
-
-    pools[i].underlyings = await getERC20Details(
-      chain,
-      pools[i].underlyings as any
-    );
-
-    /**
-     *  Updating pool amounts from the fraction of each underlyings
-     */
-
-    const formattedUnderlyings = pools[i].underlyings?.map((underlying, x) => ({
-      ...underlying,
-      amount:
-        underlying.decimals &&
-        pools[i].amount.mul(underlyingsBalances[x]).div(totalSupply),
-      decimals: underlying.decimals,
+    const calls = nonEmptyPools.map((pool) => ({
+      target: MetaRegistry.address,
+      params: [pool.poolAddress],
     }));
 
-    const balance: BalanceWithExtraProps = {
-      chain,
-      address: pools[i].address,
-      amount: pools[i].amount,
-      symbol: token.map((coin) => coin.symbol).join("-"),
-      tokens: token.map((coin) => coin),
-      underlyings: formattedUnderlyings,
-      decimals: 18,
-      category: "stake",
-      yieldKey: pools[i].lpToken,
-    };
+    const [coinsAddressesResponse, underlyingsAddressesResponse] =
+      await Promise.all([
+        multicall({
+          chain,
+          calls,
+          abi: {
+            stateMutability: "view",
+            type: "function",
+            name: "get_coins",
+            inputs: [{ name: "_pool", type: "address" }],
+            outputs: [{ name: "", type: "address[8]" }],
+          },
+        }),
 
-    /**
-     *  Rewards logics
-     */
+        multicall({
+          chain,
+          calls,
+          abi: {
+            stateMutability: "view",
+            type: "function",
+            name: "get_underlying_coins",
+            inputs: [{ name: "_pool", type: "address" }],
+            outputs: [{ name: "", type: "address[8]" }],
+          },
+        }),
+      ]);
 
-    if (rewardsEarned[i].gt(0)) {
-      const formattedRewards: any = await getCVXRatio(
-        chain,
-        CVX,
-        rewardsEarned[i]
+    const coinsAddressesRes = coinsAddressesResponse
+      .filter((res) => res.success)
+      .map((res) => res.output);
+
+    const underlyingsAddressesRes = underlyingsAddressesResponse
+      .filter((res) => res.success)
+      .map((res) => res.output);
+
+    const coinsAddresses = [];
+    const underlyingsAddresses = [];
+
+    for (let i = 0; i < coinsAddressesRes.length; i++) {
+      /**
+       *  Retrieve underlyings & coins used from pools
+       */
+
+      coinsAddresses.push(
+        coinsAddressesRes[i]
+          .filter(
+            (coin: string) =>
+              coin.toLowerCase() !== ethers.constants.AddressZero
+          )
+          .map((coin: string) =>
+            coin.toLowerCase() === ETH_ADDR
+              ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+              : coin
+          )
+      );
+      underlyingsAddresses.push(
+        underlyingsAddressesRes[i]
+          .filter(
+            (coin: string) =>
+              coin.toLowerCase() !== ethers.constants.AddressZero
+          )
+          .map((coin: string) =>
+            coin.toLowerCase() === ETH_ADDR
+              ? "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2"
+              : coin
+          )
       );
 
-      balance.rewards = [
-        { ...CRV, amount: rewardsEarned[i] },
-        { ...CVX, amount: formattedRewards },
-      ];
-    }
+      pools.push({
+        ...nonEmptyPools[i],
+        tokens: coinsAddresses[i],
+        underlyings: underlyingsAddresses[i],
+      });
 
-    if (extraRewards[i] > 0) {
-      for (let x = 0; x < extraRewards.length; x++) {
-        const extraRewardsContractAddressesRes = await call({
+      const [totalSupplyRes, underlyingsBalancesRes] = await Promise.all([
+        call({
           chain,
-          target: nonEmptyPools[i].address,
-          params: [x],
+          target: pools[i].lpToken,
+          params: [],
+          abi: {
+            stateMutability: "view",
+            type: "function",
+            name: "totalSupply",
+            inputs: [],
+            outputs: [
+              {
+                name: "",
+                type: "uint256",
+              },
+            ],
+            gas: 3240,
+          },
+        }),
+
+        call({
+          chain,
+          target: MetaRegistry.address,
+          params: [pools[i].poolAddress],
+          abi: {
+            stateMutability: "view",
+            type: "function",
+            name: "get_underlying_balances",
+            inputs: [{ name: "_pool", type: "address" }],
+            outputs: [{ name: "", type: "uint256[8]" }],
+          },
+        }),
+      ]);
+
+      const underlyingsBalances: BigNumber[] =
+        underlyingsBalancesRes.output.map((res: string) => BigNumber.from(res));
+
+      underlyingsBalances.filter((amount) => amount.gt(0));
+
+      const totalSupply = BigNumber.from(totalSupplyRes.output);
+
+      const token = await getERC20Details(chain, pools[i].tokens);
+
+      pools[i].underlyings = await getERC20Details(
+        chain,
+        pools[i].underlyings as any
+      );
+
+      /**
+       *  Updating pool amounts from the fraction of each underlyings
+       */
+
+      const formattedUnderlyings = pools[i].underlyings?.map(
+        (underlying, x) => ({
+          ...underlying,
+          amount:
+            underlying.decimals &&
+            pools[i].amount.mul(underlyingsBalances[x]).div(totalSupply),
+          decimals: underlying.decimals,
+        })
+      );
+
+      const balance: BalanceWithExtraProps = {
+        chain,
+        address: pools[i].address,
+        amount: pools[i].amount,
+        symbol: token.map((coin) => coin.symbol).join("-"),
+        tokens: token.map((coin) => coin),
+        underlyings: formattedUnderlyings,
+        decimals: 18,
+        category: "stake",
+        yieldKey: pools[i].lpToken,
+      };
+
+      /**
+       *  Rewards logics
+       */
+
+      const [rewardsEarnedRes, extraRewardsRes] = await Promise.all([
+        multicall({
+          chain,
+          calls: nonEmptyPools.map((pool) => ({
+            target: pool.address,
+            params: [ctx.address],
+          })),
           abi: {
             inputs: [
+              {
+                internalType: "address",
+                name: "account",
+                type: "address",
+              },
+            ],
+            name: "earned",
+            outputs: [
               {
                 internalType: "uint256",
                 name: "",
                 type: "uint256",
               },
             ],
-            name: "extraRewards",
+            stateMutability: "view",
+            type: "function",
+          },
+        }),
+
+        multicall({
+          chain,
+          calls: nonEmptyPools.map((pool) => ({
+            target: pool.address,
+            params: [],
+          })),
+          abi: {
+            inputs: [],
+            name: "extraRewardsLength",
             outputs: [
               {
-                internalType: "address",
+                internalType: "uint256",
                 name: "",
-                type: "address",
+                type: "uint256",
               },
             ],
             stateMutability: "view",
             type: "function",
           },
-        });
+        }),
+      ]);
 
-        const extraRewardsContractAddresses =
-          extraRewardsContractAddressesRes.output;
+      const rewardsEarned = rewardsEarnedRes
+        .filter((res) => res.success)
+        .map((res) => BigNumber.from(res.output));
 
-        const [earnedExtraRewardsRes, extraRewardsTokensRes] =
-          await Promise.all([
-            call({
-              chain,
-              target: extraRewardsContractAddresses,
-              params: [ctx.address],
-              abi: {
-                inputs: [
-                  {
-                    internalType: "address",
-                    name: "account",
-                    type: "address",
-                  },
-                ],
-                name: "earned",
-                outputs: [
-                  {
-                    internalType: "uint256",
-                    name: "",
-                    type: "uint256",
-                  },
-                ],
-                stateMutability: "view",
-                type: "function",
-              },
-            }),
+      const extraRewards = extraRewardsRes
+        .filter((res) => res.success)
+        .map((res) => res.output);
 
-            call({
-              chain,
-              target: extraRewardsContractAddresses,
-              params: [],
-              abi: {
-                inputs: [],
-                name: "rewardToken",
-                outputs: [
-                  {
-                    internalType: "contract IERC20",
-                    name: "",
-                    type: "address",
-                  },
-                ],
-                stateMutability: "view",
-                type: "function",
-              },
-            }),
+      if (rewardsEarned[i].gt(0)) {
+        const formattedRewards: any = await getCVXRatio(
+          chain,
+          CVX,
+          rewardsEarned[i]
+        );
+
+        balance.rewards = [
+          { ...CRV, amount: rewardsEarned[i] },
+          { ...CVX, amount: formattedRewards },
+        ];
+      }
+
+      if (extraRewards[i] > 0) {
+        for (let x = 0; x < extraRewards[i]; x++) {
+          const extraRewardsContractAddressesRes = await call({
+            chain,
+            target: nonEmptyPools[i].address,
+            params: [x],
+            abi: {
+              inputs: [
+                {
+                  internalType: "uint256",
+                  name: "",
+                  type: "uint256",
+                },
+              ],
+              name: "extraRewards",
+              outputs: [
+                {
+                  internalType: "address",
+                  name: "",
+                  type: "address",
+                },
+              ],
+              stateMutability: "view",
+              type: "function",
+            },
+          });
+
+          const extraRewardsContractAddresses =
+            extraRewardsContractAddressesRes.output;
+
+          const [earnedExtraRewardsRes, extraRewardsTokensRes] =
+            await Promise.all([
+              call({
+                chain,
+                target: extraRewardsContractAddresses,
+                params: [ctx.address],
+                abi: {
+                  inputs: [
+                    {
+                      internalType: "address",
+                      name: "account",
+                      type: "address",
+                    },
+                  ],
+                  name: "earned",
+                  outputs: [
+                    {
+                      internalType: "uint256",
+                      name: "",
+                      type: "uint256",
+                    },
+                  ],
+                  stateMutability: "view",
+                  type: "function",
+                },
+              }),
+
+              call({
+                chain,
+                target: extraRewardsContractAddresses,
+                params: [],
+                abi: {
+                  inputs: [],
+                  name: "rewardToken",
+                  outputs: [
+                    {
+                      internalType: "contract IERC20",
+                      name: "",
+                      type: "address",
+                    },
+                  ],
+                  stateMutability: "view",
+                  type: "function",
+                },
+              }),
+            ]);
+
+          const earnedExtraRewards = BigNumber.from(
+            earnedExtraRewardsRes.output
+          );
+          const extraRewardsTokens = extraRewardsTokensRes.output;
+
+          const extraRewardsTokensDetails = await getERC20Details(chain, [
+            extraRewardsTokens,
           ]);
 
-        const earnedExtraRewards = BigNumber.from(earnedExtraRewardsRes.output);
-        const extraRewardsTokensDetails = await getERC20Details(chain, [
-          extraRewardsTokensRes.output,
-        ]);
-
-        balance.rewards?.push({
-          ...extraRewardsTokensDetails[i],
-          amount: earnedExtraRewards,
-        });
+          balance.rewards?.push({
+            ...extraRewardsTokensDetails[0],
+            amount: earnedExtraRewards,
+          });
+        }
       }
+
+      balances.push(balance);
     }
 
-    balances.push(balance);
+    return balances;
+  } catch (error) {
+    console.log("Failed to get pool balance");
+    return [];
   }
-
-  return balances;
 }
