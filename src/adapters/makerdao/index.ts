@@ -14,6 +14,12 @@ const DAI: Token = {
   symbol: "DAI",
 };
 
+const InstadAppList: Contract = {
+  name: "InstadApp List",
+  chain: "ethereum",
+  address: "0x4c8a1BEb8a87765788946D6B19C6C6355194AbEb",
+};
+
 const Proxy_Registry: Contract = {
   name: "Maker Proxy Registry",
   chain: "ethereum",
@@ -31,6 +37,7 @@ const Get_CDPS: Contract = {
   chain: "ethereum",
   address: "0x36a724Bd100c39f0Ea4D3A20F7097eE01A8Ff573",
   manager: CDP_Manager,
+  instadApp: InstadAppList,
 };
 
 const IlkRegistry: Contract = {

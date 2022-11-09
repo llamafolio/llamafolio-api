@@ -3,6 +3,7 @@ import { Chain } from "@defillama/sdk/build/general";
 import { call } from "@defillama/sdk/build/abi";
 import { multicall } from "@lib/multicall";
 import { BigNumber, utils } from "ethers";
+import { range } from "@lib/array";
 
 const DECIMALS = {
   wad: utils.parseEther("1.0"), // 10 ** 18,
@@ -10,8 +11,8 @@ const DECIMALS = {
 };
 
 export interface CDPID_Maker extends Contract {
-  proxy: string;
-  ids: string;
+  proxy: {};
+  ids: string[];
   urns: string[];
   ilks: string[];
 }
@@ -49,6 +50,8 @@ export async function getCDPIDFromProxyAddress(
   proxy: string,
   contract: Contract
 ) {
+  let users: Contract[] = [];
+
   const cdpidInfoRes = await call({
     chain,
     target: contract.address,
@@ -74,13 +77,28 @@ export async function getCDPIDFromProxyAddress(
   const cdpidInfo = cdpidInfoRes.output;
 
   const userInfos: CDPID_Maker = {
-    proxy: proxy,
+    chain,
+    address: process.argv[3],
+    proxy: {},
     ids: cdpidInfo.ids,
     urns: cdpidInfo.urns,
     ilks: cdpidInfo.ilks,
   };
 
-  return userInfos;
+  users.push(userInfos);
+
+  //   userInfos.proxy = { name: "Maker Proxy", proxy };
+
+  if (userInfos.ids.length === 0) {
+    const proxyInstadapp = await getProxiesAddressFromInstadapp(
+      chain,
+      contract
+    );
+
+    users = proxyInstadapp;
+  }
+
+  return users;
 }
 
 export async function getBalancesFromCDPIDUserInfos(
@@ -88,6 +106,8 @@ export async function getBalancesFromCDPIDUserInfos(
   cdpidContract: CDPID_Maker,
   Vat: Contract
 ) {
+  console.log(cdpidContract);
+
   const balances: Balance[] = [];
 
   /**
@@ -283,4 +303,122 @@ export async function getBalancesFromCDPIDUserInfos(
   }
 
   return balances;
+}
+
+export async function getProxiesAddressFromInstadapp(
+  chain: Chain,
+  contract: Contract
+) {
+  const users: Contract[] = [];
+
+  const userLinkCountRes = await call({
+    chain,
+    target: contract.instadApp.address,
+    params: [process.argv[3]],
+    abi: {
+      inputs: [{ internalType: "address", name: "", type: "address" }],
+      name: "userLink",
+      outputs: [
+        { internalType: "uint64", name: "first", type: "uint64" },
+        { internalType: "uint64", name: "last", type: "uint64" },
+        { internalType: "uint64", name: "count", type: "uint64" },
+      ],
+      stateMutability: "view",
+      type: "function",
+    },
+  });
+  const idList: string[] = [];
+  const userLinkCount = userLinkCountRes.output.count;
+  const userLinkFirst = userLinkCountRes.output.first;
+
+  idList.push(userLinkFirst);
+
+  for (let i = 1; i < userLinkCount; i++) {
+    const userLinksRes = await call({
+      chain,
+      target: contract.instadApp.address,
+      params: [process.argv[3], idList[idList.length - 1]],
+      abi: {
+        inputs: [
+          { internalType: "address", name: "", type: "address" },
+          { internalType: "uint64", name: "", type: "uint64" },
+        ],
+        name: "userList",
+        outputs: [
+          { internalType: "uint64", name: "prev", type: "uint64" },
+          { internalType: "uint64", name: "next", type: "uint64" },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    });
+
+    idList.push(userLinksRes.output.next);
+  }
+
+  const accountAddressesRes = await multicall({
+    chain,
+    calls: range(0, idList.length).map((i) => ({
+      target: contract.instadApp.address,
+      params: [i],
+    })),
+    abi: {
+      inputs: [{ internalType: "uint64", name: "", type: "uint64" }],
+      name: "accountAddr",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
+      stateMutability: "view",
+      type: "function",
+    },
+  });
+
+  const accountAddresses = accountAddressesRes
+    .filter((res) => res.output)
+    .map((res) => res.output);
+
+  const cdpidInfoRes = await multicall({
+    chain,
+    calls: accountAddresses.map((proxy) => ({
+      target: contract.address,
+      params: [contract.manager.address, proxy],
+      proxy,
+    })),
+    abi: {
+      constant: true,
+      inputs: [
+        { internalType: "address", name: "manager", type: "address" },
+        { internalType: "address", name: "guy", type: "address" },
+      ],
+      name: "getCdpsAsc",
+      outputs: [
+        { internalType: "uint256[]", name: "ids", type: "uint256[]" },
+        { internalType: "address[]", name: "urns", type: "address[]" },
+        { internalType: "bytes32[]", name: "ilks", type: "bytes32[]" },
+      ],
+      payable: false,
+      stateMutability: "view",
+      type: "function",
+    },
+  });
+
+  const cdpidInfo = cdpidInfoRes
+    .filter((res) => res.success)
+    .map((res) => res.output);
+
+  for (let i = 0; i < cdpidInfo.length; i++) {
+    const info = cdpidInfo[i];
+
+    const userInfos: CDPID_Maker = {
+      chain,
+      address: process.argv[3],
+      proxy: { name: "InstadApp Proxy", proxy: accountAddresses[i] },
+      ids: info.ids,
+      urns: info.urns,
+      ilks: info.ilks,
+    };
+
+    if (userInfos.ids.length !== 0) {
+      users.push(userInfos);
+    }
+  }
+  return users;
 }
