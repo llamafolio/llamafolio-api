@@ -87,7 +87,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
 
   const lendOnly = balances.balances.filter(
     (balance: BalanceWithExtraProps) => balance.category !== "borrow"
-  );
+  ).filter((lend: BalanceWithExtraProps) => lend.amount.gt(0))
 
   const metadata_proxies: { name: string[]; address: string[] } = {
     name: [],
