@@ -2,7 +2,7 @@ import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import {
   getProxiesContracts,
   getBalancesFromProxies,
-  CDPID_Maker
+  CDPID_Maker,
 } from "./lend";
 import { Token } from "@lib/token";
 
@@ -61,11 +61,14 @@ const MCD_Vat: Contract = {
 };
 
 const getContracts = async () => {
-  const proxy: CDPID_Maker [] = await getProxiesContracts("ethereum", Get_CDPS);
+  const proxies: CDPID_Maker[] = await getProxiesContracts(
+    "ethereum",
+    Get_CDPS
+  );
 
   return {
     contracts: {
-      proxy,
+      proxies,
       MCD_Vat,
     },
   };
@@ -73,16 +76,21 @@ const getContracts = async () => {
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
-  { proxy, MCD_Vat }
+  { proxies, MCD_Vat }
 ) => {
-  const balances = await getBalancesFromProxies(
+  const balances: any = await getBalancesFromProxies(
     "ethereum",
-    proxy,
+    proxies || [],
     MCD_Vat
   );
 
+  console.log(balances);
+
   return {
-    balances,
+    balances: balances?.balances,
+    ethereum: {
+      healthFactor: balances?.healthFactor,
+    },
   };
 };
 
