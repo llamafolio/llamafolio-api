@@ -3,6 +3,7 @@ import {
   getProxiesContracts,
   getBalancesFromProxies,
   CDPID_Maker,
+  BalanceWithExtraProps,
 } from "./lend";
 import { Token } from "@lib/token";
 
@@ -84,12 +85,27 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (
     MCD_Vat
   );
 
-  console.log(balances);
+  const lendOnly = balances.balances.filter(
+    (balance: BalanceWithExtraProps) => balance.category !== "borrow"
+  );
+
+  const metadata_proxies: { name: string[]; address: string[] } = {
+    name: [],
+    address: [],
+  };
+
+  for (let i = 0; i < lendOnly.length; i++) {
+    const lend = lendOnly[i];
+    metadata_proxies.name.push(lend.proxy.name);
+    metadata_proxies.address.push(lend.proxy.address);
+  }
 
   return {
     balances: balances?.balances,
     ethereum: {
       healthFactor: balances?.healthFactor,
+      proxy: metadata_proxies.name,
+      proxyAddress: metadata_proxies.address,
     },
   };
 };

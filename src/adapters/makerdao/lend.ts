@@ -15,7 +15,7 @@ export interface CDPID_Maker extends Contract {
   ilks?: string[];
 }
 
-interface BalanceWithExtraProps extends Balance {
+export interface BalanceWithExtraProps extends Balance {
   proxy: { name: string; address: string };
   ilkMat?: BigNumber;
   urnSpot?: BigNumber;
@@ -203,7 +203,7 @@ export async function getProxiesContracts(chain: Chain, contract?: Contract) {
       const maker: CDPID_Maker = {
         chain,
         address: process.argv[3],
-        proxy: { name: "Maker Proxy", proxy: usersAddresses.maker[i] },
+        proxy: { name: "Maker Proxy", address: usersAddresses.maker[i] },
         ids: cdpidMaker.ids,
         urns: cdpidMaker.urns,
         ilks: cdpidMaker.ilks,
@@ -220,7 +220,10 @@ export async function getProxiesContracts(chain: Chain, contract?: Contract) {
       const instadApp: CDPID_Maker = {
         chain,
         address: process.argv[3],
-        proxy: { name: "InstadApp Proxy", proxy: usersAddresses.instadApp[i] },
+        proxy: {
+          name: "InstadApp Proxy",
+          address: usersAddresses.instadApp[i],
+        },
         ids: cdpidInstadApp.ids,
         urns: cdpidInstadApp.urns,
         ilks: cdpidInstadApp.ilks,
@@ -467,7 +470,7 @@ export async function getHealthFactor(balances: BalanceWithExtraProps[]) {
   const lends = balance.filter((lend) => lend.category === "lend");
   const borrows = balance.filter((lend) => lend.category === "borrow");
 
-  const health: number[] = [];
+  const healthFactor: number [] = []
 
   for (let i = 0; i < lends.length; i++) {
     const lend = lends[i];
@@ -496,7 +499,7 @@ export async function getHealthFactor(balances: BalanceWithExtraProps[]) {
         ? 10
         : parseFloat(CollateralizationRatio.toString()) / 100;
 
-    health.push(formattedCollateralizationRatio);
+    healthFactor.push(formattedCollateralizationRatio) ;
   }
-  return health;
+  return healthFactor
 }
