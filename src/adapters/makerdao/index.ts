@@ -1,9 +1,8 @@
 import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
 import {
-  getProxiesContractsFromUsers,
-  getCDPIDFromProxyAddress,
-  CDPID_Maker,
-  getBalancesFromCDPIDUserInfos,
+  getProxiesContracts,
+  getBalancesFromProxies,
+  CDPID_Maker
 } from "./lend";
 import { Token } from "@lib/token";
 
@@ -37,7 +36,7 @@ const Get_CDPS: Contract = {
   chain: "ethereum",
   address: "0x36a724Bd100c39f0Ea4D3A20F7097eE01A8Ff573",
   manager: CDP_Manager,
-  instadApp: InstadAppList,
+  proxy: [Proxy_Registry, InstadAppList],
 };
 
 const IlkRegistry: Contract = {
@@ -62,28 +61,23 @@ const MCD_Vat: Contract = {
 };
 
 const getContracts = async () => {
-  const proxyContract: string = await getProxiesContractsFromUsers(
-    "ethereum",
-    Proxy_Registry
-  );
-  const cdpidContract: CDPID_Maker = await getCDPIDFromProxyAddress(
-    "ethereum",
-    proxyContract,
-    Get_CDPS
-  );
+  const proxy: CDPID_Maker [] = await getProxiesContracts("ethereum", Get_CDPS);
 
   return {
-    contracts: { cdpidContract, MCD_Vat },
+    contracts: {
+      proxy,
+      MCD_Vat,
+    },
   };
 };
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
-  { cdpidContract, MCD_Vat }
+  { proxy, MCD_Vat }
 ) => {
-  const balances = await getBalancesFromCDPIDUserInfos(
+  const balances = await getBalancesFromProxies(
     "ethereum",
-    cdpidContract,
+    proxy,
     MCD_Vat
   );
 

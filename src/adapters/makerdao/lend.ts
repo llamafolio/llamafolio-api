@@ -1,7 +1,7 @@
 import { BaseContext, Contract, Balance } from "@lib/adapter";
 import { Chain } from "@defillama/sdk/build/general";
 import { call } from "@defillama/sdk/build/abi";
-import { multicall } from "@lib/multicall";
+import { Call, multicall } from "@lib/multicall";
 import { BigNumber, utils } from "ethers";
 import { range } from "@lib/array";
 
@@ -11,25 +11,34 @@ const DECIMALS = {
 };
 
 export interface CDPID_Maker extends Contract {
-  proxy: {};
-  ids: string[];
-  urns: string[];
-  ilks: string[];
+  ids?: string[];
+  urns?: string[];
+  ilks?: string[];
+}
+
+interface BalanceWithExtraProps extends Balance {
+  proxy: { name: string; address: string };
 }
 
 interface Urn {
-  ids: string;
-  address: string;
-  ilks: string;
+  ids?: string;
+  address?: string;
+  ilks?: string;
 }
 
-export async function getProxiesContractsFromUsers(
-  chain: Chain,
-  contract: Contract
-) {
+export async function getProxiesContracts(chain: Chain, contract: Contract) {
+  const MAKER = contract.proxy[0];
+  const INSTADAPP = contract.proxy[1];
+
+  let users: Contract[] = [];
+
+  /**
+   *    Check if user's address uses Maker proxies
+   */
+
   const proxyAddressRes = await call({
     chain,
-    target: contract.address,
+    target: MAKER.address,
     params: [process.argv[3]],
     abi: {
       constant: true,
@@ -41,100 +50,107 @@ export async function getProxiesContractsFromUsers(
       type: "function",
     },
   });
+  const makerAddressesProxies: string[] = [];
+  makerAddressesProxies.push(proxyAddressRes.output);
 
-  return proxyAddressRes.output;
-}
+  /**
+   *    Check if user's address uses InstadApp proxies
+   */
 
-export async function getCDPIDFromProxyAddress(
-  chain: Chain,
-  proxy: string,
-  contract: Contract
-) {
-  let users: Contract[] = [];
-
-  const cdpidInfoRes = await call({
+  const userLinkCountRes = await call({
     chain,
-    target: contract.address,
-    params: [contract.manager.address, proxy],
+    target: INSTADAPP.address,
+    params: [process.argv[3]],
     abi: {
-      constant: true,
-      inputs: [
-        { internalType: "address", name: "manager", type: "address" },
-        { internalType: "address", name: "guy", type: "address" },
-      ],
-      name: "getCdpsAsc",
+      inputs: [{ internalType: "address", name: "", type: "address" }],
+      name: "userLink",
       outputs: [
-        { internalType: "uint256[]", name: "ids", type: "uint256[]" },
-        { internalType: "address[]", name: "urns", type: "address[]" },
-        { internalType: "bytes32[]", name: "ilks", type: "bytes32[]" },
+        { internalType: "uint64", name: "first", type: "uint64" },
+        { internalType: "uint64", name: "last", type: "uint64" },
+        { internalType: "uint64", name: "count", type: "uint64" },
       ],
-      payable: false,
+      stateMutability: "view",
+      type: "function",
+    },
+  });
+  const instadAppIDProxies: string[] = [];
+  const userLinkCount = userLinkCountRes.output.count;
+  const userLinkFirst = userLinkCountRes.output.first;
+
+  instadAppIDProxies.push(userLinkFirst);
+
+  for (let i = 1; i < userLinkCount; i++) {
+    const userLinksRes = await call({
+      chain,
+      target: INSTADAPP.address,
+      params: [
+        process.argv[3],
+        instadAppIDProxies[instadAppIDProxies.length - 1],
+      ],
+      abi: {
+        inputs: [
+          { internalType: "address", name: "", type: "address" },
+          { internalType: "uint64", name: "", type: "uint64" },
+        ],
+        name: "userList",
+        outputs: [
+          { internalType: "uint64", name: "prev", type: "uint64" },
+          { internalType: "uint64", name: "next", type: "uint64" },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    });
+
+    instadAppIDProxies.push(userLinksRes.output.next);
+  }
+
+  const instadAppAddressesProxiesRes = await multicall({
+    chain,
+    calls: instadAppIDProxies.map((id) => ({
+      target: INSTADAPP.address,
+      params: [id],
+    })),
+    abi: {
+      inputs: [{ internalType: "uint64", name: "", type: "uint64" }],
+      name: "accountAddr",
+      outputs: [{ internalType: "address", name: "", type: "address" }],
       stateMutability: "view",
       type: "function",
     },
   });
 
-  const cdpidInfo = cdpidInfoRes.output;
+  const instadAppAddressesProxies = instadAppAddressesProxiesRes
+    .filter((res) => res.output)
+    .map((res) => res.output);
 
-  const userInfos: CDPID_Maker = {
-    chain,
-    address: process.argv[3],
-    proxy: {},
-    ids: cdpidInfo.ids,
-    urns: cdpidInfo.urns,
-    ilks: cdpidInfo.ilks,
+  const usersAddresses: { maker: string[]; instadApp: string[] } = {
+    maker: [],
+    instadApp: [],
   };
+  usersAddresses.maker = makerAddressesProxies;
+  usersAddresses.instadApp = instadAppAddressesProxies;
 
-  users.push(userInfos);
-
-  //   userInfos.proxy = { name: "Maker Proxy", proxy };
-
-  if (userInfos.ids.length === 0) {
-    const proxyInstadapp = await getProxiesAddressFromInstadapp(
-      chain,
-      contract
-    );
-
-    users = proxyInstadapp;
-  }
-
-  return users;
-}
-
-export async function getBalancesFromCDPIDUserInfos(
-  chain: Chain,
-  cdpidContract: CDPID_Maker,
-  Vat: Contract
-) {
-  console.log(cdpidContract);
-
-  const balances: Balance[] = [];
-
-  /**
-   *    Retrieve ilk (Collateral Token) infos
-   */
-
-  const [ilksInfosRes, ilkSpotRes] = await Promise.all([
+  const [cdpidFromMakerRes, cdpidFromInstadAppRes] = await Promise.all([
     multicall({
       chain,
-      calls: cdpidContract.ilks.map((ilk) => ({
-        target: Vat.ilk.address,
-        params: [ilk],
+      calls: usersAddresses.maker.map((proxy) => ({
+        target: contract.address,
+        params: [contract.manager.address, proxy],
       })),
       abi: {
-        inputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
-        name: "ilkData",
-        outputs: [
-          { internalType: "uint96", name: "pos", type: "uint96" },
-          { internalType: "address", name: "join", type: "address" },
-          { internalType: "address", name: "gem", type: "address" },
-          { internalType: "uint8", name: "dec", type: "uint8" },
-          { internalType: "uint96", name: "class", type: "uint96" },
-          { internalType: "address", name: "pip", type: "address" },
-          { internalType: "address", name: "xlip", type: "address" },
-          { internalType: "string", name: "name", type: "string" },
-          { internalType: "string", name: "symbol", type: "string" },
+        constant: true,
+        inputs: [
+          { internalType: "address", name: "manager", type: "address" },
+          { internalType: "address", name: "guy", type: "address" },
         ],
+        name: "getCdpsAsc",
+        outputs: [
+          { internalType: "uint256[]", name: "ids", type: "uint256[]" },
+          { internalType: "address[]", name: "urns", type: "address[]" },
+          { internalType: "bytes32[]", name: "ilks", type: "bytes32[]" },
+        ],
+        payable: false,
         stateMutability: "view",
         type: "function",
       },
@@ -142,17 +158,21 @@ export async function getBalancesFromCDPIDUserInfos(
 
     multicall({
       chain,
-      calls: cdpidContract.ilks.map((ilk) => ({
-        target: Vat.spot.address,
-        params: [ilk],
+      calls: usersAddresses.instadApp.map((proxy) => ({
+        target: contract.address,
+        params: [contract.manager.address, proxy],
       })),
       abi: {
         constant: true,
-        inputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
-        name: "ilks",
+        inputs: [
+          { internalType: "address", name: "manager", type: "address" },
+          { internalType: "address", name: "guy", type: "address" },
+        ],
+        name: "getCdpsAsc",
         outputs: [
-          { internalType: "contract PipLike", name: "pip", type: "address" },
-          { internalType: "uint256", name: "mat", type: "uint256" },
+          { internalType: "uint256[]", name: "ids", type: "uint256[]" },
+          { internalType: "address[]", name: "urns", type: "address[]" },
+          { internalType: "bytes32[]", name: "ilks", type: "bytes32[]" },
         ],
         payable: false,
         stateMutability: "view",
@@ -161,36 +181,147 @@ export async function getBalancesFromCDPIDUserInfos(
     }),
   ]);
 
-  const ilksInfos = ilksInfosRes
+  const cdpidFromMaker = cdpidFromMakerRes
     .filter((res) => res.success)
     .map((res) => res.output);
 
-  const ilkSpot = ilkSpotRes
+  const cdpidFromInstadApp = cdpidFromInstadAppRes
     .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output.mat));
+    .map((res) => res.output);
 
+  for (let i = 0; i < cdpidFromMaker.length; i++) {
+    const cdpidMaker = cdpidFromMaker[i];
+
+    const maker: CDPID_Maker = {
+      chain,
+      address: process.argv[3],
+      proxy: { name: "Maker Proxy", proxy: usersAddresses.maker[i] },
+      ids: cdpidMaker.ids,
+      urns: cdpidMaker.urns,
+      ilks: cdpidMaker.ilks,
+    };
+
+    if (maker.ids?.length !== 0) {
+      users.push(maker);
+    }
+  }
+
+  for (let i = 0; i < cdpidFromInstadApp.length; i++) {
+    const cdpidInstadApp = cdpidFromInstadApp[i];
+
+    const instadApp: CDPID_Maker = {
+      chain,
+      address: process.argv[3],
+      proxy: { name: "InstadApp Proxy", proxy: usersAddresses.instadApp[i] },
+      ids: cdpidInstadApp.ids,
+      urns: cdpidInstadApp.urns,
+      ilks: cdpidInstadApp.ilks,
+    };
+
+    if (instadApp.ids?.length !== 0) {
+      users.push(instadApp);
+    }
+  }
+
+  return users;
+}
+
+export async function getBalancesFromProxies(
+  chain: Chain,
+  proxies: CDPID_Maker[],
+  Vat: Contract
+) {
+  const balances: Balance[] = [];
   const ilks: Contract[] = [];
   const urnHandler: Urn[] = [];
 
-  for (let i = 0; i < ilksInfos.length; i++) {
-    const info = ilksInfos[i];
-    const spot = ilkSpot[i];
+  /**
+   *    Retrieve ilk (Collateral Token) infos
+   */
 
-    urnHandler.push({
-      ids: cdpidContract.ids[i],
-      address: cdpidContract.urns[i],
-      ilks: cdpidContract.ilks[i],
-    });
+  for (let i = 0; i < proxies.length; i++) {
+    const proxy = proxies[i];
 
-    ilks.push({
-      chain,
-      name: info.name,
-      symbol: info.symbol,
-      address: info.gem,
-      decimals: info.dec,
-      urns: urnHandler[i],
-      spot,
-    });
+    if (!proxy.ilks || !proxy.urns) {
+      return null;
+    }
+
+    const [ilksInfosRes, ilkSpotRes] = await Promise.all([
+      multicall({
+        chain,
+        calls: proxy.ilks?.map((ilk) => ({
+          target: Vat.ilk.address,
+          params: [ilk],
+        })),
+        abi: {
+          inputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+          name: "ilkData",
+          outputs: [
+            { internalType: "uint96", name: "pos", type: "uint96" },
+            { internalType: "address", name: "join", type: "address" },
+            { internalType: "address", name: "gem", type: "address" },
+            { internalType: "uint8", name: "dec", type: "uint8" },
+            { internalType: "uint96", name: "class", type: "uint96" },
+            { internalType: "address", name: "pip", type: "address" },
+            { internalType: "address", name: "xlip", type: "address" },
+            { internalType: "string", name: "name", type: "string" },
+            { internalType: "string", name: "symbol", type: "string" },
+          ],
+          stateMutability: "view",
+          type: "function",
+        },
+      }),
+
+      multicall({
+        chain,
+        calls: proxy.ilks.map((ilk) => ({
+          target: Vat.spot.address,
+          params: [ilk],
+        })),
+        abi: {
+          constant: true,
+          inputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
+          name: "ilks",
+          outputs: [
+            { internalType: "contract PipLike", name: "pip", type: "address" },
+            { internalType: "uint256", name: "mat", type: "uint256" },
+          ],
+          payable: false,
+          stateMutability: "view",
+          type: "function",
+        },
+      }),
+    ]);
+
+    const ilksInfos = ilksInfosRes
+      .filter((res) => res.success)
+      .map((res) => res.output);
+
+    const ilkSpot = ilkSpotRes
+      .filter((res) => res.success)
+      .map((res) => BigNumber.from(res.output.mat));
+
+    for (let x = 0; x < ilksInfos.length; x++) {
+      const info = ilksInfos[x];
+      const spot = ilkSpot[x];
+
+      urnHandler.push({
+        ids: proxy.ids?.[x],
+        address: proxy.urns?.[x],
+        ilks: proxy.ilks?.[x],
+      });
+
+      ilks.push({
+        chain,
+        name: info.name,
+        symbol: info.symbol,
+        address: info.gem,
+        decimals: info.dec,
+        proxy: proxy.proxy,
+        urns: urnHandler[x],
+        spot,
+      });
+    }
   }
 
   const [urnsBalancesRes, urnSupplyRes] = await Promise.all([
@@ -258,27 +389,29 @@ export async function getBalancesFromCDPIDUserInfos(
     BigNumber.from(balance.output.art)
   );
 
-  for (let i = 0; i < userBorrow.length; i++) {
-    const ilk = ilks[i];
+  for (let o = 0; o < userBorrow.length; o++) {
+    const ilk = ilks[o];
 
-    const userBorrowFormatted = userBorrow[i]
-      .mul(formattedRate[i])
+    const userBorrowFormatted = userBorrow[o]
+      .mul(formattedRate[o])
       .div(DECIMALS.ray);
 
-    const lend: Balance = {
+    const lend: BalanceWithExtraProps = {
       chain,
       name: ilk.name,
+      proxy: ilk.proxy,
       decimals: 18,
       address: ilk.address,
       symbol: ilk.symbol,
-      amount: userSupply[i],
+      amount: userSupply[o],
       category: "lend",
     };
 
     balances.push(lend);
 
-    const borrow: Balance = {
+    const borrow: BalanceWithExtraProps = {
       chain,
+      proxy: ilk.proxy,
       decimals: Vat.token.decimals,
       address: Vat.token.address,
       symbol: Vat.token.symbol,
@@ -286,139 +419,8 @@ export async function getBalancesFromCDPIDUserInfos(
       category: "borrow",
     };
 
-    // if (userBorrowFormatted.gt(0)) {
-    //   const CollateralizationRatio =
-    //     userSupply[i]
-    //       .mul(100)
-    //       .mul(BigNumber.from(urnSupply[i].spot).div(DECIMALS.ray))
-    //       .mul(ilks[i].spot.div(DECIMALS.ray))
-    //       .div(userBorrowFormatted)
-    //       .toNumber() / 100;
-
-    //       console.log(CollateralizationRatio);
-
-    // }
-
     balances.push(borrow);
   }
 
   return balances;
-}
-
-export async function getProxiesAddressFromInstadapp(
-  chain: Chain,
-  contract: Contract
-) {
-  const users: Contract[] = [];
-
-  const userLinkCountRes = await call({
-    chain,
-    target: contract.instadApp.address,
-    params: [process.argv[3]],
-    abi: {
-      inputs: [{ internalType: "address", name: "", type: "address" }],
-      name: "userLink",
-      outputs: [
-        { internalType: "uint64", name: "first", type: "uint64" },
-        { internalType: "uint64", name: "last", type: "uint64" },
-        { internalType: "uint64", name: "count", type: "uint64" },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-  const idList: string[] = [];
-  const userLinkCount = userLinkCountRes.output.count;
-  const userLinkFirst = userLinkCountRes.output.first;
-
-  idList.push(userLinkFirst);
-
-  for (let i = 1; i < userLinkCount; i++) {
-    const userLinksRes = await call({
-      chain,
-      target: contract.instadApp.address,
-      params: [process.argv[3], idList[idList.length - 1]],
-      abi: {
-        inputs: [
-          { internalType: "address", name: "", type: "address" },
-          { internalType: "uint64", name: "", type: "uint64" },
-        ],
-        name: "userList",
-        outputs: [
-          { internalType: "uint64", name: "prev", type: "uint64" },
-          { internalType: "uint64", name: "next", type: "uint64" },
-        ],
-        stateMutability: "view",
-        type: "function",
-      },
-    });
-
-    idList.push(userLinksRes.output.next);
-  }
-
-  const accountAddressesRes = await multicall({
-    chain,
-    calls: range(0, idList.length).map((i) => ({
-      target: contract.instadApp.address,
-      params: [i],
-    })),
-    abi: {
-      inputs: [{ internalType: "uint64", name: "", type: "uint64" }],
-      name: "accountAddr",
-      outputs: [{ internalType: "address", name: "", type: "address" }],
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const accountAddresses = accountAddressesRes
-    .filter((res) => res.output)
-    .map((res) => res.output);
-
-  const cdpidInfoRes = await multicall({
-    chain,
-    calls: accountAddresses.map((proxy) => ({
-      target: contract.address,
-      params: [contract.manager.address, proxy],
-      proxy,
-    })),
-    abi: {
-      constant: true,
-      inputs: [
-        { internalType: "address", name: "manager", type: "address" },
-        { internalType: "address", name: "guy", type: "address" },
-      ],
-      name: "getCdpsAsc",
-      outputs: [
-        { internalType: "uint256[]", name: "ids", type: "uint256[]" },
-        { internalType: "address[]", name: "urns", type: "address[]" },
-        { internalType: "bytes32[]", name: "ilks", type: "bytes32[]" },
-      ],
-      payable: false,
-      stateMutability: "view",
-      type: "function",
-    },
-  });
-
-  const cdpidInfo = cdpidInfoRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
-
-  for (let i = 0; i < cdpidInfo.length; i++) {
-    const info = cdpidInfo[i];
-
-    const userInfos: CDPID_Maker = {
-      chain,
-      address: process.argv[3],
-      proxy: { name: "InstadApp Proxy", proxy: accountAddresses[i] },
-      ids: info.ids,
-      urns: info.urns,
-      ilks: info.ilks,
-    };
-
-    if (userInfos.ids.length !== 0) {
-      users.push(userInfos);
-    }
-  }
-  return users;
 }
