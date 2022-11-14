@@ -27,6 +27,7 @@ export interface Balance extends BaseBalance {
   // ex: aToken -> token (AAVE)
   // ex: Uniswap Pair -> [token0, token1]
   underlyings?: BaseBalance[];
+  lock?: Lock;
 }
 
 export interface RewardBalance extends Balance {
@@ -40,6 +41,11 @@ export interface RewardBalance extends Balance {
 export interface PricedBalance extends BasePricedBalance {
   rewards?: BasePricedBalance[];
   underlyings?: BasePricedBalance[];
+}
+
+export interface Lock {
+  // Unix timestamp
+  end?: number;
 }
 
 export interface Metadata {
