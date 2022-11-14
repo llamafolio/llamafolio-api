@@ -4,6 +4,7 @@ import { call } from "@defillama/sdk/build/abi";
 import { abi } from "@lib/erc20";
 import { BigNumber } from "ethers";
 import { multicall } from "@lib/multicall";
+import { isNotNullish } from "@lib/type";
 
 export async function getStakeBalances(
   ctx: BaseContext,
@@ -87,40 +88,44 @@ export async function getBondBalances(
     }),
   ]);
 
-  const vestingBalanceOf = vestingBalanceOfRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output.payout));
+  return contracts
+    .map((contract, i) => {
+      if (!contract.underlyings?.[0] || !vestingBalanceOfRes[i].success) {
+        return;
+      }
 
-  const pendingBalanceOf = pendingBalanceOfRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output));
+      const vestingAmount = BigNumber.from(
+        vestingBalanceOfRes[i].output.payout
+      );
 
-  for (let i = 0; i < contracts.length; i++) {
-    if (!contracts[i].underlyings?.[0] || !contracts[i].rewards?.[0]) {
-      return [];
-    }
+      const balance: Balance = {
+        chain,
+        decimals: 9,
+        symbol: contracts[i].symbol,
+        address: contracts[i].address,
+        amount: vestingAmount,
+        underlyings: [
+          {
+            ...contract.underlyings?.[0],
+            amount: vestingAmount,
+          },
+        ],
+        category: "vest",
+      };
 
-    const underlyings = contracts[i].underlyings?.map((underlying) => ({
-      ...underlying,
-      amount: vestingBalanceOf[i],
-    }));
+      // rewards
+      if (pendingBalanceOfRes[i].success && contract.rewards?.[0]) {
+        const pendingBalance = BigNumber.from(pendingBalanceOfRes[i].output);
 
-    const rewards = contracts[i].rewards?.map((reward) => ({
-      ...reward,
-      amount: pendingBalanceOf[i],
-    }));
+        balance.rewards = [
+          {
+            ...contract.rewards?.[0],
+            amount: pendingBalance,
+          },
+        ];
+      }
 
-    const balance: Balance = {
-      chain,
-      decimals: 9,
-      symbol: contracts[i].symbol,
-      address: contracts[i].address,
-      amount: vestingBalanceOf[i],
-      underlyings,
-      rewards,
-      category: "vest",
-    };
-    balances.push(balance);
-  }
-  return balances;
+      return balance;
+    })
+    .filter(isNotNullish);
 }
