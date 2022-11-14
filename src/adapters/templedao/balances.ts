@@ -4,10 +4,7 @@ import { call } from "@defillama/sdk/build/abi";
 import { abi } from "@lib/erc20";
 import { BigNumber } from "ethers";
 import { multicall } from "@lib/multicall";
-
-interface BalanceWithExtraProps extends Balance {
-  lockEnd: Date;
-}
+import { isNotNullish } from "@lib/type";
 
 const TempleStaking: Contract = {
   name: "Temple staking",
@@ -72,86 +69,80 @@ export async function getLockedBalances(
   chain: Chain,
   contracts: Contract[]
 ) {
-  const balances: Balance[] = [];
-
   const calls = contracts.map((contract) => ({
     target: contract.address,
     params: [],
   }));
 
-  const [balancesLockedRes, startLockedRes, endLockedRes] = await Promise.all([
-    multicall({
-      chain,
-      calls: contracts.map((contract) => ({
-        target: contract.address,
-        params: [ctx.address],
-      })),
-      abi: abi.balanceOf,
-    }),
+  const [balancesLockedRes, periodStartTimestampRes, periodDurationRes] =
+    await Promise.all([
+      multicall({
+        chain,
+        calls: contracts.map((contract) => ({
+          target: contract.address,
+          params: [ctx.address],
+        })),
+        abi: abi.balanceOf,
+      }),
 
-    multicall({
-      chain,
-      calls,
-      abi: {
-        inputs: [],
-        name: "firstPeriodStartTimestamp",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
+      multicall({
+        chain,
+        calls,
+        abi: {
+          inputs: [],
+          name: "firstPeriodStartTimestamp",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+      }),
 
-    multicall({
-      chain,
-      calls,
-      abi: {
-        inputs: [],
-        name: "periodDuration",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
-  ]);
+      multicall({
+        chain,
+        calls,
+        abi: {
+          inputs: [],
+          name: "periodDuration",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+      }),
+    ]);
 
-  const balancesLocked = balancesLockedRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output));
+  return contracts
+    .map((contract, i) => {
+      if (!contract.underlyings?.[0] || !balancesLockedRes[i].success) {
+        return;
+      }
 
-  const startLocked = startLockedRes
-    .filter((res) => res.success)
-    .map((res) => res.output * 1000);
+      const amountLocked = BigNumber.from(balancesLockedRes[i].output);
 
-  const endLocked = endLockedRes
-    .filter((res) => res.success)
-    .map((res) => res.output * 1000);
+      const balance: Balance = {
+        chain,
+        decimals: contracts[i].decimals,
+        symbol: contracts[i].symbol,
+        address: contracts[i].address,
+        amount: amountLocked,
+        underlyings: [
+          {
+            ...contract.underlyings[0],
+            amount: amountLocked,
+          },
+        ],
+        category: "lock",
+      };
 
-  for (let i = 0; i < contracts.length; i++) {
-    if (!contracts[i].underlyings?.[0]) {
-      return [];
-    }
+      // end lock
+      if (periodStartTimestampRes[i].success && periodDurationRes[i].success) {
+        balance.lock = {
+          end:
+            parseInt(periodStartTimestampRes[i].output) +
+            parseInt(periodDurationRes[i].output),
+        };
+      }
 
-    const underlyings = contracts[i].underlyings?.map((underlying) => ({
-      ...underlying,
-      amount: balancesLocked[i],
-    }));
-
-    const lockedBalance = new Date(
-      startLocked[i] + endLocked[i]
-    ) // .toLocaleDateString("en-US");
-
-    const balance: BalanceWithExtraProps = {
-      chain,
-      decimals: contracts[i].decimals,
-      symbol: contracts[i].symbol,
-      address: contracts[i].address,
-      amount: balancesLocked[i],
-      underlyings,
-      lockEnd: lockedBalance,
-      category: "lock",
-    };
-
-    balances.push(balance);
-  }
-  return balances;
+      return balance;
+    })
+    .filter(isNotNullish);
 }
