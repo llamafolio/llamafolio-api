@@ -1,1 +1,1 @@
-export type LabelSource = "ens" | "llamafolio" | "opensea";
+export type LabelSource = 'ens' | 'llamafolio' | 'opensea'

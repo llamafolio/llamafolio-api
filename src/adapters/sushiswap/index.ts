@@ -1,98 +1,95 @@
-import { Adapter, Contract } from "@lib/adapter";
-import { getPairsBalances, getUnderlyingBalances } from "@lib/uniswap/v2/pair";
-import { getPairsContracts } from "@lib/uniswap/v2/factory";
-import { getMasterChefPoolsInfo, getMasterChefBalances } from "@lib/masterchef";
-import { isNotNullish } from "@lib/type";
-import { Token } from "@lib/token";
+import { Adapter, Contract } from '@lib/adapter'
+import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
+import { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
+import { getPairsContracts } from '@lib/uniswap/v2/factory'
+import { getPairsBalances, getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 
 const masterChef: Contract = {
-  name: "masterChef",
-  displayName: "MasterChef",
-  chain: "ethereum",
-  address: "0xc2edad668740f1aa35e4d8f227fb8e17dca888cd",
-};
+  name: 'masterChef',
+  displayName: 'MasterChef',
+  chain: 'ethereum',
+  address: '0xc2edad668740f1aa35e4d8f227fb8e17dca888cd',
+}
 
 const sushi: Token = {
-  chain: "ethereum",
-  address: "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
-  symbol: "SUSHI",
+  chain: 'ethereum',
+  address: '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2',
+  symbol: 'SUSHI',
   decimals: 18,
-};
+}
 
 const adapter: Adapter = {
-  id: "sushiswap",
+  id: 'sushiswap',
   async getContracts() {
     const [pairs, masterChefPoolsInfo] = await Promise.all([
       getPairsContracts({
-        chain: "ethereum",
-        factoryAddress: "0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac",
+        chain: 'ethereum',
+        factoryAddress: '0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac',
         length: 100,
       }),
 
       getMasterChefPoolsInfo({
-        chain: "ethereum",
+        chain: 'ethereum',
         masterChefAddress: masterChef.address,
       }),
-    ]);
+    ])
 
     // retrieve master chef pools details from lpToken addresses
-    const pairByAddress: { [key: string]: Contract } = {};
+    const pairByAddress: { [key: string]: Contract } = {}
     for (const pair of pairs) {
-      pairByAddress[pair.address.toLowerCase()] = pair;
+      pairByAddress[pair.address.toLowerCase()] = pair
     }
 
     const masterChefPools = masterChefPoolsInfo
       .map((pool) => {
-        const pair = pairByAddress[pool.lpToken.toLowerCase()];
+        const pair = pairByAddress[pool.lpToken.toLowerCase()]
         if (!pair) {
-          return null;
+          return null
         }
-        return { ...pair, pid: pool.pid };
+        return { ...pair, pid: pool.pid }
       })
-      .filter(isNotNullish);
+      .filter(isNotNullish)
 
     const contracts = [
-      ...pairs.map((c) => ({ ...c, category: "lp" })),
-      ...masterChefPools.map((c) => ({ ...c, category: "farm" })),
-    ];
+      ...pairs.map((c) => ({ ...c, category: 'lp' })),
+      ...masterChefPools.map((c) => ({ ...c, category: 'farm' })),
+    ]
 
     return {
       contracts,
       revalidate: 60 * 60,
-    };
+    }
   },
   async getBalances(ctx, contracts) {
-    const lp = [];
-    const farm = [];
+    const lp = []
+    const farm = []
 
     for (const contract of contracts) {
-      if (contract.category === "lp") {
-        lp.push(contract);
-      } else if (contract.category === "farm") {
-        farm.push(contract);
+      if (contract.category === 'lp') {
+        lp.push(contract)
+      } else if (contract.category === 'farm') {
+        farm.push(contract)
       }
     }
 
-    const pairs = await getPairsBalances(ctx, "ethereum", lp);
+    const pairs = await getPairsBalances(ctx, 'ethereum', lp)
 
     let masterChefBalances = await getMasterChefBalances(ctx, {
-      chain: "ethereum",
+      chain: 'ethereum',
       masterChefAddress: masterChef.address,
       tokens: farm,
       rewardToken: sushi,
-      pendingRewardName: "pendingSushi",
-    });
-    masterChefBalances = await getUnderlyingBalances(
-      "ethereum",
-      masterChefBalances
-    );
+      pendingRewardName: 'pendingSushi',
+    })
+    masterChefBalances = await getUnderlyingBalances('ethereum', masterChefBalances)
 
-    const balances = pairs.concat(masterChefBalances);
+    const balances = pairs.concat(masterChefBalances)
 
     return {
       balances,
-    };
+    }
   },
-};
+}
 
-export default adapter;
+export default adapter

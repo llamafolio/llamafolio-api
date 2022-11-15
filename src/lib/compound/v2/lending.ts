@@ -1,37 +1,32 @@
-import { BigNumber, ethers } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
-import { Balance, BaseContext, Contract } from "@lib/adapter";
-import { getERC20Details, getERC20BalanceOf } from "@lib/erc20";
-import { multicall } from "@lib/multicall";
-import ComptrollerABI from "./abis/Comptroller.json";
-import { Token } from "@lib/token";
-import { isNotNullish } from "@lib/type";
-import { BN_TEN } from "@lib/math";
+import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Chain } from '@lib/chains'
+import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
+import { BN_TEN } from '@lib/math'
+import { multicall } from '@lib/multicall'
+import { providers } from '@lib/providers'
+import { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
+import { BigNumber, ethers } from 'ethers'
+
+import ComptrollerABI from './abis/Comptroller.json'
 
 export interface GetMarketsContractsProps {
-  comptrollerAddress: string;
+  comptrollerAddress: string
   /**
    * map of underlying tokens by address not defined in Comptroller markets (ex: cETH -> WETH).
    */
-  underlyingAddressByMarketAddress?: { [key: string]: string };
+  underlyingAddressByMarketAddress?: { [key: string]: string }
 }
 
 export async function getMarketsContracts(
   chain: Chain,
-  {
-    comptrollerAddress,
-    underlyingAddressByMarketAddress = {},
-  }: GetMarketsContractsProps
+  { comptrollerAddress, underlyingAddressByMarketAddress = {} }: GetMarketsContractsProps,
 ) {
-  const provider = providers[chain];
+  const provider = providers[chain]
 
-  const comptroller = new ethers.Contract(
-    comptrollerAddress,
-    ComptrollerABI,
-    provider
-  );
+  const comptroller = new ethers.Contract(comptrollerAddress, ComptrollerABI, provider)
 
-  const cTokensAddresses: string[] = await comptroller.getAllMarkets();
+  const cTokensAddresses: string[] = await comptroller.getAllMarkets()
 
   const [cTokens, underlyingTokensAddressesRes] = await Promise.all([
     getERC20Details(chain, cTokensAddresses),
@@ -45,72 +40,61 @@ export async function getMarketsContracts(
       abi: {
         constant: true,
         inputs: [],
-        name: "underlying",
-        outputs: [{ name: "", type: "address" }],
+        name: 'underlying',
+        outputs: [{ name: '', type: 'address' }],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
     }),
-  ]);
+  ])
 
   const underlyingTokensAddresses: string[] = underlyingTokensAddressesRes
     .filter((res) => res.success)
-    .map((res) => res.output);
+    .map((res) => res.output)
 
   if (underlyingAddressByMarketAddress) {
     for (const marketAddress in underlyingAddressByMarketAddress) {
-      const underlyingAddress = underlyingAddressByMarketAddress[marketAddress];
-      underlyingTokensAddresses.push(underlyingAddress);
+      const underlyingAddress = underlyingAddressByMarketAddress[marketAddress]
+      underlyingTokensAddresses.push(underlyingAddress)
     }
   }
 
-  const underlyingTokens = await getERC20Details(
-    chain,
-    underlyingTokensAddresses
-  );
-  const underlyingTokenByAddress: { [key: string]: Token } = {};
+  const underlyingTokens = await getERC20Details(chain, underlyingTokensAddresses)
+  const underlyingTokenByAddress: { [key: string]: Token } = {}
   for (const underlyingToken of underlyingTokens) {
-    underlyingToken.address = underlyingToken.address.toLowerCase();
-    underlyingTokenByAddress[underlyingToken.address] = underlyingToken;
+    underlyingToken.address = underlyingToken.address.toLowerCase()
+    underlyingTokenByAddress[underlyingToken.address] = underlyingToken
   }
 
   return cTokens
     .map((token, i) => {
       const underlyingTokenAddress =
         underlyingAddressByMarketAddress?.[token.address?.toLowerCase()] ||
-        underlyingTokensAddressesRes[i].output?.toLowerCase();
-      let underlyingToken = underlyingTokenByAddress[underlyingTokenAddress];
+        underlyingTokensAddressesRes[i].output?.toLowerCase()
+      const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress]
 
       if (!underlyingToken) {
-        console.log("Failed to get underlying token for market", token);
-        return null;
+        console.log('Failed to get underlying token for market', token)
+        return null
       }
 
       return {
         ...token,
         priceSubstitute: underlyingToken.address,
         underlyings: [underlyingToken],
-      };
+      }
     })
-    .filter(isNotNullish);
+    .filter(isNotNullish)
 }
 
-export async function getMarketsBalances(
-  ctx: BaseContext,
-  chain: Chain,
-  contracts: Contract[]
-): Promise<Balance[]> {
-  const cTokenByAddress: { [key: string]: Contract } = {};
+export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+  const cTokenByAddress: { [key: string]: Contract } = {}
   for (const contract of contracts) {
-    cTokenByAddress[contract.address] = contract;
+    cTokenByAddress[contract.address] = contract
   }
 
-  const [
-    cTokensBalances,
-    cTokensBorrowBalanceCurrentRes,
-    cTokensExchangeRateCurrentRes,
-  ] = await Promise.all([
+  const [cTokensBalances, cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all([
     getERC20BalanceOf(ctx, chain, contracts),
 
     multicall({
@@ -121,12 +105,12 @@ export async function getMarketsBalances(
       })),
       abi: {
         constant: false,
-        inputs: [{ internalType: "address", name: "account", type: "address" }],
-        name: "borrowBalanceCurrent",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+        name: 'borrowBalanceCurrent',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         payable: false,
-        stateMutability: "nonpayable",
-        type: "function",
+        stateMutability: 'nonpayable',
+        type: 'function',
       },
     }),
 
@@ -139,67 +123,62 @@ export async function getMarketsBalances(
       abi: {
         constant: false,
         inputs: [],
-        name: "exchangeRateCurrent",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        name: 'exchangeRateCurrent',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         payable: false,
-        stateMutability: "nonpayable",
-        type: "function",
+        stateMutability: 'nonpayable',
+        type: 'function',
       },
     }),
-  ]);
+  ])
 
-  const exchangeRateCurrentBycTokenAddress: { [key: string]: BigNumber } = {};
+  const exchangeRateCurrentBycTokenAddress: { [key: string]: BigNumber } = {}
   for (const res of cTokensExchangeRateCurrentRes) {
     if (!res.success) {
-      continue;
+      continue
     }
 
-    exchangeRateCurrentBycTokenAddress[res.input.target] = BigNumber.from(
-      res.output
-    );
+    exchangeRateCurrentBycTokenAddress[res.input.target] = BigNumber.from(res.output)
   }
 
   const cTokensSupplyBalances = cTokensBalances
-    .filter(
-      (bal) =>
-        exchangeRateCurrentBycTokenAddress[bal.address] && bal.underlyings?.[0]
-    )
+    .filter((bal) => exchangeRateCurrentBycTokenAddress[bal.address] && bal.underlyings?.[0])
     .map((bal) => {
       // add amount
       const amount = bal.amount
         .mul(exchangeRateCurrentBycTokenAddress[bal.address])
-        .div(BN_TEN.pow(bal.underlyings[0].decimals + 10));
-      bal.underlyings[0].amount = amount;
+        .div(BN_TEN.pow(bal.underlyings[0].decimals + 10))
+      bal.underlyings[0].amount = amount
 
       return {
         ...bal,
         amount,
         underlyings: [{ ...bal.underlyings[0], decimals: bal.decimals }],
-        category: "lend",
-      };
-    });
+        category: 'lend',
+      }
+    })
 
   const cTokensBorrowBalances = cTokensBorrowBalanceCurrentRes
     .filter((res) => res.success)
     .map((res) => {
-      const cToken = cTokenByAddress[res.input.target];
+      const cToken = cTokenByAddress[res.input.target]
       if (!cToken || !cToken.underlyings?.[0]) {
-        return null;
+        return null
       }
 
       // add amount
-      const amount = BigNumber.from(res.output);
-      cToken.underlyings[0].amount = amount;
+      const amount = BigNumber.from(res.output)
+      cToken.underlyings[0].amount = amount
 
       return {
         ...cToken,
         amount,
         decimals: cToken.underlyings[0].decimals,
-        category: "borrow",
-        type: "debt",
-      };
+        category: 'borrow',
+        type: 'debt',
+      }
     })
-    .filter(isNotNullish);
+    .filter(isNotNullish)
 
-  return [...cTokensSupplyBalances, ...cTokensBorrowBalances];
+  return [...cTokensSupplyBalances, ...cTokensBorrowBalances]
 }

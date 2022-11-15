@@ -1,36 +1,34 @@
-import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
-import { getVaults } from "./contracts";
-import { getLpBalances } from "./balances";
+import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+
+import { getLpBalances } from './balances'
+import { getVaults } from './contracts'
 
 const factoryArrakis: Contract = {
-  name: "factory",
-  displayName: "Arrakis Factory",
-  chain: "ethereum",
-  address: "0xEA1aFf9dbFfD1580F6b81A3ad3589E66652dB7D9",
-};
+  name: 'factory',
+  displayName: 'Arrakis Factory',
+  chain: 'ethereum',
+  address: '0xEA1aFf9dbFfD1580F6b81A3ad3589E66652dB7D9',
+}
 
 const getContracts = async () => {
   return {
     contracts: await getVaults(factoryArrakis),
     revalidate: 60 * 60,
-  };
-};
+  }
+}
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  contracts
-) => {
-  let balances = await getLpBalances(ctx, "ethereum", contracts);
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await getLpBalances(ctx, 'ethereum', contracts)
 
   return {
     balances,
-  };
-};
+  }
+}
 
 const adapter: Adapter = {
-  id: "arrakis-finance",
+  id: 'arrakis-finance',
   getContracts,
   getBalances,
-};
+}
 
-export default adapter;
+export default adapter
