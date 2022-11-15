@@ -3,6 +3,7 @@ import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 export const abi = {
@@ -84,7 +85,7 @@ export async function getUnderlyingsContract(contract: Contract) {
  * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
  */
 export async function getPairsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
-  const balances = await getERC20BalanceOf(ctx, chain, contracts)
+  const balances = await getERC20BalanceOf(ctx, chain, contracts as Token[])
 
   return getUnderlyingBalances(chain, balances)
 }

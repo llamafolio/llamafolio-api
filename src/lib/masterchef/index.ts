@@ -10,6 +10,7 @@ import MasterChefAbi from './abis/MasterChef.json'
 export interface GetMasterChefPoolsInfoParams {
   chain: Chain
   masterChefAddress: string
+  methodName: string
 }
 
 export async function getMasterChefPoolsInfo({ chain, masterChefAddress, methodName }: GetMasterChefPoolsInfoParams) {
@@ -50,6 +51,7 @@ export interface GetMasterChefBalancesParams {
   masterChefAddress: string
   tokens: Token[]
   rewardToken: Token
+  pendingRewardName: string
 }
 
 export async function getMasterChefBalances(

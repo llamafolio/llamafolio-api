@@ -41,11 +41,11 @@ export async function getBalances(ctx: BaseContext, contracts: BaseContract[]) {
     )
   ).filter(isNotNullish)
 
-  const tokensBalances = (
+  const tokensBalances: Token[] = (
     await Promise.all(
       Object.keys(tokensByChain).map((chain) => getERC20BalanceOf(ctx, chain as Chain, tokensByChain[chain])),
     )
-  ).flat()
+  ).flat() as Token[]
 
   return coinsBalances.concat(tokensBalances)
 }

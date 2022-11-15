@@ -27,9 +27,6 @@ export async function getPositions(ctx, chain, contracts): Promise<Balance[]> {
       params: [marketsEntered[index]],
       target: marketEuler.address,
     })
-
-    const underlyingToEToken = await marketEuler.underlyingToEToken(marketsEntered[index])
-    const underlyingToDToken = await marketEuler.underlyingToDToken(marketsEntered[index])
   }
 
   const callsLendRes = await multicall({

@@ -21,7 +21,7 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
   const SK = `CI#${connectionId}`
 
   switch (routeKey) {
-    case '$connect':
+    case '$connect': {
       // 1 hour ttl
       const ttl = Math.ceil(new Date().getTime() / 1000) + 3600
 
@@ -32,6 +32,7 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
         })
         .promise()
       break
+    }
 
     case '$disconnect':
       await dynamodb
@@ -42,7 +43,7 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
         .promise()
       break
 
-    case 'updateBalances':
+    case 'updateBalances': {
       const payload = JSON.parse(body!)?.data
       const address = payload.address
       if (!address) {
@@ -57,7 +58,7 @@ export const handleRequests: APIGatewayProxyHandler = async (event) => {
         address,
       })
       break
-
+    }
     case '$default':
     default:
       await apiGatewayManagementApi

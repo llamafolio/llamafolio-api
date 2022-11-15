@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { Adapter, Balance, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+export async function getStakeBalances(_ctx: BaseContext, _chain: Chain, _contracts: Contract[]): Promise<Balance[]> {
   return []
 }
 

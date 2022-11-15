@@ -1,3 +1,6 @@
+/* eslint-disable no-empty */
+/* eslint-disable @typescript-eslint/no-var-requires */
+
 try {
   require('dotenv').config()
 } catch (e) {}

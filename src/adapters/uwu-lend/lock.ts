@@ -37,8 +37,9 @@ export async function getMultiFeeDistributionBalances(
       multiFeeDistribution.withdrawableBalance(ctx.address),
     ])
 
-  let [stakingToken, rewardToken] = await getERC20Details('ethereum', [stakingTokenAddress, rewardTokenAddress])
-  stakingToken = await getUnderlyingsContract(stakingToken)
+  const [stakingToken, rewardToken] = await getERC20Details('ethereum', [stakingTokenAddress, rewardTokenAddress])
+
+  const stakingTokenUnderlying = await getUnderlyingsContract(stakingToken)
 
   const tokens = claimableRewards.map((res: any) => res.token)
   const tokenDetails = await getERC20Details(chain, tokens)
@@ -49,7 +50,7 @@ export async function getMultiFeeDistributionBalances(
 
   // get balances of Sushi staking LP token
   const [lockedBalance] = await getUnderlyingBalances(chain, [
-    { ...stakingToken, amount: lockedBalances.total, rewards: [] } as Balance,
+    { ...stakingTokenUnderlying, amount: lockedBalances.total, rewards: [] } as Balance,
   ])
 
   if (lockedBalance) {

@@ -45,7 +45,7 @@ const getContracts = () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts) => {
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext) => {
   const stakeBalances = await getStakeBalances(ctx, 'ethereum')
 
   const balances = stakeBalances

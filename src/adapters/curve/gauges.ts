@@ -121,7 +121,7 @@ export async function getGaugesContracts(chain: Chain, pools: Contract[]) {
   const gaugeCount = await gaugeController.n_gauges()
 
   let calls = []
-  for (var i = 0; i < gaugeCount; i++) {
+  for (let i = 0; i < gaugeCount; i++) {
     calls.push({
       params: [i],
       target: gaugeController.address,
@@ -137,7 +137,7 @@ export async function getGaugesContracts(chain: Chain, pools: Contract[]) {
   const gaugesList = gaugesListRes.filter((res) => res.success).map((res) => res.output)
 
   calls = []
-  for (var i = 0; i < gaugesList.length; i++) {
+  for (let i = 0; i < gaugesList.length; i++) {
     calls.push({
       params: [gaugesList[i]],
       target: gaugeController.address,
@@ -152,7 +152,7 @@ export async function getGaugesContracts(chain: Chain, pools: Contract[]) {
 
   const gauges: Contract[] = []
 
-  for (var i = 0; i < gaugeTypesRes.length; i++) {
+  for (let i = 0; i < gaugeTypesRes.length; i++) {
     if (gaugeTypesRes[i].success && typeKeys[gaugeTypesRes[i].output] === chain) {
       gauges.push({ chain, address: gaugesList[i] })
     }
