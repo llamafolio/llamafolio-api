@@ -5,10 +5,11 @@ import { getCVXRatio } from "./pools";
 import StakerAbi from "./abis/Staker.json";
 import LockerAbi from "./abis/Locker.json";
 import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 const CVX = "0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b";
 
-export async function getStakeBalances(ctx, chain, contracts) {
+export async function getStakeBalances(ctx, chain: Chain, contracts) {
   const provider = providers[chain];
   const balances = [];
   for (var i = 0; i < contracts.length; i++) {

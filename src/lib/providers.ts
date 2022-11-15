@@ -1,10 +1,10 @@
-import ethers from "ethers";
-import { Chain, chains } from "@lib/chains";
+import { providers as ethersProviders}  from "ethers";
+import { Chain, chains, IChainInfo } from "@lib/chains";
 
 function createProvider(name: string, rpcs: string[], chainId: number) {
-  return new ethers.providers.FallbackProvider(
+  return new ethersProviders.FallbackProvider(
     rpcs.map((url, i) => ({
-      provider: new ethers.providers.StaticJsonRpcProvider(
+      provider: new ethersProviders.StaticJsonRpcProvider(
         url,
         {
           name,
@@ -17,8 +17,9 @@ function createProvider(name: string, rpcs: string[], chainId: number) {
   )
   }
 
-export const providers: { [chain in Chain]: ethers.providers.BaseProvider } = Object.assign({})
+export const providers: { [chain in Chain]: ethersProviders.BaseProvider } = Object.assign({})
 
 for (const chain of chains) {
-  providers[chain.id] = createProvider(chain.id, chain.rpcUrl, chain.chainId)
+  providers[chain.id] = createProvider(chain.id, chain.rpcUrl, chain.chainId);
 }
+
