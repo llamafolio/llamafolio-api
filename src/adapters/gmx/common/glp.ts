@@ -273,46 +273,51 @@ export async function getGLPVesterBalances(
     return [];
   }
 
-  const glpVester = contract.glpVester;
-  const gmx = contract.gmx;
+  try {
+    const glpVester = contract.glpVester;
+    const gmx = contract.gmx;
 
-  const [balanceOfRes, claimableRes] = await Promise.all([
-    call({
+    const [balanceOfRes, claimableRes] = await Promise.all([
+      call({
+        chain,
+        target: glpVester.address,
+        params: [ctx.address],
+        abi: abi.balanceOf,
+      }),
+
+      call({
+        chain,
+        target: glpVester.address,
+        params: [ctx.address],
+        abi: {
+          inputs: [
+            { internalType: "address", name: "_account", type: "address" },
+          ],
+          name: "claimable",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+      }),
+    ]);
+
+    const balanceOf = BigNumber.from(balanceOfRes.output);
+    const claimable = BigNumber.from(claimableRes.output);
+
+    balances.push({
       chain,
-      target: glpVester.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
+      category: "farm",
+      address: glpVester.address,
+      symbol: glpVester.symbol,
+      decimals: glpVester.decimals,
+      amount: balanceOf,
+      underlyings: [{ ...gmx, amount: balanceOf }],
+      rewards: [{ ...gmx, amount: claimable }],
+    });
 
-    call({
-      chain,
-      target: glpVester.address,
-      params: [ctx.address],
-      abi: {
-        inputs: [
-          { internalType: "address", name: "_account", type: "address" },
-        ],
-        name: "claimable",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
-  ]);
-
-  const balanceOf = BigNumber.from(balanceOfRes.output);
-  const claimable = BigNumber.from(claimableRes.output);
-
-  balances.push({
-    chain,
-    category: "farm",
-    address: glpVester.address,
-    symbol: glpVester.symbol,
-    decimals: glpVester.decimals,
-    amount: balanceOf,
-    underlyings: [{ ...gmx, amount: balanceOf }],
-    rewards: [{ ...gmx, amount: claimable }],
-  });
-
-  return balances;
+    return balances;
+  } catch (error) {
+    console.log("Failed to get vester balance");
+    return [];
+  }
 }

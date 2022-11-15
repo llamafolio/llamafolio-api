@@ -317,47 +317,52 @@ export async function getGMXVesterBalances(
 
     return [];
   }
+  try {
+    const gmxVester = contract.gmxVester;
+    const gmx = contract.underlyings[1];
 
-  const gmxVester = contract.gmxVester;
-  const gmx = contract.underlyings[1];
+    const [balanceOfRes, claimableRes] = await Promise.all([
+      call({
+        chain,
+        target: gmxVester.address,
+        params: [ctx.address],
+        abi: abi.balanceOf,
+      }),
 
-  const [balanceOfRes, claimableRes] = await Promise.all([
-    call({
+      call({
+        chain,
+        target: gmxVester.address,
+        params: [ctx.address],
+        abi: {
+          inputs: [
+            { internalType: "address", name: "_account", type: "address" },
+          ],
+          name: "claimable",
+          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+          stateMutability: "view",
+          type: "function",
+        },
+      }),
+    ]);
+
+    const balanceOf = BigNumber.from(balanceOfRes.output);
+    const claimable = BigNumber.from(claimableRes.output);
+
+    balances.push({
       chain,
-      target: gmxVester.address,
-      params: [ctx.address],
-      abi: abi.balanceOf
-    }),
+      category: "farm",
+      address: gmxVester.address,
+      symbol: gmxVester.symbol,
+      decimals: gmxVester.decimals,
+      amount: balanceOf,
+      underlyings: [{ ...gmx, amount: balanceOf }],
+      rewards: [{ ...gmx, amount: claimable }],
+    });
 
-    call({
-      chain,
-      target: gmxVester.address,
-      params: [ctx.address],
-      abi: {
-        inputs: [
-          { internalType: "address", name: "_account", type: "address" },
-        ],
-        name: "claimable",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-        stateMutability: "view",
-        type: "function",
-      },
-    }),
-  ]);
+    return balances;
+  } catch (error) {
+    console.log("Failed to get vester balance");
 
-  const balanceOf = BigNumber.from(balanceOfRes.output);
-  const claimable = BigNumber.from(claimableRes.output);
-
-  balances.push({
-    chain,
-    category: "farm",
-    address: gmxVester.address,
-    symbol: gmxVester.symbol,
-    decimals: gmxVester.decimals,
-    amount: balanceOf,
-    underlyings: [{ ...gmx, amount: balanceOf }],
-    rewards: [{ ...gmx, amount: claimable }],
-  });
-
-  return balances;
+    return [];
+  }
 }
