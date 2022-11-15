@@ -1,21 +1,21 @@
-import { Chain } from "@defillama/sdk/build/general";
-import { call } from "@defillama/sdk/build/abi";
-import { BigNumber } from "ethers";
-import { Token } from "@lib/token";
-import { Balance, BaseContext, Contract } from "@lib/adapter";
+import { call } from '@defillama/sdk/build/abi'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Chain } from '@lib/chains'
+import { Token } from '@lib/token'
+import { BigNumber } from 'ethers'
 
-export type GetLendBorrowBalancesParams = {
-  synthetixContract: Contract;
-  feePoolAddress: string;
-  sUSD: Token;
-};
+export interface GetLendBorrowBalancesParams {
+  synthetixContract: Contract
+  feePoolAddress: string
+  sUSD: Token
+}
 
 export async function getLendBorrowBalances(
   ctx: BaseContext,
   chain: Chain,
-  { synthetixContract, feePoolAddress, sUSD }: GetLendBorrowBalancesParams
+  { synthetixContract, feePoolAddress, sUSD }: GetLendBorrowBalancesParams,
 ) {
-  let balances: Balance[] = [];
+  const balances: Balance[] = []
 
   const [suppliedRes, borrowedRes, feesAvailableRes] = await Promise.all([
     call({
@@ -24,12 +24,12 @@ export async function getLendBorrowBalances(
       params: [ctx.address],
       abi: {
         constant: true,
-        inputs: [{ internalType: "address", name: "account", type: "address" }],
-        name: "collateral",
-        outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+        name: 'collateral',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
     }),
 
@@ -39,20 +39,20 @@ export async function getLendBorrowBalances(
       params: [ctx.address],
       abi: {
         constant: true,
-        inputs: [{ internalType: "address", name: "account", type: "address" }],
-        name: "remainingIssuableSynths",
+        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+        name: 'remainingIssuableSynths',
         outputs: [
-          { internalType: "uint256", name: "maxIssuable", type: "uint256" },
-          { internalType: "uint256", name: "alreadyIssued", type: "uint256" },
+          { internalType: 'uint256', name: 'maxIssuable', type: 'uint256' },
+          { internalType: 'uint256', name: 'alreadyIssued', type: 'uint256' },
           {
-            internalType: "uint256",
-            name: "totalSystemDebt",
-            type: "uint256",
+            internalType: 'uint256',
+            name: 'totalSystemDebt',
+            type: 'uint256',
           },
         ],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
     }),
 
@@ -62,45 +62,45 @@ export async function getLendBorrowBalances(
       params: [ctx.address],
       abi: {
         constant: true,
-        inputs: [{ internalType: "address", name: "account", type: "address" }],
-        name: "feesAvailable",
+        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+        name: 'feesAvailable',
         outputs: [
-          { internalType: "uint256", name: "", type: "uint256" },
-          { internalType: "uint256", name: "", type: "uint256" },
+          { internalType: 'uint256', name: '', type: 'uint256' },
+          { internalType: 'uint256', name: '', type: 'uint256' },
         ],
         payable: false,
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
     }),
-  ]);
+  ])
 
-  const lendAmount = BigNumber.from(suppliedRes.output);
+  const lendAmount = BigNumber.from(suppliedRes.output)
   const lendingBalance: Balance = {
     ...synthetixContract,
     amount: lendAmount,
     underlyings: [{ ...synthetixContract.underlyings[0], amount: lendAmount }],
-    category: "lend",
-  };
-  balances.push(lendingBalance);
+    category: 'lend',
+  }
+  balances.push(lendingBalance)
 
-  const borrowAmount = BigNumber.from(borrowedRes.output.alreadyIssued);
+  const borrowAmount = BigNumber.from(borrowedRes.output.alreadyIssued)
   const borrowBalance: Balance = {
     ...sUSD,
     amount: borrowAmount,
-    category: "borrow",
-  };
-  balances.push(borrowBalance);
+    category: 'borrow',
+  }
+  balances.push(borrowBalance)
 
-  const sUSDRewardAmount = BigNumber.from(feesAvailableRes.output[0]);
+  const sUSDRewardAmount = BigNumber.from(feesAvailableRes.output[0])
   const sUSDRewardBalance: Balance = {
     ...sUSD,
     amount: sUSDRewardAmount,
-    category: "reward",
-  };
-  balances.push(sUSDRewardBalance);
+    category: 'reward',
+  }
+  balances.push(sUSDRewardBalance)
 
-  const SNXRewardAmount = BigNumber.from(feesAvailableRes.output[1]);
+  const SNXRewardAmount = BigNumber.from(feesAvailableRes.output[1])
   const SNXRewardBalance: Balance = {
     ...synthetixContract,
     amount: SNXRewardAmount,
@@ -111,9 +111,9 @@ export async function getLendBorrowBalances(
         claimable: SNXRewardAmount,
       },
     ],
-    category: "reward",
-  };
-  balances.push(SNXRewardBalance);
+    category: 'reward',
+  }
+  balances.push(SNXRewardBalance)
 
-  return balances;
+  return balances
 }

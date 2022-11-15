@@ -1,7 +1,7 @@
-import { ethers } from "ethers";
+import { ethers } from 'ethers'
 
 export function fetchENSName(address: string) {
-  const provider = ethers.getDefaultProvider();
+  const provider = ethers.getDefaultProvider()
 
-  return provider.lookupAddress(address);
+  return provider.lookupAddress(address)
 }

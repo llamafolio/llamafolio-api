@@ -1,27 +1,27 @@
-import { PoolClient } from "pg";
-import format from "pg-format";
-import { PricedBalance, BasePricedBalance } from "@lib/adapter";
-import { bufToStr, strToBuf } from "@lib/buf";
-import { sliceIntoChunks } from "@lib/array";
-import { ContractStorage } from "@db/contracts";
+import { ContractStorage } from '@db/contracts'
+import { BasePricedBalance, PricedBalance } from '@lib/adapter'
+import { sliceIntoChunks } from '@lib/array'
+import { bufToStr, strToBuf } from '@lib/buf'
+import { PoolClient } from 'pg'
+import format from 'pg-format'
 
 // balances table share same fields as contracts for few reasons:
 // - no join
 // - references might be stale as we don't update balances when revalidating contracts
 export interface BalanceStorage extends ContractStorage {
-  from_address: Buffer;
-  amount: string;
-  price?: string;
-  price_timestamp?: string;
-  balance_usd?: string;
-  timestamp: string;
+  from_address: Buffer
+  amount: string
+  price?: string
+  price_timestamp?: string
+  balance_usd?: string
+  timestamp: string
 }
 
 export function fromStorage(balances: BalanceStorage[]) {
-  const res: (PricedBalance & { adapterId: string })[] = [];
-  const balanceByKey: { [key: string]: PricedBalance } = {};
-  const underlyings: BasePricedBalance[] = [];
-  const rewards: BasePricedBalance[] = [];
+  const res: (PricedBalance & { adapterId: string })[] = []
+  const balanceByKey: { [key: string]: PricedBalance } = {}
+  const underlyings: BasePricedBalance[] = []
+  const rewards: BasePricedBalance[] = []
 
   for (const balance of balances) {
     const c = {
@@ -40,53 +40,51 @@ export function fromStorage(balances: BalanceStorage[]) {
       price: balance.price ? parseFloat(balance.price) : undefined,
       priceTimestamp: balance.price_timestamp,
       amount: balance.amount,
-      balanceUSD: balance.balance_usd
-        ? parseFloat(balance.balance_usd)
-        : undefined,
+      balanceUSD: balance.balance_usd ? parseFloat(balance.balance_usd) : undefined,
       timestamp: balance.timestamp,
       ...balance.data,
-    };
+    }
 
-    const key = `${c.adapterId}#${c.chain}#${c.address}#${c.category}`;
+    const key = `${c.adapterId}#${c.chain}#${c.address}#${c.category}`
 
-    if (balance.type === "reward" && balance.parent) {
-      rewards.push(c);
-    } else if (balance.type === "underlying" && balance.parent) {
-      underlyings.push(c);
+    if (balance.type === 'reward' && balance.parent) {
+      rewards.push(c)
+    } else if (balance.type === 'underlying' && balance.parent) {
+      underlyings.push(c)
     } else {
-      balanceByKey[key] = c;
-      res.push(c);
+      balanceByKey[key] = c
+      res.push(c)
     }
   }
 
   // link children to their parents
   for (const reward of rewards) {
-    const key = `${reward.adapterId}#${reward.chain}#${reward.parent}#${reward.category}`;
-    const parent = balanceByKey[key];
+    const key = `${reward.adapterId}#${reward.chain}#${reward.parent}#${reward.category}`
+    const parent = balanceByKey[key]
     if (!parent) {
-      continue;
+      continue
     }
 
     if (!parent.rewards) {
-      parent.rewards = [];
+      parent.rewards = []
     }
-    parent.rewards.push(reward);
+    parent.rewards.push(reward)
   }
 
   for (const underlying of underlyings) {
-    const key = `${underlying.adapterId}#${underlying.chain}#${underlying.parent}#${underlying.category}`;
-    const parent = balanceByKey[key];
+    const key = `${underlying.adapterId}#${underlying.chain}#${underlying.parent}#${underlying.category}`
+    const parent = balanceByKey[key]
     if (!parent) {
-      continue;
+      continue
     }
 
     if (!parent.underlyings) {
-      parent.underlyings = [];
+      parent.underlyings = []
     }
-    parent.underlyings.push(underlying);
+    parent.underlyings.push(underlying)
   }
 
-  return res;
+  return res
 }
 
 export function toRow(balance: BalanceStorage) {
@@ -110,16 +108,11 @@ export function toRow(balance: BalanceStorage) {
     balance.balance_usd,
     balance.timestamp,
     balance.data,
-  ];
+  ]
 }
 
-export function toStorage(
-  balances: PricedBalance[],
-  adapterId: string,
-  fromAddress: string,
-  timestamp: Date
-) {
-  const res: BalanceStorage[] = [];
+export function toStorage(balances: PricedBalance[], adapterId: string, fromAddress: string, timestamp: Date) {
+  const res: BalanceStorage[] = []
 
   for (const balance of balances) {
     const {
@@ -140,7 +133,7 @@ export function toStorage(
       rewards,
       underlyings,
       ...data
-    } = balance;
+    } = balance
 
     const c = {
       from_address: strToBuf(fromAddress),
@@ -161,16 +154,16 @@ export function toStorage(
       balance_usd: balanceUSD,
       timestamp,
       // \\u0000 cannot be converted to text
-      data: JSON.parse(JSON.stringify(data).replace(/\\u0000/g, "")),
-    };
+      data: JSON.parse(JSON.stringify(data).replace(/\\u0000/g, '')),
+    }
 
-    res.push(c);
+    res.push(c)
 
     if (rewards && rewards.length > 0) {
       for (const reward of rewards) {
         res.push({
           from_address: c.from_address,
-          type: "reward",
+          type: 'reward',
           standard: reward.standard,
           name: reward.name,
           display_name: reward.displayName,
@@ -182,9 +175,7 @@ export function toStorage(
           adapter_id: adapterId,
           stable: reward.stable,
           price: reward.price,
-          price_timestamp: reward.timestamp
-            ? new Date(reward.timestamp)
-            : undefined,
+          price_timestamp: reward.timestamp ? new Date(reward.timestamp) : undefined,
           amount: reward.amount.toString(),
           balance_usd: reward.balanceUSD,
           timestamp,
@@ -193,7 +184,7 @@ export function toStorage(
           //   claimable,
           //   claimable_usd
           // }
-        });
+        })
       }
     }
 
@@ -201,7 +192,7 @@ export function toStorage(
       for (const underlying of underlyings) {
         res.push({
           from_address: c.from_address,
-          type: "underlying",
+          type: 'underlying',
           standard: underlying.standard,
           name: underlying.name,
           display_name: underlying.displayName,
@@ -213,31 +204,25 @@ export function toStorage(
           adapter_id: adapterId,
           stable: underlying.stable,
           price: underlying.price,
-          price_timestamp: underlying.timestamp
-            ? new Date(underlying.timestamp)
-            : undefined,
+          price_timestamp: underlying.timestamp ? new Date(underlying.timestamp) : undefined,
           amount: underlying.amount.toString(),
           balance_usd: underlying.balanceUSD,
           timestamp,
           parent: c.address,
-        });
+        })
       }
     }
   }
 
-  return res;
+  return res
 }
 
-export async function selectBalancesByFromAddress(
-  client: PoolClient,
-  fromAddress: string
-) {
-  const balancesRes = await client.query(
-    `select * from balances where from_address = $1::bytea;`,
-    [strToBuf(fromAddress)]
-  );
+export async function selectBalancesByFromAddress(client: PoolClient, fromAddress: string) {
+  const balancesRes = await client.query(`select * from balances where from_address = $1::bytea;`, [
+    strToBuf(fromAddress),
+  ])
 
-  return fromStorage(balancesRes.rows);
+  return fromStorage(balancesRes.rows)
 }
 
 export function insertBalances(
@@ -245,25 +230,23 @@ export function insertBalances(
   balances: PricedBalance[],
   adapterId: string,
   fromAddress: string,
-  timestamp: Date
+  timestamp: Date,
 ) {
-  const values = toStorage(balances, adapterId, fromAddress, timestamp).map(
-    toRow
-  );
+  const values = toStorage(balances, adapterId, fromAddress, timestamp).map(toRow)
 
   if (values.length === 0) {
-    return;
+    return
   }
 
   return Promise.all(
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          "INSERT INTO balances (from_address, type, standard, category, name, display_name, chain, address, symbol, decimals, adapter_id, stable, parent, price, price_timestamp, amount, balance_usd, timestamp, data) VALUES %L ON CONFLICT DO NOTHING;",
-          chunk
+          'INSERT INTO balances (from_address, type, standard, category, name, display_name, chain, address, symbol, decimals, adapter_id, stable, parent, price, price_timestamp, amount, balance_usd, timestamp, data) VALUES %L ON CONFLICT DO NOTHING;',
+          chunk,
         ),
-        []
-      )
-    )
-  );
+        [],
+      ),
+    ),
+  )
 }
