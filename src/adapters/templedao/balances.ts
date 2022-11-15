@@ -1,5 +1,5 @@
 import { BaseContext, Contract, Balance } from "@lib/adapter";
-import { Chain } from "@defillama/sdk/build/general";
+import { Chain } from "@lib/providers";
 import { call } from "@defillama/sdk/build/abi";
 import { abi } from "@lib/erc20";
 import { BigNumber } from "ethers";

@@ -1,10 +1,10 @@
 import { BaseContext, Contract, Balance } from "@lib/adapter";
-import { Chain } from "@defillama/sdk/build/general";
 import { call } from "@defillama/sdk/build/abi";
 import { abi } from "@lib/erc20";
 import { BigNumber } from "ethers";
 import { multicall } from "@lib/multicall";
 import { isNotNullish } from "@lib/type";
+import { Chain } from "@lib/providers";
 
 export async function getStakeBalances(
   ctx: BaseContext,

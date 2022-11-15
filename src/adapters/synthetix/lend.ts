@@ -1,4 +1,4 @@
-import { Chain } from "@defillama/sdk/build/general";
+import { Chain } from "@lib/providers";
 import { call } from "@defillama/sdk/build/abi";
 import { BigNumber } from "ethers";
 import { Token } from "@lib/token";

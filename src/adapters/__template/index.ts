@@ -1,4 +1,3 @@
-import { Chain } from "@defillama/sdk/build/general";
 import {
   Adapter,
   Balance,
@@ -6,6 +5,7 @@ import {
   Contract,
   GetBalancesHandler,
 } from "@lib/adapter";
+import { Chain } from "@lib/providers";
 
 export async function getStakeBalances(
   ctx: BaseContext,

@@ -1,9 +1,9 @@
 import { call } from "@defillama/sdk/build/abi";
-import { Chain } from "@defillama/sdk/build/general";
 import { Contract } from "@lib/adapter";
 import { range } from "@lib/array";
 import { getERC20Details, getERC20Details2 } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
+import { Chain } from "@lib/providers";
 import { BigNumber } from "ethers";
 
 export async function getPoolsContracts(chain: Chain, contract: Contract) {

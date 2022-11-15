@@ -1,7 +1,7 @@
-import { Chain } from "@defillama/sdk/build/general";
 import { BaseContext, Balance, Contract } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";
 import { BigNumber } from "ethers";
+import { Chain } from "@lib/providers";
 
 export async function getLendingRewardsBalances(
   ctx: BaseContext,

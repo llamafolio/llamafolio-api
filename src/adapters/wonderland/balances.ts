@@ -1,4 +1,4 @@
-import { Chain } from "@defillama/sdk/build/general";
+import { Chain } from "@lib/providers";
 import { Contract, Balance } from "@lib/adapter";
 import { BaseContext } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";

@@ -1,8 +1,8 @@
 import { multicall } from "@lib/multicall";
 import { BigNumber } from "ethers";
-import { Chain } from "@defillama/sdk/build/general";
 import { getERC20BalanceOf } from "@lib/erc20";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
+import { Chain } from "@lib/providers";
 
 export async function getLpBalances(
   ctx: BaseContext,

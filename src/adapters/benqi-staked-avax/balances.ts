@@ -1,8 +1,8 @@
-import { Chain } from "@defillama/sdk/build/general";
 import { BigNumber } from "ethers";
 import { Balance, Contract } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";
 import { BaseContext } from "@lib/adapter";
+import { Chain } from "@lib/providers";
 
 export async function getStakeBalances(
   ctx: BaseContext,

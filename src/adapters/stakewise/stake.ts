@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { Chain } from "@defillama/sdk/build/general";
+import { Chain } from "@lib/providers";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20BalanceOf } from "@lib/erc20";
 import { Token } from "@lib/token";

@@ -1,8 +1,8 @@
 import { BigNumber } from "ethers";
-import { Chain } from "@defillama/sdk/build/general";
 import { BaseContext, Balance, Contract } from "@lib/adapter";
 import { abi } from "@lib/erc20";
 import { call } from "@defillama/sdk/build/abi";
+import { Chain } from "@lib/providers";
 
 export async function getWStEthStakeBalances(
   ctx: BaseContext,

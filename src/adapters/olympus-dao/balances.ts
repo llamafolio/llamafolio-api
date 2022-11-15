@@ -1,9 +1,9 @@
-import { Chain } from "@defillama/sdk/build/general";
 import { Contract, Balance } from "@lib/adapter";
 import { BaseContext } from "@lib/adapter";
 import { abi } from "@lib/erc20";
 import { call } from "@defillama/sdk/build/abi";
 import { BigNumber } from "ethers/lib/ethers";
+import { Chain } from "@lib/providers";
 
 const OHM: Contract = {
   name: "Olympus",

@@ -1,4 +1,4 @@
-import { Chain } from "@defillama/sdk/build/general";
+import { Chain } from "@lib/providers";
 
 // Currently supported chains
 export const chains: Chain[] = [
