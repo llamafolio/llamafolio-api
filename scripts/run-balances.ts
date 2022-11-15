@@ -5,7 +5,9 @@ import pool from '../src/db/pool'
 import { Adapter, BaseContext } from '../src/lib/adapter'
 import { getPricedBalances } from '../src/lib/price'
 
-function help() {}
+function help() {
+  console.log('npm run {run-balances} {adapter} {address}')
+}
 
 async function main() {
   // argv[0]: ts-node
