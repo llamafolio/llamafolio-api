@@ -1,10 +1,11 @@
 import { ethers, BigNumber } from "ethers";
 import { multicall } from "@lib/multicall";
-import { Chain, providers } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import GaugeControllerAbi from "./abis/GaugeController.json";
 import { isNotNullish } from "@lib/type";
 import { getBalances } from "@lib/balance";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 const abi = {
   gauges: {

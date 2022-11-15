@@ -1,6 +1,6 @@
 import { call } from "@defillama/sdk/build/abi";
-import { Chain } from "@defillama/sdk/build/general";
 import { BaseContext, Contract, Balance } from "@lib/adapter";
+import { Chain } from "@lib/chains";
 import { abi, getERC20Details } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 import { BigNumber } from "ethers";

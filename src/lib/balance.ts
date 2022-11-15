@@ -1,10 +1,11 @@
 import { ethers } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import {  providers } from "@lib/providers";
 import { BaseContext, BaseContract, BaseBalance } from "@lib/adapter";
 import { Token } from "@lib/token";
 import { getERC20BalanceOf, abi as erc20Abi } from "@lib/erc20";
 import { isNotNullish } from "@lib/type";
 import { Call, multicall, MultiCallResult } from "@lib/multicall";
+import { Chain } from "@lib/chains";
 
 export async function getBalances(ctx: BaseContext, contracts: BaseContract[]) {
   const coins: Token[] = [];

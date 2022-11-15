@@ -1,10 +1,10 @@
 import { ethers, BigNumber } from "ethers";
-import { Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import { call } from "@defillama/sdk/build/abi";
+import { Chain } from "@lib/chains";
 
 const abi = {
   getReservesList: {

@@ -1,5 +1,4 @@
 import { ethers, BigNumber } from "ethers";
-import { providers, Chain } from "@defillama/sdk/build/general";
 import { multicall } from "@lib/multicall";
 import { Balance, BaseContext, Contract, RewardBalance } from "@lib/adapter";
 import {
@@ -10,6 +9,8 @@ import { Token } from "@lib/token";
 import ChefIncentivesControllerABI from "./abis/ChefIncentivesController.json";
 import { isNotNullish } from "@lib/type";
 import { range } from "@lib/array";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export type GetLendingPoolContractsParams = {
   chain: Chain;

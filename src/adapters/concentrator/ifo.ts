@@ -2,10 +2,10 @@
 
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { providers } from "@defillama/sdk/build/general";
 import ConcentratorIFOAbi from "./abis/IFO.json";
 import { getERC20Details } from "@lib/erc20";
 import { Balance } from "@lib/adapter";
+import { providers } from "@lib/providers";
 
 export async function getIFOBalances(ctx, chain) {
   const provider = providers["ethereum"];

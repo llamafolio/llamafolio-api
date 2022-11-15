@@ -1,8 +1,8 @@
 import { ethers } from "ethers";
 import fetch from "node-fetch";
 import { adapters } from "@adapters/index";
-import { providers } from "@defillama/sdk/build/general";
 import { Contract, ContractsConfig } from "@lib/adapter";
+import { providers } from "@lib/providers";
 
 function race(promise: Promise<any> | any, ms: number) {
   return Promise.race([

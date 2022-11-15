@@ -1,7 +1,8 @@
 import { BigNumber, ethers } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { providers } from "@lib/providers";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import StabilityPoolAbi from "./abis/StabilityPool.json";
+import { Chain } from "@lib/chains";
 
 export async function getFarmBalances(
   ctx: BaseContext,

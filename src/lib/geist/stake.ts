@@ -1,12 +1,13 @@
 import { multicall } from "@lib/multicall";
 import { ethers } from "ethers";
-import { providers, Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract, RewardBalance } from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import { getLendingPoolContracts as getAaveLendingPoolContracts } from "@lib/aave/v2/lending";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
 import { ContractsMap } from "@lib/map";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export type GetMultiFeeDistributionBalancesParams = {
   lendingPool: Contract;

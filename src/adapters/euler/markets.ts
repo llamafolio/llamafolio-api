@@ -1,11 +1,11 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
 import { getERC20Balances, getERC20Details } from "@lib/erc20";
 import EulerAbi from "./abis/Markets.json";
 import LensAbi from "./abis/Lens.json";
 import ETokenAbi from "./abis/eToken.json";
 import { Balance } from "@lib/adapter";
+import { providers } from "@lib/providers";
 
 export async function getPositions(ctx, chain, contracts): Promise<Balance[]> {
   const provider = providers[chain];

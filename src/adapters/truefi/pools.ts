@@ -1,4 +1,4 @@
-import { Chain } from "@defillama/sdk/build/general";
+import { Chain } from "@lib/chains";
 import { Contract } from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
 import { multicall } from "@lib/multicall";

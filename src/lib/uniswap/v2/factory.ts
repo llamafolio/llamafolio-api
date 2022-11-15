@@ -1,5 +1,4 @@
 import { ethers } from "ethers";
-import { providers, Chain } from "@defillama/sdk/build/general";
 import { Contract } from "@lib/adapter";
 import { multicall } from "@lib/multicall";
 import { getERC20Details } from "@lib/erc20";
@@ -8,6 +7,8 @@ import { isNotNullish } from "@lib/type";
 import { Category } from "@lib/category";
 import { range } from "@lib/array";
 import UniswapV2Factory from "./abis/UniswapV2Factory.json";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export type getPairsContractsParams = {
   chain: Chain;

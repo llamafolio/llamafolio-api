@@ -1,11 +1,12 @@
 import { BigNumber } from "ethers";
 import { ethers } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { providers } from "@lib/providers";
 import { Adapter, Balance, Contract, GetBalancesHandler } from "@lib/adapter";
 import abi from "./abi/hex.json";
 import { multicall } from "@lib/multicall";
 import { range } from "@lib/array";
 import { sumBN } from "@lib/math";
+import { Chain } from "@lib/chains";
 
 const HEX: Contract = {
   name: "HEX",

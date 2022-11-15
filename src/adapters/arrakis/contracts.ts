@@ -1,9 +1,9 @@
 import { multicall } from "@lib/multicall";
 import { ethers } from "ethers";
-import { providers } from "@defillama/sdk/build/general";
 import { Contract } from "@lib/adapter";
 import { getPairsDetails } from "@lib/uniswap/v2/factory";
 import FactoryAbi from "./abis/Factory.json";
+import { providers } from "@lib/providers";
 
 export async function getVaults(factoryArrakis: Contract) {
   const provider = providers[factoryArrakis.chain];
