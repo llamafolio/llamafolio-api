@@ -6,6 +6,7 @@
     "adapter": "ts-node -T scripts/run-adapter.ts",
     "create-adapter": "ts-node -T scripts/create-adapter.ts",
     "find-user": "ts-node -T scripts/find-user.ts",
+    "format": "prettier --ignore-path .gitignore --ignore-path .prettierignore '**/*.{md,json,js,ts}' --write",
     "test": "jest",
     "update-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build"
   },
@@ -22,7 +23,8 @@
     "millify": "^5.0.0",
     "node-fetch": "^2.6.2",
     "pg": "^8.7.3",
-    "pg-format": "^1.0.4"
+    "pg-format": "^1.0.4",
+    "prettier": "^2.7.1"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.101",
