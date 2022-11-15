@@ -1,37 +1,30 @@
-import { Chain } from "@defillama/sdk/build/general";
-import { call } from "@defillama/sdk/build/abi";
-import { BigNumber } from "ethers";
-import { Balance, BaseContext, Contract } from "@lib/adapter";
-import { abi, getERC20Details } from "@lib/erc20";
+import { Chain } from '@defillama/sdk/build/general'
+import { call } from '@defillama/sdk/build/abi'
+import { BigNumber } from 'ethers'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { abi, getERC20Details } from '@lib/erc20'
 
 export async function getGMXContracts(chain: Chain, contract?: Contract) {
-  const gmxStaker: Contract[] = [];
+  const gmxStaker: Contract[] = []
 
   if (!contract) {
-    console.log("Missing or incorrect contract");
+    console.log('Missing or incorrect contract')
 
-    return [];
+    return []
   }
 
   try {
-    const [
-      stakerGmxTrackerRes,
-      gmxRes,
-      wethRes,
-      stakerGmxFeesRes,
-      esGmxRes,
-      gmxVesterRes,
-    ] = await Promise.all([
+    const [stakerGmxTrackerRes, gmxRes, wethRes, stakerGmxFeesRes, esGmxRes, gmxVesterRes] = await Promise.all([
       call({
         chain,
         target: contract.address,
         params: [],
         abi: {
           inputs: [],
-          name: "stakedGmxTracker",
-          outputs: [{ internalType: "address", name: "", type: "address" }],
-          stateMutability: "view",
-          type: "function",
+          name: 'stakedGmxTracker',
+          outputs: [{ internalType: 'address', name: '', type: 'address' }],
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
 
@@ -41,10 +34,10 @@ export async function getGMXContracts(chain: Chain, contract?: Contract) {
         params: [],
         abi: {
           inputs: [],
-          name: "gmx",
-          outputs: [{ internalType: "address", name: "", type: "address" }],
-          stateMutability: "view",
-          type: "function",
+          name: 'gmx',
+          outputs: [{ internalType: 'address', name: '', type: 'address' }],
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
 
@@ -54,10 +47,10 @@ export async function getGMXContracts(chain: Chain, contract?: Contract) {
         params: [],
         abi: {
           inputs: [],
-          name: "weth",
-          outputs: [{ internalType: "address", name: "", type: "address" }],
-          stateMutability: "view",
-          type: "function",
+          name: 'weth',
+          outputs: [{ internalType: 'address', name: '', type: 'address' }],
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
 
@@ -67,10 +60,10 @@ export async function getGMXContracts(chain: Chain, contract?: Contract) {
         params: [],
         abi: {
           inputs: [],
-          name: "feeGmxTracker",
-          outputs: [{ internalType: "address", name: "", type: "address" }],
-          stateMutability: "view",
-          type: "function",
+          name: 'feeGmxTracker',
+          outputs: [{ internalType: 'address', name: '', type: 'address' }],
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
 
@@ -80,10 +73,10 @@ export async function getGMXContracts(chain: Chain, contract?: Contract) {
         params: [],
         abi: {
           inputs: [],
-          name: "esGmx",
-          outputs: [{ internalType: "address", name: "", type: "address" }],
-          stateMutability: "view",
-          type: "function",
+          name: 'esGmx',
+          outputs: [{ internalType: 'address', name: '', type: 'address' }],
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
 
@@ -93,23 +86,22 @@ export async function getGMXContracts(chain: Chain, contract?: Contract) {
         params: [],
         abi: {
           inputs: [],
-          name: "gmxVester",
-          outputs: [{ internalType: "address", name: "", type: "address" }],
-          stateMutability: "view",
-          type: "function",
+          name: 'gmxVester',
+          outputs: [{ internalType: 'address', name: '', type: 'address' }],
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
-    ]);
+    ])
 
-    const [stakerGmxTracker, gmx, weth, stakerGmxFees, esGmx, gmxVester] =
-      await Promise.all([
-        getERC20Details(chain, [stakerGmxTrackerRes.output]),
-        getERC20Details(chain, [gmxRes.output]),
-        getERC20Details(chain, [wethRes.output]),
-        getERC20Details(chain, [stakerGmxFeesRes.output]),
-        getERC20Details(chain, [esGmxRes.output]),
-        getERC20Details(chain, [gmxVesterRes.output]),
-      ]);
+    const [stakerGmxTracker, gmx, weth, stakerGmxFees, esGmx, gmxVester] = await Promise.all([
+      getERC20Details(chain, [stakerGmxTrackerRes.output]),
+      getERC20Details(chain, [gmxRes.output]),
+      getERC20Details(chain, [wethRes.output]),
+      getERC20Details(chain, [stakerGmxFeesRes.output]),
+      getERC20Details(chain, [esGmxRes.output]),
+      getERC20Details(chain, [gmxVesterRes.output]),
+    ])
 
     gmxStaker.push({
       chain,
@@ -119,42 +111,33 @@ export async function getGMXContracts(chain: Chain, contract?: Contract) {
       gmxVester: gmxVester[0],
       underlyings: [stakerGmxFees[0], gmx[0]],
       rewards: [esGmx[0], weth[0]],
-    });
+    })
 
-    return gmxStaker;
+    return gmxStaker
   } catch (error) {
-    console.log("Failed to get underlyied gmx contract");
+    console.log('Failed to get underlyied gmx contract')
 
-    return [];
+    return []
   }
 }
 
-export async function getGMXBalances(
-  ctx: BaseContext,
-  chain: Chain,
-  contracts: Contract[]
-) {
-  const contract = contracts[0];
-  const balances: Balance[] = [];
+export async function getGMXBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+  const contract = contracts[0]
+  const balances: Balance[] = []
 
   if (!contract || !contract.underlyings || !contract.rewards) {
-    console.log("Missing or incorrect contract");
+    console.log('Missing or incorrect contract')
 
-    return [];
+    return []
   }
 
   try {
-    const sbfGMX = contract.underlyings?.[0];
-    const gmx = contract.underlyings?.[1];
-    const esGMX = contract.rewards?.[0];
-    const native = contract.rewards?.[1];
+    const sbfGMX = contract.underlyings?.[0]
+    const gmx = contract.underlyings?.[1]
+    const esGMX = contract.rewards?.[0]
+    const native = contract.rewards?.[1]
 
-    const [
-      stakeGMXRes,
-      stakeEsGMXRes,
-      pendingesGMXRewardsRes,
-      pendingETHRewardsRes,
-    ] = await Promise.all([
+    const [stakeGMXRes, stakeEsGMXRes, pendingesGMXRewardsRes, pendingETHRewardsRes] = await Promise.all([
       call({
         chain,
         target: contract.address,
@@ -162,26 +145,26 @@ export async function getGMXBalances(
         abi: {
           inputs: [
             {
-              internalType: "address",
-              name: "",
-              type: "address",
+              internalType: 'address',
+              name: '',
+              type: 'address',
             },
             {
-              internalType: "address",
-              name: "",
-              type: "address",
+              internalType: 'address',
+              name: '',
+              type: 'address',
             },
           ],
-          name: "depositBalances",
+          name: 'depositBalances',
           outputs: [
             {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
+              internalType: 'uint256',
+              name: '',
+              type: 'uint256',
             },
           ],
-          stateMutability: "view",
-          type: "function",
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
 
@@ -192,26 +175,26 @@ export async function getGMXBalances(
         abi: {
           inputs: [
             {
-              internalType: "address",
-              name: "",
-              type: "address",
+              internalType: 'address',
+              name: '',
+              type: 'address',
             },
             {
-              internalType: "address",
-              name: "",
-              type: "address",
+              internalType: 'address',
+              name: '',
+              type: 'address',
             },
           ],
-          name: "depositBalances",
+          name: 'depositBalances',
           outputs: [
             {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
+              internalType: 'uint256',
+              name: '',
+              type: 'uint256',
             },
           ],
-          stateMutability: "view",
-          type: "function",
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
 
@@ -222,21 +205,21 @@ export async function getGMXBalances(
         abi: {
           inputs: [
             {
-              internalType: "address",
-              name: "_account",
-              type: "address",
+              internalType: 'address',
+              name: '_account',
+              type: 'address',
             },
           ],
-          name: "claimable",
+          name: 'claimable',
           outputs: [
             {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
+              internalType: 'uint256',
+              name: '',
+              type: 'uint256',
             },
           ],
-          stateMutability: "view",
-          type: "function",
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
 
@@ -247,33 +230,33 @@ export async function getGMXBalances(
         abi: {
           inputs: [
             {
-              internalType: "address",
-              name: "_account",
-              type: "address",
+              internalType: 'address',
+              name: '_account',
+              type: 'address',
             },
           ],
-          name: "claimable",
+          name: 'claimable',
           outputs: [
             {
-              internalType: "uint256",
-              name: "",
-              type: "uint256",
+              internalType: 'uint256',
+              name: '',
+              type: 'uint256',
             },
           ],
-          stateMutability: "view",
-          type: "function",
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
-    ]);
+    ])
 
-    const stakeGMX = BigNumber.from(stakeGMXRes.output);
-    const stakeEsGMX = BigNumber.from(stakeEsGMXRes.output);
-    const pendingesGMXRewards = BigNumber.from(pendingesGMXRewardsRes.output);
-    const pendingETHRewards = BigNumber.from(pendingETHRewardsRes.output);
+    const stakeGMX = BigNumber.from(stakeGMXRes.output)
+    const stakeEsGMX = BigNumber.from(stakeEsGMXRes.output)
+    const pendingesGMXRewards = BigNumber.from(pendingesGMXRewardsRes.output)
+    const pendingETHRewards = BigNumber.from(pendingETHRewardsRes.output)
 
     const gmxBalance: Balance = {
       chain,
-      category: "stake",
+      category: 'stake',
       address: contract.address,
       symbol: contract.symbol,
       decimals: contract.decimals,
@@ -283,43 +266,39 @@ export async function getGMXBalances(
         { ...esGMX, amount: pendingesGMXRewards },
         { ...native, amount: pendingETHRewards },
       ],
-    };
+    }
 
     const esGmxBalance: Balance = {
       chain,
-      category: "stake",
+      category: 'stake',
       address: esGMX.address,
       symbol: esGMX.symbol,
       decimals: esGMX.decimals,
       amount: stakeEsGMX,
       underlyings: [{ ...gmx, amount: stakeEsGMX }],
-    };
+    }
 
-    balances.push(gmxBalance, esGmxBalance);
+    balances.push(gmxBalance, esGmxBalance)
 
-    return balances;
+    return balances
   } catch (error) {
-    console.log("Failed to get gmx balance");
-    return [];
+    console.log('Failed to get gmx balance')
+    return []
   }
 }
 
-export async function getGMXVesterBalances(
-  ctx: BaseContext,
-  chain: Chain,
-  contracts: Contract[]
-) {
-  const contract = contracts[0];
-  const balances: Balance[] = [];
+export async function getGMXVesterBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+  const contract = contracts[0]
+  const balances: Balance[] = []
 
   if (!contract || !contract.underlyings || !contract.rewards) {
-    console.log("Missing or incorrect contract");
+    console.log('Missing or incorrect contract')
 
-    return [];
+    return []
   }
   try {
-    const gmxVester = contract.gmxVester;
-    const gmx = contract.underlyings[1];
+    const gmxVester = contract.gmxVester
+    const gmx = contract.underlyings[1]
 
     const [balanceOfRes, claimableRes] = await Promise.all([
       call({
@@ -334,35 +313,33 @@ export async function getGMXVesterBalances(
         target: gmxVester.address,
         params: [ctx.address],
         abi: {
-          inputs: [
-            { internalType: "address", name: "_account", type: "address" },
-          ],
-          name: "claimable",
-          outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-          stateMutability: "view",
-          type: "function",
+          inputs: [{ internalType: 'address', name: '_account', type: 'address' }],
+          name: 'claimable',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+          stateMutability: 'view',
+          type: 'function',
         },
       }),
-    ]);
+    ])
 
-    const balanceOf = BigNumber.from(balanceOfRes.output);
-    const claimable = BigNumber.from(claimableRes.output);
+    const balanceOf = BigNumber.from(balanceOfRes.output)
+    const claimable = BigNumber.from(claimableRes.output)
 
     balances.push({
       chain,
-      category: "vest",
+      category: 'vest',
       address: gmxVester.address,
       symbol: gmxVester.symbol,
       decimals: gmxVester.decimals,
       amount: balanceOf,
       underlyings: [{ ...gmx, amount: balanceOf }],
       rewards: [{ ...gmx, amount: claimable }],
-    });
+    })
 
-    return balances;
+    return balances
   } catch (error) {
-    console.log("Failed to get vester balance");
+    console.log('Failed to get vester balance')
 
-    return [];
+    return []
   }
 }
