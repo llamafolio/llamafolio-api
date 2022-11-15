@@ -89,6 +89,7 @@ export async function getFarmingBalances(
         const balance: Balance = {
           ...contracts[i],
           amount,
+          // TODO: fix typings
           underlyings: [{ ...contracts[i].underlyings?.[0], amount }],
           rewards: [
             contracts[i].chain === "bsc"
