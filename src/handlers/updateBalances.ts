@@ -1,71 +1,65 @@
-import { APIGatewayProxyHandler } from "aws-lambda";
-import format from "pg-format";
-import { strToBuf, isHex } from "@lib/buf";
-import pool from "@db/pool";
-import { groupContracts } from "@db/contracts";
-import { BaseContext, Contract } from "@lib/adapter";
-import { getPricedBalances } from "@lib/price";
-import { adapterById } from "@adapters/index";
-import { badRequest, serverError, success } from "@handlers/response";
-import { insertBalances } from "@db/balances";
-import {
-  getAllContractsInteractions,
-  getAllTokensInteractions,
-} from "@db/contracts";
-import { isNotNullish } from "@lib/type";
-import type { AdapterBalancesResponse } from "@handlers/getBalances";
-import { apiGatewayManagementApi } from "@handlers/apiGateway";
+import { adapterById } from '@adapters/index'
+import { insertBalances } from '@db/balances'
+import { groupContracts } from '@db/contracts'
+import { getAllContractsInteractions, getAllTokensInteractions } from '@db/contracts'
+import pool from '@db/pool'
+import { apiGatewayManagementApi } from '@handlers/apiGateway'
+import type { AdapterBalancesResponse } from '@handlers/getBalances'
+import { badRequest, serverError, success } from '@handlers/response'
+import { BaseContext, Contract } from '@lib/adapter'
+import { isHex, strToBuf } from '@lib/buf'
+import { getPricedBalances } from '@lib/price'
+import { isNotNullish } from '@lib/type'
+import { APIGatewayProxyHandler } from 'aws-lambda'
+import format from 'pg-format'
 
-export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
-  event,
-  context
-) => {
-  context.callbackWaitsForEmptyEventLoop = false; // !important to reuse pool
+export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false // !important to reuse pool
 
-  const { connectionId, address } = event;
+  const { connectionId, address } = event
   if (!address) {
-    return badRequest("Missing address parameter");
+    return badRequest('Missing address parameter')
   }
   if (!isHex(address)) {
-    return badRequest("Invalid address parameter, expected hex");
+    return badRequest('Invalid address parameter, expected hex')
   }
 
-  const ctx: BaseContext = { address };
+  const ctx: BaseContext = { address }
 
-  console.log("Update balances of address", ctx.address);
+  console.log('Update balances of address', ctx.address)
 
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
     // Early return if balances last update was < 1 minute ago
     const balancesRes = await client.query(
       `select timestamp from balances where from_address = $1::bytea order by timestamp desc limit 1;`,
-      [strToBuf(address)]
-    );
+      [strToBuf(address)],
+    )
 
     if (balancesRes.rows.length === 1) {
-      const lastUpdatedAt = new Date(balancesRes.rows[0].timestamp).getTime();
-      const now = new Date().getTime();
+      const lastUpdatedAt = new Date(balancesRes.rows[0].timestamp).getTime()
+      const now = new Date().getTime()
       // 1 minute delay
       if (now - lastUpdatedAt < 1 * 60 * 1000) {
-        console.log("Update adapters balances cache", {
+        console.log('Update adapters balances cache', {
           now,
           lastUpdatedAt,
           address,
-        });
+        })
 
         await apiGatewayManagementApi
           .postToConnection({
             ConnectionId: connectionId,
             Data: JSON.stringify({
-              event: "updateBalances",
+              event: 'updateBalances',
               updatedAt: new Date(lastUpdatedAt).toISOString(),
-              data: "cache",
+              data: 'cache',
             }),
           })
-          .promise();
+          .promise()
 
-        return success({});
+        return success({})
       }
     }
 
@@ -74,80 +68,76 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
     const [contracts, tokens] = await Promise.all([
       getAllContractsInteractions(client, ctx.address),
       getAllTokensInteractions(client, ctx.address),
-    ]);
+    ])
 
-    const contractsByAdapterId: { [key: string]: Contract[] } = {};
+    const contractsByAdapterId: { [key: string]: Contract[] } = {}
     for (const contract of contracts) {
       if (!contract.adapterId) {
-        console.error(`Missing adapterId in contract`, contract);
-        continue;
+        console.error(`Missing adapterId in contract`, contract)
+        continue
       }
       if (!contractsByAdapterId[contract.adapterId]) {
-        contractsByAdapterId[contract.adapterId] = [];
+        contractsByAdapterId[contract.adapterId] = []
       }
-      contractsByAdapterId[contract.adapterId].push(contract);
+      contractsByAdapterId[contract.adapterId].push(contract)
     }
-    contractsByAdapterId["wallet"] = tokens;
+    contractsByAdapterId['wallet'] = tokens
 
-    console.log(
-      "Interacted with protocols:",
-      Object.keys(contractsByAdapterId)
-    );
+    console.log('Interacted with protocols:', Object.keys(contractsByAdapterId))
 
     // Run adapters `getBalances` only with the contracts the user interacted with
     const adaptersBalances = await Promise.all(
       Object.keys(contractsByAdapterId)
         .map(async (adapterId) => {
           try {
-            const adapter = adapterById[adapterId];
+            const adapter = adapterById[adapterId]
             if (!adapter) {
-              console.error(`Could not find adapter with id`, adapterId);
-              return null;
+              console.error(`Could not find adapter with id`, adapterId)
+              return null
             }
 
-            const hrstart = process.hrtime();
+            const hrstart = process.hrtime()
 
-            const contracts =
-              groupContracts(contractsByAdapterId[adapterId]) || [];
-            const balancesConfig = await adapter.getBalances(ctx, contracts);
+            const contracts = groupContracts(contractsByAdapterId[adapterId]) || []
+            const balancesConfig = await adapter.getBalances(ctx, contracts)
 
-            const hrend = process.hrtime(hrstart);
+            const hrend = process.hrtime(hrstart)
 
             console.log(
               `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
               hrend[0],
-              hrend[1] / 1000000
-            );
+              hrend[1] / 1000000,
+            )
 
             // Tag balances with adapterId
             for (const balance of balancesConfig.balances) {
-              balance.adapterId = adapterId;
+              balance.adapterId = adapterId
             }
 
-            return balancesConfig.balances;
+            return balancesConfig.balances
           } catch (error) {
-            console.error(`[${adapterId}]: Failed to getBalances`, error);
-            return null;
+            console.error(`[${adapterId}]: Failed to getBalances`, error)
+            return null
           }
         })
-        .filter(isNotNullish)
-    );
+        .filter(isNotNullish),
+    )
 
     // Ungroup balances to make only 1 call to the price API
-    const balances = adaptersBalances.flat().filter(isNotNullish);
+    const balances = adaptersBalances.flat().filter(isNotNullish)
 
     // Filter out balances with invalid amounts
     const sanitizedBalances = balances.filter((balance) => {
       if (!balance.amount) {
-        console.error(`Missing balance amount`, balance);
-        return false;
+        console.error(`Missing balance amount`, balance)
+        return false
       }
 
       if (balance.underlyings) {
         for (const underlying of balance.underlyings) {
           if (!underlying.amount) {
-            console.error(`Missing underlying balance amount`, balance);
-            return false;
+            console.error(`Missing underlying balance amount`, balance)
+            return false
           }
         }
       }
@@ -155,88 +145,74 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (
       if (balance.rewards) {
         for (const reward of balance.rewards) {
           if (!reward.amount) {
-            console.error(`Missing reward balance amount`, balance);
-            return false;
+            console.error(`Missing reward balance amount`, balance)
+            return false
           }
         }
       }
 
-      return true;
-    });
+      return true
+    })
 
-    const hrstart = process.hrtime();
+    const hrstart = process.hrtime()
 
-    const pricedBalances = await getPricedBalances(sanitizedBalances);
+    const pricedBalances = await getPricedBalances(sanitizedBalances)
 
-    const hrend = process.hrtime(hrstart);
+    const hrend = process.hrtime(hrstart)
 
     console.log(
       `getPricedBalances ${sanitizedBalances.length} balances, found ${pricedBalances.length} balances in %ds %dms`,
       hrend[0],
-      hrend[1] / 1000000
-    );
+      hrend[1] / 1000000,
+    )
 
     // Group balances back by adapter
-    const pricedBalancesByAdapterId: { [key: string]: any[] } = {};
+    const pricedBalancesByAdapterId: { [key: string]: any[] } = {}
     for (const pricedBalance of pricedBalances) {
       if (!pricedBalancesByAdapterId[pricedBalance.adapterId]) {
-        pricedBalancesByAdapterId[pricedBalance.adapterId] = [];
+        pricedBalancesByAdapterId[pricedBalance.adapterId] = []
       }
-      pricedBalancesByAdapterId[pricedBalance.adapterId].push(pricedBalance);
+      pricedBalancesByAdapterId[pricedBalance.adapterId].push(pricedBalance)
     }
 
-    const now = new Date();
+    const now = new Date()
 
     // Update balances
-    await client.query("BEGIN");
+    await client.query('BEGIN')
 
     // Delete old balances
-    await client.query(
-      format(
-        "delete from balances where from_address = %L::bytea",
-        strToBuf(address)
-      ),
-      []
-    );
+    await client.query(format('delete from balances where from_address = %L::bytea', strToBuf(address)), [])
 
     // Insert new balances
     await Promise.all(
       Object.keys(pricedBalancesByAdapterId).map((adapterId) =>
-        insertBalances(
-          client,
-          pricedBalancesByAdapterId[adapterId],
-          adapterId,
-          address,
-          now
-        )
-      )
-    );
+        insertBalances(client, pricedBalancesByAdapterId[adapterId], adapterId, address, now),
+      ),
+    )
 
-    await client.query("COMMIT");
+    await client.query('COMMIT')
 
-    const data: AdapterBalancesResponse[] = Object.keys(
-      pricedBalancesByAdapterId
-    ).map((adapterId) => ({
+    const data: AdapterBalancesResponse[] = Object.keys(pricedBalancesByAdapterId).map((adapterId) => ({
       id: adapterId,
       data: pricedBalancesByAdapterId[adapterId],
-    }));
+    }))
 
     await apiGatewayManagementApi
       .postToConnection({
         ConnectionId: connectionId,
         Data: JSON.stringify({
-          event: "updateBalances",
+          event: 'updateBalances',
           updatedAt: now.toISOString(),
           data,
         }),
       })
-      .promise();
+      .promise()
 
-    return success({});
+    return success({})
   } catch (error) {
-    console.error("Failed to update balances", { error, address });
-    return serverError("Failed to update balances");
+    console.error('Failed to update balances', { error, address })
+    return serverError('Failed to update balances')
   } finally {
-    client.release(true);
+    client.release(true)
   }
-};
+}

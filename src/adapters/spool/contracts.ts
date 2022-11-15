@@ -1,28 +1,19 @@
-import { multicall } from "@lib/multicall";
-import { ethers, BigNumber } from "ethers";
-import { providers } from "@lib/providers";
-import { getERC20Balances, getERC20Details } from "@lib/erc20";
+import { providers } from '@lib/providers'
+import { ethers } from 'ethers'
 
-import ControllerAbi from "./abis/Controller.json";
-
+import ControllerAbi from './abis/Controller.json'
 
 export async function getPoolsContracts(spoolController) {
+  const provider = providers['ethereum']
+  const contract = new ethers.Contract(spoolController.address, ControllerAbi, provider)
 
-    const provider = providers["ethereum"]
-    const contract = new ethers.Contract(
-      spoolController.address,
-      ControllerAbi,
-      provider
-    );
+  const allStrategies = await contract.getAllStrategies()
+  const formattedPools = allStrategies.map((address, i) => ({
+    name: 'spool',
+    displayName: `Spool Pool`,
+    chain: 'ethereum',
+    address: address,
+  }))
 
-    const allStrategies = await contract.getAllStrategies()
-    const formattedPools = allStrategies.map((address, i) => ({
-      name: "spool",
-      displayName: `Spool Pool`,
-      chain: "ethereum",
-      address: address
-    }));
-
-    return formattedPools
-
+  return formattedPools
 }

@@ -1,12 +1,12 @@
-import { gql, request } from "graphql-request";
-import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
-import { getERC20BalanceOf } from "@lib/erc20";
-import { getUnderlyingBalances } from "@lib/uniswap/v2/pair";
+import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getERC20BalanceOf } from '@lib/erc20'
+import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
+import { gql, request } from 'graphql-request'
 
 async function getPoolsHighestVolume() {
-  const contracts: Contract[] = [];
+  const contracts: Contract[] = []
 
-  const url = "https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2";
+  const url = 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2'
 
   const query = gql`
     query pairsQuery {
@@ -24,66 +24,63 @@ async function getPoolsHighestVolume() {
         }
       }
     }
-  `;
+  `
 
-  const res = await request(url, query);
+  const res = await request(url, query)
 
   for (const pair of res.pairs) {
     if (!pair.id || !pair.token0?.id || !pair.token1?.id) {
-      continue;
+      continue
     }
 
     contracts.push({
-      chain: "ethereum",
+      chain: 'ethereum',
       address: pair.id.toLowerCase(),
-      name: "Uniswap V2",
-      symbol: "UNIV2",
+      name: 'Uniswap V2',
+      symbol: 'UNIV2',
       decimals: 18,
       underlyings: [
         {
-          chain: "ethereum",
+          chain: 'ethereum',
           address: pair.token0.id.toLowerCase(),
           symbol: pair.token0.symbol,
           decimals: parseInt(pair.token0.decimals),
         },
         {
-          chain: "ethereum",
+          chain: 'ethereum',
           address: pair.token1.id.toLowerCase(),
           symbol: pair.token1.symbol,
           decimals: parseInt(pair.token1.decimals),
         },
       ],
-    });
+    })
   }
 
-  return contracts;
+  return contracts
 }
 
 const getContracts = async () => {
-  const pairs = await getPoolsHighestVolume();
+  const pairs = await getPoolsHighestVolume()
 
   return {
     contracts: pairs,
     revalidate: 60 * 60,
-  };
-};
+  }
+}
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  contracts
-) => {
-  let lpBalances = await getERC20BalanceOf(ctx, "ethereum", contracts);
-  lpBalances = await getUnderlyingBalances("ethereum", lpBalances);
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  let lpBalances = await getERC20BalanceOf(ctx, 'ethereum', contracts)
+  lpBalances = await getUnderlyingBalances('ethereum', lpBalances)
 
   return {
-    balances: lpBalances.map((balance) => ({ ...balance, category: "farm" })),
-  };
-};
+    balances: lpBalances.map((balance) => ({ ...balance, category: 'farm' })),
+  }
+}
 
 const adapter: Adapter = {
-  id: "uniswap",
+  id: 'uniswap',
   getContracts,
   getBalances,
-};
+}
 
-export default adapter;
+export default adapter

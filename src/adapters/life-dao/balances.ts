@@ -1,29 +1,25 @@
-import { Contract, Balance } from "@lib/adapter";
-import { BaseContext } from "@lib/adapter";
-import { abi } from "@lib/erc20";
-import { call } from "@defillama/sdk/build/abi";
-import { BigNumber } from "ethers/lib/ethers";
-import { Chain } from "@lib/chains";
+import { call } from '@defillama/sdk/build/abi'
+import { Balance, Contract } from '@lib/adapter'
+import { BaseContext } from '@lib/adapter'
+import { Chain } from '@lib/chains'
+import { abi } from '@lib/erc20'
+import { BigNumber } from 'ethers/lib/ethers'
 
-export async function getStakeBalances(
-  ctx: BaseContext,
-  chain: Chain,
-  contract?: Contract
-) {
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
   if (!contract || !contract.underlyings?.[0]) {
-    return [];
+    return []
   }
 
-  const balances: Balance[] = [];
+  const balances: Balance[] = []
 
   const balanceOfRes = await call({
     chain,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
-  });
+  })
 
-  const amount = BigNumber.from(balanceOfRes.output);
+  const amount = BigNumber.from(balanceOfRes.output)
 
   const balance: Balance = {
     chain,
@@ -32,9 +28,9 @@ export async function getStakeBalances(
     symbol: contract.symbol,
     amount,
     underlyings: [{ ...contract.underlyings?.[0], amount }],
-    category: "stake",
-  };
-  balances.push(balance);
+    category: 'stake',
+  }
+  balances.push(balance)
 
-  return balances;
+  return balances
 }

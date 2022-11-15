@@ -1,19 +1,19 @@
-import { APIGatewayProxyHandler } from "aws-lambda";
-import { success } from "@handlers/response";
-import { getLabel } from "@llamafolio/labels";
+import { success } from '@handlers/response'
+import { getLabel } from '@llamafolio/labels'
+import { APIGatewayProxyHandler } from 'aws-lambda'
 
 /**
  * Get labels of given addresses
  */
 export const handler: APIGatewayProxyHandler = async (event) => {
-  const addresses = event.pathParameters?.address?.split(",") ?? [];
-  const data: { [key: string]: any } = {};
+  const addresses = event.pathParameters?.address?.split(',') ?? []
+  const data: { [key: string]: any } = {}
 
   for (const address of addresses) {
-    const label = getLabel(address.toLowerCase());
+    const label = getLabel(address.toLowerCase())
 
     if (label) {
-      data[address] = label;
+      data[address] = label
     }
   }
 
@@ -21,6 +21,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     {
       data,
     },
-    { maxAge: 10 * 60 }
-  );
-};
+    { maxAge: 10 * 60 },
+  )
+}

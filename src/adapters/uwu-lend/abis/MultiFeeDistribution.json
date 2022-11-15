@@ -158,18 +158,14 @@
     "type": "event"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "_rewardsToken", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_rewardsToken", "type": "address" }],
     "name": "addReward",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "name": "claimableRewards",
     "outputs": [
       {
@@ -186,18 +182,14 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "delegatee", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "delegatee", "type": "address" }],
     "name": "delegateExit",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
     "name": "earnedBalances",
     "outputs": [
       { "internalType": "uint256", "name": "total", "type": "uint256" },
@@ -222,9 +214,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "onBehalfOf", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "onBehalfOf", "type": "address" }],
     "name": "exitEarly",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -257,9 +247,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "_rewardsToken", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_rewardsToken", "type": "address" }],
     "name": "lastTimeRewardApplicable",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
@@ -283,9 +271,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
     "name": "lockedBalances",
     "outputs": [
       { "internalType": "uint256", "name": "total", "type": "uint256" },
@@ -380,9 +366,7 @@
   {
     "inputs": [],
     "name": "rewardToken",
-    "outputs": [
-      { "internalType": "contract IERC20", "name": "", "type": "address" }
-    ],
+    "outputs": [{ "internalType": "contract IERC20", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -431,9 +415,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address[]", "name": "_minters", "type": "address[]" }
-    ],
+    "inputs": [{ "internalType": "address[]", "name": "_minters", "type": "address[]" }],
     "name": "setMinters",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -460,9 +442,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "vault", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "vault", "type": "address" }],
     "name": "setTeamRewardVault",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -491,9 +471,7 @@
   {
     "inputs": [],
     "name": "stakingToken",
-    "outputs": [
-      { "internalType": "contract IERC20", "name": "", "type": "address" }
-    ],
+    "outputs": [{ "internalType": "contract IERC20", "name": "", "type": "address" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -512,9 +490,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -552,9 +528,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
     "name": "withdrawableBalance",
     "outputs": [
       { "internalType": "uint256", "name": "amount", "type": "uint256" },
