@@ -18,6 +18,8 @@ export interface BasePricedBalance extends BaseBalance {
   balanceUSD: number
   // price updated at
   timestamp: number
+  adapterId?: string
+  parent?: string
 }
 
 export interface Balance extends BaseBalance {
@@ -83,6 +85,8 @@ export interface BaseContract {
 
   // DefiLlama yields API identifier. Matches pool or pool_old
   yieldKey?: string
+  adapterId?: string
+  parent?: string
 }
 
 export interface Contract extends BaseContract {
