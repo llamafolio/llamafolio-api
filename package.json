@@ -6,7 +6,7 @@
     "adapter": "ts-node -T scripts/run-adapter.ts",
     "create-adapter": "ts-node -T scripts/create-adapter.ts",
     "find-user": "ts-node -T scripts/find-user.ts",
-    "format": "prettier --ignore-path .gitignore --ignore-path .prettierignore '**/*.{md,json,js,jsx,ts,tsx}' --write",
+    "format": "prettier --ignore-path .gitignore --ignore-path .prettierignore '**/*.{md,json,js,ts}' --write",
     "test": "jest",
     "update-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build"
   },
