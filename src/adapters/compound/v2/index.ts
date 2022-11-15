@@ -12,9 +12,16 @@ const COMPToken: Token = {
   coingeckoId: 'compound-governance-token',
 }
 
+const CompoundLens: Contract = {
+  chain: 'ethereum',
+  address: '0xdCbDb7306c6Ff46f77B349188dC18cEd9DF30299',
+  underlyings: [COMPToken],
+}
+
 const Comptroller: Contract = {
   chain: 'ethereum',
   address: '0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b',
+  underlyings: [COMPToken],
 }
 
 const getContracts = async () => {
@@ -27,16 +34,18 @@ const getContracts = async () => {
   })
 
   return {
-    contracts: { markets, Comptroller },
+    contracts: { markets, Comptroller, CompoundLens },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { markets, Comptroller }) => {
-  const marketsBalances = await getMarketsBalances(ctx, 'ethereum', markets)
-  const rewardsBalances = await getRewardsBalances('ethereum', marketsBalances, Comptroller)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { markets, Comptroller, CompoundLens }) => {
+  const [marketsBalances, rewardsBalances] = await Promise.all([
+    getMarketsBalances(ctx, 'ethereum', markets),
+    getRewardsBalances(ctx, 'ethereum', Comptroller, CompoundLens),
+  ])
 
   return {
-    balances: marketsBalances,
+    balances: [...marketsBalances, ...rewardsBalances],
   }
 }
 
