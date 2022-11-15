@@ -1,4 +1,4 @@
-import { Chain } from "@defillama/sdk/build/general";
+import { Chain } from "@lib/chains";
 import { BigNumber } from "ethers";
 import { Category } from "@lib/category";
 

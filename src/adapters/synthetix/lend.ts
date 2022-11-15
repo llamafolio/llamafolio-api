@@ -1,8 +1,8 @@
-import { Chain } from "@defillama/sdk/build/general";
 import { call } from "@defillama/sdk/build/abi";
 import { BigNumber } from "ethers";
 import { Token } from "@lib/token";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
+import { Chain } from "@lib/chains";
 
 export type GetLendBorrowBalancesParams = {
   synthetixContract: Contract;

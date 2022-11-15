@@ -5,7 +5,7 @@ import millify from "millify";
 
 import { Adapter, Balance, BaseContext } from "../src/lib/adapter";
 import { getPricedBalances } from "../src/lib/price";
-import { chains } from "../src/lib/chain";
+import { chains } from "../src/lib/chains";
 
 type CategoryBalances = {
   title: string;

@@ -1,9 +1,9 @@
 import { APIGatewayProxyHandler } from "aws-lambda";
 import { success } from "@handlers/response";
 import { adapters } from "@adapters/index";
-import { chains } from "@lib/chain";
 import { sum } from "@lib/math";
 import { chains as tokensByChain } from "@llamafolio/tokens";
+import { chains } from "@lib/chains";
 
 /**
  * Get stats on supported protocols, chains and tokens

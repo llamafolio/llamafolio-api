@@ -1,8 +1,8 @@
 import { BigNumber } from "ethers";
-import { Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20BalanceOf } from "@lib/erc20";
 import { Token } from "@lib/token";
+import { Chain } from "@lib/chains";
 
 export async function getStakeBalances(
   ctx: BaseContext,

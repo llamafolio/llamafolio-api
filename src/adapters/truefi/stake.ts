@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { Chain } from "@defillama/sdk/build/general";
+import { Chain } from "@lib/chains";
 import { Balance, BaseContext } from "@lib/adapter";
 import { abi } from "@lib/erc20";
 import { multicall } from "@lib/multicall";

@@ -1,10 +1,11 @@
 import { BigNumber, ethers } from "ethers";
-import { providers, Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext } from "@lib/adapter";
 import { multicall } from "@lib/multicall";
 import { Token } from "@lib/token";
 
 import MasterChefAbi from "./abis/MasterChef.json";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export type GetMasterChefPoolsInfoParams = {
   chain: Chain;

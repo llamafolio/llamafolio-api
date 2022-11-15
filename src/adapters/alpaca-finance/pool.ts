@@ -1,7 +1,7 @@
 import { call } from "@defillama/sdk/build/abi";
-import { Chain } from "@defillama/sdk/build/general";
 import { Contract } from "@lib/adapter";
 import { range } from "@lib/array";
+import { Chain } from "@lib/chains";
 import { getERC20Details, getERC20Details2 } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
 import { BigNumber } from "ethers";

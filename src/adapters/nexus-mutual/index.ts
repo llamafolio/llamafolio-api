@@ -1,5 +1,5 @@
 import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { providers } from "@lib/providers";
 import {
   Adapter,
   Contract,
@@ -8,6 +8,7 @@ import {
   GetBalancesHandler,
 } from "@lib/adapter";
 import abiNXM from "./abi/abi.json";
+import { Chain } from "@lib/chains";
 
 const NXM: Contract = {
   name: "NXM",

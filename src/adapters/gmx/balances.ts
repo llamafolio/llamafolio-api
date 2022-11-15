@@ -1,8 +1,9 @@
 import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { providers } from "@lib/providers";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20Balances } from "@lib/erc20";
 import GMXStakerAbi from "./abis/GMXStaker.json";
+import { Chain } from "@lib/chains";
 
 const GMXTokens = [
   "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",

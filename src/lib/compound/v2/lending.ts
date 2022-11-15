@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { providers } from "@lib/providers";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20Details, getERC20BalanceOf } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
@@ -7,6 +7,7 @@ import ComptrollerABI from "./abis/Comptroller.json";
 import { Token } from "@lib/token";
 import { isNotNullish } from "@lib/type";
 import { BN_TEN } from "@lib/math";
+import { Chain } from "@lib/chains";
 
 export interface GetMarketsContractsProps {
   comptrollerAddress: string;

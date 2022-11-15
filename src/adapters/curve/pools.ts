@@ -1,5 +1,4 @@
 import { ethers, BigNumber } from "ethers";
-import { Chain } from "@defillama/sdk/build/general";
 import {
   getERC20BalanceOf,
   getERC20Details,
@@ -9,6 +8,7 @@ import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { Calls, multicall } from "@lib/multicall";
 import { ETH_ADDR, Token } from "@lib/token";
 import { getBalancesCalls } from "@lib/balance";
+import { Chain } from "@lib/chains";
 
 const abi = {
   get_address: {
