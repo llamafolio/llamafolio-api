@@ -17,6 +17,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
   context.callbackWaitsForEmptyEventLoop = false // !important to reuse pool
 
   const { connectionId, address } = event
+
   if (!address) {
     return badRequest('Missing address parameter')
   }
