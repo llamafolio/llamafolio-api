@@ -191,7 +191,7 @@ async function main() {
   console.table(metadata);
 
   const endTime = Date.now();
-  console.log(`Completed in ${endTime - startTime}ms`);
+  console.log(`Completed in ${(endTime - startTime) / 1000} seconds`);
 }
 
 main()
