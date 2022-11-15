@@ -1,6 +1,14 @@
 import { Contract, GetBalancesHandler } from "@lib/adapter";
-import { getGLPContracts, getGLPBalances } from "../common/glp";
-import { getGMXContracts, getGMXBalances } from "../common/gmx";
+import {
+  getGLPContracts,
+  getGLPBalances,
+  getGLPVesterBalances,
+} from "../common/glp";
+import {
+  getGMXContracts,
+  getGMXBalances,
+  getGMXVesterBalances,
+} from "../common/gmx";
 
 const GMX_Router: Contract = {
   name: "GMX: Reward Router",
@@ -23,12 +31,20 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
   { GMX_Contracts_Arbitrum, GLP_Contracts_Arbitrum }
 ) => {
-  const [gmxBalances, glpBalances] = await Promise.all([
-    await getGMXBalances(ctx, "arbitrum", GMX_Contracts_Arbitrum),
-    await getGLPBalances(ctx, "arbitrum", GLP_Contracts_Arbitrum),
-  ]);
+  const [gmxBalances, glpBalances, gmxVesterBalances, glpVesterBalances] =
+    await Promise.all([
+      await getGMXBalances(ctx, "arbitrum", GMX_Contracts_Arbitrum),
+      await getGLPBalances(ctx, "arbitrum", GLP_Contracts_Arbitrum),
+      await getGMXVesterBalances(ctx, "arbitrum", GMX_Contracts_Arbitrum),
+      await getGLPVesterBalances(ctx, "arbitrum", GLP_Contracts_Arbitrum),
+    ]);
 
   return {
-    balances: [...gmxBalances, ...glpBalances],
+    balances: [
+      ...gmxBalances,
+      ...glpBalances,
+      ...gmxVesterBalances,
+      ...glpVesterBalances,
+    ],
   };
 };
