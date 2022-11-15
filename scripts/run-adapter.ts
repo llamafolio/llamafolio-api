@@ -136,7 +136,7 @@ async function main() {
         address: balance.address,
         category: balance.category,
         symbol: balance.symbol,
-        balance: millify(balance.amount.div(decimals).toNumber()),
+        balance: millify(balance.amount.div(decimals.toString()).toNumber()),
         balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
         yield: `${yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + '%' : '-'}`,
         il: `${yieldObject !== undefined ? yieldObject?.ilRisk : '-'}`,
@@ -151,7 +151,7 @@ async function main() {
           .map((reward) => {
             const decimals = reward.decimals ? 10 ** reward.decimals : 1
 
-            return `${millify(reward.amount.div(decimals).toNumber())} ${reward.symbol}`
+            return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
           })
           .join(' + ')
       }
@@ -161,7 +161,7 @@ async function main() {
           .map((underlying) => {
             const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
 
-            return `${millify(underlying.amount.div(decimals).toNumber())} ${underlying.symbol}`
+            return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
           })
           .join(' + ')
       }
