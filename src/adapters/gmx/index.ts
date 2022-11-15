@@ -1,33 +1,25 @@
-import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
-
-import { getStakeBalances } from './balances'
-
-const glpStaker: Contract = {
-  name: 'sGLP',
-  displayName: 'GLP Staker',
-  chain: 'arbitrum',
-  address: '0x1addd80e6039594ee970e5872d247bf0414c8903',
-}
-
-const gmxStaker: Contract = {
-  name: 'sGMX',
-  displayName: 'GMX Staker',
-  chain: 'arbitrum',
-  address: '0x908c4d94d34924765f1edc22a1dd098397c59dd4',
-}
+import * as arbitrum from '@adapters/gmx/arbitrum'
+import * as avax from '@adapters/gmx/avax'
+import { Adapter, GetBalancesHandler } from '@lib/adapter'
 
 const getContracts = async () => {
+  const [avaxGMX, arbitrumGMX] = await Promise.all([avax.getContracts(), arbitrum.getContracts()])
+
   return {
-    contracts: { stake: [glpStaker, gmxStaker] },
-    revalidate: 60 * 60,
+    contracts: { ...avaxGMX.contracts, ...arbitrumGMX.contracts },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { stake }) => {
-  const balances = await getStakeBalances(ctx, 'arbitrum', stake || [])
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const [avaxGMXBalances, arbitrumGMXBalances] = await Promise.all([
+    avax.getBalances(ctx, contracts),
+    arbitrum.getBalances(ctx, contracts),
+  ])
 
   return {
-    balances,
+    ...avaxGMXBalances,
+    ...arbitrumGMXBalances,
+    balances: [...avaxGMXBalances.balances, ...arbitrumGMXBalances.balances],
   }
 }
 
