@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+
 import { LabelSource } from '../src/labels'
 import { fetchENSName } from '../src/labels/ens'
 import { fetchLlamaFolioLabel } from '../src/labels/llamafolio'
@@ -9,11 +11,13 @@ interface Label {
   type: string
 }
 
-function help() {}
+function help() {
+  console.log('npm run find-user {adapter} {address}')
+}
 
 async function main() {
   // argv[0]: ts-node
-  // argv[1]: update-balances.ts
+  // argv[1]: find-user.ts
   // argv[2]: adapter
   // argv[3]: address
   if (process.argv.length < 3) {

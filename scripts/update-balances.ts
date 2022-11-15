@@ -10,7 +10,9 @@ import { strToBuf } from '../src/lib/buf'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
 
-function help() {}
+function help() {
+  console.log('npm run update-balances {address}')
+}
 
 async function main() {
   // argv[0]: ts-node

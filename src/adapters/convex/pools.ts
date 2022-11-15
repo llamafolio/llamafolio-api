@@ -1,4 +1,5 @@
 import { providers } from '@defillama/sdk/build/general'
+import { BaseContext } from '@lib/adapter'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { BigNumber, ethers } from 'ethers'
@@ -62,10 +63,10 @@ export async function getAllPools() {
   return formattedPools
 }
 
-export async function getPoolBalances(ctx, chain, contracts) {
+export async function getPoolBalances(ctx: BaseContext, chain: string, contracts: any[]) {
   contracts = contracts.slice(2) //remove booster and locker
 
-  const addresses = contracts.map((r) => r.crvRewards)
+  //const addresses = contracts.map((r) => r.crvRewards)
   const provider = providers[chain]
 
   let calls = []
@@ -187,7 +188,7 @@ export async function getPoolBalances(ctx, chain, contracts) {
       const pool = new ethers.Contract(contracts[i].crvRewards, PoolAbi, provider)
 
       if (extraRewards[i] > 0) {
-        const extraRewardsAddresses = []
+        //const extraRewardsAddresses = []
         for (let d = 0; d < extraRewards[i]; d++) {
           const poolReward = new ethers.Contract(await pool.extraRewards(d), RewardPoolAbi, provider)
 
@@ -232,12 +233,12 @@ export async function getCVXRatio(provider) {
 
   const CVX_EMISSION_CLIFF_DISTANCE = 1e5
   const CVX_EMISSION_TOTAL_CLIFFS = 1e3
-  const CVX_MAX_SUPPLY = 1e8
-  const CVX_DECIMALS = 1e18
+  //const CVX_MAX_SUPPLY = 1e8
+  //const CVX_DECIMALS = 1e18
   const token = new ethers.Contract(CVX, ERC20Abi, provider)
   const SUPPLY = (await token.totalSupply()) / 10 ** 18
   const currentCliff = SUPPLY / CVX_EMISSION_CLIFF_DISTANCE
-  const remainingCvxUntilMaxSupply = CVX_MAX_SUPPLY - SUPPLY
+  //const remainingCvxUntilMaxSupply = CVX_MAX_SUPPLY - SUPPLY
 
   if (currentCliff > CVX_EMISSION_TOTAL_CLIFFS) {
     return [0, 1] //cvx rewards will be 0

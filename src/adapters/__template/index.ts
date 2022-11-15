@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 import { Chain } from '@defillama/sdk/build/general'
 import { Adapter, Balance, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 

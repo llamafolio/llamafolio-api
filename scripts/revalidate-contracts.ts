@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+
 import path from 'path'
 import format from 'pg-format'
 
@@ -5,7 +7,9 @@ import { insertContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter } from '../src/lib/adapter'
 
-function help() {}
+function help() {
+  console.log('npm run revalidate-contracts {adapter} {address}')
+}
 
 async function main() {
   // argv[0]: ts-node

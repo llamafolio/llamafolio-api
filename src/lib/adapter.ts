@@ -1,4 +1,3 @@
-import { Chain } from '@defillama/sdk/build/general'
 import { Category } from '@lib/category'
 import { BigNumber } from 'ethers'
 

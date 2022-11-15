@@ -36,7 +36,7 @@ export async function getMultiFeeDistributionBalances(
       multiFeeDistribution.withdrawableBalance(ctx.address),
     ])
 
-  let [stakingToken, rewardToken] = await getERC20Details('ethereum', [stakingTokenAddress, rewardTokenAddress])
+  const [stakingToken, rewardToken] = await getERC20Details('ethereum', [stakingTokenAddress, rewardTokenAddress])
   stakingToken = await getUnderlyingsContract(stakingToken)
 
   const tokens = claimableRewards.map((res: any) => res.token)

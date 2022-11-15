@@ -1,7 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 
-function help() {}
+function help() {
+  console.log('npm run create-adapter {adapter_name}')
+}
 
 async function main() {
   // argv[0]: ts-node
