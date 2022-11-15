@@ -1,6 +1,6 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { Chain, providers } from "@lib/providers";
 import { getERC20Balances, getERC20Details } from "@lib/erc20";
 
 import ControllerAbi from "./abis/Controller.json";

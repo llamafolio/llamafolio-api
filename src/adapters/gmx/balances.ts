@@ -1,5 +1,5 @@
 import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { Chain, providers } from "@lib/providers";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20Balances } from "@lib/erc20";
 import GMXStakerAbi from "./abis/GMXStaker.json";

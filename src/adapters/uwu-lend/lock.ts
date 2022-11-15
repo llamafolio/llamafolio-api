@@ -1,5 +1,4 @@
 import { ethers } from "ethers";
-import { providers, Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
@@ -8,6 +7,7 @@ import {
   getUnderlyingBalances,
   getUnderlyingsContract,
 } from "@lib/uniswap/v2/pair";
+import { Chain, providers } from "@lib/providers";
 
 export type GetMultiFeeDistributionBalancesParams = {
   multiFeeDistributionAddress: string;

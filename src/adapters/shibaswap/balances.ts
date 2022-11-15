@@ -1,6 +1,6 @@
 import { ethers, BigNumber } from "ethers";
 import { Contract, BaseContext } from "@lib/adapter";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { Chain, providers } from "@lib/providers";
 import { getERC20Balances, getERC20Details } from "@lib/erc20";
 import { getUnderlyingBalances } from "@lib/uniswap/v2/pair";
 import { Token } from "@lib/token";

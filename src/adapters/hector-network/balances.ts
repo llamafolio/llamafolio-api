@@ -1,8 +1,8 @@
-import { Chain } from "@defillama/sdk/build/general";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";
 import { BigNumber } from "ethers";
 import { abi } from "@lib/erc20";
+import { Chain } from "@lib/providers";
 
 const Helper: Contract = {
   name: "TORCurve Helper",

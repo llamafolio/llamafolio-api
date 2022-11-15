@@ -1,6 +1,6 @@
 import { BigNumber } from "ethers";
 import { ethers } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { Chain, providers } from "@lib/providers";
 import { Adapter, Balance, Contract, GetBalancesHandler } from "@lib/adapter";
 import abi from "./abi/hex.json";
 import { multicall } from "@lib/multicall";

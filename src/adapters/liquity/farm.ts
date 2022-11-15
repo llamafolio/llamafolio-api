@@ -1,5 +1,5 @@
 import { BigNumber, ethers } from "ethers";
-import { Chain, providers } from "@defillama/sdk/build/general";
+import { Chain, providers } from "@lib/providers";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import StabilityPoolAbi from "./abis/StabilityPool.json";
 
