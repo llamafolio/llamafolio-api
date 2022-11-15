@@ -3,6 +3,8 @@ import { Token } from "@lib/token";
 import {
   getMarketsBalances,
   getMarketsContracts,
+  getHealthFactor,
+  BalanceWithExtraProps,
 } from "@lib/compound/v2/lending";
 import { getRewardsBalances } from "../common/rewards";
 
@@ -50,8 +52,14 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
     getRewardsBalances(ctx, "ethereum", Comptroller, CompoundLens),
   ]);
 
+  const healthFactor = await getHealthFactor(
+    marketsBalances as BalanceWithExtraProps[]
+  );
+
   return {
     balances: [...marketsBalances, ...rewardsBalances],
+    ethereum: {
+      healthFactor,
+    },
   };
 };
-

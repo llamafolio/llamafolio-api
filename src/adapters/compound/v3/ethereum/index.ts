@@ -1,4 +1,5 @@
 import { Contract, GetBalancesHandler } from "@lib/adapter";
+import { BalanceWithExtraProps, getHealthFactor } from "@lib/compound/v2/lending";
 import { Token } from "@lib/token";
 import { getAssetsContracts, getLendBorrowBalances } from "../common/lend";
 import { getRewardBalances } from "../common/rewards";
@@ -41,7 +42,14 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
       getRewardBalances(ctx, "ethereum", CompoundRewards, CompoundUSDCv3),
     ]);
 
+    const healthFactor = await getHealthFactor(lendBorrowBalances as BalanceWithExtraProps [])
+    console.log(healthFactor);
+    
+
   return {
     balances: [...stakeBalances, ...lendBorrowBalances, ...rewardsBalances],
+    ethereum: {
+      healthFactor
+    }
   };
 };
