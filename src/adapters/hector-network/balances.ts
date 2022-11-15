@@ -3,7 +3,12 @@ import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";
 import { BigNumber } from "ethers";
 import { abi } from "@lib/erc20";
-import { getRatioTokens } from "./helper";
+
+const Helper: Contract = {
+  name: "TORCurve Helper",
+  address: "0x2cFC70B2c114De258F05069c8f8416f6215C4A68",
+  chain: "fantom",
+};
 
 export async function getStakeBalances(
   ctx: BaseContext,
@@ -43,7 +48,7 @@ export async function getStakeBalances(
     chain,
     address: contract.address,
     symbol: contract.symbol,
-    decimals: 9,
+    decimals: contract.decimals,
     amount,
     underlyings: [{ ...contract.underlyings?.[0], amount }],
     category: "stake",
@@ -70,54 +75,74 @@ export async function getFarmingBalances(
 
   const balances: Balance[] = [];
 
-  const balanceOfRes = await call({
-    chain,
-    target: contract.address,
-    params: [ctx.address],
-    abi: {
-      inputs: [{ internalType: "address", name: "wallet", type: "address" }],
-      name: "calWithdrawAndEarned",
-      outputs: [
-        {
-          internalType: "uint256",
-          name: "_torWithdrawAmount",
-          type: "uint256",
-        },
-        {
-          internalType: "uint256",
-          name: "_daiWithdrawAmount",
-          type: "uint256",
-        },
-        {
-          internalType: "uint256",
-          name: "_usdcWithdrawAmount",
-          type: "uint256",
-        },
-        {
-          internalType: "uint256",
-          name: "_earnedRewardAmount",
-          type: "uint256",
-        },
-      ],
-      stateMutability: "view",
-      type: "function",
-    },
-  });
+  const [balanceOfRes, shareRes] = await Promise.all([
+    call({
+      chain,
+      target: contract.address,
+      params: [ctx.address],
+      abi: {
+        inputs: [{ internalType: "address", name: "wallet", type: "address" }],
+        name: "calWithdrawAndEarned",
+        outputs: [
+          {
+            internalType: "uint256",
+            name: "_torWithdrawAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "_daiWithdrawAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "_usdcWithdrawAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "_earnedRewardAmount",
+            type: "uint256",
+          },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    }),
+
+    call({
+      chain,
+      target: Helper.address,
+      params: [],
+      abi: {
+        inputs: [],
+        name: "getTorAndDaiAndUsdc",
+        outputs: [
+          { internalType: "uint256", name: "torAmount", type: "uint256" },
+          { internalType: "uint256", name: "daiAmount", type: "uint256" },
+          { internalType: "uint256", name: "usdcAmount", type: "uint256" },
+        ],
+        stateMutability: "view",
+        type: "function",
+      },
+    }),
+  ]);
 
   const amount = BigNumber.from(balanceOfRes.output._torWithdrawAmount);
   const rewardsBalanceOf = BigNumber.from(
     balanceOfRes.output._earnedRewardAmount
   );
 
-  const shares = await getRatioTokens("fantom");
+  const TORAmount = BigNumber.from(shareRes.output.torAmount);
+  const DAIAmount = BigNumber.from(shareRes.output.daiAmount);
+  const USDCAmount = BigNumber.from(shareRes.output.usdcAmount);
+  const underlyingAmounts = [TORAmount, DAIAmount, USDCAmount];
 
-  /**
-   * div by the same amount of mul we've choosen on the helper
-   */
+  const totalToken = TORAmount.add(DAIAmount).add(USDCAmount);
 
   const underlyings = curveContract.underlyings?.map((token, i) => ({
     ...token,
-    amount: amount.mul(shares[i]).div(10 ** 8),
+    amount: amount.mul(underlyingAmounts[i]).div(totalToken),
   }));
 
   const balance: Balance = {
