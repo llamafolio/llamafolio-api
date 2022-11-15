@@ -344,9 +344,7 @@
   },
   {
     "constant": false,
-    "inputs": [
-      { "internalType": "uint256", "name": "maxIterations", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "maxIterations", "type": "uint256" }],
     "name": "_processPendingActions",
     "outputs": [
       { "internalType": "bool", "name": "finished", "type": "bool" },
@@ -416,9 +414,7 @@
   },
   {
     "constant": false,
-    "inputs": [
-      { "internalType": "address", "name": "masterAddress", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "masterAddress", "type": "address" }],
     "name": "changeMasterAddress",
     "outputs": [],
     "payable": false,
@@ -520,9 +516,7 @@
       }
     ],
     "name": "contractStakersArray",
-    "outputs": [
-      { "internalType": "address[]", "name": "_stakers", "type": "address[]" }
-    ],
+    "outputs": [{ "internalType": "address[]", "name": "_stakers", "type": "address[]" }],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -647,18 +641,14 @@
     "constant": true,
     "inputs": [],
     "name": "master",
-    "outputs": [
-      { "internalType": "contract INXMMaster", "name": "", "type": "address" }
-    ],
+    "outputs": [{ "internalType": "contract INXMMaster", "name": "", "type": "address" }],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": false,
-    "inputs": [
-      { "internalType": "uint256", "name": "iterations", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "iterations", "type": "uint256" }],
     "name": "migratePendingUnstakesToNewLockTime",
     "outputs": [],
     "payable": false,
@@ -667,9 +657,7 @@
   },
   {
     "constant": false,
-    "inputs": [
-      { "internalType": "uint256", "name": "maxIterations", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "maxIterations", "type": "uint256" }],
     "name": "processPendingActions",
     "outputs": [{ "internalType": "bool", "name": "finished", "type": "bool" }],
     "payable": false,
@@ -678,9 +666,7 @@
   },
   {
     "constant": false,
-    "inputs": [
-      { "internalType": "uint256", "name": "maxIterations", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "maxIterations", "type": "uint256" }],
     "name": "processPendingActionsReturnLeft",
     "outputs": [
       { "internalType": "bool", "name": "finished", "type": "bool" },
@@ -778,9 +764,7 @@
   },
   {
     "constant": true,
-    "inputs": [
-      { "internalType": "address", "name": "staker", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "staker", "type": "address" }],
     "name": "stakerContractCount",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
@@ -821,22 +805,16 @@
   },
   {
     "constant": true,
-    "inputs": [
-      { "internalType": "address", "name": "staker", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "staker", "type": "address" }],
     "name": "stakerContractsArray",
-    "outputs": [
-      { "internalType": "address[]", "name": "", "type": "address[]" }
-    ],
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
   },
   {
     "constant": true,
-    "inputs": [
-      { "internalType": "address", "name": "staker", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "staker", "type": "address" }],
     "name": "stakerDeposit",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
@@ -845,9 +823,7 @@
   },
   {
     "constant": true,
-    "inputs": [
-      { "internalType": "address", "name": "stakerAddress", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "stakerAddress", "type": "address" }],
     "name": "stakerMaxWithdrawable",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
@@ -856,9 +832,7 @@
   },
   {
     "constant": true,
-    "inputs": [
-      { "internalType": "address", "name": "staker", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "staker", "type": "address" }],
     "name": "stakerReward",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "payable": false,
@@ -881,9 +855,7 @@
     "constant": true,
     "inputs": [],
     "name": "token",
-    "outputs": [
-      { "internalType": "contract NXMToken", "name": "", "type": "address" }
-    ],
+    "outputs": [{ "internalType": "contract NXMToken", "name": "", "type": "address" }],
     "payable": false,
     "stateMutability": "view",
     "type": "function"
@@ -961,9 +933,7 @@
   },
   {
     "constant": false,
-    "inputs": [
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
     "name": "withdraw",
     "outputs": [],
     "payable": false,
@@ -972,9 +942,7 @@
   },
   {
     "constant": false,
-    "inputs": [
-      { "internalType": "address", "name": "stakerAddress", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "stakerAddress", "type": "address" }],
     "name": "withdrawReward",
     "outputs": [],
     "payable": false,

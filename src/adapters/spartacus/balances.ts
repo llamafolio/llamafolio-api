@@ -1,30 +1,26 @@
-import { BaseContext, Contract, Balance } from "@lib/adapter";
-import { call } from "@defillama/sdk/build/abi";
-import { abi } from "@lib/erc20";
-import { BigNumber } from "ethers";
-import { multicall } from "@lib/multicall";
-import { isNotNullish } from "@lib/type";
-import { Chain } from "@lib/chains";
+import { call } from '@defillama/sdk/build/abi'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Chain } from '@lib/chains'
+import { abi } from '@lib/erc20'
+import { multicall } from '@lib/multicall'
+import { isNotNullish } from '@lib/type'
+import { BigNumber } from 'ethers'
 
-export async function getStakeBalances(
-  ctx: BaseContext,
-  chain: Chain,
-  contract?: Contract
-) {
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
   if (!contract || !contract.underlyings?.[0]) {
-    return [];
+    return []
   }
 
-  const balances: Balance[] = [];
+  const balances: Balance[] = []
 
   const balanceOfRes = await call({
     chain,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
-  });
+  })
 
-  const amount = BigNumber.from(balanceOfRes.output);
+  const amount = BigNumber.from(balanceOfRes.output)
 
   const balance: Balance = {
     chain,
@@ -33,41 +29,37 @@ export async function getStakeBalances(
     decimals: 9,
     amount,
     underlyings: [{ ...contract.underlyings?.[0], amount }],
-    category: "stake",
-  };
+    category: 'stake',
+  }
 
-  balances.push(balance);
+  balances.push(balance)
 
-  return balances;
+  return balances
 }
 
-export async function getBondBalances(
-  ctx: BaseContext,
-  chain: Chain,
-  contracts: Contract[]
-) {
-  const balances: Balance[] = [];
+export async function getBondBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+  const balances: Balance[] = []
 
   const calls = contracts.map((contract) => ({
     target: contract.address,
     params: [ctx.address],
-  }));
+  }))
 
   const [vestingBalanceOfRes, pendingBalanceOfRes] = await Promise.all([
     multicall({
       chain,
       calls,
       abi: {
-        inputs: [{ internalType: "address", name: "", type: "address" }],
-        name: "bondInfo",
+        inputs: [{ internalType: 'address', name: '', type: 'address' }],
+        name: 'bondInfo',
         outputs: [
-          { internalType: "uint256", name: "payout", type: "uint256" },
-          { internalType: "uint256", name: "vesting", type: "uint256" },
-          { internalType: "uint256", name: "lastBlock", type: "uint256" },
-          { internalType: "uint256", name: "pricePaid", type: "uint256" },
+          { internalType: 'uint256', name: 'payout', type: 'uint256' },
+          { internalType: 'uint256', name: 'vesting', type: 'uint256' },
+          { internalType: 'uint256', name: 'lastBlock', type: 'uint256' },
+          { internalType: 'uint256', name: 'pricePaid', type: 'uint256' },
         ],
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
     }),
 
@@ -75,28 +67,22 @@ export async function getBondBalances(
       chain,
       calls,
       abi: {
-        inputs: [
-          { internalType: "address", name: "_depositor", type: "address" },
-        ],
-        name: "pendingPayoutFor",
-        outputs: [
-          { internalType: "uint256", name: "pendingPayout_", type: "uint256" },
-        ],
-        stateMutability: "view",
-        type: "function",
+        inputs: [{ internalType: 'address', name: '_depositor', type: 'address' }],
+        name: 'pendingPayoutFor',
+        outputs: [{ internalType: 'uint256', name: 'pendingPayout_', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
       },
     }),
-  ]);
+  ])
 
   return contracts
     .map((contract, i) => {
       if (!contract.underlyings?.[0] || !vestingBalanceOfRes[i].success) {
-        return;
+        return
       }
 
-      const vestingAmount = BigNumber.from(
-        vestingBalanceOfRes[i].output.payout
-      );
+      const vestingAmount = BigNumber.from(vestingBalanceOfRes[i].output.payout)
 
       const balance: Balance = {
         chain,
@@ -110,22 +96,22 @@ export async function getBondBalances(
             amount: vestingAmount,
           },
         ],
-        category: "vest",
-      };
+        category: 'vest',
+      }
 
       // rewards
       if (pendingBalanceOfRes[i].success && contract.rewards?.[0]) {
-        const pendingBalance = BigNumber.from(pendingBalanceOfRes[i].output);
+        const pendingBalance = BigNumber.from(pendingBalanceOfRes[i].output)
 
         balance.rewards = [
           {
             ...contract.rewards?.[0],
             amount: pendingBalance,
           },
-        ];
+        ]
       }
 
-      return balance;
+      return balance
     })
-    .filter(isNotNullish);
+    .filter(isNotNullish)
 }

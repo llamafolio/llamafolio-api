@@ -1,8 +1,4 @@
-import { multicall } from "@lib/multicall";
-import { ethers, BigNumber } from "ethers";
-import { providers } from "@lib/providers";
-import { getERC20Balances, getERC20Details } from "@lib/erc20";
-
+import { multicall } from '@lib/multicall'
 
 //
 // Genesis Spool Vaults Contract Addresses
@@ -22,37 +18,32 @@ import { getERC20Balances, getERC20Details } from "@lib/erc20";
 //https://etherscan.io/address/0xe140bb5f424a53e0687bfc10f6845a5672d7e242#writeProxyContract​
 
 export async function getPoolsBalances(ctx, chain, contracts) {
-
-  let calls = contracts.map((contract) => {
+  const calls = contracts.map((contract) => {
     return {
       params: [],
-      target: contract.address
+      target: contract.address,
     }
   })
 
   const strategyUnderlyingsRes = await multicall({
-    chain: "ethereum",
+    chain: 'ethereum',
     calls: calls,
     abi: {
-        "inputs": [],
-        "name": "underlying",
-        "outputs": [
-          {
-            "internalType": "contract IERC20",
-            "name": "",
-            "type": "address"
-          }
-        ],
-        "stateMutability": "view",
-        "type": "function"
-      },
-  });
+      inputs: [],
+      name: 'underlying',
+      outputs: [
+        {
+          internalType: 'contract IERC20',
+          name: '',
+          type: 'address',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+  })
 
-  const strategyUnderlyings = strategyUnderlyingsRes
-    .filter((res) => res.success)
-    .map((res) => res.output);
+  const strategyUnderlyings = strategyUnderlyingsRes.filter((res) => res.success).map((res) => res.output)
 
-    console.log(strategyUnderlyings, 'strategyUnderlyingsRes')
-
-
+  console.log(strategyUnderlyings, 'strategyUnderlyingsRes')
 }

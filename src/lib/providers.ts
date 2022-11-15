@@ -1,5 +1,5 @@
-import { providers as ethersProviders } from "ethers";
-import { Chain, chains } from "@lib/chains";
+import { Chain, chains } from '@lib/chains'
+import { providers as ethersProviders } from 'ethers'
 
 function createProvider(name: string, rpcs: string[], chainId: number) {
   return new ethersProviders.FallbackProvider(
@@ -10,13 +10,12 @@ function createProvider(name: string, rpcs: string[], chainId: number) {
       }),
       priority: i,
     })),
-    1
-  );
+    1,
+  )
 }
 
-export const providers: { [chain in Chain]: ethersProviders.BaseProvider } =
-  Object.assign({});
+export const providers: { [chain in Chain]: ethersProviders.BaseProvider } = Object.assign({})
 
 for (const chain of chains) {
-  providers[chain.id] = createProvider(chain.id, chain.rpcUrl, chain.chainId);
+  providers[chain.id] = createProvider(chain.id, chain.rpcUrl, chain.chainId)
 }
