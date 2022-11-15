@@ -41,7 +41,7 @@ export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
   return pricesRes.json()
 }
 
-export async function getPricedBalances(balances: Balance[]): Promise<(Balance | PricedBalance)[]> {
+export async function getPricedBalances(balances: Balance[]): Promise<PricedBalance[]> {
   // Filter empty balances
   balances = balances.filter((balance) => balance.amount.gt(0) || (balance as RewardBalance).claimable?.gt(0))
 
@@ -75,25 +75,25 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
     const key = getTokenKey(balance as Token)
     if (!key) {
       console.log('Failed to get price token key for balance', balance)
-      return balance
+      return balance as PricedBalance
     }
 
     const price = prices.coins[key]
     if (price === undefined) {
       console.log(`Failed to get price on Defillama API for ${key}`)
-      return balance
+      return balance as PricedBalance
     }
 
     const decimals = balance.decimals || price.decimals
     if (decimals === undefined) {
       console.log(`Failed to get decimals for ${key}`)
-      return balance
+      return balance as PricedBalance
     }
 
     return {
       ...price,
       ...balance,
-      priceTimestamp: price.timestamp ? new Date(price.timestamp * 1000) : undefined,
+      timestamp: price.timestamp,
       balanceUSD: mulPrice(balance.amount, decimals, price.price),
       claimableUSD: (balance as RewardBalance).claimable
         ? mulPrice((balance as RewardBalance).claimable || BN_ZERO, decimals, price.price)
@@ -101,11 +101,12 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
     }
   }
 
-  const pricedBalances: (Balance | PricedBalance)[] = balances.map((balance) => {
+  const pricedBalances: PricedBalance[] = balances.map((balance) => {
     if (balance.rewards) {
       const pricedRewards = balance.rewards.map(getPricedBalance)
       balance.rewards = pricedRewards
     }
+
     if (balance.underlyings) {
       const pricedUnderlyings = balance.underlyings.map(getPricedBalance)
       return {

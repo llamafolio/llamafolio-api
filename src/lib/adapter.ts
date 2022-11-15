@@ -16,10 +16,10 @@ export interface BaseBalance extends BaseContract {
 export interface BasePricedBalance extends BaseBalance {
   price: number
   balanceUSD: number
+  claimableUSD?: number
+
   // price updated at
   timestamp: number
-  adapterId?: string
-  parent?: string
 }
 
 export interface Balance extends BaseBalance {
@@ -30,6 +30,8 @@ export interface Balance extends BaseBalance {
   // ex: Uniswap Pair -> [token0, token1]
   underlyings?: BaseBalance[]
   lock?: Lock
+  parent?: string
+  adapterId?: string
 }
 
 export interface RewardBalance extends Balance {

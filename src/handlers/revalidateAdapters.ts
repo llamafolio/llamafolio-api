@@ -62,10 +62,12 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
 
   const client = await pool.connect()
 
-  const adapter = adapters.find((adapter) => adapter.id === event.adapterId)
+  const { adapterId } = event
+
+  const adapter = adapters.find((adapter) => adapter.id === adapterId)
   if (!adapter) {
-    console.error(`Failed to revalidate adapter contracts, could not find adapter with id: ${event.adapterId}`)
-    return serverError(`Failed to revalidate adapter contracts, could not find adapter with id: ${event.adapterId}`)
+    console.error(`Failed to revalidate adapter contracts, could not find adapter with id: ${adapterId}`)
+    return serverError(`Failed to revalidate adapter contracts, could not find adapter with id: ${adapterId}`)
   }
 
   const config = await adapter.getContracts()
