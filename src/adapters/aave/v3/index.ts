@@ -1,66 +1,48 @@
-import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
-import { getLendingBalances } from "./balances";
+import * as arbitrum from '@adapters/aave/v3/arbitrum'
+import * as avax from '@adapters/aave/v3/avax'
+import * as fantom from '@adapters/aave/v3/fantom'
+import * as polygon from '@adapters/aave/v3/polygon'
+import { Adapter, GetBalancesHandler } from '@lib/adapter'
 
-const contracts: Contract[] = [
-  {
-    name: "poolAvax",
-    displayName: "Pool Avalanche",
-    chain: "avax",
-    address: "0x794a61358D6845594F94dc1DB02A252b5b4814aD",
-    poolDataProvider: "0x69fa688f1dc47d4b5d8029d5a35fb7a548310654",
-  },
-  {
-    name: "poolOptimism",
-    displayName: "Pool Optimism",
-    chain: "optimism",
-    address: "0x794a61358D6845594F94dc1DB02A252b5b4814aD",
-    poolDataProvider: "0x69fa688f1dc47d4b5d8029d5a35fb7a548310654",
-  },
-  {
-    name: "poolPolygon",
-    displayName: "Pool Polygon",
-    chain: "polygon",
-    address: "0x794a61358D6845594F94dc1DB02A252b5b4814aD",
-    poolDataProvider: "0x69fa688f1dc47d4b5d8029d5a35fb7a548310654",
-  },
-  {
-    name: "poolFantom",
-    displayName: "Pool Fantom",
-    chain: "fantom",
-    address: "0x794a61358D6845594F94dc1DB02A252b5b4814aD",
-    poolDataProvider: "0x69fa688f1dc47d4b5d8029d5a35fb7a548310654",
-  },
-  {
-    name: "poolArbitrum",
-    displayName: "Pool Arbitrum",
-    chain: "arbitrum",
-    address: "0x794a61358D6845594F94dc1DB02A252b5b4814aD",
-    poolDataProvider: "0x69fa688f1dc47d4b5d8029d5a35fb7a548310654",
-  },
-];
-
-const getContracts = () => {
-  return {
-    contracts: contracts,
-    revalidate: 60 * 60,
-  };
-};
-
-const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  contracts
-) => {
-  let balances = await getLendingBalances(ctx, contracts);
+const getContracts = async () => {
+  const [arbitrumContracts, avaxContracts, fantomContracts, polygonContracts] = await Promise.all([
+    arbitrum.getContracts(),
+    avax.getContracts(),
+    fantom.getContracts(),
+    polygon.getContracts(),
+  ])
 
   return {
-    balances,
-  };
-};
+    contracts: {
+      ...arbitrumContracts.contracts,
+      ...avaxContracts.contracts,
+      ...fantomContracts.contracts,
+      ...polygonContracts.contracts,
+    },
+  }
+}
+
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const [arbitrumBalances, avaxBalances, fantomBalances, polygonBalances] = await Promise.all([
+    arbitrum.getBalances(ctx, contracts),
+    avax.getBalances(ctx, contracts),
+    fantom.getBalances(ctx, contracts),
+    polygon.getBalances(ctx, contracts),
+  ])
+
+  return {
+    ...arbitrumBalances,
+    ...avaxBalances,
+    ...fantomBalances,
+    ...polygonBalances,
+    balances: [...avaxBalances.balances, ...fantomBalances.balances, ...polygonBalances.balances],
+  }
+}
 
 const adapter: Adapter = {
-  id: "aave-v3",
+  id: 'aave-v3',
   getContracts,
   getBalances,
-};
+}
 
-export default adapter;
+export default adapter

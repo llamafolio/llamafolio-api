@@ -36,6 +36,7 @@ provider:
     PGDATABASE: ${file(./env.js):PGDATABASE}
     PGPASSWORD: ${file(./env.js):PGPASSWORD}
     PGPORT: ${file(./env.js):PGPORT}
+    LLAMANODES_API_KEY: ${file(./env.js):LLAMANODES_API_KEY}
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
