@@ -114,7 +114,6 @@ export async function getContractsInfos(
         totalSupply,
         underlyings: [underlyings[i]],
       };
-      // TODO: fix typings
       contracts.push(contract);
     }
   }
