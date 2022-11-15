@@ -1,4 +1,4 @@
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 // Currently supported chains
 export const chains: Chain[] = [

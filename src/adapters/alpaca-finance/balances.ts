@@ -2,7 +2,7 @@ import { multicall } from "@lib/multicall";
 import { Balance, Contract, BaseContext } from "@lib/adapter";
 import { BigNumber } from "ethers/lib/ethers";
 import { abi } from "@lib/erc20";
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 const FairLaunch: Contract = {
   name: "fairlaunchContractAddress",

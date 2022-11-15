@@ -1,6 +1,4 @@
-import { multicall } from "@lib/multicall";
-import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@lib/providers";
+import { BigNumber } from "ethers";
 import { getERC20Balances, getERC20Details } from "@lib/erc20";
 
 

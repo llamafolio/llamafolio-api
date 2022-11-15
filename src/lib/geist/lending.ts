@@ -9,7 +9,8 @@ import { Token } from "@lib/token";
 import ChefIncentivesControllerABI from "./abis/ChefIncentivesController.json";
 import { isNotNullish } from "@lib/type";
 import { range } from "@lib/array";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export type GetLendingPoolContractsParams = {
   chain: Chain;

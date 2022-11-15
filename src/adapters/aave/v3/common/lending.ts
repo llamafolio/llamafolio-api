@@ -3,7 +3,7 @@ import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { getERC20BalanceOf, getERC20Details } from "@lib/erc20";
 import { Token } from "@lib/token";
 import { call, multiCall } from "@defillama/sdk/build/abi";
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export async function getLendingPoolContracts(
   chain: Chain,

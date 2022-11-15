@@ -1,6 +1,6 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
 import { getERC20Balances, getERC20Details } from "@lib/erc20";
 
 import MasterChefAbi from "./abis/MasterChef.json";

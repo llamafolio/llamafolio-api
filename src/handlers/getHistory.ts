@@ -1,6 +1,6 @@
 import format from "pg-format";
 import { APIGatewayProxyHandler } from "aws-lambda";
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 import { strToBuf, bufToStr, isHex } from "@lib/buf";
 import pool from "@db/pool";
 import { badRequest, serverError, success } from "@handlers/response";

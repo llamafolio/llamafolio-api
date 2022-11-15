@@ -1,10 +1,10 @@
 import { BigNumber } from "ethers";
-import { Chain } from "@lib/providers";
 import { multicall } from "@lib/multicall";
 import { Balance, BaseBalance, BaseContext } from "@lib/adapter";
 import { Token } from "@lib/token";
 import { getToken } from "@llamafolio/tokens";
 import { isNotNullish } from "@lib/type";
+import { Chain } from "@lib/chains";
 
 export const abi = {
   balanceOf: {

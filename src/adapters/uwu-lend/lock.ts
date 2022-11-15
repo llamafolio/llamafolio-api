@@ -7,7 +7,8 @@ import {
   getUnderlyingBalances,
   getUnderlyingsContract,
 } from "@lib/uniswap/v2/pair";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export type GetMultiFeeDistributionBalancesParams = {
   multiFeeDistributionAddress: string;

@@ -1,4 +1,4 @@
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 import { BigNumber } from "ethers";
 import { Category } from "@lib/category";
 

@@ -1,5 +1,5 @@
 import { BigNumber } from "ethers";
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import { multicall } from "@lib/multicall";
 import { PoolSupply } from "./pools";

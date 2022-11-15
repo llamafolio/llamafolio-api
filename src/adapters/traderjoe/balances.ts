@@ -1,4 +1,4 @@
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 import { BaseContext } from "@lib/adapter";
 import { BigNumber } from "ethers";
 import { Contract, Balance } from "@lib/adapter";

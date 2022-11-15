@@ -6,7 +6,8 @@ import { Token } from "@lib/token";
 import { getLendingPoolContracts as getAaveLendingPoolContracts } from "@lib/aave/v2/lending";
 import MultiFeeDistributionABI from "./abis/MultiFeeDistribution.json";
 import { ContractsMap } from "@lib/map";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export type GetMultiFeeDistributionBalancesParams = {
   lendingPool: Contract;

@@ -2,7 +2,8 @@ import { ethers, BigNumber } from "ethers";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import LockerABI from "./abis/Locker.json";
 import FeeDistributorAbi from "./abis/FeeDistributor.json";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export const lockerContract: Contract = {
   chain: "ethereum",

@@ -2,7 +2,7 @@ import { BigNumber } from "ethers";
 import { Balance, Contract } from "@lib/adapter";
 import { call } from "@defillama/sdk/build/abi";
 import { BaseContext } from "@lib/adapter";
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export async function getStakeBalances(
   ctx: BaseContext,

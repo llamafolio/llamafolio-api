@@ -1,4 +1,4 @@
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export interface Contract {
   chain: Chain;

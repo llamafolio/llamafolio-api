@@ -2,7 +2,7 @@ import { multicall } from "@lib/multicall";
 import { BigNumber } from "ethers";
 import { getERC20BalanceOf } from "@lib/erc20";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export async function getLpBalances(
   ctx: BaseContext,

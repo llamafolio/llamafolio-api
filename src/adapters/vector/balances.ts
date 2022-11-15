@@ -1,7 +1,8 @@
 import { multicall } from "@lib/multicall";
 import { ethers, BigNumber } from "ethers";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
+import { Chain } from "@lib/chains";
 
 import LockerAbi from "./abis/Locker.json";
 

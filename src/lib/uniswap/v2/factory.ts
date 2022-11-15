@@ -7,7 +7,8 @@ import { isNotNullish } from "@lib/type";
 import { Category } from "@lib/category";
 import { range } from "@lib/array";
 import UniswapV2Factory from "./abis/UniswapV2Factory.json";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export type getPairsContractsParams = {
   chain: Chain;

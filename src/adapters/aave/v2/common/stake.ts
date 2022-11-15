@@ -1,8 +1,8 @@
 import { call } from "@defillama/sdk/build/abi";
 import { BaseContext, Contract, Balance } from "@lib/adapter";
+import { Chain } from "@lib/chains";
 import { abi, getERC20Details } from "@lib/erc20";
 import { multicall } from "@lib/multicall";
-import { Chain } from "@lib/providers";
 import { BigNumber } from "ethers";
 
 const AAVE: Contract = {

@@ -4,7 +4,8 @@ import { Balance, BaseContext, Contract } from "@lib/adapter";
 import GaugeControllerAbi from "./abis/GaugeController.json";
 import { isNotNullish } from "@lib/type";
 import { getBalances } from "@lib/balance";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 const abi = {
   gauges: {

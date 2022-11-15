@@ -1,11 +1,12 @@
 import { ethers } from "ethers";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
 import { Adapter, Balance, Contract, GetBalancesHandler } from "@lib/adapter";
 import { Token } from "@lib/token";
 import { getERC20BalanceOf } from "@lib/erc20";
 import { chains as tokensByChain } from "@llamafolio/tokens";
 import { isNotNullish } from "@lib/type";
 import { ContractsMap } from "@lib/map";
+import { Chain } from "@lib/chains";
 
 const getContracts = () => {
   const contracts: Contract[] = [];

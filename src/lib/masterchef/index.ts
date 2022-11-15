@@ -4,7 +4,8 @@ import { multicall } from "@lib/multicall";
 import { Token } from "@lib/token";
 
 import MasterChefAbi from "./abis/MasterChef.json";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export type GetMasterChefPoolsInfoParams = {
   chain: Chain;

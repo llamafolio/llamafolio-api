@@ -5,7 +5,7 @@ import {
   Contract,
   GetBalancesHandler,
 } from "@lib/adapter";
-import { Chain } from "@lib/providers";
+import { Chain } from "@lib/chains";
 
 export async function getStakeBalances(
   ctx: BaseContext,

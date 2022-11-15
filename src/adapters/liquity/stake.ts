@@ -1,7 +1,8 @@
 import { BigNumber, ethers } from "ethers";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
 import { Balance, BaseContext, Contract } from "@lib/adapter";
 import LQTYStakingAbi from "./abis/LQTYStaking.json";
+import { Chain } from "@lib/chains";
 
 export async function getStakeBalances(
   ctx: BaseContext,

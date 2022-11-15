@@ -1,12 +1,13 @@
 import { ethers, BigNumber } from "ethers";
 import { Contract, BaseContext } from "@lib/adapter";
-import { Chain, providers } from "@lib/providers";
+import { providers } from "@lib/providers";
 import { getERC20Balances, getERC20Details } from "@lib/erc20";
 import { getUnderlyingBalances } from "@lib/uniswap/v2/pair";
 import { Token } from "@lib/token";
 
 import LockerAbi from "./abis/Locker.json";
 import StakerAbi from "./abis/Staker.json";
+import { Chain } from "@lib/chains";
 
 const bone: Token = {
   chain: "ethereum",
