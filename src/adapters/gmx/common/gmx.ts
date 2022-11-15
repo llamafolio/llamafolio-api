@@ -350,7 +350,7 @@ export async function getGMXVesterBalances(
 
     balances.push({
       chain,
-      category: "farm",
+      category: "vest",
       address: gmxVester.address,
       symbol: gmxVester.symbol,
       decimals: gmxVester.decimals,

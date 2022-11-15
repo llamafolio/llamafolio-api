@@ -306,7 +306,7 @@ export async function getGLPVesterBalances(
 
     balances.push({
       chain,
-      category: "farm",
+      category: "vest",
       address: glpVester.address,
       symbol: glpVester.symbol,
       decimals: glpVester.decimals,
