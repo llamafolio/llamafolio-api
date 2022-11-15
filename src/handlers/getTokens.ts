@@ -1,7 +1,7 @@
-import { APIGatewayProxyHandler } from "aws-lambda";
-import { success } from "@handlers/response";
-import { Token } from "@lib/token";
-import { getToken } from "@llamafolio/tokens";
+import { success } from '@handlers/response'
+import { Token } from '@lib/token'
+import { getToken } from '@llamafolio/tokens'
+import { APIGatewayProxyHandler } from 'aws-lambda'
 
 /**
  * Get tokens of given addresses
@@ -10,30 +10,30 @@ import { getToken } from "@llamafolio/tokens";
  * (Chain 'ethereum' is used by default if no chain is specified)
  */
 export const handler: APIGatewayProxyHandler = async (event) => {
-  const chainAddresses = event.pathParameters?.address?.split(",") ?? [];
-  const data: { [key: string]: Token } = {};
+  const chainAddresses = event.pathParameters?.address?.split(',') ?? []
+  const data: { [key: string]: Token } = {}
 
   for (const chainAddress of chainAddresses) {
-    const split = chainAddress.split(":");
-    let chain = "ethereum";
-    let address: string | undefined;
+    const split = chainAddress.split(':')
+    let chain = 'ethereum'
+    let address: string | undefined
 
     // chain or address
     if (split.length === 1) {
-      if (split[0].startsWith("0x")) {
-        address = split[0];
+      if (split[0].startsWith('0x')) {
+        address = split[0]
       } else {
-        chain = split[0];
+        chain = split[0]
       }
     } else {
-      chain = split[0];
-      address = split[1];
+      chain = split[0]
+      address = split[1]
     }
 
-    const token = getToken(chain, address?.toLowerCase()) as Token;
+    const token = getToken(chain, address?.toLowerCase()) as Token
 
     if (token) {
-      data[chainAddress] = token;
+      data[chainAddress] = token
     }
   }
 
@@ -41,6 +41,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     {
       data,
     },
-    { maxAge: 10 * 60 }
-  );
-};
+    { maxAge: 10 * 60 },
+  )
+}

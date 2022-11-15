@@ -1,83 +1,76 @@
-import { multicall } from "@lib/multicall";
-import { BigNumber } from "ethers";
-import { getERC20Details, abi } from "@lib/erc20";
-import { getCVXRatio } from "./helper";
-import { BaseContext, Contract, Balance } from "@lib/adapter";
-import { Chain } from "@defillama/sdk/build/general";
-import { call } from "@defillama/sdk/build/abi";
-import { range } from "@lib/array";
-import {
-  getPoolsContractsFromLpTokens,
-  getUnderlyingsRewardsBalances,
-} from "./helper";
+import { call } from '@defillama/sdk/build/abi'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { range } from '@lib/array'
+import { Chain } from '@lib/chains'
+import { abi, getERC20Details } from '@lib/erc20'
+import { multicall } from '@lib/multicall'
+import { BigNumber } from 'ethers'
 
-export async function getStakeBalances(
-  ctx: BaseContext,
-  chain: Chain,
-  contract?: Contract
-) {
-  const balances: Balance[] = [];
+import { getCVXRatio } from './helper'
+import { getPoolsContractsFromLpTokens, getUnderlyingsRewardsBalances } from './helper'
+
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
+  const balances: Balance[] = []
 
   if (!contract || !contract.underlyings?.[0] || !contract.rewards) {
-    console.log("Missing or Incorrect staking contract");
+    console.log('Missing or Incorrect staking contract')
 
-    return [];
+    return []
   }
 
   try {
-    const [stakeBalanceRes, earnedBalanceRes, extraRewardsLengthRes] =
-      await Promise.all([
-        call({
-          chain,
-          target: contract.address,
-          params: [ctx.address],
-          abi: abi.balanceOf,
-        }),
+    const [stakeBalanceRes, earnedBalanceRes, extraRewardsLengthRes] = await Promise.all([
+      call({
+        chain,
+        target: contract.address,
+        params: [ctx.address],
+        abi: abi.balanceOf,
+      }),
 
-        call({
-          chain,
-          target: contract.address,
-          params: [ctx.address],
-          abi: {
-            inputs: [
-              {
-                internalType: "address",
-                name: "account",
-                type: "address",
-              },
-            ],
-            name: "earned",
-            outputs: [
-              {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-              },
-            ],
-            stateMutability: "view",
-            type: "function",
-          },
-        }),
+      call({
+        chain,
+        target: contract.address,
+        params: [ctx.address],
+        abi: {
+          inputs: [
+            {
+              internalType: 'address',
+              name: 'account',
+              type: 'address',
+            },
+          ],
+          name: 'earned',
+          outputs: [
+            {
+              internalType: 'uint256',
+              name: '',
+              type: 'uint256',
+            },
+          ],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      }),
 
-        call({
-          chain,
-          target: contract.address,
-          params: [],
-          abi: {
-            inputs: [],
-            name: "extraRewardsLength",
-            outputs: [
-              {
-                internalType: "uint256",
-                name: "",
-                type: "uint256",
-              },
-            ],
-            stateMutability: "view",
-            type: "function",
-          },
-        }),
-      ]);
+      call({
+        chain,
+        target: contract.address,
+        params: [],
+        abi: {
+          inputs: [],
+          name: 'extraRewardsLength',
+          outputs: [
+            {
+              internalType: 'uint256',
+              name: '',
+              type: 'uint256',
+            },
+          ],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      }),
+    ])
 
     const extraRewardsTokenRes = await multicall({
       chain,
@@ -88,101 +81,81 @@ export async function getStakeBalances(
       abi: {
         inputs: [
           {
-            internalType: "uint256",
-            name: "",
-            type: "uint256",
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256',
           },
         ],
-        name: "extraRewards",
+        name: 'extraRewards',
         outputs: [
           {
-            internalType: "address",
-            name: "",
-            type: "address",
+            internalType: 'address',
+            name: '',
+            type: 'address',
           },
         ],
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
-    });
+    })
 
-    const extraRewardsToken = extraRewardsTokenRes
-      .filter((res) => res.success)
-      .map((res) => res.output);
+    const extraRewardsToken = extraRewardsTokenRes.filter((res) => res.success).map((res) => res.output)
 
-    const [earnedExtraRewardsRes, extraRewardsTokensAddressesRes] =
-      await Promise.all([
-        multicall({
-          chain,
-          calls: extraRewardsToken.map((contract) => ({
-            target: contract,
-            params: [ctx.address],
-          })),
-          abi: {
-            inputs: [
-              { internalType: "address", name: "account", type: "address" },
-            ],
-            name: "earned",
-            outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-            stateMutability: "view",
-            type: "function",
-          },
-        }),
+    const [earnedExtraRewardsRes, extraRewardsTokensAddressesRes] = await Promise.all([
+      multicall({
+        chain,
+        calls: extraRewardsToken.map((contract) => ({
+          target: contract,
+          params: [ctx.address],
+        })),
+        abi: {
+          inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+          name: 'earned',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      }),
 
-        multicall({
-          chain,
-          calls: extraRewardsToken.map((contract) => ({
-            target: contract,
-            params: [],
-          })),
-          abi: {
-            inputs: [],
-            name: "rewardToken",
-            outputs: [
-              { internalType: "contract IERC20", name: "", type: "address" },
-            ],
-            stateMutability: "view",
-            type: "function",
-          },
-        }),
-      ]);
+      multicall({
+        chain,
+        calls: extraRewardsToken.map((contract) => ({
+          target: contract,
+          params: [],
+        })),
+        abi: {
+          inputs: [],
+          name: 'rewardToken',
+          outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      }),
+    ])
 
-    const amount = BigNumber.from(stakeBalanceRes.output);
-    const earnedBalances = BigNumber.from(earnedBalanceRes.output);
+    const amount = BigNumber.from(stakeBalanceRes.output)
+    const earnedBalances = BigNumber.from(earnedBalanceRes.output)
     const extraRewardsTokensAddresses = extraRewardsTokensAddressesRes
       .filter((res) => res.success)
-      .map((res) => res.output);
+      .map((res) => res.output)
 
-    const rewardsTokens = await getERC20Details(
-      chain,
-      extraRewardsTokensAddresses
-    );
+    const rewardsTokens = await getERC20Details(chain, extraRewardsTokensAddresses)
 
     const earnedExtraRewards = earnedExtraRewardsRes
       .filter((res) => res.success)
-      .map((res) => BigNumber.from(res.output));
+      .map((res) => BigNumber.from(res.output))
 
-    const formattedRewards: any = await getCVXRatio(
-      chain,
-      contract.rewards?.[1],
-      earnedBalances
-    );
+    const formattedRewards: any = await getCVXRatio(chain, contract.rewards?.[1], earnedBalances)
 
     for (let i = 0; i < rewardsTokens.length; i++) {
-      const token = rewardsTokens[i];
-      const earnedExtraReward = earnedExtraRewards[i];
+      const token = rewardsTokens[i]
+      const earnedExtraReward = earnedExtraRewards[i]
 
-      const detailedToken: any = await getPoolsContractsFromLpTokens(
-        chain,
-        token
-      );
+      const detailedToken: any = await getPoolsContractsFromLpTokens(chain, token)
 
-      detailedToken[i].amount = earnedExtraReward;
+      detailedToken[i].amount = earnedExtraReward
 
-      const detailedTokenBalances = await getUnderlyingsRewardsBalances(
-        chain,
-        detailedToken
-      );
+      const detailedTokenBalances = await getUnderlyingsRewardsBalances(chain, detailedToken)
 
       balances.push({
         chain,
@@ -197,15 +170,15 @@ export async function getStakeBalances(
           detailedTokenBalances[1], // 3crv --> USDC
           detailedTokenBalances[2], // 3crv --> USDT
         ],
-        category: "stake",
-        yieldKey: "ef32dd3b-a03b-4f79-9b65-8420d7e04ad0",
-      });
+        category: 'stake',
+        yieldKey: 'ef32dd3b-a03b-4f79-9b65-8420d7e04ad0',
+      })
     }
 
-    return balances;
+    return balances
   } catch (error) {
-    console.log("Failed to get stake balance");
+    console.log('Failed to get stake balance')
 
-    return [];
+    return []
   }
 }

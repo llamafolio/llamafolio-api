@@ -1,4 +1,4 @@
-import { Pool } from "pg";
+import { Pool } from 'pg'
 
 // See: https://gist.github.com/streamich/6175853840fb5209388405910c6cc04b
 // connection details inherited from environment
@@ -8,6 +8,6 @@ const pool = new Pool({
   idleTimeoutMillis: 120000,
   connectionTimeoutMillis: 10000,
   ssl: { rejectUnauthorized: false },
-});
+})
 
-export default pool;
+export default pool

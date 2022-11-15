@@ -1,29 +1,29 @@
-import { APIGatewayProxyHandler } from "aws-lambda";
-import pool from "@db/pool";
-import { isHex, strToBuf } from "@lib/buf";
-import { badRequest, notFound, serverError, success } from "@handlers/response";
+import pool from '@db/pool'
+import { badRequest, notFound, serverError, success } from '@handlers/response'
+import { isHex, strToBuf } from '@lib/buf'
+import { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const getContract: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false;
+  context.callbackWaitsForEmptyEventLoop = false
 
-  const address = event.pathParameters?.address;
+  const address = event.pathParameters?.address
   if (!address) {
-    return badRequest("Missing address parameter");
+    return badRequest('Missing address parameter')
   }
   if (!isHex(address)) {
-    return badRequest("Invalid address parameter, expected hex");
+    return badRequest('Invalid address parameter, expected hex')
   }
 
-  const client = await pool.connect();
+  const client = await pool.connect()
 
   try {
     const adaptersContractsRes = await client.query(
       `select adapter_id, chain, data -> 'name' as name, data -> 'displayName' as display_name from contracts where address = $1::bytea;`,
-      [strToBuf(address)]
-    );
+      [strToBuf(address)],
+    )
 
     if (adaptersContractsRes.rows.length === 0) {
-      return notFound();
+      return notFound()
     }
 
     return success(
@@ -38,12 +38,12 @@ export const getContract: APIGatewayProxyHandler = async (event, context) => {
           })),
         },
       },
-      { maxAge: 2 * 60 }
-    );
+      { maxAge: 2 * 60 },
+    )
   } catch (e) {
-    console.error("Failed to retrieve adapters", e);
-    return serverError("Failed to retrieve adapters");
+    console.error('Failed to retrieve adapters', e)
+    return serverError('Failed to retrieve adapters')
   } finally {
-    client.release(true);
+    client.release(true)
   }
-};
+}

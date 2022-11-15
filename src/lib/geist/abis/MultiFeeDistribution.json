@@ -1,8 +1,6 @@
 [
   {
-    "inputs": [
-      { "internalType": "address", "name": "_stakingToken", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_stakingToken", "type": "address" }],
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
@@ -140,18 +138,14 @@
     "type": "event"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "_rewardsToken", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_rewardsToken", "type": "address" }],
     "name": "addReward",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "account", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
     "name": "claimableRewards",
     "outputs": [
       {
@@ -168,9 +162,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
     "name": "earnedBalances",
     "outputs": [
       { "internalType": "uint256", "name": "total", "type": "uint256" },
@@ -202,18 +194,14 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "_rewardsToken", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_rewardsToken", "type": "address" }],
     "name": "getRewardForDuration",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "_rewardsToken", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_rewardsToken", "type": "address" }],
     "name": "lastTimeRewardApplicable",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
@@ -227,9 +215,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
     "name": "lockedBalances",
     "outputs": [
       { "internalType": "uint256", "name": "total", "type": "uint256" },
@@ -326,9 +312,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "_rewardsToken", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "_rewardsToken", "type": "address" }],
     "name": "rewardPerToken",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "stateMutability": "view",
@@ -359,9 +343,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address[]", "name": "_minters", "type": "address[]" }
-    ],
+    "inputs": [{ "internalType": "address[]", "name": "_minters", "type": "address[]" }],
     "name": "setMinters",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -391,13 +373,9 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
     "name": "totalBalance",
-    "outputs": [
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -409,22 +387,16 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "newOwner", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
     "name": "transferOwnership",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
     "name": "unlockedBalance",
-    "outputs": [
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
-    ],
+    "outputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -439,9 +411,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "uint256", "name": "amount", "type": "uint256" }
-    ],
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
     "name": "withdraw",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -455,9 +425,7 @@
     "type": "function"
   },
   {
-    "inputs": [
-      { "internalType": "address", "name": "user", "type": "address" }
-    ],
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
     "name": "withdrawableBalance",
     "outputs": [
       { "internalType": "uint256", "name": "amount", "type": "uint256" },
