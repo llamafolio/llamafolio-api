@@ -6,7 +6,7 @@
     "adapter": "ts-node -T scripts/run-adapter.ts",
     "create-adapter": "ts-node -T scripts/create-adapter.ts",
     "find-user": "ts-node -T scripts/find-user.ts",
-    "lint": "eslint --ignore-path .gitignore --ignore-path .eslintignore \"**/*.{js,jsx,ts,tsx}\" --max-warnings=0",
+    "lint": "eslint --ignore-path .gitignore --ignore-path .eslintignore \"**/*.{js,ts}\" --max-warnings=0",
     "test": "jest",
     "update-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build"
   },
