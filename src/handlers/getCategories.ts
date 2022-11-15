@@ -1,12 +1,12 @@
-import { APIGatewayProxyHandler } from "aws-lambda";
-import { Categories } from "@lib/category";
-import { success } from "@handlers/response";
+import { success } from '@handlers/response'
+import { Categories } from '@lib/category'
+import { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async () => {
   return success(
     {
       data: Object.values(Categories),
     },
-    { maxAge: 10 * 60 }
-  );
-};
+    { maxAge: 10 * 60 },
+  )
+}

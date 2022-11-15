@@ -1,5 +1,5 @@
 try {
-  require("dotenv").config();
+  require('dotenv').config()
 } catch (e) {}
 module.exports = {
   PGHOST: process.env.PGHOST,
@@ -7,4 +7,4 @@ module.exports = {
   PGDATABASE: process.env.PGDATABASE,
   PGPASSWORD: process.env.PGPASSWORD,
   PGPORT: parseInt(process.env.PGPORT),
-};
+}

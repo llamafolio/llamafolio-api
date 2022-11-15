@@ -1,19 +1,15 @@
-import { BigNumber } from "ethers";
-import { Chain } from "@defillama/sdk/build/general";
-import { Balance, BaseContext, Contract } from "@lib/adapter";
-import { call } from "@defillama/sdk/build/abi";
+import { call } from '@defillama/sdk/build/abi'
+import { Chain } from '@defillama/sdk/build/general'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { BigNumber } from 'ethers'
 
-export async function getLendBalances(
-  ctx: BaseContext,
-  chain: Chain,
-  troveManager?: Contract
-) {
+export async function getLendBalances(ctx: BaseContext, chain: Chain, troveManager?: Contract) {
   if (!troveManager) {
-    return [];
+    return []
   }
 
   try {
-    const balances: Balance[] = [];
+    const balances: Balance[] = []
 
     const troveDetailsRes = await call({
       chain,
@@ -22,68 +18,68 @@ export async function getLendBalances(
       abi: {
         inputs: [
           {
-            internalType: "address",
-            name: "",
-            type: "address",
+            internalType: 'address',
+            name: '',
+            type: 'address',
           },
         ],
-        name: "Troves",
+        name: 'Troves',
         outputs: [
           {
-            internalType: "uint256",
-            name: "debt",
-            type: "uint256",
+            internalType: 'uint256',
+            name: 'debt',
+            type: 'uint256',
           },
           {
-            internalType: "uint256",
-            name: "coll",
-            type: "uint256",
+            internalType: 'uint256',
+            name: 'coll',
+            type: 'uint256',
           },
           {
-            internalType: "uint256",
-            name: "stake",
-            type: "uint256",
+            internalType: 'uint256',
+            name: 'stake',
+            type: 'uint256',
           },
           {
-            internalType: "enum TroveManager.Status",
-            name: "status",
-            type: "uint8",
+            internalType: 'enum TroveManager.Status',
+            name: 'status',
+            type: 'uint8',
           },
           {
-            internalType: "uint128",
-            name: "arrayIndex",
-            type: "uint128",
+            internalType: 'uint128',
+            name: 'arrayIndex',
+            type: 'uint128',
           },
         ],
-        stateMutability: "view",
-        type: "function",
+        stateMutability: 'view',
+        type: 'function',
       },
-    });
+    })
 
-    const troveDetails = troveDetailsRes.output;
+    const troveDetails = troveDetailsRes.output
 
     balances.push({
       chain: chain,
-      category: "lend",
-      symbol: "ETH",
+      category: 'lend',
+      symbol: 'ETH',
       decimals: 18,
-      address: "0x0000000000000000000000000000000000000000",
+      address: '0x0000000000000000000000000000000000000000',
       amount: BigNumber.from(troveDetails.coll),
-    });
+    })
 
     balances.push({
       chain: chain,
-      category: "borrow",
-      symbol: "LUSD",
-      type: "debt",
+      category: 'borrow',
+      symbol: 'LUSD',
+      type: 'debt',
       decimals: 18,
-      address: "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
+      address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
       amount: BigNumber.from(troveDetails.debt),
-    });
+    })
 
-    return balances;
+    return balances
   } catch (error) {
-    console.log("Failed to get lend balances", error);
-    return [];
+    console.log('Failed to get lend balances', error)
+    return []
   }
 }
