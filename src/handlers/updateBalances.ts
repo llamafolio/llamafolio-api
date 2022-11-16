@@ -10,19 +10,24 @@ import { BaseContext, Contract } from '@lib/adapter'
 import { isHex, strToBuf } from '@lib/buf'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 import format from 'pg-format'
 
 export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false // !important to reuse pool
 
-  const { connectionId, address } = event
+  const { connectionId, address } = event as APIGatewayProxyEvent & { connectionId?: string; address?: string }
 
   if (!address) {
     return badRequest('Missing address parameter')
   }
+
   if (!isHex(address)) {
     return badRequest('Invalid address parameter, expected hex')
+  }
+
+  if (!connectionId) {
+    return badRequest('Missing connectionId parameter')
   }
 
   const ctx: BaseContext = { address }
@@ -170,10 +175,12 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     // Group balances back by adapter
     const pricedBalancesByAdapterId: { [key: string]: any[] } = {}
     for (const pricedBalance of pricedBalances) {
-      if (!pricedBalancesByAdapterId[pricedBalance.adapterId]) {
-        pricedBalancesByAdapterId[pricedBalance.adapterId] = []
+      if (pricedBalance.adapterId) {
+        if (!pricedBalancesByAdapterId[pricedBalance.adapterId]) {
+          pricedBalancesByAdapterId[pricedBalance.adapterId] = []
+        }
+        pricedBalancesByAdapterId[pricedBalance.adapterId].push(pricedBalance)
       }
-      pricedBalancesByAdapterId[pricedBalance.adapterId].push(pricedBalance)
     }
 
     const now = new Date()

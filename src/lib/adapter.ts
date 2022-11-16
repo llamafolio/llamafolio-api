@@ -18,6 +18,9 @@ export interface BasePricedBalance extends BaseBalance {
   balanceUSD: number
   claimableUSD?: number
 
+  parent?: string
+  adapterId?: string
+
   // price updated at
   timestamp: number
 }
