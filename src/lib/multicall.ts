@@ -1,3 +1,5 @@
+import '@lib/providers'
+
 import { multiCall } from '@defillama/sdk/build/abi/index'
 
 export type MultiCallParams = Parameters<typeof multiCall>[0]

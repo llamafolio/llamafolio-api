@@ -1,5 +1,5 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -268,7 +268,7 @@ export async function getLendingPoolHealthFactor(ctx: BaseContext, chain: Chain,
     // TODO: return other metadata like LTV, available borrow etc
     return healthFactor
   } catch (error) {
-    console.log('Failed to get aave-v2 lending pool health factory', error)
+    console.log('Failed to get aave-v2 lending pool health factor', error)
     return
   }
 }
