@@ -1,3 +1,4 @@
+import { setProvider } from '@defillama/sdk/build/general'
 import { Chain, chains } from '@lib/chains'
 import { providers as ethersProviders } from 'ethers'
 
@@ -17,5 +18,8 @@ function createProvider(name: string, rpcs: string[], chainId: number) {
 export const providers: { [chain in Chain]: ethersProviders.BaseProvider } = Object.assign({})
 
 for (const chain of chains) {
-  providers[chain.id] = createProvider(chain.id, chain.rpcUrl, chain.chainId)
+  const provider = createProvider(chain.id, chain.rpcUrl, chain.chainId)
+  providers[chain.id] = provider
+  // update defillama sdk providers (used by calls and multicalls)
+  setProvider(chain.id, provider)
 }
