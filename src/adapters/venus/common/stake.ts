@@ -1,21 +1,33 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
+import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
-  const balances: Balance[] = []
+const XVS: Token = {
+  chain: 'bsc',
+  address: '0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63',
+  decimals: 18,
+  symbol: 'XVS',
+}
 
+const VAI: Token = {
+  chain: 'bsc',
+  symbol: 'VAI',
+  decimals: 18,
+  address: '0x4BD17003473389A42DAF6a0a729f6Fdb328BbBd7',
+}
+
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
   if (!contract || !contract.underlyings || !contract.rewards) {
     console.log('Missing or incorrect vault contract')
 
     return []
   }
 
-  try {
-    const VAI = contract.underlyings?.[0]
-    const XVS = contract.rewards?.[0]
+  const balances: Balance[] = []
 
+  try {
     const [stakeBalanceRes, pendingXVSRes] = await Promise.all([
       call({
         chain,

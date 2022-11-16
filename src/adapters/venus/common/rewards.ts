@@ -1,20 +1,26 @@
-import { call } from '@defillama/sdk/build/abi'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { BaseContext, Contract, Balance } from '@lib/adapter'
+import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
-export async function getRewardsBalances(ctx: BaseContext, chain: Chain, comptroller?: Contract, lens?: Contract) {
-  const rewards: Balance[] = []
+const XVS: Token = {
+  chain: 'bsc',
+  address: '0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63',
+  decimals: 18,
+  symbol: 'XVS',
+}
 
+export async function getRewardsBalances(ctx: BaseContext, chain: Chain, comptroller?: Contract, lens?: Contract) {
   if (!comptroller || !lens || !lens.underlyings) {
     console.log('Missing or incorrect inputs contracts')
 
     return []
   }
 
-  try {
-    const XVS = lens.underlyings?.[0]
+  const rewards: Balance[] = []
 
+  try {
     const XVSAllocatedRewardsRes = await call({
       chain,
       target: lens.address,

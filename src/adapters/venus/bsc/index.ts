@@ -1,9 +1,10 @@
-import { GetBalancesHandler, Contract } from '@lib/adapter'
+import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMarketsContracts } from '@lib/compound/v2/lending'
-import { ethers } from 'ethers'
 import { Token } from '@lib/token'
+import { ethers } from 'ethers'
+
+import { getLendBorrowBalances } from '../common/lend'
 import { getRewardsBalances } from '../common/rewards'
-import { getLendBorrowBalances } from '../common//lend'
 import { getStakeBalances } from '../common/stake'
 
 const XVSToken: Token = {
@@ -41,7 +42,7 @@ const VenusVault: Contract = {
 }
 
 export const getContracts = async () => {
-  const contracts = await getMarketsContracts('bsc', {
+  const markets = await getMarketsContracts('bsc', {
     // Venus Unitroller
     comptrollerAddress: Comptroller.address,
     underlyingAddressByMarketAddress: {
@@ -51,17 +52,17 @@ export const getContracts = async () => {
   })
 
   return {
-    contracts: { contracts, Comptroller, VenusLens, VenusVault },
+    contracts: { markets, Comptroller, VenusLens, VenusVault },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx,
-  { contracts, Comptroller, VenusLens, VenusVault },
+  { markets, Comptroller, VenusLens, VenusVault },
 ) => {
   const [stakeBalances, marketsBalances, rewardsBalances] = await Promise.all([
     getStakeBalances(ctx, 'bsc', VenusVault),
-    getLendBorrowBalances(ctx, 'bsc', contracts, Comptroller),
+    getLendBorrowBalances(ctx, 'bsc', markets || [], Comptroller),
     getRewardsBalances(ctx, 'bsc', Comptroller, VenusLens),
   ])
 
