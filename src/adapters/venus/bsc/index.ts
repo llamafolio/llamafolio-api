@@ -1,4 +1,4 @@
-import { Adapter, GetBalancesHandler, Contract } from '@lib/adapter'
+import { GetBalancesHandler, Contract } from '@lib/adapter'
 import { getMarketsContracts } from '@lib/compound/v2/lending'
 import { ethers } from 'ethers'
 import { Token } from '@lib/token'
