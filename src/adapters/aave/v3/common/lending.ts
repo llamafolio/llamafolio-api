@@ -1,7 +1,8 @@
-import { call, multiCall } from '@defillama/sdk/build/abi'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
+import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { BigNumber, ethers } from 'ethers'
 
@@ -29,7 +30,7 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
       params: [address],
     }))
 
-    const reserveTokensAddressesRes = await multiCall({
+    const reserveTokensAddressesRes = await multicall({
       chain,
       calls,
       abi: {
@@ -53,9 +54,7 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
       },
     })
 
-    const reserveTokensAddresses = reserveTokensAddressesRes.output
-      .filter((res) => res.success)
-      .map((res) => res.output)
+    const reserveTokensAddresses = reserveTokensAddressesRes.filter((res) => res.success).map((res) => res.output)
 
     const underlyingTokensAddresses: string[] = []
     const lendTokensAddresses: string[] = []
