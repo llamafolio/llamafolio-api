@@ -79,14 +79,15 @@ export interface BalancesConfig {
 export interface AdapterTest {
   address: string
   blockHeight: { [k: string]: number }
-  expected: BalancesTest
+  expected: { [k: string]: BalancesTest[] }
 }
 
 export interface BalancesTest {
-  [k: string]: {
-    amount: string
-    category?: string
-  }[]
+  amount?: string
+  symbol?: string
+  category?: string
+  underlying?: { symbol?: string; amount: string }[]
+  rewards?: { symbol?: string; amount: string }[]
 }
 
 export const parseBalancesTest = (balancesConfig: BalancesConfig): BalancesTest => {
@@ -94,21 +95,31 @@ export const parseBalancesTest = (balancesConfig: BalancesConfig): BalancesTest 
     .map((balances) => balances.chain)
     .filter((chain, i, chains) => chains.indexOf(chain) === i)
 
-  const balances: {
-    [k: string]: {
-      amount: string
-      category?: string
-    }[]
-  } = {}
+  const balances: { [k: string]: BalancesTest[] } = {}
 
   for (const chain of chains) {
     balances[chain] = []
     balancesConfig.balances.map((balance) => {
       if (balance.chain === chain && balance.amount.toString() !== '0') {
-        balances[chain].push({
+        const data: BalancesTest = {
           amount: balance.amount.toString(),
+          symbol: balance.symbol,
           category: balance.category,
-        })
+        }
+
+        if (balance.underlyings) {
+          data.underlying = balance.underlyings.map((underlying) => {
+            return { amount: underlying.amount.toString(), symbol: underlying.symbol }
+          })
+        }
+
+        if (balance.rewards) {
+          data.rewards = balance.rewards.map((reward) => {
+            return { amount: reward.amount.toString(), symbol: reward.symbol }
+          })
+        }
+
+        balances[chain].push(data)
       }
     })
   }

@@ -4,13 +4,22 @@ import adapter from '.'
 
 const testCases: AdapterTest[] = [
   {
-    address: '0xf93c610dd478d2e9fa47aa00ee3b726c6ac1c376',
+    address: '0x024ba2110590dffa4d6b288761c5ee1e78e62cd4',
     blockHeight: { avax: 22465369 },
-    expected: { avax: [{ amount: '69081772623', category: 'stake' }] },
+    expected: {
+      avax: [
+        {
+          amount: '181930064070972',
+          symbol: 'wMEMO ',
+          category: 'stake',
+          underlying: [{ amount: '181930064070972', symbol: 'TIME' }],
+        },
+      ],
+    },
   },
 ]
 
-describe('adapter test', () => {
+describe('wonderland test', () => {
   test('test balances', async () => {
     const contracts = await adapter.getContracts()
 
