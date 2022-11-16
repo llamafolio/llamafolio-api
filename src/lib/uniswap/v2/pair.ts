@@ -84,7 +84,7 @@ export async function getUnderlyingsContract(contract: Contract) {
  * Retrieves pairs balances (with underlyings) of Uniswap V2 like Pair.
  * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
  */
-export async function getPairsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+export async function getPairsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
   const balances = await getERC20BalanceOf(ctx, chain, contracts as Token[])
 
   return getUnderlyingBalances(chain, balances)

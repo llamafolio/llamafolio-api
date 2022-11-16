@@ -1,4 +1,4 @@
-import { Adapter } from '@lib/adapter'
+import { Adapter, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
@@ -15,11 +15,11 @@ const getContracts = async () => {
   }
 }
 
-const getBalances = async (ctx, contracts) => {
-  const pairs = await getPairsBalances(ctx, 'fantom', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts: Contract[]) => {
+  const balances = await getPairsBalances(ctx, 'fantom', contracts)
 
   return {
-    balances: pairs,
+    balances,
   }
 }
 

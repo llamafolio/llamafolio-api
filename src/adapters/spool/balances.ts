@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 
@@ -15,7 +15,7 @@ import { multicall } from '@lib/multicall'
   https://etherscan.io/address/0xe140bb5f424a53e0687bfc10f6845a5672d7e242#writeProxyContract
  */
 
-export async function getPoolsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+export async function getPoolsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
   const calls = contracts.map((contract) => {
     return {
       params: [],
@@ -43,5 +43,5 @@ export async function getPoolsBalances(ctx: BaseContext, chain: Chain, contracts
 
   const strategyUnderlyings = strategyUnderlyingsRes.filter((res) => res.success).map((res) => res.output)
 
-  console.log(strategyUnderlyings, 'strategyUnderlyingsRes')
+  return strategyUnderlyings
 }

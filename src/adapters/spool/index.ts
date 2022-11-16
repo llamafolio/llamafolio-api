@@ -1,4 +1,4 @@
-import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Adapter, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 
 import { getPoolsBalances } from './balances'
 import { getPoolsContracts } from './contracts'
@@ -17,7 +17,7 @@ const getContracts = async () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts: Contract[]) => {
   const balances = await getPoolsBalances(ctx, 'ethereum', contracts)
 
   return {
