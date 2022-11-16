@@ -1,24 +1,19 @@
-import { call } from "@defillama/sdk/build/abi";
-import { Chain } from "@defillama/sdk/build/general";
-import { BaseContext, Contract, Balance } from "@lib/adapter";
-import { BigNumber } from "ethers";
+import { call } from '@defillama/sdk/build/abi'
+import { Chain } from '@lib/chains'
+import { BaseContext, Contract, Balance } from '@lib/adapter'
+import { BigNumber } from 'ethers'
 
-export async function getRewardsBalances(
-  ctx: BaseContext,
-  chain: Chain,
-  comptroller?: Contract,
-  lens?: Contract
-) {
-  const rewards: Balance[] = [];
+export async function getRewardsBalances(ctx: BaseContext, chain: Chain, comptroller?: Contract, lens?: Contract) {
+  const rewards: Balance[] = []
 
   if (!comptroller || !lens || !lens.underlyings) {
-    console.log("Missing or incorrect inputs contracts");
+    console.log('Missing or incorrect inputs contracts')
 
-    return [];
+    return []
   }
 
   try {
-    const COMP = lens.underlyings?.[0];
+    const COMP = lens.underlyings?.[0]
 
     const compAllocatedRewardsRes = await call({
       chain,
@@ -27,37 +22,35 @@ export async function getRewardsBalances(
       abi: {
         constant: false,
         inputs: [
-          { internalType: "contract Comp", name: "comp", type: "address" },
+          { internalType: 'contract Comp', name: 'comp', type: 'address' },
           {
-            internalType: "contract ComptrollerLensInterface",
-            name: "comptroller",
-            type: "address",
+            internalType: 'contract ComptrollerLensInterface',
+            name: 'comptroller',
+            type: 'address',
           },
-          { internalType: "address", name: "account", type: "address" },
+          { internalType: 'address', name: 'account', type: 'address' },
         ],
-        name: "getCompBalanceMetadataExt",
+        name: 'getCompBalanceMetadataExt',
         outputs: [
           {
             components: [
-              { internalType: "uint256", name: "balance", type: "uint256" },
-              { internalType: "uint256", name: "votes", type: "uint256" },
-              { internalType: "address", name: "delegate", type: "address" },
-              { internalType: "uint256", name: "allocated", type: "uint256" },
+              { internalType: 'uint256', name: 'balance', type: 'uint256' },
+              { internalType: 'uint256', name: 'votes', type: 'uint256' },
+              { internalType: 'address', name: 'delegate', type: 'address' },
+              { internalType: 'uint256', name: 'allocated', type: 'uint256' },
             ],
-            internalType: "struct CompoundLens.CompBalanceMetadataExt",
-            name: "",
-            type: "tuple",
+            internalType: 'struct CompoundLens.CompBalanceMetadataExt',
+            name: '',
+            type: 'tuple',
           },
         ],
         payable: false,
-        stateMutability: "nonpayable",
-        type: "function",
+        stateMutability: 'nonpayable',
+        type: 'function',
       },
-    });
+    })
 
-    const compAllocatedRewards = BigNumber.from(
-      compAllocatedRewardsRes.output.allocated
-    );
+    const compAllocatedRewards = BigNumber.from(compAllocatedRewardsRes.output.allocated)
 
     rewards.push({
       chain,
@@ -65,13 +58,13 @@ export async function getRewardsBalances(
       decimals: COMP.decimals,
       symbol: COMP.symbol,
       amount: compAllocatedRewards,
-      category: "reward",
-    });
+      category: 'reward',
+    })
 
-    return rewards;
+    return rewards
   } catch (error) {
-    console.log("Failed to get rewards");
+    console.log('Failed to get rewards')
 
-    return [];
+    return []
   }
 }

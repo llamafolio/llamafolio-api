@@ -1,21 +1,21 @@
-import { call } from "@defillama/sdk/build/abi";
-import { Chain } from "@defillama/sdk/build/general";
-import { BaseContext, Contract, Balance } from "@lib/adapter";
-import { getERC20Details } from "@lib/erc20";
-import { BigNumber } from "ethers";
+import { call } from '@defillama/sdk/build/abi'
+import { Chain } from '@lib/chains'
+import { BaseContext, Contract, Balance } from '@lib/adapter'
+import { getERC20Details } from '@lib/erc20'
+import { BigNumber } from 'ethers'
 
 export async function getRewardBalances(
   ctx: BaseContext,
   chain: Chain,
   rewardContract: Contract,
-  coreContract: Contract
+  coreContract: Contract,
 ) {
-  const rewards: Balance[] = [];
+  const rewards: Balance[] = []
 
   if (!rewardContract || !coreContract) {
-    console.log("Missing or inccorect contract");
+    console.log('Missing or inccorect contract')
 
-    return [];
+    return []
   }
 
   try {
@@ -25,33 +25,31 @@ export async function getRewardBalances(
       params: [coreContract.address, ctx.address],
       abi: {
         inputs: [
-          { internalType: "address", name: "comet", type: "address" },
-          { internalType: "address", name: "account", type: "address" },
+          { internalType: 'address', name: 'comet', type: 'address' },
+          { internalType: 'address', name: 'account', type: 'address' },
         ],
-        name: "getRewardOwed",
+        name: 'getRewardOwed',
         outputs: [
           {
             components: [
-              { internalType: "address", name: "token", type: "address" },
-              { internalType: "uint256", name: "owed", type: "uint256" },
+              { internalType: 'address', name: 'token', type: 'address' },
+              { internalType: 'uint256', name: 'owed', type: 'uint256' },
             ],
-            internalType: "struct CometRewards.RewardOwed",
-            name: "",
-            type: "tuple",
+            internalType: 'struct CometRewards.RewardOwed',
+            name: '',
+            type: 'tuple',
           },
         ],
-        stateMutability: "nonpayable",
-        type: "function",
+        stateMutability: 'nonpayable',
+        type: 'function',
       },
-    });
+    })
 
-    const pendingCompRewardsToken = pendingCompRewardsRes.output.token;
-    const pendingCompRewardsBalance = BigNumber.from(
-      pendingCompRewardsRes.output.owed
-    );
+    const pendingCompRewardsToken = pendingCompRewardsRes.output.token
+    const pendingCompRewardsBalance = BigNumber.from(pendingCompRewardsRes.output.owed)
 
-    const tokens = await getERC20Details(chain, [pendingCompRewardsToken]);
-    const token = tokens[0];
+    const tokens = await getERC20Details(chain, [pendingCompRewardsToken])
+    const token = tokens[0]
 
     rewards.push({
       chain,
@@ -59,13 +57,13 @@ export async function getRewardBalances(
       symbol: token.symbol,
       address: token.address,
       amount: pendingCompRewardsBalance,
-      category: "reward",
-    });
+      category: 'reward',
+    })
 
-    return rewards;
+    return rewards
   } catch (error) {
-    console.log("Failed to get rewards");
+    console.log('Failed to get rewards')
 
-    return [];
+    return []
   }
 }

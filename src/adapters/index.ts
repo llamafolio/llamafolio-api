@@ -8,7 +8,8 @@ import arrakis from '@adapters/arrakis'
 import atlasUSV from '@adapters/atlas-usv'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
-import compoundV2 from '@adapters/compound/v2/ethereum'
+import compoundV2 from '@adapters/compound/v2'
+import compoundV3 from '@adapters/compound/v3'
 import concentrator from '@adapters/concentrator'
 import convex from '@adapters/convex'
 import curve from '@adapters/curve'
@@ -17,6 +18,7 @@ import floorDao from '@adapters/floor-dao'
 import geist from '@adapters/geist'
 import gmx from '@adapters/gmx'
 import granaryFinance from '@adapters/granary-finance'
+import hectorNetwork from '@adapters/hector-network'
 import hex from '@adapters/hex'
 import hundredFinance from '@adapters/hundred-finance'
 import inverseFinance from '@adapters/inverse-finance'
@@ -35,6 +37,7 @@ import radiant from '@adapters/radiant'
 import rocketpool from '@adapters/rocket-pool'
 import scream from '@adapters/scream'
 import shibaswap from '@adapters/shibaswap'
+import spartacus from '@adapters/spartacus'
 import spiritswap from '@adapters/spiritswap'
 import spookyswap from '@adapters/spookyswap'
 import stakewise from '@adapters/stakewise'
@@ -42,6 +45,7 @@ import stargate from '@adapters/stargate'
 import strike from '@adapters/strike'
 import sushiswap from '@adapters/sushiswap'
 import synthetix from '@adapters/synthetix'
+import templedao from '@adapters/templedao'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
 import uniswap from '@adapters/uniswap'
@@ -66,6 +70,7 @@ export const adapters: Adapter[] = [
   benqiLending,
   benqiStakedAvax,
   compoundV2,
+  compoundV3,
   concentrator,
   convex,
   curve,
