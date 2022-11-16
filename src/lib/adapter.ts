@@ -76,6 +76,12 @@ export interface BalancesConfig {
   xdai?: Metadata
 }
 
+export interface AdapterTest {
+  address: string
+  blockHeight: { [k: string]: number }
+  expected: BalancesTest
+}
+
 export interface BalancesTest {
   [k: string]: {
     amount: string
