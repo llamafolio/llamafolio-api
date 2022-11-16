@@ -7,6 +7,7 @@ export type ContractStandard = 'erc20' | 'erc721'
 
 export interface BaseContext {
   address: string
+  blockHeight?: { [k: string]: number }
 }
 
 export interface BaseBalance extends BaseContract {
@@ -73,6 +74,40 @@ export interface BalancesConfig {
   polygon?: Metadata
   optimism?: Metadata
   xdai?: Metadata
+}
+
+export interface BalancesTest {
+  [k: string]: {
+    amount: string
+    category?: string
+  }[]
+}
+
+export const parseBalancesTest = (balancesConfig: BalancesConfig): BalancesTest => {
+  const chains = balancesConfig.balances
+    .map((balances) => balances.chain)
+    .filter((chain, i, chains) => chains.indexOf(chain) === i)
+
+  const balances: {
+    [k: string]: {
+      amount: string
+      category?: string
+    }[]
+  } = {}
+
+  for (const chain of chains) {
+    balances[chain] = []
+    balancesConfig.balances.map((balance) => {
+      if (balance.chain === chain && balance.amount.toString() !== '0') {
+        balances[chain].push({
+          amount: balance.amount.toString(),
+          category: balance.category,
+        })
+      }
+    })
+  }
+
+  return balances
 }
 
 export interface BaseContract {
