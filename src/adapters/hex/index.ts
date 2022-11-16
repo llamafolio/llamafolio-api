@@ -56,9 +56,13 @@ const getStakeBalances = async (ctx: any, chain: Chain) => {
   )
 
   const stakeBalance: Balance = {
-    ...HEX,
     amount: stakeAmount,
     category: 'stake',
+    chain: chain,
+    address: HEX.address,
+    decimals: HEX.decimals,
+    symbol: HEX.symbol,
+    name: HEX.name,
   }
 
   return [stakeBalance]
