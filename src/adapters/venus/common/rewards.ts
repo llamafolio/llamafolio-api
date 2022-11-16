@@ -46,7 +46,7 @@ export async function getRewardsBalances(ctx: BaseContext, chain: Chain, comptro
       },
     })
 
-    const XVSAllocatedRewards = BigNumber.from(XVSAllocatedRewardsRes.output.allocated)    
+    const XVSAllocatedRewards = BigNumber.from(XVSAllocatedRewardsRes.output.allocated)
 
     rewards.push({
       chain,
@@ -59,7 +59,7 @@ export async function getRewardsBalances(ctx: BaseContext, chain: Chain, comptro
 
     return rewards
   } catch (error) {
-    console.log('Failed to get rewards')
+    console.log('Failed to get reward balance')
 
     return []
   }
