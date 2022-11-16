@@ -1,6 +1,6 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Balance, Contract } from '@lib/adapter'
 import { BaseContext } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
