@@ -1,27 +1,22 @@
+import * as bsc from '@adapters/venus/bsc'
 import { Adapter, GetBalancesHandler } from '@lib/adapter'
-import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
-import { ethers } from 'ethers'
 
 const getContracts = async () => {
-  const markets = await getMarketsContracts('bsc', {
-    // Venus Unitroller
-    comptrollerAddress: '0xfd36e2c2a6789db23113685031d7f16329158384',
-    underlyingAddressByMarketAddress: {
-      // cBNB -> BNB
-      '0xa07c5b74c9b40447a954e1466938b865b6bbea36': ethers.constants.AddressZero,
-    },
-  })
+  const bscContracts = await bsc.getContracts()
 
   return {
-    contracts: markets,
+    contracts: {
+      ...bscContracts.contracts,
+    },
   }
 }
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const markets = await getMarketsBalances(ctx, 'bsc', contracts)
+  const bscBalances = await bsc.getBalances(ctx, contracts)
 
   return {
-    balances: markets,
+    ...bscBalances,
+    balances: [...bscBalances.balances],
   }
 }
 
