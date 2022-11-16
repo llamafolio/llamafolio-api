@@ -1,11 +1,11 @@
-import { Chain, providers } from '@defillama/sdk/build/general'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Chain } from '@lib/chains'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
-import { BN_TEN } from '@lib/math'
-import { BN_TEN } from '@lib/math'
 import { multicall } from '@lib/multicall'
+import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
+import { BigNumber, ethers } from 'ethers'
 
 import ComptrollerABI from './abis/Comptroller.json'
 
