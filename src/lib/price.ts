@@ -108,9 +108,11 @@ export async function getPricedBalances(balances: Balance[]): Promise<PricedBala
     }
 
     if (balance.underlyings) {
+      const priced = getPricedBalance(balance)
       const pricedUnderlyings = balance.underlyings.map(getPricedBalance)
+
       return {
-        ...balance,
+        ...priced,
         balanceUSD: sum(pricedUnderlyings.map((b) => b.balanceUSD || 0)),
         underlyings: pricedUnderlyings,
       }

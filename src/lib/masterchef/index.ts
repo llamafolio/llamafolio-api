@@ -7,6 +7,9 @@ import { BigNumber, ethers } from 'ethers'
 
 import MasterChefAbi from './abis/MasterChef.json'
 
+type TokenMasterChef = Token & { pid: string }
+type BalanceMasterChef = Balance & { pid: string }
+
 export interface GetMasterChefPoolsInfoParams {
   chain: Chain
   masterChefAddress: string
@@ -49,7 +52,7 @@ export async function getMasterChefPoolsInfo({ chain, masterChefAddress, methodN
 export interface GetMasterChefBalancesParams {
   chain: Chain
   masterChefAddress: string
-  tokens: Token[]
+  tokens: TokenMasterChef[]
   rewardToken: Token
   pendingRewardName: string
 }
@@ -83,12 +86,12 @@ export async function getMasterChefBalances(
     },
   })
 
-  const resBalances: Balance[] = []
+  const resBalances: BalanceMasterChef[] = []
 
   for (let i = 0; i < userInfoRes.length; i++) {
     const res = userInfoRes[i]
     if (res.success) {
-      const balance: Balance = {
+      const balance: BalanceMasterChef = {
         ...tokens[i],
         category: 'farm',
         amount: BigNumber.from(res.output.amount),

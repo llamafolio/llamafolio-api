@@ -11,6 +11,7 @@ export interface BaseContext {
 
 export interface BaseBalance extends BaseContract {
   amount: BigNumber
+  claimable?: BigNumber
 }
 
 export interface BasePricedBalance extends BaseBalance {
