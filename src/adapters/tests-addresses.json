@@ -3,7 +3,9 @@
     "aave/v2": {
       "avax": {
         "stake/rewards": [],
-        "lend/borrow": []
+        "lend/borrow": [],
+        "farm": [],
+        "lp": []
       },
       "ethereum": {
         "stake/rewards": [
@@ -15,11 +17,15 @@
           "0x7344e478574acbe6dac9de1077430139e17eec3d",
           "0x777777c9898d384f785ee44acfe945efdff5f3e0",
           "0xa976ea51b9ba3232706af125a92e32788dc08ddc"
-        ]
+        ],
+        "farm": [],
+        "lp": []
       },
       "polygon": {
         "stake/rewards": [],
-        "lend/borrow": []
+        "lend/borrow": [],
+        "farm": [],
+        "lp": []
       }
     }
   },
@@ -27,69 +33,107 @@
   {
     "aave/v3": {
       "arbitrum": {
+        "stake/rewards": [],
         "lend/borrow": [
           "0x004c718103fed0bf75f2a02c3da7ea2332137fac",
           "0xa7def645947ff5a4a3bffb5c100691094829f252",
           "0x2268ab1a87899fb8038a14520ea410f3aef28407"
-        ]
+        ],
+        "farm": [],
+        "lp": []
       },
       "avax": {
+        "stake/rewards": [],
         "lend/borrow": [
           "0x935ad0fbea9572bb24138f23a69e314f0bdbddbe",
           "0x6cf9aa65ebad7028536e353393630e2340ca6049",
           "0x1840d137fc274006a0612e8389b18cae9d805364"
-        ]
+        ],
+        "farm": [],
+        "lp": []
       },
       "fantom": {
+        "stake/rewards": [],
         "lend/borrow": [
           "0x935ad0fbea9572bb24138f23a69e314f0bdbddbe",
           "0x49625a26b18ead4bb430dcf2a1f9aed2c414c98e",
           "0x506bf27c20d5e1608c43f044d9cf982fb0164123"
-        ]
+        ],
+        "farm": [],
+        "lp": []
       },
       "Optimism": {
-        "lend/borrow": []
+        "stake/rewards": [],
+        "lend/borrow": [],
+        "farm": [],
+        "lp": []
       },
       "polygon": {
+        "stake/rewards": [],
         "lend/borrow": [
           "0x73958d46b7aa2bc94926d8a215fa560a5cdca3ea",
           "0x3e059f977670eeba3460005f20572f991637614e",
           "0xe9177c5204f633a562747010788903747a858dcd"
-        ]
+        ],
+        "farm": [],
+        "lp": []
       }
     }
   },
 
   {
     "abracadabra": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
+        "stake/rewards": [
+          "0xee06760b1cc50f268a0201b6525029e21c67cb64",
+          "0xb75969711c6c104d1e905bd0db091ad8e1341c43",
+          "0xf248e3a38bbbfa1a20fc6fcccb0a35af3e51d642"
+        ],
+        "lend/borrow": [
+          "0xd80526eec84b0a66ddf55181dc52e0fb932e9464",
+          "0x79d0890a75a14bef6bf52b71ff508e05d2e1eec0",
+          "0x232af6e859d87d076d307df931be93249cc4e394"
+        ],
+        "farm": [
+          "0x7f80f4331ea4a877443dcb9d9f40ea21a0d3e297",
+          "0x33938097b1d655761eab28ed7dc8bc8a657267b9",
+          "0xc3f5785c9490c67db3b65e143f17a214925ac762"
+        ],
         "lp": []
       },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
+        "stake/rewards": [
+          "0xf5bce5077908a1b7370b9ae04adc565ebd643966",
+          "0x3dc606ce9cca12196917a3267a8ae7008e018958",
+          "0x346f1d297c98c28574742b067b67a80cda2dc0d9"
+        ],
+        "lend/borrow": [
+          "0xac5406aebe35a27691d62bfb80eefcd7c0093164",
+          "0xbefe4f86f189c1c817446b71eb6ac90e3cb68e60",
+          "0xca436e14855323927d6e6264470ded36455fc8bd"
+        ],
+        "farm": [
+          "0x1ae9938040852172f7588bbbe32cdb0867790591",
+          "0xdcb00c58277a41e8a7f6d4b988f9387bf5c319bf"
+        ],
         "lp": []
       },
       "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
+        "stake/rewards": [
+          "0x15800782f6dc1f46871f90e282cb64643bd67fd6",
+          "0x3f47a66ada01491c3d364599e5bcbf80a1a67092",
+          "0x66a534935e25c59b9a181efcd6889a1f834cb8c8"
+        ],
+        "lend/borrow": [
+          "0x15800782f6dc1f46871f90e282cb64643bd67fd6",
+          "0x6805e260db96cb44ae9154a541e60525cddcbe98",
+          "0x66a534935e25c59b9a181efcd6889a1f834cb8c8"
+        ],
+        "farm": [
+          "0xb49bd30ba7533c597d700843ca385ac1dca1e876",
+          "0xf164e0308d1137ba232ce96edf47cd06dd4c72cc",
+          "0x2705a3516dd983c81ab7fb17d075c77ff118d510"
+        ],
         "lp": []
       }
     }
