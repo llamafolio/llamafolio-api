@@ -42,16 +42,9 @@ export const getStakeBalances = async (
   const rewardsBalanceOf = BigNumber.from(rewardsBalanceOfRes.output)
 
   const stakebalance: Balance = {
+    ...(looksContract as Balance),
     amount: stakeBalanceOf,
-    chain: looksContract.chain,
-    address: looksContract.address,
-    name: looksContract.name,
-    symbol: looksContract.symbol,
-    decimals: looksContract.decimals,
-    rewards:
-      stakingContract.rewards && stakingContract.rewards[0]
-        ? [{ ...stakingContract.rewards[0], amount: rewardsBalanceOf }]
-        : [],
+    rewards: [{ ...(stakingContract.rewards?.[0] as Balance), amount: rewardsBalanceOf }],
     category: 'stake',
   }
 
@@ -78,11 +71,7 @@ export const getCompounderBalances = async (
   })
 
   const compounderBalance: Balance = {
-    chain: looksContract.chain,
-    address: looksContract.address,
-    name: looksContract.name,
-    symbol: looksContract.symbol,
-    decimals: looksContract.decimals,
+    ...(looksContract as Balance),
     amount: BigNumber.from(sharesValue.output),
     yieldKey: compounder.address,
     category: 'farm',

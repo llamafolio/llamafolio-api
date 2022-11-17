@@ -104,7 +104,7 @@ export async function getContractsInfos(chain: Chain, poolsContracts: string[]) 
         associatedWithPoolNumber: i,
         totalToken,
         totalSupply,
-        underlyings: underlyings[i] ? [{ ...(underlyings[i] as Contract) }] : [],
+        underlyings: [{ ...(underlyings[i] as Contract) }],
       }
 
       contracts.push(contract)

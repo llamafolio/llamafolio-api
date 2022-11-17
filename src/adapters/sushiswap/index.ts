@@ -1,4 +1,5 @@
 import { Adapter, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Category } from '@lib/category'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -50,8 +51,8 @@ const getContracts = async () => {
     .filter(isNotNullish)
 
   const contracts = [
-    ...pairs.map((c) => Object.assign(c, { category: 'lp' })),
-    ...masterChefPools.map((c) => Object.assign(c, { category: 'farm' })),
+    ...pairs.map((c) => ({ ...c, category: 'lp' as Category })),
+    ...masterChefPools.map((c) => ({ ...c, category: 'farm' as Category })),
   ]
 
   return {

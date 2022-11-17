@@ -45,7 +45,9 @@ async function main() {
 
   const ctx: BaseContext = { address }
 
-  const module = await import(path.join(__dirname, '..', 'src', 'adapters', process.argv[2]))
+  const adapterId = process.argv[2].replace('-', '/')
+
+  const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
 
   const contractsRes = await adapter.getContracts()

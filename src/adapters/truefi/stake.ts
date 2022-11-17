@@ -1,12 +1,10 @@
-import { Balance, BaseContext } from '@lib/adapter'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
-import { PoolSupply } from './pools'
-
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, pools: PoolSupply[]) {
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, pools: Contract[]) {
   const balances: Balance[] = []
 
   const calls = pools.map((pool) => ({
@@ -30,11 +28,10 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, pools: Po
     const amount = BigNumber.from(balanceOf[i].output).mul(pool.poolValue).div(pool.totalSupply)
 
     const balance: Balance = {
+      ...(pool as Balance),
       category: 'stake',
-      chain: pool.chain,
-      address: pool.address,
       amount,
-      underlyings: pool.underlyings && pool.underlyings[0] ? [{ ...pool.underlyings[0], amount }] : [],
+      underlyings: [{ ...(pool.underlyings?.[0] as Balance), amount }],
     }
 
     balances.push(balance)

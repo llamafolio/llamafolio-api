@@ -3,7 +3,7 @@ import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
-import { getUnderlyingBalances, getUnderlyingsContract } from '@lib/uniswap/v2/pair'
+import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { ethers } from 'ethers'
 
 import MultiFeeDistributionABI from './abis/MultiFeeDistribution.json'
@@ -39,8 +39,6 @@ export async function getMultiFeeDistributionBalances(
 
   const [stakingToken, rewardToken] = await getERC20Details('ethereum', [stakingTokenAddress, rewardTokenAddress])
 
-  const stakingTokenUnderlying = await getUnderlyingsContract(stakingToken)
-
   const tokens = claimableRewards.map((res: any) => res.token)
   const tokenDetails = await getERC20Details(chain, tokens)
   const tokenByAddress: { [key: string]: Token } = {}
@@ -50,7 +48,7 @@ export async function getMultiFeeDistributionBalances(
 
   // get balances of Sushi staking LP token
   const [lockedBalance] = await getUnderlyingBalances(chain, [
-    { ...stakingTokenUnderlying, amount: lockedBalances.total, rewards: [] } as Balance,
+    { ...stakingToken, amount: lockedBalances.total, rewards: [] } as Balance,
   ])
 
   if (lockedBalance) {

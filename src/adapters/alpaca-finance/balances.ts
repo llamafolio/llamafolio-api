@@ -83,10 +83,9 @@ export async function getFarmingBalances(ctx: BaseContext, chain: Chain, contrac
         const amount = BigNumber.from(userInfoRes[i].output.amount).mul(contract.totalToken).div(contract.totalSupply)
 
         const balance: Balance = {
-          ...contract,
+          ...(contract as Balance),
           amount,
-          underlyings:
-            contract.underlyings && contracts[i].underlyings?.[0] ? [{ ...contract.underlyings[0], amount }] : [],
+          underlyings: [{ ...(contract.underlyings?.[0] as Balance), amount }],
           rewards: [
             contracts[i].chain === 'bsc'
               ? { ...AlpacaBSC, amount: pendingRewards }
@@ -122,10 +121,9 @@ export async function getDepositBalances(ctx: BaseContext, chain: Chain, contrac
       const amount = BigNumber.from(balanceOfRes[i].output).mul(contract.totalToken).div(contract.totalSupply)
 
       const balance: Balance = {
-        chain: contract.chain,
-        address: contract.address,
+        ...(contract as Balance),
         amount,
-        underlyings: contract.underlyings && contract.underlyings[0] ? [{ ...contract.underlyings[0], amount }] : [],
+        underlyings: [{ ...(contract.underlyings?.[0] as Balance), amount }],
         category: 'lp',
       }
 

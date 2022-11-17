@@ -56,13 +56,9 @@ const getStakeBalances = async (ctx: any, chain: Chain) => {
   )
 
   const stakeBalance: Balance = {
+    ...(HEX as Balance),
     amount: stakeAmount,
     category: 'stake',
-    chain: chain,
-    address: HEX.address,
-    decimals: HEX.decimals,
-    symbol: HEX.symbol,
-    name: HEX.name,
   }
 
   return [stakeBalance]
@@ -74,15 +70,9 @@ const getContracts = () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { HEX }) => {
-  if (HEX) {
-    return {
-      balances: await getStakeBalances(ctx, 'ethereum'),
-    }
-  }
-
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx) => {
   return {
-    balances: [],
+    balances: await getStakeBalances(ctx, 'ethereum'),
   }
 }
 
