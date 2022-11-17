@@ -5,15 +5,7 @@ import { getERC20Details } from '@lib/erc20'
 import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
-export async function getSStakeContract(chain: Chain, contract?: Contract) {
-  const contracts: Contract[] = []
-
-  if (!contract) {
-    console.log('Missing or incorrect contract')
-
-    return []
-  }
-
+export async function getSStakeContract(chain: Chain, contract: Contract) {
   try {
     const underlyingTokenAddressRes = await call({
       chain,
@@ -34,23 +26,21 @@ export async function getSStakeContract(chain: Chain, contract?: Contract) {
       ...contract,
       underlyings,
     }
-    contracts.push(stakeContract)
 
-    return contracts
+    return stakeContract
   } catch (error) {
     console.log('Failed to get sStake contract')
 
-    return []
+    return
   }
 }
 
-export async function getSStakeBalance(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
-  const balances: Balance[] = []
-  const contract = contracts[0]
-
-  if (!contract.underlyings?.[0]) {
+export async function getSStakeBalance(ctx: BaseContext, chain: Chain, contract?: Contract) {
+  if (!contract || !contract.underlyings?.[0]) {
     return []
   }
+
+  const balances: Balance[] = []
 
   try {
     const [balanceOfRes, totalSupplyRes, balanceOfTokenInUnderlyingRes] = await Promise.all([

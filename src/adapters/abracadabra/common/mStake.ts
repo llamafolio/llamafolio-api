@@ -4,15 +4,7 @@ import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
-export async function getMStakeContract(chain: Chain, contract?: Contract) {
-  const contracts: Contract[] = []
-
-  if (!contract) {
-    console.log('Missing or incorrect contract')
-
-    return []
-  }
-
+export async function getMStakeContract(chain: Chain, contract: Contract) {
   try {
     const [underlyingTokenAddressRes, rewardTokenAddressRes] = await Promise.all([
       call({
@@ -52,20 +44,21 @@ export async function getMStakeContract(chain: Chain, contract?: Contract) {
       underlyings,
       rewards,
     }
-    contracts.push(stakeContract)
 
-    return contracts
+    return stakeContract
   } catch (error) {
     console.log('Failed to get mStake contract')
-
-    return []
+    return
   }
 }
 
-export async function getMStakeBalance(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+export async function getMStakeBalance(ctx: BaseContext, chain: Chain, contract?: Contract) {
+  if (!contract || !contract.underlyings?.[0]) {
+    return []
+  }
+
   const balances: Balance[] = []
-  const contract = contracts[0]
-  const underlying = contract.underlyings?.[0]
+  const underlying = contract.underlyings[0]
   const reward = contract.rewards?.[0]
 
   try {
@@ -104,13 +97,17 @@ export async function getMStakeBalance(ctx: BaseContext, chain: Chain, contracts
     const balanceOf = BigNumber.from(balanceOfRes.output.amount)
     const pendingRewards = BigNumber.from(pendingRewardsRes.output)
 
-    if (contract && underlying && reward) {
+    if (contract) {
       const balance: Balance = {
         ...contract,
+        rewards: undefined,
         amount: balanceOf,
         underlyings: [{ ...underlying, amount: balanceOf }],
-        rewards: [{ ...reward, amount: pendingRewards }],
         category: 'stake',
+      }
+
+      if (reward) {
+        balance.rewards = [{ ...reward, amount: pendingRewards }]
       }
 
       balances.push(balance)
