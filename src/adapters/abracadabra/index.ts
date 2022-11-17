@@ -1,26 +1,30 @@
-import { Adapter, GetBalancesHandler } from '@lib/adapter'
-import * as ethereum from '@adapters/abracadabra/ethereum'
 import * as avax from '@adapters/abracadabra/avax'
+import * as ethereum from '@adapters/abracadabra/ethereum'
 import * as fantom from '@adapters/abracadabra/fantom'
+import { Adapter, GetBalancesHandler } from '@lib/adapter'
 
 const getContracts = async () => {
-  const ethereumContracts = await ethereum.getContracts()
-  const avaxContracts = await avax.getContracts()
-  const fantomContracts = await fantom.getContracts()
+  const [avaxContracts, ethereumContracts, fantomContracts] = await Promise.all([
+    avax.getContracts(),
+    ethereum.getContracts(),
+    fantom.getContracts(),
+  ])
 
   return {
     contracts: {
-      ...ethereumContracts.contracts,
       ...avaxContracts.contracts,
+      ...ethereumContracts.contracts,
       ...fantomContracts.contracts,
     },
   }
 }
 
 const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const ethereumBalances = await ethereum.getBalances(ctx, contracts)
-  const avaxBalances = await avax.getBalances(ctx, contracts)
-  const fantomBalances = await fantom.getBalances(ctx, contracts)
+  const [avaxBalances, ethereumBalances, fantomBalances] = await Promise.all([
+    avax.getBalances(ctx, contracts),
+    ethereum.getBalances(ctx, contracts),
+    fantom.getBalances(ctx, contracts),
+  ])
 
   return {
     ...ethereumBalances,

@@ -1,9 +1,9 @@
-import { BigNumber } from 'ethers'
-import { getERC20Details, getERC20Details2 } from '@lib/erc20'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
+import { getERC20Details, getERC20Details2 } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { getPricedBalances } from '@lib/price'
+import { BigNumber } from 'ethers'
 
 export async function getMarketsContracts(chain: Chain, contracts?: string[]) {
   const marketsContracts: Contract[] = []
@@ -204,8 +204,6 @@ export async function getHealthFactor(balances: Balance[]) {
   const nonZeroBorrowedBalances = nonZeroBalances.filter((borrow) => borrow.category === 'borrow')
 
   if (nonZeroSuppliedBalances.length === 0) {
-    console.log('Supply balance is required to retrieve health factor')
-
     return
   }
 

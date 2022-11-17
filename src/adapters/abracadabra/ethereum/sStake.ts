@@ -1,9 +1,9 @@
-import { BigNumber } from 'ethers'
-import { getERC20Details } from '@lib/erc20'
+import { call } from '@defillama/sdk/build/abi'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
-import { call } from '@defillama/sdk/build/abi'
+import { getERC20Details } from '@lib/erc20'
 import { abi } from '@lib/erc20'
+import { BigNumber } from 'ethers'
 
 export async function getSStakeContract(chain: Chain, contract?: Contract) {
   const contracts: Contract[] = []
