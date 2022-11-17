@@ -12,4 +12,5 @@ export interface Token {
   // optional token used to retrieve price.
   // ex: WETH -> ETH
   priceSubstitute?: string
+  pid?: string // required value for masterchef pools
 }

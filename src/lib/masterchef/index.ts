@@ -7,13 +7,10 @@ import { BigNumber, ethers } from 'ethers'
 
 import MasterChefAbi from './abis/MasterChef.json'
 
-type TokenMasterChef = Token & { pid: string }
-type BalanceMasterChef = Balance & { pid: string }
-
 export interface GetMasterChefPoolsInfoParams {
   chain: Chain
   masterChefAddress: string
-  methodName: string
+  methodName?: string
 }
 
 export async function getMasterChefPoolsInfo({ chain, masterChefAddress, methodName }: GetMasterChefPoolsInfoParams) {
@@ -52,7 +49,7 @@ export async function getMasterChefPoolsInfo({ chain, masterChefAddress, methodN
 export interface GetMasterChefBalancesParams {
   chain: Chain
   masterChefAddress: string
-  tokens: TokenMasterChef[]
+  tokens: Token[]
   rewardToken: Token
   pendingRewardName: string
 }
@@ -68,7 +65,7 @@ export async function getMasterChefBalances(
   const userInfoRes = await multicall({
     chain,
     calls: tokens.map((token) => ({
-      params: [token.pid, ctx.address],
+      params: [token.pid ?? '0', ctx.address],
       target: masterChef.address,
     })),
     abi: {
@@ -86,12 +83,12 @@ export async function getMasterChefBalances(
     },
   })
 
-  const resBalances: BalanceMasterChef[] = []
+  const resBalances: Balance[] = []
 
   for (let i = 0; i < userInfoRes.length; i++) {
     const res = userInfoRes[i]
     if (res.success) {
-      const balance: BalanceMasterChef = {
+      const balance: Balance = {
         ...tokens[i],
         category: 'farm',
         amount: BigNumber.from(res.output.amount),
@@ -106,7 +103,7 @@ export async function getMasterChefBalances(
   const pendingRewardsRes = await multicall({
     chain,
     calls: resBalances.map((token) => ({
-      params: [token.pid, ctx.address],
+      params: [token.pid ?? '0', ctx.address],
       target: masterChef.address,
     })),
     abi: pendingRewardAbi,

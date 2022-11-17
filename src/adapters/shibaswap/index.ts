@@ -1,4 +1,4 @@
-import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Adapter, Balance, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -64,9 +64,9 @@ const getContracts = async () => {
     })
     .filter(isNotNullish)
 
-  const contracts = [
-    ...pairsInfo.map((c) => ({ ...c, category: 'lp' })),
-    ...masterChefPools.map((c) => ({ ...c, category: 'farm' })),
+  const contracts: Contract[] = [
+    ...pairsInfo.map((c) => Object.assign(c, { category: 'lp' })),
+    ...masterChefPools.map((c) => Object.assign(c, { category: 'farm' })),
   ]
 
   return {
@@ -75,10 +75,10 @@ const getContracts = async () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  let balances = []
-  const lp = []
-  const farm = []
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts: Contract[]) => {
+  let balances: Balance[] = []
+  const lp: Contract[] = []
+  const farm: Contract[] = []
 
   for (const contract of contracts) {
     if (contract.category === 'lp') {
@@ -103,9 +103,11 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contrac
   let masterChefBalances = await getMasterChefBalances(ctx, {
     chain: 'ethereum',
     masterChefAddress: masterChef.address,
-    tokens: farm,
+    tokens: farm as Token[],
     rewardToken: bone,
+    pendingRewardName: 'pendingToken',
   })
+
   masterChefBalances = await getUnderlyingBalances('ethereum', masterChefBalances)
 
   balances = balances.concat(masterChefBalances)

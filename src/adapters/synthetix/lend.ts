@@ -76,12 +76,17 @@ export async function getLendBorrowBalances(
   ])
 
   const lendAmount = BigNumber.from(suppliedRes.output)
+
   const lendingBalance: Balance = {
-    ...synthetixContract,
+    address: synthetixContract.address,
+    chain: synthetixContract.chain,
     amount: lendAmount,
-    underlyings: [{ ...synthetixContract.underlyings[0], amount: lendAmount }],
+    underlyings: synthetixContract?.underlyings?.[0]
+      ? [{ ...synthetixContract.underlyings[0], amount: lendAmount }]
+      : [],
     category: 'lend',
   }
+
   balances.push(lendingBalance)
 
   const borrowAmount = BigNumber.from(borrowedRes.output.alreadyIssued)
@@ -102,15 +107,18 @@ export async function getLendBorrowBalances(
 
   const SNXRewardAmount = BigNumber.from(feesAvailableRes.output[1])
   const SNXRewardBalance: Balance = {
-    ...synthetixContract,
+    address: synthetixContract.address,
+    chain: synthetixContract.chain,
     amount: SNXRewardAmount,
-    underlyings: [
-      {
-        ...synthetixContract.underlyings[0],
-        amount: SNXRewardAmount,
-        claimable: SNXRewardAmount,
-      },
-    ],
+    underlyings: synthetixContract?.underlyings?.[0]
+      ? [
+          {
+            ...synthetixContract.underlyings[0],
+            amount: SNXRewardAmount,
+            claimable: SNXRewardAmount,
+          },
+        ]
+      : [],
     category: 'reward',
   }
   balances.push(SNXRewardBalance)

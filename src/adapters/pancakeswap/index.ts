@@ -1,4 +1,4 @@
-import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Adapter, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -38,6 +38,7 @@ const getContracts = async () => {
       chain: 'bsc',
       masterChefAddress: masterChef.address,
     }),
+
     getMasterChefPoolsInfo({
       chain: 'bsc',
       masterChefAddress: masterChef2.address,
@@ -70,10 +71,10 @@ const getContracts = async () => {
     })
     .filter(isNotNullish)
 
-  const contracts = [
-    ...pairs.map((c) => ({ ...c, category: 'lp' })),
-    ...masterChefPools.map((c) => ({ ...c, category: 'farm' })),
-    ...masterChefPools2.map((c) => ({ ...c, category: 'farm2' })),
+  const contracts: Contract[] = [
+    ...pairs.map((c) => Object.assign(c, { category: 'lp' })),
+    ...masterChefPools.map((c) => Object.assign(c, { category: 'farm' })),
+    ...masterChefPools2.map((c) => Object.assign(c, { category: 'farm2' })),
   ]
 
   return {
@@ -82,10 +83,10 @@ const getContracts = async () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const lp = []
-  const farm = []
-  const farmOld = []
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts: Contract[]) => {
+  const lp: Contract[] = []
+  const farm: Contract[] = []
+  const farmOld: Contract[] = []
 
   for (const contract of contracts) {
     if (contract.category === 'lp') {
@@ -103,7 +104,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contrac
   let masterChefBalances = await getMasterChefBalances(ctx, {
     chain: 'bsc',
     masterChefAddress: masterChef.address,
-    tokens: farm,
+    tokens: farm as Token[],
     rewardToken: cake,
     pendingRewardName: 'pendingCake',
   })
@@ -114,7 +115,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contrac
   let masterChefBalances2 = await getMasterChefBalances(ctx, {
     chain: 'bsc',
     masterChefAddress: masterChef2.address,
-    tokens: farmOld,
+    tokens: farmOld as Token[],
     rewardToken: cake,
     pendingRewardName: 'pendingCake',
   })

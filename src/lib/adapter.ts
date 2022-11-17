@@ -37,6 +37,8 @@ export interface Balance extends BaseBalance {
   lock?: Lock
   parent?: string
   adapterId?: string
+
+  pid?: string // required value for masterchef pools
 }
 
 export interface RewardBalance extends Balance {

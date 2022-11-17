@@ -1,4 +1,4 @@
-export type Category = 'wallet' | 'lend' | 'borrow' | 'stake' | 'vest' | 'lock' | 'lp' | 'farm' | 'reward'
+export type Category = 'wallet' | 'lend' | 'borrow' | 'stake' | 'vest' | 'lock' | 'lp' | 'farm' | 'farm2' | 'reward'
 
 export interface CategoryInfo {
   category: Category
@@ -45,6 +45,11 @@ export const Categories: Record<Category, CategoryInfo> = {
   farm: {
     category: 'farm',
     title: 'Farming',
+    description: 'Assets used to yield rewards on a protocol',
+  },
+  farm2: {
+    category: 'farm2',
+    title: 'Farming2',
     description: 'Assets used to yield rewards on a protocol',
   },
   reward: {
