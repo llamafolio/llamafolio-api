@@ -1,6 +1,6 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 
-import { getHealthFactor, getMarketsBalances, getMarketsContracts } from '../common/markets'
+import { getMarketsBalances, getMarketsContracts } from '../common/markets'
 import { getMStakeBalance, getMStakeContract } from '../common/mStake'
 
 const mSPELL: Contract = {
@@ -41,14 +41,9 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
     getMarketsBalances(ctx, 'avax', marketsContracts_avax || []),
   ])
 
-  const healthFactor_avax = await getHealthFactor(marketsBalances_avax || [])
-
   const balances = [...mStakeBalances_avax, ...marketsBalances_avax]
 
   return {
     balances,
-    avax: {
-      healthFactor: healthFactor_avax,
-    },
   }
 }

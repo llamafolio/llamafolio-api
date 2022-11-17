@@ -2,7 +2,6 @@ import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20Details, getERC20Details2 } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { getPricedBalances } from '@lib/price'
 import { BigNumber } from 'ethers'
 
 export async function getMarketsContracts(chain: Chain, contracts?: string[]) {
@@ -188,48 +187,5 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
     console.log('Failed to get market balance')
 
     return []
-  }
-}
-
-export async function getHealthFactor(balances: Balance[]) {
-  if (!balances) {
-    console.log('Missing balance to retrieve health factor')
-
-    return
-  }
-
-  const nonZeroBalances = balances.filter((balance) => balance.amount.gt(0))
-
-  const nonZeroSuppliedBalances = nonZeroBalances.filter((supply) => supply.category === 'lend')
-  const nonZeroBorrowedBalances = nonZeroBalances.filter((borrow) => borrow.category === 'borrow')
-
-  if (nonZeroSuppliedBalances.length === 0) {
-    return
-  }
-
-  if (nonZeroBorrowedBalances.length === 0) {
-    return 10
-  }
-
-  try {
-    const [nonZeroSuppliedBalancesPriced, nonZeroBorrowedBalancesPriced] = await Promise.all([
-      await getPricedBalances(nonZeroSuppliedBalances),
-      getPricedBalances(nonZeroBorrowedBalances),
-    ])
-
-    const totalSuppliedBalancesPriced = nonZeroSuppliedBalancesPriced
-      .map((balance: any) => balance.balanceUSD)
-      .reduce((previous, current) => previous.balanceUSD + current.balanceUSD)
-
-    const totalBorrowedBalancesPriced = nonZeroBorrowedBalancesPriced
-      .map((balance: any) => balance.balanceUSD)
-      .reduce((previous, current) => previous + current)
-
-    const healthFactor =
-      totalBorrowedBalancesPriced > 0 ? totalSuppliedBalancesPriced / totalBorrowedBalancesPriced : 10
-
-    return healthFactor > 10 ? 10 : healthFactor
-  } catch (error) {
-    return
   }
 }
