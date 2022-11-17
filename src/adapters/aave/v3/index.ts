@@ -35,7 +35,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contrac
     ...avaxBalances,
     ...fantomBalances,
     ...polygonBalances,
-    balances: [...avaxBalances.balances, ...fantomBalances.balances, ...polygonBalances.balances],
+    balances: [...arbitrumBalances.balances, ...avaxBalances.balances, ...fantomBalances.balances, ...polygonBalances.balances],
   }
 }
 
