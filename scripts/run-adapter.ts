@@ -177,7 +177,7 @@ async function main() {
   const metadata: any[] = []
   for (const chain of chains) {
     if (balancesRes[chain.id]) {
-      metadata.push({ chain, ...balancesRes[chain.id] })
+      metadata.push({ chain: chain.id, ...balancesRes[chain.id] })
     }
   }
   console.log('Metadata:')

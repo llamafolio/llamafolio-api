@@ -153,7 +153,7 @@ export interface Contract extends BaseContract {
 }
 
 export interface ContractsConfig {
-  contracts: Contract[] | { [key: string]: Contract | Contract[] }
+  contracts: Contract[] | { [key: string]: Contract | Contract[] | undefined }
   revalidate?: number
 }
 
