@@ -95,7 +95,7 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
   }
 
   const [cTokensBalances, cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all([
-    getERC20BalanceOf(ctx, chain, contracts as Token[]),
+    getERC20BalanceOf(ctx, chain, contracts),
 
     multicall({
       chain,
