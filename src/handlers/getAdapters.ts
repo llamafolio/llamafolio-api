@@ -1,6 +1,6 @@
-import { APIGatewayProxyHandler } from "aws-lambda";
-import { success } from "@handlers/response";
-import { adapters } from "@adapters/index";
+import { adapters } from '@adapters/index'
+import { success } from '@handlers/response'
+import { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async () => {
   return success(
@@ -9,6 +9,6 @@ export const handler: APIGatewayProxyHandler = async () => {
         adapters: adapters.map((adapter) => ({ id: adapter.id })),
       },
     },
-    { maxAge: 10 * 60 }
-  );
-};
+    { maxAge: 10 * 60 },
+  )
+}

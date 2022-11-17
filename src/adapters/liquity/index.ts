@@ -1,41 +1,75 @@
-import { Adapter, Contract, GetBalancesHandler } from "@lib/adapter";
-import { getStakeBalances } from "./balances";
+import { getFarmBalances } from '@adapters/liquity/farm'
+import { getLendBalances } from '@adapters/liquity/lend'
+import { getStakeBalances } from '@adapters/liquity/stake'
+import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
 
 const stabilityPool: Contract = {
-  name: "stabPool",
-  displayName: "Stability Pool",
-  chain: "ethereum",
-  address: "0x66017D22b0f8556afDd19FC67041899Eb65a21bb",
-};
+  name: 'Stability Pool',
+  displayName: 'Stability Pool',
+  chain: 'ethereum',
+  address: '0x66017D22b0f8556afDd19FC67041899Eb65a21bb',
+}
+
 const troveManager: Contract = {
-  name: "trove",
-  displayName: "Trove Manager",
-  chain: "ethereum",
-  address: "0xa39739ef8b0231dbfa0dcda07d7e29faabcf4bb2",
-};
+  name: 'Trove',
+  displayName: 'Trove Manager',
+  chain: 'ethereum',
+  address: '0xa39739ef8b0231dbfa0dcda07d7e29faabcf4bb2',
+}
+
+const lqtyStaking: Contract = {
+  name: 'LQTY staking',
+  chain: 'ethereum',
+  address: '0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d',
+}
+
+/**
+ * Lending/borrowing interaction. Use trove manager to retrieve lending/borrowing balances
+ */
+const borrowerOperations: Contract = {
+  name: 'Borrower Operations',
+  chain: 'ethereum',
+  address: '0x24179CD81c9e782A4096035f7eC97fB8B783e007',
+}
+
+/**
+ * Lending/borrowing interaction through InstaDapp. Use trove manager to retrieve lending/borrowing balances
+ */
+const instaDappProxy: Contract = {
+  name: 'Liquity-v1',
+  chain: 'ethereum',
+  address: '0x3643bA40B8e2bd8F77233BDB6abe38c218f31bFe',
+}
 
 const getContracts = () => {
   return {
-    contracts: [stabilityPool, troveManager],
+    contracts: {
+      stabilityPool,
+      troveManager,
+      lqtyStaking,
+      borrowerOperations,
+      instaDappProxy,
+    },
     revalidate: 60 * 60,
-  };
-};
+  }
+}
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  contracts
-) => {
-  let balances = await getStakeBalances(ctx, "ethereum", contracts);
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { stabilityPool, lqtyStaking }) => {
+  const [lendBalances, farmBalances, stakeBalances] = await Promise.all([
+    getLendBalances(ctx, 'ethereum', troveManager),
+    getFarmBalances(ctx, 'ethereum', stabilityPool),
+    getStakeBalances(ctx, 'ethereum', lqtyStaking),
+  ])
 
   return {
-    balances,
-  };
-};
+    balances: [...lendBalances, ...farmBalances, ...stakeBalances],
+  }
+}
 
 const adapter: Adapter = {
-  id: "liquity",
+  id: 'liquity',
   getContracts,
   getBalances,
-};
+}
 
-export default adapter;
+export default adapter

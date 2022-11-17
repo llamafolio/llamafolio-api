@@ -1,35 +1,32 @@
-import { Adapter, GetBalancesHandler } from "@lib/adapter";
-import { getPairsContracts } from "@lib/uniswap/v2/factory";
-import { getPairsBalances } from "@lib/uniswap/v2/pair";
+import { Adapter, GetBalancesHandler } from '@lib/adapter'
+import { getPairsContracts } from '@lib/uniswap/v2/factory'
+import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 const getContracts = async () => {
   const pairs = await getPairsContracts({
-    chain: "fantom",
-    factoryAddress: "0x152eE697f2E276fA89E96742e9bB9aB1F2E61bE3",
+    chain: 'fantom',
+    factoryAddress: '0x152eE697f2E276fA89E96742e9bB9aB1F2E61bE3',
     length: 100,
-  });
+  })
 
   return {
     contracts: pairs,
     revalidate: 60 * 60,
-  };
-};
+  }
+}
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  contracts
-) => {
-  const pairs = await getPairsBalances(ctx, "fantom", contracts);
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const pairs = await getPairsBalances(ctx, 'fantom', contracts)
 
   return {
     balances: pairs,
-  };
-};
+  }
+}
 
 const adapter: Adapter = {
-  id: "spookyswap",
+  id: 'spookyswap',
   getContracts,
   getBalances,
-};
+}
 
-export default adapter;
+export default adapter
