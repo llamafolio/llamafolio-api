@@ -13,15 +13,14 @@ export interface BaseContext {
 export interface BaseBalance extends BaseContract {
   amount: BigNumber
   claimable?: BigNumber
+  parent?: string
+  adapterId?: string
 }
 
 export interface BasePricedBalance extends BaseBalance {
   price: number
   balanceUSD: number
   claimableUSD?: number
-
-  parent?: string
-  adapterId?: string
 
   // price updated at
   timestamp: number
@@ -35,8 +34,6 @@ export interface Balance extends BaseBalance {
   // ex: Uniswap Pair -> [token0, token1]
   underlyings?: BaseBalance[]
   lock?: Lock
-  parent?: string
-  adapterId?: string
 
   pid?: string // required value for masterchef pools
 }
