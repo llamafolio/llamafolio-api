@@ -14,7 +14,9 @@ interface CategoryBalances {
   balances: Balance[]
 }
 
-function help() {}
+function help() {
+  console.log('npm run {adapter-balances} {adapter} {address}')
+}
 
 async function main() {
   // argv[0]: ts-node
