@@ -1,19 +1,7 @@
 [
   {
     "aave/v2": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -30,18 +18,6 @@
           "0x777777c9898d384f785ee44acfe945efdff5f3e0",
           "0xa976ea51b9ba3232706af125a92e32788dc08ddc"
         ],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
         "farm": [],
         "lp": []
       },
@@ -73,18 +49,6 @@
           "0x6cf9aa65ebad7028536e353393630e2340ca6049",
           "0x1840d137fc274006a0612e8389b18cae9d805364"
         ],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
         "farm": [],
         "lp": []
       },
@@ -148,61 +112,19 @@
         "lend/borrow": [],
         "farm": [],
         "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
       }
     }
   },
 
   {
     "alpaca-finance": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "bsc": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
         "lp": []
       },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -213,37 +135,7 @@
 
   {
     "apeswap-amm": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -260,43 +152,7 @@
 
   {
     "apeswap-lending": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -307,31 +163,7 @@
 
   {
     "arrakis": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -354,37 +186,7 @@
 
   {
     "atlas-usv": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -401,43 +203,7 @@
 
   {
     "benqi-lending": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -448,43 +214,7 @@
 
   {
     "benqi-staked-avax": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -495,43 +225,7 @@
 
   {
     "compound": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -542,43 +236,7 @@
 
   {
     "concentrator": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -589,43 +247,7 @@
 
   {
     "convex": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -683,43 +305,7 @@
 
   {
     "euler": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -730,43 +316,7 @@
 
   {
     "floor-dao": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -777,43 +327,7 @@
 
   {
     "geist": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -835,55 +349,13 @@
         "lend/borrow": [],
         "farm": [],
         "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
       }
     }
   },
 
   {
     "granary-finance": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -902,12 +374,6 @@
         "lp": []
       },
       "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -918,18 +384,6 @@
 
   {
     "hector-network": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "bsc": {
         "stake/rewards": [],
         "lend/borrow": [],
@@ -943,18 +397,6 @@
         "lp": []
       },
       "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -965,43 +407,7 @@
 
   {
     "hex": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1013,18 +419,6 @@
   {
     "hundred-finance": {
       "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1059,43 +453,7 @@
 
   {
     "inverse-finance": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1106,19 +464,7 @@
 
   {
     " iron-bank": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1137,12 +483,6 @@
         "lp": []
       },
       "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1153,42 +493,6 @@
 
   {
     "klima-dao": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
@@ -1206,25 +510,7 @@
         "farm": [],
         "lp": []
       },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1247,43 +533,7 @@
 
   {
     "life-dao": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1293,25 +543,7 @@
   },
 
   {
-    "liquidity": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
+    "liquity": {
       "ethereum": {
         "stake/rewards": [],
         "lend/borrow": [],
@@ -1319,18 +551,6 @@
         "lp": []
       },
       "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1341,43 +561,7 @@
 
   {
     "looksrare": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1388,43 +572,7 @@
 
   {
     "maple": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1435,43 +583,7 @@
 
   {
     "nemesis-dao": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1482,43 +594,7 @@
 
   {
     "nexus-mutual": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1529,43 +605,7 @@
 
   {
     "olympus-dao": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1576,18 +616,6 @@
 
   {
     "pancakeswap": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "bsc": {
         "stake/rewards": [],
         "lend/borrow": [],
@@ -1595,24 +623,6 @@
         "lp": []
       },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1623,43 +633,7 @@
 
   {
     "pangolin": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1675,85 +649,13 @@
         "lend/borrow": [],
         "farm": [],
         "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
       }
     }
   },
 
   {
     "rocket-pool": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1764,43 +666,7 @@
 
   {
     "scream": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1811,43 +677,7 @@
 
   {
     "shibaswap": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1857,43 +687,7 @@
   },
   {
     "spartacus": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1903,43 +697,7 @@
   },
   {
     "spiritswap": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1949,43 +707,7 @@
   },
   {
     "spookyswap": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -1996,43 +718,7 @@
 
   {
     "spool": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2043,43 +729,7 @@
 
   {
     "stakewise": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2137,43 +787,7 @@
 
   {
     "strike": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2214,12 +828,6 @@
         "farm": [],
         "lp": []
       },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
@@ -2231,43 +839,13 @@
 
   {
     "synthetix": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
         "lp": []
       },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2278,43 +856,7 @@
 
   {
     "templedao": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2325,43 +867,7 @@
 
   {
     "traderjoe": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2372,43 +878,7 @@
 
   {
     "truefi": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2425,25 +895,7 @@
         "farm": [],
         "lp": []
       },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2465,44 +917,8 @@
   },
 
   {
-    " uwu-lend": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
+    "uwu-lend": {
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2513,43 +929,7 @@
 
   {
     "valas": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2560,43 +940,7 @@
 
   {
     "vector": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2607,90 +951,7 @@
 
   {
     "venus": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      }
-    }
-  },
-
-  {
-    "wallet": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2707,12 +968,6 @@
         "farm": [],
         "lp": []
       },
-      "avax": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "bsc": {
         "stake/rewards": [],
         "lend/borrow": [],
@@ -2720,12 +975,6 @@
         "lp": []
       },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
@@ -2748,43 +997,13 @@
 
   {
     "wonderland": {
-      "arbitrum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "avax": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
         "lp": []
       },
-      "bsc": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
       "ethereum": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "fantom": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
-      },
-      "polygon": {
         "stake/rewards": [],
         "lend/borrow": [],
         "farm": [],
