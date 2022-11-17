@@ -8,6 +8,7 @@
     "find-user": "ts-node -T scripts/find-user.ts",
     "lint": "eslint --ignore-path .gitignore --ignore-path .eslintignore \"**/*.{js,ts}\" --max-warnings=0",
     "format": "prettier --ignore-path .gitignore --ignore-path .prettierignore '**/*.{md,json,js,ts}' --write",
+    "postinstall": "npm run update-tokens",
     "test": "jest && tscheck",
     "tscheck": "tsc -p tsconfig.json --noEmit --skipLibCheck",
     "update-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build"
