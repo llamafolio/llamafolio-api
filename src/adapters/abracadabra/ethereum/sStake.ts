@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { getERC20Details } from '@lib/erc20'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
-import { Chain } from '@defillama/sdk/build/general'
+import { Chain } from '@lib/chains'
 import { call } from '@defillama/sdk/build/abi'
 import { abi } from '@lib/erc20'
 
@@ -9,6 +9,8 @@ export async function getSStakeContract(chain: Chain, contract?: Contract) {
   const contracts: Contract[] = []
 
   if (!contract) {
+    console.log('Missing or incorrect contract')
+
     return []
   }
 
@@ -36,6 +38,8 @@ export async function getSStakeContract(chain: Chain, contract?: Contract) {
 
     return contracts
   } catch (error) {
+    console.log('Failed to get sStake contract')
+
     return []
   }
 }
@@ -98,6 +102,8 @@ export async function getSStakeBalance(ctx: BaseContext, chain: Chain, contracts
 
     return balances
   } catch (error) {
+    console.log('Failed to get sStake balance')
+
     return []
   }
 }

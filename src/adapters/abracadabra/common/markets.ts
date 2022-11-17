@@ -1,7 +1,7 @@
 import { BigNumber } from 'ethers'
 import { getERC20Details, getERC20Details2 } from '@lib/erc20'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
-import { Chain } from '@defillama/sdk/build/general'
+import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { getPricedBalances } from '@lib/price'
 
@@ -9,6 +9,8 @@ export async function getMarketsContracts(chain: Chain, contracts?: string[]) {
   const marketsContracts: Contract[] = []
 
   if (!contracts) {
+    console.log('Missing or incorrect contracts')
+
     return []
   }
 
@@ -56,6 +58,7 @@ export async function getMarketsContracts(chain: Chain, contracts?: string[]) {
     for (let i = 0; i < contracts.length; i++) {
       const token = tokens[i]
       const underlying = underlyings[i]
+      const contract = contracts[i]
 
       const market: Contract = {
         chain,
@@ -68,6 +71,8 @@ export async function getMarketsContracts(chain: Chain, contracts?: string[]) {
     }
     return marketsContracts
   } catch (error) {
+    console.log('Failed to get market contract')
+
     return []
   }
 }
@@ -79,12 +84,6 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
     console.log('Missing or incorrect contract')
 
     return []
-  }
-
-  if (!contracts) {
-    console.log("Missing or incorrect contract");
-
-    return [];
   }
 
   try {
@@ -137,7 +136,7 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
 
     const borrowingToken = borrowingTokenRes.filter((res) => res.success).map((res) => res.output)
 
-    const underlyingBorrowingToken = await getERC20Details(chain, borrowingToken)
+    const underlyingBorrowingTokens = await getERC20Details(chain, borrowingToken)
 
     const lendingBalances = lendingBalancesRes.filter((res) => res.success).map((res) => BigNumber.from(res.output))
 
@@ -166,8 +165,9 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
 
     for (let i = 0; i < contracts.length; i++) {
       const amount = borrowingBalances[i]
+      const underlyingBorrowingToken = underlyingBorrowingTokens[i]
 
-      if (!underlyingBorrowingToken) {
+      if (!underlyingBorrowingTokens) {
         return []
       }
 
@@ -183,17 +183,10 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
       balances.push(borrowingBalance)
     }
 
-    const healthFactor = await getHealthFactor(balances || [])
-
-    if (healthFactor !== undefined)
-      console.log(
-        `User: ${ctx.address} - Adapter: ${process.argv[2]} - Chain: ${chain} - HealthFactor: ${
-          healthFactor && healthFactor > 10 ? 10 : healthFactor
-        }`,
-      )
-
     return balances
   } catch (error) {
+    console.log('Failed to get market balance')
+
     return []
   }
 }
@@ -221,18 +214,24 @@ export async function getHealthFactor(balances: Balance[]) {
   }
 
   try {
-    const pricedContracts = await getPricedBalances(balances)
+    const [nonZeroSuppliedBalancesPriced, nonZeroBorrowedBalancesPriced] = await Promise.all([
+      await getPricedBalances(nonZeroSuppliedBalances),
+      getPricedBalances(nonZeroBorrowedBalances),
+    ])
 
-    const formattedSuppliedBalances = pricedContracts
-      .filter((balance) => balance.category === 'lend')
+    const totalSuppliedBalancesPriced = nonZeroSuppliedBalancesPriced
+      .map((balance: any) => balance.balanceUSD)
+      .reduce((previous, current) => previous.balanceUSD + current.balanceUSD)
+
+    const totalBorrowedBalancesPriced = nonZeroBorrowedBalancesPriced
       .map((balance: any) => balance.balanceUSD)
       .reduce((previous, current) => previous + current)
 
-    const formattedBorrowedBalances = pricedContracts
-      .filter((balance) => balance.category === 'borrow')
-      .map((balance: any) => balance.balanceUSD)
-      .reduce((previous, current) => previous + current)
+    const healthFactor =
+      totalBorrowedBalancesPriced > 0 ? totalSuppliedBalancesPriced / totalBorrowedBalancesPriced : 10
 
-    return formattedSuppliedBalances / formattedBorrowedBalances
-  } catch (error) {}
+    return healthFactor > 10 ? 10 : healthFactor
+  } catch (error) {
+    return
+  }
 }

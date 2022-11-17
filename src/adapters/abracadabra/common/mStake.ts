@@ -1,13 +1,15 @@
 import { BigNumber } from 'ethers'
 import { getERC20Details } from '@lib/erc20'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
-import { Chain } from '@defillama/sdk/build/general'
+import { Chain } from '@lib/chains'
 import { call } from '@defillama/sdk/build/abi'
 
 export async function getMStakeContract(chain: Chain, contract?: Contract) {
   const contracts: Contract[] = []
 
   if (!contract) {
+    console.log('Missing or incorrect contract')
+
     return []
   }
 
@@ -54,6 +56,8 @@ export async function getMStakeContract(chain: Chain, contract?: Contract) {
 
     return contracts
   } catch (error) {
+    console.log('Failed to get mStake contract')
+
     return []
   }
 }
@@ -61,6 +65,8 @@ export async function getMStakeContract(chain: Chain, contract?: Contract) {
 export async function getMStakeBalance(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
   const balances: Balance[] = []
   const contract = contracts[0]
+  const underlying = contract.underlyings?.[0]
+  const reward = contract.rewards?.[0]
 
   try {
     const [balanceOfRes, pendingRewardsRes] = await Promise.all([
@@ -102,8 +108,8 @@ export async function getMStakeBalance(ctx: BaseContext, chain: Chain, contracts
       const balance: Balance = {
         ...contract,
         amount: balanceOf,
-        underlyings: [{ ...contract.underlyings?.[0], amount: balanceOf }],
-        rewards: [{ ...contract.rewards?.[0], amount: pendingRewards }],
+        underlyings: [{ ...underlying, amount: balanceOf }],
+        rewards: [{ ...reward, amount: pendingRewards }],
         category: 'stake',
       }
 
@@ -111,6 +117,8 @@ export async function getMStakeBalance(ctx: BaseContext, chain: Chain, contracts
     }
     return balances
   } catch (error) {
+    console.log('Failed to get mStake balance')
+
     return []
   }
 }
