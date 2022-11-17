@@ -1,13 +1,14 @@
 import { Adapter, GetBalancesHandler } from '@lib/adapter'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
+import { Token } from '@lib/token'
 
-/* const COMPToken: Token = {
+const COMPToken: Token = {
   chain: 'ethereum',
   address: '0xc00e94cb662c3520282e6f5717214004a7f26888',
   decimals: 18,
   symbol: 'COMP',
   coingeckoId: 'compound-governance-token',
-} */
+}
 
 const getContracts = async () => {
   const markets = await getMarketsContracts('ethereum', {

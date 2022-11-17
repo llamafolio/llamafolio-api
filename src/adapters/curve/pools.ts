@@ -133,6 +133,8 @@ const registryIds = {
   cryptoFactory: 6,
 }
 
+const chains = ['ethereum', 'polygon', 'arbitrum', 'aurora', 'avax', 'fantom', 'optimism', 'xdai', 'moonbeam']
+
 export async function getPoolsContracts() {
   let calls: Calls = Object.values(registryIds).map((r) => ({
     params: [r],
@@ -162,7 +164,7 @@ export async function getPoolsContracts() {
 
   calls = []
   // TODO: handle registriesPoolCount[0] (stableswap registry) if call failed above
-  for (let i = 0; i < registriesPoolCount[0]; i++) {
+  for (var i = 0; i < registriesPoolCount[0]; i++) {
     calls.push({
       params: [i],
       target: registriesList[0],
@@ -178,7 +180,7 @@ export async function getPoolsContracts() {
   const mainRegistryPoolsList = mainRegistryPoolsRes.filter((res) => res.success).map((res) => res.output)
 
   calls = []
-  for (let i = 0; i < mainRegistryPoolsList.length; i++) {
+  for (var i = 0; i < mainRegistryPoolsList.length; i++) {
     calls.push({
       params: [mainRegistryPoolsList[i]],
       target: registriesList[0],
