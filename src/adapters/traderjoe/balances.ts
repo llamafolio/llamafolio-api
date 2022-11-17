@@ -179,10 +179,13 @@ export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
 
   for (let i = 0; i < pools.length; i++) {
     const balance: Balance = {
-      ...JOE,
       address: pools[i],
+      chain: JOE.chain,
+      name: JOE.name,
+      symbol: JOE.symbol,
+      decimals: JOE.decimals,
       amount: stakeAmount[i],
-      rewards: [{ ...JOE.rewards?.[i], amount: rewardsAmount[i] }],
+      rewards: JOE.rewards && JOE.rewards[i] ? [{ ...JOE.rewards[i], amount: rewardsAmount[i] }] : [],
       category: 'stake',
     }
     balances.push(balance)

@@ -64,13 +64,16 @@ export async function getFarmBalances(ctx: BaseContext, chain: Chain, pools: Poo
   ])
 
   for (let i = 0; i < pools.length; i++) {
+    const pool = pools[i]
+
     if (staked[i].success) {
-      const amount = BigNumber.from(staked[i].output).mul(pools[i].poolValue).div(pools[i].totalSupply)
+      const amount = BigNumber.from(staked[i].output).mul(pool.poolValue).div(pool.totalSupply)
 
       const balance: Balance = {
-        ...pools[i],
         amount,
-        underlyings: [{ ...pools[i].underlyings[0], amount }],
+        chain: pool.chain,
+        address: pool.address,
+        underlyings: pool.underlyings && pool.underlyings[0] ? [{ ...pool.underlyings[0], amount }] : [],
         category: 'farm',
       }
 

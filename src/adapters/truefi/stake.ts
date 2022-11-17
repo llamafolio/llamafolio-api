@@ -21,17 +21,20 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, pools: Po
   })
 
   for (let i = 0; i < pools.length; i++) {
+    const pool = pools[i]
+
     if (!balanceOf[i].success) {
       continue
     }
 
-    const amount = BigNumber.from(balanceOf[i].output).mul(pools[i].poolValue).div(pools[i].totalSupply)
+    const amount = BigNumber.from(balanceOf[i].output).mul(pool.poolValue).div(pool.totalSupply)
 
     const balance: Balance = {
-      ...pools[i],
       category: 'stake',
+      chain: pool.chain,
+      address: pool.address,
       amount,
-      underlyings: [{ ...pools[i].underlyings[0], amount }],
+      underlyings: pool.underlyings && pool.underlyings[0] ? [{ ...pool.underlyings[0], amount }] : [],
     }
 
     balances.push(balance)
