@@ -3,6 +3,7 @@ import { Token } from '@lib/token'
 import { getAssetsContracts, getLendBorrowBalances } from '../common/lend'
 import { getRewardBalances } from '../common/rewards'
 import { getStakeBalances } from '../common/stake'
+import { getHealthFactor, BalanceWithExtraProps } from '@lib/compound/v2/lending'
 
 const USDC: Token = {
   chain: 'ethereum',
@@ -40,7 +41,12 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
     getRewardBalances(ctx, 'ethereum', CompoundRewards, CompoundUSDCv3),
   ])
 
+  const healthFactor = await getHealthFactor((lendBorrowBalances as BalanceWithExtraProps[]) || [])
+
   return {
     balances: [...stakeBalances, ...lendBorrowBalances, ...rewardsBalances],
+    ethereum: {
+      healthFactor,
+    },
   }
 }

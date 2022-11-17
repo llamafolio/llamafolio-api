@@ -1,11 +1,14 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
+import { BN_TEN, sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
+import { getPricedBalances } from '@lib/price'
+import { providers } from '@lib/providers'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import { BigNumber, ethers } from 'ethers'
 
 import ComptrollerABI from './abis/Comptroller.json'
 
@@ -194,4 +197,36 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
     .filter(isNotNullish)
 
   return [...cTokensSupplyBalances, ...cTokensBorrowBalances]
+}
+
+export async function getHealthFactor(balances: BalanceWithExtraProps[]) {
+  if (!balances) {
+    console.log('Missing balance to retrieve health factor')
+
+    return
+  }
+
+  try {
+    const nonZerobalances = balances.filter((balance) => balance.amount.gt(0))
+
+    const nonZeroSupplyBalances = nonZerobalances.filter((supply) => supply.category === 'lend')
+    const nonZeroBorrowBalances = nonZerobalances.filter((borrow) => borrow.category === 'borrow')
+
+    const supplyPriced = await getPricedBalances(nonZeroSupplyBalances)
+    const borrowPriced = await getPricedBalances(nonZeroBorrowBalances)
+
+    const supplyPricedBalanceOnly = sum(
+      supplyPriced.map((supply: any) => (+supply.balanceUSD * supply.collateralFactor) / Math.pow(10, 18)),
+    )
+    const borrowPricedBalanceOnly = sum(borrowPriced.map((borrow: any) => borrow.balanceUSD))
+
+    const healthFactor =
+      borrowPricedBalanceOnly > 0 ? (supplyPricedBalanceOnly / borrowPricedBalanceOnly).toFixed(2) : 10
+
+    return Number(healthFactor)
+  } catch (error) {
+    console.log('Failed to get health factor')
+
+    return
+  }
 }
