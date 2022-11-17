@@ -3,9 +3,7 @@
     "aave/v2": {
       "avax": {
         "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
+        "lend/borrow": []
       },
       "ethereum": {
         "stake/rewards": [
@@ -17,15 +15,11 @@
           "0x7344e478574acbe6dac9de1077430139e17eec3d",
           "0x777777c9898d384f785ee44acfe945efdff5f3e0",
           "0xa976ea51b9ba3232706af125a92e32788dc08ddc"
-        ],
-        "farm": [],
-        "lp": []
+        ]
       },
       "polygon": {
         "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
+        "lend/borrow": []
       }
     }
   },
@@ -33,50 +27,35 @@
   {
     "aave/v3": {
       "arbitrum": {
-        "stake/rewards": [],
         "lend/borrow": [
           "0x004c718103fed0bf75f2a02c3da7ea2332137fac",
           "0xa7def645947ff5a4a3bffb5c100691094829f252",
           "0x2268ab1a87899fb8038a14520ea410f3aef28407"
-        ],
-        "farm": [],
-        "lp": []
+        ]
       },
       "avax": {
-        "stake/rewards": [],
         "lend/borrow": [
           "0x935ad0fbea9572bb24138f23a69e314f0bdbddbe",
           "0x6cf9aa65ebad7028536e353393630e2340ca6049",
           "0x1840d137fc274006a0612e8389b18cae9d805364"
-        ],
-        "farm": [],
-        "lp": []
+        ]
       },
       "fantom": {
-        "stake/rewards": [],
         "lend/borrow": [
           "0x935ad0fbea9572bb24138f23a69e314f0bdbddbe",
           "0x49625a26b18ead4bb430dcf2a1f9aed2c414c98e",
           "0x506bf27c20d5e1608c43f044d9cf982fb0164123"
-        ],
-        "farm": [],
-        "lp": []
+        ]
       },
       "Optimism": {
-        "stake/rewards": [],
-        "lend/borrow": [],
-        "farm": [],
-        "lp": []
+        "lend/borrow": []
       },
       "polygon": {
-        "stake/rewards": [],
         "lend/borrow": [
           "0x73958d46b7aa2bc94926d8a215fa560a5cdca3ea",
           "0x3e059f977670eeba3460005f20572f991637614e",
           "0xe9177c5204f633a562747010788903747a858dcd"
-        ],
-        "farm": [],
-        "lp": []
+        ]
       }
     }
   },
