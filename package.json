@@ -10,7 +10,8 @@
     "lint": "eslint --ignore-path .gitignore --ignore-path .eslintignore \"**/*.{js,ts}\" --max-warnings=0",
     "format": "prettier --ignore-path .gitignore --ignore-path .prettierignore '**/*.{md,json,js,ts}' --write",
     "test": "jest",
-    "update-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build"
+    "update-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build",
+    "update-labels": "cd llamafolio-labels && git checkout main && git pull && rm -rf build && npm run build"
   },
   "keywords": [],
   "license": "ISC",
