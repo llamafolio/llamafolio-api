@@ -9,6 +9,8 @@ export async function getSStakeContract(chain: Chain, contract?: Contract) {
   const contracts: Contract[] = [];
 
   if (!contract) {
+    console.log("Missing or incorrect contract");
+
     return [];
   }
 
@@ -40,6 +42,8 @@ export async function getSStakeContract(chain: Chain, contract?: Contract) {
 
     return contracts;
   } catch (error) {
+    console.log("Failed to get sStake contract");
+
     return [];
   }
 }
@@ -113,6 +117,8 @@ export async function getSStakeBalance(
 
     return balances;
   } catch (error) {
+    console.log("Failed to get sStake balance");
+
     return [];
   }
 }

@@ -9,6 +9,8 @@ export async function getMarketsContracts(chain: Chain, contracts?: string[]) {
   const marketsContracts: Contract[] = [];
 
   if (!contracts) {
+    console.log("Missing or incorrect contracts");
+
     return [];
   }
 
@@ -60,10 +62,11 @@ export async function getMarketsContracts(chain: Chain, contracts?: string[]) {
     for (let i = 0; i < contracts.length; i++) {
       const token = tokens[i];
       const underlying = underlyings[i];
+      const contract = contracts[i];
 
       const market: Contract = {
         chain,
-        address: contracts[i],
+        address: contract,
         decimals: token.decimals,
         symbol: token.symbol,
         underlyings: [underlying ? underlying : token],
@@ -72,6 +75,8 @@ export async function getMarketsContracts(chain: Chain, contracts?: string[]) {
     }
     return marketsContracts;
   } catch (error) {
+    console.log("Failed to get market contract");
+
     return [];
   }
 }
@@ -82,6 +87,12 @@ export async function getMarketsBalances(
   contracts: Contract[]
 ) {
   const balances: Balance[] = [];
+
+  if (!contracts) {
+    console.log("Missing or incorrect contract");
+
+    return [];
+  }
 
   try {
     const [borrowingTokenRes, lendingBalancesRes, borrowingBalancesRes] =
@@ -138,7 +149,7 @@ export async function getMarketsBalances(
       .filter((res) => res.success)
       .map((res) => res.output);
 
-    const underlyingBorrowingToken = await getERC20Details(
+    const underlyingBorrowingTokens = await getERC20Details(
       chain,
       borrowingToken
     );
@@ -174,16 +185,17 @@ export async function getMarketsBalances(
 
     for (let i = 0; i < contracts.length; i++) {
       const amount = borrowingBalances[i];
+      const underlyingBorrowingToken = underlyingBorrowingTokens[i];
 
-      if (!underlyingBorrowingToken) {
+      if (!underlyingBorrowingTokens) {
         return [];
       }
 
       const borrowingBalance: Balance = {
         chain,
-        address: underlyingBorrowingToken[i].address,
-        symbol: underlyingBorrowingToken[i].symbol,
-        decimals: underlyingBorrowingToken[i].decimals,
+        address: underlyingBorrowingToken.address,
+        symbol: underlyingBorrowingToken.symbol,
+        decimals: underlyingBorrowingToken.decimals,
         amount,
         category: "borrow",
       };
@@ -191,37 +203,62 @@ export async function getMarketsBalances(
       balances.push(borrowingBalance);
     }
 
-    const healthFactor = await getHealthFactor(balances || []);
-
-    if (healthFactor !== undefined)
-      console.log(
-        `User: ${ctx.address} - Adapter: ${
-          process.argv[2]
-        } - Chain: ${chain} - HealthFactor: ${
-          healthFactor && healthFactor > 10 ? 10 : healthFactor
-        }`
-      );
-
     return balances;
   } catch (error) {
+    console.log("Failed to get market balance");
+
     return [];
   }
 }
 
 export async function getHealthFactor(balances: Balance[]) {
+  if (!balances) {
+    console.log("Missing balance to retrieve health factor");
+
+    return;
+  }
+
+  const nonZeroBalances = balances.filter((balance) => balance.amount.gt(0));
+
+  const nonZeroSuppliedBalances = nonZeroBalances.filter(
+    (supply) => supply.category === "lend"
+  );
+  const nonZeroBorrowedBalances = nonZeroBalances.filter(
+    (borrow) => borrow.category === "borrow"
+  );
+
+  if (nonZeroSuppliedBalances.length === 0) {
+    console.log("Supply balance is required to retrieve health factor");
+
+    return;
+  }
+
+  if (nonZeroBorrowedBalances.length === 0) {
+    return 10;
+  }
+
   try {
-    const pricedContracts = await getPricedBalances(balances);
+    const [nonZeroSuppliedBalancesPriced, nonZeroBorrowedBalancesPriced] =
+      await Promise.all([
+        await getPricedBalances(nonZeroSuppliedBalances),
+        getPricedBalances(nonZeroBorrowedBalances),
+      ]);
 
-    const formattedSuppliedBalances = pricedContracts
-      .filter((balance) => balance.category === "lend")
+    const totalSuppliedBalancesPriced = nonZeroSuppliedBalancesPriced
+      .map((balance: any) => balance.balanceUSD)
+      .reduce((previous, current) => previous.balanceUSD + current.balanceUSD);
+
+    const totalBorrowedBalancesPriced = nonZeroBorrowedBalancesPriced
       .map((balance: any) => balance.balanceUSD)
       .reduce((previous, current) => previous + current);
 
-    const formattedBorrowedBalances = pricedContracts
-      .filter((balance) => balance.category === "borrow")
-      .map((balance: any) => balance.balanceUSD)
-      .reduce((previous, current) => previous + current);
+    const healthFactor =
+      totalBorrowedBalancesPriced > 0
+        ? totalSuppliedBalancesPriced / totalBorrowedBalancesPriced
+        : 10;
 
-    return formattedSuppliedBalances / formattedBorrowedBalances;
-  } catch (error) {}
+    return healthFactor > 10 ? 10 : healthFactor;
+  } catch (error) {
+    return;
+  }
 }

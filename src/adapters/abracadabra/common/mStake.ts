@@ -8,6 +8,8 @@ export async function getMStakeContract(chain: Chain, contract?: Contract) {
   const contracts: Contract[] = [];
 
   if (!contract) {
+    console.log("Missing or incorrect contract");
+
     return [];
   }
 
@@ -59,6 +61,8 @@ export async function getMStakeContract(chain: Chain, contract?: Contract) {
 
     return contracts;
   } catch (error) {
+    console.log("Failed to get mStake contract");
+    
     return [];
   }
 }
@@ -70,6 +74,8 @@ export async function getMStakeBalance(
 ) {
   const balances: Balance[] = [];
   const contract = contracts[0];
+  const underlying = contract.underlyings?.[0];
+  const reward = contract.rewards?.[0];
 
   try {
     const [balanceOfRes, pendingRewardsRes] = await Promise.all([
@@ -107,12 +113,12 @@ export async function getMStakeBalance(
     const balanceOf = BigNumber.from(balanceOfRes.output.amount);
     const pendingRewards = BigNumber.from(pendingRewardsRes.output);
 
-    if (contract && contract.underlyings?.[0] && contract.rewards?.[0]) {
+    if (contract && underlying && reward) {
       const balance: Balance = {
         ...contract,
         amount: balanceOf,
-        underlyings: [{ ...contract.underlyings?.[0], amount: balanceOf }],
-        rewards: [{ ...contract.rewards?.[0], amount: pendingRewards }],
+        underlyings: [{ ...underlying, amount: balanceOf }],
+        rewards: [{ ...reward, amount: pendingRewards }],
         category: "stake",
       };
 
@@ -120,6 +126,8 @@ export async function getMStakeBalance(
     }
     return balances;
   } catch (error) {
+    console.log("Failed to get mStake balance");
+
     return [];
   }
 }
