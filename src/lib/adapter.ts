@@ -1,15 +1,38 @@
+import { sanitizeBalances } from '@lib/balance'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
-import { sanitizeBalances } from './balance'
+export interface BaseContext {
+  address: string
+  blockHeight?: { [k: string]: number }
+}
 
 export type ContractType = 'reward' | 'debt' | 'underlying'
 export type ContractStandard = 'erc20' | 'erc721'
 
-export interface BaseContext {
+export interface BaseContract {
+  // discriminators
+  type?: ContractType
+  standard?: ContractStandard
+  category?: Category
+
+  name?: string
+  displayName?: string
+  chain: Chain
   address: string
-  blockHeight?: { [k: string]: number }
+  symbol?: string
+  decimals?: number
+  stable?: boolean
+
+  // DefiLlama yields API identifier. Matches pool or pool_old
+  yieldKey?: string
+}
+
+export interface Contract extends BaseContract {
+  rewards?: BaseContract[]
+  underlyings?: BaseContract[]
+  [key: string | number]: any
 }
 
 export interface BaseBalance extends BaseContract {
@@ -71,30 +94,6 @@ export interface BalancesConfig {
   polygon?: Metadata
   optimism?: Metadata
   xdai?: Metadata
-}
-
-export interface BaseContract {
-  // discriminators
-  type?: ContractType
-  standard?: ContractStandard
-  category?: Category
-
-  name?: string
-  displayName?: string
-  chain: Chain
-  address: string
-  symbol?: string
-  decimals?: number
-  stable?: boolean
-
-  // DefiLlama yields API identifier. Matches pool or pool_old
-  yieldKey?: string
-}
-
-export interface Contract extends BaseContract {
-  rewards?: BaseContract[]
-  underlyings?: BaseContract[]
-  [key: string | number]: any
 }
 
 export interface ContractsConfig {
