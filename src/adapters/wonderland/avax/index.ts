@@ -1,6 +1,6 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 
-import { getStakeBalances, getFormattedStakeBalances } from '../common/balances'
+import { getStakeBalances, getFormattedStakeBalances } from '../common/stake'
 
 const TIME: Contract = {
   name: 'Time',
