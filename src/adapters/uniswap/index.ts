@@ -64,13 +64,13 @@ const getContracts = async () => {
   const pairs = await getPoolsHighestVolume()
 
   return {
-    contracts: pairs,
+    contracts: { pairs },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts: Contract[]) => {
-  let lpBalances = await getERC20BalanceOf(ctx, 'ethereum', contracts as Token[])
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { pairs }) => {
+  let lpBalances = await getERC20BalanceOf(ctx, 'ethereum', (pairs || []) as Token[])
   lpBalances = await getUnderlyingBalances('ethereum', lpBalances)
 
   return {

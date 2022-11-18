@@ -43,7 +43,7 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain) {
 
 const getContracts = () => {
   return {
-    contracts: [NXM, wNXM],
+    contracts: { NXM, wNXM },
   }
 }
 

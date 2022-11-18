@@ -18,13 +18,13 @@ const gmxStaker: Contract = {
 
 const getContracts = async () => {
   return {
-    contracts: [glpStaker, gmxStaker],
+    contracts: { stake: [glpStaker, gmxStaker] },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getStakeBalances(ctx, 'arbitrum', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { stake }) => {
+  const balances = await getStakeBalances(ctx, 'arbitrum', stake || [])
 
   return {
     balances,

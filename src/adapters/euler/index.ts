@@ -2,7 +2,7 @@ import { Adapter, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter
 
 import { getPositions } from './markets'
 
-const contract: Contract = {
+const market: Contract = {
   name: 'eulerMarkets',
   displayName: 'Markets Euler',
   chain: 'ethereum',
@@ -11,13 +11,13 @@ const contract: Contract = {
 
 const getContracts = () => {
   return {
-    contracts: [contract],
+    contracts: { market },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts: Contract[]) => {
-  const balances = await getPositions(ctx, 'ethereum', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { market }) => {
+  const balances = await getPositions(ctx, 'ethereum', market)
 
   return {
     balances,

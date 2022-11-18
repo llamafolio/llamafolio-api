@@ -11,13 +11,13 @@ const vtxLocker: Contract = {
 
 const getContracts = () => {
   return {
-    contracts: [vtxLocker],
+    contracts: { vtxLocker },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getLockerBalances(ctx, 'avax', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { vtxLocker }) => {
+  const balances = await getLockerBalances(ctx, 'avax', [vtxLocker])
 
   return {
     balances,

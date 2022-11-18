@@ -12,12 +12,12 @@ const getContracts = async () => {
   })
 
   return {
-    contracts: pools,
+    contracts: { pools },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getMarketsBalances(ctx, 'ethereum', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
+  const balances = await getMarketsBalances(ctx, 'ethereum', pools || [])
 
   return {
     balances,

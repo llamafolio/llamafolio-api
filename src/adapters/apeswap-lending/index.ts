@@ -3,7 +3,7 @@ import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lendin
 import { ethers } from 'ethers'
 
 const getContracts = async () => {
-  const poolsMarkets = await getMarketsContracts('bsc', {
+  const markets = await getMarketsContracts('bsc', {
     // Apeswap Unitroller
     comptrollerAddress: '0xad48b2c9dc6709a560018c678e918253a65df86e',
     underlyingAddressByMarketAddress: {
@@ -13,12 +13,12 @@ const getContracts = async () => {
   })
 
   return {
-    contracts: poolsMarkets,
+    contracts: { markets },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getMarketsBalances(ctx, 'bsc', contracts || [])
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { markets }) => {
+  const balances = await getMarketsBalances(ctx, 'bsc', markets || [])
 
   return {
     balances,

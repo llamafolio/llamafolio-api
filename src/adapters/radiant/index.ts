@@ -32,7 +32,7 @@ const radiantToken: Token = {
 }
 
 const getContracts = async () => {
-  const lendingPoolContracts = await getLendingPoolContracts({
+  const pools = await getLendingPoolContracts({
     chain: 'arbitrum',
     lendingPool: lendingPoolContract,
     chefIncentivesController: chefIncentivesControllerContract,
@@ -40,16 +40,16 @@ const getContracts = async () => {
   })
 
   return {
-    contracts: lendingPoolContracts,
+    contracts: { pools },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const lendingPoolBalances = await getLendingPoolBalances(ctx, 'arbitrum', contracts, {
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
+  const lendingPoolBalances = await getLendingPoolBalances(ctx, 'arbitrum', pools || [], {
     chefIncentivesController: chefIncentivesControllerContract,
   })
 
-  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(ctx, 'arbitrum', contracts, {
+  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(ctx, 'arbitrum', pools || [], {
     multiFeeDistribution: multiFeeDistributionContract,
     lendingPool: lendingPoolContract,
     stakingToken: radiantToken,

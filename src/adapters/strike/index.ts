@@ -2,7 +2,7 @@ import { Adapter, GetBalancesHandler } from '@lib/adapter'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
 
 const getContracts = async () => {
-  const poolsMarkets = await getMarketsContracts('ethereum', {
+  const pools = await getMarketsContracts('ethereum', {
     // Strike comptroller
     comptrollerAddress: '0xe2e17b2cbbf48211fa7eb8a875360e5e39ba2602',
     underlyingAddressByMarketAddress: {
@@ -12,12 +12,12 @@ const getContracts = async () => {
   })
 
   return {
-    contracts: poolsMarkets,
+    contracts: { pools },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getMarketsBalances(ctx, 'ethereum', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
+  const balances = await getMarketsBalances(ctx, 'ethereum', pools || [])
 
   return {
     balances,

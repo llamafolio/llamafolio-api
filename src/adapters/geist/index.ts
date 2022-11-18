@@ -32,7 +32,7 @@ const geistToken: Token = {
 }
 
 const getContracts = async () => {
-  const lendingPoolContracts = await getLendingPoolContracts({
+  const pools = await getLendingPoolContracts({
     chain: 'fantom',
     lendingPool: lendingPoolContract,
     chefIncentivesController: chefIncentivesControllerContract,
@@ -40,16 +40,16 @@ const getContracts = async () => {
   })
 
   return {
-    contracts: lendingPoolContracts,
+    contracts: { pools },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const lendingPoolBalances = await getLendingPoolBalances(ctx, 'fantom', contracts, {
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
+  const lendingPoolBalances = await getLendingPoolBalances(ctx, 'fantom', pools || [], {
     chefIncentivesController: chefIncentivesControllerContract,
   })
 
-  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(ctx, 'fantom', contracts, {
+  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(ctx, 'fantom', pools || [], {
     multiFeeDistribution: multiFeeDistributionContract,
     lendingPool: lendingPoolContract,
     stakingToken: geistToken,

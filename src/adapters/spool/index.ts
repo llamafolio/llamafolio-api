@@ -11,14 +11,16 @@ const spoolController: Contract = {
 }
 
 const getContracts = async () => {
+  const pools = await getPoolsContracts(spoolController)
+
   return {
-    contracts: await getPoolsContracts(spoolController),
+    contracts: { pools },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts: Contract[]) => {
-  const balances = await getPoolsBalances(ctx, 'ethereum', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { pools }) => {
+  const balances = await getPoolsBalances(ctx, 'ethereum', pools || [])
 
   return {
     balances,
