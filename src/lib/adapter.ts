@@ -2,6 +2,8 @@ import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
+import { sanitizeBalances } from './balance'
+
 export type ContractType = 'reward' | 'debt' | 'underlying'
 export type ContractStandard = 'erc20' | 'erc721'
 
@@ -144,7 +146,7 @@ export const parseBalancesTest = (balancesConfig: BalancesConfig): BalancesTest 
 
   for (const chain of chains) {
     balances[chain] = []
-    balancesConfig.balances.map((balance) => {
+    sanitizeBalances(balancesConfig.balances).map((balance) => {
       if (balance.chain === chain && balance.amount.toString() !== '0') {
         const data: BalancesTest = {
           amount: balance.amount.toString(),
