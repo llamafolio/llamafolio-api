@@ -4,6 +4,7 @@ import fetch from 'node-fetch'
 import path from 'path'
 
 import { Adapter, BaseContext, PricedBalance } from '../src/lib/adapter'
+import { sanitizeBalances } from '../src/lib/balance'
 import { chains } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 
@@ -53,6 +54,7 @@ async function main() {
   const contractsRes = await adapter.getContracts()
 
   const balancesRes = await adapter.getBalances(ctx, contractsRes.contracts || [])
+  const sanitizedBalances = sanitizeBalances(balancesRes.balances)
 
   const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
   const yieldsData = (await yieldsRes.json()).data
@@ -67,7 +69,7 @@ async function main() {
     yieldsByNewKeys[yieldsData[i].pool] = yieldsData[i]
   }
 
-  const pricedBalances = await getPricedBalances(balancesRes.balances)
+  const pricedBalances = await getPricedBalances(sanitizedBalances)
 
   console.log(`Found ${pricedBalances.length} non zero balances`)
 

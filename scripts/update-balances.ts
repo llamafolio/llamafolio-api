@@ -6,6 +6,7 @@ import { getAllContractsInteractionsTokenTransfers, getAllTokensInteractions } f
 import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { BaseContext, Contract } from '../src/lib/adapter'
+import { sanitizeBalances } from '../src/lib/balance'
 import { strToBuf } from '../src/lib/buf'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
@@ -91,33 +92,7 @@ async function main() {
     // Ungroup balances to make only 1 call to the price API
     const balances = adaptersBalances.flat().filter(isNotNullish)
 
-    // Filter out balances with invalid amounts
-    const sanitizedBalances = balances.filter((balance) => {
-      if (!balance.amount) {
-        console.error(`Missing balance amount`, balance)
-        return false
-      }
-
-      if (balance.underlyings) {
-        for (const underlying of balance.underlyings) {
-          if (!underlying.amount) {
-            console.error(`Missing underlying balance amount`, balance)
-            return false
-          }
-        }
-      }
-
-      if (balance.rewards) {
-        for (const reward of balance.rewards) {
-          if (!reward.amount) {
-            console.error(`Missing reward balance amount`, balance)
-            return false
-          }
-        }
-      }
-
-      return true
-    })
+    const sanitizedBalances = sanitizeBalances(balances)
 
     const hrstart = process.hrtime()
 
