@@ -1,4 +1,4 @@
-import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Adapter, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 
 import { getPoolsBalances } from './balances'
 import { getPoolsContracts } from './contracts'
@@ -11,14 +11,16 @@ const spoolController: Contract = {
 }
 
 const getContracts = async () => {
+  const pools = await getPoolsContracts(spoolController)
+
   return {
-    contracts: await getPoolsContracts(spoolController),
+    contracts: { pools },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getPoolsBalances(ctx, 'ethereum', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { pools }) => {
+  const balances = await getPoolsBalances(ctx, 'ethereum', pools || [])
 
   return {
     balances,

@@ -10,10 +10,10 @@ export type PricedAdapterBalance = PricedBalance & { adapterId: string }
 
 export interface AdapterBalancesResponse {
   id: string
-  data: (AdapterBalance | PricedAdapterBalance)[]
+  data: PricedAdapterBalance[]
 }
 
-function groupBalancesByAdapter(balances: (AdapterBalance | PricedAdapterBalance)[]) {
+function groupBalancesByAdapter(balances: PricedAdapterBalance[]): AdapterBalancesResponse[] {
   const balancesByAdapterId: {
     [key: string]: AdapterBalancesResponse
   } = {}

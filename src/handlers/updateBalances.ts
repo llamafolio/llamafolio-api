@@ -7,21 +7,28 @@ import { apiGatewayManagementApi } from '@handlers/apiGateway'
 import type { AdapterBalancesResponse } from '@handlers/getBalances'
 import { badRequest, serverError, success } from '@handlers/response'
 import { BaseContext, Contract } from '@lib/adapter'
+import { sanitizeBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 import format from 'pg-format'
 
 export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false // !important to reuse pool
 
-  const { connectionId, address } = event
+  const { connectionId, address } = event as APIGatewayProxyEvent & { connectionId?: string; address?: string }
+
   if (!address) {
     return badRequest('Missing address parameter')
   }
+
   if (!isHex(address)) {
     return badRequest('Invalid address parameter, expected hex')
+  }
+
+  if (!connectionId) {
+    return badRequest('Missing connectionId parameter')
   }
 
   const ctx: BaseContext = { address }
@@ -126,33 +133,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     // Ungroup balances to make only 1 call to the price API
     const balances = adaptersBalances.flat().filter(isNotNullish)
 
-    // Filter out balances with invalid amounts
-    const sanitizedBalances = balances.filter((balance) => {
-      if (!balance.amount) {
-        console.error(`Missing balance amount`, balance)
-        return false
-      }
-
-      if (balance.underlyings) {
-        for (const underlying of balance.underlyings) {
-          if (!underlying.amount) {
-            console.error(`Missing underlying balance amount`, balance)
-            return false
-          }
-        }
-      }
-
-      if (balance.rewards) {
-        for (const reward of balance.rewards) {
-          if (!reward.amount) {
-            console.error(`Missing reward balance amount`, balance)
-            return false
-          }
-        }
-      }
-
-      return true
-    })
+    const sanitizedBalances = sanitizeBalances(balances)
 
     const hrstart = process.hrtime()
 
@@ -169,10 +150,12 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     // Group balances back by adapter
     const pricedBalancesByAdapterId: { [key: string]: any[] } = {}
     for (const pricedBalance of pricedBalances) {
-      if (!pricedBalancesByAdapterId[pricedBalance.adapterId]) {
-        pricedBalancesByAdapterId[pricedBalance.adapterId] = []
+      if (pricedBalance.adapterId) {
+        if (!pricedBalancesByAdapterId[pricedBalance.adapterId]) {
+          pricedBalancesByAdapterId[pricedBalance.adapterId] = []
+        }
+        pricedBalancesByAdapterId[pricedBalance.adapterId].push(pricedBalance)
       }
-      pricedBalancesByAdapterId[pricedBalance.adapterId].push(pricedBalance)
     }
 
     const now = new Date()

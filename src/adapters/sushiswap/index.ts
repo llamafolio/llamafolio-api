@@ -1,4 +1,4 @@
-import { Adapter, Contract } from '@lib/adapter'
+import { Adapter, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -19,77 +19,67 @@ const sushi: Token = {
   decimals: 18,
 }
 
-const adapter: Adapter = {
-  id: 'sushiswap',
-  async getContracts() {
-    const [pairs, masterChefPoolsInfo] = await Promise.all([
-      getPairsContracts({
-        chain: 'ethereum',
-        factoryAddress: '0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac',
-        length: 100,
-      }),
+const getContracts = async () => {
+  const [pairs, masterChefPoolsInfo] = await Promise.all([
+    getPairsContracts({
+      chain: 'ethereum',
+      factoryAddress: '0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac',
+      length: 100,
+    }),
 
-      getMasterChefPoolsInfo({
-        chain: 'ethereum',
-        masterChefAddress: masterChef.address,
-      }),
-    ])
-
-    // retrieve master chef pools details from lpToken addresses
-    const pairByAddress: { [key: string]: Contract } = {}
-    for (const pair of pairs) {
-      pairByAddress[pair.address.toLowerCase()] = pair
-    }
-
-    const masterChefPools = masterChefPoolsInfo
-      .map((pool) => {
-        const pair = pairByAddress[pool.lpToken.toLowerCase()]
-        if (!pair) {
-          return null
-        }
-        return { ...pair, pid: pool.pid }
-      })
-      .filter(isNotNullish)
-
-    const contracts = [
-      ...pairs.map((c) => ({ ...c, category: 'lp' })),
-      ...masterChefPools.map((c) => ({ ...c, category: 'farm' })),
-    ]
-
-    return {
-      contracts,
-      revalidate: 60 * 60,
-    }
-  },
-  async getBalances(ctx, contracts) {
-    const lp = []
-    const farm = []
-
-    for (const contract of contracts) {
-      if (contract.category === 'lp') {
-        lp.push(contract)
-      } else if (contract.category === 'farm') {
-        farm.push(contract)
-      }
-    }
-
-    const pairs = await getPairsBalances(ctx, 'ethereum', lp)
-
-    let masterChefBalances = await getMasterChefBalances(ctx, {
+    getMasterChefPoolsInfo({
       chain: 'ethereum',
       masterChefAddress: masterChef.address,
-      tokens: farm,
-      rewardToken: sushi,
-      pendingRewardName: 'pendingSushi',
+    }),
+  ])
+
+  // retrieve master chef pools details from lpToken addresses
+  const pairByAddress: { [key: string]: Contract } = {}
+  for (const pair of pairs) {
+    pairByAddress[pair.address.toLowerCase()] = pair
+  }
+
+  const masterChefPools = masterChefPoolsInfo
+    .map((pool) => {
+      const pair = pairByAddress[pool.lpToken.toLowerCase()]
+      if (!pair) {
+        return null
+      }
+      const contract: Contract = { ...pair, pid: pool.pid, category: 'farm' }
+      return contract
     })
-    masterChefBalances = await getUnderlyingBalances('ethereum', masterChefBalances)
+    .filter(isNotNullish)
 
-    const balances = pairs.concat(masterChefBalances)
+  return {
+    contracts: { pairs, masterChefPools },
+    revalidate: 60 * 60,
+  }
+}
 
-    return {
-      balances,
-    }
-  },
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { pairs, masterChefPools }) => {
+  const pairsBalances = await getPairsBalances(ctx, 'ethereum', pairs || [])
+
+  let masterChefBalances = await getMasterChefBalances(ctx, {
+    chain: 'ethereum',
+    masterChefAddress: masterChef.address,
+    tokens: (masterChefPools || []) as Token[],
+    rewardToken: sushi,
+    pendingRewardName: 'pendingSushi',
+  })
+
+  masterChefBalances = await getUnderlyingBalances('ethereum', masterChefBalances)
+
+  const balances = pairsBalances.concat(masterChefBalances)
+
+  return {
+    balances,
+  }
+}
+
+const adapter: Adapter = {
+  id: 'sushiswap',
+  getContracts,
+  getBalances,
 }
 
 export default adapter

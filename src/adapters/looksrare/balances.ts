@@ -1,15 +1,22 @@
-import { call } from '@defillama/sdk/build/abi'
 import { BaseContext, Contract } from '@lib/adapter'
 import { Balance } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
-export const getStakeBalances = async (
-  ctx: BaseContext,
-  chain: Chain,
-  stakingContract: Contract,
-  looksContract: Contract,
-) => {
+const LOOKS: Contract = {
+  name: 'LooksRare Token',
+  chain: 'ethereum',
+  address: '0xf4d2888d29D722226FafA5d9B24F9164c092421E',
+  decimals: 18,
+  symbols: 'LOOKS',
+}
+
+export const getStakeBalances = async (ctx: BaseContext, chain: Chain, stakingContract?: Contract) => {
+  if (!stakingContract) {
+    return
+  }
+
   const [stakeBalanceOfRes, rewardsBalanceOfRes] = await Promise.all([
     call({
       chain,
@@ -42,21 +49,23 @@ export const getStakeBalances = async (
   const rewardsBalanceOf = BigNumber.from(rewardsBalanceOfRes.output)
 
   const stakebalance: Balance = {
-    ...looksContract,
+    ...(LOOKS as Balance),
     amount: stakeBalanceOf,
-    rewards: [{ ...stakingContract.rewards?.[0], amount: rewardsBalanceOf }],
     category: 'stake',
+  }
+
+  if (stakingContract.rewards?.[0]) {
+    stakebalance.rewards = [{ ...stakingContract.rewards?.[0], amount: rewardsBalanceOf }]
   }
 
   return stakebalance
 }
 
-export const getCompounderBalances = async (
-  ctx: BaseContext,
-  chain: Chain,
-  compounder: Contract,
-  looksContract: Contract,
-) => {
+export const getCompounderBalances = async (ctx: BaseContext, chain: Chain, compounder?: Contract) => {
+  if (!compounder) {
+    return
+  }
+
   const sharesValue = await call({
     chain,
     target: compounder.address,
@@ -71,7 +80,7 @@ export const getCompounderBalances = async (
   })
 
   const compounderBalance: Balance = {
-    ...looksContract,
+    ...(LOOKS as Balance),
     amount: BigNumber.from(sharesValue.output),
     yieldKey: compounder.address,
     category: 'farm',

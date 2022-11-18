@@ -1,8 +1,9 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 export const abi = {
@@ -83,8 +84,8 @@ export async function getUnderlyingsContract(contract: Contract) {
  * Retrieves pairs balances (with underlyings) of Uniswap V2 like Pair.
  * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
  */
-export async function getPairsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
-  const balances = await getERC20BalanceOf(ctx, chain, contracts)
+export async function getPairsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+  const balances = await getERC20BalanceOf(ctx, chain, contracts as Token[])
 
   return getUnderlyingBalances(chain, balances)
 }

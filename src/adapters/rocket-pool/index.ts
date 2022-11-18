@@ -12,12 +12,12 @@ const rETH: Token = {
 
 const getContracts = () => {
   return {
-    contracts: [rETH],
+    contracts: { rETH },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getERC20BalanceOf(ctx, 'ethereum', contracts as Token[])
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { rETH }) => {
+  const balances = await getERC20BalanceOf(ctx, 'ethereum', [rETH] as Token[])
 
   return {
     balances: balances.map((bal) => ({ ...bal, category: 'stake' })),

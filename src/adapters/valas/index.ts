@@ -32,7 +32,7 @@ const valasToken: Token = {
 }
 
 const getContracts = async () => {
-  const lendingPoolContracts = await getLendingPoolContracts({
+  const pools = await getLendingPoolContracts({
     chain: 'bsc',
     lendingPool: lendingPoolContract,
     chefIncentivesController: chefIncentivesControllerContract,
@@ -40,16 +40,16 @@ const getContracts = async () => {
   })
 
   return {
-    contracts: lendingPoolContracts,
+    contracts: { pools },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const lendingPoolBalances = await getLendingPoolBalances(ctx, 'bsc', contracts, {
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
+  const lendingPoolBalances = await getLendingPoolBalances(ctx, 'bsc', pools || [], {
     chefIncentivesController: chefIncentivesControllerContract,
   })
 
-  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(ctx, 'bsc', contracts, {
+  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(ctx, 'bsc', pools || [], {
     multiFeeDistribution: multiFeeDistributionContract,
     lendingPool: lendingPoolContract,
     stakingToken: valasToken,

@@ -1,6 +1,6 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Contract } from '@lib/adapter'
 import { range } from '@lib/array'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { getERC20Details, getERC20Details2 } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -99,13 +99,14 @@ export async function getContractsInfos(chain: Chain, poolsContracts: string[]) 
       const totalToken = BigNumber.from(totalTokenRes[i].output)
       const totalSupply = BigNumber.from(totalSupplyRes[i].output)
 
-      const contract = {
+      const contract: Contract = {
         ...contractsInfos[i],
         associatedWithPoolNumber: i,
         totalToken,
         totalSupply,
-        underlyings: [underlyings[i]],
+        underlyings: [{ ...(underlyings[i] as Contract) }],
       }
+
       contracts.push(contract)
     }
   }

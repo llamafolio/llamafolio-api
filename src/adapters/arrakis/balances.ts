@@ -2,12 +2,13 @@ import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 export async function getLpBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
   const balances: Balance[] = []
 
-  const balancesRaw = await getERC20BalanceOf(ctx, chain, contracts)
+  const balancesRaw = await getERC20BalanceOf(ctx, chain, contracts as Token[])
 
   const nonZeroBalances = balancesRaw.filter((balance) => balance.amount.gt(0))
 

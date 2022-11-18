@@ -33,7 +33,7 @@ const UwU: Token = {
 }
 
 const getContracts = async () => {
-  const lendingPoolContracts = await getLendingPoolContracts({
+  const pools = await getLendingPoolContracts({
     chain: 'ethereum',
     lendingPool: lendingPoolContract,
     chefIncentivesController: chefIncentivesControllerContract,
@@ -41,16 +41,16 @@ const getContracts = async () => {
   })
 
   return {
-    contracts: lendingPoolContracts,
+    contracts: { pools },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const lendingPoolBalances = await getLendingPoolBalances(ctx, 'ethereum', contracts, {
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
+  const lendingPoolBalances = await getLendingPoolBalances(ctx, 'ethereum', pools || [], {
     chefIncentivesController: chefIncentivesControllerContract,
   })
 
-  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(ctx, 'ethereum', contracts, {
+  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(ctx, 'ethereum', pools || [], {
     multiFeeDistributionAddress: multiFeeDistributionContract.address,
   })
 

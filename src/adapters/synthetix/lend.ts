@@ -1,5 +1,5 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
@@ -76,12 +76,14 @@ export async function getLendBorrowBalances(
   ])
 
   const lendAmount = BigNumber.from(suppliedRes.output)
+
   const lendingBalance: Balance = {
-    ...synthetixContract,
+    ...(synthetixContract as Balance),
     amount: lendAmount,
-    underlyings: [{ ...synthetixContract.underlyings[0], amount: lendAmount }],
+    underlyings: [{ ...(synthetixContract.underlyings?.[0] as Balance), amount: lendAmount }],
     category: 'lend',
   }
+
   balances.push(lendingBalance)
 
   const borrowAmount = BigNumber.from(borrowedRes.output.alreadyIssued)
@@ -101,18 +103,20 @@ export async function getLendBorrowBalances(
   balances.push(sUSDRewardBalance)
 
   const SNXRewardAmount = BigNumber.from(feesAvailableRes.output[1])
+
   const SNXRewardBalance: Balance = {
-    ...synthetixContract,
+    ...(synthetixContract as Balance),
     amount: SNXRewardAmount,
     underlyings: [
       {
-        ...synthetixContract.underlyings[0],
+        ...(synthetixContract.underlyings?.[0] as Balance),
         amount: SNXRewardAmount,
         claimable: SNXRewardAmount,
       },
     ],
     category: 'reward',
   }
+
   balances.push(SNXRewardBalance)
 
   return balances

@@ -1,21 +1,50 @@
+import { sanitizeBalances } from '@lib/balance'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
+export interface BaseContext {
+  address: string
+  blockHeight?: { [k: string]: number }
+}
+
 export type ContractType = 'reward' | 'debt' | 'underlying'
 export type ContractStandard = 'erc20' | 'erc721'
 
-export interface BaseContext {
+export interface BaseContract {
+  // discriminators
+  type?: ContractType
+  standard?: ContractStandard
+  category?: Category
+
+  name?: string
+  displayName?: string
+  chain: Chain
   address: string
+  symbol?: string
+  decimals?: number
+  stable?: boolean
+
+  // DefiLlama yields API identifier. Matches pool or pool_old
+  yieldKey?: string
+}
+
+export interface Contract extends BaseContract {
+  rewards?: BaseContract[]
+  underlyings?: BaseContract[]
+  [key: string | number]: any
 }
 
 export interface BaseBalance extends BaseContract {
   amount: BigNumber
+  claimable?: BigNumber
 }
 
 export interface BasePricedBalance extends BaseBalance {
   price: number
   balanceUSD: number
+  claimableUSD?: number
+
   // price updated at
   timestamp: number
 }
@@ -67,32 +96,8 @@ export interface BalancesConfig {
   xdai?: Metadata
 }
 
-export interface BaseContract {
-  // discriminators
-  type?: ContractType
-  standard?: ContractStandard
-  category?: Category
-
-  name?: string
-  displayName?: string
-  chain: Chain
-  address: string
-  symbol?: string
-  decimals?: number
-  stable?: boolean
-
-  // DefiLlama yields API identifier. Matches pool or pool_old
-  yieldKey?: string
-}
-
-export interface Contract extends BaseContract {
-  rewards?: BaseContract[]
-  underlyings?: BaseContract[]
-  [key: string | number]: any
-}
-
 export interface ContractsConfig {
-  contracts: Contract[] | { [key: string]: Contract | Contract[] }
+  contracts: { [key: string]: Contract | Contract[] | undefined }
   revalidate?: number
 }
 
@@ -111,4 +116,59 @@ export interface Adapter {
   id: string
   getContracts: GetContractsHandler
   getBalances: GetBalancesHandler<GetContractsHandler>
+}
+
+/**
+ * Tests
+ */
+
+export interface AdapterTest {
+  address: string
+  blockHeight: { [k: string]: number }
+  expected: { [k: string]: BalancesTest[] }
+}
+
+export interface BalancesTest {
+  amount?: string
+  symbol?: string
+  category?: string
+  underlying?: { symbol?: string; amount: string }[]
+  rewards?: { symbol?: string; amount: string }[]
+}
+
+export const parseBalancesTest = (balancesConfig: BalancesConfig): BalancesTest => {
+  const chains = balancesConfig.balances
+    .map((balances) => balances.chain)
+    .filter((chain, i, chains) => chains.indexOf(chain) === i)
+
+  const balances: { [k: string]: BalancesTest[] } = {}
+
+  for (const chain of chains) {
+    balances[chain] = []
+    sanitizeBalances(balancesConfig.balances).map((balance) => {
+      if (balance.chain === chain && balance.amount.toString() !== '0') {
+        const data: BalancesTest = {
+          amount: balance.amount.toString(),
+          symbol: balance.symbol,
+          category: balance.category,
+        }
+
+        if (balance.underlyings) {
+          data.underlying = balance.underlyings.map((underlying) => {
+            return { amount: underlying.amount.toString(), symbol: underlying.symbol }
+          })
+        }
+
+        if (balance.rewards) {
+          data.rewards = balance.rewards.map((reward) => {
+            return { amount: reward.amount.toString(), symbol: reward.symbol }
+          })
+        }
+
+        balances[chain].push(data)
+      }
+    })
+  }
+
+  return balances
 }

@@ -69,10 +69,10 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
     }
   }
 
-  const prices = await getTokenPrices(priced)
+  const prices = await getTokenPrices(priced as Token[])
 
-  function getPricedBalance(balance: BaseBalance) {
-    const key = getTokenKey(balance)
+  function getPricedBalance(balance: BaseBalance): PricedBalance {
+    const key = getTokenKey(balance as Token)
     if (!key) {
       console.log('Failed to get price token key for balance', balance)
       return balance

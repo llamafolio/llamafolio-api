@@ -1,4 +1,5 @@
-import { Adapter, Balance, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { isNotNullish } from '@lib/type'
 
 import { getCompounderBalances, getStakeBalances } from './balances'
 
@@ -10,22 +11,14 @@ const WETH: Contract = {
   symbols: 'WETH',
 }
 
-const LOOKS: Contract = {
-  name: 'LooksRare Token',
-  chain: 'ethereum',
-  address: '0xf4d2888d29D722226FafA5d9B24F9164c092421E',
-  decimals: 18,
-  symbols: 'LOOKS',
-}
-
-const stakingContract: Contract = {
+const staking: Contract = {
   name: 'FeeSharingSystem',
   chain: 'ethereum',
   address: '0xbcd7254a1d759efa08ec7c3291b2e85c5dcc12ce',
   rewards: [WETH],
 }
 
-const compounderContract: Contract = {
+const compounder: Contract = {
   name: 'AggregatorFeeSharingWithUniswapV3',
   chain: 'ethereum',
   address: '0x3ab16af1315dc6c95f83cbf522fecf98d00fd9ba',
@@ -33,22 +26,20 @@ const compounderContract: Contract = {
 
 const getContracts = () => {
   return {
-    contracts: [stakingContract, compounderContract],
+    contracts: { staking, compounder },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const promises: Promise<Balance>[] = []
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { staking, compounder }) => {
+  const [stakeBalances, compounderBalances] = await Promise.all([
+    getStakeBalances(ctx, 'ethereum', staking),
+    getCompounderBalances(ctx, 'ethereum', compounder),
+  ])
 
-  for (const contract of contracts)
-    if (contract.address === stakingContract.address) {
-      promises.push(getStakeBalances(ctx, 'ethereum', contract, LOOKS))
-    } else if (contract.address === compounderContract.address) {
-      promises.push(getCompounderBalances(ctx, 'ethereum', contract, LOOKS))
-    }
+  const balances = [stakeBalances, compounderBalances].filter(isNotNullish)
 
   return {
-    balances: await Promise.all(promises),
+    balances,
   }
 }
 

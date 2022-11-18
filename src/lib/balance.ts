@@ -1,6 +1,7 @@
-import { BaseBalance, BaseContext, BaseContract } from '@lib/adapter'
+import { Balance, BaseBalance, BaseContext, BaseContract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
+import { BN_ZERO } from '@lib/math'
 import { Call, multicall, MultiCallResult } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
@@ -41,11 +42,11 @@ export async function getBalances(ctx: BaseContext, contracts: BaseContract[]) {
     )
   ).filter(isNotNullish)
 
-  const tokensBalances = (
+  const tokensBalances: Token[] = (
     await Promise.all(
       Object.keys(tokensByChain).map((chain) => getERC20BalanceOf(ctx, chain as Chain, tokensByChain[chain])),
     )
-  ).flat()
+  ).flat() as Token[]
 
   return coinsBalances.concat(tokensBalances)
 }
@@ -58,6 +59,7 @@ export async function getBalancesCalls(chain: Chain, calls: Call[]) {
   for (const call of calls) {
     if (call.target === ethers.constants.AddressZero) {
       // native chain coin
+      // @ts-ignore
       coinsCallsAddresses.push(call.params[0])
     } else {
       // token
@@ -93,7 +95,8 @@ export async function getBalancesCalls(chain: Chain, calls: Call[]) {
       // native chain coin
       res.push({
         success: coinsBalancesRes[coinIdx] != null,
-        input: calls[i],
+        // @ts-ignore
+        input: call,
         output: coinsBalancesRes[coinIdx]?.toString(),
       })
       coinIdx++
@@ -105,4 +108,40 @@ export async function getBalancesCalls(chain: Chain, calls: Call[]) {
   }
 
   return res
+}
+
+export function sanitizeBalances(balances: Balance[]) {
+  const sanitizedBalances = balances.filter((balance) => {
+    if (!balance.amount) {
+      console.error(`Missing balance amount`, balance)
+      return false
+    }
+
+    if (balance.underlyings) {
+      // if there's 1 underlying and the amount is not defined, use the balance amount as default
+      if (balance.underlyings.length === 1 && balance.underlyings[0].amount == null) {
+        balance.underlyings[0].amount = balance.amount
+      }
+
+      for (const underlying of balance.underlyings) {
+        if (underlying.amount == null) {
+          console.error('Nullish underlying balance amount', { balance, underlying })
+          underlying.amount = BN_ZERO
+        }
+      }
+    }
+
+    if (balance.rewards) {
+      for (const reward of balance.rewards) {
+        if (reward.amount == null) {
+          console.error('Nullish reward balance amount', { balance, reward })
+          reward.amount = BN_ZERO
+        }
+      }
+    }
+
+    return true
+  })
+
+  return sanitizedBalances
 }

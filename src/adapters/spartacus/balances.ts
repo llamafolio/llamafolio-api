@@ -1,5 +1,5 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -38,8 +38,6 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?
 }
 
 export async function getBondBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
-  const balances: Balance[] = []
-
   const calls = contracts.map((contract) => ({
     target: contract.address,
     params: [ctx.address],

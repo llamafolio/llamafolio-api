@@ -1,4 +1,4 @@
-import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Adapter, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -31,13 +31,14 @@ const getContracts = async () => {
     getPairsContracts({
       chain: 'bsc',
       factoryAddress: '0xca143ce32fe78f1f7019d7d551a6402fc5350c73',
-      length: 4000,
+      length: 100,
     }),
 
     getMasterChefPoolsInfo({
       chain: 'bsc',
       masterChefAddress: masterChef.address,
     }),
+
     getMasterChefPoolsInfo({
       chain: 'bsc',
       masterChefAddress: masterChef2.address,
@@ -56,7 +57,8 @@ const getContracts = async () => {
       if (!pair) {
         return null
       }
-      return { ...pair, pid: pool.pid }
+      const contract: Contract = { ...pair, pid: pool.pid, category: 'farm' }
+      return contract
     })
     .filter(isNotNullish)
 
@@ -66,44 +68,32 @@ const getContracts = async () => {
       if (!pair) {
         return null
       }
-      return { ...pair, pid: pool.pid }
+      const contract: Contract = { ...pair, pid: pool.pid, category: 'farm' }
+      return contract
     })
     .filter(isNotNullish)
 
-  const contracts = [
-    ...pairs.map((c) => ({ ...c, category: 'lp' })),
-    ...masterChefPools.map((c) => ({ ...c, category: 'farm' })),
-    ...masterChefPools2.map((c) => ({ ...c, category: 'farm2' })),
-  ]
-
   return {
-    contracts,
+    contracts: {
+      pairs,
+      masterChefPools,
+      masterChefPools2,
+    },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const lp = []
-  const farm = []
-  const farmOld = []
-
-  for (const contract of contracts) {
-    if (contract.category === 'lp') {
-      lp.push(contract)
-    } else if (contract.category === 'farm') {
-      farm.push(contract)
-    } else if (contract.category === 'farm2') {
-      farmOld.push(contract)
-    }
-  }
-
-  const pairs = await getPairsBalances(ctx, 'bsc', lp)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx: BaseContext,
+  { pairs, masterChefPools, masterChefPools2 },
+) => {
+  const pairsBalances = await getPairsBalances(ctx, 'bsc', pairs || [])
 
   //new masterchef
   let masterChefBalances = await getMasterChefBalances(ctx, {
     chain: 'bsc',
     masterChefAddress: masterChef.address,
-    tokens: farm,
+    tokens: (masterChefPools || []) as Token[],
     rewardToken: cake,
     pendingRewardName: 'pendingCake',
   })
@@ -114,14 +104,14 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contrac
   let masterChefBalances2 = await getMasterChefBalances(ctx, {
     chain: 'bsc',
     masterChefAddress: masterChef2.address,
-    tokens: farmOld,
+    tokens: (masterChefPools2 || []) as Token[],
     rewardToken: cake,
     pendingRewardName: 'pendingCake',
   })
 
   masterChefBalances2 = await getUnderlyingBalances('bsc', masterChefBalances2)
 
-  const balances = pairs.concat(masterChefBalances).concat(masterChefBalances2)
+  const balances = pairsBalances.concat(masterChefBalances).concat(masterChefBalances2)
 
   return {
     balances,

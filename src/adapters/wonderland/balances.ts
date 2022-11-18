@@ -1,7 +1,7 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Balance, Contract } from '@lib/adapter'
 import { BaseContext } from '@lib/adapter'
 import { range } from '@lib/array'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -17,6 +17,7 @@ export async function getFormattedStakeBalances(ctx: BaseContext, chain: Chain, 
 
     const balanceOfRes = await call({
       chain,
+      block: ctx.blockHeight?.[chain],
       target: contract.address,
       params: [ctx.address],
       abi: abi.balanceOf,
@@ -26,6 +27,7 @@ export async function getFormattedStakeBalances(ctx: BaseContext, chain: Chain, 
 
     const formattedBalanceOfRes = await call({
       chain,
+      block: ctx.blockHeight?.[chain],
       target: contract.address,
       params: [balanceOf],
       abi: {
@@ -69,6 +71,7 @@ export async function getFarmBalances(ctx: BaseContext, chain: Chain, contract?:
     const [balanceOfRes, rewardTokenLengthRes] = await Promise.all([
       call({
         chain,
+        block: ctx.blockHeight?.[chain],
         target: contract.address,
         params: [ctx.address],
         abi: abi.balanceOf,
@@ -76,6 +79,7 @@ export async function getFarmBalances(ctx: BaseContext, chain: Chain, contract?:
 
       call({
         chain,
+        block: ctx.blockHeight?.[chain],
         target: contract.address,
         params: [],
         abi: {
@@ -95,6 +99,7 @@ export async function getFarmBalances(ctx: BaseContext, chain: Chain, contract?:
 
     const rewardTokensRes = await multicall({
       chain,
+      block: ctx.blockHeight?.[chain],
       calls: range(0, rewardTokenLength).map((i) => ({
         target: contract.address,
         params: [i],
@@ -116,6 +121,7 @@ export async function getFarmBalances(ctx: BaseContext, chain: Chain, contract?:
 
     const rewardsBalanceOfRes = await multicall({
       chain,
+      block: ctx.blockHeight?.[chain],
       calls: tokens.map((token) => ({
         target: contract.address,
         params: [ctx.address, token.address],

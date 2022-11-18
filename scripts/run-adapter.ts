@@ -3,14 +3,15 @@ import millify from 'millify'
 import fetch from 'node-fetch'
 import path from 'path'
 
-import { Adapter, Balance, BaseContext } from '../src/lib/adapter'
+import { Adapter, BaseContext, PricedBalance } from '../src/lib/adapter'
+import { sanitizeBalances } from '../src/lib/balance'
 import { chains } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 
 interface CategoryBalances {
   title: string
   totalUSD: number
-  balances: Balance[]
+  balances: PricedBalance[]
 }
 
 Object.defineProperties(BigNumber.prototype, {
@@ -22,7 +23,7 @@ Object.defineProperties(BigNumber.prototype, {
 })
 
 function help() {
-  console.log('npm run {adapter} {address}')
+  console.log('npm run adapter {address}')
 }
 
 async function main() {
@@ -45,12 +46,15 @@ async function main() {
 
   const ctx: BaseContext = { address }
 
-  const module = await import(path.join(__dirname, '..', 'src', 'adapters', process.argv[2]))
+  const adapterId = process.argv[2].replace('-', '/')
+
+  const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
 
   const contractsRes = await adapter.getContracts()
 
   const balancesRes = await adapter.getBalances(ctx, contractsRes.contracts || [])
+  const sanitizedBalances = sanitizeBalances(balancesRes.balances)
 
   const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
   const yieldsData = (await yieldsRes.json()).data
@@ -65,12 +69,12 @@ async function main() {
     yieldsByNewKeys[yieldsData[i].pool] = yieldsData[i]
   }
 
-  const pricedBalances = await getPricedBalances(balancesRes.balances)
+  const pricedBalances = await getPricedBalances(sanitizedBalances)
 
   console.log(`Found ${pricedBalances.length} non zero balances`)
 
   // group by category
-  const balancesByCategory: Record<string, Balance[]> = {}
+  const balancesByCategory: Record<string, PricedBalance[]> = {}
   for (const balance of pricedBalances) {
     if (!balancesByCategory[balance.category]) {
       balancesByCategory[balance.category] = []
@@ -129,28 +133,40 @@ async function main() {
         yieldsByPoolAddress[subKey] ||
         yieldsByKeys[nonAddressKey]
 
+      const decimals = balance.decimals ? 10 ** balance.decimals : 1
+
       const d = {
         chain: balance.chain,
         address: balance.address,
         category: balance.category,
         symbol: balance.symbol,
-        balance: millify(balance.amount / 10 ** balance.decimals),
+        balance: millify(balance.amount.div(decimals.toString()).toNumber()),
         balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
         yield: `${yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + '%' : '-'}`,
         il: `${yieldObject !== undefined ? yieldObject?.ilRisk : '-'}`,
         stable: balance.stable,
         type: balance.type,
+        reward: '',
+        underlying: '',
       }
 
       if (balance.rewards) {
         d.reward = balance.rewards
-          .map((reward) => `${millify(reward.amount / 10 ** reward.decimals)} ${reward.symbol}`)
+          .map((reward) => {
+            const decimals = reward.decimals ? 10 ** reward.decimals : 1
+
+            return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
+          })
           .join(' + ')
       }
 
       if (balance.underlyings) {
         d.underlying = balance.underlyings
-          .map((underlying) => `${millify(underlying.amount / 10 ** underlying.decimals)} ${underlying.symbol}`)
+          .map((underlying) => {
+            const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
+
+            return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
+          })
           .join(' + ')
       }
 
@@ -162,8 +178,8 @@ async function main() {
 
   const metadata: any[] = []
   for (const chain of chains) {
-    if (balancesRes[chain]) {
-      metadata.push({ chain, ...balancesRes[chain] })
+    if (balancesRes[chain.id]) {
+      metadata.push({ chain: chain.id, ...balancesRes[chain.id] })
     }
   }
   console.log('Metadata:')

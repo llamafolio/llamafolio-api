@@ -1,9 +1,9 @@
 import { adapters } from '@adapters/index'
 import { insertContracts } from '@db/contracts'
 import pool from '@db/pool'
-import { serverError, success } from '@handlers/response'
+import { badRequest, serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 import format from 'pg-format'
 
 const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, context) => {
@@ -62,10 +62,16 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
 
   const client = await pool.connect()
 
-  const adapter = adapters.find((adapter) => adapter.id === event.adapterId)
+  const { adapterId } = event as APIGatewayProxyEvent & { adapterId?: string }
+
+  if (!adapterId) {
+    return badRequest(`Missing adapterId parameter`)
+  }
+
+  const adapter = adapters.find((adapter) => adapter.id === adapterId)
   if (!adapter) {
-    console.error(`Failed to revalidate adapter contracts, could not find adapter with id: ${event.adapterId}`)
-    return serverError(`Failed to revalidate adapter contracts, could not find adapter with id: ${event.adapterId}`)
+    console.error(`Failed to revalidate adapter contracts, could not find adapter with id: ${adapterId}`)
+    return serverError(`Failed to revalidate adapter contracts, could not find adapter with id: ${adapterId}`)
   }
 
   const config = await adapter.getContracts()

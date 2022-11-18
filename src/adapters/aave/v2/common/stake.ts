@@ -1,5 +1,5 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'

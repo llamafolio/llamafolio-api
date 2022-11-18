@@ -2,6 +2,8 @@ import { Adapter, Balance, BaseContext, Contract, GetBalancesHandler } from '@li
 import { Chain } from '@lib/chains'
 
 export async function getStakeBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+  console.log(ctx, chain, contracts)
+
   return []
 }
 

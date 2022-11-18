@@ -7,7 +7,7 @@ import { BigNumber, ethers } from 'ethers'
 import LockerAbi from './abis/Locker.json'
 
 export async function getLockerBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
-  const balances = []
+  const balances: Balance[] = []
   const provider = providers[chain]
 
   for (let i = 0; i < contracts.length; i++) {
@@ -57,7 +57,7 @@ export async function getLockerBalances(ctx: BaseContext, chain: Chain, contract
           decimals: 18,
           address: '0x5817d4f0b62a59b17f75207da1848c2ce75e7af4',
           amount: BigNumber.from(lockedBalance.amount),
-          lockEnd: lockedBalance.endTime,
+          lock: { end: lockedBalance.endTime },
           yieldKey: `vector-VTX-locking`,
         })
       }

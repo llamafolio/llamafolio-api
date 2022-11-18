@@ -1,6 +1,6 @@
-import { call } from '@defillama/sdk/build/abi'
 import { BaseContext } from '@lib/adapter'
 import { Balance, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 interface Token extends Contract {
@@ -179,10 +179,10 @@ export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
 
   for (let i = 0; i < pools.length; i++) {
     const balance: Balance = {
-      ...JOE,
+      ...(JOE as Balance),
       address: pools[i],
       amount: stakeAmount[i],
-      rewards: [{ ...JOE.rewards?.[i], amount: rewardsAmount[i] }],
+      rewards: [{ ...(JOE.rewards?.[i] as Balance), amount: rewardsAmount[i] }],
       category: 'stake',
     }
     balances.push(balance)

@@ -4,17 +4,19 @@ import { getStakeBalances } from './balances'
 import { getContractsFromGraph } from './contracts'
 
 const getContracts = async () => {
+  const pools = await getContractsFromGraph()
+
   return {
-    contracts: await getContractsFromGraph(),
+    contracts: { pools },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getStakeBalances(ctx, 'ethereum', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
+  const balances = await getStakeBalances(ctx, 'ethereum', pools || [])
 
   return {
-    balances: balances,
+    balances,
   }
 }
 

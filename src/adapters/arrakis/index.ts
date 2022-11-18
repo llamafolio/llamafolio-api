@@ -11,14 +11,16 @@ const factoryArrakis: Contract = {
 }
 
 const getContracts = async () => {
+  const vaults = await getVaults(factoryArrakis)
+
   return {
-    contracts: await getVaults(factoryArrakis),
+    contracts: { vaults },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getLpBalances(ctx, 'ethereum', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { vaults }) => {
+  const balances = await getLpBalances(ctx, 'ethereum', vaults || [])
 
   return {
     balances,

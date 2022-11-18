@@ -1,8 +1,10 @@
+import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Chain } from '@lib/chains'
 import { getERC20Balances, getERC20Details } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
-export async function getStakeBalances(ctx, chain, contracts) {
-  const balances = []
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+  const balances: Balance[] = []
 
   const erc20 = []
   const underlyings = []
@@ -23,7 +25,7 @@ export async function getStakeBalances(ctx, chain, contracts) {
       symbol: underlyingDetails[index].symbol,
       decimals: 18,
       address: balanceRow.address,
-      priceSubstitute: contracts[index].underlyingTokens,
+      //priceSubstitute: contracts[index].underlyingTokens,
       amount: BigNumber.from(balanceRow.amount),
       yieldKey: erc20[index],
     })
