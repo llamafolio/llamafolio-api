@@ -73,19 +73,19 @@ export async function getFarmingBalances(ctx: BaseContext, chain: Chain, contrac
   ])
 
   for (let i = 0; i < contracts.length; i++) {
+    const contract = contracts[i]
+
     if (userInfoRes[i].success && pendingRewardsRes[i].success) {
       const pendingRewards = BigNumber.from(pendingRewardsRes[i].output)
 
       // division by 0
-      if (contracts[i].totalSupply.gt(0)) {
-        const amount = BigNumber.from(userInfoRes[i].output.amount)
-          .mul(contracts[i].totalToken)
-          .div(contracts[i].totalSupply)
+      if (contract.totalSupply.gt(0)) {
+        const amount = BigNumber.from(userInfoRes[i].output.amount).mul(contract.totalToken).div(contract.totalSupply)
 
         const balance: Balance = {
-          ...contracts[i],
+          ...(contract as Balance),
           amount,
-          underlyings: [{ ...contracts[i].underlyings?.[0], amount }],
+          underlyings: [{ ...(contract.underlyings?.[0] as Balance), amount }],
           rewards: [
             contracts[i].chain === 'bsc'
               ? { ...AlpacaBSC, amount: pendingRewards }
@@ -93,6 +93,7 @@ export async function getFarmingBalances(ctx: BaseContext, chain: Chain, contrac
           ],
           category: 'farm',
         }
+
         balances.push(balance)
       }
     }
@@ -114,15 +115,18 @@ export async function getDepositBalances(ctx: BaseContext, chain: Chain, contrac
   })
 
   for (let i = 0; i < contracts.length; i++) {
-    if (contracts[i].totalSupply.gt(0)) {
-      const amount = BigNumber.from(balanceOfRes[i].output).mul(contracts[i].totalToken).div(contracts[i].totalSupply)
+    const contract = contracts[i]
+
+    if (contract.totalSupply.gt(0)) {
+      const amount = BigNumber.from(balanceOfRes[i].output).mul(contract.totalToken).div(contract.totalSupply)
 
       const balance: Balance = {
-        ...contracts[i],
+        ...(contract as Balance),
         amount,
-        underlyings: [{ ...contracts[i].underlyings?.[0], amount }],
+        underlyings: [{ ...(contract.underlyings?.[0] as Balance), amount }],
         category: 'lp',
       }
+
       balances.push(balance)
     }
   }

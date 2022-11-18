@@ -3,8 +3,6 @@ import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
-import { PoolSupply } from './pools'
-
 const TRU: Contract = {
   chain: 'ethereum',
   address: '0x4c19596f5aaff459fa38b0f7ed92f11ae6543784',
@@ -15,7 +13,7 @@ const TRU: Contract = {
 
 const trueMultiFarm = '0xec6c3fd795d6e6f202825ddb56e01b3c128b0b10'
 
-export async function getFarmBalances(ctx: BaseContext, chain: Chain, pools: PoolSupply[]) {
+export async function getFarmBalances(ctx: BaseContext, chain: Chain, pools: Contract[]) {
   const balances: Balance[] = []
 
   const calls = pools.map((pool) => ({
@@ -64,13 +62,15 @@ export async function getFarmBalances(ctx: BaseContext, chain: Chain, pools: Poo
   ])
 
   for (let i = 0; i < pools.length; i++) {
+    const pool = pools[i]
+
     if (staked[i].success) {
-      const amount = BigNumber.from(staked[i].output).mul(pools[i].poolValue).div(pools[i].totalSupply)
+      const amount = BigNumber.from(staked[i].output).mul(pool.poolValue).div(pool.totalSupply)
 
       const balance: Balance = {
-        ...pools[i],
+        ...(pool as Balance),
         amount,
-        underlyings: [{ ...pools[i].underlyings[0], amount }],
+        underlyings: [{ ...(pool.underlyings?.[0] as Balance), amount }],
         category: 'farm',
       }
 

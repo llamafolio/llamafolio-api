@@ -41,11 +41,11 @@ export async function getBalances(ctx: BaseContext, contracts: BaseContract[]) {
     )
   ).filter(isNotNullish)
 
-  const tokensBalances = (
+  const tokensBalances: Token[] = (
     await Promise.all(
       Object.keys(tokensByChain).map((chain) => getERC20BalanceOf(ctx, chain as Chain, tokensByChain[chain])),
     )
-  ).flat()
+  ).flat() as Token[]
 
   return coinsBalances.concat(tokensBalances)
 }
@@ -58,6 +58,7 @@ export async function getBalancesCalls(chain: Chain, calls: Call[]) {
   for (const call of calls) {
     if (call.target === ethers.constants.AddressZero) {
       // native chain coin
+      // @ts-ignore
       coinsCallsAddresses.push(call.params[0])
     } else {
       // token
@@ -93,7 +94,8 @@ export async function getBalancesCalls(chain: Chain, calls: Call[]) {
       // native chain coin
       res.push({
         success: coinsBalancesRes[coinIdx] != null,
-        input: calls[i],
+        // @ts-ignore
+        input: call,
         output: coinsBalancesRes[coinIdx]?.toString(),
       })
       coinIdx++

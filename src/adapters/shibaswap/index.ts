@@ -1,4 +1,4 @@
-import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Adapter, Balance, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -60,33 +60,19 @@ const getContracts = async () => {
       if (!pair) {
         return null
       }
-      return { ...pair, pid: pool.pid }
+      const contract: Contract = { ...pair, pid: pool.pid, category: 'farm' }
+      return contract
     })
     .filter(isNotNullish)
 
-  const contracts = [
-    ...pairsInfo.map((c) => ({ ...c, category: 'lp' })),
-    ...masterChefPools.map((c) => ({ ...c, category: 'farm' })),
-  ]
-
   return {
-    contracts,
+    contracts: { pairs: pairsInfo, masterChefPools },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  let balances = []
-  const lp = []
-  const farm = []
-
-  for (const contract of contracts) {
-    if (contract.category === 'lp') {
-      lp.push(contract)
-    } else if (contract.category === 'farm') {
-      farm.push(contract)
-    }
-  }
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { pairs, masterChefPools }) => {
+  let balances: Balance[] = []
 
   const stakerBalances = await getStakerBalances(ctx, 'ethereum', staker.address)
 
@@ -96,16 +82,18 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contrac
 
   balances = balances.concat(lockerBalances)
 
-  const pairs = await getPairsBalances(ctx, 'ethereum', lp)
+  const pairsBalances = await getPairsBalances(ctx, 'ethereum', pairs || [])
 
-  balances = balances.concat(pairs)
+  balances = balances.concat(pairsBalances)
 
   let masterChefBalances = await getMasterChefBalances(ctx, {
     chain: 'ethereum',
     masterChefAddress: masterChef.address,
-    tokens: farm,
+    tokens: (masterChefPools || []) as Token[],
     rewardToken: bone,
+    pendingRewardName: 'pendingToken',
   })
+
   masterChefBalances = await getUnderlyingBalances('ethereum', masterChefBalances)
 
   balances = balances.concat(masterChefBalances)

@@ -45,7 +45,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contrac
       coins.map(async (token) => {
         try {
           const provider = providers[token.chain]
-          const amount = await provider.getBalance(ctx.address)
+          const amount = await provider.getBalance(ctx.address, ctx.blockHeight?.[token.chain])
           const balance: Balance = {
             ...token,
             amount,

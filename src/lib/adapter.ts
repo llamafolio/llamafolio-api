@@ -7,15 +7,19 @@ export type ContractStandard = 'erc20' | 'erc721'
 
 export interface BaseContext {
   address: string
+  blockHeight?: { [k: string]: number }
 }
 
 export interface BaseBalance extends BaseContract {
   amount: BigNumber
+  claimable?: BigNumber
 }
 
 export interface BasePricedBalance extends BaseBalance {
   price: number
   balanceUSD: number
+  claimableUSD?: number
+
   // price updated at
   timestamp: number
 }
@@ -111,4 +115,59 @@ export interface Adapter {
   id: string
   getContracts: GetContractsHandler
   getBalances: GetBalancesHandler<GetContractsHandler>
+}
+
+/**
+ * Tests
+ */
+
+export interface AdapterTest {
+  address: string
+  blockHeight: { [k: string]: number }
+  expected: { [k: string]: BalancesTest[] }
+}
+
+export interface BalancesTest {
+  amount?: string
+  symbol?: string
+  category?: string
+  underlying?: { symbol?: string; amount: string }[]
+  rewards?: { symbol?: string; amount: string }[]
+}
+
+export const parseBalancesTest = (balancesConfig: BalancesConfig): BalancesTest => {
+  const chains = balancesConfig.balances
+    .map((balances) => balances.chain)
+    .filter((chain, i, chains) => chains.indexOf(chain) === i)
+
+  const balances: { [k: string]: BalancesTest[] } = {}
+
+  for (const chain of chains) {
+    balances[chain] = []
+    balancesConfig.balances.map((balance) => {
+      if (balance.chain === chain && balance.amount.toString() !== '0') {
+        const data: BalancesTest = {
+          amount: balance.amount.toString(),
+          symbol: balance.symbol,
+          category: balance.category,
+        }
+
+        if (balance.underlyings) {
+          data.underlying = balance.underlyings.map((underlying) => {
+            return { amount: underlying.amount.toString(), symbol: underlying.symbol }
+          })
+        }
+
+        if (balance.rewards) {
+          data.rewards = balance.rewards.map((reward) => {
+            return { amount: reward.amount.toString(), symbol: reward.symbol }
+          })
+        }
+
+        balances[chain].push(data)
+      }
+    })
+  }
+
+  return balances
 }

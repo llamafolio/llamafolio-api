@@ -3,7 +3,7 @@ import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
-import { getUnderlyingBalances, getUnderlyingsContract } from '@lib/uniswap/v2/pair'
+import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { ethers } from 'ethers'
 
 import MultiFeeDistributionABI from './abis/MultiFeeDistribution.json'
@@ -37,8 +37,7 @@ export async function getMultiFeeDistributionBalances(
       multiFeeDistribution.withdrawableBalance(ctx.address),
     ])
 
-  let [stakingToken, rewardToken] = await getERC20Details('ethereum', [stakingTokenAddress, rewardTokenAddress])
-  stakingToken = await getUnderlyingsContract(stakingToken)
+  const [stakingToken, rewardToken] = await getERC20Details('ethereum', [stakingTokenAddress, rewardTokenAddress])
 
   const tokens = claimableRewards.map((res: any) => res.token)
   const tokenDetails = await getERC20Details(chain, tokens)

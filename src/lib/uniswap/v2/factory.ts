@@ -18,7 +18,11 @@ export interface getPairsContractsParams {
   length?: number
 }
 
-export async function getPairsContracts({ chain, factoryAddress, length }: getPairsContractsParams) {
+export async function getPairsContracts({
+  chain,
+  factoryAddress,
+  length,
+}: getPairsContractsParams): Promise<Contract[]> {
   const provider = providers[chain]
   const factory = new ethers.Contract(factoryAddress, UniswapV2Factory, provider)
 
@@ -46,7 +50,7 @@ export async function getPairsContracts({ chain, factoryAddress, length }: getPa
 
   const pairs: Contract[] = allPairsRes
     .filter((res) => res.success)
-    .map((res) => ({ chain, address: res.output.toLowerCase() }))
+    .map((res) => ({ chain, address: res.output.toLowerCase(), category: 'lp' }))
 
   return getPairsDetails(chain, pairs)
 }

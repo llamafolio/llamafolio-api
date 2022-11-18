@@ -1,19 +1,20 @@
-const { request } = require('graphql-request')
-const { query } = require('./queries/query')
+import { Contract } from '@lib/adapter'
+import { request } from 'graphql-request'
+
+import { allPoolsQuery } from './queries/query'
 
 const API_URL = 'https://staging.api.maple.finance/v1/graphql'
 
 export async function getContractsFromGraph() {
-  const contracts = []
+  const contracts: Contract[] = []
 
   const {
     results: { list: data },
-  } = await request(API_URL, query, {
+  } = await request(API_URL, allPoolsQuery, {
     filter: { skip: 0, limit: 100 },
   })
-  const pools = data.map((pool) => {
-    const tokenPrice = pool.liquidityAsset.price / 1e8
 
+  data.map((pool: Contract) => {
     contracts.push({
       chain: 'ethereum',
       address: pool.contractAddress,

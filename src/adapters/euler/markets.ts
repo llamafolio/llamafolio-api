@@ -1,4 +1,5 @@
-import { Balance } from '@lib/adapter'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Chain } from '@lib/chains'
 import { getERC20Balances, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
@@ -6,8 +7,9 @@ import { BigNumber, ethers } from 'ethers'
 
 import EulerAbi from './abis/Markets.json'
 
-export async function getPositions(ctx, chain, contracts): Promise<Balance[]> {
+export async function getPositions(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
   const provider = providers[chain]
+
   const marketEuler = new ethers.Contract(contracts[0].address, EulerAbi, provider)
 
   const marketsEntered = await marketEuler.getEnteredMarkets(ctx.address)
@@ -27,9 +29,6 @@ export async function getPositions(ctx, chain, contracts): Promise<Balance[]> {
       params: [marketsEntered[index]],
       target: marketEuler.address,
     })
-
-    const underlyingToEToken = await marketEuler.underlyingToEToken(marketsEntered[index])
-    const underlyingToDToken = await marketEuler.underlyingToDToken(marketsEntered[index])
   }
 
   const callsLendRes = await multicall({
@@ -63,7 +62,7 @@ export async function getPositions(ctx, chain, contracts): Promise<Balance[]> {
   const borrowBalances = await getERC20Balances(ctx, chain, borrowRes)
   const lendBalances = await getERC20Balances(ctx, chain, lendRes)
 
-  const balances = []
+  const balances: Balance[] = []
 
   for (let i = 0; i < borrowBalances.length; i++) {
     const borrowBalance = borrowBalances[i]

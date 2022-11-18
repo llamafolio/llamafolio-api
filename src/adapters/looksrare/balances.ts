@@ -42,10 +42,13 @@ export const getStakeBalances = async (
   const rewardsBalanceOf = BigNumber.from(rewardsBalanceOfRes.output)
 
   const stakebalance: Balance = {
-    ...looksContract,
+    ...(looksContract as Balance),
     amount: stakeBalanceOf,
-    rewards: [{ ...stakingContract.rewards?.[0], amount: rewardsBalanceOf }],
     category: 'stake',
+  }
+
+  if (stakingContract.rewards?.[0]) {
+    stakebalance.rewards = [{ ...stakingContract.rewards?.[0], amount: rewardsBalanceOf }]
   }
 
   return stakebalance
@@ -71,7 +74,7 @@ export const getCompounderBalances = async (
   })
 
   const compounderBalance: Balance = {
-    ...looksContract,
+    ...(looksContract as Balance),
     amount: BigNumber.from(sharesValue.output),
     yieldKey: compounder.address,
     category: 'farm',

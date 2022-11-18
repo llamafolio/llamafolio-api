@@ -38,8 +38,6 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?
 }
 
 export async function getBondBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
-  const balances: Balance[] = []
-
   const calls = contracts.map((contract) => ({
     target: contract.address,
     params: [ctx.address],

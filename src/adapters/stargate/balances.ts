@@ -7,7 +7,7 @@ import { BigNumber, ethers } from 'ethers'
 import MasterChefAbi from './abis/MasterChef.json'
 
 export async function getStakeBalances(ctx: BaseContext, contracts: Contract[]): Promise<Balance[]> {
-  const balances = []
+  const balances: Balance[] = []
   for (let index = 0; index < contracts.length; index++) {
     const chain = contracts[index].chain
 
@@ -107,7 +107,7 @@ export async function getStakeBalances(ctx: BaseContext, contracts: Contract[]):
           decimals: tokenDetailsImproved[c].decimals,
           address: poolInfo[c].lpToken,
           amount: BigNumber.from(balance.amount),
-          priceSubstitute: tokenDetailsImproved[c].address,
+          //priceSubstitute: tokenDetailsImproved[c].address,
           yieldKey: poolInfo[c].lpToken,
         })
       }

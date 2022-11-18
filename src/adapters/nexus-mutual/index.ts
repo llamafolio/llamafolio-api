@@ -30,7 +30,9 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain) {
   ])
 
   const stakeBalances: Balance = {
-    ...NXM,
+    chain: NXM.chain,
+    address: NXM.address,
+    decimals: NXM.decimals,
     amount: BigNumber.from(stakeAmount),
     rewards: [{ ...NXM, amount: BigNumber.from(claimableAmount) }],
     category: 'stake',
@@ -45,7 +47,7 @@ const getContracts = () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts) => {
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext) => {
   const stakeBalances = await getStakeBalances(ctx, 'ethereum')
 
   const balances = stakeBalances

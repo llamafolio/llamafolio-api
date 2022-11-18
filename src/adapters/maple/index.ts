@@ -14,7 +14,7 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contrac
   const balances = await getStakeBalances(ctx, 'ethereum', contracts)
 
   return {
-    balances: balances,
+    balances,
   }
 }
 

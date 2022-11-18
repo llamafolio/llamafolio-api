@@ -1,5 +1,6 @@
-import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Adapter, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getERC20BalanceOf } from '@lib/erc20'
+import { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { gql, request } from 'graphql-request'
 
@@ -68,8 +69,8 @@ const getContracts = async () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  let lpBalances = await getERC20BalanceOf(ctx, 'ethereum', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts: Contract[]) => {
+  let lpBalances = await getERC20BalanceOf(ctx, 'ethereum', contracts as Token[])
   lpBalances = await getUnderlyingBalances('ethereum', lpBalances)
 
   return {
