@@ -11,7 +11,7 @@ import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
 
 function help() {
-  console.log('npm run {update-balances} {address}')
+  console.log('npm run update-balances {address}')
 }
 
 async function main() {

@@ -44,8 +44,11 @@ export const getStakeBalances = async (
   const stakebalance: Balance = {
     ...(looksContract as Balance),
     amount: stakeBalanceOf,
-    rewards: [{ ...(stakingContract.rewards?.[0] as Balance), amount: rewardsBalanceOf }],
     category: 'stake',
+  }
+
+  if (stakingContract.rewards?.[0]) {
+    stakebalance.rewards = [{ ...stakingContract.rewards?.[0], amount: rewardsBalanceOf }]
   }
 
   return stakebalance

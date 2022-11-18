@@ -30,7 +30,9 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain) {
   ])
 
   const stakeBalances: Balance = {
-    ...(NXM as Balance),
+    chain: NXM.chain,
+    address: NXM.address,
+    decimals: NXM.decimals,
     amount: BigNumber.from(stakeAmount),
     rewards: [{ ...NXM, amount: BigNumber.from(claimableAmount) }],
     category: 'stake',

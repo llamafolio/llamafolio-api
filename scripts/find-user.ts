@@ -10,7 +10,7 @@ interface Label {
 }
 
 function help() {
-  console.log('npm run {find-user} {adapter} {address}')
+  console.log('npm run find-user {adapter} {address}')
 }
 
 async function main() {

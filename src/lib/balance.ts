@@ -58,12 +58,8 @@ export async function getBalancesCalls(chain: Chain, calls: Call[]) {
   for (const call of calls) {
     if (call.target === ethers.constants.AddressZero) {
       // native chain coin
-      if (call.params) {
-        if (Array.isArray(call.params)) {
-          const params = call.params as string[]
-          coinsCallsAddresses.push(params[0])
-        }
-      }
+      // @ts-ignore
+      coinsCallsAddresses.push(call.params[0])
     } else {
       // token
       tokensCalls.push(call)
@@ -98,7 +94,8 @@ export async function getBalancesCalls(chain: Chain, calls: Call[]) {
       // native chain coin
       res.push({
         success: coinsBalancesRes[coinIdx] != null,
-        input: { target: call.target, params: call.params as any[] },
+        // @ts-ignore
+        input: call,
         output: coinsBalancesRes[coinIdx]?.toString(),
       })
       coinIdx++

@@ -56,7 +56,9 @@ const getStakeBalances = async (ctx: any, chain: Chain) => {
   )
 
   const stakeBalance: Balance = {
-    ...(HEX as Balance),
+    ...HEX,
+    rewards: undefined,
+    underlyings: undefined,
     amount: stakeAmount,
     category: 'stake',
   }

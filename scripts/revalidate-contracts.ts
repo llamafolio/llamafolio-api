@@ -6,7 +6,7 @@ import pool from '../src/db/pool'
 import { Adapter } from '../src/lib/adapter'
 
 function help() {
-  console.log('npm run {revalidate-contracts} {adapter} {address}')
+  console.log('npm run revalidate-contracts {adapter} {address}')
 }
 
 async function main() {

@@ -5,18 +5,17 @@ export function isHex(str: string): boolean {
 
 /**
  *
- * @param {string} str ex: "0xabc123"
- * @return {Buffer}
+ * @param str ex: "0xabc123"
  */
-export function strToBuf(str: string): Buffer {
+export function strToBuf(str: string) {
   return Buffer.from(str.substring(2), 'hex')
 }
 
 /**
  *
- * @param {Buffer} buffer
- * @return {string} ex: "0xabc123"
+ * @param  buffer
+ * @return ex: "0xabc123"
  */
-export function bufToStr(buffer: Buffer): string {
+export function bufToStr(buffer: Buffer) {
   return '0x' + buffer.toString('hex')
 }

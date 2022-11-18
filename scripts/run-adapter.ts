@@ -22,7 +22,7 @@ Object.defineProperties(BigNumber.prototype, {
 })
 
 function help() {
-  console.log('npm run {adapter} {address}')
+  console.log('npm run adapter {address}')
 }
 
 async function main() {

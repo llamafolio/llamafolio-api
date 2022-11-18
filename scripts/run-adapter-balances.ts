@@ -15,7 +15,7 @@ interface CategoryBalances {
 }
 
 function help() {
-  console.log('npm run {adapter-balances} {adapter} {address}')
+  console.log('npm run adapter-balances {adapter} {address}')
 }
 
 async function main() {

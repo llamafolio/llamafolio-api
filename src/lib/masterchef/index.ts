@@ -65,7 +65,7 @@ export async function getMasterChefBalances(
   const userInfoRes = await multicall({
     chain,
     calls: tokens.map((token) => ({
-      params: [token.pid ?? '0', ctx.address],
+      params: [token.pid, ctx.address],
       target: masterChef.address,
     })),
     abi: {
@@ -103,7 +103,7 @@ export async function getMasterChefBalances(
   const pendingRewardsRes = await multicall({
     chain,
     calls: resBalances.map((token) => ({
-      params: [token.pid ?? '0', ctx.address],
+      params: [token.pid, ctx.address],
       target: masterChef.address,
     })),
     abi: pendingRewardAbi,

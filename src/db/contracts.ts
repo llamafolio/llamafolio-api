@@ -20,7 +20,7 @@ export interface ContractStorage {
   data?: any
 }
 
-export function fromStorage(contracts: ContractStorage[]): Contract[] {
+export function fromStorage(contracts: ContractStorage[]) {
   const res: Contract[] = []
   const contractByKey: { [key: string]: Contract } = {}
   const underlyings: BaseContract[] = []

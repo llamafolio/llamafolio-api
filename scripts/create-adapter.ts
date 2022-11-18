@@ -2,7 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 function help() {
-  console.log('npm run {create-adapter} {adapter}')
+  console.log('npm run create-adapter {adapter}')
 }
 
 async function main() {

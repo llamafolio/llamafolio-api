@@ -13,8 +13,6 @@ export interface BaseContext {
 export interface BaseBalance extends BaseContract {
   amount: BigNumber
   claimable?: BigNumber
-  parent?: string
-  adapterId?: string
 }
 
 export interface BasePricedBalance extends BaseBalance {
@@ -34,8 +32,6 @@ export interface Balance extends BaseBalance {
   // ex: Uniswap Pair -> [token0, token1]
   underlyings?: BaseBalance[]
   lock?: Lock
-
-  pid?: string // required value for masterchef pools
 }
 
 export interface RewardBalance extends Balance {
@@ -74,6 +70,56 @@ export interface BalancesConfig {
   optimism?: Metadata
   xdai?: Metadata
 }
+
+export interface BaseContract {
+  // discriminators
+  type?: ContractType
+  standard?: ContractStandard
+  category?: Category
+
+  name?: string
+  displayName?: string
+  chain: Chain
+  address: string
+  symbol?: string
+  decimals?: number
+  stable?: boolean
+
+  // DefiLlama yields API identifier. Matches pool or pool_old
+  yieldKey?: string
+}
+
+export interface Contract extends BaseContract {
+  rewards?: BaseContract[]
+  underlyings?: BaseContract[]
+  [key: string | number]: any
+}
+
+export interface ContractsConfig {
+  contracts: Contract[] | { [key: string]: Contract | Contract[] | undefined }
+  revalidate?: number
+}
+
+export type GetContractsHandler = () => ContractsConfig | Promise<ContractsConfig>
+
+export type GetBalancesHandler<C extends GetContractsHandler> = (
+  ctx: BaseContext,
+  contracts: Awaited<ReturnType<C>>['contracts'],
+) => BalancesConfig | Promise<BalancesConfig>
+
+export interface Adapter {
+  /**
+   * DefiLlama slug.
+   * @see https://docs.llama.fi/list-your-project/submit-a-project to submit your adapter on DefiLlama.
+   */
+  id: string
+  getContracts: GetContractsHandler
+  getBalances: GetBalancesHandler<GetContractsHandler>
+}
+
+/**
+ * Tests
+ */
 
 export interface AdapterTest {
   address: string
@@ -124,52 +170,4 @@ export const parseBalancesTest = (balancesConfig: BalancesConfig): BalancesTest 
   }
 
   return balances
-}
-
-export interface BaseContract {
-  // discriminators
-  type?: ContractType
-  standard?: ContractStandard
-  category?: Category
-
-  name?: string
-  displayName?: string
-  chain: Chain
-  address: string
-  symbol?: string
-  decimals?: number
-  stable?: boolean
-
-  // DefiLlama yields API identifier. Matches pool or pool_old
-  yieldKey?: string
-  adapterId?: string
-  parent?: string
-}
-
-export interface Contract extends BaseContract {
-  rewards?: BaseContract[]
-  underlyings?: BaseContract[]
-  [key: string | number]: any
-}
-
-export interface ContractsConfig {
-  contracts: Contract[] | { [key: string]: Contract | Contract[] | undefined }
-  revalidate?: number
-}
-
-export type GetContractsHandler = () => ContractsConfig | Promise<ContractsConfig>
-
-export type GetBalancesHandler<C extends GetContractsHandler> = (
-  ctx: BaseContext,
-  contracts: Awaited<ReturnType<C>>['contracts'],
-) => BalancesConfig | Promise<BalancesConfig>
-
-export interface Adapter {
-  /**
-   * DefiLlama slug.
-   * @see https://docs.llama.fi/list-your-project/submit-a-project to submit your adapter on DefiLlama.
-   */
-  id: string
-  getContracts: GetContractsHandler
-  getBalances: GetBalancesHandler<GetContractsHandler>
 }

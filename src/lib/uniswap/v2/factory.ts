@@ -50,7 +50,7 @@ export async function getPairsContracts({
 
   const pairs: Contract[] = allPairsRes
     .filter((res) => res.success)
-    .map((res) => ({ chain, address: res.output.toLowerCase() }))
+    .map((res) => ({ chain, address: res.output.toLowerCase(), category: 'lp' }))
 
   return getPairsDetails(chain, pairs)
 }
