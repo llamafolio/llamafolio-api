@@ -171,7 +171,7 @@ async function main() {
     console.table(metadata)
 
     const endTime = Date.now()
-    console.log(`Completed in ${endTime - startTime}ms`)
+    console.log(`Completed in ${(endTime - startTime) / 1000} seconds`)
   } catch (e) {
     console.log('Failed to run balances', e)
   } finally {
