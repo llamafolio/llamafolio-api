@@ -49,13 +49,13 @@ const contracts: Contract[] = [
 
 const getContracts = () => {
   return {
-    contracts: contracts,
+    contracts: { contracts },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getStakeBalances(ctx, contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { contracts }) => {
+  const balances = await getStakeBalances(ctx, contracts || [])
 
   return {
     balances,

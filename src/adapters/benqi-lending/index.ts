@@ -3,7 +3,7 @@ import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lendin
 import { ethers } from 'ethers'
 
 const getContracts = async () => {
-  const poolsMarkets = await getMarketsContracts('avax', {
+  const markets = await getMarketsContracts('avax', {
     // Benqi Comptroller
     comptrollerAddress: '0x486Af39519B4Dc9a7fCcd318217352830E8AD9b4',
     underlyingAddressByMarketAddress: {
@@ -12,13 +12,13 @@ const getContracts = async () => {
     },
   })
   return {
-    contracts: poolsMarkets,
+    contracts: { markets },
     revalidate: 60 * 60,
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await getMarketsBalances(ctx, 'avax', contracts)
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { markets }) => {
+  const balances = await getMarketsBalances(ctx, 'avax', markets || [])
 
   return {
     balances,

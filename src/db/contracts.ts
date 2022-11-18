@@ -191,7 +191,7 @@ export async function selectContractsByAdapterId(client: PoolClient, adapterId: 
 
 export function insertContracts(
   client: PoolClient,
-  contracts: Contract[] | { [key: string]: Contract | Contract[] },
+  contracts: { [key: string]: Contract | Contract[] | undefined },
   adapterId: string,
 ) {
   const values = toStorage(flattenContracts(contracts), adapterId).map(toRow)
@@ -279,12 +279,9 @@ export async function getAllTokensInteractions(client: PoolClient, address: stri
   return fromStorage(res.rows)
 }
 
-export function flattenContracts(contracts: Contract[] | { [key: string]: Contract | Contract[] }) {
-  if (Array.isArray(contracts)) {
-    return contracts
-  }
-
+export function flattenContracts(contracts: { [key: string]: Contract | Contract[] | undefined }) {
   const contractsList: Contract[] = []
+
   for (const key in contracts) {
     if (Array.isArray(contracts[key])) {
       const keyContracts = contracts[key] as Contract[]
@@ -316,10 +313,5 @@ export function groupContracts(contracts: Contract[]) {
     }
   }
 
-  // contracts either all have a __key or none of them do
-  if (Object.keys(contractsMap).length > 0) {
-    return contractsMap
-  }
-
-  return contracts
+  return contractsMap
 }
