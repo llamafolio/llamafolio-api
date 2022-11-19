@@ -1,6 +1,6 @@
 import { call } from '@defillama/sdk/build/abi'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
-import { BaseContext, Contract, Balance } from '@lib/adapter'
 import { BigNumber } from 'ethers'
 
 export async function getRewardsBalances(ctx: BaseContext, chain: Chain, comptroller?: Contract, lens?: Contract) {

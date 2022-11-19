@@ -1,14 +1,13 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
-import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
 import { BN_TEN, sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { getPricedBalances } from '@lib/price'
 import { providers } from '@lib/providers'
-import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
+import { BigNumber, ethers } from 'ethers'
 
 import ComptrollerABI from './abis/Comptroller.json'
 
@@ -215,15 +214,17 @@ export async function getHealthFactor(balances: BalanceWithExtraProps[]) {
     const supplyPriced = await getPricedBalances(nonZeroSupplyBalances)
     const borrowPriced = await getPricedBalances(nonZeroBorrowBalances)
 
-    const supplyPricedBalanceOnly = sum(
+    const supplyUSD = sum(
       supplyPriced.map((supply: any) => (+supply.balanceUSD * supply.collateralFactor) / Math.pow(10, 18)),
     )
-    const borrowPricedBalanceOnly = sum(borrowPriced.map((borrow: any) => borrow.balanceUSD))
+    const borrowUSD = sum(borrowPriced.map((borrow: any) => borrow.balanceUSD))
+    if (borrowUSD === 0) {
+      return undefined
+    }
 
-    const healthFactor =
-      borrowPricedBalanceOnly > 0 ? (supplyPricedBalanceOnly / borrowPricedBalanceOnly).toFixed(2) : 10
+    const healthFactor = supplyUSD / borrowUSD
 
-    return Number(healthFactor)
+    return healthFactor
   } catch (error) {
     console.log('Failed to get health factor')
 
