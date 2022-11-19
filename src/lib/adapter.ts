@@ -1,6 +1,6 @@
 import { sanitizeBalances } from '@lib/balance'
 import { Category } from '@lib/category'
-import { Chain } from '@lib/chains'
+import { Chain, chains } from '@lib/chains'
 import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 
@@ -159,9 +159,19 @@ export function mergeAdapters(adapters: { [key: string]: Pick<Adapter, 'getContr
       adapterKeys.map((key) => adapters[key].getBalances(ctx, contractsByAdapterKey[key])),
     )
 
+    const metadata: Omit<BalancesConfig, 'balances'> = {}
     const balances = adaptersBalances.flatMap((config) => config.balances).filter(isNotNullish)
 
+    for (const chain of chains) {
+      for (const config of adaptersBalances) {
+        if (config[chain.id]) {
+          metadata[chain.id] = { ...(metadata[chain.id] || {}), ...config[chain.id] }
+        }
+      }
+    }
+
     return {
+      ...metadata,
       balances,
     }
   }
