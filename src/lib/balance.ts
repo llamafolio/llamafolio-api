@@ -1,4 +1,4 @@
-import { Balance, BaseBalance, BaseContext, BaseContract } from '@lib/adapter'
+import { Balance, BaseBalance, BaseContext, BaseContract, GetContractsHandler } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
@@ -144,4 +144,31 @@ export function sanitizeBalances(balances: Balance[]) {
   })
 
   return sanitizedBalances
+}
+
+export async function resolveBalances<C extends GetContractsHandler>(
+  ctx: BaseContext,
+  chain: Chain,
+  contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
+  resolvers: {
+    [key in keyof Partial<Awaited<ReturnType<C>>['contracts']>]: (
+      ctx: BaseContext,
+      chain: Chain,
+      contracts: Awaited<ReturnType<C>>['contracts'][key],
+    ) =>
+      | Promise<Balance | Balance[] | Balance[][] | null | undefined>
+      | Balance
+      | Balance[]
+      | Balance[][]
+      | null
+      | undefined
+  },
+) {
+  const contractKeys = Object.keys(contracts)
+  const balances = await Promise.all(
+    contractKeys
+      .filter((contractKey) => resolvers[contractKey] != null && contracts[contractKey] != null)
+      .map((contractKey) => resolvers[contractKey](ctx, chain, contracts[contractKey]!)),
+  )
+  return balances.flat(2).filter(isNotNullish)
 }
