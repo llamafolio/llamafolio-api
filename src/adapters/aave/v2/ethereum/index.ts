@@ -51,25 +51,22 @@ const incentiveController: Contract = {
 }
 
 export const getContracts = async () => {
-  const poolsEthereum = await getLendingPoolContracts('ethereum', lendingPool)
+  const pools = await getLendingPoolContracts('ethereum', lendingPool)
 
   return {
     contracts: {
-      poolsEthereum,
+      pools,
       stkAAVE,
       stkABPT,
     },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  { poolsEthereum, stkAAVE, stkABPT },
-) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools, stkAAVE, stkABPT }) => {
   const [lendingPoolBalances, rewardsPoolBalances, healthFactor, stakeBalances, stakeBalancerBalances] =
     await Promise.all([
-      getLendingPoolBalances(ctx, 'ethereum', poolsEthereum || []),
-      getLendingRewardsBalances(ctx, 'ethereum', poolsEthereum || [], incentiveController, stkAAVE),
+      getLendingPoolBalances(ctx, 'ethereum', pools || []),
+      getLendingRewardsBalances(ctx, 'ethereum', pools || [], incentiveController, stkAAVE),
       getLendingPoolHealthFactor(ctx, 'ethereum', lendingPool),
       getStakeBalances(ctx, 'ethereum', stkAAVE),
       getStakeBalancerPoolBalances(ctx, 'ethereum', stkABPT),

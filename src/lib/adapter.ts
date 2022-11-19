@@ -1,6 +1,7 @@
 import { sanitizeBalances } from '@lib/balance'
 import { Category } from '@lib/category'
-import { Chain } from '@lib/chains'
+import { Chain, chains } from '@lib/chains'
+import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 export interface BaseContext {
@@ -105,7 +106,8 @@ export type GetContractsHandler = () => ContractsConfig | Promise<ContractsConfi
 
 export type GetBalancesHandler<C extends GetContractsHandler> = (
   ctx: BaseContext,
-  contracts: Awaited<ReturnType<C>>['contracts'],
+  // each key can be undefined as the account may not have interacted with these contracts
+  contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
 ) => BalancesConfig | Promise<BalancesConfig>
 
 export interface Adapter {
@@ -116,6 +118,72 @@ export interface Adapter {
   id: string
   getContracts: GetContractsHandler
   getBalances: GetBalancesHandler<GetContractsHandler>
+}
+
+export function mergeAdapters(adapters: { [key: string]: Pick<Adapter, 'getContracts' | 'getBalances'> }) {
+  const adapterKeys = Object.keys(adapters)
+
+  const getContracts = async () => {
+    const contracts: ContractsConfig['contracts'] = {}
+
+    const adaptersContracts = await Promise.all(adapterKeys.map((key) => adapters[key].getContracts()))
+
+    for (let i = 0; i < adapterKeys.length; i++) {
+      for (const contractKey in adaptersContracts[i].contracts) {
+        // prefix each contract key with the adapter key to preven any conflict on merged adapters
+        const compositeKey = `${adapterKeys[i]}#${contractKey}`
+        contracts[compositeKey] = adaptersContracts[i].contracts[contractKey]
+      }
+    }
+
+    return {
+      contracts,
+    }
+  }
+
+  const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+    // group back contracts to their adapter (prefix key)
+    // ex: { p0#k0: x0, p0#k1: x1, p1#k0: y0, ... } -> { p0: { k0: x0, k1: x1 }, p1: { k0: y0 } }
+    const contractsByAdapterKey: { [key: string]: ContractsConfig['contracts'] } = {}
+    for (const compositeKey in contracts) {
+      const [adapterKey, ...rest] = compositeKey.split('#')
+      // in case actual key contains separator
+      const key = rest.join('#')
+
+      if (!contractsByAdapterKey[adapterKey]) {
+        contractsByAdapterKey[adapterKey] = {}
+      }
+      contractsByAdapterKey[adapterKey][key] = contracts[compositeKey]
+    }
+
+    const adaptersBalances = await Promise.all(
+      adapterKeys
+        // don't run adapters if no contract (ex: no interaction on this chain for this protocol)
+        .filter((key) => contractsByAdapterKey[key])
+        .map((key) => adapters[key].getBalances(ctx, contractsByAdapterKey[key])),
+    )
+
+    const metadata: Omit<BalancesConfig, 'balances'> = {}
+    const balances = adaptersBalances.flatMap((config) => config.balances).filter(isNotNullish)
+
+    for (const chain of chains) {
+      for (const config of adaptersBalances) {
+        if (config[chain.id]) {
+          metadata[chain.id] = { ...(metadata[chain.id] || {}), ...config[chain.id] }
+        }
+      }
+    }
+
+    return {
+      ...metadata,
+      balances,
+    }
+  }
+
+  return {
+    getContracts,
+    getBalances,
+  }
 }
 
 /**

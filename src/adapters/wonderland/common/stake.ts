@@ -59,7 +59,7 @@ export async function getFormattedStakeBalances(ctx: BaseContext, chain: Chain, 
   }
 }
 
-export async function getFarmBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
   if (!contract) {
     return []
   }
@@ -159,7 +159,7 @@ export async function getFarmBalances(ctx: BaseContext, chain: Chain, contract?:
       symbol: contract.token.symbol,
       amount: balanceOf,
       rewards: [...rewards],
-      category: 'farm',
+      category: 'stake',
     }
     balances.push(balance)
 

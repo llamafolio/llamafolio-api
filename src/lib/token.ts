@@ -13,3 +13,12 @@ export interface Token {
   // ex: WETH -> ETH
   priceSubstitute?: string
 }
+
+export const ETH: Token = {
+  chain: 'ethereum',
+  address: '0x0000000000000000000000000000000000000000',
+  symbol: 'ETH',
+  decimals: 18,
+  coingeckoId: 'ethereum',
+  native: true,
+}

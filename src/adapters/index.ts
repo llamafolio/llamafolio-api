@@ -9,6 +9,7 @@ import atlasUSV from '@adapters/atlas-usv'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
 import compoundV2 from '@adapters/compound/v2'
+import compoundV3 from '@adapters/compound/v3'
 import concentrator from '@adapters/concentrator'
 import convex from '@adapters/convex'
 import curve from '@adapters/curve'
@@ -69,6 +70,7 @@ export const adapters: Adapter[] = [
   benqiLending,
   benqiStakedAvax,
   compoundV2,
+  compoundV3,
   concentrator,
   convex,
   curve,

@@ -46,7 +46,7 @@ async function main() {
 
   const ctx: BaseContext = { address }
 
-  const adapterId = process.argv[2].replace('-', '/')
+  const adapterId = process.argv[2]
 
   const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
