@@ -24,19 +24,19 @@ const incentiveController: Contract = {
 }
 
 export const getContracts = async () => {
-  const poolsAvax = await getLendingPoolContracts('avax', lendingPool)
+  const pools = await getLendingPoolContracts('avax', lendingPool)
 
   return {
     contracts: {
-      poolsAvax,
+      pools,
     },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { poolsAvax }) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
   const [lendingPoolBalances, rewardsPoolBalances, healthFactor] = await Promise.all([
-    getLendingPoolBalances(ctx, 'avax', poolsAvax || []),
-    getLendingRewardsBalances(ctx, 'avax', poolsAvax || [], incentiveController, WAVAX),
+    getLendingPoolBalances(ctx, 'avax', pools || []),
+    getLendingRewardsBalances(ctx, 'avax', pools || [], incentiveController, WAVAX),
     getLendingPoolHealthFactor(ctx, 'avax', lendingPool),
   ])
 
