@@ -1,8 +1,8 @@
-import { Chain } from '@defillama/sdk/build/general'
 import { call } from '@defillama/sdk/build/abi'
-import { BigNumber } from 'ethers'
+import { Chain } from '@defillama/sdk/build/general'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { abi, getERC20Details } from '@lib/erc20'
+import { BigNumber } from 'ethers'
 
 export async function getGLPContracts(chain: Chain, contract?: Contract) {
   const glpStaker: Contract[] = []
