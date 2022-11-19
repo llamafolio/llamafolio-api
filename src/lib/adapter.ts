@@ -106,7 +106,8 @@ export type GetContractsHandler = () => ContractsConfig | Promise<ContractsConfi
 
 export type GetBalancesHandler<C extends GetContractsHandler> = (
   ctx: BaseContext,
-  contracts: Awaited<ReturnType<C>>['contracts'],
+  // each key can be undefined as the account may not have interacted with these contracts
+  contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
 ) => BalancesConfig | Promise<BalancesConfig>
 
 export interface Adapter {
