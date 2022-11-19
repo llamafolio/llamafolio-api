@@ -8,6 +8,14 @@
       "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "adapter", "${input:adapter}", "${input:address}"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run adapter balances",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "adapter-balances", "${input:adapter}", "${input:address}"]
     }
   ],
   "inputs": [

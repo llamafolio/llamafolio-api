@@ -156,7 +156,10 @@ export function mergeAdapters(adapters: { [key: string]: Pick<Adapter, 'getContr
     }
 
     const adaptersBalances = await Promise.all(
-      adapterKeys.map((key) => adapters[key].getBalances(ctx, contractsByAdapterKey[key])),
+      adapterKeys
+        // don't run adapters if no contract (ex: no interaction on this chain for this protocol)
+        .filter((key) => contractsByAdapterKey[key])
+        .map((key) => adapters[key].getBalances(ctx, contractsByAdapterKey[key])),
     )
 
     const metadata: Omit<BalancesConfig, 'balances'> = {}
