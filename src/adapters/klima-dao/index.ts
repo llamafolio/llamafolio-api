@@ -1,4 +1,5 @@
 import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 import { getFormattedStakeBalances, getStakeBalances } from './balances'
 
@@ -34,13 +35,11 @@ const getContracts = () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { sKLIMA, wsKLIMA }) => {
-  const [stakeBalances, formattedBalance] = await Promise.all([
-    getStakeBalances(ctx, 'polygon', sKLIMA),
-    getFormattedStakeBalances(ctx, 'polygon', wsKLIMA),
-  ])
-
-  const balances = [...stakeBalances, ...formattedBalance]
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'polygon', contracts, {
+    sKLIMA: getStakeBalances,
+    wsKLIMA: getFormattedStakeBalances,
+  })
 
   return {
     balances,
