@@ -1,4 +1,5 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
 
@@ -44,16 +45,11 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  { poolsMarkets, piggyDistribution },
-) => {
-  const [marketsBalances, marketsRewards] = await Promise.all([
-    getMarketsBalances(ctx, 'arbitrum', poolsMarkets || []),
-    getMarketsRewards(ctx, 'arbitrum', piggyDistribution),
-  ])
-
-  const balances = [...marketsBalances, ...marketsRewards]
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'arbitrum', contracts, {
+    poolsMarkets: getMarketsBalances,
+    piggyDistribution: getMarketsRewards,
+  })
 
   return {
     balances,

@@ -26,7 +26,7 @@ export interface BalanceWithExtraProps extends Balance {
 export async function getMarketsContracts(
   chain: Chain,
   { comptrollerAddress, underlyingAddressByMarketAddress = {} }: GetMarketsContractsProps,
-) {
+): Promise<Contract[]> {
   const provider = providers[chain]
 
   const comptroller = new ethers.Contract(comptrollerAddress, ComptrollerABI, provider)
