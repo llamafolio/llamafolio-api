@@ -1,7 +1,6 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
-import { resolveBalances } from '@lib/balance'
 
-import { getLockerBalances } from '../common/balances'
+import { getLockerBalances } from '../common/locker'
 
 const vtxLocker: Contract = {
   name: 'vectorLocker',
@@ -13,11 +12,12 @@ const vtxLocker: Contract = {
 export const getContracts = () => {
   return {
     contracts: { vtxLocker },
+    revalidate: 60 * 60,
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'avax', contracts, { vtxLocker: getLockerBalances })
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { vtxLocker }) => {
+  const balances = await getLockerBalances(ctx, 'avax', [vtxLocker])
 
   return {
     balances,
