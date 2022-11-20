@@ -1,6 +1,6 @@
-import { getStakeBalances } from '@adapters/stakewise/stake'
 import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
-import { isNotNullish } from '@lib/type'
+import { resolveBalances } from '@lib/balance'
+import { getERC20BalanceOf } from '@lib/erc20'
 
 const WETH: Contract = {
   name: 'WETH',
@@ -32,12 +32,14 @@ const rEth2: Contract = {
 
 const getContracts = () => {
   return {
-    contracts: { sEth2, rEth2 },
+    contracts: { stake: [sEth2, rEth2] },
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { sEth2, rEth2 }) => {
-  const balances = await getStakeBalances(ctx, 'ethereum', [sEth2, rEth2].filter(isNotNullish))
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances(ctx, 'ethereum', contracts, {
+    stake: getERC20BalanceOf,
+  })
 
   return {
     balances,
