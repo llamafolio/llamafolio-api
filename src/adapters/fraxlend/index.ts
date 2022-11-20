@@ -83,7 +83,6 @@ export const getLendBorrowBalances = async (ctx: BaseContext, chain: Chain, pool
 
       const collateralToken = poolCollateralTokens[i]
 
-      console.log(userCollateral.toString(), poolTokenBalance.toString())
       const supply: Balance = {
         chain,
         decimals: asset.decimals,
