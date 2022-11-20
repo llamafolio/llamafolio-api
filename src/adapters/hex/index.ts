@@ -1,13 +1,23 @@
 import { Adapter, Balance, Contract, GetBalancesHandler } from '@lib/adapter'
 import { range } from '@lib/array'
+import { resolveBalances } from '@lib/balance'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { sumBN } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { providers } from '@lib/providers'
 import { BigNumber } from 'ethers'
-import { ethers } from 'ethers'
 
-import abi from './abi/hex.json'
+const abi = {
+  stakeCount: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: 'stakerAddr', type: 'address' }],
+    name: 'stakeCount',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
 
 const HEX: Contract = {
   name: 'HEX',
@@ -17,16 +27,20 @@ const HEX: Contract = {
   symbol: 'HEX',
 }
 
-const getStakeBalances = async (ctx: any, chain: Chain) => {
-  let stakeCount = 0
-  const provider = providers[chain]
-  const stakeContracts = new ethers.Contract(HEX.address, abi, provider)
-  stakeCount = await stakeContracts.stakeCount(ctx.address)
+const getStakeBalances = async (ctx: any, chain: Chain, hexContract: Contract) => {
+  const stakeCountRes = await call({
+    chain,
+    target: hexContract.address,
+    params: [ctx.address],
+    abi: abi.stakeCount,
+  })
+
+  const stakeCount = parseInt(stakeCountRes.output)
 
   const stakeListsRes = await multicall({
-    chain: HEX.chain,
+    chain,
     calls: range(0, stakeCount).map((i) => ({
-      target: HEX.address,
+      target: hexContract.address,
       params: [ctx.address, i],
     })),
     abi: {
@@ -56,14 +70,14 @@ const getStakeBalances = async (ctx: any, chain: Chain) => {
   )
 
   const stakeBalance: Balance = {
-    ...HEX,
+    ...hexContract,
     rewards: undefined,
     underlyings: undefined,
     amount: stakeAmount,
     category: 'stake',
   }
 
-  return [stakeBalance]
+  return stakeBalance
 }
 
 const getContracts = () => {
@@ -72,9 +86,11 @@ const getContracts = () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx) => {
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, { HEX: getStakeBalances })
+
   return {
-    balances: await getStakeBalances(ctx, 'ethereum'),
+    balances,
   }
 }
 
