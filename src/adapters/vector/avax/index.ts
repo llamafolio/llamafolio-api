@@ -1,7 +1,6 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 
-import { getFarmContracts } from '../common/farm'
-import { getLockerBalances } from '../common/locker'
+import { getFarmBalances, getFarmContracts } from '../common/farm'
 
 const vtxLocker: Contract = {
   name: 'vectorLocker',
@@ -17,19 +16,21 @@ const masterChef: Contract = {
 }
 
 export const getContracts = async () => {
-  const farm = await getFarmContracts('avax', masterChef)
-  console.log(farm)
+  const farmContracts = await getFarmContracts('avax', masterChef)
 
   return {
-    contracts: { vtxLocker },
-    revalidate: 60 * 60,
+    contracts: { vtxLocker, farmContracts, masterChef },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { vtxLocker }) => {
-  const balances = await getLockerBalances(ctx, 'avax', [vtxLocker])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (
+  ctx,
+  { vtxLocker, farmContracts, masterChef },
+) => {
+  const farmBalances = await getFarmBalances(ctx, 'avax', farmContracts || [], masterChef)
+  // const balances = await getLockerBalances(ctx, 'avax', [vtxLocker])
 
   return {
-    balances,
+    balances: farmBalances,
   }
 }
