@@ -1,6 +1,7 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
+import { getBondsBalances } from '../common/bond'
 import { getFormattedStakeBalances, getStakeBalances } from '../common/stake'
 
 const sOHM: Contract = {
@@ -19,9 +20,15 @@ const gOHM: Contract = {
   decimals: 18,
 }
 
+const bondOHM: Contract = {
+  name: 'OlympusPro Factory Storage',
+  chain: 'ethereum',
+  address: '0x6828D71014D797533C3b49B6990Ca1781656B71f',
+}
+
 export const getContracts = async () => {
   return {
-    contracts: { sOHM, gOHM },
+    contracts: { sOHM, gOHM, bondOHM },
   }
 }
 
@@ -29,6 +36,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
     sOHM: getStakeBalances,
     gOHM: getFormattedStakeBalances,
+    bondOHM: getBondsBalances,
   })
 
   return {
