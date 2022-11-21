@@ -1,4 +1,5 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 import { getFarmBalances, getFarmContracts } from '../common/farm'
 
@@ -23,14 +24,12 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  { vtxLocker, farmContracts, masterChef },
-) => {
-  const farmBalances = await getFarmBalances(ctx, 'avax', farmContracts || [], masterChef)
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = resolveBalances(ctx, 'avax', contracts, { farmContracts, masterChef: getFarmBalances })
+  // const farmBalances = await getFarmBalances(ctx, 'avax', farmContracts || [], masterChef)
   // const balances = await getLockerBalances(ctx, 'avax', [vtxLocker])
 
   return {
-    balances: farmBalances,
+    balances,
   }
 }

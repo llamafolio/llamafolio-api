@@ -210,7 +210,6 @@ export async function getFarmBalances(
       balances.push(balance)
     }
   }
-  console.log(balances)
 
   return balances
 }
