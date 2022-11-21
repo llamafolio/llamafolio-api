@@ -1,5 +1,6 @@
 import { adapterById } from '@adapters/index'
 import { insertBalances } from '@db/balances'
+import { BalancesSnapshot, insertBalancesSnapshots } from '@db/balances-snapshots'
 import { groupContracts } from '@db/contracts'
 import { getAllContractsInteractions, getAllTokensInteractions } from '@db/contracts'
 import pool from '@db/pool'
@@ -13,7 +14,6 @@ import { chains } from '@lib/chains'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
-import format from 'pg-format'
 
 export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false // !important to reuse pool
@@ -41,6 +41,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
   try {
     // Early return if balances last update was < 1 minute ago
     const balancesRes = await client.query(
+      // TODO: check balances_snapshots
       `select timestamp from balances where from_address = $1::bytea order by timestamp desc limit 1;`,
       [strToBuf(address)],
     )
@@ -129,7 +130,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
               balance.adapterId = adapterId
             }
 
-            return balancesConfig.balances
+            return balancesConfig
           } catch (error) {
             console.error(`[${adapterId}]: Failed to getBalances`, error)
             return []
@@ -139,7 +140,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     )
 
     // Ungroup balances to make only 1 call to the price API
-    const balances = adaptersBalances.flat().filter(isNotNullish)
+    const balances = adaptersBalances.flatMap((balanceConfig) => balanceConfig?.balances).filter(isNotNullish)
 
     const sanitizedBalances = sanitizeBalances(balances)
 
@@ -168,11 +169,30 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
     const now = new Date()
 
+    const balancesSnapshots = Object.keys(contractsByAdapterId)
+      .map((adapterId, i) => {
+        const balanceConfig = adaptersBalances[i]
+        const pricedBalances = pricedBalancesByAdapterId[adapterId]
+        if (!balanceConfig || !pricedBalances) {
+          return null
+        }
+
+        const balanceSnapshot: BalancesSnapshot = {
+          fromAddress: address,
+          balanceUSD: sumBalances(pricedBalances.filter(isNotNullish)),
+          timestamp: now,
+          data: balanceConfig.metadata,
+        }
+
+        return balanceSnapshot
+      })
+      .filter(isNotNullish)
+
     // Update balances
     await client.query('BEGIN')
 
-    // Delete old balances
-    await client.query(format('delete from balances where from_address = %L::bytea', strToBuf(address)), [])
+    // Insert balances snapshots
+    await insertBalancesSnapshots(client, balancesSnapshots)
 
     // Insert new balances
     await Promise.all(

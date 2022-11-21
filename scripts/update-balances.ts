@@ -98,7 +98,7 @@ async function main() {
     )
 
     // Ungroup balances to make only 1 call to the price API
-    const balances = adaptersBalances.flat().filter(isNotNullish)
+    const balances = adaptersBalances.flatMap((balanceConfig) => balanceConfig?.balances).filter(isNotNullish)
 
     const sanitizedBalances = sanitizeBalances(balances)
 
