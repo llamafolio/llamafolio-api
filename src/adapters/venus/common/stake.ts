@@ -18,68 +18,56 @@ const VAI: Token = {
   address: '0x4BD17003473389A42DAF6a0a729f6Fdb328BbBd7',
 }
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
-  if (!contract || !contract.underlyings || !contract.rewards) {
-    console.log('Missing or incorrect vault contract')
-
-    return []
-  }
-
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
   const balances: Balance[] = []
 
-  try {
-    const [stakeBalanceRes, pendingXVSRes] = await Promise.all([
-      call({
-        chain,
-        target: contract.address,
-        params: [ctx.address],
-        abi: {
-          constant: true,
-          inputs: [{ internalType: 'address', name: '', type: 'address' }],
-          name: 'userInfo',
-          outputs: [
-            { internalType: 'uint256', name: 'amount', type: 'uint256' },
-            { internalType: 'uint256', name: 'rewardDebt', type: 'uint256' },
-          ],
-          payable: false,
-          stateMutability: 'view',
-          type: 'function',
-        },
-      }),
-
-      call({
-        chain,
-        target: contract.address,
-        params: [ctx.address],
-        abi: {
-          constant: true,
-          inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
-          name: 'pendingXVS',
-          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-          payable: false,
-          stateMutability: 'view',
-          type: 'function',
-        },
-      }),
-    ])
-
-    const stakeBalance = BigNumber.from(stakeBalanceRes.output.amount)
-    const pendingXVS = BigNumber.from(pendingXVSRes.output)
-
-    balances.push({
+  const [stakeBalanceRes, pendingXVSRes] = await Promise.all([
+    call({
       chain,
-      address: VAI.address,
-      decimals: VAI.decimals,
-      symbol: VAI.symbol,
-      amount: stakeBalance,
-      rewards: [{ ...XVS, amount: pendingXVS }],
-      category: 'stake',
-    })
+      target: contract.address,
+      params: [ctx.address],
+      abi: {
+        constant: true,
+        inputs: [{ internalType: 'address', name: '', type: 'address' }],
+        name: 'userInfo',
+        outputs: [
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+          { internalType: 'uint256', name: 'rewardDebt', type: 'uint256' },
+        ],
+        payable: false,
+        stateMutability: 'view',
+        type: 'function',
+      },
+    }),
 
-    return balances
-  } catch (error) {
-    console.log('Failed to get stake balance')
+    call({
+      chain,
+      target: contract.address,
+      params: [ctx.address],
+      abi: {
+        constant: true,
+        inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+        name: 'pendingXVS',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        payable: false,
+        stateMutability: 'view',
+        type: 'function',
+      },
+    }),
+  ])
 
-    return []
-  }
+  const stakeBalance = BigNumber.from(stakeBalanceRes.output.amount)
+  const pendingXVS = BigNumber.from(pendingXVSRes.output)
+
+  balances.push({
+    chain,
+    address: VAI.address,
+    decimals: VAI.decimals,
+    symbol: VAI.symbol,
+    amount: stakeBalance,
+    rewards: [{ ...XVS, amount: pendingXVS }],
+    category: 'stake',
+  })
+
+  return balances
 }
