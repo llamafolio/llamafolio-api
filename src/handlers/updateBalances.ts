@@ -179,9 +179,10 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
         const balanceSnapshot: BalancesSnapshot = {
           fromAddress: address,
+          adapterId,
           balanceUSD: sumBalances(pricedBalances.filter(isNotNullish)),
           timestamp: now,
-          data: balanceConfig.metadata,
+          metadata: balanceConfig.metadata,
         }
 
         return balanceSnapshot
@@ -195,6 +196,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     await insertBalancesSnapshots(client, balancesSnapshots)
 
     // Insert new balances
+    // TODO: insert all at once
     await Promise.all(
       Object.keys(pricedBalancesByAdapterId).map((adapterId) =>
         insertBalances(client, pricedBalancesByAdapterId[adapterId], adapterId, address, now),

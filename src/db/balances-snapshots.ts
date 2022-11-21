@@ -8,7 +8,7 @@ export interface BalancesSnapshot {
   adapterId: string
   balanceUSD: number
   timestamp: Date
-  metadata: object
+  metadata?: object
 }
 
 export interface BalancesSnapshotStorage {
@@ -16,7 +16,7 @@ export interface BalancesSnapshotStorage {
   adapter_id: string
   balance_usd: string
   timestamp: string
-  metadata: object
+  metadata?: object
 }
 
 export interface BalancesSnapshotStorable {
@@ -24,7 +24,7 @@ export interface BalancesSnapshotStorable {
   adapter_id: string
   balance_usd: number
   timestamp: Date
-  metadata: object
+  metadata?: object
 }
 
 export function fromStorage(balancesSnapshots: BalancesSnapshotStorage[]) {
