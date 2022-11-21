@@ -7,7 +7,13 @@ import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
-interface BalanceWithExtraProps extends Balance {
+interface FarmContract extends Contract {
+  lpToken: string
+  rewarder: string
+  helper: string
+}
+
+interface FarmBalance extends Balance {
   lpToken: string
   rewarder: string
   helper: string
@@ -20,8 +26,8 @@ const VTX: Token = {
   symbol: 'VTX',
 }
 
-export async function getFarmContracts(chain: Chain, masterChef: Contract): Promise<Contract[]> {
-  const contracts: Contract[] = []
+export async function getFarmContracts(chain: Chain, masterChef: Contract) {
+  const contracts: FarmContract[] = []
 
   const poolsLength = await call({
     chain,
@@ -80,32 +86,35 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract): Prom
   const lpTokensAddresses = poolInfos.map((token) => token.lpToken)
 
   const [pools, lpTokens] = await Promise.all([
-    getERC20Details(chain, poolsAddresses),
-    getERC20Details(chain, lpTokensAddresses),
+    getERC20Details2(chain, poolsAddresses),
+    getERC20Details2(chain, lpTokensAddresses),
   ])
 
   for (let i = 0; i < pools.length; i++) {
-    const pool = pools[i]
-    const poolInfo = poolInfos[i]
-    const lpToken = lpTokens[i]
+    if (pools[i] && lpTokens[i]) {
+      const pool = pools[i]!
+      const poolInfo = poolInfos[i]!
+      const lpToken = lpTokens[i]!
 
-    contracts.push({
-      chain,
-      address: pool.address,
-      lpToken: lpToken.address,
-      rewarder: poolInfo.rewarder,
-      helper: poolInfo.helper,
-      decimals: lpToken.decimals,
-      symbol: lpToken.symbol,
-    })
+      contracts.push({
+        chain,
+        address: pool.address,
+        lpToken: lpToken.address,
+        rewarder: poolInfo.rewarder,
+        helper: poolInfo.helper,
+        decimals: lpToken.decimals,
+        symbol: lpToken.symbol,
+      })
+    }
   }
+
   return contracts
 }
 
 export async function getFarmBalances(
   ctx: BaseContext,
   chain: Chain,
-  contracts: Contract[],
+  contracts: FarmContract[],
   masterChef: Contract,
 ): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -128,6 +137,7 @@ export async function getFarmBalances(
         type: 'function',
       },
     }),
+
     multicall({
       chain,
       calls: contracts.map((token) => ({
@@ -142,6 +152,7 @@ export async function getFarmBalances(
         type: 'function',
       },
     }),
+
     multicall({
       chain,
       calls: contracts.map((token) => ({
@@ -180,7 +191,7 @@ export async function getFarmBalances(
     const pendingBaseReward = pendingBaseRewards[i]
 
     if (token !== null) {
-      const balance: BalanceWithExtraProps = {
+      const balance: FarmBalance = {
         chain,
         address: token.address,
         lpToken: contract.lpToken,
@@ -210,7 +221,7 @@ export async function getFarmBalances(
   return balances
 }
 
-const getExtraRewards = async (ctx: BaseContext, chain: Chain, balance: BalanceWithExtraProps): Promise<Balance[]> => {
+const getExtraRewards = async (ctx: BaseContext, chain: Chain, balance: FarmBalance): Promise<Balance[]> => {
   const pendingRewardsTokensRes = await multicall({
     chain,
     // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts checked, 7 seems to be the maximum number of extra tokens used.
