@@ -20,10 +20,7 @@ const VTX: Token = {
   symbol: 'VTX',
 }
 
-export async function getFarmContracts(chain: Chain, masterChef?: Contract): Promise<Contract[]> {
-  if (!masterChef) {
-    return []
-  }
+export async function getFarmContracts(chain: Chain, masterChef: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const poolsLength = await call({
@@ -192,7 +189,6 @@ export async function getFarmBalances(
         helper: contract.helper,
         decimals: token.decimals,
         amount: BigNumber.from(userDepositBalance),
-        underlyings: [],
         rewards: [{ ...VTX, amount: BigNumber.from(pendingBaseReward) }],
         category: 'farm',
       }
@@ -203,7 +199,7 @@ export async function getFarmBalances(
 
         if (balance.symbol === 'JLP') {
           const underlyings = await getPoolsUnderlyings(chain, balance)
-          balance.underlyings?.push(...underlyings)
+          balance.underlyings = [...underlyings]
         }
       }
 
@@ -217,7 +213,7 @@ export async function getFarmBalances(
 const getExtraRewards = async (ctx: BaseContext, chain: Chain, balance: BalanceWithExtraProps): Promise<Balance[]> => {
   const pendingRewardsTokensRes = await multicall({
     chain,
-    // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts examined, 6 seems to be the maximum number of extra tokens used.
+    // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts checked, 7 seems to be the maximum number of extra tokens used.
     // However, this process forced us to encounter many multicall failures on contracts that do not have as many tokens
     calls: range(0, 6).map((x) => ({
       target: balance.rewarder,
@@ -260,7 +256,7 @@ const getExtraRewards = async (ctx: BaseContext, chain: Chain, balance: BalanceW
   return rewardsTokens.map((token, i) => ({ ...token, amount: pendingRewardsBalances[i] }))
 }
 
-const getPoolsUnderlyings = async (chain: Chain, contract: Contract) => {
+const getPoolsUnderlyings = async (chain: Chain, contract: Contract): Promise<Balance[]> => {
   const [
     underlyingToken0AddressesRes,
     underlyingsTokens1AddressesRes,
