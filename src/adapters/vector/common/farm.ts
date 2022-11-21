@@ -188,9 +188,11 @@ export async function getFarmBalances(
         address: token.address,
         lpToken: contract.lpToken,
         rewarder: contract.rewarder,
+        symbol: token.symbol,
         helper: contract.helper,
         decimals: token.decimals,
         amount: BigNumber.from(userDepositBalance),
+        underlyings: [],
         rewards: [{ ...VTX, amount: BigNumber.from(pendingBaseReward) }],
         category: 'farm',
       }
@@ -198,10 +200,17 @@ export async function getFarmBalances(
       if (balance.amount.gt(0)) {
         const extraRewards = await getExtraRewards(ctx, chain, balance)
         balance.rewards?.push(...extraRewards)
+
+        if (balance.symbol === 'JLP') {
+          const underlyings = await getPoolsUnderlyings(chain, balance)
+          balance.underlyings?.push(...underlyings)
+        }
       }
+
       balances.push(balance)
     }
   }
+  console.log(balances)
 
   return balances
 }
@@ -209,7 +218,7 @@ export async function getFarmBalances(
 const getExtraRewards = async (ctx: BaseContext, chain: Chain, balance: BalanceWithExtraProps): Promise<Balance[]> => {
   const pendingRewardsTokensRes = await multicall({
     chain,
-    // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts examined, 6 seems to be the maximum number of tokens used.
+    // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts examined, 6 seems to be the maximum number of extra tokens used.
     // However, this process forced us to encounter many multicall failures on contracts that do not have as many tokens
     calls: range(0, 6).map((x) => ({
       target: balance.rewarder,
@@ -250,4 +259,91 @@ const getExtraRewards = async (ctx: BaseContext, chain: Chain, balance: BalanceW
     .map((res) => BigNumber.from(res.output))
 
   return rewardsTokens.map((token, i) => ({ ...token, amount: pendingRewardsBalances[i] }))
+}
+
+const getPoolsUnderlyings = async (chain: Chain, contract: Contract) => {
+  const [
+    underlyingToken0AddressesRes,
+    underlyingsTokens1AddressesRes,
+    underlyingsTokensReservesRes,
+    totalPoolSupplyRes,
+  ] = await Promise.all([
+    call({
+      chain,
+      target: contract.address,
+      params: [],
+      abi: {
+        inputs: [],
+        name: 'token0',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    }),
+
+    call({
+      chain,
+      target: contract.address,
+      params: [],
+      abi: {
+        inputs: [],
+        name: 'token1',
+        outputs: [{ internalType: 'address', name: '', type: 'address' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    }),
+
+    call({
+      chain,
+      target: contract.address,
+      params: [],
+      abi: {
+        inputs: [],
+        name: 'getReserves',
+        outputs: [
+          { internalType: 'uint112', name: '_reserve0', type: 'uint112' },
+          { internalType: 'uint112', name: '_reserve1', type: 'uint112' },
+          { internalType: 'uint32', name: '_blockTimestampLast', type: 'uint32' },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    }),
+
+    call({
+      chain,
+      target: contract.address,
+      params: [],
+      abi: {
+        inputs: [],
+        name: 'totalSupply',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    }),
+  ])
+
+  const underlyingsTokensAddresses: string[] = []
+  const underlyingsTokensReserves: BigNumber[] = []
+  const totalPoolSupply = BigNumber.from(totalPoolSupplyRes.output)
+
+  underlyingsTokensAddresses.push(underlyingToken0AddressesRes.output, underlyingsTokens1AddressesRes.output)
+  underlyingsTokensReserves.push(
+    BigNumber.from(underlyingsTokensReservesRes.output._reserve0),
+    BigNumber.from(underlyingsTokensReservesRes.output._reserve1),
+  )
+  const underlyings = await getERC20Details(chain, underlyingsTokensAddresses)
+
+  const underlyings0 = {
+    ...underlyings[0],
+    amount: contract.amount.mul(underlyingsTokensReserves[0]).div(totalPoolSupply),
+  }
+  const underlyings1 = {
+    ...underlyings[1],
+    amount: contract.amount.mul(underlyingsTokensReserves[1]).div(totalPoolSupply),
+  }
+
+  return [underlyings0, underlyings1]
 }
