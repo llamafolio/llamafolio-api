@@ -11,7 +11,12 @@ const XVS: Token = {
   symbol: 'XVS',
 }
 
-export async function getRewardsBalances(ctx: BaseContext, chain: Chain, comptroller: Contract, lens: Contract) {
+export async function getRewardsBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  comptroller: Contract,
+  lens: Contract,
+): Promise<Balance[]> {
   const rewards: Balance[] = []
 
   const XVSAllocatedRewardsRes = await call({

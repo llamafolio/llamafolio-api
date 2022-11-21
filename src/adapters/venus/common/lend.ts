@@ -9,7 +9,7 @@ export async function getLendBorrowBalances(
   chain: Chain,
   contracts: Contract[],
   comptroller: Contract,
-) {
+): Promise<Balance[]> {
   const balances: Balance[] = []
   const VAI = comptroller.underlyings?.[1]
 

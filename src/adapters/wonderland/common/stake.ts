@@ -7,7 +7,7 @@ import { abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers/lib/ethers'
 
-export async function getFormattedStakeBalance(ctx: BaseContext, chain: Chain, wMEMO: Contract) {
+export async function getFormattedStakeBalance(ctx: BaseContext, chain: Chain, wMEMO: Contract): Promise<Balance> {
   const balanceOfRes = await call({
     chain,
     block: ctx.blockHeight?.[chain],
@@ -46,7 +46,7 @@ export async function getFormattedStakeBalance(ctx: BaseContext, chain: Chain, w
   return balance
 }
 
-export async function getStakeBalance(ctx: BaseContext, chain: Chain, wMemoFarm: Contract) {
+export async function getStakeBalance(ctx: BaseContext, chain: Chain, wMemoFarm: Contract): Promise<Balance> {
   const rewards: Balance[] = []
 
   const [balanceOfRes, rewardTokenLengthRes] = await Promise.all([

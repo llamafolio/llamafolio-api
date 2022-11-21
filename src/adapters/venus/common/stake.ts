@@ -18,7 +18,7 @@ const VAI: Token = {
   address: '0x4BD17003473389A42DAF6a0a729f6Fdb328BbBd7',
 }
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [stakeBalanceRes, pendingXVSRes] = await Promise.all([
