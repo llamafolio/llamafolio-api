@@ -29,7 +29,7 @@ async function getERC20Balances(ctx: BaseContext, chain: Chain, tokens: Token[])
   }))
 }
 
-const makeAdapter = (chain: Chain) => {
+const getChainHandlers = (chain: Chain) => {
   const getContracts = () => {
     let coin: Token | undefined = undefined
     const erc20: Token[] = []
@@ -52,8 +52,6 @@ const makeAdapter = (chain: Chain) => {
   }
 
   const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-    console.log('=== GET BALANCES', { chain, contracts })
-
     const balances = await resolveBalances<typeof getContracts>(ctx, chain, contracts, {
       coin: getCoinBalance,
       erc20: getERC20Balances,
@@ -75,7 +73,7 @@ const adapter: Adapter = {
 }
 
 for (const chain of chains) {
-  adapter[chain.id] = makeAdapter(chain.id)
+  adapter[chain.id] = getChainHandlers(chain.id)
 }
 
 export default adapter
