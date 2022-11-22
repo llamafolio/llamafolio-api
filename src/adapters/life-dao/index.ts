@@ -1,10 +1,10 @@
-import * as avax from '@adapters/life-dao/avax'
 import { Adapter } from '@lib/adapter'
+
+import * as avax from './avax'
 
 const adapter: Adapter = {
   id: 'life-dao',
-  getContracts: avax.getContracts,
-  getBalances: avax.getBalances,
+  avax,
 }
 
 export default adapter

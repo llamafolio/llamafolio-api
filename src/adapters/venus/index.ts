@@ -1,10 +1,10 @@
-import * as bsc from '@adapters/venus/bsc'
 import { Adapter } from '@lib/adapter'
+
+import * as bsc from './bsc'
 
 const adapter: Adapter = {
   id: 'venus',
-  getContracts: bsc.getContracts,
-  getBalances: bsc.getBalances,
+  bsc,
 }
 
 export default adapter

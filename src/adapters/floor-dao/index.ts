@@ -1,10 +1,10 @@
-import * as ethereum from '@adapters/floor-dao/ethereum'
 import { Adapter } from '@lib/adapter'
+
+import * as ethereum from './ethereum'
 
 const adapter: Adapter = {
   id: 'floor-dao',
-  getContracts: ethereum.getContracts,
-  getBalances: ethereum.getBalances,
+  ethereum,
 }
 
 export default adapter

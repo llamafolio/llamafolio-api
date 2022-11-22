@@ -7,7 +7,7 @@
       "name": "Run adapter",
       "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "adapter", "${input:adapter}", "${input:address}"]
+      "runtimeArgs": ["run", "adapter", "${input:adapter}", "${input:chain}", "${input:address}"]
     },
     {
       "type": "node",
@@ -15,10 +15,17 @@
       "name": "Run adapter balances",
       "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "adapter-balances", "${input:adapter}", "${input:address}"]
+      "runtimeArgs": ["run", "adapter-balances", "${input:adapter}", "${input:chain}", "${input:address}"]
     }
   ],
   "inputs": [
+    {
+      "type": "pickString",
+      "id": "chain",
+      "description": "What chain?",
+      "options": ["arbitrum", "avax", "bsc", "celo", "ethereum", "fantom", "harmony", "polygon", "optimism", "xdai"],
+      "default": "ethereum"
+    },
     {
       "type": "pickString",
       "id": "adapter",

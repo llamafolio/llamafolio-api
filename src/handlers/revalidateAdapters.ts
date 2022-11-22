@@ -2,7 +2,9 @@ import { adapters } from '@adapters/index'
 import { insertContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
+import { chains } from '@lib/chains'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
+import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 import format from 'pg-format'
 
@@ -74,12 +76,12 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     return serverError(`Failed to revalidate adapter contracts, could not find adapter with id: ${adapterId}`)
   }
 
-  const config = await adapter.getContracts()
+  const chainsConfigs = await Promise.all(chains.map((chain) => adapter[chain.id]?.getContracts()).filter(isNotNullish))
 
   let expire_at: Date | null = null
-  if (config.revalidate) {
+  if (adapter.revalidate) {
     expire_at = new Date()
-    expire_at.setSeconds(expire_at.getSeconds() + config.revalidate)
+    expire_at.setSeconds(expire_at.getSeconds() + adapter.revalidate)
   }
 
   const deleteOldAdapterContractsValues = [[adapter.id]]
@@ -101,7 +103,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     }
 
     // Insert new contracts
-    await insertContracts(client, config.contracts, adapter.id)
+    await Promise.all(chainsConfigs.map((config) => insertContracts(client, config.contracts, adapter.id)))
 
     await client.query('COMMIT')
 

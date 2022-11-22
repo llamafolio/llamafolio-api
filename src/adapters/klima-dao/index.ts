@@ -1,10 +1,10 @@
-import * as polygon from '@adapters/klima-dao/polygon'
 import { Adapter } from '@lib/adapter'
+
+import * as polygon from './polygon'
 
 const adapter: Adapter = {
   id: 'klima-dao',
-  getContracts: polygon.getContracts,
-  getBalances: polygon.getBalances,
+  polygon,
 }
 
 export default adapter

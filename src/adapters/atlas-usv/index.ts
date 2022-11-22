@@ -1,15 +1,16 @@
-import * as avax from '@adapters/atlas-usv/avax'
-import * as bsc from '@adapters/atlas-usv/bsc'
-import * as ethereum from '@adapters/atlas-usv/ethereum'
-import * as polygon from '@adapters/atlas-usv/polygon'
-import { Adapter, mergeAdapters } from '@lib/adapter'
+import { Adapter } from '@lib/adapter'
 
-const multiChainAdapter = mergeAdapters({ avax, bsc, ethereum, polygon })
+import * as avax from './avax'
+import * as bsc from './bsc'
+import * as ethereum from './ethereum'
+import * as polygon from './polygon'
 
 const adapter: Adapter = {
   id: 'atlas-usv',
-  getContracts: multiChainAdapter.getContracts,
-  getBalances: multiChainAdapter.getBalances,
+  avax,
+  bsc,
+  ethereum,
+  polygon,
 }
 
 export default adapter

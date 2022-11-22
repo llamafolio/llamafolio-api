@@ -4,6 +4,8 @@ import format from 'pg-format'
 import { insertContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter } from '../src/lib/adapter'
+import { chains } from '../src/lib/chains'
+import { isNotNullish } from '../src/lib/type'
 
 function help() {
   console.log('npm run revalidate-contracts {adapter} {address}')
@@ -22,12 +24,14 @@ async function main() {
   const module = await import(path.join(__dirname, '..', 'src', 'adapters', process.argv[2]))
   const adapter = module.default as Adapter
 
-  const config = await adapter.getContracts()
+  const chainsConfigs = await Promise.all(chains.map((chain) => adapter[chain.id]?.getContracts()).filter(isNotNullish))
+
+  // const contracts = chainsConfigs.flatMap((config) => Object.values(config.contracts)).filter(isNotNullish)
 
   let expire_at: Date | null = null
-  if (config.revalidate) {
+  if (adapter.revalidate) {
     expire_at = new Date()
-    expire_at.setSeconds(expire_at.getSeconds() + config.revalidate)
+    expire_at.setSeconds(expire_at.getSeconds() + adapter.revalidate)
   }
 
   const deleteOldAdapterContractsValues = [[adapter.id]]
@@ -51,7 +55,7 @@ async function main() {
     }
 
     // Insert new contracts
-    await insertContracts(client, config.contracts, adapter.id)
+    await Promise.all(chainsConfigs.map((config) => insertContracts(client, config.contracts, adapter.id)))
 
     await client.query('COMMIT')
   } catch (e) {

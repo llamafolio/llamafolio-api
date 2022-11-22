@@ -1,10 +1,10 @@
-import * as ethereum from '@adapters/compound/v3/ethereum'
 import { Adapter } from '@lib/adapter'
+
+import * as ethereum from './ethereum'
 
 const adapter: Adapter = {
   id: 'compound-v3',
-  getContracts: ethereum.getContracts,
-  getBalances: ethereum.getBalances,
+  ethereum,
 }
 
 export default adapter
