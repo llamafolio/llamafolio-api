@@ -2,6 +2,7 @@ import { getLendingRewardsBalances } from '@adapters/aave/v2/common/rewards'
 import { getStakeBalancerPoolBalances, getStakeBalances } from '@adapters/aave/v2/common/stake'
 import { getLendingPoolBalances, getLendingPoolContracts, getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 const AAVE: Contract = {
   name: 'Aave Token',
@@ -56,24 +57,25 @@ export const getContracts = async () => {
   return {
     contracts: {
       pools,
+      incentiveController,
       stkAAVE,
       stkABPT,
     },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools, stkAAVE, stkABPT }) => {
-  const [lendingPoolBalances, rewardsPoolBalances, healthFactor, stakeBalances, stakeBalancerBalances] =
-    await Promise.all([
-      getLendingPoolBalances(ctx, 'ethereum', pools || []),
-      getLendingRewardsBalances(ctx, 'ethereum', pools || [], incentiveController, stkAAVE),
-      getLendingPoolHealthFactor(ctx, 'ethereum', lendingPool),
-      getStakeBalances(ctx, 'ethereum', stkAAVE),
-      getStakeBalancerPoolBalances(ctx, 'ethereum', stkABPT),
-    ])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    pools: getLendingPoolBalances,
+    incentiveController: (...args) => getLendingRewardsBalances(...args, stkAAVE, contracts.pools || []),
+    stkAAVE: getStakeBalances,
+    stkABPT: getStakeBalancerPoolBalances,
+  })
+
+  const healthFactor = await getLendingPoolHealthFactor(ctx, 'ethereum', lendingPool)
 
   return {
-    balances: [...lendingPoolBalances, ...rewardsPoolBalances, ...stakeBalances, ...stakeBalancerBalances],
+    balances,
     ethereum: {
       healthFactor,
     },
