@@ -5,11 +5,15 @@ import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers/lib/ethers'
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
-  if (!contract || !contract.underlyings?.[0]) {
-    return []
-  }
+const LF: Contract = {
+  name: 'Life',
+  chain: 'avax',
+  address: '0x5684a087C739A2e845F4AaAaBf4FBd261edc2bE8',
+  symbol: 'LF',
+  decimals: 9,
+}
 
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
@@ -21,16 +25,15 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?
 
   const amount = BigNumber.from(balanceOfRes.output)
 
-  const balance: Balance = {
+  balances.push({
     chain,
     address: contract.address,
     decimals: contract.decimals,
     symbol: contract.symbol,
     amount,
-    underlyings: [{ ...contract.underlyings?.[0], amount }],
+    underlyings: [{ ...LF, amount }],
     category: 'stake',
-  }
-  balances.push(balance)
+  })
 
   return balances
 }
