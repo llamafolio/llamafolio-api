@@ -5,7 +5,16 @@ import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers/lib/ethers'
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
+const KLIMA: Contract = {
+  name: 'Klima DAO',
+  displayName: 'Klima DAO',
+  chain: 'polygon',
+  address: '0x4e78011Ce80ee02d2c3e649Fb657E45898257815',
+  symbol: 'KLIMA',
+  decimals: 9,
+}
+
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
     chain,
     target: contract.address,
@@ -21,13 +30,14 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract:
     decimals: contract.decimals,
     symbol: contract.symbol,
     amount,
+    underlyings: [{ ...KLIMA, amount }],
     category: 'stake',
   }
 
   return balance
 }
 
-export async function getFormattedStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
+export async function getFormattedStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
     chain,
     target: contract.address,
@@ -58,6 +68,7 @@ export async function getFormattedStakeBalances(ctx: BaseContext, chain: Chain, 
     symbol: contract.symbol,
     decimals: 9,
     amount: formattedBalanceOf,
+    underlyings: [{ ...KLIMA, amount: formattedBalanceOf }],
     category: 'stake',
   }
 
