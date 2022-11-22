@@ -1,4 +1,4 @@
-import { Adapter, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
 import { getMultiFeeDistributionBalances } from '@lib/geist/stake'
 import { Token } from '@lib/token'
@@ -31,7 +31,7 @@ const geistToken: Token = {
   decimals: 18,
 }
 
-const getContracts = async () => {
+export const getContracts = async () => {
   const pools = await getLendingPoolContracts({
     chain: 'fantom',
     lendingPool: lendingPoolContract,
@@ -44,7 +44,7 @@ const getContracts = async () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
   const lendingPoolBalances = await getLendingPoolBalances(ctx, 'fantom', pools || [], {
     chefIncentivesController: chefIncentivesControllerContract,
   })
@@ -61,11 +61,3 @@ const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools
     balances,
   }
 }
-
-const adapter: Adapter = {
-  id: 'geist-finance',
-  getContracts,
-  getBalances,
-}
-
-export default adapter
