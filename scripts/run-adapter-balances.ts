@@ -2,7 +2,11 @@ import millify from 'millify'
 import fetch from 'node-fetch'
 import path from 'path'
 
-import { getAllTokensInteractions, getContractsInteractionsTokenTransfers, groupContracts } from '../src/db/contracts'
+import {
+  getAllChainTokensInteractions,
+  getChainContractsInteractionsTokenTransfers,
+  groupContracts,
+} from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter, Balance, BaseContext } from '../src/lib/adapter'
 import { sanitizeBalances } from '../src/lib/balance'
@@ -55,8 +59,8 @@ async function main() {
   try {
     const contracts =
       adapter.id === 'wallet'
-        ? await getAllTokensInteractions(client, ctx.address)
-        : await getContractsInteractionsTokenTransfers(client, ctx.address, adapter.id)
+        ? await getAllChainTokensInteractions(client, chain, ctx.address)
+        : await getChainContractsInteractionsTokenTransfers(client, ctx.address, chain, adapter.id)
 
     const balancesRes = await adapter[chain]?.getBalances(ctx, groupContracts(contracts) || [])
     const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])

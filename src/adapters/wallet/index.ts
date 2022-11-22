@@ -6,6 +6,7 @@ import { getERC20BalanceOf } from '@lib/erc20'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { chains as tokensByChain } from '@llamafolio/tokens'
+import { ethers } from 'ethers'
 
 async function getCoinBalance(ctx: BaseContext, chain: Chain, token?: Token) {
   if (!token) {
@@ -35,7 +36,7 @@ const getChainHandlers = (chain: Chain) => {
     const erc20: Token[] = []
 
     for (const token of tokensByChain[chain]) {
-      if (token.native) {
+      if (token.address === ethers.constants.AddressZero) {
         coin = { ...token, chain } as Token
         continue
       }

@@ -54,44 +54,47 @@ async function main() {
     console.log('Interacted with protocols:', Object.keys(contractsByAdapterId))
 
     const adaptersBalances = await Promise.all(
-      Object.keys(contractsByAdapterId)
-        .flatMap((adapterId) => {
-          const adapter = adapterById[adapterId]
-          if (!adapter) {
-            console.error(`Could not find adapter with id`, adapterId)
-            return null
+      Object.keys(contractsByAdapterId).flatMap((adapterId) => {
+        const adapter = adapterById[adapterId]
+        if (!adapter) {
+          console.error(`Could not find adapter with id`, adapterId)
+          return []
+        }
+
+        return chains.map(async (chain) => {
+          const handler = adapter[chain.id]
+          if (!handler) {
+            return []
           }
 
-          const chainHandlers = chains.map((chain) => adapter[chain.id]).filter(isNotNullish)
+          try {
+            const hrstart = process.hrtime()
 
-          return chainHandlers.map(async (handler) => {
-            try {
-              const hrstart = process.hrtime()
+            const contracts =
+              groupContracts(contractsByAdapterId[adapterId].filter((contract) => contract.chain === chain.id)) || []
 
-              const contracts = groupContracts(contractsByAdapterId[adapterId]) || []
-              const balancesConfig = await handler.getBalances(ctx, contracts)
+            const balancesConfig = await handler.getBalances(ctx, contracts)
 
-              const hrend = process.hrtime(hrstart)
+            const hrend = process.hrtime(hrstart)
 
-              console.log(
-                `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
-                hrend[0],
-                hrend[1] / 1000000,
-              )
+            console.log(
+              `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
+              hrend[0],
+              hrend[1] / 1000000,
+            )
 
-              // Tag balances with adapterId
-              for (const balance of balancesConfig.balances) {
-                balance.adapterId = adapterId
-              }
-
-              return balancesConfig.balances
-            } catch (error) {
-              console.error(`[${adapterId}]: Failed to getBalances`, error)
-              return null
+            // Tag balances with adapterId
+            for (const balance of balancesConfig.balances) {
+              balance.adapterId = adapterId
             }
-          })
+
+            return balancesConfig.balances
+          } catch (error) {
+            console.error(`[${adapterId}]: Failed to getBalances`, error)
+            return []
+          }
         })
-        .filter(isNotNullish),
+      }),
     )
 
     // Ungroup balances to make only 1 call to the price API
