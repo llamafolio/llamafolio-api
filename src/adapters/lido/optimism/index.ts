@@ -1,5 +1,6 @@
 import { getWStEthStakeBalances } from '@adapters/lido/common/stake'
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 const WETHOptimism: Contract = {
   address: '0x4200000000000000000000000000000000000006',
@@ -28,8 +29,10 @@ export const getContracts = () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { wstETHOptimism }) => {
-  const balances = await getWStEthStakeBalances(ctx, 'optimism', wstETHOptimism)
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'optimism', contracts, {
+    wstETHOptimism: getWStEthStakeBalances,
+  })
 
   return {
     balances,
