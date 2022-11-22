@@ -1,4 +1,5 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 import { getMarketsBalances, getMarketsContracts } from '../common/markets'
 import { getMStakeBalance, getMStakeContract } from '../common/mStake'
@@ -21,29 +22,24 @@ const cauldrons = [
 ]
 
 export const getContracts = async () => {
-  const [mStakeContracts_fantom, marketsContracts_fantom] = await Promise.all([
+  const [mStakeContracts, marketsContracts] = await Promise.all([
     getMStakeContract('fantom', mSPELL),
     getMarketsContracts('fantom', cauldrons),
   ])
 
   return {
     contracts: {
-      mStakeContracts_fantom,
-      marketsContracts_fantom,
+      mStakeContracts,
+      marketsContracts,
     },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  { mStakeContracts_fantom, marketsContracts_fantom },
-) => {
-  const [mStakeBalances_fantom, marketsBalances_fantom] = await Promise.all([
-    getMStakeBalance(ctx, 'fantom', mStakeContracts_fantom),
-    getMarketsBalances(ctx, 'fantom', marketsContracts_fantom || []),
-  ])
-
-  const balances = [...mStakeBalances_fantom, ...marketsBalances_fantom]
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'fantom', contracts, {
+    mStakeContracts: getMStakeBalance,
+    marketsContracts: getMarketsBalances,
+  })
 
   return {
     balances,

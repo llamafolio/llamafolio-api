@@ -1,4 +1,5 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 import { getMarketsBalances, getMarketsContracts } from '../common/markets'
 import { getMStakeBalance, getMStakeContract } from '../common/mStake'
@@ -45,7 +46,7 @@ const cauldrons = [
 ]
 
 export const getContracts = async () => {
-  const [mStakeContracts_eth, sStakeContracts_eth, marketsContracts_eth] = await Promise.all([
+  const [mStakeContracts, sStakeContracts, marketsContracts] = await Promise.all([
     getMStakeContract('ethereum', mSPELL),
     getSStakeContract('ethereum', sSPELL),
     getMarketsContracts('ethereum', cauldrons),
@@ -53,24 +54,19 @@ export const getContracts = async () => {
 
   return {
     contracts: {
-      mStakeContracts_eth,
-      sStakeContracts_eth,
-      marketsContracts_eth,
+      mStakeContracts,
+      sStakeContracts,
+      marketsContracts,
     },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  { mStakeContracts_eth, sStakeContracts_eth, marketsContracts_eth },
-) => {
-  const [mStakeBalances_eth, sStakeBalances_eth, marketsBalances_eth] = await Promise.all([
-    getMStakeBalance(ctx, 'ethereum', mStakeContracts_eth),
-    getSStakeBalance(ctx, 'ethereum', sStakeContracts_eth),
-    getMarketsBalances(ctx, 'ethereum', marketsContracts_eth || []),
-  ])
-
-  const balances = [...mStakeBalances_eth, ...sStakeBalances_eth, ...marketsBalances_eth]
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    mStakeContracts: getMStakeBalance,
+    sStakeContracts: getSStakeBalance,
+    marketsContracts: getMarketsBalances,
+  })
 
   return {
     balances,
