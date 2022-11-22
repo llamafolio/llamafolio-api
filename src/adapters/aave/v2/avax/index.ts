@@ -45,8 +45,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
 
   return {
     balances,
-    avax: {
-      healthFactor,
-    },
+    healthFactor,
   }
 }

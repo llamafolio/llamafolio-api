@@ -9,6 +9,7 @@ import { badRequest, serverError, success } from '@handlers/response'
 import { BaseContext, Contract } from '@lib/adapter'
 import { sanitizeBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
+import { chains } from '@lib/chains'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
@@ -95,37 +96,41 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     // Run adapters `getBalances` only with the contracts the user interacted with
     const adaptersBalances = await Promise.all(
       Object.keys(contractsByAdapterId)
-        .map(async (adapterId) => {
-          try {
-            const adapter = adapterById[adapterId]
-            if (!adapter) {
-              console.error(`Could not find adapter with id`, adapterId)
-              return null
-            }
-
-            const hrstart = process.hrtime()
-
-            const contracts = groupContracts(contractsByAdapterId[adapterId]) || []
-            const balancesConfig = await adapter.getBalances(ctx, contracts)
-
-            const hrend = process.hrtime(hrstart)
-
-            console.log(
-              `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
-              hrend[0],
-              hrend[1] / 1000000,
-            )
-
-            // Tag balances with adapterId
-            for (const balance of balancesConfig.balances) {
-              balance.adapterId = adapterId
-            }
-
-            return balancesConfig.balances
-          } catch (error) {
-            console.error(`[${adapterId}]: Failed to getBalances`, error)
+        .flatMap((adapterId) => {
+          const adapter = adapterById[adapterId]
+          if (!adapter) {
+            console.error(`Could not find adapter with id`, adapterId)
             return null
           }
+
+          const chainHandlers = chains.map((chain) => adapter[chain.id]).filter(isNotNullish)
+
+          return chainHandlers.map(async (handler) => {
+            try {
+              const hrstart = process.hrtime()
+
+              const contracts = groupContracts(contractsByAdapterId[adapterId]) || []
+              const balancesConfig = await handler.getBalances(ctx, contracts)
+
+              const hrend = process.hrtime(hrstart)
+
+              console.log(
+                `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
+                hrend[0],
+                hrend[1] / 1000000,
+              )
+
+              // Tag balances with adapterId
+              for (const balance of balancesConfig.balances) {
+                balance.adapterId = adapterId
+              }
+
+              return balancesConfig.balances
+            } catch (error) {
+              console.error(`[${adapterId}]: Failed to getBalances`, error)
+              return null
+            }
+          })
         })
         .filter(isNotNullish),
     )

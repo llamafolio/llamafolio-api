@@ -1,13 +1,12 @@
-import * as arbitrum from '@adapters/gmx/arbitrum'
-import * as avax from '@adapters/gmx/avax'
-import { Adapter, mergeAdapters } from '@lib/adapter'
+import { Adapter } from '@lib/adapter'
 
-const multiChainAdapter = mergeAdapters({ arbitrum, avax })
+import * as arbitrum from './arbitrum'
+import * as avax from './avax'
 
 const adapter: Adapter = {
   id: 'gmx',
-  getContracts: multiChainAdapter.getContracts,
-  getBalances: multiChainAdapter.getBalances,
+  arbitrum,
+  avax,
 }
 
 export default adapter

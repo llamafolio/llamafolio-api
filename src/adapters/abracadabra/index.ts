@@ -1,14 +1,13 @@
 import * as avax from '@adapters/abracadabra/avax'
 import * as ethereum from '@adapters/abracadabra/ethereum'
 import * as fantom from '@adapters/abracadabra/fantom'
-import { Adapter, mergeAdapters } from '@lib/adapter'
-
-const multiChainAdapter = mergeAdapters({ avax, ethereum, fantom })
+import { Adapter } from '@lib/adapter'
 
 const adapter: Adapter = {
   id: 'abracadabra',
-  getContracts: multiChainAdapter.getContracts,
-  getBalances: multiChainAdapter.getBalances,
+  avax,
+  ethereum,
+  fantom,
 }
 
 export default adapter
