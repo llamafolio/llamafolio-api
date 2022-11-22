@@ -1,5 +1,6 @@
 import { getRewardsBalances } from '@adapters/compound/v2/common/rewards'
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 import {
   BalanceWithExtraProps,
   getHealthFactor,
@@ -8,7 +9,7 @@ import {
 } from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
 
-const COMPToken: Token = {
+const COMP: Token = {
   chain: 'ethereum',
   address: '0xc00e94cb662c3520282e6f5717214004a7f26888',
   decimals: 18,
@@ -19,13 +20,13 @@ const COMPToken: Token = {
 const CompoundLens: Contract = {
   chain: 'ethereum',
   address: '0xdCbDb7306c6Ff46f77B349188dC18cEd9DF30299',
-  underlyings: [COMPToken],
+  underlyings: [COMP],
 }
 
 const Comptroller: Contract = {
   chain: 'ethereum',
   address: '0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b',
-  underlyings: [COMPToken],
+  underlyings: [COMP],
 }
 
 export const getContracts = async () => {
@@ -42,19 +43,16 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx,
-  { markets, Comptroller, CompoundLens },
-) => {
-  const [marketsBalances, rewardsBalances] = await Promise.all([
-    getMarketsBalances(ctx, 'ethereum', markets || []),
-    getRewardsBalances(ctx, 'ethereum', Comptroller, CompoundLens),
-  ])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    markets: getMarketsBalances,
+    Comptroller: (...args) => getRewardsBalances(...args, CompoundLens),
+  })
 
-  const healthFactor = await getHealthFactor((marketsBalances as BalanceWithExtraProps[]) || [])
+  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
 
   return {
-    balances: [...marketsBalances, ...rewardsBalances],
+    balances,
     ethereum: {
       healthFactor,
     },

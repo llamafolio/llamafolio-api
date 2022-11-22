@@ -198,36 +198,25 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
   return [...cTokensSupplyBalances, ...cTokensBorrowBalances]
 }
 
-export async function getHealthFactor(balances: BalanceWithExtraProps[]) {
-  if (!balances) {
-    console.log('Missing balance to retrieve health factor')
+export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promise<number | undefined> {
+  const nonZerobalances = balances.filter((balance) => balance.amount.gt(0))
 
-    return
+  const nonZeroSupplyBalances = nonZerobalances.filter((supply) => supply.category === 'lend')
+  const nonZeroBorrowBalances = nonZerobalances.filter((borrow) => borrow.category === 'borrow')
+
+  if (nonZeroSupplyBalances.length > 0 && nonZeroBorrowBalances.length === 0) {
+    return 10
   }
 
-  try {
-    const nonZerobalances = balances.filter((balance) => balance.amount.gt(0))
+  const supplyPriced = await getPricedBalances(nonZeroSupplyBalances)
+  const borrowPriced = await getPricedBalances(nonZeroBorrowBalances)
 
-    const nonZeroSupplyBalances = nonZerobalances.filter((supply) => supply.category === 'lend')
-    const nonZeroBorrowBalances = nonZerobalances.filter((borrow) => borrow.category === 'borrow')
+  const supplyUSD = sum(
+    supplyPriced.map((supply: any) => (+supply.balanceUSD * supply.collateralFactor) / Math.pow(10, 18)),
+  )
+  const borrowUSD = sum(borrowPriced.map((borrow: any) => borrow.balanceUSD))
 
-    const supplyPriced = await getPricedBalances(nonZeroSupplyBalances)
-    const borrowPriced = await getPricedBalances(nonZeroBorrowBalances)
+  const healthFactor = supplyUSD / borrowUSD
 
-    const supplyUSD = sum(
-      supplyPriced.map((supply: any) => (+supply.balanceUSD * supply.collateralFactor) / Math.pow(10, 18)),
-    )
-    const borrowUSD = sum(borrowPriced.map((borrow: any) => borrow.balanceUSD))
-    if (borrowUSD === 0) {
-      return undefined
-    }
-
-    const healthFactor = supplyUSD / borrowUSD
-
-    return healthFactor
-  } catch (error) {
-    console.log('Failed to get health factor')
-
-    return
-  }
+  return healthFactor > 10 ? 10 : healthFactor
 }
