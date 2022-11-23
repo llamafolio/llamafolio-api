@@ -7,7 +7,7 @@ import { Adapter } from '../src/lib/adapter'
 import { chains } from '../src/lib/chains'
 
 function help() {
-  console.log('npm run revalidate-contracts {adapter} {address}')
+  console.log('npm run revalidate-contracts {adapter}')
 }
 
 /**
@@ -17,7 +17,6 @@ async function main() {
   // argv[0]: ts-node
   // argv[1]: revalidate-contracts.ts
   // argv[2]: adapter
-  // argv[3]: address
   if (process.argv.length < 3) {
     console.error('Missing adapter argument')
     return help()
