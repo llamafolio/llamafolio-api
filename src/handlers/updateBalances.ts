@@ -1,19 +1,31 @@
 import { adapterById } from '@adapters/index'
 import { insertBalances } from '@db/balances'
+import { BalancesSnapshot, insertBalancesSnapshots } from '@db/balances-snapshots'
 import { groupContracts } from '@db/contracts'
 import { getAllContractsInteractions, getAllTokensInteractions } from '@db/contracts'
 import pool from '@db/pool'
 import { apiGatewayManagementApi } from '@handlers/apiGateway'
 import type { AdapterBalancesResponse } from '@handlers/getBalances'
 import { badRequest, serverError, success } from '@handlers/response'
-import { BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesConfig, BaseContext, Contract } from '@lib/adapter'
 import { sanitizeBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
-import { chains } from '@lib/chains'
+import { Chain, chains } from '@lib/chains'
+import { sumBalances } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 import format from 'pg-format'
+
+interface ExtendedBalance extends Balance {
+  adapterId: string
+}
+
+interface ExtendedBalancesConfig extends BalancesConfig {
+  adapterId: string
+  chain: Chain
+  balances: ExtendedBalance[]
+}
 
 export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false // !important to reuse pool
@@ -94,7 +106,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     console.log('Interacted with protocols:', Object.keys(contractsByAdapterId))
 
     // Run adapters `getBalances` only with the contracts the user interacted with
-    const adaptersBalances = await Promise.all(
+    const adaptersBalancesConfigsRes = await Promise.all(
       Object.keys(contractsByAdapterId).flatMap((adapterId) => {
         const adapter = adapterById[adapterId]
         if (!adapter) {
@@ -102,44 +114,48 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
           return []
         }
 
-        return chains.map(async (chain) => {
-          const handler = adapter[chain.id]
-          if (!handler) {
-            return []
-          }
+        return chains
+          .filter((chain) => adapter[chain.id])
+          .map(async (chain) => {
+            const handler = adapter[chain.id]!
 
-          try {
-            const hrstart = process.hrtime()
+            try {
+              const hrstart = process.hrtime()
 
-            const contracts =
-              groupContracts(contractsByAdapterId[adapterId].filter((contract) => contract.chain === chain.id)) || []
+              const contracts =
+                groupContracts(contractsByAdapterId[adapterId].filter((contract) => contract.chain === chain.id)) || []
 
-            const balancesConfig = await handler.getBalances(ctx, contracts)
+              const balancesConfig = await handler.getBalances(ctx, contracts)
 
-            const hrend = process.hrtime(hrstart)
+              const hrend = process.hrtime(hrstart)
 
-            console.log(
-              `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
-              hrend[0],
-              hrend[1] / 1000000,
-            )
+              console.log(
+                `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
+                hrend[0],
+                hrend[1] / 1000000,
+              )
 
-            // Tag balances with adapterId
-            for (const balance of balancesConfig.balances) {
-              balance.adapterId = adapterId
+              const extendedBalancesConfig: ExtendedBalancesConfig = {
+                ...balancesConfig,
+                // Tag balances with adapterId
+                balances: balancesConfig.balances.map((balance) => ({ ...balance, adapterId })),
+                adapterId,
+                chain: chain.id,
+              }
+
+              return extendedBalancesConfig
+            } catch (error) {
+              console.error(`[${adapterId}]: Failed to getBalances`, error)
+              return
             }
-
-            return balancesConfig.balances
-          } catch (error) {
-            console.error(`[${adapterId}]: Failed to getBalances`, error)
-            return []
-          }
-        })
+          })
       }),
     )
 
+    const adaptersBalancesConfigs = adaptersBalancesConfigsRes.filter(isNotNullish)
+
     // Ungroup balances to make only 1 call to the price API
-    const balances = adaptersBalances.flat().filter(isNotNullish)
+    const balances = adaptersBalancesConfigs.flatMap((balanceConfig) => balanceConfig?.balances).filter(isNotNullish)
 
     const sanitizedBalances = sanitizeBalances(balances)
 
@@ -157,7 +173,8 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
     // Group balances back by adapter
     const pricedBalancesByAdapterId: { [key: string]: any[] } = {}
-    for (const pricedBalance of pricedBalances) {
+    for (const _pricedBalance of pricedBalances) {
+      const pricedBalance = _pricedBalance as ExtendedBalance
       if (pricedBalance.adapterId) {
         if (!pricedBalancesByAdapterId[pricedBalance.adapterId]) {
           pricedBalancesByAdapterId[pricedBalance.adapterId] = []
@@ -168,13 +185,37 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
     const now = new Date()
 
+    const balancesSnapshots = adaptersBalancesConfigs
+      .map((balanceConfig) => {
+        const pricedBalances = pricedBalancesByAdapterId[balanceConfig.adapterId]
+        if (!pricedBalances) {
+          return null
+        }
+
+        const balancesSnapshot: BalancesSnapshot = {
+          fromAddress: address,
+          adapterId: balanceConfig.adapterId,
+          chain: balanceConfig.chain,
+          balanceUSD: sumBalances(pricedBalances.filter(isNotNullish)),
+          timestamp: now,
+          healthFactor: balanceConfig.healthFactor,
+        }
+
+        return balancesSnapshot
+      })
+      .filter(isNotNullish)
+
     // Update balances
     await client.query('BEGIN')
+
+    // Insert balances snapshots
+    await insertBalancesSnapshots(client, balancesSnapshots)
 
     // Delete old balances
     await client.query(format('delete from balances where from_address = %L::bytea', strToBuf(address)), [])
 
     // Insert new balances
+    // TODO: insert all at once
     await Promise.all(
       Object.keys(pricedBalancesByAdapterId).map((adapterId) =>
         insertBalances(client, pricedBalancesByAdapterId[adapterId], adapterId, address, now),
