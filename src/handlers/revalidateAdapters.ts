@@ -1,12 +1,17 @@
 import { adapters } from '@adapters/index'
-import { insertContracts } from '@db/contracts'
+import {
+  Adapter as DBAdapter,
+  deleteAdapter,
+  insertAdapters,
+  selectAdaptersContractsExpired,
+  selectDistinctIdAdapters,
+} from '@db/adapters'
+import { deleteContractsByAdapter, insertContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
-import { chains } from '@lib/chains'
+import { Chain, chains } from '@lib/chains'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
-import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
-import format from 'pg-format'
 
 const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
@@ -15,39 +20,42 @@ const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, conte
 
   try {
     const [expiredAdaptersRes, adapterIdsRes] = await Promise.all([
-      client.query(`select distinct(id) from adapters where contracts_expire_at <= now();`, []),
-      client.query(`select id from adapters;`, []),
+      selectAdaptersContractsExpired(client),
+      selectDistinctIdAdapters(client),
     ])
 
-    const adapterIds = new Set(adapterIdsRes.rows.map((row) => row.id))
+    const adapterIds = new Set(adapterIdsRes.map((adapter) => adapter.id))
 
-    const revalidateAdapterIds = new Set()
+    const adaptersToRevalidate: [string, Chain][] = []
 
     // revalidate expired adapters
-    for (const row of expiredAdaptersRes.rows) {
-      revalidateAdapterIds.add(row.id)
+    for (const adapter of expiredAdaptersRes) {
+      adaptersToRevalidate.push([adapter.id, adapter.chain])
     }
 
     // revalidate new adapters (not stored in our DB yet)
     for (const adapter of adapters) {
       if (!adapterIds.has(adapter.id)) {
-        revalidateAdapterIds.add(adapter.id)
+        for (const chain of chains) {
+          if (adapter[chain.id]) {
+            adaptersToRevalidate.push([adapter.id, chain.id])
+          }
+        }
       }
     }
 
-    const revalidateAdapterIdsArr = [...revalidateAdapterIds]
-
-    if (revalidateAdapterIdsArr.length > 0) {
-      // Run adapters "getContracts" in Lambdas
-      for (const adapterId of revalidateAdapterIdsArr) {
+    if (adaptersToRevalidate.length > 0) {
+      // Run "getContracts" in Lambdas
+      for (const [adapterId, chain] of adaptersToRevalidate) {
         invokeLambda(`llamafolio-api-${process.env.stage}-revalidateAdapterContracts`, {
           adapterId,
+          chain,
         })
       }
     }
 
     return success({
-      data: revalidateAdapterIdsArr,
+      data: adaptersToRevalidate,
     })
   } catch (e) {
     console.error('Failed to revalidate adapters contracts', e)
@@ -64,10 +72,13 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
 
   const client = await pool.connect()
 
-  const { adapterId } = event as APIGatewayProxyEvent & { adapterId?: string }
+  const { adapterId, chain } = event as APIGatewayProxyEvent & { adapterId?: string; chain?: Chain }
 
   if (!adapterId) {
     return badRequest(`Missing adapterId parameter`)
+  }
+  if (!chain) {
+    return badRequest(`Missing chain parameter`)
   }
 
   const adapter = adapters.find((adapter) => adapter.id === adapterId)
@@ -76,34 +87,41 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     return serverError(`Failed to revalidate adapter contracts, could not find adapter with id: ${adapterId}`)
   }
 
-  const chainsConfigs = await Promise.all(chains.map((chain) => adapter[chain.id]?.getContracts()).filter(isNotNullish))
-
-  let expire_at: Date | null = null
-  if (adapter.revalidate) {
-    expire_at = new Date()
-    expire_at.setSeconds(expire_at.getSeconds() + adapter.revalidate)
+  if (!adapter[chain]) {
+    console.error(`Failed to revalidate adapter contracts, adapter ${adapterId} is missing handlers for chain ${chain}`)
+    return serverError(
+      `Failed to revalidate adapter contracts, adapter ${adapterId} is missing handlers for chain ${chain}`,
+    )
   }
 
-  const deleteOldAdapterContractsValues = [[adapter.id]]
+  const config = await adapter[chain]!.getContracts()
 
-  const insertAdapterValues = [[adapter.id, expire_at]]
+  let expire_at: Date | undefined = undefined
+  if (config.revalidate) {
+    expire_at = new Date()
+    expire_at.setSeconds(expire_at.getSeconds() + config.revalidate)
+  }
+
+  const dbAdapter: DBAdapter = {
+    id: adapterId,
+    chain,
+    contractsExpireAt: expire_at,
+  }
 
   try {
     await client.query('BEGIN')
 
-    // Delete old contracts
-    await client.query(format('DELETE FROM contracts WHERE adapter_id IN %L;', deleteOldAdapterContractsValues), [])
+    // Delete old adapter
+    await deleteAdapter(client, adapterId, chain)
 
     // Insert adapter if not exists
-    if (insertAdapterValues.length > 0) {
-      await client.query(
-        format('INSERT INTO adapters (id, contracts_expire_at) VALUES %L ON CONFLICT DO NOTHING;', insertAdapterValues),
-        [],
-      )
-    }
+    await insertAdapters(client, [dbAdapter])
+
+    // Delete old contracts
+    await deleteContractsByAdapter(client, adapterId, chain)
 
     // Insert new contracts
-    await Promise.all(chainsConfigs.map((config) => insertContracts(client, config.contracts, adapter.id)))
+    await insertContracts(client, config.contracts, adapter.id)
 
     await client.query('COMMIT')
 

@@ -313,6 +313,19 @@ export async function getAllChainTokensInteractions(client: PoolClient, chain: C
   return fromStorage(res.rows)
 }
 
+/**
+ *
+ * @param client
+ * @param adapterId
+ */
+export function deleteContractsByAdapterId(client: PoolClient, adapterId: string) {
+  return client.query('DELETE FROM contracts WHERE adapter_id = $1;', [adapterId])
+}
+
+export function deleteContractsByAdapter(client: PoolClient, adapterId: string, chain: Chain) {
+  return client.query('DELETE FROM contracts WHERE adapter_id = $1 AND chain = $2;', [adapterId, chain])
+}
+
 export function flattenContracts(contracts: { [key: string]: Contract | Contract[] | undefined }) {
   const contractsList: Contract[] = []
 
