@@ -4,11 +4,15 @@ import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
-  if (!contract || !contract.underlyings?.[0]) {
-    return []
-  }
+const WAVAX: Contract = {
+  name: 'Wrapped AVAX',
+  chain: 'avax',
+  address: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
+  symbol: 'WAVAX ',
+  decimals: 18,
+}
 
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance> {
   const [balanceOfRes, poolValueRes, totalSupplyRes] = await Promise.all([
     call({
       chain,
@@ -60,8 +64,8 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?
     ...contract,
     rewards: undefined,
     amount,
-    underlyings: [{ ...contract.underlyings[0], amount }],
+    underlyings: [{ ...WAVAX, amount }],
   }
 
-  return [balance]
+  return balance
 }

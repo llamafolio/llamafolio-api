@@ -1,12 +1,12 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsContracts } from '@lib/compound/v2/lending'
+import { BalanceWithExtraProps, getHealthFactor, getMarketsContracts } from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
 import { ethers } from 'ethers'
 
-import { getLendBorrowBalances } from '../common/lend'
-import { getRewardsBalances } from '../common/rewards'
-import { getStakeBalances } from '../common/stake'
+import { getLendBorrowBalances } from './lend'
+import { getRewardsBalances } from './rewards'
+import { getStakeBalances } from './stake'
 
 const XVSToken: Token = {
   chain: 'bsc',
@@ -64,7 +64,10 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     Comptroller: (...args) => getRewardsBalances(...args, VenusLens),
   })
 
+  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
+
   return {
     balances,
+    healthFactor,
   }
 }
