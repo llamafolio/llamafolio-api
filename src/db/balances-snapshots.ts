@@ -1,11 +1,13 @@
 import { sliceIntoChunks } from '@lib/array'
 import { bufToStr, strToBuf } from '@lib/buf'
+import { Chain } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
 export interface BalancesSnapshot {
   fromAddress: string
   adapterId: string
+  chain: Chain
   balanceUSD: number
   timestamp: Date
   metadata?: object
@@ -14,6 +16,7 @@ export interface BalancesSnapshot {
 export interface BalancesSnapshotStorage {
   from_address: Buffer
   adapter_id: string
+  chain: string
   balance_usd: string
   timestamp: string
   metadata?: object
@@ -22,41 +25,51 @@ export interface BalancesSnapshotStorage {
 export interface BalancesSnapshotStorable {
   from_address: Buffer
   adapter_id: string
+  chain: Chain
   balance_usd: number
   timestamp: Date
   metadata?: object
 }
 
-export function fromStorage(balancesSnapshots: BalancesSnapshotStorage[]) {
-  const res: BalancesSnapshot[] = []
+export function fromStorage(balancesSnapshotsStorage: BalancesSnapshotStorage[]) {
+  const balancesSnapshots: BalancesSnapshot[] = []
 
-  for (const snapshot of balancesSnapshots) {
-    const c: BalancesSnapshot = {
-      fromAddress: bufToStr(snapshot.from_address),
-      adapterId: snapshot.adapter_id,
-      balanceUSD: parseFloat(snapshot.balance_usd),
-      timestamp: new Date(snapshot.timestamp),
-      metadata: snapshot.metadata,
+  for (const balancesSnapshotStorage of balancesSnapshotsStorage) {
+    const balancesSnapshot: BalancesSnapshot = {
+      fromAddress: bufToStr(balancesSnapshotStorage.from_address),
+      adapterId: balancesSnapshotStorage.adapter_id,
+      chain: balancesSnapshotStorage.chain as Chain,
+      balanceUSD: parseFloat(balancesSnapshotStorage.balance_usd),
+      timestamp: new Date(balancesSnapshotStorage.timestamp),
+      metadata: balancesSnapshotStorage.metadata,
     }
 
-    res.push(c)
+    balancesSnapshots.push(balancesSnapshot)
   }
 
-  return res
+  return balancesSnapshots
 }
 
 export function toRow(snapshot: BalancesSnapshotStorable) {
-  return [snapshot.from_address, snapshot.adapter_id, snapshot.balance_usd, snapshot.timestamp, snapshot.metadata]
+  return [
+    snapshot.from_address,
+    snapshot.adapter_id,
+    snapshot.chain,
+    snapshot.balance_usd,
+    snapshot.timestamp,
+    snapshot.metadata,
+  ]
 }
 
 export function toStorage(balancesSnapshots: BalancesSnapshot[]) {
-  const res: BalancesSnapshotStorable[] = []
+  const balancesSnapshotsStorable: BalancesSnapshotStorable[] = []
 
-  for (const snapshot of balancesSnapshots) {
-    const { fromAddress, adapterId, balanceUSD, timestamp, metadata } = snapshot
+  for (const balanceSnapshot of balancesSnapshots) {
+    const { fromAddress, adapterId, chain, balanceUSD, timestamp, metadata } = balanceSnapshot
 
-    const c = {
+    const balancesSnapshotStorable: BalancesSnapshotStorable = {
       from_address: strToBuf(fromAddress),
+      chain,
       adapter_id: adapterId,
       balance_usd: balanceUSD,
       timestamp: new Date(timestamp),
@@ -64,10 +77,10 @@ export function toStorage(balancesSnapshots: BalancesSnapshot[]) {
       metadata: JSON.parse(JSON.stringify(metadata).replace(/\\u0000/g, '')),
     }
 
-    res.push(c)
+    balancesSnapshotsStorable.push(balancesSnapshotStorable)
   }
 
-  return res
+  return balancesSnapshotsStorable
 }
 
 export async function selectBalancesSnapshotsByFromAddress(client: PoolClient, fromAddress: string) {
@@ -89,7 +102,7 @@ export function insertBalancesSnapshots(client: PoolClient, balancesSnapshot: Ba
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          'INSERT INTO balances_snapshots (from_address, adapter_id, balance_usd, timestamp, data) VALUES %L ON CONFLICT DO NOTHING;',
+          'INSERT INTO balances_snapshots (from_address, adapter_id, chain, balance_usd, timestamp, data) VALUES %L ON CONFLICT DO NOTHING;',
           chunk,
         ),
         [],
