@@ -12,7 +12,7 @@ const HEC: Contract = {
   symbol: 'HEC',
 }
 
-export async function getsStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
+export async function getsStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
     chain,
     target: contract.address,
