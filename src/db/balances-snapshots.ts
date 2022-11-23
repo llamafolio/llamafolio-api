@@ -105,7 +105,7 @@ export function insertBalancesSnapshots(client: PoolClient, balancesSnapshot: Ba
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          'INSERT INTO balances_snapshots (from_address, adapter_id, chain, balance_usd, timestamp, data) VALUES %L ON CONFLICT DO NOTHING;',
+          'INSERT INTO balances_snapshots (from_address, adapter_id, chain, balance_usd, timestamp, metadata) VALUES %L ON CONFLICT DO NOTHING;',
           chunk,
         ),
         [],
