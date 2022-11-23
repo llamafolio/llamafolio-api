@@ -85,6 +85,7 @@ export interface BalancesConfig {
 
 export interface ContractsConfig {
   contracts: { [key: string]: Contract | Contract[] | undefined }
+  revalidate?: number
 }
 
 export type GetContractsHandler = () => ContractsConfig | Promise<ContractsConfig>
@@ -95,18 +96,17 @@ export type GetBalancesHandler<C extends GetContractsHandler> = (
   contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
 ) => BalancesConfig | Promise<BalancesConfig>
 
-export interface AdapterResolver {
+export interface AdapterHandler {
   getContracts: GetContractsHandler
   getBalances: GetBalancesHandler<GetContractsHandler>
 }
 
-export interface Adapter extends Partial<Record<Chain, AdapterResolver>> {
+export interface Adapter extends Partial<Record<Chain, AdapterHandler>> {
   /**
    * DefiLlama slug.
    * @see https://docs.llama.fi/list-your-project/submit-a-project to submit your adapter on DefiLlama.
    */
   id: string
-  revalidate?: number
 }
 
 /**

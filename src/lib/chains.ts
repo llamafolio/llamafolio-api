@@ -40,7 +40,7 @@ export const chains: IChainInfo[] = [
     chainId: 56,
     name: 'BNB Chain',
     rpcUrl: [
-      `https://bsc-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      // `https://bsc-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://bsc-dataseed.binance.org/',
       'https://bsc-dataseed1.defibit.io/',
       'https://bsc-dataseed1.ninicoin.io/',
