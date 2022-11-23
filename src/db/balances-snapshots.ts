@@ -4,13 +4,17 @@ import { Chain } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
-export interface BalancesSnapshot {
+interface Metadata {
+  healthFactor?: number
+}
+
+export interface BalancesSnapshot extends Metadata {
   fromAddress: string
   adapterId: string
   chain: Chain
   balanceUSD: number
   timestamp: Date
-  metadata?: object
+  healthFactor?: number
 }
 
 export interface BalancesSnapshotStorage {
@@ -19,7 +23,7 @@ export interface BalancesSnapshotStorage {
   chain: string
   balance_usd: string
   timestamp: string
-  metadata?: object
+  metadata: Metadata
 }
 
 export interface BalancesSnapshotStorable {
@@ -28,7 +32,7 @@ export interface BalancesSnapshotStorable {
   chain: Chain
   balance_usd: number
   timestamp: Date
-  metadata?: object
+  metadata: Metadata
 }
 
 export function fromStorage(balancesSnapshotsStorage: BalancesSnapshotStorage[]) {
@@ -41,7 +45,7 @@ export function fromStorage(balancesSnapshotsStorage: BalancesSnapshotStorage[])
       chain: balancesSnapshotStorage.chain as Chain,
       balanceUSD: parseFloat(balancesSnapshotStorage.balance_usd),
       timestamp: new Date(balancesSnapshotStorage.timestamp),
-      metadata: balancesSnapshotStorage.metadata,
+      healthFactor: balancesSnapshotStorage.metadata.healthFactor,
     }
 
     balancesSnapshots.push(balancesSnapshot)
@@ -65,7 +69,7 @@ export function toStorage(balancesSnapshots: BalancesSnapshot[]) {
   const balancesSnapshotsStorable: BalancesSnapshotStorable[] = []
 
   for (const balanceSnapshot of balancesSnapshots) {
-    const { fromAddress, adapterId, chain, balanceUSD, timestamp, metadata } = balanceSnapshot
+    const { fromAddress, adapterId, chain, balanceUSD, timestamp, healthFactor } = balanceSnapshot
 
     const balancesSnapshotStorable: BalancesSnapshotStorable = {
       from_address: strToBuf(fromAddress),
@@ -73,8 +77,7 @@ export function toStorage(balancesSnapshots: BalancesSnapshot[]) {
       adapter_id: adapterId,
       balance_usd: balanceUSD,
       timestamp: new Date(timestamp),
-      // \\u0000 cannot be converted to text
-      metadata: JSON.parse(JSON.stringify(metadata).replace(/\\u0000/g, '')),
+      metadata: { healthFactor },
     }
 
     balancesSnapshotsStorable.push(balancesSnapshotStorable)

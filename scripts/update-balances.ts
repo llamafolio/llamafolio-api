@@ -1,11 +1,13 @@
+import format from 'pg-format'
+
 import { adapterById } from '../src/adapters'
 import { insertBalances } from '../src/db/balances'
-import { BalancesSnapshot, insertBalancesSnapshots } from '../src/db/balances-snapshots'
 import { getAllContractsInteractionsTokenTransfers, getAllTokensInteractions } from '../src/db/contracts'
 import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { BaseContext, Contract } from '../src/lib/adapter'
 import { sanitizeBalances } from '../src/lib/balance'
+import { strToBuf } from '../src/lib/buf'
 import { chains } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
@@ -86,7 +88,7 @@ async function main() {
               balance.adapterId = adapterId
             }
 
-            return balancesConfig
+            return balancesConfig.balances
           } catch (error) {
             console.error(`[${adapterId}]: Failed to getBalances`, error)
             return []
@@ -96,7 +98,7 @@ async function main() {
     )
 
     // Ungroup balances to make only 1 call to the price API
-    const balances = adaptersBalances.flatMap((balanceConfig) => balanceConfig?.balances).filter(isNotNullish)
+    const balances = adaptersBalances.flat().filter(isNotNullish)
 
     const sanitizedBalances = sanitizeBalances(balances)
 
@@ -123,33 +125,12 @@ async function main() {
 
     const now = new Date()
 
-    const balancesSnapshots = Object.keys(contractsByAdapterId)
-      .map((adapterId, i) => {
-        const balanceConfig = adaptersBalances[i]
-        const pricedBalances = pricedBalancesByAdapterId[adapterId]
-        if (!balanceConfig || !pricedBalances) {
-          return null
-        }
-
-        const balanceSnapshot: BalancesSnapshot = {
-          fromAddress: address,
-          adapterId,
-          balanceUSD: sumBalances(pricedBalances.filter(isNotNullish)),
-          timestamp: now,
-          metadata: balanceConfig.metadata,
-        }
-
-        return balanceSnapshot
-      })
-      .filter(isNotNullish)
-
     await client.query('BEGIN')
 
-    // Insert balances snapshots
-    await insertBalancesSnapshots(client, balancesSnapshots)
+    // Delete old balances
+    await client.query(format('delete from balances where from_address = %L::bytea', [strToBuf(address)]), [])
 
     // Insert new balances
-    // TODO: insert all at once
     await Promise.all(
       Object.keys(pricedBalancesByAdapterId).map((adapterId) =>
         insertBalances(client, pricedBalancesByAdapterId[adapterId], adapterId, address, now),

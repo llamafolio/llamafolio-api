@@ -2,11 +2,8 @@ import { ContractStorage } from '@db/contracts'
 import { BasePricedBalance, PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
 import { bufToStr, strToBuf } from '@lib/buf'
-import { sumBalances } from '@lib/math'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
-
-import { BalancesSnapshot } from './balances-snapshots'
 
 // balances table share same fields as contracts for few reasons:
 // - no join
@@ -239,16 +236,6 @@ export function insertBalances(
 
   if (values.length === 0) {
     return
-  }
-
-  // TODO: insert snapshot into balances_snaphshots
-
-  const balancesSnapshot: BalancesSnapshot = {
-    timestamp,
-    fromAddress,
-    balanceUSD: sumBalances(balances),
-    // TODO:
-    data: {},
   }
 
   return Promise.all(
