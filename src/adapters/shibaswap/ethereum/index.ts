@@ -1,5 +1,5 @@
 import { Balance, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
-import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
+import { getMasterChefBalances, getMasterChefPoolsInfo, masterChefPendingRewardsMethod } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
@@ -92,9 +92,9 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
   let masterChefBalances = await getMasterChefBalances(ctx, {
     chain: 'ethereum',
     masterChefAddress: masterChef.address,
-    tokens: (masterChefPools || []) as Token[],
+    tokens: masterChefPools || [],
     rewardToken: bone,
-    pendingRewardName: 'pendingToken',
+    pendingRewardMethod: masterChefPendingRewardsMethod('pendingToken'),
   })
 
   masterChefBalances = await getUnderlyingBalances('ethereum', masterChefBalances)

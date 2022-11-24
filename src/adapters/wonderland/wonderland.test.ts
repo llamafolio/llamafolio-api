@@ -5,14 +5,15 @@ import adapter from '.'
 const testCases: AdapterTest[] = [
   {
     address: '0x024ba2110590dffa4d6b288761c5ee1e78e62cd4',
-    blockHeight: { avax: 22465369 },
+    chain: 'avax',
+    blockHeight: { avax: 22792815 },
     expected: {
       avax: [
         {
-          amount: '181930064070972',
+          amount: '181775358645059',
           symbol: 'wMEMO ',
           category: 'stake',
-          underlying: [{ amount: '181930064070972', symbol: 'TIME' }],
+          //underlying: [{ amount: '181930064070972', symbol: 'TIME' }],
         },
       ],
     },
@@ -21,16 +22,20 @@ const testCases: AdapterTest[] = [
 
 describe('wonderland test', () => {
   test('test balances', async () => {
-    const contracts = await adapter.getContracts()
-
     for (const test of testCases) {
-      const ctx: BaseContext = { address: test.address, blockHeight: test.blockHeight }
+      const adapterHandler = adapter[test.chain]
 
-      const balancesConfig = await adapter.getBalances(ctx, contracts.contracts)
+      if (adapterHandler) {
+        const contracts = await adapterHandler.getContracts()
 
-      const balances = parseBalancesTest(balancesConfig)
+        const ctx: BaseContext = { address: test.address, blockHeight: test.blockHeight }
 
-      expect(balances).toEqual(test.expected)
+        const balancesConfig = await adapterHandler.getBalances(ctx, contracts.contracts)
+
+        const balances = parseBalancesTest(balancesConfig)
+
+        expect(balances).toEqual(test.expected)
+      }
     }
   })
 })

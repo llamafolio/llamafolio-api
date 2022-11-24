@@ -67,7 +67,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
     masterChefAddress: masterChef.address,
     tokens: (masterChefPools || []) as Token[],
     rewardToken: sushi,
-    pendingRewardName: 'pendingSushi',
   })
 
   masterChefBalances = await getUnderlyingBalances('ethereum', masterChefBalances)

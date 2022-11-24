@@ -3,9 +3,17 @@ import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
+/**
+ * Wrapper to common libraries for different named methods
+ */
+export interface MethodWithAbi {
+  method: string
+  abi: any
+}
+
 export interface BaseContext {
   address: string
-  blockHeight?: { [k: string]: number }
+  blockHeight?: { [k: string]: number | string }
 }
 
 export type ContractType = 'reward' | 'debt' | 'underlying'
@@ -115,7 +123,8 @@ export interface Adapter extends Partial<Record<Chain, AdapterHandler>> {
 
 export interface AdapterTest {
   address: string
-  blockHeight: { [k: string]: number }
+  chain: Chain
+  blockHeight: { [k: string]: number | string }
   expected: { [k: string]: BalancesTest[] }
 }
 

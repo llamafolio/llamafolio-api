@@ -1,5 +1,10 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
-import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
+import {
+  getMasterChefBalances,
+  getMasterChefPoolsInfo,
+  masterChefLpPoolInfoMethod,
+  masterChefPendingRewardsMethod,
+} from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
@@ -16,7 +21,7 @@ const masterChef2: Contract = {
   name: 'masterChef',
   displayName: 'MasterChef 2',
   chain: 'bsc',
-  address: '0xa5f8C5Dbd5F286960b9d90548680aE5ebFf07652', //legacy masterchef
+  address: '0xa5f8C5Dbd5F286960b9d90548680aE5ebFf07652', // Legacy MasterChef
 }
 
 const cake: Token = {
@@ -42,7 +47,7 @@ export const getContracts = async () => {
     getMasterChefPoolsInfo({
       chain: 'bsc',
       masterChefAddress: masterChef2.address,
-      methodName: 'lpToken', //lpToken address is in a different method from poolInfo
+      poolInfoMethod: masterChefLpPoolInfoMethod, //lpToken address is in a different method from poolInfo
     }),
   ])
 
@@ -89,24 +94,24 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
 ) => {
   const pairsBalances = await getPairsBalances(ctx, 'bsc', pairs || [])
 
-  //new masterchef
+  // New masterchef
   let masterChefBalances = await getMasterChefBalances(ctx, {
     chain: 'bsc',
     masterChefAddress: masterChef.address,
-    tokens: (masterChefPools || []) as Token[],
+    tokens: masterChefPools || [],
     rewardToken: cake,
-    pendingRewardName: 'pendingCake',
+    pendingRewardMethod: masterChefPendingRewardsMethod('pendingCake'),
   })
 
   masterChefBalances = await getUnderlyingBalances('bsc', masterChefBalances)
 
-  //old masterchef
+  // Old masterchef
   let masterChefBalances2 = await getMasterChefBalances(ctx, {
     chain: 'bsc',
     masterChefAddress: masterChef2.address,
-    tokens: (masterChefPools2 || []) as Token[],
+    tokens: masterChefPools2 || [],
     rewardToken: cake,
-    pendingRewardName: 'pendingCake',
+    pendingRewardMethod: masterChefPendingRewardsMethod('pendingCake'),
   })
 
   masterChefBalances2 = await getUnderlyingBalances('bsc', masterChefBalances2)
