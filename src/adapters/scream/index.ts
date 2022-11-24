@@ -7,7 +7,7 @@ const adapter: Adapter = {
   fantom,
 }
 
-// TODO: Missing rewards, but there's a suspicious access denied based on country
+// TODO: Missing rewards, but there's a suspicious access denied to the docs according to the user's country
 // https://docs.scream.sh/
 
 export default adapter
