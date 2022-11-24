@@ -43,8 +43,7 @@ export const getContracts = async () => {
     }),
 
     getMasterChefPoolsInfo({
-      chain: 'ethereum',
-      masterChefAddress: masterChef.address,
+      masterChef,
     }),
   ])
 
@@ -90,8 +89,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
   balances = balances.concat(pairsBalances)
 
   let masterChefBalances = await getMasterChefBalances(ctx, {
-    chain: 'ethereum',
-    masterChefAddress: masterChef.address,
+    masterChef,
     tokens: masterChefPools || [],
     rewardToken: bone,
     pendingRewardMethod: masterChefPendingRewardsMethod('pendingToken'),

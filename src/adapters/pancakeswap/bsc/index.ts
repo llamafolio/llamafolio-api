@@ -6,7 +6,6 @@ import {
   masterChefPendingRewardsMethod,
 } from '@lib/masterchef'
 import { Token } from '@lib/token'
-import { isNotNullish } from '@lib/type'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances, getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 
@@ -32,7 +31,7 @@ const cake: Token = {
 }
 
 export const getContracts = async () => {
-  const [pairs, masterChefPoolsInfo, masterChefPoolsInfo2] = await Promise.all([
+  const [pairs, masterChefPools, masterChefPools2] = await Promise.all([
     getPairsContracts({
       chain: 'bsc',
       factoryAddress: '0xca143ce32fe78f1f7019d7d551a6402fc5350c73',
@@ -40,14 +39,12 @@ export const getContracts = async () => {
     }),
 
     getMasterChefPoolsInfo({
-      chain: 'bsc',
-      masterChefAddress: masterChef.address,
+      masterChef,
     }),
 
     getMasterChefPoolsInfo({
-      chain: 'bsc',
-      masterChefAddress: masterChef2.address,
-      poolInfoMethod: masterChefLpPoolInfoMethod, //lpToken address is in a different method from poolInfo
+      masterChef: masterChef2,
+      poolInfoMethod: masterChefLpPoolInfoMethod, // lpToken address is in a different method from poolInfo
     }),
   ])
 
@@ -56,27 +53,6 @@ export const getContracts = async () => {
   for (const pair of pairs) {
     pairByAddress[pair.address.toLowerCase()] = pair
   }
-  const masterChefPools = masterChefPoolsInfo
-    .map((pool) => {
-      const pair = pairByAddress[pool.lpToken.toLowerCase()]
-      if (!pair) {
-        return null
-      }
-      const contract: Contract = { ...pair, pid: pool.pid, category: 'farm' }
-      return contract
-    })
-    .filter(isNotNullish)
-
-  const masterChefPools2 = masterChefPoolsInfo2
-    .map((pool) => {
-      const pair = pairByAddress[pool.lpToken.toLowerCase()]
-      if (!pair) {
-        return null
-      }
-      const contract: Contract = { ...pair, pid: pool.pid, category: 'farm' }
-      return contract
-    })
-    .filter(isNotNullish)
 
   return {
     contracts: {
@@ -93,11 +69,10 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
   { pairs, masterChefPools, masterChefPools2 },
 ) => {
   const pairsBalances = await getPairsBalances(ctx, 'bsc', pairs || [])
-
   // New masterchef
+
   let masterChefBalances = await getMasterChefBalances(ctx, {
-    chain: 'bsc',
-    masterChefAddress: masterChef.address,
+    masterChef,
     tokens: masterChefPools || [],
     rewardToken: cake,
     pendingRewardMethod: masterChefPendingRewardsMethod('pendingCake'),
@@ -107,8 +82,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
 
   // Old masterchef
   let masterChefBalances2 = await getMasterChefBalances(ctx, {
-    chain: 'bsc',
-    masterChefAddress: masterChef2.address,
+    masterChef: masterChef2,
     tokens: masterChefPools2 || [],
     rewardToken: cake,
     pendingRewardMethod: masterChefPendingRewardsMethod('pendingCake'),

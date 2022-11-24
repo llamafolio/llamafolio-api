@@ -1,13 +1,11 @@
 import { Balance, BaseContext, Contract, MethodWithAbi } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 export interface GetMasterChefPoolsInfoParams {
-  chain: Chain
-  masterChefAddress: string
+  masterChef: Contract
   poolLengthMethod?: MethodWithAbi
   poolInfoMethod?: MethodWithAbi
 }
@@ -63,42 +61,34 @@ export const masterChefLpPoolInfoMethod: MethodWithAbi = {
 }
 
 export async function getMasterChefPoolsInfo({
-  chain,
-  masterChefAddress,
+  masterChef,
   poolLengthMethod = defaultMasterChefPoolLengthMethod,
   poolInfoMethod = defaultMasterChefPoolInfoMethod,
-}: GetMasterChefPoolsInfoParams) {
+}: GetMasterChefPoolsInfoParams): Promise<Contract[]> {
   const poolLength = await call({
-    target: masterChefAddress,
+    target: masterChef.address,
     abi: poolLengthMethod.abi,
     params: [],
-    chain,
+    chain: masterChef.chain,
   })
 
   const calls = []
   for (let i = 0; i < poolLength.output; i++) {
     calls.push({
       params: [i],
-      target: masterChefAddress,
+      target: masterChef.address,
     })
   }
 
   const poolsInfoRes = await multicall({
-    chain,
+    chain: masterChef.chain,
     calls,
     abi: poolInfoMethod.abi,
   })
 
   const poolsInfo = poolsInfoRes
-    .filter((res) => res.success)
-    .map((res) => {
-      // Override poolsInfo data for lpToken
-      if (poolInfoMethod.method === 'lpToken') {
-        return { lpToken: res.output, pid: res.input.params[0] }
-      } else {
-        return { ...res.output, pid: res.input.params[0] }
-      }
-    })
+    .filter((poolInfo) => poolInfo.success)
+    .map((poolInfo) => ({ ...poolInfo.output, pid: poolInfo.input.params[0] }))
 
   return poolsInfo
 }
@@ -151,8 +141,7 @@ export const masterChefPendingRewardsMethod = (methodName = 'pendingSushi'): Met
 }
 
 export interface GetMasterChefBalancesParams {
-  chain: Chain
-  masterChefAddress: string
+  masterChef: Contract
   tokens: Contract[]
   userInfoMethod?: MethodWithAbi
   pendingRewardMethod?: MethodWithAbi
@@ -162,8 +151,7 @@ export interface GetMasterChefBalancesParams {
 export async function getMasterChefBalances(
   ctx: BaseContext,
   {
-    chain,
-    masterChefAddress,
+    masterChef,
     tokens,
     userInfoMethod = defaultMasterChefUserInfoMethod,
     pendingRewardMethod = masterChefPendingRewardsMethod(),
@@ -171,10 +159,10 @@ export async function getMasterChefBalances(
   }: GetMasterChefBalancesParams,
 ) {
   const userInfoRes = await multicall({
-    chain,
+    chain: masterChef.chain,
     calls: tokens.map((token) => ({
       params: [token.pid, ctx.address],
-      target: masterChefAddress,
+      target: masterChef.address,
     })),
     abi: userInfoMethod.abi,
   })
@@ -190,10 +178,10 @@ export async function getMasterChefBalances(
     })
 
   const pendingRewardsRes = await multicall({
-    chain,
+    chain: masterChef.chain,
     calls: tokens.map((token) => ({
       params: [token.pid, ctx.address],
-      target: masterChefAddress,
+      target: masterChef.address,
     })),
     abi: pendingRewardMethod.abi,
   })
