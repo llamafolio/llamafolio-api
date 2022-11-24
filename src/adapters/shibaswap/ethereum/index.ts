@@ -1,7 +1,6 @@
 import { Balance, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo, masterChefPendingRewardsMethod } from '@lib/masterchef'
 import { Token } from '@lib/token'
-import { isNotNullish } from '@lib/type'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances, getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 
@@ -24,7 +23,7 @@ const masterChef: Contract = {
   name: 'masterChef',
   displayName: 'MasterChef',
   chain: 'ethereum',
-  address: '0x94235659cf8b805b2c658f9ea2d6d6ddbb17c8d7',
+  address: '0x94235659cF8b805B2c658f9ea2D6d6DDbb17C8d7',
 }
 
 const bone: Token = {
@@ -35,7 +34,7 @@ const bone: Token = {
 }
 
 export const getContracts = async () => {
-  const [pairsInfo, masterChefPoolsInfo] = await Promise.all([
+  const [pairsInfo, masterChefPools] = await Promise.all([
     getPairsContracts({
       chain: 'ethereum',
       factoryAddress: '0x115934131916C8b277DD010Ee02de363c09d037c',
@@ -47,23 +46,7 @@ export const getContracts = async () => {
     }),
   ])
 
-  // retrieve master chef pools details from lpToken addresses
-  const pairByAddress: { [key: string]: Contract } = {}
-  for (const pair of pairsInfo) {
-    pairByAddress[pair.address.toLowerCase()] = pair
-  }
-
-  const masterChefPools = masterChefPoolsInfo
-    .map((pool) => {
-      const pair = pairByAddress[pool.lpToken.toLowerCase()]
-      if (!pair) {
-        return null
-      }
-      const contract: Contract = { ...pair, pid: pool.pid, category: 'farm' }
-      return contract
-    })
-    .filter(isNotNullish)
-
+  console.log(masterChefPools)
   return {
     contracts: { pairs: pairsInfo, masterChefPools },
     revalidate: 60 * 60,
@@ -92,7 +75,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
     masterChef,
     tokens: masterChefPools || [],
     rewardToken: bone,
-    pendingRewardMethod: masterChefPendingRewardsMethod('pendingToken'),
+    pendingRewardMethod: masterChefPendingRewardsMethod('pendingBone'),
   })
 
   masterChefBalances = await getUnderlyingBalances('ethereum', masterChefBalances)

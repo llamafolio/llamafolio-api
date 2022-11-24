@@ -48,12 +48,6 @@ export const getContracts = async () => {
     }),
   ])
 
-  // retrieve master chef pools details from lpToken addresses
-  const pairByAddress: { [key: string]: Contract } = {}
-  for (const pair of pairs) {
-    pairByAddress[pair.address.toLowerCase()] = pair
-  }
-
   return {
     contracts: {
       pairs,

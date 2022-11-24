@@ -2,6 +2,7 @@ import { Balance, BaseContext, Contract, MethodWithAbi } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
+import { getPairsDetails } from '@lib/uniswap/v2/factory'
 import { BigNumber } from 'ethers'
 
 export interface GetMasterChefPoolsInfoParams {
@@ -87,10 +88,21 @@ export async function getMasterChefPoolsInfo({
   })
 
   const poolsInfo = poolsInfoRes
-    .filter((poolInfo) => poolInfo.success)
-    .map((poolInfo) => ({ ...poolInfo.output, pid: poolInfo.input.params[0] }))
+    .filter((res) => res.success)
+    .map((res) => {
+      // Override poolsInfo data for lpToken
+      if (poolInfoMethod.method === 'lpToken') {
+        return { lpToken: res.output, pid: res.input.params[0] }
+      } else {
+        return { ...res.output, pid: res.input.params[0] }
+      }
+    })
 
-  return poolsInfo
+  const pairsInfo: Contract[] = poolsInfo.map((poolInfo) => ({ ...poolInfo, address: poolInfo.lpToken }))
+
+  const pairsDetails = await getPairsDetails(masterChef.chain, pairsInfo)
+
+  return pairsDetails.map((pair, i) => ({ ...pair, ...pairsInfo[i], category: 'farm' }))
 }
 
 const defaultMasterChefUserInfoMethod: MethodWithAbi = {

@@ -1,7 +1,6 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
-import { isNotNullish } from '@lib/type'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances, getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 
@@ -20,34 +19,16 @@ const sushi: Token = {
 }
 
 export const getContracts = async () => {
-  const [pairs, masterChefPoolsInfo] = await Promise.all([
+  const [pairs, masterChefPools] = await Promise.all([
     getPairsContracts({
       chain: 'ethereum',
       factoryAddress: '0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac',
       length: 100,
     }),
-
     getMasterChefPoolsInfo({
       masterChef,
     }),
   ])
-
-  // retrieve master chef pools details from lpToken addresses
-  const pairByAddress: { [key: string]: Contract } = {}
-  for (const pair of pairs) {
-    pairByAddress[pair.address.toLowerCase()] = pair
-  }
-
-  const masterChefPools = masterChefPoolsInfo
-    .map((pool) => {
-      const pair = pairByAddress[pool.lpToken.toLowerCase()]
-      if (!pair) {
-        return null
-      }
-      const contract: Contract = { ...pair, pid: pool.pid, category: 'farm' }
-      return contract
-    })
-    .filter(isNotNullish)
 
   return {
     contracts: { pairs, masterChefPools },

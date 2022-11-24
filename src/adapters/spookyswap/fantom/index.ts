@@ -22,7 +22,7 @@ export const getContracts = async () => {
   const [pairs, masterChefPools] = await Promise.all([
     getPairsContracts({
       chain: 'fantom',
-      factoryAddress: '0x152eE697f2E276fA89E96742e9bB9aB1F2E61bE3',
+      factoryAddress: '0xca143ce32fe78f1f7019d7d551a6402fc5350c73',
       length: 100,
     }),
     getMasterChefPoolsInfo({

@@ -146,7 +146,7 @@ export async function getPairsDetails(chain: Chain, contracts: Contract[]) {
       }
 
       const token0 = token0ByAddress[underlyings.token0]
-      const token1 = token0ByAddress[underlyings.token1]
+      const token1 = token1ByAddress[underlyings.token1]
 
       if (!token0 || !token1) {
         return null
