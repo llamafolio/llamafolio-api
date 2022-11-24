@@ -1,8 +1,8 @@
 import { adapterById } from '@adapters/index'
 import { insertBalances } from '@db/balances'
 import { BalancesSnapshot, insertBalancesSnapshots } from '@db/balances-snapshots'
-import { groupContracts } from '@db/contracts'
-import { getAllContractsInteractions, getAllTokensInteractions } from '@db/contracts'
+import { getAllContractsInteractionsTokenTransfers, groupContracts } from '@db/contracts'
+import { getAllTokensInteractions } from '@db/contracts'
 import pool from '@db/pool'
 import { apiGatewayManagementApi } from '@handlers/apiGateway'
 import type { AdapterBalancesResponse } from '@handlers/getBalances'
@@ -86,7 +86,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
     const [contracts, tokens] = await Promise.all([
-      getAllContractsInteractions(client, ctx.address),
+      getAllContractsInteractionsTokenTransfers(client, ctx.address),
       getAllTokensInteractions(client, ctx.address),
     ])
 
