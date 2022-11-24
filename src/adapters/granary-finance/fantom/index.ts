@@ -19,11 +19,12 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'fantom', contracts, {
-    pools: getLendingPoolBalances,
-  })
-
-  const healthFactor = await getLendingPoolHealthFactor(ctx, 'fantom', lendingPool)
+  const [balances, healthFactor] = await Promise.all([
+    resolveBalances<typeof getContracts>(ctx, 'fantom', contracts, {
+      pools: getLendingPoolBalances,
+    }),
+    getLendingPoolHealthFactor(ctx, 'fantom', lendingPool),
+  ])
 
   return {
     balances,
