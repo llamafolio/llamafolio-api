@@ -3,6 +3,7 @@ import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
 import { getLendBorrowBalances } from '../common/lend'
+import { getVestBalances } from '../common/vest'
 
 const SNX: Token = {
   chain: 'ethereum',
@@ -27,20 +28,36 @@ const synthetix: Contract = {
   underlyings: [SNX],
 }
 
+const feePool: Contract = {
+  name: 'FeePool',
+  chain: 'ethereum',
+  address: '0x3b2f389aee480238a49e3a9985cd6815370712eb',
+}
+
+const rewardEscrow: Contract = {
+  name: 'Reward Escrow v2',
+  chain: 'ethereum',
+  address: '0xAc86855865CbF31c8f9FBB68C749AD5Bd72802e3',
+  underlyings: [SNX],
+}
+
+const liquidatorReward: Contract = {
+  name: 'Liquidator Reward',
+  chain: 'ethereum',
+  address: '0xf79603a71144e415730C1A6f57F366E4Ea962C00',
+  underlyings: [SNX],
+}
+
 export const getContracts = async () => {
   return {
-    contracts: { synthetix },
+    contracts: { synthetix, feePool, sUSD, rewardEscrow, liquidatorReward },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
-    synthetix: (ctx, chain, synthetix) =>
-      getLendBorrowBalances(ctx, chain, {
-        synthetixContract: synthetix,
-        feePoolAddress: '0x3b2f389aee480238a49e3a9985cd6815370712eb',
-        sUSD: sUSD,
-      }),
+    synthetix: (...args) => getLendBorrowBalances(...args, feePool, sUSD),
+    rewardEscrow: (...args) => getVestBalances(...args, liquidatorReward),
   })
 
   return {

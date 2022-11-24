@@ -55,7 +55,7 @@ export interface Balance extends BaseBalance {
   // optional underlying tokens.
   // ex: aToken -> token (AAVE)
   // ex: Uniswap Pair -> [token0, token1]
-  underlyings?: BaseBalance[]
+  underlyings?: BaseBalance[] | BaseContract[]
   lock?: Lock
 }
 
