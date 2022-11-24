@@ -25,8 +25,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
 
   return {
     balances: lendingPoolBalances,
-    ethereum: {
-      healthFactor,
-    },
+    healthFactor,
   }
 }

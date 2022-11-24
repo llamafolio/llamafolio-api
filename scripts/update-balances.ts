@@ -2,14 +2,27 @@ import format from 'pg-format'
 
 import { adapterById } from '../src/adapters'
 import { insertBalances } from '../src/db/balances'
+import { BalancesSnapshot, insertBalancesSnapshots } from '../src/db/balances-snapshots'
 import { getAllContractsInteractionsTokenTransfers, getAllTokensInteractions } from '../src/db/contracts'
 import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { BaseContext, Contract } from '../src/lib/adapter'
+import { Balance, BalancesConfig, BaseContext, Contract } from '../src/lib/adapter'
 import { sanitizeBalances } from '../src/lib/balance'
 import { strToBuf } from '../src/lib/buf'
+import { Chain, chains } from '../src/lib/chains'
+import { sumBalances } from '../src/lib/math'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
+
+interface ExtendedBalance extends Balance {
+  adapterId: string
+}
+
+interface ExtendedBalancesConfig extends BalancesConfig {
+  adapterId: string
+  chain: Chain
+  balances: ExtendedBalance[]
+}
 
 function help() {
   console.log('npm run update-balances {address}')
@@ -52,45 +65,57 @@ async function main() {
 
     console.log('Interacted with protocols:', Object.keys(contractsByAdapterId))
 
-    const adaptersBalances = await Promise.all(
-      Object.keys(contractsByAdapterId)
-        .map(async (adapterId) => {
-          try {
-            const adapter = adapterById[adapterId]
-            if (!adapter) {
-              console.error(`Could not find adapter with id`, adapterId)
-              return null
+    // Run adapters `getBalances` only with the contracts the user interacted with
+    const adaptersBalancesConfigsRes = await Promise.all(
+      Object.keys(contractsByAdapterId).flatMap((adapterId) => {
+        const adapter = adapterById[adapterId]
+        if (!adapter) {
+          console.error(`Could not find adapter with id`, adapterId)
+          return []
+        }
+
+        return chains
+          .filter((chain) => adapter[chain.id])
+          .map(async (chain) => {
+            const handler = adapter[chain.id]!
+
+            try {
+              const hrstart = process.hrtime()
+
+              const contracts =
+                groupContracts(contractsByAdapterId[adapterId].filter((contract) => contract.chain === chain.id)) || []
+
+              const balancesConfig = await handler.getBalances(ctx, contracts)
+
+              const hrend = process.hrtime(hrstart)
+
+              console.log(
+                `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
+                hrend[0],
+                hrend[1] / 1000000,
+              )
+
+              const extendedBalancesConfig: ExtendedBalancesConfig = {
+                ...balancesConfig,
+                // Tag balances with adapterId
+                balances: balancesConfig.balances.map((balance) => ({ ...balance, adapterId })),
+                adapterId,
+                chain: chain.id,
+              }
+
+              return extendedBalancesConfig
+            } catch (error) {
+              console.error(`[${adapterId}]: Failed to getBalances`, error)
+              return
             }
-
-            const hrstart = process.hrtime()
-
-            const contracts = groupContracts(contractsByAdapterId[adapterId]) || []
-            const balancesConfig = await adapter.getBalances(ctx, contracts)
-
-            const hrend = process.hrtime(hrstart)
-
-            console.log(
-              `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
-              hrend[0],
-              hrend[1] / 1000000,
-            )
-
-            // tag balances with adapterId
-            for (const balance of balancesConfig.balances) {
-              balance.adapterId = adapterId
-            }
-
-            return balancesConfig.balances
-          } catch (error) {
-            console.error(`[${adapterId}]: Failed to getBalances`, error)
-            return null
-          }
-        })
-        .filter(isNotNullish),
+          })
+      }),
     )
 
+    const adaptersBalancesConfigs = adaptersBalancesConfigsRes.filter(isNotNullish)
+
     // Ungroup balances to make only 1 call to the price API
-    const balances = adaptersBalances.flat().filter(isNotNullish)
+    const balances = adaptersBalancesConfigs.flatMap((balanceConfig) => balanceConfig?.balances).filter(isNotNullish)
 
     const sanitizedBalances = sanitizeBalances(balances)
 
@@ -106,23 +131,51 @@ async function main() {
       hrend[1] / 1000000,
     )
 
-    // group balances back by adapter
+    // Group balances back by adapter
     const pricedBalancesByAdapterId: { [key: string]: any[] } = {}
-    for (const pricedBalance of pricedBalances) {
-      if (!pricedBalancesByAdapterId[pricedBalance.adapterId]) {
-        pricedBalancesByAdapterId[pricedBalance.adapterId] = []
+    for (const _pricedBalance of pricedBalances) {
+      const pricedBalance = _pricedBalance as ExtendedBalance
+      if (pricedBalance.adapterId) {
+        if (!pricedBalancesByAdapterId[pricedBalance.adapterId]) {
+          pricedBalancesByAdapterId[pricedBalance.adapterId] = []
+        }
+        pricedBalancesByAdapterId[pricedBalance.adapterId].push(pricedBalance)
       }
-      pricedBalancesByAdapterId[pricedBalance.adapterId].push(pricedBalance)
     }
 
     const now = new Date()
 
+    const balancesSnapshots = adaptersBalancesConfigs
+      .map((balanceConfig) => {
+        const pricedBalances = pricedBalancesByAdapterId[balanceConfig.adapterId]
+        if (!pricedBalances) {
+          return null
+        }
+
+        const balancesSnapshot: BalancesSnapshot = {
+          fromAddress: address,
+          adapterId: balanceConfig.adapterId,
+          chain: balanceConfig.chain,
+          balanceUSD: sumBalances(pricedBalances.filter(isNotNullish)),
+          timestamp: now,
+          healthFactor: balanceConfig.healthFactor,
+        }
+
+        return balancesSnapshot
+      })
+      .filter(isNotNullish)
+
+    // Update balances
     await client.query('BEGIN')
+
+    // Insert balances snapshots
+    await insertBalancesSnapshots(client, balancesSnapshots)
 
     // Delete old balances
     await client.query(format('delete from balances where from_address = %L::bytea', [strToBuf(address)]), [])
 
     // Insert new balances
+    // TODO: insert all at once
     await Promise.all(
       Object.keys(pricedBalancesByAdapterId).map((adapterId) =>
         insertBalances(client, pricedBalancesByAdapterId[adapterId], adapterId, address, now),

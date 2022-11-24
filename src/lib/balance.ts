@@ -168,7 +168,16 @@ export async function resolveBalances<C extends GetContractsHandler>(
   const balances = await Promise.all(
     contractKeys
       .filter((contractKey) => resolvers[contractKey] != null && contracts[contractKey] != null)
-      .map((contractKey) => resolvers[contractKey](ctx, chain, contracts[contractKey]!)),
+      .map(async (contractKey) => {
+        try {
+          const resolver = resolvers[contractKey]
+          const balances = await resolver(ctx, chain, contracts[contractKey]!)
+          return balances
+        } catch (error) {
+          console.error(`Resolver ${contractKey} failed`, error)
+          return null
+        }
+      }),
   )
   return balances.flat(2).filter(isNotNullish)
 }

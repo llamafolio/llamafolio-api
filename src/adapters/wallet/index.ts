@@ -1,78 +1,80 @@
 import { Adapter, Balance, BaseContext, GetBalancesHandler } from '@lib/adapter'
-import { Chain } from '@lib/chains'
+import { resolveBalances } from '@lib/balance'
+import { Category } from '@lib/category'
+import { Chain, chains } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
-import { isNotNullish } from '@lib/type'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 import { ethers } from 'ethers'
 
-async function getBalance(ctx: BaseContext, chain: Chain, token: Token) {
-  try {
-    const provider = providers[chain]
-    const amount = await provider.getBalance(ctx.address, ctx.blockHeight?.[chain])
-    const balance: Balance = {
-      ...token,
-      amount,
-    }
-    return balance
-  } catch (err) {
-    console.error(`Failed to get coin balance for chain ${chain}`, err)
+async function getCoinBalance(ctx: BaseContext, chain: Chain, token?: Token) {
+  if (!token) {
     return null
   }
-}
 
-async function getTokensBalances(ctx: BaseContext, chain: Chain, tokens: Token[]) {
-  const coin = tokens.find((token) => token.address === ethers.constants.AddressZero)
-  const _tokens = tokens.filter((token) => token.address !== ethers.constants.AddressZero)
-
-  if (coin) {
-    return (await Promise.all([getBalance(ctx, chain, coin), getERC20BalanceOf(ctx, chain, _tokens)])).flat()
+  const provider = providers[chain]
+  const amount = await provider.getBalance(ctx.address, ctx.blockHeight?.[chain])
+  const balance: Balance = {
+    ...token,
+    amount,
+    category: 'wallet',
   }
-
-  return getERC20BalanceOf(ctx, chain, _tokens)
+  return balance
 }
 
-const getContracts = () => {
-  const contracts: { [key: string]: Token[] } = {}
+async function getERC20Balances(ctx: BaseContext, chain: Chain, tokens: Token[]) {
+  return (await getERC20BalanceOf(ctx, chain, tokens)).map((balance) => ({
+    ...balance,
+    category: 'wallet' as Category,
+  }))
+}
 
-  for (const chain in tokensByChain) {
-    contracts[chain] = []
+const getChainHandlers = (chain: Chain) => {
+  const getContracts = () => {
+    let coin: Token | undefined = undefined
+    const erc20: Token[] = []
 
     for (const token of tokensByChain[chain]) {
+      if (token.address === ethers.constants.AddressZero) {
+        coin = { ...token, chain } as Token
+        continue
+      }
       // llamafolio-tokens registers all tokens to help get metadata but some are protocol specific (ex: stETH, aTokens).
       // wallet flag indicates wallet-only tokens
       if (token.wallet) {
-        contracts[chain].push({ ...token, chain } as Token)
+        erc20.push({ ...token, chain } as Token)
       }
+    }
+
+    return {
+      contracts: { coin, erc20 },
+    }
+  }
+
+  const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+    const balances = await resolveBalances<typeof getContracts>(ctx, chain, contracts, {
+      coin: getCoinBalance,
+      erc20: getERC20Balances,
+    })
+
+    return {
+      balances,
     }
   }
 
   return {
-    contracts,
-  }
-}
-
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, chainContracts) => {
-  const chainBalances = await Promise.all(
-    Object.keys(chainContracts).map((chain) => getTokensBalances(ctx, chain as Chain, chainContracts[chain])),
-  )
-
-  return {
-    balances: chainBalances
-      .flat()
-      .filter(isNotNullish)
-      .map((balance) => {
-        balance.category = 'wallet'
-        return balance
-      }),
+    getContracts,
+    getBalances,
   }
 }
 
 const adapter: Adapter = {
   id: 'wallet',
-  getContracts,
-  getBalances,
+}
+
+for (const chain of chains) {
+  adapter[chain.id] = getChainHandlers(chain.id)
 }
 
 export default adapter

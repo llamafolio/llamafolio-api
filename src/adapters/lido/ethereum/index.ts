@@ -1,5 +1,7 @@
-import { getStEthStakeBalances, getStMaticBalances, getWStEthStakeBalances } from '@adapters/lido/common/stake'
+import { getStEthStakeBalances, getWStEthStakeBalances } from '@adapters/lido/common/stake'
+import { getStMaticBalances } from '@adapters/lido/common/stake'
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 const WETH: Contract = {
   address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
@@ -60,14 +62,14 @@ export const getContracts = () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { stETH, wstETH, stMATICEthereum }) => {
-  const [stEthBalances, wstEthBalances, stMaticBalances] = await Promise.all([
-    getStEthStakeBalances(ctx, 'ethereum', stETH),
-    getWStEthStakeBalances(ctx, 'ethereum', wstETH),
-    getStMaticBalances(ctx, 'ethereum', stMATICEthereum),
-  ])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    stETH: getStEthStakeBalances,
+    wstETH: getWStEthStakeBalances,
+    stMATICEthereum: getStMaticBalances,
+  })
 
   return {
-    balances: [...stEthBalances, ...wstEthBalances, ...stMaticBalances],
+    balances,
   }
 }

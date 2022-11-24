@@ -1,6 +1,7 @@
 import { BaseContract, Contract, ContractStandard, ContractType } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
 import { bufToStr, strToBuf } from '@lib/buf'
+import { Chain } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -269,6 +270,27 @@ export async function getContractsInteractionsTokenTransfers(client: PoolClient,
 }
 
 /**
+ * Get a list of all unique protocols and contracts a given account interacted with, filtered by chain
+ * @param client
+ * @param chain
+ * @param address
+ * @param adapterId
+ */
+export async function getChainContractsInteractionsTokenTransfers(
+  client: PoolClient,
+  chain: Chain,
+  address: string,
+  adapterId: string,
+) {
+  const res = await client.query(
+    'select * from all_contract_interactions_tt($1) where chain = $2 and adapter_id = $3;',
+    [strToBuf(address), chain, adapterId],
+  )
+
+  return fromStorage(res.rows)
+}
+
+/**
  * Get a list of all unique tokens received by a given account
  * @param client
  * @param address
@@ -277,6 +299,31 @@ export async function getAllTokensInteractions(client: PoolClient, address: stri
   const res = await client.query('select * from all_token_received($1);', [strToBuf(address)])
 
   return fromStorage(res.rows)
+}
+
+/**
+ * Get a list of all unique tokens received by a given account, filtered by chain
+ * @param client
+ * @param chain
+ * @param address
+ */
+export async function getAllChainTokensInteractions(client: PoolClient, chain: Chain, address: string) {
+  const res = await client.query('select * from all_token_received($1) where chain = $2;', [strToBuf(address), chain])
+
+  return fromStorage(res.rows)
+}
+
+/**
+ *
+ * @param client
+ * @param adapterId
+ */
+export function deleteContractsByAdapterId(client: PoolClient, adapterId: string) {
+  return client.query('DELETE FROM contracts WHERE adapter_id = $1;', [adapterId])
+}
+
+export function deleteContractsByAdapter(client: PoolClient, adapterId: string, chain: Chain) {
+  return client.query('DELETE FROM contracts WHERE adapter_id = $1 AND chain = $2;', [adapterId, chain])
 }
 
 export function flattenContracts(contracts: { [key: string]: Contract | Contract[] | undefined }) {

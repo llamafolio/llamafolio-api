@@ -5,6 +5,7 @@ import {
   getLendingRewardsBalances,
 } from '@adapters/aave/v3/common/lending'
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 const lendingPool: Contract = {
   name: 'Pool',
@@ -28,26 +29,26 @@ const incentiveController: Contract = {
 }
 
 export const getContracts = async () => {
-  const poolsArbitrum = await getLendingPoolContracts('arbitrum', lendingPool, poolDataProvider)
+  const pools = await getLendingPoolContracts('arbitrum', lendingPool, poolDataProvider)
 
   return {
     contracts: {
-      poolsArbitrum,
+      pools,
+      incentiveController,
     },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { poolsArbitrum }) => {
-  const [lendingPoolBalances, rewardsPoolBalances, healthFactor] = await Promise.all([
-    getLendingPoolBalances(ctx, 'arbitrum', poolsArbitrum || []),
-    getLendingRewardsBalances(ctx, 'arbitrum', incentiveController, poolsArbitrum || []),
-    getLendingPoolHealthFactor(ctx, 'arbitrum', lendingPool),
-  ])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'arbitrum', contracts, {
+    pools: getLendingPoolBalances,
+    incentiveController: (...args) => getLendingRewardsBalances(...args, contracts.pools || []),
+  })
+
+  const healthFactor = await getLendingPoolHealthFactor(ctx, 'arbitrum', lendingPool)
 
   return {
-    balances: [...lendingPoolBalances, ...rewardsPoolBalances],
-    arbitrum: {
-      healthFactor,
-    },
+    balances,
+    healthFactor,
   }
 }

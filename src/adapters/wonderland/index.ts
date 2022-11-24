@@ -1,30 +1,10 @@
-import * as avax from '@adapters/wonderland/avax'
-import { Adapter, GetBalancesHandler } from '@lib/adapter'
+import { Adapter } from '@lib/adapter'
 
-const getContracts = () => {
-  const avaxContracts = avax.getContracts()
-
-  return {
-    contracts: {
-      ...avaxContracts.contracts,
-    },
-  }
-}
-
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const avaxBalances = await avax.getBalances(ctx, contracts)
-
-  return {
-    ...avaxBalances,
-
-    balances: [...avaxBalances.balances],
-  }
-}
+import * as avax from './avax'
 
 const adapter: Adapter = {
   id: 'wonderland',
-  getContracts,
-  getBalances,
+  avax,
 }
 
 export default adapter

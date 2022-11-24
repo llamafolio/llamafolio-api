@@ -1,34 +1,10 @@
-import { Adapter, GetBalancesHandler } from '@lib/adapter'
+import { Adapter } from '@lib/adapter'
 
-import { getFarmBalances } from './farm'
-import { getPoolsContracts, getPoolsSupplies } from './pools'
-import { getStakeBalances } from './stake'
-
-const getContracts = async () => {
-  const pools = await getPoolsContracts('ethereum')
-
-  return {
-    contracts: { pools },
-  }
-}
-
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
-  const poolsSupplies = await getPoolsSupplies('ethereum', pools || [])
-
-  const [farmBalances, stakeBalances] = await Promise.all([
-    getFarmBalances(ctx, 'ethereum', poolsSupplies),
-    getStakeBalances(ctx, 'ethereum', poolsSupplies),
-  ])
-
-  return {
-    balances: [...farmBalances, ...stakeBalances],
-  }
-}
+import * as ethereum from './ethereum'
 
 const adapter: Adapter = {
   id: 'truefi',
-  getContracts,
-  getBalances,
+  ethereum,
 }
 
 export default adapter

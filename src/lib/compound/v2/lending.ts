@@ -1,15 +1,13 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
+import { getERC20BalanceOf, getERC20Details, getERC20Details2 } from '@lib/erc20'
 import { BN_TEN, sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { getPricedBalances } from '@lib/price'
-import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import { BigNumber, ethers } from 'ethers'
-
-import ComptrollerABI from './abis/Comptroller.json'
+import { BigNumber } from 'ethers'
 
 export interface GetMarketsContractsProps {
   comptrollerAddress: string
@@ -26,21 +24,47 @@ export interface BalanceWithExtraProps extends Balance {
 export async function getMarketsContracts(
   chain: Chain,
   { comptrollerAddress, underlyingAddressByMarketAddress = {} }: GetMarketsContractsProps,
-) {
-  const provider = providers[chain]
+): Promise<Contract[]> {
+  const cTokensAddressesRes = await call({
+    chain,
+    abi: {
+      constant: true,
+      inputs: [],
+      name: 'getAllMarkets',
+      outputs: [{ internalType: 'contract CToken[]', name: '', type: 'address[]' }],
+      payable: false,
+      stateMutability: 'view',
+      type: 'function',
+    },
+    target: comptrollerAddress,
+  })
+  const cTokensAddresses: string[] = cTokensAddressesRes.output
 
-  const comptroller = new ethers.Contract(comptrollerAddress, ComptrollerABI, provider)
+  const [cTokens, marketsRes, underlyingTokensAddressesRes] = await Promise.all([
+    getERC20Details2(chain, cTokensAddresses),
 
-  const cTokensAddresses: string[] = await comptroller.getAllMarkets()
-
-  const collateralsFactors: any[] = []
-
-  for (const cTokensAddress of cTokensAddresses) {
-    collateralsFactors.push(await comptroller.markets(cTokensAddress))
-  }
-
-  const [cTokens, underlyingTokensAddressesRes] = await Promise.all([
-    getERC20Details(chain, cTokensAddresses),
+    multicall({
+      chain,
+      abi: {
+        constant: true,
+        inputs: [{ internalType: 'address', name: '', type: 'address' }],
+        name: 'markets',
+        outputs: [
+          { internalType: 'bool', name: 'isListed', type: 'bool' },
+          {
+            internalType: 'uint256',
+            name: 'collateralFactorMantissa',
+            type: 'uint256',
+          },
+          { internalType: 'bool', name: 'isComped', type: 'bool' },
+        ],
+        payable: false,
+        stateMutability: 'view',
+        type: 'function',
+      },
+      target: comptrollerAddress,
+      calls: cTokensAddresses.map((cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] })),
+    }),
 
     multicall({
       chain,
@@ -80,6 +104,10 @@ export async function getMarketsContracts(
 
   return cTokens
     .map((token, i) => {
+      if (!token || !marketsRes[i].success) {
+        return null
+      }
+
       const underlyingTokenAddress =
         underlyingAddressByMarketAddress?.[token.address?.toLowerCase()] ||
         underlyingTokensAddressesRes[i].output?.toLowerCase()
@@ -92,7 +120,7 @@ export async function getMarketsContracts(
 
       return {
         ...token,
-        collateralFactor: collateralsFactors[i].collateralFactorMantissa,
+        collateralFactor: marketsRes[i].output.collateralFactorMantissa,
         priceSubstitute: underlyingToken.address,
         underlyings: [underlyingToken],
       }
@@ -198,36 +226,25 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
   return [...cTokensSupplyBalances, ...cTokensBorrowBalances]
 }
 
-export async function getHealthFactor(balances: BalanceWithExtraProps[]) {
-  if (!balances) {
-    console.log('Missing balance to retrieve health factor')
+export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promise<number | undefined> {
+  const nonZerobalances = balances.filter((balance) => balance.amount.gt(0))
 
-    return
+  const nonZeroSupplyBalances = nonZerobalances.filter((supply) => supply.category === 'lend')
+  const nonZeroBorrowBalances = nonZerobalances.filter((borrow) => borrow.category === 'borrow')
+
+  if (nonZeroSupplyBalances.length > 0 && nonZeroBorrowBalances.length === 0) {
+    return 10
   }
 
-  try {
-    const nonZerobalances = balances.filter((balance) => balance.amount.gt(0))
+  const supplyPriced = await getPricedBalances(nonZeroSupplyBalances)
+  const borrowPriced = await getPricedBalances(nonZeroBorrowBalances)
 
-    const nonZeroSupplyBalances = nonZerobalances.filter((supply) => supply.category === 'lend')
-    const nonZeroBorrowBalances = nonZerobalances.filter((borrow) => borrow.category === 'borrow')
+  const supplyUSD = sum(
+    supplyPriced.map((supply: any) => (+supply.balanceUSD * supply.collateralFactor) / Math.pow(10, 18)),
+  )
+  const borrowUSD = sum(borrowPriced.map((borrow: any) => borrow.balanceUSD))
 
-    const supplyPriced = await getPricedBalances(nonZeroSupplyBalances)
-    const borrowPriced = await getPricedBalances(nonZeroBorrowBalances)
+  const healthFactor = supplyUSD / borrowUSD
 
-    const supplyUSD = sum(
-      supplyPriced.map((supply: any) => (+supply.balanceUSD * supply.collateralFactor) / Math.pow(10, 18)),
-    )
-    const borrowUSD = sum(borrowPriced.map((borrow: any) => borrow.balanceUSD))
-    if (borrowUSD === 0) {
-      return undefined
-    }
-
-    const healthFactor = supplyUSD / borrowUSD
-
-    return healthFactor
-  } catch (error) {
-    console.log('Failed to get health factor')
-
-    return
-  }
+  return healthFactor > 10 ? 10 : healthFactor
 }

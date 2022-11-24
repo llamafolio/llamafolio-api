@@ -1,42 +1,37 @@
-import { call } from '@defillama/sdk/build/abi'
+import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { BaseContext, Contract, Balance } from '@lib/adapter'
 import { abi } from '@lib/erc20'
+import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
-  if (!contract || !contract.underlyings) {
-    console.log('Missing or inccorect contract')
+const USDC: Token = {
+  chain: 'ethereum',
+  address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+  decimals: 6,
+  symbol: 'USDC',
+}
 
-    return []
-  }
+export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+  const balances: Balance[] = []
 
-  try {
-    const balances: Balance[] = []
-    const COMP = contract.underlyings?.[0]
+  const balanceOfRes = await call({
+    chain,
+    target: contract.address,
+    params: [ctx.address],
+    abi: abi.balanceOf,
+  })
 
-    const balanceOfRes = await call({
-      chain,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    })
+  const amount = BigNumber.from(balanceOfRes.output)
 
-    const amount = BigNumber.from(balanceOfRes.output)
+  balances.push({
+    chain,
+    address: USDC.address,
+    decimals: USDC.decimals,
+    symbol: USDC.symbol,
+    amount,
+    category: 'stake',
+  })
 
-    balances.push({
-      chain,
-      address: COMP.address,
-      decimals: COMP.decimals,
-      symbol: COMP.symbol,
-      amount,
-      category: 'stake',
-    })
-
-    return balances
-  } catch (error) {
-    console.log('Failed to get stake balance')
-
-    return []
-  }
+  return balances
 }

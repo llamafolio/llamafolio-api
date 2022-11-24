@@ -2,11 +2,15 @@ import millify from 'millify'
 import fetch from 'node-fetch'
 import path from 'path'
 
-import { getAllTokensInteractions, getContractsInteractionsTokenTransfers, groupContracts } from '../src/db/contracts'
+import {
+  getAllChainTokensInteractions,
+  getChainContractsInteractionsTokenTransfers,
+  groupContracts,
+} from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter, Balance, BaseContext } from '../src/lib/adapter'
 import { sanitizeBalances } from '../src/lib/balance'
-import { chains } from '../src/lib/chains'
+import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 
 interface CategoryBalances {
@@ -16,14 +20,15 @@ interface CategoryBalances {
 }
 
 function help() {
-  console.log('npm run adapter-balances {adapter} {address}')
+  console.log('npm run adapter-balances {adapter} {chain} {address}')
 }
 
 async function main() {
   // argv[0]: ts-node
   // argv[1]: run-balances.ts
   // argv[2]: adapter
-  // argv[3]: address
+  // argv[3]: chain
+  // argv[4]: address
 
   const startTime = Date.now()
 
@@ -32,14 +37,19 @@ async function main() {
     return help()
   }
   if (process.argv.length < 4) {
+    console.error('Missing chain argument')
+    return help()
+  }
+  if (process.argv.length < 5) {
     console.error('Missing address argument')
     return help()
   }
-  const address = process.argv[3].toLowerCase()
-
-  const ctx: BaseContext = { address }
 
   const adapterId = process.argv[2]
+  const chain = process.argv[3] as Chain
+  const address = process.argv[4].toLowerCase()
+
+  const ctx: BaseContext = { address }
 
   const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
@@ -49,11 +59,11 @@ async function main() {
   try {
     const contracts =
       adapter.id === 'wallet'
-        ? await getAllTokensInteractions(client, ctx.address)
-        : await getContractsInteractionsTokenTransfers(client, ctx.address, adapter.id)
+        ? await getAllChainTokensInteractions(client, chain, ctx.address)
+        : await getChainContractsInteractionsTokenTransfers(client, ctx.address, chain, adapter.id)
 
-    const balancesRes = await adapter.getBalances(ctx, groupContracts(contracts) || [])
-    const sanitizedBalances = sanitizeBalances(balancesRes.balances)
+    const balancesRes = await adapter[chain]?.getBalances(ctx, groupContracts(contracts) || [])
+    const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])
 
     const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
     const yieldsData = (await yieldsRes.json()).data
@@ -163,14 +173,9 @@ async function main() {
       console.table(data)
     }
 
-    const metadata: any[] = []
-    for (const chain of chains) {
-      if (balancesRes[chain.id]) {
-        metadata.push({ chain: chain.id, ...balancesRes[chain.id] })
-      }
-    }
+    const { healthFactor } = balancesRes || {}
     console.log('Metadata:')
-    console.table(metadata)
+    console.table({ healthFactor })
 
     const endTime = Date.now()
     console.log(`Completed in ${endTime - startTime}ms`)

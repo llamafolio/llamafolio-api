@@ -1,6 +1,7 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
-import { getFormattedStakeBalances, getStakeBalances } from '../common/stake'
+import { getFormattedStakeBalance, getStakeBalance } from '../common/stake'
 
 const TIME: Contract = {
   name: 'Time',
@@ -34,13 +35,11 @@ export const getContracts = () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { wMEMO, wMemoFarm }) => {
-  const [formattedStakeBalances, farmBalances] = await Promise.all([
-    getFormattedStakeBalances(ctx, 'avax', wMEMO),
-    getStakeBalances(ctx, 'avax', wMemoFarm),
-  ])
-
-  const balances = [...formattedStakeBalances, ...farmBalances]
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
+    wMEMO: getFormattedStakeBalance,
+    wMemoFarm: getStakeBalance,
+  })
 
   return {
     balances,
