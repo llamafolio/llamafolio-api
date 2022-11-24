@@ -47,16 +47,8 @@ export async function getVestBalances(
       decimals: SNX.decimals,
       symbol: SNX.symbol,
       amount,
+      rewards: [{ ...SNX, amount: rewards }],
       category: 'vest',
-    })
-
-    balances.push({
-      chain,
-      address: SNX.address,
-      decimals: SNX.decimals,
-      symbol: SNX.symbol,
-      amount: rewards,
-      category: 'reward',
     })
   }
 

@@ -72,7 +72,7 @@ export const chains: IChainInfo[] = [
     chainId: 250,
     name: 'Fantom',
     rpcUrl: [
-      `https://fantom-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      // `https://fantom-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://rpc.ankr.com/fantom',
       'https://rpc.ftm.tools/',
       'https://rpcapi.fantom.network',
@@ -104,7 +104,7 @@ export const chains: IChainInfo[] = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcUrl: [`https://optimism-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, 'https://mainnet.optimism.io/'],
+    rpcUrl: [/*`https://optimism-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,*/ 'https://mainnet.optimism.io/'],
   },
   {
     id: 'xdai',
