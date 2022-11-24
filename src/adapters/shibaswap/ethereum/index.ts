@@ -46,7 +46,6 @@ export const getContracts = async () => {
     }),
   ])
 
-  console.log(masterChefPools)
   return {
     contracts: { pairs: pairsInfo, masterChefPools },
     revalidate: 60 * 60,
