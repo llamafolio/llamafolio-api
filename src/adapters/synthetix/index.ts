@@ -9,7 +9,7 @@ const adapter: Adapter = {
   // optimism,
 }
 
-// TODO: Farm parts using Curve logic
+// TODO: Farm parts using Curve logic, HealthFactor
 // https://docs.synthetix.io/
 
 export default adapter
