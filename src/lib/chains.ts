@@ -1,4 +1,3 @@
-import { LLAMANODES_API_KEY } from '../../env'
 import { Contract } from './adapter'
 
 export declare type Chain =
@@ -26,7 +25,10 @@ export const chains: IChainInfo[] = [
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
-    rpcUrl: [`https://arbitrum-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, 'https://arb1.arbitrum.io/rpc'],
+    rpcUrl: [
+      // `https://arbitrum-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      'https://arb1.arbitrum.io/rpc',
+    ],
   },
   {
     id: 'avax',
@@ -60,7 +62,7 @@ export const chains: IChainInfo[] = [
     chainId: 1,
     name: 'Ethereum',
     rpcUrl: [
-      `https://eth-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      // `https://eth-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79',
       'https://cloudflare-eth.com/',
       'https://main-light.eth.linkpool.io/',
@@ -72,7 +74,7 @@ export const chains: IChainInfo[] = [
     chainId: 250,
     name: 'Fantom',
     rpcUrl: [
-      `https://fantom-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      // `https://fantom-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://rpc.ankr.com/fantom',
       'https://rpc.ftm.tools/',
       'https://rpcapi.fantom.network',
@@ -95,7 +97,7 @@ export const chains: IChainInfo[] = [
     chainId: 137,
     name: 'Polygon',
     rpcUrl: [
-      `https://polygon-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      // `https://polygon-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://polygon-rpc.com/',
       'https://rpc-mainnet.maticvigil.com/',
     ],
@@ -104,14 +106,17 @@ export const chains: IChainInfo[] = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcUrl: [`https://optimism-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, 'https://mainnet.optimism.io/'],
+    rpcUrl: [
+      // `https://optimism-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      'https://mainnet.optimism.io/',
+    ],
   },
   {
     id: 'xdai',
     chainId: 100,
     name: 'Gnosis Chain',
     rpcUrl: [
-      `https://gnosis-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      // `https://gnosis-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://rpc.ankr.com/gnosis',
       'https://xdai-archive.blockscout.com',
     ],

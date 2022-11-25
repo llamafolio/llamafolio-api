@@ -3,9 +3,9 @@ import { Contract } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
-import { getGaugesBalances, getGaugesContracts } from '../common/gauge'
-import { getLockerBalances } from '../common/locker'
-import { getPoolsBalances, getPoolsContracts } from '../common/pools'
+import { getGaugesBalances, getGaugesContracts } from './gauge'
+import { getLockerBalances } from './locker'
+import { getPoolsBalances, getPoolsContracts } from './pools'
 
 const CRVToken: Token = {
   chain: 'ethereum',
@@ -53,14 +53,14 @@ export const getContracts = async () => {
   const gaugeContracts = await getGaugesContracts('ethereum', pools, GaugeController)
 
   return {
-    contracts: { pools, MetaRegistry, lockerContract, gaugeContracts },
+    contracts: { pools, MetaRegistry, lockerContract, gaugeContracts, feeDistributorContract },
     revalidate: 60 * 60,
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
-    lockerContract: getLockerBalances,
+    lockerContract: (...args) => getLockerBalances(...args, feeDistributorContract),
     pools: (...args) => getPoolsBalances(...args, MetaRegistry),
     gaugeContracts: (...args) => getGaugesBalances(...args, MetaRegistry),
   })

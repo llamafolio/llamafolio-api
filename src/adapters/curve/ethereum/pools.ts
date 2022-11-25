@@ -100,11 +100,8 @@ export async function getPoolsContracts(chain: Chain, contract: Contract): Promi
     ])
 
   const poolsDetailsNames = poolsDetailsNamesRes.filter((res) => res.success).map((res) => res.output)
-
   const poolsLPTokens = poolsLPTokensRes.filter((res) => res.success).map((res) => res.output)
-
   const coinsAddressesRes = coinsAddressesResponse.filter((res) => res.success).map((res) => res.output)
-
   const underlyingsAddressesRes = underlyingsAddressesResponse.filter((res) => res.success).map((res) => res.output)
 
   for (let i = 0; i < coinsAddressesRes.length; i++) {

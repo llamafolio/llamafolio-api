@@ -26,6 +26,7 @@ export async function getLockerBalances(
   ctx: BaseContext,
   chain: Chain,
   contract: Contract,
+  feeDistributorContract: Contract,
 ): Promise<BalanceWithExtraProps[]> {
   const balances: BalanceWithExtraProps[] = []
 
@@ -59,7 +60,7 @@ export async function getLockerBalances(
 
     call({
       chain,
-      target: contract.rewards?.[0].address,
+      target: feeDistributorContract.address,
       params: [ctx.address],
       abi: {
         name: 'claim',

@@ -146,7 +146,7 @@ export async function getGaugesContracts(
         return null
       }
 
-      const pool = poolByAddress[lpTokensAddresses[i].toLowerCase()]
+      const pool: Contract = poolByAddress[lpTokensAddresses[i].toLowerCase()]
 
       if (!pool) {
         return null
