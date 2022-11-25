@@ -8,7 +8,7 @@ import { isHex } from '@lib/buf'
 import { Chain } from '@lib/chains'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
-interface BalancesProtocolChainResponse {
+export interface BalancesProtocolChainResponse {
   id: Chain
   balances: PricedBalance[]
   healthFactor?: number
