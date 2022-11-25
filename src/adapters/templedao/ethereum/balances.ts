@@ -6,17 +6,21 @@ import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-const TempleStaking: Contract = {
-  name: 'Temple staking',
+const TEMPLE: Contract = {
+  name: 'Temple',
+  displayName: 'Temple Token',
   chain: 'ethereum',
-  address: '0x4D14b24EDb751221B3Ff08BBB8bd91D4b1c8bc77',
+  address: '0x470ebf5f030ed85fc1ed4c2d36b9dd02e77cf1b7',
+  decimals: 18,
+  symbol: 'TEMPLE ',
 }
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
-  if (!contract || !contract.underlyings?.[0]) {
-    return []
-  }
-
+export async function getStakeBalances(
+  ctx: BaseContext,
+  chain: Chain,
+  contract: Contract,
+  templeStaking: Contract,
+): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
@@ -30,7 +34,7 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?
 
   const formattedBalanceRes = await call({
     chain,
-    target: TempleStaking.address,
+    target: templeStaking.address,
     params: [balanceOf],
     abi: {
       inputs: [{ internalType: 'uint256', name: 'amountOgTemple', type: 'uint256' }],
@@ -49,7 +53,7 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?
     symbol: contract.symbol,
     decimals: contract.decimals,
     amount: formattedBalance,
-    underlyings: [{ ...contract.underlyings?.[0], amount: formattedBalance }],
+    underlyings: [{ ...TEMPLE, amount: formattedBalance }],
     category: 'stake',
   }
 
@@ -58,7 +62,7 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?
   return balances
 }
 
-export async function getLockedBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+export async function getLockedBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
   const calls = contracts.map((contract) => ({
     target: contract.address,
     params: [],
@@ -101,7 +105,7 @@ export async function getLockedBalances(ctx: BaseContext, chain: Chain, contract
 
   return contracts
     .map((contract, i) => {
-      if (!contract.underlyings?.[0] || !balancesLockedRes[i].success) {
+      if (!TEMPLE || !balancesLockedRes[i].success) {
         return
       }
 
@@ -109,16 +113,11 @@ export async function getLockedBalances(ctx: BaseContext, chain: Chain, contract
 
       const balance: Balance = {
         chain,
-        decimals: contracts[i].decimals,
-        symbol: contracts[i].symbol,
-        address: contracts[i].address,
+        decimals: contract.decimals,
+        symbol: contract.symbol,
+        address: contract.address,
         amount: amountLocked,
-        underlyings: [
-          {
-            ...contract.underlyings[0],
-            amount: amountLocked,
-          },
-        ],
+        underlyings: [{ ...TEMPLE, amount: amountLocked }],
         category: 'lock',
       }
 

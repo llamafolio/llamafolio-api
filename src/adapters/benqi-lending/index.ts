@@ -7,4 +7,7 @@ const adapter: Adapter = {
   avax,
 }
 
+// TODO: rewards on lending/borrowing
+// https://docs.benqi.fi/
+
 export default adapter

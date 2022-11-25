@@ -7,4 +7,7 @@ const adapter: Adapter = {
   fantom,
 }
 
+// TODO : Locked
+// https://docs.hector.network/hector-network/introduction
+
 export default adapter

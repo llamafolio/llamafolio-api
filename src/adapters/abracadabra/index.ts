@@ -10,4 +10,7 @@ const adapter: Adapter = {
   fantom,
 }
 
+// TODO: healthfactor
+// https://docs.abracadabra.money/
+
 export default adapter

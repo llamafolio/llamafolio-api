@@ -1,4 +1,6 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
+import { Chain } from '@lib/chains'
 
 import { getGLPBalances, getGLPContracts, getGLPVesterBalances } from '../common/glp'
 import { getGMXBalances, getGMXContracts, getGMXVesterBalances } from '../common/gmx'
@@ -17,15 +19,21 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { gmx, glp }) => {
-  const balances = await Promise.all([
-    getGMXBalances(ctx, 'avax', gmx || []),
-    getGLPBalances(ctx, 'avax', glp || []),
-    getGMXVesterBalances(ctx, 'avax', gmx || []),
-    getGLPVesterBalances(ctx, 'avax', glp || []),
-  ])
+function gmxBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
+  return Promise.all([getGMXBalances(ctx, chain, contract), getGMXVesterBalances(ctx, chain, contract)])
+}
+
+function glpBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
+  return Promise.all([getGLPBalances(ctx, chain, contract), getGLPVesterBalances(ctx, chain, contract)])
+}
+
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
+    gmx: gmxBalances,
+    glp: glpBalances,
+  })
 
   return {
-    balances: balances.flat(),
+    balances: balances,
   }
 }
