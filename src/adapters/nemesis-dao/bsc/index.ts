@@ -1,4 +1,5 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 import { getStakeBalances } from './balances'
 
@@ -25,8 +26,10 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { sNMS }) => {
-  const balances = await getStakeBalances(ctx, 'bsc', sNMS)
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'bsc', contracts, {
+    sNMS: getStakeBalances,
+  })
 
   return {
     balances,

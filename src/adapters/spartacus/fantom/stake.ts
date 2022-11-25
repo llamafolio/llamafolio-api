@@ -4,12 +4,13 @@ import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
-const NMS: Contract = {
-  name: 'Nemesis DAO',
-  chain: 'bsc',
-  address: '0x8AC9DC3358A2dB19fDd57f433ff45d1fc357aFb3',
+const SPA: Contract = {
+  name: 'Spartacus ',
+  displayName: 'Spartacus ',
+  chain: 'fantom',
+  address: '0x5602df4A94eB6C680190ACCFA2A475621E0ddBdc',
   decimals: 9,
-  symbol: 'NMS',
+  symbol: 'SPA',
 }
 
 export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
@@ -22,17 +23,19 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract:
     abi: abi.balanceOf,
   })
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const amount = BigNumber.from(balanceOfRes.output)
 
-  balances.push({
+  const balance: Balance = {
     chain,
     address: contract.address,
     symbol: contract.symbol,
     decimals: 9,
-    amount: balanceOf,
-    underlyings: [NMS],
+    amount,
+    underlyings: [SPA],
     category: 'stake',
-  })
+  }
+
+  balances.push(balance)
 
   return balances
 }

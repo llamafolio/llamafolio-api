@@ -1,6 +1,8 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
-import { getBondBalances, getStakeBalances } from './balances'
+import { getStakeBalances } from './stake'
+import { getVestBalances } from './vest'
 
 const SPA: Contract = {
   name: 'Spartacus ',
@@ -47,13 +49,11 @@ export const getContracts = () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { sSPA, bonds }) => {
-  const [stakeBalances, bondBalances] = await Promise.all([
-    getStakeBalances(ctx, 'fantom', sSPA),
-    getBondBalances(ctx, 'fantom', bonds || []),
-  ])
-
-  const balances = [...stakeBalances, ...bondBalances]
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'fantom', contracts, {
+    sSPA: getStakeBalances,
+    bonds: getVestBalances,
+  })
 
   return {
     balances,
