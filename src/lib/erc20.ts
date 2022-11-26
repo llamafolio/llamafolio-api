@@ -166,9 +166,9 @@ export async function getERC20Details2(chain: Chain, tokens: (string | null)[]):
 
 export async function resolveERC20Details<K extends string>(
   chain: Chain,
-  contracts: Record<K, string[]>,
-): Promise<Record<K, MultiCallResult<Token>[]>> {
-  const results = {} as Record<K, MultiCallResult<Token>[]>
+  contracts: Record<K, (string | null)[]>,
+): Promise<Record<K, MultiCallResult<string | null, any[], Token>[]>> {
+  const results = {} as Record<K, MultiCallResult<string | null, any[], Token>[]>
   const calls: Call[] = []
 
   for (const key in contracts) {
@@ -176,9 +176,14 @@ export async function resolveERC20Details<K extends string>(
 
     for (let i = 0; i < contracts[key].length; i++) {
       const address = contracts[key][i]
-      const token = getToken(chain, address.toLowerCase())
+      const input = { params: [], target: address }
 
-      const input = { params: [], target: contracts[key][i] }
+      if (!address) {
+        results[key].push({ success: false, output: null, input })
+        continue
+      }
+
+      const token = getToken(chain, address.toLowerCase())
 
       if (token) {
         results[key].push({ success: true, output: token as Token, input })
@@ -201,8 +206,8 @@ export async function resolveERC20Details<K extends string>(
   let callsIdx = 0
   for (const key in contracts) {
     for (let i = 0; i < contracts[key].length; i++) {
-      // calls are only made of unsuccessful cache requests
-      if (results[key][i].success) {
+      // ignored nullish targets or successful responses (found in cache)
+      if (!contracts[key][i] || results[key][i].success) {
         continue
       }
 
