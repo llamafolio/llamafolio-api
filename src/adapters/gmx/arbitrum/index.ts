@@ -3,7 +3,7 @@ import { resolveBalances } from '@lib/balance'
 import { Chain } from '@lib/chains'
 
 import { getGLPBalances, getGLPContracts, getGLPVesterBalances } from '../common/glp'
-import { getGMXBalances, getGMXContracts, getGMXVesterBalances } from '../common/gmx'
+import { getGMXBalances, getGMXContract, getGMXVesterBalances } from '../common/gmx'
 
 const gmxRouter: Contract = {
   name: 'GMX: Reward Router',
@@ -12,7 +12,7 @@ const gmxRouter: Contract = {
 }
 
 export const getContracts = async () => {
-  const [gmx, glp] = await Promise.all([getGMXContracts('arbitrum', gmxRouter), getGLPContracts('arbitrum', gmxRouter)])
+  const [gmx, glp] = await Promise.all([getGMXContract('arbitrum', gmxRouter), getGLPContracts('arbitrum', gmxRouter)])
 
   return {
     contracts: { gmx, glp },

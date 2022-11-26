@@ -87,6 +87,32 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  getUserAccountData: {
+    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
+    name: 'getUserAccountData',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'totalCollateralBase',
+        type: 'uint256',
+      },
+      { internalType: 'uint256', name: 'totalDebtBase', type: 'uint256' },
+      {
+        internalType: 'uint256',
+        name: 'availableBorrowsBase',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'currentLiquidationThreshold',
+        type: 'uint256',
+      },
+      { internalType: 'uint256', name: 'ltv', type: 'uint256' },
+      { internalType: 'uint256', name: 'healthFactor', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
 export async function getLendingPoolContracts(chain: Chain, lendingPool: Contract) {
@@ -110,13 +136,13 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
       abi: abi.getReserveData,
     })
 
-    const reservesData = reservesDataRes.filter((res) => res.success).map((res) => res.output)
+    const reservesData = reservesDataRes.filter(isSuccess)
 
     const { underlyingTokens, aTokens, stableDebtTokens, variableDebtTokens } = await resolveERC20Details(chain, {
-      underlyingTokens: reservesList,
-      aTokens: reservesData.map((reserveData) => reserveData.aTokenAddress),
-      stableDebtTokens: reservesData.map((reserveData) => reserveData.stableDebtTokenAddress),
-      variableDebtTokens: reservesData.map((reserveData) => reserveData.variableDebtTokenAddress),
+      underlyingTokens: reservesData.map((reserveData) => reserveData.input.params[0]),
+      aTokens: reservesData.map((reserveData) => reserveData.output.aTokenAddress),
+      stableDebtTokens: reservesData.map((reserveData) => reserveData.output.stableDebtTokenAddress),
+      variableDebtTokens: reservesData.map((reserveData) => reserveData.output.variableDebtTokenAddress),
     })
 
     for (let i = 0; i < underlyingTokens.length; i++) {
@@ -193,32 +219,7 @@ export async function getLendingPoolHealthFactor(ctx: BaseContext, chain: Chain,
       chain,
       target: lendingPool.address,
       params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
-        name: 'getUserAccountData',
-        outputs: [
-          {
-            internalType: 'uint256',
-            name: 'totalCollateralBase',
-            type: 'uint256',
-          },
-          { internalType: 'uint256', name: 'totalDebtBase', type: 'uint256' },
-          {
-            internalType: 'uint256',
-            name: 'availableBorrowsBase',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: 'currentLiquidationThreshold',
-            type: 'uint256',
-          },
-          { internalType: 'uint256', name: 'ltv', type: 'uint256' },
-          { internalType: 'uint256', name: 'healthFactor', type: 'uint256' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.getUserAccountData,
     })
 
     // no borrowed balance

@@ -1,7 +1,6 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
-import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
+import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
@@ -39,45 +38,6 @@ export const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
-
-export async function getUnderlyingsContract(contract: Contract) {
-  const [token0Address, token1Address] = await Promise.all([
-    call({
-      chain: contract.chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        constant: true,
-        inputs: [],
-        name: 'token0',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-    call({
-      chain: contract.chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        constant: true,
-        inputs: [],
-        name: 'token1',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-  ])
-
-  const underlyings = await getERC20Details(contract.chain, [token0Address.output, token1Address.output])
-
-  contract.underlyings = underlyings
-
-  return contract
 }
 
 /**

@@ -6,6 +6,35 @@ import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { BigNumber, ethers } from 'ethers'
 
+const abi = {
+  getReservesList: {
+    inputs: [],
+    name: 'getReservesList',
+    outputs: [{ internalType: 'address[]', name: '', type: 'address[]' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getReserveTokensAddresses: {
+    inputs: [{ internalType: 'address', name: 'asset', type: 'address' }],
+    name: 'getReserveTokensAddresses',
+    outputs: [
+      { internalType: 'address', name: 'aTokenAddress', type: 'address' },
+      {
+        internalType: 'address',
+        name: 'stableDebtTokenAddress',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'variableDebtTokenAddress',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
 export async function getLendingPoolContracts(
   chain: Chain,
   lendingPool: Contract,
@@ -17,44 +46,18 @@ export async function getLendingPoolContracts(
     chain,
     target: lendingPool.address,
     params: [],
-    abi: {
-      inputs: [],
-      name: 'getReservesList',
-      outputs: [{ internalType: 'address[]', name: '', type: 'address[]' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.getReservesList,
   })
 
   const reservesList: string[] = reserveListRes.output
 
-  const calls = reservesList.map((address) => ({
-    target: poolDataProvider.address,
-    params: [address],
-  }))
-
   const reserveTokensAddressesRes = await multicall({
     chain,
-    calls,
-    abi: {
-      inputs: [{ internalType: 'address', name: 'asset', type: 'address' }],
-      name: 'getReserveTokensAddresses',
-      outputs: [
-        { internalType: 'address', name: 'aTokenAddress', type: 'address' },
-        {
-          internalType: 'address',
-          name: 'stableDebtTokenAddress',
-          type: 'address',
-        },
-        {
-          internalType: 'address',
-          name: 'variableDebtTokenAddress',
-          type: 'address',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    calls: reservesList.map((address) => ({
+      target: poolDataProvider.address,
+      params: [address],
+    })),
+    abi: abi.getReserveTokensAddresses,
   })
 
   const reserveTokensAddresses = reserveTokensAddressesRes.filter((res) => res.success).map((res) => res.output)

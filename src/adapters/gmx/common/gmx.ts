@@ -1,107 +1,101 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { abi, getERC20Details } from '@lib/erc20'
+import { abi as erc20Abi, resolveERC20Details } from '@lib/erc20'
+import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-export async function getGMXContracts(chain: Chain, contract: Contract): Promise<Contract> {
+const abi = {
+  esGmx: {
+    inputs: [],
+    name: 'esGmx',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  feeGmxTracker: {
+    inputs: [],
+    name: 'feeGmxTracker',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  gmx: {
+    inputs: [],
+    name: 'gmx',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  gmxVester: {
+    inputs: [],
+    name: 'gmxVester',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  stakedGmxTracker: {
+    inputs: [],
+    name: 'stakedGmxTracker',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  weth: {
+    inputs: [],
+    name: 'weth',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+export async function getGMXContract(chain: Chain, contract: Contract) {
   const [stakerGmxTrackerRes, gmxRes, wethRes, stakerGmxFeesRes, esGmxRes, gmxVesterRes] = await Promise.all([
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'stakedGmxTracker',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'gmx',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'weth',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'feeGmxTracker',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'esGmx',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'gmxVester',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+    call({ chain, target: contract.address, params: [], abi: abi.stakedGmxTracker }),
+    call({ chain, target: contract.address, params: [], abi: abi.gmx }),
+    call({ chain, target: contract.address, params: [], abi: abi.weth }),
+    call({ chain, target: contract.address, params: [], abi: abi.feeGmxTracker }),
+    call({ chain, target: contract.address, params: [], abi: abi.esGmx }),
+    call({ chain, target: contract.address, params: [], abi: abi.gmxVester }),
   ])
 
-  const [stakerGmxTracker, gmx, weth, stakerGmxFees, esGmx, gmxVester] = await Promise.all([
-    getERC20Details(chain, [stakerGmxTrackerRes.output]),
-    getERC20Details(chain, [gmxRes.output]),
-    getERC20Details(chain, [wethRes.output]),
-    getERC20Details(chain, [stakerGmxFeesRes.output]),
-    getERC20Details(chain, [esGmxRes.output]),
-    getERC20Details(chain, [gmxVesterRes.output]),
-  ])
+  const { stakerGmxTrackerToken, gmxToken, wethToken, stakerGmxFeesToken, esGmxToken, gmxVesterToken } =
+    await resolveERC20Details(chain, {
+      stakerGmxTrackerToken: [stakerGmxTrackerRes.output],
+      gmxToken: [gmxRes.output],
+      wethToken: [wethRes.output],
+      stakerGmxFeesToken: [stakerGmxFeesRes.output],
+      esGmxToken: [esGmxRes.output],
+      gmxVesterToken: [gmxVesterRes.output],
+    })
+
+  const stakerGmxTrackerTokenRes = stakerGmxTrackerToken[0]
+  const gmxTokenRes = gmxToken[0]
+  const wethTokenRes = wethToken[0]
+  const stakerGmxFeesTokenRes = stakerGmxFeesToken[0]
+  const esGmxTokenRes = esGmxToken[0]
+  const gmxVesterTokenRes = gmxVesterToken[0]
+
+  if (
+    !isSuccess(stakerGmxTrackerTokenRes) ||
+    !isSuccess(gmxTokenRes) ||
+    !isSuccess(wethTokenRes) ||
+    !isSuccess(stakerGmxFeesTokenRes) ||
+    !isSuccess(esGmxTokenRes) ||
+    !isSuccess(gmxVesterTokenRes)
+  ) {
+    return
+  }
 
   const gmxStaker: Contract = {
     chain,
-    decimals: stakerGmxTracker[0].decimals,
-    symbol: stakerGmxTracker[0].symbol,
-    address: stakerGmxTracker[0].address,
-    gmxVester: gmxVester[0],
-    underlyings: [stakerGmxFees[0], gmx[0]],
-    rewards: [esGmx[0], weth[0]],
+    decimals: stakerGmxTrackerTokenRes.output.decimals,
+    symbol: stakerGmxTrackerTokenRes.output.symbol,
+    address: stakerGmxTrackerTokenRes.output.address,
+    gmxVester: gmxVesterTokenRes.output,
+    underlyings: [stakerGmxFeesTokenRes.output, gmxTokenRes.output],
+    rewards: [esGmxTokenRes.output, wethTokenRes.output],
   }
 
   return gmxStaker
@@ -280,7 +274,7 @@ export async function getGMXVesterBalances(ctx: BaseContext, chain: Chain, contr
       chain,
       target: gmxVester.address,
       params: [ctx.address],
-      abi: abi.balanceOf,
+      abi: erc20Abi.balanceOf,
     }),
 
     call({
