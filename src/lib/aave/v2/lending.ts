@@ -1,7 +1,7 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
+import { getERC20BalanceOf, resolveERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { BigNumber, ethers } from 'ethers'
@@ -109,50 +109,25 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
       abi: abi.getReserveData,
     })
 
-    const underlyingTokensAddresses: string[] = []
-    const aTokensAddresses: string[] = []
-    const stableDebtTokenAddresses: string[] = []
-    const variableDebtTokenAddresses: string[] = []
-    const underlyingTokenAddressByAddress: { [key: string]: string } = {}
+    const reservesData = reservesDataRes.filter((res) => res.success).map((res) => res.output)
 
-    for (let i = 0; i < reservesDataRes.length; i++) {
-      if (reservesDataRes[i].success) {
-        const reserveData = reservesDataRes[i].output
+    const { underlyingTokens, aTokens, stableDebtTokens, variableDebtTokens } = await resolveERC20Details(chain, {
+      underlyingTokens: reservesList,
+      aTokens: reservesData.map((reserveData) => reserveData.aTokenAddress),
+      stableDebtTokens: reservesData.map((reserveData) => reserveData.stableDebtTokenAddress),
+      variableDebtTokens: reservesData.map((reserveData) => reserveData.variableDebtTokenAddress),
+    })
 
-        const underlyingTokenAddress = reservesList[i].toLowerCase()
-
-        underlyingTokensAddresses.push(underlyingTokenAddress)
-        aTokensAddresses.push(reserveData.aTokenAddress)
-        stableDebtTokenAddresses.push(reserveData.stableDebtTokenAddress)
-        variableDebtTokenAddresses.push(reserveData.variableDebtTokenAddress)
-
-        // map aTokens, stable debt tokens and variable debt tokens to their underlyings
-        underlyingTokenAddressByAddress[reserveData.aTokenAddress] = underlyingTokenAddress
-        underlyingTokenAddressByAddress[reserveData.stableDebtTokenAddress] = underlyingTokenAddress
-        underlyingTokenAddressByAddress[reserveData.variableDebtTokenAddress] = underlyingTokenAddress
+    for (let i = 0; i < underlyingTokens.length; i++) {
+      if (!underlyingTokens[i].success) {
+        continue
       }
-    }
 
-    // TODO: 1 multicall to get all ERC20 details at once
-    const [underlyingTokens, aTokens, stableDebtTokens, variableDebtTokens] = await Promise.all([
-      getERC20Details(chain, underlyingTokensAddresses),
-      getERC20Details(chain, aTokensAddresses),
-      getERC20Details(chain, stableDebtTokenAddresses),
-      getERC20Details(chain, variableDebtTokenAddresses),
-    ])
+      const underlyingToken = underlyingTokens[i].output!
 
-    const underlyingTokenByAddress: { [key: string]: Token } = {}
-    for (const token of underlyingTokens) {
-      underlyingTokenByAddress[token.address] = token
-    }
+      if (aTokens[i].success) {
+        const aToken = aTokens[i].output!
 
-    for (let i = 0; i < aTokens.length; i++) {
-      const aToken = aTokens[i]
-
-      const underlyingTokenAddress = underlyingTokenAddressByAddress[aToken.address]
-      const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress]
-
-      if (underlyingToken) {
         contracts.push({
           ...aToken,
           priceSubstitute: underlyingToken.address,
@@ -160,15 +135,10 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
           category: 'lend',
         })
       }
-    }
 
-    for (let i = 0; i < stableDebtTokens.length; i++) {
-      const stableDebtToken = stableDebtTokens[i]
+      if (stableDebtTokens[i].success) {
+        const stableDebtToken = stableDebtTokens[i].output!
 
-      const underlyingTokenAddress = underlyingTokenAddressByAddress[stableDebtToken.address]
-      const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress]
-
-      if (underlyingToken) {
         contracts.push({
           ...stableDebtToken,
           priceSubstitute: underlyingToken.address,
@@ -178,15 +148,10 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
           stable: true,
         })
       }
-    }
 
-    for (let i = 0; i < variableDebtTokens.length; i++) {
-      const variableDebtToken = variableDebtTokens[i]
+      if (variableDebtTokens[i].success) {
+        const variableDebtToken = variableDebtTokens[i].output!
 
-      const underlyingTokenAddress = underlyingTokenAddressByAddress[variableDebtToken.address]
-      const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress]
-
-      if (underlyingToken) {
         contracts.push({
           ...variableDebtToken,
           priceSubstitute: underlyingToken.address,
