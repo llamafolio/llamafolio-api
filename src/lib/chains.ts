@@ -1,5 +1,4 @@
 import { LLAMANODES_API_KEY } from '../../env'
-import { Contract } from './adapter'
 
 export declare type Chain =
   | 'ethereum'
@@ -122,17 +121,4 @@ export const chainById: { [key: string]: IChainInfo } = {}
 
 for (const chain of chains) {
   chainById[chain.id] = chain
-}
-
-export function groupByChains(contracts: Contract[]) {
-  const chainsContracts: Partial<Record<Chain, Contract[]>> = {}
-
-  for (const contract of contracts) {
-    if (!chainsContracts[contract.chain]) {
-      chainsContracts[contract.chain] = []
-    }
-    chainsContracts[contract.chain]?.push(contract)
-  }
-
-  return chainsContracts
 }
