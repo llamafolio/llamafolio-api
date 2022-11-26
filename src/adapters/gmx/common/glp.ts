@@ -1,10 +1,10 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { abi, getERC20Details } from '@lib/erc20'
+import { abi, resolveERC20Details } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
-export async function getGLPContracts(chain: Chain, contract: Contract): Promise<Contract> {
+export async function getGLPContracts(chain: Chain, contract: Contract) {
   const [stakerGLPTrackerRes, glpRes, wethRes, stakerGLPFeesRes, esGmxRes, glpVesterRes, gmxRes] = await Promise.all([
     call({
       chain,
@@ -98,25 +98,37 @@ export async function getGLPContracts(chain: Chain, contract: Contract): Promise
     }),
   ])
 
-  const [stakerGLPTracker, glp, weth, stakerGLPFees, esGmx, glpVester, gmx] = await Promise.all([
-    getERC20Details(chain, [stakerGLPTrackerRes.output]),
-    getERC20Details(chain, [glpRes.output]),
-    getERC20Details(chain, [wethRes.output]),
-    getERC20Details(chain, [stakerGLPFeesRes.output]),
-    getERC20Details(chain, [esGmxRes.output]),
-    getERC20Details(chain, [glpVesterRes.output]),
-    getERC20Details(chain, [gmxRes.output]),
-  ])
+  const { stakerGLPTracker, glp, weth, stakerGLPFees, esGmx, glpVester, gmx } = await resolveERC20Details(chain, {
+    stakerGLPTracker: [stakerGLPTrackerRes.output],
+    glp: [glpRes.output],
+    weth: [wethRes.output],
+    stakerGLPFees: [stakerGLPFeesRes.output],
+    esGmx: [esGmxRes.output],
+    glpVester: [glpVesterRes.output],
+    gmx: [gmxRes.output],
+  })
+
+  if (
+    !stakerGLPTracker[0].success ||
+    !glp[0].success ||
+    !weth[0].success ||
+    !stakerGLPFees[0].success ||
+    !esGmx[0].success ||
+    !glpVester[0].success ||
+    !gmx[0].success
+  ) {
+    return
+  }
 
   const glpStaker: Contract = {
     chain,
-    decimals: stakerGLPTracker[0].decimals,
-    symbol: stakerGLPTracker[0].symbol,
-    address: stakerGLPTracker[0].address,
-    glpVester: glpVester[0],
-    gmx: gmx[0],
-    underlyings: [stakerGLPFees[0], glp[0]],
-    rewards: [esGmx[0], weth[0]],
+    decimals: stakerGLPTracker[0].output!.decimals,
+    symbol: stakerGLPTracker[0].output!.symbol,
+    address: stakerGLPTracker[0].output!.address,
+    glpVester: glpVester[0].output,
+    gmx: gmx[0].output,
+    underlyings: [stakerGLPFees[0].output!, glp[0].output!],
+    rewards: [esGmx[0].output!, weth[0].output!],
   }
 
   return glpStaker

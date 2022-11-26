@@ -1,6 +1,6 @@
 import { Balance, BaseBalance, BaseContext } from '@lib/adapter'
 import { Chain } from '@lib/chains'
-import { multicall } from '@lib/multicall'
+import { Call, multicall, MultiCallResult } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { getToken } from '@llamafolio/tokens'
@@ -162,4 +162,74 @@ export async function getERC20Details2(chain: Chain, tokens: (string | null)[]):
   }
 
   return tokens.map((address) => (address != null && found[address]) || null)
+}
+
+export async function resolveERC20Details<K extends string>(
+  chain: Chain,
+  contracts: Record<K, string[]>,
+): Promise<Record<K, MultiCallResult<Token>[]>> {
+  const results = {} as Record<K, MultiCallResult<Token>[]>
+  const calls: Call[] = []
+
+  for (const key in contracts) {
+    results[key] = []
+
+    for (let i = 0; i < contracts[key].length; i++) {
+      const address = contracts[key][i]
+      const token = getToken(chain, address.toLowerCase())
+
+      const input = { params: [], target: contracts[key][i] }
+
+      if (token) {
+        results[key].push({ success: true, output: token as Token, input })
+      } else {
+        calls.push({
+          target: address,
+          params: [],
+        })
+        results[key].push({ success: false, output: null, input })
+      }
+    }
+  }
+
+  // fetch missing info on-chain
+  const [symbols, decimals] = await Promise.all([
+    multicall({ chain, calls, abi: abi.symbol }),
+    multicall({ chain, calls, abi: abi.decimals }),
+  ])
+
+  let callsIdx = 0
+  for (const key in contracts) {
+    for (let i = 0; i < contracts[key].length; i++) {
+      // calls are only made of unsuccessful cache requests
+      if (results[key][i].success) {
+        continue
+      }
+
+      const address = calls[callsIdx].target
+      if (!symbols[callsIdx].success) {
+        console.error(`Could not get symbol for token ${chain}:${address}`)
+        callsIdx++
+        continue
+      }
+      if (!decimals[callsIdx].success) {
+        console.error(`Could not get decimals for token ${chain}:${address}`)
+        callsIdx++
+        continue
+      }
+
+      const token: Token = {
+        chain,
+        address,
+        symbol: symbols[callsIdx].output,
+        decimals: parseInt(decimals[callsIdx].output),
+      }
+      results[key][i].success = true
+      results[key][i].output = token
+
+      callsIdx++
+    }
+  }
+
+  return results
 }
