@@ -119,25 +119,22 @@ export function sanitizeBalances(balances: Balance[]) {
 
     if (balance.underlyings) {
       // if there's 1 underlying and the amount is not defined, use the balance amount as default
+      let defaultAmount = BN_ZERO
       if (balance.underlyings.length === 1 && balance.underlyings[0].amount == null) {
-        balance.underlyings[0].amount = balance.amount
+        defaultAmount = balance.amount
       }
 
-      for (const underlying of balance.underlyings) {
-        if (underlying.amount == null) {
-          console.error('Nullish underlying balance amount', { balance, underlying })
-          underlying.amount = BN_ZERO
-        }
-      }
+      balance.underlyings = balance.underlyings.map((underlying) => ({
+        ...underlying,
+        amount: underlying.amount || defaultAmount,
+      }))
     }
 
     if (balance.rewards) {
-      for (const reward of balance.rewards) {
-        if (reward.amount == null) {
-          console.error('Nullish reward balance amount', { balance, reward })
-          reward.amount = BN_ZERO
-        }
-      }
+      balance.rewards = balance.rewards.map((reward) => ({
+        ...reward,
+        amount: reward.amount || BN_ZERO,
+      }))
     }
 
     return true
