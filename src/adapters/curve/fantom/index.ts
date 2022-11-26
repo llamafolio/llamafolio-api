@@ -6,18 +6,18 @@ import { getPools, getPoolsBalancesFromGauges } from '../common/pools'
 
 const gaugeController: Contract = {
   name: 'Curve.fi: Gauge Controller',
-  chain: 'avax',
+  chain: 'fantom',
   address: '0xabC000d88f23Bb45525E447528DBF656A9D55bf5',
 }
 
 const provider: Contract = {
   name: 'Curve Main Provider',
-  chain: 'avax',
+  chain: 'fantom',
   address: '0x0000000022D53366457F9d5E68Ec105046FC4383',
 }
 
 export const getContracts = async () => {
-  const pools = await getPools('avax', provider, gaugeController)
+  const pools = await getPools('fantom', provider, gaugeController)
 
   return {
     contracts: { pools, provider },
@@ -25,7 +25,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'fantom', contracts, {
     pools: getPoolsBalancesFromGauges,
   })
 
