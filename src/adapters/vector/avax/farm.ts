@@ -2,10 +2,76 @@ import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20Details, getERC20Details2 } from '@lib/erc20'
+import { getERC20Details, getERC20DetailsTmp, resolveERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
+import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
+
+const abi = {
+  addressToPoolInfo: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'addressToPoolInfo',
+    outputs: [
+      { internalType: 'address', name: 'lpToken', type: 'address' },
+      { internalType: 'uint256', name: 'allocPoint', type: 'uint256' },
+      { internalType: 'uint256', name: 'lastRewardTimestamp', type: 'uint256' },
+      { internalType: 'uint256', name: 'accVTXPerShare', type: 'uint256' },
+      { internalType: 'address', name: 'rewarder', type: 'address' },
+      { internalType: 'address', name: 'helper', type: 'address' },
+      { internalType: 'address', name: 'locker', type: 'address' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  depositInfo: {
+    inputs: [
+      { internalType: 'address', name: '_lp', type: 'address' },
+      { internalType: 'address', name: '_user', type: 'address' },
+    ],
+    name: 'depositInfo',
+    outputs: [{ internalType: 'uint256', name: 'availableAmount', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  depositToken: {
+    inputs: [],
+    name: 'depositToken',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingTokens: {
+    inputs: [
+      { internalType: 'address', name: '_lp', type: 'address' },
+      { internalType: 'address', name: '_user', type: 'address' },
+      { internalType: 'address', name: 'token', type: 'address' },
+    ],
+    name: 'pendingTokens',
+    outputs: [
+      { internalType: 'uint256', name: 'pendingVTX', type: 'uint256' },
+      { internalType: 'address', name: 'bonusTokenAddress', type: 'address' },
+      { internalType: 'string', name: 'bonusTokenSymbol', type: 'string' },
+      { internalType: 'uint256', name: 'pendingBonusToken', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  poolLength: {
+    inputs: [],
+    name: 'poolLength',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  registeredToken: {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'registeredToken',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
 
 interface FarmContract extends Contract {
   lpToken: string
@@ -33,13 +99,7 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
     chain,
     target: masterChef.address,
     params: [],
-    abi: {
-      inputs: [],
-      name: 'poolLength',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.poolLength,
   })
 
   const poolsAddressesRes = await multicall({
@@ -48,16 +108,10 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
       target: masterChef.address,
       params: [i],
     })),
-    abi: {
-      inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      name: 'registeredToken',
-      outputs: [{ internalType: 'address', name: '', type: 'address' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.registeredToken,
   })
 
-  const poolsAddresses = poolsAddressesRes.filter((res) => res.success).map((res) => res.output)
+  const poolsAddresses = poolsAddressesRes.filter(isSuccess).map((res) => res.output)
 
   const poolInfosRes = await multicall({
     chain,
@@ -65,47 +119,32 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
       target: masterChef.address,
       params: [pool],
     })),
-    abi: {
-      inputs: [{ internalType: 'address', name: '', type: 'address' }],
-      name: 'addressToPoolInfo',
-      outputs: [
-        { internalType: 'address', name: 'lpToken', type: 'address' },
-        { internalType: 'uint256', name: 'allocPoint', type: 'uint256' },
-        { internalType: 'uint256', name: 'lastRewardTimestamp', type: 'uint256' },
-        { internalType: 'uint256', name: 'accVTXPerShare', type: 'uint256' },
-        { internalType: 'address', name: 'rewarder', type: 'address' },
-        { internalType: 'address', name: 'helper', type: 'address' },
-        { internalType: 'address', name: 'locker', type: 'address' },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.addressToPoolInfo,
   })
 
-  const poolInfos = poolInfosRes.filter((res) => res.success).map((res) => res.output)
-  const lpTokensAddresses = poolInfos.map((token) => token.lpToken)
-
-  const [pools, lpTokens] = await Promise.all([
-    getERC20Details2(chain, poolsAddresses),
-    getERC20Details2(chain, lpTokensAddresses),
-  ])
+  const { pools, lpTokens } = await resolveERC20Details(chain, {
+    pools: poolsAddresses,
+    lpTokens: poolInfosRes.map((res) => res.output?.lpToken),
+  })
 
   for (let i = 0; i < pools.length; i++) {
-    if (pools[i] && lpTokens[i]) {
-      const pool = pools[i]!
-      const poolInfo = poolInfos[i]!
-      const lpToken = lpTokens[i]!
+    const poolRes = pools[i]
+    const poolInfoRes = poolInfosRes[i]
+    const lpTokenRes = lpTokens[i]
 
-      contracts.push({
-        chain,
-        address: pool.address,
-        lpToken: lpToken.address,
-        rewarder: poolInfo.rewarder,
-        helper: poolInfo.helper,
-        decimals: lpToken.decimals,
-        symbol: lpToken.symbol,
-      })
+    if (!isSuccess(poolRes) || !isSuccess(poolInfoRes) || !isSuccess(lpTokenRes)) {
+      continue
     }
+
+    contracts.push({
+      chain,
+      address: poolRes.output.address,
+      lpToken: lpTokenRes.output.address,
+      rewarder: poolInfoRes.output.rewarder,
+      helper: poolInfoRes.output.helper,
+      decimals: lpTokenRes.output.decimals,
+      symbol: lpTokenRes.output.symbol,
+    })
   }
 
   return contracts
@@ -126,16 +165,7 @@ export async function getFarmBalances(
         target: masterChef.address,
         params: [token.lpToken, ctx.address],
       })),
-      abi: {
-        inputs: [
-          { internalType: 'address', name: '_lp', type: 'address' },
-          { internalType: 'address', name: '_user', type: 'address' },
-        ],
-        name: 'depositInfo',
-        outputs: [{ internalType: 'uint256', name: 'availableAmount', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.depositInfo,
     }),
 
     multicall({
@@ -144,13 +174,7 @@ export async function getFarmBalances(
         target: token.helper,
         params: [],
       })),
-      abi: {
-        inputs: [],
-        name: 'depositToken',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.depositToken,
     }),
 
     multicall({
@@ -159,22 +183,7 @@ export async function getFarmBalances(
         target: masterChef.address,
         params: [token.lpToken, ctx.address, token.address],
       })),
-      abi: {
-        inputs: [
-          { internalType: 'address', name: '_lp', type: 'address' },
-          { internalType: 'address', name: '_user', type: 'address' },
-          { internalType: 'address', name: 'token', type: 'address' },
-        ],
-        name: 'pendingTokens',
-        outputs: [
-          { internalType: 'uint256', name: 'pendingVTX', type: 'uint256' },
-          { internalType: 'address', name: 'bonusTokenAddress', type: 'address' },
-          { internalType: 'string', name: 'bonusTokenSymbol', type: 'string' },
-          { internalType: 'uint256', name: 'pendingBonusToken', type: 'uint256' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.pendingTokens,
     }),
   ])
 
@@ -182,23 +191,23 @@ export async function getFarmBalances(
   const depositTokensPools = depositTokensPoolsRes.map((res) => res.output)
   const pendingBaseRewards = pendingBaseRewardsRes.map((res) => res.output.pendingVTX)
 
-  const tokens = await getERC20Details2(chain, depositTokensPools)
+  const tokens = await getERC20DetailsTmp(chain, depositTokensPools)
 
   for (let i = 0; i < contracts.length; i++) {
     const contract = contracts[i]
     const userDepositBalance = userDepositBalances[i]
-    const token = tokens[i]
+    const tokenRes = tokens[i]
     const pendingBaseReward = pendingBaseRewards[i]
 
-    if (token !== null) {
+    if (isSuccess(tokenRes)) {
       const balance: FarmBalance = {
         chain,
-        address: token.address,
+        address: tokenRes.output.address,
         lpToken: contract.lpToken,
         rewarder: contract.rewarder,
-        symbol: token.symbol,
+        symbol: tokenRes.output.symbol,
         helper: contract.helper,
-        decimals: token.decimals,
+        decimals: tokenRes.output.decimals,
         amount: BigNumber.from(userDepositBalance),
         rewards: [{ ...VTX, amount: BigNumber.from(pendingBaseReward) }],
         category: 'farm',
