@@ -1,7 +1,8 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
-import { getERC20Details, getERC20Details2 } from '@lib/erc20'
+import { getERC20Details, resolveERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 export async function getMarketsContracts(chain: Chain, contracts: string[]): Promise<Contract[]> {
@@ -39,25 +40,26 @@ export async function getMarketsContracts(chain: Chain, contracts: string[]): Pr
     },
   })
 
-  const [tokens, underlyings] = await Promise.all([
-    getERC20Details(chain, collateralTokenAddresses),
-    getERC20Details2(
-      chain,
-      underlyingsTokenAddressesRes.map((res) => res.output),
-    ),
-  ])
+  const { tokens, underlyings } = await resolveERC20Details(chain, {
+    tokens: collateralTokenAddresses,
+    underlyings: underlyingsTokenAddressesRes.map((res) => res.output),
+  })
 
   for (let i = 0; i < contracts.length; i++) {
-    const token = tokens[i]
-    const underlying = underlyings[i]
+    const tokenRes = tokens[i]
+    const underlyingRes = underlyings[i]
     const contract = contracts[i]
+
+    if (!isSuccess(tokenRes) || !isSuccess(underlyingRes)) {
+      continue
+    }
 
     const market: Contract = {
       chain,
       address: contract,
-      decimals: token.decimals,
-      symbol: token.symbol,
-      underlyings: [underlying ? underlying : token],
+      decimals: tokenRes.output.decimals,
+      symbol: tokenRes.output.symbol,
+      underlyings: [underlyingRes.output],
     }
     marketsContracts.push(market)
   }

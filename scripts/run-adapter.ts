@@ -32,21 +32,12 @@ async function main() {
   // argv[2]: adapter
   // argv[3]: chain
   // argv[4]: address
+  if (process.argv.length < 5) {
+    console.error('Missing arguments')
+    return help()
+  }
 
   const startTime = Date.now()
-
-  if (process.argv.length < 3) {
-    console.error('Missing adapter argument')
-    return help()
-  }
-  if (process.argv.length < 4) {
-    console.error('Missing chain argument')
-    return help()
-  }
-  if (process.argv.length < 5) {
-    console.error('Missing address argument')
-    return help()
-  }
 
   const adapterId = process.argv[2]
   const chain = process.argv[3] as Chain

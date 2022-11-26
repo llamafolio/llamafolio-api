@@ -18,7 +18,7 @@ async function main() {
   // argv[1]: revalidate-contracts.ts
   // argv[2]: adapter
   if (process.argv.length < 3) {
-    console.error('Missing adapter argument')
+    console.error('Missing arguments')
     return help()
   }
 

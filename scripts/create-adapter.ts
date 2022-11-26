@@ -10,7 +10,7 @@ async function main() {
   // argv[1]: create-adapter.ts
   // argv[2]: adapter
   if (process.argv.length < 3) {
-    console.error('Missing adapter argument')
+    console.error('Missing arguments')
     return help()
   }
 

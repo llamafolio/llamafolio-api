@@ -4,6 +4,7 @@ import { Chain } from '@lib/chains'
 import { getERC20BalanceOf, resolveERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
+import { isSuccess } from '@lib/type'
 import { BigNumber, ethers } from 'ethers'
 
 const abi = {
@@ -119,43 +120,40 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
     })
 
     for (let i = 0; i < underlyingTokens.length; i++) {
-      if (!underlyingTokens[i].success) {
+      const underlyingTokenRes = underlyingTokens[i]
+      const aTokenRes = aTokens[i]
+      const stableDebtTokenRes = stableDebtTokens[i]
+      const variableDebtTokenRes = variableDebtTokens[i]
+
+      if (!isSuccess(underlyingTokenRes)) {
         continue
       }
 
-      const underlyingToken = underlyingTokens[i].output!
-
-      if (aTokens[i].success) {
-        const aToken = aTokens[i].output!
-
+      if (isSuccess(aTokenRes)) {
         contracts.push({
-          ...aToken,
-          priceSubstitute: underlyingToken.address,
-          underlyings: [underlyingToken],
+          ...aTokenRes.output,
+          priceSubstitute: underlyingTokenRes.output.address,
+          underlyings: [underlyingTokenRes.output],
           category: 'lend',
         })
       }
 
-      if (stableDebtTokens[i].success) {
-        const stableDebtToken = stableDebtTokens[i].output!
-
+      if (isSuccess(stableDebtTokenRes)) {
         contracts.push({
-          ...stableDebtToken,
-          priceSubstitute: underlyingToken.address,
-          underlyings: [underlyingToken],
+          ...stableDebtTokenRes.output,
+          priceSubstitute: underlyingTokenRes.output.address,
+          underlyings: [underlyingTokenRes.output],
           type: 'debt',
           category: 'borrow',
           stable: true,
         })
       }
 
-      if (variableDebtTokens[i].success) {
-        const variableDebtToken = variableDebtTokens[i].output!
-
+      if (isSuccess(variableDebtTokenRes)) {
         contracts.push({
-          ...variableDebtToken,
-          priceSubstitute: underlyingToken.address,
-          underlyings: [underlyingToken],
+          ...variableDebtTokenRes.output,
+          priceSubstitute: underlyingTokenRes.output.address,
+          underlyings: [underlyingTokenRes.output],
           type: 'debt',
           category: 'borrow',
           stable: false,

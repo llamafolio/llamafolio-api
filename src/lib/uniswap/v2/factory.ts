@@ -5,7 +5,7 @@ import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { resolveERC20Details } from '@lib/erc20'
 import { Call, multicall } from '@lib/multicall'
-import { isNotNullish } from '@lib/type'
+import { isNotNullish, isSuccess } from '@lib/type'
 
 const abi = {
   allPairsLength: {
@@ -74,7 +74,7 @@ export async function getPairsContracts({ chain, factoryAddress, length }: getPa
     abi: abi.allPairs,
   })
 
-  const contracts: Contract[] = allPairsRes.filter((res) => res.success).map((res) => ({ chain, address: res.output }))
+  const contracts: Contract[] = allPairsRes.filter(isSuccess).map((res) => ({ chain, address: res.output }))
 
   return getPairsDetails(chain, contracts)
 }
@@ -109,19 +109,19 @@ export async function getPairsDetails(chain: Chain, contracts: Contract[]): Prom
 
   return contracts
     .map((contract, i) => {
-      if (!pairs[i].success || !token0s[i].success || !token1s[i].success) {
+      const pairRes = pairs[i]
+      const token0Res = token0s[i]
+      const token1Res = token1s[i]
+
+      if (!isSuccess(pairRes) || !isSuccess(token0Res) || !isSuccess(token1Res)) {
         return null
       }
 
-      const pair = pairs[i].output!
-      const token0 = token0s[i].output!
-      const token1 = token1s[i].output!
-
       return {
         ...contract,
-        ...pair,
+        ...pairRes.output,
         category: 'lp' as Category,
-        underlyings: [token0, token1],
+        underlyings: [token0Res.output, token1Res.output],
       }
     })
     .filter(isNotNullish)

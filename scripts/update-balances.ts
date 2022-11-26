@@ -33,9 +33,10 @@ async function main() {
   // argv[1]: update-balances.ts
   // argv[2]: address
   if (process.argv.length < 3) {
-    console.error('Missing address argument')
+    console.error('Missing arguments')
     return help()
   }
+
   const address = process.argv[2].toLowerCase()
 
   const ctx: BaseContext = { address }
