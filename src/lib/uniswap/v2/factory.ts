@@ -3,9 +3,8 @@ import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
-import { resolveERC20Details } from '@lib/erc20'
 import { Call, multicall } from '@lib/multicall'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isSuccess } from '@lib/type'
 
 const abi = {
   allPairsLength: {
@@ -80,10 +79,10 @@ export async function getPairsContracts({ chain, factoryAddress, length }: getPa
 }
 
 export async function getPairsDetails(chain: Chain, contracts: Contract[]): Promise<Contract[]> {
-  const addresses = contracts.map((contract) => contract.address)
+  const res: Contract[] = []
 
-  const calls: Call[] = addresses.map((address) => ({
-    target: address,
+  const calls: Call[] = contracts.map((contract) => ({
+    target: contract.address,
     params: [],
   }))
 
@@ -101,28 +100,20 @@ export async function getPairsDetails(chain: Chain, contracts: Contract[]): Prom
     }),
   ])
 
-  const { pairs, token0s, token1s } = await resolveERC20Details(chain, {
-    pairs: calls.map((res) => res.target),
-    token0s: token0sRes.map((res) => res.output),
-    token1s: token1sRes.map((res) => res.output),
-  })
+  for (let i = 0; i < calls.length; i++) {
+    const token0Res = token0sRes[i]
+    const token1Res = token1sRes[i]
 
-  return contracts
-    .map((contract, i) => {
-      const pairRes = pairs[i]
-      const token0Res = token0s[i]
-      const token1Res = token1s[i]
+    if (!isSuccess(token0Res) || !isSuccess(token1Res)) {
+      continue
+    }
 
-      if (!isSuccess(pairRes) || !isSuccess(token0Res) || !isSuccess(token1Res)) {
-        return null
-      }
-
-      return {
-        ...contract,
-        ...pairRes.output,
-        category: 'lp' as Category,
-        underlyings: [token0Res.output, token1Res.output],
-      }
+    res.push({
+      ...contracts[i],
+      category: 'lp' as Category,
+      underlyings: [token0Res.output, token1Res.output],
     })
-    .filter(isNotNullish)
+  }
+
+  return res
 }
