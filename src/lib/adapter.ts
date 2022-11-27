@@ -90,7 +90,7 @@ export interface BalancesConfig {
 }
 
 export interface ContractsConfig {
-  contracts: { [key: string]: Contract | Contract[] | undefined }
+  contracts: { [key: string]: Contract | Contract[] | RawContract | RawContract[] | undefined }
   revalidate?: number
 }
 

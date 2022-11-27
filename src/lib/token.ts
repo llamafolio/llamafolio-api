@@ -1,8 +1,10 @@
+import { insertTokens, selectChainTokens } from '@db/tokens'
+import { BaseContract, Contract, ContractStandard, RawContract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
+import { isNotNullish } from '@lib/type'
+import { PoolClient } from 'pg'
 
-import { Contract, ContractsConfig } from './adapter'
 import { getERC20Details } from './erc20'
-import { isNotNullish } from './type'
 
 export const ETH_ADDR = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
@@ -27,9 +29,15 @@ export const ETH: Token = {
   native: true,
 }
 
-export async function resolveContractsTokens(contractsMap: ContractsConfig['contracts']) {
+export async function resolveContractsTokens(
+  client: PoolClient,
+  contractsMap: {
+    [key: string]: RawContract | RawContract[] | Contract | Contract[] | undefined
+  },
+  storeMissingTokens = false,
+) {
   const chainsAddresses: Partial<Record<Chain, Set<string>>> = {}
-  const res: ContractsConfig['contracts'] = {}
+  const res: { [key: string]: BaseContract | BaseContract[] | undefined } = {}
 
   for (const key in contractsMap) {
     const contracts = contractsMap[key]
@@ -41,10 +49,18 @@ export async function resolveContractsTokens(contractsMap: ContractsConfig['cont
         }
         chainsAddresses[contract.chain]?.add(contract.address.toLowerCase())
         if (contract.underlyings) {
-          chainsAddresses[contract.chain]?.add(...contract.underlyings.map((address) => address.toLowerCase()))
+          for (const underlying of contract.underlyings) {
+            if (typeof underlying === 'string') {
+              chainsAddresses[contract.chain]?.add(underlying.toLowerCase())
+            }
+          }
         }
         if (contract.rewards) {
-          chainsAddresses[contract.chain]?.add(...contract.rewards.map((address) => address.toLowerCase()))
+          for (const reward of contract.rewards) {
+            if (typeof reward === 'string') {
+              chainsAddresses[contract.chain]?.add(reward.toLowerCase())
+            }
+          }
         }
       }
     } else if (contracts) {
@@ -53,28 +69,73 @@ export async function resolveContractsTokens(contractsMap: ContractsConfig['cont
       }
       chainsAddresses[contracts.chain]?.add(contracts.address.toLowerCase())
       if (contracts.underlyings) {
-        chainsAddresses[contracts.chain]?.add(...contracts.underlyings.map((address) => address.toLowerCase()))
+        for (const underlying of contracts.underlyings) {
+          if (typeof underlying === 'string') {
+            chainsAddresses[contracts.chain]?.add(underlying.toLowerCase())
+          }
+        }
       }
       if (contracts.rewards) {
-        chainsAddresses[contracts.chain]?.add(...contracts.rewards.map((address) => address.toLowerCase()))
+        for (const reward of contracts.rewards) {
+          if (typeof reward === 'string') {
+            chainsAddresses[contracts.chain]?.add(reward.toLowerCase())
+          }
+        }
       }
     }
   }
 
   const chains = Object.keys(chainsAddresses)
 
+  // get tokens info from DB
   const chainsTokensRes = await Promise.all(
-    chains.map((chain) => getERC20Details(chain, Array.from(chainsAddresses[chain]))),
+    chains.map((chain) => selectChainTokens(client, chain as Chain, Array.from(chainsAddresses[chain as Chain] || []))),
   )
 
   const chainsTokens: Partial<Record<Chain, Record<string, Token>>> = {}
 
-  for (const chainTokensRes of chainsTokensRes) {
-    for (const token of chainTokensRes) {
-      if (!chainsTokens[token.chain]) {
-        chainsTokens[token.chain] = {}
+  for (let i = 0; i < chains.length; i++) {
+    const chain = chains[i] as Chain
+    for (const token of chainsTokensRes[i]) {
+      if (!chainsTokens[chain]) {
+        chainsTokens[chain] = {}
       }
-      chainsTokens[token.chain][token.address.toLowerCase()] = token
+      chainsTokens[chain]![token.address.toLowerCase()] = { ...token, chain }
+    }
+  }
+
+  // collect missing tokens and fetch their info on-chain
+  const missingChainsTokens: Partial<Record<Chain, string[]>> = {}
+
+  for (let i = 0; i < chains.length; i++) {
+    const chain = chains[i] as Chain
+
+    const chainAddresses = chainsAddresses[chain as Chain]
+    if (chainAddresses) {
+      for (const address of chainAddresses) {
+        if (!chainsTokens[chain]?.[address]) {
+          if (!missingChainsTokens[chain]) {
+            missingChainsTokens[chain] = []
+          }
+          missingChainsTokens[chain]!.push(address)
+        }
+      }
+    }
+  }
+
+  const missingTokensChains = Object.keys(missingChainsTokens)
+
+  const missingChainsTokensRes = await Promise.all(
+    missingTokensChains.map((chain) => getERC20Details(chain as Chain, missingChainsTokens[chain as Chain] || [])),
+  )
+
+  for (let i = 0; i < missingTokensChains.length; i++) {
+    const chain = missingTokensChains[i] as Chain
+    for (const token of missingChainsTokensRes[i]) {
+      if (!chainsTokens[chain]) {
+        chainsTokens[chain] = {}
+      }
+      chainsTokens[chain]![token.address.toLowerCase()] = { ...token, chain }
     }
   }
 
@@ -88,23 +149,23 @@ export async function resolveContractsTokens(contractsMap: ContractsConfig['cont
 
       for (const contract of contracts) {
         const underlyingTokens = contract.underlyings
-          ?.map((address) => chainsTokens[contract.chain]?.[address.toLowerCase()])
+          ?.map((underlying) =>
+            typeof underlying === 'string' ? chainsTokens[contract.chain]?.[underlying.toLowerCase()] : underlying,
+          )
           .filter(isNotNullish)
 
         const rewardTokens = contract.rewards
-          ?.map((address) => chainsTokens[contract.chain]?.[address.toLowerCase()])
+          ?.map((reward) =>
+            typeof reward === 'string' ? chainsTokens[contract.chain]?.[reward.toLowerCase()] : reward,
+          )
           .filter(isNotNullish)
 
         if (
           underlyingTokens?.length === contract.underlyings?.length &&
           rewardTokens?.length === contract.rewards?.length
         ) {
-          // if 1 underlying specified, default contract to it
-          const underlying = underlyingTokens?.length === 1 ? underlyingTokens[0] : {}
-
           resContracts.push({
             ...contract,
-            // ...underlying,
             ...(chainsTokens[contract.chain]?.[contract.address.toLowerCase()] || {}),
             underlyings: underlyingTokens,
             rewards: rewardTokens,
@@ -113,23 +174,21 @@ export async function resolveContractsTokens(contractsMap: ContractsConfig['cont
       }
     } else if (contracts) {
       const underlyingTokens = contracts.underlyings
-        ?.map((address) => chainsTokens[contracts.chain]?.[address.toLowerCase()])
+        ?.map((underlying) =>
+          typeof underlying === 'string' ? chainsTokens[contracts.chain]?.[underlying.toLowerCase()] : underlying,
+        )
         .filter(isNotNullish)
 
       const rewardTokens = contracts.rewards
-        ?.map((address) => chainsTokens[contracts.chain]?.[address.toLowerCase()])
+        ?.map((reward) => (typeof reward === 'string' ? chainsTokens[contracts.chain]?.[reward.toLowerCase()] : reward))
         .filter(isNotNullish)
 
       if (
         underlyingTokens?.length === contracts.underlyings?.length &&
         rewardTokens?.length === contracts.rewards?.length
       ) {
-        // if 1 underlying specified, default contract to it
-        const underlying = underlyingTokens?.length === 1 ? underlyingTokens[0] : {}
-
         resContracts = {
           ...contracts,
-          ...underlying,
           ...(chainsTokens[contracts.chain]?.[contracts.address.toLowerCase()] || {}),
           underlyings: underlyingTokens,
           rewards: rewardTokens,
@@ -138,6 +197,32 @@ export async function resolveContractsTokens(contractsMap: ContractsConfig['cont
     }
 
     res[key] = resContracts
+  }
+
+  if (storeMissingTokens) {
+    const now = new Date()
+
+    await Promise.all(
+      missingTokensChains
+        .map((chain, i) => {
+          const tokens = (missingChainsTokensRes[i] || []).map((token) => ({
+            address: token.address,
+            standard: 'erc20' as ContractStandard,
+            name: undefined,
+            symbol: token.symbol,
+            decimals: token.decimals,
+            totalSupply: undefined,
+            coingeckoId: token.coingeckoId || undefined,
+            cmcId: undefined,
+            updated_at: now,
+          }))
+
+          console.log(`Inserting ${tokens.length} tokens on ${chain}`)
+
+          return insertTokens(client, chain as Chain, tokens)
+        })
+        .filter(isNotNullish),
+    )
   }
 
   return res
