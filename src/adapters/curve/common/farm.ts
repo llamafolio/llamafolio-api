@@ -8,6 +8,7 @@ import { Token } from '@lib/token'
 import { BigNumber, ethers } from 'ethers'
 
 import { getPoolsContracts } from '../ethereum/pools'
+import { getRegistries } from './registries'
 
 interface PoolsContracts extends Contract {
   lpToken: string
@@ -20,84 +21,12 @@ interface PoolBalances extends Balance {
   tokens: Token[]
 }
 
-const getMainAddresses = async (chain: Chain, provider: Contract): Promise<Contract> => {
-  const [getRegistriesAddresses, getPoolsInfosAddresses, getFactoriesAddresses] = await Promise.all([
-    call({
-      chain,
-      target: provider.address,
-      params: [0],
-      abi: {
-        name: 'get_id_info',
-        outputs: [
-          { type: 'address', name: 'addr' },
-          { type: 'bool', name: 'is_active' },
-          { type: 'uint256', name: 'version' },
-          { type: 'uint256', name: 'last_modified' },
-          { type: 'string', name: 'description' },
-        ],
-        inputs: [{ type: 'uint256', name: 'arg0' }],
-        stateMutability: 'view',
-        type: 'function',
-        gas: 12168,
-      },
-    }),
-
-    call({
-      chain,
-      target: provider.address,
-      params: [1],
-      abi: {
-        name: 'get_id_info',
-        outputs: [
-          { type: 'address', name: 'addr' },
-          { type: 'bool', name: 'is_active' },
-          { type: 'uint256', name: 'version' },
-          { type: 'uint256', name: 'last_modified' },
-          { type: 'string', name: 'description' },
-        ],
-        inputs: [{ type: 'uint256', name: 'arg0' }],
-        stateMutability: 'view',
-        type: 'function',
-        gas: 12168,
-      },
-    }),
-
-    call({
-      chain,
-      target: provider.address,
-      params: [3],
-      abi: {
-        name: 'get_id_info',
-        outputs: [
-          { type: 'address', name: 'addr' },
-          { type: 'bool', name: 'is_active' },
-          { type: 'uint256', name: 'version' },
-          { type: 'uint256', name: 'last_modified' },
-          { type: 'string', name: 'description' },
-        ],
-        inputs: [{ type: 'uint256', name: 'arg0' }],
-        stateMutability: 'view',
-        type: 'function',
-        gas: 12168,
-      },
-    }),
-  ])
-
-  const registriesAddresses = getRegistriesAddresses.output
-  const poolsInfosAddresses = getPoolsInfosAddresses.output
-  const factoriesAddresses = getFactoriesAddresses.output
-
-  return {
-    chain,
-    name: registriesAddresses.description,
-    address: registriesAddresses.addr,
-    factory: factoriesAddresses.addr,
-    infosGetter: poolsInfosAddresses.addr,
-  }
-}
-
-export async function getPools(chain: Chain, provider: Contract, gaugeController: Contract): Promise<PoolsContracts[]> {
-  const registry = await getMainAddresses(chain, provider)
+export async function getFarmPoolsContracts(
+  chain: Chain,
+  provider: Contract,
+  gaugeController: Contract,
+): Promise<PoolsContracts[]> {
+  const registry = await getRegistries(chain, provider)
   const pools = await getPoolsContracts(chain, registry)
 
   const contracts: PoolsContracts[] = []
@@ -138,7 +67,7 @@ export async function getPools(chain: Chain, provider: Contract, gaugeController
   return contracts
 }
 
-export async function getPoolsBalancesFromGauges(ctx: BaseContext, chain: Chain, pools: PoolsContracts[]) {
+export async function getFarmPoolsBalances(ctx: BaseContext, chain: Chain, pools: PoolsContracts[]) {
   const nonZeroPools = (await getERC20BalanceOf(ctx, chain, pools as Token[])).filter((res) => res.amount.gt(0))
 
   return await getUnderlyingsBalances(chain, nonZeroPools)
