@@ -29,6 +29,12 @@ export interface BaseContract {
   yieldKey?: string
 }
 
+export interface RawContract extends BaseContract {
+  rewards?: string[]
+  underlyings?: string[]
+  [key: string | number]: any
+}
+
 export interface Contract extends BaseContract {
   rewards?: BaseContract[]
   underlyings?: BaseContract[]

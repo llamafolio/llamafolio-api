@@ -7,6 +7,7 @@ import { Adapter, BaseContext, PricedBalance } from '../src/lib/adapter'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
+import { resolveContractsTokens } from '../src/lib/token'
 
 interface CategoryBalances {
   title: string
@@ -50,7 +51,9 @@ async function main() {
 
   const contractsRes = await adapter[chain]?.getContracts()
 
-  const balancesRes = await adapter[chain]?.getBalances(ctx, contractsRes?.contracts || {})
+  const contracts = await resolveContractsTokens(contractsRes?.contracts || {})
+
+  const balancesRes = await adapter[chain]?.getBalances(ctx, contracts)
   const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])
 
   const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
