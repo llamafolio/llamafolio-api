@@ -9,6 +9,7 @@
     "update-balances": "ts-node -T scripts/update-balances.ts",
     "revalidate-contracts": "ts-node -T scripts/revalidate-contracts.ts",
     "find-user": "ts-node -T scripts/find-user.ts",
+    "insert-tokens": "ts-node -T scripts/insert-tokens.ts",
     "lint": "eslint --ignore-path .gitignore --ignore-path .eslintignore \"**/*.{js,ts}\" --max-warnings=0",
     "format": "prettier --ignore-path .gitignore --ignore-path .prettierignore '**/*.{md,json,js,ts}' --write",
     "postinstall": "npm run update-tokens && npm run update-labels",
