@@ -1,8 +1,7 @@
 import { Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
-import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
+import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const pools = [
@@ -15,16 +14,13 @@ const pools = [
 
 export async function getPoolsContracts(chain: Chain) {
   const contracts: Contract[] = []
-  const poolsContracts = await getERC20Details(chain, pools)
 
-  const calls = poolsContracts.map((pool) => ({
-    target: pool.address,
-    params: [],
-  }))
-
-  const underlyingAddressesRes = await multicall({
+  const tokensRes = await multicall({
     chain,
-    calls,
+    calls: pools.map((pool) => ({
+      target: pool,
+      params: [],
+    })),
     abi: {
       inputs: [],
       name: 'token',
@@ -34,26 +30,18 @@ export async function getPoolsContracts(chain: Chain) {
     },
   })
 
-  const underlyingAddresses = underlyingAddressesRes.filter((res) => res.success).map((res) => res.output)
+  for (let i = 0; i < pools.length; i++) {
+    const tokenRes = tokensRes[i]
 
-  const underlyingContracts = await getERC20Details(chain, underlyingAddresses)
-
-  const underlyingContractByAddress: { [key: string]: Token } = {}
-  for (const underlyingContract of underlyingContracts) {
-    underlyingContract.address = underlyingContract.address.toLowerCase()
-    underlyingContractByAddress[underlyingContract.address] = underlyingContract
-  }
-
-  for (let i = 0; i < poolsContracts.length; i++) {
-    const underlying = underlyingContractByAddress[underlyingAddressesRes[i].output.toLowerCase()]
-
-    if (underlying) {
-      const contract: Contract = {
-        ...poolsContracts[i],
-        underlyings: [underlying],
-      }
-      contracts.push(contract)
+    if (!isSuccess(tokenRes)) {
+      continue
     }
+
+    contracts.push({
+      chain,
+      address: pools[i],
+      underlyings: [tokenRes.output],
+    })
   }
 
   return contracts

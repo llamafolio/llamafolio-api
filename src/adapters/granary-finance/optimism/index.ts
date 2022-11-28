@@ -1,5 +1,6 @@
 import { getLendingPoolBalances, getLendingPoolContracts, getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 const lendingPool: Contract = {
   chain: 'optimism',
@@ -8,23 +9,25 @@ const lendingPool: Contract = {
 }
 
 export const getContracts = async () => {
-  const poolsOptimism = await getLendingPoolContracts('optimism', lendingPool)
+  const pools = await getLendingPoolContracts('optimism', lendingPool)
 
   return {
     contracts: {
-      poolsOptimism,
+      pools,
     },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { poolsOptimism }) => {
-  const [lendingPoolBalances, healthFactor] = await Promise.all([
-    getLendingPoolBalances(ctx, 'optimism', poolsOptimism || []),
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const [balances, healthFactor] = await Promise.all([
+    resolveBalances<typeof getContracts>(ctx, 'optimism', contracts, {
+      pools: getLendingPoolBalances,
+    }),
     getLendingPoolHealthFactor(ctx, 'optimism', lendingPool),
   ])
 
   return {
-    balances: lendingPoolBalances,
+    balances,
     healthFactor,
   }
 }

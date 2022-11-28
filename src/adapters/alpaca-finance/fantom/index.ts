@@ -1,9 +1,8 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Chain } from '@lib/chains'
 
-import { getDepositBalances, getFarmingBalances } from '../common/balances'
-import { getContractsInfos, getPoolsContracts } from '../common/pool'
+import { getPoolsBalances } from '../common/balances'
+import { getPoolsContracts } from './pools'
 
 const MiniFL: Contract = {
   name: 'MiniFl',
@@ -11,16 +10,18 @@ const MiniFL: Contract = {
   address: '0x838B7F64Fa89d322C563A6f904851A13a164f84C',
 }
 
-function getPoolsBalances(ctx: BaseContext, chain: Chain, pools: Contract[]) {
-  return Promise.all([getFarmingBalances(ctx, chain, pools), getDepositBalances(ctx, chain, pools)])
+const AlpacaFTM: Contract = {
+  chain: 'fantom',
+  address: '0xad996a45fd2373ed0b10efa4a8ecb9de445a4302',
+  decimals: 18,
+  symbols: 'ALPACA',
 }
 
 export const getContracts = async () => {
   const pools = await getPoolsContracts('fantom', MiniFL)
-  const poolsInfo = await getContractsInfos('fantom', pools)
 
   return {
-    contracts: { pools: poolsInfo },
+    contracts: { pools },
   }
 }
 

@@ -11,6 +11,7 @@ import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Chain, chains } from '@lib/chains'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
+import { resolveContractsTokens } from '@lib/token'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 
 const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, context) => {
@@ -94,21 +95,23 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     )
   }
 
-  const config = await adapter[chain]!.getContracts()
-
-  let expire_at: Date | undefined = undefined
-  if (config.revalidate) {
-    expire_at = new Date()
-    expire_at.setSeconds(expire_at.getSeconds() + config.revalidate)
-  }
-
-  const dbAdapter: DBAdapter = {
-    id: adapterId,
-    chain,
-    contractsExpireAt: expire_at,
-  }
-
   try {
+    const config = await adapter[chain]!.getContracts()
+
+    const contracts = await resolveContractsTokens(client, config.contracts || {}, true)
+
+    let expire_at: Date | undefined = undefined
+    if (config.revalidate) {
+      expire_at = new Date()
+      expire_at.setSeconds(expire_at.getSeconds() + config.revalidate)
+    }
+
+    const dbAdapter: DBAdapter = {
+      id: adapterId,
+      chain,
+      contractsExpireAt: expire_at,
+    }
+
     await client.query('BEGIN')
 
     // Delete old adapter
@@ -121,7 +124,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     await deleteContractsByAdapter(client, adapterId, chain)
 
     // Insert new contracts
-    await insertContracts(client, config.contracts, adapter.id)
+    await insertContracts(client, contracts, adapter.id)
 
     await client.query('COMMIT')
 

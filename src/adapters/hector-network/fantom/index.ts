@@ -1,6 +1,8 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
-import { getFarmingBalances, getStakeBalances } from './balances'
+import { getFarmingBalances } from './farm'
+import { getsStakeBalances, getWsStakeBalances } from './stake'
 
 const TOR: Contract = {
   name: 'TOR',
@@ -41,6 +43,14 @@ const HEC: Contract = {
   decimals: 9,
   symbol: 'HEC',
 }
+const sHEC: Contract = {
+  name: 'Staked Hector',
+  chain: 'fantom',
+  address: '0x75bdef24285013387a47775828bec90b91ca9a5f',
+  decimals: 9,
+  symbol: 'sHEC',
+  underlyings: [HEC],
+}
 
 const wsHEC: Contract = {
   name: 'Wrapped sHEC',
@@ -68,17 +78,16 @@ const StakingGateway: Contract = {
 
 export const getContracts = () => {
   return {
-    contracts: { wsHEC, StakingGateway },
+    contracts: { sHEC, wsHEC, StakingGateway },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { wsHEC, StakingGateway }) => {
-  const [stakeBalances, farmingBalances] = await Promise.all([
-    getStakeBalances(ctx, 'fantom', wsHEC),
-    getFarmingBalances(ctx, 'fantom', StakingGateway),
-  ])
-
-  const balances = [...stakeBalances, ...farmingBalances]
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'fantom', contracts, {
+    sHEC: getsStakeBalances,
+    wsHEC: getWsStakeBalances,
+    StakingGateway: getFarmingBalances,
+  })
 
   return {
     balances,

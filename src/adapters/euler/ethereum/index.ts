@@ -1,23 +1,23 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
+import { getERC20BalanceOf } from '@lib/erc20'
+import { Token } from '@lib/token'
 
-import { getPositions } from './markets'
+import { getMarketsContracts } from '../common/markets'
 
-const market: Contract = {
-  name: 'eulerMarkets',
-  displayName: 'Markets Euler',
-  chain: 'ethereum',
-  address: '0x3520d5a913427E6F0D6A83E07ccD4A4da316e4d3',
-}
+export const getContracts = async () => {
+  const markets = await getMarketsContracts('ethereum')
 
-export const getContracts = () => {
   return {
-    contracts: { market },
+    contracts: { markets },
     revalidate: 60 * 60,
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { market }) => {
-  const balances = await getPositions(ctx, 'ethereum', market)
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    markets: (ctx, chain, contracts) => getERC20BalanceOf(ctx, chain, contracts as Token[]),
+  })
 
   return {
     balances,

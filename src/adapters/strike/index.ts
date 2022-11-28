@@ -7,4 +7,7 @@ const adapter: Adapter = {
   ethereum,
 }
 
+// TODO: Rewards on Lending/Borrowing, LP farming
+// https://docs.strike.org/
+
 export default adapter

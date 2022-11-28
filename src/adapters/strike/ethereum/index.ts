@@ -1,5 +1,11 @@
 import { GetBalancesHandler } from '@lib/adapter'
-import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
+import { resolveBalances } from '@lib/balance'
+import {
+  BalanceWithExtraProps,
+  getHealthFactor,
+  getMarketsBalances,
+  getMarketsContracts,
+} from '@lib/compound/v2/lending'
 
 export const getContracts = async () => {
   const pools = await getMarketsContracts('ethereum', {
@@ -16,10 +22,15 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
-  const balances = await getMarketsBalances(ctx, 'ethereum', pools || [])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    pools: getMarketsBalances,
+  })
+
+  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
 
   return {
     balances,
+    healthFactor,
   }
 }

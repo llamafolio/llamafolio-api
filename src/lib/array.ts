@@ -15,3 +15,16 @@ export function sliceIntoChunks<T>(arr: T[], chunkSize: number) {
   }
   return res
 }
+
+export function groupBy<T extends Record<string, any>>(arr: T[], key: keyof T) {
+  const groups: { [key: string]: T[] } = {}
+
+  for (const item of arr) {
+    if (!groups[item[key]]) {
+      groups[item[key]] = []
+    }
+    groups[item[key]].push(item)
+  }
+
+  return groups
+}

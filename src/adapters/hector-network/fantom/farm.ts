@@ -1,7 +1,6 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
 const Helper: Contract = {
@@ -10,61 +9,47 @@ const Helper: Contract = {
   chain: 'fantom',
 }
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
-  if (!contract || !contract.underlyings?.[0]) {
-    return []
-  }
-  const balances: Balance[] = []
-
-  const balanceOfRes = await call({
-    chain,
-    target: contract.address,
-    params: [ctx.address],
-    abi: abi.balanceOf,
-  })
-
-  const balanceOf = balanceOfRes.output
-
-  const formattedBalanceOfRes = await call({
-    chain,
-    target: contract.address,
-    params: [balanceOf],
-    abi: {
-      inputs: [{ internalType: 'uint256', name: '_amount', type: 'uint256' }],
-      name: 'wsHECTosHEC',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  })
-
-  const amount = BigNumber.from(formattedBalanceOfRes.output)
-
-  const balance: Balance = {
-    chain,
-    address: contract.address,
-    symbol: contract.symbol,
-    decimals: contract.decimals,
-    amount,
-    underlyings: [{ ...contract.underlyings?.[0], amount }],
-    category: 'stake',
-  }
-
-  balances.push(balance)
-  return balances
+const TOR: Contract = {
+  name: 'TOR',
+  chain: 'fantom',
+  address: '0x74e23df9110aa9ea0b6ff2faee01e740ca1c642e',
+  decimals: 18,
+  symbol: 'TOR',
 }
 
-export async function getFarmingBalances(ctx: BaseContext, chain: Chain, contract?: Contract) {
-  if (!contract || !contract.underlyings?.[0]) {
-    return []
-  }
+const DAI: Contract = {
+  name: 'Dai Stablecoin',
+  chain: 'fantom',
+  address: '0x8d11ec38a3eb5e956b052f67da8bdc9bef8abf3e',
+  decimals: 18,
+  symbol: 'DAI',
+}
 
-  const curveContract: Contract = contract.underlyings?.[0]
+const USDC: Contract = {
+  name: 'USD Coin',
+  chain: 'fantom',
+  address: '0x04068da6c83afcfa0e13ba15a6696662335d5b75',
+  decimals: 18,
+  symbol: 'USDC',
+}
 
-  if (!curveContract.underlyings || !curveContract.rewards?.[0]) {
-    return []
-  }
+const wFTM: Contract = {
+  name: 'Wrapped Fantom',
+  chain: 'fantom',
+  address: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+  decimals: 18,
+  symbol: 'wFTM',
+}
 
+const Curve_fiFactoryUSDMetapool: Contract = {
+  name: 'Curve.fi Factory USD Metapool: TOR-2pool ',
+  address: '0x24699312CB27C26Cfc669459D670559E5E44EE60',
+  chain: 'fantom',
+  underlyings: [TOR, DAI, USDC],
+  rewards: [wFTM],
+}
+
+export async function getFarmingBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [balanceOfRes, shareRes] = await Promise.all([
@@ -130,22 +115,21 @@ export async function getFarmingBalances(ctx: BaseContext, chain: Chain, contrac
 
   const totalToken = TORAmount.add(DAIAmount).add(USDCAmount)
 
-  const underlyings = curveContract.underlyings?.map((token, i) => ({
+  const underlyings = Curve_fiFactoryUSDMetapool.underlyings?.map((token, i) => ({
     ...token,
     amount: amount.mul(underlyingAmounts[i]).div(totalToken),
   }))
 
-  const balance: Balance = {
-    address: curveContract.address,
+  balances.push({
+    address: Curve_fiFactoryUSDMetapool.address,
     chain,
     amount,
     symbol: `TOR-DAI-USDC`,
     decimals: 18,
     underlyings,
-    rewards: [{ ...curveContract.rewards[0], amount: rewardsBalanceOf }],
+    rewards: [{ ...wFTM, amount: rewardsBalanceOf }],
     category: 'farm',
-  }
+  })
 
-  balances.push(balance)
   return balances
 }

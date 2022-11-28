@@ -3,10 +3,12 @@ import millify from 'millify'
 import fetch from 'node-fetch'
 import path from 'path'
 
+import pool from '../src/db/pool'
 import { Adapter, BaseContext, PricedBalance } from '../src/lib/adapter'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
+import { resolveContractsTokens } from '../src/lib/token'
 
 interface CategoryBalances {
   title: string
@@ -32,21 +34,12 @@ async function main() {
   // argv[2]: adapter
   // argv[3]: chain
   // argv[4]: address
+  if (process.argv.length < 5) {
+    console.error('Missing arguments')
+    return help()
+  }
 
   const startTime = Date.now()
-
-  if (process.argv.length < 3) {
-    console.error('Missing adapter argument')
-    return help()
-  }
-  if (process.argv.length < 4) {
-    console.error('Missing chain argument')
-    return help()
-  }
-  if (process.argv.length < 5) {
-    console.error('Missing address argument')
-    return help()
-  }
 
   const adapterId = process.argv[2]
   const chain = process.argv[3] as Chain
@@ -57,137 +50,147 @@ async function main() {
   const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
 
-  const contractsRes = await adapter[chain]?.getContracts()
+  const client = await pool.connect()
 
-  const balancesRes = await adapter[chain]?.getBalances(ctx, contractsRes?.contracts || {})
-  const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])
+  try {
+    const contractsRes = await adapter[chain]?.getContracts()
 
-  const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
-  const yieldsData = (await yieldsRes.json()).data
+    const contracts = await resolveContractsTokens(client, contractsRes?.contracts || {}, true)
 
-  const yieldsByPoolAddress: { [key: string]: any } = {}
-  const yieldsByKeys: { [key: string]: any } = {}
-  const yieldsByNewKeys: { [key: string]: any } = {}
+    const balancesRes = await adapter[chain]?.getBalances(ctx, contracts)
+    const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])
 
-  for (let i = 0; i < yieldsData.length; i++) {
-    yieldsByPoolAddress[yieldsData[i].pool_old.toLowerCase()] = yieldsData[i]
-    yieldsByKeys[yieldsData[i].pool_old] = yieldsData[i]
-    yieldsByNewKeys[yieldsData[i].pool] = yieldsData[i]
-  }
+    const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
+    const yieldsData = (await yieldsRes.json()).data
 
-  const pricedBalances = await getPricedBalances(sanitizedBalances)
+    const yieldsByPoolAddress: { [key: string]: any } = {}
+    const yieldsByKeys: { [key: string]: any } = {}
+    const yieldsByNewKeys: { [key: string]: any } = {}
 
-  console.log(`Found ${pricedBalances.length} non zero balances`)
-
-  // group by category
-  const balancesByCategory: Record<string, PricedBalance[]> = {}
-  for (const balance of pricedBalances) {
-    if (!balancesByCategory[balance.category]) {
-      balancesByCategory[balance.category] = []
-    }
-    balancesByCategory[balance.category].push(balance)
-  }
-
-  const categoriesBalances: CategoryBalances[] = []
-  for (const category in balancesByCategory) {
-    const cat: CategoryBalances = {
-      title: category,
-      totalUSD: 0,
-      balances: [],
+    for (let i = 0; i < yieldsData.length; i++) {
+      yieldsByPoolAddress[yieldsData[i].pool_old.toLowerCase()] = yieldsData[i]
+      yieldsByKeys[yieldsData[i].pool_old] = yieldsData[i]
+      yieldsByNewKeys[yieldsData[i].pool] = yieldsData[i]
     }
 
-    for (const balance of balancesByCategory[category]) {
-      cat.totalUSD += balance.balanceUSD || 0
-      cat.balances.push(balance)
+    const pricedBalances = await getPricedBalances(sanitizedBalances)
+
+    console.log(`Found ${pricedBalances.length} non zero balances`)
+
+    // group by category
+    const balancesByCategory: Record<string, PricedBalance[]> = {}
+    for (const balance of pricedBalances) {
+      if (!balancesByCategory[balance.category]) {
+        balancesByCategory[balance.category] = []
+      }
+      balancesByCategory[balance.category].push(balance)
     }
 
-    // sort by balanceUSD
-    cat.balances.sort((a, b) => {
-      if (a.balanceUSD != null && b.balanceUSD == null) {
-        return -1
-      }
-      if (a.balanceUSD == null && b.balanceUSD != null) {
-        return 1
-      }
-      return b.balanceUSD - a.balanceUSD
-    })
-
-    categoriesBalances.push(cat)
-  }
-
-  // sort categories by total balances
-  categoriesBalances.sort((a, b) => b.totalUSD - a.totalUSD)
-
-  for (const categoryBalances of categoriesBalances) {
-    console.log(
-      `Category: ${categoryBalances.title}, totalUSD: ${millify(categoryBalances.totalUSD)} (${
-        categoryBalances.totalUSD
-      })`,
-    )
-
-    const data: any[] = []
-
-    for (const balance of categoryBalances.balances) {
-      const key = `${balance.yieldKey?.toLowerCase()}-${balance.chain === 'avax' ? 'avalanche' : balance.chain}`
-      const subKey = `${balance.yieldKey?.toLowerCase()}`
-      const nonAddressKey = `${balance.yieldKey}` //in a case where a yields key may be a string instead of an address
-      const newKey = `${balance.yieldKey?.toLowerCase()}` //new unique identifiers recently introduced on llamayield
-
-      const yieldObject =
-        yieldsByNewKeys[newKey] ||
-        yieldsByPoolAddress[key] ||
-        yieldsByPoolAddress[subKey] ||
-        yieldsByKeys[nonAddressKey]
-
-      const decimals = balance.decimals ? 10 ** balance.decimals : 1
-
-      const d = {
-        chain: balance.chain,
-        address: balance.address,
-        category: balance.category,
-        symbol: balance.symbol,
-        balance: millify(balance.amount.div(decimals.toString()).toNumber()),
-        balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-        yield: `${yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + '%' : '-'}`,
-        il: `${yieldObject !== undefined ? yieldObject?.ilRisk : '-'}`,
-        stable: balance.stable,
-        type: balance.type,
-        reward: '',
-        underlying: '',
+    const categoriesBalances: CategoryBalances[] = []
+    for (const category in balancesByCategory) {
+      const cat: CategoryBalances = {
+        title: category,
+        totalUSD: 0,
+        balances: [],
       }
 
-      if (balance.rewards) {
-        d.reward = balance.rewards
-          .map((reward) => {
-            const decimals = reward.decimals ? 10 ** reward.decimals : 1
-
-            return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
-          })
-          .join(' + ')
+      for (const balance of balancesByCategory[category]) {
+        cat.totalUSD += balance.balanceUSD || 0
+        cat.balances.push(balance)
       }
 
-      if (balance.underlyings) {
-        d.underlying = balance.underlyings
-          .map((underlying) => {
-            const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
+      // sort by balanceUSD
+      cat.balances.sort((a, b) => {
+        if (a.balanceUSD != null && b.balanceUSD == null) {
+          return -1
+        }
+        if (a.balanceUSD == null && b.balanceUSD != null) {
+          return 1
+        }
+        return b.balanceUSD - a.balanceUSD
+      })
 
-            return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
-          })
-          .join(' + ')
-      }
-
-      data.push(d)
+      categoriesBalances.push(cat)
     }
 
-    console.table(data)
+    // sort categories by total balances
+    categoriesBalances.sort((a, b) => b.totalUSD - a.totalUSD)
+
+    for (const categoryBalances of categoriesBalances) {
+      console.log(
+        `Category: ${categoryBalances.title}, totalUSD: ${millify(categoryBalances.totalUSD)} (${
+          categoryBalances.totalUSD
+        })`,
+      )
+
+      const data: any[] = []
+
+      for (const balance of categoryBalances.balances) {
+        const key = `${balance.yieldKey?.toLowerCase()}-${balance.chain === 'avax' ? 'avalanche' : balance.chain}`
+        const subKey = `${balance.yieldKey?.toLowerCase()}`
+        const nonAddressKey = `${balance.yieldKey}` //in a case where a yields key may be a string instead of an address
+        const newKey = `${balance.yieldKey?.toLowerCase()}` //new unique identifiers recently introduced on llamayield
+
+        const yieldObject =
+          yieldsByNewKeys[newKey] ||
+          yieldsByPoolAddress[key] ||
+          yieldsByPoolAddress[subKey] ||
+          yieldsByKeys[nonAddressKey]
+
+        const decimals = balance.decimals ? 10 ** balance.decimals : 1
+
+        const d = {
+          chain: balance.chain,
+          address: balance.address,
+          category: balance.category,
+          symbol: balance.symbol,
+          balance: millify(balance.amount.div(decimals.toString()).toNumber()),
+          balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
+          yield: `${yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + '%' : '-'}`,
+          il: `${yieldObject !== undefined ? yieldObject?.ilRisk : '-'}`,
+          stable: balance.stable,
+          type: balance.type,
+          reward: '',
+          underlying: '',
+        }
+
+        if (balance.rewards) {
+          d.reward = balance.rewards
+            .map((reward) => {
+              const decimals = reward.decimals ? 10 ** reward.decimals : 1
+
+              return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
+            })
+            .join(' + ')
+        }
+
+        if (balance.underlyings) {
+          d.underlying = balance.underlyings
+            .map((underlying) => {
+              const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
+
+              return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
+            })
+            .join(' + ')
+        }
+
+        data.push(d)
+      }
+
+      console.table(data)
+    }
+
+    const { healthFactor } = balancesRes || {}
+    console.log('Metadata:')
+    console.table({ healthFactor })
+
+    const endTime = Date.now()
+    console.log(`Completed in ${endTime - startTime}ms`)
+  } catch (error) {
+    console.log('Failed to run adapter', error)
+  } finally {
+    client.release(true)
   }
-
-  const { healthFactor } = balancesRes || {}
-  console.log('Metadata:')
-  console.table({ healthFactor })
-
-  const endTime = Date.now()
-  console.log(`Completed in ${endTime - startTime}ms`)
 }
 
 main()

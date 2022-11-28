@@ -1,8 +1,8 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getFarmBalances, getFarmContracts } from '../common/farm'
-import { getLockerBalances } from '../common/locker'
+import { getFarmBalances, getFarmContracts } from './farm'
+import { getLockerBalances } from './locker'
 
 const vtxLocker: Contract = {
   name: 'Locked VTX',

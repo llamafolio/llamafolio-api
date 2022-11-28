@@ -1,6 +1,7 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
-import { getStakeBalances } from './balances'
+import { getStakeBalances } from './stake'
 
 const WAVAX: Contract = {
   name: 'Wrapped AVAX',
@@ -27,8 +28,12 @@ export const getContracts = () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { sAVAX }) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
+    sAVAX: getStakeBalances,
+  })
+
   return {
-    balances: await getStakeBalances(ctx, 'avax', sAVAX),
+    balances,
   }
 }

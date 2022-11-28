@@ -1,6 +1,6 @@
 import { Balance, BaseBalance, BaseContext } from '@lib/adapter'
 import { Chain } from '@lib/chains'
-import { multicall } from '@lib/multicall'
+import { Call, multicall, MultiCallResult } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { getToken } from '@llamafolio/tokens'
@@ -118,48 +118,147 @@ export async function getERC20Details(chain: Chain, tokens: string[]): Promise<T
   return tokens.map((address) => found[address]).filter(isNotNullish)
 }
 
-export async function getERC20Details2(chain: Chain, tokens: (string | null)[]): Promise<(Token | null)[]> {
-  const found: { [key: string]: Token } = {}
-  for (const address of tokens) {
+// Temporary function to refactor getERC20Details across all adapters
+export async function getERC20DetailsTmp(
+  chain: Chain,
+  tokens: (string | null)[],
+): Promise<MultiCallResult<string | null, any[], Token | null>[]> {
+  const results: MultiCallResult<string | null, any[], Token | null>[] = []
+  const calls: Call[] = []
+
+  for (let i = 0; i < tokens.length; i++) {
+    const address = tokens[i]
+    const input = { params: [], target: address }
+
     if (!address) {
+      results.push({ success: false, output: null, input })
       continue
     }
-    const tokenInfo = getToken(chain, address.toLowerCase())
-    if (tokenInfo) {
-      found[address] = tokenInfo as Token
+
+    const token = getToken(chain, address.toLowerCase())
+
+    if (token) {
+      results.push({ success: true, output: token as Token, input })
+    } else {
+      calls.push({
+        target: address,
+        params: [],
+      })
+      results.push({ success: false, output: null, input })
     }
   }
 
-  const missingTokens = tokens.filter((address) => address && !found[address]) as string[]
-
-  const calls = missingTokens.map((address) => ({
-    target: address,
-    params: [],
-  }))
-
+  // fetch missing info on-chain
   const [symbols, decimals] = await Promise.all([
     multicall({ chain, calls, abi: abi.symbol }),
     multicall({ chain, calls, abi: abi.decimals }),
   ])
 
-  for (let i = 0; i < missingTokens.length; i++) {
-    const address = missingTokens[i]
-    if (!symbols[i].success) {
-      console.error(`Could not get symbol for token ${chain}:${address}`)
-      continue
-    }
-    if (!decimals[i].success) {
-      console.error(`Could not get decimals for token ${chain}:${address}`)
+  let callsIdx = 0
+  for (let i = 0; i < tokens.length; i++) {
+    // ignored nullish targets or successful responses (found in cache)
+    if (!tokens[i] || results[i].success) {
       continue
     }
 
-    found[address] = {
+    const address = calls[callsIdx].target
+    if (!symbols[callsIdx].success) {
+      console.error(`Could not get symbol for token ${chain}:${address}`)
+      callsIdx++
+      continue
+    }
+    if (!decimals[callsIdx].success) {
+      console.error(`Could not get decimals for token ${chain}:${address}`)
+      callsIdx++
+      continue
+    }
+
+    const token: Token = {
       chain,
       address,
-      symbol: symbols[i].output,
-      decimals: parseInt(decimals[i].output),
+      symbol: symbols[callsIdx].output,
+      decimals: parseInt(decimals[callsIdx].output),
+    }
+    results[i].success = true
+    results[i].output = token
+
+    callsIdx++
+  }
+
+  return results
+}
+
+export async function resolveERC20Details<K extends string>(
+  chain: Chain,
+  contracts: Record<K, (string | null)[]>,
+): Promise<Record<K, MultiCallResult<string | null, any[], Token | null>[]>> {
+  const results = {} as Record<K, MultiCallResult<string | null, any[], Token | null>[]>
+  const calls: Call[] = []
+
+  for (const key in contracts) {
+    results[key] = []
+
+    for (let i = 0; i < contracts[key].length; i++) {
+      const address = contracts[key][i]
+      const input = { params: [], target: address }
+
+      if (!address) {
+        results[key].push({ success: false, output: null, input })
+        continue
+      }
+
+      const token = getToken(chain, address.toLowerCase())
+
+      if (token) {
+        results[key].push({ success: true, output: token as Token, input })
+      } else {
+        calls.push({
+          target: address,
+          params: [],
+        })
+        results[key].push({ success: false, output: null, input })
+      }
     }
   }
 
-  return tokens.map((address) => (address != null && found[address]) || null)
+  // fetch missing info on-chain
+  const [symbols, decimals] = await Promise.all([
+    multicall({ chain, calls, abi: abi.symbol }),
+    multicall({ chain, calls, abi: abi.decimals }),
+  ])
+
+  let callsIdx = 0
+  for (const key in contracts) {
+    for (let i = 0; i < contracts[key].length; i++) {
+      // ignored nullish targets or successful responses (found in cache)
+      if (!contracts[key][i] || results[key][i].success) {
+        continue
+      }
+
+      const address = calls[callsIdx].target
+      if (!symbols[callsIdx].success) {
+        console.error(`Could not get symbol for token ${chain}:${address}`)
+        callsIdx++
+        continue
+      }
+      if (!decimals[callsIdx].success) {
+        console.error(`Could not get decimals for token ${chain}:${address}`)
+        callsIdx++
+        continue
+      }
+
+      const token: Token = {
+        chain,
+        address,
+        symbol: symbols[callsIdx].output,
+        decimals: parseInt(decimals[callsIdx].output),
+      }
+      results[key][i].success = true
+      results[key][i].output = token
+
+      callsIdx++
+    }
+  }
+
+  return results
 }

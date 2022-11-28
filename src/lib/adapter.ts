@@ -37,6 +37,12 @@ export interface BaseContract {
   yieldKey?: string
 }
 
+export interface RawContract extends BaseContract {
+  rewards?: string[]
+  underlyings?: string[]
+  [key: string | number]: any
+}
+
 export interface Contract extends BaseContract {
   rewards?: BaseContract[]
   underlyings?: BaseContract[]
@@ -63,7 +69,7 @@ export interface Balance extends BaseBalance {
   // optional underlying tokens.
   // ex: aToken -> token (AAVE)
   // ex: Uniswap Pair -> [token0, token1]
-  underlyings?: BaseBalance[]
+  underlyings?: BaseBalance[] | BaseContract[]
   lock?: Lock
 }
 
@@ -92,7 +98,7 @@ export interface BalancesConfig {
 }
 
 export interface ContractsConfig {
-  contracts: { [key: string]: Contract | Contract[] | undefined }
+  contracts: { [key: string]: Contract | Contract[] | RawContract | RawContract[] | undefined }
   revalidate?: number
 }
 

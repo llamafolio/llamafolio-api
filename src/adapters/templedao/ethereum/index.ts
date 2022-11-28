@@ -1,4 +1,5 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 import { getLockedBalances, getStakeBalances } from './balances'
 
@@ -9,6 +10,12 @@ const TEMPLE: Contract = {
   address: '0x470ebf5f030ed85fc1ed4c2d36b9dd02e77cf1b7',
   decimals: 18,
   symbol: 'TEMPLE ',
+}
+
+const templeStaking: Contract = {
+  name: 'Temple staking',
+  chain: 'ethereum',
+  address: '0x4D14b24EDb751221B3Ff08BBB8bd91D4b1c8bc77',
 }
 
 const OG_TEMPLE: Contract = {
@@ -60,17 +67,15 @@ export const getContracts = () => {
   const vaults: Contract[] = [Vault_A, Vault_B, Vault_C, Vault_D]
 
   return {
-    contracts: { OG_TEMPLE, vaults },
+    contracts: { OG_TEMPLE, templeStaking, vaults },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { OG_TEMPLE, vaults }) => {
-  const [stakeBalances, lockedBalances] = await Promise.all([
-    getStakeBalances(ctx, 'ethereum', OG_TEMPLE),
-    getLockedBalances(ctx, 'ethereum', vaults || []),
-  ])
-
-  const balances = [...stakeBalances, ...lockedBalances]
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    OG_TEMPLE: (...args) => getStakeBalances(...args, templeStaking),
+    vaults: getLockedBalances,
+  })
 
   return {
     balances,

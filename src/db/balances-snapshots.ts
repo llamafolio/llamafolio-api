@@ -94,6 +94,26 @@ export async function selectBalancesSnapshotsByFromAddress(client: PoolClient, f
   return fromStorage(balancesRes.rows)
 }
 
+export async function selectLastBalancesSnapshotsByFromAddress(client: PoolClient, fromAddress: string) {
+  const balancesRes = await client.query(
+    `
+  WITH last_snapshot AS (
+    SELECT timestamp FROM balances_snapshots
+    WHERE from_address = $1::bytea
+    ORDER BY timestamp DESC
+    LIMIT 1
+  )
+  SELECT *
+  FROM balances_snapshots b
+  WHERE b.from_address = $1::bytea AND
+  b.timestamp IN (SELECT timestamp FROM last_snapshot);
+  `,
+    [strToBuf(fromAddress)],
+  )
+
+  return fromStorage(balancesRes.rows)
+}
+
 export function insertBalancesSnapshots(client: PoolClient, balancesSnapshot: BalancesSnapshot[]) {
   const values = toStorage(balancesSnapshot).map(toRow)
 

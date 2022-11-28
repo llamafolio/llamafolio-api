@@ -1,7 +1,7 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getFormattedStakeBalances, getStakeBalances } from '../common/stake'
+import { getFormattedStakeBalances, getStakeBalances } from './stake'
 
 const FLOOR: Contract = {
   name: 'Floor',

@@ -1,6 +1,11 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
+import {
+  BalanceWithExtraProps,
+  getHealthFactor,
+  getMarketsBalances,
+  getMarketsContracts,
+} from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
 
 import { getMarketsRewards } from '../common/rewards'
@@ -51,7 +56,10 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     piggyDistribution: getMarketsRewards,
   })
 
+  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
+
   return {
     balances,
+    healthFactor,
   }
 }

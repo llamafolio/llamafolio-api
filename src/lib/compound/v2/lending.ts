@@ -1,13 +1,51 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20BalanceOf, getERC20Details, getERC20Details2 } from '@lib/erc20'
+import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { getPricedBalances } from '@lib/price'
 import { Token } from '@lib/token'
-import { isNotNullish } from '@lib/type'
+import { isNotNullish, isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
+
+const abi = {
+  getAllMarkets: {
+    constant: true,
+    inputs: [],
+    name: 'getAllMarkets',
+    outputs: [{ internalType: 'contract CToken[]', name: '', type: 'address[]' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  markets: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'markets',
+    outputs: [
+      { internalType: 'bool', name: 'isListed', type: 'bool' },
+      {
+        internalType: 'uint256',
+        name: 'collateralFactorMantissa',
+        type: 'uint256',
+      },
+      { internalType: 'bool', name: 'isComped', type: 'bool' },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  underlying: {
+    constant: true,
+    inputs: [],
+    name: 'underlying',
+    outputs: [{ name: '', type: 'address' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
 
 export interface GetMarketsContractsProps {
   comptrollerAddress: string
@@ -25,44 +63,19 @@ export async function getMarketsContracts(
   chain: Chain,
   { comptrollerAddress, underlyingAddressByMarketAddress = {} }: GetMarketsContractsProps,
 ): Promise<Contract[]> {
+  const contracts: Contract[] = []
+
   const cTokensAddressesRes = await call({
     chain,
-    abi: {
-      constant: true,
-      inputs: [],
-      name: 'getAllMarkets',
-      outputs: [{ internalType: 'contract CToken[]', name: '', type: 'address[]' }],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.getAllMarkets,
     target: comptrollerAddress,
   })
   const cTokensAddresses: string[] = cTokensAddressesRes.output
 
-  const [cTokens, marketsRes, underlyingTokensAddressesRes] = await Promise.all([
-    getERC20Details2(chain, cTokensAddresses),
-
+  const [marketsRes, underlyingTokensAddressesRes] = await Promise.all([
     multicall({
       chain,
-      abi: {
-        constant: true,
-        inputs: [{ internalType: 'address', name: '', type: 'address' }],
-        name: 'markets',
-        outputs: [
-          { internalType: 'bool', name: 'isListed', type: 'bool' },
-          {
-            internalType: 'uint256',
-            name: 'collateralFactorMantissa',
-            type: 'uint256',
-          },
-          { internalType: 'bool', name: 'isComped', type: 'bool' },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
-      target: comptrollerAddress,
+      abi: abi.markets,
       calls: cTokensAddresses.map((cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] })),
     }),
 
@@ -72,60 +85,29 @@ export async function getMarketsContracts(
         target: address,
         params: [],
       })),
-      abi: {
-        constant: true,
-        inputs: [],
-        name: 'underlying',
-        outputs: [{ name: '', type: 'address' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.underlying,
     }),
   ])
 
-  const underlyingTokensAddresses: string[] = underlyingTokensAddressesRes
-    .filter((res) => res.success)
-    .map((res) => res.output)
+  for (let i = 0; i < cTokensAddresses.length; i++) {
+    const cToken = cTokensAddresses[i]
+    const underlying = underlyingAddressByMarketAddress[cToken.toLowerCase()] || underlyingTokensAddressesRes[i].output
+    const marketRes = marketsRes[i]
 
-  if (underlyingAddressByMarketAddress) {
-    for (const marketAddress in underlyingAddressByMarketAddress) {
-      const underlyingAddress = underlyingAddressByMarketAddress[marketAddress]
-      underlyingTokensAddresses.push(underlyingAddress)
+    if (!isSuccess(marketRes)) {
+      continue
     }
-  }
 
-  const underlyingTokens = await getERC20Details(chain, underlyingTokensAddresses)
-  const underlyingTokenByAddress: { [key: string]: Token } = {}
-  for (const underlyingToken of underlyingTokens) {
-    underlyingToken.address = underlyingToken.address.toLowerCase()
-    underlyingTokenByAddress[underlyingToken.address] = underlyingToken
-  }
-
-  return cTokens
-    .map((token, i) => {
-      if (!token || !marketsRes[i].success) {
-        return null
-      }
-
-      const underlyingTokenAddress =
-        underlyingAddressByMarketAddress?.[token.address?.toLowerCase()] ||
-        underlyingTokensAddressesRes[i].output?.toLowerCase()
-      const underlyingToken = underlyingTokenByAddress[underlyingTokenAddress]
-
-      if (!underlyingToken) {
-        console.log('Failed to get underlying token for market', token)
-        return null
-      }
-
-      return {
-        ...token,
-        collateralFactor: marketsRes[i].output.collateralFactorMantissa,
-        priceSubstitute: underlyingToken.address,
-        underlyings: [underlyingToken],
-      }
+    contracts.push({
+      chain,
+      address: cToken,
+      collateralFactor: marketRes.output.collateralFactorMantissa,
+      priceSubstitute: underlying,
+      underlyings: [underlying],
     })
-    .filter(isNotNullish)
+  }
+
+  return contracts
 }
 
 export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
@@ -184,19 +166,18 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
   const cTokensSupplyBalances = cTokensBalances
     .filter((bal) => exchangeRateCurrentBycTokenAddress[bal.address] && bal.underlyings?.[0])
     .map((bal) => {
+      const underlying = bal.underlyings?.[0]
       // add amount
-      if (!bal.underlyings?.[0] || !bal.underlyings?.[0].decimals) {
+      if (!underlying || !underlying.decimals) {
         return
       }
-      const amount = bal.amount
-        .mul(exchangeRateCurrentBycTokenAddress[bal.address])
-        .div(BN_TEN.pow(bal.underlyings[0].decimals + 10))
-      bal.underlyings[0].amount = amount
+
+      const amount = bal.amount.mul(exchangeRateCurrentBycTokenAddress[bal.address]).div(BN_TEN.pow(10))
 
       return {
         ...bal,
-        amount,
-        underlyings: [{ ...bal.underlyings[0], decimals: bal.decimals }],
+        amount: BigNumber.from(amount).div(BN_TEN.pow(underlying.decimals)),
+        underlyings: [{ ...underlying, amount: BigNumber.from(amount).div(BN_TEN.pow(bal.decimals)) }],
         category: 'lend',
       }
     })
@@ -205,19 +186,20 @@ export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contrac
     .filter((res) => res.success)
     .map((res) => {
       const cToken: any = cTokenByAddress[res.input.target]
-      if (!cToken || !cToken.underlyings?.[0]) {
+      const underlying = cToken?.underlyings?.[0]
+      if (!cToken || !underlying) {
         return null
       }
 
       // add amount
       const amount = BigNumber.from(res.output)
-      cToken.underlyings[0].amount = amount
 
       return {
         ...cToken,
         amount,
-        decimals: cToken.underlyings[0].decimals,
+        decimals: underlying.decimals,
         category: 'borrow',
+        underlyings: [{ ...underlying, amount }],
         type: 'debt',
       }
     })

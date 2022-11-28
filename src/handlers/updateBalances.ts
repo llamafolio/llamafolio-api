@@ -5,9 +5,10 @@ import { getAllContractsInteractionsTokenTransfers, groupContracts } from '@db/c
 import { getAllTokensInteractions } from '@db/contracts'
 import pool from '@db/pool'
 import { apiGatewayManagementApi } from '@handlers/apiGateway'
-import type { AdapterBalancesResponse } from '@handlers/getBalances'
+import type { BalancesProtocolChainResponse, BalancesProtocolResponse, BalancesResponse } from '@handlers/getBalances'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, BalancesConfig, BaseContext, Contract } from '@lib/adapter'
+import { groupBy } from '@lib/array'
 import { sanitizeBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
 import { Chain, chains } from '@lib/chains'
@@ -224,19 +225,39 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
     await client.query('COMMIT')
 
-    const data: AdapterBalancesResponse[] = Object.keys(pricedBalancesByAdapterId).map((adapterId) => ({
-      id: adapterId,
-      data: pricedBalancesByAdapterId[adapterId],
-    }))
+    const protocols: BalancesProtocolResponse[] = []
+
+    for (const adapterId in pricedBalancesByAdapterId) {
+      const balancesByChain = groupBy(pricedBalancesByAdapterId[adapterId], 'chain')
+      const balancesSnapshotsByChain = groupBy(pricedBalancesByAdapterId[adapterId] || [], 'chain')
+
+      const chains: BalancesProtocolChainResponse[] = []
+
+      for (const chain in balancesByChain) {
+        const balanceSnapshot = balancesSnapshotsByChain[chain]?.[0]
+
+        chains.push({
+          id: chain as Chain,
+          balances: balancesByChain[chain],
+          healthFactor: balanceSnapshot?.healthFactor,
+        })
+      }
+
+      protocols.push({
+        id: adapterId,
+        chains,
+      })
+    }
+
+    const balancesResponse: BalancesResponse = {
+      updatedAt: now.toISOString(),
+      protocols,
+    }
 
     await apiGatewayManagementApi
       .postToConnection({
         ConnectionId: connectionId,
-        Data: JSON.stringify({
-          event: 'updateBalances',
-          updatedAt: now.toISOString(),
-          data,
-        }),
+        Data: JSON.stringify(balancesResponse),
       })
       .promise()
 
