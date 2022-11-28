@@ -1,9 +1,18 @@
 import { GetBalancesHandler } from '@lib/adapter'
 import { Contract } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { Token } from '@lib/token'
 
 import { getFarmPoolsBalances, getFarmPoolsContracts } from '../common/farm'
-import { getLpPoolsBalances, getLpPoolsContracts } from '../common/lp'
+import { getLpPoolsBalances } from '../common/lp'
+import { getLpPoolsContracts } from '../common/pool'
+
+const CRVToken: Token = {
+  chain: 'avax',
+  address: '0x249848beca43ac405b8102ec90dd5f22ca513c06',
+  decimals: 18,
+  symbol: 'CRV.e',
+}
 
 const gaugeController: Contract = {
   name: 'Curve.fi: Gauge Controller',
@@ -22,14 +31,14 @@ export const getContracts = async () => {
   const lpPools = await getLpPoolsContracts('avax', provider)
 
   return {
-    contracts: { pools, provider, lpPools },
+    contracts: { pools, provider, lpPools, CRVToken },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
-    pools: getFarmPoolsBalances,
-    lpPools: (...args) => getLpPoolsBalances(...args, provider),
+    pools: (...args) => getFarmPoolsBalances(...args, CRVToken),
+    lpPools: getLpPoolsBalances,
   })
 
   return {

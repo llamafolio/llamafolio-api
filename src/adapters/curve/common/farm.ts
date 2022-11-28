@@ -67,19 +67,24 @@ export async function getFarmPoolsContracts(
   return contracts
 }
 
-export async function getFarmPoolsBalances(ctx: BaseContext, chain: Chain, pools: PoolsContracts[]) {
+export async function getFarmPoolsBalances(ctx: BaseContext, chain: Chain, pools: PoolsContracts[], rewards: Token) {
   const nonZeroPools = (await getERC20BalanceOf(ctx, chain, pools as Token[])).filter((res) => res.amount.gt(0))
 
-  return await getUnderlyingsBalances(chain, nonZeroPools)
+  return await getUnderlyingsBalances(ctx, chain, nonZeroPools, rewards)
 }
 
-const getUnderlyingsBalances = async (chain: Chain, pools: any[]): Promise<PoolBalances[]> => {
+const getUnderlyingsBalances = async (
+  ctx: BaseContext,
+  chain: Chain,
+  pools: any[],
+  rewards: Token,
+): Promise<PoolBalances[]> => {
   const balances: PoolBalances[] = []
 
   for (let i = 0; i < pools.length; i++) {
     const pool = pools[i]
 
-    const [getTotalSupply, getUnderlyingsBalances] = await Promise.all([
+    const [getTotalSupply, getUnderlyingsBalances, getClaimableRewards] = await Promise.all([
       call({
         chain,
         target: pool.lpToken,
@@ -114,11 +119,36 @@ const getUnderlyingsBalances = async (chain: Chain, pools: any[]): Promise<PoolB
           gas: 3993,
         },
       }),
+
+      call({
+        chain,
+        target: pool.address,
+        params: [ctx.address],
+        abi: {
+          stateMutability: 'nonpayable',
+          type: 'function',
+          name: 'claimable_tokens',
+          inputs: [
+            {
+              name: 'addr',
+              type: 'address',
+            },
+          ],
+          outputs: [
+            {
+              name: '',
+              type: 'uint256',
+            },
+          ],
+          gas: 2683603,
+        },
+      }),
     ])
 
     const underlyings = await getERC20Details(chain, pool.underlyings)
     const totalSupply = BigNumber.from(getTotalSupply.output)
     const underlyingsBalances = getUnderlyingsBalances.filter((res) => res.success).map((res) => res.output)
+    const claimableRewards = BigNumber.from(getClaimableRewards.output)
 
     const formattedUnderlyings = underlyings.map((underlying, x) => ({
       ...underlying,
@@ -134,6 +164,7 @@ const getUnderlyingsBalances = async (chain: Chain, pools: any[]): Promise<PoolB
       symbol: underlyings.map((underlying) => underlying.symbol).join('-'),
       tokens: underlyings.map((underlying) => underlying),
       underlyings: formattedUnderlyings,
+      rewards: [{ ...rewards, amount: claimableRewards }],
       category: 'farm',
     })
   }
