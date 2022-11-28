@@ -21,7 +21,7 @@ const testCases: AdapterTest[] = [
 
 describe('wonderland test', () => {
   test('test balances', async () => {
-    const contracts = await adapter.getContracts()
+    const contracts = await adapter.getContracts({})
 
     for (const test of testCases) {
       const ctx: BaseContext = { address: test.address, blockHeight: test.blockHeight }
