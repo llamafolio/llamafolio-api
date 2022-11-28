@@ -216,9 +216,10 @@ export async function resolveContractsTokens(
             updated_at: now,
           }))
 
-          console.log(`Inserting ${tokens.length} tokens on ${chain}`)
-
-          return insertTokens(client, chain as Chain, tokens)
+          if (tokens.length > 0) {
+            console.log(`Inserting ${tokens.length} tokens on ${chain}`)
+            return insertTokens(client, chain as Chain, tokens)
+          }
         })
         .filter(isNotNullish),
     )
