@@ -34,12 +34,16 @@ const bone: Token = {
   address: '0x9813037ee2218799597d83d4a5b6f3b6778218d9',
 }
 
-export const getContracts = async () => {
+export const getContracts = async (props: any) => {
+  const offset = props.pairOffset || 0
+  const limit = 100
+
   const [pairsInfo, masterChefPoolsInfo] = await Promise.all([
     getPairsContracts({
       chain: 'ethereum',
       factoryAddress: '0x115934131916C8b277DD010Ee02de363c09d037c',
-      length: 100,
+      offset,
+      limit,
     }),
 
     getMasterChefPoolsInfo({
@@ -66,8 +70,14 @@ export const getContracts = async () => {
     .filter(isNotNullish)
 
   return {
-    contracts: { pairs: pairsInfo, masterChefPools },
+    contracts: {
+      pairs: pairsInfo,
+      masterChefPools,
+    },
     revalidate: 60 * 60,
+    revalidateProps: {
+      pairOffset: offset + limit,
+    },
   }
 }
 

@@ -53,7 +53,7 @@ async function main() {
   const client = await pool.connect()
 
   try {
-    const contractsRes = await adapter[chain]?.getContracts()
+    const contractsRes = await adapter[chain]?.getContracts({})
 
     const contracts = await resolveContractsTokens(client, contractsRes?.contracts || {}, true)
 

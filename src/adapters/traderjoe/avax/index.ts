@@ -28,7 +28,10 @@ const rJOE: Contract = {
   types: 'stake',
 }
 
-export const getContracts = async () => {
+export const getContracts = async (props: any) => {
+  const offset = props.pairOffset || 0
+  const limit = 100
+
   const markets = await getMarketsContracts('avax', {
     comptrollerAddress: '0xdc13687554205E5b89Ac783db14bb5bba4A1eDaC',
   })
@@ -36,12 +39,22 @@ export const getContracts = async () => {
   const pools = await getPairsContracts({
     chain: 'avax',
     factoryAddress: '0x9Ad6C38BE94206cA50bb0d90783181662f0Cfa10',
-    length: 100,
+    offset,
+    limit,
   })
 
   return {
-    contracts: { markets, pools, sJOE, veJOE, rJOE },
+    contracts: {
+      markets,
+      pools,
+      sJOE,
+      veJOE,
+      rJOE,
+    },
     revalidate: 60 * 60,
+    revalidateProps: {
+      pairOffset: offset + limit,
+    },
   }
 }
 

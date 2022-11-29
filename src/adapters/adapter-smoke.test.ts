@@ -41,7 +41,9 @@ describe.skip('getContracts basic validations', () => {
   beforeAll(async () => {
     // Get adapters contracts:
     // getContracts should run under 5 minutes
-    adaptersContractsConfigs = await Promise.all(adapters.map((adapter) => race(adapter.getContracts(), 60 * 5 * 1000)))
+    adaptersContractsConfigs = await Promise.all(
+      adapters.map((adapter) => race(adapter.getContracts({}), 60 * 5 * 1000)),
+    )
   })
 
   test('adapter ids must be unique', () => {

@@ -1,7 +1,7 @@
 import path from 'path'
 
-import { Adapter as DBAdapter, deleteAdapterById, insertAdapters } from '../src/db/adapters'
-import { deleteContractsByAdapterId, insertContracts } from '../src/db/contracts'
+import { Adapter as DBAdapter, deleteAdapterById, insertAdapters, selectAdapter } from '../src/db/adapters'
+import { deleteContractsByAdapter, insertContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter } from '../src/lib/adapter'
 import { chains } from '../src/lib/chains'
@@ -33,7 +33,9 @@ async function main() {
 
     const chainContractsConfigs = await Promise.all(
       adapterChains.map(async (chain) => {
-        const contractsRes = await adapter[chain.id]!.getContracts()
+        const prevDbAdapter = await selectAdapter(client, chain.id, adapter.id)
+
+        const contractsRes = await adapter[chain.id]!.getContracts(prevDbAdapter?.contractsRevalidateProps || {})
 
         const contracts = await resolveContractsTokens(client, contractsRes?.contracts || {}, true)
 
@@ -57,6 +59,7 @@ async function main() {
         id: adapter.id,
         chain: adapterChains[i].id,
         contractsExpireAt: expire_at,
+        contractsRevalidateProps: config.revalidateProps,
       }
     })
 
@@ -68,8 +71,16 @@ async function main() {
     // Insert new adapters
     await insertAdapters(client, dbAdapters)
 
-    // Delete old contracts
-    await deleteContractsByAdapterId(client, adapter.id)
+    // Delete old contracts unless it's a revalidate.
+    // In such case we want to add new contracts, not replace the old ones
+    await Promise.all(
+      chainContractsConfigs.map((config, i) => {
+        if (config.revalidate) {
+          return
+        }
+        return deleteContractsByAdapter(client, adapter.id, adapterChains[i].id)
+      }),
+    )
 
     // Insert new contracts for all specified chains
     await Promise.all(chainContractsConfigs.map((config) => insertContracts(client, config.contracts, adapter.id)))

@@ -92,9 +92,13 @@ export interface BalancesConfig {
 export interface ContractsConfig {
   contracts: { [key: string]: Contract | Contract[] | RawContract | RawContract[] | undefined }
   revalidate?: number
+  revalidateProps?: { [key: string]: any }
 }
 
-export type GetContractsHandler = () => ContractsConfig | Promise<ContractsConfig>
+/**
+ * Pass previous `revalidateProps` passed to `getContracts` handler to know where the previous revalidate process ended.
+ */
+export type GetContractsHandler = (props: { [key: string]: any }) => ContractsConfig | Promise<ContractsConfig>
 
 export type GetBalancesHandler<C extends GetContractsHandler> = (
   ctx: BaseContext,
