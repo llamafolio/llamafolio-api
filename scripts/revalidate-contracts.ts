@@ -6,7 +6,6 @@ import pool from '../src/db/pool'
 import { Adapter } from '../src/lib/adapter'
 import { chains } from '../src/lib/chains'
 import { resolveContractsTokens } from '../src/lib/token'
-import { isNotNullish } from '../src/lib/type'
 
 function help() {
   console.log('npm run revalidate-contracts {adapter}')
@@ -36,7 +35,7 @@ async function main() {
       adapterChains.map(async (chain) => {
         const prevDbAdapter = await selectAdapter(client, chain.id, adapter.id)
 
-        const contractsRes = await adapter[chain.id]!.getContracts(prevDbAdapter?.contractsRevalidateProps)
+        const contractsRes = await adapter[chain.id]!.getContracts(prevDbAdapter?.contractsRevalidateProps || {})
 
         const contracts = await resolveContractsTokens(client, contractsRes?.contracts || {}, true)
 
@@ -75,14 +74,12 @@ async function main() {
     // Delete old contracts unless it's a revalidate.
     // In such case we want to add new contracts, not replace the old ones
     await Promise.all(
-      chainContractsConfigs
-        .map((config, i) => {
-          if (config.revalidate) {
-            return
-          }
-          return deleteContractsByAdapter(client, adapter.id, adapterChains[i])
-        })
-        .filter(isNotNullish),
+      chainContractsConfigs.map((config, i) => {
+        if (config.revalidate) {
+          return
+        }
+        return deleteContractsByAdapter(client, adapter.id, adapterChains[i].id)
+      }),
     )
 
     // Insert new contracts for all specified chains
