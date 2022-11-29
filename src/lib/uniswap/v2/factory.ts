@@ -48,25 +48,23 @@ const abi = {
 export interface getPairsContractsParams {
   chain: Chain
   factoryAddress: string
-  // optional number of pairs
-  length?: number
+  offset?: number
+  limit?: number
 }
 
-export async function getPairsContracts({ chain, factoryAddress, length }: getPairsContractsParams) {
+export async function getPairsContracts({ chain, factoryAddress, offset = 0, limit = 100 }: getPairsContractsParams) {
   const allPairsLengthRes = await call({
     chain,
     abi: abi.allPairsLength,
     target: factoryAddress,
   })
 
-  let allPairsLength = parseInt(allPairsLengthRes.output)
-  if (length !== undefined) {
-    allPairsLength = Math.min(allPairsLength, length)
-  }
+  const allPairsLength = parseInt(allPairsLengthRes.output)
+  const end = Math.min(offset + limit, allPairsLength)
 
   const allPairsRes = await multicall({
     chain,
-    calls: range(0, allPairsLength).map((_, i) => ({
+    calls: range(offset, end).map((_, i) => ({
       target: factoryAddress,
       params: [i],
     })),

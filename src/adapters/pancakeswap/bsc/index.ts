@@ -30,12 +30,16 @@ const cake: Token = {
   decimals: 18,
 }
 
-export const getContracts = async () => {
+export const getContracts = async (props: any) => {
+  const offset = props.pairOffset || 0
+  const limit = 100
+
   const [pairs, masterChefPools, masterChefPools2] = await Promise.all([
     getPairsContracts({
       chain: 'bsc',
       factoryAddress: '0xca143ce32fe78f1f7019d7d551a6402fc5350c73',
-      length: 100,
+      offset,
+      limit,
     }),
 
     getMasterChefPoolsInfo({
@@ -55,6 +59,9 @@ export const getContracts = async () => {
       masterChefPools2,
     },
     revalidate: 60 * 60,
+    revalidateProps: {
+      pairOffset: offset + limit,
+    },
   }
 }
 

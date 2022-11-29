@@ -18,12 +18,16 @@ const sushi: Token = {
   decimals: 18,
 }
 
-export const getContracts = async () => {
+export const getContracts = async (props: any) => {
+  const offset = props.pairOffset || 0
+  const limit = 100
+
   const [pairs, masterChefPools] = await Promise.all([
     getPairsContracts({
       chain: 'ethereum',
       factoryAddress: '0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac',
-      length: 100,
+      offset,
+      limit,
     }),
     getMasterChefPoolsInfo({
       masterChef,
@@ -31,8 +35,14 @@ export const getContracts = async () => {
   ])
 
   return {
-    contracts: { pairs, masterChefPools },
+    contracts: {
+      pairs,
+      masterChefPools,
+    },
     revalidate: 60 * 60,
+    revalidateProps: {
+      pairOffset: offset + limit,
+    },
   }
 }
 

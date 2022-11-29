@@ -3,6 +3,7 @@ import {
   Adapter as DBAdapter,
   deleteAdapter,
   insertAdapters,
+  selectAdapter,
   selectAdaptersContractsExpired,
   selectDistinctIdAdapters,
 } from '@db/adapters'
@@ -96,7 +97,9 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
   }
 
   try {
-    const config = await adapter[chain]!.getContracts()
+    const prevDbAdapter = await selectAdapter(client, chain, adapter.id)
+
+    const config = await adapter[chain]!.getContracts(prevDbAdapter?.contractsRevalidateProps || {})
 
     const contracts = await resolveContractsTokens(client, config.contracts || {}, true)
 
@@ -110,6 +113,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
       id: adapterId,
       chain,
       contractsExpireAt: expire_at,
+      contractsRevalidateProps: config.revalidateProps,
     }
 
     await client.query('BEGIN')
@@ -120,8 +124,11 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     // Insert adapter if not exists
     await insertAdapters(client, [dbAdapter])
 
-    // Delete old contracts
-    await deleteContractsByAdapter(client, adapterId, chain)
+    // Delete old contracts unless it's a revalidate.
+    // In such case we want to add new contracts, not replace the old ones
+    if (!config.revalidate) {
+      await deleteContractsByAdapter(client, adapterId, chain)
+    }
 
     // Insert new contracts
     await insertContracts(client, contracts, adapter.id)

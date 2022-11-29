@@ -18,12 +18,16 @@ const boo: Token = {
   decimals: 18,
 }
 
-export const getContracts = async () => {
+export const getContracts = async (props: any) => {
+  const offset = props.pairOffset || 0
+  const limit = 100
+
   const [pairs, masterChefPools] = await Promise.all([
     getPairsContracts({
       chain: 'fantom',
       factoryAddress: '0xca143ce32fe78f1f7019d7d551a6402fc5350c73',
-      length: 100,
+      offset,
+      limit,
     }),
     getMasterChefPoolsInfo({
       masterChef,
@@ -33,6 +37,9 @@ export const getContracts = async () => {
   return {
     contracts: { pairs, masterChefPools },
     revalidate: 60 * 60,
+    revalidateProps: {
+      pairOffset: offset + limit,
+    },
   }
 }
 
