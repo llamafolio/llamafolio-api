@@ -127,11 +127,11 @@ export function sanitizeBalances(balances: Balance[]) {
     if (balance.underlyings) {
       if (balance.underlyings.length === 1 && (balance.underlyings?.[0] as Balance).amount == null) {
         if (balance.decimals && balance.underlyings[0].decimals) {
-          const mantissa = balance.decimals - balance.underlyings[0].decimals
+          const mantissa = Math.abs(balance.decimals - balance.underlyings[0].decimals)
 
           balance.underlyings = balance.underlyings.map((underlying) => ({
             ...underlying,
-            amount: balance.amount.div(BN_TEN.pow(mantissa)),
+            amount: mantissa > 0 ? balance.amount.div(BN_TEN.pow(mantissa)) : balance.amount.mul(BN_TEN.pow(mantissa)),
           }))
         }
       }
