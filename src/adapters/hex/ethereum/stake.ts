@@ -67,7 +67,7 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract:
   const amount = sumBN(stakesAndIndexes.map((balance) => balance.stake))
 
   const rewards = await getRewardsBalances(chain, contract, stakesAndIndexes)
-  const totalRewards = /*amount.add*/ sumBN(rewards)
+  const totalRewards = sumBN(rewards)
 
   balances.push({
     chain,
