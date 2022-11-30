@@ -15,7 +15,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   for (const address of addresses) {
     const ensName = await provider.lookupAddress(address)
 
-    const label = getLabel(address.toLowerCase(), ensName)
+    const label = getLabel(address.toLowerCase(), ensName || undefined)
 
     if (label) {
       data[address] = label
