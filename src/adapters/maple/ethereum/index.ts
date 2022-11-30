@@ -1,19 +1,26 @@
-import { GetBalancesHandler } from '@lib/adapter'
+import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
-import { getStakeBalances } from './balances'
-import { getContractsFromGraph } from './contracts'
+import { getFarmBalances, getFarmContracts } from './farm'
+
+const MapleFactory: Contract = {
+  chain: 'ethereum',
+  name: 'PoolFactory',
+  address: '0x2Cd79F7f8b38B9c0D80EA6B230441841A31537eC',
+}
 
 export const getContracts = async () => {
-  const pools = await getContractsFromGraph()
+  const pools = await getFarmContracts('ethereum', MapleFactory)
 
   return {
     contracts: { pools },
-    revalidate: 60 * 60,
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
-  const balances = await getStakeBalances(ctx, 'ethereum', pools || [])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    pools: getFarmBalances,
+  })
 
   return {
     balances,
