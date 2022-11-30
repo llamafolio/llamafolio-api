@@ -1,7 +1,9 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getERC20BalanceOf } from '@lib/erc20'
+import { Token } from '@lib/token'
 
-import { getHealthFactor, getMarketsBalances, getMarketsContracts } from '../common/markets'
+import { getHealthFactor, getMarketsContracts } from '../common/markets'
 
 const lens: Contract = {
   chain: 'ethereum',
@@ -20,7 +22,7 @@ export const getContracts = async () => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
-    markets: getMarketsBalances,
+    markets: (ctx, chain, contracts) => getERC20BalanceOf(ctx, chain, contracts as Token[]),
   })
 
   const healthFactor = await getHealthFactor(ctx, 'ethereum', lens)

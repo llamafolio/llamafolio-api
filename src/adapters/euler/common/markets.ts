@@ -1,7 +1,7 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20BalanceOf, resolveERC20Details } from '@lib/erc20'
+import { resolveERC20Details } from '@lib/erc20'
 import { Token } from '@lib/token'
 import { gql, request } from 'graphql-request'
 
@@ -76,49 +76,6 @@ export async function getMarketsContracts(chain: Chain): Promise<Contract[]> {
   }
 
   return contracts
-}
-
-export async function getMarketsBalances(ctx: BaseContext, chain: Chain, markets: Contract[]) {
-  const marketsBalances = await getERC20BalanceOf(ctx, chain, markets as Token[])
-  const nonZeroBalances = marketsBalances.filter((res) => res.amount.gt(0))
-
-  const lends: Balance[] = []
-  const borrows: Balance[] = []
-
-  for (let i = 0; i < nonZeroBalances.length; i++) {
-    const nonZeroBalance = nonZeroBalances[i]
-    const underlying: any = nonZeroBalance.underlyings?.[0]
-
-    if (nonZeroBalance.category === 'lend' && nonZeroBalance.decimals) {
-      lends.push({
-        ...nonZeroBalance,
-        underlyings: [
-          {
-            ...underlying,
-            amount: nonZeroBalance.amount.div(
-              Math.pow(10, nonZeroBalance.decimals && nonZeroBalance.decimals - underlying.decimals),
-            ),
-          },
-        ],
-      })
-    }
-
-    if (nonZeroBalance.category === 'borrow' && nonZeroBalance.decimals) {
-      lends.push({
-        ...nonZeroBalance,
-        underlyings: [
-          {
-            ...underlying,
-            amount: nonZeroBalance.amount.div(
-              Math.pow(10, nonZeroBalance.decimals && nonZeroBalance.decimals - underlying.decimals),
-            ),
-          },
-        ],
-      })
-    }
-  }
-
-  return [lends, borrows]
 }
 
 export async function getHealthFactor(ctx: BaseContext, chain: Chain, lensContract: Contract): Promise<number> {

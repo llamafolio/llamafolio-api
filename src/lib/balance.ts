@@ -1,7 +1,7 @@
 import { Balance, BaseBalance, BaseContext, BaseContract, ContractType, GetContractsHandler } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
+import { BN_TEN, BN_ZERO } from '@lib/math'
 import { Call, multicall, MultiCallParams, MultiCallResult } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
@@ -116,34 +116,35 @@ export async function multicallBalances(params: MultiCallParams) {
 }
 
 export function sanitizeBalances(balances: Balance[]) {
-  const sanitizedBalances = balances.filter((balance) => {
+  const sanitizedBalances: Balance[] = []
+
+  for (const balance of balances) {
     if (!balance.amount) {
       console.error(`Missing balance amount`, balance)
       return false
     }
 
     if (balance.underlyings) {
-      // if there's 1 underlying and the amount is not defined, use the balance amount as default
-      let defaultAmount = BN_ZERO
-      if (balance.underlyings.length === 1 && balance.underlyings[0].amount == null) {
-        defaultAmount = balance.amount
+      if (balance.underlyings.length === 1 && (balance.underlyings?.[0] as Balance).amount == null) {
+        if (balance.decimals && balance.underlyings[0].decimals) {
+          const mantissa = balance.decimals - balance.underlyings[0].decimals
+
+          balance.underlyings = balance.underlyings.map((underlying) => ({
+            ...underlying,
+            amount: balance.amount.div(BN_TEN.pow(mantissa)),
+          }))
+        }
       }
 
-      balance.underlyings = balance.underlyings.map((underlying) => ({
-        ...underlying,
-        amount: underlying.amount || defaultAmount,
-      }))
+      if (balance.rewards) {
+        balance.rewards = balance.rewards.map((reward) => ({
+          ...reward,
+          amount: reward.amount || BN_ZERO,
+        }))
+      }
     }
-
-    if (balance.rewards) {
-      balance.rewards = balance.rewards.map((reward) => ({
-        ...reward,
-        amount: reward.amount || BN_ZERO,
-      }))
-    }
-
-    return true
-  })
+    sanitizedBalances.push(balance)
+  }
 
   return sanitizedBalances
 }
