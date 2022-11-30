@@ -27,7 +27,8 @@
       "@adapters/*": ["./src/adapters/*"],
       "@db/*": ["./src/db/*"],
       "@handlers/*": ["./src/handlers/*"],
-      "@lib/*": ["./src/lib/*"]
+      "@lib/*": ["./src/lib/*"],
+      "@labels/*": ["./src/labels/*"]
     }
   },
   "include": ["src"],

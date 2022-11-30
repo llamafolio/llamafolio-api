@@ -16,7 +16,8 @@
     "test": "jest && tscheck",
     "tscheck": "tsc -p tsconfig.json --noEmit --skipLibCheck",
     "update-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build",
-    "update-labels": "cd llamafolio-labels && git checkout main && git pull && rm -rf build && npm run build"
+    "update-labels": "cd llamafolio-labels && git checkout main && git pull && rm -rf build && npm run build",
+    "update-twitter-labels": "curl -o src/labels/twitter-labels.json https://raw.githubusercontent.com/ultrasoundmoney/ens_twitter_accounts/main/ens_twitter.json"
   },
   "keywords": [],
   "license": "ISC",
