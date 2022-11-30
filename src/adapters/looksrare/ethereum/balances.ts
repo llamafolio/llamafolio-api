@@ -12,11 +12,15 @@ const LOOKS: Contract = {
   symbols: 'LOOKS',
 }
 
-export const getStakeBalances = async (ctx: BaseContext, chain: Chain, stakingContract?: Contract) => {
-  if (!stakingContract) {
-    return
-  }
+const WETH: Contract = {
+  name: 'Wrapped Ether',
+  chain: 'ethereum',
+  address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+  decimals: 18,
+  symbols: 'WETH',
+}
 
+export const getStakeBalances = async (ctx: BaseContext, chain: Chain, stakingContract: Contract) => {
   const [stakeBalanceOfRes, rewardsBalanceOfRes] = await Promise.all([
     call({
       chain,
@@ -49,23 +53,19 @@ export const getStakeBalances = async (ctx: BaseContext, chain: Chain, stakingCo
   const rewardsBalanceOf = BigNumber.from(rewardsBalanceOfRes.output)
 
   const stakebalance: Balance = {
-    ...(LOOKS as Balance),
+    chain,
+    address: LOOKS.address,
+    decimals: LOOKS.decimals,
+    symbol: LOOKS.symbols,
     amount: stakeBalanceOf,
+    rewards: [{ ...WETH, amount: rewardsBalanceOf }],
     category: 'stake',
-  }
-
-  if (stakingContract.rewards?.[0]) {
-    stakebalance.rewards = [{ ...stakingContract.rewards?.[0], amount: rewardsBalanceOf }]
   }
 
   return stakebalance
 }
 
-export const getCompounderBalances = async (ctx: BaseContext, chain: Chain, compounder?: Contract) => {
-  if (!compounder) {
-    return
-  }
-
+export const getCompounderBalances = async (ctx: BaseContext, chain: Chain, compounder: Contract) => {
   const sharesValue = await call({
     chain,
     target: compounder.address,
@@ -80,7 +80,10 @@ export const getCompounderBalances = async (ctx: BaseContext, chain: Chain, comp
   })
 
   const compounderBalance: Balance = {
-    ...(LOOKS as Balance),
+    chain,
+    address: LOOKS.address,
+    decimals: LOOKS.decimals,
+    symbol: LOOKS.symbols,
     amount: BigNumber.from(sharesValue.output),
     yieldKey: compounder.address,
     category: 'farm',
