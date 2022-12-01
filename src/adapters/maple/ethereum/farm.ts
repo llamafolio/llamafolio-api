@@ -8,7 +8,7 @@ import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-export async function getFarmContracts(chain: Chain, contract: Contract) {
+export async function getFarmContracts(chain: Chain, contract: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const getPoolsNumber = await call({
