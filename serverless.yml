@@ -81,7 +81,6 @@ functions:
   getBalancesTokens:
     handler: src/handlers/getBalancesTokens.handler
     description: Get address erc20 balances
-    timeout: 30
     events:
       - httpApi:
           method: get
