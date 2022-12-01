@@ -128,10 +128,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
             id: chain as Chain,
             chainId: chainInfo.chainId,
             balances: balances.sort(sortBalances).map(formatBalance),
-            balanceUSD: sumBalances(balances),
           }
         })
-        .sort(sortBalances),
+        .sort((a, b) => sumBalances(b.balances) - sumBalances(a.balances)),
     }
 
     return success(balancesResponse)

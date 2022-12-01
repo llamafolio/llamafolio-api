@@ -1,4 +1,4 @@
-import { Balance, BaseBalance, BaseContext, BaseContract, GetContractsHandler, PricedBalance } from '@lib/adapter'
+import { Balance, BaseBalance, BaseContext, BaseContract, ContractType, GetContractsHandler } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
@@ -199,7 +199,13 @@ export function sortBalances(a: SortBalance, b: SortBalance) {
   return bUSD - aUSD
 }
 
-export function sumBalances(balances: PricedBalance[]) {
+export interface SumBalance {
+  type?: ContractType
+  claimableUSD?: number
+  balanceUSD?: number
+}
+
+export function sumBalances(balances: SumBalance[]) {
   let res = 0
 
   for (const balance of balances) {
