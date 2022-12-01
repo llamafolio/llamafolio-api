@@ -1,55 +1,101 @@
+import { call } from '@defillama/sdk/build/abi'
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
-import { providers } from '@lib/providers'
-import { BigNumber, ethers } from 'ethers'
+import { Token } from '@lib/token'
+import { BigNumber } from 'ethers'
 
-import FeeDistributorAbi from '../abis/FeeDistributor.json'
-import LockerABI from '../abis/Locker.json'
-
-export const lockerContract: Contract = {
-  chain: 'ethereum',
-  address: '0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2',
-  name: 'Locker',
+interface BalanceWithExtraProps extends Balance {
+  lock: { end: number }
 }
 
-export const feeDistributorContract: Contract = {
+const CRVToken: Token = {
   chain: 'ethereum',
-  address: '0xa464e6dcda8ac41e03616f95f4bc98a13b8922dc',
-  name: 'FeeDistributor',
+  address: '0xD533a949740bb3306d119CC777fa900bA034cd52',
+  decimals: 18,
+  symbol: 'CRV',
 }
 
-export async function getLockedBalances(
+const IIICrvToken: Token = {
+  chain: 'ethereum',
+  address: '0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490',
+  decimals: 18,
+  symbol: '3Crv',
+}
+
+export async function getLockerBalances(
   ctx: BaseContext,
   chain: Chain,
-  lockerAddress: string,
-  feeDistributorAddress: string,
-): Promise<Balance> {
-  const provider = providers['ethereum']
+  contract: Contract,
+  feeDistributorContract: Contract,
+): Promise<BalanceWithExtraProps[]> {
+  const balances: BalanceWithExtraProps[] = []
 
-  const locker = new ethers.Contract(lockerAddress, LockerABI, provider)
+  const [lockerBalanceRes, claimableBalanceRes] = await Promise.all([
+    call({
+      chain,
+      target: contract.address,
+      params: [ctx.address],
+      abi: {
+        name: 'locked',
+        outputs: [
+          {
+            type: 'int128',
+            name: 'amount',
+          },
+          {
+            type: 'uint256',
+            name: 'end',
+          },
+        ],
+        inputs: [
+          {
+            type: 'address',
+            name: 'arg0',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    }),
 
-  const feeDistributor = new ethers.Contract(feeDistributorAddress, FeeDistributorAbi, provider)
-
-  const [lockedBalance, claimableBalance] = await Promise.all([
-    locker.locked(ctx.address),
-    feeDistributor.claim(ctx.address),
+    call({
+      chain,
+      target: feeDistributorContract.address,
+      params: [ctx.address],
+      abi: {
+        name: 'claim',
+        outputs: [
+          {
+            type: 'uint256',
+            name: '',
+          },
+        ],
+        inputs: [
+          {
+            type: 'address',
+            name: '_addr',
+          },
+        ],
+        stateMutability: 'view',
+        type: 'function',
+      },
+    }),
   ])
 
-  return {
+  const lockerBalance = BigNumber.from(lockerBalanceRes.output.amount)
+  const lockEnd = lockerBalanceRes.output.end
+  const claimableBalance = BigNumber.from(claimableBalanceRes.output)
+
+  balances.push({
     chain,
+    symbol: CRVToken.symbol,
+    decimals: CRVToken.decimals,
+    address: CRVToken.address,
+    amount: lockerBalance,
+    lock: { end: lockEnd },
+    rewards: [{ ...IIICrvToken, amount: claimableBalance }],
     category: 'lock',
-    symbol: 'CRV',
-    decimals: 18,
-    address: '0xd533a949740bb3306d119cc777fa900ba034cd52',
-    amount: BigNumber.from(lockedBalance.amount),
-    rewards: [
-      {
-        chain,
-        symbol: '3CRV',
-        decimals: 18,
-        address: '0x6c3f90f043a72fa612cbac8115ee7e52bde6e490',
-        amount: BigNumber.from(claimableBalance),
-      },
-    ],
-  }
+  })
+
+  return balances
 }
