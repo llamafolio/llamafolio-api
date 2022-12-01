@@ -7,10 +7,9 @@ import { getAllContractsInteractionsTokenTransfers, getAllTokensInteractions } f
 import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Balance, BalancesConfig, BaseContext, Contract } from '../src/lib/adapter'
-import { sanitizeBalances } from '../src/lib/balance'
+import { sanitizeBalances, sumBalances } from '../src/lib/balance'
 import { strToBuf } from '../src/lib/buf'
 import { Chain, chains } from '../src/lib/chains'
-import { sumBalances } from '../src/lib/math'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
 

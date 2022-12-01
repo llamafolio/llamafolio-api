@@ -1,4 +1,4 @@
-import { Balance, BaseBalance, BaseContext, BaseContract, GetContractsHandler } from '@lib/adapter'
+import { Balance, BaseBalance, BaseContext, BaseContract, ContractType, GetContractsHandler } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
@@ -177,4 +177,45 @@ export async function resolveBalances<C extends GetContractsHandler>(
       }),
   )
   return balances.flat(2).filter(isNotNullish)
+}
+
+export interface SortBalance {
+  balanceUSD?: number
+  rewards?: SortBalance[]
+  underlyings?: SortBalance[]
+}
+
+export function sortBalances(a: SortBalance, b: SortBalance) {
+  if (a.rewards) {
+    a.rewards = a.rewards.sort(sortBalances)
+  }
+  if (a.underlyings) {
+    a.underlyings = a.underlyings.sort(sortBalances)
+  }
+
+  const aUSD = a.balanceUSD || 0
+  const bUSD = b.balanceUSD || 0
+
+  return bUSD - aUSD
+}
+
+export interface SumBalance {
+  type?: ContractType
+  claimableUSD?: number
+  balanceUSD?: number
+}
+
+export function sumBalances(balances: SumBalance[]) {
+  let res = 0
+
+  for (const balance of balances) {
+    // substract debt positions
+    if (balance.type === 'debt') {
+      res -= balance.balanceUSD || 0
+    } else {
+      res += balance.claimableUSD || balance.balanceUSD || 0
+    }
+  }
+
+  return res
 }

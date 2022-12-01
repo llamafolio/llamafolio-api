@@ -78,6 +78,15 @@ functions:
           method: get
           path: /balances/{address}
 
+  getBalancesErc20:
+    handler: src/handlers/getBalancesErc20.handler
+    description: Get address erc20 balances
+    timeout: 30
+    events:
+      - httpApi:
+          method: get
+          path: /balances/{address}/erc20
+
   getCategories:
     handler: src/handlers/getCategories.handler
     description: Get categories
