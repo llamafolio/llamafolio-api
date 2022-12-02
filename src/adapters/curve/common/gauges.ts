@@ -125,22 +125,24 @@ export async function getGaugesContracts(
       const gauges: string[] = []
 
       if (registryId === 'stableSwap' || registryId === 'cryptoSwap') {
-        gauges.push(...(gaugesRes.output[0] as string[]).filter((address) => address !== ethers.constants.AddressZero))
+        gauges.push(...(gaugesRes.output[0] as string[]))
       } else {
         gauges.push(gaugesRes.output as string)
       }
 
       for (const gauge of gauges) {
-        const gaugeContract: Contract = {
-          chain,
-          address: gauge,
-          pool: pool.pool,
-          lpToken: pool.lpToken,
-          yieldKey: pool.lpToken,
-          underlyings: pool.underlyings?.slice(),
-        }
+        if (gauge !== ethers.constants.AddressZero) {
+          const gaugeContract: Contract = {
+            chain,
+            address: gauge,
+            pool: pool.pool,
+            lpToken: pool.lpToken,
+            yieldKey: pool.lpToken,
+            underlyings: pool.underlyings?.slice(),
+          }
 
-        gaugeContracts.push(gaugeContract)
+          gaugeContracts.push(gaugeContract)
+        }
       }
     }
   }

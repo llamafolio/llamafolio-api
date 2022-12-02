@@ -4,7 +4,7 @@ import { Adapter as DBAdapter, deleteAdapterById, insertAdapters, selectAdapter 
 import { deleteContractsByAdapter, insertContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter } from '../src/lib/adapter'
-import { chains } from '../src/lib/chains'
+import { Chain, chains } from '../src/lib/chains'
 import { resolveContractsTokens } from '../src/lib/token'
 
 function help() {
@@ -12,30 +12,32 @@ function help() {
 }
 
 /**
- * Revalidate contracts of all chains for given adapter
+ * Revalidate contracts of all (or given) chain(s) for given adapter
  */
 async function main() {
   // argv[0]: ts-node
   // argv[1]: revalidate-contracts.ts
   // argv[2]: adapter
+  // argv[3]: ?chain
   if (process.argv.length < 3) {
     console.error('Missing arguments')
     return help()
   }
 
+  const chain = process.argv[3] as Chain | undefined
   const module = await import(path.join(__dirname, '..', 'src', 'adapters', process.argv[2]))
   const adapter = module.default as Adapter
 
   const client = await pool.connect()
 
   try {
-    const adapterChains = chains.filter((chain) => adapter[chain.id])
+    const adapterChains = chain ? [chain] : chains.filter((chain) => adapter[chain.id]).map((chain) => chain.id)
 
     const chainContractsConfigs = await Promise.all(
       adapterChains.map(async (chain) => {
-        const prevDbAdapter = await selectAdapter(client, chain.id, adapter.id)
+        const prevDbAdapter = await selectAdapter(client, chain, adapter.id)
 
-        const contractsRes = await adapter[chain.id]!.getContracts(prevDbAdapter?.contractsRevalidateProps || {})
+        const contractsRes = await adapter[chain]!.getContracts(prevDbAdapter?.contractsRevalidateProps || {})
 
         const contracts = await resolveContractsTokens(client, contractsRes?.contracts || {}, true)
 
@@ -57,7 +59,7 @@ async function main() {
 
       return {
         id: adapter.id,
-        chain: adapterChains[i].id,
+        chain: adapterChains[i],
         contractsExpireAt: expire_at,
         contractsRevalidateProps: config.revalidateProps,
       }
@@ -78,7 +80,7 @@ async function main() {
         if (config.revalidate) {
           return
         }
-        return deleteContractsByAdapter(client, adapter.id, adapterChains[i].id)
+        return deleteContractsByAdapter(client, adapter.id, adapterChains[i])
       }),
     )
 

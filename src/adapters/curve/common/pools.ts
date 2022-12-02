@@ -1,4 +1,6 @@
 import { Contract } from '@lib/adapter'
+import { range } from '@lib/array'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { Call, multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
@@ -148,6 +150,59 @@ const abi = {
       ],
     },
   },
+  base_pool_list: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'base_pool_list',
+    inputs: [{ name: 'arg0', type: 'uint256' }],
+    outputs: [{ name: '', type: 'address' }],
+    gas: 3633,
+  },
+  base_pool_count: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'base_pool_count',
+    inputs: [],
+    outputs: [{ name: '', type: 'uint256' }],
+    gas: 3618,
+  },
+  coins: {
+    name: 'coins',
+    outputs: [{ type: 'address', name: '' }],
+    inputs: [{ type: 'uint256', name: 'arg0' }],
+    stateMutability: 'view',
+    type: 'function',
+    gas: 2220,
+  },
+}
+
+async function getStableFactoryBasePools(chain: Chain, stableFactory: string) {
+  const basePoolCountRes = await call({
+    chain,
+    target: stableFactory,
+    abi: abi.base_pool_count,
+  })
+
+  const basePoolCount = parseInt(basePoolCountRes.output)
+
+  const basePoolsRes = await multicall({
+    chain,
+    calls: range(0, basePoolCount).map((poolIdx) => ({ target: stableFactory, params: [poolIdx] })),
+    abi: abi.base_pool_list,
+  })
+
+  const basePoolsCoinsRes = await multicall({
+    chain,
+    calls: basePoolsRes
+      .filter(isSuccess)
+      .map((res) => res.output)
+      .flatMap((pool) => range(0, 4).map((coinIdx) => ({ target: pool, params: [coinIdx] }))),
+    abi: abi.coins,
+  })
+
+  // TODO:
+  // - make getPoolsContracts more generic ? all pools have the "coins" function to get underlyings
+  // - dissociate multicall errors and no coin error
 }
 
 export interface PoolContract extends Contract {
@@ -216,6 +271,7 @@ export async function getPoolsContracts(chain: Chain, registries: Partial<Record
   const [lpTokensRes, poolNamesRes, ...registriesCoins] = await Promise.all([
     multicall<string, [string], string>({
       chain,
+      // TODO: no need to fetch LP tokens for Factory regisitries
       calls,
       abi: abi.get_lp_token,
     }),
@@ -262,7 +318,7 @@ export async function getPoolsContracts(chain: Chain, registries: Partial<Record
         const contract: PoolContract = {
           chain,
           name: nameRes.success ? nameRes.output : undefined,
-          address: lpToken,
+          address: pool,
           lpToken,
           pool,
           registry: registriesAddresses[registryIdx],
