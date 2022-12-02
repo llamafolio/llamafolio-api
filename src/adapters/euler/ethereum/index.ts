@@ -21,11 +21,12 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
-    markets: (ctx, chain, contracts) => getERC20BalanceOf(ctx, chain, contracts as Token[]),
-  })
-
-  const healthFactor = await getHealthFactor(ctx, 'ethereum', lens)
+  const [balances, healthFactor] = await Promise.all([
+    resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+      markets: (ctx, chain, contracts) => getERC20BalanceOf(ctx, chain, contracts as Token[]),
+    }),
+    getHealthFactor(ctx, 'ethereum', lens),
+  ])
 
   return {
     balances,
