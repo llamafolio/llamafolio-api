@@ -12,13 +12,23 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
   const provider = providers['ethereum']
 
-  for (const address of addresses) {
-    const ensName = await provider.lookupAddress(address)
+  const ensNames = await Promise.all(
+    addresses.map(async (address) => {
+      try {
+        return await provider.lookupAddress(address)
+      } catch {
+        return
+      }
+    }),
+  )
 
-    const label = getLabel(address.toLowerCase(), ensName || undefined)
+  for (let addressIdx = 0; addressIdx < addresses.length; addressIdx++) {
+    const ensName = ensNames[addressIdx] || undefined
+
+    const label = getLabel(addresses[addressIdx].toLowerCase(), ensName)
 
     if (label) {
-      data[address] = label
+      data[addresses[addressIdx]] = label
     }
   }
 
