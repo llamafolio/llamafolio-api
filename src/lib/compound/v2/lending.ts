@@ -214,12 +214,15 @@ export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promis
   const nonZeroSupplyBalances = nonZerobalances.filter((supply) => supply.category === 'lend')
   const nonZeroBorrowBalances = nonZerobalances.filter((borrow) => borrow.category === 'borrow')
 
-  if (nonZeroSupplyBalances.length > 0 && nonZeroBorrowBalances.length === 0) {
-    return 10
+  // no borrowed balance
+  if (nonZeroBorrowBalances.length === 0) {
+    return
   }
 
-  const supplyPriced = await getPricedBalances(nonZeroSupplyBalances)
-  const borrowPriced = await getPricedBalances(nonZeroBorrowBalances)
+  const [supplyPriced, borrowPriced] = await Promise.all([
+    getPricedBalances(nonZeroSupplyBalances),
+    getPricedBalances(nonZeroBorrowBalances),
+  ])
 
   const supplyUSD = sum(
     supplyPriced.map((supply: any) => (+supply.balanceUSD * supply.collateralFactor) / Math.pow(10, 18)),
