@@ -62,11 +62,11 @@ export async function getVaults(chain: Chain, factoryArrakis: Contract) {
       pools.push({
         name: 'pool',
         displayName: 'Arrakis Pool',
-        chain: 'ethereum',
+        chain,
         address: pool,
       })
     })
   }
 
-  return getPairsDetails('ethereum', pools)
+  return getPairsDetails(chain, pools)
 }
