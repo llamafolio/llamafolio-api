@@ -1,5 +1,3 @@
-import { LLAMANODES_API_KEY } from '../../env'
-
 export declare type Chain =
   | 'ethereum'
   | 'bsc'
@@ -62,7 +60,7 @@ export const chains: IChainInfo[] = [
     chainId: 1,
     name: 'Ethereum',
     rpcUrl: [
-      `https://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      // `https://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79',
       'https://cloudflare-eth.com/',
       'https://main-light.eth.linkpool.io/',
@@ -74,7 +72,7 @@ export const chains: IChainInfo[] = [
     chainId: 250,
     name: 'Fantom',
     rpcUrl: [
-      `https://ftm.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      // `https://ftm.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://rpc.ankr.com/fantom',
       'https://rpc.ftm.tools/',
       'https://rpcapi.fantom.network',
@@ -97,7 +95,7 @@ export const chains: IChainInfo[] = [
     chainId: 137,
     name: 'Polygon',
     rpcUrl: [
-      `https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      // `https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://polygon-rpc.com/',
       'https://rpc-mainnet.maticvigil.com/',
     ],
