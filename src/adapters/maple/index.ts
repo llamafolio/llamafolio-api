@@ -7,4 +7,6 @@ const adapter: Adapter = {
   ethereum,
 }
 
+// TODO: Maple Stake, we need to find a way to get Balancer Pools
+
 export default adapter
