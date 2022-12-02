@@ -2,7 +2,6 @@ import { Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { resolveERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
@@ -68,23 +67,14 @@ export async function getPoolsContracts(chain: Chain, miniFairLaunch: Contract) 
     abi: abi.token,
   })
 
-  const { pools, underlyings } = await resolveERC20Details(chain, {
-    pools: poolsAddresses,
-    underlyings: underlyingsAddressesRes.map((res) => res.output),
-  })
-
-  for (let i = 0; i < pools.length; i++) {
-    const poolRes = pools[i]
-    const underlyingRes = underlyings[i]
-
-    if (!isSuccess(poolRes) || !isSuccess(underlyingRes)) {
-      continue
-    }
+  for (let poolIdx = 0; poolIdx < poolsAddresses.length; poolIdx++) {
+    const underlyingRes = underlyingsAddressesRes[poolIdx]
 
     contracts.push({
-      ...poolRes.output,
-      pid: i,
-      underlyings: [underlyingRes.output],
+      chain,
+      address: poolsAddresses[poolIdx],
+      pid: poolIdx,
+      underlyings: isSuccess(underlyingRes) ? [underlyingRes.output] : undefined,
     })
   }
 
