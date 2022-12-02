@@ -7,12 +7,12 @@ import { getVaults } from '../common/contracts'
 const factoryArrakis: Contract = {
   name: 'factory',
   displayName: 'Arrakis Factory',
-  chain: 'ethereum',
-  address: '0xEA1aFf9dbFfD1580F6b81A3ad3589E66652dB7D9',
+  chain: 'optimism',
+  address: '0x2845c6929d621e32B7596520C8a1E5a37e616F09',
 }
 
 export const getContracts = async () => {
-  const vaults = await getVaults('ethereum', factoryArrakis)
+  const vaults = await getVaults('optimism', factoryArrakis)
 
   return {
     contracts: { vaults },
@@ -21,7 +21,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'optimism', contracts, {
     vaults: getLpBalances,
   })
 
