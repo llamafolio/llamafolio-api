@@ -1,7 +1,8 @@
 import { success } from '@handlers/response'
-import { providers } from '@lib/providers'
+import { chainById } from '@lib/chains'
 import { getLabel } from '@llamafolio/labels'
 import { APIGatewayProxyHandler } from 'aws-lambda'
+import { ethers } from 'ethers'
 
 /**
  * Get labels of given addresses
@@ -10,13 +11,17 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const addresses = event.pathParameters?.address?.split(',') ?? []
   const data: { [key: string]: any } = {}
 
-  const provider = providers['ethereum']
+  const provider = new ethers.providers.StaticJsonRpcProvider(
+    chainById['ethereum'].rpcUrl[0],
+    chainById['ethereum'].chainId,
+  )
 
   const ensNames = await Promise.all(
     addresses.map(async (address) => {
       try {
-        return await provider.lookupAddress(address)
-      } catch {
+        const ensName = await provider.lookupAddress(ethers.utils.getAddress(address))
+        return ensName
+      } catch (error) {
         return
       }
     }),
