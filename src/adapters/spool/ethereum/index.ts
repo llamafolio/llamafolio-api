@@ -1,4 +1,5 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
 import { getPoolsBalances } from './balances'
 import { getPoolsContracts } from './contracts'
@@ -19,8 +20,10 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { pools }) => {
-  const balances = await getPoolsBalances(ctx, 'ethereum', pools || [])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    pools: getPoolsBalances,
+  })
 
   return {
     balances,

@@ -1,4 +1,6 @@
-import { GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
+import { Chain } from '@lib/chains'
 
 import { getFarmBalances } from './farm'
 import { getPoolsContracts, getPoolsSupplies } from './pools'
@@ -12,15 +14,17 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
-  const poolsSupplies = await getPoolsSupplies('ethereum', pools || [])
+async function getAllBalances(ctx: BaseContext, chain: Chain, pools: Contract[]) {
+  const poolsSupplies = await getPoolsSupplies(chain, pools)
+  return Promise.all([getFarmBalances(ctx, chain, poolsSupplies), getStakeBalances(ctx, chain, poolsSupplies)])
+}
 
-  const [farmBalances, stakeBalances] = await Promise.all([
-    getFarmBalances(ctx, 'ethereum', poolsSupplies),
-    getStakeBalances(ctx, 'ethereum', poolsSupplies),
-  ])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    pools: getAllBalances,
+  })
 
   return {
-    balances: [...farmBalances, ...stakeBalances],
+    balances,
   }
 }
