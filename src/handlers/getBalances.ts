@@ -2,15 +2,55 @@ import { selectBalancesByFromAddress } from '@db/balances'
 import { selectLastBalancesSnapshotsByFromAddress } from '@db/balances-snapshots'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
-import { PricedBalance } from '@lib/adapter'
+import { ContractStandard, ContractType } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { isHex } from '@lib/buf'
+import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
+function formatBalance(balance: any): FormattedBalance {
+  return {
+    type: balance.type,
+    standard: balance.standard,
+    name: balance.name,
+    chain: balance.chain,
+    address: balance.address,
+    symbol: balance.symbol,
+    decimals: balance.decimals,
+    category: balance.category,
+    adapterId: balance.adapterId,
+    stable: balance.stable,
+    amount: balance.amount,
+    balanceUSD: balance.balanceUSD,
+    timestamp: balance.timestamp,
+    underlyings: balance.underlyings?.map(formatBalance),
+    rewards: balance.rewards?.map(formatBalance),
+  }
+}
+
+export interface FormattedBalance {
+  type?: ContractType
+  standard?: ContractStandard
+  name?: string
+  chain: Chain
+  address: string
+  symbol?: string
+  decimals?: number
+  category: Category
+  adapterId: string
+  stable?: boolean
+  price?: number
+  amount?: string
+  balanceUSD?: number
+  timestamp?: number
+  underlyings?: FormattedBalance[]
+  rewards?: FormattedBalance[]
+}
+
 export interface BalancesProtocolChainResponse {
   id: Chain
-  balances: PricedBalance[]
+  balances: FormattedBalance[]
   healthFactor?: number
 }
 
@@ -58,7 +98,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
         chains.push({
           id: chain as Chain,
-          balances: balancesByChain[chain],
+          balances: balancesByChain[chain].map(formatBalance),
           healthFactor: balanceSnapshot?.healthFactor,
         })
       }
@@ -76,7 +116,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       protocols,
     }
 
-    return success(balancesResponse)
+    return success(balancesResponse, { maxAge: 60 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
