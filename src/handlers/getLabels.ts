@@ -19,7 +19,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const ensNames = await Promise.all(
     addresses.map(async (address) => {
       try {
-        const ensName = await provider.lookupAddress(ethers.utils.getAddress(address))
+        const ensName = await provider.lookupAddress(address)
         return ensName
       } catch (error) {
         return
