@@ -121,29 +121,32 @@ export function sanitizeBalances(balances: Balance[]) {
   for (const balance of balances) {
     if (!balance.amount) {
       console.error(`Missing balance amount`, balance)
-      return false
+      continue
     }
+
+    const sanitizedBalance = { ...balance }
 
     if (balance.underlyings) {
       if (balance.underlyings.length === 1 && (balance.underlyings?.[0] as Balance).amount == null) {
         if (balance.decimals && balance.underlyings[0].decimals) {
           const mantissa = Math.abs(balance.decimals - balance.underlyings[0].decimals)
 
-          balance.underlyings = balance.underlyings.map((underlying) => ({
+          sanitizedBalance.underlyings = balance.underlyings.map((underlying) => ({
             ...underlying,
             amount: mantissa > 0 ? balance.amount.div(BN_TEN.pow(mantissa)) : balance.amount.mul(BN_TEN.pow(mantissa)),
           }))
         }
       }
-
-      if (balance.rewards) {
-        balance.rewards = balance.rewards.map((reward) => ({
-          ...reward,
-          amount: reward.amount || BN_ZERO,
-        }))
-      }
     }
-    sanitizedBalances.push(balance)
+
+    if (balance.rewards) {
+      sanitizedBalance.rewards = balance.rewards.map((reward) => ({
+        ...reward,
+        amount: reward.amount || BN_ZERO,
+      }))
+    }
+
+    sanitizedBalances.push(sanitizedBalance)
   }
 
   return sanitizedBalances
