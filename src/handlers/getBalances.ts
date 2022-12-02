@@ -21,6 +21,7 @@ function formatBalance(balance: any): FormattedBalance {
     category: balance.category,
     adapterId: balance.adapterId,
     stable: balance.stable,
+    price: balance.price,
     amount: balance.amount,
     balanceUSD: balance.balanceUSD,
     timestamp: balance.timestamp,
