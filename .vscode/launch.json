@@ -16,6 +16,14 @@
       "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "adapter-balances", "${input:adapter}", "${input:chain}", "${input:address}"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Run revalidate contracts",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "revalidate-contracts", "${input:adapter}", "${input:chain}"]
     }
   ],
   "inputs": [

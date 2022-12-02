@@ -1,8 +1,8 @@
 import { Balance, BaseBalance, BaseContext, BaseContract, ContractType, GetContractsHandler } from '@lib/adapter'
 import { Chain } from '@lib/chains'
-import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
+import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
-import { Call, multicall, MultiCallResult } from '@lib/multicall'
+import { Call, multicall, MultiCallParams, MultiCallResult } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -51,12 +51,17 @@ export async function getBalances(ctx: BaseContext, contracts: BaseContract[]) {
   return coinsBalances.concat(tokensBalances)
 }
 
-export async function getBalancesCalls(chain: Chain, calls: Call[]) {
+export async function multicallBalances(params: MultiCallParams) {
+  if (!params.chain) {
+    return []
+  }
+
+  const chain = params.chain as Chain
   const coinsCallsAddresses: string[] = []
   const tokensCalls: Call[] = []
   const res: MultiCallResult[] = []
 
-  for (const call of calls) {
+  for (const call of params.calls) {
     if (call.target === ethers.constants.AddressZero) {
       // native chain coin
       // @ts-ignore
@@ -83,13 +88,13 @@ export async function getBalancesCalls(chain: Chain, calls: Call[]) {
   const tokensBalancesRes = await multicall({
     chain,
     calls: tokensCalls,
-    abi: erc20Abi.balanceOf,
+    abi: params.abi,
   })
 
   let coinIdx = 0
   let tokenIdx = 0
-  for (let i = 0; i < calls.length; i++) {
-    const call = calls[i]
+  for (let i = 0; i < params.calls.length; i++) {
+    const call = params.calls[i]
 
     if (call.target === ethers.constants.AddressZero) {
       // native chain coin

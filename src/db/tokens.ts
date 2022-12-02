@@ -110,6 +110,18 @@ export async function selectChainTokens(client: PoolClient, chain: Chain, tokens
   return fromStorage(tokensRes.rows)
 }
 
+export async function selectUndecodedChainAddresses(client: PoolClient, chain: Chain) {
+  const tokensRes = await client.query(
+    format(
+      `select distinct(token_address) from %I.token_transfers where token_address not in (select address from ethereum.tokens) limit 1000;`,
+      chain,
+    ),
+    [],
+  )
+
+  return tokensRes.rows.map(({ token_address }) => bufToStr(token_address))
+}
+
 export function insertTokens(client: PoolClient, chain: Chain, tokens: Token[]) {
   const values = toStorage(tokens).map(toRow)
 
