@@ -65,11 +65,10 @@ export async function getLpBalances(ctx: BaseContext, chain: Chain, contracts: C
       continue
     }
 
-    nonZeroBalances[i].underlyings![0].amount = BigNumber.from(nonZeroBalances[i].amount)
+    ;(nonZeroBalances[i].underlyings![0] as Balance).amount = BigNumber.from(nonZeroBalances[i].amount)
       .mul(underlyingBalancesRes[i].output.amount0Current)
       .div(totalSupplyRes[i].output)
-
-    nonZeroBalances[i].underlyings![1].amount = BigNumber.from(nonZeroBalances[i].amount)
+    ;(nonZeroBalances[i].underlyings![1] as Balance).amount = BigNumber.from(nonZeroBalances[i].amount)
       .mul(underlyingBalancesRes[i].output.amount1Current)
       .div(totalSupplyRes[i].output)
 
