@@ -183,6 +183,7 @@ export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
       address: pools[i],
       amount: stakeAmount[i],
       rewards: [{ ...(JOE.rewards?.[i] as Balance), amount: rewardsAmount[i] }],
+      underlyings: [JOE],
       category: 'stake',
     }
     balances.push(balance)

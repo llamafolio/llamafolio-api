@@ -2,7 +2,7 @@ import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20BalanceOf, resolveERC20Details } from '@lib/erc20'
+import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -39,7 +39,7 @@ export async function getFarmContracts(chain: Chain, contract: Contract): Promis
     },
   })
 
-  const poolsAddresses = getPoolsAddresses.filter((res) => res.success).map((res) => res.output)
+  const poolsAddresses = getPoolsAddresses.filter(isSuccess).map((res) => res.output)
 
   const getUnderlyingsTokensAddresses = await multicall({
     chain,
@@ -56,23 +56,19 @@ export async function getFarmContracts(chain: Chain, contract: Contract): Promis
     },
   })
 
-  const { pools, underlyings } = await resolveERC20Details(chain, {
-    pools: poolsAddresses,
-    underlyings: getUnderlyingsTokensAddresses.map((res) => res.output),
-  })
+  for (let poolIdx = 0; poolIdx < poolsAddresses.length; poolIdx++) {
+    const pool = poolsAddresses[poolIdx]
+    const underlyingRes = getUnderlyingsTokensAddresses[poolIdx]
 
-  for (let i = 0; i < pools.length; i++) {
-    const pool = pools[i]
-    const underlying = underlyings[i]
-
-    if (!isSuccess(pool) || !isSuccess(underlying)) {
+    if (!isSuccess(underlyingRes)) {
       continue
     }
 
     contracts.push({
-      ...pool.output,
-      underlyings: [underlying.output],
-      rewards: [underlying.output],
+      chain,
+      address: pool,
+      underlyings: [underlyingRes.output],
+      rewards: [underlyingRes.output],
     })
   }
 
