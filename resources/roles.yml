@@ -2,7 +2,7 @@ Resources:
   handleWebsocketRequestsRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: ${self:service}-${self:provider.stage}-handleWebsocketRequestsRole
+      RoleName: ${self:service}-${self:custom.stage}-handleWebsocketRequestsRole
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -12,7 +12,7 @@ Resources:
                 - lambda.amazonaws.com
             Action: sts:AssumeRole
       Policies:
-        - PolicyName: ${self:service}-${self:provider.stage}-handleWebsocketRequestsPolicy
+        - PolicyName: ${self:service}-${self:custom.stage}-handleWebsocketRequestsPolicy
           PolicyDocument:
             Version: '2012-10-17'
             Statement:
