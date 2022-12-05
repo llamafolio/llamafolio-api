@@ -40,6 +40,7 @@ import shibaswap from '@adapters/shibaswap'
 import spartacus from '@adapters/spartacus'
 import spiritswap from '@adapters/spiritswap'
 import spookyswap from '@adapters/spookyswap'
+import spool from '@adapters/spool'
 import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
 import strike from '@adapters/strike'
@@ -100,8 +101,9 @@ export const adapters: Adapter[] = [
   shibaswap,
   spartacus,
   spiritswap,
-  stakewise,
   spookyswap,
+  spool,
+  stakewise,
   stargate,
   strike,
   sushiswap,
