@@ -7,4 +7,6 @@ const adapter: Adapter = {
   ethereum,
 }
 
+// TODO : Find the logic around strategies used to farm
+
 export default adapter
