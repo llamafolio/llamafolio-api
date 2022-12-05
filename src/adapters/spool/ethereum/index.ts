@@ -34,7 +34,6 @@ export const getContracts = async () => {
 
   return {
     contracts: { spoolStaking, genesis },
-    revalidate: 60 * 60,
   }
 }
 
