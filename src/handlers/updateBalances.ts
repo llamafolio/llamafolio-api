@@ -76,7 +76,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
             Data: JSON.stringify({
               event: 'updateBalances',
               updatedAt: lastUpdatedAt.toISOString(),
-              data: 'cache',
+              cache: true,
             }),
           })
           .promise()
@@ -258,7 +258,10 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     await apiGatewayManagementApi
       .postToConnection({
         ConnectionId: connectionId,
-        Data: JSON.stringify(balancesResponse),
+        Data: JSON.stringify({
+          event: 'updateBalances',
+          ...balancesResponse,
+        }),
       })
       .promise()
 
