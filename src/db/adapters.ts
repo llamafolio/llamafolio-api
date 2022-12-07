@@ -24,6 +24,7 @@ export interface AdapterStorable {
   chain: Chain
   contracts_expire_at?: Date
   contracts_revalidate_props?: { [key: string]: any }
+  created_at?: Date
 }
 
 export function fromStorage(adaptersStorage: AdapterStorage[]) {
@@ -68,6 +69,7 @@ export function toRow(adapterStorable: AdapterStorable) {
     adapterStorable.chain,
     adapterStorable.contracts_expire_at,
     adapterStorable.contracts_revalidate_props,
+    adapterStorable.created_at,
   ]
 }
 
@@ -75,13 +77,14 @@ export function toStorage(adapters: Adapter[]) {
   const adaptersStorable: AdapterStorable[] = []
 
   for (const adapter of adapters) {
-    const { id, chain, contractsExpireAt, contractsRevalidateProps } = adapter
+    const { id, chain, contractsExpireAt, contractsRevalidateProps, createdAt } = adapter
 
     const adapterStorable: AdapterStorable = {
       id,
       chain,
       contracts_expire_at: contractsExpireAt,
       contracts_revalidate_props: contractsRevalidateProps,
+      created_at: createdAt,
     }
 
     adaptersStorable.push(adapterStorable)
@@ -144,7 +147,35 @@ export function insertAdapters(client: PoolClient, adapters: Adapter[]) {
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          'INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props) VALUES %L ON CONFLICT DO NOTHING;',
+          'INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, created_at) VALUES %L ON CONFLICT DO NOTHING;',
+          chunk,
+        ),
+        [],
+      ),
+    ),
+  )
+}
+
+export function upsertAdapters(client: PoolClient, adapters: Adapter[]) {
+  const values = toStorage(adapters).map(toRow)
+
+  if (values.length === 0) {
+    return
+  }
+
+  return Promise.all(
+    sliceIntoChunks(values, 200).map((chunk) =>
+      client.query(
+        format(
+          `
+          INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, created_at)
+          VALUES %L
+          ON CONFLICT (id, chain) 
+          DO 
+            UPDATE SET 
+              contracts_expire_at = EXCLUDED.contracts_expire_at,
+              contracts_revalidate_props = EXCLUDED.contracts_revalidate_props
+          ;`,
           chunk,
         ),
         [],

@@ -1,6 +1,6 @@
 import path from 'path'
 
-import { Adapter as DBAdapter, deleteAdapterById, insertAdapters, selectAdapter } from '../src/db/adapters'
+import { Adapter as DBAdapter, selectAdapter, upsertAdapters } from '../src/db/adapters'
 import { deleteContractsByAdapter, insertContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter } from '../src/lib/adapter'
@@ -62,16 +62,13 @@ async function main() {
         chain: adapterChains[i],
         contractsExpireAt: expire_at,
         contractsRevalidateProps: config.revalidateProps,
+        createdAt: now,
       }
     })
 
     await client.query('BEGIN')
 
-    // Delete old adapters
-    await deleteAdapterById(client, adapter.id)
-
-    // Insert new adapters
-    await insertAdapters(client, dbAdapters)
+    await upsertAdapters(client, dbAdapters)
 
     // Delete old contracts unless it's a revalidate.
     // In such case we want to add new contracts, not replace the old ones
