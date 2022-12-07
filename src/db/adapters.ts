@@ -8,6 +8,7 @@ export interface Adapter {
   chain: Chain
   contractsExpireAt?: Date
   contractsRevalidateProps?: { [key: string]: any }
+  createdAt: Date
 }
 
 export interface AdapterStorage {
@@ -15,6 +16,7 @@ export interface AdapterStorage {
   chain: string
   contracts_expire_at: string | null
   contracts_revalidate_props: { [key: string]: any } | null
+  created_at: string
 }
 
 export interface AdapterStorable {
@@ -33,6 +35,25 @@ export function fromStorage(adaptersStorage: AdapterStorage[]) {
       chain: adapterStorage.chain as Chain,
       contractsExpireAt: adapterStorage.contracts_expire_at ? new Date(adapterStorage.contracts_expire_at) : undefined,
       contractsRevalidateProps: adapterStorage.contracts_revalidate_props || {},
+      createdAt: new Date(adapterStorage.created_at),
+    }
+
+    adapters.push(adapter)
+  }
+
+  return adapters
+}
+
+export function fromPartialStorage(adaptersStorage: Partial<AdapterStorage>[]) {
+  const adapters: Partial<Adapter>[] = []
+
+  for (const adapterStorage of adaptersStorage) {
+    const adapter: Partial<Adapter> = {
+      id: adapterStorage?.id,
+      chain: adapterStorage?.chain as Chain,
+      contractsExpireAt: adapterStorage.contracts_expire_at ? new Date(adapterStorage.contracts_expire_at) : undefined,
+      contractsRevalidateProps: adapterStorage?.contracts_revalidate_props || {},
+      createdAt: adapterStorage.created_at ? new Date(adapterStorage.created_at) : undefined,
     }
 
     adapters.push(adapter)
@@ -85,6 +106,31 @@ export async function selectAdaptersContractsExpired(client: PoolClient) {
   const adaptersRes = await client.query(`select * from adapters where contracts_expire_at <= now();`, [])
 
   return fromStorage(adaptersRes.rows)
+}
+
+export async function selectLatestCreatedAdapters(client: PoolClient, limit = 5) {
+  // select x last added protocols (no matter which chain) and collect
+  // all of their chains we support
+  const adaptersRes = await client.query(
+    `
+    with last_adapters as (
+      select distinct(id), created_at from adapters
+        where id <> 'wallet' and created_at is not null
+        order by created_at desc
+        limit $1
+    )
+    select id, array_agg(chain) as chains, created_at from (
+      select * from adapters where id in (select id from last_adapters)
+    ) as _ group by (id, created_at);
+    `,
+    [limit],
+  )
+
+  return adaptersRes.rows.map((row) => ({
+    id: row.id as string,
+    chains: row.chains as Chain[],
+    createdAt: new Date(row.created_at),
+  }))
 }
 
 export function insertAdapters(client: PoolClient, adapters: Adapter[]) {
