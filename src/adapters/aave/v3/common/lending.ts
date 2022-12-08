@@ -76,14 +76,12 @@ export async function getLendingPoolContracts(
       {
         chain,
         address: aToken,
-        priceSubstitute: underlyingToken,
         underlyings: [underlyingToken],
         category: 'lend',
       },
       {
         chain,
         address: stableDebtToken,
-        priceSubstitute: underlyingToken,
         underlyings: [underlyingToken],
         type: 'debt',
         category: 'borrow',
@@ -92,7 +90,6 @@ export async function getLendingPoolContracts(
       {
         chain,
         address: variableDebtToken,
-        priceSubstitute: underlyingToken,
         underlyings: [underlyingToken],
         type: 'debt',
         category: 'borrow',

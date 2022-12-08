@@ -1,7 +1,5 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
-import { getERC20BalanceOf } from '@lib/erc20'
-import { Token } from '@lib/token'
-import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
+import { getPairsBalances } from '@lib/uniswap/v2/pair'
 import { gql, request } from 'graphql-request'
 
 async function getPoolsHighestVolume() {
@@ -70,8 +68,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { pairs }) => {
-  let lpBalances = await getERC20BalanceOf(ctx, 'ethereum', (pairs || []) as Token[])
-  lpBalances = await getUnderlyingBalances('ethereum', lpBalances)
+  const lpBalances = await getPairsBalances(ctx, 'ethereum', pairs || [])
 
   return {
     balances: lpBalances.map((balance) => ({ ...balance, category: 'farm' })),

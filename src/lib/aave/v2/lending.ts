@@ -150,14 +150,12 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
       {
         chain,
         address: aToken,
-        priceSubstitute: underlyingToken,
         underlyings: [underlyingToken],
         category: 'lend',
       },
       {
         chain,
         address: stableDebtToken,
-        priceSubstitute: underlyingToken,
         underlyings: [underlyingToken],
         type: 'debt',
         category: 'borrow',
@@ -166,7 +164,6 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
       {
         chain,
         address: variableDebtToken,
-        priceSubstitute: underlyingToken,
         underlyings: [underlyingToken],
         type: 'debt',
         category: 'borrow',

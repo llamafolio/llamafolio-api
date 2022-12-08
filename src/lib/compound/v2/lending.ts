@@ -102,7 +102,6 @@ export async function getMarketsContracts(
       chain,
       address: cToken,
       collateralFactor: marketRes.output.collateralFactorMantissa,
-      priceSubstitute: underlying,
       underlyings: [underlying],
     })
   }
