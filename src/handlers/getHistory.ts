@@ -29,6 +29,10 @@ interface Transaction {
   token_transfers: TokenTransfer[]
 }
 
+/**
+ * Get the history of a given address
+ * Returns an array of transactions for all the chains including token transfers.
+ */
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
