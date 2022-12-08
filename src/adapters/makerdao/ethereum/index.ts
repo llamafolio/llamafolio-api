@@ -1,7 +1,7 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getProxiesBalances } from './balances'
+import { BalanceWithExtraProps, getHealthFactor, getProxiesBalances } from './balances'
 import { getCdpidFromProxiesAddresses } from './cdpid'
 import { getInstaDappContracts, getMakerContracts } from './proxies'
 
@@ -66,7 +66,10 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     Vat: (...args) => getProxiesBalances(...args, IlkRegistry, Spot, cdpid),
   })
 
+  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
+
   return {
     balances,
+    healthFactor,
   }
 }

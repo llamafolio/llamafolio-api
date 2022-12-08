@@ -246,44 +246,45 @@ const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHand
   return balances
 }
 
-/**
- * ******************************************
- * ********** TO DO : HEALTHFACTOR **********
- * ******************************************
- */
+export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promise<number[] | undefined> {
+  const healthFactor: number[] = []
+  const nonZeroBalances = balances.filter((balance) => balance.amount.gt(0))
 
-// export async function getHealthFactor(balances: BalanceWithExtraProps[]) {
-//   const nonZeroBalances = balances.filter((balance) => balance.amount.gt(0))
+  const lends = nonZeroBalances.filter((lend) => lend.category === 'lend')
+  const borrows = nonZeroBalances.filter((lend) => lend.category === 'borrow')
 
-//   const lends = nonZeroBalances.filter((lend) => lend.category === 'lend')
-//   const borrows = nonZeroBalances.filter((lend) => lend.category === 'borrow')
+  if (borrows.length === 0) {
+    return
+  }
 
-//   if (borrows.length === 0) {
-//     return
-//   }
+  for (let i = 0; i < lends.length; i++) {
+    const lend = lends[i]
+    const borrow = borrows[i]
 
-//   for (let i = 0; i < lends.length; i++) {
-//     const lend = lends[i]
-//     const borrow = borrows[i]
+    /**
+     * Art: wad
+     * rate: ray
+     * spot: ray
+     * mat: ray
+     * formula: Collateralization Ratio = Vat.urn.ink * Vat.ilk.spot * Spot.ilk.mat / (Vat.urn.art * Vat.ilk.rate)
+     * Vat.urn.ink = balance.amount (lend)
+     * Vat.ilk.spot = balance.spot
+     * Spot.ilk.mat = balance.mat
+     * (Vat.urn.art * Vat.ilk.rate) = balance.amount (borrow)
+     */
 
-//     /**
-//      * Art: wad
-//      * rate: ray
-//      * spot: ray
-//      * mat: ray
-//      * formula: Collateralization Ratio = Vat.urn.ink * Vat.ilk.spot * Spot.ilk.mat / (Vat.urn.art * Vat.ilk.rate)
-//      */
+    if (lend.mat && lend.spot && borrow.amount.gt(0)) {
+      const PRECISION_FACTOR = 1000 // to prevent the risk of rounding numbers since BigNumber hates floating numbers
+      const collateralizationRatio = lend.amount
+        .mul(PRECISION_FACTOR)
+        .mul(lend.mat)
+        .div(DECIMALS.ray)
+        .mul(lend.spot)
+        .div(DECIMALS.ray)
+        .div(borrow.amount)
 
-//     if (lend.mat && lend.spot) {
-//       const CollateralizationRatio = lend.amount
-//         .mul(100)
-//         .mul(lend.mat.div(DECIMALS.ray))
-//         .mul(lend.spot.div(DECIMALS.ray))
-//         .div(borrow.amount)
-
-//       const healthFactor = +CollateralizationRatio.div(100)
-
-//       return healthFactor
-//     }
-//   }
-// }
+      healthFactor.push(+collateralizationRatio / PRECISION_FACTOR)
+    }
+  }
+  return healthFactor
+}
