@@ -9,27 +9,6 @@ import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
-function formatBalance(balance: any): FormattedBalance {
-  return {
-    type: balance.type,
-    standard: balance.standard,
-    name: balance.name,
-    chain: balance.chain,
-    address: balance.address,
-    symbol: balance.symbol,
-    decimals: balance.decimals,
-    category: balance.category,
-    adapterId: balance.adapterId,
-    stable: balance.stable,
-    price: balance.price,
-    amount: balance.amount,
-    balanceUSD: balance.balanceUSD,
-    timestamp: balance.timestamp,
-    underlyings: balance.underlyings?.map(formatBalance),
-    rewards: balance.rewards?.map(formatBalance),
-  }
-}
-
 export interface FormattedBalance {
   type?: ContractType
   standard?: ContractStandard
@@ -47,6 +26,53 @@ export interface FormattedBalance {
   timestamp?: number
   underlyings?: FormattedBalance[]
   rewards?: FormattedBalance[]
+}
+
+/**
+ * If there's only one underlying, replace balance by its underlying
+ * @param balance
+ */
+function unwrapUnderlyings(balance: FormattedBalance) {
+  if (balance.underlyings?.length === 1) {
+    const underlying = balance.underlyings[0]
+
+    return {
+      ...balance,
+      address: underlying.address,
+      symbol: underlying.symbol,
+      decimals: underlying.decimals,
+      stable: underlying.stable,
+      price: underlying.price,
+      amount: underlying.amount,
+      balanceUSD: underlying.balanceUSD,
+      underlyings: undefined,
+    }
+  }
+
+  return balance
+}
+
+export function formatBalance(balance: any): FormattedBalance {
+  const formattedBalance: FormattedBalance = {
+    type: balance.type,
+    standard: balance.standard,
+    name: balance.name,
+    chain: balance.chain,
+    address: balance.address,
+    symbol: balance.symbol,
+    decimals: balance.decimals,
+    category: balance.category,
+    adapterId: balance.adapterId,
+    stable: balance.stable,
+    price: balance.price,
+    amount: balance.amount,
+    balanceUSD: balance.balanceUSD,
+    timestamp: balance.timestamp,
+    underlyings: balance.underlyings?.map(formatBalance),
+    rewards: balance.rewards?.map(formatBalance),
+  }
+
+  return unwrapUnderlyings(formattedBalance)
 }
 
 export interface BalancesProtocolChainResponse {
