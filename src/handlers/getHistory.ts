@@ -52,9 +52,11 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     limit = 1000
   }
 
-  const page = parseInt(params?.page ?? '1')
+  const offset = params?.page && params?.page !== '0' ? ((parseInt(params?.page) - 1) * limit).toFixed(0) : undefined
 
-  const { txs } = await getTransactionHistory(address.toLowerCase(), limit, page, {}, INDEXER_HEADERS)
+  const offsetNumber = parseInt(offset ?? '0')
+
+  const { txs } = await getTransactionHistory(address.toLowerCase(), limit, offsetNumber, {}, INDEXER_HEADERS)
 
   const txParsed: Transaction[] = txs.map((tx) => {
     const chain = tx.chain === 'mainnet' ? 'ethereum' : tx.chain
