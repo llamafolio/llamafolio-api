@@ -62,8 +62,6 @@ export async function getUnderlyingsBalancesInPoolsFromLPTokensBalances(
 
     const totalSupply = BigNumber.from(getTotalSupply.output)
 
-    // const underlyingsBalances = BigNumber.from(getUnderlyingsBalances.output.map((res) => BigNumber.from(res.output))
-
     /**
      *  Updating pool amounts from the fraction of each underlyings
      */
@@ -75,7 +73,9 @@ export async function getUnderlyingsBalancesInPoolsFromLPTokensBalances(
       const underlying = underlyings[j]
 
       underlyingsFractionated.push({
-        ...underlying,
+        chain,
+        address: underlying.address,
+        symbol: underlying.symbol,
         amount: contract.amount.mul(underlyingBalance).div(totalSupply),
         decimals: underlying.decimals,
       })
