@@ -46,10 +46,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
   const params = event.queryStringParameters
 
-  let limit = parseInt(params?.limit ?? '1000')
+  let limit = parseInt(params?.limit ?? '100')
 
-  if (limit > 1000) {
-    limit = 1000
+  if (limit > 100) {
+    limit = 100
   }
 
   const offset = params?.page && params?.page !== '0' ? ((parseInt(params?.page) - 1) * limit).toFixed(0) : undefined
