@@ -28,6 +28,7 @@ import lido from '@adapters/lido'
 import lifeDao from '@adapters/life-dao'
 import liquity from '@adapters/liquity'
 import looksRare from '@adapters/looksrare'
+import makerDao from '@adapters/makerdao'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
 import olympusDao from '@adapters/olympus-dao'
@@ -40,6 +41,7 @@ import shibaswap from '@adapters/shibaswap'
 import spartacus from '@adapters/spartacus'
 import spiritswap from '@adapters/spiritswap'
 import spookyswap from '@adapters/spookyswap'
+import spool from '@adapters/spool'
 import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
 import strike from '@adapters/strike'
@@ -89,6 +91,7 @@ export const adapters: Adapter[] = [
   lifeDao,
   liquity,
   looksRare,
+  makerDao,
   nemesisDao,
   nexusMutual,
   olympusDao,
@@ -100,8 +103,9 @@ export const adapters: Adapter[] = [
   shibaswap,
   spartacus,
   spiritswap,
-  stakewise,
   spookyswap,
+  spool,
+  stakewise,
   stargate,
   strike,
   sushiswap,

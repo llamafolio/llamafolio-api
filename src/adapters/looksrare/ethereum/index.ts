@@ -1,5 +1,5 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
-import { isNotNullish } from '@lib/type'
+import { resolveBalances } from '@lib/balance'
 
 import { getCompounderBalances, getStakeBalances } from './balances'
 
@@ -30,13 +30,11 @@ export const getContracts = () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { staking, compounder }) => {
-  const [stakeBalances, compounderBalances] = await Promise.all([
-    getStakeBalances(ctx, 'ethereum', staking),
-    getCompounderBalances(ctx, 'ethereum', compounder),
-  ])
-
-  const balances = [stakeBalances, compounderBalances].filter(isNotNullish)
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+    staking: getStakeBalances,
+    compounder: getCompounderBalances,
+  })
 
   return {
     balances,

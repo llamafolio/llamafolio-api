@@ -7,6 +7,15 @@ import { abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers/lib/ethers'
 
+const TIME: Contract = {
+  name: 'Time',
+  displayName: 'Time Token',
+  chain: 'avax',
+  address: '0xb54f16fb19478766a268f172c9480f8da1a7c9c3',
+  decimals: 9,
+  symbol: 'TIME',
+}
+
 export async function getFormattedStakeBalance(ctx: BaseContext, chain: Chain, wMEMO: Contract): Promise<Balance> {
   const balanceOfRes = await call({
     chain,
@@ -39,6 +48,7 @@ export async function getFormattedStakeBalance(ctx: BaseContext, chain: Chain, w
     address: wMEMO.address,
     symbol: wMEMO.symbol,
     decimals: 9,
+    underlyings: [TIME],
     amount: formattedBalanceOf,
     category: 'stake',
   }

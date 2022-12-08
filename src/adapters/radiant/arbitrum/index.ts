@@ -1,4 +1,7 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
+import { Chain } from '@lib/chains'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
 import { getMultiFeeDistributionBalances } from '@lib/geist/stake'
 import { Token } from '@lib/token'
@@ -44,20 +47,27 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { pools }) => {
-  const lendingPoolBalances = await getLendingPoolBalances(ctx, 'arbitrum', pools || [], {
-    chefIncentivesController: chefIncentivesControllerContract,
-  })
+function getLendingBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+  return Promise.all([
+    getLendingPoolBalances(ctx, chain, contracts, { chefIncentivesController: chefIncentivesControllerContract }),
+    getMultiFeeDistributionBalances(ctx, chain, contracts, {
+      multiFeeDistribution: multiFeeDistributionContract,
+      lendingPool: lendingPoolContract,
+      stakingToken: radiantToken,
+    }),
+  ])
+}
 
-  const multiFeeDistributionBalances = await getMultiFeeDistributionBalances(ctx, 'arbitrum', pools || [], {
-    multiFeeDistribution: multiFeeDistributionContract,
-    lendingPool: lendingPoolContract,
-    stakingToken: radiantToken,
-  })
-
-  const balances = lendingPoolBalances.concat(multiFeeDistributionBalances)
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const [balances, healthFactor] = await Promise.all([
+    resolveBalances<typeof getContracts>(ctx, 'arbitrum', contracts, {
+      pools: getLendingBalances,
+    }),
+    getLendingPoolHealthFactor(ctx, 'arbitrum', lendingPoolContract),
+  ])
 
   return {
     balances,
+    healthFactor,
   }
 }

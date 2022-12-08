@@ -8,6 +8,7 @@ export interface Adapter {
   chain: Chain
   contractsExpireAt?: Date
   contractsRevalidateProps?: { [key: string]: any }
+  createdAt: Date
 }
 
 export interface AdapterStorage {
@@ -15,6 +16,7 @@ export interface AdapterStorage {
   chain: string
   contracts_expire_at: string | null
   contracts_revalidate_props: { [key: string]: any } | null
+  created_at: string
 }
 
 export interface AdapterStorable {
@@ -22,6 +24,7 @@ export interface AdapterStorable {
   chain: Chain
   contracts_expire_at?: Date
   contracts_revalidate_props?: { [key: string]: any }
+  created_at?: Date
 }
 
 export function fromStorage(adaptersStorage: AdapterStorage[]) {
@@ -33,6 +36,25 @@ export function fromStorage(adaptersStorage: AdapterStorage[]) {
       chain: adapterStorage.chain as Chain,
       contractsExpireAt: adapterStorage.contracts_expire_at ? new Date(adapterStorage.contracts_expire_at) : undefined,
       contractsRevalidateProps: adapterStorage.contracts_revalidate_props || {},
+      createdAt: new Date(adapterStorage.created_at),
+    }
+
+    adapters.push(adapter)
+  }
+
+  return adapters
+}
+
+export function fromPartialStorage(adaptersStorage: Partial<AdapterStorage>[]) {
+  const adapters: Partial<Adapter>[] = []
+
+  for (const adapterStorage of adaptersStorage) {
+    const adapter: Partial<Adapter> = {
+      id: adapterStorage?.id,
+      chain: adapterStorage?.chain as Chain,
+      contractsExpireAt: adapterStorage.contracts_expire_at ? new Date(adapterStorage.contracts_expire_at) : undefined,
+      contractsRevalidateProps: adapterStorage?.contracts_revalidate_props || {},
+      createdAt: adapterStorage.created_at ? new Date(adapterStorage.created_at) : undefined,
     }
 
     adapters.push(adapter)
@@ -47,6 +69,7 @@ export function toRow(adapterStorable: AdapterStorable) {
     adapterStorable.chain,
     adapterStorable.contracts_expire_at,
     adapterStorable.contracts_revalidate_props,
+    adapterStorable.created_at,
   ]
 }
 
@@ -54,13 +77,14 @@ export function toStorage(adapters: Adapter[]) {
   const adaptersStorable: AdapterStorable[] = []
 
   for (const adapter of adapters) {
-    const { id, chain, contractsExpireAt, contractsRevalidateProps } = adapter
+    const { id, chain, contractsExpireAt, contractsRevalidateProps, createdAt } = adapter
 
     const adapterStorable: AdapterStorable = {
       id,
       chain,
       contracts_expire_at: contractsExpireAt,
       contracts_revalidate_props: contractsRevalidateProps,
+      created_at: createdAt,
     }
 
     adaptersStorable.push(adapterStorable)
@@ -87,6 +111,31 @@ export async function selectAdaptersContractsExpired(client: PoolClient) {
   return fromStorage(adaptersRes.rows)
 }
 
+export async function selectLatestCreatedAdapters(client: PoolClient, limit = 5) {
+  // select x last added protocols (no matter which chain) and collect
+  // all of their chains we support
+  const adaptersRes = await client.query(
+    `
+    with last_adapters as (
+      select distinct(id), created_at from adapters
+        where id <> 'wallet' and created_at is not null
+        order by created_at desc
+        limit $1
+    )
+    select id, array_agg(chain) as chains, created_at from (
+      select * from adapters where id in (select id from last_adapters)
+    ) as _ group by (id, created_at);
+    `,
+    [limit],
+  )
+
+  return adaptersRes.rows.map((row) => ({
+    id: row.id as string,
+    chains: row.chains as Chain[],
+    createdAt: new Date(row.created_at),
+  }))
+}
+
 export function insertAdapters(client: PoolClient, adapters: Adapter[]) {
   const values = toStorage(adapters).map(toRow)
 
@@ -98,7 +147,35 @@ export function insertAdapters(client: PoolClient, adapters: Adapter[]) {
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          'INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props) VALUES %L ON CONFLICT DO NOTHING;',
+          'INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, created_at) VALUES %L ON CONFLICT DO NOTHING;',
+          chunk,
+        ),
+        [],
+      ),
+    ),
+  )
+}
+
+export function upsertAdapters(client: PoolClient, adapters: Adapter[]) {
+  const values = toStorage(adapters).map(toRow)
+
+  if (values.length === 0) {
+    return
+  }
+
+  return Promise.all(
+    sliceIntoChunks(values, 200).map((chunk) =>
+      client.query(
+        format(
+          `
+          INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, created_at)
+          VALUES %L
+          ON CONFLICT (id, chain) 
+          DO 
+            UPDATE SET 
+              contracts_expire_at = EXCLUDED.contracts_expire_at,
+              contracts_revalidate_props = EXCLUDED.contracts_revalidate_props
+          ;`,
           chunk,
         ),
         [],

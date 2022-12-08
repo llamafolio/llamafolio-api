@@ -1,8 +1,8 @@
-import { Balance, BaseBalance, BaseContext, BaseContract, GetContractsHandler } from '@lib/adapter'
+import { Balance, BaseBalance, BaseContext, BaseContract, ContractType, GetContractsHandler } from '@lib/adapter'
 import { Chain } from '@lib/chains'
-import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
-import { Call, multicall, MultiCallResult } from '@lib/multicall'
+import { getERC20BalanceOf } from '@lib/erc20'
+import { BN_TEN, BN_ZERO } from '@lib/math'
+import { Call, multicall, MultiCallParams, MultiCallResult } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -51,12 +51,17 @@ export async function getBalances(ctx: BaseContext, contracts: BaseContract[]) {
   return coinsBalances.concat(tokensBalances)
 }
 
-export async function getBalancesCalls(chain: Chain, calls: Call[]) {
+export async function multicallBalances(params: MultiCallParams) {
+  if (!params.chain) {
+    return []
+  }
+
+  const chain = params.chain as Chain
   const coinsCallsAddresses: string[] = []
   const tokensCalls: Call[] = []
   const res: MultiCallResult[] = []
 
-  for (const call of calls) {
+  for (const call of params.calls) {
     if (call.target === ethers.constants.AddressZero) {
       // native chain coin
       // @ts-ignore
@@ -83,13 +88,13 @@ export async function getBalancesCalls(chain: Chain, calls: Call[]) {
   const tokensBalancesRes = await multicall({
     chain,
     calls: tokensCalls,
-    abi: erc20Abi.balanceOf,
+    abi: params.abi,
   })
 
   let coinIdx = 0
   let tokenIdx = 0
-  for (let i = 0; i < calls.length; i++) {
-    const call = calls[i]
+  for (let i = 0; i < params.calls.length; i++) {
+    const call = params.calls[i]
 
     if (call.target === ethers.constants.AddressZero) {
       // native chain coin
@@ -111,34 +116,38 @@ export async function getBalancesCalls(chain: Chain, calls: Call[]) {
 }
 
 export function sanitizeBalances(balances: Balance[]) {
-  const sanitizedBalances = balances.filter((balance) => {
+  const sanitizedBalances: Balance[] = []
+
+  for (const balance of balances) {
     if (!balance.amount) {
       console.error(`Missing balance amount`, balance)
-      return false
+      continue
     }
 
-    if (balance.underlyings) {
-      // if there's 1 underlying and the amount is not defined, use the balance amount as default
-      let defaultAmount = BN_ZERO
-      if (balance.underlyings.length === 1 && balance.underlyings[0].amount == null) {
-        defaultAmount = balance.amount
-      }
+    const sanitizedBalance = { ...balance }
 
-      balance.underlyings = balance.underlyings.map((underlying) => ({
-        ...underlying,
-        amount: underlying.amount || defaultAmount,
-      }))
+    if (balance.underlyings) {
+      if (balance.underlyings.length === 1 && (balance.underlyings?.[0] as Balance).amount == null) {
+        if (balance.decimals && balance.underlyings[0].decimals) {
+          const mantissa = Math.abs(balance.decimals - balance.underlyings[0].decimals)
+
+          sanitizedBalance.underlyings = balance.underlyings.map((underlying) => ({
+            ...underlying,
+            amount: mantissa > 0 ? balance.amount.div(BN_TEN.pow(mantissa)) : balance.amount.mul(BN_TEN.pow(mantissa)),
+          }))
+        }
+      }
     }
 
     if (balance.rewards) {
-      balance.rewards = balance.rewards.map((reward) => ({
+      sanitizedBalance.rewards = balance.rewards.map((reward) => ({
         ...reward,
         amount: reward.amount || BN_ZERO,
       }))
     }
 
-    return true
-  })
+    sanitizedBalances.push(sanitizedBalance)
+  }
 
   return sanitizedBalances
 }
@@ -177,4 +186,45 @@ export async function resolveBalances<C extends GetContractsHandler>(
       }),
   )
   return balances.flat(2).filter(isNotNullish)
+}
+
+export interface SortBalance {
+  balanceUSD?: number
+  rewards?: SortBalance[]
+  underlyings?: SortBalance[]
+}
+
+export function sortBalances(a: SortBalance, b: SortBalance) {
+  if (a.rewards) {
+    a.rewards = a.rewards.sort(sortBalances)
+  }
+  if (a.underlyings) {
+    a.underlyings = a.underlyings.sort(sortBalances)
+  }
+
+  const aUSD = a.balanceUSD || 0
+  const bUSD = b.balanceUSD || 0
+
+  return bUSD - aUSD
+}
+
+export interface SumBalance {
+  type?: ContractType
+  claimableUSD?: number
+  balanceUSD?: number
+}
+
+export function sumBalances(balances: SumBalance[]) {
+  let res = 0
+
+  for (const balance of balances) {
+    // substract debt positions
+    if (balance.type === 'debt') {
+      res -= balance.balanceUSD || 0
+    } else {
+      res += balance.claimableUSD || balance.balanceUSD || 0
+    }
+  }
+
+  return res
 }

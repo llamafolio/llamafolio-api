@@ -1,7 +1,7 @@
 import { GetBalancesHandler } from '@lib/adapter'
 import { Contract } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
-import { isNotNullish } from '@lib/type'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
@@ -58,18 +58,16 @@ export const getContracts = async (props: any) => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { markets, pools }) => {
-  const balances = (
-    await Promise.all([
-      getMarketsBalances(ctx, 'avax', markets || []),
-      getPairsBalances(ctx, 'avax', pools || []),
-      getStakeBalance(ctx, 'avax'),
-    ])
-  )
-    .flat()
-    .filter(isNotNullish)
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const [balances, stakeBalances] = await Promise.all([
+    resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
+      markets: getMarketsBalances,
+      pools: getPairsBalances,
+    }),
+    getStakeBalance(ctx, 'avax'),
+  ])
 
   return {
-    balances,
+    balances: [...balances, ...stakeBalances],
   }
 }

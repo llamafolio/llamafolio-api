@@ -1,7 +1,7 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20BalanceOf, getERC20Details, resolveERC20Details } from '@lib/erc20'
+import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -61,55 +61,44 @@ export async function getLendingPoolContracts(
     abi: abi.getReserveTokensAddresses,
   })
 
-  const reserveTokensAddresses = reserveTokensAddressesRes.filter(isSuccess)
-
-  const { underlyingTokens, aTokens, stableDebtTokens, variableDebtTokens } = await resolveERC20Details(chain, {
-    underlyingTokens: reserveTokensAddresses.map((reserveTokens) => reserveTokens.input.params[0]),
-    aTokens: reserveTokensAddresses.map((reserveTokens) => reserveTokens.output.aTokenAddress),
-    stableDebtTokens: reserveTokensAddresses.map((reserveTokens) => reserveTokens.output.stableDebtTokenAddress),
-    variableDebtTokens: reserveTokensAddresses.map((reserveTokens) => reserveTokens.output.variableDebtTokenAddress),
-  })
-
-  for (let i = 0; i < underlyingTokens.length; i++) {
-    const underlyingTokenRes = underlyingTokens[i]
-    const aTokenRes = aTokens[i]
-    const stableDebtTokenRes = stableDebtTokens[i]
-    const variableDebtTokenRes = variableDebtTokens[i]
-
-    if (!isSuccess(underlyingTokenRes)) {
+  for (let reserveIdx = 0; reserveIdx < reserveTokensAddressesRes.length; reserveIdx++) {
+    const reserveTokensAddressRes = reserveTokensAddressesRes[reserveIdx]
+    if (!isSuccess(reserveTokensAddressRes)) {
       continue
     }
 
-    if (isSuccess(aTokenRes)) {
-      contracts.push({
-        ...aTokenRes.output,
-        priceSubstitute: underlyingTokenRes.output.address,
-        underlyings: [underlyingTokenRes.output],
-        category: 'lend',
-      })
-    }
+    const underlyingToken = reserveTokensAddressRes.input.params[0]
+    const aToken = reserveTokensAddressRes.output.aTokenAddress
+    const stableDebtToken = reserveTokensAddressRes.output.stableDebtTokenAddress
+    const variableDebtToken = reserveTokensAddressRes.output.variableDebtTokenAddress
 
-    if (isSuccess(stableDebtTokenRes)) {
-      contracts.push({
-        ...stableDebtTokenRes.output,
-        priceSubstitute: underlyingTokenRes.output.address,
-        underlyings: [underlyingTokenRes.output],
+    contracts.push(
+      {
+        chain,
+        address: aToken,
+        priceSubstitute: underlyingToken,
+        underlyings: [underlyingToken],
+        category: 'lend',
+      },
+      {
+        chain,
+        address: stableDebtToken,
+        priceSubstitute: underlyingToken,
+        underlyings: [underlyingToken],
         type: 'debt',
         category: 'borrow',
         stable: true,
-      })
-    }
-
-    if (isSuccess(variableDebtTokenRes)) {
-      contracts.push({
-        ...variableDebtTokenRes.output,
-        priceSubstitute: underlyingTokenRes.output.address,
-        underlyings: [underlyingTokenRes.output],
+      },
+      {
+        chain,
+        address: variableDebtToken,
+        priceSubstitute: underlyingToken,
+        underlyings: [underlyingToken],
         type: 'debt',
         category: 'borrow',
         stable: false,
-      })
-    }
+      },
+    )
   }
 
   return contracts

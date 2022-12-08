@@ -1,11 +1,10 @@
 import { adapters } from '@adapters/index'
 import {
   Adapter as DBAdapter,
-  deleteAdapter,
-  insertAdapters,
   selectAdapter,
   selectAdaptersContractsExpired,
   selectDistinctIdAdapters,
+  upsertAdapters,
 } from '@db/adapters'
 import { deleteContractsByAdapter, insertContracts } from '@db/contracts'
 import pool from '@db/pool'
@@ -114,15 +113,12 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
       chain,
       contractsExpireAt: expire_at,
       contractsRevalidateProps: config.revalidateProps,
+      createdAt: new Date(),
     }
 
     await client.query('BEGIN')
 
-    // Delete old adapter
-    await deleteAdapter(client, adapterId, chain)
-
-    // Insert adapter if not exists
-    await insertAdapters(client, [dbAdapter])
+    await upsertAdapters(client, [dbAdapter])
 
     // Delete old contracts unless it's a revalidate.
     // In such case we want to add new contracts, not replace the old ones

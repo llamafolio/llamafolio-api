@@ -1,18 +1,26 @@
 import { adapterById } from '@adapters/index'
 import { insertBalances } from '@db/balances'
-import { BalancesSnapshot, insertBalancesSnapshots } from '@db/balances-snapshots'
+import {
+  BalancesSnapshot,
+  insertBalancesSnapshots,
+  selectLastBalancesSnapshotsTimestampByFromAddress,
+} from '@db/balances-snapshots'
 import { getAllContractsInteractionsTokenTransfers, groupContracts } from '@db/contracts'
 import { getAllTokensInteractions } from '@db/contracts'
 import pool from '@db/pool'
 import { apiGatewayManagementApi } from '@handlers/apiGateway'
-import type { BalancesProtocolChainResponse, BalancesProtocolResponse, BalancesResponse } from '@handlers/getBalances'
+import {
+  BalancesProtocolChainResponse,
+  BalancesProtocolResponse,
+  BalancesResponse,
+  formatBalance,
+} from '@handlers/getBalances'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, BalancesConfig, BaseContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
-import { sanitizeBalances } from '@lib/balance'
+import { sanitizeBalances, sumBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
 import { Chain, chains } from '@lib/chains'
-import { sumBalances } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
@@ -53,16 +61,14 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
   try {
     // Early return if balances last update was < 1 minute ago
-    const balancesRes = await client.query(
-      `select timestamp from balances where from_address = $1::bytea order by timestamp desc limit 1;`,
-      [strToBuf(address)],
-    )
+    const lastUpdatedAt = await selectLastBalancesSnapshotsTimestampByFromAddress(client, address)
 
-    if (balancesRes.rows.length === 1) {
-      const lastUpdatedAt = new Date(balancesRes.rows[0].timestamp).getTime()
+    if (lastUpdatedAt) {
+      // TODO: move this condition to Postgres
+      const lastUpdatedAtTime = lastUpdatedAt.getTime()
       const now = new Date().getTime()
       // 1 minute delay
-      if (now - lastUpdatedAt < 1 * 60 * 1000) {
+      if (now - lastUpdatedAtTime < 1 * 60 * 1000) {
         console.log('Update adapters balances cache', {
           now,
           lastUpdatedAt,
@@ -74,8 +80,8 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
             ConnectionId: connectionId,
             Data: JSON.stringify({
               event: 'updateBalances',
-              updatedAt: new Date(lastUpdatedAt).toISOString(),
-              data: 'cache',
+              updatedAt: lastUpdatedAt.toISOString(),
+              cache: true,
             }),
           })
           .promise()
@@ -238,7 +244,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
         chains.push({
           id: chain as Chain,
-          balances: balancesByChain[chain],
+          balances: balancesByChain[chain].map(formatBalance),
           healthFactor: balanceSnapshot?.healthFactor,
         })
       }
@@ -257,7 +263,10 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     await apiGatewayManagementApi
       .postToConnection({
         ConnectionId: connectionId,
-        Data: JSON.stringify(balancesResponse),
+        Data: JSON.stringify({
+          event: 'updateBalances',
+          ...balancesResponse,
+        }),
       })
       .promise()
 

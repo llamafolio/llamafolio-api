@@ -2,7 +2,7 @@ org: llamafolio
 app: llamafolio-api
 service: llamafolio-api
 
-frameworkVersion: "3"
+frameworkVersion: '3'
 
 provider:
   name: aws
@@ -20,16 +20,16 @@ provider:
           Action:
             - xray:PutTraceSegments
             - xray:PutTelemetryRecords
-          Resource: "*"
-        - Effect: "Allow"
+          Resource: '*'
+        - Effect: 'Allow'
           Action:
-            - "s3:ListBucket"
-            - "s3:*Object*"
-          Resource: "*"
-        - Effect: "Allow"
+            - 's3:ListBucket'
+            - 's3:*Object*'
+          Resource: '*'
+        - Effect: 'Allow'
           Action:
-            - "lambda:InvokeFunction"
-          Resource: "*"
+            - 'lambda:InvokeFunction'
+          Resource: '*'
   environment:
     PGHOST: ${file(./env.js):PGHOST}
     PGUSER: ${file(./env.js):PGUSER}
@@ -42,7 +42,7 @@ provider:
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     APIG_ENDPOINT:
       Fn::Join:
-        - ""
+        - ''
         - - Ref: WebsocketsApi
           - .execute-api.
           - Ref: AWS::Region
@@ -52,7 +52,7 @@ provider:
   httpApi:
     metrics: true
     cors:
-      allowedOrigins: "*"
+      allowedOrigins: '*'
       allowedHeaders:
         - Content-Type
         - Authorization
@@ -77,6 +77,14 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}
+
+  getBalancesTokens:
+    handler: src/handlers/getBalancesTokens.handler
+    description: Get address erc20 balances
+    events:
+      - httpApi:
+          method: get
+          path: /balances/{address}/tokens
 
   getCategories:
     handler: src/handlers/getCategories.handler
@@ -117,6 +125,14 @@ functions:
       - httpApi:
           method: get
           path: /labels/{address}
+
+  getLatestProtocols:
+    handler: src/handlers/getLatestProtocols.handler
+    description: Get latest protocols
+    events:
+      - httpApi:
+          method: get
+          path: /protocols/latest
 
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler

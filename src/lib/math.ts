@@ -1,4 +1,3 @@
-import { PricedBalance } from '@lib/adapter'
 import { BigNumber, utils } from 'ethers'
 
 export const BN_ZERO = BigNumber.from('0')
@@ -21,21 +20,6 @@ export function sum(nums: number[]) {
   for (const num of nums) {
     res += num || 0
   }
-  return res
-}
-
-export function sumBalances(balances: PricedBalance[]) {
-  let res = 0
-
-  for (const balance of balances) {
-    // substract debt positions
-    if (balance.type === 'debt') {
-      res -= balance.balanceUSD || 0
-    } else {
-      res += balance.claimableUSD || balance.balanceUSD || 0
-    }
-  }
-
   return res
 }
 
