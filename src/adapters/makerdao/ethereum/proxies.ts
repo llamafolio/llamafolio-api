@@ -4,118 +4,109 @@ import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { ethers } from 'ethers'
 
-export interface Proxy {
-  maker: string[]
-  instadApp: string[]
+const abi = {
+  userLink: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'userLink',
+    outputs: [
+      { internalType: 'uint64', name: 'first', type: 'uint64' },
+      { internalType: 'uint64', name: 'last', type: 'uint64' },
+      { internalType: 'uint64', name: 'count', type: 'uint64' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  userList: {
+    inputs: [
+      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'uint64', name: '', type: 'uint64' },
+    ],
+    name: 'userList',
+    outputs: [
+      { internalType: 'uint64', name: 'prev', type: 'uint64' },
+      { internalType: 'uint64', name: 'next', type: 'uint64' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  accountAddr: {
+    inputs: [{ internalType: 'uint64', name: '', type: 'uint64' }],
+    name: 'accountAddr',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  proxies: {
+    constant: true,
+    inputs: [{ name: '', type: 'address' }],
+    name: 'proxies',
+    outputs: [{ name: '', type: 'address' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
-export async function getProxiesContractsAddresses(
-  ctx: BaseContext,
-  chain: Chain,
-  proxiesContracts: Contract[],
-): Promise<Proxy> {
-  const proxiesAddresses: Proxy = { maker: [], instadApp: [] }
-
-  /**
-   *  Maker allows 2 kinds of proxies: Maker and InstadApp
-   */
-
-  const Maker = proxiesContracts[0]
-  const InstadApp = proxiesContracts[1]
-
-  /**
-   *    Check if user's address uses Maker proxies
-   */
-
-  const getProxiesAddressesFromMaker = await call({
-    chain,
-    target: Maker.address,
-    params: [ctx.address],
-    abi: {
-      constant: true,
-      inputs: [{ name: '', type: 'address' }],
-      name: 'proxies',
-      outputs: [{ name: '', type: 'address' }],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
-  })
-
-  proxiesAddresses.maker.push(getProxiesAddressesFromMaker.output)
-
-  /**
-   *    Check if user's address uses InstadApp proxies
-   */
-
+export async function getInstaDappContracts(ctx: BaseContext, chain: Chain, instaList: Contract): Promise<Contract[]> {
   const getUserLinkCountFromInstadApp = await call({
     chain,
-    target: InstadApp.address,
+    target: instaList.address,
     params: [ctx.address],
-    abi: {
-      inputs: [{ internalType: 'address', name: '', type: 'address' }],
-      name: 'userLink',
-      outputs: [
-        { internalType: 'uint64', name: 'first', type: 'uint64' },
-        { internalType: 'uint64', name: 'last', type: 'uint64' },
-        { internalType: 'uint64', name: 'count', type: 'uint64' },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.userLink,
   })
 
-  const instadAppIDProxies: string[] = []
-  const userLinkCount = getUserLinkCountFromInstadApp.output.count
-  const userLinkFirst = getUserLinkCountFromInstadApp.output.first
+  const ids: number[] = []
+  const userLinkCount = parseInt(getUserLinkCountFromInstadApp.output.count)
+  const userLinkFirst = parseInt(getUserLinkCountFromInstadApp.output.first)
 
-  instadAppIDProxies.push(userLinkFirst)
+  ids.push(userLinkFirst)
 
   for (let i = 1; i < userLinkCount; i++) {
     const userLinksRes = await call({
       chain,
-      target: InstadApp.address,
+      target: instaList.address,
       // Previous value gives access to the next one Id
-      params: [ctx.address, instadAppIDProxies[instadAppIDProxies.length - 1]],
-      abi: {
-        inputs: [
-          { internalType: 'address', name: '', type: 'address' },
-          { internalType: 'uint64', name: '', type: 'uint64' },
-        ],
-        name: 'userList',
-        outputs: [
-          { internalType: 'uint64', name: 'prev', type: 'uint64' },
-          { internalType: 'uint64', name: 'next', type: 'uint64' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      params: [ctx.address, ids[ids.length - 1]],
+      abi: abi.userList,
     })
 
-    instadAppIDProxies.push(userLinksRes.output.next)
+    ids.push(userLinksRes.output.next)
   }
 
   const getInstadAppAddressesProxiesFromId = await multicall({
     chain,
-    calls: instadAppIDProxies.map((id) => ({
-      target: InstadApp.address,
+    calls: ids.map((id) => ({
+      target: instaList.address,
       params: [id],
     })),
-    abi: {
-      inputs: [{ internalType: 'uint64', name: '', type: 'uint64' }],
-      name: 'accountAddr',
-      outputs: [{ internalType: 'address', name: '', type: 'address' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.accountAddr,
   })
 
-  const instadAppAddressesProxiesFromId = getInstadAppAddressesProxiesFromId
+  const instadAppAddressesProxiesFromId: string[] = getInstadAppAddressesProxiesFromId
     .filter((res) => res.success)
     .map((res) => res.output)
     .filter((res) => res !== ethers.constants.AddressZero)
 
-  proxiesAddresses.instadApp = instadAppAddressesProxiesFromId
+  return instadAppAddressesProxiesFromId.map((address) => ({
+    chain,
+    address,
+    proxy: 'InstaDapp',
+  }))
+}
 
-  return proxiesAddresses
+export async function getMakerContracts(ctx: BaseContext, chain: Chain, proxyRegistry: Contract): Promise<Contract[]> {
+  // Check if user's address uses Maker proxies
+  const proxiesRes = await call({
+    chain,
+    target: proxyRegistry.address,
+    params: [ctx.address],
+    abi: abi.proxies,
+  })
+
+  return [proxiesRes.output]
+    .filter((res) => res !== ethers.constants.AddressZero)
+    .map((address) => ({
+      chain,
+      address,
+    }))
 }

@@ -3,7 +3,7 @@ import { resolveBalances } from '@lib/balance'
 
 import { getProxiesBalances } from './balances'
 import { getCdpidFromProxiesAddresses } from './cdpid'
-import { getProxiesContractsAddresses } from './proxies'
+import { getInstaDappContracts, getMakerContracts } from './proxies'
 
 const InstadAppProxyRegistry: Contract = {
   name: 'InstadApp List',
@@ -49,15 +49,17 @@ const Vat: Contract = {
 }
 
 export const getContracts = () => {
-  const proxiesRegistries: Contract[] = [MakerProxyRegistry, InstadAppProxyRegistry]
-
   return {
-    contracts: { proxiesRegistries, getCdps, cdpManager, Vat, IlkRegistry, Spot },
+    contracts: { MakerProxyRegistry, InstadAppProxyRegistry, getCdps, cdpManager, Vat, IlkRegistry, Spot },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const proxies = await getProxiesContractsAddresses(ctx, 'ethereum', contracts.proxiesRegistries || [])
+  const [makerProxies, instaDappProxies] = await Promise.all([
+    getInstaDappContracts(ctx, 'ethereum', InstadAppProxyRegistry),
+    getMakerContracts(ctx, 'ethereum', MakerProxyRegistry),
+  ])
+  const proxies = [...makerProxies, ...instaDappProxies]
   const cdpid = await getCdpidFromProxiesAddresses('ethereum', getCdps, cdpManager, proxies)
 
   const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
