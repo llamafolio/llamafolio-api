@@ -9,7 +9,12 @@ import { getAllContractsInteractionsTokenTransfers, groupContracts } from '@db/c
 import { getAllTokensInteractions } from '@db/contracts'
 import pool from '@db/pool'
 import { apiGatewayManagementApi } from '@handlers/apiGateway'
-import type { BalancesProtocolChainResponse, BalancesProtocolResponse, BalancesResponse } from '@handlers/getBalances'
+import {
+  BalancesProtocolChainResponse,
+  BalancesProtocolResponse,
+  BalancesResponse,
+  formatBalance,
+} from '@handlers/getBalances'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, BalancesConfig, BaseContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
@@ -239,7 +244,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
         chains.push({
           id: chain as Chain,
-          balances: balancesByChain[chain],
+          balances: balancesByChain[chain].map(formatBalance),
           healthFactor: balanceSnapshot?.healthFactor,
         })
       }
