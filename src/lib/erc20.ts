@@ -1,4 +1,4 @@
-import { Balance, BaseBalance, BaseContext } from '@lib/adapter'
+import { Balance, BaseContext } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { Call, multicall, MultiCallResult } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -57,12 +57,6 @@ export const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
-
-export async function getERC20Balances(ctx: BaseContext, chain: Chain, tokens: string[]): Promise<BaseBalance[]> {
-  const details = await getERC20Details(chain, tokens)
-
-  return getERC20BalanceOf(ctx, chain, details)
 }
 
 export async function getERC20BalanceOf(ctx: BaseContext, chain: Chain, tokens: Token[]): Promise<Balance[]> {
