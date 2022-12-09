@@ -71,5 +71,5 @@ export async function getHealthFactor(ctx: BaseContext, chain: Chain, lensContra
 
   const healthFactor = getHealthFactor.output.healthScore / Math.pow(10, 18)
 
-  return healthFactor > 10 ? 10 : healthFactor
+  return healthFactor
 }

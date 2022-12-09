@@ -212,7 +212,7 @@ export async function getLendingPoolHealthFactor(ctx: BaseContext, chain: Chain,
     const healthFactor = parseFloat(ethers.utils.formatUnits(userAccountDataRes.output.healthFactor, 18))
 
     // TODO: return other metadata like LTV, available borrow etc
-    return healthFactor > 10 ? 10 : healthFactor
+    return healthFactor
   } catch (error) {
     console.log('Failed to get aave-v2 lending pool health factor', error)
     return

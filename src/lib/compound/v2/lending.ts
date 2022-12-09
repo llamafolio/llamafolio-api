@@ -230,5 +230,5 @@ export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promis
 
   const healthFactor = supplyUSD / borrowUSD
 
-  return healthFactor > 10 ? 10 : healthFactor
+  return healthFactor
 }

@@ -137,7 +137,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
               const hrend = process.hrtime(hrstart)
 
               console.log(
-                `[${adapterId}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
+                `[${adapterId}][${chain.id}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
                 hrend[0],
                 hrend[1] / 1000000,
               )
@@ -152,7 +152,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
               return extendedBalancesConfig
             } catch (error) {
-              console.error(`[${adapterId}]: Failed to getBalances`, error)
+              console.error(`[${adapterId}][${chain.id}]: Failed to getBalances`, error)
               return
             }
           })
