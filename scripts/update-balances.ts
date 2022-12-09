@@ -6,7 +6,7 @@ import { BalancesSnapshot, insertBalancesSnapshots } from '../src/db/balances-sn
 import { getAllContractsInteractionsTokenTransfers, getAllTokensInteractions } from '../src/db/contracts'
 import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { Balance, BalancesConfig, BaseContext, Contract } from '../src/lib/adapter'
+import { Balance, BalancesConfig, BalancesContext, Contract } from '../src/lib/adapter'
 import { sanitizeBalances, sumBalances } from '../src/lib/balance'
 import { strToBuf } from '../src/lib/buf'
 import { Chain, chains } from '../src/lib/chains'
@@ -38,16 +38,14 @@ async function main() {
 
   const address = process.argv[2].toLowerCase()
 
-  const ctx: BaseContext = { address }
-
   const client = await pool.connect()
 
   try {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
     const [contracts, tokens] = await Promise.all([
-      getAllContractsInteractionsTokenTransfers(client, ctx.address),
-      getAllTokensInteractions(client, ctx.address),
+      getAllContractsInteractionsTokenTransfers(client, address),
+      getAllTokensInteractions(client, address),
     ])
 
     const contractsByAdapterId: { [key: string]: Contract[] } = {}
@@ -84,6 +82,8 @@ async function main() {
 
               const contracts =
                 groupContracts(contractsByAdapterId[adapterId].filter((contract) => contract.chain === chain.id)) || []
+
+              const ctx: BalancesContext = { address, chain: chain.id, adapterId }
 
               const balancesConfig = await handler.getBalances(ctx, contracts)
 

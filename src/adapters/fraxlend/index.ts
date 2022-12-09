@@ -1,4 +1,4 @@
-import { Adapter, Balance, BaseContext, Contract, GetBalancesHandler, GetContractsHandler } from '@lib/adapter'
+import { Adapter, Balance, BalancesContext, Contract, GetBalancesHandler, GetContractsHandler } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -13,7 +13,7 @@ const pools = [
   '0x50E627a1DF8D665524942aD7eC6392b6BA60293a',
 ]
 
-export const getLendBorrowBalances = async (ctx: BaseContext, chain: Chain, pools: Contract[]) => {
+export const getLendBorrowBalances = async (ctx: BalancesContext, chain: Chain, pools: Contract[]) => {
   const balances: Balance[] = []
 
   try {
@@ -164,7 +164,7 @@ const getContracts: GetContractsHandler = async () => {
   }
 }
 
-const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { poolsContracts }) => {
+const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, { poolsContracts }) => {
   const poolTokenBalances = await getLendBorrowBalances(ctx, 'ethereum', poolsContracts as Contract[])
 
   return { balances: [...poolTokenBalances] }

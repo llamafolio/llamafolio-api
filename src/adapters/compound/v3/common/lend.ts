@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
@@ -120,7 +120,7 @@ export async function getAssetsContracts(chain: Chain, contract: Contract): Prom
 }
 
 export async function getLendBorrowBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   assets: Contract[],
   contract: Contract,

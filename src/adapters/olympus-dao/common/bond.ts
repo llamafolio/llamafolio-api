@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
@@ -6,7 +6,7 @@ import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
-export async function getBondsBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getBondsBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const bondDetailsRes = await multicall({

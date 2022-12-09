@@ -1,5 +1,5 @@
 import { Balance, Contract } from '@lib/adapter'
-import { BaseContext } from '@lib/adapter'
+import { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
@@ -13,7 +13,7 @@ const OHM: Contract = {
   decimals: 9,
 }
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
+export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract) {
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
@@ -39,7 +39,7 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract:
   return balances
 }
 
-export async function getFormattedStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
+export async function getFormattedStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract) {
   const balances: Balance[] = []
 
   const balanceOfRes = await call({

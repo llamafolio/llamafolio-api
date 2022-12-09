@@ -1,5 +1,5 @@
 import { Balance, Contract } from '@lib/adapter'
-import { BaseContext } from '@lib/adapter'
+import { BalancesContext } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
@@ -16,7 +16,7 @@ const TIME: Contract = {
   symbol: 'TIME',
 }
 
-export async function getFormattedStakeBalance(ctx: BaseContext, chain: Chain, wMEMO: Contract): Promise<Balance> {
+export async function getFormattedStakeBalance(ctx: BalancesContext, chain: Chain, wMEMO: Contract): Promise<Balance> {
   const balanceOfRes = await call({
     chain,
     block: ctx.blockHeight?.[chain],
@@ -56,7 +56,7 @@ export async function getFormattedStakeBalance(ctx: BaseContext, chain: Chain, w
   return balance
 }
 
-export async function getStakeBalance(ctx: BaseContext, chain: Chain, wMemoFarm: Contract): Promise<Balance> {
+export async function getStakeBalance(ctx: BalancesContext, chain: Chain, wMemoFarm: Contract): Promise<Balance> {
   const rewards: Balance[] = []
 
   const [balanceOfRes, rewardTokenLengthRes] = await Promise.all([

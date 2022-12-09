@@ -1,4 +1,4 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 import { gql, request } from 'graphql-request'
 
@@ -67,7 +67,7 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, { pairs }) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, { pairs }) => {
   const lpBalances = await getPairsBalances(ctx, 'ethereum', pairs || [])
 
   return {

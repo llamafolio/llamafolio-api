@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
@@ -12,7 +12,7 @@ const SPA: Contract = {
   symbol: 'SPA',
 }
 
-export async function getVestBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+export async function getVestBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const calls = contracts.map((contract) => ({

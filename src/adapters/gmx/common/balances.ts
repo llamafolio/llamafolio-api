@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi as erc20Abi } from '@lib/erc20'
@@ -57,7 +57,7 @@ const abi = {
   },
 }
 
-export async function getGMXStakerBalances(ctx: BaseContext, chain: Chain, gmxStaker: Contract) {
+export async function getGMXStakerBalances(ctx: BalancesContext, chain: Chain, gmxStaker: Contract) {
   if (!gmxStaker.underlyings || !gmxStaker.rewards) {
     return []
   }
@@ -107,7 +107,7 @@ export async function getGMXStakerBalances(ctx: BaseContext, chain: Chain, gmxSt
   return balances
 }
 
-export async function getGMXVesterBalance(ctx: BaseContext, chain: Chain, gmxVester: Contract) {
+export async function getGMXVesterBalance(ctx: BalancesContext, chain: Chain, gmxVester: Contract) {
   const gmx = gmxVester.underlyings?.[0]
   if (!gmx) {
     return []
@@ -135,7 +135,7 @@ export async function getGMXVesterBalance(ctx: BaseContext, chain: Chain, gmxVes
   return balance
 }
 
-export async function getGLPStakerBalance(ctx: BaseContext, chain: Chain, glpStaker: Contract) {
+export async function getGLPStakerBalance(ctx: BalancesContext, chain: Chain, glpStaker: Contract) {
   if (!glpStaker.underlyings || !glpStaker.rewards) {
     return []
   }
@@ -171,7 +171,7 @@ export async function getGLPStakerBalance(ctx: BaseContext, chain: Chain, glpSta
   return balance
 }
 
-export async function getGLPVesterBalance(ctx: BaseContext, chain: Chain, glpVester: Contract) {
+export async function getGLPVesterBalance(ctx: BalancesContext, chain: Chain, glpVester: Contract) {
   const [balanceOfRes, claimableRes] = await Promise.all([
     call({ chain, target: glpVester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ chain, target: glpVester.address, params: [ctx.address], abi: abi.claimable }),

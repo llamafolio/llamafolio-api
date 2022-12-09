@@ -1,4 +1,4 @@
-import { Balance, BaseBalance, BaseContext, BaseContract, ContractType, GetContractsHandler } from '@lib/adapter'
+import { Balance, BalancesContext, BaseBalance, BaseContract, ContractType, GetContractsHandler } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, BN_ZERO } from '@lib/math'
@@ -8,7 +8,7 @@ import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { ethers } from 'ethers'
 
-export async function getBalances(ctx: BaseContext, contracts: BaseContract[]) {
+export async function getBalances(ctx: BalancesContext, contracts: BaseContract[]) {
   const coins: Token[] = []
   const tokensByChain: { [key: string]: Token[] } = {}
 
@@ -153,12 +153,12 @@ export function sanitizeBalances(balances: Balance[]) {
 }
 
 export async function resolveBalances<C extends GetContractsHandler>(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
   resolvers: {
     [key in keyof Partial<Awaited<ReturnType<C>>['contracts']>]: (
-      ctx: BaseContext,
+      ctx: BalancesContext,
       chain: Chain,
       contracts: Awaited<ReturnType<C>>['contracts'][key],
     ) =>

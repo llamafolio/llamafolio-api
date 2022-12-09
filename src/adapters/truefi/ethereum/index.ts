@@ -1,4 +1,4 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Chain } from '@lib/chains'
 
@@ -14,7 +14,7 @@ export const getContracts = async () => {
   }
 }
 
-async function getAllBalances(ctx: BaseContext, chain: Chain, pools: Contract[]) {
+async function getAllBalances(ctx: BalancesContext, chain: Chain, pools: Contract[]) {
   const poolsSupplies = await getPoolsSupplies(chain, pools)
   return Promise.all([getFarmBalances(ctx, chain, poolsSupplies), getStakeBalances(ctx, chain, poolsSupplies)])
 }

@@ -4,8 +4,13 @@ import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
 export interface BaseContext {
-  address: string
+  chain: Chain
+  adapterId: string
   blockHeight?: { [k: string]: number }
+}
+
+export interface BalancesContext extends BaseContext {
+  address: string
 }
 
 export type ContractType = 'reward' | 'debt' | 'underlying'
@@ -98,10 +103,13 @@ export interface ContractsConfig {
 /**
  * Pass previous `revalidateProps` passed to `getContracts` handler to know where the previous revalidate process ended.
  */
-export type GetContractsHandler = (props: { [key: string]: any }) => ContractsConfig | Promise<ContractsConfig>
+export type GetContractsHandler = (
+  ctx: BaseContext,
+  props: { [key: string]: any },
+) => ContractsConfig | Promise<ContractsConfig>
 
 export type GetBalancesHandler<C extends GetContractsHandler> = (
-  ctx: BaseContext,
+  ctx: BalancesContext,
   // each key can be undefined as the account may not have interacted with these contracts
   contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
 ) => BalancesConfig | Promise<BalancesConfig>

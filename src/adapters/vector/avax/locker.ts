@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
@@ -15,7 +15,7 @@ const VTX: Token = {
   symbol: 'VTX',
 }
 
-export async function getLockerBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getLockerBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
   const [userTotalDepositRes, rewarderAddressRes, userExtraLockedSlots] = await Promise.all([
     call({
@@ -114,7 +114,7 @@ export async function getLockerBalances(ctx: BaseContext, chain: Chain, contract
   return balances
 }
 
-const lockedRewardsBalances = async (ctx: BaseContext, chain: Chain, rewarder: string): Promise<Balance[]> => {
+const lockedRewardsBalances = async (ctx: BalancesContext, chain: Chain, rewarder: string): Promise<Balance[]> => {
   const pendingRewardsTokensRes = await multicall({
     chain,
     // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts checked, 7 seems to be the maximum number of extra tokens used.

@@ -2,7 +2,7 @@ import walletAdapter from '@adapters/wallet'
 import { getAllTokensInteractions, groupContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
-import { BaseContext, PricedBalance } from '@lib/adapter'
+import { BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { sanitizeBalances, sortBalances, sumBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
@@ -53,8 +53,6 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  const ctx: BaseContext = { address }
-
   const client = await pool.connect()
 
   try {
@@ -75,6 +73,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
             const hrstart = process.hrtime()
 
             const contracts = groupContracts(tokensByChain[chain]) || []
+
+            const ctx: BalancesContext = { address, chain: chain as Chain, adapterId: walletAdapter.id }
 
             const balancesConfig = await handler.getBalances(ctx, contracts)
 

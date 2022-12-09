@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import { BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
@@ -47,7 +47,7 @@ const abi = {
   },
 }
 
-export async function getInstaDappContracts(ctx: BaseContext, chain: Chain, instaList: Contract): Promise<Contract[]> {
+export async function getInstaDappContracts(ctx: BalancesContext, chain: Chain, instaList: Contract): Promise<Contract[]> {
   const getUserLinkCountFromInstadApp = await call({
     chain,
     target: instaList.address,
@@ -94,7 +94,7 @@ export async function getInstaDappContracts(ctx: BaseContext, chain: Chain, inst
   }))
 }
 
-export async function getMakerContracts(ctx: BaseContext, chain: Chain, proxyRegistry: Contract): Promise<Contract[]> {
+export async function getMakerContracts(ctx: BalancesContext, chain: Chain, proxyRegistry: Contract): Promise<Contract[]> {
   // Check if user's address uses Maker proxies
   const proxiesRes = await call({
     chain,

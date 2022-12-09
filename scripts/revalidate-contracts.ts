@@ -3,7 +3,7 @@ import path from 'path'
 import { Adapter as DBAdapter, selectAdapter, upsertAdapters } from '../src/db/adapters'
 import { deleteContractsByAdapter, insertContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { Adapter } from '../src/lib/adapter'
+import { Adapter, BaseContext } from '../src/lib/adapter'
 import { Chain, chains } from '../src/lib/chains'
 import { resolveContractsTokens } from '../src/lib/token'
 
@@ -37,7 +37,9 @@ async function main() {
       adapterChains.map(async (chain) => {
         const prevDbAdapter = await selectAdapter(client, chain, adapter.id)
 
-        const contractsRes = await adapter[chain]!.getContracts(prevDbAdapter?.contractsRevalidateProps || {})
+        const ctx: BaseContext = { chain, adapterId: adapter.id }
+
+        const contractsRes = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
 
         const contracts = await resolveContractsTokens(client, contractsRes?.contracts || {}, true)
 

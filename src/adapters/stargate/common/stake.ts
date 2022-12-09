@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
@@ -40,7 +40,7 @@ interface IStakeOptions {
   pendingRewardAbi: object
 }
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, lpStaking: Contract, options?: IStakeOptions) {
+export async function getStakeBalances(ctx: BalancesContext, chain: Chain, lpStaking: Contract, options?: IStakeOptions) {
   const balances: Balance[] = []
 
   const poolCountRes = await call({

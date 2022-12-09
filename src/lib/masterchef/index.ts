@@ -1,4 +1,4 @@
-import { Balance, BaseContext } from '@lib/adapter'
+import { Balance, BalancesContext } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
@@ -55,7 +55,7 @@ export interface GetMasterChefBalancesParams {
 }
 
 export async function getMasterChefBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   { chain, masterChefAddress, tokens, rewardToken, pendingRewardName }: GetMasterChefBalancesParams,
 ) {
   const provider = providers[chain]

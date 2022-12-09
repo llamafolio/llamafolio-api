@@ -1,4 +1,4 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Chain } from '@lib/chains'
 import { BN_TEN } from '@lib/math'
@@ -49,13 +49,13 @@ const miniPoolManager: Contract = {
   underlyings: [ETH],
 }
 
-function getNodeStakingBalance(ctx: BaseContext, chain: Chain, nodeStaking: Contract) {
+function getNodeStakingBalance(ctx: BalancesContext, chain: Chain, nodeStaking: Contract) {
   return getSingleStakeBalance(ctx, chain, nodeStaking, {
     abi: abi.getNodeRPLStake,
   })
 }
 
-async function getMiniPoolManagerBalance(ctx: BaseContext, chain: Chain, miniPoolManager: Contract) {
+async function getMiniPoolManagerBalance(ctx: BalancesContext, chain: Chain, miniPoolManager: Contract) {
   const balance = await getSingleStakeBalance(ctx, chain, miniPoolManager, {
     abi: abi.getNodeActiveMinipoolCount,
   })

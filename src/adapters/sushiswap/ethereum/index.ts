@@ -1,4 +1,4 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -67,7 +67,7 @@ export const getContracts = async (props: any) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx: BaseContext,
+  ctx: BalancesContext,
   { pairs, masterChefPools },
 ) => {
   const pairsBalances = await getPairsBalances(ctx, 'ethereum', pairs || [])

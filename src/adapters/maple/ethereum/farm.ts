@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
@@ -75,7 +75,7 @@ export async function getFarmContracts(chain: Chain, contract: Contract): Promis
   return contracts
 }
 
-export async function getFarmBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+export async function getFarmBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
   const farmBalances: Balance[] = []
 
   const balances = await getERC20BalanceOf(ctx, chain, contracts as Token[])

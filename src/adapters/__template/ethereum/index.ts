@@ -1,8 +1,8 @@
-import { Balance, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Balance, BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Chain } from '@lib/chains'
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, staking: Contract): Promise<Balance[]> {
+export async function getStakeBalances(ctx: BalancesContext, chain: Chain, staking: Contract): Promise<Balance[]> {
   console.log(ctx, chain, staking)
 
   return []

@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -46,7 +46,7 @@ const abi = {
 }
 
 export async function getPoolsBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   pools: Contract[],
   fairLaunch: Contract,

@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
@@ -37,7 +37,7 @@ export async function getSStakeContract(chain: Chain, contract: Contract): Promi
   return stakeContract
 }
 
-export async function getSStakeBalance(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getSStakeBalance(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [balanceOfRes, totalSupplyRes, balanceOfTokenInUnderlyingRes] = await Promise.all([

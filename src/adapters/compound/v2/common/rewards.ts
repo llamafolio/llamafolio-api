@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
@@ -13,7 +13,7 @@ const COMP: Token = {
 }
 
 export async function getRewardsBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   comptroller: Contract,
   lens: Contract,

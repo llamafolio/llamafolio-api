@@ -1,4 +1,4 @@
-import { Balance, BaseContext } from '@lib/adapter'
+import { Balance, BalancesContext } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { Call, multicall, MultiCallResult } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -59,7 +59,7 @@ export const abi = {
   },
 }
 
-export async function getERC20BalanceOf(ctx: BaseContext, chain: Chain, tokens: Token[]): Promise<Balance[]> {
+export async function getERC20BalanceOf(ctx: BalancesContext, chain: Chain, tokens: Token[]): Promise<Balance[]> {
   const balances = await multicall({
     chain,
     calls: tokens.map((token) => ({

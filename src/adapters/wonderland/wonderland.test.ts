@@ -1,4 +1,5 @@
-import { AdapterTest, BaseContext, parseBalancesTest } from '@lib/adapter'
+// TODO: fix
+import { AdapterTest, BalancesContext, parseBalancesTest } from '@lib/adapter'
 
 import adapter from '.'
 
@@ -24,7 +25,7 @@ describe('wonderland test', () => {
     const contracts = await adapter.getContracts({})
 
     for (const test of testCases) {
-      const ctx: BaseContext = { address: test.address, blockHeight: test.blockHeight }
+      const ctx: BalancesContext = { address: test.address, blockHeight: test.blockHeight }
 
       const balancesConfig = await adapter.getBalances(ctx, contracts.contracts)
 
