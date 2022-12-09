@@ -178,7 +178,7 @@ export async function getCRVCVXRewards(ctx: BaseContext, chain: Chain, pool: Con
         rewardsToken.poolAddress = await getPoolFromLpTokenAddress(chain, [rewardsToken.address])
         rewardsToken.underlyings = (await getPoolsUnderlyings(chain, rewardsToken.poolAddress)).flat()
 
-        const underlyingsBalances: any = await getUnderlyingsBalancesInPool(
+        const underlyingsBalances = await getUnderlyingsBalancesInPool(
           chain,
           rewardsToken,
           rewardsToken.address,

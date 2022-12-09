@@ -3,6 +3,7 @@ import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
 import { getPoolsBalances } from './balances'
+import { getLockerBalances } from './locker'
 import { getPoolsContract } from './pool'
 import { getStakeBalances } from './stake'
 
@@ -27,7 +28,7 @@ const CVX: Token = {
   decimals: 18,
 }
 
-const lockerContract: Contract = {
+const locker: Contract = {
   name: 'Locker',
   displayName: 'Convex Locker',
   chain: 'ethereum',
@@ -54,7 +55,7 @@ export const getContracts = async () => {
   const pools = await getPoolsContract('ethereum', poolRegistry)
 
   return {
-    contracts: { cvxCRVStaker, lockerContract, pools },
+    contracts: { cvxCRVStaker, locker, pools },
   }
 }
 
@@ -62,6 +63,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
     pools: getPoolsBalances,
     cvxCRVStaker: getStakeBalances,
+    locker: getLockerBalances,
   })
 
   return {
