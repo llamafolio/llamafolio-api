@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
@@ -106,7 +106,7 @@ const CVX: Token = {
   decimals: 18,
 }
 
-export async function getCRVCVXRewards(ctx: BaseContext, chain: Chain, pool: Contract) {
+export async function getCRVCVXRewards(ctx: BalancesContext, chain: Chain, pool: Contract) {
   const rewards: Balance[] = []
 
   const [getCRVRewardsEarned, getExtraRewardsEarned] = await Promise.all([

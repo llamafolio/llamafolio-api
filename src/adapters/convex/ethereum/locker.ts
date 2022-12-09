@@ -1,5 +1,5 @@
 import { call } from '@defillama/sdk/build/abi'
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { sumBN } from '@lib/math'
@@ -104,7 +104,7 @@ const abi = {
   },
 }
 
-export async function getLockerBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
+export async function getLockerBalances(ctx: BalancesContext, chain: Chain, contract: Contract) {
   const balances: BalanceWithExtraProps[] = []
 
   const [getBalanceLocked, getClaimableRewards] = await Promise.all([
