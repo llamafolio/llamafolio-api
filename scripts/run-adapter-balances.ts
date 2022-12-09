@@ -1,5 +1,4 @@
 import millify from 'millify'
-import fetch from 'node-fetch'
 import path from 'path'
 
 import {
@@ -51,23 +50,10 @@ async function main() {
     const contracts =
       adapter.id === 'wallet'
         ? await getAllChainTokensInteractions(client, chain, ctx.address)
-        : await getChainContractsInteractionsTokenTransfers(client, ctx.address, chain, adapter.id)
+        : await getChainContractsInteractionsTokenTransfers(client, chain, ctx.address, adapter.id)
 
     const balancesRes = await adapter[chain]?.getBalances(ctx, groupContracts(contracts) || [])
     const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])
-
-    const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
-    const yieldsData = (await yieldsRes.json()).data
-
-    const yieldsByPoolAddress: { [key: string]: any } = {}
-    const yieldsByKeys: { [key: string]: any } = {}
-    const yieldsByNewKeys: { [key: string]: any } = {}
-
-    for (let i = 0; i < yieldsData.length; i++) {
-      yieldsByPoolAddress[yieldsData[i].pool_old.toLowerCase()] = yieldsData[i]
-      yieldsByKeys[yieldsData[i].pool_old] = yieldsData[i]
-      yieldsByNewKeys[yieldsData[i].pool] = yieldsData[i]
-    }
 
     const pricedBalances = await getPricedBalances(sanitizedBalances)
 
@@ -122,17 +108,6 @@ async function main() {
       const data: any[] = []
 
       for (const balance of categoryBalances.balances) {
-        const key = `${balance.yieldKey?.toLowerCase()}-${balance.chain === 'avax' ? 'avalanche' : balance.chain}`
-        const subKey = `${balance.yieldKey?.toLowerCase()}`
-        const nonAddressKey = `${balance.yieldKey}` //in a case where a yields key may be a string instead of an address
-        const newKey = `${balance.yieldKey?.toLowerCase()}` //new unique identifiers recently introduced on llamayield
-
-        const yieldObject =
-          yieldsByNewKeys[newKey] ||
-          yieldsByPoolAddress[key] ||
-          yieldsByPoolAddress[subKey] ||
-          yieldsByKeys[nonAddressKey]
-
         const d = {
           chain: balance.chain,
           address: balance.address,
@@ -140,8 +115,6 @@ async function main() {
           symbol: balance.symbol,
           balance: millify(balance.amount / 10 ** balance.decimals),
           balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-          yield: `${yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + '%' : '-'}`,
-          il: `${yieldObject !== undefined ? yieldObject?.ilRisk : '-'}`,
           stable: balance.stable,
           type: balance.type,
         }
