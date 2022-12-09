@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicallBalances } from '@lib/balance'
 import { Chain } from '@lib/chains'
 import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
@@ -20,7 +20,7 @@ export interface GetPoolsBalancesParams {
  * @param params
  */
 export async function getPoolsBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   pools: Contract[],
   params: GetPoolsBalancesParams,
@@ -121,7 +121,7 @@ export interface GetStakingPoolsBalancesParams extends GetPoolsBalancesParams {
  * @param params
  */
 export async function getStakingPoolsBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   pools: Contract[],
   params: GetStakingPoolsBalancesParams,

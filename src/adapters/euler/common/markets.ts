@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import { BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { gql, request } from 'graphql-request'
@@ -51,7 +51,7 @@ export async function getMarketsContracts(chain: Chain): Promise<Contract[]> {
   return contracts
 }
 
-export async function getHealthFactor(ctx: BaseContext, chain: Chain, lensContract: Contract): Promise<number> {
+export async function getHealthFactor(ctx: BalancesContext, chain: Chain, lensContract: Contract): Promise<number> {
   const getHealthFactor = await call({
     chain,
     target: lensContract.address,

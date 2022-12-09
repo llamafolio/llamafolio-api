@@ -4,7 +4,7 @@ import fetch from 'node-fetch'
 import path from 'path'
 
 import pool from '../src/db/pool'
-import { Adapter, BaseContext, PricedBalance } from '../src/lib/adapter'
+import { Adapter, BalancesContext, PricedBalance } from '../src/lib/adapter'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
@@ -45,7 +45,7 @@ async function main() {
   const chain = process.argv[3] as Chain
   const address = process.argv[4].toLowerCase()
 
-  const ctx: BaseContext = { address }
+  const ctx: BalancesContext = { address, chain, adapterId }
 
   const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
@@ -53,7 +53,7 @@ async function main() {
   const client = await pool.connect()
 
   try {
-    const contractsRes = await adapter[chain]?.getContracts({})
+    const contractsRes = await adapter[chain]?.getContracts(ctx, {})
 
     const contracts = await resolveContractsTokens(client, contractsRes?.contracts || {}, true)
 

@@ -16,7 +16,7 @@ import {
   formatBalance,
 } from '@handlers/getBalances'
 import { badRequest, serverError, success } from '@handlers/response'
-import { Balance, BalancesConfig, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesConfig, BalancesContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { sanitizeBalances, sumBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
@@ -53,9 +53,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     return badRequest('Missing connectionId parameter')
   }
 
-  const ctx: BaseContext = { address }
-
-  console.log('Update balances of address', ctx.address)
+  console.log('Update balances of address', address)
 
   const client = await pool.connect()
 
@@ -93,8 +91,8 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
     const [contracts, tokens] = await Promise.all([
-      getAllContractsInteractionsTokenTransfers(client, ctx.address),
-      getAllTokensInteractions(client, ctx.address),
+      getAllContractsInteractionsTokenTransfers(client, address),
+      getAllTokensInteractions(client, address),
     ])
 
     const contractsByAdapterId: { [key: string]: Contract[] } = {}
@@ -131,6 +129,8 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
               const contracts =
                 groupContracts(contractsByAdapterId[adapterId].filter((contract) => contract.chain === chain.id)) || []
+
+              const ctx: BalancesContext = { address, chain: chain.id, adapterId }
 
               const balancesConfig = await handler.getBalances(ctx, contracts)
 

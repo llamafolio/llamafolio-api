@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
@@ -151,7 +151,7 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
 }
 
 export async function getFarmBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   contracts: FarmContract[],
   masterChef: Contract,
@@ -230,7 +230,7 @@ export async function getFarmBalances(
   return balances
 }
 
-const getExtraRewards = async (ctx: BaseContext, chain: Chain, balance: FarmBalance): Promise<Balance[]> => {
+const getExtraRewards = async (ctx: BalancesContext, chain: Chain, balance: FarmBalance): Promise<Balance[]> => {
   const pendingRewardsTokensRes = await multicall({
     chain,
     // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts checked, 7 seems to be the maximum number of extra tokens used.

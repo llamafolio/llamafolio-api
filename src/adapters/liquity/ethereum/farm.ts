@@ -1,11 +1,11 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { providers } from '@lib/providers'
 import { BigNumber, ethers } from 'ethers'
 
 import StabilityPoolAbi from '../abis/StabilityPool.json'
 
-export async function getFarmBalance(ctx: BaseContext, chain: Chain, stabilityPool: Contract) {
+export async function getFarmBalance(ctx: BalancesContext, chain: Chain, stabilityPool: Contract) {
   const provider = providers[chain]
 
   const StabilityPool = new ethers.Contract(stabilityPool.address, StabilityPoolAbi, provider)

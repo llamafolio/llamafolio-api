@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
@@ -18,7 +18,7 @@ const VAI: Token = {
   address: '0x4BD17003473389A42DAF6a0a729f6Fdb328BbBd7',
 }
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [stakeBalanceRes, pendingXVSRes] = await Promise.all([

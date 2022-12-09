@@ -1,10 +1,10 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
 export async function getLendingRewardsBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   incentiveController: Contract,
   rewardToken: Contract,

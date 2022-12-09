@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
@@ -16,7 +16,7 @@ const TEMPLE: Contract = {
 }
 
 export async function getStakeBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   contract: Contract,
   templeStaking: Contract,
@@ -62,7 +62,7 @@ export async function getStakeBalances(
   return balances
 }
 
-export async function getLockedBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+export async function getLockedBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
   const calls = contracts.map((contract) => ({
     target: contract.address,
     params: [],

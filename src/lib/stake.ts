@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call, TCall } from '@lib/call'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
@@ -7,7 +7,7 @@ import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 export async function getSingleStakeBalance(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   contract: Contract,
   callOptions?: Partial<TCall>,
@@ -31,7 +31,7 @@ export async function getSingleStakeBalance(
   return balance
 }
 
-export async function getSingleStakeBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+export async function getSingleStakeBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]) {
   const balances = await getERC20BalanceOf(ctx, chain, contracts as Token[])
   return balances.map((bal) => ({ ...bal, category: 'stake' as Category }))
 }

@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Balance, BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
@@ -14,7 +14,7 @@ const pools = [
   '0x50E627a1DF8D665524942aD7eC6392b6BA60293a',
 ]
 
-export const getLendBorrowBalances = async (ctx: BaseContext, chain: Chain, pools: Contract[]) => {
+export const getLendBorrowBalances = async (ctx: BalancesContext, chain: Chain, pools: Contract[]) => {
   const balances: Balance[] = []
 
   const [userCollateralBalancesRes, poolTokenBalanceRes, poolCollateralTokenRes] = await Promise.all([
@@ -159,7 +159,7 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BaseContext, contracts) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
     pools: getLendBorrowBalances,
   })

@@ -1,11 +1,11 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
 export async function getVestBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   escrow: Contract,
   liquidator: Contract,

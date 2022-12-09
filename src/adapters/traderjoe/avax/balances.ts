@@ -1,4 +1,4 @@
-import { BaseContext } from '@lib/adapter'
+import { BalancesContext } from '@lib/adapter'
 import { Balance, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
@@ -47,7 +47,7 @@ const JOE: Token = {
   coingeckoId: 'joe',
 }
 
-export async function getStakeBalance(ctx: BaseContext, chain: Chain) {
+export async function getStakeBalance(ctx: BalancesContext, chain: Chain) {
   const balances: Balance[] = []
 
   const [sJOEbalanceOfRes, veJOEbalanceOfRes, rJOEbalanceOfRes] = await Promise.all([

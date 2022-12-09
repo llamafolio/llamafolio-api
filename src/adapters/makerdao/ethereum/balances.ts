@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -37,7 +37,7 @@ export interface BalanceWithExtraProps extends Balance {
 }
 
 export async function getProxiesBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   vat: Contract,
   ilk: Contract,

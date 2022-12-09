@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20Details, resolveERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -67,7 +67,11 @@ export async function getMarketsContracts(chain: Chain, contracts: string[]): Pr
   return marketsContracts
 }
 
-export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+export async function getMarketsBalances(
+  ctx: BalancesContext,
+  chain: Chain,
+  contracts: Contract[],
+): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [borrowingTokenRes, lendingBalancesRes, borrowingBalancesRes] = await Promise.all([

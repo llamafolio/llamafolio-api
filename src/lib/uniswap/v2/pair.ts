@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -44,7 +44,7 @@ export const abi = {
  * Retrieves pairs balances (with underlyings) of Uniswap V2 like Pair.
  * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
  */
-export async function getPairsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+export async function getPairsBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
   const balances = await getERC20BalanceOf(ctx, chain, contracts as Token[])
 
   return getUnderlyingBalances(chain, balances)

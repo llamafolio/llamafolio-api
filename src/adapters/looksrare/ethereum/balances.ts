@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import { BalancesContext, Contract } from '@lib/adapter'
 import { Balance } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
@@ -20,7 +20,7 @@ const WETH: Contract = {
   symbols: 'WETH',
 }
 
-export const getStakeBalances = async (ctx: BaseContext, chain: Chain, stakingContract: Contract) => {
+export const getStakeBalances = async (ctx: BalancesContext, chain: Chain, stakingContract: Contract) => {
   const [stakeBalanceOfRes, rewardsBalanceOfRes] = await Promise.all([
     call({
       chain,
@@ -65,7 +65,7 @@ export const getStakeBalances = async (ctx: BaseContext, chain: Chain, stakingCo
   return stakebalance
 }
 
-export const getCompounderBalances = async (ctx: BaseContext, chain: Chain, compounder: Contract) => {
+export const getCompounderBalances = async (ctx: BalancesContext, chain: Chain, compounder: Contract) => {
   const sharesValue = await call({
     chain,
     target: compounder.address,

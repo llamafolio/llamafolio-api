@@ -1,5 +1,5 @@
 import { Balance, Contract } from '@lib/adapter'
-import { BaseContext } from '@lib/adapter'
+import { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
@@ -12,7 +12,7 @@ const WAVAX: Contract = {
   decimals: 18,
 }
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance> {
+export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance> {
   const [balanceOfRes, poolValueRes, totalSupplyRes] = await Promise.all([
     call({
       chain,

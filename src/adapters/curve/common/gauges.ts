@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { Chain } from '@lib/chains'
 import { Call, multicall } from '@lib/multicall'
@@ -182,7 +182,7 @@ export async function getGaugesContracts(
   return gaugeContracts
 }
 
-export async function getGaugesBalances(ctx: BaseContext, chain: Chain, gauges: Contract[]) {
+export async function getGaugesBalances(ctx: BalancesContext, chain: Chain, gauges: Contract[]) {
   const gaugesBalances: Balance[] = []
   const calls: Call[] = []
 

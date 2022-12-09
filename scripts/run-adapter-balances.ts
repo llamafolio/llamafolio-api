@@ -7,7 +7,7 @@ import {
   groupContracts,
 } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { Adapter, Balance, BaseContext } from '../src/lib/adapter'
+import { Adapter, Balance, BalancesContext } from '../src/lib/adapter'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
@@ -39,7 +39,7 @@ async function main() {
   const chain = process.argv[3] as Chain
   const address = process.argv[4].toLowerCase()
 
-  const ctx: BaseContext = { address }
+  const ctx: BalancesContext = { address, chain, adapterId }
 
   const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
