@@ -16,14 +16,12 @@ npm run adapter curve ethereum 0x0000000000000000000000000000000000000000
 
 ## API
 
-### Invocation
-
 ### Local development
 
-You can invoke your function locally by using the following command:
+You can run the API locally using:
 
 ```bash
-serverless invoke local --function hello
+npm run dev
 ```
 
 ## Contributing and listing your protocol
