@@ -2,10 +2,10 @@ import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
+import { getPoolFromLpTokenAddress, getPoolsUnderlyings, getUnderlyingsBalancesInPool } from '@lib/convex/underlyings'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
-import { getPoolFromLpTokenAddress, getPoolsUnderlyings, getUnderlyingsBalancesInPool } from '@lib/underlyings'
 import { BigNumber, utils } from 'ethers'
 
 const abi = {

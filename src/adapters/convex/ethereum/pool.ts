@@ -2,9 +2,9 @@ import { call } from '@defillama/sdk/build/abi'
 import { Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { Chain } from '@lib/chains'
+import { getPoolFromLpTokenAddress, getPoolsUnderlyings } from '@lib/convex/underlyings'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { getPoolFromLpTokenAddress, getPoolsUnderlyings } from '@lib/underlyings'
 
 interface PoolParams extends Contract {
   poolAddress: string

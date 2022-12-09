@@ -1,8 +1,8 @@
 import { Balance, BaseContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
+import { getUnderlyingsBalancesInPool } from '@lib/convex/underlyings'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { Token } from '@lib/token'
-import { getUnderlyingsBalancesInPool } from '@lib/underlyings'
 
 import { getCRVCVXRewards } from './rewards'
 

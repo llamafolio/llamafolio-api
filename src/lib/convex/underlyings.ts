@@ -4,8 +4,8 @@ import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { BigNumber, ethers } from 'ethers'
 
-import { getERC20Details } from './erc20'
-import { ETH_ADDR } from './token'
+import { getERC20Details } from '../erc20'
+import { ETH_ADDR } from '../token'
 
 const abi = {
   totalSupply: {
