@@ -246,7 +246,7 @@ const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHand
   return balances
 }
 
-export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promise<number[] | undefined> {
+export function getHealthFactor(balances: BalanceWithExtraProps[]): number[] | undefined {
   const healthFactor: number[] = []
   const nonZeroBalances = balances.filter((balance) => balance.amount.gt(0))
 
