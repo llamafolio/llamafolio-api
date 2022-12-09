@@ -80,7 +80,15 @@ export async function getPoolsContract(chain: Chain, contract: Contract) {
     abi: abi.poolInfo,
   })
 
-  const poolInfos = getPoolInfos.filter((res) => res.success).map((res) => res.output)
+  const poolInfos = getPoolInfos
+    .filter((res) => res.success)
+    .map((res) => res.output)
+    .filter((res) => res.lptoken !== '0xB15fFb543211b558D40160811e5DcBcd7d5aaac9') // dead address
+
+  for (let i = 0; i < poolInfos.length; i++) {
+    const poolInfo = poolInfos[i]
+    console.log(poolInfo.lptoken, i)
+  }
 
   const lptokensAddresses: string[] = poolInfos.map((token) => token.lptoken)
 
