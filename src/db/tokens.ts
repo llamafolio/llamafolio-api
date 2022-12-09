@@ -113,7 +113,8 @@ export async function selectChainTokens(client: PoolClient, chain: Chain, tokens
 export async function selectUndecodedChainAddresses(client: PoolClient, chain: Chain) {
   const tokensRes = await client.query(
     format(
-      `select distinct(token_address) from %I.token_transfers where token_address not in (select address from ethereum.tokens) limit 1000;`,
+      `select distinct(token_address) from %I.token_transfers where token_address not in (select address from %I.tokens) limit 100;`,
+      chain,
       chain,
     ),
     [],
