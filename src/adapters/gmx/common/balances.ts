@@ -140,15 +140,14 @@ export async function getGLPStakerBalance(ctx: BaseContext, chain: Chain, glpSta
     return []
   }
 
-  const fGlp = glpStaker.underlyings?.[0]
-  const glp = glpStaker.underlyings?.[1]
+  const glp = glpStaker.underlyings?.[0]
   const esGMX = glpStaker.rewards?.[0]
   const native = glpStaker.rewards?.[1]
 
   const [stakeGLPRes, pendingesGMXRewardsRes, pendingETHRewardsRes] = await Promise.all([
     call({ chain, target: glpStaker.address, params: [ctx.address], abi: abi.stakedAmounts }),
     call({ chain, target: glpStaker.address, params: [ctx.address], abi: abi.claimable }),
-    call({ chain, target: fGlp.address, params: [ctx.address], abi: abi.claimable }),
+    call({ chain, target: glpStaker.fGlp, params: [ctx.address], abi: abi.claimable }),
   ])
 
   const stakeGLP = BigNumber.from(stakeGLPRes.output)
