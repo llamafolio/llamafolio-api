@@ -1,8 +1,11 @@
-import { Balance, Contract } from '@lib/adapter'
+import { Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20Details } from '@lib/erc20'
-import { BigNumber } from 'ethers'
+import { multicall } from '@lib/multicall'
+import { BigNumber, ethers } from 'ethers'
+
+import { getERC20Details } from './erc20'
+import { ETH_ADDR } from './token'
 
 const abi = {
   totalSupply: {
@@ -24,72 +27,125 @@ const abi = {
     type: 'function',
     name: 'get_underlying_balances',
     inputs: [{ name: '_pool', type: 'address' }],
-    outputs: [{ name: '', type: 'uint256[8]' }],
+    outputs: [{ name: '', type: 'uint256[4]' }],
+  },
+
+  getPoolFromLPToken: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_pool_from_lp_token',
+    inputs: [{ name: 'arg0', type: 'address' }],
+    outputs: [{ name: '', type: 'address' }],
+    gas: 2443,
+  },
+
+  getUnderlyingsCoins: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_underlying_coins',
+    inputs: [{ name: '_pool', type: 'address' }],
+    outputs: [{ name: '', type: 'address[8]' }],
   },
 }
 
-export async function getUnderlyingsBalancesInPoolsFromLPTokensBalances(
+const curveMetaRegistry: Contract = {
+  chain: 'ethereum',
+  address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
+}
+
+export const getPoolsUnderlyings = async (chain: Chain, poolsAddresses: string[]) => {
+  const getUnderlyingsAddresses = await multicall({
+    chain,
+    calls: poolsAddresses.map((poolAddress) => ({
+      target: curveMetaRegistry.address,
+      params: [poolAddress],
+    })),
+    abi: abi.getUnderlyingsCoins,
+  })
+
+  const underlyingsAddresses = getUnderlyingsAddresses.filter((res) => res.success).map((res) => res.output)
+
+  const formattedUnderlyingsAddresses: any[] = []
+
+  for (let i = 0; i < underlyingsAddresses.length; i++) {
+    formattedUnderlyingsAddresses.push(
+      underlyingsAddresses[i]
+        .filter((underlying: string) => underlying.toLowerCase() !== ethers.constants.AddressZero)
+        .map((underlying: string) =>
+          underlying.toLowerCase() === ETH_ADDR ? '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' : underlying,
+        ),
+    )
+  }
+
+  const underlyings: any[] = []
+
+  for (const formattedUnderlyingsAddress of formattedUnderlyingsAddresses) {
+    underlyings.push(await getERC20Details(chain, formattedUnderlyingsAddress))
+  }
+
+  return underlyings
+}
+
+export async function getPoolFromLpTokenAddress(chain: Chain, lpTokens: string[]) {
+  const getPoolsAddressesFromLpTokens = await multicall({
+    chain,
+    calls: lpTokens.map((lpToken) => ({
+      target: curveMetaRegistry.address,
+      params: [lpToken],
+    })),
+    abi: abi.getPoolFromLPToken,
+  })
+
+  return getPoolsAddressesFromLpTokens.filter((res) => res.success).map((res) => res.output)
+}
+
+export async function getUnderlyingsBalancesInPool(
   chain: Chain,
-  contracts: Contract[],
-  lpTokensAddresses: string[],
-  poolsAddresses: string[],
-  registry: Contract,
-): Promise<Balance[]> {
-  const balances: Balance[] = []
+  contract: Contract,
+  lpTokenAddress: string,
+  poolAddress: string,
+) {
+  const [getTotalSupply, getUnderlyingsBalances] = await Promise.all([
+    call({
+      chain,
+      target: lpTokenAddress,
+      params: [],
+      abi: abi.totalSupply,
+    }),
 
-  for (let i = 0; i < contracts.length; i++) {
-    const contract = contracts[i]
-    const lpTokenAddress = lpTokensAddresses[i]
-    const poolAddress = poolsAddresses[i]
+    call({
+      chain,
+      target: curveMetaRegistry.address,
+      params: [poolAddress],
+      abi: abi.underlyingsBalances,
+    }),
+  ])
 
-    const [getTotalSupply, getUnderlyingsBalances, underlyings] = await Promise.all([
-      call({
-        chain,
-        target: lpTokenAddress,
-        params: [],
-        abi: abi.totalSupply,
-      }),
+  const totalSupply = BigNumber.from(getTotalSupply.output)
+  const underlyingsBalances: BigNumber[] = getUnderlyingsBalances.output.map((res: string) => BigNumber.from(res))
 
-      call({
-        chain,
-        target: registry.address,
-        params: [poolAddress],
-        abi: abi.underlyingsBalances,
-      }),
+  underlyingsBalances.filter((amount) => amount.gt(0))
 
-      getERC20Details(chain, contract.underlyings as any[]),
-    ])
+  /**
+   *  Updating pool amounts from the fraction of each underlyings
+   */
 
-    const totalSupply = BigNumber.from(getTotalSupply.output)
+  const underlyingsFractionated = []
 
-    /**
-     *  Updating pool amounts from the fraction of each underlyings
-     */
+  if (contract.underlyings) {
+    for (let i = 0; i < contract.underlyings.length; i++) {
+      const underlyingBalance = BigNumber.from(getUnderlyingsBalances.output[i])
 
-    const underlyingsFractionated = []
-
-    for (let j = 0; j < getUnderlyingsBalances.output.length; j++) {
-      const underlyingBalance = BigNumber.from(getUnderlyingsBalances.output[j])
-      const underlying = underlyings[j]
+      const underlyings = contract.underlyings[i]
 
       underlyingsFractionated.push({
         chain,
-        address: underlying.address,
-        symbol: underlying.symbol,
+        address: underlyings.address,
+        symbol: underlyings.symbol,
         amount: contract.amount.mul(underlyingBalance).div(totalSupply),
-        decimals: underlying.decimals,
+        decimals: underlyings.decimals,
       })
     }
-
-    balances.push({
-      chain,
-      address: contract.address,
-      amount: contract.amount,
-      symbol: underlyings.map((underlying) => underlying.symbol).join('-'),
-      underlyings: underlyingsFractionated,
-      decimals: 18,
-    })
   }
-
-  return balances
+  return underlyingsFractionated
 }
