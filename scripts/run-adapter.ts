@@ -147,9 +147,9 @@ async function main() {
           balance: millify(balance.amount.div(decimals.toString()).toNumber()),
           balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
           yield: `${yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + '%' : '-'}`,
-          // il: `${yieldObject !== undefined ? yieldObject?.ilRisk : '-'}`,
-          // stable: balance.stable,
-          // type: balance.type,
+          il: `${yieldObject !== undefined ? yieldObject?.ilRisk : '-'}`,
+          stable: balance.stable,
+          type: balance.type,
           reward: '',
           underlying: '',
         }
