@@ -2,7 +2,7 @@ import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20Details, getERC20DetailsTmp, resolveERC20Details } from '@lib/erc20'
+import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -71,18 +71,31 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  rewardTokens: {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'rewardTokens',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  earned: {
+    inputs: [
+      { internalType: 'address', name: '_account', type: 'address' },
+      { internalType: 'address', name: '_rewardToken', type: 'address' },
+    ],
+    name: 'earned',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
 interface FarmContract extends Contract {
-  lpToken: string
   rewarder: string
-  helper: string
 }
 
 interface FarmBalance extends Balance {
-  lpToken: string
   rewarder: string
-  helper: string
 }
 
 const VTX: Token = {
@@ -122,28 +135,51 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
     abi: abi.addressToPoolInfo,
   })
 
-  const { pools, lpTokens } = await resolveERC20Details(chain, {
-    pools: poolsAddresses,
-    lpTokens: poolInfosRes.map((res) => res.output?.lpToken),
-  })
+  const poolInfos = poolInfosRes.filter(isSuccess)
 
-  for (let i = 0; i < pools.length; i++) {
-    const poolRes = pools[i]
-    const poolInfoRes = poolInfosRes[i]
-    const lpTokenRes = lpTokens[i]
+  // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts checked, 7 seems to be the maximum number of extra tokens used.
+  // However, this process forced us to encounter many multicall failures on contracts that do not have as many tokens
+  const rewardsLength = 7
 
-    if (!isSuccess(poolRes) || !isSuccess(poolInfoRes) || !isSuccess(lpTokenRes)) {
+  const [depositTokensRes, rewardTokensRes] = await Promise.all([
+    multicall({
+      chain,
+      calls: poolInfos.map((res) => ({
+        target: res.output.helper,
+        params: [],
+      })),
+      abi: abi.depositToken,
+    }),
+
+    multicall({
+      chain,
+      calls: poolInfos.flatMap((res) =>
+        range(0, rewardsLength).map((idx) => ({
+          target: res.output.rewarder,
+          params: [idx],
+        })),
+      ),
+      abi: abi.rewardTokens,
+    }),
+  ])
+
+  for (let poolIdx = 0; poolIdx < poolInfos.length; poolIdx++) {
+    const poolInfoRes = poolInfos[poolIdx]
+    const depositTokenRes = depositTokensRes[poolIdx]
+
+    if (!depositTokenRes) {
       continue
     }
 
     contracts.push({
       chain,
-      address: poolRes.output.address,
-      lpToken: lpTokenRes.output.address,
+      address: poolInfoRes.input.params[0],
       rewarder: poolInfoRes.output.rewarder,
-      helper: poolInfoRes.output.helper,
-      decimals: lpTokenRes.output.decimals,
-      symbol: lpTokenRes.output.symbol,
+      underlyings: [depositTokenRes.output],
+      rewards: range(poolIdx * rewardsLength, (poolIdx + 1) * rewardsLength)
+        .map((rewardIdx) => rewardTokensRes[rewardIdx])
+        .filter(isSuccess)
+        .map((res) => res.output),
     })
   }
 
@@ -153,129 +189,98 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
 export async function getFarmBalances(
   ctx: BalancesContext,
   chain: Chain,
-  contracts: FarmContract[],
+  pools: FarmContract[],
   masterChef: Contract,
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [userDepositBalancesRes, depositTokensPoolsRes, pendingBaseRewardsRes] = await Promise.all([
+  const [userDepositBalancesRes, pendingBaseRewardsRes, pendingRewardsRes] = await Promise.all([
     multicall({
       chain,
-      calls: contracts.map((token) => ({
+      calls: pools.map((pool) => ({
         target: masterChef.address,
-        params: [token.lpToken, ctx.address],
+        params: [pool.address, ctx.address],
       })),
       abi: abi.depositInfo,
     }),
 
     multicall({
       chain,
-      calls: contracts.map((token) => ({
-        target: token.helper,
-        params: [],
+      calls: pools.map((pool) => ({
+        target: masterChef.address,
+        params: [pool.address, ctx.address, pool.address],
       })),
-      abi: abi.depositToken,
+      abi: abi.pendingTokens,
     }),
 
     multicall({
       chain,
-      calls: contracts.map((token) => ({
-        target: masterChef.address,
-        params: [token.lpToken, ctx.address, token.address],
-      })),
-      abi: abi.pendingTokens,
+      calls: pools.flatMap(
+        (pool) =>
+          pool.rewards?.map((rewardToken) => ({
+            target: pool.rewarder,
+            params: [ctx.address, rewardToken.address],
+          })) ?? [],
+      ),
+      abi: abi.earned,
     }),
   ])
 
-  const userDepositBalances = userDepositBalancesRes.map((res) => res.output)
-  const depositTokensPools = depositTokensPoolsRes.map((res) => res.output)
-  const pendingBaseRewards = pendingBaseRewardsRes.map((res) => res.output.pendingVTX)
+  let rewardIdx = 0
+  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+    const pool = pools[poolIdx]
+    const userDepositBalanceRes = userDepositBalancesRes[poolIdx]
+    const pendingBaseRewardRes = pendingBaseRewardsRes[poolIdx]
 
-  const tokens = await getERC20DetailsTmp(chain, depositTokensPools)
-
-  for (let i = 0; i < contracts.length; i++) {
-    const contract = contracts[i]
-    const userDepositBalance = userDepositBalances[i]
-    const tokenRes = tokens[i]
-    const pendingBaseReward = pendingBaseRewards[i]
-
-    if (isSuccess(tokenRes)) {
-      const balance: FarmBalance = {
-        chain,
-        address: tokenRes.output.address,
-        lpToken: contract.lpToken,
-        rewarder: contract.rewarder,
-        symbol: tokenRes.output.symbol,
-        helper: contract.helper,
-        decimals: tokenRes.output.decimals,
-        amount: BigNumber.from(userDepositBalance),
-        rewards: [{ ...VTX, amount: BigNumber.from(pendingBaseReward) }],
-        category: 'farm',
-      }
-
-      if (balance.amount.gt(0)) {
-        const extraRewards = await getExtraRewards(ctx, chain, balance)
-        balance.rewards?.push(...extraRewards)
-
-        if (balance.symbol === 'JLP') {
-          const underlyings = await getPoolsUnderlyings(chain, balance)
-          balance.underlyings = [...underlyings]
-        }
-      }
-
-      balances.push(balance)
+    if (!isSuccess(userDepositBalanceRes)) {
+      rewardIdx += pool.rewards?.length ?? 0
+      continue
     }
+
+    const balance: FarmBalance = {
+      chain,
+      address: pool.address,
+      symbol: pool.symbol,
+      decimals: pool.decimals,
+      amount: BigNumber.from(userDepositBalanceRes.output),
+      underlyings: pool.underlyings,
+      category: 'farm',
+      rewarder: pool.rewarder,
+    }
+
+    // base reward
+    const rewards: Balance[] = []
+    if (isSuccess(pendingBaseRewardRes)) {
+      rewards.push({ ...VTX, amount: BigNumber.from(pendingBaseRewardRes.output.pendingVTX) })
+    }
+
+    // extra reward
+    if (pool.rewards) {
+      for (const reward of pool.rewards) {
+        if (isSuccess(pendingRewardsRes[rewardIdx])) {
+          rewards.push({ ...reward, amount: BigNumber.from(pendingRewardsRes[rewardIdx].output) })
+        }
+        rewardIdx++
+      }
+    }
+
+    balance.rewards = rewards
+
+    // resolve LP underlyings
+    if (balance.amount.gt(0)) {
+      if (balance.symbol === 'JLP') {
+        const underlyings = await getPoolsUnderlyings(chain, balance)
+        balance.underlyings = [...underlyings]
+      }
+    }
+
+    balances.push(balance)
   }
 
   return balances
 }
 
-const getExtraRewards = async (ctx: BalancesContext, chain: Chain, balance: FarmBalance): Promise<Balance[]> => {
-  const pendingRewardsTokensRes = await multicall({
-    chain,
-    // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts checked, 7 seems to be the maximum number of extra tokens used.
-    // However, this process forced us to encounter many multicall failures on contracts that do not have as many tokens
-    calls: range(0, 6).map((x) => ({
-      target: balance.rewarder,
-      params: [x],
-    })),
-    abi: {
-      inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      name: 'rewardTokens',
-      outputs: [{ internalType: 'address', name: '', type: 'address' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  })
-
-  const pendingRewardsTokens = pendingRewardsTokensRes.filter((res) => res.success).map((res) => res.output)
-  const rewardsTokens = await getERC20Details(chain, pendingRewardsTokens)
-
-  const pendingRewardsBalancesRes = await multicall({
-    chain,
-    calls: pendingRewardsTokens.map((token) => ({
-      target: balance.rewarder,
-      params: [ctx.address, token],
-    })),
-    abi: {
-      inputs: [
-        { internalType: 'address', name: '_account', type: 'address' },
-        { internalType: 'address', name: '_rewardToken', type: 'address' },
-      ],
-      name: 'earned',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  })
-
-  const pendingRewardsBalances = pendingRewardsBalancesRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output))
-
-  return rewardsTokens.map((token, i) => ({ ...token, amount: pendingRewardsBalances[i] }))
-}
-
+// TODO: reuse TraderJoe logic
 const getPoolsUnderlyings = async (chain: Chain, contract: Contract): Promise<Balance[]> => {
   const [
     underlyingToken0AddressesRes,
