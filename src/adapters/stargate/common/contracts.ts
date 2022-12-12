@@ -2,7 +2,6 @@ import { Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { resolveERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
@@ -65,25 +64,27 @@ const abi = {
 export async function getPoolsContracts(chain: Chain, lpStaking: Contract): Promise<Contract[]> {
   const pools: Contract[] = []
 
-  const getPoolsLength = await call({
+  const poolsLengthRes = await call({
     chain,
     target: lpStaking.address,
     params: [],
     abi: abi.poolLength,
   })
 
-  const getPoolsInfos = await multicall({
+  const poolsLength = parseInt(poolsLengthRes.output)
+
+  const poolsInfosRes = await multicall({
     chain,
-    calls: range(0, getPoolsLength.output).map((i) => ({
+    calls: range(0, poolsLength).map((i) => ({
       target: lpStaking.address,
       params: [i],
     })),
     abi: abi.poolInfos,
   })
 
-  const poolsInfos = getPoolsInfos.filter((res) => res.success).map((res) => res.output)
+  const poolsInfos = poolsInfosRes.filter(isSuccess).map((res) => res.output)
 
-  const getTokens = await multicall({
+  const tokensRes = await multicall({
     chain,
     calls: poolsInfos.map((token) => ({
       target: token.lpToken,
@@ -92,25 +93,29 @@ export async function getPoolsContracts(chain: Chain, lpStaking: Contract): Prom
     abi: abi.token,
   })
 
-  const tokens = await resolveERC20Details(chain, {
-    tokens: getTokens.map((res) => res.output),
-  })
+  let tokenIdx = 0
+  for (let poolInfoIdx = 0; poolInfoIdx < poolsLength; poolInfoIdx++) {
+    const poolInfoRes = poolsInfosRes[poolInfoIdx]
+    const tokenRes = tokensRes[tokenIdx]
 
-  for (let i = 0; i < getPoolsLength.output; i++) {
-    const token = tokens.tokens[i]
+    if (!isSuccess(poolInfoRes)) {
+      continue
+    }
 
-    if (!isSuccess(token) || !lpStaking.rewards) {
+    if (!isSuccess(tokenRes)) {
+      tokenIdx++
       continue
     }
 
     pools.push({
       chain,
-      address: token.output.address,
-      symbol: token.output.symbol,
-      decimals: token.output.decimals,
-      yieldKey: token.output.address,
+      address: tokenRes.output,
+      yieldKey: tokenRes.output,
+      underlyings: [tokenRes.output],
       rewards: lpStaking.rewards,
     })
+
+    tokenIdx++
   }
 
   return pools
