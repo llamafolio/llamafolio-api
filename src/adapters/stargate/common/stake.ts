@@ -67,20 +67,18 @@ export async function getStakeBalances(
     const reward = pool.rewards?.[0]
     const pendingReward = pendingRewards[i]
 
-    if (!reward) {
-      continue
+    if (reward) {
+      poolsBalances.push({
+        chain,
+        address: pool.address,
+        decimals: pool.decimals,
+        symbol: pool.symbol,
+        amount: balance,
+        rewards: [{ ...reward, amount: pendingReward }],
+        yieldKey: pool.address,
+        category: 'stake',
+      })
     }
-
-    poolsBalances.push({
-      chain,
-      address: pool.address,
-      decimals: pool.decimals,
-      symbol: pool.symbol,
-      amount: balance,
-      rewards: [{ ...reward, amount: pendingReward }],
-      yieldKey: pool.address,
-      category: 'stake',
-    })
   }
 
   return poolsBalances
