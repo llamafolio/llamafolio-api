@@ -5,12 +5,12 @@ import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
 const abi = {
-  pendingReward: {
+  pendingEmissionToken: {
     inputs: [
       { internalType: 'uint256', name: '_pid', type: 'uint256' },
       { internalType: 'address', name: '_user', type: 'address' },
     ],
-    name: 'pendingStargate',
+    name: 'pendingEmissionToken',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
@@ -54,7 +54,7 @@ export async function getStakeBalances(
     multicall({
       chain,
       calls,
-      abi: abi.pendingReward,
+      abi: abi.pendingEmissionToken,
     }),
   ])
 

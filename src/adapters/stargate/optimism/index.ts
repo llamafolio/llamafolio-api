@@ -2,14 +2,8 @@ import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
-import { getStakeBalances } from '../common/stake'
-
-const stakingContract: Contract = {
-  name: 'lpStaking',
-  displayName: 'LP Staking Pool Optimism',
-  chain: 'optimism',
-  address: '0x4DeA9e918c6289a52cd469cAC652727B7b412Cd2',
-}
+import { getPoolsContracts } from '../common/contracts'
+import { getStakeBalances } from './stake'
 
 const OP: Token = {
   chain: 'optimism',
@@ -18,29 +12,25 @@ const OP: Token = {
   symbol: 'OP',
 }
 
-const abi = {
-  pendingEmissionToken: {
-    inputs: [
-      { internalType: 'uint256', name: '_pid', type: 'uint256' },
-      { internalType: 'address', name: '_user', type: 'address' },
-    ],
-    name: 'pendingEmissionToken',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
+const lpStaking: Contract = {
+  name: 'lpStaking',
+  displayName: 'LP Staking Pool Optimism',
+  chain: 'optimism',
+  address: '0x4DeA9e918c6289a52cd469cAC652727B7b412Cd2',
+  rewards: [OP],
 }
 
-export const getContracts = () => {
+export const getContracts = async () => {
+  const pools = await getPoolsContracts('optimism', lpStaking)
+
   return {
-    contracts: { stakingContract },
+    contracts: { lpStaking, pools },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, 'optimism', contracts, {
-    stakingContract: (...args) =>
-      getStakeBalances(...args, { rewardToken: OP, pendingRewardAbi: abi.pendingEmissionToken }),
+    pools: (...args) => getStakeBalances(...args, lpStaking),
   })
 
   return {
