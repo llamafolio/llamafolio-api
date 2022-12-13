@@ -3,8 +3,87 @@ import { Balance, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
+
 interface Token extends Contract {
   name: string
+}
+
+const abi = {
+  getUserInfo: {
+    inputs: [
+      { internalType: 'address', name: '_user', type: 'address' },
+      {
+        internalType: 'contract IERC20Upgradeable',
+        name: '_rewardToken',
+        type: 'address',
+      },
+    ],
+    name: 'getUserInfo',
+    outputs: [
+      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'uint256', name: '', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  veJoeUserInfos: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'userInfos',
+    outputs: [
+      { internalType: 'uint256', name: 'balance', type: 'uint256' },
+      { internalType: 'uint256', name: 'rewardDebt', type: 'uint256' },
+      {
+        internalType: 'uint256',
+        name: 'lastClaimTimestamp',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'speedUpEndTimestamp',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  rJoeUserInfo: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'userInfo',
+    outputs: [
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { internalType: 'uint256', name: 'rewardDebt', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingReward: {
+    inputs: [
+      { internalType: 'address', name: '_user', type: 'address' },
+      {
+        internalType: 'contract IERC20Upgradeable',
+        name: '_token',
+        type: 'address',
+      },
+    ],
+    name: 'pendingReward',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getPendingVeJoe: {
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'getPendingVeJoe',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingRJoe: {
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'pendingRJoe',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
 const pools = [
@@ -55,65 +134,21 @@ export async function getStakeBalance(ctx: BalancesContext, chain: Chain) {
       chain,
       target: pools[0],
       params: [ctx.address, USDC.address],
-      abi: {
-        inputs: [
-          { internalType: 'address', name: '_user', type: 'address' },
-          {
-            internalType: 'contract IERC20Upgradeable',
-            name: '_rewardToken',
-            type: 'address',
-          },
-        ],
-        name: 'getUserInfo',
-        outputs: [
-          { internalType: 'uint256', name: '', type: 'uint256' },
-          { internalType: 'uint256', name: '', type: 'uint256' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.getUserInfo,
     }),
 
     call({
       chain,
       target: pools[1],
       params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: '', type: 'address' }],
-        name: 'userInfos',
-        outputs: [
-          { internalType: 'uint256', name: 'balance', type: 'uint256' },
-          { internalType: 'uint256', name: 'rewardDebt', type: 'uint256' },
-          {
-            internalType: 'uint256',
-            name: 'lastClaimTimestamp',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: 'speedUpEndTimestamp',
-            type: 'uint256',
-          },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.veJoeUserInfos,
     }),
 
     call({
       chain,
       target: pools[2],
       params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: '', type: 'address' }],
-        name: 'userInfo',
-        outputs: [
-          { internalType: 'uint256', name: 'amount', type: 'uint256' },
-          { internalType: 'uint256', name: 'rewardDebt', type: 'uint256' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.rJoeUserInfo,
     }),
   ])
 
@@ -128,46 +163,21 @@ export async function getStakeBalance(ctx: BalancesContext, chain: Chain) {
       chain,
       target: pools[0],
       params: [ctx.address, USDC.address],
-      abi: {
-        inputs: [
-          { internalType: 'address', name: '_user', type: 'address' },
-          {
-            internalType: 'contract IERC20Upgradeable',
-            name: '_token',
-            type: 'address',
-          },
-        ],
-        name: 'pendingReward',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.pendingReward,
     }),
 
     call({
       chain,
       target: pools[1],
       params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
-        name: 'getPendingVeJoe',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.getPendingVeJoe,
     }),
 
     call({
       chain,
       target: pools[2],
       params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
-        name: 'pendingRJoe',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.pendingRJoe,
     }),
   ])
 
@@ -178,12 +188,16 @@ export async function getStakeBalance(ctx: BalancesContext, chain: Chain) {
   const rewardsAmount = [sJOErewards, veJOErewards, rJOErewards]
 
   for (let i = 0; i < pools.length; i++) {
+    const pool = pools[i]
+    const amount = stakeAmount[i]
+    const rewardToken = JOE.rewards?.[i]
+    const rewardBalance = rewardsAmount[i]
+
     const balance: Balance = {
-      ...(JOE as Balance),
-      address: pools[i],
-      amount: stakeAmount[i],
-      rewards: [{ ...(JOE.rewards?.[i] as Balance), amount: rewardsAmount[i] }],
-      underlyings: [JOE],
+      ...JOE,
+      address: pool,
+      amount,
+      rewards: [{ ...(rewardToken as Balance), amount: rewardBalance }],
       category: 'stake',
     }
     balances.push(balance)
