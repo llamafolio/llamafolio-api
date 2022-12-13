@@ -15,24 +15,6 @@ const abiWonderland = {
     stateMutability: 'view',
     type: 'function',
   },
-  rewardTokenLength: {
-    constant: true,
-    inputs: [],
-    name: 'rewardTokenLength',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-  rewardTokens: {
-    constant: true,
-    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    name: 'rewardTokens',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
   earned: {
     constant: true,
     inputs: [
@@ -131,12 +113,12 @@ export async function getStakeBalance(
 
     const rewardsBalanceOf = rewardsBalanceOfRes.filter(isSuccess).map((res) => BigNumber.from(res.output))
 
-    rewards.map((reward, i) =>
-      balance.rewards?.push({
-        ...reward,
-        amount: rewardsBalanceOf[i],
-      }),
-    )
+    for (let i = 0; i < rewards.length; i++) {
+      const reward = rewards[i]
+      const rewardBalanceOf = rewardsBalanceOf[i]
+
+      balance.rewards?.push({ ...reward, amount: rewardBalanceOf })
+    }
   }
 
   return balance
