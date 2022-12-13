@@ -1,6 +1,7 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
+import { getwMemoFarmContracts } from './contract'
 import { getFormattedStakeBalance, getStakeBalance } from './stake'
 
 const wMEMO: Contract = {
@@ -19,16 +20,18 @@ const wMemoFarm: Contract = {
   token: wMEMO,
 }
 
-export const getContracts = () => {
+export const getContracts = async () => {
+  const stake = await getwMemoFarmContracts('avax', wMemoFarm)
+
   return {
-    contracts: { wMEMO, wMemoFarm },
+    contracts: { wMEMO, stake, wMemoFarm },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
     wMEMO: getFormattedStakeBalance,
-    wMemoFarm: getStakeBalance,
+    stake: (...args) => getStakeBalance(...args, wMemoFarm),
   })
 
   return {
