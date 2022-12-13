@@ -3,6 +3,47 @@ import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
+const abi = {
+  collateral: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'collateral',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  remainingIssuableSynths: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'remainingIssuableSynths',
+    outputs: [
+      { internalType: 'uint256', name: 'maxIssuable', type: 'uint256' },
+      { internalType: 'uint256', name: 'alreadyIssued', type: 'uint256' },
+      {
+        internalType: 'uint256',
+        name: 'totalSystemDebt',
+        type: 'uint256',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  feesAvailable: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'feesAvailable',
+    outputs: [
+      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'uint256', name: '', type: 'uint256' },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
 export async function getLendBorrowBalances(
   ctx: BalancesContext,
   chain: Chain,
@@ -18,56 +59,21 @@ export async function getLendBorrowBalances(
       chain,
       target: synthetixContract.address,
       params: [ctx.address],
-      abi: {
-        constant: true,
-        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-        name: 'collateral',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.collateral,
     }),
 
     call({
       chain,
       target: synthetixContract.address,
       params: [ctx.address],
-      abi: {
-        constant: true,
-        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-        name: 'remainingIssuableSynths',
-        outputs: [
-          { internalType: 'uint256', name: 'maxIssuable', type: 'uint256' },
-          { internalType: 'uint256', name: 'alreadyIssued', type: 'uint256' },
-          {
-            internalType: 'uint256',
-            name: 'totalSystemDebt',
-            type: 'uint256',
-          },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.remainingIssuableSynths,
     }),
 
     call({
       chain,
       target: feePoolContract.address,
       params: [ctx.address],
-      abi: {
-        constant: true,
-        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-        name: 'feesAvailable',
-        outputs: [
-          { internalType: 'uint256', name: '', type: 'uint256' },
-          { internalType: 'uint256', name: '', type: 'uint256' },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.feesAvailable,
     }),
   ])
 

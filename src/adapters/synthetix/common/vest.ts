@@ -4,6 +4,18 @@ import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
+const abiSNX = {
+  earned: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'earned',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
 export async function getVestBalances(
   ctx: BalancesContext,
   chain: Chain,
@@ -24,15 +36,7 @@ export async function getVestBalances(
       chain,
       target: liquidator.address,
       params: [ctx.address],
-      abi: {
-        constant: true,
-        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-        name: 'earned',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abiSNX.earned,
     }),
   ])
 
