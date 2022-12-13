@@ -111,13 +111,18 @@ export async function getStakeBalance(
       abi: abiWonderland.earned,
     })
 
-    const rewardsBalanceOf = rewardsBalanceOfRes.filter(isSuccess).map((res) => BigNumber.from(res.output))
+    let rewardsIdx = 0
+    for (let balanceIdx = 0; balanceIdx < rewardsBalanceOfRes.length; balanceIdx++) {
+      const rewardBalanceOfRes = rewardsBalanceOfRes[balanceIdx]
+      const reward = rewards[rewardsIdx]
 
-    for (let i = 0; i < rewards.length; i++) {
-      const reward = rewards[i]
-      const rewardBalanceOf = rewardsBalanceOf[i]
+      if (!isSuccess(rewardBalanceOfRes)) {
+        continue
+      }
 
-      balance.rewards?.push({ ...reward, amount: rewardBalanceOf })
+      balance.rewards?.push({ ...reward, amount: BigNumber.from(rewardBalanceOfRes.output) })
+
+      rewardsIdx++
     }
   }
 
