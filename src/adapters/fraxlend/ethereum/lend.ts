@@ -1,93 +1,80 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
-import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
-  userCollateralBalance: {
-    inputs: [{ internalType: 'address', name: '', type: 'address' }],
-    name: 'userCollateralBalance',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+  getUserSnapshot: {
+    inputs: [{ internalType: 'address', name: '_address', type: 'address' }],
+    name: 'getUserSnapshot',
+    outputs: [
+      { internalType: 'uint256', name: '_userAssetShares', type: 'uint256' },
+      { internalType: 'uint256', name: '_userBorrowShares', type: 'uint256' },
+      { internalType: 'uint256', name: '_userCollateralBalance', type: 'uint256' },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
 }
 
-export const getLendBorrowBalances = async (ctx: BalancesContext, chain: Chain, pools: Contract[]) => {
+export const getLendBorrowBalances = async (ctx: BalancesContext, chain: Chain, pairs: Contract[], FRAX: Contract) => {
   const balances: Balance[] = []
 
-  const [userCollateralBalancesRes, poolTokenBalanceRes, poolCollateralTokenRes] = await Promise.all([
-    multicall({
-      chain,
-      calls: pools.map((pool) => ({
-        target: pool.address,
-        params: [ctx.address],
-      })),
-      abi: abi.userCollateralBalance,
-    }),
+  const userSnapshotsRes = await multicall({
+    chain,
+    calls: pairs.map((pair) => ({
+      target: pair.address,
+      params: [ctx.address],
+    })),
+    abi: abi.getUserSnapshot,
+  })
 
-    multicall({
-      chain,
-      calls: pools.map((pool) => ({
-        target: pool.address,
-        params: [ctx.address],
-      })),
-      abi: {
-        inputs: [{ internalType: 'address', name: '', type: 'address' }],
-        name: 'balanceOf',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+  for (let pairIdx = 0; pairIdx < pairs.length; pairIdx++) {
+    const pair = pairs[pairIdx]
+    const userSnapshotRes = userSnapshotsRes[pairIdx]
 
-    multicall({
-      chain,
-      calls: pools.map((pool) => ({
-        target: pool.address,
-        params: [],
-      })),
-      abi: {
-        inputs: [],
-        name: 'collateralContract',
-        outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-  ])
+    if (isSuccess(userSnapshotRes)) {
+      const userAssetShares = BigNumber.from(userSnapshotRes.output._userAssetShares)
+      const userBorrowShares = BigNumber.from(userSnapshotRes.output._userBorrowShares)
+      const userCollateralBalance = BigNumber.from(userSnapshotRes.output._userCollateralBalance)
 
-  const poolCollateralTokensAddress = poolCollateralTokenRes.filter((res) => res.success).map((res) => res.output)
+      const asset: Balance = {
+        chain,
+        decimals: pair.decimals,
+        symbol: pair.symbol,
+        address: pair.address,
+        amount: userAssetShares,
+        category: 'lend',
+        underlyings: [FRAX],
+      }
 
-  const poolCollateralTokens = await getERC20Details(chain, poolCollateralTokensAddress)
+      balances.push(asset)
 
-  const poolTokenBalances = poolTokenBalanceRes.filter((res) => res.success).map((res) => BigNumber.from(res.output))
+      const collateral: Balance = {
+        chain,
+        decimals: pair.decimals,
+        symbol: pair.symbol,
+        address: pair.address,
+        amount: userCollateralBalance,
+        category: 'lend',
+        underlyings: pair.underlyings,
+      }
 
-  const userCollateralBalances = userCollateralBalancesRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output))
+      balances.push(collateral)
 
-  for (let i = 0; i < pools.length; i++) {
-    const asset = pools[i]
+      const borrow: Balance = {
+        chain,
+        decimals: pair.decimals,
+        symbol: pair.symbol,
+        address: pair.address,
+        amount: userBorrowShares,
+        category: 'borrow',
+        underlyings: [FRAX],
+      }
 
-    const poolTokenBalance = poolTokenBalances[i]
-
-    const userCollateral = userCollateralBalances[i]
-
-    const collateralToken = poolCollateralTokens[i]
-
-    const supply: Balance = {
-      chain,
-      decimals: asset.decimals,
-      symbol: asset.symbol,
-      address: asset.address,
-      amount: poolTokenBalance,
-      category: 'lend',
-      underlyings: [{ amount: userCollateral, ...collateralToken }],
+      balances.push(borrow)
     }
-
-    balances.push(supply)
   }
 
   return balances
