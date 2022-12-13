@@ -2,12 +2,67 @@ import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
-import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-export async function getBondsBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
-  const balances: Balance[] = []
+const abi = {
+  bondDetails: {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'bondDetails',
+    outputs: [
+      { internalType: 'address', name: '_payoutToken', type: 'address' },
+      { internalType: 'address', name: '_principleToken', type: 'address' },
+      { internalType: 'address', name: '_treasuryAddress', type: 'address' },
+      { internalType: 'address', name: '_bondAddress', type: 'address' },
+      { internalType: 'address', name: '_initialOwner', type: 'address' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingPayoutFor: {
+    inputs: [{ internalType: 'address', name: '_depositor', type: 'address' }],
+    name: 'pendingPayoutFor',
+    outputs: [{ internalType: 'uint256', name: 'pendingPayout_', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  token0: {
+    inputs: [],
+    name: 'token0',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  token1: {
+    inputs: [],
+    name: 'token1',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getReserves: {
+    inputs: [],
+    name: 'getReserves',
+    outputs: [
+      { internalType: 'uint112', name: '_reserve0', type: 'uint112' },
+      { internalType: 'uint112', name: '_reserve1', type: 'uint112' },
+      { internalType: 'uint32', name: '_blockTimestampLast', type: 'uint32' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  totalSupply: {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+export async function getBondsContracts(chain: Chain, contract: Contract): Promise<Contract[]> {
+  const contracts: Contract[] = []
 
   const bondDetailsRes = await multicall({
     chain,
@@ -15,72 +70,82 @@ export async function getBondsBalances(ctx: BalancesContext, chain: Chain, contr
       target: contract.address,
       params: [i],
     })),
-    abi: {
-      inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      name: 'bondDetails',
-      outputs: [
-        { internalType: 'address', name: '_payoutToken', type: 'address' },
-        { internalType: 'address', name: '_principleToken', type: 'address' },
-        { internalType: 'address', name: '_treasuryAddress', type: 'address' },
-        { internalType: 'address', name: '_bondAddress', type: 'address' },
-        { internalType: 'address', name: '_initialOwner', type: 'address' },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.bondDetails,
   })
 
-  const userSuppliedTokenAddresses = bondDetailsRes
-    .filter((res) => res.success)
-    .map((res) => res.output._principleToken)
+  for (let i = 0; i < bondDetailsRes.length; i++) {
+    if (!isSuccess(bondDetailsRes[i])) {
+      continue
+    }
+    const bondDetail = bondDetailsRes[i]
 
-  const bondWithTokenAddresses = bondDetailsRes.filter((res) => res.success).map((res) => res.output._payoutToken)
-  const bondAddresses = bondDetailsRes.filter((res) => res.success).map((res) => res.output._bondAddress)
+    const userSuppliedToken = bondDetail.output._principleToken
+    const bondWithToken = bondDetail.output._payoutToken
+    const bondAddress = bondDetail.output._bondAddress
 
-  const [userSuppliedTokens, bondWithTokens] = await Promise.all([
-    getERC20Details(chain, userSuppliedTokenAddresses),
-    getERC20Details(chain, bondWithTokenAddresses),
+    const bondContract: Contract = {
+      chain,
+      address: userSuppliedToken,
+      bondAddress,
+      bondWithToken,
+      underlyings: [],
+      category: 'vest',
+    }
+
+    const underlyings = await getPoolsUnderlyings(chain, userSuppliedToken)
+    if (underlyings.length > 0) {
+      bondContract.underlyings = underlyings
+    }
+    contracts.push(bondContract)
+  }
+
+  return contracts
+}
+
+const getPoolsUnderlyings = async (chain: Chain, contracts: string) => {
+  const calls = [contracts].map((contract) => ({
+    target: contract,
+    params: [],
+  }))
+
+  const [underlyingToken0AddressesRes, underlyingsTokens1AddressesRes] = await Promise.all([
+    multicall({ chain, calls, abi: abi.token0 }),
+    multicall({ chain, calls, abi: abi.token1 }),
   ])
 
-  const bondContractsInfos = []
+  const underlyings0 = underlyingToken0AddressesRes.filter((res) => res.success).map((res) => res.output)
+  const underlyings1 = underlyingsTokens1AddressesRes.filter((res) => res.success).map((res) => res.output)
 
-  for (let i = 0; i < userSuppliedTokens.length; i++) {
-    const userSuppliedToken = userSuppliedTokens[i]
-    const bondWithToken = bondWithTokens[i]
-    const bondAddress = bondAddresses[i]
+  return [...underlyings0, ...underlyings1]
+}
 
-    bondContractsInfos.push({ userSuppliedToken, bondWithToken, bondAddress })
-  }
+export async function getBondsBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]) {
+  const balances: Balance[] = []
 
   const pendingPayoutForRes = await multicall({
     chain,
-    calls: bondContractsInfos.map((bond) => ({
-      target: bond.bondAddress,
+    calls: contracts.map((contract) => ({
+      target: contract.bondAddress,
       params: [ctx.address],
     })),
-    abi: {
-      inputs: [{ internalType: 'address', name: '_depositor', type: 'address' }],
-      name: 'pendingPayoutFor',
-      outputs: [{ internalType: 'uint256', name: 'pendingPayout_', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.pendingPayoutFor,
   })
 
-  const pendingPayoutFor = pendingPayoutForRes.filter((res) => res.success).map((res) => BigNumber.from(res.output))
+  const pendingPayoutFor = pendingPayoutForRes.filter(isSuccess).map((res) => BigNumber.from(res.output))
 
-  for (let i = 0; i < bondContractsInfos.length; i++) {
-    const bondContractInfo = bondContractsInfos[i]
+  for (let i = 0; i < contracts.length; i++) {
+    const contract = contracts[i]
     const pendingPayout = pendingPayoutFor[i]
 
     const balance: Balance = {
-      ...bondContractInfo.userSuppliedToken,
+      ...contract,
       amount: pendingPayout,
-      category: 'vest',
+      rewards: undefined,
     }
-    if (balance.amount.gt(0) && balance.symbol === 'SLP') {
-      const underlyings = await getPoolsUnderlyings(chain, balance)
-      balance.underlyings = [...underlyings]
+
+    if (contract.underlyings && contract.symbol === 'SLP') {
+      const underlyingsBalances = await getUnderlyingsBalances(chain, balance)
+      balance.underlyings = underlyingsBalances
     }
     balances.push(balance)
   }
@@ -88,89 +153,42 @@ export async function getBondsBalances(ctx: BalancesContext, chain: Chain, contr
   return balances
 }
 
-const getPoolsUnderlyings = async (chain: Chain, contract: Contract): Promise<Balance[]> => {
-  const [
-    underlyingToken0AddressesRes,
-    underlyingsTokens1AddressesRes,
-    underlyingsTokensReservesRes,
-    totalPoolSupplyRes,
-  ] = await Promise.all([
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'token0',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+const getUnderlyingsBalances = async (chain: Chain, contract: Contract) => {
+  const underlyings = []
 
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'token1',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+  if (contract.underlyings) {
+    const [underlyingsTokensReservesRes, totalPoolSupplyRes] = await Promise.all([
+      call({
+        chain,
+        target: contract.address,
+        params: [],
+        abi: abi.getReserves,
+      }),
 
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'getReserves',
-        outputs: [
-          { internalType: 'uint112', name: '_reserve0', type: 'uint112' },
-          { internalType: 'uint112', name: '_reserve1', type: 'uint112' },
-          { internalType: 'uint32', name: '_blockTimestampLast', type: 'uint32' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+      call({
+        chain,
+        target: contract.address,
+        params: [],
+        abi: abi.totalSupply,
+      }),
+    ])
 
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'totalSupply',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-  ])
+    const underlyingsTokensReserves0 = BigNumber.from(underlyingsTokensReservesRes.output._reserve0)
+    const underlyingsTokensReserves1 = BigNumber.from(underlyingsTokensReservesRes.output._reserve1)
+    const totalPoolSupply = BigNumber.from(totalPoolSupplyRes.output)
 
-  const underlyingsTokensAddresses: string[] = []
-  const underlyingsTokensReserves: BigNumber[] = []
-  const totalPoolSupply = BigNumber.from(totalPoolSupplyRes.output)
+    const underlyings0 = {
+      ...contract.underlyings[0],
+      amount: contract.amount.mul(underlyingsTokensReserves0).div(totalPoolSupply),
+    }
 
-  underlyingsTokensAddresses.push(underlyingToken0AddressesRes.output, underlyingsTokens1AddressesRes.output)
-  underlyingsTokensReserves.push(
-    BigNumber.from(underlyingsTokensReservesRes.output._reserve0),
-    BigNumber.from(underlyingsTokensReservesRes.output._reserve1),
-  )
-  const underlyings = await getERC20Details(chain, underlyingsTokensAddresses)
+    const underlyings1 = {
+      ...contract.underlyings[1],
+      amount: contract.amount.mul(underlyingsTokensReserves1).div(totalPoolSupply),
+    }
 
-  const underlyings0 = {
-    ...underlyings[0],
-    amount: contract.amount.mul(underlyingsTokensReserves[0]).div(totalPoolSupply),
+    underlyings.push(underlyings0, underlyings1)
+
+    return underlyings
   }
-  const underlyings1 = {
-    ...underlyings[1],
-    amount: contract.amount.mul(underlyingsTokensReserves[1]).div(totalPoolSupply),
-  }
-
-  return [underlyings0, underlyings1]
 }

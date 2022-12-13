@@ -5,6 +5,16 @@ import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers/lib/ethers'
 
+const abiOlympus = {
+  balanceFrom: {
+    inputs: [{ internalType: 'uint256', name: '_amount', type: 'uint256' }],
+    name: 'balanceFrom',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
 const OHM: Contract = {
   name: 'Olympus',
   chain: 'ethereum',
@@ -31,7 +41,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
     decimals: contract.decimals,
     symbol: contract.symbol,
     amount,
-    underlyings: [{ ...OHM, amount }],
+    underlyings: [OHM],
     category: 'stake',
   }
   balances.push(balance)
@@ -55,13 +65,7 @@ export async function getFormattedStakeBalances(ctx: BalancesContext, chain: Cha
     chain,
     target: contract.address,
     params: [balanceOf],
-    abi: {
-      inputs: [{ internalType: 'uint256', name: '_amount', type: 'uint256' }],
-      name: 'balanceFrom',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abiOlympus.balanceFrom,
   })
 
   const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes.output)
@@ -72,7 +76,7 @@ export async function getFormattedStakeBalances(ctx: BalancesContext, chain: Cha
     symbol: contract.symbol,
     decimals: 9,
     amount: formattedBalanceOf,
-    underlyings: [{ ...OHM, amount: formattedBalanceOf }],
+    underlyings: [OHM],
     category: 'stake',
   }
 
