@@ -1,41 +1,130 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
-import { multicall } from '@lib/multicall'
+import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
-export async function getStakeBalances(ctx: BalancesContext, chain: Chain, pools: Contract[]) {
+const abiTRU = {
+  claimable: {
+    inputs: [
+      {
+        internalType: 'contract IERC20',
+        name: 'token',
+        type: 'address',
+      },
+      { internalType: 'address', name: 'account', type: 'address' },
+    ],
+    name: 'claimable',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  poolValue: {
+    inputs: [],
+    name: 'poolValue',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  totalSupply: {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+const TRU: Token = {
+  chain: 'ethereum',
+  address: '0x4c19596f5aaff459fa38b0f7ed92f11ae6543784',
+  symbol: 'TRU',
+  decimals: 8,
+}
+
+const TrueUSD: Token = {
+  chain: 'ethereum',
+  address: '0x0000000000085d4780B73119b644AE5ecd22b376',
+  symbol: 'TUSD',
+  decimals: 18,
+}
+
+export async function getTRUStakeBalances(ctx: BalancesContext, chain: Chain, stkTRU: Contract) {
   const balances: Balance[] = []
 
-  const calls = pools.map((pool) => ({
-    target: pool.address,
-    params: [ctx.address],
-  }))
+  const [balanceOfRes, claimableRes] = await Promise.all([
+    call({
+      chain,
+      target: stkTRU.address,
+      params: [ctx.address],
+      abi: abi.balanceOf,
+    }),
 
-  const balanceOf = await multicall({
+    call({
+      chain,
+      target: stkTRU.address,
+      params: [ctx.address, TRU.address],
+      abi: abiTRU.claimable,
+    }),
+  ])
+
+  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const claimable = BigNumber.from(claimableRes.output)
+
+  balances.push({
     chain,
-    calls,
-    abi: abi.balanceOf,
+    address: stkTRU.address,
+    decimals: stkTRU.decimals,
+    symbol: stkTRU.symbol,
+    amount: balanceOf,
+    underlyings: [TRU],
+    rewards: [{ ...TRU, amount: claimable }],
+    category: 'stake',
   })
 
-  for (let i = 0; i < pools.length; i++) {
-    const pool = pools[i]
+  return balances
+}
 
-    if (!balanceOf[i].success) {
-      continue
-    }
+export async function getTUSDStakeBalances(ctx: BalancesContext, chain: Chain, TUSD: Contract) {
+  const balances: Balance[] = []
 
-    const amount = BigNumber.from(balanceOf[i].output).mul(pool.poolValue).div(pool.totalSupply)
+  const [balanceOfRes, poolValueRes, totalSupplyRes] = await Promise.all([
+    call({
+      chain,
+      target: TUSD.address,
+      params: [ctx.address],
+      abi: abi.balanceOf,
+    }),
 
-    const balance: Balance = {
-      ...(pool as Balance),
-      category: 'stake',
-      amount,
-      underlyings: [{ ...(pool.underlyings?.[0] as Balance), amount }],
-    }
+    call({
+      chain,
+      target: TUSD.address,
+      params: [],
+      abi: abiTRU.poolValue,
+    }),
 
-    balances.push(balance)
-  }
+    call({
+      chain,
+      target: TUSD.address,
+      params: [],
+      abi: abiTRU.totalSupply,
+    }),
+  ])
+
+  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const poolValue = BigNumber.from(poolValueRes.output)
+  const totalSupply = BigNumber.from(totalSupplyRes.output)
+
+  balances.push({
+    chain,
+    address: TUSD.address,
+    decimals: TUSD.decimals,
+    symbol: TUSD.symbol,
+    amount: balanceOf.mul(poolValue).div(totalSupply),
+    underlyings: [TrueUSD],
+    category: 'stake',
+  })
 
   return balances
 }
