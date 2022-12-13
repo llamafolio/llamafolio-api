@@ -98,15 +98,13 @@ export async function getStakeBalance(
 ): Promise<Balance> {
   const rewards = contract.rewards
 
-  const [balanceOfRes] = await Promise.all([
-    call({
-      chain,
-      block: ctx.blockHeight?.[chain],
-      target: wMemoFarm.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
-  ])
+  const balanceOfRes = await call({
+    chain,
+    block: ctx.blockHeight?.[chain],
+    target: wMemoFarm.address,
+    params: [ctx.address],
+    abi: abi.balanceOf,
+  })
 
   const balanceOf = BigNumber.from(balanceOfRes.output)
 
