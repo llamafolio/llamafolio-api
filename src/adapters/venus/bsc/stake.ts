@@ -4,6 +4,30 @@ import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
+const abi = {
+  userInfo: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'userInfo',
+    outputs: [
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { internalType: 'uint256', name: 'rewardDebt', type: 'uint256' },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingXVS: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'pendingXVS',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
 const XVS: Token = {
   chain: 'bsc',
   address: '0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63',
@@ -26,33 +50,14 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
       chain,
       target: contract.address,
       params: [ctx.address],
-      abi: {
-        constant: true,
-        inputs: [{ internalType: 'address', name: '', type: 'address' }],
-        name: 'userInfo',
-        outputs: [
-          { internalType: 'uint256', name: 'amount', type: 'uint256' },
-          { internalType: 'uint256', name: 'rewardDebt', type: 'uint256' },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.userInfo,
     }),
 
     call({
       chain,
       target: contract.address,
       params: [ctx.address],
-      abi: {
-        constant: true,
-        inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
-        name: 'pendingXVS',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.pendingXVS,
     }),
   ])
 

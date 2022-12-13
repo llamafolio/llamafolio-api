@@ -2,7 +2,27 @@ import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { getMarketsBalances } from '@lib/compound/v2/lending'
+import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
+
+const abi = {
+  mintedVAIs: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'mintedVAIs',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+const VAI: Token = {
+  chain: 'bsc',
+  symbol: 'VAI',
+  decimals: 18,
+  address: '0x4BD17003473389A42DAF6a0a729f6Fdb328BbBd7',
+}
 
 export async function getLendBorrowBalances(
   ctx: BalancesContext,
@@ -10,39 +30,28 @@ export async function getLendBorrowBalances(
   contracts: Contract[],
   comptroller: Contract,
 ): Promise<Balance[]> {
-  const balances: Balance[] = []
-  const VAI = comptroller.underlyings?.[1]
+  const VAIMinted: Balance[] = []
 
-  const contractsBalances = await getMarketsBalances(ctx, 'bsc', contracts)
+  const marketsBalances = await getMarketsBalances(ctx, 'bsc', contracts)
 
-  const VAIBorrowBalancesRes = await call({
+  const VAIBalancesRes = await call({
     chain,
     target: comptroller.address,
     params: [ctx.address],
-    abi: {
-      constant: true,
-      inputs: [{ internalType: 'address', name: '', type: 'address' }],
-      name: 'mintedVAIs',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.mintedVAIs,
   })
 
-  const VAIBorrowBalances = BigNumber.from(VAIBorrowBalancesRes.output)
+  const VAIBalances = BigNumber.from(VAIBalancesRes.output)
 
-  if (VAI) {
-    balances.push({
-      chain,
-      decimals: VAI.decimals,
-      symbol: VAI.symbol,
-      address: VAI.address,
-      amount: VAIBorrowBalances,
-      type: 'debt',
-      category: 'borrow',
-    })
-  }
+  VAIMinted.push({
+    chain,
+    decimals: VAI.decimals,
+    symbol: VAI.symbol,
+    address: VAI.address,
+    amount: VAIBalances,
+    type: 'debt',
+    category: 'borrow',
+  })
 
-  return [...contractsBalances, ...balances]
+  return [...marketsBalances, ...VAIMinted]
 }
