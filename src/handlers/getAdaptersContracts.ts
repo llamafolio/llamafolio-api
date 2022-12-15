@@ -15,7 +15,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
   try {
     const adapterContracts = await client.query(
-      `select address, adapter_id from contracts where chain = $1 and adapter_id <> 'wallet';`,
+      `select distinct address, adapter_id from contracts where chain = $1 and adapter_id <> 'wallet';`,
       [chain],
     )
 
@@ -25,18 +25,12 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       }
     }
 
-    const contracts = adapterContracts.rows.map((row) => ({
-      adapter_id: row.adapter_id,
-      address: bufToStr(row.address),
-    }))
-
-    const filteredContracts = Array.from(new Set(contracts.map((contract) => contract.address))).map((address) => {
-      return contracts.find((contract) => contract.address === address)
-    })
-
     return success(
       {
-        data: filteredContracts,
+        data: adapterContracts.rows.map((row) => ({
+          adapter_id: row.adapter_id,
+          address: bufToStr(row.address),
+        })),
       },
       { maxAge: 2 * 60 },
     )
