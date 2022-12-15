@@ -14,7 +14,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const client = await pool.connect()
 
   try {
-    const adapterContracts = await client.query(`select address, adapter_id from contracts where chain = '${chain}'`)
+    const adapterContracts = await client.query(
+      `select address, adapter_id from contracts where chain = $1 and adapter_id <> 'wallet';`,
+      [chain],
+    )
 
     if (adapterContracts.rows.length === 0) {
       return {
@@ -22,12 +25,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       }
     }
 
-    const contracts = adapterContracts.rows
-      .map((row) => ({
-        adapter_id: row.adapter_id,
-        address: bufToStr(row.address),
-      }))
-      .filter((contract) => contract.adapter_id !== 'wallet')
+    const contracts = adapterContracts.rows.map((row) => ({
+      adapter_id: row.adapter_id,
+      address: bufToStr(row.address),
+    }))
 
     const filteredContracts = Array.from(new Set(contracts.map((contract) => contract.address))).map((address) => {
       return contracts.find((contract) => contract.address === address)
@@ -40,8 +41,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       { maxAge: 2 * 60 },
     )
   } catch (e) {
-    console.error('Failed to adapters contracts', e)
-    return serverError('Failed to adapters contracts')
+    console.error('Failed to fetch adapters contracts', e)
+    return serverError('Failed to fetch adapters contracts')
   } finally {
     client.release(true)
   }
