@@ -70,6 +70,14 @@ functions:
           method: get
           path: /adapters
 
+  getAdaptersContracts:
+    handler: src/handlers/getAdaptersContracts.handler
+    description: Get adapters contracts for a specific chain
+    events:
+      - httpApi:
+          method: get
+          path: /adapters/{chain}
+          
   getBalances:
     handler: src/handlers/getBalances.handler
     description: Get address balances
