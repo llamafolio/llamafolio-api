@@ -72,7 +72,7 @@ export async function getSynapseContract(chain: Chain, contract: Contract) {
     const lpTokenRes = lpTokensRes[i]
 
     if (!isSuccess(lpTokenRes)) {
-      i++
+      continue
     }
 
     if (contract.rewards)
@@ -81,10 +81,9 @@ export async function getSynapseContract(chain: Chain, contract: Contract) {
         address: lpTokenRes.output,
         rewards: contract.rewards,
       })
-  }
 
-  const test = await getPairsDetails(chain, contracts)
-  console.log(test)
+    i++
+  }
 
   return await getPairsDetails(chain, contracts)
 }
@@ -114,7 +113,7 @@ export async function getSynapseBalances(
     const rewards = contract.rewards?.[0]
 
     if (!isSuccess(balanceOf) || !isSuccess(pendingRewardRes)) {
-      i++
+      continue
     }
 
     if (rewards)
@@ -124,6 +123,8 @@ export async function getSynapseBalances(
         rewards: [{ ...rewards, amount: BigNumber.from(pendingRewardRes.output) }],
         category: 'farm',
       })
+
+    i++
   }
 
   return await getUnderlyingBalances(chain, balances)
