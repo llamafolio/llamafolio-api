@@ -77,7 +77,7 @@ functions:
       - httpApi:
           method: get
           path: /adapters/{chain}
-
+          
   getBalances:
     handler: src/handlers/getBalances.handler
     description: Get address balances
