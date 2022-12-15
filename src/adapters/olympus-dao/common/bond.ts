@@ -142,8 +142,10 @@ export async function getBondsBalances(ctx: BalancesContext, chain: Chain, contr
         amount: pendingPayout,
         underlyings: [underlyingToken0, underlyingToken1],
         rewards: undefined,
+        category: 'vest',
       })
     }
   }
+
   return balances
 }
