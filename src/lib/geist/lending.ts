@@ -2,7 +2,7 @@ import {
   getLendingPoolBalances as getAaveLendingPoolBalances,
   getLendingPoolContracts as getAaveLendingPoolContracts,
 } from '@lib/aave/v2/lending'
-import { Balance, BaseContext, Contract, RewardBalance } from '@lib/adapter'
+import { Balance, BalancesContext, Contract, RewardBalance } from '@lib/adapter'
 import { range } from '@lib/array'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
@@ -79,7 +79,7 @@ export interface GetLendingPoolBalancesParams {
 }
 
 export async function getLendingPoolBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   contracts: Contract[],
   { chefIncentivesController }: GetLendingPoolBalancesParams,

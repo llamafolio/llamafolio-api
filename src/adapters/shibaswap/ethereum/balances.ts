@@ -1,4 +1,4 @@
-import { Balance, BaseContext } from '@lib/adapter'
+import { Balance, BalancesContext } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
@@ -14,7 +14,7 @@ const bone: Token = {
   address: '0x9813037ee2218799597d83d4a5b6f3b6778218d9',
 }
 
-export async function getStakerBalances(ctx: BaseContext, chain: Chain, address: string): Promise<Balance[]> {
+export async function getStakerBalances(ctx: BalancesContext, chain: Chain, address: string): Promise<Balance[]> {
   const provider = providers[chain]
   const Staker = new ethers.Contract(address, StakerAbi, provider)
 
@@ -29,7 +29,7 @@ export async function getStakerBalances(ctx: BaseContext, chain: Chain, address:
   ]
 }
 
-export async function getLockerBalances(ctx: BaseContext, chain: Chain, address: string): Promise<Balance[]> {
+export async function getLockerBalances(ctx: BalancesContext, chain: Chain, address: string): Promise<Balance[]> {
   const provider = providers[chain]
   const Locker = new ethers.Contract(address, LockerAbi, provider)
 

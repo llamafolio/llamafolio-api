@@ -1,10 +1,10 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
-export async function getWStEthStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getWStEthStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
@@ -45,7 +45,7 @@ export async function getWStEthStakeBalances(ctx: BaseContext, chain: Chain, con
   return balances
 }
 
-export async function getStEthStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getStEthStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
@@ -73,7 +73,7 @@ export async function getStEthStakeBalances(ctx: BaseContext, chain: Chain, cont
   return balances
 }
 
-export async function getStMaticBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getStMaticBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balanceOfRes = await call({

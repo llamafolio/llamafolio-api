@@ -1,5 +1,5 @@
 import { Balance, Contract } from '@lib/adapter'
-import { BaseContext } from '@lib/adapter'
+import { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
@@ -14,7 +14,7 @@ const USV: Token = {
   decimals: 9,
 }
 
-export async function getStakeBalance(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance> {
+export async function getStakeBalance(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
     chain,
     target: contract.address,

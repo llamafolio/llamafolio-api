@@ -1,5 +1,5 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
-import { resolveBalances } from '@lib/balance'
+import { isNotNullish } from '@lib/type'
 
 import { BalanceWithExtraProps, getHealthFactor, getProxiesBalances } from './balances'
 import { getCdpidFromProxiesAddresses } from './cdpid'
@@ -55,18 +55,20 @@ export const getContracts = () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const [makerProxies, instaDappProxies] = await Promise.all([
-    getInstaDappContracts(ctx, 'ethereum', InstadAppProxyRegistry),
-    getMakerContracts(ctx, 'ethereum', MakerProxyRegistry),
-  ])
-  const proxies = [...makerProxies, ...instaDappProxies]
+  const proxies = (
+    await Promise.all(
+      [
+        contracts.MakerProxyRegistry ? getMakerContracts(ctx, 'ethereum', MakerProxyRegistry) : null,
+        contracts.InstadAppProxyRegistry ? getInstaDappContracts(ctx, 'ethereum', InstadAppProxyRegistry) : null,
+      ].filter(isNotNullish),
+    )
+  ).flat()
+
   const cdpid = await getCdpidFromProxiesAddresses('ethereum', getCdps, cdpManager, proxies)
 
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
-    Vat: (...args) => getProxiesBalances(...args, IlkRegistry, Spot, cdpid),
-  })
+  const balances = await getProxiesBalances(ctx, 'ethereum', Vat, IlkRegistry, Spot, cdpid)
 
-  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
+  const healthFactor = getHealthFactor(balances as BalanceWithExtraProps[])
 
   return {
     balances,

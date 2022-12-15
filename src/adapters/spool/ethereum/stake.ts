@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
@@ -11,7 +11,7 @@ const Spool: Token = {
   symbol: 'SPOOL',
 }
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract) {
+export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract) {
   const balances: Balance[] = []
 
   const [getBalances, getEarned] = await Promise.all([

@@ -1,6 +1,7 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import { BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
+import { ethers, utils } from 'ethers'
 import { gql, request } from 'graphql-request'
 
 const THE_GRAPH_URL = 'https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet'
@@ -51,7 +52,11 @@ export async function getMarketsContracts(chain: Chain): Promise<Contract[]> {
   return contracts
 }
 
-export async function getHealthFactor(ctx: BaseContext, chain: Chain, lensContract: Contract): Promise<number> {
+export async function getHealthFactor(
+  ctx: BalancesContext,
+  chain: Chain,
+  lensContract: Contract,
+): Promise<number | undefined> {
   const getHealthFactor = await call({
     chain,
     target: lensContract.address,
@@ -69,7 +74,11 @@ export async function getHealthFactor(ctx: BaseContext, chain: Chain, lensContra
     },
   })
 
-  const healthFactor = getHealthFactor.output.healthScore / Math.pow(10, 18)
+  if (ethers.constants.MaxUint256.eq(getHealthFactor.output.healthScore)) {
+    return
+  }
 
-  return healthFactor > 10 ? 10 : healthFactor
+  const healthFactor = parseFloat(utils.formatUnits(getHealthFactor.output.healthScore, 18))
+
+  return healthFactor
 }

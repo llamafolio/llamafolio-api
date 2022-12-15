@@ -1,5 +1,5 @@
 import { call } from '@defillama/sdk/build/abi'
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
@@ -23,7 +23,7 @@ const IIICrvToken: Token = {
 }
 
 export async function getLockerBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   contract: Contract,
   feeDistributorContract: Contract,

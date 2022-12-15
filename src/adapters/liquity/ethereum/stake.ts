@@ -1,11 +1,11 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { providers } from '@lib/providers'
 import { BigNumber, ethers } from 'ethers'
 
 import LQTYStakingAbi from '../abis/LQTYStaking.json'
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, lqtyStaking: Contract) {
+export async function getStakeBalances(ctx: BalancesContext, chain: Chain, lqtyStaking: Contract) {
   const provider = providers[chain]
 
   const LQTYStaking = new ethers.Contract(lqtyStaking.address, LQTYStakingAbi, provider)

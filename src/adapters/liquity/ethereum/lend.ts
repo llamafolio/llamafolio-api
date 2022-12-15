@@ -1,9 +1,9 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
-export async function getLendBalances(ctx: BaseContext, chain: Chain, troveManager: Contract) {
+export async function getLendBalances(ctx: BalancesContext, chain: Chain, troveManager: Contract) {
   const balances: Balance[] = []
 
   const troveDetailsRes = await call({

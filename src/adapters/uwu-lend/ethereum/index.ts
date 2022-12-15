@@ -1,5 +1,5 @@
 import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Chain } from '@lib/chains'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
@@ -48,7 +48,7 @@ export const getContracts = async () => {
   }
 }
 
-function getLendingBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+function getLendingBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]) {
   return Promise.all([
     getLendingPoolBalances(ctx, chain, contracts, {
       chefIncentivesController: chefIncentivesControllerContract,

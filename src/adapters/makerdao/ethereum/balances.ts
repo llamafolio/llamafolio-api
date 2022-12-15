@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -37,7 +37,7 @@ export interface BalanceWithExtraProps extends Balance {
 }
 
 export async function getProxiesBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   vat: Contract,
   ilk: Contract,
@@ -246,7 +246,7 @@ const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHand
   return balances
 }
 
-export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promise<number[] | undefined> {
+export function getHealthFactor(balances: BalanceWithExtraProps[]): number[] | undefined {
   const healthFactor: number[] = []
   const nonZeroBalances = balances.filter((balance) => balance.amount.gt(0))
 

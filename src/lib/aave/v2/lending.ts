@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
@@ -150,14 +150,12 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
       {
         chain,
         address: aToken,
-        priceSubstitute: underlyingToken,
         underlyings: [underlyingToken],
         category: 'lend',
       },
       {
         chain,
         address: stableDebtToken,
-        priceSubstitute: underlyingToken,
         underlyings: [underlyingToken],
         type: 'debt',
         category: 'borrow',
@@ -166,7 +164,6 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
       {
         chain,
         address: variableDebtToken,
-        priceSubstitute: underlyingToken,
         underlyings: [underlyingToken],
         type: 'debt',
         category: 'borrow',
@@ -178,7 +175,7 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
   return contracts
 }
 
-export async function getLendingPoolBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]) {
+export async function getLendingPoolBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]) {
   try {
     const balances: Balance[] = await getERC20BalanceOf(ctx, chain, contracts as Token[])
 
@@ -198,7 +195,7 @@ export async function getLendingPoolBalances(ctx: BaseContext, chain: Chain, con
   }
 }
 
-export async function getLendingPoolHealthFactor(ctx: BaseContext, chain: Chain, lendingPool: Contract) {
+export async function getLendingPoolHealthFactor(ctx: BalancesContext, chain: Chain, lendingPool: Contract) {
   try {
     const userAccountDataRes = await call({
       chain,
@@ -215,7 +212,7 @@ export async function getLendingPoolHealthFactor(ctx: BaseContext, chain: Chain,
     const healthFactor = parseFloat(ethers.utils.formatUnits(userAccountDataRes.output.healthFactor, 18))
 
     // TODO: return other metadata like LTV, available borrow etc
-    return healthFactor > 10 ? 10 : healthFactor
+    return healthFactor
   } catch (error) {
     console.log('Failed to get aave-v2 lending pool health factor', error)
     return

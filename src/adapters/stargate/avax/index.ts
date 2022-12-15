@@ -1,24 +1,35 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { Token } from '@lib/token'
 
+import { getPoolsContracts } from '../common/contracts'
 import { getStakeBalances } from '../common/stake'
 
-const stakingContract: Contract = {
+const STG: Token = {
+  chain: 'avax',
+  address: '0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590',
+  decimals: 18,
+  symbol: 'STG',
+}
+const lpStaking: Contract = {
   name: 'lpStaking',
   displayName: 'LP Staking Pool Avalanche',
   chain: 'avax',
   address: '0x8731d54E9D02c286767d56ac03e8037C07e01e98',
+  rewards: [STG],
 }
 
-export const getContracts = () => {
+export const getContracts = async () => {
+  const pools = await getPoolsContracts('avax', lpStaking)
+
   return {
-    contracts: { stakingContract },
+    contracts: { lpStaking, pools },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
-    stakingContract: getStakeBalances,
+    pools: (...args) => getStakeBalances(...args, lpStaking),
   })
 
   return {

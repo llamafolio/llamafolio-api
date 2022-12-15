@@ -20,6 +20,14 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Run update balances",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "update-balances", "${input:address}"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Run revalidate contracts",
       "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "npm",
@@ -55,6 +63,7 @@
         "curve",
         "euler",
         "floor-dao",
+        "fraxlend",
         "geist",
         "gmx",
         "granary-finance",
@@ -67,6 +76,7 @@
         "life-dao",
         "liquity",
         "looksrare",
+        "makerdao",
         "maple",
         "nemesis-dao",
         "nexus-mutual",

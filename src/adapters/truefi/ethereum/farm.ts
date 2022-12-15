@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
@@ -13,7 +13,7 @@ const TRU: Contract = {
 
 const trueMultiFarm = '0xec6c3fd795d6e6f202825ddb56e01b3c128b0b10'
 
-export async function getFarmBalances(ctx: BaseContext, chain: Chain, pools: Contract[]) {
+export async function getFarmBalances(ctx: BalancesContext, chain: Chain, pools: Contract[]) {
   const balances: Balance[] = []
 
   const calls = pools.map((pool) => ({

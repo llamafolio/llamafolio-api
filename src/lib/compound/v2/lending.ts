@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
@@ -102,7 +102,6 @@ export async function getMarketsContracts(
       chain,
       address: cToken,
       collateralFactor: marketRes.output.collateralFactorMantissa,
-      priceSubstitute: underlying,
       underlyings: [underlying],
     })
   }
@@ -110,7 +109,11 @@ export async function getMarketsContracts(
   return contracts
 }
 
-export async function getMarketsBalances(ctx: BaseContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+export async function getMarketsBalances(
+  ctx: BalancesContext,
+  chain: Chain,
+  contracts: Contract[],
+): Promise<Balance[]> {
   const cTokenByAddress: { [key: string]: Contract } = {}
   for (const contract of contracts) {
     cTokenByAddress[contract.address] = contract
@@ -231,5 +234,5 @@ export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promis
 
   const healthFactor = supplyUSD / borrowUSD
 
-  return healthFactor > 10 ? 10 : healthFactor
+  return healthFactor
 }

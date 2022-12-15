@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
@@ -12,7 +12,7 @@ const HEC: Contract = {
   symbol: 'HEC',
 }
 
-export async function getsStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance> {
+export async function getsStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
     chain,
     target: contract.address,
@@ -35,7 +35,7 @@ export async function getsStakeBalances(ctx: BaseContext, chain: Chain, contract
   return balance
 }
 
-export async function getWsStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance> {
+export async function getWsStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
     chain,
     target: contract.address,

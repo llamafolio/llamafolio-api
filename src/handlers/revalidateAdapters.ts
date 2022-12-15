@@ -9,6 +9,7 @@ import {
 import { deleteContractsByAdapter, insertContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
+import { BaseContext } from '@lib/adapter'
 import { Chain, chains } from '@lib/chains'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { resolveContractsTokens } from '@lib/token'
@@ -98,7 +99,9 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
   try {
     const prevDbAdapter = await selectAdapter(client, chain, adapter.id)
 
-    const config = await adapter[chain]!.getContracts(prevDbAdapter?.contractsRevalidateProps || {})
+    const ctx: BaseContext = { chain, adapterId: adapter.id }
+
+    const config = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
 
     const contracts = await resolveContractsTokens(client, config.contracts || {}, true)
 

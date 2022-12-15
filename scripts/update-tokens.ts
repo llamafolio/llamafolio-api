@@ -26,19 +26,31 @@ async function main() {
   const client = await pool.connect()
 
   try {
-    const addresses = await selectUndecodedChainAddresses(client, chain)
+    const limit = 1000
+    let offset = 0
 
-    const tokens = (await getERC20Details(chain, addresses)).map((token) => ({
-      ...token,
-      symbol: token.symbol.replaceAll('\x00', ''),
-      updated_at: now,
-    }))
+    while (true) {
+      console.log('Offset', offset)
+      const addresses = await selectUndecodedChainAddresses(client, chain, limit, offset)
+      if (addresses.length === 0) {
+        console.log(`Insert tokens done`)
+        return
+      }
 
-    console.log(tokens)
+      const tokens = (await getERC20Details(chain, addresses)).map((token) => ({
+        ...token,
+        symbol: token.symbol.replaceAll('\x00', ''),
+        updated_at: now,
+      }))
 
-    console.log(`Inserting ${tokens.length} tokens on ${chain}`)
+      console.log(tokens)
 
-    await insertTokens(client, chain, tokens)
+      console.log(`Inserting ${tokens.length} tokens on ${chain}`)
+
+      await insertTokens(client, chain, tokens)
+
+      offset += limit
+    }
   } catch (e) {
     console.log('Failed to insert tokens', e)
   } finally {

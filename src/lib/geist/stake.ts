@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract, RewardBalance } from '@lib/adapter'
+import { Balance, BalancesContext, Contract, RewardBalance } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -15,7 +15,7 @@ export interface GetMultiFeeDistributionBalancesParams {
 }
 
 export async function getMultiFeeDistributionBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   lendingPoolContracts: Contract[],
   params: GetMultiFeeDistributionBalancesParams,

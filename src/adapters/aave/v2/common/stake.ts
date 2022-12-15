@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { abi, getERC20Details } from '@lib/erc20'
@@ -21,7 +21,7 @@ const ABPT: Contract = {
   decimals: 18,
 }
 
-export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [balanceOfRes, rewardsRes] = await Promise.all([
@@ -64,7 +64,7 @@ export async function getStakeBalances(ctx: BaseContext, chain: Chain, contract:
 }
 
 export async function getStakeBalancerPoolBalances(
-  ctx: BaseContext,
+  ctx: BalancesContext,
   chain: Chain,
   stakingContract: Contract,
 ): Promise<Balance[]> {

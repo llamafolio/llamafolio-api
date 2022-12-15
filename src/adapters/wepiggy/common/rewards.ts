@@ -1,4 +1,4 @@
-import { Balance, BaseContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
@@ -12,7 +12,7 @@ const WPC: Token = {
   symbol: 'WPC',
 }
 
-export async function getMarketsRewards(ctx: BaseContext, chain: Chain, piggyDistribution: Contract): Promise<Balance> {
+export async function getMarketsRewards(ctx: BalancesContext, chain: Chain, piggyDistribution: Contract): Promise<Balance> {
   const pendingWPCRewardsRes = await call({
     chain,
     target: piggyDistribution.address,
