@@ -23,9 +23,9 @@ interface Transaction {
   to_address: string
   gas_used: string
   gas_price: string
-  input_function_name: string
+  input_function_name?: string
   success: boolean
-  adapter_id?: string | null
+  adapter_id?: string
   token_transfers: TokenTransfer[]
 }
 
@@ -70,9 +70,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       to_address: tx.to_address,
       gas_used: tx.gas_used,
       gas_price: tx.gas_price,
-      input_function_name: '',
+      input_function_name: tx.method_name?.name,
       success: tx.receipt.success,
-      adapter_id: '',
+      adapter_id: tx.contract_interacted?.adapter_id,
       token_transfers: tx.token_transfers_aggregate.nodes.map((token_transfer) => ({
         symbol: token_transfer.token_details.symbol,
         decimals: token_transfer.token_details.decimals,

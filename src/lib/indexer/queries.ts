@@ -43,8 +43,14 @@ export const getTransactionHistoryQuery = (address: string, limit: number, offse
       receipt {
         success
       }
-      contract_interaction {
+      contract_interacted {
         contract
+        adapter_id {
+          adapter_id
+        }
+      }
+      method_name {
+        name
       }
     }
   }

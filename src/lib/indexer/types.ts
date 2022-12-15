@@ -51,10 +51,20 @@ export interface IndexerTransaction {
       transaction_log_index: number
     }[]
   }
-  contract_interaction: {
-    contract: string
-  }
-  contract_creation: {
-    contract: string
-  }
+  contract_interacted:
+    | {
+        contract: string
+        adapter_id: string | undefined
+      }
+    | undefined
+  contract_created:
+    | {
+        contract: string
+      }
+    | undefined
+  method_name:
+    | {
+        name: string
+      }
+    | undefined
 }
