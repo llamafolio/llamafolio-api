@@ -19,12 +19,6 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       [chain],
     )
 
-    if (adapterContracts.rows.length === 0) {
-      return {
-        data: [],
-      }
-    }
-
     return success(
       {
         data: adapterContracts.rows.map((row) => ({
