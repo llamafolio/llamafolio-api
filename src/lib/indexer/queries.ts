@@ -7,20 +7,19 @@ export const getTransactionHistoryQuery = (
   chainsFilter: string[],
   protocolsFilter: string[],
 ): string => {
-  const filters = []
-
-  filters.push(`{ from_address: { _eq: "${address}" } }`)
-  filters.push(`{ to_address: { _eq:"${address}" } }`)
+  const chains = []
 
   if (chainsFilter.length > 0) {
     for (const chain of chainsFilter) {
-      filters.push(`{ chain: { _eq: "${chain}" } }`)
+      chains.push(`{ chain: { _eq: "${chain}" } }`)
     }
   }
 
+  const protocols = []
+
   if (protocolsFilter.length > 0) {
     for (const protocol of protocolsFilter) {
-      filters.push(`{ contract_interacted: { adapter_id: { adapter_id: { _eq: "${protocol}" } } } }`)
+      protocols.push(`{ contract_interacted: { adapter_id: { adapter_id: { _eq: "${protocol}" } } } }`)
     }
   }
 
@@ -28,7 +27,15 @@ export const getTransactionHistoryQuery = (
     query getTransactionHistory {
       txs(
         where: {
-          _or: [${filters}]
+          _and: [
+            {
+              _or: [
+                { from_address: { _eq: "${address}" } }, { to_address: { _eq:"${address}" } }
+              ]
+            }
+            { _or: [${chains}] }
+            { _or: [${protocols}] }
+          ]
         }
         limit: ${limit}
         offset: ${offset}
