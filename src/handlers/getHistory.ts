@@ -52,7 +52,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     limit = 100
   }
 
-  const offset = params?.page && params?.page !== '0' ? ((parseInt(params?.page) - 1) * limit).toFixed(0) : undefined
+  const page = params?.page === '0' ? '1' : params?.page ?? '1'
+
+  const offset = ((parseInt(page) - 1) * limit).toFixed(0)
 
   const offsetNumber = parseInt(offset ?? '0')
 
@@ -72,7 +74,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
   const protocols = protocolsFilter?.split(',') ?? []
 
-  const { txs } = await getTransactionHistory(
+  const { txs, txs_aggregate } = await getTransactionHistory(
     address.toLowerCase(),
     limit,
     offsetNumber,
@@ -81,6 +83,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     {},
     INDEXER_HEADERS,
   )
+
+  const totalPages = (txs_aggregate.aggregate.count / limit).toFixed(0)
 
   const txParsed: Transaction[] = txs.map((tx) => {
     const chain = tx.chain === 'mainnet' ? 'ethereum' : tx.chain
@@ -96,7 +100,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       gas_price: tx.gas_price,
       input_function_name: tx.method_name?.name,
       success: tx.receipt.success,
-      adapter_id: tx.contract_interacted?.adapter_id,
+      adapter_id: tx.contract_interacted?.adapter_id?.adapter_id,
       token_transfers: tx.token_transfers_aggregate.nodes.map((token_transfer) => ({
         symbol: token_transfer.token_details.symbol,
         decimals: token_transfer.token_details.decimals,
@@ -109,7 +113,15 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   })
 
   try {
-    return success(txParsed, { maxAge: 2 * 60 })
+    return success(
+      {
+        data: txParsed,
+        totalPages,
+        currentPage: page,
+        nextPage: page >= totalPages ? undefined : (parseInt(page) + 1).toString(),
+      },
+      { maxAge: 2 * 60 },
+    )
   } catch (e) {
     console.error('Failed to retrieve history', e)
     return serverError('Failed to retrieve history')

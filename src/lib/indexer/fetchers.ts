@@ -14,7 +14,7 @@ export const getTransactionHistory = async (
   protocolsFilter: string[],
   variables = {},
   headers = {},
-): Promise<{ txs: IndexerTransaction[] }> =>
+): Promise<{ txs: IndexerTransaction[]; txs_aggregate: { aggregate: { count: number } } }> =>
   indexer_graph(
     getTransactionHistoryQuery(address.toLowerCase(), limit, offset, chainsFilter, protocolsFilter),
     variables,

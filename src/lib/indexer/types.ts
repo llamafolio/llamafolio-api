@@ -54,7 +54,7 @@ export interface IndexerTransaction {
   contract_interacted:
     | {
         contract: string
-        adapter_id: string | undefined
+        adapter_id: { adapter_id: string | undefined } | undefined
       }
     | undefined
   contract_created:

@@ -15,6 +15,8 @@ export const getTransactionHistoryQuery = (
     }
   }
 
+  const chainsFilterParam = chains.length > 0 ? `{ _or: [${chains}] }` : ''
+
   const protocols = []
 
   if (protocolsFilter.length > 0) {
@@ -22,6 +24,8 @@ export const getTransactionHistoryQuery = (
       protocols.push(`{ contract_interacted: { adapter_id: { adapter_id: { _eq: "${protocol}" } } } }`)
     }
   }
+
+  const protocolsFilterParams = protocols.length > 0 ? `{ _or: [${protocols}] }` : ''
 
   return gql`
     query getTransactionHistory {
@@ -33,8 +37,8 @@ export const getTransactionHistoryQuery = (
                 { from_address: { _eq: "${address}" } }, { to_address: { _eq:"${address}" } }
               ]
             }
-            { _or: [${chains}] }
-            { _or: [${protocols}] }
+            ${chainsFilterParam}
+            ${protocolsFilterParams}
           ]
         }
         limit: ${limit}
@@ -79,6 +83,23 @@ export const getTransactionHistoryQuery = (
         }
         method_name {
           name
+        }
+      }
+      txs_aggregate(
+        where: {
+          _and: [
+            {
+              _or: [
+                { from_address: { _eq: "${address}" } }, { to_address: { _eq:"${address}" } }
+              ]
+            }
+            ${chainsFilterParam}
+            ${protocolsFilterParams}
+          ]
+        }
+      ) {
+        aggregate {
+          count
         }
       }
     }
