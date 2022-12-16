@@ -10,8 +10,16 @@ export const getTransactionHistory = async (
   address: string,
   limit: number,
   offset: number,
+  chainsFilter: string[],
+  protocolsFilter: string[],
   variables = {},
   headers = {},
 ): Promise<{ txs: IndexerTransaction[] }> => {
-  return await indexer_graph(getTransactionHistoryQuery(address.toLowerCase(), limit, offset), variables, headers)
+  const query = getTransactionHistoryQuery(address.toLowerCase(), limit, offset, chainsFilter, protocolsFilter)
+  console.log(query)
+  return await indexer_graph(
+    getTransactionHistoryQuery(address.toLowerCase(), limit, offset, chainsFilter, protocolsFilter),
+    variables,
+    headers,
+  )
 }

@@ -56,7 +56,31 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
   const offsetNumber = parseInt(offset ?? '0')
 
-  const { txs } = await getTransactionHistory(address.toLowerCase(), limit, offsetNumber, {}, INDEXER_HEADERS)
+  let chainsFilter = params?.chains
+
+  if (chainsFilter) {
+    chainsFilter = chainsFilter.replace(/"/g, '').replace(/'/g, '')
+  }
+
+  const chains = chainsFilter?.split(',') ?? []
+
+  let protocolsFilter = params?.protocols
+
+  if (protocolsFilter) {
+    protocolsFilter = protocolsFilter.replace(/"/g, '').replace(/'/g, '')
+  }
+
+  const protocols = protocolsFilter?.split(',') ?? []
+
+  const { txs } = await getTransactionHistory(
+    address.toLowerCase(),
+    limit,
+    offsetNumber,
+    chains,
+    protocols,
+    {},
+    INDEXER_HEADERS,
+  )
 
   const txParsed: Transaction[] = txs.map((tx) => {
     const chain = tx.chain === 'mainnet' ? 'ethereum' : tx.chain
