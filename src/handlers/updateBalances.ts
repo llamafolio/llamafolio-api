@@ -5,8 +5,7 @@ import {
   insertBalancesSnapshots,
   selectLastBalancesSnapshotsTimestampByFromAddress,
 } from '@db/balances-snapshots'
-import { getAllContractsInteractionsTokenTransfers, groupContracts } from '@db/contracts'
-import { getAllTokensInteractions } from '@db/contracts'
+import { groupContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { apiGatewayManagementApi } from '@handlers/apiGateway'
 import {
@@ -21,6 +20,7 @@ import { groupBy } from '@lib/array'
 import { sanitizeBalances, sumBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
 import { Chain, chains } from '@lib/chains'
+import { getContractsInteracted, getTokensInteracted } from '@lib/indexer/fetchers'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
@@ -90,23 +90,34 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
-    const [contracts, tokens] = await Promise.all([
-      getAllContractsInteractionsTokenTransfers(client, address),
-      getAllTokensInteractions(client, address),
+    const [{ contract_interactions }, { token_transfers }] = await Promise.all([
+      getContractsInteracted(address),
+      getTokensInteracted(address),
     ])
 
+    const tokensInteracted: Contract[] = token_transfers.map((token) => ({
+      name: token.token_details.name,
+      chain: token.chain,
+      address: token.token,
+      symbol: token.token_details.symbol,
+      decimals: token.token_details.decimals,
+    }))
+
+    const contractsInteracted: Contract[] = contract_interactions.map((contract) => ({
+      chain: contract.chain,
+      address: contract.contract,
+      adapterId: contract.adapter_id.adapter_id,
+    }))
+
     const contractsByAdapterId: { [key: string]: Contract[] } = {}
-    for (const contract of contracts) {
-      if (!contract.adapterId) {
-        console.error(`Missing adapterId in contract`, contract)
-        continue
-      }
+    for (const contract of contractsInteracted) {
       if (!contractsByAdapterId[contract.adapterId]) {
         contractsByAdapterId[contract.adapterId] = []
       }
       contractsByAdapterId[contract.adapterId].push(contract)
     }
-    contractsByAdapterId['wallet'] = tokens
+
+    contractsByAdapterId['wallet'] = tokensInteracted
 
     console.log('Interacted with protocols:', Object.keys(contractsByAdapterId))
 

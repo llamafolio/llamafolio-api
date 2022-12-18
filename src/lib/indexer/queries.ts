@@ -105,3 +105,40 @@ export const getTransactionHistoryQuery = (
     }
   `
 }
+
+export const getTokensInteractedQuery = (address: string): string => gql`
+  query getTokensInteracted {
+    token_transfers(
+      where: {
+        _and: [
+          {
+            _or: [
+              { from_address: { _eq: "${address}" } }
+              { to_address: { _eq: "${address}" } }
+            ]
+          }
+        ]
+      }
+      distinct_on: token
+    ) {
+      token
+      chain
+      token_details {
+        decimals
+        name
+        symbol
+      }
+    }
+  }
+`
+
+export const getContractsInteractedQuery = (address: string): string => gql`
+  query getContractsInteracted {
+    contract_interactions(where: {address: {_eq: "${address}"}, adapter_id: {adapter_id: {_is_null: false}}}, distinct_on: contract) {
+      contract
+      adapter_id {
+        adapter_id
+      }
+    }
+  }
+`
