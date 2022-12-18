@@ -67,7 +67,12 @@ export function fromStorage(contracts: ContractStorage[]) {
     if (!parent.rewards) {
       parent.rewards = []
     }
-    parent.rewards.push(reward)
+    const idx = reward.__idx
+    if (idx != null) {
+      parent.rewards[idx] = reward
+    } else {
+      parent.rewards.push(reward)
+    }
   }
 
   for (const underlying of underlyings) {
@@ -80,7 +85,12 @@ export function fromStorage(contracts: ContractStorage[]) {
     if (!parent.underlyings) {
       parent.underlyings = []
     }
-    parent.underlyings.push(underlying)
+    const idx = underlying.__idx
+    if (idx != null) {
+      parent.underlyings[idx] = underlying
+    } else {
+      parent.underlyings.push(underlying)
+    }
   }
 
   return res
@@ -143,7 +153,8 @@ export function toStorage(contracts: Contract[], adapterId: string) {
     res.push(c)
 
     if (rewards && rewards.length > 0) {
-      for (const reward of rewards) {
+      for (let idx = 0; idx < rewards.length; idx++) {
+        const reward = rewards[idx]
         res.push({
           type: 'reward',
           standard: reward.standard,
@@ -157,12 +168,14 @@ export function toStorage(contracts: Contract[], adapterId: string) {
           adapter_id: adapterId,
           stable: reward.stable,
           parent: c.address,
+          data: { __idx: idx },
         })
       }
     }
 
     if (underlyings && underlyings.length > 0) {
-      for (const underlying of underlyings) {
+      for (let idx = 0; idx < underlyings.length; idx++) {
+        const underlying = underlyings[idx]
         res.push({
           type: 'underlying',
           standard: underlying.standard,
@@ -176,6 +189,7 @@ export function toStorage(contracts: Contract[], adapterId: string) {
           adapter_id: adapterId,
           stable: underlying.stable,
           parent: c.address,
+          data: { __idx: idx },
         })
       }
     }
