@@ -142,3 +142,32 @@ export const getContractsInteractedQuery = (address: string): string => gql`
     }
   }
 `
+
+export const getTokensDetailsQuery = (tokens: string[]): string => {
+  const tokensFilter = []
+
+  if (tokens.length > 0) {
+    for (const token of tokens) {
+      tokensFilter.push(`{ address: { _eq: "${token}" } }`)
+    }
+  }
+  const tokensFilterParams = tokens.length > 0 ? `{ _or: [${tokensFilter}] }` : ''
+
+  return gql`
+    query getTransactionHistory {
+      tokens(
+        where: {
+          _and: [
+            ${tokensFilterParams}
+          ]
+        }
+      ) {
+        chain
+        decimals
+        symbol
+        name
+        address
+      }
+    }
+  `
+}

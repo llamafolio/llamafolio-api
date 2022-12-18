@@ -1,6 +1,11 @@
 import request from 'graphql-request'
 
-import { getContractsInteractedQuery, getTokensInteractedQuery, getTransactionHistoryQuery } from './queries'
+import {
+  getContractsInteractedQuery,
+  getTokensDetailsQuery,
+  getTokensInteractedQuery,
+  getTransactionHistoryQuery,
+} from './queries'
 import { IndexerContractsInteracted, IndexerTokenInteraction, IndexerTransaction } from './types'
 
 export const indexer_graph = async (query: string, variables = {}, headers = {}) =>
@@ -34,3 +39,10 @@ export const getContractsInteracted = async (
   headers = {},
 ): Promise<{ contract_interactions: IndexerContractsInteracted[] }> =>
   indexer_graph(getContractsInteractedQuery(address.toLowerCase()), variables, headers)
+
+export const getTokenDetails = async (
+  tokens: string[],
+  variables = {},
+  headers = {},
+): Promise<{ contract_interactions: IndexerContractsInteracted[] }> =>
+  indexer_graph(getTokensDetailsQuery(tokens), variables, headers)
