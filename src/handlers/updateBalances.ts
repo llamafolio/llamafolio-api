@@ -21,6 +21,7 @@ import { sanitizeBalances, sumBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
 import { Chain, chains } from '@lib/chains'
 import { getContractsInteracted, getTokensInteracted } from '@lib/indexer/fetchers'
+import { INDEXER_HEADERS } from '@lib/indexer/utils'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
@@ -91,8 +92,8 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
     const [{ contract_interactions }, { token_transfers }] = await Promise.all([
-      getContractsInteracted(address),
-      getTokensInteracted(address),
+      getContractsInteracted(address, {}, INDEXER_HEADERS),
+      getTokensInteracted(address, {}, INDEXER_HEADERS),
     ])
 
     const tokensInteracted: Contract[] = token_transfers.map((token) => ({

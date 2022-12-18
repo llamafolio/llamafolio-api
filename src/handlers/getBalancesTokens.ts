@@ -1,5 +1,5 @@
 import walletAdapter from '@adapters/wallet'
-import { getAllTokensInteractions, groupContracts } from '@db/contracts'
+import { groupContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { BalancesContext, PricedBalance } from '@lib/adapter'
@@ -7,6 +7,8 @@ import { groupBy } from '@lib/array'
 import { sanitizeBalances, sortBalances, sumBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Chain, chainById } from '@lib/chains'
+import { getTokensInteracted } from '@lib/indexer/fetchers'
+import { INDEXER_HEADERS } from '@lib/indexer/utils'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyHandler } from 'aws-lambda'
@@ -57,7 +59,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
   try {
     // Fetch all tokens received
-    const tokens = await getAllTokensInteractions(client, address)
+    const { token_transfers } = await getTokensInteracted(address, {}, INDEXER_HEADERS)
+
+    const tokens = token_transfers.map((token) => ({ address: token.token, chain: token.chain }))
 
     const tokensByChain = groupBy(tokens, 'chain')
 
