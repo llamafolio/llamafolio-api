@@ -88,3 +88,11 @@ export interface IndexerContractsInteracted {
     adapter_id: string
   }
 }
+
+export interface IndexerToken {
+  decimals: number
+  chain: Chain
+  name: string
+  symbol: string
+  address: string
+}
