@@ -4,6 +4,30 @@ import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
+const abi = {
+  token: {
+    inputs: [],
+    name: 'token',
+    outputs: [{ internalType: 'contract ERC20', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  poolValue: {
+    inputs: [],
+    name: 'poolValue',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  totalSupply: {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
 const pools = [
   '0x1ed460d149d48fa7d91703bf4890f97220c09437', // BUSD
   '0xa991356d261fbaf194463af6df8f0464f8f1c742', // USDC
@@ -15,20 +39,12 @@ const pools = [
 export async function getPoolsContracts(chain: Chain) {
   const contracts: Contract[] = []
 
-  const tokensRes = await multicall({
-    chain,
-    calls: pools.map((pool) => ({
-      target: pool,
-      params: [],
-    })),
-    abi: {
-      inputs: [],
-      name: 'token',
-      outputs: [{ internalType: 'contract ERC20', name: '', type: 'address' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  })
+  const calls = pools.map((pool) => ({
+    target: pool,
+    params: [],
+  }))
+
+  const tokensRes = await multicall({ chain, calls, abi: abi.token })
 
   for (let i = 0; i < pools.length; i++) {
     const tokenRes = tokensRes[i]
@@ -60,41 +76,24 @@ export async function getPoolsSupplies(chain: Chain, pools: Contract[]) {
     params: [],
   }))
 
-  const [poolValue, totalSupply] = await Promise.all([
-    multicall({
-      chain,
-      calls,
-      abi: {
-        inputs: [],
-        name: 'poolValue',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    multicall({
-      chain,
-      calls,
-      abi: {
-        inputs: [],
-        name: 'totalSupply',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+  const [poolValues, totalSupplies] = await Promise.all([
+    multicall({ chain, calls, abi: abi.poolValue }),
+    multicall({ chain, calls, abi: abi.totalSupply }),
   ])
 
   for (let i = 0; i < pools.length; i++) {
-    if (!poolValue[i].success || !totalSupply[i].success) {
+    const poolValue = poolValues[i]
+    const totalSupply = totalSupplies[i]
+    const pool = pools[i]
+
+    if (!isSuccess(poolValue) || !isSuccess(totalSupply)) {
       continue
     }
 
     poolsSupplies.push({
-      ...pools[i],
-      poolValue: BigNumber.from(poolValue[i].output),
-      totalSupply: BigNumber.from(totalSupply[i].output),
+      ...pool,
+      poolValue: BigNumber.from(poolValue.output),
+      totalSupply: BigNumber.from(totalSupply.output),
     })
   }
 
