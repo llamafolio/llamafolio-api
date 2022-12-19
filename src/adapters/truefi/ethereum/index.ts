@@ -54,7 +54,7 @@ export const getContracts = async () => {
 
 async function getAllBalances(ctx: BalancesContext, chain: Chain, pools: Contract[]) {
   const poolsSupplies = await getPoolsSupplies(chain, pools)
-  return await getFarmBalances(ctx, chain, poolsSupplies, trueMultiFarm)
+  return getFarmBalances(ctx, chain, poolsSupplies, trueMultiFarm)
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
