@@ -1,87 +1,80 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
+import { Token } from '@lib/token'
+import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-const TRU: Contract = {
+const abi = {
+  staked: {
+    inputs: [
+      {
+        internalType: 'contract IERC20',
+        name: 'token',
+        type: 'address',
+      },
+      { internalType: 'address', name: 'staker', type: 'address' },
+    ],
+    name: 'staked',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  claimable: {
+    inputs: [
+      {
+        internalType: 'contract IERC20',
+        name: 'token',
+        type: 'address',
+      },
+      { internalType: 'address', name: 'account', type: 'address' },
+    ],
+    name: 'claimable',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+const TRU: Token = {
   chain: 'ethereum',
   address: '0x4c19596f5aaff459fa38b0f7ed92f11ae6543784',
-  name: 'TrueFi',
   symbol: 'TRU',
   decimals: 8,
 }
 
-const trueMultiFarm = '0xec6c3fd795d6e6f202825ddb56e01b3c128b0b10'
-
-export async function getFarmBalances(ctx: BalancesContext, chain: Chain, pools: Contract[]) {
+export async function getFarmBalances(ctx: BalancesContext, chain: Chain, pools: Contract[], multifarm: Contract) {
   const balances: Balance[] = []
 
   const calls = pools.map((pool) => ({
-    target: trueMultiFarm,
+    target: multifarm.address,
     params: [pool.address, ctx.address],
   }))
 
-  const [staked, claimable] = await Promise.all([
-    multicall({
-      chain,
-      calls,
-      abi: {
-        inputs: [
-          {
-            internalType: 'contract IERC20',
-            name: 'token',
-            type: 'address',
-          },
-          { internalType: 'address', name: 'staker', type: 'address' },
-        ],
-        name: 'staked',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    multicall({
-      chain,
-      calls,
-      abi: {
-        inputs: [
-          {
-            internalType: 'contract IERC20',
-            name: 'token',
-            type: 'address',
-          },
-          { internalType: 'address', name: 'account', type: 'address' },
-        ],
-        name: 'claimable',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+  const [stakeds, claimables] = await Promise.all([
+    multicall({ chain, calls, abi: abi.staked }),
+    multicall({ chain, calls, abi: abi.claimable }),
   ])
 
   for (let i = 0; i < pools.length; i++) {
     const pool = pools[i]
+    const staked = stakeds[i]
+    const underlying = pool.underlyings?.[0]
+    const claimable = claimables[i]
 
-    if (staked[i].success) {
-      const amount = BigNumber.from(staked[i].output).mul(pool.poolValue).div(pool.totalSupply)
+    if (isSuccess(staked)) {
+      const amount = BigNumber.from(staked.output).mul(pool.poolValue).div(pool.totalSupply)
 
       const balance: Balance = {
         ...(pool as Balance),
         amount,
-        underlyings: [{ ...(pool.underlyings?.[0] as Balance), amount }],
+        underlyings: [underlying as Balance],
+        rewards: [],
         category: 'farm',
       }
 
-      if (claimable[i].success) {
-        balance.rewards = [
-          {
-            ...TRU,
-            amount: BigNumber.from(claimable[i].output),
-            claimable: BigNumber.from(claimable[i].output),
-          },
-        ]
+      if (isSuccess(claimable)) {
+        balance.rewards?.push({ ...TRU, amount: BigNumber.from(claimable.output) })
       }
 
       balances.push(balance)

@@ -8,14 +8,14 @@ import { getLendBorrowBalances } from './lend'
 import { getRewardsBalances } from './rewards'
 import { getStakeBalances } from './stake'
 
-const XVSToken: Token = {
+const XVS: Token = {
   chain: 'bsc',
   address: '0xcf6bb5389c92bdda8a3747ddb454cb7a64626c63',
   decimals: 18,
   symbol: 'XVS',
 }
 
-const VAIToken: Token = {
+const VAI: Token = {
   chain: 'bsc',
   symbol: 'VAI',
   decimals: 18,
@@ -25,21 +25,21 @@ const VAIToken: Token = {
 const VenusLens: Contract = {
   chain: 'bsc',
   address: '0x595e9DDfEbd47B54b996c839Ef3Dd97db3ED19bA',
-  underlyings: [XVSToken],
+  underlyings: [XVS],
 }
 
 const Comptroller: Contract = {
   chain: 'bsc',
   address: '0xfD36E2c2a6789Db23113685031d7F16329158384',
-  underlyings: [XVSToken, VAIToken],
+  underlyings: [XVS, VAI],
 }
 
 const VenusVault: Contract = {
   chain: 'bsc',
   name: 'VaiVault',
   address: '0x0667eed0a0aab930af74a3dfedd263a73994f216',
-  underlyings: [VAIToken],
-  rewards: [XVSToken],
+  underlyings: [VAI],
+  rewards: [XVS],
 }
 
 export const getContracts = async () => {

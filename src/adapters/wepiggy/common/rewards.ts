@@ -12,7 +12,11 @@ const WPC: Token = {
   symbol: 'WPC',
 }
 
-export async function getMarketsRewards(ctx: BalancesContext, chain: Chain, piggyDistribution: Contract): Promise<Balance> {
+export async function getMarketsRewards(
+  ctx: BalancesContext,
+  chain: Chain,
+  piggyDistribution: Contract,
+): Promise<Balance> {
   const pendingWPCRewardsRes = await call({
     chain,
     target: piggyDistribution.address,
