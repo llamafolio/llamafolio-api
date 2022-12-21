@@ -5,6 +5,7 @@ try {
   require('dotenv').config()
 } catch (e) {}
 module.exports = {
+  STAGE: process.env.stage,
   PGHOST: process.env.PGHOST,
   PGUSER: process.env.PGUSER,
   PGDATABASE: process.env.PGDATABASE,

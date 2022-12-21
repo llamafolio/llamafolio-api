@@ -77,7 +77,7 @@ functions:
       - httpApi:
           method: get
           path: /adapters/{chain}
-          
+
   getBalances:
     handler: src/handlers/getBalances.handler
     description: Get address balances
@@ -164,9 +164,21 @@ functions:
     events:
       - schedule: rate(10 minutes)
 
+  scheduledUpdateYields:
+    handler: src/handlers/updateYields.scheduledUpdateYields
+    description: Scheduled update yields
+    events:
+      # every new hour
+      - schedule: cron(0 * * * ? *)
+
   revalidateAdapterContracts:
     handler: src/handlers/revalidateAdapters.revalidateAdapterContracts
     description: Revalidate adapter contracts
+
+  updateYields:
+    handler: src/handlers/updateYields.handler
+    description: Update yields
+    timeout: 300
 
   websocketRequests:
     handler: src/handlers/websocket.handleRequests
