@@ -3,17 +3,33 @@ import { Redis } from 'ioredis'
 
 export interface YieldStorage {
   apy: number
+  apyBase: number | null
+  apyReward: number | null
+  apyMean30d: number
   ilRisk: boolean
 }
 
 export interface YieldStorable {
   apy: number
+  apyBase: number | null
+  apyReward: number | null
+  apyMean30d: number
   ilRisk: any
   pool_old: string
 }
 
 function toKey(key: string) {
   return `yield-${key}`.toLowerCase()
+}
+
+function toValue(yieldStorable: YieldStorable) {
+  return JSON.stringify({
+    apy: yieldStorable.apy,
+    apyBase: yieldStorable.apyBase,
+    apyReward: yieldStorable.apyReward,
+    apyMean30d: yieldStorable.apyMean30d,
+    ilRisk: boolean(yieldStorable.apy),
+  })
 }
 
 export async function selectYieldsByKeys(client: Redis, yieldKeys: string[]) {
@@ -49,10 +65,7 @@ export async function insertYields<T extends YieldStorable>(client: Redis, yield
   for (const _yield of yields) {
     const key = toKey(_yield.pool_old)
 
-    values[key] = JSON.stringify({
-      apy: _yield.apy,
-      ilRisk: boolean(_yield.apy),
-    })
+    values[key] = toValue(_yield)
   }
 
   return client.mset(values)
@@ -65,10 +78,7 @@ export async function replaceYields<T extends YieldStorable>(client: Redis, yiel
   for (const _yield of yields) {
     const key = toKey(_yield.pool_old)
 
-    toInsertValues[key] = JSON.stringify({
-      apy: _yield.apy,
-      ilRisk: boolean(_yield.apy),
-    })
+    toInsertValues[key] = toValue(_yield)
   }
 
   if (toDeleteKeys.length === 0) {
