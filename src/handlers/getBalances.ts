@@ -1,38 +1,38 @@
 import { selectBalancesByFromAddress } from '@db/balances'
 import { selectLastBalancesSnapshotsByFromAddress } from '@db/balances-snapshots'
 import pool from '@db/pool'
-import { selectYieldsByIds } from '@db/yields'
+import { client as redisClient } from '@db/redis'
+import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, ContractStandard, ContractType } from '@lib/adapter'
-import { groupBy, keyBy } from '@lib/array'
+import { groupBy } from '@lib/array'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
-import { boolean } from '@lib/fmt'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyHandler } from 'aws-lambda'
-import { PoolClient } from 'pg'
+import { Redis } from 'ioredis'
 
 /**
  * Add yields info to given balances
  */
-async function getBalancesYields<T extends Balance>(client: PoolClient, balances: T[]): Promise<T[]> {
+async function getBalancesYields<T extends Balance>(client: Redis, balances: T[]): Promise<T[]> {
   const yieldKeys = balances.map((balance) => balance.yieldKey).filter(isNotNullish)
-  const yields = await selectYieldsByIds(client, yieldKeys)
-  const yieldsByKey = keyBy(yields, 'pool_old', { lowercase: true })
+
+  const yieldsByKey = await selectYieldsByKeys(client, yieldKeys)
 
   for (const balance of balances) {
     if (!balance.yieldKey) {
       continue
     }
 
-    const _yield = yieldsByKey[balance.yieldKey.toLowerCase()]
+    const _yield = yieldsByKey[balance.yieldKey]
     if (!_yield) {
       continue
     }
 
     balance.apy = _yield.apy
-    balance.ilRisk = boolean(_yield.ilRisk)
+    balance.ilRisk = _yield.ilRisk
   }
 
   return balances
@@ -143,7 +143,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       selectLastBalancesSnapshotsByFromAddress(client, address),
     ])
 
-    const pricedBalancesWithYields = await getBalancesYields(client, pricedBalances)
+    const pricedBalancesWithYields = await getBalancesYields(redisClient, pricedBalances)
 
     const protocols: BalancesProtocolResponse[] = []
     const balancesByAdapterId = groupBy(pricedBalancesWithYields, 'adapterId')

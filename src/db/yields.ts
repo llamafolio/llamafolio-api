@@ -1,102 +1,83 @@
-import { sliceIntoChunks } from '@lib/array'
-import { bufToStr, strToBuf } from '@lib/buf'
-import { PoolClient } from 'pg'
-import format from 'pg-format'
-
-export interface YieldOld {
-  chain: string
-  project: string
-  symbol: string
-  tvlUsd: number
-  apyBase: number | null
-  apyReward: number | null
-  apy: number
-  rewardTokens: string[] | null
-  pool: string
-  pool_old: string
-  apyPct1D: number | null
-  apyPct7D: number | null
-  apyPct30D: number | null
-  stablecoin: boolean
-  ilRisk: string
-  exposure: string
-  predictions: object
-  poolMeta: null | string
-  mu: number
-  sigma: number
-  count: number
-  outlier: boolean
-  underlyingTokens: string[] | null
-  il7d: number | null
-  apyBase7d: number | null
-  apyMean30d: number
-  volumeUsd1d: number | null
-  volumeUsd7d: number | null
-}
+import { boolean } from '@lib/fmt'
+import { Redis } from 'ioredis'
 
 export interface YieldStorage {
-  id: Buffer
-  data: Omit<YieldOld, 'pool_old'>
+  apy: number
+  ilRisk: boolean
 }
 
-export type YieldStorable = YieldStorage
+export interface YieldStorable {
+  apy: number
+  ilRisk: any
+  pool_old: string
+}
 
-export function fromStorage(yieldsStorage: YieldStorage[]) {
-  const yields: YieldOld[] = []
+function toKey(key: string) {
+  return `yield-${key}`.toLowerCase()
+}
 
-  for (const yieldStorage of yieldsStorage) {
-    const _yield: YieldOld = {
-      pool_old: bufToStr(yieldStorage.id),
-      ...yieldStorage.data,
+export async function selectYieldsByKeys(client: Redis, yieldKeys: string[]) {
+  const keys = yieldKeys.map(toKey)
+
+  const values = await client.mget(keys)
+
+  const res: { [key: string]: YieldStorage } = {}
+
+  for (let idx = 0; idx < values.length; idx++) {
+    const value = values[idx]
+    if (value) {
+      res[yieldKeys[idx]] = JSON.parse(value)
     }
-
-    yields.push(_yield)
   }
 
-  return yields
+  return res
 }
 
-export function toRow(yieldStable: YieldStorable) {
-  return [yieldStable.id, yieldStable.data]
+export async function deleteAllYields(client: Redis) {
+  const keys = await client.keys(`yield-*`)
+
+  return client.del(keys)
 }
 
-export function toStorage(yields: YieldOld[]) {
-  const yieldsStorable: YieldStorable[] = []
-
-  for (const _yield of yields) {
-    const { pool_old, ...data } = _yield
-
-    const yieldStorable: YieldStorable = {
-      id: strToBuf(pool_old),
-      data,
-    }
-
-    yieldsStorable.push(yieldStorable)
-  }
-
-  return yieldsStorable
-}
-
-export async function selectYieldsByIds(client: PoolClient, ids: string[]) {
-  const yieldsRes = await client.query(format(`select * from yields where id in (%L);`, ids.map(strToBuf)), [])
-
-  return fromStorage(yieldsRes.rows)
-}
-
-export function deleteAllYields(client: PoolClient) {
-  return client.query('DELETE FROM yields WHERE true;', [])
-}
-
-export function insertYields(client: PoolClient, yields: YieldOld[]) {
-  const values = toStorage(yields).map(toRow)
-
-  if (values.length === 0) {
+export async function insertYields<T extends YieldStorable>(client: Redis, yields: T[]) {
+  if (yields.length === 0) {
     return
   }
 
-  return Promise.all(
-    sliceIntoChunks(values, 1_000).map((chunk) =>
-      client.query(format('INSERT INTO yields (id, data) VALUES %L ON CONFLICT DO NOTHING;', chunk), []),
-    ),
-  )
+  const values: { [key: string]: any } = {}
+
+  for (const _yield of yields) {
+    const key = toKey(_yield.pool_old)
+
+    values[key] = JSON.stringify({
+      apy: _yield.apy,
+      ilRisk: boolean(_yield.apy),
+    })
+  }
+
+  return client.mset(values)
+}
+
+export async function replaceYields<T extends YieldStorable>(client: Redis, yields: T[]) {
+  const toDeleteKeys = await client.keys(`yield-*`)
+
+  const toInsertValues: { [key: string]: any } = {}
+  for (const _yield of yields) {
+    const key = toKey(_yield.pool_old)
+
+    toInsertValues[key] = JSON.stringify({
+      apy: _yield.apy,
+      ilRisk: boolean(_yield.apy),
+    })
+  }
+
+  if (toDeleteKeys.length === 0) {
+    if (yields.length === 0) {
+      return
+    }
+
+    return client.mset(toInsertValues)
+  }
+
+  return client.multi().del(toDeleteKeys).mset(toInsertValues).exec()
 }
