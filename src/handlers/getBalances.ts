@@ -32,6 +32,9 @@ async function getBalancesYields<T extends Balance>(client: Redis, balances: T[]
     }
 
     balance.apy = _yield.apy
+    balance.apyBase = _yield.apyBase
+    balance.apyReward = _yield.apyReward
+    balance.apyMean30d = _yield.apyMean30d
     balance.ilRisk = _yield.ilRisk
   }
 
@@ -53,6 +56,9 @@ export interface FormattedBalance {
   amount?: string
   balanceUSD?: number
   apy?: number
+  apyBase?: number
+  apyReward?: number
+  apyMean30d?: number
   ilRisk?: boolean
   timestamp?: number
   underlyings?: FormattedBalance[]
@@ -99,6 +105,9 @@ export function formatBalance(balance: any): FormattedBalance {
     amount: balance.amount,
     balanceUSD: balance.balanceUSD,
     apy: balance.apy,
+    apyBase: balance.apyBase,
+    apyReward: balance.apyReward,
+    apyMean30d: balance.apyMean30d,
     ilRisk: balance.ilRisk,
     timestamp: balance.timestamp,
     underlyings: balance.underlyings?.map(formatBalance),
