@@ -52,6 +52,8 @@ async function main() {
         ? await getAllChainTokensInteractions(client, chain, ctx.address)
         : await getChainContractsInteractionsTokenTransfers(client, chain, ctx.address, adapter.id)
 
+    console.log(`Interacted with ${contracts.length} contracts`)
+
     const balancesRes = await adapter[chain]?.getBalances(ctx, groupContracts(contracts) || [])
     const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])
 
