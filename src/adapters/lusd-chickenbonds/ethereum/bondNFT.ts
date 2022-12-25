@@ -1,10 +1,13 @@
-import { BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
+import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isNotNullish, isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
+
+import { getAccruedBLUSD } from './chickenBondManager'
 
 const BondStatus = {
   nonExistent: 0,
@@ -48,6 +51,14 @@ const abi = {
 }
 
 export async function getActiveBondsBalances(ctx: BalancesContext, _chain: Chain, bondNFT: Contract) {
+  const LUSD = bondNFT.underlyings?.[0]
+  const bLUSD = bondNFT.rewards?.[0]
+  if (!LUSD || !bLUSD) {
+    return []
+  }
+
+  const balances: Balance[] = []
+
   const balanceOfRes = await call({
     chain: ctx.chain,
     target: bondNFT.address,
@@ -82,17 +93,37 @@ export async function getActiveBondsBalances(ctx: BalancesContext, _chain: Chain
     .map((res) => (parseInt(res.output) === BondStatus.active ? res.input.params[0] : null))
     .filter(isNotNullish)
 
-  const bondAmountsRes = await multicall({
-    chain: ctx.chain,
-    calls: activeTokenIDs.map((tokenID) => ({
-      target: bondNFT.address,
-      params: [tokenID],
-    })),
-    abi: abi.getBondAmount,
-  })
+  const [bondAmountsRes, accruedBLUSDRes] = await Promise.all([
+    multicall({
+      chain: ctx.chain,
+      calls: activeTokenIDs.map((tokenID) => ({
+        target: bondNFT.address,
+        params: [tokenID],
+      })),
+      abi: abi.getBondAmount,
+    }),
+    getAccruedBLUSD(ctx, activeTokenIDs),
+  ])
 
-  return bondAmountsRes.filter(isSuccess).map((bondAmountRes) => ({
-    ...bondNFT.underlyings?.[0],
-    amount: BigNumber.from(bondAmountRes.output),
-  }))
+  for (let tokenIdx = 0; tokenIdx < activeTokenIDs.length; tokenIdx++) {
+    const bondAmountRes = bondAmountsRes[tokenIdx]
+    const bLUSDRes = accruedBLUSDRes[tokenIdx]
+
+    const balance: Balance = {
+      ...LUSD,
+      amount: BN_ZERO,
+    }
+
+    if (isSuccess(bondAmountRes)) {
+      balance.amount = BigNumber.from(bondAmountRes.output)
+    }
+
+    if (isSuccess(bLUSDRes)) {
+      balance.rewards = [{ ...bLUSD, amount: BigNumber.from(bLUSDRes.output) }]
+    }
+
+    balances.push(balance)
+  }
+
+  return balances
 }

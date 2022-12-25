@@ -64,8 +64,8 @@ export async function getBondNFTContract() {
   return contract
 }
 
-export async function getAccruedBLUSD(ctx: BalancesContext, tokenIDs: number[]) {
-  const bondAmountsRes = await multicall({
+export function getAccruedBLUSD(ctx: BalancesContext, tokenIDs: number[]) {
+  return multicall({
     chain: ctx.chain,
     calls: tokenIDs.map((tokenID) => ({
       target: chickenBondManager,
