@@ -1,6 +1,7 @@
 import millify from 'millify'
 import path from 'path'
 
+import { selectAdapterProps } from '../src/db/adapters'
 import {
   getAllChainTokensInteractions,
   getChainContractsInteractionsTokenTransfers,
@@ -47,12 +48,20 @@ async function main() {
   const client = await pool.connect()
 
   try {
-    const contracts =
+    const [contracts, adapterProps] = await Promise.all([
       adapter.id === 'wallet'
-        ? await getAllChainTokensInteractions(client, chain, ctx.address)
-        : await getChainContractsInteractionsTokenTransfers(client, chain, ctx.address, adapter.id)
+        ? getAllChainTokensInteractions(client, chain, ctx.address)
+        : getChainContractsInteractionsTokenTransfers(client, chain, ctx.address, adapter.id),
+      selectAdapterProps(client, adapter.id),
+    ])
 
-    const balancesRes = await adapter[chain]?.getBalances(ctx, groupContracts(contracts) || [])
+    console.log(`Interacted with ${contracts.length} contracts`)
+
+    const balancesRes = await adapter[chain]?.getBalances(
+      ctx,
+      groupContracts(contracts) || [],
+      adapterProps?.contractsProps || {},
+    )
     const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])
 
     const pricedBalances = await getPricedBalances(sanitizedBalances)

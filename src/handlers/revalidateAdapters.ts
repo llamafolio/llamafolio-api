@@ -103,7 +103,10 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
 
     const config = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
 
-    const contracts = await resolveContractsTokens(client, config.contracts || {}, true)
+    const [contracts, props] = await Promise.all([
+      resolveContractsTokens(client, config.contracts || {}, true),
+      resolveContractsTokens(client, config.props || {}, true),
+    ])
 
     let expire_at: Date | undefined = undefined
     if (config.revalidate) {
@@ -116,6 +119,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
       chain,
       contractsExpireAt: expire_at,
       contractsRevalidateProps: config.revalidateProps,
+      contractsProps: props,
       createdAt: new Date(),
     }
 

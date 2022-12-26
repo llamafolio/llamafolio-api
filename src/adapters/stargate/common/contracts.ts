@@ -82,40 +82,31 @@ export async function getPoolsContracts(chain: Chain, lpStaking: Contract): Prom
     abi: abi.poolInfos,
   })
 
-  const poolsInfos = poolsInfosRes.filter(isSuccess).map((res) => res.output)
-
   const tokensRes = await multicall({
     chain,
-    calls: poolsInfos.map((token) => ({
-      target: token.lpToken,
+    calls: poolsInfosRes.map((res) => ({
+      target: res.success ? res.output.lpToken : undefined,
       params: [],
     })),
     abi: abi.token,
   })
 
-  let tokenIdx = 0
-  for (let poolInfoIdx = 0; poolInfoIdx < poolsLength; poolInfoIdx++) {
-    const poolInfoRes = poolsInfosRes[poolInfoIdx]
-    const tokenRes = tokensRes[tokenIdx]
+  for (let pid = 0; pid < poolsLength; pid++) {
+    const poolInfoRes = poolsInfosRes[pid]
+    const tokenRes = tokensRes[pid]
 
-    if (!isSuccess(poolInfoRes)) {
-      continue
-    }
-
-    if (!isSuccess(tokenRes)) {
-      tokenIdx++
+    if (!isSuccess(poolInfoRes) || !isSuccess(tokenRes)) {
       continue
     }
 
     pools.push({
       chain,
-      address: tokenRes.output,
+      address: poolInfoRes.output.lpToken,
       yieldKey: tokenRes.output,
       underlyings: [tokenRes.output],
       rewards: lpStaking.rewards,
+      pid,
     })
-
-    tokenIdx++
   }
 
   return pools

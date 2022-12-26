@@ -1,13 +1,45 @@
 import { selectBalancesByFromAddress } from '@db/balances'
 import { selectLastBalancesSnapshotsByFromAddress } from '@db/balances-snapshots'
 import pool from '@db/pool'
+import { client as redisClient } from '@db/redis'
+import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
-import { ContractStandard, ContractType } from '@lib/adapter'
+import { Balance, ContractStandard, ContractType } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
+import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyHandler } from 'aws-lambda'
+import { Redis } from 'ioredis'
+
+/**
+ * Add yields info to given balances
+ */
+async function getBalancesYields<T extends Balance>(client: Redis, balances: T[]): Promise<T[]> {
+  const yieldKeys = balances.map((balance) => balance.yieldKey).filter(isNotNullish)
+
+  const yieldsByKey = await selectYieldsByKeys(client, yieldKeys)
+
+  for (const balance of balances) {
+    if (!balance.yieldKey) {
+      continue
+    }
+
+    const _yield = yieldsByKey[balance.yieldKey]
+    if (!_yield) {
+      continue
+    }
+
+    balance.apy = _yield.apy
+    balance.apyBase = _yield.apyBase
+    balance.apyReward = _yield.apyReward
+    balance.apyMean30d = _yield.apyMean30d
+    balance.ilRisk = _yield.ilRisk
+  }
+
+  return balances
+}
 
 export interface FormattedBalance {
   type?: ContractType
@@ -23,6 +55,11 @@ export interface FormattedBalance {
   price?: number
   amount?: string
   balanceUSD?: number
+  apy?: number
+  apyBase?: number
+  apyReward?: number
+  apyMean30d?: number
+  ilRisk?: boolean
   timestamp?: number
   underlyings?: FormattedBalance[]
   rewards?: FormattedBalance[]
@@ -67,6 +104,11 @@ export function formatBalance(balance: any): FormattedBalance {
     price: balance.price,
     amount: balance.amount,
     balanceUSD: balance.balanceUSD,
+    apy: balance.apy,
+    apyBase: balance.apyBase,
+    apyReward: balance.apyReward,
+    apyMean30d: balance.apyMean30d,
+    ilRisk: balance.ilRisk,
     timestamp: balance.timestamp,
     underlyings: balance.underlyings?.map(formatBalance),
     rewards: balance.rewards?.map(formatBalance),
@@ -110,8 +152,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       selectLastBalancesSnapshotsByFromAddress(client, address),
     ])
 
+    const pricedBalancesWithYields = await getBalancesYields(redisClient, pricedBalances)
+
     const protocols: BalancesProtocolResponse[] = []
-    const balancesByAdapterId = groupBy(pricedBalances, 'adapterId')
+    const balancesByAdapterId = groupBy(pricedBalancesWithYields, 'adapterId')
     const balancesSnapshotsByAdapterId = groupBy(lastBalancesSnapshots, 'adapterId')
 
     for (const adapterId in balancesByAdapterId) {

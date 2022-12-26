@@ -80,7 +80,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
             const ctx: BalancesContext = { address, chain: chain as Chain, adapterId: walletAdapter.id }
 
-            const balancesConfig = await handler.getBalances(ctx, contracts)
+            const balancesConfig = await handler.getBalances(ctx, contracts, {})
 
             const hrend = process.hrtime(hrstart)
 

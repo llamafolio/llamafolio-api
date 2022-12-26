@@ -134,7 +134,7 @@ export async function getMultiFeeDistributionBalances(
       },
     }
 
-    // try to reuse contracts from LendingPool to connect reward tokens with their underlyings
+    // rewards accumulate in gTokens; add their underlyings
     const underlyings = lendingPoolContractByAddress[rewardData.token.toLowerCase()]?.underlyings
     if (underlyings) {
       reward.underlyings = [{ ...underlyings[0], amount: rewardData.amount }]
@@ -142,24 +142,6 @@ export async function getMultiFeeDistributionBalances(
 
     rewardsBalances.push(reward)
   }
-
-  // fix missing rewards underlyings:
-  // rewards accumulate in all gTokens and the account may not have interacted with all of them (for ex if never claimed rewards)
-  // const missingRewardsUnderlyings = rewardsBalances.filter((balance) => !balance.underlyings)
-  // if (missingRewardsUnderlyings.length > 0) {
-  //   const gTokens = await getAaveLendingPoolContracts(chain, params.lendingPool)
-
-  //   const gTokensMap = new ContractsMap<Contract>(gTokens)
-
-  //   for (const rewardsBalance of rewardsBalances) {
-  //     if (!rewardsBalance.underlyings) {
-  //       const gToken = gTokensMap.get(rewardsBalance)
-  //       if (gToken && gToken.underlyings?.[0]) {
-  //         rewardsBalance.underlyings = [{ ...gToken.underlyings[0], amount: rewardsBalance.amount }]
-  //       }
-  //     }
-  //   }
-  // }
 
   const earnedBalance: Balance = {
     chain,

@@ -55,9 +55,12 @@ async function main() {
   try {
     const contractsRes = await adapter[chain]?.getContracts(ctx, {})
 
-    const contracts = await resolveContractsTokens(client, contractsRes?.contracts || {}, true)
+    const [contracts, props] = await Promise.all([
+      resolveContractsTokens(client, contractsRes?.contracts || {}, true),
+      resolveContractsTokens(client, contractsRes?.props || {}, true),
+    ])
 
-    const balancesRes = await adapter[chain]?.getBalances(ctx, contracts)
+    const balancesRes = await adapter[chain]?.getBalances(ctx, contracts, props)
     const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])
 
     const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')

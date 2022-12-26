@@ -26,6 +26,7 @@
     "paths": {
       "@adapters/*": ["./src/adapters/*"],
       "@db/*": ["./src/db/*"],
+      "@env": ["./env"],
       "@handlers/*": ["./src/handlers/*"],
       "@lib/*": ["./src/lib/*"]
     }

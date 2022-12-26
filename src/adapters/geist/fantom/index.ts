@@ -44,13 +44,14 @@ export const getContracts = async () => {
 
   return {
     contracts: { pools },
+    props: { pools },
   }
 }
 
-function getLendingBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]) {
+function getLendingBalances(ctx: BalancesContext, chain: Chain, pools: Contract[], allPools: Contract[]) {
   return Promise.all([
-    getLendingPoolBalances(ctx, chain, contracts, { chefIncentivesController: chefIncentivesControllerContract }),
-    getMultiFeeDistributionBalances(ctx, chain, contracts, {
+    getLendingPoolBalances(ctx, chain, pools, { chefIncentivesController: chefIncentivesControllerContract }),
+    getMultiFeeDistributionBalances(ctx, chain, allPools, {
       multiFeeDistribution: multiFeeDistributionContract,
       lendingPool: lendingPoolContract,
       stakingToken: geistToken,
@@ -58,10 +59,10 @@ function getLendingBalances(ctx: BalancesContext, chain: Chain, contracts: Contr
   ])
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts, props) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, 'fantom', contracts, {
-      pools: getLendingBalances,
+      pools: (ctx, chain, pools) => getLendingBalances(ctx, chain, pools, props.pools || []),
     }),
     getLendingPoolHealthFactor(ctx, 'fantom', lendingPoolContract),
   ])
