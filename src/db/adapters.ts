@@ -119,7 +119,7 @@ export async function selectAdaptersContractsExpired(client: PoolClient) {
 }
 
 export async function selectAdapterProps(client: PoolClient, adapterId: string) {
-  const adaptersRes = await client.query(`select id, contracts_props from adapters where id = $1;`, [adapterId])
+  const adaptersRes = await client.query(`select contracts_props from adapters where id = $1;`, [adapterId])
 
   return fromPartialStorage(adaptersRes.rows)[0]
 }
