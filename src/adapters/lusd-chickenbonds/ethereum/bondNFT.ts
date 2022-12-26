@@ -1,7 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isNotNullish, isSuccess } from '@lib/type'
@@ -50,7 +49,7 @@ const abi = {
   },
 }
 
-export async function getActiveBondsBalances(ctx: BalancesContext, _chain: Chain, bondNFT: Contract) {
+export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Contract) {
   const LUSD = bondNFT.underlyings?.[0]
   const bLUSD = bondNFT.rewards?.[0]
   if (!LUSD || !bLUSD) {

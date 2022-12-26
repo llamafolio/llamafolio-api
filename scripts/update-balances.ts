@@ -1,12 +1,14 @@
 import format from 'pg-format'
 
 import { adapterById } from '../src/adapters'
+import { selectAdaptersProps } from '../src/db/adapters'
 import { insertBalances } from '../src/db/balances'
 import { BalancesSnapshot, insertBalancesSnapshots } from '../src/db/balances-snapshots'
 import { getAllContractsInteractionsTokenTransfers, getAllTokensInteractions } from '../src/db/contracts'
 import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Balance, BalancesConfig, BalancesContext, Contract } from '../src/lib/adapter'
+import { keyBy } from '../src/lib/array'
 import { sanitizeBalances, sumBalances } from '../src/lib/balance'
 import { strToBuf } from '../src/lib/buf'
 import { Chain, chains } from '../src/lib/chains'
@@ -61,11 +63,15 @@ async function main() {
     }
     contractsByAdapterId['wallet'] = tokens
 
-    console.log('Interacted with protocols:', Object.keys(contractsByAdapterId))
+    const adapterIds = Object.keys(contractsByAdapterId)
+    const adaptersProps = await selectAdaptersProps(client, adapterIds)
+    const adaptersPropsById = keyBy(adaptersProps, 'id')
+
+    console.log('Interacted with protocols:', adapterIds)
 
     // Run adapters `getBalances` only with the contracts the user interacted with
     const adaptersBalancesConfigsRes = await Promise.all(
-      Object.keys(contractsByAdapterId).flatMap((adapterId) => {
+      adapterIds.flatMap((adapterId) => {
         const adapter = adapterById[adapterId]
         if (!adapter) {
           console.error(`Could not find adapter with id`, adapterId)
@@ -82,10 +88,11 @@ async function main() {
 
               const contracts =
                 groupContracts(contractsByAdapterId[adapterId].filter((contract) => contract.chain === chain.id)) || []
+              const props = adaptersPropsById[adapterId]?.contractsProps || {}
 
               const ctx: BalancesContext = { address, chain: chain.id, adapterId }
 
-              const balancesConfig = await handler.getBalances(ctx, contracts)
+              const balancesConfig = await handler.getBalances(ctx, contracts, props)
 
               const hrend = process.hrtime(hrstart)
 
