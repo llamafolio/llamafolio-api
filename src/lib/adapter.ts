@@ -96,6 +96,7 @@ export interface BalancesConfig {
 
 export interface ContractsConfig {
   contracts: { [key: string]: Contract | Contract[] | RawContract | RawContract[] | undefined }
+  props?: { [key: string]: Contract | Contract[] | RawContract | RawContract[] | undefined }
   revalidate?: number
   revalidateProps?: { [key: string]: any }
 }
@@ -105,13 +106,14 @@ export interface ContractsConfig {
  */
 export type GetContractsHandler = (
   ctx: BaseContext,
-  props: { [key: string]: any },
+  revalidateProps: { [key: string]: any },
 ) => ContractsConfig | Promise<ContractsConfig>
 
 export type GetBalancesHandler<C extends GetContractsHandler> = (
   ctx: BalancesContext,
   // each key can be undefined as the account may not have interacted with these contracts
   contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
+  props: Awaited<ReturnType<C>>['props'],
 ) => BalancesConfig | Promise<BalancesConfig>
 
 export interface AdapterHandler {

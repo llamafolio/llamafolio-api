@@ -8,6 +8,7 @@ export interface Adapter {
   chain: Chain
   contractsExpireAt?: Date
   contractsRevalidateProps?: { [key: string]: any }
+  contractsProps?: { [key: string]: any }
   createdAt: Date
 }
 
@@ -16,6 +17,7 @@ export interface AdapterStorage {
   chain: string
   contracts_expire_at: string | null
   contracts_revalidate_props: { [key: string]: any } | null
+  contracts_props: { [key: string]: any } | null
   created_at: string
 }
 
@@ -24,6 +26,7 @@ export interface AdapterStorable {
   chain: Chain
   contracts_expire_at?: Date
   contracts_revalidate_props?: { [key: string]: any }
+  contracts_props?: { [key: string]: any }
   created_at?: Date
 }
 
@@ -36,6 +39,7 @@ export function fromStorage(adaptersStorage: AdapterStorage[]) {
       chain: adapterStorage.chain as Chain,
       contractsExpireAt: adapterStorage.contracts_expire_at ? new Date(adapterStorage.contracts_expire_at) : undefined,
       contractsRevalidateProps: adapterStorage.contracts_revalidate_props || {},
+      contractsProps: adapterStorage.contracts_props || {},
       createdAt: new Date(adapterStorage.created_at),
     }
 
@@ -54,6 +58,7 @@ export function fromPartialStorage(adaptersStorage: Partial<AdapterStorage>[]) {
       chain: adapterStorage?.chain as Chain,
       contractsExpireAt: adapterStorage.contracts_expire_at ? new Date(adapterStorage.contracts_expire_at) : undefined,
       contractsRevalidateProps: adapterStorage?.contracts_revalidate_props || {},
+      contractsProps: adapterStorage?.contracts_props || {},
       createdAt: adapterStorage.created_at ? new Date(adapterStorage.created_at) : undefined,
     }
 
@@ -69,6 +74,7 @@ export function toRow(adapterStorable: AdapterStorable) {
     adapterStorable.chain,
     adapterStorable.contracts_expire_at,
     adapterStorable.contracts_revalidate_props,
+    adapterStorable.contracts_props,
     adapterStorable.created_at,
   ]
 }
@@ -77,13 +83,14 @@ export function toStorage(adapters: Adapter[]) {
   const adaptersStorable: AdapterStorable[] = []
 
   for (const adapter of adapters) {
-    const { id, chain, contractsExpireAt, contractsRevalidateProps, createdAt } = adapter
+    const { id, chain, contractsExpireAt, contractsRevalidateProps, contractsProps, createdAt } = adapter
 
     const adapterStorable: AdapterStorable = {
       id,
       chain,
       contracts_expire_at: contractsExpireAt,
       contracts_revalidate_props: contractsRevalidateProps,
+      contracts_props: contractsProps,
       created_at: createdAt,
     }
 
@@ -109,6 +116,21 @@ export async function selectAdaptersContractsExpired(client: PoolClient) {
   const adaptersRes = await client.query(`select * from adapters where contracts_expire_at <= now();`, [])
 
   return fromStorage(adaptersRes.rows)
+}
+
+export async function selectAdapterProps(client: PoolClient, adapterId: string) {
+  const adaptersRes = await client.query(`select id, contracts_props from adapters where id = $1;`, [adapterId])
+
+  return fromPartialStorage(adaptersRes.rows)[0]
+}
+
+export async function selectAdaptersProps(client: PoolClient, adapterIds: string[]) {
+  const adaptersRes = await client.query(
+    format(`select id, contracts_props from adapters where id in (%L);`, adapterIds),
+    [],
+  )
+
+  return fromPartialStorage(adaptersRes.rows)
 }
 
 export async function selectLatestCreatedAdapters(client: PoolClient, limit = 5) {
@@ -147,7 +169,7 @@ export function insertAdapters(client: PoolClient, adapters: Adapter[]) {
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          'INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, created_at) VALUES %L ON CONFLICT DO NOTHING;',
+          'INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, contracts_props, created_at) VALUES %L ON CONFLICT DO NOTHING;',
           chunk,
         ),
         [],
@@ -168,13 +190,14 @@ export function upsertAdapters(client: PoolClient, adapters: Adapter[]) {
       client.query(
         format(
           `
-          INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, created_at)
+          INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, contracts_props, created_at)
           VALUES %L
           ON CONFLICT (id, chain) 
           DO 
             UPDATE SET 
               contracts_expire_at = EXCLUDED.contracts_expire_at,
-              contracts_revalidate_props = EXCLUDED.contracts_revalidate_props
+              contracts_revalidate_props = EXCLUDED.contracts_revalidate_props,
+              contracts_props = EXCLUDED.contracts_props
           ;`,
           chunk,
         ),

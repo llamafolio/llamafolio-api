@@ -1,4 +1,5 @@
 import { adapterById } from '@adapters/index'
+import { selectAdaptersProps } from '@db/adapters'
 import { insertBalances } from '@db/balances'
 import {
   BalancesSnapshot,
@@ -17,7 +18,7 @@ import {
 } from '@handlers/getBalances'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, BalancesConfig, BalancesContext, Contract } from '@lib/adapter'
-import { groupBy } from '@lib/array'
+import { groupBy, keyBy } from '@lib/array'
 import { sanitizeBalances, sumBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
 import { Chain, chains } from '@lib/chains'
@@ -108,11 +109,15 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     }
     contractsByAdapterId['wallet'] = tokens
 
-    console.log('Interacted with protocols:', Object.keys(contractsByAdapterId))
+    const adapterIds = Object.keys(contractsByAdapterId)
+    const adaptersProps = await selectAdaptersProps(client, adapterIds)
+    const adaptersPropsById = keyBy(adaptersProps, 'id')
+
+    console.log('Interacted with protocols:', adapterIds)
 
     // Run adapters `getBalances` only with the contracts the user interacted with
     const adaptersBalancesConfigsRes = await Promise.all(
-      Object.keys(contractsByAdapterId).flatMap((adapterId) => {
+      adapterIds.flatMap((adapterId) => {
         const adapter = adapterById[adapterId]
         if (!adapter) {
           console.error(`Could not find adapter with id`, adapterId)
@@ -129,10 +134,11 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
 
               const contracts =
                 groupContracts(contractsByAdapterId[adapterId].filter((contract) => contract.chain === chain.id)) || []
+              const props = adaptersPropsById[adapterId]?.contractsProps || {}
 
               const ctx: BalancesContext = { address, chain: chain.id, adapterId }
 
-              const balancesConfig = await handler.getBalances(ctx, contracts)
+              const balancesConfig = await handler.getBalances(ctx, contracts, props)
 
               const hrend = process.hrtime(hrstart)
 

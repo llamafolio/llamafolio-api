@@ -2,7 +2,10 @@ import { BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
-const chickenBondManager = '0x57619FE9C539f890b19c61812226F9703ce37137'
+export const chickenBondManager: Contract = {
+  chain: 'ethereum',
+  address: '0x57619FE9C539f890b19c61812226F9703ce37137',
+}
 
 const abi = {
   bondNFT: {
@@ -39,17 +42,17 @@ export async function getBondNFTContract() {
   const [bondNFTRes, lusdTokenRes, bLUSDTokenRes] = await Promise.all([
     call({
       chain: 'ethereum',
-      target: chickenBondManager,
+      target: chickenBondManager.address,
       abi: abi.bondNFT,
     }),
     call({
       chain: 'ethereum',
-      target: chickenBondManager,
+      target: chickenBondManager.address,
       abi: abi.lusdToken,
     }),
     call({
       chain: 'ethereum',
-      target: chickenBondManager,
+      target: chickenBondManager.address,
       abi: abi.bLUSDToken,
     }),
   ])
@@ -68,7 +71,7 @@ export function getAccruedBLUSD(ctx: BalancesContext, tokenIDs: number[]) {
   return multicall({
     chain: ctx.chain,
     calls: tokenIDs.map((tokenID) => ({
-      target: chickenBondManager,
+      target: chickenBondManager.address,
       params: [tokenID],
     })),
     abi: abi.calcAccruedBLUSD,
