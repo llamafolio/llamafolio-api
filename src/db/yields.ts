@@ -33,6 +33,10 @@ function toValue(yieldStorable: YieldStorable) {
 }
 
 export async function selectYieldsByKeys(client: Redis, yieldKeys: string[]) {
+  if (yieldKeys.length === 0) {
+    return {}
+  }
+
   const keys = yieldKeys.map(toKey)
 
   const values = await client.mget(keys)
