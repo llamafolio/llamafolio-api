@@ -129,49 +129,23 @@ export async function getAllContractsInteractions(client: PoolClient, address: s
 }
 
 /**
- * Get a list of all unique protocols and contracts a given account interacted with
- * @param client
- * @param address
- */
-export async function getAllContractsInteractionsTokenTransfers(client: PoolClient, address: string) {
-  const res = await client.query("select * from all_contract_interactions_tt($1) where adapter_id <> 'wallet';", [
-    strToBuf(address),
-  ])
-
-  return fromStorage(res.rows)
-}
-
-/**
- * Get a list of all unique protocols and contracts a given account interacted with
- * @param client
- * @param address
- */
-export async function getContractsInteractionsTokenTransfers(client: PoolClient, address: string, adapterId: string) {
-  const res = await client.query('select * from all_contract_interactions_tt($1) where adapter_id = $2;', [
-    strToBuf(address),
-    adapterId,
-  ])
-
-  return fromStorage(res.rows)
-}
-
-/**
  * Get a list of all unique protocols and contracts a given account interacted with, filtered by chain
  * @param client
  * @param chain
  * @param address
  * @param adapterId
  */
-export async function getChainContractsInteractionsTokenTransfers(
+export async function getChainContractsInteractions(
   client: PoolClient,
   chain: Chain,
   address: string,
   adapterId: string,
 ) {
-  const res = await client.query(
-    'select * from all_contract_interactions_tt($1) where chain = $2 and adapter_id = $3;',
-    [strToBuf(address), chain, adapterId],
-  )
+  const res = await client.query('select * from all_contract_interactions($1) where chain = $2 and adapter_id = $3;', [
+    strToBuf(address),
+    chain,
+    adapterId,
+  ])
 
   return fromStorage(res.rows)
 }
