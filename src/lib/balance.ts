@@ -1,4 +1,5 @@
-import { Balance, BalancesContext, BaseBalance, BaseContract, ContractType, GetContractsHandler } from '@lib/adapter'
+import { Balance, BalancesContext, BaseBalance, BaseContract, GetContractsHandler } from '@lib/adapter'
+import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, BN_ZERO } from '@lib/math'
@@ -213,7 +214,7 @@ export function sortBalances(a: SortBalance, b: SortBalance) {
 }
 
 export interface SumBalance {
-  type?: ContractType
+  category?: Category
   claimableUSD?: number
   balanceUSD?: number
 }
@@ -223,7 +224,7 @@ export function sumBalances(balances: SumBalance[]) {
 
   for (const balance of balances) {
     // substract debt positions
-    if (balance.type === 'debt') {
+    if (balance.category === 'borrow') {
       res -= balance.balanceUSD || 0
     } else {
       res += balance.claimableUSD || balance.balanceUSD || 0

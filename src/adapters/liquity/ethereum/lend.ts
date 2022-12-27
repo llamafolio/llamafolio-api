@@ -66,7 +66,6 @@ export async function getLendBalances(ctx: BalancesContext, chain: Chain, troveM
     chain: chain,
     category: 'borrow',
     symbol: 'LUSD',
-    type: 'debt',
     decimals: 18,
     address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
     amount: BigNumber.from(troveDetails.debt),

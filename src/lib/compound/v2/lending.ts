@@ -203,7 +203,6 @@ export async function getMarketsBalances(
         decimals: underlying.decimals,
         category: 'borrow',
         underlyings: [{ ...underlying, amount }],
-        type: 'debt',
       }
     })
     .filter(isNotNullish)

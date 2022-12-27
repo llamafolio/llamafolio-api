@@ -41,7 +41,6 @@ export async function getMarketsContracts(chain: Chain): Promise<Contract[]> {
       {
         chain,
         category: 'borrow',
-        type: 'debt',
         address: markets[marketIdx].dTokenAddress,
         yieldKey: `${markets[marketIdx].dTokenAddress.toLowerCase()}-euler`,
         underlyings: [markets[marketIdx].address],

@@ -13,12 +13,10 @@ export interface BalancesContext extends BaseContext {
   address: string
 }
 
-export type ContractType = 'reward' | 'debt' | 'underlying'
 export type ContractStandard = 'erc20' | 'erc721'
 
 export interface BaseContract {
   // discriminators
-  type?: ContractType
   standard?: ContractStandard
   category?: Category
 
