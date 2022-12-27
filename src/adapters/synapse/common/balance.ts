@@ -2,11 +2,11 @@ import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
+import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-// import { getPairsBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -20,6 +20,13 @@ const abi = {
   lpToken: {
     inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     name: 'lpToken',
+    outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  SYNAPSE: {
+    inputs: [],
+    name: 'SYNAPSE',
     outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
@@ -49,83 +56,85 @@ const abi = {
   },
 }
 
-export async function getSynapseContract(chain: Chain, contract: Contract) {
+export async function getPoolsContracts(chain: Chain, contract: Contract) {
   const contracts: Contract[] = []
 
-  const poolLentghRes = await call({
-    chain,
-    target: contract.address,
-    params: [],
-    abi: abi.poolLength,
-  })
+  const [poolLentghRes, synapseRes] = await Promise.all([
+    call({
+      chain,
+      target: contract.address,
+      params: [],
+      abi: abi.poolLength,
+    }),
+    call({
+      chain,
+      target: contract.address,
+      params: [],
+      abi: abi.SYNAPSE,
+    }),
+  ])
 
   const poolLength = parseInt(poolLentghRes.output)
 
-  const calls = range(0, poolLength).map((i) => ({
-    target: contract.address,
-    params: [i],
-  }))
+  const lpTokensRes = await multicall({
+    chain,
+    calls: range(0, poolLength).map((pid) => ({
+      target: contract.address,
+      params: [pid],
+    })),
+    abi: abi.lpToken,
+  })
 
-  const lpTokensRes = await multicall({ chain, calls, abi: abi.lpToken })
-
-  for (let i = 0; i < poolLength; i++) {
-    const lpTokenRes = lpTokensRes[i]
-
+  for (let pid = 0; pid < poolLength; pid++) {
+    const lpTokenRes = lpTokensRes[pid]
     if (!isSuccess(lpTokenRes)) {
       continue
     }
 
-    if (contract.rewards)
-      contracts.push({
-        chain,
-        address: lpTokenRes.output,
-        rewards: contract.rewards,
-      })
-
-    i++
+    contracts.push({
+      chain,
+      address: lpTokenRes.output,
+      pid,
+      rewards: [synapseRes.output],
+    })
   }
 
-  return await getPairsDetails(chain, contracts)
+  return getPairsDetails(chain, contracts)
 }
 
-export async function getSynapseBalances(
-  ctx: BalancesContext,
-  chain: Chain,
-  contracts: Contract[],
-  MiniChef: Contract,
-) {
+export async function getPoolsBalances(ctx: BalancesContext, chain: Chain, pools: Contract[], MiniChef: Contract) {
   const balances: Balance[] = []
 
-  const calls = range(0, contracts.length).map((i) => ({
+  const calls = pools.map((pool) => ({
     target: MiniChef.address,
-    params: [i, ctx.address],
+    params: [pool.pid, ctx.address],
   }))
 
-  const [balancesOfRes, pendingRewardsRes] = await Promise.all([
+  const [userInfosRes, pendingSynapsesRes] = await Promise.all([
     multicall({ chain, calls, abi: abi.userInfo }),
     multicall({ chain, calls, abi: abi.pendingSynapse }),
   ])
 
-  for (let i = 0; i < contracts.length; i++) {
-    const contract = contracts[i]
-    const balanceOf = balancesOfRes[i]
-    const pendingRewardRes = pendingRewardsRes[i]
-    const rewards = contract.rewards?.[0]
+  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+    const pool = pools[poolIdx]
+    const userInfoRes = userInfosRes[poolIdx]
+    const pendingSynapseRes = pendingSynapsesRes[poolIdx]
+    const synapse = pool.rewards?.[0]
 
-    if (!isSuccess(balanceOf) || !isSuccess(pendingRewardRes)) {
-      continue
+    const amount = isSuccess(userInfoRes) ? BigNumber.from(userInfoRes.output.amount) : BN_ZERO
+
+    const balance: Balance = {
+      ...pool,
+      amount,
+      category: 'farm',
     }
 
-    if (rewards)
-      balances.push({
-        ...contract,
-        amount: BigNumber.from(balanceOf.output.amount),
-        rewards: [{ ...rewards, amount: BigNumber.from(pendingRewardRes.output) }],
-        category: 'farm',
-      })
+    if (synapse && isSuccess(pendingSynapseRes)) {
+      balance.rewards = [{ ...synapse, amount: BigNumber.from(pendingSynapseRes.output) }]
+    }
 
-    i++
+    balances.push(balance)
   }
 
-  return await getUnderlyingBalances(chain, balances)
+  return getUnderlyingBalances(chain, balances)
 }
