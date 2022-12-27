@@ -48,6 +48,7 @@ import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
 import strike from '@adapters/strike'
 import sushiswap from '@adapters/sushiswap'
+import synapse from '@adapters/synapse'
 import synthetix from '@adapters/synthetix'
 import templedao from '@adapters/templedao'
 import traderjoe from '@adapters/traderjoe'
@@ -113,6 +114,7 @@ export const adapters: Adapter[] = [
   stargate,
   strike,
   sushiswap,
+  synapse,
   synthetix,
   templedao,
   traderjoe,
