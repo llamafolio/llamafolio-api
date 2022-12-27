@@ -221,7 +221,9 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
           fromAddress: address,
           adapterId: balanceConfig.adapterId,
           chain: balanceConfig.chain,
-          balanceUSD: sumBalances(pricedBalances.filter(isNotNullish)),
+          balanceUSD: sumBalances(
+            pricedBalances.filter((balance) => isNotNullish(balance) && balance.chain === balanceConfig.chain),
+          ),
           timestamp: now,
           healthFactor: balanceConfig.healthFactor,
         }
