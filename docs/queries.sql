@@ -164,49 +164,36 @@ FROM (
 LEFT JOIN fantom.token_transfers on fantom.token_transfers.transaction_hash = txs.txhash;
 
 
--- Given an address, get all distinct contract addresses interacted with (also looks at interaction through logs)
+-- Given an address, get all distinct contract addresses interacted with (transactions to contract and tokens received)
 create or replace function all_contract_interactions(address bytea)
 	RETURNS setof public.contracts
 	LANGUAGE plpgsql
-as
-$$
-declare
-    tables CURSOR FOR
-        SELECT chains.chain as _chain
-		-- TODO: put polygon back
-        FROM chains WHERE is_evm and chain <> 'polygon';
-    multichainQuery text := '';
-BEGIN 
+as $$
+declare 
+	tables CURSOR FOR
+		SELECT chains.chain as _chain FROM chains
+		WHERE is_evm;
+	multichainQuery text := '';
+BEGIN
 	FOR rec IN tables LOOP
-		multichainQuery := multichainQuery ||
-			format('SELECT contract_address, %L::varchar as chain
-				FROM %I.transactions t
-				INNER JOIN %I.logs l ON t.hash = l.transaction_hash
-				WHERE t.from_address = %L', 
-				rec._chain, rec._chain, rec._chain, address
-			) || 
-		' union all ';
+		multichainQuery := multichainQuery || format(
+  '
+	SELECT * FROM contracts
+	WHERE chain = %L
+	AND address in (
+		(SELECT to_address from %I.transactions
+		WHERE from_address = %L)
+		UNION
+		(SELECT token_address from %I.token_transfers
+		WHERE to_address = %L)
+	)',
+  rec._chain, rec._chain, address, rec._chain, address
+) || ' union all ';
 	END LOOP;
-  
 	-- remove the last ' union all '
 	multichainQuery := left(multichainQuery, -10);
-	
-	return query execute format('
-								SELECT DISTINCT ON (c.chain, c.address, c.parent, c.type, c.category) c.* FROM (
-									SELECT c.* FROM ( %s ) AS uc
-									INNER JOIN contracts c ON (
-										c.chain = uc.chain AND
-										c.address = uc.contract_address
-									) UNION ALL
-									SELECT c.* FROM ( %s ) AS uc
-									INNER JOIN contracts c ON (
-										c.chain = uc.chain AND
-										c.parent = uc.contract_address
-									)
-							   	) c
-								', multichainQuery, multichainQuery);
-END
-$$;
+	return query execute multichainQuery;
+END $$;
 
 -- Usage
 select * from all_contract_interactions('\x0000000000000000000000000000000000000000');

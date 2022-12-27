@@ -4,7 +4,7 @@ import { adapterById } from '../src/adapters'
 import { selectAdaptersProps } from '../src/db/adapters'
 import { insertBalances } from '../src/db/balances'
 import { BalancesSnapshot, insertBalancesSnapshots } from '../src/db/balances-snapshots'
-import { getAllContractsInteractionsTokenTransfers, getAllTokensInteractions } from '../src/db/contracts'
+import { getAllContractsInteractions, getAllTokensInteractions } from '../src/db/contracts'
 import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Balance, BalancesConfig, BalancesContext, Contract } from '../src/lib/adapter'
@@ -46,7 +46,7 @@ async function main() {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
     const [contracts, tokens] = await Promise.all([
-      getAllContractsInteractionsTokenTransfers(client, address),
+      getAllContractsInteractions(client, address),
       getAllTokensInteractions(client, address),
     ])
 
@@ -163,7 +163,9 @@ async function main() {
           fromAddress: address,
           adapterId: balanceConfig.adapterId,
           chain: balanceConfig.chain,
-          balanceUSD: sumBalances(pricedBalances.filter(isNotNullish)),
+          balanceUSD: sumBalances(
+            pricedBalances.filter((balance) => isNotNullish(balance) && balance.chain === balanceConfig.chain),
+          ),
           timestamp: now,
           healthFactor: balanceConfig.healthFactor,
         }

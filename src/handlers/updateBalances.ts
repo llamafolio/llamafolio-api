@@ -6,7 +6,7 @@ import {
   insertBalancesSnapshots,
   selectLastBalancesSnapshotsTimestampByFromAddress,
 } from '@db/balances-snapshots'
-import { getAllContractsInteractionsTokenTransfers, groupContracts } from '@db/contracts'
+import { getAllContractsInteractions, groupContracts } from '@db/contracts'
 import { getAllTokensInteractions } from '@db/contracts'
 import pool from '@db/pool'
 import { apiGatewayManagementApi } from '@handlers/apiGateway'
@@ -92,7 +92,7 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
     const [contracts, tokens] = await Promise.all([
-      getAllContractsInteractionsTokenTransfers(client, address),
+      getAllContractsInteractions(client, address),
       getAllTokensInteractions(client, address),
     ])
 
@@ -209,7 +209,9 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
           fromAddress: address,
           adapterId: balanceConfig.adapterId,
           chain: balanceConfig.chain,
-          balanceUSD: sumBalances(pricedBalances.filter(isNotNullish)),
+          balanceUSD: sumBalances(
+            pricedBalances.filter((balance) => isNotNullish(balance) && balance.chain === balanceConfig.chain),
+          ),
           timestamp: now,
           healthFactor: balanceConfig.healthFactor,
         }
