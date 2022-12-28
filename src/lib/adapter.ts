@@ -39,8 +39,8 @@ export interface RawContract extends BaseContract {
 }
 
 export interface Contract extends BaseContract {
-  rewards?: BaseContract[]
-  underlyings?: BaseContract[]
+  rewards?: BaseContract[] | string[]
+  underlyings?: BaseContract[] | string[]
   [key: string | number]: any
 }
 
