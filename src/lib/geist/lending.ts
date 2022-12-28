@@ -65,7 +65,6 @@ export async function getLendingPoolContracts({
       const reward: Contract = {
         ...rewardToken,
         category: 'reward',
-        type: 'reward',
       }
       contract.rewards = [reward]
     }

@@ -49,7 +49,6 @@ export async function getLendBorrowBalances(
     symbol: VAI.symbol,
     address: VAI.address,
     amount: VAIBalances,
-    type: 'debt',
     category: 'borrow',
   })
 

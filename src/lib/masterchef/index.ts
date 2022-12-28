@@ -119,7 +119,6 @@ export async function getMasterChefBalances(
       parent.rewards.push({
         ...rewardToken,
         category: 'reward',
-        type: 'reward',
         amount: BigNumber.from(res.output),
         claimable: BigNumber.from(res.output),
       })

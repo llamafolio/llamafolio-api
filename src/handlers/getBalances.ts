@@ -4,7 +4,7 @@ import pool from '@db/pool'
 import { client as redisClient } from '@db/redis'
 import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
-import { Balance, ContractStandard, ContractType } from '@lib/adapter'
+import { Balance, ContractStandard } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
@@ -42,7 +42,6 @@ async function getBalancesYields<T extends Balance>(client: Redis, balances: T[]
 }
 
 export interface FormattedBalance {
-  type?: ContractType
   standard?: ContractStandard
   name?: string
   chain: Chain
@@ -129,7 +128,7 @@ export interface BalancesProtocolResponse {
 }
 
 export interface BalancesResponse {
-  updatedAt: string
+  updatedAt: number
   protocols: BalancesProtocolResponse[]
 }
 
