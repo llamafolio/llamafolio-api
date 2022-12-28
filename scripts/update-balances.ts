@@ -4,7 +4,6 @@ import { adapterById } from '../src/adapters'
 import { selectAdaptersProps } from '../src/db/adapters'
 import { insertBalances } from '../src/db/balances'
 import { BalancesSnapshot, insertBalancesSnapshots } from '../src/db/balances-snapshots'
-import { getAllContractsInteractions, getAllTokensInteractions } from '../src/db/contracts'
 import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Balance, BalancesConfig, BalancesContext, Contract } from '../src/lib/adapter'
@@ -12,6 +11,8 @@ import { keyBy } from '../src/lib/array'
 import { sanitizeBalances, sumBalances } from '../src/lib/balance'
 import { strToBuf } from '../src/lib/buf'
 import { Chain, chains } from '../src/lib/chains'
+import { getContractsInteracted, getTokensInteracted } from '../src/lib/indexer/fetchers'
+import { INDEXER_HEADERS } from '../src/lib/indexer/utils'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
 
@@ -45,23 +46,27 @@ async function main() {
   try {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
-    const [contracts, tokens] = await Promise.all([
-      getAllContractsInteractions(client, address),
-      getAllTokensInteractions(client, address),
+    const [{ contract_interactions }, { token_transfers }] = await Promise.all([
+      getContractsInteracted(address, {}, INDEXER_HEADERS),
+      getTokensInteracted(address, {}, INDEXER_HEADERS),
     ])
 
     const contractsByAdapterId: { [key: string]: Contract[] } = {}
-    for (const contract of contracts) {
-      if (!contract.adapterId) {
-        console.error(`Missing adapterId in contract`, contract)
-        continue
+
+    for (const contract of contract_interactions) {
+      if (!contractsByAdapterId[contract.adapter_id.adapter_id]) {
+        contractsByAdapterId[contract.adapter_id.adapter_id] = []
       }
-      if (!contractsByAdapterId[contract.adapterId]) {
-        contractsByAdapterId[contract.adapterId] = []
-      }
-      contractsByAdapterId[contract.adapterId].push(contract)
+      contractsByAdapterId[contract.adapter_id.adapter_id].push({ chain: contract.chain, address: contract.contract })
     }
-    contractsByAdapterId['wallet'] = tokens
+
+    contractsByAdapterId['wallet'] = token_transfers.map((token) => ({
+      chain: token.chain,
+      address: token.token,
+      name: token.token_details.name,
+      decimals: token.token_details.decimals,
+      symbol: token.token_details.symbol,
+    }))
 
     const adapterIds = Object.keys(contractsByAdapterId)
     const adaptersProps = await selectAdaptersProps(client, adapterIds)

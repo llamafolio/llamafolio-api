@@ -105,7 +105,13 @@ export const getTransactionHistoryQuery = (
   `
 }
 
-export const getTokensInteractedQuery = (address: string): string => gql`
+export const getTokensInteractedQuery = (address: string, chain: string | undefined): string => {
+  let chainFilter = ''
+  if (chain) {
+    chainFilter += `{ chain: { _eq: "${chain}" } }`
+  }
+
+  return gql`
   query getTokensInteracted {
     token_transfers(
       where: {
@@ -116,6 +122,7 @@ export const getTokensInteractedQuery = (address: string): string => gql`
               { to_address: { _eq: "${address}" } }
             ]
           }
+          ${chainFilter}
         ]
       }
       distinct_on: token
@@ -130,10 +137,24 @@ export const getTokensInteractedQuery = (address: string): string => gql`
     }
   }
 `
+}
 
-export const getContractsInteractedQuery = (address: string): string => gql`
+export const getContractsInteractedQuery = (address: string, chain: string | undefined): string => {
+  let chainFilter = ''
+  if (chain) {
+    chainFilter += `chain: { _eq: "${chain}" }`
+  }
+
+  return gql`
   query getContractsInteracted {
-    contract_interactions(where: {address: {_eq: "${address}"}, adapter_id: {adapter_id: {_is_null: false}}}, distinct_on: contract) {
+    contract_interactions(
+      where: {
+        address: { _eq: "${address}" }
+        adapter_id: { adapter_id: { _is_null: false } }
+        ${chainFilter}
+      }
+      distinct_on: contract
+    ) {
       contract
       adapter_id {
         adapter_id
@@ -141,6 +162,7 @@ export const getContractsInteractedQuery = (address: string): string => gql`
     }
   }
 `
+}
 
 export const getTokensDetailsQuery = (tokens: string[]): string => {
   const tokensFilter = []

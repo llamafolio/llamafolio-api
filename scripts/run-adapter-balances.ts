@@ -2,11 +2,14 @@ import millify from 'millify'
 import path from 'path'
 
 import { selectAdapterProps } from '../src/db/adapters'
-import { getAllChainTokensInteractions, getChainContractsInteractions, groupContracts } from '../src/db/contracts'
+import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter, Balance, BalancesContext } from '../src/lib/adapter'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
+import { getContractsInteracted, getTokensInteracted } from '../src/lib/indexer/fetchers'
+import { IndexerContractsInteracted, IndexerTokenInteraction } from '../src/lib/indexer/types'
+import { INDEXER_HEADERS } from '../src/lib/indexer/utils'
 import { getPricedBalances } from '../src/lib/price'
 
 interface CategoryBalances {
@@ -44,12 +47,21 @@ async function main() {
   const client = await pool.connect()
 
   try {
-    const [contracts, adapterProps] = await Promise.all([
+    const [interactions, adapterProps] = await Promise.all([
       adapter.id === 'wallet'
-        ? getAllChainTokensInteractions(client, chain, ctx.address)
-        : getChainContractsInteractions(client, chain, ctx.address, adapter.id),
+        ? getTokensInteracted(ctx.address, {}, INDEXER_HEADERS, chain)
+        : getContractsInteracted(ctx.address, {}, INDEXER_HEADERS, chain),
       selectAdapterProps(client, adapter.id),
     ])
+
+    const contracts =
+      adapter.id === 'wallet'
+        ? (interactions as { token_transfers: IndexerTokenInteraction[] }).token_transfers.map(
+            (token_interactions) => token_interactions.token,
+          )
+        : (interactions as { contract_interactions: IndexerContractsInteracted[] }).contract_interactions.map(
+            (contract_interactions) => contract_interactions.contract,
+          )
 
     console.log(`Interacted with ${contracts.length} contracts`)
 
