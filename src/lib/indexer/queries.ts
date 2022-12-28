@@ -37,8 +37,7 @@ export const getTransactionHistoryQuery = (
                 { from_address: { _eq: "${address}" } }, { to_address: { _eq:"${address}" } }
               ]
             }
-            ${chainsFilterParam}
-            ${protocolsFilterParams}
+            ${chainsFilterParam}${protocolsFilterParams}
           ]
         }
         limit: ${limit}
