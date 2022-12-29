@@ -66,7 +66,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
 
   const cdpid = await getCdpidFromProxiesAddresses('ethereum', getCdps, cdpManager, proxies)
 
-  const balances = await getProxiesBalances(ctx, 'ethereum', Vat, IlkRegistry, Spot, cdpid)
+  const balances = await getProxiesBalances('ethereum', Vat, IlkRegistry, Spot, cdpid)
 
   const healthFactor = getHealthFactor(balances as BalanceWithExtraProps[])
 

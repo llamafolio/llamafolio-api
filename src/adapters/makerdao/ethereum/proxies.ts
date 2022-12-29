@@ -47,7 +47,11 @@ const abi = {
   },
 }
 
-export async function getInstaDappContracts(ctx: BalancesContext, chain: Chain, instaList: Contract): Promise<Contract[]> {
+export async function getInstaDappContracts(
+  ctx: BalancesContext,
+  chain: Chain,
+  instaList: Contract,
+): Promise<Contract[]> {
   const getUserLinkCountFromInstadApp = await call({
     chain,
     target: instaList.address,
@@ -94,7 +98,11 @@ export async function getInstaDappContracts(ctx: BalancesContext, chain: Chain, 
   }))
 }
 
-export async function getMakerContracts(ctx: BalancesContext, chain: Chain, proxyRegistry: Contract): Promise<Contract[]> {
+export async function getMakerContracts(
+  ctx: BalancesContext,
+  chain: Chain,
+  proxyRegistry: Contract,
+): Promise<Contract[]> {
   // Check if user's address uses Maker proxies
   const proxiesRes = await call({
     chain,
