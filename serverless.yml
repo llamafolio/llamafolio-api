@@ -30,6 +30,18 @@ provider:
           Action:
             - 'lambda:InvokeFunction'
           Resource: '*'
+        - Effect: "Allow"
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:BatchGetItem
+          Resource:
+            - "Fn::GetAtt": [DynamoTable, Arn]
   environment:
     PGHOST: ${file(./env.js):PGHOST}
     PGUSER: ${file(./env.js):PGUSER}

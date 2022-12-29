@@ -1,4 +1,4 @@
-import { selectBalancesByFromAddress } from '@db/balances'
+import { getUpdateBalancesStatus, putUpdateBalancesStatus, selectBalancesByFromAddress } from '@db/balances'
 import { selectLastBalancesSnapshotsByFromAddress } from '@db/balances-snapshots'
 import pool from '@db/pool'
 import { client as redisClient } from '@db/redis'
@@ -187,18 +187,20 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     let status: TStatus = 'success'
     // Trigger update if data is "stale" (or "empty" == never been updated).
     // At the moment, balances are considered "stale" if they haven't been updated in the last 2 minutes.
-    // Later, we can use more advanced strategies using transactions events or else
+    // Later, we can use more advanced strategies using transactions events, scheduled updates etc
     const now = new Date().getTime()
-    if (updatedAt === undefined || now - updatedAt > 2 * 60 * 1000) {
+    // 2 minutes
+    const updateInterval = 2 * 60 * 1000
+
+    if (updatedAt === undefined || now - updatedAt > updateInterval) {
       status = updatedAt === undefined ? 'empty' : 'stale'
-      // TODO: store status in Dynamo and prevent multiple Lambdas updating the same resource during the execution
-      await invokeLambda(
-        `llamafolio-api-${process.env.stage}-updateBalances`,
-        {
-          address,
-        },
-        'Event',
-      )
+
+      // restrict to one concurrent update of the same address
+      const updateStatus = await getUpdateBalancesStatus(address)
+      if (!updateStatus) {
+        await putUpdateBalancesStatus(address, Math.floor(now / 1000))
+        await invokeLambda(`llamafolio-api-${process.env.stage}-updateBalances`, { address }, 'Event')
+      }
     }
 
     const balancesResponse: BalancesResponse = {

@@ -6,6 +6,7 @@ try {
 } catch (e) {}
 module.exports = {
   STAGE: process.env.stage,
+  DDB_TABLE_NAME: process.env.tableName,
   PGHOST: process.env.PGHOST,
   PGUSER: process.env.PGUSER,
   PGDATABASE: process.env.PGDATABASE,
