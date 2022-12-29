@@ -43,14 +43,6 @@ provider:
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    APIG_ENDPOINT:
-      Fn::Join:
-        - ''
-        - - Ref: WebsocketsApi
-          - .execute-api.
-          - Ref: AWS::Region
-          - .amazonaws.com/
-          - ${self:provider.stage}
 
   httpApi:
     metrics: true
@@ -185,7 +177,7 @@ functions:
 
   updateBalances:
     handler: src/handlers/updateBalances.handler
-    role: handleUpdateBalancesRole
+    description: Update balances
     timeout: 300
 
 custom:
@@ -206,7 +198,6 @@ custom:
 
 resources:
   - ${file(resources/dynamodb.yml)}
-  - ${file(resources/roles.yml)}
 
 plugins:
   - serverless-offline
