@@ -99,7 +99,6 @@ export interface BalanceWithExtraProps extends Balance {
   urnAddress?: string
   id?: string
   mat?: BigNumber
-  priceSubstitute: string
   spot?: BigNumber
 }
 
@@ -211,12 +210,20 @@ const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHand
         id: urnHandler.id,
         name: urnHandler.asset.name,
         address: urnHandler.address,
-        priceSubstitute: urnHandler.asset.address,
         decimals: 18,
         symbol: urnHandler.asset.symbol,
         amount: userSupply,
         mat: urnHandler.asset.mat,
         spot: urnSpot,
+        underlyings: [
+          {
+            chain,
+            amount: userSupply,
+            address: urnHandler.asset.address,
+            decimals: urnHandler.asset.decimals,
+            symbol: urnHandler.asset.symbol,
+          },
+        ],
         category: 'lend',
       }
 
@@ -225,7 +232,7 @@ const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHand
         proxy: urnHandler.proxy,
         decimals: DAI.decimals,
         address: urnHandler.address,
-        priceSubstitute: DAI.address,
+        underlyings: [{ ...DAI, amount: userBorrowFormatted }],
         symbol: DAI.symbol,
         amount: userBorrowFormatted,
         category: 'borrow',
