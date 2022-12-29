@@ -1,8 +1,8 @@
 Resources:
-  handleWebsocketRequestsRole:
+  handleUpdateBalancesRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: ${self:service}-${self:custom.stage}-handleWebsocketRequestsRole
+      RoleName: ${self:service}-${self:custom.stage}-handleUpdateBalancesRole
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:

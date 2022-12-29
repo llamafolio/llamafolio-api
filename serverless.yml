@@ -183,23 +183,9 @@ functions:
     description: Update yields
     timeout: 300
 
-  websocketRequests:
-    handler: src/handlers/websocket.handleRequests
-    role: handleWebsocketRequestsRole
-    events:
-      - websocket:
-          route: $connect
-      - websocket:
-          route: $disconnect
-      - websocket:
-          route: updateBalances
-      - websocket:
-          # Fallback
-          route: $default
-
-  websocketUpdateAdaptersBalances:
-    handler: src/handlers/updateBalances.websocketUpdateAdaptersHandler
-    role: handleWebsocketRequestsRole
+  updateBalances:
+    handler: src/handlers/updateBalances.handler
+    role: handleUpdateBalancesRole
     timeout: 300
 
 custom:
