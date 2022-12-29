@@ -118,17 +118,26 @@ export async function selectAdaptersContractsExpired(client: PoolClient) {
   return fromStorage(adaptersRes.rows)
 }
 
-export async function selectAdapterProps(client: PoolClient, adapterId: string) {
-  const adaptersRes = await client.query(`select contracts_props from adapters where id = $1;`, [adapterId])
+export async function selectAdapterProps(client: PoolClient, adapterId: string, chain: Chain) {
+  const adaptersRes = await client.query(`select contracts_props from adapters where id = $1 and chain = $2;`, [
+    adapterId,
+    chain,
+  ])
 
   return fromPartialStorage(adaptersRes.rows)[0]
 }
 
-export async function selectAdaptersProps(client: PoolClient, adapterIds: string[]) {
-  const adaptersRes = await client.query(
-    format(`select id, contracts_props from adapters where id in (%L);`, adapterIds),
-    [],
+/**
+ * @param client
+ * @param adapters [adapterId, chain] array
+ */
+export async function selectAdaptersProps(client: PoolClient, adapters: [string, Chain][]) {
+  const fmt = format(
+    `select a.id, a.chain, a.contracts_props from adapters a join (values %L) as v (id, chain) on a.id = v.id and a.chain = v.chain;`,
+    adapters,
   )
+
+  const adaptersRes = await client.query(fmt, [])
 
   return fromPartialStorage(adaptersRes.rows)
 }

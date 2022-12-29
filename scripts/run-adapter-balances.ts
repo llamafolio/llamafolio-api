@@ -48,7 +48,7 @@ async function main() {
       adapter.id === 'wallet'
         ? getAllChainTokensInteractions(client, chain, ctx.address)
         : getChainContractsInteractions(client, chain, ctx.address, adapter.id),
-      selectAdapterProps(client, adapter.id),
+      selectAdapterProps(client, adapter.id, chain),
     ])
 
     console.log(`Interacted with ${contracts.length} contracts`)
