@@ -1,24 +1,13 @@
 import { adapterById } from '@adapters/index'
 import { selectAdaptersProps } from '@db/adapters'
 import { insertBalances } from '@db/balances'
-import {
-  BalancesSnapshot,
-  insertBalancesSnapshots,
-  selectLastBalancesSnapshotsTimestampByFromAddress,
-} from '@db/balances-snapshots'
+import { BalancesSnapshot, insertBalancesSnapshots } from '@db/balances-snapshots'
 import { getAllContractsInteractions, groupContracts } from '@db/contracts'
 import { getAllTokensInteractions } from '@db/contracts'
 import pool from '@db/pool'
-import { apiGatewayManagementApi } from '@handlers/apiGateway'
-import {
-  BalancesProtocolChainResponse,
-  BalancesProtocolResponse,
-  BalancesResponse,
-  formatBalance,
-} from '@handlers/getBalances'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, BalancesConfig, BalancesContext, Contract } from '@lib/adapter'
-import { groupBy, keyBy } from '@lib/array'
+import { keyBy } from '@lib/array'
 import { sanitizeBalances, sumBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
 import { Chain, chains } from '@lib/chains'
@@ -37,10 +26,10 @@ interface ExtendedBalancesConfig extends BalancesConfig {
   balances: ExtendedBalance[]
 }
 
-export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (event, context) => {
+export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false // !important to reuse pool
 
-  const { connectionId, address } = event as APIGatewayProxyEvent & { connectionId?: string; address?: string }
+  const { address } = event as APIGatewayProxyEvent & { address?: string }
 
   if (!address) {
     return badRequest('Missing address parameter')
@@ -50,45 +39,11 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  if (!connectionId) {
-    return badRequest('Missing connectionId parameter')
-  }
-
   console.log('Update balances of address', address)
 
   const client = await pool.connect()
 
   try {
-    // Early return if balances last update was < 1 minute ago
-    const lastUpdatedAt = await selectLastBalancesSnapshotsTimestampByFromAddress(client, address)
-
-    if (lastUpdatedAt) {
-      // TODO: move this condition to Postgres
-      const lastUpdatedAtTime = lastUpdatedAt.getTime()
-      const now = new Date().getTime()
-      // 1 minute delay
-      if (now - lastUpdatedAtTime < 1 * 60 * 1000) {
-        console.log('Update adapters balances cache', {
-          now,
-          lastUpdatedAt,
-          address,
-        })
-
-        await apiGatewayManagementApi
-          .postToConnection({
-            ConnectionId: connectionId,
-            Data: JSON.stringify({
-              event: 'updateBalances',
-              updatedAt: lastUpdatedAt.toISOString(),
-              cache: true,
-            }),
-          })
-          .promise()
-
-        return success({})
-      }
-    }
-
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
     const [contracts, tokens] = await Promise.all([
@@ -238,45 +193,6 @@ export const websocketUpdateAdaptersHandler: APIGatewayProxyHandler = async (eve
     )
 
     await client.query('COMMIT')
-
-    const protocols: BalancesProtocolResponse[] = []
-
-    for (const adapterId in pricedBalancesByAdapterId) {
-      const balancesByChain = groupBy(pricedBalancesByAdapterId[adapterId], 'chain')
-      const balancesSnapshotsByChain = groupBy(pricedBalancesByAdapterId[adapterId] || [], 'chain')
-
-      const chains: BalancesProtocolChainResponse[] = []
-
-      for (const chain in balancesByChain) {
-        const balanceSnapshot = balancesSnapshotsByChain[chain]?.[0]
-
-        chains.push({
-          id: chain as Chain,
-          balances: balancesByChain[chain].map(formatBalance),
-          healthFactor: balanceSnapshot?.healthFactor,
-        })
-      }
-
-      protocols.push({
-        id: adapterId,
-        chains,
-      })
-    }
-
-    const balancesResponse: BalancesResponse = {
-      updatedAt: now.toISOString(),
-      protocols,
-    }
-
-    await apiGatewayManagementApi
-      .postToConnection({
-        ConnectionId: connectionId,
-        Data: JSON.stringify({
-          event: 'updateBalances',
-          ...balancesResponse,
-        }),
-      })
-      .promise()
 
     return success({})
   } catch (error) {

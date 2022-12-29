@@ -20,6 +20,7 @@ export function fromStorage(balancesStorage: BalanceStorage[]) {
 
   for (const balanceStorage of balancesStorage) {
     const balance = {
+      ...balanceStorage.data,
       standard: balanceStorage.standard,
       name: balanceStorage.name,
       chain: balanceStorage.chain,
@@ -30,7 +31,6 @@ export function fromStorage(balancesStorage: BalanceStorage[]) {
       amount: balanceStorage.amount,
       balanceUSD: balanceStorage.balance_usd ? parseFloat(balanceStorage.balance_usd) : undefined,
       timestamp: balanceStorage.timestamp,
-      ...balanceStorage.data,
     }
 
     balances.push(balance)
