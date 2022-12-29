@@ -110,6 +110,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
 
     const balance: Balance = {
       ...LUSD,
+      category: 'stake',
       amount: BN_ZERO,
     }
 
