@@ -132,14 +132,24 @@ export async function selectAdapterProps(client: PoolClient, adapterId: string, 
  * @param adapters [adapterId, chain] array
  */
 export async function selectAdaptersProps(client: PoolClient, adapters: [string, Chain][]) {
-  const fmt = format(
-    `select a.id, a.chain, a.contracts_props from adapters a join (values %L) as v (id, chain) on a.id = v.id and a.chain = v.chain;`,
-    adapters,
+  const adaptersRes = await client.query(
+    format(
+      `select a.id, a.chain, a.contracts_props from adapters a join (values %L) as v (id, chain) on a.id = v.id and a.chain = v.chain;`,
+      adapters,
+    ),
+    [],
   )
 
-  const adaptersRes = await client.query(fmt, [])
-
   return fromPartialStorage(adaptersRes.rows)
+}
+
+export async function selectDefinedAdaptersContractsProps(client: PoolClient) {
+  const adaptersRes = await client.query(
+    `select id, chain, contracts_props from adapters where contracts_props is not null;`,
+    [],
+  )
+
+  return fromPartialStorage(adaptersRes.rows) as Pick<Adapter, 'id' | 'chain' | 'contractsProps'>[]
 }
 
 export async function selectLatestCreatedAdapters(client: PoolClient, limit = 5) {
