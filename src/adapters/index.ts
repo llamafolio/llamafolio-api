@@ -28,6 +28,7 @@ import klimaDao from '@adapters/klima-dao'
 import lido from '@adapters/lido'
 import lifeDao from '@adapters/life-dao'
 import liquity from '@adapters/liquity'
+import llamapay from '@adapters/llamapay'
 import looksRare from '@adapters/looksrare'
 import lusdChickenbonds from '@adapters/lusd-chickenbonds'
 import makerDao from '@adapters/makerdao'
@@ -94,6 +95,7 @@ export const adapters: Adapter[] = [
   lido,
   lifeDao,
   liquity,
+  llamapay,
   looksRare,
   lusdChickenbonds,
   makerDao,

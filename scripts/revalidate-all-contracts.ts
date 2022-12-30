@@ -34,6 +34,7 @@ const adaptersPaths = [
   'liquity',
   'looksrare',
   'lusd-chickenbonds',
+  'makerdao',
   'nemesis-dao',
   'nexus-mutual',
   'olympus-dao',

@@ -43,7 +43,7 @@ async function main() {
 
         const [contracts, props] = await Promise.all([
           resolveContractsTokens(client, contractsRes?.contracts || {}, true),
-          resolveContractsTokens(client, contractsRes?.props || {}, true),
+          contractsRes?.props ? resolveContractsTokens(client, contractsRes?.props, true) : undefined,
         ])
 
         return {

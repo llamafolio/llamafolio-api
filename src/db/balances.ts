@@ -1,4 +1,5 @@
 import { ContractStorage } from '@db/contracts'
+import { dynamodb } from '@db/dynamo'
 import { PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
 import { bufToStr, strToBuf } from '@lib/buf'
@@ -20,6 +21,7 @@ export function fromStorage(balancesStorage: BalanceStorage[]) {
 
   for (const balanceStorage of balancesStorage) {
     const balance = {
+      ...balanceStorage.data,
       standard: balanceStorage.standard,
       name: balanceStorage.name,
       chain: balanceStorage.chain,
@@ -30,7 +32,6 @@ export function fromStorage(balancesStorage: BalanceStorage[]) {
       amount: balanceStorage.amount,
       balanceUSD: balanceStorage.balance_usd ? parseFloat(balanceStorage.balance_usd) : undefined,
       timestamp: balanceStorage.timestamp,
-      ...balanceStorage.data,
     }
 
     balances.push(balance)
@@ -116,4 +117,20 @@ export function insertBalances(
       ),
     ),
   )
+}
+
+export async function getUpdateBalancesStatus(address: string) {
+  const PK = `UBS#${address.toLowerCase()}`
+  const res = await dynamodb.get({ PK, SK: PK })
+  return res.Item
+}
+
+export function putUpdateBalancesStatus(address: string, timestamp: number) {
+  const PK = `UBS#${address.toLowerCase()}`
+  return dynamodb.put({ PK, SK: PK, timestamp })
+}
+
+export function deleteUpdateBalancesStatus(address: string) {
+  const PK = `UBS#${address.toLowerCase()}`
+  return dynamodb.delete({ PK, SK: PK })
 }

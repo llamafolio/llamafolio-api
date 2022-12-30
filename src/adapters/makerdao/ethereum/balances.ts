@@ -1,10 +1,77 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
+import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 import { cdpid } from './cdpid'
+
+const abi = {
+  ilkData: {
+    inputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+    name: 'ilkData',
+    outputs: [
+      { internalType: 'uint96', name: 'pos', type: 'uint96' },
+      { internalType: 'address', name: 'join', type: 'address' },
+      { internalType: 'address', name: 'gem', type: 'address' },
+      { internalType: 'uint8', name: 'dec', type: 'uint8' },
+      { internalType: 'uint96', name: 'class', type: 'uint96' },
+      { internalType: 'address', name: 'pip', type: 'address' },
+      { internalType: 'address', name: 'xlip', type: 'address' },
+      { internalType: 'string', name: 'name', type: 'string' },
+      { internalType: 'string', name: 'symbol', type: 'string' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  ilks: {
+    constant: true,
+    inputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+    name: 'ilks',
+    outputs: [
+      {
+        internalType: 'contract PipLike',
+        name: 'pip',
+        type: 'address',
+      },
+      { internalType: 'uint256', name: 'mat', type: 'uint256' },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  urns: {
+    constant: true,
+    inputs: [
+      { internalType: 'bytes32', name: '', type: 'bytes32' },
+      { internalType: 'address', name: '', type: 'address' },
+    ],
+    name: 'urns',
+    outputs: [
+      { internalType: 'uint256', name: 'ink', type: 'uint256' },
+      { internalType: 'uint256', name: 'art', type: 'uint256' },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  vatIlks: {
+    constant: true,
+    inputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
+    name: 'ilks',
+    outputs: [
+      { internalType: 'uint256', name: 'Art', type: 'uint256' },
+      { internalType: 'uint256', name: 'rate', type: 'uint256' },
+      { internalType: 'uint256', name: 'spot', type: 'uint256' },
+      { internalType: 'uint256', name: 'line', type: 'uint256' },
+      { internalType: 'uint256', name: 'dust', type: 'uint256' },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
 
 const DECIMALS = {
   wad: utils.parseEther('1.0'), // 10 ** 18,
@@ -32,215 +99,147 @@ export interface BalanceWithExtraProps extends Balance {
   urnAddress?: string
   id?: string
   mat?: BigNumber
-  priceSubstitute: string
   spot?: BigNumber
 }
 
-export async function getProxiesBalances(
-  ctx: BalancesContext,
-  chain: Chain,
-  vat: Contract,
-  ilk: Contract,
-  spot: Contract,
-  cdpids: cdpid[],
-) {
+export async function getProxiesBalances(chain: Chain, vat: Contract, ilk: Contract, spot: Contract, cdpids: cdpid[]) {
   const urnHandlers: UrnHandlerParams[] = []
 
-  for (const cdpid of cdpids) {
-    urnHandlers.push(...(await getUrnWithDetailedInfos(chain, ilk, spot, cdpid)))
-  }
-
-  return await getUrnsBalances(chain, vat, urnHandlers)
-}
-
-const getUrnWithDetailedInfos = async (
-  chain: Chain,
-  ilk: Contract,
-  spot: Contract,
-  cdpid: cdpid,
-): Promise<UrnHandlerParams[]> => {
-  const urnHandlers: UrnHandlerParams[] = []
-
-  /**
-   *    Retrieve ilk (Collateral Token) infos
-   */
-
-  const [getIlksInfos, getIlksMats] = await Promise.all([
+  const [ilksInfosRes, ilksMatsRes] = await Promise.all([
     multicall({
       chain,
-      calls: cdpid.ilks.map((asset) => ({
-        target: ilk.address,
-        params: [asset],
-      })),
-      abi: {
-        inputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
-        name: 'ilkData',
-        outputs: [
-          { internalType: 'uint96', name: 'pos', type: 'uint96' },
-          { internalType: 'address', name: 'join', type: 'address' },
-          { internalType: 'address', name: 'gem', type: 'address' },
-          { internalType: 'uint8', name: 'dec', type: 'uint8' },
-          { internalType: 'uint96', name: 'class', type: 'uint96' },
-          { internalType: 'address', name: 'pip', type: 'address' },
-          { internalType: 'address', name: 'xlip', type: 'address' },
-          { internalType: 'string', name: 'name', type: 'string' },
-          { internalType: 'string', name: 'symbol', type: 'string' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      calls: cdpids.flatMap((cdpid) =>
+        cdpid.ilks.map((asset) => ({
+          target: ilk.address,
+          params: [asset],
+        })),
+      ),
+      abi: abi.ilkData,
     }),
-
     multicall({
       chain,
-      calls: cdpid.ilks.map((asset) => ({
-        target: spot.address,
-        params: [asset],
-      })),
-      abi: {
-        constant: true,
-        inputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
-        name: 'ilks',
-        outputs: [
-          {
-            internalType: 'contract PipLike',
-            name: 'pip',
-            type: 'address',
-          },
-          { internalType: 'uint256', name: 'mat', type: 'uint256' },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
+      calls: cdpids.flatMap((cdpid) =>
+        cdpid.ilks.map((asset) => ({
+          target: spot.address,
+          params: [asset],
+        })),
+      ),
+      abi: abi.ilks,
     }),
   ])
 
-  const ilksInfos = getIlksInfos.filter((res) => res.success).map((res) => res.output)
-  const ilksMats = getIlksMats.filter((res) => res.success).map((res) => res.output.mat)
+  let callIdx = 0
+  for (let cdpidIdx = 0; cdpidIdx < cdpids.length; cdpidIdx++) {
+    const cdpid = cdpids[cdpidIdx]
 
-  for (let i = 0; i < ilksInfos.length; i++) {
-    const ilkInfo = ilksInfos[i]
-    const ilkMat = ilksMats[i]
-    const urnAddress = cdpid.urns[i]
-    const ilkId = cdpid.ilks[i]
-    const id = cdpid.ids[i]
+    for (let ilkIdx = 0; ilkIdx < cdpid.ilks.length; ilkIdx++) {
+      const ilkInfoRes = ilksInfosRes[callIdx]
+      const ilkMatRes = ilksMatsRes[callIdx]
+      const urnAddress = cdpid.urns[ilkIdx]
+      const ilkId = cdpid.ilks[ilkIdx]
+      const id = cdpid.ids[ilkIdx]
 
-    urnHandlers.push({
-      chain,
-      address: cdpid.address,
-      urnAddress,
-      proxy: cdpid.proxy,
-      id,
-      asset: {
-        chain,
-        name: ilkInfo.name,
-        ilkId,
-        symbol: ilkInfo.symbol,
-        address: ilkInfo.gem,
-        decimals: ilkInfo.dec,
-        mat: BigNumber.from(ilkMat),
-      },
-    })
+      if (isSuccess(ilkInfoRes) && isSuccess(ilkMatRes)) {
+        const ilkInfo = ilkInfoRes.output
+        const ilkMat = ilkMatRes.output.mat
+
+        urnHandlers.push({
+          chain,
+          address: cdpid.address,
+          urnAddress,
+          proxy: cdpid.proxy,
+          id,
+          asset: {
+            chain,
+            name: ilkInfo.name,
+            ilkId,
+            symbol: ilkInfo.symbol,
+            address: ilkInfo.gem,
+            decimals: ilkInfo.dec,
+            mat: BigNumber.from(ilkMat),
+          },
+        })
+      }
+
+      callIdx++
+    }
   }
 
-  return urnHandlers
+  return getUrnsBalances(chain, vat, urnHandlers)
 }
 
 const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHandlerParams[]) => {
   const balances: Balance[] = []
 
-  const [getUrnsBalances, getUrnSupply] = await Promise.all([
+  const [urnsRes, ilksRes] = await Promise.all([
     multicall({
       chain,
       calls: urnHandlers.map((urn) => ({
         target: vat.address,
         params: [urn.asset.ilkId, urn.urnAddress],
       })),
-      abi: {
-        constant: true,
-        inputs: [
-          { internalType: 'bytes32', name: '', type: 'bytes32' },
-          { internalType: 'address', name: '', type: 'address' },
-        ],
-        name: 'urns',
-        outputs: [
-          { internalType: 'uint256', name: 'ink', type: 'uint256' },
-          { internalType: 'uint256', name: 'art', type: 'uint256' },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.urns,
     }),
-
     multicall({
       chain,
       calls: urnHandlers.map((urn) => ({
         target: vat.address,
         params: [urn.asset.ilkId],
       })),
-      abi: {
-        constant: true,
-        inputs: [{ internalType: 'bytes32', name: '', type: 'bytes32' }],
-        name: 'ilks',
-        outputs: [
-          { internalType: 'uint256', name: 'Art', type: 'uint256' },
-          { internalType: 'uint256', name: 'rate', type: 'uint256' },
-          { internalType: 'uint256', name: 'spot', type: 'uint256' },
-          { internalType: 'uint256', name: 'line', type: 'uint256' },
-          { internalType: 'uint256', name: 'dust', type: 'uint256' },
-        ],
-        payable: false,
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.vatIlks,
     }),
   ])
 
-  const userSupplies = getUrnsBalances.filter((res) => res.success).map((res) => BigNumber.from(res.output.ink))
-  const userBorrows = getUrnsBalances.filter((res) => res.success).map((res) => BigNumber.from(res.output.art))
-
-  const urnSpots = getUrnSupply.filter((res) => res.success).map((res) => BigNumber.from(res.output.spot))
-  const rates = getUrnSupply.filter((res) => res.success).map((res) => BigNumber.from(res.output.rate))
-
   for (let i = 0; i < urnHandlers.length; i++) {
     const urnHandler = urnHandlers[i]
-    const userSupply = userSupplies[i]
-    const userBorrow = userBorrows[i]
-    const rate = rates[i]
-    const urnSpot = urnSpots[i]
+    const urnRes = urnsRes[i]
+    const ilkRes = ilksRes[i]
 
-    const userBorrowFormatted = userBorrow.mul(rate).div(DECIMALS.ray)
+    if (isSuccess(urnRes) && isSuccess(ilkRes)) {
+      const userSupply = BigNumber.from(urnRes.output.ink)
+      const userBorrow = BigNumber.from(urnRes.output.art)
+      const urnSpot = BigNumber.from(ilkRes.output.spot)
+      const rate = BigNumber.from(ilkRes.output.rate)
 
-    const lend: BalanceWithExtraProps = {
-      chain,
-      proxy: urnHandler.proxy,
-      urnAddress: urnHandler.address,
-      id: urnHandler.id,
-      name: urnHandler.asset.name,
-      address: urnHandler.address,
-      priceSubstitute: urnHandler.asset.address,
-      decimals: 18,
-      symbol: urnHandler.asset.symbol,
-      amount: userSupply,
-      mat: urnHandler.asset.mat,
-      spot: urnSpot,
-      category: 'lend',
+      const userBorrowFormatted = userBorrow.mul(rate).div(DECIMALS.ray)
+
+      const lend: BalanceWithExtraProps = {
+        chain,
+        proxy: urnHandler.proxy,
+        urnAddress: urnHandler.address,
+        id: urnHandler.id,
+        name: urnHandler.asset.name,
+        address: urnHandler.address,
+        decimals: 18,
+        symbol: urnHandler.asset.symbol,
+        amount: userSupply,
+        mat: urnHandler.asset.mat,
+        spot: urnSpot,
+        underlyings: [
+          {
+            chain,
+            amount: userSupply,
+            address: urnHandler.asset.address,
+            decimals: urnHandler.asset.decimals,
+            symbol: urnHandler.asset.symbol,
+          },
+        ],
+        category: 'lend',
+      }
+
+      const borrow: BalanceWithExtraProps = {
+        chain,
+        proxy: urnHandler.proxy,
+        decimals: DAI.decimals,
+        address: urnHandler.address,
+        underlyings: [{ ...DAI, amount: userBorrowFormatted }],
+        symbol: DAI.symbol,
+        amount: userBorrowFormatted,
+        category: 'borrow',
+      }
+
+      balances.push(lend, borrow)
     }
-
-    const borrow: BalanceWithExtraProps = {
-      chain,
-      proxy: urnHandler.proxy,
-      decimals: DAI.decimals,
-      address: urnHandler.address,
-      priceSubstitute: DAI.address,
-      symbol: DAI.symbol,
-      amount: userBorrowFormatted,
-      category: 'borrow',
-    }
-
-    balances.push(lend, borrow)
   }
 
   return balances

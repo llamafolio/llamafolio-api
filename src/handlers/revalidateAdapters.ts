@@ -105,7 +105,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
 
     const [contracts, props] = await Promise.all([
       resolveContractsTokens(client, config.contracts || {}, true),
-      resolveContractsTokens(client, config.props || {}, true),
+      config.props ? resolveContractsTokens(client, config.props, true) : undefined,
     ])
 
     let expire_at: Date | undefined = undefined

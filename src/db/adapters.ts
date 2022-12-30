@@ -118,19 +118,38 @@ export async function selectAdaptersContractsExpired(client: PoolClient) {
   return fromStorage(adaptersRes.rows)
 }
 
-export async function selectAdapterProps(client: PoolClient, adapterId: string) {
-  const adaptersRes = await client.query(`select contracts_props from adapters where id = $1;`, [adapterId])
+export async function selectAdapterProps(client: PoolClient, adapterId: string, chain: Chain) {
+  const adaptersRes = await client.query(`select contracts_props from adapters where id = $1 and chain = $2;`, [
+    adapterId,
+    chain,
+  ])
 
   return fromPartialStorage(adaptersRes.rows)[0]
 }
 
-export async function selectAdaptersProps(client: PoolClient, adapterIds: string[]) {
+/**
+ * @param client
+ * @param adapters [adapterId, chain] array
+ */
+export async function selectAdaptersProps(client: PoolClient, adapters: [string, Chain][]) {
   const adaptersRes = await client.query(
-    format(`select id, contracts_props from adapters where id in (%L);`, adapterIds),
+    format(
+      `select a.id, a.chain, a.contracts_props from adapters a join (values %L) as v (id, chain) on a.id = v.id and a.chain = v.chain;`,
+      adapters,
+    ),
     [],
   )
 
   return fromPartialStorage(adaptersRes.rows)
+}
+
+export async function selectDefinedAdaptersContractsProps(client: PoolClient) {
+  const adaptersRes = await client.query(
+    `select id, chain, contracts_props from adapters where contracts_props is not null;`,
+    [],
+  )
+
+  return fromPartialStorage(adaptersRes.rows) as Pick<Adapter, 'id' | 'chain' | 'contractsProps'>[]
 }
 
 export async function selectLatestCreatedAdapters(client: PoolClient, limit = 5) {
@@ -140,12 +159,13 @@ export async function selectLatestCreatedAdapters(client: PoolClient, limit = 5)
     `
     with last_adapters as (
       select distinct(id), created_at from adapters
-        where id <> 'wallet' and created_at is not null
-        order by created_at desc
-        limit $1
+      where id <> 'wallet' and created_at is not null
+      order by created_at desc
+      limit $1
     )
     select id, array_agg(chain) as chains, created_at from (
-      select * from adapters where id in (select id from last_adapters)
+      select la.id, a.chain, la.created_at from last_adapters la
+      inner join adapters a on a.id = la.id
     ) as _ group by (id, created_at);
     `,
     [limit],

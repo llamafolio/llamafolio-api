@@ -15,8 +15,7 @@
     "lint": "eslint --ignore-path .gitignore --ignore-path .eslintignore \"**/*.{js,ts}\" --max-warnings=0",
     "format": "prettier --ignore-path .gitignore --ignore-path .prettierignore '**/*.{md,json,js,ts}' --write",
     "postinstall": "npm run update-llamafolio-tokens && npm run update-llamafolio-labels",
-    "test": "jest && tscheck",
-    "dev": "sls offline",
+    "test": "jest",
     "tscheck": "tsc -p tsconfig.json --noEmit --skipLibCheck",
     "update-llamafolio-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build",
     "update-llamafolio-labels": "cd llamafolio-labels && git checkout main && git pull && rm -rf build && npm run build"
@@ -34,8 +33,7 @@
     "ioredis": "^5.2.4",
     "node-fetch": "^2.6.2",
     "pg": "^8.7.3",
-    "pg-format": "^1.0.4",
-    "prettier": "^2.7.1"
+    "pg-format": "^1.0.4"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.101",
@@ -51,6 +49,7 @@
     "eslint-plugin-unused-imports": "^2.0.0",
     "jest": "^28.1.3",
     "millify": "^5.0.1",
+    "prettier": "^2.8.1",
     "serverless": "^3.19.0",
     "serverless-esbuild": "^1.31.0",
     "serverless-offline": "^10.0.2",

@@ -30,6 +30,18 @@ provider:
           Action:
             - 'lambda:InvokeFunction'
           Resource: '*'
+        - Effect: "Allow"
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:BatchGetItem
+          Resource:
+            - "Fn::GetAtt": [DynamoTable, Arn]
   environment:
     PGHOST: ${file(./env.js):PGHOST}
     PGUSER: ${file(./env.js):PGUSER}
@@ -43,14 +55,6 @@ provider:
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    APIG_ENDPOINT:
-      Fn::Join:
-        - ''
-        - - Ref: WebsocketsApi
-          - .execute-api.
-          - Ref: AWS::Region
-          - .amazonaws.com/
-          - ${self:provider.stage}
 
   httpApi:
     metrics: true
@@ -183,23 +187,9 @@ functions:
     description: Update yields
     timeout: 300
 
-  websocketRequests:
-    handler: src/handlers/websocket.handleRequests
-    role: handleWebsocketRequestsRole
-    events:
-      - websocket:
-          route: $connect
-      - websocket:
-          route: $disconnect
-      - websocket:
-          route: updateBalances
-      - websocket:
-          # Fallback
-          route: $default
-
-  websocketUpdateAdaptersBalances:
-    handler: src/handlers/updateBalances.websocketUpdateAdaptersHandler
-    role: handleWebsocketRequestsRole
+  updateBalances:
+    handler: src/handlers/updateBalances.handler
+    description: Update balances
     timeout: 300
 
 custom:
@@ -220,7 +210,6 @@ custom:
 
 resources:
   - ${file(resources/dynamodb.yml)}
-  - ${file(resources/roles.yml)}
 
 plugins:
   - serverless-offline

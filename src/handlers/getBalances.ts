@@ -1,4 +1,4 @@
-import { selectBalancesByFromAddress } from '@db/balances'
+import { getUpdateBalancesStatus, putUpdateBalancesStatus, selectBalancesByFromAddress } from '@db/balances'
 import { selectLastBalancesSnapshotsByFromAddress } from '@db/balances-snapshots'
 import pool from '@db/pool'
 import { client as redisClient } from '@db/redis'
@@ -9,6 +9,7 @@ import { groupBy } from '@lib/array'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
+import { invokeLambda } from '@lib/lambda'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 import { Redis } from 'ioredis'
@@ -90,7 +91,6 @@ function unwrapUnderlyings(balance: FormattedBalance) {
 
 export function formatBalance(balance: any): FormattedBalance {
   const formattedBalance: FormattedBalance = {
-    type: balance.type,
     standard: balance.standard,
     name: balance.name,
     chain: balance.chain,
@@ -127,8 +127,11 @@ export interface BalancesProtocolResponse {
   chains: BalancesProtocolChainResponse[]
 }
 
+export type TStatus = 'empty' | 'stale' | 'success'
+
 export interface BalancesResponse {
-  updatedAt: number
+  status: TStatus
+  updatedAt?: number
   protocols: BalancesProtocolResponse[]
 }
 
@@ -179,14 +182,35 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       })
     }
 
-    const updatedAt = pricedBalances[0]?.timestamp
+    const updatedAt = pricedBalances[0]?.timestamp ? new Date(pricedBalances[0]?.timestamp).getTime() : undefined
+
+    let status: TStatus = 'success'
+    // Trigger update if data is "stale" (or "empty" == never been updated).
+    // At the moment, balances are considered "stale" if they haven't been updated in the last 2 minutes.
+    // Later, we can use more advanced strategies using transactions events, scheduled updates etc
+    const now = new Date().getTime()
+    // 2 minutes
+    const updateInterval = 2 * 60 * 1000
+
+    if (updatedAt === undefined || now - updatedAt > updateInterval) {
+      status = updatedAt === undefined ? 'empty' : 'stale'
+
+      // restrict to one concurrent update of the same address
+      const updateStatus = await getUpdateBalancesStatus(address)
+      if (!updateStatus) {
+        await putUpdateBalancesStatus(address, Math.floor(now / 1000))
+        await invokeLambda(`llamafolio-api-${process.env.stage}-updateBalances`, { address }, 'Event')
+      }
+    }
 
     const balancesResponse: BalancesResponse = {
-      updatedAt,
+      status,
+      updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
       protocols,
     }
 
-    return success(balancesResponse, { maxAge: 60 })
+    // max-age 15sec as it's the average time to refresh balances
+    return success(balancesResponse, { maxAge: 15 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')

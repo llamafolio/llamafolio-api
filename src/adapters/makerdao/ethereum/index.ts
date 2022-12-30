@@ -50,23 +50,24 @@ const Vat: Contract = {
 
 export const getContracts = () => {
   return {
-    contracts: { MakerProxyRegistry, InstadAppProxyRegistry, getCdps, cdpManager, Vat, IlkRegistry, Spot },
+    contracts: { MakerProxyRegistry, InstadAppProxyRegistry },
+    props: { MakerProxyRegistry, InstadAppProxyRegistry },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, _contracts, props) => {
   const proxies = (
     await Promise.all(
       [
-        contracts.MakerProxyRegistry ? getMakerContracts(ctx, 'ethereum', MakerProxyRegistry) : null,
-        contracts.InstadAppProxyRegistry ? getInstaDappContracts(ctx, 'ethereum', InstadAppProxyRegistry) : null,
+        props.MakerProxyRegistry ? getMakerContracts(ctx, 'ethereum', MakerProxyRegistry) : null,
+        props.InstadAppProxyRegistry ? getInstaDappContracts(ctx, 'ethereum', InstadAppProxyRegistry) : null,
       ].filter(isNotNullish),
     )
   ).flat()
 
   const cdpid = await getCdpidFromProxiesAddresses('ethereum', getCdps, cdpManager, proxies)
 
-  const balances = await getProxiesBalances(ctx, 'ethereum', Vat, IlkRegistry, Spot, cdpid)
+  const balances = await getProxiesBalances('ethereum', Vat, IlkRegistry, Spot, cdpid)
 
   const healthFactor = getHealthFactor(balances as BalanceWithExtraProps[])
 
