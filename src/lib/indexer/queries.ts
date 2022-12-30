@@ -83,6 +83,13 @@ export const getTransactionHistoryQuery = (
         method_name {
           name
         }
+        logs_aggregate {
+          nodes {
+            topics
+            data
+            address
+          }
+        }
       }
       txs_aggregate(
         where: {
@@ -164,7 +171,7 @@ export const getContractsInteractedQuery = (address: string, chain: string | und
 `
 }
 
-export const getTokensDetailsQuery = (tokens: string[]): string => {
+export const getTokensDetailsQuery = (tokens: string[], chain: string | undefined): string => {
   const tokensFilter = []
 
   if (tokens.length > 0) {
@@ -174,12 +181,18 @@ export const getTokensDetailsQuery = (tokens: string[]): string => {
   }
   const tokensFilterParams = tokens.length > 0 ? `{ _or: [${tokensFilter}] }` : ''
 
+  let chainFilter = ''
+  if (chain) {
+    chainFilter += `chain: { _eq: "${chain}" }`
+  }
+
   return gql`
-    query getTransactionHistory {
+    query getTokensDetails {
       tokens(
         where: {
           _and: [
             ${tokensFilterParams}
+            ${chainFilter}
           ]
         }
       ) {

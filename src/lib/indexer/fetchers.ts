@@ -46,4 +46,6 @@ export const getTokenDetails = async (
   tokens: string[],
   variables = {},
   headers = {},
-): Promise<{ tokens: IndexerContractsInteracted[] }> => indexer_graph(getTokensDetailsQuery(tokens), variables, headers)
+  chain?: string,
+): Promise<{ tokens: IndexerContractsInteracted[] }> =>
+  indexer_graph(getTokensDetailsQuery(tokens, chain), variables, headers)
