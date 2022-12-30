@@ -1,18 +1,17 @@
 import format from 'pg-format'
 
 import { adapterById } from '../src/adapters'
-import { selectAdaptersProps } from '../src/db/adapters'
+import { selectDefinedAdaptersContractsProps } from '../src/db/adapters'
 import { insertBalances } from '../src/db/balances'
 import { BalancesSnapshot, insertBalancesSnapshots } from '../src/db/balances-snapshots'
+import { getAllContractsInteractions, getAllTokensInteractions } from '../src/db/contracts'
 import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { Balance, BalancesConfig, BalancesContext, Contract } from '../src/lib/adapter'
-import { keyBy } from '../src/lib/array'
+import { Balance, BalancesConfig, BalancesContext } from '../src/lib/adapter'
+import { groupBy, groupBy2, keyBy2 } from '../src/lib/array'
 import { sanitizeBalances, sumBalances } from '../src/lib/balance'
 import { strToBuf } from '../src/lib/buf'
-import { Chain, chains } from '../src/lib/chains'
-import { getContractsInteracted, getTokensInteracted } from '../src/lib/indexer/fetchers'
-import { INDEXER_HEADERS } from '../src/lib/indexer/utils'
+import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
 
@@ -46,81 +45,78 @@ async function main() {
   try {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
-    const [{ contract_interactions }, { token_transfers }] = await Promise.all([
-      getContractsInteracted(address, {}, INDEXER_HEADERS),
-      getTokensInteracted(address, {}, INDEXER_HEADERS),
+    const [contracts, tokens, adaptersContractsProps] = await Promise.all([
+      getAllContractsInteractions(client, address),
+      getAllTokensInteractions(client, address),
+      selectDefinedAdaptersContractsProps(client),
     ])
 
-    const contractsByAdapterId: { [key: string]: Contract[] } = {}
-
-    for (const contract of contract_interactions) {
-      if (!contractsByAdapterId[contract.adapter_id.adapter_id]) {
-        contractsByAdapterId[contract.adapter_id.adapter_id] = []
+    const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
+    contractsByAdapterIdChain['wallet'] = groupBy(tokens, 'chain')
+    const adaptersContractsPropsByIdChain = keyBy2(adaptersContractsProps, 'id', 'chain')
+    // add adapters with contracts_props, even if there was no user interaction with any of the contracts
+    for (const adapter of adaptersContractsProps) {
+      if (!contractsByAdapterIdChain[adapter.id]) {
+        contractsByAdapterIdChain[adapter.id] = {}
       }
-      contractsByAdapterId[contract.adapter_id.adapter_id].push({ chain: contract.chain, address: contract.contract })
+      if (!contractsByAdapterIdChain[adapter.id][adapter.chain]) {
+        contractsByAdapterIdChain[adapter.id][adapter.chain] = []
+      }
     }
 
-    contractsByAdapterId['wallet'] = token_transfers.map((token) => ({
-      chain: token.chain,
-      address: token.token,
-      name: token.token_details.name,
-      decimals: token.token_details.decimals,
-      symbol: token.token_details.symbol,
-    }))
-
-    const adapterIds = Object.keys(contractsByAdapterId)
-    const adaptersProps = await selectAdaptersProps(client, adapterIds)
-    const adaptersPropsById = keyBy(adaptersProps, 'id')
+    const adapterIds = Object.keys(contractsByAdapterIdChain)
+    // list of all [adapterId, chain]
+    const adapterIdsChains = adapterIds.flatMap((adapterId) =>
+      Object.keys(contractsByAdapterIdChain[adapterId]).map((chain) => [adapterId, chain] as [string, Chain]),
+    )
 
     console.log('Interacted with protocols:', adapterIds)
 
     // Run adapters `getBalances` only with the contracts the user interacted with
     const adaptersBalancesConfigsRes = await Promise.all(
-      adapterIds.flatMap((adapterId) => {
+      adapterIdsChains.map(async ([adapterId, chain]) => {
         const adapter = adapterById[adapterId]
         if (!adapter) {
-          console.error(`Could not find adapter with id`, adapterId)
-          return []
+          console.error(`Could not find adapter`, adapterId)
+          return
+        }
+        const handler = adapter[chain]
+        if (!handler) {
+          console.error(`Could not find chain handler for`, [adapterId, chain])
+          return
         }
 
-        return chains
-          .filter((chain) => adapter[chain.id])
-          .map(async (chain) => {
-            const handler = adapter[chain.id]!
+        try {
+          const hrstart = process.hrtime()
 
-            try {
-              const hrstart = process.hrtime()
+          const contracts = groupContracts(contractsByAdapterIdChain[adapterId][chain]) || []
+          const props = adaptersContractsPropsByIdChain[adapterId]?.[chain]?.contractsProps || {}
 
-              const contracts =
-                groupContracts(contractsByAdapterId[adapterId].filter((contract) => contract.chain === chain.id)) || []
-              const props = adaptersPropsById[adapterId]?.contractsProps || {}
+          const ctx: BalancesContext = { address, chain, adapterId }
 
-              const ctx: BalancesContext = { address, chain: chain.id, adapterId }
+          const balancesConfig = await handler.getBalances(ctx, contracts, props)
 
-              const balancesConfig = await handler.getBalances(ctx, contracts, props)
+          const hrend = process.hrtime(hrstart)
 
-              const hrend = process.hrtime(hrstart)
+          console.log(
+            `[${adapterId}][${chain}] getBalances ${contractsByAdapterIdChain[adapterId][chain].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
+            hrend[0],
+            hrend[1] / 1000000,
+          )
 
-              console.log(
-                `[${adapterId}][${chain.id}] getBalances ${contractsByAdapterId[adapterId].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
-                hrend[0],
-                hrend[1] / 1000000,
-              )
+          const extendedBalancesConfig: ExtendedBalancesConfig = {
+            ...balancesConfig,
+            // Tag balances with adapterId
+            balances: balancesConfig.balances.map((balance) => ({ ...balance, adapterId })),
+            adapterId,
+            chain,
+          }
 
-              const extendedBalancesConfig: ExtendedBalancesConfig = {
-                ...balancesConfig,
-                // Tag balances with adapterId
-                balances: balancesConfig.balances.map((balance) => ({ ...balance, adapterId })),
-                adapterId,
-                chain: chain.id,
-              }
-
-              return extendedBalancesConfig
-            } catch (error) {
-              console.error(`[${adapterId}][${chain.id}]: Failed to getBalances`, error)
-              return
-            }
-          })
+          return extendedBalancesConfig
+        } catch (error) {
+          console.error(`[${adapterId}][${chain}]: Failed to getBalances`, error)
+          return
+        }
       }),
     )
 
@@ -144,16 +140,10 @@ async function main() {
     )
 
     // Group balances back by adapter
-    const pricedBalancesByAdapterId: { [key: string]: any[] } = {}
-    for (const _pricedBalance of pricedBalances) {
-      const pricedBalance = _pricedBalance as ExtendedBalance
-      if (pricedBalance.adapterId) {
-        if (!pricedBalancesByAdapterId[pricedBalance.adapterId]) {
-          pricedBalancesByAdapterId[pricedBalance.adapterId] = []
-        }
-        pricedBalancesByAdapterId[pricedBalance.adapterId].push(pricedBalance)
-      }
-    }
+    const pricedBalancesByAdapterId = groupBy(
+      (pricedBalances as ExtendedBalance[]).filter((pricedBalance) => pricedBalance.adapterId),
+      'adapterId',
+    )
 
     const now = new Date()
 
