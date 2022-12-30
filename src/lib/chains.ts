@@ -128,3 +128,15 @@ export const chainById: { [key: string]: IChainInfo } = {}
 for (const chain of chains) {
   chainById[chain.id] = chain
 }
+
+// Helper to match DefiLlama chains to our keys
+export const chainIdResolver: { [key: string]: string } = {
+  arbitrum: 'arbitrum',
+  avalanche: 'avax',
+  bsc: 'bsc',
+  celo: 'celo',
+  ethereum: 'ethereum',
+  fantom: 'fantom',
+  optimism: 'optimism',
+  polygon: 'polygon',
+}

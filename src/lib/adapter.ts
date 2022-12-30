@@ -1,4 +1,3 @@
-import { sanitizeBalances } from '@lib/balance'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
@@ -6,7 +5,7 @@ import { BigNumber } from 'ethers'
 export interface BaseContext {
   chain: Chain
   adapterId: string
-  blockHeight?: { [k: string]: number }
+  blockHeight?: number
 }
 
 export interface BalancesContext extends BaseContext {
@@ -130,54 +129,17 @@ export interface Adapter extends Partial<Record<Chain, AdapterHandler>> {
 /**
  * Tests
  */
-
 export interface AdapterTest {
   address: string
-  blockHeight: { [k: string]: number }
-  expected: { [k: string]: BalancesTest[] }
+  blockHeight: number
+  expected: BalancesTest[]
 }
 
 export interface BalancesTest {
-  amount?: string
+  amount?: BigNumber
   symbol?: string
-  category?: string
-  underlying?: { symbol?: string; amount: string }[]
-  rewards?: { symbol?: string; amount: string }[]
-}
-
-export const parseBalancesTest = (balancesConfig: BalancesConfig): BalancesTest => {
-  const chains = balancesConfig.balances
-    .map((balances) => balances.chain)
-    .filter((chain, i, chains) => chains.indexOf(chain) === i)
-
-  const balances: { [k: string]: BalancesTest[] } = {}
-
-  for (const chain of chains) {
-    balances[chain] = []
-    sanitizeBalances(balancesConfig.balances).map((balance) => {
-      if (balance.chain === chain && balance.amount.toString() !== '0') {
-        const data: BalancesTest = {
-          amount: balance.amount.toString(),
-          symbol: balance.symbol,
-          category: balance.category,
-        }
-
-        if (balance.underlyings) {
-          data.underlying = balance.underlyings.map((underlying) => {
-            return { amount: underlying.amount.toString(), symbol: underlying.symbol }
-          })
-        }
-
-        if (balance.rewards) {
-          data.rewards = balance.rewards.map((reward) => {
-            return { amount: reward.amount.toString(), symbol: reward.symbol }
-          })
-        }
-
-        balances[chain].push(data)
-      }
-    })
-  }
-
-  return balances
+  decimals?: string
+  category: Category
+  underlying?: { symbol?: string; decimals?: string; amount: BigNumber }[]
+  rewards?: { symbol?: string; decimals?: string; amount: BigNumber }[]
 }

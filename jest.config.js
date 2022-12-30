@@ -10,4 +10,12 @@ module.exports = {
   moduleNameMapper: pathsToModuleNameMapper(tsconfig.compilerOptions.paths, {
     prefix: '<rootDir>/',
   }),
+  globals: {
+    'ts-jest': {
+      diagnostics: {
+        // ignore TS type errors
+        exclude: ['**'],
+      },
+    },
+  },
 }
