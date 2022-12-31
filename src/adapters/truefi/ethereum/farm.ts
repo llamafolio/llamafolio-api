@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -43,7 +42,7 @@ const TRU: Token = {
   decimals: 8,
 }
 
-export async function getFarmBalances(ctx: BalancesContext, chain: Chain, pools: Contract[], multifarm: Contract) {
+export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], multifarm: Contract) {
   const balances: Balance[] = []
 
   const calls = pools.map((pool) => ({
@@ -52,8 +51,8 @@ export async function getFarmBalances(ctx: BalancesContext, chain: Chain, pools:
   }))
 
   const [stakeds, claimables] = await Promise.all([
-    multicall({ chain, calls, abi: abi.staked }),
-    multicall({ chain, calls, abi: abi.claimable }),
+    multicall({ chain: ctx.chain, calls, abi: abi.staked }),
+    multicall({ chain: ctx.chain, calls, abi: abi.claimable }),
   ])
 
   for (let i = 0; i < pools.length; i++) {

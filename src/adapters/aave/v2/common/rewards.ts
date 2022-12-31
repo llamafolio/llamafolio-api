@@ -1,11 +1,9 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
 export async function getLendingRewardsBalances(
   ctx: BalancesContext,
-  chain: Chain,
   incentiveController: Contract,
   rewardToken: Contract,
   contracts: Contract[],
@@ -17,7 +15,7 @@ export async function getLendingRewardsBalances(
   const rewards: Balance[] = []
 
   const userRewardsRes = await call({
-    chain,
+    chain: ctx.chain,
     target: incentiveController.address,
     params: [assetsAddressesList, ctx.address],
     abi: {

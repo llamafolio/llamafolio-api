@@ -1,7 +1,6 @@
 import { Balance, Contract } from '@lib/adapter'
 import { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers/lib/ethers'
@@ -14,9 +13,9 @@ const USV: Token = {
   decimals: 9,
 }
 
-export async function getStakeBalance(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance> {
+export async function getStakeBalance(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
-    chain,
+    chain: ctx.chain,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,

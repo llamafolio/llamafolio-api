@@ -79,13 +79,12 @@ export interface GetLendingPoolBalancesParams {
 
 export async function getLendingPoolBalances(
   ctx: BalancesContext,
-  chain: Chain,
   contracts: Contract[],
   { chefIncentivesController }: GetLendingPoolBalancesParams,
 ) {
-  const provider = providers[chain]
+  const provider = providers[ctx.chain]
 
-  const balances = await getAaveLendingPoolBalances(ctx, chain, contracts)
+  const balances = await getAaveLendingPoolBalances(ctx, contracts)
 
   const balanceByAddress: { [key: string]: Balance } = {}
   for (const balance of balances) {

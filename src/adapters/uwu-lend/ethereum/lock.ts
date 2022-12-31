@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
@@ -14,12 +13,11 @@ export interface GetMultiFeeDistributionBalancesParams {
 
 export async function getMultiFeeDistributionBalances(
   ctx: BalancesContext,
-  chain: Chain,
   lendingPoolContracts: Contract[],
   { multiFeeDistributionAddress }: GetMultiFeeDistributionBalancesParams,
 ) {
   const balances: Balance[] = []
-  const provider = providers[chain]
+  const provider = providers[ctx.chain]
 
   const lendingPoolContractByAddress: { [key: string]: Contract } = {}
   for (const contract of lendingPoolContracts) {
@@ -40,14 +38,14 @@ export async function getMultiFeeDistributionBalances(
   const [stakingToken, rewardToken] = await getERC20Details('ethereum', [stakingTokenAddress, rewardTokenAddress])
 
   const tokens = claimableRewards.map((res: any) => res.token)
-  const tokenDetails = await getERC20Details(chain, tokens)
+  const tokenDetails = await getERC20Details(ctx.chain, tokens)
   const tokenByAddress: { [key: string]: Token } = {}
   for (const token of tokenDetails) {
     tokenByAddress[token.address] = token
   }
 
   // get balances of Sushi staking LP token
-  const [lockedBalance] = await getUnderlyingBalances(chain, [
+  const [lockedBalance] = await getUnderlyingBalances(ctx.chain, [
     { ...stakingToken, amount: lockedBalances.total, rewards: [] } as Balance,
   ])
 
@@ -60,7 +58,7 @@ export async function getMultiFeeDistributionBalances(
         continue
       }
       const reward: Balance = {
-        chain,
+        chain: ctx.chain,
         address: rewardData.token,
         amount: rewardData.amount,
         decimals: token.decimals,

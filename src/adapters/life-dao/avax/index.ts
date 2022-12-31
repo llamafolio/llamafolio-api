@@ -27,7 +27,7 @@ export const getContracts = () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     sLF: getStakeBalances,
   })
 

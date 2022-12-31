@@ -1,9 +1,8 @@
 import { Balance, BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Chain } from '@lib/chains'
 
-export async function getStakeBalances(ctx: BalancesContext, chain: Chain, staking: Contract): Promise<Balance[]> {
-  console.log(ctx, chain, staking)
+export async function getStakeBalances(ctx: BalancesContext, staking: Contract): Promise<Balance[]> {
+  console.log(ctx, staking)
 
   return []
 }
@@ -18,7 +17,7 @@ const staking: Contract = {
 
 export const getContracts = async () => {
   return {
-    // All contracts `getBalances` will look at, grouped by keys
+    // Contracts grouped by keys. They will be passed to `getBalances`, filtered by user interaction
     contracts: { staking },
     // Optional revalidate time (in seconds).
     // Contracts returned by the adapter are cached by default and can be updated by interval with this parameter.
@@ -31,7 +30,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   // Any method to check all the contracts retrieved above.
   // This function will be run each time a user queries his balances.
   // As static contracts info are filled in getContracts, this should ideally only fetch the current amount of each contract (+ underlyings and rewards)
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     staking: getStakeBalances,
   })
 

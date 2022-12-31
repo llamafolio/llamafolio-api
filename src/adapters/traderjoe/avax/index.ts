@@ -60,11 +60,11 @@ export const getContracts = async (props: any) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, stakeBalances] = await Promise.all([
-    resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
+    resolveBalances<typeof getContracts>(ctx, contracts, {
       markets: getMarketsBalances,
       pools: getPairsBalances,
     }),
-    getStakeBalance(ctx, 'avax'),
+    getStakeBalance(ctx),
   ])
 
   return {

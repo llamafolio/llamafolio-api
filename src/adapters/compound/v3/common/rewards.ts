@@ -1,19 +1,17 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
 export async function getRewardBalances(
   ctx: BalancesContext,
-  chain: Chain,
   rewardContract: Contract,
   coreContract: Contract,
 ): Promise<Balance[]> {
   const rewards: Balance[] = []
 
   const pendingCompRewardsRes = await call({
-    chain,
+    chain: ctx.chain,
     target: rewardContract.address,
     params: [coreContract.address, ctx.address],
     abi: {
@@ -41,11 +39,11 @@ export async function getRewardBalances(
   const pendingCompRewardsToken = pendingCompRewardsRes.output.token
   const pendingCompRewardsBalance = BigNumber.from(pendingCompRewardsRes.output.owed)
 
-  const tokens = await getERC20Details(chain, [pendingCompRewardsToken])
+  const tokens = await getERC20Details(ctx.chain, [pendingCompRewardsToken])
   const token = tokens[0]
 
   rewards.push({
-    chain,
+    chain: ctx.chain,
     decimals: token.decimals,
     symbol: token.symbol,
     address: token.address,

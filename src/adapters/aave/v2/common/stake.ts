@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
@@ -21,19 +20,19 @@ const ABPT: Contract = {
   decimals: 18,
 }
 
-export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [balanceOfRes, rewardsRes] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [ctx.address],
       abi: {
@@ -50,7 +49,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
   const rewards = BigNumber.from(rewardsRes.output)
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     address: contract.address,
     decimals: contract.decimals,
     symbol: contract.symbol,
@@ -65,14 +64,13 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
 
 export async function getStakeBalancerPoolBalances(
   ctx: BalancesContext,
-  chain: Chain,
   stakingContract: Contract,
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [bPoolRes, stakingBalanceOfRes, stakingRewardsRes] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: ABPT.address,
       abi: {
         inputs: [],
@@ -84,14 +82,14 @@ export async function getStakeBalancerPoolBalances(
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: stakingContract.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: stakingContract.address,
       params: [ctx.address],
       abi: {
@@ -110,7 +108,7 @@ export async function getStakeBalancerPoolBalances(
 
   // Underlyings
   const totalSupplyRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: [{ target: stakingContract.address }, { target: ABPT.address }],
     abi: {
       inputs: [],
@@ -127,7 +125,7 @@ export async function getStakeBalancerPoolBalances(
   }
 
   const stakingContractLPBalanceRes = await call({
-    chain,
+    chain: ctx.chain,
     target: ABPT.address,
     params: stakingContract.address,
     abi: {
@@ -142,7 +140,7 @@ export async function getStakeBalancerPoolBalances(
   })
 
   const underlyingsTokensAddressesRes = await call({
-    chain,
+    chain: ctx.chain,
     target: bPoolRes.output,
     params: [],
     abi: {
@@ -157,14 +155,14 @@ export async function getStakeBalancerPoolBalances(
   })
 
   const underlyingsTokensAddresses = underlyingsTokensAddressesRes.output
-  const underlyingsTokens = await getERC20Details(chain, underlyingsTokensAddresses)
+  const underlyingsTokens = await getERC20Details(ctx.chain, underlyingsTokensAddresses)
   if (underlyingsTokens.length !== underlyingsTokensAddressesRes.output.length) {
     console.log('Failed to get underlyings details')
     return []
   }
 
   const underlyingsBalancesRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: underlyingsTokens.map((token) => ({
       target: token.address,
       params: [bPoolRes.output],
@@ -181,7 +179,7 @@ export async function getStakeBalancerPoolBalances(
   })
 
   const underlying0Balance: Balance = {
-    chain,
+    chain: ctx.chain,
     address: underlyingsTokens[0].address,
     decimals: underlyingsTokens[0].decimals,
     symbol: underlyingsTokens[0].symbol,
@@ -193,7 +191,7 @@ export async function getStakeBalancerPoolBalances(
       .div(totalSupplyRes[1].output),
   }
   const underlying1Balance: Balance = {
-    chain,
+    chain: ctx.chain,
     address: underlyingsTokens[1].address,
     decimals: underlyingsTokens[1].decimals,
     symbol: underlyingsTokens[1].symbol,
@@ -206,7 +204,7 @@ export async function getStakeBalancerPoolBalances(
   }
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     address: stakingContract.address,
     decimals: stakingContract.decimals,
     symbol: stakingContract.symbol,

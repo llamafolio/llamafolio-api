@@ -102,7 +102,7 @@ export async function getPoolsContracts(chain: Chain, contract: Contract) {
   return getPairsDetails(chain, contracts)
 }
 
-export async function getPoolsBalances(ctx: BalancesContext, chain: Chain, pools: Contract[], MiniChef: Contract) {
+export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[], MiniChef: Contract) {
   const balances: Balance[] = []
 
   const calls = pools.map((pool) => ({
@@ -111,8 +111,8 @@ export async function getPoolsBalances(ctx: BalancesContext, chain: Chain, pools
   }))
 
   const [userInfosRes, pendingSynapsesRes] = await Promise.all([
-    multicall({ chain, calls, abi: abi.userInfo }),
-    multicall({ chain, calls, abi: abi.pendingSynapse }),
+    multicall({ chain: ctx.chain, calls, abi: abi.userInfo }),
+    multicall({ chain: ctx.chain, calls, abi: abi.pendingSynapse }),
   ])
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
@@ -136,5 +136,5 @@ export async function getPoolsBalances(ctx: BalancesContext, chain: Chain, pools
     balances.push(balance)
   }
 
-  return getUnderlyingBalances(chain, balances)
+  return getUnderlyingBalances(ctx.chain, balances)
 }

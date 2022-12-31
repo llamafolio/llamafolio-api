@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
@@ -11,12 +10,12 @@ const Spool: Token = {
   symbol: 'SPOOL',
 }
 
-export async function getYieldBalances(ctx: BalancesContext, chain: Chain, pools: Contract[]) {
+export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]) {
   const balances: Balance[] = []
 
   const [getDeposit, getEarned] = await Promise.all([
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: pools.map((pool) => ({
         target: pool.address,
         params: [ctx.address],
@@ -37,7 +36,7 @@ export async function getYieldBalances(ctx: BalancesContext, chain: Chain, pools
     }),
 
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: pools.map((pool) => ({
         target: pool.address,
         params: [Spool.address, ctx.address],
@@ -68,7 +67,7 @@ export async function getYieldBalances(ctx: BalancesContext, chain: Chain, pools
     }
 
     balances.push({
-      chain,
+      chain: ctx.chain,
       name: pool.name,
       address: pool.address,
       symbol: underlying.symbol,

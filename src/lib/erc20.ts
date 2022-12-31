@@ -59,9 +59,9 @@ export const abi = {
   },
 }
 
-export async function getERC20BalanceOf(ctx: BalancesContext, chain: Chain, tokens: Token[]): Promise<Balance[]> {
+export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): Promise<Balance[]> {
   const balances = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: tokens.map((token) => ({
       target: token.address,
       params: [ctx.address],
@@ -72,7 +72,7 @@ export async function getERC20BalanceOf(ctx: BalancesContext, chain: Chain, toke
   return tokens
     .map((token, i) => {
       if (!balances[i].success || balances[i].output == null) {
-        console.error(`Could not get balanceOf for token ${chain}:${token.address}`)
+        console.error(`Could not get balanceOf for token ${ctx.chain}:${token.address}`)
         return null
       }
 

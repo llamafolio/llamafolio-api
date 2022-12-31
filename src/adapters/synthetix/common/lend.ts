@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -46,7 +45,6 @@ const abi = {
 
 export async function getLendBorrowBalances(
   ctx: BalancesContext,
-  chain: Chain,
   synthetixContract: Contract,
   feePoolContract: Contract,
   sUSDContract: Contract,
@@ -56,21 +54,21 @@ export async function getLendBorrowBalances(
 
   const [suppliedRes, borrowedRes, feesAvailableRes] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: synthetixContract.address,
       params: [ctx.address],
       abi: abi.collateral,
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: synthetixContract.address,
       params: [ctx.address],
       abi: abi.remainingIssuableSynths,
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: feePoolContract.address,
       params: [ctx.address],
       abi: abi.feesAvailable,
@@ -84,7 +82,7 @@ export async function getLendBorrowBalances(
 
   if (SNX) {
     balances.push({
-      chain,
+      chain: ctx.chain,
       address: synthetixContract.address,
       decimals: synthetixContract.decimals,
       symbol: synthetixContract.symbol,
@@ -94,7 +92,7 @@ export async function getLendBorrowBalances(
     })
 
     balances.push({
-      chain,
+      chain: ctx.chain,
       address: sUSDContract.address,
       decimals: sUSDContract.decimals,
       symbol: sUSDContract.symbol,
@@ -103,7 +101,7 @@ export async function getLendBorrowBalances(
     })
 
     balances.push({
-      chain,
+      chain: ctx.chain,
       address: sUSDContract.address,
       decimals: sUSDContract.decimals,
       symbol: sUSDContract.symbol,
@@ -112,7 +110,7 @@ export async function getLendBorrowBalances(
     })
 
     balances.push({
-      chain,
+      chain: ctx.chain,
       address: SNX.address,
       decimals: SNX.decimals,
       symbol: SNX.symbol,

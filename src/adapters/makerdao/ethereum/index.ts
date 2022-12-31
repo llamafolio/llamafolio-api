@@ -59,8 +59,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const proxies = (
     await Promise.all(
       [
-        props.MakerProxyRegistry ? getMakerContracts(ctx, 'ethereum', MakerProxyRegistry) : null,
-        props.InstadAppProxyRegistry ? getInstaDappContracts(ctx, 'ethereum', InstadAppProxyRegistry) : null,
+        props.MakerProxyRegistry ? getMakerContracts(ctx, MakerProxyRegistry) : null,
+        props.InstadAppProxyRegistry ? getInstaDappContracts(ctx, InstadAppProxyRegistry) : null,
       ].filter(isNotNullish),
     )
   ).flat()

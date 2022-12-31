@@ -1,7 +1,6 @@
 import { Balance, Contract } from '@lib/adapter'
 import { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
@@ -38,10 +37,10 @@ const TIME: Contract = {
   symbol: 'TIME',
 }
 
-export async function getFormattedStakeBalance(ctx: BalancesContext, chain: Chain, wMEMO: Contract): Promise<Balance> {
+export async function getFormattedStakeBalance(ctx: BalancesContext, wMEMO: Contract): Promise<Balance> {
   const balanceOfRes = await call({
-    chain,
-    block: ctx.blockHeight?.[chain],
+    chain: ctx.chain,
+    block: ctx.blockHeight,
     target: wMEMO.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -50,8 +49,8 @@ export async function getFormattedStakeBalance(ctx: BalancesContext, chain: Chai
   const balanceOf = balanceOfRes.output
 
   const formattedBalanceOfRes = await call({
-    chain,
-    block: ctx.blockHeight?.[chain],
+    chain: ctx.chain,
+    block: ctx.blockHeight,
     target: wMEMO.address,
     params: [balanceOf],
     abi: abiWonderland.wMEMOToMEMO,
@@ -60,7 +59,7 @@ export async function getFormattedStakeBalance(ctx: BalancesContext, chain: Chai
   const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes.output)
 
   const balance: Balance = {
-    chain,
+    chain: ctx.chain,
     address: wMEMO.address,
     symbol: wMEMO.symbol,
     decimals: 9,
@@ -72,17 +71,12 @@ export async function getFormattedStakeBalance(ctx: BalancesContext, chain: Chai
   return balance
 }
 
-export async function getStakeBalance(
-  ctx: BalancesContext,
-  chain: Chain,
-  contract: Contract,
-  wMemoFarm: Contract,
-): Promise<Balance> {
+export async function getStakeBalance(ctx: BalancesContext, contract: Contract, wMemoFarm: Contract): Promise<Balance> {
   const rewards = contract.rewards
 
   const balanceOfRes = await call({
-    chain,
-    block: ctx.blockHeight?.[chain],
+    chain: ctx.chain,
+    block: ctx.blockHeight,
     target: wMemoFarm.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -91,7 +85,7 @@ export async function getStakeBalance(
   const balanceOf = BigNumber.from(balanceOfRes.output)
 
   const balance: Balance = {
-    chain,
+    chain: ctx.chain,
     decimals: contract.decimals,
     address: contract.address,
     symbol: contract.symbol,
@@ -102,8 +96,8 @@ export async function getStakeBalance(
 
   if (rewards) {
     const rewardsBalanceOfRes = await multicall({
-      chain,
-      block: ctx.blockHeight?.[chain],
+      chain: ctx.chain,
+      block: ctx.blockHeight,
       calls: rewards.map((token) => ({
         target: wMemoFarm.address,
         params: [ctx.address, token.address],

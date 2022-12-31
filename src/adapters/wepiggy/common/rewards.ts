@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -12,13 +11,9 @@ const WPC: Token = {
   symbol: 'WPC',
 }
 
-export async function getMarketsRewards(
-  ctx: BalancesContext,
-  chain: Chain,
-  piggyDistribution: Contract,
-): Promise<Balance> {
+export async function getMarketsRewards(ctx: BalancesContext, piggyDistribution: Contract): Promise<Balance> {
   const pendingWPCRewardsRes = await call({
-    chain,
+    chain: ctx.chain,
     target: piggyDistribution.address,
     params: [ctx.address, 'true', 'true'],
     abi: {
@@ -34,13 +29,10 @@ export async function getMarketsRewards(
     },
   })
 
-  // It looks like Debank is using a 1e3 factor
-  // Unfortunately Piggy's documentation is in Chinese, so it's complicated to find the mathematical logic
-  // At first it seems judicious to render the same as Debank
   const pendingWPCRewards = BigNumber.from(pendingWPCRewardsRes.output).mul(Math.pow(10, 3))
 
   const reward: Balance = {
-    chain,
+    chain: ctx.chain,
     address: WPC.address,
     decimals: WPC.decimals,
     symbol: WPC.symbol,

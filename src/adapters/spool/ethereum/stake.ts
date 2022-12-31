@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -11,12 +10,12 @@ const Spool: Token = {
   symbol: 'SPOOL',
 }
 
-export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract) {
+export async function getStakeBalances(ctx: BalancesContext, contract: Contract) {
   const balances: Balance[] = []
 
   const [getBalances, getEarned] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [ctx.address],
       abi: {
@@ -29,7 +28,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [Spool.address, ctx.address],
       abi: {
@@ -49,7 +48,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
   const earned = BigNumber.from(getEarned.output)
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     address: Spool.address,
     decimals: Spool.decimals,
     symbol: Spool.symbol,

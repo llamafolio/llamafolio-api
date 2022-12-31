@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -14,14 +13,13 @@ const COMP: Token = {
 
 export async function getRewardsBalances(
   ctx: BalancesContext,
-  chain: Chain,
   comptroller: Contract,
   lens: Contract,
 ): Promise<Balance[]> {
   const rewards: Balance[] = []
 
   const compAllocatedRewardsRes = await call({
-    chain,
+    chain: ctx.chain,
     target: lens.address,
     params: [COMP.address, comptroller.address, ctx.address],
     abi: {
@@ -58,7 +56,7 @@ export async function getRewardsBalances(
   const compAllocatedRewards = BigNumber.from(compAllocatedRewardsRes.output.allocated)
 
   rewards.push({
-    chain,
+    chain: ctx.chain,
     address: COMP.address,
     decimals: COMP.decimals,
     symbol: COMP.symbol,

@@ -1,12 +1,11 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { providers } from '@lib/providers'
 import { BigNumber, ethers } from 'ethers'
 
 import StabilityPoolAbi from '../abis/StabilityPool.json'
 
-export async function getFarmBalance(ctx: BalancesContext, chain: Chain, stabilityPool: Contract) {
-  const provider = providers[chain]
+export async function getFarmBalance(ctx: BalancesContext, stabilityPool: Contract) {
+  const provider = providers[ctx.chain]
 
   const StabilityPool = new ethers.Contract(stabilityPool.address, StabilityPoolAbi, provider)
 
@@ -19,7 +18,7 @@ export async function getFarmBalance(ctx: BalancesContext, chain: Chain, stabili
   const amount = BigNumber.from(LUSDBalance)
 
   const balance: Balance = {
-    chain: chain,
+    chain: ctx.chain,
     category: 'farm',
     address: stabilityPool.address,
     symbol: 'LUSD',
@@ -28,7 +27,7 @@ export async function getFarmBalance(ctx: BalancesContext, chain: Chain, stabili
     stable: true,
     underlyings: [
       {
-        chain,
+        chain: ctx.chain,
         address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0',
         name: 'LUSD',
         symbol: 'LUSD',
@@ -39,14 +38,14 @@ export async function getFarmBalance(ctx: BalancesContext, chain: Chain, stabili
     ],
     rewards: [
       {
-        chain,
+        chain: ctx.chain,
         symbol: 'LQTY',
         decimals: 18,
         address: '0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d',
         amount: BigNumber.from(LQTYBalance),
       },
       {
-        chain,
+        chain: ctx.chain,
         symbol: 'ETH',
         decimals: 18,
         address: '0x0000000000000000000000000000000000000000',

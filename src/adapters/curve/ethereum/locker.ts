@@ -1,6 +1,5 @@
 import { call } from '@defillama/sdk/build/abi'
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -24,7 +23,6 @@ const IIICrvToken: Token = {
 
 export async function getLockerBalances(
   ctx: BalancesContext,
-  chain: Chain,
   contract: Contract,
   feeDistributorContract: Contract,
 ): Promise<BalanceWithExtraProps[]> {
@@ -32,7 +30,7 @@ export async function getLockerBalances(
 
   const [lockerBalanceRes, claimableBalanceRes] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [ctx.address],
       abi: {
@@ -59,7 +57,7 @@ export async function getLockerBalances(
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: feeDistributorContract.address,
       params: [ctx.address],
       abi: {
@@ -87,7 +85,7 @@ export async function getLockerBalances(
   const claimableBalance = BigNumber.from(claimableBalanceRes.output)
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     symbol: CRVToken.symbol,
     decimals: CRVToken.decimals,
     address: CRVToken.address,

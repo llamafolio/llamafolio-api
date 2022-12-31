@@ -99,12 +99,8 @@ export async function getLendingPoolContracts(
   return contracts
 }
 
-export async function getLendingPoolBalances(
-  ctx: BalancesContext,
-  chain: Chain,
-  contracts: Contract[],
-): Promise<Balance[]> {
-  const balances: Balance[] = await getERC20BalanceOf(ctx, chain, contracts as Token[])
+export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
+  const balances: Balance[] = await getERC20BalanceOf(ctx, contracts as Token[])
 
   // use the same amount for underlyings
   for (const balance of balances) {
@@ -118,7 +114,6 @@ export async function getLendingPoolBalances(
 
 export async function getLendingRewardsBalances(
   ctx: BalancesContext,
-  chain: Chain,
   incentiveController: Contract,
   contracts: Contract[],
 ): Promise<Balance[]> {
@@ -126,7 +121,7 @@ export async function getLendingRewardsBalances(
   const assets: any = contracts.map((contract: Contract) => contract.address)
 
   const rewardsListsRes = await call({
-    chain,
+    chain: ctx.chain,
     target: incentiveController.address,
     params: [assets, ctx.address],
     abi: {
@@ -155,7 +150,7 @@ export async function getLendingRewardsBalances(
   const rewardsLists = rewardsListsRes.output
 
   const rewardsAddress = rewardsLists.rewardsList
-  const rewardsTokens = await getERC20Details(chain, rewardsAddress)
+  const rewardsTokens = await getERC20Details(ctx.chain, rewardsAddress)
   const rewardsBalances = BigNumber.from(rewardsLists.unclaimedAmounts[0])
 
   rewards.push({
@@ -167,9 +162,9 @@ export async function getLendingRewardsBalances(
   return rewards
 }
 
-export async function getLendingPoolHealthFactor(ctx: BalancesContext, chain: Chain, lendingPool: Contract) {
+export async function getLendingPoolHealthFactor(ctx: BalancesContext, lendingPool: Contract) {
   const userAccountDataRes = await call({
-    chain,
+    chain: ctx.chain,
     target: lendingPool.address,
     params: [ctx.address],
     abi: {

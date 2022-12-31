@@ -75,13 +75,13 @@ export async function getFarmContracts(chain: Chain, contract: Contract): Promis
   return contracts
 }
 
-export async function getFarmBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+export async function getFarmBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const farmBalances: Balance[] = []
 
-  const balances = await getERC20BalanceOf(ctx, chain, contracts as Token[])
+  const balances = await getERC20BalanceOf(ctx, contracts as Token[])
 
   const getRewards = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: balances.map((balance) => ({
       target: balance.address,
       params: [ctx.address],

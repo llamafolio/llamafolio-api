@@ -44,9 +44,7 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
   ).filter(isNotNullish)
 
   const tokensBalances: Token[] = (
-    await Promise.all(
-      Object.keys(tokensByChain).map((chain) => getERC20BalanceOf(ctx, chain as Chain, tokensByChain[chain])),
-    )
+    await Promise.all(Object.keys(tokensByChain).map((chain) => getERC20BalanceOf(ctx, tokensByChain[chain])))
   ).flat() as Token[]
 
   return coinsBalances.concat(tokensBalances)
@@ -159,12 +157,10 @@ export function sanitizeBalances(balances: Balance[]) {
 
 export async function resolveBalances<C extends GetContractsHandler>(
   ctx: BalancesContext,
-  chain: Chain,
   contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
   resolvers: {
     [key in keyof Partial<Awaited<ReturnType<C>>['contracts']>]: (
       ctx: BalancesContext,
-      chain: Chain,
       contracts: Awaited<ReturnType<C>>['contracts'][key],
     ) =>
       | Promise<Balance | Balance[] | Balance[][] | null | undefined>
@@ -182,7 +178,7 @@ export async function resolveBalances<C extends GetContractsHandler>(
       .map(async (contractKey) => {
         try {
           const resolver = resolvers[contractKey]
-          const balances = await resolver(ctx, chain, contracts[contractKey]!)
+          const balances = await resolver(ctx, contracts[contractKey]!)
           return balances
         } catch (error) {
           console.error(`Resolver ${contractKey} failed`, error)

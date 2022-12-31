@@ -188,7 +188,6 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
 
 export async function getFarmBalances(
   ctx: BalancesContext,
-  chain: Chain,
   pools: FarmContract[],
   masterChef: Contract,
 ): Promise<Balance[]> {
@@ -196,7 +195,7 @@ export async function getFarmBalances(
 
   const [userDepositBalancesRes, pendingBaseRewardsRes, pendingRewardsRes] = await Promise.all([
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: pools.map((pool) => ({
         target: masterChef.address,
         params: [pool.address, ctx.address],
@@ -205,7 +204,7 @@ export async function getFarmBalances(
     }),
 
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: pools.map((pool) => ({
         target: masterChef.address,
         params: [pool.address, ctx.address, pool.address],
@@ -214,7 +213,7 @@ export async function getFarmBalances(
     }),
 
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: pools.flatMap(
         (pool) =>
           pool.rewards?.map((rewardToken) => ({
@@ -238,7 +237,7 @@ export async function getFarmBalances(
     }
 
     const balance: FarmBalance = {
-      chain,
+      chain: ctx.chain,
       address: pool.address,
       symbol: pool.symbol,
       decimals: pool.decimals,
@@ -269,7 +268,7 @@ export async function getFarmBalances(
     // resolve LP underlyings
     if (balance.amount.gt(0)) {
       if (balance.symbol === 'JLP') {
-        const underlyings = await getPoolsUnderlyings(chain, balance)
+        const underlyings = await getPoolsUnderlyings(ctx.chain, balance)
         balance.underlyings = [...underlyings]
       }
     }
