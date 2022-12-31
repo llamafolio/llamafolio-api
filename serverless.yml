@@ -117,14 +117,6 @@ functions:
           method: get
           path: /contracts/{address}
 
-  getHistory:
-    handler: src/handlers/getHistory.handler
-    description: Get address history
-    events:
-      - httpApi:
-          method: get
-          path: /history/{address}
-
   getInfoStats:
     handler: src/handlers/getInfoStats.handler
     description: Get stats on supported protocols, chains and tokens
