@@ -1,18 +1,17 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-export async function getFarmContracts(chain: Chain, contract: Contract): Promise<Contract[]> {
+export async function getFarmContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const getPoolsNumber = await call({
-    chain,
+    chain: ctx.chain,
     target: contract.address,
     params: [],
     abi: {
@@ -25,7 +24,7 @@ export async function getFarmContracts(chain: Chain, contract: Contract): Promis
   })
 
   const getPoolsAddresses = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: range(0, getPoolsNumber.output).map((i) => ({
       target: contract.address,
       params: [i],
@@ -42,7 +41,7 @@ export async function getFarmContracts(chain: Chain, contract: Contract): Promis
   const poolsAddresses = getPoolsAddresses.filter(isSuccess).map((res) => res.output)
 
   const getUnderlyingsTokensAddresses = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: poolsAddresses.map((pool) => ({
       target: pool,
       params: [],
@@ -65,7 +64,7 @@ export async function getFarmContracts(chain: Chain, contract: Contract): Promis
     }
 
     contracts.push({
-      chain,
+      chain: ctx.chain,
       address: pool,
       underlyings: [underlyingRes.output],
       rewards: [underlyingRes.output],

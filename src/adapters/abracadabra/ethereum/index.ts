@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getMarketsBalances, getMarketsContracts } from '../common/markets'
@@ -45,11 +45,11 @@ const cauldrons = [
   '0x8227965A7f42956549aFaEc319F4E444aa438Df5',
 ]
 
-export const getContracts = async () => {
+export const getContracts = async (ctx: BaseContext) => {
   const [mStakeContracts, sStakeContracts, marketsContracts] = await Promise.all([
-    getMStakeContract('ethereum', mSPELL),
-    getSStakeContract('ethereum', sSPELL),
-    getMarketsContracts('ethereum', cauldrons),
+    getMStakeContract(ctx, mSPELL),
+    getSStakeContract(ctx, sSPELL),
+    getMarketsContracts(ctx, cauldrons),
   ])
 
   return {

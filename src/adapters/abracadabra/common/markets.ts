@@ -1,15 +1,14 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { getERC20Details, resolveERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-export async function getMarketsContracts(chain: Chain, contracts: string[]): Promise<Contract[]> {
+export async function getMarketsContracts(ctx: BaseContext, contracts: string[]): Promise<Contract[]> {
   const marketsContracts: Contract[] = []
 
   const collateralTokenAddressesRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: contracts.map((contract) => ({
       target: contract,
       params: [],
@@ -26,7 +25,7 @@ export async function getMarketsContracts(chain: Chain, contracts: string[]): Pr
   const collateralTokenAddresses = collateralTokenAddressesRes.filter((res) => res.success).map((res) => res.output)
 
   const underlyingsTokenAddressesRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: collateralTokenAddresses.map((address) => ({
       target: address,
       params: [],
@@ -40,7 +39,7 @@ export async function getMarketsContracts(chain: Chain, contracts: string[]): Pr
     },
   })
 
-  const { tokens, underlyings } = await resolveERC20Details(chain, {
+  const { tokens, underlyings } = await resolveERC20Details(ctx, {
     tokens: collateralTokenAddresses,
     underlyings: underlyingsTokenAddressesRes.map((res) => res.output),
   })
@@ -55,7 +54,7 @@ export async function getMarketsContracts(chain: Chain, contracts: string[]): Pr
     }
 
     const market: Contract = {
-      chain,
+      chain: ctx.chain,
       address: contract,
       decimals: tokenRes.output.decimals,
       symbol: tokenRes.output.symbol,
@@ -119,7 +118,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
 
   const borrowingToken = borrowingTokenRes.filter((res) => res.success).map((res) => res.output)
 
-  const underlyingBorrowingTokens = await getERC20Details(ctx.chain, borrowingToken)
+  const underlyingBorrowingTokens = await getERC20Details(ctx, borrowingToken)
 
   const lendingBalances = lendingBalancesRes.filter((res) => res.success).map((res) => BigNumber.from(res.output))
 

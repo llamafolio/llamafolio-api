@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -47,20 +46,20 @@ export const abi = {
 export async function getPairsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances = await getERC20BalanceOf(ctx, contracts as Token[])
 
-  return getUnderlyingBalances(ctx.chain, balances)
+  return getUnderlyingBalances(ctx, balances)
 }
 
 /**
  * Retrieves underlying balances of Uniswap V2 like Pair contract balance.
  * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
  */
-export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
+export async function getUnderlyingBalances(ctx: BalancesContext, balances: Balance[]) {
   // filter empty balances
   balances = balances.filter((balance) => balance.amount?.gt(0) && balance.underlyings?.[0] && balance.underlyings?.[1])
 
   const [token0sBalanceOfRes, token1sBalanceOfRes, totalSupplyRes] = await Promise.all([
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: balances.map((bToken) => ({
         params: [bToken.address],
         target: bToken.underlyings![0].address,
@@ -69,7 +68,7 @@ export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
     }),
 
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: balances.map((bToken) => ({
         params: [bToken.address],
         target: bToken.underlyings![1].address,
@@ -78,7 +77,7 @@ export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
     }),
 
     multicall({
-      chain: chain,
+      chain: ctx.chain,
       calls: balances.map((token) => ({
         params: [],
         target: token.address,
@@ -109,14 +108,14 @@ export async function getUnderlyingBalances(chain: Chain, balances: Balance[]) {
 
     balances[i].underlyings = [
       {
-        chain,
+        chain: ctx.chain,
         address: balances[i].underlyings![0].address,
         symbol: balances[i].underlyings![0].symbol,
         decimals: balances[i].underlyings![0].decimals,
         amount: balance0,
       },
       {
-        chain,
+        chain: ctx.chain,
         address: balances[i].underlyings![1].address,
         symbol: balances[i].underlyings![1].symbol,
         decimals: balances[i].underlyings![1].decimals,

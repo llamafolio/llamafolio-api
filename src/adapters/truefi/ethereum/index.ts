@@ -1,4 +1,4 @@
-import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
@@ -43,8 +43,8 @@ const trueMultiFarm: Contract = {
   address: '0xec6c3fd795d6e6f202825ddb56e01b3c128b0b10',
 }
 
-export const getContracts = async () => {
-  const pools = await getPoolsContracts('ethereum')
+export const getContracts = async (ctx: BaseContext) => {
+  const pools = await getPoolsContracts(ctx)
 
   return {
     contracts: { pools, stkTRU, TUSD },
@@ -52,7 +52,7 @@ export const getContracts = async () => {
 }
 
 async function getAllBalances(ctx: BalancesContext, pools: Contract[]) {
-  const poolsSupplies = await getPoolsSupplies(ctx.chain, pools)
+  const poolsSupplies = await getPoolsSupplies(ctx, pools)
   return getFarmBalances(ctx, poolsSupplies, trueMultiFarm)
 }
 

@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getGLPStakerBalance, getGLPVesterBalance, getGMXStakerBalances, getGMXVesterBalance } from '../common/balances'
@@ -10,8 +10,8 @@ const gmxRouter: Contract = {
   address: '0xA906F338CB21815cBc4Bc87ace9e68c87eF8d8F1',
 }
 
-export const getContracts = async () => {
-  const contracts = await getGMXContracts('arbitrum', gmxRouter)
+export const getContracts = async (ctx: BaseContext) => {
+  const contracts = await getGMXContracts(ctx, gmxRouter)
 
   return {
     contracts,

@@ -1,6 +1,5 @@
-import { Contract } from '@lib/adapter'
+import { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 
 const abi = {
   esGmx: {
@@ -68,7 +67,7 @@ const abi = {
   },
 }
 
-export async function getGMXContracts(chain: Chain, gmxRouter: Contract) {
+export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract) {
   const [
     stakedGmxTrackerRes,
     stakedGlpTrackerRes,
@@ -80,27 +79,27 @@ export async function getGMXContracts(chain: Chain, gmxRouter: Contract) {
     gmxVesterRes,
     glpVesterRes,
   ] = await Promise.all([
-    call({ chain, target: gmxRouter.address, params: [], abi: abi.stakedGmxTracker }),
-    call({ chain, target: gmxRouter.address, params: [], abi: abi.stakedGlpTracker }),
-    call({ chain, target: gmxRouter.address, params: [], abi: abi.gmx }),
-    call({ chain, target: gmxRouter.address, params: [], abi: abi.glp }),
-    call({ chain, target: gmxRouter.address, params: [], abi: abi.weth }),
-    call({ chain, target: gmxRouter.address, params: [], abi: abi.feeGmxTracker }),
-    call({ chain, target: gmxRouter.address, params: [], abi: abi.esGmx }),
-    call({ chain, target: gmxRouter.address, params: [], abi: abi.gmxVester }),
-    call({ chain, target: gmxRouter.address, params: [], abi: abi.glpVester }),
+    call({ chain: ctx.chain, target: gmxRouter.address, params: [], abi: abi.stakedGmxTracker }),
+    call({ chain: ctx.chain, target: gmxRouter.address, params: [], abi: abi.stakedGlpTracker }),
+    call({ chain: ctx.chain, target: gmxRouter.address, params: [], abi: abi.gmx }),
+    call({ chain: ctx.chain, target: gmxRouter.address, params: [], abi: abi.glp }),
+    call({ chain: ctx.chain, target: gmxRouter.address, params: [], abi: abi.weth }),
+    call({ chain: ctx.chain, target: gmxRouter.address, params: [], abi: abi.feeGmxTracker }),
+    call({ chain: ctx.chain, target: gmxRouter.address, params: [], abi: abi.esGmx }),
+    call({ chain: ctx.chain, target: gmxRouter.address, params: [], abi: abi.gmxVester }),
+    call({ chain: ctx.chain, target: gmxRouter.address, params: [], abi: abi.glpVester }),
   ])
 
   // GMX
   const gmxVester: Contract = {
-    chain,
+    chain: ctx.chain,
     address: gmxVesterRes.output,
     underlyings: [esGmxRes.output],
     rewards: [gmxRes.output],
   }
 
   const gmxStaker: Contract = {
-    chain,
+    chain: ctx.chain,
     address: stakedGmxTrackerRes.output,
     underlyings: [stakerGmxFeesRes.output, gmxRes.output],
     rewards: [esGmxRes.output, wethRes.output],
@@ -108,7 +107,7 @@ export async function getGMXContracts(chain: Chain, gmxRouter: Contract) {
 
   // GLP
   const glpStaker: Contract = {
-    chain,
+    chain: ctx.chain,
     address: stakedGlpTrackerRes.output,
     fGlp: stakerGmxFeesRes.output,
     underlyings: [glpRes.output],
@@ -116,7 +115,7 @@ export async function getGMXContracts(chain: Chain, gmxRouter: Contract) {
   }
 
   const glpVester: Contract = {
-    chain,
+    chain: ctx.chain,
     address: glpVesterRes.output,
     underlyings: [esGmxRes.output],
     rewards: [gmxRes.output],

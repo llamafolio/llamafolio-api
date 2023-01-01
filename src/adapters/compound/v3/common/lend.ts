@@ -1,7 +1,6 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -83,18 +82,18 @@ const USDC: Token = {
   symbol: 'USDC',
 }
 
-export async function getAssetsContracts(chain: Chain, contract: Contract): Promise<Contract[]> {
+export async function getAssetsContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const numberOfAssets = await call({
-    chain,
+    chain: ctx.chain,
     target: contract.address,
     params: [],
     abi: abi.numAssets,
   })
 
   const assetsInfoRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: range(0, numberOfAssets.output).map((i) => ({
       target: contract.address,
       params: [i],
@@ -110,7 +109,7 @@ export async function getAssetsContracts(chain: Chain, contract: Contract): Prom
     }
 
     contracts.push({
-      chain,
+      chain: ctx.chain,
       address: assetInfoRes.output.asset,
       collateralFactor: assetInfoRes.output.borrowCollateralFactor,
     })

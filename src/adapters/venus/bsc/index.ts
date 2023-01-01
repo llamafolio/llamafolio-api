@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { BalanceWithExtraProps, getHealthFactor, getMarketsContracts } from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
@@ -42,8 +42,8 @@ const VenusVault: Contract = {
   rewards: [XVS],
 }
 
-export const getContracts = async () => {
-  const markets = await getMarketsContracts('bsc', {
+export const getContracts = async (ctx: BaseContext) => {
+  const markets = await getMarketsContracts(ctx, {
     // Venus Unitroller
     comptrollerAddress: Comptroller.address,
     underlyingAddressByMarketAddress: {

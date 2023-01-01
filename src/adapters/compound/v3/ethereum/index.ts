@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { BalanceWithExtraProps, getHealthFactor } from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
@@ -25,8 +25,8 @@ const CompoundRewards: Contract = {
   address: '0x1B0e765F6224C21223AeA2af16c1C46E38885a40',
 }
 
-export const getContracts = async () => {
-  const assets = await getAssetsContracts('ethereum', CompoundUSDCv3)
+export const getContracts = async (ctx: BaseContext) => {
+  const assets = await getAssetsContracts(ctx, CompoundUSDCv3)
 
   return {
     contracts: { CompoundUSDCv3, assets, CompoundRewards },

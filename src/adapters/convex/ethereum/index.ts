@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
@@ -51,8 +51,8 @@ const cvxCRVStaker: Contract = {
   rewards: [CRV, CVX],
 }
 
-export const getContracts = async () => {
-  const pools = await getPoolsContract('ethereum', poolRegistry)
+export const getContracts = async (ctx: BaseContext) => {
+  const pools = await getPoolsContract(ctx, poolRegistry)
 
   return {
     contracts: { cvxCRVStaker, locker, pools },

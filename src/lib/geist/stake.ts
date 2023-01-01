@@ -41,7 +41,7 @@ export async function getMultiFeeDistributionBalances(
   ])
 
   const tokens = claimableRewards.map((res: any) => res.token)
-  const tokenDetails = await getERC20Details(ctx.chain, tokens)
+  const tokenDetails = await getERC20Details(ctx, tokens)
   const tokenByAddress: { [key: string]: Token } = {}
   for (const token of tokenDetails) {
     tokenByAddress[token.address] = token

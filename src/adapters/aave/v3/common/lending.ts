@@ -1,6 +1,5 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -37,14 +36,14 @@ const abi = {
 }
 
 export async function getLendingPoolContracts(
-  chain: Chain,
+  ctx: BaseContext,
   lendingPool: Contract,
   poolDataProvider: Contract,
 ): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const reserveListRes = await call({
-    chain,
+    chain: ctx.chain,
     target: lendingPool.address,
     params: [],
     abi: abi.getReservesList,
@@ -53,7 +52,7 @@ export async function getLendingPoolContracts(
   const reservesList: string[] = reserveListRes.output
 
   const reserveTokensAddressesRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: reservesList.map((address) => ({
       target: poolDataProvider.address,
       params: [address],
@@ -74,20 +73,20 @@ export async function getLendingPoolContracts(
 
     contracts.push(
       {
-        chain,
+        chain: ctx.chain,
         address: aToken,
         underlyings: [underlyingToken],
         category: 'lend',
       },
       {
-        chain,
+        chain: ctx.chain,
         address: stableDebtToken,
         underlyings: [underlyingToken],
         category: 'borrow',
         stable: true,
       },
       {
-        chain,
+        chain: ctx.chain,
         address: variableDebtToken,
         underlyings: [underlyingToken],
         category: 'borrow',
@@ -150,7 +149,7 @@ export async function getLendingRewardsBalances(
   const rewardsLists = rewardsListsRes.output
 
   const rewardsAddress = rewardsLists.rewardsList
-  const rewardsTokens = await getERC20Details(ctx.chain, rewardsAddress)
+  const rewardsTokens = await getERC20Details(ctx, rewardsAddress)
   const rewardsBalances = BigNumber.from(rewardsLists.unclaimedAmounts[0])
 
   rewards.push({

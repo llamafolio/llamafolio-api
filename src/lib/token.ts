@@ -125,7 +125,9 @@ export async function resolveContractsTokens(
   const missingTokensChains = Object.keys(missingChainsTokens)
 
   const missingChainsTokensRes = await Promise.all(
-    missingTokensChains.map((chain) => getERC20Details(chain as Chain, missingChainsTokens[chain as Chain] || [])),
+    missingTokensChains.map((chain) =>
+      getERC20Details({ chain: chain as Chain, adapterId: '' }, missingChainsTokens[chain as Chain] || []),
+    ),
   )
 
   for (let i = 0; i < missingTokensChains.length; i++) {

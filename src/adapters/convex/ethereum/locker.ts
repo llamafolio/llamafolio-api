@@ -139,7 +139,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
   const claimableRewardsBalances = claimableRewards.map((token) => BigNumber.from(token.amount))
   const claimableRewardsTokens = claimableRewards.map((claim) => claim.token)
 
-  const tokens = await getERC20Details(ctx.chain, claimableRewardsTokens)
+  const tokens = await getERC20Details(ctx, claimableRewardsTokens)
   const rewards = tokens.map((token, i) => ({ ...token, amount: claimableRewardsBalances[i] }))
 
   balances.push({

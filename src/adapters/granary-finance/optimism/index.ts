@@ -1,5 +1,5 @@
 import { getLendingPoolBalances, getLendingPoolContracts, getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const lendingPool: Contract = {
@@ -8,8 +8,8 @@ const lendingPool: Contract = {
   name: 'Lending Pool',
 }
 
-export const getContracts = async () => {
-  const pools = await getLendingPoolContracts('optimism', lendingPool)
+export const getContracts = async (ctx: BaseContext) => {
+  const pools = await getLendingPoolContracts(ctx, lendingPool)
 
   return {
     contracts: {

@@ -39,7 +39,7 @@ export async function getRewardBalances(
   const pendingCompRewardsToken = pendingCompRewardsRes.output.token
   const pendingCompRewardsBalance = BigNumber.from(pendingCompRewardsRes.output.owed)
 
-  const tokens = await getERC20Details(ctx.chain, [pendingCompRewardsToken])
+  const tokens = await getERC20Details(ctx, [pendingCompRewardsToken])
   const token = tokens[0]
 
   rewards.push({

@@ -155,7 +155,7 @@ export async function getStakeBalancerPoolBalances(
   })
 
   const underlyingsTokensAddresses = underlyingsTokensAddressesRes.output
-  const underlyingsTokens = await getERC20Details(ctx.chain, underlyingsTokensAddresses)
+  const underlyingsTokens = await getERC20Details(ctx, underlyingsTokensAddresses)
   if (underlyingsTokens.length !== underlyingsTokensAddressesRes.output.length) {
     console.log('Failed to get underlyings details')
     return []
