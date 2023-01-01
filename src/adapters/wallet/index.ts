@@ -7,13 +7,13 @@ import { Token } from '@lib/token'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 import { ethers } from 'ethers'
 
-async function getCoinBalance(ctx: BalancesContext, chain: Chain, token?: Token) {
+async function getCoinBalance(ctx: BalancesContext, token?: Token) {
   if (!token) {
     return null
   }
 
-  const provider = providers[chain]
-  const amount = await provider.getBalance(ctx.address, ctx.blockHeight?.[chain])
+  const provider = providers[ctx.chain]
+  const amount = await provider.getBalance(ctx.address, ctx.blockHeight)
   return { ...token, amount } as Balance
 }
 
@@ -40,7 +40,7 @@ const getChainHandlers = (chain: Chain) => {
   }
 
   const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-    const balances = await resolveBalances<typeof getContracts>(ctx, chain, contracts, {
+    const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
       coin: getCoinBalance,
       erc20: getERC20BalanceOf,
     })

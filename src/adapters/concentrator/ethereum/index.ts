@@ -18,7 +18,7 @@ export const getContracts = () => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { concentratorIFOContract }) => {
   if (concentratorIFOContract) {
     return {
-      balances: await getIFOBalances(ctx, 'ethereum'),
+      balances: await getIFOBalances(ctx),
     }
   }
 

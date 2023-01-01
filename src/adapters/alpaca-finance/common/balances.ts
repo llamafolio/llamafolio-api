@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
@@ -47,7 +46,6 @@ const abi = {
 
 export async function getPoolsBalances(
   ctx: BalancesContext,
-  chain: Chain,
   pools: Contract[],
   fairLaunch: Contract,
   alpaca: Contract,
@@ -70,11 +68,11 @@ export async function getPoolsBalances(
   }))
 
   const [userInfosRes, pendingRewardsRes, totalTokensRes, totalSuppliesRes, balancesOfRes] = await Promise.all([
-    multicall({ chain, calls, abi: abi.userInfo }),
-    multicall({ chain, calls, abi: abi.pendingAlpaca }),
-    multicall({ chain, calls: supplyCalls, abi: abi.totalToken }),
-    multicall({ chain, calls: supplyCalls, abi: abi.totalSupply }),
-    multicall({ chain, calls: balanceOfCalls, abi: erc20Abi.balanceOf }),
+    multicall({ chain: ctx.chain, calls, abi: abi.userInfo }),
+    multicall({ chain: ctx.chain, calls, abi: abi.pendingAlpaca }),
+    multicall({ chain: ctx.chain, calls: supplyCalls, abi: abi.totalToken }),
+    multicall({ chain: ctx.chain, calls: supplyCalls, abi: abi.totalSupply }),
+    multicall({ chain: ctx.chain, calls: balanceOfCalls, abi: erc20Abi.balanceOf }),
   ])
 
   for (let i = 0; i < pools.length; i++) {

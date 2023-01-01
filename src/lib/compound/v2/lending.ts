@@ -109,21 +109,17 @@ export async function getMarketsContracts(
   return contracts
 }
 
-export async function getMarketsBalances(
-  ctx: BalancesContext,
-  chain: Chain,
-  contracts: Contract[],
-): Promise<Balance[]> {
+export async function getMarketsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const cTokenByAddress: { [key: string]: Contract } = {}
   for (const contract of contracts) {
     cTokenByAddress[contract.address] = contract
   }
 
   const [cTokensBalances, cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all([
-    getERC20BalanceOf(ctx, chain, contracts as Token[]),
+    getERC20BalanceOf(ctx, contracts as Token[]),
 
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: contracts.map((token) => ({
         target: token.address,
         params: [ctx.address],
@@ -140,7 +136,7 @@ export async function getMarketsBalances(
     }),
 
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: contracts.map((token) => ({
         target: token.address,
         params: [],

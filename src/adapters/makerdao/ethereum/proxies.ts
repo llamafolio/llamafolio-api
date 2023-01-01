@@ -1,6 +1,5 @@
 import { BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { ethers } from 'ethers'
 
@@ -47,13 +46,9 @@ const abi = {
   },
 }
 
-export async function getInstaDappContracts(
-  ctx: BalancesContext,
-  chain: Chain,
-  instaList: Contract,
-): Promise<Contract[]> {
+export async function getInstaDappContracts(ctx: BalancesContext, instaList: Contract): Promise<Contract[]> {
   const getUserLinkCountFromInstadApp = await call({
-    chain,
+    chain: ctx.chain,
     target: instaList.address,
     params: [ctx.address],
     abi: abi.userLink,
@@ -67,7 +62,7 @@ export async function getInstaDappContracts(
 
   for (let i = 1; i < userLinkCount; i++) {
     const userLinksRes = await call({
-      chain,
+      chain: ctx.chain,
       target: instaList.address,
       // Previous value gives access to the next one Id
       params: [ctx.address, ids[ids.length - 1]],
@@ -78,7 +73,7 @@ export async function getInstaDappContracts(
   }
 
   const getInstadAppAddressesProxiesFromId = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: ids.map((id) => ({
       target: instaList.address,
       params: [id],
@@ -92,20 +87,16 @@ export async function getInstaDappContracts(
     .filter((res) => res !== ethers.constants.AddressZero)
 
   return instadAppAddressesProxiesFromId.map((address) => ({
-    chain,
+    chain: ctx.chain,
     address,
     proxy: 'InstaDapp',
   }))
 }
 
-export async function getMakerContracts(
-  ctx: BalancesContext,
-  chain: Chain,
-  proxyRegistry: Contract,
-): Promise<Contract[]> {
+export async function getMakerContracts(ctx: BalancesContext, proxyRegistry: Contract): Promise<Contract[]> {
   // Check if user's address uses Maker proxies
   const proxiesRes = await call({
-    chain,
+    chain: ctx.chain,
     target: proxyRegistry.address,
     params: [ctx.address],
     abi: abi.proxies,
@@ -114,7 +105,7 @@ export async function getMakerContracts(
   return [proxiesRes.output]
     .filter((res) => res !== ethers.constants.AddressZero)
     .map((address) => ({
-      chain,
+      chain: ctx.chain,
       address,
     }))
 }

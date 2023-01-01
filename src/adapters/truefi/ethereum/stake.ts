@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
@@ -50,19 +49,19 @@ const TrueUSD: Token = {
   decimals: 18,
 }
 
-export async function getTRUStakeBalances(ctx: BalancesContext, chain: Chain, stkTRU: Contract) {
+export async function getTRUStakeBalances(ctx: BalancesContext, stkTRU: Contract) {
   const balances: Balance[] = []
 
   const [balanceOfRes, claimableRes] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: stkTRU.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: stkTRU.address,
       params: [ctx.address, TRU.address],
       abi: abiTRU.claimable,
@@ -73,7 +72,7 @@ export async function getTRUStakeBalances(ctx: BalancesContext, chain: Chain, st
   const claimable = BigNumber.from(claimableRes.output)
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     address: stkTRU.address,
     decimals: stkTRU.decimals,
     symbol: stkTRU.symbol,
@@ -86,26 +85,26 @@ export async function getTRUStakeBalances(ctx: BalancesContext, chain: Chain, st
   return balances
 }
 
-export async function getTUSDStakeBalances(ctx: BalancesContext, chain: Chain, TUSD: Contract) {
+export async function getTUSDStakeBalances(ctx: BalancesContext, TUSD: Contract) {
   const balances: Balance[] = []
 
   const [balanceOfRes, poolValueRes, totalSupplyRes] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: TUSD.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: TUSD.address,
       params: [],
       abi: abiTRU.poolValue,
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: TUSD.address,
       params: [],
       abi: abiTRU.totalSupply,
@@ -117,7 +116,7 @@ export async function getTUSDStakeBalances(ctx: BalancesContext, chain: Chain, T
   const totalSupply = BigNumber.from(totalSupplyRes.output)
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     address: TUSD.address,
     decimals: TUSD.decimals,
     symbol: TUSD.symbol,

@@ -1,5 +1,4 @@
 import { Balance, BalancesContext } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { BigNumber, ethers } from 'ethers'
@@ -14,8 +13,8 @@ const bone: Token = {
   address: '0x9813037ee2218799597d83d4a5b6f3b6778218d9',
 }
 
-export async function getStakerBalances(ctx: BalancesContext, chain: Chain, address: string): Promise<Balance[]> {
-  const provider = providers[chain]
+export async function getStakerBalances(ctx: BalancesContext, address: string): Promise<Balance[]> {
+  const provider = providers[ctx.chain]
   const Staker = new ethers.Contract(address, StakerAbi, provider)
 
   const stakedBone = await Staker.balanceOf(ctx.address)
@@ -29,8 +28,8 @@ export async function getStakerBalances(ctx: BalancesContext, chain: Chain, addr
   ]
 }
 
-export async function getLockerBalances(ctx: BalancesContext, chain: Chain, address: string): Promise<Balance[]> {
-  const provider = providers[chain]
+export async function getLockerBalances(ctx: BalancesContext, address: string): Promise<Balance[]> {
+  const provider = providers[ctx.chain]
   const Locker = new ethers.Contract(address, LockerAbi, provider)
 
   const remainingLocker = await Locker.unclaimedTokensByUser(ctx.address)

@@ -24,7 +24,7 @@ export const getContracts = async (props: any) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'fantom', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: getPairsBalances,
   })
 

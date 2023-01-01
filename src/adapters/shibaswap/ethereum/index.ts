@@ -87,15 +87,15 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
 ) => {
   let balances: Balance[] = []
 
-  const stakerBalances = await getStakerBalances(ctx, 'ethereum', staker.address)
+  const stakerBalances = await getStakerBalances(ctx, staker.address)
 
   balances = balances.concat(stakerBalances)
 
-  const lockerBalances = await getLockerBalances(ctx, 'ethereum', locker.address)
+  const lockerBalances = await getLockerBalances(ctx, locker.address)
 
   balances = balances.concat(lockerBalances)
 
-  const pairsBalances = await getPairsBalances(ctx, 'ethereum', pairs || [])
+  const pairsBalances = await getPairsBalances(ctx, pairs || [])
 
   balances = balances.concat(pairsBalances)
 

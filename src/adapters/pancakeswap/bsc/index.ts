@@ -94,7 +94,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx: BalancesContext,
   { pairs, masterChefPools, masterChefPools2 },
 ) => {
-  const pairsBalances = await getPairsBalances(ctx, 'bsc', pairs || [])
+  const pairsBalances = await getPairsBalances(ctx, pairs || [])
 
   //new masterchef
   let masterChefBalances = await getMasterChefBalances(ctx, {

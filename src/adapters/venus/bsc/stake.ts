@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -42,19 +41,19 @@ const VAI: Token = {
   address: '0x4BD17003473389A42DAF6a0a729f6Fdb328BbBd7',
 }
 
-export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [stakeBalanceRes, pendingXVSRes] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [ctx.address],
       abi: abi.userInfo,
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [ctx.address],
       abi: abi.pendingXVS,
@@ -65,7 +64,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
   const pendingXVS = BigNumber.from(pendingXVSRes.output)
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     address: VAI.address,
     decimals: VAI.decimals,
     symbol: VAI.symbol,

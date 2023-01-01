@@ -1,6 +1,6 @@
 // @ts-nocheck
 
-import { Balance } from '@lib/adapter'
+import { Balance, BalancesContext } from '@lib/adapter'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
@@ -8,7 +8,7 @@ import { BigNumber, ethers } from 'ethers'
 
 import ConcentratorIFOAbi from '../abis/IFO.json'
 
-export async function getIFOBalances(ctx, chain) {
+export async function getIFOBalances(ctx: BalancesContext) {
   const provider = providers['ethereum']
 
   const ifoContract = new ethers.Contract('0x3cf54f3a1969be9916dad548f3c084331c4450b5', ConcentratorIFOAbi, provider)

@@ -44,10 +44,10 @@ export const abi = {
  * Retrieves pairs balances (with underlyings) of Uniswap V2 like Pair.
  * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
  */
-export async function getPairsBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
-  const balances = await getERC20BalanceOf(ctx, chain, contracts as Token[])
+export async function getPairsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
+  const balances = await getERC20BalanceOf(ctx, contracts as Token[])
 
-  return getUnderlyingBalances(chain, balances)
+  return getUnderlyingBalances(ctx.chain, balances)
 }
 
 /**

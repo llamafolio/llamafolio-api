@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract, RewardBalance } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
@@ -16,13 +15,12 @@ export interface GetMultiFeeDistributionBalancesParams {
 
 export async function getMultiFeeDistributionBalances(
   ctx: BalancesContext,
-  chain: Chain,
   lendingPoolContracts: Contract[],
   params: GetMultiFeeDistributionBalancesParams,
 ) {
   const rewardsBalances: Balance[] = []
   const balances: Balance[] = []
-  const provider = providers[chain]
+  const provider = providers[ctx.chain]
 
   const lendingPoolContractByAddress: { [key: string]: Contract } = {}
   for (const contract of lendingPoolContracts) {
@@ -43,14 +41,14 @@ export async function getMultiFeeDistributionBalances(
   ])
 
   const tokens = claimableRewards.map((res: any) => res.token)
-  const tokenDetails = await getERC20Details(chain, tokens)
+  const tokenDetails = await getERC20Details(ctx.chain, tokens)
   const tokenByAddress: { [key: string]: Token } = {}
   for (const token of tokenDetails) {
     tokenByAddress[token.address] = token
   }
 
   const lockedBalance: Balance = {
-    chain,
+    chain: ctx.chain,
     address: params.stakingToken.address,
     symbol: params.stakingToken.symbol,
     decimals: params.stakingToken.decimals,
@@ -60,7 +58,7 @@ export async function getMultiFeeDistributionBalances(
   balances.push(lockedBalance)
 
   const unlockedBalance: Balance = {
-    chain,
+    chain: ctx.chain,
     address: params.stakingToken.address,
     symbol: params.stakingToken.symbol,
     decimals: params.stakingToken.decimals,
@@ -70,7 +68,7 @@ export async function getMultiFeeDistributionBalances(
   balances.push(unlockedBalance)
 
   const rewardRates = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: tokenDetails.map((t) => ({
       target: multiFeeDistribution.address,
       params: t.address,
@@ -112,7 +110,7 @@ export async function getMultiFeeDistributionBalances(
     // let apy =  (604800 * (rData.rewardRate / decimal) * assetPrice * 365 / 7  /(geistPrice * totalSupply /1e18));
 
     const reward: RewardBalance = {
-      chain,
+      chain: ctx.chain,
       address: rewardData.token,
       amount: rewardData.amount,
       decimals: token.decimals,
@@ -143,7 +141,7 @@ export async function getMultiFeeDistributionBalances(
   }
 
   const earnedBalance: Balance = {
-    chain,
+    chain: ctx.chain,
     address: params.stakingToken.address,
     symbol: params.stakingToken.symbol,
     decimals: params.stakingToken.decimals,

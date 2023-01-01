@@ -36,12 +36,12 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'avax', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: getLendingPoolBalances,
     incentiveController: (...args) => getLendingRewardsBalances(...args, WAVAX, contracts.pools || []),
   })
 
-  const healthFactor = await getLendingPoolHealthFactor(ctx, 'avax', lendingPool)
+  const healthFactor = await getLendingPoolHealthFactor(ctx, lendingPool)
 
   return {
     balances,

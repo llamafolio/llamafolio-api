@@ -1,6 +1,5 @@
 import { call } from '@defillama/sdk/build/abi'
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { sumBN } from '@lib/math'
 import { multicall } from '@lib/multicall'
@@ -104,19 +103,19 @@ const abi = {
   },
 }
 
-export async function getLockerBalances(ctx: BalancesContext, chain: Chain, contract: Contract) {
+export async function getLockerBalances(ctx: BalancesContext, contract: Contract) {
   const balances: BalanceWithExtraProps[] = []
 
   const [getBalanceLocked, getClaimableRewards] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [ctx.address],
       abi: abi.lockedBalances,
     }),
 
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: [contract].map((c) => ({
         target: c.address,
         params: [ctx.address],
@@ -140,11 +139,11 @@ export async function getLockerBalances(ctx: BalancesContext, chain: Chain, cont
   const claimableRewardsBalances = claimableRewards.map((token) => BigNumber.from(token.amount))
   const claimableRewardsTokens = claimableRewards.map((claim) => claim.token)
 
-  const tokens = await getERC20Details(chain, claimableRewardsTokens)
+  const tokens = await getERC20Details(ctx.chain, claimableRewardsTokens)
   const rewards = tokens.map((token, i) => ({ ...token, amount: claimableRewardsBalances[i] }))
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     address: CVX.address,
     symbol: CVX.symbol,
     decimals: CVX.decimals,

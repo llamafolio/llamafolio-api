@@ -182,11 +182,11 @@ export async function getGaugesContracts(
   return gaugeContracts
 }
 
-export async function getGaugesBalances(ctx: BalancesContext, chain: Chain, gauges: Contract[]) {
+export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]) {
   const gaugesBalances: Balance[] = []
   const calls: Call[] = []
 
-  const gaugesBalancesRes = await getStakingPoolsBalances(ctx, chain, gauges, {
+  const gaugesBalancesRes = await getStakingPoolsBalances(ctx, gauges, {
     getLPTokenAddress: (contract) => contract.lpToken,
     getPoolAddress: (contract) => contract.pool,
   })
@@ -198,7 +198,7 @@ export async function getGaugesBalances(ctx: BalancesContext, chain: Chain, gaug
     }
   }
 
-  const claimableRewards = await multicall({ chain, calls, abi: abi.claimable_reward })
+  const claimableRewards = await multicall({ chain: ctx.chain, calls, abi: abi.claimable_reward })
 
   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
     const rewards = gaugesBalancesRes[gaugeIdx].rewards || []

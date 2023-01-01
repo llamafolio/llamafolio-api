@@ -55,7 +55,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     synthetix: (...args) => getLendBorrowBalances(...args, feePool, sUSD),
     rewardEscrow: (...args) => getVestBalances(...args, liquidatorReward),
   })

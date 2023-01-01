@@ -19,15 +19,10 @@ export interface GetPoolsBalancesParams {
  * @param pools address: LP token address
  * @param params
  */
-export async function getPoolsBalances(
-  ctx: BalancesContext,
-  chain: Chain,
-  pools: Contract[],
-  params: GetPoolsBalancesParams,
-) {
-  const poolsBalances = await getERC20BalanceOf(ctx, chain, pools as Token[])
+export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[], params: GetPoolsBalancesParams) {
+  const poolsBalances = await getERC20BalanceOf(ctx, pools as Token[])
 
-  return getPoolsUnderlyingBalances(chain, poolsBalances, params)
+  return getPoolsUnderlyingBalances(ctx.chain, poolsBalances, params)
 }
 
 export async function getPoolsUnderlyingBalances(chain: Chain, pools: Balance[], params: GetPoolsBalancesParams) {
@@ -122,18 +117,17 @@ export interface GetStakingPoolsBalancesParams extends GetPoolsBalancesParams {
  */
 export async function getStakingPoolsBalances(
   ctx: BalancesContext,
-  chain: Chain,
   pools: Contract[],
   params: GetStakingPoolsBalancesParams,
 ) {
   const { getLPTokenAddress } = params
   const stakingPoolsBalances: Balance[] = []
 
-  const poolsBalances = await getPoolsBalances(ctx, chain, pools, params)
+  const poolsBalances = await getPoolsBalances(ctx, pools, params)
 
   const [totalSuppliesRes, stakingTokenBalancesRes] = await Promise.all([
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: poolsBalances.map((pool) => ({
         params: [],
         target: getLPTokenAddress(pool),
@@ -142,7 +136,7 @@ export async function getStakingPoolsBalances(
     }),
 
     multicallBalances({
-      chain,
+      chain: ctx.chain,
       calls: poolsBalances.map((pool) => ({
         params: [pool.address],
         target: getLPTokenAddress(pool),

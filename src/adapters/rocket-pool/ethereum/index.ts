@@ -1,6 +1,5 @@
 import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Chain } from '@lib/chains'
 import { BN_TEN } from '@lib/math'
 import { getSingleStakeBalance } from '@lib/stake'
 import { ETH, Token } from '@lib/token'
@@ -49,14 +48,14 @@ const miniPoolManager: Contract = {
   underlyings: [ETH],
 }
 
-function getNodeStakingBalance(ctx: BalancesContext, chain: Chain, nodeStaking: Contract) {
-  return getSingleStakeBalance(ctx, chain, nodeStaking, {
+function getNodeStakingBalance(ctx: BalancesContext, nodeStaking: Contract) {
+  return getSingleStakeBalance(ctx, nodeStaking, {
     abi: abi.getNodeRPLStake,
   })
 }
 
-async function getMiniPoolManagerBalance(ctx: BalancesContext, chain: Chain, miniPoolManager: Contract) {
-  const balance = await getSingleStakeBalance(ctx, chain, miniPoolManager, {
+async function getMiniPoolManagerBalance(ctx: BalancesContext, miniPoolManager: Contract) {
+  const balance = await getSingleStakeBalance(ctx, miniPoolManager, {
     abi: abi.getNodeActiveMinipoolCount,
   })
 
@@ -76,7 +75,7 @@ export const getContracts = () => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   console.log(contracts)
 
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     miniPoolManager: getMiniPoolManagerBalance,
     nodeStaking: getNodeStakingBalance,
   })

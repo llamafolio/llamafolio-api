@@ -86,7 +86,7 @@ export async function getBondsContracts(chain: Chain, contract: Contract): Promi
   return await getPairsDetails(chain, bondContracts)
 }
 
-export async function getBondsBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]) {
+export async function getBondsBalances(ctx: BalancesContext, contracts: Contract[]) {
   const balances: Balance[] = []
 
   const calls = contracts.map((contract) => ({
@@ -96,15 +96,15 @@ export async function getBondsBalances(ctx: BalancesContext, chain: Chain, contr
 
   const [pendingPayoutForRes, underlyingsTokensReservesRes, totalPoolSuppliesRes] = await Promise.all([
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: contracts.map((contract) => ({
         target: contract.bondAddress,
         params: [ctx.address],
       })),
       abi: abi.pendingPayoutFor,
     }),
-    multicall({ chain, calls, abi: abi.getReserves }),
-    multicall({ chain, calls, abi: abi.totalSupply }),
+    multicall({ chain: ctx.chain, calls, abi: abi.getReserves }),
+    multicall({ chain: ctx.chain, calls, abi: abi.totalSupply }),
   ])
 
   const pendingPayoutFor = pendingPayoutForRes.filter(isSuccess).map((res) => BigNumber.from(res.output))

@@ -1,12 +1,11 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { providers } from '@lib/providers'
 import { BigNumber, ethers } from 'ethers'
 
 import LQTYStakingAbi from '../abis/LQTYStaking.json'
 
-export async function getStakeBalances(ctx: BalancesContext, chain: Chain, lqtyStaking: Contract) {
-  const provider = providers[chain]
+export async function getStakeBalances(ctx: BalancesContext, lqtyStaking: Contract) {
+  const provider = providers[ctx.chain]
 
   const LQTYStaking = new ethers.Contract(lqtyStaking.address, LQTYStakingAbi, provider)
 
@@ -19,7 +18,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, lqtyS
   const amount = BigNumber.from(LQTYBalance)
 
   const balance: Balance = {
-    chain: chain,
+    chain: ctx.chain,
     category: 'stake',
     address: lqtyStaking.address,
     symbol: 'LQTY',
@@ -27,7 +26,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, lqtyS
     amount,
     underlyings: [
       {
-        chain,
+        chain: ctx.chain,
         address: '0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D',
         name: 'LQTY',
         symbol: 'LQTY',
@@ -37,7 +36,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, lqtyS
     ],
     rewards: [
       {
-        chain,
+        chain: ctx.chain,
         symbol: 'LUSD',
         decimals: 18,
         address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0',
@@ -45,7 +44,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, lqtyS
         stable: true,
       },
       {
-        chain,
+        chain: ctx.chain,
         symbol: 'ETH',
         decimals: 18,
         address: '0x0000000000000000000000000000000000000000',

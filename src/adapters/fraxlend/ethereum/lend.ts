@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
@@ -18,11 +17,11 @@ const abi = {
   },
 }
 
-export const getLendBorrowBalances = async (ctx: BalancesContext, chain: Chain, pairs: Contract[], FRAX: Contract) => {
+export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contract[], FRAX: Contract) => {
   const balances: Balance[] = []
 
   const userSnapshotsRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: pairs.map((pair) => ({
       target: pair.address,
       params: [ctx.address],
@@ -40,7 +39,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, chain: Chain, 
       const userCollateralBalance = BigNumber.from(userSnapshotRes.output._userCollateralBalance)
 
       const asset: Balance = {
-        chain,
+        chain: ctx.chain,
         decimals: pair.decimals,
         symbol: pair.symbol,
         address: pair.address,
@@ -52,7 +51,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, chain: Chain, 
       balances.push(asset)
 
       const collateral: Balance = {
-        chain,
+        chain: ctx.chain,
         decimals: pair.decimals,
         symbol: pair.symbol,
         address: pair.address,
@@ -64,7 +63,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, chain: Chain, 
       balances.push(collateral)
 
       const borrow: Balance = {
-        chain,
+        chain: ctx.chain,
         decimals: pair.decimals,
         symbol: pair.symbol,
         address: pair.address,

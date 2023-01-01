@@ -106,19 +106,19 @@ const CVX: Token = {
   decimals: 18,
 }
 
-export async function getCRVCVXRewards(ctx: BalancesContext, chain: Chain, pool: Contract) {
+export async function getCRVCVXRewards(ctx: BalancesContext, pool: Contract) {
   const rewards: Balance[] = []
 
   const [getCRVRewardsEarned, getExtraRewardsEarned] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: pool.address,
       params: [ctx.address],
       abi: abi.earned,
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: pool.address,
       params: [],
       abi: abi.extraRewardsLength,
@@ -129,13 +129,13 @@ export async function getCRVCVXRewards(ctx: BalancesContext, chain: Chain, pool:
   const extraRewardsEarned = BigNumber.from(getExtraRewardsEarned.output)
 
   if (rewardsCRVEarned.gt(0)) {
-    const CVXRewards = await getCVXRatio(chain, CVX, rewardsCRVEarned)
+    const CVXRewards = await getCVXRatio(ctx.chain, CVX, rewardsCRVEarned)
     rewards.push({ ...CRV, amount: rewardsCRVEarned }, { ...CVX, amount: CVXRewards as BigNumber })
   }
 
   if (extraRewardsEarned.gt(0)) {
     const getExtraRewardsAddresses = await multicall({
-      chain,
+      chain: ctx.chain,
       calls: range(0, +extraRewardsEarned).map((i) => ({
         target: pool.address,
         params: [i],
@@ -147,7 +147,7 @@ export async function getCRVCVXRewards(ctx: BalancesContext, chain: Chain, pool:
 
     const [getEarnedExtraRewards, getExtraRewardsTokens] = await Promise.all([
       multicall({
-        chain,
+        chain: ctx.chain,
         calls: extraRewardsAddresses.map((extra) => ({
           target: extra,
           params: [ctx.address],
@@ -156,7 +156,7 @@ export async function getCRVCVXRewards(ctx: BalancesContext, chain: Chain, pool:
       }),
 
       multicall({
-        chain,
+        chain: ctx.chain,
         calls: extraRewardsAddresses.map((extra) => ({
           target: extra,
           params: [],
@@ -170,16 +170,16 @@ export async function getCRVCVXRewards(ctx: BalancesContext, chain: Chain, pool:
       .map((res) => BigNumber.from(res.output))
 
     const extraRewardsTokens = getExtraRewardsTokens.filter((res) => res.success).map((res) => res.output)
-    const rewardsTokens: Contract[] = await getERC20Details(chain, extraRewardsTokens)
+    const rewardsTokens: Contract[] = await getERC20Details(ctx.chain, extraRewardsTokens)
 
     for (const rewardsToken of rewardsTokens) {
       if (rewardsToken.name && rewardsToken.name.includes('Curve')) {
         rewardsToken.amount = earnedExtraRewards[0]
-        rewardsToken.poolAddress = await getPoolFromLpTokenAddress(chain, [rewardsToken.address])
-        rewardsToken.underlyings = (await getPoolsUnderlyings(chain, rewardsToken.poolAddress)).flat()
+        rewardsToken.poolAddress = await getPoolFromLpTokenAddress(ctx.chain, [rewardsToken.address])
+        rewardsToken.underlyings = (await getPoolsUnderlyings(ctx.chain, rewardsToken.poolAddress)).flat()
 
         const underlyingsBalances = await getUnderlyingsBalancesInPool(
-          chain,
+          ctx.chain,
           rewardsToken,
           rewardsToken.address,
           rewardsToken.poolAddress[0],

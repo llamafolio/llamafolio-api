@@ -67,16 +67,12 @@ export async function getMarketsContracts(chain: Chain, contracts: string[]): Pr
   return marketsContracts
 }
 
-export async function getMarketsBalances(
-  ctx: BalancesContext,
-  chain: Chain,
-  contracts: Contract[],
-): Promise<Balance[]> {
+export async function getMarketsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [borrowingTokenRes, lendingBalancesRes, borrowingBalancesRes] = await Promise.all([
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: contracts.map((contract) => ({
         target: contract.address,
         params: [],
@@ -91,7 +87,7 @@ export async function getMarketsBalances(
     }),
 
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: contracts.map((contract) => ({
         target: contract.address,
         params: [ctx.address],
@@ -106,7 +102,7 @@ export async function getMarketsBalances(
     }),
 
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: contracts.map((contract) => ({
         target: contract.address,
         params: [ctx.address],
@@ -123,7 +119,7 @@ export async function getMarketsBalances(
 
   const borrowingToken = borrowingTokenRes.filter((res) => res.success).map((res) => res.output)
 
-  const underlyingBorrowingTokens = await getERC20Details(chain, borrowingToken)
+  const underlyingBorrowingTokens = await getERC20Details(ctx.chain, borrowingToken)
 
   const lendingBalances = lendingBalancesRes.filter((res) => res.success).map((res) => BigNumber.from(res.output))
 
@@ -136,7 +132,7 @@ export async function getMarketsBalances(
     }
 
     const lendingBalance: Balance = {
-      chain,
+      chain: ctx.chain,
       address: contract.address,
       symbol: contract.symbol,
       decimals: contract.decimals,
@@ -159,7 +155,7 @@ export async function getMarketsBalances(
     }
 
     const borrowingBalance: Balance = {
-      chain,
+      chain: ctx.chain,
       address: underlyingBorrowingToken.address,
       symbol: underlyingBorrowingToken.symbol,
       decimals: underlyingBorrowingToken.decimals,

@@ -1,7 +1,6 @@
 import { getLendingPoolHealthFactor } from '@adapters/aave/v3/common/lending'
 import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Chain } from '@lib/chains'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
 import { getMultiFeeDistributionBalances } from '@lib/geist/stake'
 import { Token } from '@lib/token'
@@ -47,10 +46,10 @@ export const getContracts = async () => {
   }
 }
 
-function getLendingBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]) {
+function getLendingBalances(ctx: BalancesContext, contracts: Contract[]) {
   return Promise.all([
-    getLendingPoolBalances(ctx, chain, contracts, { chefIncentivesController: chefIncentivesControllerContract }),
-    getMultiFeeDistributionBalances(ctx, chain, contracts, {
+    getLendingPoolBalances(ctx, contracts, { chefIncentivesController: chefIncentivesControllerContract }),
+    getMultiFeeDistributionBalances(ctx, contracts, {
       multiFeeDistribution: multiFeeDistributionContract,
       lendingPool: lendingPoolContract,
       stakingToken: valasToken,
@@ -60,10 +59,10 @@ function getLendingBalances(ctx: BalancesContext, chain: Chain, contracts: Contr
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, healthFactor] = await Promise.all([
-    resolveBalances<typeof getContracts>(ctx, 'bsc', contracts, {
+    resolveBalances<typeof getContracts>(ctx, contracts, {
       pools: getLendingBalances,
     }),
-    getLendingPoolHealthFactor(ctx, 'bsc', lendingPoolContract),
+    getLendingPoolHealthFactor(ctx, lendingPoolContract),
   ])
 
   return {

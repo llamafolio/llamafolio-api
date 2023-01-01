@@ -121,7 +121,6 @@ export async function getAssetsContracts(chain: Chain, contract: Contract): Prom
 
 export async function getLendBorrowBalances(
   ctx: BalancesContext,
-  chain: Chain,
   assets: Contract[],
   contract: Contract,
 ): Promise<Balance[]> {
@@ -129,7 +128,7 @@ export async function getLendBorrowBalances(
 
   const [userCollateralBalancesRes, userBorrowBalancesRes] = await Promise.all([
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: assets.map((asset) => ({
         target: contract.address,
         params: [ctx.address, asset.address],
@@ -138,7 +137,7 @@ export async function getLendBorrowBalances(
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [ctx.address],
       abi: abi.borrowBalanceOf,
@@ -156,7 +155,7 @@ export async function getLendBorrowBalances(
     const userCollateralBalance = userCollateralBalances[i]
 
     const supply: BalanceWithExtraProps = {
-      chain,
+      chain: ctx.chain,
       decimals: asset.decimals,
       symbol: asset.symbol,
       address: asset.address,
@@ -169,7 +168,7 @@ export async function getLendBorrowBalances(
   }
 
   const borrow: Balance = {
-    chain,
+    chain: ctx.chain,
     decimals: USDC.decimals,
     symbol: USDC.symbol,
     address: USDC.address,

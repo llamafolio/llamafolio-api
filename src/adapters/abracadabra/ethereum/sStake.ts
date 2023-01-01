@@ -37,19 +37,19 @@ export async function getSStakeContract(chain: Chain, contract: Contract): Promi
   return stakeContract
 }
 
-export async function getSStakeBalance(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getSStakeBalance(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [balanceOfRes, totalSupplyRes, balanceOfTokenInUnderlyingRes] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [],
       abi: {
@@ -62,7 +62,7 @@ export async function getSStakeBalance(ctx: BalancesContext, chain: Chain, contr
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: SPELL.address,
       params: [contract.address],
       abi: abi.balanceOf,
@@ -76,7 +76,7 @@ export async function getSStakeBalance(ctx: BalancesContext, chain: Chain, contr
   const formattedBalanceOf = balanceOf.mul(balanceOfTokenInUnderlying).div(totalSupply)
 
   const balance: Balance = {
-    chain,
+    chain: ctx.chain,
     decimals: contract.decimals,
     address: contract.address,
     symbol: contract.symbol,

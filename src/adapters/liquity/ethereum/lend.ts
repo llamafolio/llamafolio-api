@@ -1,13 +1,12 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
-export async function getLendBalances(ctx: BalancesContext, chain: Chain, troveManager: Contract) {
+export async function getLendBalances(ctx: BalancesContext, troveManager: Contract) {
   const balances: Balance[] = []
 
   const troveDetailsRes = await call({
-    chain,
+    chain: ctx.chain,
     target: troveManager.address,
     params: [ctx.address],
     abi: {
@@ -54,7 +53,7 @@ export async function getLendBalances(ctx: BalancesContext, chain: Chain, troveM
   const troveDetails = troveDetailsRes.output
 
   balances.push({
-    chain: chain,
+    chain: ctx.chain,
     category: 'lend',
     symbol: 'ETH',
     decimals: 18,
@@ -63,7 +62,7 @@ export async function getLendBalances(ctx: BalancesContext, chain: Chain, troveM
   })
 
   balances.push({
-    chain: chain,
+    chain: ctx.chain,
     category: 'borrow',
     symbol: 'LUSD',
     decimals: 18,
