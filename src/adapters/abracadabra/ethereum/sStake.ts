@@ -1,6 +1,5 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { abi } from '@lib/erc20'
 import { Token } from '@lib/token'
@@ -13,9 +12,9 @@ const SPELL: Token = {
   symbol: 'SPELL',
 }
 
-export async function getSStakeContract(chain: Chain, contract: Contract): Promise<Contract> {
+export async function getSStakeContract(ctx: BaseContext, contract: Contract): Promise<Contract> {
   const underlyingTokenAddressRes = await call({
-    chain,
+    chain: ctx.chain,
     target: contract.address,
     params: [],
     abi: {
@@ -27,7 +26,7 @@ export async function getSStakeContract(chain: Chain, contract: Contract): Promi
     },
   })
 
-  const underlyings = await getERC20Details(chain, [underlyingTokenAddressRes.output])
+  const underlyings = await getERC20Details(ctx, [underlyingTokenAddressRes.output])
 
   const stakeContract: Contract = {
     ...contract,

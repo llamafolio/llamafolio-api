@@ -4,7 +4,7 @@ import {
   getLendingPoolHealthFactor,
   getLendingRewardsBalances,
 } from '@adapters/aave/v3/common/lending'
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const lendingPool: Contract = {
@@ -28,8 +28,8 @@ const incentiveController: Contract = {
   displayName: 'Aave: Incentives V3',
 }
 
-export const getContracts = async () => {
-  const pools = await getLendingPoolContracts('arbitrum', lendingPool, poolDataProvider)
+export const getContracts = async (ctx: BaseContext) => {
+  const pools = await getLendingPoolContracts(ctx, lendingPool, poolDataProvider)
 
   return {
     contracts: {

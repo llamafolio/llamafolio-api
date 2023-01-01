@@ -1,5 +1,5 @@
 import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
-import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
 import { Token } from '@lib/token'
@@ -34,9 +34,9 @@ const UwU: Token = {
   symbol: 'UwU',
 }
 
-export const getContracts = async () => {
+export const getContracts = async (ctx: BaseContext) => {
   const pools = await getLendingPoolContracts({
-    chain: 'ethereum',
+    ctx,
     lendingPool: lendingPoolContract,
     chefIncentivesController: chefIncentivesControllerContract,
     rewardToken: UwU,

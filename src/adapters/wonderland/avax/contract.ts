@@ -1,7 +1,6 @@
-import { Contract } from '@lib/adapter'
+import { BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
@@ -35,9 +34,9 @@ const wMEMO: Contract = {
   symbol: 'wMEMO ',
 }
 
-export async function getwMemoFarmContracts(chain: Chain, wMemoFarm: Contract): Promise<Contract> {
+export async function getwMemoFarmContracts(ctx: BaseContext, wMemoFarm: Contract): Promise<Contract> {
   const rewardTokenLengthRes = await call({
-    chain,
+    chain: ctx.chain,
     target: wMemoFarm.address,
     params: [],
     abi: abiWonderland.rewardTokenLength,
@@ -46,7 +45,7 @@ export async function getwMemoFarmContracts(chain: Chain, wMemoFarm: Contract): 
   const rewardTokenLength = parseInt(rewardTokenLengthRes.output)
 
   const rewardTokensRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: range(0, rewardTokenLength).map((i) => ({
       target: wMemoFarm.address,
       params: [i],
@@ -57,7 +56,7 @@ export async function getwMemoFarmContracts(chain: Chain, wMemoFarm: Contract): 
   const rewardTokens = rewardTokensRes.filter(isSuccess).map((res) => res.output)
 
   const contract: Contract = {
-    chain,
+    chain: ctx.chain,
     address: wMEMO.address,
     symbol: wMEMO.symbol,
     decimals: wMEMO.decimals,

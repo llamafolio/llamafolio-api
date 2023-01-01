@@ -1,4 +1,4 @@
-import { GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPoolsBalances } from '@lib/pools'
 import { Token } from '@lib/token'
@@ -14,10 +14,10 @@ const CRV: Token = {
   symbol: 'CRV',
 }
 
-export const getContracts = async () => {
-  const registries = await getRegistries('arbitrum', ['stableSwap', 'stableFactory', 'cryptoSwap'])
-  const pools = await getPoolsContracts('arbitrum', registries)
-  const gauges = await getGaugesContracts('arbitrum', registries, pools, CRV)
+export const getContracts = async (ctx: BaseContext) => {
+  const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap'])
+  const pools = await getPoolsContracts(ctx, registries)
+  const gauges = await getGaugesContracts(ctx, registries, pools, CRV)
 
   return {
     contracts: {

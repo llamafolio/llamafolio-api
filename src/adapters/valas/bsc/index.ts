@@ -1,5 +1,5 @@
 import { getLendingPoolHealthFactor } from '@adapters/aave/v3/common/lending'
-import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
 import { getMultiFeeDistributionBalances } from '@lib/geist/stake'
@@ -33,9 +33,9 @@ const valasToken: Token = {
   decimals: 18,
 }
 
-export const getContracts = async () => {
+export const getContracts = async (ctx: BaseContext) => {
   const pools = await getLendingPoolContracts({
-    chain: 'bsc',
+    ctx,
     lendingPool: lendingPoolContract,
     chefIncentivesController: chefIncentivesControllerContract,
     rewardToken: valasToken,

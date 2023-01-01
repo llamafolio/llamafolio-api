@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getPoolsBalances, getPoolsContracts } from '../common/balance'
@@ -8,8 +8,8 @@ const MiniChef: Contract = {
   address: '0xd10eF2A513cEE0Db54E959eF16cAc711470B62cF',
 }
 
-export const getContracts = async () => {
-  const pools = await getPoolsContracts('ethereum', MiniChef)
+export const getContracts = async (ctx: BaseContext) => {
+  const pools = await getPoolsContracts(ctx, MiniChef)
 
   return {
     contracts: { pools },

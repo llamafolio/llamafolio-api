@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getPoolsBalances } from '../common/balances'
@@ -17,8 +17,8 @@ const ALPACA: Contract = {
   symbol: 'ALPACA',
 }
 
-export const getContracts = async () => {
-  const pools = await getPoolsContracts('bsc', fairLaunch)
+export const getContracts = async (ctx: BaseContext) => {
+  const pools = await getPoolsContracts(ctx, fairLaunch)
 
   return {
     contracts: { pools },

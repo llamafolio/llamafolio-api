@@ -1,7 +1,7 @@
 import { getLendingRewardsBalances } from '@adapters/aave/v2/common/rewards'
 import { getStakeBalancerPoolBalances, getStakeBalances } from '@adapters/aave/v2/common/stake'
 import { getLendingPoolBalances, getLendingPoolContracts, getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const AAVE: Contract = {
@@ -51,8 +51,8 @@ const incentiveController: Contract = {
   chain: 'ethereum',
 }
 
-export const getContracts = async () => {
-  const pools = await getLendingPoolContracts('ethereum', lendingPool)
+export const getContracts = async (ctx: BaseContext) => {
+  const pools = await getLendingPoolContracts(ctx, lendingPool)
 
   return {
     contracts: {

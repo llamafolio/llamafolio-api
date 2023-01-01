@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getMarketsBalances, getMarketsContracts } from '../common/markets'
@@ -21,10 +21,10 @@ const cauldrons = [
   '0xa3Fc1B4b7f06c2391f7AD7D4795C1cD28A59917e',
 ]
 
-export const getContracts = async () => {
+export const getContracts = async (ctx: BaseContext) => {
   const [mStakeContracts, marketsContracts] = await Promise.all([
-    getMStakeContract('fantom', mSPELL),
-    getMarketsContracts('fantom', cauldrons),
+    getMStakeContract(ctx, mSPELL),
+    getMarketsContracts(ctx, cauldrons),
   ])
 
   return {

@@ -1,4 +1,4 @@
-import { Contract } from '@lib/adapter'
+import { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
@@ -53,9 +53,9 @@ const curveMetaRegistry: Contract = {
   address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
 }
 
-export const getPoolsUnderlyings = async (chain: Chain, poolsAddresses: string[]) => {
+export const getPoolsUnderlyings = async (ctx: BaseContext, poolsAddresses: string[]) => {
   const getUnderlyingsAddresses = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: poolsAddresses.map((poolAddress) => ({
       target: curveMetaRegistry.address,
       params: [poolAddress],
@@ -80,15 +80,15 @@ export const getPoolsUnderlyings = async (chain: Chain, poolsAddresses: string[]
   const underlyings: any[] = []
 
   for (const formattedUnderlyingsAddress of formattedUnderlyingsAddresses) {
-    underlyings.push(await getERC20Details(chain, formattedUnderlyingsAddress))
+    underlyings.push(await getERC20Details(ctx, formattedUnderlyingsAddress))
   }
 
   return underlyings
 }
 
-export async function getPoolFromLpTokenAddress(chain: Chain, lpTokens: string[]) {
+export async function getPoolFromLpTokenAddress(ctx: BaseContext, lpTokens: string[]) {
   const getPoolsAddressesFromLpTokens = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: lpTokens.map((lpToken) => ({
       target: curveMetaRegistry.address,
       params: [lpToken],

@@ -1,4 +1,4 @@
-import { GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import {
   BalanceWithExtraProps,
@@ -7,8 +7,8 @@ import {
   getMarketsContracts,
 } from '@lib/compound/v2/lending'
 
-export const getContracts = async () => {
-  const markets = await getMarketsContracts('avax', {
+export const getContracts = async (ctx: BaseContext) => {
+  const markets = await getMarketsContracts(ctx, {
     // Iron-Bank Unitroller on AVAX chain
     comptrollerAddress: '0x2eE80614Ccbc5e28654324a66A396458Fa5cD7Cc',
   })

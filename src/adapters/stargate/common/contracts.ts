@@ -1,7 +1,6 @@
-import { Contract } from '@lib/adapter'
+import { BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
@@ -61,11 +60,11 @@ const abi = {
   },
 }
 
-export async function getPoolsContracts(chain: Chain, lpStaking: Contract): Promise<Contract[]> {
+export async function getPoolsContracts(ctx: BaseContext, lpStaking: Contract): Promise<Contract[]> {
   const pools: Contract[] = []
 
   const poolsLengthRes = await call({
-    chain,
+    chain: ctx.chain,
     target: lpStaking.address,
     params: [],
     abi: abi.poolLength,
@@ -74,7 +73,7 @@ export async function getPoolsContracts(chain: Chain, lpStaking: Contract): Prom
   const poolsLength = parseInt(poolsLengthRes.output)
 
   const poolsInfosRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: range(0, poolsLength).map((i) => ({
       target: lpStaking.address,
       params: [i],
@@ -83,7 +82,7 @@ export async function getPoolsContracts(chain: Chain, lpStaking: Contract): Prom
   })
 
   const tokensRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: poolsInfosRes.map((res) => ({
       target: res.success ? res.output.lpToken : undefined,
       params: [],
@@ -100,7 +99,7 @@ export async function getPoolsContracts(chain: Chain, lpStaking: Contract): Prom
     }
 
     pools.push({
-      chain,
+      chain: ctx.chain,
       address: poolInfoRes.output.lpToken,
       yieldKey: tokenRes.output,
       underlyings: [tokenRes.output],

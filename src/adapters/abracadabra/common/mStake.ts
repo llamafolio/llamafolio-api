@@ -1,13 +1,12 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
-export async function getMStakeContract(chain: Chain, contract: Contract): Promise<Contract> {
+export async function getMStakeContract(ctx: BaseContext, contract: Contract): Promise<Contract> {
   const [underlyingTokenAddressRes, rewardTokenAddressRes] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [],
       abi: {
@@ -20,7 +19,7 @@ export async function getMStakeContract(chain: Chain, contract: Contract): Promi
     }),
 
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [],
       abi: {
@@ -34,8 +33,8 @@ export async function getMStakeContract(chain: Chain, contract: Contract): Promi
   ])
 
   const [underlyings, rewards] = await Promise.all([
-    getERC20Details(chain, [underlyingTokenAddressRes.output]),
-    getERC20Details(chain, [rewardTokenAddressRes.output]),
+    getERC20Details(ctx, [underlyingTokenAddressRes.output]),
+    getERC20Details(ctx, [rewardTokenAddressRes.output]),
   ])
 
   const stakeContract: Contract = {

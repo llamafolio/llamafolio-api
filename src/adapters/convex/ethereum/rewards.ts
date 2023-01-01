@@ -1,7 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getPoolFromLpTokenAddress, getPoolsUnderlyings, getUnderlyingsBalancesInPool } from '@lib/convex/underlyings'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -129,7 +128,7 @@ export async function getCRVCVXRewards(ctx: BalancesContext, pool: Contract) {
   const extraRewardsEarned = BigNumber.from(getExtraRewardsEarned.output)
 
   if (rewardsCRVEarned.gt(0)) {
-    const CVXRewards = await getCVXRatio(ctx.chain, CVX, rewardsCRVEarned)
+    const CVXRewards = await getCVXRatio(ctx, CVX, rewardsCRVEarned)
     rewards.push({ ...CRV, amount: rewardsCRVEarned }, { ...CVX, amount: CVXRewards as BigNumber })
   }
 
@@ -170,13 +169,13 @@ export async function getCRVCVXRewards(ctx: BalancesContext, pool: Contract) {
       .map((res) => BigNumber.from(res.output))
 
     const extraRewardsTokens = getExtraRewardsTokens.filter((res) => res.success).map((res) => res.output)
-    const rewardsTokens: Contract[] = await getERC20Details(ctx.chain, extraRewardsTokens)
+    const rewardsTokens: Contract[] = await getERC20Details(ctx, extraRewardsTokens)
 
     for (const rewardsToken of rewardsTokens) {
       if (rewardsToken.name && rewardsToken.name.includes('Curve')) {
         rewardsToken.amount = earnedExtraRewards[0]
-        rewardsToken.poolAddress = await getPoolFromLpTokenAddress(ctx.chain, [rewardsToken.address])
-        rewardsToken.underlyings = (await getPoolsUnderlyings(ctx.chain, rewardsToken.poolAddress)).flat()
+        rewardsToken.poolAddress = await getPoolFromLpTokenAddress(ctx, [rewardsToken.address])
+        rewardsToken.underlyings = (await getPoolsUnderlyings(ctx, rewardsToken.poolAddress)).flat()
 
         const underlyingsBalances = await getUnderlyingsBalancesInPool(
           ctx.chain,
@@ -200,9 +199,9 @@ export async function getCRVCVXRewards(ctx: BalancesContext, pool: Contract) {
   return rewards
 }
 
-const getCVXRatio = async (chain: Chain, contract: Contract, earnedBalances: BigNumber) => {
+const getCVXRatio = async (ctx: BalancesContext, contract: Contract, earnedBalances: BigNumber) => {
   const totalSupplyRes = await call({
-    chain,
+    chain: ctx.chain,
     target: contract.address,
     params: [],
     abi: abi.totalSupply,

@@ -131,7 +131,7 @@ const lockedRewardsBalances = async (ctx: BalancesContext, rewarder: string): Pr
   })
 
   const pendingRewardsTokens = pendingRewardsTokensRes.filter((res) => res.success).map((res) => res.output)
-  const rewardsTokens = await getERC20Details(ctx.chain, pendingRewardsTokens)
+  const rewardsTokens = await getERC20Details(ctx, pendingRewardsTokens)
 
   const pendingRewardsBalancesRes = await multicall({
     chain: ctx.chain,

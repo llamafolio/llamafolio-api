@@ -1,4 +1,4 @@
-import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -19,13 +19,13 @@ const sushi: Token = {
   decimals: 18,
 }
 
-export const getContracts = async (props: any) => {
+export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
 
   const [pairs, masterChefPoolsInfo] = await Promise.all([
     getPairsContracts({
-      chain: 'ethereum',
+      ctx,
       factoryAddress: '0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac',
       offset,
       limit,
@@ -80,7 +80,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
     pendingRewardName: 'pendingSushi',
   })
 
-  masterChefBalances = await getUnderlyingBalances('ethereum', masterChefBalances)
+  masterChefBalances = await getUnderlyingBalances(ctx, masterChefBalances)
 
   const balances = pairsBalances.concat(masterChefBalances)
 

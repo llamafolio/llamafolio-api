@@ -1,5 +1,4 @@
-import { Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
+import { BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
@@ -29,7 +28,7 @@ export interface cdpid extends Contract {
 }
 
 export async function getCdpidFromProxiesAddresses(
-  chain: Chain,
+  ctx: BalancesContext,
   cdps: Contract,
   manager: Contract,
   proxies: Contract[],
@@ -38,7 +37,7 @@ export async function getCdpidFromProxiesAddresses(
 
   // Maker uses cdpid to map an id with user's addresses
   const cdpidAddressesRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: proxies.map((proxy) => ({
       target: cdps.address,
       params: [manager.address, proxy.address],

@@ -1,4 +1,4 @@
-import { GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { Contract } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
@@ -28,16 +28,16 @@ const rJOE: Contract = {
   types: 'stake',
 }
 
-export const getContracts = async (props: any) => {
+export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
 
-  const markets = await getMarketsContracts('avax', {
+  const markets = await getMarketsContracts(ctx, {
     comptrollerAddress: '0xdc13687554205E5b89Ac783db14bb5bba4A1eDaC',
   })
 
   const pools = await getPairsContracts({
-    chain: 'avax',
+    ctx,
     factoryAddress: '0x9Ad6C38BE94206cA50bb0d90783181662f0Cfa10',
     offset,
     limit,

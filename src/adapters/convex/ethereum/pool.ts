@@ -1,7 +1,6 @@
 import { call } from '@defillama/sdk/build/abi'
-import { Contract } from '@lib/adapter'
+import { BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
-import { Chain } from '@lib/chains'
 import { getPoolFromLpTokenAddress, getPoolsUnderlyings } from '@lib/convex/underlyings'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -61,18 +60,18 @@ const abi = {
   },
 }
 
-export async function getPoolsContract(chain: Chain, contract: Contract) {
+export async function getPoolsContract(ctx: BaseContext, contract: Contract) {
   const pools: Contract[] = []
 
   const getPoolsCount = await call({
-    chain,
+    chain: ctx.chain,
     target: contract.address,
     params: [],
     abi: abi.poolLength,
   })
 
   const getPoolInfos = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: range(0, getPoolsCount.output).map((i) => ({
       target: contract.address,
       params: [i],
@@ -88,11 +87,11 @@ export async function getPoolsContract(chain: Chain, contract: Contract) {
   const lptokensAddresses: string[] = poolInfos.map((token) => token.lptoken)
 
   const [lpTokens, poolsFromLpTokensAddresses] = await Promise.all([
-    getERC20Details(chain, lptokensAddresses),
-    getPoolFromLpTokenAddress(chain, lptokensAddresses),
+    getERC20Details(ctx, lptokensAddresses),
+    getPoolFromLpTokenAddress(ctx, lptokensAddresses),
   ])
 
-  const underlyings = await getPoolsUnderlyings(chain, poolsFromLpTokensAddresses)
+  const underlyings = await getPoolsUnderlyings(ctx, poolsFromLpTokensAddresses)
 
   for (let i = 0; i < underlyings.length; i++) {
     const lpToken = lpTokens[i]

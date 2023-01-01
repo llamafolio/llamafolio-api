@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getwMemoFarmContracts } from './contract'
@@ -20,8 +20,8 @@ const wMemoFarm: Contract = {
   token: wMEMO,
 }
 
-export const getContracts = async () => {
-  const stake = await getwMemoFarmContracts('avax', wMemoFarm)
+export const getContracts = async (ctx: BaseContext) => {
+  const stake = await getwMemoFarmContracts(ctx, wMemoFarm)
 
   return {
     contracts: { wMEMO, stake, wMemoFarm },

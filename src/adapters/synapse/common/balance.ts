@@ -1,7 +1,6 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
@@ -56,18 +55,18 @@ const abi = {
   },
 }
 
-export async function getPoolsContracts(chain: Chain, contract: Contract) {
+export async function getPoolsContracts(ctx: BaseContext, contract: Contract) {
   const contracts: Contract[] = []
 
   const [poolLentghRes, synapseRes] = await Promise.all([
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [],
       abi: abi.poolLength,
     }),
     call({
-      chain,
+      chain: ctx.chain,
       target: contract.address,
       params: [],
       abi: abi.SYNAPSE,
@@ -77,7 +76,7 @@ export async function getPoolsContracts(chain: Chain, contract: Contract) {
   const poolLength = parseInt(poolLentghRes.output)
 
   const lpTokensRes = await multicall({
-    chain,
+    chain: ctx.chain,
     calls: range(0, poolLength).map((pid) => ({
       target: contract.address,
       params: [pid],
@@ -92,14 +91,14 @@ export async function getPoolsContracts(chain: Chain, contract: Contract) {
     }
 
     contracts.push({
-      chain,
+      chain: ctx.chain,
       address: lpTokenRes.output,
       pid,
       rewards: [synapseRes.output],
     })
   }
 
-  return getPairsDetails(chain, contracts)
+  return getPairsDetails(ctx, contracts)
 }
 
 export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[], MiniChef: Contract) {
@@ -136,5 +135,5 @@ export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[], 
     balances.push(balance)
   }
 
-  return getUnderlyingBalances(ctx.chain, balances)
+  return getUnderlyingBalances(ctx, balances)
 }

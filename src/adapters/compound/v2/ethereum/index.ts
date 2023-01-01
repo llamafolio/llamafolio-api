@@ -1,5 +1,5 @@
 import { getRewardsBalances } from '@adapters/compound/v2/common/rewards'
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import {
   BalanceWithExtraProps,
@@ -29,8 +29,8 @@ const Comptroller: Contract = {
   underlyings: [COMP],
 }
 
-export const getContracts = async () => {
-  const markets = await getMarketsContracts('ethereum', {
+export const getContracts = async (ctx: BaseContext) => {
+  const markets = await getMarketsContracts(ctx, {
     comptrollerAddress: Comptroller.address,
     underlyingAddressByMarketAddress: {
       // cETH -> WETH

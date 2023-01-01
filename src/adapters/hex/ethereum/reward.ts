@@ -1,6 +1,5 @@
-import { Contract } from '@lib/adapter'
+import { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { sumBN } from '@lib/math'
 import { BigNumber } from 'ethers'
 
@@ -18,11 +17,15 @@ interface decodedDataParams {
   sats: bigint
 }
 
-export async function getRewardsBalances(chain: Chain, contract: Contract, stakesAndIndexes: stakeAndIndexParams[]) {
+export async function getRewardsBalances(
+  ctx: BaseContext,
+  contract: Contract,
+  stakesAndIndexes: stakeAndIndexParams[],
+) {
   const rewards: BigNumber[] = []
 
   for (const stakeAndIndex of stakesAndIndexes) {
-    const reward = await getInterestForRangeDays(chain, contract, stakeAndIndex)
+    const reward = await getInterestForRangeDays(ctx, contract, stakeAndIndex)
 
     rewards.push(reward)
   }
@@ -44,11 +47,15 @@ const HEX_DECODER = (encodedDailyData: string) => {
   return { payout, shares, sats }
 }
 
-const getDecodedDataFromRangeDays = async (chain: Chain, contract: Contract, stakeAndIndex: stakeAndIndexParams) => {
+const getDecodedDataFromRangeDays = async (
+  ctx: BaseContext,
+  contract: Contract,
+  stakeAndIndex: stakeAndIndexParams,
+) => {
   const data = []
 
   const currentDayRes = await call({
-    chain,
+    chain: ctx.chain,
     target: contract.address,
     params: [],
     abi: {
@@ -65,7 +72,7 @@ const getDecodedDataFromRangeDays = async (chain: Chain, contract: Contract, sta
   const today = currentDayRes.output
 
   const dataRangeRes = await call({
-    chain,
+    chain: ctx.chain,
     target: contract.address,
     params: [stakeAndIndex.lockedDays, today],
     abi: {
@@ -92,10 +99,10 @@ const getDecodedDataFromRangeDays = async (chain: Chain, contract: Contract, sta
   return data
 }
 
-const getInterestForRangeDays = async (chain: Chain, contract: Contract, stakeAndIndex: stakeAndIndexParams) => {
+const getInterestForRangeDays = async (ctx: BaseContext, contract: Contract, stakeAndIndex: stakeAndIndexParams) => {
   const interest: BigNumber[] = []
 
-  const decodedData: decodedDataParams[] = await getDecodedDataFromRangeDays(chain, contract, stakeAndIndex)
+  const decodedData: decodedDataParams[] = await getDecodedDataFromRangeDays(ctx, contract, stakeAndIndex)
 
   for (let i = 0; i < decodedData.length; i++) {
     const dailyDecodedData = decodedData[i]

@@ -1,6 +1,5 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
@@ -60,13 +59,13 @@ export interface BalanceWithExtraProps extends Balance {
 }
 
 export async function getMarketsContracts(
-  chain: Chain,
+  ctx: BaseContext,
   { comptrollerAddress, underlyingAddressByMarketAddress = {} }: GetMarketsContractsProps,
 ): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const cTokensAddressesRes = await call({
-    chain,
+    chain: ctx.chain,
     abi: abi.getAllMarkets,
     target: comptrollerAddress,
   })
@@ -74,13 +73,13 @@ export async function getMarketsContracts(
 
   const [marketsRes, underlyingTokensAddressesRes] = await Promise.all([
     multicall({
-      chain,
+      chain: ctx.chain,
       abi: abi.markets,
       calls: cTokensAddresses.map((cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] })),
     }),
 
     multicall({
-      chain,
+      chain: ctx.chain,
       calls: cTokensAddresses.map((address) => ({
         target: address,
         params: [],
@@ -99,7 +98,7 @@ export async function getMarketsContracts(
     }
 
     contracts.push({
-      chain,
+      chain: ctx.chain,
       address: cToken,
       collateralFactor: marketRes.output.collateralFactorMantissa,
       underlyings: [underlying],

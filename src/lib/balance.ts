@@ -1,4 +1,11 @@
-import { Balance, BalancesContext, BaseBalance, BaseContract, GetContractsHandler } from '@lib/adapter'
+import {
+  Balance,
+  BalancesContext,
+  BaseBalance,
+  BaseContract,
+  ExcludeRawContract,
+  GetContractsHandler,
+} from '@lib/adapter'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
@@ -157,11 +164,11 @@ export function sanitizeBalances(balances: Balance[]) {
 
 export async function resolveBalances<C extends GetContractsHandler>(
   ctx: BalancesContext,
-  contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
+  contracts: ExcludeRawContract<Partial<Awaited<ReturnType<C>>['contracts']>>,
   resolvers: {
     [key in keyof Partial<Awaited<ReturnType<C>>['contracts']>]: (
       ctx: BalancesContext,
-      contracts: Awaited<ReturnType<C>>['contracts'][key],
+      contracts: ExcludeRawContract<Awaited<ReturnType<C>>['contracts']>[key],
     ) =>
       | Promise<Balance | Balance[] | Balance[][] | null | undefined>
       | Balance

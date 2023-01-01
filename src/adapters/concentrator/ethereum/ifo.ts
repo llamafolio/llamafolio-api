@@ -153,7 +153,7 @@ export async function getIFOBalances(ctx: BalancesContext) {
 
   const pendingRewards = pendingRewardsRes.filter((res) => res.success)
 
-  const lpTokenDetails = await getERC20Details(chain, lpTokens)
+  const lpTokenDetails = await getERC20Details(ctx, lpTokens)
 
   const balances: Balance[] = []
   for (let index = 0; index < poolBalances.length; index++) {
@@ -165,7 +165,7 @@ export async function getIFOBalances(ctx: BalancesContext) {
       )
 
       const balance: Balance = {
-        chain: chain,
+        chain,
         category: 'lp',
         symbol: tokenDetail.symbol,
         decimals: tokenDetail.decimals,
