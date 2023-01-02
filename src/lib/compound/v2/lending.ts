@@ -65,7 +65,7 @@ export async function getMarketsContracts(
   const contracts: Contract[] = []
 
   const cTokensAddressesRes = await call({
-    chain: ctx.chain,
+    ctx,
     abi: abi.getAllMarkets,
     target: comptrollerAddress,
   })
@@ -73,13 +73,13 @@ export async function getMarketsContracts(
 
   const [marketsRes, underlyingTokensAddressesRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       abi: abi.markets,
       calls: cTokensAddresses.map((cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] })),
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: cTokensAddresses.map((address) => ({
         target: address,
         params: [],
@@ -118,7 +118,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
     getERC20BalanceOf(ctx, contracts as Token[]),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: contracts.map((token) => ({
         target: token.address,
         params: [ctx.address],
@@ -135,7 +135,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: contracts.map((token) => ({
         target: token.address,
         params: [],

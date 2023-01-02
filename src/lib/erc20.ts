@@ -60,7 +60,7 @@ export const abi = {
 
 export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): Promise<Balance[]> {
   const balances = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: tokens.map((token) => ({
       target: token.address,
       params: [ctx.address],
@@ -98,8 +98,8 @@ export async function getERC20Details(ctx: BaseContext, tokens: string[]): Promi
   }))
 
   const [symbols, decimals] = await Promise.all([
-    multicall({ chain: ctx.chain, calls, abi: abi.symbol }),
-    multicall({ chain: ctx.chain, calls, abi: abi.decimals }),
+    multicall({ ctx, calls, abi: abi.symbol }),
+    multicall({ ctx, calls, abi: abi.decimals }),
   ])
 
   for (let i = 0; i < missingTokens.length; i++) {
@@ -159,8 +159,8 @@ export async function resolveERC20Details<K extends string>(
 
   // fetch missing info on-chain
   const [symbols, decimals] = await Promise.all([
-    multicall({ chain: ctx.chain, calls, abi: abi.symbol }),
-    multicall({ chain: ctx.chain, calls, abi: abi.decimals }),
+    multicall({ ctx, calls, abi: abi.symbol }),
+    multicall({ ctx, calls, abi: abi.decimals }),
   ])
 
   let callsIdx = 0

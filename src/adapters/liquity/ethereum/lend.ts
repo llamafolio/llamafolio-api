@@ -6,7 +6,7 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
   const balances: Balance[] = []
 
   const troveDetailsRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: troveManager.address,
     params: [ctx.address],
     abi: {

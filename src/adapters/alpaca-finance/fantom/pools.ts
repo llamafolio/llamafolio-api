@@ -38,7 +38,7 @@ export async function getPoolsContracts(ctx: BaseContext, miniFairLaunch: Contra
   const contracts: Contract[] = []
 
   const poolsLengthRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: miniFairLaunch.address,
     params: [],
     abi: abi.poolLength,
@@ -47,7 +47,7 @@ export async function getPoolsContracts(ctx: BaseContext, miniFairLaunch: Contra
   const poolsLength = parseInt(poolsLengthRes.output)
 
   const poolsInfoRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, poolsLength).map((i) => ({
       target: miniFairLaunch.address,
       params: [i],
@@ -58,7 +58,7 @@ export async function getPoolsContracts(ctx: BaseContext, miniFairLaunch: Contra
   const poolsAddresses = poolsInfoRes.map((res) => res.output)
 
   const underlyingsAddressesRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: poolsAddresses.map((token: string) => ({
       target: token,
       params: [],

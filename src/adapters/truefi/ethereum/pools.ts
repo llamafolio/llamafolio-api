@@ -43,7 +43,7 @@ export async function getPoolsContracts(ctx: BaseContext) {
     params: [],
   }))
 
-  const tokensRes = await multicall({ chain: ctx.chain, calls, abi: abi.token })
+  const tokensRes = await multicall({ ctx, calls, abi: abi.token })
 
   for (let i = 0; i < pools.length; i++) {
     const tokenRes = tokensRes[i]
@@ -76,8 +76,8 @@ export async function getPoolsSupplies(ctx: BaseContext, pools: Contract[]) {
   }))
 
   const [poolValues, totalSupplies] = await Promise.all([
-    multicall({ chain: ctx.chain, calls, abi: abi.poolValue }),
-    multicall({ chain: ctx.chain, calls, abi: abi.totalSupply }),
+    multicall({ ctx, calls, abi: abi.poolValue }),
+    multicall({ ctx, calls, abi: abi.totalSupply }),
   ])
 
   for (let i = 0; i < pools.length; i++) {

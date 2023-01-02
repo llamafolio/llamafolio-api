@@ -1,4 +1,4 @@
-import { Balance, BalancesContext } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
@@ -8,13 +8,15 @@ import { BigNumber, ethers } from 'ethers'
 import MasterChefAbi from './abis/MasterChef.json'
 
 export interface GetMasterChefPoolsInfoParams {
-  chain: Chain
   masterChefAddress: string
   methodName?: string
 }
 
-export async function getMasterChefPoolsInfo({ chain, masterChefAddress, methodName }: GetMasterChefPoolsInfoParams) {
-  const provider = providers[chain]
+export async function getMasterChefPoolsInfo(
+  ctx: BaseContext,
+  { masterChefAddress, methodName }: GetMasterChefPoolsInfoParams,
+) {
+  const provider = providers[ctx.chain]
   const masterChef = new ethers.Contract(masterChefAddress, MasterChefAbi, provider)
 
   const poolLength = await masterChef.poolLength()
@@ -28,7 +30,7 @@ export async function getMasterChefPoolsInfo({ chain, masterChefAddress, methodN
   }
 
   const poolsInfoRes = await multicall({
-    chain,
+    ctx,
     calls,
     abi: methodName === 'poolInfo' || methodName == null ? poolInfoAbi : lpTokenAbi,
   })
@@ -63,7 +65,7 @@ export async function getMasterChefBalances(
 
   // token amounts
   const userInfoRes = await multicall({
-    chain,
+    ctx,
     calls: tokens.map((token) => ({
       params: [token.pid, ctx.address],
       target: masterChef.address,
@@ -101,7 +103,7 @@ export async function getMasterChefBalances(
 
   // rewards
   const pendingRewardsRes = await multicall({
-    chain,
+    ctx,
     calls: resBalances.map((token) => ({
       params: [token.pid, ctx.address],
       target: masterChef.address,

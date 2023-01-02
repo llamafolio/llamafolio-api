@@ -21,7 +21,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
   const balances: Balance[] = []
 
   const userSnapshotsRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: pairs.map((pair) => ({
       target: pair.address,
       params: [ctx.address],

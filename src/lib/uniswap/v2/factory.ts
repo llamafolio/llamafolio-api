@@ -53,7 +53,7 @@ export interface getPairsContractsParams {
 
 export async function getPairsContracts({ ctx, factoryAddress, offset = 0, limit = 100 }: getPairsContractsParams) {
   const allPairsLengthRes = await call({
-    chain: ctx.chain,
+    ctx,
     abi: abi.allPairsLength,
     target: factoryAddress,
   })
@@ -62,7 +62,7 @@ export async function getPairsContracts({ ctx, factoryAddress, offset = 0, limit
   const end = Math.min(offset + limit, allPairsLength)
 
   const allPairsRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(offset, end).map((_, i) => ({
       target: factoryAddress,
       params: [i],
@@ -84,8 +84,8 @@ export async function getPairsDetails(ctx: BaseContext, contracts: Contract[]): 
   }))
 
   const [token0sRes, token1sRes] = await Promise.all([
-    multicall({ chain: ctx.chain, calls, abi: abi.token0 }),
-    multicall({ chain: ctx.chain, calls, abi: abi.token1 }),
+    multicall({ ctx, calls, abi: abi.token0 }),
+    multicall({ ctx, calls, abi: abi.token1 }),
   ])
 
   for (let i = 0; i < calls.length; i++) {

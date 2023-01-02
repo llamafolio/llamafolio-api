@@ -69,7 +69,7 @@ export async function getPayeeStreams(ctx: BalancesContext) {
   const { streams } = await request(endpoint, payeeStreamsQuery, { id: ctx.address.toLowerCase() })
 
   const withdrawablesRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: streams.map((stream: any) => ({
       target: stream.contract.address,
       params: [stream.payer.id, ctx.address, stream.amountPerSec],

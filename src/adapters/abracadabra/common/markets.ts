@@ -8,7 +8,7 @@ export async function getMarketsContracts(ctx: BaseContext, contracts: string[])
   const marketsContracts: Contract[] = []
 
   const collateralTokenAddressesRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: contracts.map((contract) => ({
       target: contract,
       params: [],
@@ -25,7 +25,7 @@ export async function getMarketsContracts(ctx: BaseContext, contracts: string[])
   const collateralTokenAddresses = collateralTokenAddressesRes.filter((res) => res.success).map((res) => res.output)
 
   const underlyingsTokenAddressesRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: collateralTokenAddresses.map((address) => ({
       target: address,
       params: [],
@@ -71,7 +71,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
 
   const [borrowingTokenRes, lendingBalancesRes, borrowingBalancesRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: contracts.map((contract) => ({
         target: contract.address,
         params: [],
@@ -86,7 +86,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: contracts.map((contract) => ({
         target: contract.address,
         params: [ctx.address],
@@ -101,7 +101,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: contracts.map((contract) => ({
         target: contract.address,
         params: [ctx.address],

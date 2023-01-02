@@ -46,7 +46,7 @@ export async function getRewardsBalances(
   const rewards: Balance[] = []
 
   const XVSAllocatedRewardsRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: lens.address,
     params: [XVS.address, comptroller.address, ctx.address],
     abi: abi.getXVSBalanceMetadataExt,

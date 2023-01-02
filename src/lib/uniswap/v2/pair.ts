@@ -59,7 +59,7 @@ export async function getUnderlyingBalances(ctx: BalancesContext, balances: Bala
 
   const [token0sBalanceOfRes, token1sBalanceOfRes, totalSupplyRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: balances.map((bToken) => ({
         params: [bToken.address],
         target: bToken.underlyings![0].address,
@@ -68,7 +68,7 @@ export async function getUnderlyingBalances(ctx: BalancesContext, balances: Bala
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: balances.map((bToken) => ({
         params: [bToken.address],
         target: bToken.underlyings![1].address,
@@ -77,7 +77,7 @@ export async function getUnderlyingBalances(ctx: BalancesContext, balances: Bala
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: balances.map((token) => ({
         params: [],
         target: token.address,

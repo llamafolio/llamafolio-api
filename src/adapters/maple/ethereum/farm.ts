@@ -11,7 +11,7 @@ export async function getFarmContracts(ctx: BaseContext, contract: Contract): Pr
   const contracts: Contract[] = []
 
   const getPoolsNumber = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [],
     abi: {
@@ -24,7 +24,7 @@ export async function getFarmContracts(ctx: BaseContext, contract: Contract): Pr
   })
 
   const getPoolsAddresses = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, getPoolsNumber.output).map((i) => ({
       target: contract.address,
       params: [i],
@@ -41,7 +41,7 @@ export async function getFarmContracts(ctx: BaseContext, contract: Contract): Pr
   const poolsAddresses = getPoolsAddresses.filter(isSuccess).map((res) => res.output)
 
   const getUnderlyingsTokensAddresses = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: poolsAddresses.map((pool) => ({
       target: pool,
       params: [],
@@ -80,7 +80,7 @@ export async function getFarmBalances(ctx: BalancesContext, contracts: Contract[
   const balances = await getERC20BalanceOf(ctx, contracts as Token[])
 
   const getRewards = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: balances.map((balance) => ({
       target: balance.address,
       params: [ctx.address],

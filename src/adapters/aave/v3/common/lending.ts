@@ -43,7 +43,7 @@ export async function getLendingPoolContracts(
   const contracts: Contract[] = []
 
   const reserveListRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: lendingPool.address,
     params: [],
     abi: abi.getReservesList,
@@ -52,7 +52,7 @@ export async function getLendingPoolContracts(
   const reservesList: string[] = reserveListRes.output
 
   const reserveTokensAddressesRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: reservesList.map((address) => ({
       target: poolDataProvider.address,
       params: [address],
@@ -120,7 +120,7 @@ export async function getLendingRewardsBalances(
   const assets: any = contracts.map((contract: Contract) => contract.address)
 
   const rewardsListsRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: incentiveController.address,
     params: [assets, ctx.address],
     abi: {
@@ -163,7 +163,7 @@ export async function getLendingRewardsBalances(
 
 export async function getLendingPoolHealthFactor(ctx: BalancesContext, lendingPool: Contract) {
   const userAccountDataRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: lendingPool.address,
     params: [ctx.address],
     abi: {

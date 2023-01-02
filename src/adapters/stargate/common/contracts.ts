@@ -64,7 +64,7 @@ export async function getPoolsContracts(ctx: BaseContext, lpStaking: Contract): 
   const pools: Contract[] = []
 
   const poolsLengthRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: lpStaking.address,
     params: [],
     abi: abi.poolLength,
@@ -73,7 +73,7 @@ export async function getPoolsContracts(ctx: BaseContext, lpStaking: Contract): 
   const poolsLength = parseInt(poolsLengthRes.output)
 
   const poolsInfosRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, poolsLength).map((i) => ({
       target: lpStaking.address,
       params: [i],
@@ -82,7 +82,7 @@ export async function getPoolsContracts(ctx: BaseContext, lpStaking: Contract): 
   })
 
   const tokensRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: poolsInfosRes.map((res) => ({
       target: res.success ? res.output.lpToken : undefined,
       params: [],

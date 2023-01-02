@@ -108,14 +108,14 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
   const contracts: FarmContract[] = []
 
   const poolsLength = await call({
-    chain: ctx.chain,
+    ctx,
     target: masterChef.address,
     params: [],
     abi: abi.poolLength,
   })
 
   const poolsAddressesRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, poolsLength.output).map((i) => ({
       target: masterChef.address,
       params: [i],
@@ -126,7 +126,7 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
   const poolsAddresses = poolsAddressesRes.filter(isSuccess).map((res) => res.output)
 
   const poolInfosRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: poolsAddresses.map((pool) => ({
       target: masterChef.address,
       params: [pool],
@@ -142,7 +142,7 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
 
   const [depositTokensRes, rewardTokensRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: poolInfos.map((res) => ({
         target: res.output.helper,
         params: [],
@@ -151,7 +151,7 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: poolInfos.flatMap((res) =>
         range(0, rewardsLength).map((idx) => ({
           target: res.output.rewarder,
@@ -194,7 +194,7 @@ export async function getFarmBalances(
 
   const [userDepositBalancesRes, pendingBaseRewardsRes, pendingRewardsRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: pools.map((pool) => ({
         target: masterChef.address,
         params: [pool.address, ctx.address],
@@ -203,7 +203,7 @@ export async function getFarmBalances(
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: pools.map((pool) => ({
         target: masterChef.address,
         params: [pool.address, ctx.address, pool.address],
@@ -212,7 +212,7 @@ export async function getFarmBalances(
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: pools.flatMap(
         (pool) =>
           pool.rewards?.map((rewardToken) => ({
@@ -287,7 +287,7 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
     totalPoolSupplyRes,
   ] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -300,7 +300,7 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -313,7 +313,7 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -330,7 +330,7 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {

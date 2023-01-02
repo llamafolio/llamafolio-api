@@ -110,14 +110,14 @@ export async function getCRVCVXRewards(ctx: BalancesContext, pool: Contract) {
 
   const [getCRVRewardsEarned, getExtraRewardsEarned] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: pool.address,
       params: [ctx.address],
       abi: abi.earned,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: pool.address,
       params: [],
       abi: abi.extraRewardsLength,
@@ -134,7 +134,7 @@ export async function getCRVCVXRewards(ctx: BalancesContext, pool: Contract) {
 
   if (extraRewardsEarned.gt(0)) {
     const getExtraRewardsAddresses = await multicall({
-      chain: ctx.chain,
+      ctx,
       calls: range(0, +extraRewardsEarned).map((i) => ({
         target: pool.address,
         params: [i],
@@ -146,7 +146,7 @@ export async function getCRVCVXRewards(ctx: BalancesContext, pool: Contract) {
 
     const [getEarnedExtraRewards, getExtraRewardsTokens] = await Promise.all([
       multicall({
-        chain: ctx.chain,
+        ctx,
         calls: extraRewardsAddresses.map((extra) => ({
           target: extra,
           params: [ctx.address],
@@ -155,7 +155,7 @@ export async function getCRVCVXRewards(ctx: BalancesContext, pool: Contract) {
       }),
 
       multicall({
-        chain: ctx.chain,
+        ctx,
         calls: extraRewardsAddresses.map((extra) => ({
           target: extra,
           params: [],
@@ -178,7 +178,7 @@ export async function getCRVCVXRewards(ctx: BalancesContext, pool: Contract) {
         rewardsToken.underlyings = (await getPoolsUnderlyings(ctx, rewardsToken.poolAddress)).flat()
 
         const underlyingsBalances = await getUnderlyingsBalancesInPool(
-          ctx.chain,
+          ctx,
           rewardsToken,
           rewardsToken.address,
           rewardsToken.poolAddress[0],
@@ -201,7 +201,7 @@ export async function getCRVCVXRewards(ctx: BalancesContext, pool: Contract) {
 
 const getCVXRatio = async (ctx: BalancesContext, contract: Contract, earnedBalances: BigNumber) => {
   const totalSupplyRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [],
     abi: abi.totalSupply,

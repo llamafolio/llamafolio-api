@@ -113,7 +113,7 @@ export async function getProxiesBalances(
 
   const [ilksInfosRes, ilksMatsRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: cdpids.flatMap((cdpid) =>
         cdpid.ilks.map((asset) => ({
           target: ilk.address,
@@ -123,7 +123,7 @@ export async function getProxiesBalances(
       abi: abi.ilkData,
     }),
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: cdpids.flatMap((cdpid) =>
         cdpid.ilks.map((asset) => ({
           target: spot.address,
@@ -179,7 +179,7 @@ const getUrnsBalances = async (ctx: BalancesContext, vat: Contract, urnHandlers:
 
   const [urnsRes, ilksRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: urnHandlers.map((urn) => ({
         target: vat.address,
         params: [urn.asset.ilkId, urn.urnAddress],
@@ -187,7 +187,7 @@ const getUrnsBalances = async (ctx: BalancesContext, vat: Contract, urnHandlers:
       abi: abi.urns,
     }),
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: urnHandlers.map((urn) => ({
         target: vat.address,
         params: [urn.asset.ilkId],

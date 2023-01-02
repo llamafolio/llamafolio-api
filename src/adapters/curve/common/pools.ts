@@ -177,7 +177,7 @@ const abi = {
 
 async function getStableFactoryBasePools(ctx: BaseContext, stableFactory: string) {
   const basePoolCountRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: stableFactory,
     abi: abi.base_pool_count,
   })
@@ -185,13 +185,13 @@ async function getStableFactoryBasePools(ctx: BaseContext, stableFactory: string
   const basePoolCount = parseInt(basePoolCountRes.output)
 
   const basePoolsRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, basePoolCount).map((poolIdx) => ({ target: stableFactory, params: [poolIdx] })),
     abi: abi.base_pool_list,
   })
 
   const basePoolsCoinsRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: basePoolsRes
       .filter(isSuccess)
       .map((res) => res.output)
@@ -224,7 +224,7 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
   const registriesAddresses = Object.values(registries)
 
   const poolsCountRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: registriesAddresses.map((registry) => ({ target: registry })),
     abi: abi.pool_count,
   })
@@ -238,7 +238,7 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
   }
 
   const poolsListRes = await multicall<string, [number], string>({
-    chain: ctx.chain,
+    ctx,
     calls,
     abi: abi.pool_list,
   })
@@ -269,21 +269,21 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
 
   const [lpTokensRes, poolNamesRes, ...registriesCoins] = await Promise.all([
     multicall<string, [string], string>({
-      chain: ctx.chain,
+      ctx,
       // TODO: no need to fetch LP tokens for Factory regisitries
       calls,
       abi: abi.get_lp_token,
     }),
 
     multicall<string, [string], string>({
-      chain: ctx.chain,
+      ctx,
       calls,
       abi: abi.get_pool_name,
     }),
 
     ...registriesIds.map((registryId, registryIdx) =>
       multicall<string, [string], string[]>({
-        chain: ctx.chain,
+        ctx,
         calls: registriesPools[registryIdx].map((pool) => ({
           target: registriesAddresses[registryIdx],
           params: [pool],

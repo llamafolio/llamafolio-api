@@ -26,7 +26,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -52,7 +52,7 @@ export async function getFormattedStakeBalances(ctx: BalancesContext, contract: 
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -61,7 +61,7 @@ export async function getFormattedStakeBalances(ctx: BalancesContext, contract: 
   const balanceOf = balanceOfRes.output
 
   const formattedBalanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [balanceOf],
     abi: abiOlympus.balanceFrom,

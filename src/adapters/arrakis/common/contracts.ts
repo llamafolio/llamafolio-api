@@ -40,14 +40,14 @@ const abi = {
 
 export async function getVaults(ctx: BaseContext, factoryArrakis: Contract) {
   const getPoolsDeployers = await call({
-    chain: ctx.chain,
+    ctx,
     target: factoryArrakis.address,
     params: [],
     abi: abi.getDeployers,
   })
 
   const getDeployedPools = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: getPoolsDeployers.output.map((deployer: string) => ({
       target: factoryArrakis.address,
       params: [deployer],

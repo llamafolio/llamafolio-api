@@ -46,14 +46,14 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
 
   const [stakeBalanceRes, pendingXVSRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: abi.userInfo,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: abi.pendingXVS,

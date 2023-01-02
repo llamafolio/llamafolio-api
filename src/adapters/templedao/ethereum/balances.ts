@@ -22,7 +22,7 @@ export async function getStakeBalances(
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -31,7 +31,7 @@ export async function getStakeBalances(
   const balanceOf = balanceOfRes.output
 
   const formattedBalanceRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: templeStaking.address,
     params: [balanceOf],
     abi: {
@@ -68,7 +68,7 @@ export async function getLockedBalances(ctx: BalancesContext, contracts: Contrac
 
   const [balancesLockedRes, periodStartTimestampRes, periodDurationRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: contracts.map((contract) => ({
         target: contract.address,
         params: [ctx.address],
@@ -77,7 +77,7 @@ export async function getLockedBalances(ctx: BalancesContext, contracts: Contrac
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls,
       abi: {
         inputs: [],
@@ -89,7 +89,7 @@ export async function getLockedBalances(ctx: BalancesContext, contracts: Contrac
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls,
       abi: {
         inputs: [],

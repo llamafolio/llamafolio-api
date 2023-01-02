@@ -15,7 +15,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,

@@ -15,7 +15,7 @@ const USV: Token = {
 
 export async function getStakeBalance(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,

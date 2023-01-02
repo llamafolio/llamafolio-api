@@ -14,7 +14,7 @@ const WAVAX: Contract = {
 export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const [balanceOfRes, poolValueRes, totalSupplyRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: ctx.address,
       abi: {
@@ -27,7 +27,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -40,7 +40,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {

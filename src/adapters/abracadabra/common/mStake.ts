@@ -6,7 +6,7 @@ import { BigNumber } from 'ethers'
 export async function getMStakeContract(ctx: BaseContext, contract: Contract): Promise<Contract> {
   const [underlyingTokenAddressRes, rewardTokenAddressRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -19,7 +19,7 @@ export async function getMStakeContract(ctx: BaseContext, contract: Contract): P
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -53,7 +53,7 @@ export async function getMStakeBalance(ctx: BalancesContext, contract: Contract)
 
   const [balanceOfRes, pendingRewardsRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: {
@@ -70,7 +70,7 @@ export async function getMStakeBalance(ctx: BalancesContext, contract: Contract)
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: {

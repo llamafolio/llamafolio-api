@@ -20,7 +20,7 @@ export async function getVestBalances(ctx: BalancesContext, contracts: Contract[
   }))
 
   const vestingBalanceOfRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls,
     abi: {
       inputs: [{ internalType: 'address', name: '_depositor', type: 'address' }],

@@ -24,7 +24,7 @@ export async function getPairsContracts(ctx: BaseContext, registry: string) {
   const contracts: Contract[] = []
 
   const allPairAddressesRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: registry,
     abi: abi.getAllPairAddresses,
   })
@@ -32,7 +32,7 @@ export async function getPairsContracts(ctx: BaseContext, registry: string) {
   const pairs: string[] = allPairAddressesRes.output
 
   const collateralContractsRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: pairs.map((address) => ({
       target: address,
       params: [],

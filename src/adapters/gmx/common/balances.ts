@@ -68,15 +68,10 @@ export async function getGMXStakerBalances(ctx: BalancesContext, gmxStaker: Cont
   const native = gmxStaker.rewards?.[1]
 
   const [stakeGMXRes, stakeEsGMXRes, pendingesGMXRewardsRes, pendingETHRewardsRes] = await Promise.all([
-    call({ chain: ctx.chain, target: gmxStaker.address, params: [ctx.address, gmx.address], abi: abi.depositBalances }),
-    call({
-      chain: ctx.chain,
-      target: gmxStaker.address,
-      params: [ctx.address, esGMX.address],
-      abi: abi.depositBalances,
-    }),
-    call({ chain: ctx.chain, target: gmxStaker.address, params: [ctx.address], abi: abi.claimable }),
-    call({ chain: ctx.chain, target: sbfGMX.address, params: [ctx.address], abi: abi.claimable }),
+    call({ ctx, target: gmxStaker.address, params: [ctx.address, gmx.address], abi: abi.depositBalances }),
+    call({ ctx, target: gmxStaker.address, params: [ctx.address, esGMX.address], abi: abi.depositBalances }),
+    call({ ctx, target: gmxStaker.address, params: [ctx.address], abi: abi.claimable }),
+    call({ ctx, target: sbfGMX.address, params: [ctx.address], abi: abi.claimable }),
   ])
 
   const stakeGMX = BigNumber.from(stakeGMXRes.output)
@@ -118,8 +113,8 @@ export async function getGMXVesterBalance(ctx: BalancesContext, gmxVester: Contr
   }
 
   const [balanceOfRes, claimableRes] = await Promise.all([
-    call({ chain: ctx.chain, target: gmxVester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-    call({ chain: ctx.chain, target: gmxVester.address, params: [ctx.address], abi: abi.claimable }),
+    call({ ctx, target: gmxVester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: gmxVester.address, params: [ctx.address], abi: abi.claimable }),
   ])
 
   const balanceOf = BigNumber.from(balanceOfRes.output)
@@ -149,9 +144,9 @@ export async function getGLPStakerBalance(ctx: BalancesContext, glpStaker: Contr
   const native = glpStaker.rewards?.[1]
 
   const [stakeGLPRes, pendingesGMXRewardsRes, pendingETHRewardsRes] = await Promise.all([
-    call({ chain: ctx.chain, target: glpStaker.address, params: [ctx.address], abi: abi.stakedAmounts }),
-    call({ chain: ctx.chain, target: glpStaker.address, params: [ctx.address], abi: abi.claimable }),
-    call({ chain: ctx.chain, target: glpStaker.fGlp, params: [ctx.address], abi: abi.claimable }),
+    call({ ctx, target: glpStaker.address, params: [ctx.address], abi: abi.stakedAmounts }),
+    call({ ctx, target: glpStaker.address, params: [ctx.address], abi: abi.claimable }),
+    call({ ctx, target: glpStaker.fGlp, params: [ctx.address], abi: abi.claimable }),
   ])
 
   const stakeGLP = BigNumber.from(stakeGLPRes.output)
@@ -177,8 +172,8 @@ export async function getGLPStakerBalance(ctx: BalancesContext, glpStaker: Contr
 
 export async function getGLPVesterBalance(ctx: BalancesContext, glpVester: Contract) {
   const [balanceOfRes, claimableRes] = await Promise.all([
-    call({ chain: ctx.chain, target: glpVester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-    call({ chain: ctx.chain, target: glpVester.address, params: [ctx.address], abi: abi.claimable }),
+    call({ ctx, target: glpVester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: glpVester.address, params: [ctx.address], abi: abi.claimable }),
   ])
 
   const balanceOf = BigNumber.from(balanceOfRes.output)

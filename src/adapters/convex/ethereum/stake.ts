@@ -17,7 +17,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
 
   const [getBalanceOf, getRewards] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: abi.balanceOf,

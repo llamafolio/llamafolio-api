@@ -43,17 +43,8 @@ export async function getStakeBalances(
   }))
 
   const [getBalances, getPendingRewards] = await Promise.all([
-    multicall({
-      chain: ctx.chain,
-      calls,
-      abi: abi.userInfos,
-    }),
-
-    multicall({
-      chain: ctx.chain,
-      calls,
-      abi: abi.pendingEmissionToken,
-    }),
+    multicall({ ctx, calls, abi: abi.userInfos }),
+    multicall({ ctx, calls, abi: abi.pendingEmissionToken }),
   ])
 
   const balances = getBalances.filter((res) => res.success).map((res) => BigNumber.from(res.output.amount))

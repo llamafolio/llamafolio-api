@@ -46,8 +46,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
       limit,
     }),
 
-    getMasterChefPoolsInfo({
-      chain: 'ethereum',
+    getMasterChefPoolsInfo(ctx, {
       masterChefAddress: masterChef.address,
     }),
   ])

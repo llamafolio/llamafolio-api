@@ -59,24 +59,14 @@ export async function getPoolsContracts(ctx: BaseContext, contract: Contract) {
   const contracts: Contract[] = []
 
   const [poolLentghRes, synapseRes] = await Promise.all([
-    call({
-      chain: ctx.chain,
-      target: contract.address,
-      params: [],
-      abi: abi.poolLength,
-    }),
-    call({
-      chain: ctx.chain,
-      target: contract.address,
-      params: [],
-      abi: abi.SYNAPSE,
-    }),
+    call({ ctx, target: contract.address, params: [], abi: abi.poolLength }),
+    call({ ctx, target: contract.address, params: [], abi: abi.SYNAPSE }),
   ])
 
   const poolLength = parseInt(poolLentghRes.output)
 
   const lpTokensRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, poolLength).map((pid) => ({
       target: contract.address,
       params: [pid],
@@ -110,8 +100,8 @@ export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[], 
   }))
 
   const [userInfosRes, pendingSynapsesRes] = await Promise.all([
-    multicall({ chain: ctx.chain, calls, abi: abi.userInfo }),
-    multicall({ chain: ctx.chain, calls, abi: abi.pendingSynapse }),
+    multicall({ ctx, calls, abi: abi.userInfo }),
+    multicall({ ctx, calls, abi: abi.pendingSynapse }),
   ])
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {

@@ -1,6 +1,6 @@
-import { call } from '@defillama/sdk/build/abi'
 import { BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
+import { call } from '@lib/call'
 import { getPoolFromLpTokenAddress, getPoolsUnderlyings } from '@lib/convex/underlyings'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -64,14 +64,14 @@ export async function getPoolsContract(ctx: BaseContext, contract: Contract) {
   const pools: Contract[] = []
 
   const getPoolsCount = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [],
     abi: abi.poolLength,
   })
 
   const getPoolInfos = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, getPoolsCount.output).map((i) => ({
       target: contract.address,
       params: [i],

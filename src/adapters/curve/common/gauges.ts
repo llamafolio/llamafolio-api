@@ -156,7 +156,7 @@ export async function getGaugesContracts(
   }
 
   const rewardTokensRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls,
     abi: abi.reward_tokens,
   })
@@ -197,7 +197,7 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]
     }
   }
 
-  const claimableRewards = await multicall({ chain: ctx.chain, calls, abi: abi.claimable_reward })
+  const claimableRewards = await multicall({ ctx, calls, abi: abi.claimable_reward })
 
   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
     const rewards = gaugesBalancesRes[gaugeIdx].rewards || []

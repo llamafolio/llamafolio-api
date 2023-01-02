@@ -54,21 +54,21 @@ export async function getLendBorrowBalances(
 
   const [suppliedRes, borrowedRes, feesAvailableRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: synthetixContract.address,
       params: [ctx.address],
       abi: abi.collateral,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: synthetixContract.address,
       params: [ctx.address],
       abi: abi.remainingIssuableSynths,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: feePoolContract.address,
       params: [ctx.address],
       abi: abi.feesAvailable,

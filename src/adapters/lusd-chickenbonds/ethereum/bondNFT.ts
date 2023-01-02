@@ -59,7 +59,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: bondNFT.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -68,7 +68,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
   const bondsLength = balanceOfRes.output
 
   const tokenOfOwnerByIndexRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, bondsLength).map((bondIdx) => ({
       target: bondNFT.address,
       params: [ctx.address, bondIdx],
@@ -79,7 +79,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
   const tokenIDs = tokenOfOwnerByIndexRes.filter(isSuccess).map((res) => parseInt(res.output))
 
   const bondStatusRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: tokenIDs.map((tokenID) => ({
       target: bondNFT.address,
       params: [tokenID],
@@ -94,7 +94,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
 
   const [bondAmountsRes, accruedBLUSDRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: activeTokenIDs.map((tokenID) => ({
         target: bondNFT.address,
         params: [tokenID],

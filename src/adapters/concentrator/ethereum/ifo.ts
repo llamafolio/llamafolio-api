@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import { Balance, BalancesContext } from '@lib/adapter'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -24,7 +22,7 @@ export async function getIFOBalances(ctx: BalancesContext) {
   }
 
   const poolDetailsRes = await multicall({
-    chain: 'ethereum',
+    ctx,
     calls: calls,
     abi: {
       inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
@@ -70,7 +68,7 @@ export async function getIFOBalances(ctx: BalancesContext) {
   }
 
   const poolBalancesRes = await multicall({
-    chain: 'ethereum',
+    ctx,
     calls: calls,
     abi: {
       inputs: [
@@ -123,7 +121,7 @@ export async function getIFOBalances(ctx: BalancesContext) {
   }
 
   const pendingRewardsRes = await multicall({
-    chain: 'ethereum',
+    ctx,
     calls: calls,
     abi: {
       inputs: [
@@ -165,7 +163,7 @@ export async function getIFOBalances(ctx: BalancesContext) {
       )
 
       const balance: Balance = {
-        chain,
+        chain: ctx.chain,
         category: 'lp',
         symbol: tokenDetail.symbol,
         decimals: tokenDetail.decimals,
@@ -178,7 +176,7 @@ export async function getIFOBalances(ctx: BalancesContext) {
       if (pendingReward) {
         balances.rewards = [
           {
-            chain,
+            chain: ctx.chain,
             category: 'lp',
             symbol: 'CTR',
             decimals: 18,

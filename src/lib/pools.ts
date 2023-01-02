@@ -48,7 +48,7 @@ export async function getPoolsUnderlyingBalances(
 
   const [totalSuppliesRes, underlyingsBalanceOfRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: pools.map((token) => ({
         params: [],
         target: token.address,
@@ -57,7 +57,7 @@ export async function getPoolsUnderlyingBalances(
     }),
 
     multicallBalances({
-      chain: ctx.chain,
+      ctx,
       calls,
       abi: erc20Abi.balanceOf,
     }),
@@ -126,7 +126,7 @@ export async function getStakingPoolsBalances(
 
   const [totalSuppliesRes, stakingTokenBalancesRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: poolsBalances.map((pool) => ({
         params: [],
         target: getLPTokenAddress(pool),
@@ -135,7 +135,7 @@ export async function getStakingPoolsBalances(
     }),
 
     multicallBalances({
-      chain: ctx.chain,
+      ctx,
       calls: poolsBalances.map((pool) => ({
         params: [pool.address],
         target: getLPTokenAddress(pool),
