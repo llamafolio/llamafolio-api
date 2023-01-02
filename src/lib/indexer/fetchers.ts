@@ -11,21 +11,38 @@ export const getTokensInteracted = async (
   variables = {},
   headers = {},
   chain?: string,
-): Promise<{ token_transfers: IndexerTokenInteraction[] }> =>
-  indexer_graph(getTokensInteractedQuery(address.toLowerCase(), chain), variables, headers)
+): Promise<IndexerTokenInteraction[]> => {
+  const { token_transfers } = await indexer_graph(
+    getTokensInteractedQuery(address.toLowerCase(), chain),
+    variables,
+    headers,
+  )
+
+  return token_transfers
+}
 
 export const getContractsInteracted = async (
   address: string,
   variables = {},
   headers = {},
   chain?: string,
-): Promise<{ contract_interactions: IndexerContractsInteracted[] }> =>
-  indexer_graph(getContractsInteractedQuery(address.toLowerCase(), chain), variables, headers)
+): Promise<IndexerContractsInteracted[]> => {
+  const { contract_interactions } = await indexer_graph(
+    getContractsInteractedQuery(address.toLowerCase(), chain),
+    variables,
+    headers,
+  )
+
+  return contract_interactions
+}
 
 export const getTokenDetails = async (
-  tokens: string[],
+  tokensAddress: string[],
   variables = {},
   headers = {},
   chain?: string,
-): Promise<{ tokens: IndexerContractsInteracted[] }> =>
-  indexer_graph(getTokensDetailsQuery(tokens, chain), variables, headers)
+): Promise<IndexerContractsInteracted[]> => {
+  const { tokens } = await indexer_graph(getTokensDetailsQuery(tokensAddress, chain), variables, headers)
+
+  return tokens
+}
