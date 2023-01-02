@@ -13,7 +13,7 @@ const wMEMO: Contract = {
   symbol: 'wMEMO ',
 }
 
-const wMEMOFarm: Contract = {
+const wMEMOFarmContract: Contract = {
   name: 'Multirewards',
   chain: 'avax',
   address: '0xC172c84587bEa6d593269bFE08632bf2Da2Bc0f6',
@@ -21,17 +21,17 @@ const wMEMOFarm: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const wMEMOStakeWithMultipleRewards = await getRewardsMEMOFarmTokens(ctx, wMEMOFarm)
+  const wMEMOStake = await getRewardsMEMOFarmTokens(ctx, wMEMOFarmContract)
 
   return {
-    contracts: { wMEMO, wMEMOStakeWithMultipleRewards },
+    contracts: { wMEMO, wMEMOStake },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     wMEMO: getTIMEStakeBalances,
-    wMEMOStakeWithMultipleRewards: getwMEMOStakeBalances,
+    wMEMOStake: getwMEMOStakeBalances,
   })
 
   return {

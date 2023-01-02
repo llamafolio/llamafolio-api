@@ -1,11 +1,11 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi } from '@lib/erc20'
+import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-const abiWonderland = {
+const abi = {
   wMEMOToMEMO: {
     inputs: [{ internalType: 'uint256', name: '_amount', type: 'uint256' }],
     name: 'wMEMOToMEMO',
@@ -50,7 +50,7 @@ export async function getTIMEStakeBalances(ctx: BalancesContext, contract: Contr
     ctx,
     target: contract.address,
     params: [ctx.address],
-    abi: abi.balanceOf,
+    abi: erc20Abi.balanceOf,
   })
 
   const balanceOf = balanceOfRes.output
@@ -59,7 +59,7 @@ export async function getTIMEStakeBalances(ctx: BalancesContext, contract: Contr
     ctx,
     target: contract.address,
     params: [balanceOf],
-    abi: abiWonderland.wMEMOToMEMO,
+    abi: abi.wMEMOToMEMO,
   })
 
   const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes.output)
@@ -84,7 +84,7 @@ export async function getwMEMOStakeBalances(ctx: BalancesContext, contract: Cont
     ctx,
     target: contract.address,
     params: [ctx.address],
-    abi: abi.balanceOf,
+    abi: erc20Abi.balanceOf,
   })
 
   const balanceOf = BigNumber.from(balanceOfRes.output)
@@ -109,7 +109,7 @@ export async function getwMEMOStakeBalances(ctx: BalancesContext, contract: Cont
     const rewardsBalanceOfRes = await multicall({
       ctx,
       calls,
-      abi: abiWonderland.earned,
+      abi: abi.earned,
     })
 
     let rewardsIdx = 0
