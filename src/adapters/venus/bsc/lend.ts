@@ -33,7 +33,7 @@ export async function getLendBorrowBalances(
   const marketsBalances = await getMarketsBalances(ctx, contracts)
 
   const VAIBalancesRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: comptroller.address,
     params: [ctx.address],
     abi: abi.mintedVAIs,

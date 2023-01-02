@@ -38,13 +38,11 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
       limit,
     }),
 
-    getMasterChefPoolsInfo({
-      chain: 'bsc',
+    getMasterChefPoolsInfo(ctx, {
       masterChefAddress: masterChef.address,
     }),
 
-    getMasterChefPoolsInfo({
-      chain: 'bsc',
+    getMasterChefPoolsInfo(ctx, {
       masterChefAddress: masterChef2.address,
       methodName: 'lpToken', //lpToken address is in a different method from poolInfo
     }),

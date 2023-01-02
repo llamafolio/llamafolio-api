@@ -43,7 +43,7 @@ export async function getLendingPoolContracts({
   const lmRewardsCount = (await chefIncentives.poolLength()).toNumber()
 
   const registeredTokensRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, lmRewardsCount).map((_, i) => ({
       target: chefIncentives.address,
       params: [i],

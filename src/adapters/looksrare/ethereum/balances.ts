@@ -22,7 +22,7 @@ const WETH: Contract = {
 export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Contract) => {
   const [stakeBalanceOfRes, rewardsBalanceOfRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: stakingContract.address,
       params: ctx.address,
       abi: {
@@ -35,7 +35,7 @@ export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Co
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: stakingContract.address,
       params: ctx.address,
       abi: {

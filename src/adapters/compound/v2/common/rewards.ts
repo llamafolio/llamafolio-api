@@ -19,7 +19,7 @@ export async function getRewardsBalances(
   const rewards: Balance[] = []
 
   const compAllocatedRewardsRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: lens.address,
     params: [COMP.address, comptroller.address, ctx.address],
     abi: {

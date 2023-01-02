@@ -24,14 +24,14 @@ export async function getVestBalances(
 
   const [balanceOf, earnedRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: escrow.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: liquidator.address,
       params: [ctx.address],
       abi: abiSNX.earned,

@@ -11,7 +11,7 @@ export async function getRewardBalances(
   const rewards: Balance[] = []
 
   const pendingCompRewardsRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: rewardContract.address,
     params: [coreContract.address, ctx.address],
     abi: {

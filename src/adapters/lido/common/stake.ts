@@ -7,14 +7,14 @@ export async function getWStEthStakeBalances(ctx: BalancesContext, contract: Con
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
   })
 
   const converterWStEthToStEthRes = await call({
-    chain: 'ethereum',
+    ctx,
     target: '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0',
     params: [balanceOfRes.output],
     abi: {
@@ -48,7 +48,7 @@ export async function getStEthStakeBalances(ctx: BalancesContext, contract: Cont
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -76,14 +76,14 @@ export async function getStMaticBalances(ctx: BalancesContext, contract: Contrac
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
   })
 
   const converterWStEthToStEthRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [balanceOfRes.output],
     abi: {

@@ -13,7 +13,7 @@ const HEC: Contract = {
 
 export async function getsStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -36,7 +36,7 @@ export async function getsStakeBalances(ctx: BalancesContext, contract: Contract
 
 export async function getWsStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -45,7 +45,7 @@ export async function getWsStakeBalances(ctx: BalancesContext, contract: Contrac
   const balanceOf = balanceOfRes.output
 
   const formattedBalanceOfRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [balanceOf],
     abi: {

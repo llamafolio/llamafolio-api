@@ -10,7 +10,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
   const balances: Balance[] = []
 
   const stakeCountRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: {
@@ -25,7 +25,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
   })
 
   const findStakesAndIndexesRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, stakeCountRes.output).map((i) => ({
       target: contract.address,
       params: [ctx.address, i],

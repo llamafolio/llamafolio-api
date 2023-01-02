@@ -18,14 +18,14 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
   const balances: Balance[] = []
   const [userTotalDepositRes, rewarderAddressRes, userExtraLockedSlots] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -38,7 +38,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: {
@@ -68,7 +68,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
   })
 
   const extraUserLockedBySlotsRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, userExtraLockedSlots.output).map((i) => ({
       target: contract.address,
       params: [ctx.address, i],
@@ -115,7 +115,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
 
 const lockedRewardsBalances = async (ctx: BalancesContext, rewarder: string): Promise<Balance[]> => {
   const pendingRewardsTokensRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts checked, 7 seems to be the maximum number of extra tokens used.
     calls: range(0, 7).map((i) => ({
       target: rewarder,
@@ -134,7 +134,7 @@ const lockedRewardsBalances = async (ctx: BalancesContext, rewarder: string): Pr
   const rewardsTokens = await getERC20Details(ctx, pendingRewardsTokens)
 
   const pendingRewardsBalancesRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: pendingRewardsTokens.map((token) => ({
       target: rewarder,
       params: [ctx.address, token],

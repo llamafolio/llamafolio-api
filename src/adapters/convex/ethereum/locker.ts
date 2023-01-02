@@ -1,5 +1,5 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { getERC20Details } from '@lib/erc20'
 import { sumBN } from '@lib/math'
 import { multicall } from '@lib/multicall'
@@ -108,14 +108,14 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
 
   const [getBalanceLocked, getClaimableRewards] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: abi.lockedBalances,
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: [contract].map((c) => ({
         target: c.address,
         params: [ctx.address],

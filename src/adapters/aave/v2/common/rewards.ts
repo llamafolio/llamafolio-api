@@ -15,7 +15,7 @@ export async function getLendingRewardsBalances(
   const rewards: Balance[] = []
 
   const userRewardsRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: incentiveController.address,
     params: [assetsAddressesList, ctx.address],
     abi: {

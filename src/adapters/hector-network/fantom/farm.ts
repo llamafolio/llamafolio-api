@@ -53,7 +53,7 @@ export async function getFarmingBalances(ctx: BalancesContext, contract: Contrac
 
   const [balanceOfRes, shareRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: {
@@ -87,7 +87,7 @@ export async function getFarmingBalances(ctx: BalancesContext, contract: Contrac
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: Helper.address,
       params: [],
       abi: {

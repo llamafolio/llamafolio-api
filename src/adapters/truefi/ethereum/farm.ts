@@ -51,8 +51,8 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], m
   }))
 
   const [stakeds, claimables] = await Promise.all([
-    multicall({ chain: ctx.chain, calls, abi: abi.staked }),
-    multicall({ chain: ctx.chain, calls, abi: abi.claimable }),
+    multicall({ ctx, calls, abi: abi.staked }),
+    multicall({ ctx, calls, abi: abi.claimable }),
   ])
 
   for (let i = 0; i < pools.length; i++) {

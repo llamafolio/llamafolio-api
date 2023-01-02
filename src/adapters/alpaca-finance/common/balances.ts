@@ -68,11 +68,11 @@ export async function getPoolsBalances(
   }))
 
   const [userInfosRes, pendingRewardsRes, totalTokensRes, totalSuppliesRes, balancesOfRes] = await Promise.all([
-    multicall({ chain: ctx.chain, calls, abi: abi.userInfo }),
-    multicall({ chain: ctx.chain, calls, abi: abi.pendingAlpaca }),
-    multicall({ chain: ctx.chain, calls: supplyCalls, abi: abi.totalToken }),
-    multicall({ chain: ctx.chain, calls: supplyCalls, abi: abi.totalSupply }),
-    multicall({ chain: ctx.chain, calls: balanceOfCalls, abi: erc20Abi.balanceOf }),
+    multicall({ ctx, calls, abi: abi.userInfo }),
+    multicall({ ctx, calls, abi: abi.pendingAlpaca }),
+    multicall({ ctx, calls: supplyCalls, abi: abi.totalToken }),
+    multicall({ ctx, calls: supplyCalls, abi: abi.totalSupply }),
+    multicall({ ctx, calls: balanceOfCalls, abi: erc20Abi.balanceOf }),
   ])
 
   for (let i = 0; i < pools.length; i++) {

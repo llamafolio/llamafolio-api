@@ -55,7 +55,7 @@ const getDecodedDataFromRangeDays = async (
   const data = []
 
   const currentDayRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [],
     abi: {
@@ -72,7 +72,7 @@ const getDecodedDataFromRangeDays = async (
   const today = currentDayRes.output
 
   const dataRangeRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [stakeAndIndex.lockedDays, today],
     abi: {

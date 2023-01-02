@@ -1,6 +1,5 @@
 import { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { BigNumber, ethers } from 'ethers'
 
@@ -55,7 +54,7 @@ const curveMetaRegistry: Contract = {
 
 export const getPoolsUnderlyings = async (ctx: BaseContext, poolsAddresses: string[]) => {
   const getUnderlyingsAddresses = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: poolsAddresses.map((poolAddress) => ({
       target: curveMetaRegistry.address,
       params: [poolAddress],
@@ -88,7 +87,7 @@ export const getPoolsUnderlyings = async (ctx: BaseContext, poolsAddresses: stri
 
 export async function getPoolFromLpTokenAddress(ctx: BaseContext, lpTokens: string[]) {
   const getPoolsAddressesFromLpTokens = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: lpTokens.map((lpToken) => ({
       target: curveMetaRegistry.address,
       params: [lpToken],
@@ -100,21 +99,21 @@ export async function getPoolFromLpTokenAddress(ctx: BaseContext, lpTokens: stri
 }
 
 export async function getUnderlyingsBalancesInPool(
-  chain: Chain,
+  ctx: BaseContext,
   contract: Contract,
   lpTokenAddress: string,
   poolAddress: string,
 ) {
   const [getTotalSupply, getUnderlyingsBalances] = await Promise.all([
     call({
-      chain,
+      ctx,
       target: lpTokenAddress,
       params: [],
       abi: abi.totalSupply,
     }),
 
     call({
-      chain,
+      ctx,
       target: curveMetaRegistry.address,
       params: [poolAddress],
       abi: abi.underlyingsBalances,
@@ -139,7 +138,7 @@ export async function getUnderlyingsBalancesInPool(
       const underlyings = contract.underlyings[i]
 
       underlyingsFractionated.push({
-        chain,
+        chain: ctx.chain,
         address: underlyings.address,
         symbol: underlyings.symbol,
         amount: contract.amount.mul(underlyingBalance).div(totalSupply),

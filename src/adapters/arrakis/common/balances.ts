@@ -18,7 +18,7 @@ export async function getLpBalances(ctx: BalancesContext, contracts: Contract[])
 
   const [underlyingBalancesRes, totalSupplyRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls,
       abi: {
         inputs: [],
@@ -41,7 +41,7 @@ export async function getLpBalances(ctx: BalancesContext, contracts: Contract[])
     }),
 
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: calls,
       abi: {
         inputs: [],

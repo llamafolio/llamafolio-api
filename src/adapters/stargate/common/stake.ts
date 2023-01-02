@@ -43,8 +43,8 @@ export async function getStakeBalances(
   }))
 
   const [userInfosRes, pendingRewardsRes] = await Promise.all([
-    multicall({ chain: ctx.chain, calls, abi: abi.userInfos }),
-    multicall({ chain: ctx.chain, calls, abi: abi.pendingReward }),
+    multicall({ ctx, calls, abi: abi.userInfos }),
+    multicall({ ctx, calls, abi: abi.pendingReward }),
   ])
 
   for (let i = 0; i < pools.length; i++) {

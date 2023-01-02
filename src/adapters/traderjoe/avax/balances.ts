@@ -130,21 +130,21 @@ export async function getStakeBalance(ctx: BalancesContext) {
 
   const [sJOEbalanceOfRes, veJOEbalanceOfRes, rJOEbalanceOfRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: pools[0],
       params: [ctx.address, USDC.address],
       abi: abi.getUserInfo,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: pools[1],
       params: [ctx.address],
       abi: abi.veJoeUserInfos,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: pools[2],
       params: [ctx.address],
       abi: abi.rJoeUserInfo,
@@ -159,21 +159,21 @@ export async function getStakeBalance(ctx: BalancesContext) {
 
   const [sJOErewardsRes, veJOErewardsRes, rJOErewardsRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: pools[0],
       params: [ctx.address, USDC.address],
       abi: abi.pendingReward,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: pools[1],
       params: [ctx.address],
       abi: abi.getPendingVeJoe,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: pools[2],
       params: [ctx.address],
       abi: abi.pendingRJoe,

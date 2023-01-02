@@ -86,14 +86,14 @@ export async function getAssetsContracts(ctx: BaseContext, contract: Contract): 
   const contracts: Contract[] = []
 
   const numberOfAssets = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [],
     abi: abi.numAssets,
   })
 
   const assetsInfoRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, numberOfAssets.output).map((i) => ({
       target: contract.address,
       params: [i],
@@ -127,7 +127,7 @@ export async function getLendBorrowBalances(
 
   const [userCollateralBalancesRes, userBorrowBalancesRes] = await Promise.all([
     multicall({
-      chain: ctx.chain,
+      ctx,
       calls: assets.map((asset) => ({
         target: contract.address,
         params: [ctx.address, asset.address],
@@ -136,7 +136,7 @@ export async function getLendBorrowBalances(
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: abi.borrowBalanceOf,

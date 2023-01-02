@@ -39,8 +39,7 @@ const TIME: Contract = {
 
 export async function getFormattedStakeBalance(ctx: BalancesContext, wMEMO: Contract): Promise<Balance> {
   const balanceOfRes = await call({
-    chain: ctx.chain,
-    block: ctx.blockHeight,
+    ctx,
     target: wMEMO.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -49,8 +48,7 @@ export async function getFormattedStakeBalance(ctx: BalancesContext, wMEMO: Cont
   const balanceOf = balanceOfRes.output
 
   const formattedBalanceOfRes = await call({
-    chain: ctx.chain,
-    block: ctx.blockHeight,
+    ctx,
     target: wMEMO.address,
     params: [balanceOf],
     abi: abiWonderland.wMEMOToMEMO,
@@ -75,8 +73,7 @@ export async function getStakeBalance(ctx: BalancesContext, contract: Contract, 
   const rewards = contract.rewards
 
   const balanceOfRes = await call({
-    chain: ctx.chain,
-    block: ctx.blockHeight,
+    ctx,
     target: wMemoFarm.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -96,8 +93,7 @@ export async function getStakeBalance(ctx: BalancesContext, contract: Contract, 
 
   if (rewards) {
     const rewardsBalanceOfRes = await multicall({
-      chain: ctx.chain,
-      block: ctx.blockHeight,
+      ctx,
       calls: rewards.map((token) => ({
         target: wMemoFarm.address,
         params: [ctx.address, token.address],

@@ -25,14 +25,14 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
 
   const [balanceOfRes, rewardsRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: {
@@ -70,7 +70,7 @@ export async function getStakeBalancerPoolBalances(
 
   const [bPoolRes, stakingBalanceOfRes, stakingRewardsRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: ABPT.address,
       abi: {
         inputs: [],
@@ -82,14 +82,14 @@ export async function getStakeBalancerPoolBalances(
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: stakingContract.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: stakingContract.address,
       params: [ctx.address],
       abi: {
@@ -108,7 +108,7 @@ export async function getStakeBalancerPoolBalances(
 
   // Underlyings
   const totalSupplyRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: [{ target: stakingContract.address }, { target: ABPT.address }],
     abi: {
       inputs: [],
@@ -125,7 +125,7 @@ export async function getStakeBalancerPoolBalances(
   }
 
   const stakingContractLPBalanceRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: ABPT.address,
     params: stakingContract.address,
     abi: {
@@ -140,7 +140,7 @@ export async function getStakeBalancerPoolBalances(
   })
 
   const underlyingsTokensAddressesRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: bPoolRes.output,
     params: [],
     abi: {
@@ -162,7 +162,7 @@ export async function getStakeBalancerPoolBalances(
   }
 
   const underlyingsBalancesRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: underlyingsTokens.map((token) => ({
       target: token.address,
       params: [bPoolRes.output],

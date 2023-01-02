@@ -54,14 +54,14 @@ export async function getTRUStakeBalances(ctx: BalancesContext, stkTRU: Contract
 
   const [balanceOfRes, claimableRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: stkTRU.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: stkTRU.address,
       params: [ctx.address, TRU.address],
       abi: abiTRU.claimable,
@@ -90,21 +90,21 @@ export async function getTUSDStakeBalances(ctx: BalancesContext, TUSD: Contract)
 
   const [balanceOfRes, poolValueRes, totalSupplyRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: TUSD.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: TUSD.address,
       params: [],
       abi: abiTRU.poolValue,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: TUSD.address,
       params: [],
       abi: abiTRU.totalSupply,

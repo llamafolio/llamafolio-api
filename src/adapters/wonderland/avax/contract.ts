@@ -36,7 +36,7 @@ const wMEMO: Contract = {
 
 export async function getwMemoFarmContracts(ctx: BaseContext, wMemoFarm: Contract): Promise<Contract> {
   const rewardTokenLengthRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: wMemoFarm.address,
     params: [],
     abi: abiWonderland.rewardTokenLength,
@@ -45,7 +45,7 @@ export async function getwMemoFarmContracts(ctx: BaseContext, wMemoFarm: Contrac
   const rewardTokenLength = parseInt(rewardTokenLengthRes.output)
 
   const rewardTokensRes = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: range(0, rewardTokenLength).map((i) => ({
       target: wMemoFarm.address,
       params: [i],

@@ -7,10 +7,9 @@ import {
   GetContractsHandler,
 } from '@lib/adapter'
 import { Category } from '@lib/category'
-import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, BN_ZERO } from '@lib/math'
-import { Call, multicall, MultiCallParams, MultiCallResult } from '@lib/multicall'
+import { Call, multicall, MultiCallOptions, MultiCallResult } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -57,12 +56,8 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
   return coinsBalances.concat(tokensBalances)
 }
 
-export async function multicallBalances(params: MultiCallParams) {
-  if (!params.chain) {
-    return []
-  }
-
-  const chain = params.chain as Chain
+export async function multicallBalances(params: MultiCallOptions) {
+  const chain = params.ctx.chain
   const coinsCallsAddresses: string[] = []
   const tokensCalls: Call[] = []
   const res: MultiCallResult[] = []
@@ -92,7 +87,7 @@ export async function multicallBalances(params: MultiCallParams) {
   )
 
   const tokensBalancesRes = await multicall({
-    chain,
+    ctx: params.ctx,
     calls: tokensCalls,
     abi: params.abi,
   })

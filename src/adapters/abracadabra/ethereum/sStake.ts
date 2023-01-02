@@ -14,7 +14,7 @@ const SPELL: Token = {
 
 export async function getSStakeContract(ctx: BaseContext, contract: Contract): Promise<Contract> {
   const underlyingTokenAddressRes = await call({
-    chain: ctx.chain,
+    ctx,
     target: contract.address,
     params: [],
     abi: {
@@ -41,14 +41,14 @@ export async function getSStakeBalance(ctx: BalancesContext, contract: Contract)
 
   const [balanceOfRes, totalSupplyRes, balanceOfTokenInUnderlyingRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: abi.balanceOf,
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -61,7 +61,7 @@ export async function getSStakeBalance(ctx: BalancesContext, contract: Contract)
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: SPELL.address,
       params: [contract.address],
       abi: abi.balanceOf,

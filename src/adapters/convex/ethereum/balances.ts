@@ -13,7 +13,7 @@ export async function getPoolsBalances(ctx: BalancesContext, contracts: Contract
 
   for (const nonZeroPool of nonZeroPools) {
     const underlyiedPoolBalances = await getUnderlyingsBalancesInPool(
-      ctx.chain,
+      ctx,
       nonZeroPool,
       nonZeroPool.lpToken,
       nonZeroPool.poolAddress,

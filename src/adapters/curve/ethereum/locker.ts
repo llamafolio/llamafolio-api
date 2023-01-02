@@ -1,5 +1,5 @@
-import { call } from '@defillama/sdk/build/abi'
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -30,7 +30,7 @@ export async function getLockerBalances(
 
   const [lockerBalanceRes, claimableBalanceRes] = await Promise.all([
     call({
-      chain: ctx.chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: {
@@ -57,7 +57,7 @@ export async function getLockerBalances(
     }),
 
     call({
-      chain: ctx.chain,
+      ctx,
       target: feeDistributorContract.address,
       params: [ctx.address],
       abi: {

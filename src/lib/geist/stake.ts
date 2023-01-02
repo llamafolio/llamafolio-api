@@ -68,7 +68,7 @@ export async function getMultiFeeDistributionBalances(
   balances.push(unlockedBalance)
 
   const rewardRates = await multicall({
-    chain: ctx.chain,
+    ctx,
     calls: tokenDetails.map((t) => ({
       target: multiFeeDistribution.address,
       params: t.address,

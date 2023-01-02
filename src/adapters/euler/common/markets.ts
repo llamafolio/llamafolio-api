@@ -52,7 +52,7 @@ export async function getMarketsContracts(ctx: BaseContext): Promise<Contract[]>
 
 export async function getHealthFactor(ctx: BalancesContext, lensContract: Contract): Promise<number | undefined> {
   const getHealthFactor = await call({
-    chain: ctx.chain,
+    ctx,
     target: lensContract.address,
     params: [ctx.address],
     abi: {
