@@ -66,7 +66,7 @@ export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Co
 
 export const getCompounderBalances = async (ctx: BalancesContext, compounder: Contract) => {
   const sharesValue = await call({
-    chain: ctx.chain,
+    ctx,
     target: compounder.address,
     params: [ctx.address],
     abi: {
