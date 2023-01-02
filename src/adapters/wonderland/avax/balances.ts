@@ -1,10 +1,9 @@
-import { Balance, Contract } from '@lib/adapter'
-import { BalancesContext } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
-import { BigNumber } from 'ethers/lib/ethers'
+import { BigNumber } from 'ethers'
 
 const abiWonderland = {
   wMEMOToMEMO: {
@@ -37,10 +36,19 @@ const TIME: Contract = {
   symbol: 'TIME',
 }
 
-export async function getFormattedStakeBalance(ctx: BalancesContext, wMEMO: Contract): Promise<Balance> {
+const wMEMO: Contract = {
+  name: 'Wrapped MEMO',
+  displayName: 'Wrapped MEMO',
+  chain: 'avax',
+  address: '0x0da67235dd5787d67955420c84ca1cecd4e5bb3b',
+  decimals: 18,
+  symbol: 'wMEMO ',
+}
+
+export async function getTIMEStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const balanceOfRes = await call({
     ctx,
-    target: wMEMO.address,
+    target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
   })
@@ -49,7 +57,7 @@ export async function getFormattedStakeBalance(ctx: BalancesContext, wMEMO: Cont
 
   const formattedBalanceOfRes = await call({
     ctx,
-    target: wMEMO.address,
+    target: contract.address,
     params: [balanceOf],
     abi: abiWonderland.wMEMOToMEMO,
   })
@@ -58,8 +66,8 @@ export async function getFormattedStakeBalance(ctx: BalancesContext, wMEMO: Cont
 
   const balance: Balance = {
     chain: ctx.chain,
-    address: wMEMO.address,
-    symbol: wMEMO.symbol,
+    address: contract.address,
+    symbol: contract.symbol,
     decimals: 9,
     underlyings: [TIME],
     amount: formattedBalanceOf,
@@ -69,12 +77,12 @@ export async function getFormattedStakeBalance(ctx: BalancesContext, wMEMO: Cont
   return balance
 }
 
-export async function getStakeBalance(ctx: BalancesContext, contract: Contract, wMemoFarm: Contract): Promise<Balance> {
+export async function getwMEMOStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const rewards = contract.rewards
 
   const balanceOfRes = await call({
     ctx,
-    target: wMemoFarm.address,
+    target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
   })
@@ -83,21 +91,24 @@ export async function getStakeBalance(ctx: BalancesContext, contract: Contract, 
 
   const balance: Balance = {
     chain: ctx.chain,
-    decimals: contract.decimals,
     address: contract.address,
-    symbol: contract.symbol,
+    symbol: wMEMO.symbol,
+    decimals: wMEMO.decimals,
     amount: balanceOf,
+    underlyings: [wMEMO],
     rewards: [],
     category: 'stake',
   }
 
   if (rewards) {
+    const calls = rewards.map((token: any) => ({
+      target: contract.address,
+      params: [ctx.address, token.address],
+    }))
+
     const rewardsBalanceOfRes = await multicall({
       ctx,
-      calls: rewards.map((token) => ({
-        target: wMemoFarm.address,
-        params: [ctx.address, token.address],
-      })),
+      calls,
       abi: abiWonderland.earned,
     })
 
@@ -110,7 +121,7 @@ export async function getStakeBalance(ctx: BalancesContext, contract: Contract, 
         continue
       }
 
-      balance.rewards?.push({ ...reward, amount: BigNumber.from(rewardBalanceOfRes.output) })
+      balance.rewards?.push({ ...(reward as Contract), amount: BigNumber.from(rewardBalanceOfRes.output) })
 
       rewardsIdx++
     }

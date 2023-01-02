@@ -1,8 +1,8 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getwMemoFarmContracts } from './contract'
-import { getFormattedStakeBalance, getStakeBalance } from './stake'
+import { getTIMEStakeBalances, getwMEMOStakeBalances } from './balances'
+import { getRewardsMEMOFarmTokens } from './rewards'
 
 const wMEMO: Contract = {
   name: 'Wrapped MEMO',
@@ -13,25 +13,25 @@ const wMEMO: Contract = {
   symbol: 'wMEMO ',
 }
 
-const wMemoFarm: Contract = {
+const wMEMOFarm: Contract = {
   name: 'Multirewards',
   chain: 'avax',
   address: '0xC172c84587bEa6d593269bFE08632bf2Da2Bc0f6',
-  token: wMEMO,
+  underlyings: [wMEMO],
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const stake = await getwMemoFarmContracts(ctx, wMemoFarm)
+  const wMEMOStakeWithMultipleRewards = await getRewardsMEMOFarmTokens(ctx, wMEMOFarm)
 
   return {
-    contracts: { wMEMO, stake, wMemoFarm },
+    contracts: { wMEMO, wMEMOStakeWithMultipleRewards },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    wMEMO: getFormattedStakeBalance,
-    stake: (...args) => getStakeBalance(...args, wMemoFarm),
+    wMEMO: getTIMEStakeBalances,
+    wMEMOStakeWithMultipleRewards: getwMEMOStakeBalances,
   })
 
   return {

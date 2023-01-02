@@ -34,10 +34,10 @@ const wMEMO: Contract = {
   symbol: 'wMEMO ',
 }
 
-export async function getwMemoFarmContracts(ctx: BaseContext, wMemoFarm: Contract): Promise<Contract> {
+export async function getRewardsMEMOFarmTokens(ctx: BaseContext, wMEMOFarm: Contract): Promise<Contract> {
   const rewardTokenLengthRes = await call({
     ctx,
-    target: wMemoFarm.address,
+    target: wMEMOFarm.address,
     params: [],
     abi: abiWonderland.rewardTokenLength,
   })
@@ -47,7 +47,7 @@ export async function getwMemoFarmContracts(ctx: BaseContext, wMemoFarm: Contrac
   const rewardTokensRes = await multicall({
     ctx,
     calls: range(0, rewardTokenLength).map((i) => ({
-      target: wMemoFarm.address,
+      target: wMEMOFarm.address,
       params: [i],
     })),
     abi: abiWonderland.rewardTokens,
@@ -55,14 +55,10 @@ export async function getwMemoFarmContracts(ctx: BaseContext, wMemoFarm: Contrac
 
   const rewardTokens = rewardTokensRes.filter(isSuccess).map((res) => res.output)
 
-  const contract: Contract = {
+  return {
     chain: ctx.chain,
-    address: wMEMO.address,
-    symbol: wMEMO.symbol,
-    decimals: wMEMO.decimals,
+    address: wMEMOFarm.address,
+    underlyings: [wMEMO],
     rewards: rewardTokens,
-    category: 'stake',
   }
-
-  return contract
 }
