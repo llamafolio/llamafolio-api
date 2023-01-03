@@ -109,6 +109,7 @@ export const chains: IChainInfo[] = [
     rpcUrl: [
       // `https://optimism-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://mainnet.optimism.io/',
+      'https://rpc.ankr.com/optimism',
     ],
   },
   {
