@@ -36,7 +36,7 @@ export async function getWStEthStakeBalances(ctx: BalancesContext, contract: Con
       symbol: contract.symbol,
       address: contract.address,
       amount: formattedBalanceOf,
-      underlyings: [{ ...underlying, amount: formattedBalanceOf }],
+      underlyings: [{ ...underlying, symbol: contract.symbol }],
       category: 'stake',
     })
   }
@@ -64,7 +64,7 @@ export async function getStEthStakeBalances(ctx: BalancesContext, contract: Cont
       symbol: contract.symbol,
       address: contract.address,
       amount: balanceOf,
-      underlyings: [{ ...underlying, amount: balanceOf }],
+      underlyings: [{ ...underlying, symbol: contract.symbol }],
       category: 'stake',
     })
   }
@@ -109,7 +109,7 @@ export async function getStMaticBalances(ctx: BalancesContext, contract: Contrac
       symbol: contract.symbol,
       address: contract.address,
       amount: formattedBalanceOf,
-      underlyings: [{ ...underlying, amount: formattedBalanceOf }],
+      underlyings: [{ ...underlying, symbol: contract.symbol }],
       category: 'stake',
     })
   }
