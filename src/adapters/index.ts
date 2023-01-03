@@ -62,6 +62,7 @@ import venus from '@adapters/venus'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
 import wonderland from '@adapters/wonderland'
+import yearnFinance from '@adapters/yearn-finance'
 import { Adapter } from '@lib/adapter'
 
 export const adapters: Adapter[] = [
@@ -129,6 +130,7 @@ export const adapters: Adapter[] = [
   wallet,
   wepiggy,
   wonderland,
+  yearnFinance,
 ]
 
 export const adapterById: { [key: string]: Adapter } = {}
