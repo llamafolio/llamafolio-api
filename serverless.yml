@@ -30,7 +30,7 @@ provider:
           Action:
             - 'lambda:InvokeFunction'
           Resource: '*'
-        - Effect: "Allow"
+        - Effect: 'Allow'
           Action:
             - dynamodb:DescribeTable
             - dynamodb:Query
@@ -41,7 +41,7 @@ provider:
             - dynamodb:DeleteItem
             - dynamodb:BatchGetItem
           Resource:
-            - "Fn::GetAtt": [DynamoTable, Arn]
+            - 'Fn::GetAtt': [DynamoTable, Arn]
   environment:
     PGHOST: ${file(./env.js):PGHOST}
     PGUSER: ${file(./env.js):PGUSER}
@@ -201,8 +201,18 @@ custom:
     external:
       - pg-native
       - pg-format
-    # for debugging
-    #keepOutputDirectory: true
+  domainMap:
+    prod:
+      domain: api.llamafolio.com
+      certificateArn: 'arn:aws:acm:us-east-1:610755237132:certificate/fc28bd84-7bb3-424a-9ca2-7ea4ab2dd559'
+      hostedZone: llamafolio.com
+    dev:
+      domain: staging-api.llamafolio.com
+      certificateArn: 'arn:aws:acm:us-east-1:610755237132:certificate/fc28bd84-7bb3-424a-9ca2-7ea4ab2dd559'
+      hostedZone: llamafolio.com
+  domain: ${self:custom.domainMap.${self:custom.stage}.domain}
+  certificateArn: ${self:custom.domainMap.${self:custom.stage}.certificateArn}
+  hostedZone: ${self:custom.domainMap.${self:custom.stage}.hostedZone}
   prune:
     automatic: true
     number: 5 # Number of versions to keep
@@ -210,6 +220,7 @@ custom:
 
 resources:
   - ${file(resources/dynamodb.yml)}
+  - ${file(resources/api-cloudfront.yml)}
 
 plugins:
   - serverless-offline
