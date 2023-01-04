@@ -3,6 +3,10 @@ import { BigNumber, utils } from 'ethers'
 export const BN_ZERO = BigNumber.from('0')
 export const BN_TEN = BigNumber.from('10')
 
+export function isZero<T extends BigNumber | string | number>(num: T) {
+  return num.toString() === '0'
+}
+
 export function decimalsBN(num: BigNumber, decimals: number) {
   return num.div(BN_TEN.pow(decimals))
 }
