@@ -2,15 +2,7 @@ import { getWStEthStakeBalances } from '@adapters/lido/common/stake'
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-const WETHArbitrum: Contract = {
-  address: '0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-  chain: 'arbitrum',
-  symbol: 'WETH',
-  decimals: 18,
-  coingeckoId: 'weth',
-}
-
-const wstETHArbitrum: Contract = {
+const wstETH: Contract = {
   name: 'wstETH',
   displayName: 'Wrapped liquid staked Ether 2.0',
   chain: 'arbitrum',
@@ -18,20 +10,19 @@ const wstETHArbitrum: Contract = {
   symbol: 'wstETH',
   decimals: 18,
   coingeckoId: 'wrapped-steth',
-  underlyings: [WETHArbitrum],
 }
 
 export const getContracts = () => {
   return {
     contracts: {
-      wstETHArbitrum,
+      wstETH,
     },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    wstETHArbitrum: getWStEthStakeBalances,
+    wstETH: getWStEthStakeBalances,
   })
 
   return {
