@@ -27,19 +27,15 @@ export async function getWStEthStakeBalances(ctx: BalancesContext, contract: Con
   })
 
   const formattedBalanceOf = BigNumber.from(converterWStEthToStEthRes.output)
-  const underlying = contract.underlyings?.[0]
 
-  if (underlying) {
-    balances.push({
-      chain: ctx.chain,
-      decimals: contract.decimals,
-      symbol: contract.symbol,
-      address: contract.address,
-      amount: formattedBalanceOf,
-      underlyings: [{ ...underlying, amount: formattedBalanceOf }],
-      category: 'stake',
-    })
-  }
+  balances.push({
+    chain: ctx.chain,
+    decimals: contract.decimals,
+    symbol: contract.symbol,
+    address: contract.address,
+    amount: formattedBalanceOf,
+    category: 'stake',
+  })
 
   return balances
 }
@@ -55,19 +51,15 @@ export async function getStEthStakeBalances(ctx: BalancesContext, contract: Cont
   })
 
   const balanceOf = BigNumber.from(balanceOfRes.output)
-  const underlying = contract.underlyings?.[0]
 
-  if (underlying) {
-    balances.push({
-      chain: ctx.chain,
-      decimals: contract.decimals,
-      symbol: contract.symbol,
-      address: contract.address,
-      amount: balanceOf,
-      underlyings: [{ ...underlying, amount: balanceOf }],
-      category: 'stake',
-    })
-  }
+  balances.push({
+    chain: ctx.chain,
+    decimals: contract.decimals,
+    symbol: contract.symbol,
+    address: contract.address,
+    amount: balanceOf,
+    category: 'stake',
+  })
 
   return balances
 }
@@ -100,19 +92,15 @@ export async function getStMaticBalances(ctx: BalancesContext, contract: Contrac
   })
 
   const formattedBalanceOf = BigNumber.from(converterWStEthToStEthRes.output[0])
-  const underlying = contract.underlyings?.[0]
 
-  if (underlying) {
-    balances.push({
-      chain: ctx.chain,
-      decimals: contract.decimals,
-      symbol: contract.symbol,
-      address: contract.address,
-      amount: formattedBalanceOf,
-      underlyings: [{ ...underlying, amount: formattedBalanceOf }],
-      category: 'stake',
-    })
-  }
+  balances.push({
+    chain: ctx.chain,
+    decimals: contract.decimals,
+    symbol: contract.symbol,
+    address: contract.address,
+    amount: formattedBalanceOf,
+    category: 'stake',
+  })
 
   return balances
 }

@@ -3,14 +3,6 @@ import { getStMaticBalances } from '@adapters/lido/common/stake'
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-const WETH: Contract = {
-  address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-  chain: 'ethereum',
-  symbol: 'WETH',
-  decimals: 18,
-  coingeckoId: 'weth',
-}
-
 const stETH: Contract = {
   name: 'stETH',
   displayName: 'Liquid staked Ether 2.0',
@@ -19,7 +11,6 @@ const stETH: Contract = {
   symbol: 'stETH',
   decimals: 18,
   coingeckoId: 'staked-ether',
-  underlyings: [WETH],
 }
 
 const wstETH: Contract = {
@@ -30,26 +21,15 @@ const wstETH: Contract = {
   symbol: 'wstETH',
   decimals: 18,
   coingeckoId: 'wrapped-steth',
-  underlyings: [WETH],
 }
 
-const MATICEthereum: Contract = {
-  chain: 'ethereum',
-  address: '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
-  name: 'MATIC',
-  symbol: 'MATIC',
-  decimals: 18,
-  coingeckoId: 'matic-network',
-}
-
-const stMATICEthereum: Contract = {
+const stMATIC: Contract = {
   chain: 'ethereum',
   address: '0x9ee91f9f426fa633d227f7a9b000e28b9dfd8599',
   name: 'Staked MATIC',
   symbol: 'stMATIC',
   decimals: 18,
   coingeckoId: 'lido-staked-matic',
-  underlyings: [MATICEthereum],
 }
 
 export const getContracts = () => {
@@ -57,7 +37,7 @@ export const getContracts = () => {
     contracts: {
       stETH,
       wstETH,
-      stMATICEthereum,
+      stMATIC,
     },
   }
 }
@@ -66,7 +46,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     stETH: getStEthStakeBalances,
     wstETH: getWStEthStakeBalances,
-    stMATICEthereum: getStMaticBalances,
+    stMATIC: getStMaticBalances,
   })
 
   return {
