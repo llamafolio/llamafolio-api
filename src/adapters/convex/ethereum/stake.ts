@@ -37,10 +37,8 @@ const abi = {
   },
 }
 
-export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
-  const balances: Balance[] = []
-
-  const [getBalanceOf, getRewards] = await Promise.all([
+export async function getCvxCrvStakeBalance(ctx: BalancesContext, contract: Contract) {
+  const [balanceOfRes, getRewards] = await Promise.all([
     call({
       ctx,
       target: contract.address,
@@ -51,9 +49,9 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     getCRVCVXRewards(ctx, contract),
   ])
 
-  const balanceOf = BigNumber.from(getBalanceOf.output)
+  const balanceOf = BigNumber.from(balanceOfRes.output)
 
-  balances.push({
+  const balance: Balance = {
     chain: ctx.chain,
     address: cvxCRV.address,
     symbol: cvxCRV.symbol,
@@ -61,25 +59,23 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     amount: balanceOf,
     rewards: getRewards,
     category: 'stake',
-  })
+  }
 
-  return balances
+  return balance
 }
 
-export async function getCVXStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
-  const balances: Balance[] = []
-
+export async function getCVXStakeBalance(ctx: BalancesContext, cvxRewardPool: Contract) {
   const [balanceOfRes, earnedRes] = await Promise.all([
     call({
       ctx,
-      target: contract.address,
+      target: cvxRewardPool.address,
       params: [ctx.address],
       abi: erc20Abi.balanceOf,
     }),
 
     call({
       ctx,
-      target: contract.address,
+      target: cvxRewardPool.address,
       params: [ctx.address],
       abi: abi.earned,
     }),
@@ -88,7 +84,7 @@ export async function getCVXStakeBalances(ctx: BalancesContext, contract: Contra
   const balanceOf = BigNumber.from(balanceOfRes.output)
   const earned = BigNumber.from(earnedRes.output)
 
-  balances.push({
+  const balance: Balance = {
     chain: ctx.chain,
     address: CVX.address,
     symbol: CVX.symbol,
@@ -96,7 +92,7 @@ export async function getCVXStakeBalances(ctx: BalancesContext, contract: Contra
     amount: balanceOf,
     rewards: [{ ...CRV, amount: earned }],
     category: 'stake',
-  })
+  }
 
-  return balances
+  return balance
 }
