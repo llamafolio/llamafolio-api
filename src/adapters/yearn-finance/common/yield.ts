@@ -4,6 +4,7 @@ import { call } from '@lib/call'
 import { getPoolFromLpTokenAddress, getPoolsUnderlyings } from '@lib/convex/underlyings'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -195,20 +196,22 @@ const formattedUnderlyingsBalances = async (ctx: BaseContext, pools: PoolsBalanc
     }
   }
 
-  for (const curvePoolsBalance of curvePoolsBalances) {
-    if (curvePoolsBalance.underlyings) {
+  for (const curvePoolBalance of curvePoolsBalances) {
+    const underlyings = curvePoolBalance.underlyings
+
+    if (underlyings) {
       const [totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
         call({
           ctx,
-          target: curvePoolsBalance.lpToken as string,
+          target: curvePoolBalance.lpToken as string,
           params: [],
           abi: erc20Abi.totalSupply,
         }),
 
         multicall({
           ctx,
-          calls: range(0, curvePoolsBalance.underlyings.length).map((i) => ({
-            target: curvePoolsBalance.poolAddress,
+          calls: range(0, curvePoolBalance.underlyings.length).map((i) => ({
+            target: curvePoolBalance.poolAddress,
             params: [i],
           })),
           abi: abi.balances,
@@ -216,31 +219,25 @@ const formattedUnderlyingsBalances = async (ctx: BaseContext, pools: PoolsBalanc
       ])
 
       const totalSupply = totalSuppliesRes.output
-      const underlyingsBalances = underlyingsBalancesRes
-        .filter((res) => res.success)
-        .map((res) => BigNumber.from(res.output))
+      const underlyingsBalances = underlyingsBalancesRes.filter(isSuccess).map((res) => res.output)
 
-      /**
-       *  Updating pool amounts from the fraction of each underlyings
-       */
+      const underlyingsWithUnwrapBalances = underlyings.map((underlying, i) => ({
+        ...underlying,
+        // decimals: 10,
+        amount: curvePoolBalance.amount.mul(underlyingsBalances[i]).div(totalSupply),
+      }))
 
-      const formattedUnderlyings: Balance[] = []
-
-      for (let i = 0; i < curvePoolsBalance.underlyings.length; i++) {
-        const underlyingBalance = underlyingsBalances[i]
-        const underlyings = curvePoolsBalance.underlyings[i]
-
-        formattedUnderlyings.push({
-          ...underlyings,
-          amount: curvePoolsBalance.amount.mul(underlyingBalance).div(totalSupply),
-        })
+      const curvePoolWithUnwrapBalances: Balance = {
+        ...curvePoolBalance,
+        underlyings: underlyingsWithUnwrapBalances,
+        rewards: undefined,
+        category: 'farm',
       }
 
-      curvePoolsBalance.underlyings = formattedUnderlyings
+      console.log(curvePoolWithUnwrapBalances)
 
-      balances.push(curvePoolsBalance)
+      balances.push(curvePoolWithUnwrapBalances)
     }
-
-    return balances
   }
+  return balances
 }
