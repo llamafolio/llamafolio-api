@@ -1,15 +1,22 @@
-import { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { getPoolsBalances as getCurvePoolsBalances, getPoolsFromLpTokens } from '@adapters/curve/ethereum/meta-registry'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { keyBy, range } from '@lib/array'
 import { call } from '@lib/call'
-import { getPoolFromLpTokenAddress, getPoolsUnderlyings } from '@lib/convex/underlyings'
-import { getERC20Details } from '@lib/erc20'
+import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { Token } from '@lib/token'
+import { isSuccess } from '@lib/type'
+import { BigNumber } from 'ethers'
 
-interface PoolParams extends Contract {
-  poolAddress: string
+import { getCvxCliffRatio } from './utils'
+
+interface BaseRewardPoolContract extends Contract {
   lpToken: string
-  rewardAddress: string
-  underlying?: Contract
+  crvRewards: string
+}
+
+interface PoolContract extends BaseRewardPoolContract {
+  pool: string
 }
 
 const abi = {
@@ -41,27 +48,31 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-
-  getPoolFromLPToken: {
+  earned: {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'earned',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
-    name: 'get_pool_from_lp_token',
-    inputs: [{ name: 'arg0', type: 'address' }],
-    outputs: [{ name: '', type: 'address' }],
-    gas: 2443,
   },
-
-  getUnderlyings: {
+  extraRewards: {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'extraRewards',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
-    name: 'get_underlying_coins',
-    inputs: [{ name: '_pool', type: 'address' }],
-    outputs: [{ name: '', type: 'address[8]' }],
+  },
+  extraRewardsLength: {
+    inputs: [],
+    name: 'extraRewardsLength',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
   },
 }
 
-export async function getPoolsContract(ctx: BaseContext, contract: Contract) {
-  const pools: Contract[] = []
+export async function getPoolsContracts(ctx: BaseContext, contract: Contract) {
+  const pools: PoolContract[] = []
 
   const getPoolsCount = await call({
     ctx,
@@ -84,31 +95,156 @@ export async function getPoolsContract(ctx: BaseContext, contract: Contract) {
     .map((res) => res.output)
     .filter((res) => res.lptoken !== '0xB15fFb543211b558D40160811e5DcBcd7d5aaac9') // dead address
 
-  const lptokensAddresses: string[] = poolInfos.map((token) => token.lptoken)
+  const baseRewardPools: BaseRewardPoolContract[] = poolInfos.map((poolInfo) => ({
+    chain: ctx.chain,
+    address: poolInfo.token,
+    lpToken: poolInfo.lptoken,
+    crvRewards: poolInfo.crvRewards,
+  }))
 
-  const [lpTokens, poolsFromLpTokensAddresses] = await Promise.all([
-    getERC20Details(ctx, lptokensAddresses),
-    getPoolFromLpTokenAddress(ctx, lptokensAddresses),
+  // - underlyings from Curve Meta registry contract
+  // - rewards from Convex BaseRewardPool contracts
+  const [curvePools, baseRewardPoolsWithRewards] = await Promise.all([
+    getPoolsFromLpTokens(
+      ctx,
+      baseRewardPools.map((token) => token.lpToken),
+    ),
+    getBaseRewardPoolsRewards(ctx, baseRewardPools),
   ])
+  const curvePoolByLpToken = keyBy(curvePools, 'lpToken', { lowercase: true })
 
-  const underlyings = await getPoolsUnderlyings(ctx, poolsFromLpTokensAddresses)
-
-  for (let i = 0; i < underlyings.length; i++) {
-    const lpToken = lpTokens[i]
-    const poolInfo = poolInfos[i]
-    const poolAddress = poolsFromLpTokensAddresses[i]
-    const underlying = underlyings[i]
-
-    const pool: PoolParams = {
-      ...lpToken,
-      address: poolInfo.crvRewards,
-      poolAddress: poolAddress,
-      lpToken: poolInfo.lptoken,
-      underlyings: underlying,
-      rewardAddress: poolInfo.crvRewards,
+  for (let poolIdx = 0; poolIdx < baseRewardPools.length; poolIdx++) {
+    const baseRewardPool = baseRewardPoolsWithRewards[poolIdx]
+    const curvePool = curvePoolByLpToken[baseRewardPool.lpToken.toLowerCase()]
+    if (!curvePool) {
+      continue
     }
+
+    const pool: PoolContract = {
+      ...baseRewardPool,
+      pool: curvePool.address,
+      underlyings: curvePool.underlyings,
+    }
+
     pools.push(pool)
   }
 
   return pools
+}
+
+export async function getBaseRewardPoolsRewards(ctx: BaseContext, baseRewardPools: BaseRewardPoolContract[]) {
+  const res: BaseRewardPoolContract[] = []
+
+  const extraRewardsLengthsRes = await multicall({
+    ctx,
+    calls: baseRewardPools.map((baseRewardPool) => ({
+      target: baseRewardPool.crvRewards,
+      params: [],
+    })),
+    abi: abi.extraRewardsLength,
+  })
+
+  const extraRewardsRes = await multicall<string, [number], string>({
+    ctx,
+    calls: extraRewardsLengthsRes.filter(isSuccess).flatMap((res) =>
+      range(0, res.output).map((idx) => ({
+        target: res.input.target,
+        params: [idx],
+      })),
+    ),
+    abi: abi.extraRewards,
+  })
+
+  let extraRewardCallIdx = 0
+  for (let poolIdx = 0; poolIdx < extraRewardsLengthsRes.length; poolIdx++) {
+    const extraRewardsLengthRes = extraRewardsLengthsRes[poolIdx]
+    if (!isSuccess(extraRewardsLengthRes)) {
+      continue
+    }
+
+    const baseRewardPool = { ...baseRewardPools[poolIdx], rewards: [] as string[] }
+
+    for (let extraRewardIdx = 0; extraRewardIdx < extraRewardsLengthRes.output; extraRewardIdx++) {
+      const extraRewardRes = extraRewardsRes[extraRewardCallIdx]
+      if (isSuccess(extraRewardRes)) {
+        baseRewardPool.rewards.push(extraRewardRes.output)
+      }
+
+      extraRewardCallIdx++
+    }
+
+    res.push(baseRewardPool)
+  }
+
+  return res
+}
+
+export async function getPoolsBalances(ctx: BalancesContext, pools: PoolContract[], CVX: Token, CRV: Token) {
+  const balances = await getCurvePoolsBalances(ctx, pools, {
+    getBalanceAddress: (pool) => pool.crvRewards,
+    getLpTokenAddress: (pool) => pool.lpToken,
+    getPoolAddress: (pool) => pool.pool,
+  })
+
+  const [crvEarnedRes, extraRewardsEarnedRes, cvxTotalSupplyRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: balances.map((balance) => ({
+        // @ts-ignore
+        target: balance.crvRewards,
+        params: [],
+      })),
+      abi: abi.earned,
+    }),
+
+    multicall({
+      ctx,
+      calls: balances.flatMap((balance) =>
+        (balance.rewards || []).map((reward) => ({
+          target: reward.address,
+          params: [ctx.address],
+        })),
+      ),
+      abi: abi.earned,
+    }),
+
+    call({
+      ctx,
+      target: CVX.address,
+      abi: erc20Abi.totalSupply,
+    }),
+  ])
+
+  let extraRewardsEarnedIdx = 0
+  for (let balanceIdx = 0; balanceIdx < balances.length; balanceIdx++) {
+    const balance = balances[balanceIdx]
+    balance.category = 'stake'
+
+    const crvEarned = BigNumber.from(crvEarnedRes[balanceIdx].output || '0')
+    const cvxTotalSupply = BigNumber.from(cvxTotalSupplyRes.output || '0')
+
+    const rewards: Balance[] = []
+
+    if (crvEarned.gt(0)) {
+      const cvxEarned = getCvxCliffRatio(cvxTotalSupply, crvEarned)
+      rewards.push({ ...CRV, amount: crvEarned }, { ...CVX, amount: cvxEarned })
+    }
+
+    if (balance.rewards) {
+      for (let extraRewardIdx = 0; extraRewardIdx < balance.rewards.length; extraRewardIdx++) {
+        const extraRewardEarnedRes = extraRewardsEarnedRes[extraRewardsEarnedIdx]
+
+        rewards.push({
+          ...balance.rewards?.[extraRewardIdx],
+          amount: BigNumber.from(extraRewardEarnedRes.output || '0'),
+        })
+
+        extraRewardsEarnedIdx++
+      }
+    }
+
+    balance.rewards = rewards
+  }
+
+  return balances
 }

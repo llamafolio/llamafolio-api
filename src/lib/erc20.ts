@@ -58,11 +58,21 @@ export const abi = {
   },
 }
 
-export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): Promise<Balance[]> {
+export interface GetERC20BalanceOfParams {
+  getContractAddress: (contract: any) => string
+}
+
+export async function getERC20BalanceOf(
+  ctx: BalancesContext,
+  tokens: Token[],
+  params?: GetERC20BalanceOfParams,
+): Promise<Balance[]> {
+  const { getContractAddress } = params || { getContractAddress: (contract) => contract.address }
+
   const balances = await multicall({
     ctx,
     calls: tokens.map((token) => ({
-      target: token.address,
+      target: getContractAddress(token),
       params: [ctx.address],
     })),
     abi: abi.balanceOf,
