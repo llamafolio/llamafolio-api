@@ -1,7 +1,6 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-// import { getLendBorrowBalances, getLendContracts, getUserHealthFactor } from './balances'
 import { getLendBorrowBalances, getLendContracts, getUserHealthFactor } from './balances'
 
 const morphoLens: Contract = {
