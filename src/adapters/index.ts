@@ -32,6 +32,7 @@ import llamapay from '@adapters/llamapay'
 import looksRare from '@adapters/looksrare'
 import lusdChickenbonds from '@adapters/lusd-chickenbonds'
 import makerDao from '@adapters/makerdao'
+import morphoAave from '@adapters/morpho-aave'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
 import olympusDao from '@adapters/olympus-dao'
@@ -99,6 +100,7 @@ export const adapters: Adapter[] = [
   looksRare,
   lusdChickenbonds,
   makerDao,
+  morphoAave,
   nemesisDao,
   nexusMutual,
   olympusDao,
