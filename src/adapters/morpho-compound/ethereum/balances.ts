@@ -14,7 +14,7 @@ const abi = {
   },
   underlyings_assets: {
     inputs: [],
-    name: 'UNDERLYING_ASSET_ADDRESS',
+    name: 'underlying',
     outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
@@ -26,8 +26,8 @@ const abi = {
     ],
     name: 'getCurrentSupplyBalanceInOf',
     outputs: [
-      { internalType: 'uint256', name: 'balanceInP2P', type: 'uint256' },
       { internalType: 'uint256', name: 'balanceOnPool', type: 'uint256' },
+      { internalType: 'uint256', name: 'balanceInP2P', type: 'uint256' },
       { internalType: 'uint256', name: 'totalBalance', type: 'uint256' },
     ],
     stateMutability: 'view',
@@ -40,15 +40,18 @@ const abi = {
     ],
     name: 'getCurrentBorrowBalanceInOf',
     outputs: [
-      { internalType: 'uint256', name: 'balanceInP2P', type: 'uint256' },
       { internalType: 'uint256', name: 'balanceOnPool', type: 'uint256' },
+      { internalType: 'uint256', name: 'balanceInP2P', type: 'uint256' },
       { internalType: 'uint256', name: 'totalBalance', type: 'uint256' },
     ],
     stateMutability: 'view',
     type: 'function',
   },
   getUserHealthFactor: {
-    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    inputs: [
+      { internalType: 'address', name: '_user', type: 'address' },
+      { internalType: 'address[]', name: '_updatedMarkets', type: 'address[]' },
+    ],
     name: 'getUserHealthFactor',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
@@ -123,7 +126,7 @@ export async function getLendBorrowBalances(
       ...market,
       chain: ctx.chain,
       address: market.address,
-      decimals: market.decimals,
+      decimals: 18,
       symbol: market.symbol,
       amount: lendBalance,
       underlyings,
@@ -135,7 +138,7 @@ export async function getLendBorrowBalances(
       ...market,
       chain: ctx.chain,
       address: market.address,
-      decimals: market.decimals,
+      decimals: 18,
       symbol: market.symbol,
       amount: borrowBalance,
       underlyings,
@@ -149,11 +152,17 @@ export async function getLendBorrowBalances(
   return balances
 }
 
-export async function getUserHealthFactor(ctx: BalancesContext, morphoLens: Contract): Promise<number> {
+export async function getUserHealthFactor(
+  ctx: BalancesContext,
+  morphoLens: Contract,
+  markets: Contract[],
+): Promise<number> {
+  const marketsAddresses: string[] = markets.map((res) => res.address)
+
   const userHealthFactorRes = await call({
     ctx,
     target: morphoLens.address,
-    params: [ctx.address],
+    params: [ctx.address, marketsAddresses],
     abi: abi.getUserHealthFactor,
   })
 
