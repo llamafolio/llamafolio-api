@@ -3,18 +3,10 @@ import { call } from '@lib/call'
 import { getERC20Details } from '@lib/erc20'
 import { sumBN } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 interface BalanceWithExtraProps extends Balance {
   lock: { end: number }
-}
-
-const CVX: Token = {
-  chain: 'ethereum',
-  address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b',
-  symbol: 'CVX',
-  decimals: 18,
 }
 
 const abi = {
@@ -103,7 +95,7 @@ const abi = {
   },
 }
 
-export async function getLockerBalances(ctx: BalancesContext, contract: Contract) {
+export async function getLockerBalances(ctx: BalancesContext, contract: Contract, CVX: Contract) {
   const balances: BalanceWithExtraProps[] = []
 
   const [getBalanceLocked, getClaimableRewards] = await Promise.all([

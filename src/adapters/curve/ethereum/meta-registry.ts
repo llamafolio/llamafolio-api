@@ -50,10 +50,14 @@ export async function getPoolsFromLpTokens(ctx: BaseContext, lpTokens: string[])
   // underlyings
   const getUnderlyingsRes = await multicall<string, [string], string[]>({
     ctx,
-    calls: getPoolFromLPTokensRes.map((res) => ({
-      target: res.success ? curveMetaRegistry.address : undefined,
-      params: res.success ? [res.output] : undefined,
-    })),
+    calls: getPoolFromLPTokensRes.map((res) =>
+      res.success
+        ? {
+            target: curveMetaRegistry.address,
+            params: [res.output],
+          }
+        : null,
+    ),
     abi: abi.getUnderlyingsCoins,
   })
 

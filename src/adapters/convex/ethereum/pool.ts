@@ -2,7 +2,7 @@ import { getPoolsBalances as getCurvePoolsBalances, getPoolsFromLpTokens } from 
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { keyBy, range } from '@lib/array'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
+import { abi as erc20Abi, resolveERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -11,6 +11,7 @@ import { BigNumber } from 'ethers'
 import { getCvxCliffRatio } from './utils'
 
 interface BaseRewardPoolContract extends Contract {
+  token: string
   lpToken: string
   crvRewards: string
 }
@@ -97,14 +98,16 @@ export async function getPoolsContracts(ctx: BaseContext, contract: Contract) {
 
   const baseRewardPools: BaseRewardPoolContract[] = poolInfos.map((poolInfo) => ({
     chain: ctx.chain,
-    address: poolInfo.token,
+    address: poolInfo.crvRewards,
+    token: poolInfo.token,
     lpToken: poolInfo.lptoken,
     crvRewards: poolInfo.crvRewards,
   }))
 
   // - underlyings from Curve Meta registry contract
   // - rewards from Convex BaseRewardPool contracts
-  const [curvePools, baseRewardPoolsWithRewards] = await Promise.all([
+  const [{ baseRewardPoolsTokens }, curvePools, baseRewardPoolsWithRewards] = await Promise.all([
+    resolveERC20Details(ctx, { baseRewardPoolsTokens: baseRewardPools.map((pool) => pool.token) }),
     getPoolsFromLpTokens(
       ctx,
       baseRewardPools.map((token) => token.lpToken),
@@ -115,13 +118,16 @@ export async function getPoolsContracts(ctx: BaseContext, contract: Contract) {
 
   for (let poolIdx = 0; poolIdx < baseRewardPools.length; poolIdx++) {
     const baseRewardPool = baseRewardPoolsWithRewards[poolIdx]
+    const tokenRes = baseRewardPoolsTokens[poolIdx]
     const curvePool = curvePoolByLpToken[baseRewardPool.lpToken.toLowerCase()]
-    if (!curvePool) {
+    if (!isSuccess(tokenRes) || !curvePool) {
       continue
     }
 
     const pool: PoolContract = {
       ...baseRewardPool,
+      decimals: tokenRes.output.decimals,
+      symbol: tokenRes.output.symbol,
       pool: curvePool.address,
       underlyings: curvePool.underlyings,
     }
@@ -192,7 +198,7 @@ export async function getPoolsBalances(ctx: BalancesContext, pools: PoolContract
       calls: balances.map((balance) => ({
         // @ts-ignore
         target: balance.crvRewards,
-        params: [],
+        params: [ctx.address],
       })),
       abi: abi.earned,
     }),
@@ -212,6 +218,7 @@ export async function getPoolsBalances(ctx: BalancesContext, pools: PoolContract
       ctx,
       target: CVX.address,
       abi: erc20Abi.totalSupply,
+      params: [],
     }),
   ])
 
