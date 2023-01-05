@@ -78,9 +78,9 @@ export async function getLendContracts(ctx: BaseContext, morhoLens: Contract): P
     abi: abi.underlyings_assets,
   })
 
-  for (let Idx = 0; Idx < underlyingsRes.length; Idx++) {
-    const marketsContracts = marketsContractsRes.output[Idx]
-    const underlying = underlyingsRes[Idx]
+  for (let idx = 0; idx < underlyingsRes.length; idx++) {
+    const marketsContracts = marketsContractsRes.output[idx]
+    const underlying = underlyingsRes[idx]
 
     if (!isSuccess(underlying)) {
       continue
@@ -118,10 +118,10 @@ export async function getLendBorrowBalances(
   const lendBalances = lendBalancesRes.filter(isSuccess).map((res) => BigNumber.from(res.output.totalBalance))
   const borrowBalances = borrowBalancesRes.filter(isSuccess).map((res) => BigNumber.from(res.output.totalBalance))
 
-  for (let Idx = 0; Idx < markets.length; Idx++) {
-    const market = markets[Idx]
-    const lendBalance = lendBalances[Idx]
-    const borrowBalance = borrowBalances[Idx]
+  for (let idx = 0; idx < markets.length; idx++) {
+    const market = markets[idx]
+    const lendBalance = lendBalances[idx]
+    const borrowBalance = borrowBalances[idx]
     const underlyings = market.underlyings?.[0] as Contract
 
     lend.push({
