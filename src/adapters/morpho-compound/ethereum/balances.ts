@@ -2,7 +2,7 @@ import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
-import { BigNumber } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 
 const abi = {
   getAllMarkets: {
@@ -156,7 +156,7 @@ export async function getUserHealthFactor(
   ctx: BalancesContext,
   morphoLens: Contract,
   markets: Contract[],
-): Promise<number> {
+): Promise<number | undefined> {
   const marketsAddresses: string[] = markets.map((res) => res.address)
 
   const userHealthFactorRes = await call({
@@ -165,6 +165,10 @@ export async function getUserHealthFactor(
     params: [ctx.address, marketsAddresses],
     abi: abi.getUserHealthFactor,
   })
+
+  if (ethers.constants.MaxUint256.eq(userHealthFactorRes.output)) {
+    return
+  }
 
   return userHealthFactorRes.output / 1e18
 }
