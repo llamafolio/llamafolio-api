@@ -78,16 +78,18 @@ export async function getLendContracts(ctx: BaseContext, morhoLens: Contract): P
     abi: abi.underlyings_assets,
   })
 
-  const underlyings = underlyingsRes.filter(isSuccess).map((res) => res.output)
-
-  for (let Idx = 0; Idx < underlyings.length; Idx++) {
+  for (let Idx = 0; Idx < underlyingsRes.length; Idx++) {
     const marketsContracts = marketsContractsRes.output[Idx]
-    const underlying = underlyings[Idx]
+    const underlying = underlyingsRes[Idx]
+
+    if (!isSuccess(underlying)) {
+      continue
+    }
 
     contracts.push({
       chain: ctx.chain,
       address: marketsContracts,
-      underlyings: [underlying],
+      underlyings: [underlying.output],
     })
   }
 
