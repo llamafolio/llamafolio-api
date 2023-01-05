@@ -117,16 +117,16 @@ export async function getLendBorrowBalances(
     const market = markets[Idx]
     const lendBalance = lendBalances[Idx]
     const borrowBalance = borrowBalances[Idx]
-    const underlyings = [market.underlyings?.[0]] as Contract[]
+    const underlyings = market.underlyings?.[0] as Contract
 
     lend.push({
       ...market,
       chain: ctx.chain,
       address: market.address,
-      decimals: market.decimals,
+      decimals: underlyings.decimals,
       symbol: market.symbol,
       amount: lendBalance,
-      underlyings,
+      underlyings: [underlyings],
       rewards: undefined,
       category: 'lend',
     })
@@ -135,10 +135,10 @@ export async function getLendBorrowBalances(
       ...market,
       chain: ctx.chain,
       address: market.address,
-      decimals: market.decimals,
+      decimals: underlyings.decimals,
       symbol: market.symbol,
       amount: borrowBalance,
-      underlyings,
+      underlyings: [underlyings],
       rewards: undefined,
       category: 'borrow',
     })
