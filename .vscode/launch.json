@@ -107,7 +107,8 @@
         "venus",
         "wallet",
         "wepiggy",
-        "wonderland"
+        "wonderland",
+        "yearn-finance"
       ],
       "default": "curve"
     },

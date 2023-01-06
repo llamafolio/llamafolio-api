@@ -1,10 +1,6 @@
-import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { Balance, BalancesContext, BaseContext, BaseContract, Contract } from '@lib/adapter'
+import { keyBy } from '@lib/array'
 import { call } from '@lib/call'
-import { getPoolFromLpTokenAddress, getPoolsUnderlyings } from '@lib/convex/underlyings'
-import { abi as erc20Abi } from '@lib/erc20'
-import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -88,16 +84,14 @@ const abi = {
   },
 }
 
-interface PoolsBalancesParams extends Balance {
-  underlyingsBalances?: BigNumber
+interface VaultBalance extends Balance {
   lpToken?: string
   poolAddress?: string
+  underlyingAmount?: BigNumber
 }
 
 export async function getVaultsContracts(ctx: BaseContext, registry: Contract) {
   const contracts: Contract[] = []
-  const baseContract: Contract[] = []
-  const curveContracts: Contract[] = []
 
   const assetsStaticsRes = await call({
     ctx,
@@ -117,37 +111,17 @@ export async function getVaultsContracts(ctx: BaseContext, registry: Contract) {
       decimals: parseInt(assetsStatic.decimals),
       lpToken: assetsStatic.tokenId,
       underlyings: [assetsStatic.tokenId],
-      poolAddress: '',
     }
 
-    if (contract.symbol?.includes('Curve')) {
-      curveContracts.push(contract)
-    } else {
-      baseContract.push(contract)
-    }
+    contracts.push(contract)
   }
-
-  const lpToken = curveContracts.map((lp) => lp.underlyings![0])
-
-  const poolAddresses = await getPoolFromLpTokenAddress(ctx, lpToken as any)
-  const undelyings = await getPoolsUnderlyings(ctx, poolAddresses)
-
-  for (let i = 0; i < curveContracts.length; i++) {
-    const curveContract = curveContracts[i]
-    const undelying = undelyings[i]
-    const poolAddress = poolAddresses[i]
-
-    curveContract.poolAddress = poolAddress
-    curveContract.underlyings = undelying
-  }
-
-  contracts.push(...baseContract, ...curveContracts)
 
   return contracts
 }
 
-export async function getVaultsBalances(ctx: BalancesContext, contracts: Contract[], registry: Contract) {
-  const assetsBalances: PoolsBalancesParams[] = []
+export async function getVaultsBalances(ctx: BalancesContext, vaults: Contract[], registry: Contract) {
+  const balances: Balance[] = []
+  const vaultBalances: VaultBalance[] = []
 
   const assetsPositionsOf = await call({
     ctx,
@@ -159,83 +133,33 @@ export async function getVaultsBalances(ctx: BalancesContext, contracts: Contrac
   for (let i = 0; i < assetsPositionsOf.output.length; i++) {
     const assetsPositionOf = assetsPositionsOf.output[i]
 
-    assetsBalances.push({
+    vaultBalances.push({
       chain: ctx.chain,
       address: assetsPositionOf.assetId,
       amount: BigNumber.from(assetsPositionOf.balance),
-      underlyingsBalances: BigNumber.from(assetsPositionOf.underlyingTokenBalance.amount),
-    })
-  }
-
-  const balanceDetailsByPositionAddress: { [key: string]: Contract } = {}
-  for (const contract of contracts) {
-    balanceDetailsByPositionAddress[contract.address.toLowerCase()] = contract
-  }
-
-  const poolsBalances = []
-  for (const assetsBalance of assetsBalances) {
-    poolsBalances.push({
-      ...balanceDetailsByPositionAddress[assetsBalance.address.toLowerCase()],
-      amount: BigNumber.from(assetsBalance.underlyingsBalances),
+      underlyingAmount: BigNumber.from(assetsPositionOf.underlyingTokenBalance.amount),
       category: 'farm',
     })
   }
 
-  return await formattedUnderlyingsBalances(ctx, poolsBalances as PoolsBalancesParams[])
-}
+  const vaultBalanceByAddress = keyBy(vaultBalances, 'address', { lowercase: true })
 
-const formattedUnderlyingsBalances = async (ctx: BaseContext, pools: PoolsBalancesParams[]) => {
-  const balances: Balance[] = []
-  const curvePoolsBalances: PoolsBalancesParams[] = []
+  for (let vaultIdx = 0; vaultIdx < vaults.length; vaultIdx++) {
+    const vault = vaults[vaultIdx]
+    const underlying = vault.underlyings?.[0] as BaseContract
+    const vaultBalance = vaultBalanceByAddress[vault.address.toLowerCase()]
 
-  for (const pool of pools) {
-    if (!pool.symbol?.includes('Curve')) {
-      balances.push(pool)
-    } else {
-      curvePoolsBalances.push(pool)
+    if (!vaultBalance) {
+      continue
     }
+
+    const balance: Balance = { ...vault, ...vaultBalance }
+    if (underlying) {
+      balance.underlyings = [{ ...underlying, amount: vaultBalance.underlyingAmount || vaultBalance.amount }]
+    }
+
+    balances.push(balance)
   }
 
-  for (const curvePoolBalance of curvePoolsBalances) {
-    const underlyings = curvePoolBalance.underlyings
-
-    if (underlyings) {
-      const [totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
-        call({
-          ctx,
-          target: curvePoolBalance.lpToken as string,
-          params: [],
-          abi: erc20Abi.totalSupply,
-        }),
-
-        multicall({
-          ctx,
-          calls: range(0, curvePoolBalance.underlyings.length).map((i) => ({
-            target: curvePoolBalance.poolAddress,
-            params: [i],
-          })),
-          abi: abi.balances,
-        }),
-      ])
-
-      const totalSupply = totalSuppliesRes.output
-      const underlyingsBalances = underlyingsBalancesRes.filter(isSuccess).map((res) => res.output)
-
-      const underlyingsWithUnwrapBalances = underlyings.map((underlying, i) => ({
-        ...underlying,
-        // decimals: 10,
-        amount: curvePoolBalance.amount.mul(underlyingsBalances[i]).div(totalSupply),
-      }))
-
-      const curvePoolWithUnwrapBalances: Balance = {
-        ...curvePoolBalance,
-        underlyings: underlyingsWithUnwrapBalances,
-        rewards: undefined,
-        category: 'farm',
-      }
-
-      balances.push(curvePoolWithUnwrapBalances)
-    }
-  }
   return balances
 }

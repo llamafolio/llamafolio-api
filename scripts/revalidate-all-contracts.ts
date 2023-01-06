@@ -65,6 +65,7 @@ const adaptersPaths = [
   'wallet',
   'wepiggy',
   'wonderland',
+  'yearn-finance',
 ]
 
 /**
