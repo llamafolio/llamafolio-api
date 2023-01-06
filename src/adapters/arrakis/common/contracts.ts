@@ -40,16 +40,16 @@ const abi = {
 }
 
 export async function getVaults(ctx: BaseContext, factoryArrakis: Contract) {
-  const getPoolsDeployers = await call({
+  const poolsDeployers = await call({
     ctx,
     target: factoryArrakis.address,
     params: [],
     abi: abi.getDeployers,
   })
 
-  const getDeployedPools = await multicall({
+  const deployedPools = await multicall({
     ctx,
-    calls: getPoolsDeployers.output.map((deployer: string) => ({
+    calls: poolsDeployers.output.map((deployer: string) => ({
       target: factoryArrakis.address,
       params: [deployer],
     })),
@@ -57,13 +57,13 @@ export async function getVaults(ctx: BaseContext, factoryArrakis: Contract) {
   })
 
   const pools: Contract[] = []
-  for (let idx = 0; idx < getDeployedPools.length; idx++) {
-    const getDeployedPool = getDeployedPools[idx]
-    if (!isSuccess(getDeployedPool)) {
+  for (let idx = 0; idx < deployedPools.length; idx++) {
+    const deployedPool = deployedPools[idx]
+    if (!isSuccess(deployedPool)) {
       continue
     }
 
-    for (const pool of getDeployedPool.output) {
+    for (const pool of deployedPool.output) {
       pools.push({
         chain: ctx.chain,
         address: pool,
