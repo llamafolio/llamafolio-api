@@ -1,6 +1,7 @@
 import { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
+import { isSuccess } from '@lib/type'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 
 const abi = {
@@ -39,28 +40,36 @@ const abi = {
 }
 
 export async function getVaults(ctx: BaseContext, factoryArrakis: Contract) {
-  const getPoolsDeployers = await call({
+  const poolsDeployers = await call({
     ctx,
     target: factoryArrakis.address,
     params: [],
     abi: abi.getDeployers,
   })
 
-  const getDeployedPools = await multicall({
+  const deployedPools = await multicall({
     ctx,
-    calls: getPoolsDeployers.output.map((deployer: string) => ({
+    calls: poolsDeployers.output.map((deployer: string) => ({
       target: factoryArrakis.address,
       params: [deployer],
     })),
     abi: abi.getPools,
   })
 
-  const deployedPools: Contract[] = getDeployedPools
-    .filter((res) => res.success)
-    .map((res) => ({
-      chain: ctx.chain,
-      address: res.output,
-    }))
+  const pools: Contract[] = []
+  for (let idx = 0; idx < deployedPools.length; idx++) {
+    const deployedPool = deployedPools[idx]
+    if (!isSuccess(deployedPool)) {
+      continue
+    }
 
-  return getPairsDetails(ctx, deployedPools)
+    for (const pool of deployedPool.output) {
+      pools.push({
+        chain: ctx.chain,
+        address: pool,
+      })
+    }
+  }
+
+  return getPairsDetails(ctx, pools)
 }
