@@ -8,7 +8,7 @@ import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
-  assetPositionsOf: {
+  assetsPositionsOf: {
     inputs: [{ internalType: 'address', name: 'accountAddress', type: 'address' }],
     name: 'assetsPositionsOf',
     outputs: [
@@ -56,7 +56,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  assetsStaticPositionsOf: {
+  assetsStatic: {
     inputs: [],
     name: 'assetsStatic',
     outputs: [
@@ -94,29 +94,29 @@ interface PoolsBalancesParams extends Balance {
   poolAddress?: string
 }
 
-export async function getPositionsContract(ctx: BaseContext, registry: Contract) {
+export async function getVaultsContracts(ctx: BaseContext, registry: Contract) {
   const contracts: Contract[] = []
   const baseContract: Contract[] = []
   const curveContracts: Contract[] = []
 
-  const assetsStaticsPositionsOfRes = await call({
+  const assetsStaticsRes = await call({
     ctx,
     target: registry.address,
     params: [],
-    abi: abi.assetsStaticPositionsOf,
+    abi: abi.assetsStatic,
   })
 
-  for (let i = 0; i < assetsStaticsPositionsOfRes.output.length; i++) {
-    const assetsStaticPositionOf = assetsStaticsPositionsOfRes.output[i]
+  for (let i = 0; i < assetsStaticsRes.output.length; i++) {
+    const assetsStatic = assetsStaticsRes.output[i]
 
     const contract: Contract = {
       chain: ctx.chain,
-      name: assetsStaticPositionOf.name,
-      address: assetsStaticPositionOf.id,
-      symbol: assetsStaticPositionOf.symbol,
-      decimals: parseInt(assetsStaticPositionOf.decimals),
-      lpToken: assetsStaticPositionOf.tokenId,
-      underlyings: [assetsStaticPositionOf.tokenId],
+      name: assetsStatic.name,
+      address: assetsStatic.id,
+      symbol: assetsStatic.symbol,
+      decimals: parseInt(assetsStatic.decimals),
+      lpToken: assetsStatic.tokenId,
+      underlyings: [assetsStatic.tokenId],
       poolAddress: '',
     }
 
@@ -146,14 +146,14 @@ export async function getPositionsContract(ctx: BaseContext, registry: Contract)
   return contracts
 }
 
-export async function getPositionsBalances(ctx: BalancesContext, contracts: Contract[], registry: Contract) {
+export async function getVaultsBalances(ctx: BalancesContext, contracts: Contract[], registry: Contract) {
   const assetsBalances: PoolsBalancesParams[] = []
 
   const assetsPositionsOf = await call({
     ctx,
     target: registry.address,
     params: [ctx.address],
-    abi: abi.assetPositionsOf,
+    abi: abi.assetsPositionsOf,
   })
 
   for (let i = 0; i < assetsPositionsOf.output.length; i++) {
@@ -233,8 +233,6 @@ const formattedUnderlyingsBalances = async (ctx: BaseContext, pools: PoolsBalanc
         rewards: undefined,
         category: 'farm',
       }
-
-      console.log(curvePoolWithUnwrapBalances)
 
       balances.push(curvePoolWithUnwrapBalances)
     }
