@@ -1,191 +1,258 @@
-import { Balance, BalancesContext } from '@lib/adapter'
-import { getERC20Details } from '@lib/erc20'
-import { multicall } from '@lib/multicall'
-import { providers } from '@lib/providers'
-import { BigNumber, ethers } from 'ethers'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { range } from '@lib/array'
+import { call } from '@lib/call'
+import { BN_ZERO } from '@lib/math'
+import { Call, multicall } from '@lib/multicall'
+import { isSuccess } from '@lib/type'
+import { BigNumber } from 'ethers'
 
-import ConcentratorIFOAbi from '../abis/IFO.json'
+const abi = {
+  aladdinCRV: {
+    inputs: [],
+    name: 'aladdinCRV',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  ctr: {
+    inputs: [],
+    name: 'ctr',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getUserShare: {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_pid',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_account',
+        type: 'address',
+      },
+    ],
+    name: 'getUserShare',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingCTR: {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_pid',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_account',
+        type: 'address',
+      },
+    ],
+    name: 'pendingCTR',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingReward: {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_pid',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_account',
+        type: 'address',
+      },
+    ],
+    name: 'pendingReward',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  poolLength: {
+    inputs: [],
+    name: 'poolLength',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'pools',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  poolInfo: {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'poolInfo',
+    outputs: [
+      { internalType: 'uint128', name: 'totalUnderlying', type: 'uint128' },
+      { internalType: 'uint128', name: 'totalShare', type: 'uint128' },
+      { internalType: 'uint256', name: 'accRewardPerShare', type: 'uint256' },
+      { internalType: 'uint256', name: 'convexPoolId', type: 'uint256' },
+      { internalType: 'address', name: 'lpToken', type: 'address' },
+      { internalType: 'address', name: 'crvRewards', type: 'address' },
+      {
+        internalType: 'uint256',
+        name: 'withdrawFeePercentage',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'platformFeePercentage',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'harvestBountyPercentage',
+        type: 'uint256',
+      },
+      { internalType: 'bool', name: 'pauseDeposit', type: 'bool' },
+      { internalType: 'bool', name: 'pauseWithdraw', type: 'bool' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
 
-export async function getIFOBalances(ctx: BalancesContext) {
-  const provider = providers['ethereum']
+interface PoolContract extends Contract {
+  pid: number
+  convexPoolId: number
+  crvRewards: string
+}
 
-  const ifoContract = new ethers.Contract('0x3cf54f3a1969be9916dad548f3c084331c4450b5', ConcentratorIFOAbi, provider)
+export async function getIFOPoolsContracts(ctx: BaseContext, concentratorIFOVault: Contract) {
+  const contracts: PoolContract[] = []
 
-  const poolLength = await ifoContract.poolLength()
+  const [poolLengthRes, aladdinCRVRes, ctrRes] = await Promise.all([
+    call({
+      ctx,
+      target: concentratorIFOVault.address,
+      params: [],
+      abi: abi.poolLength,
+    }),
+    call({
+      ctx,
+      target: concentratorIFOVault.address,
+      params: [],
+      abi: abi.aladdinCRV,
+    }),
+    call({
+      ctx,
+      target: concentratorIFOVault.address,
+      params: [],
+      abi: abi.ctr,
+    }),
+  ])
 
-  let calls = []
-  for (let index = 0; index < poolLength.toNumber(); index++) {
-    calls.push({
-      params: [index],
-      target: ifoContract.address,
+  const poolLength = parseInt(poolLengthRes.output)
+
+  const poolsInfoRes = await multicall({
+    ctx,
+    calls: range(0, poolLength).map((idx) => ({
+      target: concentratorIFOVault.address,
+      params: [idx],
+    })),
+    abi: abi.poolInfo,
+  })
+
+  for (let pid = 0; pid < poolLength; pid++) {
+    const poolInfoRes = poolsInfoRes[pid]
+    if (!isSuccess(poolInfoRes)) {
+      continue
+    }
+
+    contracts.push({
+      chain: ctx.chain,
+      pid,
+      address: poolInfoRes.output.lpToken,
+      convexPoolId: poolInfoRes.output.convexPoolId,
+      crvRewards: poolInfoRes.output.crvRewards,
+      rewards: [aladdinCRVRes.output, ctrRes.output],
     })
   }
 
-  const poolDetailsRes = await multicall({
-    ctx,
-    calls: calls,
-    abi: {
-      inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      name: 'poolInfo',
-      outputs: [
-        { internalType: 'uint128', name: 'totalUnderlying', type: 'uint128' },
-        { internalType: 'uint128', name: 'totalShare', type: 'uint128' },
-        { internalType: 'uint256', name: 'accRewardPerShare', type: 'uint256' },
-        { internalType: 'uint256', name: 'convexPoolId', type: 'uint256' },
-        { internalType: 'address', name: 'lpToken', type: 'address' },
-        { internalType: 'address', name: 'crvRewards', type: 'address' },
-        {
-          internalType: 'uint256',
-          name: 'withdrawFeePercentage',
-          type: 'uint256',
-        },
-        {
-          internalType: 'uint256',
-          name: 'platformFeePercentage',
-          type: 'uint256',
-        },
-        {
-          internalType: 'uint256',
-          name: 'harvestBountyPercentage',
-          type: 'uint256',
-        },
-        { internalType: 'bool', name: 'pauseDeposit', type: 'bool' },
-        { internalType: 'bool', name: 'pauseWithdraw', type: 'bool' },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  })
+  return contracts
+}
 
-  const poolDetails = poolDetailsRes.filter((res) => res.success).map((res) => res.output)
-
-  calls = []
-  for (let index = 0; index < poolLength.toNumber(); index++) {
-    calls.push({
-      params: [index, ctx.address],
-      target: ifoContract.address,
-    })
-  }
-
-  const poolBalancesRes = await multicall({
-    ctx,
-    calls: calls,
-    abi: {
-      inputs: [
-        {
-          internalType: 'uint256',
-          name: '_pid',
-          type: 'uint256',
-        },
-        {
-          internalType: 'address',
-          name: '_account',
-          type: 'address',
-        },
-      ],
-      name: 'getUserShare',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  })
-
-  const poolBalances = poolBalancesRes.filter((res) => res.success).map((res) => res.output)
-
-  const lpTokens = []
-  const pids = []
-  const correspondingKeys = []
-  for (let index = 0; index < poolBalances.length; index++) {
-    const poolBalance = poolBalances[index]
-    if (poolBalance > 0) {
-      pids.push(index)
-      lpTokens.push(poolDetails[index].lpToken)
-      correspondingKeys[poolDetails[index].lpToken] = index
-    }
-  }
-
-  if (pids.length > 0) {
-    calls = []
-    for (let index = 0; index < pids.length; index++) {
-      calls.push({
-        params: [pids[index], ctx.address],
-        target: ifoContract.address,
-      })
-    }
-  }
-
-  const pendingRewardsRes = await multicall({
-    ctx,
-    calls: calls,
-    abi: {
-      inputs: [
-        {
-          internalType: 'uint256',
-          name: '_pid',
-          type: 'uint256',
-        },
-        {
-          internalType: 'address',
-          name: '_account',
-          type: 'address',
-        },
-      ],
-      name: 'pendingCTR',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: '',
-          type: 'uint256',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  })
-
-  const pendingRewards = pendingRewardsRes.filter((res) => res.success)
-
-  const lpTokenDetails = await getERC20Details(ctx, lpTokens)
-
+export async function getIFOPoolsBalances(ctx: BalancesContext, pools: PoolContract[], concentratorIFOVault: Contract) {
   const balances: Balance[] = []
-  for (let index = 0; index < poolBalances.length; index++) {
-    const poolBalance = poolBalances[index]
-    if (poolBalance > 0) {
-      const tokenDetail = lpTokenDetails.find((o) => o.address === poolDetails[index].lpToken)
-      const pendingReward = pendingRewards.find(
-        (o) => o.input.params[0] === correspondingKeys[poolDetails[index].lpToken],
-      )
 
-      const balance: Balance = {
-        chain: ctx.chain,
-        category: 'lp',
-        symbol: tokenDetail.symbol,
-        decimals: tokenDetail.decimals,
-        address: tokenDetail.address,
-        amount: BigNumber.from(poolBalance),
-      }
+  const calls: Call[] = pools.map((pool) => ({
+    target: concentratorIFOVault.address,
+    params: [pool.pid, ctx.address],
+  }))
 
-      balances.push(balance)
+  const [userSharesRes, pendingCTRsRes, pendingRewardsRes] = await Promise.all([
+    multicall({ ctx, calls, abi: abi.getUserShare }),
+    multicall({ ctx, calls, abi: abi.pendingCTR }),
+    multicall({ ctx, calls, abi: abi.pendingReward }),
+  ])
 
-      if (pendingReward) {
-        balances.rewards = [
-          {
-            chain: ctx.chain,
-            category: 'lp',
-            symbol: 'CTR',
-            decimals: 18,
-            address: '0xb3ad645db386d7f6d753b2b9c3f4b853da6890b8',
-            amount: BigNumber.from(pendingReward.output),
-          },
-        ]
-      }
+  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+    const pool = pools[poolIdx]
+    const userShareRes = userSharesRes[poolIdx]
+    const pendingCTRRes = pendingCTRsRes[poolIdx]
+    const pendingRewardRes = pendingRewardsRes[poolIdx]
+    const rewards = pool.rewards
+
+    if (!isSuccess(userShareRes)) {
+      continue
     }
+
+    const balance: Balance = {
+      ...pool,
+      amount: BigNumber.from(userShareRes.output),
+      category: 'lp',
+    }
+
+    if (rewards) {
+      balance.rewards = [
+        {
+          ...(rewards[0] as Contract),
+          amount: pendingRewardRes.success ? BigNumber.from(pendingRewardRes.output) : BN_ZERO,
+        },
+        { ...(rewards[1] as Contract), amount: pendingCTRRes.success ? BigNumber.from(pendingCTRRes.output) : BN_ZERO },
+      ]
+    }
+
+    balances.push(balance)
   }
 
   return balances

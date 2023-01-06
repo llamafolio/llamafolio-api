@@ -1,26 +1,27 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 
-import { getIFOBalances } from './ifo'
+import { getIFOPoolsBalances, getIFOPoolsContracts } from './ifo'
 
-const concentratorIFOContract: Contract = {
+const concentratorIFOVault: Contract = {
   name: 'ConcentratorIFO',
   displayName: 'Concentrator IFO',
   chain: 'ethereum',
   address: '0x3cf54f3a1969be9916dad548f3c084331c4450b5',
 }
 
-export const getContracts = () => {
+export const getContracts = async (ctx: BaseContext) => {
+  const pools = await getIFOPoolsContracts(ctx, concentratorIFOVault)
+
   return {
-    contracts: { concentratorIFOContract },
+    contracts: { pools },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, { concentratorIFOContract }) => {
-  if (concentratorIFOContract) {
-    return {
-      balances: await getIFOBalances(ctx),
-    }
-  }
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    pools: (ctx, pools) => getIFOPoolsBalances(ctx, pools, concentratorIFOVault),
+  })
 
-  return { balances: [] }
+  return { balances }
 }
