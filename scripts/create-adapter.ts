@@ -25,15 +25,14 @@ async function main() {
     return
   }
 
-  // flat (non recursive) copy
   fs.mkdirSync(dst)
-  fs.readdirSync(src).forEach(function (child) {
-    fs.copyFileSync(path.join(src, child), path.join(dst, child))
-  })
+  fs.mkdirSync(path.join(dst, 'ethereum'))
+  fs.copyFileSync(path.join(src, 'index.ts'), path.join(dst, 'index.ts'))
+  fs.copyFileSync(path.join(src, 'ethereum', 'index.ts'), path.join(dst, 'ethereum', 'index.ts'))
 
   console.log(`Successfully created adapter. To try it out run:`)
   console.log('')
-  console.log(`npm run adapter ${name} 0x0000000000000000000000000000000000000000`)
+  console.log(`npm run adapter ${name} ethereum 0x0000000000000000000000000000000000000000`)
 }
 
 main()
