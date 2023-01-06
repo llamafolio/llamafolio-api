@@ -59,7 +59,7 @@ const abi = {
   },
 }
 
-export async function getLendContracts(ctx: BaseContext, morhoLens: Contract): Promise<Contract[]> {
+export async function getMarketsContracts(ctx: BaseContext, morhoLens: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const marketsContractsRes = await call({
@@ -79,7 +79,7 @@ export async function getLendContracts(ctx: BaseContext, morhoLens: Contract): P
   })
 
   for (let idx = 0; idx < underlyingsRes.length; idx++) {
-    const marketsContracts = marketsContractsRes.output[idx]
+    const market = marketsContractsRes.output[idx]
     const underlying = underlyingsRes[idx]
 
     if (!isSuccess(underlying)) {
@@ -88,7 +88,7 @@ export async function getLendContracts(ctx: BaseContext, morhoLens: Contract): P
 
     contracts.push({
       chain: ctx.chain,
-      address: marketsContracts,
+      address: market,
       underlyings: [underlying.output],
     })
   }
@@ -102,8 +102,6 @@ export async function getLendBorrowBalances(
   morphoLens: Contract,
 ): Promise<Balance[]> {
   const balances: Balance[] = []
-  const lend: Balance[] = []
-  const borrow: Balance[] = []
 
   const calls = markets.map((market) => ({
     target: morphoLens.address,
@@ -115,41 +113,35 @@ export async function getLendBorrowBalances(
     multicall({ ctx, calls, abi: abi.getCurrentBorrowBalanceInOf }),
   ])
 
-  const lendBalances = lendBalancesRes.filter(isSuccess).map((res) => BigNumber.from(res.output.totalBalance))
-  const borrowBalances = borrowBalancesRes.filter(isSuccess).map((res) => BigNumber.from(res.output.totalBalance))
-
-  for (let idx = 0; idx < markets.length; idx++) {
-    const market = markets[idx]
-    const lendBalance = lendBalances[idx]
-    const borrowBalance = borrowBalances[idx]
+  for (let marketIdx = 0; marketIdx < markets.length; marketIdx++) {
+    const market = markets[marketIdx]
+    const lendBalanceRes = lendBalancesRes[marketIdx]
+    const borrowBalanceRes = borrowBalancesRes[marketIdx]
     const underlyings = market.underlyings?.[0] as Contract
 
-    lend.push({
-      ...market,
-      chain: ctx.chain,
-      address: market.address,
-      decimals: underlyings.decimals,
-      symbol: market.symbol,
-      amount: lendBalance,
-      underlyings: [underlyings],
-      rewards: undefined,
-      category: 'lend',
-    })
+    if (isSuccess(lendBalanceRes)) {
+      balances.push({
+        ...market,
+        decimals: underlyings.decimals,
+        amount: BigNumber.from(lendBalanceRes.output.totalBalance),
+        underlyings: [underlyings],
+        rewards: undefined,
+        category: 'lend',
+      })
+    }
 
-    borrow.push({
+    balances.push({
       ...market,
       chain: ctx.chain,
       address: market.address,
       decimals: underlyings.decimals,
       symbol: market.symbol,
-      amount: borrowBalance,
+      amount: BigNumber.from(borrowBalanceRes.output.totalBalance),
       underlyings: [underlyings],
       rewards: undefined,
       category: 'borrow',
     })
   }
-
-  balances.push(...lend, ...borrow)
 
   return balances
 }
