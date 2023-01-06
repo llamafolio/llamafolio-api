@@ -11,7 +11,7 @@ const xSushi: Token = {
   symbol: 'xSUSHI',
 }
 
-export async function getStakeBalances(ctx: BalancesContext, xSushi: Contract): Promise<Balance> {
+export async function getXSushiStakeBalance(ctx: BalancesContext, xSushi: Contract): Promise<Balance> {
   const balanceOf = await call({ ctx, target: xSushi.address, params: [ctx.address], abi: erc20Abi.balanceOf })
 
   const balance: Balance = {
@@ -25,7 +25,7 @@ export async function getStakeBalances(ctx: BalancesContext, xSushi: Contract): 
   return balance
 }
 
-export async function getYieldBalances(ctx: BalancesContext, meowshi: Contract): Promise<Balance> {
+export async function getMeowshiYieldBalance(ctx: BalancesContext, meowshi: Contract): Promise<Balance> {
   const meowConverter = 1e5 // 1 xSushi -> 100k meowshi
 
   const balanceOf = await call({ ctx, target: meowshi.address, params: [ctx.address], abi: erc20Abi.balanceOf })

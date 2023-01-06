@@ -6,7 +6,7 @@ import { isNotNullish } from '@lib/type'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
-import { getStakeBalances, getYieldBalances } from '../common/balances'
+import { getMeowshiYieldBalance, getXSushiStakeBalance } from '../common/balances'
 
 const masterChef: Contract = {
   name: 'masterChef',
@@ -99,8 +99,8 @@ function getSushiSwapBalances(ctx: BalancesContext, pairs: Contract[], masterChe
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    xSushi: getStakeBalances,
-    meowshi: getYieldBalances,
+    xSushi: getXSushiStakeBalance,
+    meowshi: getMeowshiYieldBalance,
     pairs: (...args) => getSushiSwapBalances(...args, contracts.masterChefPools || []),
   })
 
