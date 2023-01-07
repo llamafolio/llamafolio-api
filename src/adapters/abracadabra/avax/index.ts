@@ -12,6 +12,17 @@ const mSPELL: Contract = {
   symbol: 'mSPELL',
 }
 
+const MIM: Contract = {
+  name: 'Magic Internet Money',
+  address: '0x130966628846bfd36ff31a822705796e8cb8c18d',
+  chain: 'avax',
+  symbol: 'MIM',
+  decimals: 18,
+  coingeckoId: 'magic-internet-money',
+  stable: true,
+  wallet: true,
+}
+
 const cauldrons = [
   '0x3CFEd0439aB822530b1fFBd19536d897EF30D2a2',
   '0x3b63f81Ad1fc724E44330b4cf5b5B6e355AD964B',
@@ -36,7 +47,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     mStakeContracts: getMStakeBalance,
-    marketsContracts: getMarketsBalances,
+    marketsContracts: (ctx, markets) => getMarketsBalances(ctx, markets, MIM),
   })
 
   return {
