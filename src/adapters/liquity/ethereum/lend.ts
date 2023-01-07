@@ -2,6 +2,48 @@ import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { BigNumber } from 'ethers'
 
+const abi = {
+  Troves: {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'Troves',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'debt',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'coll',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'stake',
+        type: 'uint256',
+      },
+      {
+        internalType: 'enum TroveManager.Status',
+        name: 'status',
+        type: 'uint8',
+      },
+      {
+        internalType: 'uint128',
+        name: 'arrayIndex',
+        type: 'uint128',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
 export async function getLendBalances(ctx: BalancesContext, troveManager: Contract) {
   const balances: Balance[] = []
 
@@ -9,45 +51,7 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
     ctx,
     target: troveManager.address,
     params: [ctx.address],
-    abi: {
-      inputs: [
-        {
-          internalType: 'address',
-          name: '',
-          type: 'address',
-        },
-      ],
-      name: 'Troves',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: 'debt',
-          type: 'uint256',
-        },
-        {
-          internalType: 'uint256',
-          name: 'coll',
-          type: 'uint256',
-        },
-        {
-          internalType: 'uint256',
-          name: 'stake',
-          type: 'uint256',
-        },
-        {
-          internalType: 'enum TroveManager.Status',
-          name: 'status',
-          type: 'uint8',
-        },
-        {
-          internalType: 'uint128',
-          name: 'arrayIndex',
-          type: 'uint128',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.Troves,
   })
 
   const troveDetails = troveDetailsRes.output
