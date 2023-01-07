@@ -7,16 +7,16 @@ import { chainIdResolver } from '../src/lib/chains'
 import { fetchProtocolsLite } from '../src/lib/protocols'
 
 const adapterTemplate = (slug: string, chains: string[]) => `
-import { Adapter } from '@lib/adapter'
+import { Adapter } from '@lib/adapter';
 
-${chains.map((chain) => `import * as ${chain} from './${chain}'`)}
+${chains.map((chain) => `import * as ${chain} from './${chain}'`).join(';')}
 
 const adapter: Adapter = {
   id: '${slug}',
   ${chains.join(',')}
-}
+};
 
-export default adapter
+export default adapter;
 
 `
 
