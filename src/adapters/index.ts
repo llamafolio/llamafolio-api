@@ -16,6 +16,7 @@ import curve from '@adapters/curve'
 import euler from '@adapters/euler'
 import floorDao from '@adapters/floor-dao'
 import fraxLend from '@adapters/fraxlend'
+import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
 import gmx from '@adapters/gmx'
 import granaryFinance from '@adapters/granary-finance'
@@ -86,6 +87,7 @@ export const adapters: Adapter[] = [
   euler,
   floorDao,
   fraxLend,
+  gearbox,
   geist,
   gmx,
   granaryFinance,
