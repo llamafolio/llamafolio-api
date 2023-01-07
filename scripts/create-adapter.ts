@@ -92,6 +92,7 @@ async function main() {
     fs.writeFileSync(path.join(dst, chain, 'index.ts'), chainTemplate)
   }
 
+  // format
   execSync(
     `npx prettier --ignore-path .gitignore --ignore-path .prettierignore 'src/adapters/${slug}/**/*.{md,json,js,ts}' --write`,
   )

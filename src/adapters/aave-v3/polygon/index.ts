@@ -1,31 +1,36 @@
-import { getLendingRewardsBalances } from '@adapters/aave/v2/common/rewards'
-import { getLendingPoolBalances, getLendingPoolContracts, getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
+import {
+  getLendingPoolBalances,
+  getLendingPoolContracts,
+  getLendingPoolHealthFactor,
+  getLendingRewardsBalances,
+} from '../common/lending'
+
 const lendingPool: Contract = {
-  name: 'Lending Pool',
-  address: '0x8dff5e27ea6b7ac08ebfdf9eb090f32ee9a30fcf',
   chain: 'polygon',
+  address: '0x794a61358D6845594F94dc1DB02A252b5b4814aD',
+  name: 'Pool',
+  displayName: 'Pool',
 }
 
-const WMATIC: Contract = {
-  address: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
+const poolDataProvider: Contract = {
   chain: 'polygon',
-  name: 'Wrapped Matic',
-  symbol: 'WMATIC',
-  decimals: 18,
-  coingeckoId: 'wmatic',
+  address: '0x69fa688f1dc47d4b5d8029d5a35fb7a548310654',
+  name: 'Pool Data Provider',
+  displayName: 'Aave: Pool Data Provider V3',
 }
 
 const incentiveController: Contract = {
-  name: 'Aave Incentive Controller',
-  address: '0x357D51124f59836DeD84c8a1730D72B749d8BC23',
   chain: 'polygon',
+  address: '0x929EC64c34a17401F460460D4B9390518E5B473e',
+  name: 'Incentive Controller',
+  displayName: 'Aave: Incentives V3',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getLendingPoolContracts(ctx, lendingPool)
+  const pools = await getLendingPoolContracts(ctx, lendingPool, poolDataProvider)
 
   return {
     contracts: {
@@ -38,7 +43,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: getLendingPoolBalances,
-    incentiveController: (...args) => getLendingRewardsBalances(...args, WMATIC, contracts.pools || []),
+    incentiveController: (...args) => getLendingRewardsBalances(...args, contracts.pools || []),
   })
 
   const healthFactor = await getLendingPoolHealthFactor(ctx, lendingPool)

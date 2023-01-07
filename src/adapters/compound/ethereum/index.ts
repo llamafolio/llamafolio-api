@@ -1,4 +1,3 @@
-import { getRewardsBalances } from '@adapters/compound/v2/common/rewards'
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import {
@@ -8,6 +7,8 @@ import {
   getMarketsContracts,
 } from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
+
+import { getRewardsBalances } from '../common/rewards'
 
 const COMP: Token = {
   chain: 'ethereum',

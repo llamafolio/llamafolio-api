@@ -1,8 +1,9 @@
-import { getLendingRewardsBalances } from '@adapters/aave/v2/common/rewards'
-import { getStakeBalancerPoolBalances, getStakeBalances } from '@adapters/aave/v2/common/stake'
 import { getLendingPoolBalances, getLendingPoolContracts, getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+
+import { getLendingRewardsBalances } from '../common/rewards'
+import { getStakeBalancerPoolBalances, getStakeBalances } from '../common/stake'
 
 const AAVE: Contract = {
   name: 'Aave Token',

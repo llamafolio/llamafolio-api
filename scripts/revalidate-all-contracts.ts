@@ -1,75 +1,20 @@
-import { execSync } from 'node:child_process'
+import { execSync } from 'child_process'
+import fs from 'fs'
+import path from 'path'
 
-// TODO: infer paths from imports or fs
-const adaptersPaths = [
-  'aave/v2',
-  'aave/v3',
-  'abracadabra',
-  'alpaca-finance',
-  'apeswap-amm',
-  'apeswap-lending',
-  'arrakis',
-  'atlas-usv',
-  'benqi-lending',
-  'benqi-staked-avax',
-  'compound/v2',
-  'compound/v3',
-  'concentrator',
-  'convex',
-  'curve',
-  'euler',
-  'floor-dao',
-  'fraxlend',
-  'geist',
-  'gmx',
-  'granary-finance',
-  'hector-network',
-  'hex',
-  'hundred-finance',
-  'inverse-finance',
-  'iron-bank',
-  'klima-dao',
-  'lido',
-  'life-dao',
-  'liquity',
-  'looksrare',
-  'lusd-chickenbonds',
-  'makerdao',
-  'maple',
-  'morpho-aave',
-  'morpho-compound',
-  'nemesis-dao',
-  'nexus-mutual',
-  'olympus-dao',
-  'pancakeswap',
-  'pangolin',
-  'radiant',
-  'rocket-pool',
-  'scream',
-  'shibaswap',
-  'spartacus',
-  'spiritswap',
-  'spookyswap',
-  'spool',
-  'stakewise',
-  'stargate',
-  'strike',
-  'sushiswap',
-  'synapse',
-  'synthetix',
-  'templedao',
-  'traderjoe',
-  'truefi',
-  'uniswap',
-  'uwu-lend',
-  'valas',
-  'vector',
-  'venus',
-  'wallet',
-  'wepiggy',
-  'wonderland',
-  'yearn-finance',
-]
+function getAdapters() {
+  const src = path.join(__dirname, '..', 'src', 'adapters')
+
+  const adapters: string[] = []
+
+  fs.readdirSync(src).forEach(function (child) {
+    if (fs.existsSync(path.join(src, child, 'index.ts'))) {
+      adapters.push(child)
+    }
+  })
+
+  return adapters
+}
 
 /**
  * Revalidate contracts of all adapters
@@ -78,11 +23,13 @@ async function main() {
   // argv[0]: ts-node
   // argv[1]: revalidate-all-contracts.ts
 
+  const adapters = getAdapters()
+
   // TODO: spawn child processes
-  for (const adapterPath of adaptersPaths) {
-    console.log(`Revalidate contracts ${adapterPath}`)
+  for (const adapter of adapters) {
+    console.log(`Revalidate contracts ${adapter}`)
     try {
-      const stdout = execSync(`npm run revalidate-contracts ${adapterPath}`, {})
+      const stdout = execSync(`npm run revalidate-contracts ${adapter}`, {})
       console.log(stdout.toString())
     } catch (err) {
       console.error(err)

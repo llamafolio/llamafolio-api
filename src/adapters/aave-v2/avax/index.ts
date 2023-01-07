@@ -1,7 +1,8 @@
-import { getLendingRewardsBalances } from '@adapters/aave/v2/common/rewards'
 import { getLendingPoolBalances, getLendingPoolContracts, getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+
+import { getLendingRewardsBalances } from '../common/rewards'
 
 const lendingPool: Contract = {
   name: 'Lending Pool',
