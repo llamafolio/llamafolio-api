@@ -12,14 +12,6 @@ const RBN: Token = {
   decimals: 18,
   symbol: 'RBN',
 }
-const rbnEarn: Contract = {
-  chain: 'ethereum',
-  name: 'Ribbon.fi rEARN Gauge Deposit',
-  address: '0x9674126ff31e5ece36de0cf03a49351a7c814587',
-  decimals: 18,
-  symbol: 'rEARN-gauge',
-  underlyings: [RBN],
-}
 
 const veRBN: Contract = {
   chain: 'ethereum',
@@ -46,7 +38,7 @@ export const getContracts = async (ctx: BaseContext) => {
   const gauges = await getFarmLPContracts(ctx, gaugeController)
 
   return {
-    contracts: { veRBN, veRBNPenaltyRewards, gauges, rbnEarn },
+    contracts: { veRBN, veRBNPenaltyRewards, gauges },
   }
 }
 
