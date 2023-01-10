@@ -7,4 +7,10 @@ const adapter: Adapter = {
   ethereum,
 }
 
+/**
+ *  TODO:
+ *  - Logic to get rewards from farming part
+ *  - Logic on Avax chain (very low liquidity atm)
+ */
+
 export default adapter
