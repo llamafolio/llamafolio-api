@@ -2,16 +2,8 @@ import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_TEN } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
-
-const RBN: Token = {
-  chain: 'ethereum',
-  address: '0x6123B0049F904d730dB3C36a31167D9d4121fA6B',
-  decimals: 18,
-  symbol: 'RBN',
-}
 
 const abi = {
   pricePerShare: {
@@ -58,10 +50,6 @@ export async function getFarmBalances(ctx: BalancesContext, gauges: Contract[]):
         amount: balanceOf,
         rewards: undefined,
         category: 'farm',
-      }
-
-      if (balance.amount.gt(0)) {
-        console.log(balance)
       }
 
       balances.push(balance)
