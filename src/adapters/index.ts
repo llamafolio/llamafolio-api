@@ -43,6 +43,7 @@ import olympusDao from '@adapters/olympus-dao'
 import pancakeswap from '@adapters/pancakeswap'
 import pangolin from '@adapters/pangolin'
 import radiant from '@adapters/radiant'
+import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import scream from '@adapters/scream'
 import shibaswap from '@adapters/shibaswap'
@@ -116,6 +117,7 @@ export const adapters: Adapter[] = [
   pancakeswap,
   pangolin,
   radiant,
+  ribbonFinance,
   rocketPool,
   scream,
   shibaswap,
