@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import {
   BalanceWithExtraProps,
@@ -30,8 +30,8 @@ const comptroller: Contract = {
   address: '0xaa87715E858b482931eB2f6f92E504571588390b',
 }
 
-export const getContracts = async () => {
-  const poolsMarkets = await getMarketsContracts('arbitrum', {
+export const getContracts = async (ctx: BaseContext) => {
+  const poolsMarkets = await getMarketsContracts(ctx, {
     // WePiggy Unitroller on Arbitrum chain
     comptrollerAddress: comptroller.address,
     underlyingAddressByMarketAddress: {
@@ -51,7 +51,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'arbitrum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     poolsMarkets: getMarketsBalances,
     piggyDistribution: getMarketsRewards,
   })

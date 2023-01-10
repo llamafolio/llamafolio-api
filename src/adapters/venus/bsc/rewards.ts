@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -41,14 +40,13 @@ const XVS: Token = {
 
 export async function getRewardsBalances(
   ctx: BalancesContext,
-  chain: Chain,
   comptroller: Contract,
   lens: Contract,
 ): Promise<Balance[]> {
   const rewards: Balance[] = []
 
   const XVSAllocatedRewardsRes = await call({
-    chain,
+    ctx,
     target: lens.address,
     params: [XVS.address, comptroller.address, ctx.address],
     abi: abi.getXVSBalanceMetadataExt,
@@ -57,7 +55,7 @@ export async function getRewardsBalances(
   const XVSAllocatedRewards = BigNumber.from(XVSAllocatedRewardsRes.output.allocated)
 
   rewards.push({
-    chain,
+    chain: ctx.chain,
     address: XVS.address,
     decimals: XVS.decimals,
     symbol: XVS.symbol,

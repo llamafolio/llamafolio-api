@@ -1,6 +1,5 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
-import { Chain } from '@lib/chains'
 import { Call, multicall } from '@lib/multicall'
 import { getStakingPoolsBalances } from '@lib/pools'
 import { Token } from '@lib/token'
@@ -84,7 +83,7 @@ const abi = {
 }
 
 export async function getGaugesContracts(
-  chain: Chain,
+  ctx: BaseContext,
   registries: Partial<Record<Registry, string>>,
   pools: PoolContract[],
   CRV: Token,
@@ -103,7 +102,7 @@ export async function getGaugesContracts(
   const registriesGauges = await Promise.all(
     registriesIds.map((registryId) =>
       multicall<string, [string], string[][] | string>({
-        chain,
+        chain: ctx.chain,
         calls: poolsByRegistryId[registryId].map((pool) => ({
           target: registries[registryId] as string,
           params: [pool.pool],
@@ -133,7 +132,7 @@ export async function getGaugesContracts(
       for (const gauge of gauges) {
         if (gauge !== ethers.constants.AddressZero) {
           const gaugeContract: Contract = {
-            chain,
+            chain: ctx.chain,
             address: gauge,
             pool: pool.pool,
             lpToken: pool.lpToken,
@@ -157,7 +156,7 @@ export async function getGaugesContracts(
   }
 
   const rewardTokensRes = await multicall({
-    chain,
+    ctx,
     calls,
     abi: abi.reward_tokens,
   })
@@ -182,11 +181,11 @@ export async function getGaugesContracts(
   return gaugeContracts
 }
 
-export async function getGaugesBalances(ctx: BalancesContext, chain: Chain, gauges: Contract[]) {
+export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]) {
   const gaugesBalances: Balance[] = []
   const calls: Call[] = []
 
-  const gaugesBalancesRes = await getStakingPoolsBalances(ctx, chain, gauges, {
+  const gaugesBalancesRes = await getStakingPoolsBalances(ctx, gauges, {
     getLPTokenAddress: (contract) => contract.lpToken,
     getPoolAddress: (contract) => contract.pool,
   })
@@ -198,7 +197,7 @@ export async function getGaugesBalances(ctx: BalancesContext, chain: Chain, gaug
     }
   }
 
-  const claimableRewards = await multicall({ chain, calls, abi: abi.claimable_reward })
+  const claimableRewards = await multicall({ ctx, calls, abi: abi.claimable_reward })
 
   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
     const rewards = gaugesBalancesRes[gaugeIdx].rewards || []

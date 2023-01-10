@@ -53,6 +53,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
+  console.log(`Get balances tokens`, address)
+
   const client = await pool.connect()
 
   try {
@@ -76,12 +78,14 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
             const ctx: BalancesContext = { address, chain: chain as Chain, adapterId: walletAdapter.id }
 
+            console.log(`[${walletAdapter.id}][${chain}] getBalances ${tokensByChain[chain].length} contracts`)
+
             const balancesConfig = await handler.getBalances(ctx, contracts, {})
 
             const hrend = process.hrtime(hrstart)
 
             console.log(
-              `[${walletAdapter.id}][${chain}] getBalances ${tokensByChain[chain].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
+              `[${walletAdapter.id}][${chain}] found ${balancesConfig.balances.length} balances in %ds %dms`,
               hrend[0],
               hrend[1] / 1000000,
             )

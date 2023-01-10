@@ -1,17 +1,16 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { sumBN } from '@lib/math'
 import { multicall } from '@lib/multicall'
 
 import { getRewardsBalances } from './reward'
 
-export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const stakeCountRes = await call({
-    chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: {
@@ -26,7 +25,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
   })
 
   const findStakesAndIndexesRes = await multicall({
-    chain,
+    ctx,
     calls: range(0, stakeCountRes.output).map((i) => ({
       target: contract.address,
       params: [ctx.address, i],
@@ -66,18 +65,18 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
 
   const amount = sumBN(stakesAndIndexes.map((balance) => balance.stake))
 
-  const rewards = await getRewardsBalances(chain, contract, stakesAndIndexes)
+  const rewards = await getRewardsBalances(ctx, contract, stakesAndIndexes)
   const totalRewards = sumBN(rewards)
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     decimals: contract.decimals,
     symbol: contract.symbol,
     address: contract.address,
     amount,
     rewards: [
       {
-        chain,
+        chain: ctx.chain,
         decimals: contract.decimals,
         symbol: contract.symbol,
         address: contract.address,

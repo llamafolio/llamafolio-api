@@ -1,60 +1,63 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
-export async function getLendBalances(ctx: BalancesContext, chain: Chain, troveManager: Contract) {
+const abi = {
+  Troves: {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'Troves',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'debt',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'coll',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'stake',
+        type: 'uint256',
+      },
+      {
+        internalType: 'enum TroveManager.Status',
+        name: 'status',
+        type: 'uint8',
+      },
+      {
+        internalType: 'uint128',
+        name: 'arrayIndex',
+        type: 'uint128',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+export async function getLendBalances(ctx: BalancesContext, troveManager: Contract) {
   const balances: Balance[] = []
 
   const troveDetailsRes = await call({
-    chain,
+    ctx,
     target: troveManager.address,
     params: [ctx.address],
-    abi: {
-      inputs: [
-        {
-          internalType: 'address',
-          name: '',
-          type: 'address',
-        },
-      ],
-      name: 'Troves',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: 'debt',
-          type: 'uint256',
-        },
-        {
-          internalType: 'uint256',
-          name: 'coll',
-          type: 'uint256',
-        },
-        {
-          internalType: 'uint256',
-          name: 'stake',
-          type: 'uint256',
-        },
-        {
-          internalType: 'enum TroveManager.Status',
-          name: 'status',
-          type: 'uint8',
-        },
-        {
-          internalType: 'uint128',
-          name: 'arrayIndex',
-          type: 'uint128',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.Troves,
   })
 
   const troveDetails = troveDetailsRes.output
 
   balances.push({
-    chain: chain,
+    chain: ctx.chain,
     category: 'lend',
     symbol: 'ETH',
     decimals: 18,
@@ -63,7 +66,7 @@ export async function getLendBalances(ctx: BalancesContext, chain: Chain, troveM
   })
 
   balances.push({
-    chain: chain,
+    chain: ctx.chain,
     category: 'borrow',
     symbol: 'LUSD',
     decimals: 18,

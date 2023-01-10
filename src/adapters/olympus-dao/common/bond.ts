@@ -1,6 +1,5 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
@@ -66,9 +65,9 @@ interface BondParams extends Contract {
   bondAddress: string
 }
 
-export async function getBondsContracts(chain: Chain, contract: Contract): Promise<Contract[]> {
+export async function getBondsContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const bondDetailsRes = await multicall({
-    chain,
+    ctx,
     calls: range(0, 25).map((i) => ({
       target: contract.address,
       params: [i],
@@ -77,16 +76,16 @@ export async function getBondsContracts(chain: Chain, contract: Contract): Promi
   })
 
   const bondContracts: BondParams[] = bondDetailsRes.filter(isSuccess).map((res) => ({
-    chain,
+    chain: ctx.chain,
     address: res.output._principleToken,
     bondWithToken: res.output._payoutToken,
     bondAddress: res.output._bondAddress,
   }))
 
-  return await getPairsDetails(chain, bondContracts)
+  return await getPairsDetails(ctx, bondContracts)
 }
 
-export async function getBondsBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]) {
+export async function getBondsBalances(ctx: BalancesContext, contracts: Contract[]) {
   const balances: Balance[] = []
 
   const calls = contracts.map((contract) => ({
@@ -96,15 +95,15 @@ export async function getBondsBalances(ctx: BalancesContext, chain: Chain, contr
 
   const [pendingPayoutForRes, underlyingsTokensReservesRes, totalPoolSuppliesRes] = await Promise.all([
     multicall({
-      chain,
+      ctx,
       calls: contracts.map((contract) => ({
         target: contract.bondAddress,
         params: [ctx.address],
       })),
       abi: abi.pendingPayoutFor,
     }),
-    multicall({ chain, calls, abi: abi.getReserves }),
-    multicall({ chain, calls, abi: abi.totalSupply }),
+    multicall({ ctx, calls, abi: abi.getReserves }),
+    multicall({ ctx, calls, abi: abi.totalSupply }),
   ])
 
   const pendingPayoutFor = pendingPayoutForRes.filter(isSuccess).map((res) => BigNumber.from(res.output))

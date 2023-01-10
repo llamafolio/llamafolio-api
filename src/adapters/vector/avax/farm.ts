@@ -1,7 +1,6 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -105,18 +104,18 @@ const VTX: Token = {
   symbol: 'VTX',
 }
 
-export async function getFarmContracts(chain: Chain, masterChef: Contract) {
+export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
   const contracts: FarmContract[] = []
 
   const poolsLength = await call({
-    chain,
+    ctx,
     target: masterChef.address,
     params: [],
     abi: abi.poolLength,
   })
 
   const poolsAddressesRes = await multicall({
-    chain,
+    ctx,
     calls: range(0, poolsLength.output).map((i) => ({
       target: masterChef.address,
       params: [i],
@@ -127,7 +126,7 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
   const poolsAddresses = poolsAddressesRes.filter(isSuccess).map((res) => res.output)
 
   const poolInfosRes = await multicall({
-    chain,
+    ctx,
     calls: poolsAddresses.map((pool) => ({
       target: masterChef.address,
       params: [pool],
@@ -143,7 +142,7 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
 
   const [depositTokensRes, rewardTokensRes] = await Promise.all([
     multicall({
-      chain,
+      ctx,
       calls: poolInfos.map((res) => ({
         target: res.output.helper,
         params: [],
@@ -152,7 +151,7 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
     }),
 
     multicall({
-      chain,
+      ctx,
       calls: poolInfos.flatMap((res) =>
         range(0, rewardsLength).map((idx) => ({
           target: res.output.rewarder,
@@ -172,7 +171,7 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
     }
 
     contracts.push({
-      chain,
+      chain: ctx.chain,
       address: poolInfoRes.input.params[0],
       rewarder: poolInfoRes.output.rewarder,
       underlyings: [depositTokenRes.output],
@@ -188,7 +187,6 @@ export async function getFarmContracts(chain: Chain, masterChef: Contract) {
 
 export async function getFarmBalances(
   ctx: BalancesContext,
-  chain: Chain,
   pools: FarmContract[],
   masterChef: Contract,
 ): Promise<Balance[]> {
@@ -196,7 +194,7 @@ export async function getFarmBalances(
 
   const [userDepositBalancesRes, pendingBaseRewardsRes, pendingRewardsRes] = await Promise.all([
     multicall({
-      chain,
+      ctx,
       calls: pools.map((pool) => ({
         target: masterChef.address,
         params: [pool.address, ctx.address],
@@ -205,7 +203,7 @@ export async function getFarmBalances(
     }),
 
     multicall({
-      chain,
+      ctx,
       calls: pools.map((pool) => ({
         target: masterChef.address,
         params: [pool.address, ctx.address, pool.address],
@@ -214,7 +212,7 @@ export async function getFarmBalances(
     }),
 
     multicall({
-      chain,
+      ctx,
       calls: pools.flatMap(
         (pool) =>
           pool.rewards?.map((rewardToken) => ({
@@ -238,7 +236,7 @@ export async function getFarmBalances(
     }
 
     const balance: FarmBalance = {
-      chain,
+      chain: ctx.chain,
       address: pool.address,
       symbol: pool.symbol,
       decimals: pool.decimals,
@@ -269,7 +267,7 @@ export async function getFarmBalances(
     // resolve LP underlyings
     if (balance.amount.gt(0)) {
       if (balance.symbol === 'JLP') {
-        const underlyings = await getPoolsUnderlyings(chain, balance)
+        const underlyings = await getPoolsUnderlyings(ctx, balance)
         balance.underlyings = [...underlyings]
       }
     }
@@ -281,7 +279,7 @@ export async function getFarmBalances(
 }
 
 // TODO: reuse TraderJoe logic
-const getPoolsUnderlyings = async (chain: Chain, contract: Contract): Promise<Balance[]> => {
+const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Promise<Balance[]> => {
   const [
     underlyingToken0AddressesRes,
     underlyingsTokens1AddressesRes,
@@ -289,7 +287,7 @@ const getPoolsUnderlyings = async (chain: Chain, contract: Contract): Promise<Ba
     totalPoolSupplyRes,
   ] = await Promise.all([
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -302,7 +300,7 @@ const getPoolsUnderlyings = async (chain: Chain, contract: Contract): Promise<Ba
     }),
 
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -315,7 +313,7 @@ const getPoolsUnderlyings = async (chain: Chain, contract: Contract): Promise<Ba
     }),
 
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -332,7 +330,7 @@ const getPoolsUnderlyings = async (chain: Chain, contract: Contract): Promise<Ba
     }),
 
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [],
       abi: {
@@ -354,7 +352,7 @@ const getPoolsUnderlyings = async (chain: Chain, contract: Contract): Promise<Ba
     BigNumber.from(underlyingsTokensReservesRes.output._reserve0),
     BigNumber.from(underlyingsTokensReservesRes.output._reserve1),
   )
-  const underlyings = await getERC20Details(chain, underlyingsTokensAddresses)
+  const underlyings = await getERC20Details(ctx, underlyingsTokensAddresses)
 
   const underlyings0 = {
     ...underlyings[0],

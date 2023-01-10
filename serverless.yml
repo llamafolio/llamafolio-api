@@ -30,7 +30,7 @@ provider:
           Action:
             - 'lambda:InvokeFunction'
           Resource: '*'
-        - Effect: "Allow"
+        - Effect: 'Allow'
           Action:
             - dynamodb:DescribeTable
             - dynamodb:Query
@@ -41,7 +41,7 @@ provider:
             - dynamodb:DeleteItem
             - dynamodb:BatchGetItem
           Resource:
-            - "Fn::GetAtt": [DynamoTable, Arn]
+            - 'Fn::GetAtt': [DynamoTable, Arn]
   environment:
     PGHOST: ${file(./env.js):PGHOST}
     PGUSER: ${file(./env.js):PGUSER}
@@ -100,6 +100,7 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}/tokens
+    timeout: 29
 
   getCategories:
     handler: src/handlers/getCategories.handler

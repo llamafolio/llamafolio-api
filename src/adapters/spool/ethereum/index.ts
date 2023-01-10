@@ -66,7 +66,7 @@ export const getContracts = () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     spoolStaking: getStakeBalances,
     genesisPools: getYieldBalances,
   })

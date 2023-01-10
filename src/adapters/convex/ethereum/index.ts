@@ -1,11 +1,10 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
-import { getPoolsBalances } from './balances'
 import { getLockerBalances } from './locker'
-import { getPoolsContract } from './pool'
-import { getStakeBalances } from './stake'
+import { getPoolsBalances, getPoolsContracts } from './pool'
+import { getCvxCrvStakeBalance, getCVXStakeBalance } from './stake'
 
 const cvxCRV: Token = {
   chain: 'ethereum',
@@ -28,6 +27,13 @@ const CVX: Token = {
   decimals: 18,
 }
 
+const cvxRewardPool: Contract = {
+  chain: 'ethereum',
+  address: '0xCF50b810E57Ac33B91dCF525C6ddd9881B139332',
+  underlyings: [CVX],
+  rewards: [CRV],
+}
+
 const locker: Contract = {
   name: 'Locker',
   displayName: 'Convex Locker',
@@ -36,7 +42,7 @@ const locker: Contract = {
   underlyings: [CVX],
 }
 
-const poolRegistry: Contract = {
+const booster: Contract = {
   name: 'Convex Finance Booster',
   chain: 'ethereum',
   address: '0xf403c135812408bfbe8713b5a23a04b3d48aae31',
@@ -51,19 +57,20 @@ const cvxCRVStaker: Contract = {
   rewards: [CRV, CVX],
 }
 
-export const getContracts = async () => {
-  const pools = await getPoolsContract('ethereum', poolRegistry)
+export const getContracts = async (ctx: BaseContext) => {
+  const pools = await getPoolsContracts(ctx, booster)
 
   return {
-    contracts: { cvxCRVStaker, locker, pools },
+    contracts: { cvxCRVStaker, locker, pools, cvxRewardPool },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
-    pools: getPoolsBalances,
-    cvxCRVStaker: getStakeBalances,
-    locker: getLockerBalances,
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    pools: (...args) => getPoolsBalances(...args, CVX, CRV),
+    cvxRewardPool: (...args) => getCVXStakeBalance(...args, CVX, CRV),
+    cvxCRVStaker: (...args) => getCvxCrvStakeBalance(...args, CVX, CRV),
+    locker: (...args) => getLockerBalances(...args, CVX),
   })
 
   return {

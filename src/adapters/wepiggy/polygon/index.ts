@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
@@ -25,8 +25,8 @@ const comptroller: Contract = {
   address: '0xFfceAcfD39117030314A07b2C86dA36E51787948',
 }
 
-export const getContracts = async () => {
-  const poolsMarkets = await getMarketsContracts('polygon', {
+export const getContracts = async (ctx: BaseContext) => {
+  const poolsMarkets = await getMarketsContracts(ctx, {
     // WePiggy Unitroller on Polygon chain
     comptrollerAddress: comptroller.address,
     underlyingAddressByMarketAddress: {
@@ -44,7 +44,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'polygon', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     poolsMarkets: getMarketsBalances,
     piggyDistribution: getMarketsRewards,
   })

@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
@@ -12,7 +11,7 @@ const SPA: Contract = {
   symbol: 'SPA',
 }
 
-export async function getVestBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+export async function getVestBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const calls = contracts.map((contract) => ({
@@ -21,7 +20,7 @@ export async function getVestBalances(ctx: BalancesContext, chain: Chain, contra
   }))
 
   const vestingBalanceOfRes = await multicall({
-    chain,
+    ctx,
     calls,
     abi: {
       inputs: [{ internalType: 'address', name: '_depositor', type: 'address' }],
@@ -39,7 +38,7 @@ export async function getVestBalances(ctx: BalancesContext, chain: Chain, contra
     const vestingBalance = vestingBalanceOf[i]
 
     balances.push({
-      chain,
+      chain: ctx.chain,
       address: contract.address,
       symbol: contract.symbol,
       decimals: 9,

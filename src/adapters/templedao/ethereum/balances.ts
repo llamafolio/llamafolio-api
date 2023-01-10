@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
@@ -17,14 +16,13 @@ const TEMPLE: Contract = {
 
 export async function getStakeBalances(
   ctx: BalancesContext,
-  chain: Chain,
   contract: Contract,
   templeStaking: Contract,
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -33,7 +31,7 @@ export async function getStakeBalances(
   const balanceOf = balanceOfRes.output
 
   const formattedBalanceRes = await call({
-    chain,
+    ctx,
     target: templeStaking.address,
     params: [balanceOf],
     abi: {
@@ -48,7 +46,7 @@ export async function getStakeBalances(
   const formattedBalance = BigNumber.from(formattedBalanceRes.output)
 
   const balance: Balance = {
-    chain,
+    chain: ctx.chain,
     address: contract.address,
     symbol: contract.symbol,
     decimals: contract.decimals,
@@ -62,7 +60,7 @@ export async function getStakeBalances(
   return balances
 }
 
-export async function getLockedBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]): Promise<Balance[]> {
+export async function getLockedBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const calls = contracts.map((contract) => ({
     target: contract.address,
     params: [],
@@ -70,7 +68,7 @@ export async function getLockedBalances(ctx: BalancesContext, chain: Chain, cont
 
   const [balancesLockedRes, periodStartTimestampRes, periodDurationRes] = await Promise.all([
     multicall({
-      chain,
+      ctx,
       calls: contracts.map((contract) => ({
         target: contract.address,
         params: [ctx.address],
@@ -79,7 +77,7 @@ export async function getLockedBalances(ctx: BalancesContext, chain: Chain, cont
     }),
 
     multicall({
-      chain,
+      ctx,
       calls,
       abi: {
         inputs: [],
@@ -91,7 +89,7 @@ export async function getLockedBalances(ctx: BalancesContext, chain: Chain, cont
     }),
 
     multicall({
-      chain,
+      ctx,
       calls,
       abi: {
         inputs: [],
@@ -112,7 +110,7 @@ export async function getLockedBalances(ctx: BalancesContext, chain: Chain, cont
       const amountLocked = BigNumber.from(balancesLockedRes[i].output)
 
       const balance: Balance = {
-        chain,
+        chain: ctx.chain,
         decimals: contract.decimals,
         symbol: contract.symbol,
         address: contract.address,

@@ -1,7 +1,6 @@
 import { Balance, Contract } from '@lib/adapter'
 import { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers/lib/ethers'
 
@@ -13,11 +12,11 @@ const FLOOR: Contract = {
   symbol: 'FLOOR ',
 }
 
-export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -26,7 +25,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
   const amount = BigNumber.from(balanceOfRes.output)
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     address: contract.address,
     symbol: contract.symbol,
     decimals: 9,
@@ -38,15 +37,11 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
   return balances
 }
 
-export async function getFormattedStakeBalances(
-  ctx: BalancesContext,
-  chain: Chain,
-  contract: Contract,
-): Promise<Balance[]> {
+export async function getFormattedStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balanceOfRes = await call({
-    chain,
+    ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
@@ -55,7 +50,7 @@ export async function getFormattedStakeBalances(
   const balanceOf = balanceOfRes.output
 
   const formattedBalanceOfRes = await call({
-    chain,
+    ctx,
     target: contract.address,
     params: [balanceOf],
     abi: {
@@ -70,7 +65,7 @@ export async function getFormattedStakeBalances(
   const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes.output)
 
   balances.push({
-    chain,
+    chain: ctx.chain,
     address: contract.address,
     symbol: contract.symbol,
     decimals: 9,

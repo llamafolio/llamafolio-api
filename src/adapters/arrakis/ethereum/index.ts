@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getLpBalances } from '../common/balances'
@@ -11,8 +11,8 @@ const factoryArrakis: Contract = {
   address: '0xEA1aFf9dbFfD1580F6b81A3ad3589E66652dB7D9',
 }
 
-export const getContracts = async () => {
-  const vaults = await getVaults('ethereum', factoryArrakis)
+export const getContracts = async (ctx: BaseContext) => {
+  const vaults = await getVaults(ctx, factoryArrakis)
 
   return {
     contracts: { vaults },
@@ -21,7 +21,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     vaults: getLpBalances,
   })
 

@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getBondsBalances, getBondsContracts } from '../common/bond'
@@ -26,8 +26,8 @@ const bondOHM: Contract = {
   address: '0x6828D71014D797533C3b49B6990Ca1781656B71f',
 }
 
-export const getContracts = async () => {
-  const bonds = await getBondsContracts('ethereum', bondOHM)
+export const getContracts = async (ctx: BaseContext) => {
+  const bonds = await getBondsContracts(ctx, bondOHM)
 
   return {
     contracts: { sOHM, gOHM, bondOHM, bonds },
@@ -35,7 +35,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     sOHM: getStakeBalances,
     gOHM: getFormattedStakeBalances,
     bonds: getBondsBalances,

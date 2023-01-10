@@ -2,9 +2,8 @@ import {
   getLendingPoolBalances as getAaveLendingPoolBalances,
   getLendingPoolContracts as getAaveLendingPoolContracts,
 } from '@lib/aave/v2/lending'
-import { Balance, BalancesContext, Contract, RewardBalance } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract, RewardBalance } from '@lib/adapter'
 import { range } from '@lib/array'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
@@ -14,7 +13,7 @@ import { BigNumber, ethers } from 'ethers'
 import ChefIncentivesControllerABI from './abis/ChefIncentivesController.json'
 
 export interface GetLendingPoolContractsParams {
-  chain: Chain
+  ctx: BaseContext
   lendingPool: Contract
   chefIncentivesController: Contract
   rewardToken: Token
@@ -24,14 +23,14 @@ export interface GetLendingPoolContractsParams {
  * Get AAVE LendingPool lending and borrowing contracts with rewards from ChefIncentives
  */
 export async function getLendingPoolContracts({
-  chain,
+  ctx,
   lendingPool,
   chefIncentivesController,
   rewardToken,
 }: GetLendingPoolContractsParams) {
-  const provider = providers[chain]
+  const provider = providers[ctx.chain]
 
-  const aaveLendingPoolContracts = await getAaveLendingPoolContracts(chain, lendingPool)
+  const aaveLendingPoolContracts = await getAaveLendingPoolContracts(ctx, lendingPool)
 
   const aaveLendingPoolContractsByAddress: { [key: string]: Contract } = {}
   for (const contract of aaveLendingPoolContracts) {
@@ -44,7 +43,7 @@ export async function getLendingPoolContracts({
   const lmRewardsCount = (await chefIncentives.poolLength()).toNumber()
 
   const registeredTokensRes = await multicall({
-    chain,
+    ctx,
     calls: range(0, lmRewardsCount).map((_, i) => ({
       target: chefIncentives.address,
       params: [i],
@@ -79,13 +78,12 @@ export interface GetLendingPoolBalancesParams {
 
 export async function getLendingPoolBalances(
   ctx: BalancesContext,
-  chain: Chain,
   contracts: Contract[],
   { chefIncentivesController }: GetLendingPoolBalancesParams,
 ) {
-  const provider = providers[chain]
+  const provider = providers[ctx.chain]
 
-  const balances = await getAaveLendingPoolBalances(ctx, chain, contracts)
+  const balances = await getAaveLendingPoolBalances(ctx, contracts)
 
   const balanceByAddress: { [key: string]: Balance } = {}
   for (const balance of balances) {

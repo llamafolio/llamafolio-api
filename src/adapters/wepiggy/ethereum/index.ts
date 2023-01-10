@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import {
   BalanceWithExtraProps,
@@ -30,8 +30,8 @@ const comptroller: Contract = {
   address: '0x0C8c1ab017c3C0c8A48dD9F1DB2F59022D190f0b',
 }
 
-export const getContracts = async () => {
-  const poolsMarkets = await getMarketsContracts('ethereum', {
+export const getContracts = async (ctx: BaseContext) => {
+  const poolsMarkets = await getMarketsContracts(ctx, {
     // WePiggy Unitroller on ETH chain
     comptrollerAddress: comptroller.address,
     // pETH -> wETH
@@ -49,7 +49,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     poolsMarkets: getMarketsBalances,
     piggyDistribution: getMarketsRewards,
   })

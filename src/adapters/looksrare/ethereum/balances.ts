@@ -1,7 +1,6 @@
 import { BalancesContext, Contract } from '@lib/adapter'
 import { Balance } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
 const LOOKS: Contract = {
@@ -20,10 +19,10 @@ const WETH: Contract = {
   symbols: 'WETH',
 }
 
-export const getStakeBalances = async (ctx: BalancesContext, chain: Chain, stakingContract: Contract) => {
+export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Contract) => {
   const [stakeBalanceOfRes, rewardsBalanceOfRes] = await Promise.all([
     call({
-      chain,
+      ctx,
       target: stakingContract.address,
       params: ctx.address,
       abi: {
@@ -36,7 +35,7 @@ export const getStakeBalances = async (ctx: BalancesContext, chain: Chain, staki
     }),
 
     call({
-      chain,
+      ctx,
       target: stakingContract.address,
       params: ctx.address,
       abi: {
@@ -53,7 +52,7 @@ export const getStakeBalances = async (ctx: BalancesContext, chain: Chain, staki
   const rewardsBalanceOf = BigNumber.from(rewardsBalanceOfRes.output)
 
   const stakebalance: Balance = {
-    chain,
+    chain: ctx.chain,
     address: LOOKS.address,
     decimals: LOOKS.decimals,
     symbol: LOOKS.symbols,
@@ -65,9 +64,9 @@ export const getStakeBalances = async (ctx: BalancesContext, chain: Chain, staki
   return stakebalance
 }
 
-export const getCompounderBalances = async (ctx: BalancesContext, chain: Chain, compounder: Contract) => {
+export const getCompounderBalances = async (ctx: BalancesContext, compounder: Contract) => {
   const sharesValue = await call({
-    chain,
+    ctx,
     target: compounder.address,
     params: [ctx.address],
     abi: {
@@ -80,7 +79,7 @@ export const getCompounderBalances = async (ctx: BalancesContext, chain: Chain, 
   })
 
   const compounderBalance: Balance = {
-    chain,
+    chain: ctx.chain,
     address: LOOKS.address,
     decimals: LOOKS.decimals,
     symbol: LOOKS.symbols,

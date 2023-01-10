@@ -68,7 +68,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, { pairs }) => {
-  const lpBalances = await getPairsBalances(ctx, 'ethereum', pairs || [])
+  const lpBalances = await getPairsBalances(ctx, pairs || [])
 
   return {
     balances: lpBalances.map((balance) => ({ ...balance, category: 'farm' })),

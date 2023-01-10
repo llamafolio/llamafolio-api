@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getMarketsBalances, getMarketsContracts } from '../common/markets'
@@ -19,6 +19,17 @@ const sSPELL: Contract = {
   address: '0x26fa3fffb6efe8c1e69103acb4044c26b9a106a9',
   decimals: 18,
   symbol: 'sSPELL',
+}
+
+const MIM: Contract = {
+  name: 'Magic Internet Money',
+  address: '0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3',
+  chain: 'ethereum',
+  symbol: 'MIM',
+  decimals: 18,
+  coingeckoId: 'magic-internet-money',
+  stable: true,
+  wallet: true,
 }
 
 const cauldrons = [
@@ -45,11 +56,11 @@ const cauldrons = [
   '0x8227965A7f42956549aFaEc319F4E444aa438Df5',
 ]
 
-export const getContracts = async () => {
+export const getContracts = async (ctx: BaseContext) => {
   const [mStakeContracts, sStakeContracts, marketsContracts] = await Promise.all([
-    getMStakeContract('ethereum', mSPELL),
-    getSStakeContract('ethereum', sSPELL),
-    getMarketsContracts('ethereum', cauldrons),
+    getMStakeContract(ctx, mSPELL),
+    getSStakeContract(ctx, sSPELL),
+    getMarketsContracts(ctx, cauldrons),
   ])
 
   return {
@@ -62,10 +73,10 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     mStakeContracts: getMStakeBalance,
     sStakeContracts: getSStakeBalance,
-    marketsContracts: getMarketsBalances,
+    marketsContracts: (ctx, markets) => getMarketsBalances(ctx, markets, MIM),
   })
 
   return {

@@ -4,6 +4,7 @@ import { argv } from 'process'
 
 import pool from '../src/db/pool'
 import { insertTokens, selectUndecodedChainAddresses } from '../src/db/tokens'
+import { BaseContext } from '../src/lib/adapter'
 import { Chain } from '../src/lib/chains'
 import { getERC20Details } from '../src/lib/erc20'
 
@@ -23,6 +24,8 @@ async function main() {
   const chain = argv[2] as Chain
   const now = new Date()
 
+  const ctx: BaseContext = { chain, adapterId: '' }
+
   const client = await pool.connect()
 
   try {
@@ -37,7 +40,7 @@ async function main() {
         return
       }
 
-      const tokens = (await getERC20Details(chain, addresses)).map((token) => ({
+      const tokens = (await getERC20Details(ctx, addresses)).map((token) => ({
         ...token,
         symbol: token.symbol.replaceAll('\x00', ''),
         updated_at: now,

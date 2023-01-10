@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
@@ -33,7 +32,6 @@ const abi = {
 
 export async function getStakeBalances(
   ctx: BalancesContext,
-  chain: Chain,
   pools: Contract[],
   lpStaking: Contract,
 ): Promise<Balance[]> {
@@ -45,17 +43,8 @@ export async function getStakeBalances(
   }))
 
   const [getBalances, getPendingRewards] = await Promise.all([
-    multicall({
-      chain,
-      calls,
-      abi: abi.userInfos,
-    }),
-
-    multicall({
-      chain,
-      calls,
-      abi: abi.pendingEmissionToken,
-    }),
+    multicall({ ctx, calls, abi: abi.userInfos }),
+    multicall({ ctx, calls, abi: abi.pendingEmissionToken }),
   ])
 
   const balances = getBalances.filter((res) => res.success).map((res) => BigNumber.from(res.output.amount))
@@ -72,7 +61,7 @@ export async function getStakeBalances(
     }
 
     poolsBalances.push({
-      chain,
+      chain: ctx.chain,
       address: pool.address,
       decimals: pool.decimals,
       symbol: pool.symbol,

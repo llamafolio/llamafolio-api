@@ -28,6 +28,14 @@ export const ETH: Token = {
   native: true,
 }
 
+export const WETH: Token = {
+  chain: 'ethereum',
+  address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  symbol: 'WETH',
+  decimals: 18,
+  coingeckoId: 'weth',
+}
+
 export async function resolveContractsTokens(
   client: PoolClient,
   contractsMap: {
@@ -125,7 +133,9 @@ export async function resolveContractsTokens(
   const missingTokensChains = Object.keys(missingChainsTokens)
 
   const missingChainsTokensRes = await Promise.all(
-    missingTokensChains.map((chain) => getERC20Details(chain as Chain, missingChainsTokens[chain as Chain] || [])),
+    missingTokensChains.map((chain) =>
+      getERC20Details({ chain: chain as Chain, adapterId: '' }, missingChainsTokens[chain as Chain] || []),
+    ),
   )
 
   for (let i = 0; i < missingTokensChains.length; i++) {

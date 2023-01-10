@@ -1,4 +1,4 @@
-import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -26,25 +26,23 @@ const cake: Token = {
   decimals: 18,
 }
 
-export const getContracts = async (props: any) => {
+export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
 
   const [pairs, masterChefPoolsInfo, masterChefPoolsInfo2] = await Promise.all([
     getPairsContracts({
-      chain: 'bsc',
+      ctx,
       factoryAddress: '0xca143ce32fe78f1f7019d7d551a6402fc5350c73',
       offset,
       limit,
     }),
 
-    getMasterChefPoolsInfo({
-      chain: 'bsc',
+    getMasterChefPoolsInfo(ctx, {
       masterChefAddress: masterChef.address,
     }),
 
-    getMasterChefPoolsInfo({
-      chain: 'bsc',
+    getMasterChefPoolsInfo(ctx, {
       masterChefAddress: masterChef2.address,
       methodName: 'lpToken', //lpToken address is in a different method from poolInfo
     }),
@@ -94,7 +92,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
   ctx: BalancesContext,
   { pairs, masterChefPools, masterChefPools2 },
 ) => {
-  const pairsBalances = await getPairsBalances(ctx, 'bsc', pairs || [])
+  const pairsBalances = await getPairsBalances(ctx, pairs || [])
 
   //new masterchef
   let masterChefBalances = await getMasterChefBalances(ctx, {
@@ -105,7 +103,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
     pendingRewardName: 'pendingCake',
   })
 
-  masterChefBalances = await getUnderlyingBalances('bsc', masterChefBalances)
+  masterChefBalances = await getUnderlyingBalances(ctx, masterChefBalances)
 
   //old masterchef
   let masterChefBalances2 = await getMasterChefBalances(ctx, {
@@ -116,7 +114,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
     pendingRewardName: 'pendingCake',
   })
 
-  masterChefBalances2 = await getUnderlyingBalances('bsc', masterChefBalances2)
+  masterChefBalances2 = await getUnderlyingBalances(ctx, masterChefBalances2)
 
   const balances = pairsBalances.concat(masterChefBalances).concat(masterChefBalances2)
 

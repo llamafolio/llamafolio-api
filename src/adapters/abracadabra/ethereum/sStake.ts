@@ -1,8 +1,6 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
-import { getERC20Details } from '@lib/erc20'
-import { abi } from '@lib/erc20'
+import { abi as erc20Abi } from '@lib/erc20'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -13,59 +11,55 @@ const SPELL: Token = {
   symbol: 'SPELL',
 }
 
-export async function getSStakeContract(chain: Chain, contract: Contract): Promise<Contract> {
+const abi = {
+  token: {
+    inputs: [],
+    name: 'token',
+    outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+export async function getSStakeContract(ctx: BaseContext, contract: Contract): Promise<Contract> {
   const underlyingTokenAddressRes = await call({
-    chain,
+    ctx,
     target: contract.address,
     params: [],
-    abi: {
-      inputs: [],
-      name: 'token',
-      outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.token,
   })
-
-  const underlyings = await getERC20Details(chain, [underlyingTokenAddressRes.output])
 
   const stakeContract: Contract = {
     ...contract,
-    underlyings,
+    underlyings: [underlyingTokenAddressRes.output],
   }
 
   return stakeContract
 }
 
-export async function getSStakeBalance(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getSStakeBalance(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [balanceOfRes, totalSupplyRes, balanceOfTokenInUnderlyingRes] = await Promise.all([
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
-      abi: abi.balanceOf,
+      abi: erc20Abi.balanceOf,
     }),
 
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [],
-      abi: {
-        inputs: [],
-        name: 'totalSupply',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: erc20Abi.totalSupply,
     }),
 
     call({
-      chain,
+      ctx,
       target: SPELL.address,
       params: [contract.address],
-      abi: abi.balanceOf,
+      abi: erc20Abi.balanceOf,
     }),
   ])
 
@@ -76,7 +70,7 @@ export async function getSStakeBalance(ctx: BalancesContext, chain: Chain, contr
   const formattedBalanceOf = balanceOf.mul(balanceOfTokenInUnderlying).div(totalSupply)
 
   const balance: Balance = {
-    chain,
+    chain: ctx.chain,
     decimals: contract.decimals,
     address: contract.address,
     symbol: contract.symbol,

@@ -1,6 +1,5 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
@@ -60,13 +59,13 @@ export interface BalanceWithExtraProps extends Balance {
 }
 
 export async function getMarketsContracts(
-  chain: Chain,
+  ctx: BaseContext,
   { comptrollerAddress, underlyingAddressByMarketAddress = {} }: GetMarketsContractsProps,
 ): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const cTokensAddressesRes = await call({
-    chain,
+    ctx,
     abi: abi.getAllMarkets,
     target: comptrollerAddress,
   })
@@ -74,13 +73,13 @@ export async function getMarketsContracts(
 
   const [marketsRes, underlyingTokensAddressesRes] = await Promise.all([
     multicall({
-      chain,
+      ctx,
       abi: abi.markets,
       calls: cTokensAddresses.map((cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] })),
     }),
 
     multicall({
-      chain,
+      ctx,
       calls: cTokensAddresses.map((address) => ({
         target: address,
         params: [],
@@ -99,7 +98,7 @@ export async function getMarketsContracts(
     }
 
     contracts.push({
-      chain,
+      chain: ctx.chain,
       address: cToken,
       collateralFactor: marketRes.output.collateralFactorMantissa,
       underlyings: [underlying],
@@ -109,21 +108,17 @@ export async function getMarketsContracts(
   return contracts
 }
 
-export async function getMarketsBalances(
-  ctx: BalancesContext,
-  chain: Chain,
-  contracts: Contract[],
-): Promise<Balance[]> {
+export async function getMarketsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const cTokenByAddress: { [key: string]: Contract } = {}
   for (const contract of contracts) {
     cTokenByAddress[contract.address] = contract
   }
 
   const [cTokensBalances, cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all([
-    getERC20BalanceOf(ctx, chain, contracts as Token[]),
+    getERC20BalanceOf(ctx, contracts as Token[]),
 
     multicall({
-      chain,
+      ctx,
       calls: contracts.map((token) => ({
         target: token.address,
         params: [ctx.address],
@@ -140,7 +135,7 @@ export async function getMarketsBalances(
     }),
 
     multicall({
-      chain,
+      ctx,
       calls: contracts.map((token) => ({
         target: token.address,
         params: [],

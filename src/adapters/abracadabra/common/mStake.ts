@@ -1,86 +1,75 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
-import { getERC20Details } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
-export async function getMStakeContract(chain: Chain, contract: Contract): Promise<Contract> {
+const abi = {
+  mim: {
+    inputs: [],
+    name: 'mim',
+    outputs: [{ internalType: 'contract ERC20', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  spell: {
+    inputs: [],
+    name: 'spell',
+    outputs: [{ internalType: 'contract ERC20', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  userInfo: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'userInfo',
+    outputs: [
+      { internalType: 'uint128', name: 'amount', type: 'uint128' },
+      { internalType: 'uint128', name: 'rewardDebt', type: 'uint128' },
+      { internalType: 'uint128', name: 'lastAdded', type: 'uint128' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingReward: {
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'pendingReward',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+export async function getMStakeContract(ctx: BaseContext, contract: Contract): Promise<Contract> {
   const [underlyingTokenAddressRes, rewardTokenAddressRes] = await Promise.all([
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'spell',
-        outputs: [{ internalType: 'contract ERC20', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    call({
-      chain,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'mim',
-        outputs: [{ internalType: 'contract ERC20', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-  ])
-
-  const [underlyings, rewards] = await Promise.all([
-    getERC20Details(chain, [underlyingTokenAddressRes.output]),
-    getERC20Details(chain, [rewardTokenAddressRes.output]),
+    call({ ctx, target: contract.address, params: [], abi: abi.spell }),
+    call({ ctx, target: contract.address, params: [], abi: abi.mim }),
   ])
 
   const stakeContract: Contract = {
     ...contract,
-    underlyings,
-    rewards,
+    underlyings: [underlyingTokenAddressRes.output],
+    rewards: [rewardTokenAddressRes.output],
   }
 
   return stakeContract
 }
 
-export async function getMStakeBalance(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getMStakeBalance(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
   const underlying = contract.underlyings?.[0]
   const reward = contract.rewards?.[0]
 
   const [balanceOfRes, pendingRewardsRes] = await Promise.all([
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: '', type: 'address' }],
-        name: 'userInfo',
-        outputs: [
-          { internalType: 'uint128', name: 'amount', type: 'uint128' },
-          { internalType: 'uint128', name: 'rewardDebt', type: 'uint128' },
-          { internalType: 'uint128', name: 'lastAdded', type: 'uint128' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.userInfo,
     }),
 
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
-        name: 'pendingReward',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.pendingReward,
     }),
   ])
 

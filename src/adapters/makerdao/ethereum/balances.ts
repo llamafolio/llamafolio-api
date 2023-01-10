@@ -1,4 +1,4 @@
-import { Balance, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -102,12 +102,18 @@ export interface BalanceWithExtraProps extends Balance {
   spot?: BigNumber
 }
 
-export async function getProxiesBalances(chain: Chain, vat: Contract, ilk: Contract, spot: Contract, cdpids: cdpid[]) {
+export async function getProxiesBalances(
+  ctx: BalancesContext,
+  vat: Contract,
+  ilk: Contract,
+  spot: Contract,
+  cdpids: cdpid[],
+) {
   const urnHandlers: UrnHandlerParams[] = []
 
   const [ilksInfosRes, ilksMatsRes] = await Promise.all([
     multicall({
-      chain,
+      ctx,
       calls: cdpids.flatMap((cdpid) =>
         cdpid.ilks.map((asset) => ({
           target: ilk.address,
@@ -117,7 +123,7 @@ export async function getProxiesBalances(chain: Chain, vat: Contract, ilk: Contr
       abi: abi.ilkData,
     }),
     multicall({
-      chain,
+      ctx,
       calls: cdpids.flatMap((cdpid) =>
         cdpid.ilks.map((asset) => ({
           target: spot.address,
@@ -144,13 +150,13 @@ export async function getProxiesBalances(chain: Chain, vat: Contract, ilk: Contr
         const ilkMat = ilkMatRes.output.mat
 
         urnHandlers.push({
-          chain,
+          chain: ctx.chain,
           address: cdpid.address,
           urnAddress,
           proxy: cdpid.proxy,
           id,
           asset: {
-            chain,
+            chain: ctx.chain,
             name: ilkInfo.name,
             ilkId,
             symbol: ilkInfo.symbol,
@@ -165,15 +171,15 @@ export async function getProxiesBalances(chain: Chain, vat: Contract, ilk: Contr
     }
   }
 
-  return getUrnsBalances(chain, vat, urnHandlers)
+  return getUrnsBalances(ctx, vat, urnHandlers)
 }
 
-const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHandlerParams[]) => {
+const getUrnsBalances = async (ctx: BalancesContext, vat: Contract, urnHandlers: UrnHandlerParams[]) => {
   const balances: Balance[] = []
 
   const [urnsRes, ilksRes] = await Promise.all([
     multicall({
-      chain,
+      ctx,
       calls: urnHandlers.map((urn) => ({
         target: vat.address,
         params: [urn.asset.ilkId, urn.urnAddress],
@@ -181,7 +187,7 @@ const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHand
       abi: abi.urns,
     }),
     multicall({
-      chain,
+      ctx,
       calls: urnHandlers.map((urn) => ({
         target: vat.address,
         params: [urn.asset.ilkId],
@@ -204,7 +210,7 @@ const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHand
       const userBorrowFormatted = userBorrow.mul(rate).div(DECIMALS.ray)
 
       const lend: BalanceWithExtraProps = {
-        chain,
+        chain: ctx.chain,
         proxy: urnHandler.proxy,
         urnAddress: urnHandler.address,
         id: urnHandler.id,
@@ -217,7 +223,7 @@ const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHand
         spot: urnSpot,
         underlyings: [
           {
-            chain,
+            chain: ctx.chain,
             amount: userSupply,
             address: urnHandler.asset.address,
             decimals: urnHandler.asset.decimals,
@@ -228,7 +234,7 @@ const getUrnsBalances = async (chain: Chain, vat: Contract, urnHandlers: UrnHand
       }
 
       const borrow: BalanceWithExtraProps = {
-        chain,
+        chain: ctx.chain,
         proxy: urnHandler.proxy,
         decimals: DAI.decimals,
         address: urnHandler.address,

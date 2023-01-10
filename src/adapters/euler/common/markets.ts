@@ -1,6 +1,5 @@
-import { BalancesContext, Contract } from '@lib/adapter'
+import { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { ethers, utils } from 'ethers'
 import { gql, request } from 'graphql-request'
 
@@ -22,7 +21,7 @@ const marketsQuery = gql`
   }
 `
 
-export async function getMarketsContracts(chain: Chain): Promise<Contract[]> {
+export async function getMarketsContracts(ctx: BaseContext): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const {
@@ -32,14 +31,14 @@ export async function getMarketsContracts(chain: Chain): Promise<Contract[]> {
   for (let marketIdx = 0; marketIdx < markets.length; marketIdx++) {
     contracts.push(
       {
-        chain,
+        chain: ctx.chain,
         category: 'lend',
         address: markets[marketIdx].eTokenAddress,
         yieldKey: `${markets[marketIdx].eTokenAddress.toLowerCase()}-euler`,
         underlyings: [markets[marketIdx].address],
       },
       {
-        chain,
+        chain: ctx.chain,
         category: 'borrow',
         address: markets[marketIdx].dTokenAddress,
         yieldKey: `${markets[marketIdx].dTokenAddress.toLowerCase()}-euler`,
@@ -51,13 +50,9 @@ export async function getMarketsContracts(chain: Chain): Promise<Contract[]> {
   return contracts
 }
 
-export async function getHealthFactor(
-  ctx: BalancesContext,
-  chain: Chain,
-  lensContract: Contract,
-): Promise<number | undefined> {
+export async function getHealthFactor(ctx: BalancesContext, lensContract: Contract): Promise<number | undefined> {
   const getHealthFactor = await call({
-    chain,
+    ctx,
     target: lensContract.address,
     params: [ctx.address],
     abi: {

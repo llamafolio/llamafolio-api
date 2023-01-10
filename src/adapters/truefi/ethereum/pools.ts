@@ -1,5 +1,4 @@
-import { Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
+import { BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
@@ -36,7 +35,7 @@ const pools = [
   '0xa1e72267084192db7387c8cc1328fade470e4149', // Legacy TUSD
 ]
 
-export async function getPoolsContracts(chain: Chain) {
+export async function getPoolsContracts(ctx: BaseContext) {
   const contracts: Contract[] = []
 
   const calls = pools.map((pool) => ({
@@ -44,7 +43,7 @@ export async function getPoolsContracts(chain: Chain) {
     params: [],
   }))
 
-  const tokensRes = await multicall({ chain, calls, abi: abi.token })
+  const tokensRes = await multicall({ ctx, calls, abi: abi.token })
 
   for (let i = 0; i < pools.length; i++) {
     const tokenRes = tokensRes[i]
@@ -54,7 +53,7 @@ export async function getPoolsContracts(chain: Chain) {
     }
 
     contracts.push({
-      chain,
+      chain: ctx.chain,
       address: pools[i],
       underlyings: [tokenRes.output],
     })
@@ -68,7 +67,7 @@ export interface PoolSupply extends Contract {
   totalSupply: BigNumber
 }
 
-export async function getPoolsSupplies(chain: Chain, pools: Contract[]) {
+export async function getPoolsSupplies(ctx: BaseContext, pools: Contract[]) {
   const poolsSupplies: PoolSupply[] = []
 
   const calls = pools.map((pool) => ({
@@ -77,8 +76,8 @@ export async function getPoolsSupplies(chain: Chain, pools: Contract[]) {
   }))
 
   const [poolValues, totalSupplies] = await Promise.all([
-    multicall({ chain, calls, abi: abi.poolValue }),
-    multicall({ chain, calls, abi: abi.totalSupply }),
+    multicall({ ctx, calls, abi: abi.poolValue }),
+    multicall({ ctx, calls, abi: abi.totalSupply }),
   ])
 
   for (let i = 0; i < pools.length; i++) {

@@ -1,9 +1,15 @@
-import { Balance, BalancesContext, BaseBalance, BaseContract, GetContractsHandler } from '@lib/adapter'
+import {
+  Balance,
+  BalancesContext,
+  BaseBalance,
+  BaseContract,
+  ExcludeRawContract,
+  GetContractsHandler,
+} from '@lib/adapter'
 import { Category } from '@lib/category'
-import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, BN_ZERO } from '@lib/math'
-import { Call, multicall, MultiCallParams, MultiCallResult } from '@lib/multicall'
+import { Call, multicall, MultiCallOptions, MultiCallResult } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -44,20 +50,14 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
   ).filter(isNotNullish)
 
   const tokensBalances: Token[] = (
-    await Promise.all(
-      Object.keys(tokensByChain).map((chain) => getERC20BalanceOf(ctx, chain as Chain, tokensByChain[chain])),
-    )
+    await Promise.all(Object.keys(tokensByChain).map((chain) => getERC20BalanceOf(ctx, tokensByChain[chain])))
   ).flat() as Token[]
 
   return coinsBalances.concat(tokensBalances)
 }
 
-export async function multicallBalances(params: MultiCallParams) {
-  if (!params.chain) {
-    return []
-  }
-
-  const chain = params.chain as Chain
+export async function multicallBalances(params: MultiCallOptions) {
+  const chain = params.ctx.chain
   const coinsCallsAddresses: string[] = []
   const tokensCalls: Call[] = []
   const res: MultiCallResult[] = []
@@ -87,7 +87,7 @@ export async function multicallBalances(params: MultiCallParams) {
   )
 
   const tokensBalancesRes = await multicall({
-    chain,
+    ctx: params.ctx,
     calls: tokensCalls,
     abi: params.abi,
   })
@@ -159,13 +159,11 @@ export function sanitizeBalances(balances: Balance[]) {
 
 export async function resolveBalances<C extends GetContractsHandler>(
   ctx: BalancesContext,
-  chain: Chain,
-  contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
+  contracts: ExcludeRawContract<Partial<Awaited<ReturnType<C>>['contracts']>>,
   resolvers: {
     [key in keyof Partial<Awaited<ReturnType<C>>['contracts']>]: (
       ctx: BalancesContext,
-      chain: Chain,
-      contracts: Awaited<ReturnType<C>>['contracts'][key],
+      contracts: ExcludeRawContract<Awaited<ReturnType<C>>['contracts']>[key],
     ) =>
       | Promise<Balance | Balance[] | Balance[][] | null | undefined>
       | Balance
@@ -182,7 +180,7 @@ export async function resolveBalances<C extends GetContractsHandler>(
       .map(async (contractKey) => {
         try {
           const resolver = resolvers[contractKey]
-          const balances = await resolver(ctx, chain, contracts[contractKey]!)
+          const balances = await resolver(ctx, contracts[contractKey]!)
           return balances
         } catch (error) {
           console.error(`Resolver ${contractKey} failed`, error)

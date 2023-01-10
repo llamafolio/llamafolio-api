@@ -1,21 +1,23 @@
-import aaveV2 from '@adapters/aave/v2'
-import aaveV3 from '@adapters/aave/v3'
+import aaveV2 from '@adapters/aave-v2'
+import aaveV3 from '@adapters/aave-v3'
 import abracadabra from '@adapters/abracadabra'
 import alpacaFinance from '@adapters/alpaca-finance'
 import apeswapAmm from '@adapters/apeswap-amm'
 import apeswapLending from '@adapters/apeswap-lending'
 import arrakis from '@adapters/arrakis'
-import atlasUSV from '@adapters/atlas-usv'
+import atlasUsv from '@adapters/atlas-usv'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
-import compoundV2 from '@adapters/compound/v2'
-import compoundV3 from '@adapters/compound/v3'
+import compound from '@adapters/compound'
+import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
 import convex from '@adapters/convex'
 import curve from '@adapters/curve'
+import dydx from '@adapters/dydx'
 import euler from '@adapters/euler'
 import floorDao from '@adapters/floor-dao'
-import fraxLend from '@adapters/fraxlend'
+import fraxlend from '@adapters/fraxlend'
+import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
 import gmx from '@adapters/gmx'
 import granaryFinance from '@adapters/granary-finance'
@@ -29,16 +31,19 @@ import lido from '@adapters/lido'
 import lifeDao from '@adapters/life-dao'
 import liquity from '@adapters/liquity'
 import llamapay from '@adapters/llamapay'
-import looksRare from '@adapters/looksrare'
+import looksrare from '@adapters/looksrare'
 import lusdChickenbonds from '@adapters/lusd-chickenbonds'
-import makerDao from '@adapters/makerdao'
+import makerdao from '@adapters/makerdao'
+import maple from '@adapters/maple'
+import morphoAave from '@adapters/morpho-aave'
+import morphoCompound from '@adapters/morpho-compound'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
 import olympusDao from '@adapters/olympus-dao'
 import pancakeswap from '@adapters/pancakeswap'
 import pangolin from '@adapters/pangolin'
 import radiant from '@adapters/radiant'
-import rocketpool from '@adapters/rocket-pool'
+import rocketPool from '@adapters/rocket-pool'
 import scream from '@adapters/scream'
 import shibaswap from '@adapters/shibaswap'
 import spartacus from '@adapters/spartacus'
@@ -62,6 +67,7 @@ import venus from '@adapters/venus'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
 import wonderland from '@adapters/wonderland'
+import yearnFinance from '@adapters/yearn-finance'
 import { Adapter } from '@lib/adapter'
 
 export const adapters: Adapter[] = [
@@ -72,17 +78,19 @@ export const adapters: Adapter[] = [
   apeswapAmm,
   apeswapLending,
   arrakis,
-  atlasUSV,
+  atlasUsv,
   benqiLending,
   benqiStakedAvax,
-  compoundV2,
+  compound,
   compoundV3,
   concentrator,
   convex,
   curve,
+  dydx,
   euler,
   floorDao,
-  fraxLend,
+  fraxlend,
+  gearbox,
   geist,
   gmx,
   granaryFinance,
@@ -96,16 +104,19 @@ export const adapters: Adapter[] = [
   lifeDao,
   liquity,
   llamapay,
-  looksRare,
+  looksrare,
   lusdChickenbonds,
-  makerDao,
+  makerdao,
+  maple,
+  morphoAave,
+  morphoCompound,
   nemesisDao,
   nexusMutual,
   olympusDao,
   pancakeswap,
   pangolin,
   radiant,
-  rocketpool,
+  rocketPool,
   scream,
   shibaswap,
   spartacus,
@@ -129,6 +140,7 @@ export const adapters: Adapter[] = [
   wallet,
   wepiggy,
   wonderland,
+  yearnFinance,
 ]
 
 export const adapterById: { [key: string]: Adapter } = {}

@@ -1,7 +1,6 @@
-import { Contract } from '@lib/adapter'
+import { BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { Call, multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -176,9 +175,9 @@ const abi = {
   },
 }
 
-async function getStableFactoryBasePools(chain: Chain, stableFactory: string) {
+async function getStableFactoryBasePools(ctx: BaseContext, stableFactory: string) {
   const basePoolCountRes = await call({
-    chain,
+    ctx,
     target: stableFactory,
     abi: abi.base_pool_count,
   })
@@ -186,13 +185,13 @@ async function getStableFactoryBasePools(chain: Chain, stableFactory: string) {
   const basePoolCount = parseInt(basePoolCountRes.output)
 
   const basePoolsRes = await multicall({
-    chain,
+    ctx,
     calls: range(0, basePoolCount).map((poolIdx) => ({ target: stableFactory, params: [poolIdx] })),
     abi: abi.base_pool_list,
   })
 
   const basePoolsCoinsRes = await multicall({
-    chain,
+    ctx,
     calls: basePoolsRes
       .filter(isSuccess)
       .map((res) => res.output)
@@ -217,7 +216,7 @@ export interface PoolContract extends Contract {
 // - resolve meta pools LP tokens -> underlyings
 // - unwrap custom LP tokens (Yearn etc)
 
-export async function getPoolsContracts(chain: Chain, registries: Partial<Record<Registry, string>>) {
+export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Record<Registry, string>>) {
   const poolContracts: PoolContract[] = []
   let calls: Call[] = []
 
@@ -225,7 +224,7 @@ export async function getPoolsContracts(chain: Chain, registries: Partial<Record
   const registriesAddresses = Object.values(registries)
 
   const poolsCountRes = await multicall({
-    chain,
+    ctx,
     calls: registriesAddresses.map((registry) => ({ target: registry })),
     abi: abi.pool_count,
   })
@@ -239,7 +238,7 @@ export async function getPoolsContracts(chain: Chain, registries: Partial<Record
   }
 
   const poolsListRes = await multicall<string, [number], string>({
-    chain,
+    ctx,
     calls,
     abi: abi.pool_list,
   })
@@ -270,21 +269,21 @@ export async function getPoolsContracts(chain: Chain, registries: Partial<Record
 
   const [lpTokensRes, poolNamesRes, ...registriesCoins] = await Promise.all([
     multicall<string, [string], string>({
-      chain,
+      ctx,
       // TODO: no need to fetch LP tokens for Factory regisitries
       calls,
       abi: abi.get_lp_token,
     }),
 
     multicall<string, [string], string>({
-      chain,
+      ctx,
       calls,
       abi: abi.get_pool_name,
     }),
 
     ...registriesIds.map((registryId, registryIdx) =>
       multicall<string, [string], string[]>({
-        chain,
+        ctx,
         calls: registriesPools[registryIdx].map((pool) => ({
           target: registriesAddresses[registryIdx],
           params: [pool],
@@ -316,7 +315,7 @@ export async function getPoolsContracts(chain: Chain, registries: Partial<Record
 
       if (lpToken && isSuccess(coinsRes)) {
         const contract: PoolContract = {
-          chain,
+          chain: ctx.chain,
           name: nameRes.success ? nameRes.output : undefined,
           address: pool,
           lpToken,

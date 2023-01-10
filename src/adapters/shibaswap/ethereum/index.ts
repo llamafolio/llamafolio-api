@@ -1,4 +1,4 @@
-import { Balance, BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -34,20 +34,19 @@ const bone: Token = {
   address: '0x9813037ee2218799597d83d4a5b6f3b6778218d9',
 }
 
-export const getContracts = async (props: any) => {
+export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
 
   const [pairsInfo, masterChefPoolsInfo] = await Promise.all([
     getPairsContracts({
-      chain: 'ethereum',
+      ctx,
       factoryAddress: '0x115934131916C8b277DD010Ee02de363c09d037c',
       offset,
       limit,
     }),
 
-    getMasterChefPoolsInfo({
-      chain: 'ethereum',
+    getMasterChefPoolsInfo(ctx, {
       masterChefAddress: masterChef.address,
     }),
   ])
@@ -87,15 +86,15 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
 ) => {
   let balances: Balance[] = []
 
-  const stakerBalances = await getStakerBalances(ctx, 'ethereum', staker.address)
+  const stakerBalances = await getStakerBalances(ctx, staker.address)
 
   balances = balances.concat(stakerBalances)
 
-  const lockerBalances = await getLockerBalances(ctx, 'ethereum', locker.address)
+  const lockerBalances = await getLockerBalances(ctx, locker.address)
 
   balances = balances.concat(lockerBalances)
 
-  const pairsBalances = await getPairsBalances(ctx, 'ethereum', pairs || [])
+  const pairsBalances = await getPairsBalances(ctx, pairs || [])
 
   balances = balances.concat(pairsBalances)
 
@@ -107,7 +106,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (
     pendingRewardName: 'pendingToken',
   })
 
-  masterChefBalances = await getUnderlyingBalances('ethereum', masterChefBalances)
+  masterChefBalances = await getUnderlyingBalances(ctx, masterChefBalances)
 
   balances = balances.concat(masterChefBalances)
 

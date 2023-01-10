@@ -91,25 +91,36 @@ export interface BalancesConfig {
   healthFactor?: number
 }
 
-export interface ContractsConfig {
-  contracts: { [key: string]: Contract | Contract[] | RawContract | RawContract[] | undefined }
-  props?: { [key: string]: Contract | Contract[] | RawContract | RawContract[] | undefined }
+export interface ContractsMap {
+  [key: string]: Contract | Contract[] | RawContract | RawContract[]
+}
+
+export interface ContractsConfig<C extends ContractsMap, P extends ContractsMap> {
+  contracts: C
+  props?: P
   revalidate?: number
   revalidateProps?: { [key: string]: any }
 }
 
 /**
+ * RawContract is automatically mapped to Contract
+ */
+export type ExcludeRawContract<T> = {
+  [P in keyof T]: Exclude<T[P], RawContract | RawContract[]>
+}
+
+/**
  * Pass previous `revalidateProps` passed to `getContracts` handler to know where the previous revalidate process ended.
  */
-export type GetContractsHandler = (
+export type GetContractsHandler<C extends ContractsMap = ContractsMap, P extends ContractsMap = ContractsMap> = (
   ctx: BaseContext,
   revalidateProps: { [key: string]: any },
-) => ContractsConfig | Promise<ContractsConfig>
+) => ContractsConfig<C, P> | Promise<ContractsConfig<C, P>>
 
 export type GetBalancesHandler<C extends GetContractsHandler> = (
   ctx: BalancesContext,
   // each key can be undefined as the account may not have interacted with these contracts
-  contracts: Partial<Awaited<ReturnType<C>>['contracts']>,
+  contracts: ExcludeRawContract<Partial<Awaited<ReturnType<C>>['contracts']>>,
   props: Awaited<ReturnType<C>>['props'],
 ) => BalancesConfig | Promise<BalancesConfig>
 

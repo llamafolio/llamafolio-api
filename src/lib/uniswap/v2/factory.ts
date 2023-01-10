@@ -1,8 +1,7 @@
-import { Contract } from '@lib/adapter'
+import { BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Category } from '@lib/category'
-import { Chain } from '@lib/chains'
 import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
@@ -46,15 +45,15 @@ const abi = {
 }
 
 export interface getPairsContractsParams {
-  chain: Chain
+  ctx: BaseContext
   factoryAddress: string
   offset?: number
   limit?: number
 }
 
-export async function getPairsContracts({ chain, factoryAddress, offset = 0, limit = 100 }: getPairsContractsParams) {
+export async function getPairsContracts({ ctx, factoryAddress, offset = 0, limit = 100 }: getPairsContractsParams) {
   const allPairsLengthRes = await call({
-    chain,
+    ctx,
     abi: abi.allPairsLength,
     target: factoryAddress,
   })
@@ -63,7 +62,7 @@ export async function getPairsContracts({ chain, factoryAddress, offset = 0, lim
   const end = Math.min(offset + limit, allPairsLength)
 
   const allPairsRes = await multicall({
-    chain,
+    ctx,
     calls: range(offset, end).map((_, i) => ({
       target: factoryAddress,
       params: [i],
@@ -71,12 +70,12 @@ export async function getPairsContracts({ chain, factoryAddress, offset = 0, lim
     abi: abi.allPairs,
   })
 
-  const contracts: Contract[] = allPairsRes.filter(isSuccess).map((res) => ({ chain, address: res.output }))
+  const contracts: Contract[] = allPairsRes.filter(isSuccess).map((res) => ({ chain: ctx.chain, address: res.output }))
 
-  return getPairsDetails(chain, contracts)
+  return getPairsDetails(ctx, contracts)
 }
 
-export async function getPairsDetails(chain: Chain, contracts: Contract[]): Promise<Contract[]> {
+export async function getPairsDetails(ctx: BaseContext, contracts: Contract[]): Promise<Contract[]> {
   const res: Contract[] = []
 
   const calls: Call[] = contracts.map((contract) => ({
@@ -85,17 +84,8 @@ export async function getPairsDetails(chain: Chain, contracts: Contract[]): Prom
   }))
 
   const [token0sRes, token1sRes] = await Promise.all([
-    multicall({
-      chain,
-      calls,
-      abi: abi.token0,
-    }),
-
-    multicall({
-      chain,
-      calls,
-      abi: abi.token1,
-    }),
+    multicall({ ctx, calls, abi: abi.token0 }),
+    multicall({ ctx, calls, abi: abi.token1 }),
   ])
 
   for (let i = 0; i < calls.length; i++) {

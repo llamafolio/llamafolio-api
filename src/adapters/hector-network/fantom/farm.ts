@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
 const Helper: Contract = {
@@ -49,12 +48,12 @@ const Curve_fiFactoryUSDMetapool: Contract = {
   rewards: [wFTM],
 }
 
-export async function getFarmingBalances(ctx: BalancesContext, chain: Chain, contract: Contract): Promise<Balance[]> {
+export async function getFarmingBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [balanceOfRes, shareRes] = await Promise.all([
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: {
@@ -88,7 +87,7 @@ export async function getFarmingBalances(ctx: BalancesContext, chain: Chain, con
     }),
 
     call({
-      chain,
+      ctx,
       target: Helper.address,
       params: [],
       abi: {
@@ -122,7 +121,7 @@ export async function getFarmingBalances(ctx: BalancesContext, chain: Chain, con
 
   balances.push({
     address: Curve_fiFactoryUSDMetapool.address,
-    chain,
+    chain: ctx.chain,
     amount,
     symbol: `TOR-DAI-USDC`,
     decimals: 18,

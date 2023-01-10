@@ -1,4 +1,4 @@
-import { GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { Contract } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPoolsBalances } from '@lib/pools'
@@ -35,10 +35,10 @@ const locker: Contract = {
   name: 'Locker',
 }
 
-export const getContracts = async () => {
-  const registries = await getRegistries('ethereum', ['stableSwap', 'stableFactory', 'cryptoSwap', 'cryptoFactory'])
-  const pools = await getPoolsContracts('ethereum', registries)
-  const gauges = await getGaugesContracts('ethereum', registries, pools, CRV)
+export const getContracts = async (ctx: BaseContext) => {
+  const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap', 'cryptoFactory'])
+  const pools = await getPoolsContracts(ctx, registries)
+  const gauges = await getGaugesContracts(ctx, registries, pools, CRV)
 
   return {
     contracts: {
@@ -50,8 +50,8 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
-    pools: (ctx, chain, pools) => getPoolsBalances(ctx, chain, pools, { getPoolAddress: (contract) => contract.pool }),
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    pools: (ctx, pools) => getPoolsBalances(ctx, pools, { getPoolAddress: (contract) => contract.pool }),
     gauges: getGaugesBalances,
     locker: (...args) => getLockerBalances(...args, feeDistributor),
   })

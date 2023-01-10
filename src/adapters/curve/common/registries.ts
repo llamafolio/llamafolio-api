@@ -1,4 +1,4 @@
-import { Chain } from '@lib/chains'
+import { BaseContext } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -31,11 +31,11 @@ export const Registries: { [key in Registry]: number } = {
   cryptoFactory: 6,
 }
 
-export const getRegistries = async (chain: Chain, registries: Registry[]) => {
+export const getRegistries = async (ctx: BaseContext, registries: Registry[]) => {
   const res: Partial<Record<Registry, string>> = {}
 
   const registriesAddressRes = await multicall<string, [number], string>({
-    chain,
+    chain: ctx.chain,
     calls: registries.map((id) => ({
       params: [Registries[id]],
       // Immutable address provider (same address on all chains)

@@ -1,25 +1,42 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
-import { providers } from '@lib/providers'
-import { BigNumber, ethers } from 'ethers'
+import { call } from '@lib/call'
+import { BigNumber } from 'ethers'
 
-import LQTYStakingAbi from '../abis/LQTYStaking.json'
+const abi = {
+  stakes: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'stakes',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getPendingETHGain: {
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'getPendingETHGain',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getPendingLUSDGain: {
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'getPendingLUSDGain',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
 
-export async function getStakeBalances(ctx: BalancesContext, chain: Chain, lqtyStaking: Contract) {
-  const provider = providers[chain]
-
-  const LQTYStaking = new ethers.Contract(lqtyStaking.address, LQTYStakingAbi, provider)
-
-  const [LQTYBalance, ETHBalance, LUSDBalance] = await Promise.all([
-    LQTYStaking.stakes(ctx.address),
-    LQTYStaking.getPendingETHGain(ctx.address),
-    LQTYStaking.getPendingLUSDGain(ctx.address),
+export async function getStakeBalances(ctx: BalancesContext, lqtyStaking: Contract) {
+  const [LQTYBalanceRes, ETHBalanceRes, LUSDBalanceRes] = await Promise.all([
+    call({ ctx, target: lqtyStaking.address, params: [ctx.address], abi: abi.stakes }),
+    call({ ctx, target: lqtyStaking.address, params: [ctx.address], abi: abi.getPendingETHGain }),
+    call({ ctx, target: lqtyStaking.address, params: [ctx.address], abi: abi.getPendingLUSDGain }),
   ])
 
-  const amount = BigNumber.from(LQTYBalance)
+  const amount = BigNumber.from(LQTYBalanceRes.output)
 
   const balance: Balance = {
-    chain: chain,
+    chain: ctx.chain,
     category: 'stake',
     address: lqtyStaking.address,
     symbol: 'LQTY',
@@ -27,7 +44,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, lqtyS
     amount,
     underlyings: [
       {
-        chain,
+        chain: ctx.chain,
         address: '0x6DEA81C8171D0bA574754EF6F8b412F2Ed88c54D',
         name: 'LQTY',
         symbol: 'LQTY',
@@ -37,19 +54,19 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, lqtyS
     ],
     rewards: [
       {
-        chain,
+        chain: ctx.chain,
         symbol: 'LUSD',
         decimals: 18,
         address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0',
-        amount: BigNumber.from(LUSDBalance),
+        amount: BigNumber.from(LUSDBalanceRes.output),
         stable: true,
       },
       {
-        chain,
+        chain: ctx.chain,
         symbol: 'ETH',
         decimals: 18,
         address: '0x0000000000000000000000000000000000000000',
-        amount: BigNumber.from(ETHBalance),
+        amount: BigNumber.from(ETHBalanceRes.output),
       },
     ],
   }

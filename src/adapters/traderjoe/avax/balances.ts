@@ -1,7 +1,6 @@
 import { BalancesContext } from '@lib/adapter'
 import { Balance, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 
 interface Token extends Contract {
@@ -126,26 +125,26 @@ const JOE: Token = {
   coingeckoId: 'joe',
 }
 
-export async function getStakeBalance(ctx: BalancesContext, chain: Chain) {
+export async function getStakeBalance(ctx: BalancesContext) {
   const balances: Balance[] = []
 
   const [sJOEbalanceOfRes, veJOEbalanceOfRes, rJOEbalanceOfRes] = await Promise.all([
     call({
-      chain,
+      ctx,
       target: pools[0],
       params: [ctx.address, USDC.address],
       abi: abi.getUserInfo,
     }),
 
     call({
-      chain,
+      ctx,
       target: pools[1],
       params: [ctx.address],
       abi: abi.veJoeUserInfos,
     }),
 
     call({
-      chain,
+      ctx,
       target: pools[2],
       params: [ctx.address],
       abi: abi.rJoeUserInfo,
@@ -160,21 +159,21 @@ export async function getStakeBalance(ctx: BalancesContext, chain: Chain) {
 
   const [sJOErewardsRes, veJOErewardsRes, rJOErewardsRes] = await Promise.all([
     call({
-      chain,
+      ctx,
       target: pools[0],
       params: [ctx.address, USDC.address],
       abi: abi.pendingReward,
     }),
 
     call({
-      chain,
+      ctx,
       target: pools[1],
       params: [ctx.address],
       abi: abi.getPendingVeJoe,
     }),
 
     call({
-      chain,
+      ctx,
       target: pools[2],
       params: [ctx.address],
       abi: abi.pendingRJoe,

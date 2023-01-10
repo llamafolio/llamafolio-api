@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -18,12 +17,12 @@ const wNXM: Token = {
   symbol: 'wNXM',
 }
 
-export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contract: Contract) {
+export async function getStakeBalances(ctx: BalancesContext, contract: Contract) {
   const balances: Balance[] = []
 
   const [getStakeBalances, getRewardsBalances] = await Promise.all([
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: {
@@ -38,7 +37,7 @@ export async function getStakeBalances(ctx: BalancesContext, chain: Chain, contr
     }),
 
     call({
-      chain,
+      ctx,
       target: contract.address,
       params: [ctx.address],
       abi: {

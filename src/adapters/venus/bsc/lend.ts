@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getMarketsBalances } from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
@@ -26,16 +25,15 @@ const VAI: Token = {
 
 export async function getLendBorrowBalances(
   ctx: BalancesContext,
-  chain: Chain,
   contracts: Contract[],
   comptroller: Contract,
 ): Promise<Balance[]> {
   const VAIMinted: Balance[] = []
 
-  const marketsBalances = await getMarketsBalances(ctx, 'bsc', contracts)
+  const marketsBalances = await getMarketsBalances(ctx, contracts)
 
   const VAIBalancesRes = await call({
-    chain,
+    ctx,
     target: comptroller.address,
     params: [ctx.address],
     abi: abi.mintedVAIs,
@@ -44,7 +42,7 @@ export async function getLendBorrowBalances(
   const VAIBalances = BigNumber.from(VAIBalancesRes.output)
 
   VAIMinted.push({
-    chain,
+    chain: ctx.chain,
     decimals: VAI.decimals,
     symbol: VAI.symbol,
     address: VAI.address,

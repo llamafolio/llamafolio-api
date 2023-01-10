@@ -1,11 +1,11 @@
-import { GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getActiveBondsBalances } from './bondNFT'
 import { chickenBondManager, getBondNFTContract } from './chickenBondManager'
 
-export const getContracts = async () => {
-  const bondNFT = await getBondNFTContract()
+export const getContracts = async (ctx: BaseContext) => {
+  const bondNFT = await getBondNFTContract(ctx)
 
   return {
     contracts: { chickenBondManager },
@@ -14,7 +14,7 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts, props) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, 'ethereum', contracts, {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     chickenBondManager: (ctx) => getActiveBondsBalances(ctx, props.bondNFT),
   })
 

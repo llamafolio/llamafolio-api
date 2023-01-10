@@ -1,6 +1,5 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -115,11 +114,11 @@ const abi = {
   },
 }
 
-export async function getLendingPoolContracts(chain: Chain, lendingPool: Contract) {
+export async function getLendingPoolContracts(ctx: BaseContext, lendingPool: Contract) {
   const contracts: Contract[] = []
 
   const reservesListRes = await call({
-    chain,
+    ctx,
     target: lendingPool.address,
     abi: abi.getReservesList,
   })
@@ -127,7 +126,7 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
   const reservesList: string[] = reservesListRes.output
 
   const reservesDataRes = await multicall({
-    chain,
+    ctx,
     calls: reservesList.map((reserveTokenAddress) => ({
       target: lendingPool.address,
       params: [reserveTokenAddress],
@@ -148,20 +147,20 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
 
     contracts.push(
       {
-        chain,
+        chain: ctx.chain,
         address: aToken,
         underlyings: [underlyingToken],
         category: 'lend',
       },
       {
-        chain,
+        chain: ctx.chain,
         address: stableDebtToken,
         underlyings: [underlyingToken],
         category: 'borrow',
         stable: true,
       },
       {
-        chain,
+        chain: ctx.chain,
         address: variableDebtToken,
         underlyings: [underlyingToken],
         category: 'borrow',
@@ -173,9 +172,9 @@ export async function getLendingPoolContracts(chain: Chain, lendingPool: Contrac
   return contracts
 }
 
-export async function getLendingPoolBalances(ctx: BalancesContext, chain: Chain, contracts: Contract[]) {
+export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Contract[]) {
   try {
-    const balances: Balance[] = await getERC20BalanceOf(ctx, chain, contracts as Token[])
+    const balances: Balance[] = await getERC20BalanceOf(ctx, contracts as Token[])
 
     // use the same amount for underlyings
     for (const balance of balances) {
@@ -193,10 +192,10 @@ export async function getLendingPoolBalances(ctx: BalancesContext, chain: Chain,
   }
 }
 
-export async function getLendingPoolHealthFactor(ctx: BalancesContext, chain: Chain, lendingPool: Contract) {
+export async function getLendingPoolHealthFactor(ctx: BalancesContext, lendingPool: Contract) {
   try {
     const userAccountDataRes = await call({
-      chain,
+      ctx,
       target: lendingPool.address,
       params: [ctx.address],
       abi: abi.getUserAccountData,

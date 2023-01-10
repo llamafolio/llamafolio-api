@@ -1,7 +1,6 @@
-import { Contract } from '@lib/adapter'
+import { BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
@@ -47,11 +46,11 @@ const abi = {
   },
 }
 
-export async function getPoolsContracts(chain: Chain, fairLaunch: Contract) {
+export async function getPoolsContracts(ctx: BaseContext, fairLaunch: Contract) {
   const contracts: Contract[] = []
 
   const poolsLengthRes = await call({
-    chain,
+    ctx,
     target: fairLaunch.address,
     params: [],
     abi: abi.poolLength,
@@ -60,7 +59,7 @@ export async function getPoolsContracts(chain: Chain, fairLaunch: Contract) {
   const poolsLength = parseInt(poolsLengthRes.output)
 
   const poolsInfoRes = await multicall({
-    chain,
+    ctx,
     calls: range(0, poolsLength).map((i) => ({
       target: fairLaunch.address,
       params: [i],
@@ -71,7 +70,7 @@ export async function getPoolsContracts(chain: Chain, fairLaunch: Contract) {
   const poolsAddresses = poolsInfoRes.filter(isSuccess).map((res) => res.output.stakeToken)
 
   const underlyingsAddressesRes = await multicall({
-    chain,
+    ctx,
     calls: poolsAddresses.map((token: string) => ({
       target: token,
       params: [],
@@ -83,7 +82,7 @@ export async function getPoolsContracts(chain: Chain, fairLaunch: Contract) {
     const underlyingRes = underlyingsAddressesRes[poolIdx]
 
     contracts.push({
-      chain,
+      chain: ctx.chain,
       address: poolsAddresses[poolIdx],
       pid: poolIdx,
       underlyings: isSuccess(underlyingRes) ? [underlyingRes.output] : undefined,
