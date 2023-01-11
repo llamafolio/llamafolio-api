@@ -163,6 +163,7 @@ export async function getStakingPoolsBalances(
       ...poolsBalances[poolIdx],
       category: 'stake',
       amount,
+      decimals: 18,
       // adjust amounts with staking token ratio
       underlyings: underlyings.map((underlying) => ({
         ...underlying,

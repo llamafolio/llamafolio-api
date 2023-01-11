@@ -38,6 +38,7 @@ const locker: Contract = {
 export const getContracts = async (ctx: BaseContext) => {
   const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap', 'cryptoFactory'])
   const pools = await getPoolsContracts(ctx, registries)
+
   const gauges = await getGaugesContracts(ctx, registries, pools, CRV)
 
   return {
@@ -60,3 +61,28 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     balances,
   }
 }
+
+// for (let i = 0; i < assetsPositionsOf.output.length; i++) {
+//   const assetsPositionOf = assetsPositionsOf.output[i]
+
+//   assetsBalances.push({
+//     chain,
+//     address: assetsPositionOf.assetId,
+//     amount: BigNumber.from(assetsPositionOf.balance),
+//   })
+// }
+
+// const balanceDetailsByPositionAddress: { [key: string]: Contract } = {}
+// for (const contract of contracts) {
+//   balanceDetailsByPositionAddress[contract.address.toLowerCase()] = contract
+// }
+
+// for (const assetsBalance of assetsBalances) {
+//   const position = balanceDetailsByPositionAddress[assetsBalance.address.toLowerCase()]
+
+//   balances.push({
+//     ...position,
+//     amount: assetsBalance.amount,
+//     rewards: undefined,
+//     category: 'farm',
+//   })
