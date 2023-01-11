@@ -150,6 +150,14 @@ functions:
           method: get
           path: /protocols/latest
 
+  getLatestSnapshot:
+    handler: src/handlers/getLatestSnapshot.handler
+    description: Get latest snapshot
+    events:
+      - httpApi:
+          method: get
+          path: /snapshots/{address}/latest
+
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler
     description: Get sync status
