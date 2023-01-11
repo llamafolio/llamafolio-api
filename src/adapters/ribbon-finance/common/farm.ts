@@ -28,26 +28,29 @@ export async function getFarmBalances(ctx: BalancesContext, gauges: Contract[]):
     params: [],
   }))
 
-  const [balancesOfRes, pricePerShareRes] = await Promise.all([
+  const [balancesOfRes, pricePerSharesRes] = await Promise.all([
     multicall({ ctx, calls: gaugeCalls, abi: erc20Abi.balanceOf }),
     multicall({ ctx, calls: lpCalls, abi: abi.pricePerShare }),
   ])
 
-  const balancesOf = balancesOfRes.filter(isSuccess).map((res) => BigNumber.from(res.output))
-  const pricePerShares = pricePerShareRes.filter(isSuccess).map((res) => res.output)
+  for (let gaugeIdx = 0; gaugeIdx < gauges.length; gaugeIdx++) {
+    const gauge = gauges[gaugeIdx]
+    const pricePerShare = pricePerSharesRes[gaugeIdx]
+    const balanceOf = balancesOfRes[gaugeIdx]
+    const underlying = gauge.underlyings?.[0] as Contract
 
-  for (let i = 0; i < gauges.length; i++) {
-    const gauge = gauges[i]
-    const pricePerShare = pricePerShares[i]
-    const balanceOf = balancesOf[i]
-    const underlyings = gauge.underlyings?.[0] as Contract
+    if (!isSuccess(pricePerShare) || !isSuccess(balanceOf)) {
+      continue
+    }
 
-    if (underlyings.decimals) {
+    const amount = BigNumber.from(balanceOf.output)
+
+    if (underlying && underlying.decimals) {
       const balance: Balance = {
         ...gauge,
-        decimals: underlyings.decimals,
-        underlyings: [{ ...underlyings, amount: balanceOf.mul(pricePerShare).div(BN_TEN.pow(underlyings.decimals)) }],
-        amount: balanceOf,
+        decimals: underlying.decimals,
+        underlyings: [{ ...underlying, amount: amount.mul(pricePerShare.output).div(BN_TEN.pow(underlying.decimals)) }],
+        amount: amount,
         rewards: undefined,
         category: 'farm',
       }

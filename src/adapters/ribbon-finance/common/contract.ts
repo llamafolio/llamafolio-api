@@ -115,9 +115,7 @@ export async function getFarmLPContracts(ctx: BaseContext, gaugeController: Cont
     if (!isSuccess(underlyings)) {
       const underlyings = await call({ ctx, target: contract.lpToken, params: [], abi: abi.vaultParamsOptions })
       contract.underlyings = [underlyings.output.underlying]
-    }
-
-    if (isSuccess(underlyings)) {
+    } else {
       contract.underlyings = [underlyings.output.asset]
     }
   }

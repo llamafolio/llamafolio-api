@@ -10,7 +10,7 @@ const adapter: Adapter = {
 /**
  *  TODO:
  *  - Logic to get rewards from farming part
- *  - Logic on Avax chain (very low liquidity atm)
+ *  - Logic on Avax chain
  */
 
 export default adapter
