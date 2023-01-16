@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { multicallBalances } from '@lib/balance'
 import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
 import { BN_ZERO, isZero } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
@@ -7,8 +6,50 @@ import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
+import { groupBy } from './array'
+
 export interface GetPoolsBalancesParams {
   getPoolAddress: (contract: Contract) => string
+}
+
+export interface PoolsBalances extends Balance {
+  registryId?: string
+  totalSupply: BigNumber
+  lpToken: string
+}
+
+const abi = {
+  get_balances: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_balances',
+    inputs: [{ name: '_pool', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256[8]' }],
+    gas: 41626,
+  },
+  get_decimals: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_decimals',
+    inputs: [{ name: '_pool', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256[8]' }],
+  },
+  get_underlying_balances: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_underlying_balances',
+    inputs: [{ name: '_pool', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256[8]' }],
+    gas: 39733,
+  },
+  get_underlyings_decimals: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_underlying_decimals',
+    inputs: [{ name: '_pool', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256[8]' }],
+    gas: 19730,
+  },
 }
 
 /**
@@ -16,51 +57,51 @@ export interface GetPoolsBalancesParams {
  * @param pools address: LP token address
  * @param params
  */
-export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[], params: GetPoolsBalancesParams) {
+export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[] /*, params: GetPoolsBalancesParams */) {
   const poolsBalances = await getERC20BalanceOf(ctx, pools as Token[])
 
-  return getPoolsUnderlyingBalances(ctx, poolsBalances, params)
+  const poolsByRegistryId = groupBy(poolsBalances as PoolsBalances[], 'registryId')
+
+  const stablePools = [...poolsByRegistryId.stableSwap, ...poolsByRegistryId.stableFactory]
+  const cryptoPools = [...poolsByRegistryId.cryptoSwap, ...poolsByRegistryId.cryptoFactory]
+
+  const underlyingsBalances = await Promise.all([
+    getUnderlyingBalancesFromStablePools(ctx, stablePools /*, params*/),
+    getUnderlyingBalancesFromCryptoPools(ctx, cryptoPools /*, params*/),
+  ])
+
+  return underlyingsBalances.flat()
 }
 
-export async function getPoolsUnderlyingBalances(
+const getUnderlyingBalancesFromStablePools = async (
   ctx: BalancesContext,
-  pools: Balance[],
-  params: GetPoolsBalancesParams,
-) {
+  pools: PoolsBalances[],
+  // params: GetPoolsBalancesParams,
+) => {
   const res: Balance[] = []
-  const { getPoolAddress } = params
 
-  const balanceOfCalls: Call[] = []
+  const calls: Call[] = []
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const underlyings = pools[poolIdx].underlyings
-    if (!underlyings) {
-      continue
-    }
-
-    for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
-      balanceOfCalls.push({
-        target: underlyings[underlyingIdx].address,
-        params: [getPoolAddress(pools[poolIdx])],
-      })
-    }
+    calls.push({
+      target: (pools[poolIdx] as Contract).registry,
+      params: [(pools[poolIdx] as Contract).pool],
+    })
   }
 
-  const [totalSuppliesRes, underlyingsBalanceOfRes] = await Promise.all([
+  const [totalSuppliesRes, underlyingsBalanceOfStableRes, underlyingsDecimalsStableRes] = await Promise.all([
     multicall({
       ctx,
       calls: pools.map((token) => ({
         params: [],
-        target: token.address,
+        target: token.lpToken,
       })),
       abi: erc20Abi.totalSupply,
     }),
 
-    multicallBalances({
-      ctx,
-      calls: balanceOfCalls,
-      abi: erc20Abi.balanceOf,
-    }),
+    multicall({ ctx, calls, abi: abi.get_underlying_balances }),
+
+    multicall({ ctx, calls, abi: abi.get_underlyings_decimals }),
   ])
 
   let balanceOfIdx = 0
@@ -78,28 +119,128 @@ export async function getPoolsUnderlyingBalances(
       continue
     }
 
-    const poolAmount = pools[poolIdx].amount
-    const poolTotalSupply = BigNumber.from(totalSupplyRes.output)
+    const totalSupply = BigNumber.from(totalSupplyRes.output)
 
-    const poolBalance: Balance = {
+    const poolBalance: PoolsBalances = {
       ...pools[poolIdx],
       category: 'lp',
       underlyings: [],
+      totalSupply,
     }
 
     for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
-      const underlyingBalanceRes = underlyingsBalanceOfRes[balanceOfIdx]
-      // fallback to 0 in case of failure, better than not showing anything at all
-      const underlyingBalance = isSuccess(underlyingBalanceRes) ? BigNumber.from(underlyingBalanceRes.output) : BN_ZERO
+      const underlyingBalanceOfStableRes = underlyingsBalanceOfStableRes[balanceOfIdx]
+      const underlyingDecimalsStableRes = underlyingsDecimalsStableRes[balanceOfIdx]
 
-      const underlyingAmount = underlyingBalance.mul(poolAmount).div(poolTotalSupply)
+      const underlyingsBalance =
+        isSuccess(underlyingBalanceOfStableRes) && underlyingBalanceOfStableRes.output[underlyingIdx] != undefined
+          ? BigNumber.from(underlyingBalanceOfStableRes.output[underlyingIdx])
+          : BN_ZERO
 
-      poolBalance.underlyings!.push({ ...underlyings[underlyingIdx], amount: underlyingAmount })
+      const underlyingsDecimals =
+        isSuccess(underlyingDecimalsStableRes) && underlyingDecimalsStableRes.output[underlyingIdx] != undefined
+          ? underlyingDecimalsStableRes.output[underlyingIdx]
+          : 18
 
-      balanceOfIdx++
+      poolBalance.underlyings?.push({
+        ...underlyings[underlyingIdx],
+        decimals: underlyingsDecimals,
+        amount: underlyingsBalance.mul(poolBalance.amount).div(poolBalance.totalSupply),
+      })
     }
 
     res.push(poolBalance)
+    balanceOfIdx++
+  }
+
+  return res
+}
+
+const getUnderlyingBalancesFromCryptoPools = async (
+  ctx: BalancesContext,
+  pools: PoolsBalances[],
+  // params: GetPoolsBalancesParams,
+) => {
+  const res: Balance[] = []
+
+  const calls: Call[] = []
+
+  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+    calls.push({
+      target: (pools[poolIdx] as Contract).registry,
+      params: [(pools[poolIdx] as Contract).pool],
+    })
+  }
+
+  const [totalSuppliesRes, underlyingsBalanceOfCryptoRes, underlyingsDecimalsCryptoRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: pools.map((token) => ({
+        params: [],
+        target: token.address,
+      })),
+      abi: erc20Abi.totalSupply,
+    }),
+
+    multicall({
+      ctx,
+      calls,
+      abi: abi.get_balances,
+    }),
+
+    multicall({
+      ctx,
+      calls,
+      abi: abi.get_decimals,
+    }),
+  ])
+
+  let balanceOfIdx = 0
+  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+    const underlyings = pools[poolIdx].underlyings
+    if (!underlyings) {
+      continue
+    }
+
+    const totalSupplyRes = totalSuppliesRes[poolIdx]
+
+    if (!isSuccess(totalSupplyRes) || isZero(totalSupplyRes.output)) {
+      balanceOfIdx += underlyings.length
+      continue
+    }
+
+    const totalSupply = BigNumber.from(totalSupplyRes.output)
+
+    const poolBalance: PoolsBalances = {
+      ...pools[poolIdx],
+      category: 'lp',
+      underlyings: [],
+      totalSupply,
+    }
+
+    for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
+      const underlyingBalanceOfCryptoRes = underlyingsBalanceOfCryptoRes[balanceOfIdx]
+      const underlyingDecimalsCryptoRes = underlyingsDecimalsCryptoRes[balanceOfIdx]
+
+      const underlyingsBalance =
+        isSuccess(underlyingBalanceOfCryptoRes) && underlyingBalanceOfCryptoRes.output[underlyingIdx] != undefined
+          ? BigNumber.from(underlyingBalanceOfCryptoRes.output[underlyingIdx])
+          : BN_ZERO
+
+      const underlyingsDecimals =
+        isSuccess(underlyingDecimalsCryptoRes) && underlyingDecimalsCryptoRes.output[underlyingIdx] != undefined
+          ? underlyingDecimalsCryptoRes.output[underlyingIdx]
+          : 18
+
+      poolBalance.underlyings?.push({
+        ...underlyings[underlyingIdx],
+        decimals: underlyingsDecimals,
+        amount: underlyingsBalance.mul(poolBalance.amount).div(poolBalance.totalSupply),
+      })
+    }
+
+    res.push(poolBalance)
+    balanceOfIdx++
   }
 
   return res
@@ -120,59 +261,8 @@ export async function getStakingPoolsBalances(
   params: GetStakingPoolsBalancesParams,
 ) {
   const { getLPTokenAddress } = params
-  const stakingPoolsBalances: Balance[] = []
 
-  const poolsBalances = await getPoolsBalances(ctx, pools, params)
+  const poolsBalances = await getPoolsBalances(ctx, pools /*, params */)
 
-  const [totalSuppliesRes, stakingTokenBalancesRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: poolsBalances.map((pool) => ({
-        params: [],
-        target: getLPTokenAddress(pool),
-      })),
-      abi: erc20Abi.totalSupply,
-    }),
-
-    multicallBalances({
-      ctx,
-      calls: poolsBalances.map((pool) => ({
-        params: [pool.address],
-        target: getLPTokenAddress(pool),
-      })),
-      abi: erc20Abi.balanceOf,
-    }),
-  ])
-
-  for (let poolIdx = 0; poolIdx < poolsBalances.length; poolIdx++) {
-    const totalSupplyRes = totalSuppliesRes[poolIdx]
-    const stakingTokenBalanceRes = stakingTokenBalancesRes[poolIdx]
-
-    if (!isSuccess(totalSupplyRes) || isZero(totalSupplyRes.output) || !isSuccess(stakingTokenBalanceRes)) {
-      continue
-    }
-
-    const totalSupply = BigNumber.from(totalSupplyRes.output)
-    const amount = BigNumber.from(stakingTokenBalanceRes.output)
-    const underlyings = poolsBalances[poolIdx].underlyings
-    if (!underlyings) {
-      continue
-    }
-
-    const stakingBalance: Balance = {
-      ...poolsBalances[poolIdx],
-      category: 'stake',
-      amount,
-      decimals: 18,
-      // adjust amounts with staking token ratio
-      underlyings: underlyings.map((underlying) => ({
-        ...underlying,
-        amount: BigNumber.from(underlying.amount).mul(amount).div(totalSupply),
-      })),
-    }
-
-    stakingPoolsBalances.push(stakingBalance)
-  }
-
-  return stakingPoolsBalances
+  return poolsBalances
 }

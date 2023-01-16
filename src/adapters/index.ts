@@ -18,6 +18,7 @@ import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
 import convex from '@adapters/convex'
 import curve from '@adapters/curve'
+import curveV2 from '@adapters/curve-v2'
 import dydx from '@adapters/dydx'
 import euler from '@adapters/euler'
 import floorDao from '@adapters/floor-dao'
@@ -103,6 +104,7 @@ export const adapters: Adapter[] = [
   concentrator,
   convex,
   curve,
+  curveV2,
   dydx,
   euler,
   floorDao,
