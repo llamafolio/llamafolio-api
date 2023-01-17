@@ -1,6 +1,4 @@
 import { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
-import { call } from '@lib/call'
 import { Call, multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -80,38 +78,18 @@ const abi = {
     stableSwap: {
       stateMutability: 'view',
       type: 'function',
-      name: 'get_coins',
-      inputs: [
-        {
-          name: '_pool',
-          type: 'address',
-        },
-      ],
-      outputs: [
-        {
-          name: '',
-          type: 'address[8]',
-        },
-      ],
-      gas: 12102,
+      name: 'get_underlying_coins',
+      inputs: [{ name: '_pool', type: 'address' }],
+      outputs: [{ name: '', type: 'address[8]' }],
+      gas: 12194,
     },
     stableFactory: {
       stateMutability: 'view',
       type: 'function',
-      name: 'get_coins',
-      inputs: [
-        {
-          name: '_pool',
-          type: 'address',
-        },
-      ],
-      outputs: [
-        {
-          name: '',
-          type: 'address[4]',
-        },
-      ],
-      gas: 9164,
+      name: 'get_underlying_coins',
+      inputs: [{ name: '_pool', type: 'address' }],
+      outputs: [{ name: '', type: 'address[8]' }],
+      gas: 21345,
     },
     cryptoSwap: {
       stateMutability: 'view',
@@ -173,35 +151,6 @@ const abi = {
     type: 'function',
     gas: 2220,
   },
-}
-
-async function getStableFactoryBasePools(ctx: BaseContext, stableFactory: string) {
-  const basePoolCountRes = await call({
-    ctx,
-    target: stableFactory,
-    abi: abi.base_pool_count,
-  })
-
-  const basePoolCount = parseInt(basePoolCountRes.output)
-
-  const basePoolsRes = await multicall({
-    ctx,
-    calls: range(0, basePoolCount).map((poolIdx) => ({ target: stableFactory, params: [poolIdx] })),
-    abi: abi.base_pool_list,
-  })
-
-  const basePoolsCoinsRes = await multicall({
-    ctx,
-    calls: basePoolsRes
-      .filter(isSuccess)
-      .map((res) => res.output)
-      .flatMap((pool) => range(0, 4).map((coinIdx) => ({ target: pool, params: [coinIdx] }))),
-    abi: abi.coins,
-  })
-
-  // TODO:
-  // - make getPoolsContracts more generic ? all pools have the "coins" function to get underlyings
-  // - dissociate multicall errors and no coin error
 }
 
 export interface PoolContract extends Contract {

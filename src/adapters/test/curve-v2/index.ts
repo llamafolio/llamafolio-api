@@ -1,9 +1,9 @@
+import * as ethereum from '@adapters/curve-v2/ethereum'
 import { Adapter } from '@lib/adapter'
 
-import * as ethereum from './ethereum'
-
 const adapter: Adapter = {
-  id: 'curve',
+  id: 'curve-v2',
+
   ethereum,
 }
 

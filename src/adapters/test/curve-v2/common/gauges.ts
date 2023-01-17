@@ -4,7 +4,8 @@ import { Call, multicall } from '@lib/multicall'
 import { getStakingPoolsBalances } from '@lib/pools'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { BigNumber, ethers } from 'ethers'
+import { ethers } from 'ethers'
+import { BigNumber } from 'ethers'
 
 import { PoolContract } from './pools'
 import { Registry } from './registries'
@@ -135,6 +136,8 @@ export async function getGaugesContracts(
             chain: ctx.chain,
             address: gauge,
             pool: pool.pool,
+            registry: registries[registryId],
+            registryId: registryId,
             lpToken: pool.lpToken,
             yieldKey: pool.lpToken,
             underlyings: pool.underlyings?.slice(),
@@ -196,13 +199,10 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]
       calls.push({ target: gaugesBalancesRes[gaugeIdx].address, params: [ctx.address, rewards[rewardIdx].address] })
     }
   }
-
   const claimableRewards = await multicall({ ctx, calls, abi: abi.claimable_reward })
-
   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
     const rewards = gaugesBalancesRes[gaugeIdx].rewards || []
     const gaugeRewards = []
-
     for (let rewardIdx = 0; rewardIdx < rewards.length; rewardIdx++) {
       const gaugeRewardRes = claimableRewards[gaugeIdx]
       if (isSuccess(gaugeRewardRes)) {
@@ -212,7 +212,6 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]
         })
       }
     }
-
     gaugesBalances.push({ ...gaugesBalancesRes[gaugeIdx], rewards: gaugeRewards })
   }
 

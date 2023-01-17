@@ -151,8 +151,8 @@ async function main() {
           balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
           yield: `${yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + '%' : '-'}`,
           il: `${yieldObject !== undefined ? yieldObject?.ilRisk : '-'}`,
-          stable: balance.stable,
-          type: balance.type,
+          // stable: balance.stable,
+          // type: balance.type,
           reward: '',
           underlying: '',
         }
