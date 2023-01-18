@@ -42,7 +42,7 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
           ;(token as BaseBalance).amount = balance
           return token
         } catch (err) {
-          // console.error(`Failed to get coin balance for chain ${token.chain}`, err)
+          console.error(`Failed to get coin balance for chain ${token.chain}`, err)
           return null
         }
       }),
@@ -80,7 +80,7 @@ export async function multicallBalances(params: MultiCallOptions) {
         const balance = await provider.getBalance(address)
         return balance
       } catch (err) {
-        // console.error(`Failed to get coin balance for chain ${chain}`, err)
+        console.error(`Failed to get coin balance for chain ${chain}`, err)
         return null
       }
     }),
@@ -121,7 +121,7 @@ export function sanitizeBalances(balances: Balance[]) {
 
   for (const balance of balances) {
     if (!balance.amount) {
-      // console.error(`Missing balance amount`, balance)
+      console.error(`Missing balance amount`, balance)
       continue
     }
 

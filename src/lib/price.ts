@@ -74,19 +74,19 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
   function getPricedBalance(balance: BaseBalance): PricedBalance {
     const key = getTokenKey(balance as Token)
     if (!key) {
-      // console.log('Failed to get price token key for balance', balance)
+      console.log('Failed to get price token key for balance', balance)
       return balance
     }
 
     const price = prices.coins[key]
     if (price === undefined) {
-      // console.log(`Failed to get price on Defillama API for ${key}`)
+      console.log(`Failed to get price on Defillama API for ${key}`)
       return balance
     }
 
     const decimals = balance.decimals || price.decimals
     if (decimals === undefined) {
-      // console.log(`Failed to get decimals for ${key}`)
+      console.log(`Failed to get decimals for ${key}`)
       return balance
     }
 

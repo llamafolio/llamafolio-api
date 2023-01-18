@@ -81,7 +81,7 @@ export async function getERC20BalanceOf(
   return tokens
     .map((token, i) => {
       if (!balances[i].success || balances[i].output == null) {
-        // console.error(`Could not get balanceOf for token ${ctx.chain}:${token.address}`)
+        console.error(`Could not get balanceOf for token ${ctx.chain}:${token.address}`)
         return null
       }
 
@@ -115,11 +115,11 @@ export async function getERC20Details(ctx: BaseContext, tokens: string[]): Promi
   for (let i = 0; i < missingTokens.length; i++) {
     const address = missingTokens[i]
     if (!symbols[i].success) {
-      // console.error(`Could not get symbol for token ${ctx.chain}:${address}`)
+      console.error(`Could not get symbol for token ${ctx.chain}:${address}`)
       continue
     }
     if (!decimals[i].success) {
-      // console.error(`Could not get decimals for token ${ctx.chain}:${address}`)
+      console.error(`Could not get decimals for token ${ctx.chain}:${address}`)
       continue
     }
 
@@ -183,12 +183,12 @@ export async function resolveERC20Details<K extends string>(
 
       const address = calls[callsIdx].target
       if (!symbols[callsIdx].success) {
-        // console.error(`Could not get symbol for token ${ctx.chain}:${address}`)
+        console.error(`Could not get symbol for token ${ctx.chain}:${address}`)
         callsIdx++
         continue
       }
       if (!decimals[callsIdx].success) {
-        // console.error(`Could not get decimals for token ${ctx.chain}:${address}`)
+        console.error(`Could not get decimals for token ${ctx.chain}:${address}`)
         callsIdx++
         continue
       }
