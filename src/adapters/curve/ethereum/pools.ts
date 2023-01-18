@@ -201,6 +201,9 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
       !isSuccess(gaugeTypeRes) ||
       !isSuccess(poolNameRes) ||
       !isSuccess(lpTokenRes) ||
+      // registry responses seem wrong for these addresses since it returns 1e24 number with only 8 decimals or 6 decimals underlyings
+      lpTokenRes.output === '0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2' || // compound-gauge
+      lpTokenRes.output === '0x5282a4eF67D9C33135340fB3289cc1711c13638C' || // ib3CRV-gauge
       !isSuccess(coinRes) ||
       !isSuccess(underlyingRes)
     ) {
@@ -260,7 +263,6 @@ export async function getGaugesContracts(ctx: BaseContext, gaugeController: Cont
 
   for (let gaugeIdx = 0; gaugeIdx < gaugesLists.length; gaugeIdx++) {
     const gaugeList = gaugesLists[gaugeIdx]
-
     if (!isSuccess(gaugeList)) {
       continue
     }
@@ -275,7 +277,6 @@ export async function getGaugesContracts(ctx: BaseContext, gaugeController: Cont
 
   for (const gauge of gauges) {
     const gaugeDetails = poolsDetailsByGaugesAddresses[gauge.address.toLowerCase()]
-
     if (gaugeDetails != undefined) {
       gaugeContracts.push({
         ...gaugeDetails,
@@ -299,14 +300,11 @@ export async function getGaugesContracts(ctx: BaseContext, gaugeController: Cont
 
     for (let rewardIdx = 0; rewardIdx < 4; rewardIdx++) {
       const rewardTokenRes = rewardTokensRes[callIdx]
-
       if (isSuccess(rewardTokenRes) && rewardTokenRes.output !== ethers.constants.AddressZero) {
         rewards.push(rewardTokenRes.output)
       }
-
       callIdx++
     }
-
     gaugeContracts[gaugeIdx].rewards = rewards
   }
 
