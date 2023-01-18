@@ -73,7 +73,7 @@ export interface PoolBalance extends Balance {
 }
 
 export async function getPoolBalances(ctx: BalancesContext, pools: Contract[], registry: Contract) {
-  const poolBalances: PoolBalance[] = []
+  const poolBalances: Balance[] = []
 
   const poolBalanceCalls = pools.map((pool) => ({
     target: pool.gauge,

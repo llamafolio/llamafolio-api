@@ -3,6 +3,7 @@ import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
 import { getGaugesBalances } from './balances'
+import { getLockerBalances } from './locker'
 import { getGaugesContracts, getPoolsContracts } from './pools'
 
 const CRV: Token = {
@@ -10,6 +11,18 @@ const CRV: Token = {
   address: '0xD533a949740bb3306d119CC777fa900bA034cd52',
   decimals: 18,
   symbol: 'CRV',
+}
+
+const locker: Contract = {
+  chain: 'ethereum',
+  address: '0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2',
+  name: 'Locker',
+}
+
+const feeDistributor: Contract = {
+  chain: 'ethereum',
+  address: '0xa464e6dcda8ac41e03616f95f4bc98a13b8922dc',
+  name: 'FeeDistributor',
 }
 
 const registry: Contract = {
@@ -29,13 +42,14 @@ export const getContracts = async (ctx: BaseContext) => {
   const gauges = await getGaugesContracts(ctx, gaugeController, pools, CRV)
 
   return {
-    contracts: { pools, gauges, registry },
+    contracts: { pools, gauges, registry, locker },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     gauges: (...args) => getGaugesBalances(...args, registry),
+    locker: (...args) => getLockerBalances(...args, feeDistributor),
   })
 
   return {
