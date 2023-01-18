@@ -197,10 +197,11 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]
     calls.push({ target: gaugesBalancesRes[gaugeIdx].address, params: [ctx.address] })
   }
 
+  // TODO : extra rewards logic
+
   const claimableRewards = await multicall({ ctx, calls, abi: abi.claimable_reward })
 
-  // for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
-  for (let gaugeIdx = 0; gaugeIdx < 30; gaugeIdx++) {
+  for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
     const rewards = gaugesBalancesRes[gaugeIdx].rewards || []
     const gaugeRewards = []
 
@@ -221,7 +222,8 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]
 
   /**
    *
-   *     [WIP]
+   *              [WIP]
+   *  Attempt to find extra rewards
    *
    */
 
@@ -246,7 +248,8 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]
 
 /**
  *
- *    [WIP]
+ *              [WIP]
+ *  Attempt to find extra rewards
  *
  */
 

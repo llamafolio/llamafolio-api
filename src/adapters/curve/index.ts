@@ -7,4 +7,10 @@ const adapter: Adapter = {
   ethereum,
 }
 
+/**
+ * TODO:
+ * - Extra rewards logics on ethereum
+ * - Altchains
+ */
+
 export default adapter

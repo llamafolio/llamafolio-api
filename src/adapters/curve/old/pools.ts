@@ -6,7 +6,7 @@ import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-import { groupBy } from './array'
+import { groupBy } from '../../../lib/array'
 
 export interface GetPoolsBalancesParams {
   getPoolAddress: (contract: Contract) => string

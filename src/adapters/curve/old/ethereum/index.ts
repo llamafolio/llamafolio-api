@@ -1,7 +1,7 @@
+import { getPoolsBalances } from '@adapters/curve/old/pools'
 import { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { Contract } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getPoolsBalances } from '@lib/pools'
 import { Token } from '@lib/token'
 
 import { getGaugesBalances, getGaugesContracts } from '../common/gauges'

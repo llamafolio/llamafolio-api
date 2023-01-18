@@ -1,7 +1,7 @@
+import { getStakingPoolsBalances } from '@adapters/curve/old/pools'
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { Call, multicall } from '@lib/multicall'
-import { getStakingPoolsBalances } from '@lib/pools'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { ethers } from 'ethers'
