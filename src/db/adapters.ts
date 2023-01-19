@@ -158,17 +158,23 @@ export async function selectLatestCreatedAdapters(client: PoolClient, limit = 5)
   const adaptersRes = await client.query(
     `
     with last_adapters as (
-      select distinct(id), created_at from adapters
-      where id <> 'wallet' and created_at is not null
-      order by created_at desc
-      limit $1
-    )
-    select id, array_agg(chain) as chains, created_at from (
-      select la.id, a.chain, la.created_at from last_adapters la
-      inner join adapters a on a.id = la.id
-    ) as _ group by (id, created_at);
+      select * from (
+        select distinct on (a.id) a.id, a.created_at from (
+          select distinct id, created_at from adapters
+          where id <> 'wallet' and created_at is not null
+          order by created_at desc
+          limit $2
+        ) a
+        limit $1
+      ) b
+      order by b.created_at desc
+      )
+      select id, array_agg(chain) as chains, created_at from (
+        select la.id, a.chain, la.created_at from last_adapters la
+        inner join adapters a on a.id = la.id
+      ) as _ group by (id, created_at) order by created_at desc;
     `,
-    [limit],
+    [limit, limit * 2],
   )
 
   return adaptersRes.rows.map((row) => ({

@@ -5,6 +5,7 @@
   "scripts": {
     "adapter": "ts-node -T scripts/run-adapter.ts",
     "build": "ts-node -T scripts/build-adapters.ts",
+    "dev": "sls offline",
     "deploy:dev": "npm run postinstall && npm run build && NODE_ENV=dev sls deploy --stage dev",
     "deploy:prod": "npm run postinstall && npm run build && NODE_ENV=prod sls deploy --stage prod",
     "create-adapter": "ts-node -T scripts/create-adapter.ts",
