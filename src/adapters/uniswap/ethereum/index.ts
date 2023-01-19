@@ -9,12 +9,11 @@ import uniPairsV2 from './uniPairs_v2.json'
 async function getPoolsHighestVolume(address: string) {
   const contracts: Contract[] = []
 
-  // const url = 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2'
-  const url = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3'
+  const url = 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2'
 
   const query = gql`
     query pairs {
-      pools(
+      pairs(
         first: 1000
         orderBy: volumeUSD
         orderDirection: desc
@@ -37,7 +36,7 @@ async function getPoolsHighestVolume(address: string) {
 
   const res = await request(url, query)
 
-  for (const pair of res.pools) {
+  for (const pair of res.pairs) {
     if (!pair.id || !pair.token0?.id || !pair.token1?.id) {
       continue
     }
@@ -45,8 +44,8 @@ async function getPoolsHighestVolume(address: string) {
     contracts.push({
       chain: 'ethereum',
       address: pair.id.toLowerCase(),
-      name: 'Uniswap V3',
-      symbol: 'UNIV3',
+      name: 'Uniswap V2',
+      symbol: 'UNIV2',
       decimals: 18,
       underlyings: [
         {
@@ -92,7 +91,7 @@ const getPairsFromGQL = async () => {
     fs.writeFile(file, jsonData, finished)
   }
 
-  saveData(pairs, 'uniPairs_v3.json')
+  saveData(pairs, 'uniPairs_v2.json')
 }
 
 export const getContracts = async () => {
