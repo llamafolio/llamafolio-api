@@ -1,10 +1,12 @@
-import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 import tokenlists from '@llamafolio/tokens/ethereum/tokenlist.json'
 import fs from 'fs'
 import { gql, request } from 'graphql-request'
 
 import uniPairsV2 from './uniPairs_v2.json'
+import uniPairsV3 from './uniPairs_v3.json'
 
 async function getPoolsHighestVolume(address: string) {
   const contracts: Contract[] = []
@@ -95,7 +97,7 @@ const getPairsFromGQL = async () => {
 }
 
 export const getContracts = async () => {
-  const pairs = uniPairsV2 as Contract[]
+  const pairs = [...(uniPairsV2 as Contract[]), ...(uniPairsV3 as Contract[])]
 
   return {
     contracts: { pairs },
@@ -103,10 +105,12 @@ export const getContracts = async () => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, { pairs }) => {
-  const lpBalances = await getPairsBalances(ctx, pairs || [])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    pairs: getPairsBalances,
+  })
 
   return {
-    balances: lpBalances.map((balance) => ({ ...balance, category: 'farm' })),
+    balances: balances.map((balance) => ({ ...balance, category: 'farm' })),
   }
 }
