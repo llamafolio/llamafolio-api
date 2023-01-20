@@ -5,8 +5,7 @@ import tokenlists from '@llamafolio/tokens/ethereum/tokenlist.json'
 import fs from 'fs'
 import { gql, request } from 'graphql-request'
 
-import uniPairsV2 from './uniPairs_v2.json'
-import uniPairsV3 from './uniPairs_v3.json'
+import uniPairsV2 from './datas/uniPairs_v2.json'
 
 async function getPoolsHighestVolume(address: string) {
   const contracts: Contract[] = []
@@ -97,7 +96,7 @@ const getPairsFromGQL = async () => {
 }
 
 export const getContracts = async () => {
-  const pairs = [...(uniPairsV2 as Contract[]), ...(uniPairsV3 as Contract[])]
+  const pairs = [...(uniPairsV2 as Contract[])]
 
   return {
     contracts: { pairs },
