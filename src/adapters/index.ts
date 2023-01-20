@@ -60,7 +60,8 @@ import synthetix from '@adapters/synthetix'
 import templedao from '@adapters/templedao'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
-import uniswap from '@adapters/uniswap'
+import uniswapV2 from '@adapters/uniswap-v2'
+import uniswapV3 from '@adapters/uniswap-v3'
 import uwuLend from '@adapters/uwu-lend'
 import valas from '@adapters/valas'
 import vector from '@adapters/vector'
@@ -134,7 +135,8 @@ export const adapters: Adapter[] = [
   templedao,
   traderjoe,
   truefi,
-  uniswap,
+  uniswapV2,
+  uniswapV3,
   uwuLend,
   valas,
   vector,
