@@ -35,20 +35,20 @@ async function getPoolsHighestVolume(address: string, idx: number) {
     }
 
     contracts.push({
-      chain: 'ethereum',
+      chain: 'bsc',
       address: pair.id.toLowerCase(),
       name: 'PancakeSwap',
       symbol: 'Cake',
       decimals: 18,
       underlyings: [
         {
-          chain: 'ethereum',
+          chain: 'bsc',
           address: pair.token0.id.toLowerCase(),
           symbol: pair.token0.symbol,
           decimals: parseInt(pair.token0.decimals),
         },
         {
-          chain: 'ethereum',
+          chain: 'bsc',
           address: pair.token1.id.toLowerCase(),
           symbol: pair.token1.symbol,
           decimals: parseInt(pair.token1.decimals),
