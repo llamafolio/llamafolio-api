@@ -26,9 +26,13 @@ const cake: Token = {
   decimals: 18,
 }
 
+import { getPairsFromGQL } from './common/pairs'
+
 export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
+
+  const test = await getPairsFromGQL()
 
   const [pairs, masterChefPoolsInfo, masterChefPoolsInfo2] = await Promise.all([
     getPairsContracts({
