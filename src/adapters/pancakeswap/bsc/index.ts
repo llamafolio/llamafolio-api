@@ -1,9 +1,11 @@
 import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 import { getMasterChefBalances, getMasterChefPoolsInfo } from '@lib/masterchef'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances, getUnderlyingBalances } from '@lib/uniswap/v2/pair'
+
+import pancakeListsPairs from './pairs.json'
 
 const masterChef: Contract = {
   name: 'masterChef',
@@ -26,21 +28,20 @@ const cake: Token = {
   decimals: 18,
 }
 
-import { getPairsFromGQL } from './common/pairs'
-
 export const getContracts = async (ctx: BaseContext, props: any) => {
+  const pancakePairs = [...(pancakeListsPairs as Contract[])]
+
   const offset = props.pairOffset || 0
   const limit = 100
 
-  const test = await getPairsFromGQL()
-
-  const [pairs, masterChefPoolsInfo, masterChefPoolsInfo2] = await Promise.all([
-    getPairsContracts({
-      ctx,
-      factoryAddress: '0xca143ce32fe78f1f7019d7d551a6402fc5350c73',
-      offset,
-      limit,
-    }),
+  const [/*pairs,*/ masterChefPoolsInfo, masterChefPoolsInfo2] = await Promise.all([
+    // Comment since we are using hard fetch pairs from graphQL.
+    // getPairsContracts({
+    //   ctx,
+    //   factoryAddress: '0xca143ce32fe78f1f7019d7d551a6402fc5350c73',
+    //   offset,
+    //   limit,
+    // }),
 
     getMasterChefPoolsInfo(ctx, {
       masterChefAddress: masterChef.address,
@@ -54,7 +55,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
 
   // retrieve master chef pools details from lpToken addresses
   const pairByAddress: { [key: string]: Contract } = {}
-  for (const pair of pairs) {
+  for (const pair of pancakePairs) {
     pairByAddress[pair.address.toLowerCase()] = pair
   }
   const masterChefPools = masterChefPoolsInfo
@@ -81,10 +82,11 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
 
   return {
     contracts: {
-      pairs,
+      pancakePairs,
       masterChefPools,
       masterChefPools2,
     },
+
     revalidate: 60 * 60,
     revalidateProps: {
       pairOffset: offset + limit,
@@ -92,37 +94,34 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (
-  ctx: BalancesContext,
-  { pairs, masterChefPools, masterChefPools2 },
-) => {
-  const pairsBalances = await getPairsBalances(ctx, pairs || [])
+const masterChefBalances = async (ctx: BalancesContext, masterChefPools: Contract[], masterChefPools2: Contract[]) => {
+  const [masterChefBalances, masterChefBalances2] = await Promise.all([
+    getMasterChefBalances(ctx, {
+      chain: 'bsc',
+      masterChefAddress: masterChef.address,
+      tokens: (masterChefPools || []) as Token[],
+      rewardToken: cake,
+      pendingRewardName: 'pendingCake',
+    }),
+    getMasterChefBalances(ctx, {
+      chain: 'bsc',
+      masterChefAddress: masterChef2.address,
+      tokens: (masterChefPools2 || []) as Token[],
+      rewardToken: cake,
+      pendingRewardName: 'pendingCake',
+    }),
+  ])
 
-  //new masterchef
-  let masterChefBalances = await getMasterChefBalances(ctx, {
-    chain: 'bsc',
-    masterChefAddress: masterChef.address,
-    tokens: (masterChefPools || []) as Token[],
-    rewardToken: cake,
-    pendingRewardName: 'pendingCake',
+  return Promise.all([getUnderlyingBalances(ctx, masterChefBalances), getUnderlyingBalances(ctx, masterChefBalances2)])
+}
+
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
+  const pancakeFarmBalances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    pancakePairs: getPairsBalances,
+    masterChefPools: (...args) => masterChefBalances(...args, contracts.masterChefPools2 || []),
   })
-
-  masterChefBalances = await getUnderlyingBalances(ctx, masterChefBalances)
-
-  //old masterchef
-  let masterChefBalances2 = await getMasterChefBalances(ctx, {
-    chain: 'bsc',
-    masterChefAddress: masterChef2.address,
-    tokens: (masterChefPools2 || []) as Token[],
-    rewardToken: cake,
-    pendingRewardName: 'pendingCake',
-  })
-
-  masterChefBalances2 = await getUnderlyingBalances(ctx, masterChefBalances2)
-
-  const balances = pairsBalances.concat(masterChefBalances).concat(masterChefBalances2)
 
   return {
-    balances,
+    balances: pancakeFarmBalances.map((res) => ({ ...res, category: res.category === 'farm' ? 'farm' : 'lp' })),
   }
 }
