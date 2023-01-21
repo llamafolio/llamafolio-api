@@ -9,6 +9,7 @@
     "deploy:dev": "npm run postinstall && npm run build && NODE_ENV=dev sls deploy --stage dev",
     "deploy:prod": "npm run postinstall && npm run build && NODE_ENV=prod sls deploy --stage prod",
     "create-adapter": "ts-node -T scripts/create-adapter.ts",
+    "delete-adapter": "ts-node -T scripts/delete-adapter.ts",
     "adapter-balances": "ts-node -T scripts/run-adapter-balances.ts",
     "update-balances": "ts-node -T scripts/update-balances.ts",
     "revalidate-contracts": "ts-node -T scripts/revalidate-contracts.ts",
