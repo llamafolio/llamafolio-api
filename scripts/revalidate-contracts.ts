@@ -8,7 +8,7 @@ import { Chain, chains } from '../src/lib/chains'
 import { resolveContractsTokens } from '../src/lib/token'
 
 function help() {
-  console.log('npm run revalidate-contracts {adapter}')
+  console.log('npm run revalidate-contracts {adapter} ?{chain}')
 }
 
 /**

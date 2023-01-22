@@ -63,16 +63,18 @@ export async function getPairsContracts({ ctx, factoryAddress, offset = 0, limit
 
   const allPairsRes = await multicall({
     ctx,
-    calls: range(offset, end).map((_, i) => ({
+    calls: range(offset, end).map((idx) => ({
       target: factoryAddress,
-      params: [i],
+      params: [idx],
     })),
     abi: abi.allPairs,
   })
 
   const contracts: Contract[] = allPairsRes.filter(isSuccess).map((res) => ({ chain: ctx.chain, address: res.output }))
 
-  return getPairsDetails(ctx, contracts)
+  const pairs = await getPairsDetails(ctx, contracts)
+
+  return { pairs, allPairsLength }
 }
 
 export async function getPairsDetails(ctx: BaseContext, contracts: Contract[]): Promise<Contract[]> {

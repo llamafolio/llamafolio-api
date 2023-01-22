@@ -36,7 +36,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
     comptrollerAddress: '0xdc13687554205E5b89Ac783db14bb5bba4A1eDaC',
   })
 
-  const pools = await getPairsContracts({
+  const { pairs, allPairsLength } = await getPairsContracts({
     ctx,
     factoryAddress: '0x9Ad6C38BE94206cA50bb0d90783181662f0Cfa10',
     offset,
@@ -46,14 +46,14 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   return {
     contracts: {
       markets,
-      pools,
+      pairs,
       sJOE,
       veJOE,
       rJOE,
     },
     revalidate: 60 * 60,
     revalidateProps: {
-      pairOffset: offset + limit,
+      pairOffset: Math.min(offset + limit, allPairsLength),
     },
   }
 }
@@ -62,7 +62,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const [balances, stakeBalances] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
       markets: getMarketsBalances,
-      pools: getPairsBalances,
+      pairs: getPairsBalances,
     }),
     getStakeBalance(ctx),
   ])

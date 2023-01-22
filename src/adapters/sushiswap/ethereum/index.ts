@@ -40,7 +40,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
 
-  const [pairs, masterChefPoolsInfo] = await Promise.all([
+  const [{ pairs, allPairsLength }, masterChefPoolsInfo] = await Promise.all([
     getPairsContracts({
       ctx,
       factoryAddress: '0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac',
@@ -79,7 +79,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
     },
     revalidate: 60 * 60,
     revalidateProps: {
-      pairOffset: offset + limit,
+      pairOffset: Math.min(offset + limit, allPairsLength),
     },
   }
 }
