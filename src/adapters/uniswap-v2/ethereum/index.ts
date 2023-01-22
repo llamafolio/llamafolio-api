@@ -1,9 +1,8 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 import { gql, request } from 'graphql-request'
-
-import Pairs from './pairs.json'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function getPoolsHighestVolume() {
@@ -62,13 +61,23 @@ async function getPoolsHighestVolume() {
   return contracts
 }
 
-export const getContracts = async () => {
-  // const pairs = await getPoolsHighestVolume()
-  const pairs = Pairs as Contract[]
+export const getContracts = async (ctx: BaseContext, props: any) => {
+  const offset = props.pairOffset || 0
+  const limit = 100
+
+  const { pairs, allPairsLength } = await getPairsContracts({
+    ctx,
+    factoryAddress: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f',
+    offset,
+    limit,
+  })
 
   return {
     contracts: { pairs },
-    // revalidate: 60 * 60,
+    revalidate: 60 * 60,
+    revalidateProps: {
+      pairOffset: Math.min(offset + limit, allPairsLength),
+    },
   }
 }
 
