@@ -13,6 +13,7 @@ const locker: Contract = {
   chain: 'ethereum',
   address: '0xa404f66b9278c4ab8428225014266b4b239bcdc7',
 }
+
 const staker: Contract = {
   name: 'staker',
   displayName: 'Staker tBone',

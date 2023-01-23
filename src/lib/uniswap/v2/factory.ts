@@ -3,7 +3,7 @@ import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Category } from '@lib/category'
 import { Call, multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
+import { isNotNullish, isSuccess } from '@lib/type'
 
 const abi = {
   allPairsLength: {
@@ -51,6 +51,11 @@ export interface getPairsContractsParams {
   limit?: number
 }
 
+export interface Pair extends Contract {
+  pid: number
+  underlyings: [string, string]
+}
+
 export async function getPairsContracts({ ctx, factoryAddress, offset = 0, limit = 100 }: getPairsContractsParams) {
   const allPairsLengthRes = await call({
     ctx,
@@ -61,24 +66,28 @@ export async function getPairsContracts({ ctx, factoryAddress, offset = 0, limit
   const allPairsLength = parseInt(allPairsLengthRes.output)
   const end = Math.min(offset + limit, allPairsLength)
 
+  const pids = range(offset, end)
+
   const allPairsRes = await multicall({
     ctx,
-    calls: range(offset, end).map((idx) => ({
+    calls: pids.map((idx) => ({
       target: factoryAddress,
       params: [idx],
     })),
     abi: abi.allPairs,
   })
 
-  const contracts: Contract[] = allPairsRes.filter(isSuccess).map((res) => ({ chain: ctx.chain, address: res.output }))
+  const contracts: Contract[] = allPairsRes
+    .map((res, idx) => (res.success ? { chain: ctx.chain, address: res.output, pid: pids[idx] } : null))
+    .filter(isNotNullish)
 
-  const pairs = await getPairsDetails(ctx, contracts)
+  const pairs = (await getPairsDetails(ctx, contracts)) as Pair[]
 
   return { pairs, allPairsLength }
 }
 
-export async function getPairsDetails(ctx: BaseContext, contracts: Contract[]): Promise<Contract[]> {
-  const res: Contract[] = []
+export async function getPairsDetails<T extends Contract>(ctx: BaseContext, contracts: T[]): Promise<T[]> {
+  const res: T[] = []
 
   const calls: Call[] = contracts.map((contract) => ({
     target: contract.address,
