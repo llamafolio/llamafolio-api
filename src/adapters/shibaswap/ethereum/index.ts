@@ -13,6 +13,7 @@ const locker: Contract = {
   chain: 'ethereum',
   address: '0xa404f66b9278c4ab8428225014266b4b239bcdc7',
 }
+
 const staker: Contract = {
   name: 'staker',
   displayName: 'Staker tBone',
@@ -38,7 +39,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
 
-  const [pairsInfo, masterChefPoolsInfo] = await Promise.all([
+  const [{ pairs, allPairsLength }, masterChefPoolsInfo] = await Promise.all([
     getPairsContracts({
       ctx,
       factoryAddress: '0x115934131916C8b277DD010Ee02de363c09d037c',
@@ -53,7 +54,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
 
   // retrieve master chef pools details from lpToken addresses
   const pairByAddress: { [key: string]: Contract } = {}
-  for (const pair of pairsInfo) {
+  for (const pair of pairs) {
     pairByAddress[pair.address.toLowerCase()] = pair
   }
 
@@ -70,12 +71,12 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
 
   return {
     contracts: {
-      pairs: pairsInfo,
+      pairs,
       masterChefPools,
     },
     revalidate: 60 * 60,
     revalidateProps: {
-      pairOffset: offset + limit,
+      pairOffset: Math.min(offset + limit, allPairsLength),
     },
   }
 }

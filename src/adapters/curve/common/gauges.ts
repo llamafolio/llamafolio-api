@@ -102,7 +102,7 @@ export async function getGaugesContracts(
   const registriesGauges = await Promise.all(
     registriesIds.map((registryId) =>
       multicall<string, [string], string[][] | string>({
-        chain: ctx.chain,
+        ctx,
         calls: poolsByRegistryId[registryId].map((pool) => ({
           target: registries[registryId] as string,
           params: [pool.pool],

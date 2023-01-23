@@ -44,7 +44,7 @@ export async function getLendingPoolContracts({
 
   const registeredTokensRes = await multicall({
     ctx,
-    calls: range(0, lmRewardsCount).map((_, i) => ({
+    calls: range(0, lmRewardsCount).map((i) => ({
       target: chefIncentives.address,
       params: [i],
     })),

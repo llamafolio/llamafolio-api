@@ -43,6 +43,7 @@ import olympusDao from '@adapters/olympus-dao'
 import pancakeswap from '@adapters/pancakeswap'
 import pangolin from '@adapters/pangolin'
 import radiant from '@adapters/radiant'
+import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import scream from '@adapters/scream'
 import shibaswap from '@adapters/shibaswap'
@@ -59,7 +60,7 @@ import synthetix from '@adapters/synthetix'
 import templedao from '@adapters/templedao'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
-import uniswap from '@adapters/uniswap'
+import uniswapV2 from '@adapters/uniswap-v2'
 import uwuLend from '@adapters/uwu-lend'
 import valas from '@adapters/valas'
 import vector from '@adapters/vector'
@@ -116,6 +117,7 @@ export const adapters: Adapter[] = [
   pancakeswap,
   pangolin,
   radiant,
+  ribbonFinance,
   rocketPool,
   scream,
   shibaswap,
@@ -132,7 +134,7 @@ export const adapters: Adapter[] = [
   templedao,
   traderjoe,
   truefi,
-  uniswap,
+  uniswapV2,
   uwuLend,
   valas,
   vector,

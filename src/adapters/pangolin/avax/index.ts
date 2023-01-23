@@ -7,7 +7,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
 
-  const pairs = await getPairsContracts({
+  const { pairs, allPairsLength } = await getPairsContracts({
     ctx,
     factoryAddress: '0xefa94de7a4656d787667c749f7e1223d71e9fd88',
     offset,
@@ -18,7 +18,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
     contracts: { pairs },
     revalidate: 60 * 60,
     revalidateProps: {
-      pairOffset: offset + limit,
+      pairOffset: Math.min(offset + limit, allPairsLength),
     },
   }
 }

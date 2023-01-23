@@ -5,10 +5,15 @@
   "scripts": {
     "adapter": "ts-node -T scripts/run-adapter.ts",
     "build": "ts-node -T scripts/build-adapters.ts",
+    "dev": "sls offline",
+    "deploy:dev": "npm run postinstall && npm run build && NODE_ENV=dev sls deploy --stage dev",
+    "deploy:prod": "npm run postinstall && npm run build && NODE_ENV=prod sls deploy --stage prod",
     "create-adapter": "ts-node -T scripts/create-adapter.ts",
+    "delete-adapter": "ts-node -T scripts/delete-adapter.ts",
     "adapter-balances": "ts-node -T scripts/run-adapter-balances.ts",
     "update-balances": "ts-node -T scripts/update-balances.ts",
     "revalidate-contracts": "ts-node -T scripts/revalidate-contracts.ts",
+    "revalidate-contracts-rec": "ts-node -T scripts/revalidate-contracts-rec.ts",
     "find-user": "ts-node -T scripts/find-user.ts",
     "insert-tokens": "ts-node -T scripts/insert-tokens.ts",
     "update-tokens": "ts-node -T scripts/update-tokens.ts",
@@ -32,6 +37,7 @@
     "ethers": "^5.6.9",
     "graphql-request": "^5.0.0",
     "ioredis": "^5.2.4",
+    "lodash": "^4.17.21",
     "node-fetch": "^2.6.2",
     "pg": "^8.7.3",
     "pg-format": "^1.0.4"

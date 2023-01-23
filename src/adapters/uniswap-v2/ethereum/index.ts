@@ -1,7 +1,10 @@
-import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
+import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 import { gql, request } from 'graphql-request'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function getPoolsHighestVolume() {
   const contracts: Contract[] = []
 
@@ -58,19 +61,32 @@ async function getPoolsHighestVolume() {
   return contracts
 }
 
-export const getContracts = async () => {
-  const pairs = await getPoolsHighestVolume()
+export const getContracts = async (ctx: BaseContext, props: any) => {
+  const offset = props.pairOffset || 0
+  const limit = 100
+
+  const { pairs, allPairsLength } = await getPairsContracts({
+    ctx,
+    factoryAddress: '0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f',
+    offset,
+    limit,
+  })
 
   return {
     contracts: { pairs },
     revalidate: 60 * 60,
+    revalidateProps: {
+      pairOffset: Math.min(offset + limit, allPairsLength),
+    },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, { pairs }) => {
-  const lpBalances = await getPairsBalances(ctx, pairs || [])
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    pairs: getPairsBalances,
+  })
 
   return {
-    balances: lpBalances.map((balance) => ({ ...balance, category: 'farm' })),
+    balances: balances.map((balance) => ({ ...balance, category: 'farm' })),
   }
 }

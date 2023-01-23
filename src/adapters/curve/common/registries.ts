@@ -35,7 +35,7 @@ export const getRegistries = async (ctx: BaseContext, registries: Registry[]) =>
   const res: Partial<Record<Registry, string>> = {}
 
   const registriesAddressRes = await multicall<string, [number], string>({
-    chain: ctx.chain,
+    ctx,
     calls: registries.map((id) => ({
       params: [Registries[id]],
       // Immutable address provider (same address on all chains)

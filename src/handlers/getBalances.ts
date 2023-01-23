@@ -209,8 +209,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       protocols,
     }
 
-    // max-age 15sec as it's the average time to refresh balances
-    return success(balancesResponse, { maxAge: 15 })
+    return success(balancesResponse, { maxAge: status === 'success' ? 15 : 5 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
