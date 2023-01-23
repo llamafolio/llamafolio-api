@@ -1,3 +1,4 @@
+import { AWS_ENDPOINT } from '@utility/serverless'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 import aws from 'aws-sdk'
 
@@ -6,7 +7,7 @@ type InvocationType = 'RequestResponse' | 'Event' | 'DryRun'
 export function invokeLambda(functioName: string, event: any, invocationType?: InvocationType) {
   return new Promise((resolve) => {
     new aws.Lambda({
-      endpoint: process.env.IS_OFFLINE ? 'http://localhost:3002' : undefined,
+      endpoint: AWS_ENDPOINT,
     }).invoke(
       {
         FunctionName: functioName,

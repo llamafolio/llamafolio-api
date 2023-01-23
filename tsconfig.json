@@ -28,7 +28,8 @@
       "@db/*": ["./src/db/*"],
       "@env": ["./env"],
       "@handlers/*": ["./src/handlers/*"],
-      "@lib/*": ["./src/lib/*"]
+      "@lib/*": ["./src/lib/*"],
+      "@utility/*": ["./src/utility/*"]
     }
   },
   "include": ["src"],

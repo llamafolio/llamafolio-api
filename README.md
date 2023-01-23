@@ -16,9 +16,19 @@ npm run adapter curve ethereum 0x0000000000000000000000000000000000000000
 
 ## API
 
-### Local development
+## Local development
 
-You can run the API locally using:
+### Setting up the environment
+Llamafolio uses AWS with [serverless](https://www.serverless.com/framework).
+1. Create .env file in the root directory.
+2. Put any value to `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY`
+```
+AWS_ACCESS_KEY_ID="RANDOM_STRING"
+AWS_SECRET_ACCESS_KEY="RANDOM_STRING"
+```
+3. TODO: Describe other steps
+
+Then you can run the API locally using:
 
 ```bash
 npm run dev

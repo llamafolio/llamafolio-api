@@ -120,17 +120,29 @@ export function insertBalances(
 }
 
 export async function getUpdateBalancesStatus(address: string) {
-  const PK = `UBS#${address.toLowerCase()}`
-  const res = await dynamodb.get({ PK, SK: PK })
-  return res.Item
+  if (dynamodb) {
+    const PK = `UBS#${address.toLowerCase()}`
+    const res = await dynamodb.get({ PK, SK: PK })
+    return res.Item
+  } else {
+    return console.log('getUpdateBalancesStatus: DynamoDB is disabled in serverless offline.')
+  }
 }
 
 export function putUpdateBalancesStatus(address: string, timestamp: number) {
-  const PK = `UBS#${address.toLowerCase()}`
-  return dynamodb.put({ PK, SK: PK, timestamp })
+  if (dynamodb) {
+    const PK = `UBS#${address.toLowerCase()}`
+    return dynamodb.put({ PK, SK: PK, timestamp })
+  } else {
+    return console.log('putUpdateBalancesStatus: DynamoDB is disabled in serverless offline.')
+  }
 }
 
 export function deleteUpdateBalancesStatus(address: string) {
-  const PK = `UBS#${address.toLowerCase()}`
-  return dynamodb.delete({ PK, SK: PK })
+  if (dynamodb) {
+    const PK = `UBS#${address.toLowerCase()}`
+    return dynamodb.delete({ PK, SK: PK })
+  } else {
+    return console.log('deleteUpdateBalancesStatus: DynamoDB is disabled in serverless offline.')
+  }
 }
