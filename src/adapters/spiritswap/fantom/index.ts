@@ -1,6 +1,6 @@
-import { getMasterChefPoolsBalances } from '@adapters/sushiswap/ethereum/masterchef'
 import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
 import { Token } from '@lib/token'
 import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
