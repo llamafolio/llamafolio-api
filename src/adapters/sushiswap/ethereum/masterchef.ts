@@ -70,9 +70,20 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  lpToken: {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'lpToken',
+    outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
-const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterchef: Contract) => {
+const getMasterChefPoolsInfosV1 = async (
+  ctx: BaseContext,
+  pairs: Pair[],
+  masterchef: Contract,
+): Promise<Contract[]> => {
   const pools: Contract[] = []
 
   const poolLengthRes = await call({ ctx, target: masterchef.address, params: [], abi: abi.poolLength })
@@ -121,19 +132,83 @@ const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterch
   return masterchefPools
 }
 
+const getMasterChefPoolsInfosV2 = async (
+  ctx: BaseContext,
+  pairs: Pair[],
+  masterchef: Contract,
+): Promise<Contract[]> => {
+  const pools: Contract[] = []
+
+  const poolLengthRes = await call({ ctx, target: masterchef.address, params: [], abi: abi.poolLength })
+
+  const poolLength = parseInt(poolLengthRes.output)
+
+  const calls: Call[] = []
+  for (let idx = 0; idx < poolLength; idx++) {
+    calls.push({ target: masterchef.address, params: [idx] })
+  }
+
+  const poolInfosRes = await multicall({ ctx, calls, abi: abi.lpToken })
+
+  for (let poolIdx = 0; poolIdx < poolInfosRes.length; poolIdx++) {
+    const poolInfoRes = poolInfosRes[poolIdx]
+    if (!isSuccess(poolInfoRes)) {
+      continue
+    }
+
+    pools.push({
+      chain: ctx.chain,
+      address: poolInfoRes.output,
+      lpToken: poolInfoRes.output,
+      pid: poolInfoRes.input.params[0],
+    })
+  }
+
+  const pairByAddress: { [key: string]: Contract } = {}
+  for (const pair of pairs) {
+    pairByAddress[pair.address.toLowerCase()] = pair
+  }
+
+  const masterchefPools = pools
+    .map((pool) => {
+      const pair = pairByAddress[pool.lpToken.toLowerCase()]
+
+      if (!pair) {
+        return null
+      }
+
+      const contract: Contract = { ...pair, pid: pool.pid, category: 'farm' }
+      return contract
+    })
+    .filter(isNotNullish)
+
+  return masterchefPools
+}
+
 export async function getMasterChefPoolsBalances(
   ctx: BalancesContext,
   pairs: Pair[],
   masterchef: Contract,
   rewardToken: Token,
+  rewardTokenName?: string,
 ) {
   const poolsBalances: Balance[] = []
-  const masterchefPools = await getMasterChefPoolsInfos(ctx, pairs, masterchef)
+  const masterchefPools: Contract[] = []
+
+  const [masterchefPoolsv1, masterchefPoolsv2] = await Promise.all([
+    getMasterChefPoolsInfosV1(ctx, pairs, masterchef),
+    getMasterChefPoolsInfosV2(ctx, pairs, masterchef),
+  ])
+
+  masterchefPools.push(...masterchefPoolsv1, ...masterchefPoolsv2)
 
   const pendingReward = JSON.parse(
     JSON.stringify(abi.pendingReward).replace(
       'pendingSushi',
-      `pending${rewardToken.symbol.charAt(0) + rewardToken.symbol.slice(1).toLowerCase()}`,
+
+      rewardTokenName === undefined
+        ? `pending${rewardToken.symbol.charAt(0) + rewardToken.symbol.slice(1).toLowerCase()}`
+        : `pending${rewardTokenName}`,
     ),
   )
 

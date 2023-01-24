@@ -40,7 +40,7 @@ const spirit: Token = {
   decimals: 18,
 }
 
-export async function getLockerBalances(ctx: BalancesContext, locker: Contract) {
+export async function getLockerBalances(ctx: BalancesContext, locker: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [balanceOfRes, lockendRes] = await Promise.all([
