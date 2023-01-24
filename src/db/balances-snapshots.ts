@@ -128,11 +128,23 @@ export async function selectLastBalancesSnapshotsTimestampByFromAddress(client: 
   return balancesSnapshotsRes.rows.length === 1 ? new Date(balancesSnapshotsRes.rows[0].timestamp) : null
 }
 
-export function insertBalancesSnapshots(client: PoolClient, balancesSnapshot: BalancesSnapshot[]) {
+export function insertBalancesSnapshots(client: PoolClient, balancesSnapshot: BalancesSnapshot[], address?: string) {
   const values = toStorage(balancesSnapshot).map(toRow)
 
-  if (values.length === 0) {
-    return
+  if (values.length === 0 && address) {
+    console.log(
+      format(
+        'INSERT INTO balances_snapshots (from_address, adapter_id, chain, balance_usd, timestamp, metadata) VALUES (%L) ON CONFLICT DO NOTHING;',
+        [strToBuf(address), null, null, 0, new Date(), {}],
+      ),
+    )
+    return client.query(
+      format(
+        'INSERT INTO balances_snapshots (from_address, adapter_id, chain, balance_usd, timestamp, metadata) VALUES (%L) ON CONFLICT DO NOTHING;',
+        [strToBuf(address), null, null, 0, new Date(), {}],
+      ),
+      [],
+    )
   }
 
   return Promise.all(

@@ -178,7 +178,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     await client.query('BEGIN')
 
     // Insert balances snapshots
-    await insertBalancesSnapshots(client, balancesSnapshots)
+    await insertBalancesSnapshots(client, balancesSnapshots, address)
 
     // Delete old balances
     await client.query(format('delete from balances where from_address = %L::bytea', strToBuf(address)), [])
