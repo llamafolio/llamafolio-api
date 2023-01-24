@@ -74,6 +74,7 @@ const abi = {
 
 const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterchef: Contract) => {
   const pools: Contract[] = []
+
   const poolLengthRes = await call({ ctx, target: masterchef.address, params: [], abi: abi.poolLength })
 
   const poolLength = parseInt(poolLengthRes.output)
