@@ -187,7 +187,7 @@ const getMasterChefLpToken = async (ctx: BaseContext, pairs: Pair[], masterchef:
 
 /**
  * @param rewardTokenName `string` used to replace pending rewards function on `abi`
- * @param lpTokenAbi `True` if using masterchef_v2 since it uses `lpToken` function instead of `poolsInfo`
+ * @param lpTokenAbi `True` if using `getMasterChefLpToken` since it uses `lpToken` function instead of `poolsInfo`
  */
 
 export async function getMasterChefPoolsBalances(
