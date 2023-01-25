@@ -79,6 +79,10 @@ const abi = {
   },
 }
 
+/**
+ * @function getMasterChefPoolsInfos used by `getMasterChefPoolsBalances` when `abi` does not includes `lpToken` function
+ */
+
 const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterchef: Contract): Promise<Contract[]> => {
   const pools: Contract[] = []
 
@@ -127,6 +131,10 @@ const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterch
 
   return masterchefPools
 }
+
+/**
+ * @function getMasterChefLpToken used by `getMasterChefPoolsBalances` when `abi` does includes `lpToken` function
+ */
 
 const getMasterChefLpToken = async (ctx: BaseContext, pairs: Pair[], masterchef: Contract): Promise<Contract[]> => {
   const pools: Contract[] = []
@@ -178,8 +186,8 @@ const getMasterChefLpToken = async (ctx: BaseContext, pairs: Pair[], masterchef:
 }
 
 /**
- * @param rewardTokenName `string` used to replace pending rewards function on abi
- * @param lpTokenAbi `True` if using masterchef_v2 since it uses LpToken `function` instead of `poolsInfo`
+ * @param rewardTokenName `string` used to replace pending rewards function on `abi`
+ * @param lpTokenAbi `True` if using masterchef_v2 since it uses `lpToken` function instead of `poolsInfo`
  */
 
 export async function getMasterChefPoolsBalances(
