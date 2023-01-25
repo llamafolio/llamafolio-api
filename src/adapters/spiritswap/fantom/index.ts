@@ -56,11 +56,18 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
-function getSpiritswapBalances(ctx: BalancesContext, pairs: Pair[], masterchef: Contract, rewardToken: Token) {
+function getSpiritswapBalances(
+  ctx: BalancesContext,
+  pairs: Pair[],
+  masterchef: Contract,
+  rewardToken: Token,
+  rewardTokenName?: string,
+  lpTokenAbi?: boolean,
+) {
   return Promise.all([
     getPairsBalances(ctx, pairs),
     getGaugesBalances(ctx, pairs, gaugeController),
-    getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken),
+    getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
   ])
 }
 

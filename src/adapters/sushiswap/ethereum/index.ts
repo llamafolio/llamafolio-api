@@ -59,8 +59,18 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
-function getSushiswapPairsBalances(ctx: BalancesContext, pairs: Pair[], masterchef: Contract, rewardToken: Token) {
-  return Promise.all([getPairsBalances(ctx, pairs), getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken)])
+function getSushiswapPairsBalances(
+  ctx: BalancesContext,
+  pairs: Pair[],
+  masterchef: Contract,
+  rewardToken: Token,
+  rewardTokenName?: string,
+  lpTokenAbi?: boolean,
+) {
+  return Promise.all([
+    getPairsBalances(ctx, pairs),
+    getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
+  ])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {

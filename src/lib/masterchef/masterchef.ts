@@ -79,11 +79,7 @@ const abi = {
   },
 }
 
-const getMasterChefPoolsInfosV1 = async (
-  ctx: BaseContext,
-  pairs: Pair[],
-  masterchef: Contract,
-): Promise<Contract[]> => {
+const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterchef: Contract): Promise<Contract[]> => {
   const pools: Contract[] = []
 
   const poolLengthRes = await call({ ctx, target: masterchef.address, params: [], abi: abi.poolLength })
@@ -132,11 +128,7 @@ const getMasterChefPoolsInfosV1 = async (
   return masterchefPools
 }
 
-const getMasterChefPoolsInfosV2 = async (
-  ctx: BaseContext,
-  pairs: Pair[],
-  masterchef: Contract,
-): Promise<Contract[]> => {
+const getMasterChefLpToken = async (ctx: BaseContext, pairs: Pair[], masterchef: Contract): Promise<Contract[]> => {
   const pools: Contract[] = []
 
   const poolLengthRes = await call({ ctx, target: masterchef.address, params: [], abi: abi.poolLength })
@@ -185,28 +177,33 @@ const getMasterChefPoolsInfosV2 = async (
   return masterchefPools
 }
 
+/**
+ * @param rewardTokenName `string` used to replace pending rewards function on abi
+ * @param lpTokenAbi `True` if using masterchef_v2 since it uses LpToken `function` instead of `poolsInfo`
+ */
+
 export async function getMasterChefPoolsBalances(
   ctx: BalancesContext,
   pairs: Pair[],
   masterchef: Contract,
   rewardToken: Token,
   rewardTokenName?: string,
+  lpTokenAbi?: boolean,
 ) {
   const poolsBalances: Balance[] = []
   const masterchefPools: Contract[] = []
 
-  const [masterchefPoolsv1, masterchefPoolsv2] = await Promise.all([
-    getMasterChefPoolsInfosV1(ctx, pairs, masterchef),
-    getMasterChefPoolsInfosV2(ctx, pairs, masterchef),
-  ])
-
-  masterchefPools.push(...masterchefPoolsv1, ...masterchefPoolsv2)
+  if (!lpTokenAbi) {
+    masterchefPools.push(...(await getMasterChefPoolsInfos(ctx, pairs, masterchef)))
+  } else {
+    masterchefPools.push(...(await getMasterChefLpToken(ctx, pairs, masterchef)))
+  }
 
   const pendingReward = JSON.parse(
     JSON.stringify(abi.pendingReward).replace(
       'pendingSushi',
 
-      rewardTokenName === undefined
+      !rewardTokenName
         ? `pending${rewardToken.symbol.charAt(0) + rewardToken.symbol.slice(1).toLowerCase()}`
         : `pending${rewardTokenName}`,
     ),

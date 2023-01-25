@@ -51,16 +51,25 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
-function getSpookyswapPairsBalances(ctx: BalancesContext, pairs: Pair[], masterchef: Contract, rewardToken: Token) {
+function getSpookyswapPairsBalances(
+  ctx: BalancesContext,
+  pairs: Pair[],
+  masterchef: Contract,
+  masterchef2: Contract,
+  rewardToken: Token,
+  rewardTokenName?: string,
+  lpTokenAbi?: boolean,
+) {
   return Promise.all([
     getPairsBalances(ctx, pairs),
-    getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, 'BOO'),
+    getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
+    getMasterChefPoolsBalances(ctx, pairs, masterchef2, rewardToken, rewardTokenName, lpTokenAbi),
   ])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getSpookyswapPairsBalances(...args, masterChef, BOO),
+    pairs: (...args) => getSpookyswapPairsBalances(...args, masterChef, masterChef2, BOO, 'BOO', true),
     xBOO: getStakexBOOBalances,
   })
 
