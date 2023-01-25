@@ -10,8 +10,8 @@ interface Metadata {
 
 export interface BalancesSnapshot extends Metadata {
   fromAddress: string
-  adapterId: string
-  chain: Chain
+  adapterId: string | null
+  chain: Chain | null
   balanceUSD: number
   timestamp: Date
   healthFactor?: number
@@ -19,8 +19,8 @@ export interface BalancesSnapshot extends Metadata {
 
 export interface BalancesSnapshotStorage {
   from_address: Buffer
-  adapter_id: string
-  chain: string
+  adapter_id: string | null
+  chain: string | null
   balance_usd: string
   timestamp: string
   metadata: Metadata
@@ -28,8 +28,8 @@ export interface BalancesSnapshotStorage {
 
 export interface BalancesSnapshotStorable {
   from_address: Buffer
-  adapter_id: string
-  chain: Chain
+  adapter_id: string | null
+  chain: Chain | null
   balance_usd: number
   timestamp: Date
   metadata: Metadata
@@ -128,11 +128,12 @@ export async function selectLastBalancesSnapshotsTimestampByFromAddress(client: 
   return balancesSnapshotsRes.rows.length === 1 ? new Date(balancesSnapshotsRes.rows[0].timestamp) : null
 }
 
-export function insertBalancesSnapshots(client: PoolClient, balancesSnapshot: BalancesSnapshot[]) {
+export function insertBalancesSnapshots(client: PoolClient, balancesSnapshot: BalancesSnapshot[], address: string) {
   const values = toStorage(balancesSnapshot).map(toRow)
 
   if (values.length === 0) {
-    return
+    // insert empty snapshot with 0 balance
+    values.push([strToBuf(address), null, null, 0, new Date(), {}])
   }
 
   return Promise.all(

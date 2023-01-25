@@ -182,7 +182,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       })
     }
 
-    const updatedAt = pricedBalances[0]?.timestamp ? new Date(pricedBalances[0]?.timestamp).getTime() : undefined
+    const updatedAt = lastBalancesSnapshots[0]?.timestamp
+      ? new Date(lastBalancesSnapshots[0]?.timestamp).getTime()
+      : undefined
 
     let status: TStatus = 'success'
     // Trigger update if data is "stale" (or "empty" == never been updated).
