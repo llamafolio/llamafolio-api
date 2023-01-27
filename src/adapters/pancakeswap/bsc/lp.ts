@@ -6,7 +6,7 @@ import { isNotNullish, isSuccess } from '@lib/type'
 import { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
-import { groupBy, range } from 'lodash'
+import { range } from 'lodash'
 
 const pancakeStableSwapInfos: Contract = {
   chain: 'bsc',
@@ -235,7 +235,7 @@ const getMasterChefLpToken = async (
     stablePairByAddress[masterchefStablePool.lpToken.toLowerCase()] = masterchefStablePool
   }
 
-  const masterchefPools = pools
+  const masterchefPools: Contract[] = pools
     .map((pool) => {
       const pair = pairByAddress[pool.lpToken.toLowerCase()]
       const stablePair = stablePairByAddress[pool.lpToken.toLowerCase()]
@@ -245,23 +245,18 @@ const getMasterChefLpToken = async (
       }
 
       if (pair) {
-        const contract: Contract = { ...pair, pid: pool.pid, category: 'farm', stablePool: false }
+        const contract: Contract = { ...pair, pid: pool.pid, category: 'farm' }
         return contract
       }
 
       if (stablePair) {
-        const contract: Contract = { ...stablePair, pid: pool.pid, category: 'farm', stablePool: true }
+        const contract: Contract = { ...stablePair, pid: pool.pid, category: 'farm' }
         return contract
       }
     })
     .filter(isNotNullish)
 
   return masterchefPools
-}
-
-interface MasterchefPoolsBalancesParams extends Balance {
-  stablePool: boolean
-  lpToken: string
 }
 
 const getPancakeUnderlyingsMasterChefPoolsBalances = async (
@@ -316,6 +311,10 @@ const getPancakeUnderlyingsMasterChefPoolsBalances = async (
   return underlyiedPoolsBalances
 }
 
+interface MasterchefPoolsBalancesParams extends Balance {
+  lpToken: string
+}
+
 export async function getPancakeMasterChefPoolsBalances(
   ctx: BalancesContext,
   pairs: Pair[],
@@ -326,6 +325,8 @@ export async function getPancakeMasterChefPoolsBalances(
 ) {
   const poolsBalances: MasterchefPoolsBalancesParams[] = []
   const masterchefPoolsBalances: Balance[] = []
+  const stableMasterchefPools: Balance[] = []
+  const variableMasterchefPools: Balance[] = []
   const masterchefPools: Contract[] = await getMasterChefLpToken(ctx, pairs, masterchef, factory)
 
   const pendingReward = JSON.parse(
@@ -361,18 +362,23 @@ export async function getPancakeMasterChefPoolsBalances(
       ...masterchefPool,
       lpToken: masterchefPool.lpToken,
       underlyings: masterchefPool.underlyings as Contract[],
-      stablePool: masterchefPool.stablePool,
       category: 'farm',
       amount: BigNumber.from(poolBalanceRes.output.amount),
       rewards: [{ ...rewardToken, amount: BigNumber.from(pendingRewardRes.output) }],
     })
   }
 
-  const splitPoolsBalances = groupBy(poolsBalances, 'stablePool')
+  for (const poolsBalance of poolsBalances) {
+    if (poolsBalance.symbol?.includes('Stable')) {
+      stableMasterchefPools.push(poolsBalance)
+    } else {
+      variableMasterchefPools.push(poolsBalance)
+    }
+  }
 
   const [underlyingsPoolsBalances, underlyingsStablePoolsBalances] = await Promise.all([
-    getUnderlyingBalances(ctx, splitPoolsBalances.false || []),
-    getPancakeUnderlyingsMasterChefPoolsBalances(ctx, splitPoolsBalances.true, pancakeStableSwapInfos || []),
+    getUnderlyingBalances(ctx, variableMasterchefPools || []),
+    getPancakeUnderlyingsMasterChefPoolsBalances(ctx, stableMasterchefPools, pancakeStableSwapInfos || []),
   ])
 
   masterchefPoolsBalances.push(...underlyingsPoolsBalances, ...underlyingsStablePoolsBalances)
