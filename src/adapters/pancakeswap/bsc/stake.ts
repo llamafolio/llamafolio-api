@@ -1,6 +1,7 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { BN_ZERO } from '@lib/math'
+import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers/lib/ethers'
 
@@ -62,23 +63,31 @@ const cake: Token = {
   decimals: 18,
 }
 
-export async function getStakerBalances(ctx: BalancesContext, staker: Contract) {
+export async function getStakersBalances(ctx: BalancesContext, stakers: Contract[]) {
   const balances: Balance[] = []
 
+  const calls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
+
   const [userBalanceOfRes, pendingRewardsRes] = await Promise.all([
-    call({ ctx, target: staker.address, params: ctx.address, abi: abi.userInfo }),
-    call({ ctx, target: staker.address, params: ctx.address, abi: abi.pendingReward }),
+    multicall({ ctx, calls, abi: abi.userInfo }),
+    multicall({ ctx, calls, abi: abi.pendingReward }),
   ])
 
-  balances.push({
-    ...staker,
-    decimals: cake.decimals,
-    symbol: cake.symbol,
-    underlyings: [cake],
-    amount: BigNumber.from(userBalanceOfRes.output.amount),
-    rewards: [{ ...(staker.rewards?.[0] as Contract), amount: BigNumber.from(pendingRewardsRes.output) }],
-    category: 'stake',
-  })
+  for (let stakerIdx = 0; stakerIdx < stakers.length; stakerIdx++) {
+    const staker = stakers[stakerIdx]
+    const amount = BigNumber.from(userBalanceOfRes[stakerIdx].output?.amount || '0')
+    const rewardsAmount = BigNumber.from(pendingRewardsRes[stakerIdx].output || '0')
+
+    balances.push({
+      ...staker,
+      decimals: cake.decimals,
+      symbol: cake.symbol,
+      underlyings: [cake],
+      amount,
+      rewards: [{ ...(staker.rewards?.[0] as Contract), amount: rewardsAmount }],
+      category: 'stake',
+    })
+  }
 
   return balances
 }
