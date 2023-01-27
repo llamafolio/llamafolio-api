@@ -5,7 +5,7 @@ import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 import { getPancakeMasterChefPoolsBalances } from './lp'
-import { getStakerBalances } from './stake'
+import { getStakerBalances, getStakerCake } from './stake'
 
 const cake: Token = {
   chain: 'bsc',
@@ -54,6 +54,13 @@ const mgp: Token = {
   address: '0xd06716e1ff2e492cc5034c2e81805562dd3b45fa',
   decimals: 18,
   symbol: 'MGP',
+}
+
+const stakerCake: Contract = {
+  chain: 'bsc',
+  address: '0x45c54210128a065de780C4B0Df3d16664f7f859e',
+  underlyings: [cake],
+  rewards: [cake],
 }
 
 const stakerCakeToZBC: Contract = {
@@ -124,6 +131,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
 
   return {
     contracts: {
+      stakerCake,
       stakerCakeToZBC,
       stakerCakeToArena,
       stakerCakeToPrimal,
@@ -162,6 +170,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: 
     stakerCakeToSquad: getStakerBalances,
     stakerCakeToXcad: getStakerBalances,
     stakerCakeToMgp: getStakerBalances,
+    stakerCake: getStakerCake,
   })
 
   return {

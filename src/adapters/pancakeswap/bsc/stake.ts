@@ -1,5 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { BN_ZERO } from '@lib/math'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers/lib/ethers'
 
@@ -35,6 +36,23 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  userInfos: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'userInfo',
+    outputs: [
+      { internalType: 'uint256', name: 'shares', type: 'uint256' },
+      { internalType: 'uint256', name: 'lastDepositedTime', type: 'uint256' },
+      { internalType: 'uint256', name: 'cakeAtLastUserAction', type: 'uint256' },
+      { internalType: 'uint256', name: 'lastUserActionTime', type: 'uint256' },
+      { internalType: 'uint256', name: 'lockStartTime', type: 'uint256' },
+      { internalType: 'uint256', name: 'lockEndTime', type: 'uint256' },
+      { internalType: 'uint256', name: 'userBoostedShare', type: 'uint256' },
+      { internalType: 'bool', name: 'locked', type: 'bool' },
+      { internalType: 'uint256', name: 'lockedAmount', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
 const cake: Token = {
@@ -63,4 +81,24 @@ export async function getStakerBalances(ctx: BalancesContext, staker: Contract) 
   })
 
   return balances
+}
+
+export async function getStakerCake(ctx: BalancesContext, staker: Contract) {
+  const balance: Balance[] = []
+
+  const balanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.userInfos })
+  const balanceOf = BigNumber.from(balanceOfRes.output.lockedAmount)
+
+  balance.push({
+    ...staker,
+    amount: balanceOf,
+    decimals: cake.decimals,
+    symbol: cake.symbol,
+    underlyings: [cake],
+    // Rewards set as BN_ZERO until we find the way to get auto-compound formula
+    rewards: [{ ...cake, amount: BN_ZERO }],
+    category: 'stake',
+  })
+
+  return balance
 }
