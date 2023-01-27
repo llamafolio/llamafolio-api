@@ -5,34 +5,18 @@ import { Token } from '@lib/token'
 import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
-import { getStakeBalances, getUniqueUnderlyingsMasterchefBalances } from './balance'
+const miniChef: Contract = {
+  name: 'miniChef',
+  displayName: 'MiniChef',
+  chain: 'fantom',
+  address: '0xf731202A3cf7EfA9368C2d7bD613926f7A144dB5',
+}
 
-const BSW: Token = {
-  chain: 'bsc',
-  address: '0x965f527d9159dce6288a2219db51fc6eef120dd1',
+const sushi: Token = {
+  chain: 'fantom',
+  address: '0xae75A438b2E0cB8Bb01Ec1E1e376De11D44477CC',
+  symbol: 'SUSHI',
   decimals: 18,
-  symbol: 'BSW',
-}
-
-const bswStaker: Contract = {
-  name: 'AutoBSW',
-  chain: 'bsc',
-  address: '0x97A16ff6Fd63A46bf973671762a39f3780Cda73D',
-  underlyings: [BSW],
-}
-
-const bswStaker2: Contract = {
-  name: 'Holder Pool AutoBSW',
-  chain: 'bsc',
-  address: '0xa4b20183039b2F9881621C3A03732fBF0bfdff10',
-  underlyings: [BSW],
-}
-
-const masterChef: Contract = {
-  name: 'masterChef',
-  displayName: 'MasterChef',
-  chain: 'bsc',
-  address: '0xDbc1A13490deeF9c3C12b44FE77b503c1B061739',
 }
 
 export const getContracts = async (ctx: BaseContext, props: any) => {
@@ -41,16 +25,15 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
 
   const { pairs, allPairsLength } = await getPairsContracts({
     ctx,
-    factoryAddress: '0x858E3312ed3A876947EA49d572A7C42DE08af7EE',
+    factoryAddress: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
     offset,
     limit,
   })
 
   return {
     contracts: {
+      miniChef,
       pairs,
-      masterChef,
-      stakers: [bswStaker, bswStaker2],
     },
     revalidate: 60 * 60,
     revalidateProps: {
@@ -59,7 +42,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
-function getBiswapPairsBalances(
+function getSushiswapPairsBalances(
   ctx: BalancesContext,
   pairs: Pair[],
   masterchef: Contract,
@@ -70,14 +53,12 @@ function getBiswapPairsBalances(
   return Promise.all([
     getPairsBalances(ctx, pairs),
     getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
-    getUniqueUnderlyingsMasterchefBalances(ctx, masterchef),
   ])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getBiswapPairsBalances(...args, masterChef, BSW, 'BSW'),
-    stakers: getStakeBalances,
+    pairs: (...args) => getSushiswapPairsBalances(...args, miniChef, sushi, undefined, true),
   })
 
   return {

@@ -1,5 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { BigNumber, utils } from 'ethers'
 
@@ -77,28 +78,34 @@ export async function getUniqueUnderlyingsMasterchefBalances(ctx: BalancesContex
   return balances
 }
 
-export async function getStakeBalances(ctx: BalancesContext, staker: Contract) {
+export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]) {
   const balances: Balance[] = []
 
+  const balanceOfCalls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
+  const pendingRewardsCalls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [] }))
+
   const [balanceOfRes, getMultiplierRewards] = await Promise.all([
-    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.userStakeInfo }),
-    call({ ctx, target: staker.address, params: [], abi: abi.getPricePerFullShare }),
+    multicall({ ctx, calls: balanceOfCalls, abi: abi.userStakeInfo }),
+    multicall({ ctx, calls: pendingRewardsCalls, abi: abi.getPricePerFullShare }),
   ])
 
-  const amount = BigNumber.from(balanceOfRes.output.shares)
-  const multiplier = getMultiplierRewards.output
+  for (let stakerIdx = 0; stakerIdx < stakers.length; stakerIdx++) {
+    const staker = stakers[stakerIdx]
+    const amount = BigNumber.from(balanceOfRes[stakerIdx].output?.shares || 0)
+    const multiplier = BigNumber.from(getMultiplierRewards[stakerIdx].output || 0)
 
-  const autoCompoundBalances = amount.mul(multiplier).div(utils.parseEther('1.0'))
+    const autoCompoundBalances = amount.mul(multiplier).div(utils.parseEther('1.0'))
 
-  balances.push({
-    chain: ctx.chain,
-    address: staker.address,
-    decimals: BSW.decimals,
-    symbol: BSW.symbol,
-    amount: autoCompoundBalances,
-    underlyings: [BSW],
-    category: 'stake',
-  })
+    balances.push({
+      chain: ctx.chain,
+      address: staker.address,
+      decimals: BSW.decimals,
+      symbol: BSW.symbol,
+      amount: autoCompoundBalances,
+      underlyings: [BSW],
+      category: 'stake',
+    })
+  }
 
   return balances
 }
