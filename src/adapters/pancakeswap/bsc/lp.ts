@@ -6,7 +6,7 @@ import { isNotNullish, isSuccess } from '@lib/type'
 import { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
-import { groupBy, range } from 'lodash'
+import { range } from 'lodash'
 
 const pancakeStableSwapInfos: Contract = {
   chain: 'bsc',
@@ -325,6 +325,8 @@ export async function getPancakeMasterChefPoolsBalances(
   rewardTokenName?: string,
 ) {
   const poolsBalances: MasterchefPoolsBalancesParams[] = []
+  const variablesPoolsBalances: MasterchefPoolsBalancesParams[] = []
+  const stablePoolsBalances: MasterchefPoolsBalancesParams[] = []
   const masterchefPoolsBalances: Balance[] = []
   const masterchefPools: Contract[] = await getMasterChefLpToken(ctx, pairs, masterchef, factory)
 
@@ -368,11 +370,17 @@ export async function getPancakeMasterChefPoolsBalances(
     })
   }
 
-  const splitPoolsBalances = groupBy(poolsBalances, 'stablePool')
+  for (const poolsBalance of poolsBalances) {
+    if (poolsBalance.stablePool) {
+      stablePoolsBalances.push(poolsBalance)
+    } else {
+      variablesPoolsBalances.push(poolsBalance)
+    }
+  }
 
   const [underlyingsPoolsBalances, underlyingsStablePoolsBalances] = await Promise.all([
-    getUnderlyingBalances(ctx, splitPoolsBalances.false),
-    getPancakeUnderlyingsMasterChefPoolsBalances(ctx, splitPoolsBalances.true, pancakeStableSwapInfos),
+    getUnderlyingBalances(ctx, variablesPoolsBalances || []),
+    getPancakeUnderlyingsMasterChefPoolsBalances(ctx, stablePoolsBalances || [], pancakeStableSwapInfos),
   ])
 
   masterchefPoolsBalances.push(...underlyingsPoolsBalances, ...underlyingsStablePoolsBalances)
