@@ -8,6 +8,7 @@ import arrakis from '@adapters/arrakis'
 import atlasUsv from '@adapters/atlas-usv'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
+import biswap from '@adapters/biswap'
 import compound from '@adapters/compound'
 import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
@@ -82,6 +83,7 @@ export const adapters: Adapter[] = [
   atlasUsv,
   benqiLending,
   benqiStakedAvax,
+  biswap,
   compound,
   compoundV3,
   concentrator,

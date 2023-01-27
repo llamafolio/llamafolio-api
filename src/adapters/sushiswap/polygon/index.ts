@@ -5,34 +5,18 @@ import { Token } from '@lib/token'
 import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
-import { getMeowshiYieldBalance, getXSushiStakeBalance } from '../common/balances'
-
-const masterChef: Contract = {
-  name: 'masterChef',
-  displayName: 'MasterChef',
-  chain: 'ethereum',
-  address: '0xc2edad668740f1aa35e4d8f227fb8e17dca888cd',
+const miniChef: Contract = {
+  name: 'miniChef',
+  displayName: 'MiniChef',
+  chain: 'polygon',
+  address: '0x0769fd68dfb93167989c6f7254cd0d766fb2841f',
 }
 
 const sushi: Token = {
-  chain: 'ethereum',
-  address: '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2',
+  chain: 'polygon',
+  address: '0x0b3F868E0BE5597D5DB7fEB59E1CADBb0fdDa50a',
   symbol: 'SUSHI',
   decimals: 18,
-}
-
-const xSushi: Contract = {
-  chain: 'ethereum',
-  address: '0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272',
-  decimals: 18,
-  symbol: 'xSUSHI',
-}
-
-const meowshi: Contract = {
-  chain: 'ethereum',
-  address: '0x650F44eD6F1FE0E1417cb4b3115d52494B4D9b6D',
-  decimals: 18,
-  symbol: 'MEOW',
 }
 
 export const getContracts = async (ctx: BaseContext, props: any) => {
@@ -41,16 +25,14 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
 
   const { pairs, allPairsLength } = await getPairsContracts({
     ctx,
-    factoryAddress: '0xc0aee478e3658e2610c5f7a4a2e1777ce9e4f2ac',
+    factoryAddress: '0xc35DADB65012eC5796536bD9864eD8773aBc74C4',
     offset,
     limit,
   })
 
   return {
     contracts: {
-      xSushi,
-      meowshi,
-      masterChef,
+      miniChef,
       pairs,
     },
     revalidate: 60 * 60,
@@ -76,9 +58,7 @@ function getSushiswapPairsBalances(
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getSushiswapPairsBalances(...args, masterChef, sushi),
-    xSushi: getXSushiStakeBalance,
-    meowshi: getMeowshiYieldBalance,
+    pairs: (...args) => getSushiswapPairsBalances(...args, miniChef, sushi, undefined, true),
   })
 
   return {
