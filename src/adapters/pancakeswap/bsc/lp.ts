@@ -371,8 +371,8 @@ export async function getPancakeMasterChefPoolsBalances(
   const splitPoolsBalances = groupBy(poolsBalances, 'stablePool')
 
   const [underlyingsPoolsBalances, underlyingsStablePoolsBalances] = await Promise.all([
-    getUnderlyingBalances(ctx, splitPoolsBalances.false),
-    getPancakeUnderlyingsMasterChefPoolsBalances(ctx, splitPoolsBalances.true, pancakeStableSwapInfos),
+    getUnderlyingBalances(ctx, splitPoolsBalances.false || []),
+    getPancakeUnderlyingsMasterChefPoolsBalances(ctx, splitPoolsBalances.true, pancakeStableSwapInfos || []),
   ])
 
   masterchefPoolsBalances.push(...underlyingsPoolsBalances, ...underlyingsStablePoolsBalances)
