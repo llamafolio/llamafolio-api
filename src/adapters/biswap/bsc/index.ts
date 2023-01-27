@@ -5,13 +5,27 @@ import { Token } from '@lib/token'
 import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
-import { getUniqueUnderlyingsMasterchefBalances } from './balance'
+import { getStakeBalances, getUniqueUnderlyingsMasterchefBalances } from './balance'
 
 const BSW: Token = {
   chain: 'bsc',
   address: '0x965f527d9159dce6288a2219db51fc6eef120dd1',
   decimals: 18,
   symbol: 'BSW',
+}
+
+const bswStaker: Contract = {
+  name: 'AutoBSW',
+  chain: 'bsc',
+  address: '0x97A16ff6Fd63A46bf973671762a39f3780Cda73D',
+  underlyings: [BSW],
+}
+
+const bswStaker2: Contract = {
+  name: 'Holder Pool AutoBSW',
+  chain: 'bsc',
+  address: '0xa4b20183039b2F9881621C3A03732fBF0bfdff10',
+  underlyings: [BSW],
 }
 
 const masterChef: Contract = {
@@ -36,6 +50,8 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
     contracts: {
       pairs,
       masterChef,
+      bswStaker,
+      bswStaker2,
     },
     revalidate: 60 * 60,
     revalidateProps: {
@@ -62,6 +78,8 @@ function getBiswapPairsBalances(
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: (...args) => getBiswapPairsBalances(...args, masterChef, BSW, 'BSW'),
+    bswStaker: getStakeBalances,
+    bswStaker2: getStakeBalances,
   })
 
   return {
