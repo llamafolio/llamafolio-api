@@ -35,7 +35,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const timestamp = lastBalancesSnapshots[0].timestamp
 
     const response: LatestSnapshotResponse = {
-      updatedAt: Math.floor(new Date(timestamp).getTime()),
+      updatedAt: Math.floor(new Date(timestamp).getTime() / 1000),
       balanceUSD: sumBalances(lastBalancesSnapshots),
     }
 
