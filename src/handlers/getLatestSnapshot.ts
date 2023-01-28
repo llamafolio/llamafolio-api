@@ -16,7 +16,7 @@ export interface SnapshotChainResponse {
 export interface LatestSnapshotResponse {
   balanceUSD: number
   chains: SnapshotChainResponse[]
-  updatedAt: TUnixTimestamp
+  updatedAt?: TUnixTimestamp
 }
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
@@ -36,8 +36,12 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const lastBalancesSnapshots = await selectLastBalancesSnapshotsByFromAddress(client, address)
 
     if (lastBalancesSnapshots.length === 0) {
+      const response: LatestSnapshotResponse = {
+        balanceUSD: 0,
+        chains: [],
+      }
       // balances updates minimum interval is 2 minutes
-      return success({}, { maxAge: 2 * 60 })
+      return success(response, { maxAge: 2 * 60 })
     }
 
     const timestamp = lastBalancesSnapshots[0].timestamp
