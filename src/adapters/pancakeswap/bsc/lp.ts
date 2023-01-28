@@ -1,4 +1,5 @@
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -6,7 +7,6 @@ import { isNotNullish, isSuccess } from '@lib/type'
 import { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
-import { range } from 'lodash'
 
 const pancakeStableSwapInfos: Contract = {
   chain: 'bsc',
