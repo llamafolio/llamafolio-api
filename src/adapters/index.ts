@@ -6,6 +6,7 @@ import apeswapAmm from '@adapters/apeswap-amm'
 import apeswapLending from '@adapters/apeswap-lending'
 import arrakis from '@adapters/arrakis'
 import atlasUsv from '@adapters/atlas-usv'
+import bancorV3 from '@adapters/bancor-v3'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
 import biswap from '@adapters/biswap'
@@ -81,6 +82,7 @@ export const adapters: Adapter[] = [
   apeswapLending,
   arrakis,
   atlasUsv,
+  bancorV3,
   benqiLending,
   benqiStakedAvax,
   biswap,
