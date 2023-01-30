@@ -61,6 +61,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   return {
     contracts: {
       markets,
+      boostedMasterchef,
       pairs,
       sJOE,
       veJOE,
