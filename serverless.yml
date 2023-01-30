@@ -142,6 +142,14 @@ functions:
           method: get
           path: /labels/{address}
 
+  searchLabels:
+    handler: src/handlers/searchLabels.handler
+    description: Get labels
+    events:
+      - httpApi:
+          method: get
+          path: /labels/search
+
   getLatestProtocols:
     handler: src/handlers/getLatestProtocols.handler
     description: Get latest protocols
