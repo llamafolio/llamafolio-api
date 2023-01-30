@@ -165,7 +165,7 @@ function getPancakeswapPairsBalances(
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getPancakeswapPairsBalances(...args, masterChef2, pancakeStableFactory, cake),
+    pairs: (...args) => getPancakeswapPairsBalances(...args, masterChef2, pancakeStableFactory, cake, 'Cake'),
     stakers: getStakersBalances,
     stakerCake: getStakerCake,
   })

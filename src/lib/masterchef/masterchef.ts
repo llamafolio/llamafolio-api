@@ -59,7 +59,7 @@ const abi = {
         type: 'address',
       },
     ],
-    name: 'pendingSushi',
+    name: 'pending',
     outputs: [
       {
         internalType: 'uint256',
@@ -209,11 +209,9 @@ export async function getMasterChefPoolsBalances(
 
   const pendingReward = JSON.parse(
     JSON.stringify(abi.pendingReward).replace(
-      'pendingSushi',
+      'pending',
 
-      !rewardTokenName
-        ? `pending${rewardToken.symbol.charAt(0) + rewardToken.symbol.slice(1).toLowerCase()}`
-        : `pending${rewardTokenName}`,
+      !rewardTokenName ? `pending` : `pending${rewardTokenName}`,
     ),
   )
 

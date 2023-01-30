@@ -1,20 +1,35 @@
-import { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getPairsContracts } from '@lib/uniswap/v2/factory'
+import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
+import { Token } from '@lib/token'
+import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
+import { getPairsBalances } from '@lib/uniswap/v2/pair'
+
+const MDX: Token = {
+  chain: 'bsc',
+  address: '0x9c65ab58d8d978db963e63f2bfb7121627e3a739',
+  symbol: 'MDX',
+  decimals: 18,
+}
+
+const masterChef: Contract = {
+  chain: 'bsc',
+  address: '0xc48fe252aa631017df253578b1405ea399728a50',
+}
 
 export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
-  const limit = 100
+  const limit = 1980
 
   const { pairs, allPairsLength } = await getPairsContracts({
     ctx,
-    factoryAddress: '0x152eE697f2E276fA89E96742e9bB9aB1F2E61bE3',
+    factoryAddress: '0x3CD1C46068dAEa5Ebb0d3f55F6915B10648062B8',
     offset,
     limit,
   })
 
   return {
-    contracts: { pairs },
+    contracts: { pairs, masterChef },
     revalidate: 60 * 60,
     revalidateProps: {
       pairOffset: Math.min(offset + limit, allPairsLength),
@@ -22,11 +37,24 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
+function getMdexPairsBalances(
+  ctx: BalancesContext,
+  pairs: Pair[],
+  masterchef: Contract,
+  rewardToken: Token,
+  rewardTokenName?: string,
+  lpTokenAbi?: boolean,
+) {
+  return Promise.all([
+    getPairsBalances(ctx, pairs),
+    getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
+  ])
+}
+
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  // Any method to check the contracts retrieved above (based on user interaction).
-  // This function will be run each time a user queries his balances.
-  // As static contracts info is filled in getContracts, this should ideally only fetch the current amount of each contract (+ underlyings and rewards)
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {})
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    pairs: (...args) => getMdexPairsBalances(...args, masterChef, MDX),
+  })
 
   return {
     balances,
