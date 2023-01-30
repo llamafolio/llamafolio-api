@@ -44,6 +44,7 @@ import nexusMutual from '@adapters/nexus-mutual'
 import olympusDao from '@adapters/olympus-dao'
 import pancakeswap from '@adapters/pancakeswap'
 import pangolin from '@adapters/pangolin'
+import quickswapDex from '@adapters/quickswap-dex'
 import radiant from '@adapters/radiant'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
@@ -120,6 +121,7 @@ export const adapters: Adapter[] = [
   olympusDao,
   pancakeswap,
   pangolin,
+  quickswapDex,
   radiant,
   ribbonFinance,
   rocketPool,
