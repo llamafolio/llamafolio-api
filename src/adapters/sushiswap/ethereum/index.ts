@@ -76,7 +76,7 @@ function getSushiswapPairsBalances(
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getSushiswapPairsBalances(...args, masterChef, sushi),
+    pairs: (...args) => getSushiswapPairsBalances(...args, masterChef, sushi, 'Sushi'),
     xSushi: getXSushiStakeBalance,
     meowshi: getMeowshiYieldBalance,
   })

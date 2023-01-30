@@ -73,7 +73,7 @@ function getSpiritswapBalances(
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getSpiritswapBalances(...args, masterChef, spirit),
+    pairs: (...args) => getSpiritswapBalances(...args, masterChef, spirit, 'Spirit'),
     locker: getLockerBalances,
   })
 

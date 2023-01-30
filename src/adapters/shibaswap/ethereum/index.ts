@@ -112,7 +112,7 @@ function getShibaswapPairsBalances(
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getShibaswapPairsBalances(...args, masterChef, bone),
+    pairs: (...args) => getShibaswapPairsBalances(...args, masterChef, bone, 'Bone'),
     buryBoneStaker: getStakerBalances,
     buryLeashStaker: getStakerBalances,
     shibaStaker: getStakerBalances,
