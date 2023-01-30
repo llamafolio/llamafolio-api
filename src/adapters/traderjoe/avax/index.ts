@@ -1,11 +1,21 @@
-import { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { Contract } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
-import { getPairsContracts } from '@lib/uniswap/v2/factory'
+import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
+import { Token } from '@lib/token'
+import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 import { getStakeBalance } from './balances'
+
+const JOE: Token = {
+  chain: 'avax',
+  address: '0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd',
+  symbol: 'JOE',
+  decimals: 18,
+  coingeckoId: 'joe',
+}
 
 const sJOE: Contract = {
   name: 'sJOE staking',
@@ -28,6 +38,11 @@ const rJOE: Contract = {
   types: 'stake',
 }
 
+const boostedMasterchef: Contract = {
+  chain: 'avax',
+  address: '0x4483f0b6e2F5486D06958C20f8C39A7aBe87bf8F',
+}
+
 export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
@@ -46,6 +61,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   return {
     contracts: {
       markets,
+      boostedMasterchef,
       pairs,
       sJOE,
       veJOE,
@@ -58,11 +74,25 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
+function getTraderjoePairsBalances(
+  ctx: BalancesContext,
+  pairs: Pair[],
+  masterchef: Contract,
+  rewardToken: Token,
+  rewardTokenName?: string,
+  lpTokenAbi?: boolean,
+) {
+  return Promise.all([
+    getPairsBalances(ctx, pairs),
+    getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
+  ])
+}
+
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, stakeBalances] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
       markets: getMarketsBalances,
-      pairs: getPairsBalances,
+      pairs: (...args) => getTraderjoePairsBalances(...args, boostedMasterchef, JOE, 'Tokens', false),
     }),
     getStakeBalance(ctx),
   ])
