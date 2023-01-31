@@ -5,11 +5,21 @@ import { Token } from '@lib/token'
 import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
+import { getPangolinStakeBalances } from './balance'
+
 const pangolin: Token = {
   chain: 'avax',
   address: '0x60781c2586d68229fde47564546784ab3faca982',
   decimals: 18,
   symbol: 'PNG',
+}
+
+const staker: Contract = {
+  name: 'PNG staking',
+  chain: 'avax',
+  address: '0x88afdaE1a9F58Da3E68584421937E5F564A0135b',
+  underlyings: [pangolin],
+  rewards: [pangolin],
 }
 
 const miniChef: Contract = {
@@ -29,7 +39,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   })
 
   return {
-    contracts: { miniChef, pairs },
+    contracts: { staker, miniChef, pairs },
     revalidate: 60 * 60,
     revalidateProps: {
       pairOffset: Math.min(offset + limit, allPairsLength),
@@ -54,6 +64,7 @@ function getPangolinPairsBalances(
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: (...args) => getPangolinPairsBalances(...args, miniChef, pangolin, 'Reward', true),
+    staker: getPangolinStakeBalances,
   })
 
   return {
