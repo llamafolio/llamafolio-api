@@ -1,12 +1,10 @@
-
-import { Adapter } from '@lib/adapter';
+import { Adapter } from '@lib/adapter'
 
 import * as bsc from './bsc'
 
 const adapter: Adapter = {
   id: 'leonicornswap',
-  bsc
-};
+  bsc,
+}
 
-export default adapter;
-
+export default adapter
