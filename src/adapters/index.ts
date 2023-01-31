@@ -29,6 +29,7 @@ import hundredFinance from '@adapters/hundred-finance'
 import inverseFinance from '@adapters/inverse-finance'
 import ironBank from '@adapters/iron-bank'
 import klimaDao from '@adapters/klima-dao'
+import leonicornswap from '@adapters/leonicornswap'
 import lido from '@adapters/lido'
 import lifeDao from '@adapters/life-dao'
 import liquity from '@adapters/liquity'
@@ -107,6 +108,7 @@ export const adapters: Adapter[] = [
   inverseFinance,
   ironBank,
   klimaDao,
+  leonicornswap,
   lido,
   lifeDao,
   liquity,
