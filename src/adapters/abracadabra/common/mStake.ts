@@ -86,7 +86,7 @@ export async function getMStakeBalance(ctx: BalancesContext, contract: Contract)
     }
 
     if (reward) {
-      balance.rewards = [{ ...reward, amount: pendingRewards }]
+      balance.rewards = [{ ...(reward as Contract), amount: pendingRewards }]
     }
 
     balances.push(balance)
