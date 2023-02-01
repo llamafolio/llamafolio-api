@@ -44,6 +44,7 @@ import morphoCompound from '@adapters/morpho-compound'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
 import olympusDao from '@adapters/olympus-dao'
+import opynSqueeth from '@adapters/opyn-squeeth'
 import pancakeswap from '@adapters/pancakeswap'
 import pangolin from '@adapters/pangolin'
 import quickswapDex from '@adapters/quickswap-dex'
@@ -123,6 +124,7 @@ export const adapters: Adapter[] = [
   nemesisDao,
   nexusMutual,
   olympusDao,
+  opynSqueeth,
   pancakeswap,
   pangolin,
   quickswapDex,
