@@ -5,7 +5,7 @@ import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 const SPELL: Token = {
-  chain: 'avax',
+  chain: 'ethereum',
   address: '0x090185f2135308BaD17527004364eBcC2D37e5F6',
   decimals: 18,
   symbol: 'SPELL',
