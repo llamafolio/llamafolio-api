@@ -1,4 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
@@ -39,6 +40,16 @@ const abi = {
     inputs: [],
     name: 'totalSupply',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  locks: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'locks',
+    outputs: [
+      { internalType: 'int128', name: 'amount', type: 'int128' },
+      { internalType: 'uint256', name: 'end', type: 'uint256' },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
@@ -115,4 +126,18 @@ export async function getPoolsBalances(
   }
 
   return balances
+}
+
+export async function getLockerBalance(ctx: BalancesContext, locker: Contract): Promise<Balance> {
+  const underlyings = locker.underlyings?.[0]
+  const lockerBalancesOfRes = await call({ ctx, target: locker.address, params: [ctx.address], abi: abi.locks })
+
+  return {
+    ...locker,
+    amount: BigNumber.from(lockerBalancesOfRes.output.amount),
+    underlyings: [underlyings as Contract],
+    lock: { end: lockerBalancesOfRes.output.end },
+    rewards: undefined,
+    category: 'lock',
+  }
 }
