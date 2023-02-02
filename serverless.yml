@@ -110,9 +110,9 @@ functions:
           method: get
           path: /categories
 
-  getContract:
+  getContracts:
     handler: src/handlers/getContracts.getContract
-    description: Get contract
+    description: Get contracts
     events:
       - httpApi:
           method: get

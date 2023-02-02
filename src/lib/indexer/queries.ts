@@ -100,49 +100,6 @@ export const getTransactionHistoryQuery = (
       `
 }
 
-export const getContractsInteractedQuery = (address: string): string => gql`
-      query getContractsInteracted {
-        transactions(where: {_and: [{_or: [{from_address: {_eq: "${address}"}}]}], contract_interacted: {contract: {_is_null: false}}}, distinct_on: to_address) {
-          contract_interacted {
-            adapter {
-              adapter_id
-            }
-            contract
-            chain
-          }
-        }
-      }
-    `
-
-export const getTokensInteractedQuery = (address: string): string => gql`
-    query getTokensInteracted {
-      erc20_transfers(distinct_on: token, where: {_and: [{_or: [{from_address: {_eq: "${address}"}}, {to_address: {_eq: "${address}"}}]}]}) {
-        token_details {
-          address
-          chain
-          decimals
-          name
-          symbol
-        }
-      }
-    }
-`
-
-export const getTokensBalancesQuery = (address: string): string => gql`
-  query getTokensBalances {
-    erc20_balances(where: { address: { _eq: "${address}" } }) {
-      balance
-      chain
-      token
-      token_details {
-        name
-        symbol
-        decimals
-      }
-    }
-  }
-`
-
 export const getTokensHoldersQuery = (token: string, chain: string, limit: number, offset: number): string => gql`
   query getTokensBalances {
     erc20_balances(
@@ -171,30 +128,16 @@ export const getTokensHoldersQuery = (token: string, chain: string, limit: numbe
   }
 `
 
-export const getContractsQuery = (contract: string): string => gql`
-    query getContract {
-      contracts(where: { contract: { _eq: "${contract}" } }) {
-        block
-        chain
-        contract
-        creator
-        hash
-        parsed
-        verified
-        contract_information {
-          abi
-          name
-        }
-        adapter {
-          adapter_id
-        }
-      }
-    }
-  `
+export const getContractsQuery = (contract: string, chain?: string): string => {
+  let filter = `contract: { _eq: "${contract}" }`
 
-export const getContractForChainQuery = (chain: string, contract: string): string => gql`
+  if (chain) {
+    filter = filter + `, chain: { _eq: "${chain}" }`
+  }
+
+  return gql`
     query getContract {
-      contracts(where: { chain: { _eq: "${chain}" }, contract: { _eq: "${contract}" } }) {
+      contracts(where: { ${filter} }) {
         block
         chain
         contract
@@ -212,3 +155,4 @@ export const getContractForChainQuery = (chain: string, contract: string): strin
       }
     }
   `
+}

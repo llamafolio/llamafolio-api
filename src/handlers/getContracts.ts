@@ -1,12 +1,24 @@
-import pool from '@db/pool'
-import { badRequest, notFound, serverError, success } from '@handlers/response'
-import { isHex, strToBuf } from '@lib/buf'
+import { badRequest, serverError, success } from '@handlers/response'
+import { isHex } from '@lib/buf'
+import { getContracts, HASURA_HEADERS } from '@lib/indexer'
 import { APIGatewayProxyHandler } from 'aws-lambda'
+
+export interface IContract {
+  block: number
+  chain: string
+  contract: string
+  creator: string
+  hash: string
+  protocol?: string
+  abi?: any
+  name?: string
+}
 
 export const getContract: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
   const address = event.pathParameters?.address
+
   if (!address) {
     return badRequest('Missing address parameter')
   }
@@ -14,36 +26,43 @@ export const getContract: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  const client = await pool.connect()
-
   try {
-    const adaptersContractsRes = await client.query(
-      `select adapter_id, chain, data -> 'name' as name, data -> 'displayName' as display_name from contracts where address = $1::bytea;`,
-      [strToBuf(address)],
-    )
+    const chain = event.queryStringParameters?.chain
 
-    if (adaptersContractsRes.rows.length === 0) {
-      return notFound()
-    }
+    const { contracts } = await getContracts(address, chain, HASURA_HEADERS)
+
+    const contractsData = contracts.map((contract) => {
+      const contractData: IContract = {
+        block: contract.block,
+        chain: contract.chain,
+        contract: contract.contract,
+        creator: contract.creator,
+        hash: contract.hash,
+      }
+
+      if (contract.contract_information?.abi) {
+        contractData.abi = JSON.parse(contract?.contract_information.abi)
+      }
+
+      if (contract.contract_information?.name) {
+        contractData.name = contract?.contract_information.name
+      }
+
+      if (contract.adapter) {
+        contractData.protocol = contract.adapter.adapter_id
+      }
+
+      return contractData
+    })
 
     return success(
       {
-        data: {
-          // TODO: resolve name in case multiple adapters use the same contract
-          name: adaptersContractsRes.rows[0].name,
-          display_name: adaptersContractsRes.rows[0].display_name,
-          adapters: adaptersContractsRes.rows.map((row) => ({
-            id: row.adapter_id,
-            chain: row.chain,
-          })),
-        },
+        data: contractsData,
       },
       { maxAge: 2 * 60 },
     )
   } catch (e) {
-    console.error('Failed to retrieve adapters', e)
-    return serverError('Failed to retrieve adapters')
-  } finally {
-    client.release(true)
+    console.error('Failed to retrieve contracts', e)
+    return serverError('Failed to retrieve contracts')
   }
 }

@@ -1,7 +1,6 @@
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
-import { getTransactionHistory } from '@lib/indexer/fetchers'
-import { HASURA_HEADERS } from '@lib/indexer/utils'
+import { getTransactionHistory, HASURA_HEADERS } from '@lib/indexer'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface ITransaction {

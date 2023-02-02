@@ -1,7 +1,12 @@
 import request from 'graphql-request'
 
-import { getChainsIndexedStateQuery, getTransactionHistoryQuery } from './queries'
-import { IIndexerTransaction } from './types'
+import {
+  getChainsIndexedStateQuery,
+  getContractsQuery,
+  getTokensHoldersQuery,
+  getTransactionHistoryQuery,
+} from './queries'
+import { IIndexerContract, IIndexerTransaction } from './types'
 
 export const indexer_graph = async (query: string, variables = {}, headers = {}) =>
   request('https://graph.kindynos.mx/v1/graphql', query, variables, headers)
@@ -30,4 +35,35 @@ export const getTransactionHistory = async (
   )
 
   return { transactions, transactions_aggregate }
+}
+
+export const getTokensHolders = async (
+  token: string,
+  chain: string,
+  limit: number,
+  offset: number,
+  headers = {},
+): Promise<{
+  erc20_balances: { address: string; balance: string }[]
+  erc20_balances_aggregate: { aggregate: { count: number; sum: { balance: number } } }
+}> => {
+  const { erc20_balances, erc20_balances_aggregate } = await indexer_graph(
+    getTokensHoldersQuery(token.toLowerCase(), chain, limit, offset),
+    {},
+    headers,
+  )
+
+  return { erc20_balances, erc20_balances_aggregate }
+}
+
+export const getContracts = async (
+  contract: string,
+  chain?: string,
+  headers = {},
+): Promise<{
+  contracts: IIndexerContract[]
+}> => {
+  const { contracts } = await indexer_graph(getContractsQuery(contract, chain), {}, headers)
+
+  return { contracts }
 }

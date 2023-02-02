@@ -1,6 +1,5 @@
 import { serverError, success } from '@handlers/response'
-import { getChainBlocks } from '@lib/indexer/fetchers'
-import { HASURA_HEADERS } from '@lib/indexer/utils'
+import { getChainBlocks, HASURA_HEADERS } from '@lib/indexer'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async (_event, context) => {
