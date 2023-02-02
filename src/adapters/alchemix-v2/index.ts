@@ -4,7 +4,7 @@ import * as ethereum from './ethereum'
 import * as fantom from './fantom'
 
 const adapter: Adapter = {
-  id: 'alchemix',
+  id: 'alchemix-v2',
   ethereum,
   fantom,
 }
