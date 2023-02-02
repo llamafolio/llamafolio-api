@@ -170,22 +170,20 @@ export async function getTransmutationBalances(ctx: BalancesContext, transmuters
     const reactiveDetails = reactivesDetailsByAddress[synthetic.reactiveToken.toLowerCase()]
     const underlyings = reactiveDetails.underlyings?.[0] as Contract
 
-    if (!isSuccess(totalValueRes)) {
+    if (!isSuccess(totalValueRes) || !underlyings) {
       continue
     }
 
-    if (underlyings) {
-      const reactive: Balance = {
-        ...reactiveDetails,
-        symbol: underlyings.symbol,
-        amount: BigNumber.from(totalValueRes.output),
-        underlyings: undefined,
-        rewards: undefined,
-        category: 'lend',
-      }
-
-      synthetics.push(synthetic, reactive)
+    const reactive: Balance = {
+      ...reactiveDetails,
+      symbol: underlyings.symbol,
+      amount: BigNumber.from(totalValueRes.output),
+      underlyings: undefined,
+      rewards: undefined,
+      category: 'lend',
     }
+
+    synthetics.push(synthetic, reactive)
   }
   return synthetics
 }
