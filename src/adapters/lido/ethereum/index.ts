@@ -1,5 +1,5 @@
-import { getStEthStakeBalances, getWStEthStakeBalances } from '@adapters/lido/common/stake'
-import { getStMaticBalances } from '@adapters/lido/common/stake'
+import { getStEthStakeBalances, getWStEthStakeBalances } from '@adapters/lido/ethereum/stake'
+import { getStMaticBalances } from '@adapters/lido/ethereum/stake'
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
