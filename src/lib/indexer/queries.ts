@@ -1,5 +1,14 @@
 import { gql } from 'graphql-request'
 
+export const getChainsIndexedStateQuery = (): string => gql`
+  query getChainsIndexedState @cached(refresh: true) {
+    chains_indexed_state(order_by: { chain: asc }) {
+      chain
+      indexed_blocks_amount
+    }
+  }
+`
+
 export const getTransactionHistoryQuery = (
   address: string,
   limit: number,

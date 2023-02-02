@@ -43,7 +43,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const queries = event.queryStringParameters
 
   let chains: string[] = []
-  console.log(queries.chains)
+
   if (queries?.chains) {
     chains = queries.chains.replace(/"/g, '').replace(/'/g, '').split(',') ?? []
   }
