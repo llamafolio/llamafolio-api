@@ -47,6 +47,7 @@ import nexusMutual from '@adapters/nexus-mutual'
 import olympusDao from '@adapters/olympus-dao'
 import opynSqueeth from '@adapters/opyn-squeeth'
 import pancakeswap from '@adapters/pancakeswap'
+import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiant from '@adapters/radiant'
@@ -128,6 +129,7 @@ export const adapters: Adapter[] = [
   olympusDao,
   opynSqueeth,
   pancakeswap,
+  pandora,
   pangolin,
   quickswapDex,
   radiant,
