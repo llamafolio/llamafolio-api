@@ -91,10 +91,9 @@ const lens: Contract = {
 export const getContracts = async (ctx: BaseContext) => {
   const markets = await getMarketsContracts(ctx)
   const stakers = [eUSDCStaker, eUSDTStaker, eWETHStaker]
-  const poolTokens = [USDC, USDT, WETH]
 
   return {
-    contracts: { stakers, EULStaker, poolTokens, markets, lens },
+    contracts: { stakers, EULStaker, markets, lens },
     revalidate: 60 * 60,
   }
 }
@@ -104,7 +103,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: 
     resolveBalances<typeof getContracts>(ctx, contracts, {
       markets: (ctx, contracts) => getERC20BalanceOf(ctx, contracts as Token[]),
       stakers: getETokenStakes,
-      EULStaker: (...args) => getEULStakes(...args, contracts.poolTokens || []),
+      EULStaker: (...args) => getEULStakes(...args, [USDC, USDT, WETH]),
     }),
     getHealthFactor(ctx, lens),
   ])
