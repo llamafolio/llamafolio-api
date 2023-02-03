@@ -8,7 +8,7 @@ const THE_GRAPH_URL = 'https://api.thegraph.com/subgraphs/name/euler-xyz/euler-m
 const marketsQuery = gql`
   {
     eulerMarketStore(id: "euler-market-store") {
-      markets(first: 100) {
+      markets(first: 250) {
         address: id
         name
         symbol
