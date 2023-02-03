@@ -54,6 +54,7 @@ import radiant from '@adapters/radiant'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import scream from '@adapters/scream'
+import setProtocol from '@adapters/set-protocol'
 import shibaswap from '@adapters/shibaswap'
 import spartacus from '@adapters/spartacus'
 import spiritswap from '@adapters/spiritswap'
@@ -136,6 +137,7 @@ export const adapters: Adapter[] = [
   ribbonFinance,
   rocketPool,
   scream,
+  setProtocol,
   shibaswap,
   spartacus,
   spiritswap,
