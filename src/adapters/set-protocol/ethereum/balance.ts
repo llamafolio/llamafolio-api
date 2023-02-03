@@ -31,22 +31,23 @@ export async function getSetProtocolPoolsBalances(ctx: BalancesContext, pools: C
     const balanceOfRes = balancesOfRes[idx]
     const totalSupplyRes = totalSuppliesRes[idx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(totalSupplyRes) || isZero(totalSupplyRes.output)) {
+    if (
+      !isSuccess(balanceOfRes) ||
+      !isSuccess(totalSupplyRes) ||
+      isZero(totalSupplyRes.output) ||
+      isZero(balanceOfRes.output)
+    ) {
       continue
     }
 
-    const balance: getSetProtocolPoolsBalances = {
+    nonZeroBalances.push({
       ...pool,
       amount: BigNumber.from(balanceOfRes.output),
       totalSupply: BigNumber.from(totalSupplyRes.output),
       underlyings: pool.underlyings as Contract[],
       rewards: undefined,
       category: 'farm',
-    }
-
-    if (balance.amount.gt(0)) {
-      nonZeroBalances.push(balance)
-    }
+    })
   }
 
   for (const nonZeroBalance of nonZeroBalances) {
