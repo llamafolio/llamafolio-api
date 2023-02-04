@@ -1,7 +1,6 @@
 import { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { resolveERC20Details } from '@lib/erc20'
-import { Call, multicall } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
 const abi = {
@@ -26,32 +25,23 @@ export async function getSetProtocolPools(ctx: BaseContext, controller: Contract
 
   const setsContractsRes = await call({ ctx, target: controller.address, params: [], abi: abi.getSets })
 
-  const calls: Call[] = []
+  const setsUnderlyingsRes = await multicall({
+    ctx,
+    calls: setsContractsRes.output.map((target: string) => ({ target })),
+    abi: abi.getComponents,
+  })
+
   for (let idx = 0; idx < setsContractsRes.output.length; idx++) {
-    const setsContractRes = setsContractsRes.output[idx]
-    calls.push({ target: setsContractRes, params: [] })
-
-    pools.push({ chain: ctx.chain, address: setsContractRes, underlyings: [] })
-  }
-
-  const underlyingsRes = await multicall({ ctx, calls, abi: abi.getComponents })
-  const underlyings: any = underlyingsRes.filter(isSuccess).map((res) => res.output)
-
-  const underlyingsDetails = await resolveERC20Details(ctx, underlyings)
-
-  for (let idx = 0; idx < pools.length; idx++) {
-    const pool = pools[idx]
-    const underlyingDetails = underlyingsDetails[idx]
-
-    for (let underlyingIdx = 0; underlyingIdx < underlyingDetails.length; underlyingIdx++) {
-      const underlying = underlyingDetails[underlyingIdx]
-
-      if (!isSuccess(underlying)) {
-        continue
-      }
-
-      pool.underlyings?.push(underlying.output as any)
+    const underlyingsRes = setsUnderlyingsRes[idx]
+    if (!isSuccess(underlyingsRes)) {
+      continue
     }
+
+    pools.push({
+      chain: ctx.chain,
+      address: setsContractsRes.output[idx],
+      underlyings: underlyingsRes.output,
+    })
   }
 
   return pools
