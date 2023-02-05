@@ -1,46 +1,54 @@
-import { success } from '@handlers/response'
-import { chainById } from '@lib/chains'
-import { getLabel } from '@llamafolio/labels'
+import { selectLabelsByAddresses } from '@db/labels'
+import pool from '@db/pool'
+import { badRequest, serverError, success } from '@handlers/response'
+import { isHex } from '@lib/buf'
 import { APIGatewayProxyHandler } from 'aws-lambda'
-import { ethers } from 'ethers'
+
+const LINKS = ['github', 'telegram', 'twitter', 'website']
 
 /**
  * Get labels of given addresses
  */
-export const handler: APIGatewayProxyHandler = async (event) => {
+export const handler: APIGatewayProxyHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false
+
   const addresses = event.pathParameters?.address?.split(',') ?? []
   const data: { [key: string]: any } = {}
-
-  const provider = new ethers.providers.StaticJsonRpcProvider(
-    chainById['ethereum'].rpcUrl[0],
-    chainById['ethereum'].chainId,
-  )
-
-  const ensNames = await Promise.all(
-    addresses.map(async (address) => {
-      try {
-        const ensName = await provider.lookupAddress(address)
-        return ensName
-      } catch (error) {
-        return
-      }
-    }),
-  )
-
-  for (let addressIdx = 0; addressIdx < addresses.length; addressIdx++) {
-    const ensName = ensNames[addressIdx] || undefined
-
-    const label = getLabel(addresses[addressIdx].toLowerCase(), ensName)
-
-    if (label) {
-      data[addresses[addressIdx]] = label
+  for (const address of addresses) {
+    if (!isHex(address)) {
+      return badRequest('Invalid address parameter, expected hex')
     }
+
+    data[address] = { labels: [], links: {} }
   }
 
-  return success(
-    {
-      data,
-    },
-    { maxAge: 10 * 60 },
-  )
+  const client = await pool.connect()
+
+  try {
+    const labels = await selectLabelsByAddresses(client, addresses)
+
+    for (const label of labels) {
+      if (!data[label.address]) {
+        continue
+      }
+
+      if (LINKS.includes(label.type)) {
+        data[label.address].links[label.type] = label.value
+      } else {
+        data[label.address].labels.push({ type: label.type, value: label.value })
+      }
+    }
+
+    return success(
+      {
+        data,
+      },
+      { maxAge: 20 * 60 },
+    )
+  } catch (error) {
+    console.error('Failed to retrieve labels', { error, addresses })
+    return serverError('Failed to retrieve labels')
+  } finally {
+    client.release(true)
+  }
 }
