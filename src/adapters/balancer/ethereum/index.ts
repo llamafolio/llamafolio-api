@@ -1,19 +1,27 @@
-import { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPoolsBalances } from '@lib/pools'
 
-import { getBalancerPools } from '../common/pool'
 import { getOldBalancerPools } from './pool'
+
+const gaugeController: Contract = {
+  chain: 'ethereum',
+  address: '0x4E7bBd911cf1EFa442BC1b2e9Ea01ffE785412EC',
+}
+
+const vault: Contract = {
+  chain: 'ethereum',
+  address: '0xba12222222228d8ba445958a75a0704d566bf2c8',
+}
 
 const oldUrl = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer'
 const url = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2'
 
 export const getContracts = async (ctx: BaseContext) => {
   const oldPools = await getOldBalancerPools(ctx, oldUrl)
-  const pools = await getBalancerPools(ctx, url)
 
   return {
-    contracts: { oldPools, pools },
+    contracts: { oldPools },
   }
 }
 

@@ -20,7 +20,7 @@ export const getContracts = async (ctx: BaseContext) => {
   const pools = await getBalancerPools(ctx, url, gaugeController)
 
   return {
-    contracts: { pools, vault },
+    contracts: { pools, gaugeController, vault },
   }
 }
 
@@ -28,6 +28,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (...args) => getBalancerPoolsBalances(...args, vault),
   })
+
+  console.log(balances[0].underlyings)
 
   return {
     balances,
