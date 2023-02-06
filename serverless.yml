@@ -43,6 +43,7 @@ provider:
           Resource:
             - 'Fn::GetAtt': [DynamoTable, Arn]
   environment:
+    INDEXER_ADMIN_TOKEN: ${file(./env.js):INDEXER_ADMIN_TOKEN}
     PGHOST: ${file(./env.js):PGHOST}
     PGUSER: ${file(./env.js):PGUSER}
     PGDATABASE: ${file(./env.js):PGDATABASE}
