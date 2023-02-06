@@ -1,7 +1,26 @@
 import { BaseContext, Contract } from '@lib/adapter'
+import { Call, multicall } from '@lib/multicall'
+import { isSuccess } from '@lib/type'
 import request, { gql } from 'graphql-request'
 
-export async function getBalancerPools(ctx: BaseContext, url: string): Promise<Contract[]> {
+const abi = {
+  getPoolGauge: {
+    inputs: [{ internalType: 'address', name: 'pool', type: 'address' }],
+    name: 'getPoolGauge',
+    outputs: [{ internalType: 'contract ILiquidityGauge', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getPoolStreamer: {
+    inputs: [{ internalType: 'address', name: 'pool', type: 'address' }],
+    name: 'getPoolStreamer',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+export async function getBalancerPools(ctx: BaseContext, url: string, gaugeController: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const query = gql`
@@ -33,6 +52,30 @@ export async function getBalancerPools(ctx: BaseContext, url: string): Promise<C
       decimals: 18,
       underlyings: pool.tokens.map((underlying: Contract) => ({ ...underlying, chain: ctx.chain })),
     })
+  }
+
+  const calls: Call[] = []
+  for (const contract of contracts) {
+    calls.push({ target: gaugeController.address, params: [contract.address] })
+  }
+
+  const [gaugesRes, rewardersRes] = await Promise.all([
+    multicall({ ctx, calls, abi: abi.getPoolGauge }),
+    multicall({ ctx, calls, abi: abi.getPoolStreamer }),
+  ])
+
+  for (let idx = 0; idx < contracts.length; idx++) {
+    const contract = contracts[idx]
+    const gaugeRes = gaugesRes[idx]
+    const rewarderRes = rewardersRes[idx]
+
+    if (!isSuccess(gaugeRes) || !isSuccess(rewarderRes)) {
+      contract.gauge = undefined
+      continue
+    }
+
+    contract.gauge = gaugeRes.output
+    contract.rewarder = rewarderRes.output
   }
 
   return contracts
