@@ -1,7 +1,7 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getBalancerPoolsBalances } from '../common/balance'
+import { getBalancerPoolsBalances, getLpBalancerPoolsBalances } from '../common/balance'
 import { getBalancerPools } from '../common/pool'
 
 const gaugeController: Contract = {
@@ -24,9 +24,13 @@ export const getContracts = async (ctx: BaseContext) => {
   }
 }
 
+const getBalancerBalances = async (ctx: BalancesContext, pools: Contract[], vault: Contract) => {
+  return Promise.all([getBalancerPoolsBalances(ctx, pools, vault), getLpBalancerPoolsBalances(ctx, pools, vault)])
+}
+
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getBalancerPoolsBalances(...args, vault),
+    pools: (...args) => getBalancerBalances(...args, vault),
   })
 
   return {

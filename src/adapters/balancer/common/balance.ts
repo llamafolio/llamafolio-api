@@ -28,7 +28,7 @@ const abi = {
 
 export interface getBalancerPoolsBalancesParams extends Balance {
   totalSupply: BigNumber
-  actualSupply: BigNumber
+  actualSupply?: BigNumber
 }
 
 export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Contract[], vault: Contract) {
@@ -95,10 +95,72 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
     }
 
     /**
-     *  TODO: render this more readable
+     *  TODO: render this more readable + Unwrap missing stablePool underlyings + Rewards using rewarder address maybe?
      *  Sometimes underlyings returned in Pool have the lpToken as underlying in order to facilitate the balance function on chain, but in our case it acts as a duplicate.
      *  Unfortunately, we can't remove these underlying before assigning the balance because vault function returns balances in a specific order.
      */
+
+    balance.underlyings = balance.underlyings?.filter((underlying) => underlying.address !== balance.address)
+
+    balances.push(balance)
+  }
+
+  return balances
+}
+
+export async function getLpBalancerPoolsBalances(ctx: BalancesContext, pools: Contract[], vault: Contract) {
+  const balances: getBalancerPoolsBalancesParams[] = []
+
+  const balanceOfCalls: Call[] = []
+  const suppliesCalls: Call[] = []
+  const tokensCalls: Call[] = []
+
+  for (const pool of pools) {
+    balanceOfCalls.push({ target: pool.address, params: [ctx.address] })
+    suppliesCalls.push({ target: pool.address, params: [] })
+    tokensCalls.push({ target: vault.address, params: [pool.id] })
+  }
+
+  const [balanceOfsRes, totalSuppliesRes, tokensBalancesRes] = await Promise.all([
+    multicall({ ctx, calls: balanceOfCalls, abi: erc20Abi.balanceOf }),
+    multicall({ ctx, calls: suppliesCalls, abi: erc20Abi.totalSupply }),
+    multicall({ ctx, calls: tokensCalls, abi: abi.getPoolTokens }),
+  ])
+
+  for (let idx = 0; idx < pools.length; idx++) {
+    const pool = pools[idx]
+    const underlyings = pool.underlyings as Contract[]
+    const balanceOfRes = balanceOfsRes[idx]
+    const totalSupplyRes = totalSuppliesRes[idx]
+    const tokensBalanceRes = tokensBalancesRes[idx]
+
+    if (
+      !underlyings ||
+      !isSuccess(balanceOfRes) ||
+      !isSuccess(totalSupplyRes) ||
+      !isSuccess(tokensBalanceRes) ||
+      isZero(totalSupplyRes.output)
+    ) {
+      continue
+    }
+
+    const balance: getBalancerPoolsBalancesParams = {
+      ...pool,
+      amount: BigNumber.from(balanceOfRes.output),
+      underlyings,
+      rewards: undefined,
+      totalSupply: BigNumber.from(totalSupplyRes.output),
+      category: 'lp',
+    }
+
+    for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
+      const underlying = balance.underlyings![underlyingIdx]
+      const underlyingsBalanceOf = tokensBalanceRes.output.balances[underlyingIdx]
+
+      const underlyingAmount = balance.amount.mul(underlyingsBalanceOf).div(balance.totalSupply)
+
+      balance.underlyings![underlyingIdx] = { ...underlying, amount: underlyingAmount }
+    }
 
     balance.underlyings = balance.underlyings?.filter((underlying) => underlying.address !== balance.address)
 
