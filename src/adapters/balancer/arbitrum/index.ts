@@ -29,8 +29,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     pools: (...args) => getBalancerPoolsBalances(...args, vault),
   })
 
-  console.log(balances[0].underlyings)
-
   return {
     balances,
   }

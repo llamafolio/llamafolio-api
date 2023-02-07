@@ -50,10 +50,7 @@ export async function getBalancerPools(ctx: BaseContext, url: string, gaugeContr
       id: pool.id,
       symbol: pool.symbol,
       decimals: 18,
-      underlyings: pool.tokens
-        // sometimes the tokens returned have the lpToken of the pool in order to facilitate the balance function, but in our case it acts as a duplicate
-        .filter((underlying: Contract) => underlying.address !== pool.address)
-        .map((underlying: Contract) => ({ ...underlying, chain: ctx.chain })),
+      underlyings: pool.tokens.map((underlying: Contract) => ({ ...underlying, chain: ctx.chain })),
     })
   }
 
@@ -72,14 +69,15 @@ export async function getBalancerPools(ctx: BaseContext, url: string, gaugeContr
     const gaugeRes = gaugesRes[idx]
     const rewarderRes = rewardersRes[idx]
 
-    if (!isSuccess(gaugeRes) || !isSuccess(rewarderRes)) {
+    if (!isSuccess(gaugeRes)) {
       contract.gauge = undefined
-      continue
     }
-
     contract.gauge = gaugeRes.output
+
+    if (!isSuccess(rewarderRes)) {
+      contract.rewarder = undefined
+    }
     contract.rewarder = rewarderRes.output
   }
-
   return contracts
 }
