@@ -26,9 +26,7 @@ export interface ITransaction {
   value: string
 }
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event) => {
   const address = event.pathParameters?.address
 
   if (!address) {

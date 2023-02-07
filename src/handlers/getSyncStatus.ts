@@ -2,9 +2,7 @@ import { serverError, success } from '@handlers/response'
 import { getChainBlocks, HASURA_HEADERS } from '@lib/indexer'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
-export const handler: APIGatewayProxyHandler = async (_event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async () => {
   try {
     const chains_indexed_state = await getChainBlocks(HASURA_HEADERS)
     return success(chains_indexed_state, { maxAge: 10 })

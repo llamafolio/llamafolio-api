@@ -14,9 +14,7 @@ export interface IContract {
   name?: string
 }
 
-export const getContract: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const getContract: APIGatewayProxyHandler = async (event) => {
   const address = event.pathParameters?.address
 
   if (!address) {
