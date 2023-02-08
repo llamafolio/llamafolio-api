@@ -1,6 +1,8 @@
 import { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 
+import { getVaultTokens } from './vault'
+
 const abi = {
   esGmx: {
     inputs: [],
@@ -67,7 +69,7 @@ const abi = {
   },
 }
 
-export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract) {
+export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract, vault: Contract) {
   const [
     stakedGmxTrackerRes,
     stakedGlpTrackerRes,
@@ -78,6 +80,7 @@ export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract) {
     esGmxRes,
     gmxVesterRes,
     glpVesterRes,
+    vaultTokens,
   ] = await Promise.all([
     call({ ctx, target: gmxRouter.address, params: [], abi: abi.stakedGmxTracker }),
     call({ ctx, target: gmxRouter.address, params: [], abi: abi.stakedGlpTracker }),
@@ -88,6 +91,7 @@ export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract) {
     call({ ctx, target: gmxRouter.address, params: [], abi: abi.esGmx }),
     call({ ctx, target: gmxRouter.address, params: [], abi: abi.gmxVester }),
     call({ ctx, target: gmxRouter.address, params: [], abi: abi.glpVester }),
+    getVaultTokens(ctx, vault),
   ])
 
   // GMX
@@ -110,7 +114,8 @@ export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract) {
     chain: ctx.chain,
     address: stakedGlpTrackerRes.output,
     fGlp: stakerGmxFeesRes.output,
-    underlyings: [glpRes.output],
+    glp: glpRes.output,
+    underlyings: vaultTokens,
     rewards: [esGmxRes.output, wethRes.output],
   }
 

@@ -1,6 +1,7 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
+import { getPoolsUnderlyingBalances } from '@lib/pools'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -134,12 +135,11 @@ export async function getGMXVesterBalance(ctx: BalancesContext, gmxVester: Contr
   return balance
 }
 
-export async function getGLPStakerBalance(ctx: BalancesContext, glpStaker: Contract) {
+export async function getGLPStakerBalance(ctx: BalancesContext, glpStaker: Contract, vault: Contract) {
   if (!glpStaker.underlyings || !glpStaker.rewards) {
     return []
   }
 
-  const glp = glpStaker.underlyings?.[0]
   const esGMX = glpStaker.rewards?.[0]
   const native = glpStaker.rewards?.[1]
 
@@ -154,18 +154,24 @@ export async function getGLPStakerBalance(ctx: BalancesContext, glpStaker: Contr
   const pendingETHRewards = BigNumber.from(pendingETHRewardsRes.output)
 
   const balance: Balance = {
+    ...glpStaker,
     chain: ctx.chain,
     category: 'stake',
     address: glpStaker.address,
     symbol: glpStaker.symbol,
     decimals: glpStaker.decimals,
     amount: stakeGLP,
-    underlyings: [{ ...glp, amount: stakeGLP }],
     rewards: [
       { ...esGMX, amount: pendingesGMXRewards },
       { ...native, amount: pendingETHRewards },
     ],
   }
+
+  const [{ underlyings }] = await getPoolsUnderlyingBalances(ctx, [{ ...balance }], {
+    getPoolAddress: () => vault.address,
+  })
+
+  balance.underlyings = underlyings
 
   return balance
 }
