@@ -10,8 +10,14 @@ const gmxRouter: Contract = {
   address: '0xA906F338CB21815cBc4Bc87ace9e68c87eF8d8F1',
 }
 
+const vault: Contract = {
+  name: 'Vault',
+  chain: 'arbitrum',
+  address: '0x489ee077994B6658eAfA855C308275EAd8097C4A',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
-  const contracts = await getGMXContracts(ctx, gmxRouter)
+  const contracts = await getGMXContracts(ctx, gmxRouter, vault)
 
   return {
     contracts,
@@ -22,7 +28,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     gmxVester: getGMXVesterBalance,
     gmxStaker: getGMXStakerBalances,
-    glpStaker: getGLPStakerBalance,
+    glpStaker: (ctx, glpStaker) => getGLPStakerBalance(ctx, glpStaker, vault),
     glpVester: getGLPVesterBalance,
   })
 
