@@ -95,7 +95,7 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
     }
 
     /**
-     *  TODO: render this more readable + Unwrap missing stablePool underlyings + Rewards using rewarder address maybe?
+     *  TODO: Unwrap missing stablePool underlyings + Rewards using rewarder address maybe?
      *  Sometimes underlyings returned in Pool have the lpToken as underlying in order to facilitate the balance function on chain, but in our case it acts as a duplicate.
      *  Unfortunately, we can't remove these underlying before assigning the balance because vault function returns balances in a specific order.
      */
