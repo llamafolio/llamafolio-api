@@ -18,6 +18,8 @@ npm run adapter curve ethereum 0x0000000000000000000000000000000000000000
 
 ### Local development
 
+Start by [setting up your environment](./docs/setup.md).
+
 You can run the API locally using:
 
 ```bash
