@@ -12,4 +12,4 @@ Run migration script
 DATABASE_URL=postgres://postgres@localhost:5432/llamafolio_dev npm run migrate up
 ```
 
-Note: too start from a clean database, drop the whole `llamafolio_dev` database and run previous steps again.
+Note: to start from a clean database, drop the whole `llamafolio_dev` database and run previous steps again.
