@@ -140,7 +140,6 @@ export async function getGLPStakerBalance(ctx: BalancesContext, glpStaker: Contr
     return []
   }
 
-  // const glp = glpStaker.underlyings?.[0]
   const esGMX = glpStaker.rewards?.[0]
   const native = glpStaker.rewards?.[1]
 
