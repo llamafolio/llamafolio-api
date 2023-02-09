@@ -4,7 +4,7 @@ import pool from '@db/pool'
 import { client as redisClient } from '@db/redis'
 import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
-import { Balance, ContractStandard } from '@lib/adapter'
+import { Balance, ContractStandard, Lock } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
@@ -60,6 +60,7 @@ export interface FormattedBalance {
   apyReward?: number
   apyMean30d?: number
   ilRisk?: boolean
+  lock?: Lock
   timestamp?: number
   underlyings?: FormattedBalance[]
   rewards?: FormattedBalance[]
@@ -108,6 +109,7 @@ export function formatBalance(balance: any): FormattedBalance {
     apyReward: balance.apyReward,
     apyMean30d: balance.apyMean30d,
     ilRisk: balance.ilRisk,
+    lock: balance.lock,
     timestamp: balance.timestamp,
     underlyings: balance.underlyings?.map(formatBalance),
     rewards: balance.rewards?.map(formatBalance),
