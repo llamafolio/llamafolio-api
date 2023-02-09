@@ -69,6 +69,7 @@ const AURA: Token = {
   decimals: 18,
   symbol: 'AURA',
 }
+
 const auraBal: Token = {
   chain: 'ethereum',
   address: '0x616e8BfA43F920657B3497DBf40D6b1A02D4608d',
