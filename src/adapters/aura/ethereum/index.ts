@@ -24,6 +24,8 @@ const AURA: Token = {
 const auraLocker: Contract = {
   chain: 'ethereum',
   address: '0x3Fa73f1E5d8A792C80F426fc8F84FBF7Ce9bBCAC',
+  symbol: 'vlAURA',
+  decimals: 18,
   underlyings: [AURA],
   rewards: [auraBal],
 }
