@@ -1,4 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { isZero } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
@@ -82,6 +83,8 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
       category: 'farm',
     }
 
+    const detailedUnderlyings: Contract[] = []
+
     for (let underlyingIdx = 0; underlyingIdx < balance.underlyings!.length; underlyingIdx++) {
       const underlying = balance.underlyings![underlyingIdx]
       const underlyingsBalanceOf = poolTokenBalanceRes.output.balances[underlyingIdx]
@@ -92,15 +95,26 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
         .div(balance.actualSupply ? balance.actualSupply : balance.totalSupply)
 
       balance.underlyings![underlyingIdx] = { ...underlying, amount: underlyingAmount }
+
+      // extra dimension for pools used as underlyings that needs to be unwrapped once more
+      const unwrappedUnderlyings = balance.underlyings![underlyingIdx] as Balance
+
+      if (!unwrappedUnderlyings.underlyings) {
+        detailedUnderlyings.push(balance.underlyings![underlyingIdx])
+        continue
+      }
+
+      unwrappedUnderlyings.underlyings = await unwrappedUnderlyingsInPools(ctx, unwrappedUnderlyings, vault)
+      detailedUnderlyings.push(...unwrappedUnderlyings.underlyings!)
     }
 
     /**
-     *  TODO: Unwrap missing stablePool underlyings + Rewards using rewarder address maybe?
+     *  TODO: Rewards using rewarder address maybe?
      *  Sometimes underlyings returned in Pool have the lpToken as underlying in order to facilitate the balance function on chain, but in our case it acts as a duplicate.
      *  Unfortunately, we can't remove these underlying before assigning the balance because vault function returns balances in a specific order.
      */
 
-    balance.underlyings = balance.underlyings?.filter((underlying) => underlying.address !== balance.address)
+    balance.underlyings = detailedUnderlyings?.filter((underlying) => underlying.address !== balance.address)
 
     balances.push(balance)
   }
@@ -153,6 +167,8 @@ export async function getLpBalancerPoolsBalances(ctx: BalancesContext, pools: Co
       category: 'lp',
     }
 
+    const detailedUnderlyings: Contract[] = []
+
     for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
       const underlying = balance.underlyings![underlyingIdx]
       const underlyingsBalanceOf = tokensBalanceRes.output.balances[underlyingIdx]
@@ -160,12 +176,60 @@ export async function getLpBalancerPoolsBalances(ctx: BalancesContext, pools: Co
       const underlyingAmount = balance.amount.mul(underlyingsBalanceOf).div(balance.totalSupply)
 
       balance.underlyings![underlyingIdx] = { ...underlying, amount: underlyingAmount }
+
+      // extra dimension for pools used as underlyings that needs to be unwrapped once more
+      const unwrappedUnderlyings = balance.underlyings![underlyingIdx] as Balance
+
+      if (!unwrappedUnderlyings.underlyings) {
+        detailedUnderlyings.push(balance.underlyings![underlyingIdx])
+        continue
+      }
+
+      unwrappedUnderlyings.underlyings = await unwrappedUnderlyingsInPools(ctx, unwrappedUnderlyings, vault)
+      detailedUnderlyings.push(...unwrappedUnderlyings.underlyings!)
     }
 
-    balance.underlyings = balance.underlyings?.filter((underlying) => underlying.address !== balance.address)
+    balance.underlyings = detailedUnderlyings?.filter((underlying) => underlying.address !== balance.address)
 
     balances.push(balance)
   }
 
   return balances
+}
+
+const unwrappedUnderlyingsInPools = async (ctx: BalancesContext, balance: Contract, vault: Contract) => {
+  const unwrappedUnderlyings: Contract[] = []
+
+  const [totalSupplyRes, actualSupplyRes, poolTokensBalancesRes] = await Promise.all([
+    call({ ctx, target: balance.address, params: [], abi: erc20Abi.totalSupply }),
+    call({ ctx, target: balance.address, params: [], abi: abi.getActualSupply }),
+    call({ ctx, target: vault.address, params: [balance.id], abi: abi.getPoolTokens }),
+  ])
+
+  if (!balance.underlyings) {
+    return
+  }
+
+  balance.totalSupply = BigNumber.from(totalSupplyRes.output)
+  balance.actualSupply = actualSupplyRes.output && BigNumber.from(actualSupplyRes.output)
+
+  for (let underlyingIdx = 0; underlyingIdx < balance.underlyings.length; underlyingIdx++) {
+    const underlying = balance.underlyings[underlyingIdx] as string
+
+    const poolTokenBalanceRes = poolTokensBalancesRes.output.balances[underlyingIdx]
+
+    const underlyingAmount = balance.amount
+      .mul(poolTokenBalanceRes)
+      .div(balance.actualSupply ? balance.actualSupply : balance.totalSupply)
+
+    if (underlying !== balance.address) {
+      unwrappedUnderlyings.push({
+        chain: ctx.chain,
+        address: underlying,
+        amount: underlyingAmount,
+      })
+    }
+  }
+
+  return unwrappedUnderlyings
 }
