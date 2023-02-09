@@ -1,4 +1,5 @@
 import { BaseContext, Contract } from '@lib/adapter'
+import { keyBy } from '@lib/array'
 import { call } from '@lib/call'
 import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -83,6 +84,7 @@ export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: C
       rewards: [BAL],
     })
   }
+
   return getAuraPoolsId(ctx, pools, vault)
 }
 
@@ -143,22 +145,15 @@ const getAuraPoolsUnderlyings = async (ctx: BaseContext, pools: Contract[], vaul
 const unwrapPoolsAsUnderlyings = (pools: Contract[]) => {
   const unwrappedPools: Contract[] = []
 
-  const poolsByAddress: { [key: string]: Contract } = {}
+  const poolByAddress = keyBy(pools, 'address', { lowercase: true })
+
   for (const pool of pools) {
-    poolsByAddress[pool.address.toLowerCase()] = pool
-
     const underlyings = pool.underlyings as Contract[]
-
     if (!underlyings) {
       continue
     }
 
-    const unwrappedUnderlyings: Contract[] = []
-    for (const underlying of underlyings) {
-      unwrappedUnderlyings.push(
-        poolsByAddress[underlying.toLowerCase()] ? poolsByAddress[underlying.toLowerCase()] : underlying,
-      )
-    }
+    const unwrappedUnderlyings = underlyings.map((address) => poolByAddress[address.toLowerCase()] || address)
 
     unwrappedPools.push({
       ...pool,
