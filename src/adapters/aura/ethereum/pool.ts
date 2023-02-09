@@ -80,8 +80,6 @@ export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: C
       pool: poolsInfoRes.output.lptoken,
       lpToken: poolsInfoRes.output.lptoken,
       gauge: poolsInfoRes.output.crvRewards,
-      // gauge: poolsInfoRes.output.gauge,
-      // crvRewards: poolsInfoRes.output.crvRewards,
       rewards: [BAL],
     })
   }
@@ -139,5 +137,34 @@ const getAuraPoolsUnderlyings = async (ctx: BaseContext, pools: Contract[], vaul
     })
   }
 
-  return poolsWithUnderlyings
+  return unwrapPoolsAsUnderlyings(poolsWithUnderlyings)
+}
+
+const unwrapPoolsAsUnderlyings = (pools: Contract[]) => {
+  const unwrappedPools: Contract[] = []
+
+  const poolsByAddress: { [key: string]: Contract } = {}
+  for (const pool of pools) {
+    poolsByAddress[pool.address.toLowerCase()] = pool
+
+    const underlyings = pool.underlyings as Contract[]
+
+    if (!underlyings) {
+      continue
+    }
+
+    const unwrappedUnderlyings: Contract[] = []
+    for (const underlying of underlyings) {
+      unwrappedUnderlyings.push(
+        poolsByAddress[underlying.toLowerCase()] ? poolsByAddress[underlying.toLowerCase()] : underlying,
+      )
+    }
+
+    unwrappedPools.push({
+      ...pool,
+      underlyings: unwrappedUnderlyings,
+    })
+  }
+
+  return unwrappedPools
 }
