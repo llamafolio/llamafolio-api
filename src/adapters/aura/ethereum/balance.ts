@@ -141,16 +141,13 @@ export const getAuraMintAmount = async (
 ): Promise<Balance[]> => {
   const balancesWithExtraRewards: Balance[] = []
 
-  const [/*balanceOfRes, */ auraReductionPerCliffRes, auraMaxSupplyRes, auraTotalSupplyRes, auraTotalCliffsRes] =
-    await Promise.all([
-      // call({ ctx, target: auraRewards.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-      call({ ctx, target: auraRewards.address, params: [], abi: abi.reductionPerCliff }),
-      call({ ctx, target: auraRewards.address, params: [], abi: abi.EMISSIONS_MAX_SUPPLY }),
-      call({ ctx, target: auraRewards.address, params: [], abi: abi.totalSupply }),
-      call({ ctx, target: auraRewards.address, params: [], abi: abi.totalCliffs }),
-    ])
+  const [auraReductionPerCliffRes, auraMaxSupplyRes, auraTotalSupplyRes, auraTotalCliffsRes] = await Promise.all([
+    call({ ctx, target: auraRewards.address, params: [], abi: abi.reductionPerCliff }),
+    call({ ctx, target: auraRewards.address, params: [], abi: abi.EMISSIONS_MAX_SUPPLY }),
+    call({ ctx, target: auraRewards.address, params: [], abi: abi.totalSupply }),
+    call({ ctx, target: auraRewards.address, params: [], abi: abi.totalCliffs }),
+  ])
 
-  // const balEarned = BigNumber.from(balanceOfRes.output)
   const reductionPerCliff = BigNumber.from(auraReductionPerCliffRes.output)
   const maxSupply = BigNumber.from(auraMaxSupplyRes.output)
   const totalSupply = BigNumber.from(auraTotalSupplyRes.output)
