@@ -1,13 +1,10 @@
-import { BaseContext, GetBalancesHandler } from '@lib/adapter'
-import { Contract } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getPoolsBalances } from '@lib/pools'
 import { Token } from '@lib/token'
 
-import { getGaugesBalances, getGaugesContracts } from '../common/gauges'
-import { getPoolsContracts } from '../common/pools'
-import { getRegistries } from '../common/registries'
+import { getGaugesBalances } from './balances'
 import { getLockerBalances } from './locker'
+import { getGaugesContracts, getPoolsContracts } from './pools'
 
 const CRV: Token = {
   chain: 'ethereum',
@@ -16,11 +13,10 @@ const CRV: Token = {
   symbol: 'CRV',
 }
 
-const TriCrv: Token = {
+const locker: Contract = {
   chain: 'ethereum',
-  address: '0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490',
-  decimals: 18,
-  symbol: '3Crv',
+  address: '0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2',
+  name: 'Locker',
 }
 
 const feeDistributor: Contract = {
@@ -29,30 +25,30 @@ const feeDistributor: Contract = {
   name: 'FeeDistributor',
 }
 
-const locker: Contract = {
+const metaRegistry: Contract = {
+  name: 'Curve Metaregistry',
   chain: 'ethereum',
-  address: '0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2',
-  name: 'Locker',
+  address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
+}
+
+const gaugeController: Contract = {
+  name: 'Curve Gauge Controller',
+  chain: 'ethereum',
+  address: '0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap', 'cryptoFactory'])
-  const pools = await getPoolsContracts(ctx, registries)
-  const gauges = await getGaugesContracts(ctx, registries, pools, CRV)
+  const pools = await getPoolsContracts(ctx, metaRegistry)
+  const gauges = await getGaugesContracts(ctx, gaugeController, pools, CRV)
 
   return {
-    contracts: {
-      pools,
-      gauges,
-      locker,
-    },
+    contracts: { pools, gauges, metaRegistry, locker },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (ctx, pools) => getPoolsBalances(ctx, pools, { getPoolAddress: (contract) => contract.pool }),
-    gauges: getGaugesBalances,
+    gauges: (...args) => getGaugesBalances(...args, metaRegistry),
     locker: (...args) => getLockerBalances(...args, feeDistributor),
   })
 

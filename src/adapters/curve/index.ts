@@ -16,4 +16,10 @@ const adapter: Adapter = {
   polygon,
 }
 
+/**
+ * TODO:
+ * - Extra rewards logics on ethereum
+ * - Altchains
+ */
+
 export default adapter
