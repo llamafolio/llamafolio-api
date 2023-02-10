@@ -134,6 +134,7 @@ export async function getGaugesContracts(
           const gaugeContract: Contract = {
             chain: ctx.chain,
             address: gauge,
+            gauge: gauge,
             pool: pool.pool,
             lpToken: pool.lpToken,
             yieldKey: pool.lpToken,

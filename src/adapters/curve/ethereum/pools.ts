@@ -197,7 +197,7 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
     if (
       !isSuccess(gaugeRes) ||
       // inactive gauges has been replaced by AddressZero in curve registry
-      gaugeRes.output == ethers.constants.AddressZero ||
+      // gaugeRes.output == ethers.constants.AddressZero ||
       !isSuccess(gaugeTypeRes) ||
       !isSuccess(poolNameRes) ||
       !isSuccess(lpTokenRes) ||
@@ -213,7 +213,7 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
 
     poolContracts.push({
       ...pools[poolIdx],
-      address: gaugeRes.output,
+      // address: lpTokenRes.output,
       name: poolNameRes.output,
       symbol: `${poolNameRes.output}-gauge`,
       gauge: gaugeRes.output,
@@ -280,6 +280,7 @@ export async function getGaugesContracts(ctx: BaseContext, gaugeController: Cont
     if (gaugeDetails != undefined) {
       gaugeContracts.push({
         ...gaugeDetails,
+        address: gauge.address,
       })
     }
   }
