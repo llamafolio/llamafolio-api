@@ -4,6 +4,13 @@ import { resolveBalances } from '@lib/balance'
 import { getBondsBalances, getBondsContracts } from '../common/bond'
 import { getFormattedStakeBalances, getStakeBalances } from '../common/stake'
 
+const sOHM_deprecated: Contract = {
+  chain: 'ethereum',
+  address: '0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f',
+  symbol: 'sOHM',
+  decimals: 9,
+}
+
 const sOHM: Contract = {
   name: 'Staked OHM',
   chain: 'ethereum',
@@ -28,15 +35,16 @@ const bondOHM: Contract = {
 
 export const getContracts = async (ctx: BaseContext) => {
   const bonds = await getBondsContracts(ctx, bondOHM)
+  const stakers = [sOHM, sOHM_deprecated]
 
   return {
-    contracts: { sOHM, gOHM, bondOHM, bonds },
+    contracts: { stakers, gOHM, bondOHM, bonds },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    sOHM: getStakeBalances,
+    stakers: getStakeBalances,
     gOHM: getFormattedStakeBalances,
     bonds: getBondsBalances,
   })
