@@ -25,7 +25,7 @@ const feeDistributor: Contract = {
   name: 'FeeDistributor',
 }
 
-const registry: Contract = {
+const metaRegistry: Contract = {
   name: 'Curve Metaregistry',
   chain: 'ethereum',
   address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
@@ -38,17 +38,17 @@ const gaugeController: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getPoolsContracts(ctx, registry)
+  const pools = await getPoolsContracts(ctx, metaRegistry)
   const gauges = await getGaugesContracts(ctx, gaugeController, pools, CRV)
 
   return {
-    contracts: { pools, gauges, registry, locker },
+    contracts: { pools, gauges, metaRegistry, locker },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    gauges: (...args) => getGaugesBalances(...args, registry),
+    gauges: (...args) => getGaugesBalances(...args, metaRegistry),
     locker: (...args) => getLockerBalances(...args, feeDistributor),
   })
 

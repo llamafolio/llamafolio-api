@@ -220,13 +220,7 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]
     gaugesBaseBalances.push({ ...gaugesBalancesRes[gaugeIdx], rewards: gaugeRewards })
   }
 
-  /**
-   *
-   *              [WIP]
-   *  Attempt to find extra rewards
-   *
-   */
-
+  // TODO: get extra rewards
   // for (const gaugesBaseBalance of gaugesBaseBalances) {
   //   const rewards = gaugesBaseBalance.rewards
   //   if (!rewards) {
@@ -246,13 +240,7 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]
   return gaugesBaseBalances
 }
 
-/**
- *
- *              [WIP]
- *  Attempt to find extra rewards
- *
- */
-
+// TODO: get extra rewards
 // const getExtraRewards = async (ctx: BalancesContext, pools: Contract[]) => {
 //   const gaugeWithoutExtraRewardsContracts: Contract[] = []
 //   const gaugeWithExtraRewardsContracts: Contract[] = []

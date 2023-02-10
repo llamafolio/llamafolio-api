@@ -1,4 +1,4 @@
-import { getPoolsBalances as getCurvePoolsBalances, getPoolsFromLpTokens } from '@adapters/curve/common/meta-registry'
+import { getPoolsBalances as getCurvePoolsBalances, getPoolsFromLpTokens } from '@adapters/curve/ethereum/meta-registry'
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { keyBy, range } from '@lib/array'
 import { call } from '@lib/call'
