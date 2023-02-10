@@ -54,7 +54,7 @@ export async function getLockerBalances(
   const [balanceOf, lockedEndRes, supplyRes, tokensBalancesRes] = await Promise.all([
     call({ ctx, target: votingEscrow.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: votingEscrow.address, params: [ctx.address], abi: abi.locked__end }),
-    call({ ctx, target: votingEscrow.address, params: [], abi: abi.supply }),
+    call({ ctx, target: votingEscrow.address, params: [], abi: erc20Abi.totalSupply }),
     call({
       ctx,
       target: vault.address,
