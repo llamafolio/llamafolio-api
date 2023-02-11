@@ -1,6 +1,4 @@
 import { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
-import { call } from '@lib/call'
 import { Call, multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -173,35 +171,14 @@ const abi = {
     type: 'function',
     gas: 2220,
   },
-}
-
-async function getStableFactoryBasePools(ctx: BaseContext, stableFactory: string) {
-  const basePoolCountRes = await call({
-    ctx,
-    target: stableFactory,
-    abi: abi.base_pool_count,
-  })
-
-  const basePoolCount = parseInt(basePoolCountRes.output)
-
-  const basePoolsRes = await multicall({
-    ctx,
-    calls: range(0, basePoolCount).map((poolIdx) => ({ target: stableFactory, params: [poolIdx] })),
-    abi: abi.base_pool_list,
-  })
-
-  const basePoolsCoinsRes = await multicall({
-    ctx,
-    calls: basePoolsRes
-      .filter(isSuccess)
-      .map((res) => res.output)
-      .flatMap((pool) => range(0, 4).map((coinIdx) => ({ target: pool, params: [coinIdx] }))),
-    abi: abi.coins,
-  })
-
-  // TODO:
-  // - make getPoolsContracts more generic ? all pools have the "coins" function to get underlyings
-  // - dissociate multicall errors and no coin error
+  get_underlying_coins: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_underlying_coins',
+    inputs: [{ name: '_pool', type: 'address' }],
+    outputs: [{ name: '', type: 'address[8]' }],
+    gas: 21345,
+  },
 }
 
 export interface PoolContract extends Contract {
@@ -268,18 +245,8 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
   }
 
   const [lpTokensRes, poolNamesRes, ...registriesCoins] = await Promise.all([
-    multicall<string, [string], string>({
-      ctx,
-      // TODO: no need to fetch LP tokens for Factory regisitries
-      calls,
-      abi: abi.get_lp_token,
-    }),
-
-    multicall<string, [string], string>({
-      ctx,
-      calls,
-      abi: abi.get_pool_name,
-    }),
+    multicall<string, [string], string>({ ctx, calls, abi: abi.get_lp_token }),
+    multicall<string, [string], string>({ ctx, calls, abi: abi.get_pool_name }),
 
     ...registriesIds.map((registryId, registryIdx) =>
       multicall<string, [string], string[]>({

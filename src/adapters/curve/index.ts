@@ -1,4 +1,4 @@
-// import * as arbitrum from '@adapters/curve/arbitrum'
+import * as arbitrum from '@adapters/curve/arbitrum'
 // import * as avax from '@adapters/curve/avax'
 import * as ethereum from '@adapters/curve/ethereum'
 // import * as fantom from '@adapters/curve/fantom'
@@ -8,7 +8,7 @@ import { Adapter } from '@lib/adapter'
 
 const adapter: Adapter = {
   id: 'curve',
-  // arbitrum,
+  arbitrum,
   // avax,
   ethereum,
   // fantom,

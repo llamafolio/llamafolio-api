@@ -64,38 +64,22 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
-
-export async function getLpCurveBalances(
-  ctx: BalancesContext,
-  pools: Contract[],
-  metaRegistry: Contract,
-): Promise<Balance[]> {
-  const balances: Balance[] = []
-
-  const lpBalances = await getPoolBalances(ctx, pools, metaRegistry)
-
-  for (const lpBalance of lpBalances) {
-    const underlyings = lpBalance.underlyings as Contract[]
-
-    if (!underlyings) {
-      continue
-    }
-
-    //  Tokemak reactor's underlyings act as duplicate with abnormal balances because tTokens are not known.
-    //  The following if...else fix it by using common underlyings for each Tokemak lpTokens as `Debank` does
-
-    if (underlyings[0].symbol !== `t${underlyings[1].symbol}`) {
-      balances.push(lpBalance)
-    } else {
-      balances.push({
-        ...lpBalance,
-        underlyings: [{ ...underlyings[1], amount: underlyings[1].amount.add(underlyings[0].amount) }],
-      })
-    }
-  }
-
-  return balances
+  get_decimals: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_decimals',
+    inputs: [{ name: '_pool', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256[8]' }],
+    gas: 9818,
+  },
+  get_balances: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_balances',
+    inputs: [{ name: '_pool', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256[8]' }],
+    gas: 41626,
+  },
 }
 
 interface PoolBalance extends Balance {
@@ -104,7 +88,7 @@ interface PoolBalance extends Balance {
   totalSupply?: BigNumber
 }
 
-const getPoolBalances = async (ctx: BalancesContext, pools: Contract[], registry: Contract): Promise<Balance[]> => {
+const getPoolBalances = async (ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> => {
   const poolBalances: Balance[] = []
 
   const calls: Call[] = []
@@ -137,23 +121,23 @@ const getPoolBalances = async (ctx: BalancesContext, pools: Contract[], registry
   // There is no need to look for underlyings balances if pool balances is null
   const nonZeroPoolBalances = poolBalances.filter((res) => res.amount.gt(0))
 
-  return getUnderlyingsPoolsBalances(ctx, nonZeroPoolBalances, registry)
+  return getUnderlyingsPoolsBalances(ctx, nonZeroPoolBalances)
 }
 
-const getUnderlyingsPoolsBalances = async (ctx: BalancesContext, pools: PoolBalance[], registry: Contract) => {
+const getUnderlyingsPoolsBalances = async (ctx: BalancesContext, pools: PoolBalance[]) => {
   const underlyingsBalancesInPools: Balance[] = []
 
   const calls: Call[] = []
   const suppliesCalls: Call[] = []
   for (const pool of pools as Contract[]) {
-    calls.push({ target: registry.address, params: [pool.pool] })
+    calls.push({ target: pool.registry, params: [pool.pool] })
     suppliesCalls.push({ target: pool.lpToken, params: [] })
   }
 
   const [totalSuppliesRes, underlyingsBalanceOfRes, underlyingsDecimalsRes] = await Promise.all([
     multicall({ ctx, calls: suppliesCalls, abi: erc20Abi.totalSupply }),
-    multicall({ ctx, calls, abi: abi.get_underlying_balances }),
-    multicall({ ctx, calls, abi: abi.get_underlying_decimals }),
+    multicall({ ctx, calls, abi: abi.get_balances }),
+    multicall({ ctx, calls, abi: abi.get_decimals }),
   ])
 
   let balanceOfIdx = 0
@@ -209,11 +193,11 @@ const getUnderlyingsPoolsBalances = async (ctx: BalancesContext, pools: PoolBala
   return underlyingsBalancesInPools
 }
 
-export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[], registry: Contract) {
+export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]) {
   const uniqueRewards: Balance[] = []
   const nonUniqueRewards: Balance[] = []
 
-  const gaugesBalancesRes = await getPoolBalances(ctx, gauges, registry)
+  const gaugesBalancesRes = await getPoolBalances(ctx, gauges)
 
   const calls: Call[] = []
   for (const gaugesBalance of gaugesBalancesRes) {
