@@ -78,38 +78,18 @@ const abi = {
     stableSwap: {
       stateMutability: 'view',
       type: 'function',
-      name: 'get_coins',
-      inputs: [
-        {
-          name: '_pool',
-          type: 'address',
-        },
-      ],
-      outputs: [
-        {
-          name: '',
-          type: 'address[8]',
-        },
-      ],
-      gas: 12102,
+      name: 'get_underlying_coins',
+      inputs: [{ name: '_pool', type: 'address' }],
+      outputs: [{ name: '', type: 'address[8]' }],
+      gas: 21345,
     },
     stableFactory: {
       stateMutability: 'view',
       type: 'function',
-      name: 'get_coins',
-      inputs: [
-        {
-          name: '_pool',
-          type: 'address',
-        },
-      ],
-      outputs: [
-        {
-          name: '',
-          type: 'address[4]',
-        },
-      ],
-      gas: 9164,
+      name: 'get_underlying_coins',
+      inputs: [{ name: '_pool', type: 'address' }],
+      outputs: [{ name: '', type: 'address[8]' }],
+      gas: 21345,
     },
     cryptoSwap: {
       stateMutability: 'view',
@@ -187,11 +167,6 @@ export interface PoolContract extends Contract {
   registry: string
   registryId: Registry
 }
-
-// TODO:
-// - stable factory base pools
-// - resolve meta pools LP tokens -> underlyings
-// - unwrap custom LP tokens (Yearn etc)
 
 export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Record<Registry, string>>) {
   const poolContracts: PoolContract[] = []

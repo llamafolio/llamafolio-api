@@ -1,9 +1,9 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getPoolsBalances } from '@lib/pools'
+// import { getPoolsBalances } from '@lib/pools'
 import { Token } from '@lib/token'
 
-import { getGaugesBalances } from '../common/balance'
+import { getGaugesBalances, getPoolsBalances } from '../common/balance'
 import { getGaugesContracts } from '../common/gauges'
 import { getPoolsContracts } from '../common/pools'
 import { getRegistries } from '../common/registries'
@@ -35,15 +35,9 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (ctx, pools) => getPoolsBalances(ctx, pools, { getPoolAddress: (contract) => contract.pool }),
+    pools: (ctx, pools) => getPoolsBalances(ctx, pools, undefined, true),
     gauges: (...args) => getGaugesBalances(...args),
   })
-
-  for (const balance of balances) {
-    if (balance.amount.gt(0)) {
-      console.log(balance)
-    }
-  }
 
   return {
     balances,

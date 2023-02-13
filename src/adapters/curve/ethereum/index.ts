@@ -2,8 +2,9 @@ import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
-import { getGaugesBalances, getLpCurveBalances } from './balances'
+import { getGaugesBalances } from '../common/balance'
 import { getLockerBalances } from './locker'
+import { getLpCurveBalances } from './lpBalance'
 import { getGaugesContracts, getPoolsContracts } from './pools'
 
 const CRV: Token = {

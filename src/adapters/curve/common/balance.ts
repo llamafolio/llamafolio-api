@@ -88,7 +88,12 @@ interface PoolBalance extends Balance {
   totalSupply?: BigNumber
 }
 
-const getPoolBalances = async (ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> => {
+export async function getPoolsBalances(
+  ctx: BalancesContext,
+  pools: Contract[],
+  registry?: Contract,
+  underlyingsAbi?: boolean,
+): Promise<Balance[]> {
   const poolBalances: Balance[] = []
 
   const calls: Call[] = []
@@ -121,23 +126,39 @@ const getPoolBalances = async (ctx: BalancesContext, pools: Contract[]): Promise
   // There is no need to look for underlyings balances if pool balances is null
   const nonZeroPoolBalances = poolBalances.filter((res) => res.amount.gt(0))
 
-  return getUnderlyingsPoolsBalances(ctx, nonZeroPoolBalances)
+  return getUnderlyingsPoolsBalances(ctx, nonZeroPoolBalances, registry, underlyingsAbi)
 }
 
-const getUnderlyingsPoolsBalances = async (ctx: BalancesContext, pools: PoolBalance[]) => {
+const getUnderlyingsPoolsBalances = async (
+  ctx: BalancesContext,
+  pools: PoolBalance[],
+  registry?: Contract,
+  underlyingsAbi?: boolean,
+): Promise<Balance[]> => {
   const underlyingsBalancesInPools: Balance[] = []
 
   const calls: Call[] = []
   const suppliesCalls: Call[] = []
+  let optionAbiBalances = {}
+  let optionAbiDecimals = {}
+
   for (const pool of pools as Contract[]) {
-    calls.push({ target: pool.registry, params: [pool.pool] })
+    calls.push({ target: registry ? registry.address : pool.registry, params: [pool.pool] })
     suppliesCalls.push({ target: pool.lpToken, params: [] })
+
+    if (underlyingsAbi !== true) {
+      optionAbiBalances = abi.get_balances
+      optionAbiDecimals = abi.get_decimals
+    } else {
+      optionAbiBalances = abi.get_underlying_balances
+      optionAbiDecimals = abi.get_underlying_decimals
+    }
   }
 
   const [totalSuppliesRes, underlyingsBalanceOfRes, underlyingsDecimalsRes] = await Promise.all([
     multicall({ ctx, calls: suppliesCalls, abi: erc20Abi.totalSupply }),
-    multicall({ ctx, calls, abi: abi.get_balances }),
-    multicall({ ctx, calls, abi: abi.get_decimals }),
+    multicall({ ctx, calls, abi: optionAbiBalances }),
+    multicall({ ctx, calls, abi: optionAbiDecimals }),
   ])
 
   let balanceOfIdx = 0
@@ -193,11 +214,16 @@ const getUnderlyingsPoolsBalances = async (ctx: BalancesContext, pools: PoolBala
   return underlyingsBalancesInPools
 }
 
-export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]) {
+export async function getGaugesBalances(
+  ctx: BalancesContext,
+  gauges: Contract[],
+  registry?: Contract,
+  underlyingsAbi?: boolean,
+) {
   const uniqueRewards: Balance[] = []
   const nonUniqueRewards: Balance[] = []
 
-  const gaugesBalancesRes = await getPoolBalances(ctx, gauges)
+  const gaugesBalancesRes = await getPoolsBalances(ctx, gauges, registry, underlyingsAbi)
 
   const calls: Call[] = []
   for (const gaugesBalance of gaugesBalancesRes) {
