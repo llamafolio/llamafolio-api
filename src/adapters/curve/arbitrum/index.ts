@@ -1,6 +1,5 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-// import { getPoolsBalances } from '@lib/pools'
 import { Token } from '@lib/token'
 
 import { getGaugesBalances, getPoolsBalances } from '../common/balance'
