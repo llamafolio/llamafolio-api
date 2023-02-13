@@ -1,4 +1,5 @@
-import { LLAMANODES_API_KEY } from '../../env'
+import { LLAMANODES_API_KEY, OPTIMISM_RPC } from '../../env'
+import { isNotNullish } from './type'
 
 export declare type Chain =
   | 'ethereum'
@@ -25,16 +26,12 @@ export const chains: IChainInfo[] = [
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
-    rpcUrl: [
-      // `https://arbitrum-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
-      'https://arb1.arbitrum.io/rpc',
-    ],
+    rpcUrl: ['https://arb1.arbitrum.io/rpc'],
   },
   {
     id: 'avax',
     chainId: 43114,
     name: 'Avalanche',
-    // TODO: LlamaNodes RPC
     rpcUrl: [`https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc`],
   },
   {
@@ -42,7 +39,6 @@ export const chains: IChainInfo[] = [
     chainId: 56,
     name: 'BNB Chain',
     rpcUrl: [
-      // `https://bsc-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://bsc-dataseed.binance.org/',
       'https://bsc-dataseed1.defibit.io/',
       'https://bsc-dataseed1.ninicoin.io/',
@@ -54,7 +50,6 @@ export const chains: IChainInfo[] = [
     id: 'celo',
     chainId: 42220,
     name: 'Celo',
-    // TODO: LlamaNodes RPC
     rpcUrl: [`https://forno.celo.org`],
   },
   {
@@ -73,18 +68,12 @@ export const chains: IChainInfo[] = [
     id: 'fantom',
     chainId: 250,
     name: 'Fantom',
-    rpcUrl: [
-      // `https://ftm.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
-      'https://rpc.ankr.com/fantom',
-      'https://rpc.ftm.tools/',
-      'https://rpcapi.fantom.network',
-    ],
+    rpcUrl: ['https://rpc.ankr.com/fantom', 'https://rpc.ftm.tools/', 'https://rpcapi.fantom.network'],
   },
   {
     id: 'harmony',
     chainId: 1666600000,
     name: 'Harmony',
-    // TODO: LlamaNodes RPC
     rpcUrl: [
       `https://api.harmony.one`,
       'https://harmony-0-rpc.gateway.pokt.network',
@@ -106,21 +95,13 @@ export const chains: IChainInfo[] = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcUrl: [
-      // `https://optimism-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
-      'https://mainnet.optimism.io/',
-      'https://rpc.ankr.com/optimism',
-    ],
+    rpcUrl: ['https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism', OPTIMISM_RPC].filter(isNotNullish),
   },
   {
     id: 'xdai',
     chainId: 100,
     name: 'Gnosis Chain',
-    rpcUrl: [
-      // `https://gnosis-ski.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
-      'https://rpc.ankr.com/gnosis',
-      'https://xdai-archive.blockscout.com',
-    ],
+    rpcUrl: ['https://rpc.ankr.com/gnosis', 'https://xdai-archive.blockscout.com'],
   },
 ]
 
