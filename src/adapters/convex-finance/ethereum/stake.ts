@@ -6,13 +6,6 @@ import { BigNumber } from 'ethers'
 
 import { getCvxCliffRatio } from './utils'
 
-const cvxCRV: Token = {
-  chain: 'ethereum',
-  address: '0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7',
-  symbol: 'cvxCRV',
-  decimals: 18,
-}
-
 const abi = {
   earned: {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
@@ -23,7 +16,19 @@ const abi = {
   },
 }
 
-export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contract, CVX: Contract, CRV: Contract) {
+const cvxCRV: Token = {
+  chain: 'ethereum',
+  address: '0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7',
+  symbol: 'cvxCRV',
+  decimals: 18,
+}
+
+export async function getCvxCrvStakeBalance(
+  ctx: BalancesContext,
+  cvxCrv: Contract,
+  CVX: Contract,
+  CRV: Contract,
+): Promise<Balance> {
   const [balanceOfRes, crvEarnedRes, cvxTotalSupplyRes] = await Promise.all([
     call({
       ctx,
@@ -57,7 +62,7 @@ export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contra
     rewards.push({ ...CRV, amount: crvEarned } as Balance, { ...CVX, amount: cvxEarned } as Balance)
   }
 
-  const balance: Balance = {
+  return {
     chain: ctx.chain,
     address: cvxCRV.address,
     symbol: cvxCRV.symbol,
@@ -66,11 +71,14 @@ export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contra
     rewards,
     category: 'stake',
   }
-
-  return balance
 }
 
-export async function getCVXStakeBalance(ctx: BalancesContext, cvxRewardPool: Contract, CVX: Contract, CRV: Contract) {
+export async function getCVXStakeBalance(
+  ctx: BalancesContext,
+  cvxRewardPool: Contract,
+  CVX: Contract,
+  CRV: Contract,
+): Promise<Balance> {
   const [balanceOfRes, earnedRes] = await Promise.all([
     call({
       ctx,
@@ -90,7 +98,7 @@ export async function getCVXStakeBalance(ctx: BalancesContext, cvxRewardPool: Co
   const balanceOf = BigNumber.from(balanceOfRes.output)
   const earned = BigNumber.from(earnedRes.output)
 
-  const balance: Balance = {
+  return {
     chain: ctx.chain,
     address: CVX.address,
     symbol: CVX.symbol,
@@ -99,6 +107,4 @@ export async function getCVXStakeBalance(ctx: BalancesContext, cvxRewardPool: Co
     rewards: [{ ...CRV, amount: earned }],
     category: 'stake',
   }
-
-  return balance
 }

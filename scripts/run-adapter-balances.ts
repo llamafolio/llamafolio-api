@@ -120,8 +120,8 @@ async function main() {
           symbol: balance.symbol,
           balance: millify(balance.amount / 10 ** balance.decimals),
           balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-          stable: balance.stable,
-          type: balance.type,
+          // stable: balance.stable,
+          // type: balance.type,
         }
 
         if (balance.rewards) {
