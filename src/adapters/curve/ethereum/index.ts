@@ -2,8 +2,9 @@ import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
-import { getGaugesBalances } from './balances'
+import { getGaugesBalances } from '../common/balance'
 import { getLockerBalances } from './locker'
+import { getLpCurveBalances } from './lpBalance'
 import { getGaugesContracts, getPoolsContracts } from './pools'
 
 const CRV: Token = {
@@ -42,13 +43,14 @@ export const getContracts = async (ctx: BaseContext) => {
   const gauges = await getGaugesContracts(ctx, gaugeController, pools, CRV)
 
   return {
-    contracts: { pools, gauges, metaRegistry, locker },
+    contracts: { gauges, pools, metaRegistry, locker },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    gauges: (...args) => getGaugesBalances(...args, metaRegistry),
+    pools: (...args) => getLpCurveBalances(...args, metaRegistry),
+    gauges: (...args) => getGaugesBalances(...args, metaRegistry, true),
     locker: (...args) => getLockerBalances(...args, feeDistributor),
   })
 

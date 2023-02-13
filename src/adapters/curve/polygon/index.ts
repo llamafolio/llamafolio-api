@@ -1,9 +1,9 @@
-import { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getPoolsBalances } from '@lib/pools'
 import { Token } from '@lib/token'
 
-import { getGaugesBalances, getGaugesContracts } from '../common/gauges'
+import { getGaugesBalances, getPoolsBalances } from '../common/balance'
+import { getGaugesContracts } from '../common/gauges'
 import { getPoolsContracts } from '../common/pools'
 import { getRegistries } from '../common/registries'
 
@@ -14,23 +14,28 @@ const CRV: Token = {
   symbol: 'CRV',
 }
 
+const xChainGaugesFactory: Contract = {
+  chain: 'polygon',
+  address: '0xabC000d88f23Bb45525E447528DBF656A9D55bf5',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
   const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap', 'cryptoFactory'])
   const pools = await getPoolsContracts(ctx, registries)
-  const gauges = await getGaugesContracts(ctx, registries, pools, CRV)
+  const gauges = await getGaugesContracts(ctx, pools, xChainGaugesFactory, CRV)
 
   return {
     contracts: {
-      pools,
       gauges,
+      pools,
     },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (ctx, pools) => getPoolsBalances(ctx, pools, { getPoolAddress: (contract) => contract.pool }),
-    gauges: getGaugesBalances,
+    pools: (ctx, pools) => getPoolsBalances(ctx, pools, undefined, true),
+    gauges: (...args) => getGaugesBalances(...args),
   })
 
   return {

@@ -64,23 +64,44 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  get_decimals: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_decimals',
+    inputs: [{ name: '_pool', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256[8]' }],
+    gas: 9818,
+  },
+  get_balances: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_balances',
+    inputs: [{ name: '_pool', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256[8]' }],
+    gas: 41626,
+  },
 }
 
-export interface PoolBalance extends Balance {
+interface PoolBalance extends Balance {
   pool?: string
   lpToken?: string
   totalSupply?: BigNumber
 }
 
-export async function getPoolBalances(ctx: BalancesContext, pools: Contract[], registry: Contract) {
+export async function getPoolsBalances(
+  ctx: BalancesContext,
+  pools: Contract[],
+  registry?: Contract,
+  underlyingsAbi?: boolean,
+): Promise<Balance[]> {
   const poolBalances: Balance[] = []
 
-  const poolBalanceCalls = pools.map((pool) => ({
-    target: pool.gauge,
-    params: ctx.address,
-  }))
+  const calls: Call[] = []
+  for (const pool of pools) {
+    calls.push({ target: pool.address, params: [ctx.address] })
+  }
 
-  const poolsBalancesOfRes = await multicall({ ctx, calls: poolBalanceCalls, abi: erc20Abi.balanceOf })
+  const poolsBalancesOfRes = await multicall({ ctx, calls, abi: erc20Abi.balanceOf })
 
   let poolIdx = 0
   for (let balanceIdx = 0; balanceIdx < pools.length; balanceIdx++) {
@@ -105,33 +126,39 @@ export async function getPoolBalances(ctx: BalancesContext, pools: Contract[], r
   // There is no need to look for underlyings balances if pool balances is null
   const nonZeroPoolBalances = poolBalances.filter((res) => res.amount.gt(0))
 
-  return getUnderlyingsPoolsBalances(ctx, nonZeroPoolBalances, registry)
+  return getUnderlyingsPoolsBalances(ctx, nonZeroPoolBalances, registry, underlyingsAbi)
 }
 
-const getUnderlyingsPoolsBalances = async (ctx: BalancesContext, pools: PoolBalance[], registry: Contract) => {
+const getUnderlyingsPoolsBalances = async (
+  ctx: BalancesContext,
+  pools: PoolBalance[],
+  registry?: Contract,
+  underlyingsAbi?: boolean,
+): Promise<Balance[]> => {
   const underlyingsBalancesInPools: Balance[] = []
 
   const calls: Call[] = []
+  const suppliesCalls: Call[] = []
+  let optionAbiBalances = {}
+  let optionAbiDecimals = {}
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    calls.push({
-      target: registry.address,
-      params: [(pools[poolIdx] as Contract).pool],
-    })
+  for (const pool of pools as Contract[]) {
+    calls.push({ target: registry ? registry.address : pool.registry, params: [pool.pool] })
+    suppliesCalls.push({ target: pool.lpToken, params: [] })
+
+    if (underlyingsAbi !== true) {
+      optionAbiBalances = abi.get_balances
+      optionAbiDecimals = abi.get_decimals
+    } else {
+      optionAbiBalances = abi.get_underlying_balances
+      optionAbiDecimals = abi.get_underlying_decimals
+    }
   }
 
   const [totalSuppliesRes, underlyingsBalanceOfRes, underlyingsDecimalsRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: pools.map((token) => ({
-        params: [],
-        target: token.lpToken,
-      })),
-      abi: erc20Abi.totalSupply,
-    }),
-
-    multicall({ ctx, calls, abi: abi.get_underlying_balances }),
-    multicall({ ctx, calls, abi: abi.get_underlying_decimals }),
+    multicall({ ctx, calls: suppliesCalls, abi: erc20Abi.totalSupply }),
+    multicall({ ctx, calls, abi: optionAbiBalances }),
+    multicall({ ctx, calls, abi: optionAbiDecimals }),
   ])
 
   let balanceOfIdx = 0
@@ -187,110 +214,62 @@ const getUnderlyingsPoolsBalances = async (ctx: BalancesContext, pools: PoolBala
   return underlyingsBalancesInPools
 }
 
-export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[], registry: Contract) {
-  const gaugesBaseBalances: Balance[] = []
+export async function getGaugesBalances(
+  ctx: BalancesContext,
+  gauges: Contract[],
+  registry?: Contract,
+  underlyingsAbi?: boolean,
+) {
+  const uniqueRewards: Balance[] = []
+  const nonUniqueRewards: Balance[] = []
+
+  const gaugesBalancesRes = await getPoolsBalances(ctx, gauges, registry, underlyingsAbi)
+
   const calls: Call[] = []
-
-  const gaugesBalancesRes = await getPoolBalances(ctx, gauges, registry)
-
-  for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
-    calls.push({ target: gaugesBalancesRes[gaugeIdx].address, params: [ctx.address] })
+  for (const gaugesBalance of gaugesBalancesRes) {
+    gaugesBalance.category = 'farm'
+    calls.push({ target: gaugesBalance.address, params: [ctx.address] })
   }
-
-  // TODO : extra rewards logic
 
   const claimableRewards = await multicall({ ctx, calls, abi: abi.claimable_reward })
 
+  const extraRewardsCalls: Call[] = []
   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
-    const rewards = gaugesBalancesRes[gaugeIdx].rewards || []
-    const gaugeRewards = []
+    const gaugeBalance = gaugesBalancesRes[gaugeIdx]
+    const rewards = gaugeBalance.rewards as Contract[]
+    const claimableReward = claimableRewards[gaugeIdx]
 
-    for (let rewardIdx = 0; rewardIdx < rewards.length; rewardIdx++) {
-      const gaugeRewardsRes = claimableRewards[gaugeIdx]
-      if (!isSuccess(gaugeRewardsRes)) {
-        continue
-      }
-
-      gaugeRewards.push({
-        ...gaugesBalancesRes[gaugeIdx].rewards![rewardIdx],
-        amount: BigNumber.from(claimableRewards[gaugeIdx].output),
-      })
+    if (!rewards || !isSuccess(claimableReward)) {
+      continue
     }
 
-    gaugesBaseBalances.push({ ...gaugesBalancesRes[gaugeIdx], rewards: gaugeRewards })
+    // rewards[0] is the common rewards for all pools: CRV
+    rewards[0].amount = BigNumber.from(claimableReward.output)
+
+    if (rewards.length != 2) {
+      uniqueRewards.push(gaugeBalance)
+      continue
+    }
+
+    for (let rewardIdx = 1; rewardIdx < rewards.length; rewardIdx++) {
+      const reward = rewards[rewardIdx]
+      extraRewardsCalls.push({ target: (gaugeBalance as Contract).gauge, params: [ctx.address, reward.address] })
+      nonUniqueRewards.push(gaugeBalance)
+    }
   }
 
-  // TODO: get extra rewards
-  // for (const gaugesBaseBalance of gaugesBaseBalances) {
-  //   const rewards = gaugesBaseBalance.rewards
-  //   if (!rewards) {
-  //     continue
-  //   }
-  //   if (rewards.length > 1) {
-  //     gaugeWithExtraRewardsBalances.push(gaugesBaseBalance)
-  //   }
-  // }
+  const extraRewardsRes = await multicall({ ctx, calls: extraRewardsCalls, abi: abi.claimable_extra_reward })
 
-  // const extraRewardsGaugesBalances = await getExtraRewards(ctx, gaugeWithExtraRewardsBalances)
+  for (let idx = 0; idx < nonUniqueRewards.length; idx++) {
+    const rewards = nonUniqueRewards[idx].rewards
+    const extraRewardRes = extraRewardsRes[idx]
 
-  for (const gaugesBaseBalance of gaugesBaseBalances) {
-    gaugesBaseBalance.category = 'stake'
+    if (!rewards || !isSuccess(extraRewardRes)) {
+      continue
+    }
+
+    rewards[1].amount = BigNumber.from(extraRewardRes.output)
   }
 
-  return gaugesBaseBalances
+  return [...uniqueRewards, ...nonUniqueRewards]
 }
-
-// TODO: get extra rewards
-// const getExtraRewards = async (ctx: BalancesContext, pools: Contract[]) => {
-//   const gaugeWithoutExtraRewardsContracts: Contract[] = []
-//   const gaugeWithExtraRewardsContracts: Contract[] = []
-
-//   const extraRewardsContractsCalls: Call[] = []
-//   for (const pool of pools) {
-//     extraRewardsContractsCalls.push({ target: pool.address, params: [] })
-//   }
-
-//   const extraRewardsContractsRes = await multicall({ ctx, calls: extraRewardsContractsCalls, abi: abi.reward_contract })
-
-//   let extraRewardsContractIdx = 0
-//   for (let gaugeIdx = 0; gaugeIdx < pools.length; gaugeIdx++) {
-//     const pool = pools[gaugeIdx]
-//     const extraRewardsContractRes = extraRewardsContractsRes[extraRewardsContractIdx]
-
-//     if (!isSuccess(extraRewardsContractRes)) {
-//       gaugeWithoutExtraRewardsContracts.push(pool)
-//       continue
-//     }
-
-//     pool.rewardContract = extraRewardsContractRes.output
-
-//     gaugeWithExtraRewardsContracts.push(pool)
-//     extraRewardsContractIdx++
-//   }
-
-//   const extraRewardsBalancesCalls: Call[] = []
-//   for (const gaugeWithExtraRewardsContract of gaugeWithExtraRewardsContracts) {
-//     extraRewardsBalancesCalls.push({
-//       target: gaugeWithExtraRewardsContract.rewardContract,
-//       params: [gaugeWithExtraRewardsContract.address],
-//     })
-//   }
-
-//   const extraRewardsBalancesRes = await multicall({ ctx, calls: extraRewardsBalancesCalls, abi: abi.earned })
-
-//   for (let gaugeIdx = 0; gaugeIdx < gaugeWithExtraRewardsContracts.length; gaugeIdx++) {
-//     const rewards = gaugeWithExtraRewardsContracts[gaugeIdx].rewards![1]
-//     if (!rewards) {
-//       continue
-//     }
-
-//     const extraRewardsBalanceRes = extraRewardsBalancesRes[gaugeIdx]
-//     if (!isSuccess(extraRewardsBalanceRes)) {
-//       continue
-//     }
-
-//     ;(rewards as Balance).amount = BigNumber.from(extraRewardsBalanceRes.output)
-//   }
-
-//   return [...gaugeWithExtraRewardsContracts, ...gaugeWithoutExtraRewardsContracts]
-// }
