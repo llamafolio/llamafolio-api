@@ -19,7 +19,6 @@ export async function getLpCurveBalances(
     }
 
     //  Tokemak reactor's underlyings act as duplicate with abnormal balances because tTokens are not known.
-    //  The following if...else fix it by using common underlyings for each Tokemak lpTokens as `Debank` does
 
     if (underlyings[0].symbol !== `t${underlyings[1].symbol}`) {
       balances.push(lpBalance)
