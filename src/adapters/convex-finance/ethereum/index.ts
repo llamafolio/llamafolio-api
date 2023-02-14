@@ -1,9 +1,11 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getPoolsBalances } from '@adapters/curve/common/balance'
+import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
+import { getConvexGaugesBalances } from './balance'
 import { getLockerBalances } from './locker'
-import { getPoolsBalances, getPoolsContracts } from './pool'
+import { getPoolsContracts } from './pool'
 import { getCvxCrvStakeBalance, getCVXStakeBalance } from './stake'
 
 const cvxCRV: Token = {
@@ -25,6 +27,11 @@ const CVX: Token = {
   address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b',
   symbol: 'CVX',
   decimals: 18,
+}
+
+const metaRegistry: Contract = {
+  chain: 'ethereum',
+  address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
 }
 
 const cvxRewardPool: Contract = {
@@ -61,16 +68,25 @@ export const getContracts = async (ctx: BaseContext) => {
   const pools = await getPoolsContracts(ctx, booster)
 
   return {
-    contracts: { cvxCRVStaker, locker, pools, cvxRewardPool },
+    contracts: {
+      cvxCRVStaker,
+      cvxRewardPool,
+      locker,
+      pools,
+    },
   }
+}
+
+const getConvexPsBalances = async (ctx: BalancesContext, pools: Contract[], registry: Contract) => {
+  return Promise.all([getPoolsBalances(ctx, pools, registry), getConvexGaugesBalances(ctx, pools, registry)])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getPoolsBalances(...args, CVX, CRV),
-    cvxRewardPool: (...args) => getCVXStakeBalance(...args, CVX, CRV),
-    cvxCRVStaker: (...args) => getCvxCrvStakeBalance(...args, CVX, CRV),
-    locker: (...args) => getLockerBalances(...args, CVX),
+    pools: (...args) => getConvexPsBalances(...args, metaRegistry),
+    cvxRewardPool: getCVXStakeBalance,
+    cvxCRVStaker: getCvxCrvStakeBalance,
+    locker: getLockerBalances,
   })
 
   return {

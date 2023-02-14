@@ -16,7 +16,7 @@ import biswap from '@adapters/biswap'
 import compound from '@adapters/compound'
 import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
-import convex from '@adapters/convex'
+import convexFinance from '@adapters/convex-finance'
 import curve from '@adapters/curve'
 import dydx from '@adapters/dydx'
 import euler from '@adapters/euler'
@@ -101,7 +101,7 @@ export const adapters: Adapter[] = [
   compound,
   compoundV3,
   concentrator,
-  convex,
+  convexFinance,
   curve,
   dydx,
   euler,
