@@ -95,7 +95,7 @@ export const chains: IChainInfo[] = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcUrl: ['https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism', OPTIMISM_RPC].filter(isNotNullish),
+    rpcUrl: ['https://mainnet.optimism.io/', OPTIMISM_RPC, 'https://rpc.ankr.com/optimism'].filter(isNotNullish),
   },
   {
     id: 'xdai',
