@@ -1,9 +1,11 @@
 import { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Call, multicall } from '@lib/multicall'
+import { isZero } from '@lib/math'
+import { multicall } from '@lib/multicall'
 import { ETH_ADDR, Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { ethers } from 'ethers'
+import { range } from 'lodash'
 
 const abi = {
   poolLength: {
@@ -90,85 +92,68 @@ const metaRegistry: Contract = {
   address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
 }
 
-export async function getPoolsContracts(ctx: BaseContext, contract: Contract) {
+export async function getPoolsContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const pools: Contract[] = []
 
-  const calls: Call[] = []
-  const callsPools: Call[] = []
-  const callsRewarder: Call[] = []
-  const callsUnderlyings: Call[] = []
-  const callsExtraRewards: Call[] = []
+  const poolsCountRes = await call({ ctx, target: contract.address, params: [], abi: abi.poolLength })
 
-  const poolsCountRes = await call({
+  const poolsCount: number = parseInt(poolsCountRes.output)
+
+  const poolInfosRes = await multicall({
     ctx,
-    target: contract.address,
-    params: [],
-    abi: abi.poolLength,
+    calls: range(0, poolsCount).map((i) => ({
+      target: contract.address,
+      params: [i],
+    })),
+    abi: abi.poolInfo,
   })
-
-  const poolsCount = parseInt(poolsCountRes.output)
-
-  for (let poolIdx = 0; poolIdx < poolsCount; poolIdx++) {
-    calls.push({ target: contract.address, params: [poolIdx] })
-  }
-
-  const poolInfosRes = await multicall({ ctx, calls, abi: abi.poolInfo })
 
   for (let idx = 0; idx < poolsCount; idx++) {
     const poolInfoRes = poolInfosRes[idx]
+    if (!isSuccess(poolInfoRes)) continue
 
-    if (!isSuccess(poolInfoRes) /* || poolInfoRes.output.lptoken === '0xB15fFb543211b558D40160811e5DcBcd7d5aaac9' */) {
-      continue
-    }
-
+    const { lptoken: address, gauge, token, crvRewards } = poolInfoRes.output
     pools.push({
       chain: ctx.chain,
-      address: poolInfoRes.output.lptoken,
-      gauge: poolInfoRes.output.gauge,
-      token: poolInfoRes.output.token,
-      lpToken: poolInfoRes.output.lptoken,
-      crvRewards: poolInfoRes.output.crvRewards,
+      address,
+      gauge,
+      token,
+      lpToken: address,
+      crvRewards,
       rewards: [CRV, CVX],
     })
-
-    callsPools.push({ target: metaRegistry.address, params: [poolInfoRes.output.lptoken] })
-    callsRewarder.push({ target: poolInfoRes.output.crvRewards, params: [0] })
   }
 
-  const [poolsAddressesRes, rewarderAddressesRes] = await Promise.all([
-    multicall({ ctx, calls: callsPools, abi: abi.getPoolFromLPToken }),
-    multicall({ ctx, calls: callsRewarder, abi: abi.extraRewards }),
-  ])
+  const poolsAddressesRes = await multicall({
+    ctx,
+    calls: pools.map(({ address }) => ({
+      target: metaRegistry.address,
+      params: [address],
+    })),
+    abi: abi.getPoolFromLPToken,
+  })
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
     const poolAddressRes = poolsAddressesRes[poolIdx]
-    const rewarderAddressRes = rewarderAddressesRes[poolIdx]
-
-    if (!isSuccess(poolAddressRes)) {
-      continue
-    }
+    if (!isSuccess(poolAddressRes)) continue
 
     pool.pool = poolAddressRes.output
-    pool.rewarder = rewarderAddressRes.output || undefined
-
-    callsUnderlyings.push({ target: metaRegistry.address, params: [poolAddressRes.output] })
-    callsExtraRewards.push({ target: rewarderAddressRes.output && rewarderAddressRes.output, params: [] })
   }
 
-  const [underlyingsRes, extraRewardsRes] = await Promise.all([
-    multicall({ ctx, calls: callsUnderlyings, abi: abi.getUnderlyingsCoins }),
-    multicall({ ctx, calls: callsExtraRewards, abi: abi.rewardToken }),
-  ])
+  const underlyingsRes = await multicall({
+    ctx,
+    calls: pools.map(({ pool }) => ({
+      target: metaRegistry.address,
+      params: [pool],
+    })),
+    abi: abi.getUnderlyingsCoins,
+  })
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
     const underlyingRes = underlyingsRes[poolIdx]
-    const extraRewardRes = extraRewardsRes[poolIdx]
-
-    if (!isSuccess(underlyingRes)) {
-      continue
-    }
+    if (!isSuccess(underlyingRes)) continue
 
     pool.underlyings = underlyingRes.output
       .map((address: string) => address.toLowerCase())
@@ -176,131 +161,76 @@ export async function getPoolsContracts(ctx: BaseContext, contract: Contract) {
       .filter((address: string) => address !== ethers.constants.AddressZero)
       // replace ETH alias
       .map((address: string) => (address === ETH_ADDR ? ethers.constants.AddressZero : address))
+  }
 
-    if (!isSuccess(extraRewardRes)) {
+  return getExtraRewards(ctx, pools)
+}
+
+const getExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
+  const commonRewardsPools: Contract[] = []
+  const extraRewardsPools: Contract[] = []
+
+  const extraRewardsLengthsRes = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({
+      target: pool.crvRewards,
+      params: [],
+    })),
+    abi: abi.extraRewardsLength,
+  })
+
+  const extraRewardsRes = await multicall<string, [number], string>({
+    ctx,
+    calls: extraRewardsLengthsRes.filter(isSuccess).flatMap((res) =>
+      range(0, res.output).map((idx) => ({
+        target: res.input.target,
+        params: [idx],
+      })),
+    ),
+    abi: abi.extraRewards,
+  })
+
+  let extraRewardsCallIdx = 0
+  for (let poolIdx = 0; poolIdx < extraRewardsLengthsRes.length; poolIdx++) {
+    const extraRewardsLengthRes = extraRewardsLengthsRes[poolIdx]
+    if (!isSuccess(extraRewardsLengthRes)) continue
+
+    const baseRewardPool: Contract = { ...pools[poolIdx], rewarder: [] as string[] }
+
+    for (let extraRewardIdx = 0; extraRewardIdx < extraRewardsLengthRes.output; extraRewardIdx++) {
+      const extraRewardRes = extraRewardsRes[extraRewardsCallIdx]
+      if (isSuccess(extraRewardRes)) {
+        baseRewardPool.rewarder.push(extraRewardRes.output)
+      }
+      extraRewardsCallIdx++
+    }
+
+    if (isZero(baseRewardPool.rewarder.length)) {
+      commonRewardsPools.push(baseRewardPool)
       continue
     }
 
-    pool.rewards?.push(extraRewardRes.output)
+    extraRewardsPools.push(baseRewardPool)
   }
-  return pools
+
+  const extraRewardsTokensRes = await multicall({
+    ctx,
+    calls: extraRewardsPools.flatMap((pool) => pool.rewarder.map((res: any) => ({ target: res, params: [] }))),
+    abi: abi.rewardToken,
+  })
+
+  let extraRewardsTokensIdx = 0
+  for (let poolIdx = 0; poolIdx < extraRewardsPools.length; poolIdx++) {
+    const pool = extraRewardsPools[poolIdx]
+
+    for (let extraRewardIdx = 0; extraRewardIdx < pool.rewarder.length; extraRewardIdx++) {
+      const extraRewardsTokens = extraRewardsTokensRes[extraRewardsTokensIdx]
+      if (!isSuccess(extraRewardsTokens)) continue
+
+      pool.rewards?.push(extraRewardsTokens.output)
+      extraRewardsTokensIdx++
+    }
+  }
+
+  return [...commonRewardsPools, ...extraRewardsPools]
 }
-
-// export async function getBaseRewardPoolsRewards(ctx: BaseContext, baseRewardPools: BaseRewardPoolContract[]) {
-//   const res: BaseRewardPoolContract[] = []
-
-//   const extraRewardsLengthsRes = await multicall({
-//     ctx,
-//     calls: baseRewardPools.map((baseRewardPool) => ({
-//       target: baseRewardPool.crvRewards,
-//       params: [],
-//     })),
-//     abi: abi.extraRewardsLength,
-//   })
-
-//   const extraRewardsRes = await multicall<string, [number], string>({
-//     ctx,
-//     calls: extraRewardsLengthsRes.filter(isSuccess).flatMap((res) =>
-//       range(0, res.output).map((idx) => ({
-//         target: res.input.target,
-//         params: [idx],
-//       })),
-//     ),
-//     abi: abi.extraRewards,
-//   })
-
-//   let extraRewardCallIdx = 0
-//   for (let poolIdx = 0; poolIdx < extraRewardsLengthsRes.length; poolIdx++) {
-//     const extraRewardsLengthRes = extraRewardsLengthsRes[poolIdx]
-//     if (!isSuccess(extraRewardsLengthRes)) {
-//       continue
-//     }
-
-//     const baseRewardPool = { ...baseRewardPools[poolIdx], rewards: [] as string[] }
-
-//     for (let extraRewardIdx = 0; extraRewardIdx < extraRewardsLengthRes.output; extraRewardIdx++) {
-//       const extraRewardRes = extraRewardsRes[extraRewardCallIdx]
-//       if (isSuccess(extraRewardRes)) {
-//         baseRewardPool.rewards.push(extraRewardRes.output)
-//       }
-
-//       extraRewardCallIdx++
-//     }
-
-//     res.push(baseRewardPool)
-//   }
-
-//   return res
-// }
-
-// export async function getPoolsBalances(ctx: BalancesContext, pools: PoolContract[], CVX: Token, CRV: Token) {
-
-//   const balances = await getCurvePoolsBalances(ctx, pools, {
-//     getBalanceAddress: (pool) => pool.crvRewards,
-//     getLpTokenAddress: (pool) => pool.lpToken,
-//     getPoolAddress: (pool) => pool.pool,
-//   })
-
-//   const [crvEarnedRes, extraRewardsEarnedRes, cvxTotalSupplyRes] = await Promise.all([
-//     multicall({
-//       ctx,
-//       calls: balances.map((balance) => ({
-//         // @ts-ignore
-//         target: balance.crvRewards,
-//         params: [ctx.address],
-//       })),
-//       abi: abi.earned,
-//     }),
-
-//     multicall({
-//       ctx,
-//       calls: balances.flatMap((balance) =>
-//         (balance.rewards || []).map((reward) => ({
-//           target: reward.address,
-//           params: [ctx.address],
-//         })),
-//       ),
-//       abi: abi.earned,
-//     }),
-
-//     call({
-//       ctx,
-//       target: CVX.address,
-//       abi: erc20Abi.totalSupply,
-//       params: [],
-//     }),
-//   ])
-
-//   let extraRewardsEarnedIdx = 0
-//   for (let balanceIdx = 0; balanceIdx < balances.length; balanceIdx++) {
-//     const balance = balances[balanceIdx]
-//     balance.category = 'stake'
-
-//     const crvEarned = BigNumber.from(crvEarnedRes[balanceIdx].output || '0')
-//     const cvxTotalSupply = BigNumber.from(cvxTotalSupplyRes.output || '0')
-
-//     const rewards: Balance[] = []
-
-//     if (crvEarned.gt(0)) {
-//       const cvxEarned = getCvxCliffRatio(cvxTotalSupply, crvEarned)
-//       rewards.push({ ...CRV, amount: crvEarned }, { ...CVX, amount: cvxEarned })
-//     }
-
-//     if (balance.rewards) {
-//       for (let extraRewardIdx = 0; extraRewardIdx < balance.rewards.length; extraRewardIdx++) {
-//         const extraRewardEarnedRes = extraRewardsEarnedRes[extraRewardsEarnedIdx]
-
-//         rewards.push({
-//           ...balance.rewards?.[extraRewardIdx],
-//           amount: BigNumber.from(extraRewardEarnedRes.output || '0'),
-//         })
-
-//         extraRewardsEarnedIdx++
-//       }
-//     }
-
-//     balance.rewards = rewards
-//   }
-
-//   return balances
-// }

@@ -16,6 +16,20 @@ const abi = {
   },
 }
 
+const CRV: Token = {
+  chain: 'ethereum',
+  address: '0xD533a949740bb3306d119CC777fa900bA034cd52',
+  symbol: 'CRV',
+  decimals: 18,
+}
+
+const CVX: Token = {
+  chain: 'ethereum',
+  address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b',
+  symbol: 'CVX',
+  decimals: 18,
+}
+
 const cvxCRV: Token = {
   chain: 'ethereum',
   address: '0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7',
@@ -23,32 +37,11 @@ const cvxCRV: Token = {
   decimals: 18,
 }
 
-export async function getCvxCrvStakeBalance(
-  ctx: BalancesContext,
-  cvxCrv: Contract,
-  CVX: Contract,
-  CRV: Contract,
-): Promise<Balance> {
+export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contract): Promise<Balance> {
   const [balanceOfRes, crvEarnedRes, cvxTotalSupplyRes] = await Promise.all([
-    call({
-      ctx,
-      target: cvxCrv.address,
-      params: [ctx.address],
-      abi: erc20Abi.balanceOf,
-    }),
-
-    call({
-      ctx,
-      target: cvxCrv.address,
-      params: [ctx.address],
-      abi: abi.earned,
-    }),
-
-    call({
-      ctx,
-      target: CVX.address,
-      abi: erc20Abi.totalSupply,
-    }),
+    call({ ctx, target: cvxCrv.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: cvxCrv.address, params: [ctx.address], abi: abi.earned }),
+    call({ ctx, target: CVX.address, abi: erc20Abi.totalSupply }),
   ])
 
   const balanceOf = BigNumber.from(balanceOfRes.output || '0')
@@ -73,26 +66,10 @@ export async function getCvxCrvStakeBalance(
   }
 }
 
-export async function getCVXStakeBalance(
-  ctx: BalancesContext,
-  cvxRewardPool: Contract,
-  CVX: Contract,
-  CRV: Contract,
-): Promise<Balance> {
+export async function getCVXStakeBalance(ctx: BalancesContext, cvxRewardPool: Contract): Promise<Balance> {
   const [balanceOfRes, earnedRes] = await Promise.all([
-    call({
-      ctx,
-      target: cvxRewardPool.address,
-      params: [ctx.address],
-      abi: erc20Abi.balanceOf,
-    }),
-
-    call({
-      ctx,
-      target: cvxRewardPool.address,
-      params: [ctx.address],
-      abi: abi.earned,
-    }),
+    call({ ctx, target: cvxRewardPool.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: cvxRewardPool.address, params: [ctx.address], abi: abi.earned }),
   ])
 
   const balanceOf = BigNumber.from(balanceOfRes.output)

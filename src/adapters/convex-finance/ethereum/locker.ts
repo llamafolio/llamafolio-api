@@ -1,13 +1,7 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { getERC20Details } from '@lib/erc20'
-import { sumBN } from '@lib/math'
-import { multicall } from '@lib/multicall'
+import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
-
-interface BalanceWithExtraProps extends Balance {
-  lock: { end: number }
-}
 
 const abi = {
   lockedBalances: {
@@ -95,55 +89,48 @@ const abi = {
   },
 }
 
-export async function getLockerBalances(ctx: BalancesContext, contract: Contract, CVX: Contract) {
-  const balances: BalanceWithExtraProps[] = []
+const CVX: Token = {
+  chain: 'ethereum',
+  address: '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b',
+  symbol: 'CVX',
+  decimals: 18,
+}
 
-  const [getBalanceLocked, getClaimableRewards] = await Promise.all([
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.lockedBalances,
-    }),
+export async function getLockerBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
+  const balances: Balance[] = []
 
-    multicall({
-      ctx,
-      calls: [contract].map((c) => ({
-        target: c.address,
-        params: [ctx.address],
-      })),
-      abi: abi.claimableRewards,
-    }),
+  const [lockedDatasRes, claimableRewardsRes] = await Promise.all([
+    call({ ctx, target: contract.address, params: [ctx.address], abi: abi.lockedBalances }),
+    call({ ctx, target: contract.address, params: [ctx.address], abi: abi.claimableRewards }),
   ])
 
-  const balanceLocked = sumBN(
-    getBalanceLocked.output[3].map((locked: { amount: string }) => BigNumber.from(locked.amount)),
-  )
+  const lockedDatas = lockedDatasRes.output
+  const totalLocked = BigNumber.from(lockedDatas.total)
 
-  const lockerDuration = getBalanceLocked.output[3].map((locked: { unlockTime: number }) => locked.unlockTime)
-  const lastLockerTimer = lockerDuration.sort((previous: number, current: number) => current - previous)
+  const claimableRewards = claimableRewardsRes.output
 
-  const claimableRewards = getClaimableRewards
-    .filter((res) => res.success)
-    .map((res) => res.output)
-    .flat()
+  for (const lockedData of lockedDatas.lockData) {
+    const balance: Balance = {
+      ...contract,
+      amount: BigNumber.from(lockedData.amount),
+      lock: { end: lockedData.unlockTime },
+      underlyings: [CVX],
+      rewards: [],
+      category: 'lock',
+    }
 
-  const claimableRewardsBalances = claimableRewards.map((token) => BigNumber.from(token.amount))
-  const claimableRewardsTokens = claimableRewards.map((claim) => claim.token)
+    for (const claimableReward of claimableRewards) {
+      const reward: Balance = {
+        chain: ctx.chain,
+        address: claimableReward.token,
+        amount: BigNumber.from(claimableReward.amount).mul(balance.amount).div(totalLocked),
+      }
 
-  const tokens = await getERC20Details(ctx, claimableRewardsTokens)
-  const rewards = tokens.map((token, i) => ({ ...token, amount: claimableRewardsBalances[i] }))
-
-  balances.push({
-    chain: ctx.chain,
-    address: CVX.address,
-    symbol: CVX.symbol,
-    decimals: CVX.decimals,
-    amount: balanceLocked,
-    lock: lastLockerTimer[0],
-    rewards,
-    category: 'lock',
-  })
-
+      if (reward.amount.gt(0)) {
+        balance.rewards?.push(reward)
+      }
+    }
+    balances.push(balance)
+  }
   return balances
 }

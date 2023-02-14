@@ -2,6 +2,7 @@ import { getPoolsBalances } from '@adapters/curve/common/balance'
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
+import { BN_ZERO } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -37,20 +38,21 @@ const CVX: Token = {
   decimals: 18,
 }
 
-export async function getConvexGaugesBalances(ctx: BalancesContext, pools: Contract[], registry: Contract) {
-  const gauges: Contract[] = []
-  const gaugesBalances: Balance[] = []
-  // const commonRewards: Balance[] = []
+export async function getConvexGaugesBalances(
+  ctx: BalancesContext,
+  pools: Contract[],
+  registry: Contract,
+): Promise<Balance[]> {
+  const commonRewardsPools: Balance[] = []
+  const extraRewardsPools: Balance[] = []
 
-  for (const pool of pools) {
-    gauges.push({ ...pool, address: pool.crvRewards })
-  }
+  pools = pools.map((pool) => ({ ...pool, address: pool.crvRewards }))
 
-  const gaugesBalancesRes = await getPoolsBalances(ctx, gauges, registry, true)
+  const gaugesBalancesRes = await getPoolsBalances(ctx, pools, registry, true)
 
   const calls: Call[] = []
   for (const gaugeBalance of gaugesBalancesRes) {
-    gaugeBalance.category = 'farm'
+    gaugeBalance.category = 'stake'
     calls.push({ target: (gaugeBalance as Contract).crvRewards, params: [ctx.address] })
   }
 
@@ -59,25 +61,58 @@ export async function getConvexGaugesBalances(ctx: BalancesContext, pools: Contr
     call({ ctx, target: CVX.address, abi: erc20Abi.totalSupply }),
   ])
 
+  const extraRewardsCalls: Call[] = []
   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
     const gaugeBalance = gaugesBalancesRes[gaugeIdx]
-    const rewards = gaugeBalance.rewards as Contract[]
     const claimableReward = claimableRewards[gaugeIdx]
+    const rewards = gaugeBalance.rewards as Contract[]
 
-    if (!rewards || !isSuccess(claimableReward)) {
+    if (!rewards || !isSuccess(claimableReward)) continue
+
+    // rewards[0] is the common reward for all pools: CRV
+    rewards[0].amount = BigNumber.from(claimableReward.output || BN_ZERO)
+
+    // rewards[1] is the common reward for all pools: CVX
+    rewards[1].amount = getCvxCliffRatio(BigNumber.from(cvxTotalSupplyRes.output), rewards[0].amount)
+
+    if (rewards.length < 3) {
+      commonRewardsPools.push(gaugeBalance)
       continue
     }
 
-    // rewards[0] is the common rewards for all pools: CRV
-    rewards[0].amount = BigNumber.from(claimableReward.output)
+    extraRewardsPools.push(gaugeBalance)
 
-    if (rewards[0].amount.gt(0)) {
-      const cvxEarned = getCvxCliffRatio(BigNumber.from(cvxTotalSupplyRes.output), rewards[0].amount)
-      // rewards[1] is the common rewards for all pools: CVX
-      rewards[1].amount = cvxEarned
-      gaugesBalances.push(gaugeBalance)
+    for (let rewardIdx = 0; rewardIdx < gaugeBalance.rewards!.length - 2; rewardIdx++) {
+      const rewarder = (gaugeBalance as Contract).rewarder[rewardIdx]
+      extraRewardsCalls.push({ target: rewarder, params: [ctx.address] })
     }
   }
 
-  return gaugesBalances
+  const extraRewardsRes = await multicall({ ctx, calls: extraRewardsCalls, abi: abi.earned })
+
+  let extraRewardsCallIdx = 0
+  for (let poolIdx = 0; poolIdx < extraRewardsPools.length; poolIdx++) {
+    const extraRewardsPool = extraRewardsPools[poolIdx]
+    const rewards = extraRewardsPool.rewards as Contract[]
+    if (!rewards) continue
+
+    for (let extraRewardIdx = 2; extraRewardIdx < rewards.length; extraRewardIdx++) {
+      const reward = rewards[extraRewardIdx]
+      const extraRewardRes = extraRewardsRes[extraRewardsCallIdx]
+
+      if (!isSuccess(extraRewardRes)) continue
+
+      reward.amount = BigNumber.from(extraRewardRes.output)
+
+      extraRewardsCallIdx++
+    }
+
+    // CVX can sometimes appears as common and extra rewards
+    if (rewards[1].address === rewards[2].address) {
+      rewards[1].amount = rewards[1].amount.add(rewards[2].amount)
+      rewards.splice(2, 1)
+    }
+  }
+
+  return [...commonRewardsPools, ...extraRewardsPools]
 }

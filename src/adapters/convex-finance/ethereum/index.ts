@@ -4,6 +4,7 @@ import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
 import { getConvexGaugesBalances } from './balance'
+import { getLockerBalances } from './locker'
 import { getPoolsContracts } from './pool'
 import { getCvxCrvStakeBalance, getCVXStakeBalance } from './stake'
 
@@ -68,10 +69,10 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: {
-      pools,
       cvxCRVStaker,
-      locker,
       cvxRewardPool,
+      locker,
+      pools,
     },
   }
 }
@@ -81,13 +82,11 @@ const getConvexPsBalances = async (ctx: BalancesContext, pools: Contract[], regi
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  console.log(contracts)
-
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (...args) => getConvexPsBalances(...args, metaRegistry),
-    cvxRewardPool: (...args) => getCVXStakeBalance(...args, CVX, CRV),
-    cvxCRVStaker: (...args) => getCvxCrvStakeBalance(...args, CVX, CRV),
-    // locker: (...args) => getLockerBalances(...args, CVX),
+    cvxRewardPool: getCVXStakeBalance,
+    cvxCRVStaker: getCvxCrvStakeBalance,
+    locker: getLockerBalances,
   })
 
   return {
