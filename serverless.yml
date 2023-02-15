@@ -143,6 +143,14 @@ functions:
           method: get
           path: /labels/{address}
 
+  getProtocols:
+    handler: src/handlers/getProtocols.handler
+    description: Get protocols
+    events:
+      - httpApi:
+          method: get
+          path: /protocols
+
   getLatestProtocols:
     handler: src/handlers/getLatestProtocols.handler
     description: Get latest protocols
@@ -181,7 +189,7 @@ functions:
     events:
       - httpApi:
           method: get
-          path: /holders/{address}       
+          path: /holders/{address}
 
   scheduledRevalidateAdaptersContracts:
     handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts
