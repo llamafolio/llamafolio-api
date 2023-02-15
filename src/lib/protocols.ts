@@ -2,6 +2,8 @@ import { chainById, chainIdResolver } from '@lib/chains'
 import { sum } from '@lib/math'
 import fetch from 'node-fetch'
 
+export const DEFILLAMA_ICONS_PALETTE_CDN = 'https://icons.llamao.fi/palette'
+
 export interface IParentProtocolLiteResponse {
   chains: string[]
   cmcId: string
@@ -121,4 +123,23 @@ function getChainName(chains: string[]) {
   }
 
   return chains[0]
+}
+
+function defillamaProtocolPaletteUrl(name: string) {
+  const x = name ?? ''
+  return `${DEFILLAMA_ICONS_PALETTE_CDN}/protocols/${x.toLowerCase().split(' ').join('-').split("'").join('')}`
+}
+
+async function getColor(path: string) {
+  try {
+    const color = await fetch(path).then((res) => res.text())
+
+    return color
+  } catch (error) {
+    return undefined
+  }
+}
+
+export function getProtocolColor(name: string) {
+  return getColor(defillamaProtocolPaletteUrl(name))
 }

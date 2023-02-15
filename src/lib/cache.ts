@@ -14,14 +14,14 @@ export class Cache<K extends string | number, V> {
   /**
    * @param key
    */
-  get(key: K) {
+  get<U extends V>(key: K): U | null {
     const record = this.cache.get(key)
     if (!record) {
       return null
     }
 
     if (!record.expire || record.expire > Date.now()) {
-      return record.value
+      return record.value as U
     }
 
     this.cache.delete(key)
