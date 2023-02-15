@@ -66,7 +66,9 @@ export async function getFarmBalances(ctx: BalancesContext, vault: Contract, poo
     const userInfoBalance = userInfosBalancesRes[poolIdx]
     const pendingReward = pendingRewardRes[poolIdx]
 
-    if (!rewards || !isSuccess(userInfoBalance) || isZero(userInfoBalance.output.shares)) continue
+    if (!rewards || !isSuccess(userInfoBalance) || isZero(userInfoBalance.output.shares)) {
+      continue
+    }
 
     if (pool.pid == userInfoBalance.input.params[0]) {
       balances.push({

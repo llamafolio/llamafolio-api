@@ -50,10 +50,7 @@ export async function getStakeBalances(ctx: BalancesContext, staker: Contract): 
 }
 
 export async function getStakeInPools(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
-  const balances: Balance[] = []
-  for (const staker of stakers) {
-    balances.push(await getStakeBalances(ctx, staker))
-  }
+  const balances = (await Promise.all(stakers.map((staker) => getStakeBalances(ctx, staker)))).flat()
 
   return (await getUnderlyingsPoolsBalances(ctx, balances, metaRegistry, true)).map((pool) => ({
     ...pool,

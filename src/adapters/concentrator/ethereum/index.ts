@@ -104,11 +104,11 @@ export const getContracts = async (ctx: BaseContext) => {
     getOldContracts(ctx, concentratorAladdinETHVault),
   ])
 
-  const sortedPools = (vaultName: string) => (pool: Contract) => pool.vaultName === vaultName
+  const filterPools = (vaultName: string) => (pool: Contract) => pool.vaultName === vaultName
 
-  const concentratorIFOPools = pools.filter(sortedPools('ConcentratorIFO'))
-  const aladdinConvexPools = pools.filter(sortedPools('AladdinConvexVault'))
-  const aladdinFXSConvexPools = pools.filter(sortedPools('AladdinFXSConvexVault'))
+  const concentratorIFOPools = pools.filter(filterPools('ConcentratorIFO'))
+  const aladdinConvexPools = pools.filter(filterPools('AladdinConvexVault'))
+  const aladdinFXSConvexPools = pools.filter(filterPools('AladdinFXSConvexVault'))
 
   return {
     contracts: {

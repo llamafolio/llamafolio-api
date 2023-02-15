@@ -142,7 +142,9 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 
     for (let idx = 0; idx < poolsCount; idx++) {
       const poolInfoRes = poolInfosRes[idx]
-      if (!isSuccess(poolInfoRes)) continue
+      if (!isSuccess(poolInfoRes)) {
+        continue
+      }
 
       const { lpToken: address, convexPoolId, crvRewards } = poolInfoRes.output
       pools.push({
@@ -170,7 +172,9 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
     for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
       const pool = pools[poolIdx]
       const poolAddressRes = poolsAddressesRes[poolIdx]
-      if (!isSuccess(poolAddressRes)) continue
+      if (!isSuccess(poolAddressRes)) {
+        continue
+      }
 
       pool.pool = poolAddressRes.output
     }
@@ -187,7 +191,9 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
     for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
       const pool = pools[poolIdx]
       const underlyingRes = underlyingsRes[poolIdx]
-      if (!isSuccess(underlyingRes)) continue
+      if (!isSuccess(underlyingRes)) {
+        continue
+      }
 
       pool.underlyings = underlyingRes.output
         .map((address: string) => address.toLowerCase())
@@ -197,6 +203,7 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
         .map((address: string) => (address === ETH_ADDR ? ethers.constants.AddressZero : address))
     }
   }
+
   return pools
 }
 
@@ -217,7 +224,9 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
 
   for (let idx = 0; idx < poolsCount; idx++) {
     const poolInfoRes = poolInfosRes[idx]
-    if (!isSuccess(poolInfoRes)) continue
+    if (!isSuccess(poolInfoRes)) {
+      continue
+    }
 
     pools.push({
       chain: ctx.chain,
@@ -242,7 +251,9 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
     const poolAddressRes = poolsAddressesRes[poolIdx]
-    if (!isSuccess(poolAddressRes)) continue
+    if (!isSuccess(poolAddressRes)) {
+      continue
+    }
 
     pool.pool = poolAddressRes.output
   }
@@ -259,7 +270,9 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
     const underlyingRes = underlyingsRes[poolIdx]
-    if (!isSuccess(underlyingRes)) continue
+    if (!isSuccess(underlyingRes)) {
+      continue
+    }
 
     pool.underlyings = underlyingRes.output
       .map((address: string) => address.toLowerCase())
@@ -267,7 +280,7 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
       .filter((address: string) => address !== ethers.constants.AddressZero)
       // replace ETH alias
       .map((address: string) => (address === ETH_ADDR ? ethers.constants.AddressZero : address))
-    // }
   }
+
   return pools
 }
