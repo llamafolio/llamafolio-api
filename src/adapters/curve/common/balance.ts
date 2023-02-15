@@ -129,7 +129,7 @@ export async function getPoolsBalances(
   return getUnderlyingsPoolsBalances(ctx, nonZeroPoolBalances, registry, underlyingsAbi)
 }
 
-const getUnderlyingsPoolsBalances = async (
+export const getUnderlyingsPoolsBalances = async (
   ctx: BalancesContext,
   pools: PoolBalance[],
   registry?: Contract,
