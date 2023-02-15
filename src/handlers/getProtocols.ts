@@ -31,6 +31,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     }
   }
 
+  if (queries?.limit) {
+    const limit = parseInt(queries.limit)
+
+    protocols = protocols.slice(0, limit)
+  }
+
   return success(
     {
       protocols: protocols.map((protocol, idx) => ({ ...protocol, color: colors[idx] })),
