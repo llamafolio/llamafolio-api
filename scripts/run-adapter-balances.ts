@@ -149,7 +149,6 @@ async function main() {
         }
 
         if (balance.category === 'perpetual') {
-          millify(balance.amount.div(decimals.toString()).toNumber())
           d.margin = millify(balance.margin.div(decimals.toString()).toNumber())
           d.entryPrice = millify(balance.entryPrice.div(decimals.toString()).toNumber())
           d.marketPrice = millify(balance.marketPrice.div(decimals.toString()).toNumber())
