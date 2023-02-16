@@ -286,7 +286,5 @@ const getPositions = async (
     })
   }
 
-  console.log(positionsDatas)
-
   return positionsDatas
 }
