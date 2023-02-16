@@ -4,7 +4,7 @@ import path from 'path'
 import { selectAdapterProps } from '../src/db/adapters'
 import { getAllChainTokensInteractions, getChainContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { Adapter, Balance, BalancesContext } from '../src/lib/adapter'
+import { Adapter, BalancesContext, PricedBalance } from '../src/lib/adapter'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
@@ -12,7 +12,7 @@ import { getPricedBalances } from '../src/lib/price'
 interface CategoryBalances {
   title: string
   totalUSD: number
-  balances: Balance[]
+  balances: PricedBalance[]
 }
 
 function help() {
@@ -65,7 +65,7 @@ async function main() {
     console.log(`Found ${pricedBalances.length} non zero balances`)
 
     // group by category
-    const balancesByCategory: Record<string, Balance[]> = {}
+    const balancesByCategory: Record<string, PricedBalance[]> = {}
     for (const balance of pricedBalances) {
       if (!balancesByCategory[balance.category]) {
         balancesByCategory[balance.category] = []
@@ -113,27 +113,47 @@ async function main() {
       const data: any[] = []
 
       for (const balance of categoryBalances.balances) {
+        const decimals = balance.decimals ? 10 ** balance.decimals : 1
+
         const d = {
           chain: balance.chain,
           address: balance.address,
           category: balance.category,
           symbol: balance.symbol,
-          balance: millify(balance.amount / 10 ** balance.decimals),
+          balance: millify(balance.amount.div(decimals.toString()).toNumber()),
           balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
           stable: balance.stable,
           type: balance.type,
+          reward: '',
+          underlying: '',
         }
 
         if (balance.rewards) {
           d.reward = balance.rewards
-            .map((reward) => `${millify(reward.amount / 10 ** reward.decimals)} ${reward.symbol}`)
+            .map((reward) => {
+              const decimals = reward.decimals ? 10 ** reward.decimals : 1
+
+              return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
+            })
             .join(' + ')
         }
 
         if (balance.underlyings) {
           d.underlying = balance.underlyings
-            .map((underlying) => `${millify(underlying.amount / 10 ** underlying.decimals)} ${underlying.symbol}`)
+            .map((underlying) => {
+              const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
+
+              return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
+            })
             .join(' + ')
+        }
+
+        if (balance.category === 'perpetual') {
+          millify(balance.amount.div(decimals.toString()).toNumber())
+          d.margin = millify(balance.margin.div(decimals.toString()).toNumber())
+          d.entryPrice = millify(balance.entryPrice.div(decimals.toString()).toNumber())
+          d.marketPrice = millify(balance.marketPrice.div(decimals.toString()).toNumber())
+          d.leverage = millify(balance.leverage.div(decimals.toString()).toNumber())
         }
 
         data.push(d)
