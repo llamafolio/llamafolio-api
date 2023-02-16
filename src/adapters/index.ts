@@ -53,6 +53,7 @@ import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiant from '@adapters/radiant'
+import rageTrade from '@adapters/rage-trade'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import scream from '@adapters/scream'
@@ -138,6 +139,7 @@ export const adapters: Adapter[] = [
   pangolin,
   quickswapDex,
   radiant,
+  rageTrade,
   ribbonFinance,
   rocketPool,
   scream,
