@@ -51,6 +51,7 @@ import opynSqueeth from '@adapters/opyn-squeeth'
 import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
+import pikaProtocol from '@adapters/pika-protocol'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiant from '@adapters/radiant'
 import rageTrade from '@adapters/rage-trade'
@@ -137,6 +138,7 @@ export const adapters: Adapter[] = [
   pancakeswap,
   pandora,
   pangolin,
+  pikaProtocol,
   quickswapDex,
   radiant,
   rageTrade,
