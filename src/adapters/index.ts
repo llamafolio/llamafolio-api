@@ -13,6 +13,7 @@ import bancorV3 from '@adapters/bancor-v3'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
 import biswap from '@adapters/biswap'
+import capFinance from '@adapters/cap-finance'
 import compound from '@adapters/compound'
 import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
@@ -100,6 +101,7 @@ export const adapters: Adapter[] = [
   benqiLending,
   benqiStakedAvax,
   biswap,
+  capFinance,
   compound,
   compoundV3,
   concentrator,
