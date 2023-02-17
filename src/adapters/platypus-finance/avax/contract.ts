@@ -78,52 +78,40 @@ export async function getPlatypusContract(ctx: BaseContext, contract: Contract):
 
   const poolsInfosRes = await multicall({ ctx, calls, abi: abi.poolInfo })
 
-  const lpTokensCalls: Call[] = []
-  const rewarderCalls: Call[] = []
+  const lpTokensCalls: (Call | null)[] = []
+  const rewarderCalls: (Call | null)[] = []
   for (let poolIdx = 0; poolIdx < poolLength; poolIdx++) {
     const poolsInfoRes = poolsInfosRes[poolIdx]
 
-    if (!isSuccess(poolsInfoRes)) {
+    lpTokensCalls.push(isSuccess(poolsInfoRes) ? { target: poolsInfoRes.output.lpToken, params: [] } : null)
+    rewarderCalls.push(isSuccess(poolsInfoRes) ? { target: poolsInfoRes.output.rewarder, params: [] } : null)
+  }
+
+  const [lpTokensInfosPoolsRes, lpTokensInfosUnderlyingsRes, rewarderTokensRes] = await Promise.all([
+    multicall({ ctx, calls: lpTokensCalls, abi: abi.pool }),
+    multicall<string, [], string>({ ctx, calls: lpTokensCalls, abi: abi.underlyingToken }),
+    multicall({ ctx, calls: rewarderCalls, abi: abi.rewardTokens }),
+  ])
+
+  for (let poolIdx = 0; poolIdx < poolLength; poolIdx++) {
+    const poolsInfoRes = poolsInfosRes[poolIdx]
+    const lpTokensInfosPool = lpTokensInfosPoolsRes[poolIdx]
+    const lpTokensInfosUnderlying = lpTokensInfosUnderlyingsRes[poolIdx]
+    const rewarderToken = rewarderTokensRes[poolIdx]
+
+    if (!isSuccess(poolsInfoRes) || !isSuccess(lpTokensInfosPool) || !isSuccess(lpTokensInfosUnderlying)) {
       continue
     }
 
     contracts.push({
       chain: ctx.chain,
       pid: poolIdx,
-      underlyings: undefined,
       address: poolsInfoRes.output.lpToken,
       rewarder: poolsInfoRes.output.rewarder,
-      rewards: [PTP],
+      rewards: [PTP, ...(isSuccess(rewarderToken) ? rewarderToken.output : [])],
+      pool: lpTokensInfosPool.output,
+      underlyings: [lpTokensInfosUnderlying.output],
     })
-
-    lpTokensCalls.push({ target: poolsInfoRes.output.lpToken, params: [] })
-    rewarderCalls.push({ target: poolsInfoRes.output.rewarder, params: [] })
-  }
-
-  const [lpTokensInfosPoolsRes, lpTokensInfosUnderlyingsRes, rewarderTokensRes] = await Promise.all([
-    multicall({ ctx, calls: lpTokensCalls, abi: abi.pool }),
-    multicall({ ctx, calls: lpTokensCalls, abi: abi.underlyingToken }),
-    multicall({ ctx, calls: rewarderCalls, abi: abi.rewardTokens }),
-  ])
-
-  for (let poolIdx = 0; poolIdx < contracts.length; poolIdx++) {
-    const contract = contracts[poolIdx]
-    const lpTokensInfosPool = lpTokensInfosPoolsRes[poolIdx]
-    const lpTokensInfosUnderlying = lpTokensInfosUnderlyingsRes[poolIdx]
-    const rewarderToken = rewarderTokensRes[poolIdx]
-
-    if (!isSuccess(lpTokensInfosPool) || !isSuccess(lpTokensInfosUnderlying)) {
-      continue
-    }
-
-    contract.pool = lpTokensInfosPool.output
-    contract.underlyings = [lpTokensInfosUnderlying.output]
-
-    if (!isSuccess(rewarderToken)) {
-      continue
-    }
-
-    contract.rewards?.push(...rewarderToken.output)
   }
 
   return contracts
