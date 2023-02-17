@@ -1,0 +1,35 @@
+import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
+import { Token } from '@lib/token'
+import { BigNumber } from 'ethers'
+
+const abi = {
+  userStake: {
+    inputs: [{ internalType: 'address', name: 'userAddress', type: 'address' }],
+    name: 'userStake',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+const api3Token: Token = {
+  chain: 'ethereum',
+  address: '0x0b38210ea11411557c13457D4dA7dC6ea731B88a',
+  decimals: 18,
+  symbol: 'API3',
+}
+
+export async function getApi3StakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
+  const userStakeRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.userStake })
+
+  return {
+    ...staker,
+    symbol: api3Token.symbol,
+    decimals: api3Token.decimals,
+    amount: BigNumber.from(userStakeRes.output),
+    underlyings: [api3Token],
+    rewards: undefined,
+    category: 'stake',
+  }
+}
