@@ -78,6 +78,7 @@ export interface RewardBalance extends Balance {
 export interface PricedBalance extends BasePricedBalance {
   rewards?: BasePricedBalance[]
   underlyings?: BasePricedBalance[]
+  type?: string
 }
 
 export interface Lock {

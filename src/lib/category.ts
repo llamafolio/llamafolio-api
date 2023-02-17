@@ -1,4 +1,4 @@
-export type Category = 'wallet' | 'lend' | 'borrow' | 'stake' | 'vest' | 'lock' | 'lp' | 'farm' | 'reward'
+export type Category = 'wallet' | 'lend' | 'borrow' | 'stake' | 'vest' | 'lock' | 'lp' | 'farm' | 'reward' | 'perpetual'
 
 export interface CategoryInfo {
   category: Category
@@ -51,5 +51,10 @@ export const Categories: Record<Category, CategoryInfo> = {
     category: 'reward',
     title: 'Rewards',
     description: 'Assets rewarded by a protocol',
+  },
+  perpetual: {
+    category: 'perpetual',
+    title: 'Perpetual',
+    description: `Assets used to speculate on the underlying cryptocurrency's future price movements.`,
   },
 }
