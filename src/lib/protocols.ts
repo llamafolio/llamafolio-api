@@ -55,10 +55,12 @@ export interface IProtocolLite {
   chain: string
   chains: string[]
   tvl: number
+  symbol?: string
 }
 
 export async function fetchProtocolsLite() {
   const res = await fetch('https://api.llama.fi/lite/protocols2')
+
   const data: IProtocolsLiteResponse = await res.json()
 
   const protocols: IProtocolLite[] = []
@@ -79,8 +81,8 @@ export async function fetchProtocolsLite() {
 
     protocols.push({
       ...protocol,
-      slug: getProtocolSlug(protocol.name),
       chain: getChainName(protocol.chains),
+      slug: getProtocolSlug(protocol.name),
     })
   }
 
@@ -92,9 +94,9 @@ export async function fetchProtocolsLite() {
 
       protocols.push({
         ...parentProtocol,
-        slug: getProtocolSlug(parentProtocol.name),
-        chain: getChainName(parentProtocol.chains),
         category: categories.length > 1 ? 'Multi-Category' : categories[0],
+        chain: getChainName(parentProtocol.chains),
+        slug: getProtocolSlug(parentProtocol.name),
         tvl: sum(children.map((protocol) => protocol.tvl || 0)),
       })
     }
@@ -102,7 +104,6 @@ export async function fetchProtocolsLite() {
 
   return protocols
 }
-
 export function getProtocolSlug(name: string) {
   return name?.toLowerCase().split(' ').join('-').split("'").join('') ?? ''
 }
