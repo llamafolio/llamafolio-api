@@ -19,6 +19,7 @@
     "insert-tokens": "ts-node -T scripts/insert-tokens.ts",
     "update-tokens": "ts-node -T scripts/update-tokens.ts",
     "update-yields": "ts-node -T scripts/update-yields.ts",
+    "update-protocols": "ts-node -T scripts/update-protocols.ts",
     "lint": "eslint --ignore-path .gitignore --ignore-path .eslintignore \"**/*.{js,ts}\" --max-warnings=0",
     "format": "prettier --ignore-path .gitignore --ignore-path .prettierignore '**/*.{md,json,js,ts}' --write",
     "postinstall": "npm run update-llamafolio-tokens",
