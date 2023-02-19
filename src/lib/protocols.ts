@@ -108,7 +108,7 @@ export function getProtocolSlug(name: string) {
   return name?.toLowerCase().split(' ').join('-').split("'").join('') ?? ''
 }
 
-export function getChainName(chains: string[]) {
+function getChainName(chains: string[]) {
   if (chains.length === 0) {
     return ''
   }
