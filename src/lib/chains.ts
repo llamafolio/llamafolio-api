@@ -1,4 +1,4 @@
-import { LLAMANODES_API_KEY, OPTIMISM_RPC } from '../../env'
+import { ARBITRUM_RPC, LLAMANODES_API_KEY, OPTIMISM_RPC } from '../../env'
 import { isNotNullish } from './type'
 
 export declare type Chain =
@@ -26,7 +26,7 @@ export const chains: IChainInfo[] = [
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
-    rpcUrl: ['https://arb1.arbitrum.io/rpc'],
+    rpcUrl: [ARBITRUM_RPC, 'https://arb1.arbitrum.io/rpc'].filter(isNotNullish),
   },
   {
     id: 'avax',
@@ -95,7 +95,7 @@ export const chains: IChainInfo[] = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcUrl: ['https://mainnet.optimism.io/', OPTIMISM_RPC, 'https://rpc.ankr.com/optimism'].filter(isNotNullish),
+    rpcUrl: [OPTIMISM_RPC, 'https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism'].filter(isNotNullish),
   },
   {
     id: 'xdai',
