@@ -49,13 +49,15 @@ provider:
     PGDATABASE: ${file(./env.js):PGDATABASE}
     PGPASSWORD: ${file(./env.js):PGPASSWORD}
     PGPORT: ${file(./env.js):PGPORT}
-    LLAMANODES_API_KEY: ${file(./env.js):LLAMANODES_API_KEY}
     REDIS_PORT: ${file(./env.js):REDIS_PORT}
     REDIS_HOST: ${file(./env.js):REDIS_HOST}
     REDIS_PASSWORD: ${file(./env.js):REDIS_PASSWORD}
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    LLAMANODES_API_KEY: ${file(./env.js):LLAMANODES_API_KEY}
+    ARBITRUM_RPC: ${file(./env.js):ARBITRUM_RPC}
+    OPTIMISM_RPC: ${file(./env.js):OPTIMISM_RPC}
 
   httpApi:
     metrics: true
