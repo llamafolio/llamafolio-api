@@ -57,7 +57,7 @@ export const chains: IChainInfo[] = [
     chainId: 1,
     name: 'Ethereum',
     rpcUrl: [
-      `https://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      `wss://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79',
       'https://cloudflare-eth.com/',
       'https://main-light.eth.linkpool.io/',
@@ -86,7 +86,7 @@ export const chains: IChainInfo[] = [
     chainId: 137,
     name: 'Polygon',
     rpcUrl: [
-      `https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      `wss://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://polygon-rpc.com/',
       'https://rpc-mainnet.maticvigil.com/',
     ],

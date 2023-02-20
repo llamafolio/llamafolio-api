@@ -3,6 +3,11 @@ import { Chain, chains } from '@lib/chains'
 import { providers as ethersProviders } from 'ethers'
 
 function createProvider(name: string, rpcs: string[], chainId: number) {
+  // prioritize websocket RPC (better performance)
+  if (rpcs[0].startsWith('wss')) {
+    return new ethersProviders.WebSocketProvider(rpcs[0], chainId)
+  }
+
   return new ethersProviders.FallbackProvider(
     rpcs.map((url, i) => ({
       provider: new ethersProviders.StaticJsonRpcProvider(url, {
