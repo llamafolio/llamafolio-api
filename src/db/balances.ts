@@ -92,14 +92,24 @@ export async function selectBalancesByFromAddress(client: PoolClient, fromAddres
   return fromStorage(balancesRes.rows)
 }
 
-export function insertBalances(
-  client: PoolClient,
-  balances: PricedBalance[],
-  adapterId: string,
-  fromAddress: string,
-  timestamp: Date,
-) {
-  const values = toStorage(balances, adapterId, fromAddress, timestamp).map(toRow)
+interface BalancesStorable<B extends PricedBalance> {
+  balances: B[]
+  adapterId: string
+  fromAddress: string
+  timestamp: Date
+}
+
+export function insertBalances<B extends PricedBalance>(client: PoolClient, balancesStorables: BalancesStorable<B>[]) {
+  const values = []
+
+  for (const balancesStorable of balancesStorables) {
+    const { balances, adapterId, fromAddress, timestamp } = balancesStorable
+    const storageBalances = toStorage(balances, adapterId, fromAddress, timestamp)
+
+    for (const balance of storageBalances) {
+      values.push(toRow(balance))
+    }
+  }
 
   if (values.length === 0) {
     return

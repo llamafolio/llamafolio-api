@@ -179,11 +179,14 @@ async function main() {
     await client.query(format('delete from balances where from_address = %L::bytea', [strToBuf(address)]), [])
 
     // Insert new balances
-    // TODO: insert all at once
-    await Promise.all(
-      Object.keys(pricedBalancesByAdapterId).map((adapterId) =>
-        insertBalances(client, pricedBalancesByAdapterId[adapterId], adapterId, address, now),
-      ),
+    await insertBalances(
+      client,
+      Object.keys(pricedBalancesByAdapterId).map((adapterId) => ({
+        balances: pricedBalancesByAdapterId[adapterId],
+        adapterId,
+        fromAddress: address,
+        timestamp: now,
+      })),
     )
 
     await client.query('COMMIT')
