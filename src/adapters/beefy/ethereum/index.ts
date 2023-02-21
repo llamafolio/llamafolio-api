@@ -1,7 +1,6 @@
 import { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getBeefyBalances } from '../common/balance'
 import { getBeefyContracts } from '../common/contract'
 
 export const getContracts = async (ctx: BaseContext) => {
@@ -13,9 +12,9 @@ export const getContracts = async (ctx: BaseContext) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: getBeefyBalances,
-  })
+  console.log(contracts)
+
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {})
 
   return {
     balances,

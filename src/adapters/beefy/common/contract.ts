@@ -12,10 +12,14 @@ export async function getBeefyContracts(ctx: BaseContext): Promise<Contract[]> {
       continue
     }
 
+    console.log(data)
+
     const {
       chain,
+      name,
+      token: symbol,
+      tokenProviderId: provider,
       tokenAddress: lpToken,
-      name: symbol,
       tokenDecimals: decimals,
       assets: underlyings,
       strategy,
@@ -24,11 +28,13 @@ export async function getBeefyContracts(ctx: BaseContext): Promise<Contract[]> {
 
     contracts.push({
       chain,
+      name,
       address,
       decimals,
       symbol,
       lpToken,
       strategy,
+      provider,
       underlyings,
       rewards: undefined,
     })
