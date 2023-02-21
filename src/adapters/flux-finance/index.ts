@@ -1,10 +1,10 @@
 import { Adapter } from '@lib/adapter'
 
-import * as optimism from './optimism'
+import * as ethereum from './ethereum'
 
 const adapter: Adapter = {
-  id: 'sonne-finance',
-  optimism,
+  id: 'flux-finance',
+  ethereum,
 }
 
 export default adapter
