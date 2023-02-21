@@ -1,4 +1,4 @@
-import { getUpdateBalancesStatus, putUpdateBalancesStatus, selectBalancesByFromAddress } from '@db/balances'
+import { selectBalancesByFromAddress } from '@db/balances'
 import { selectLastBalancesSnapshotsByFromAddress } from '@db/balances-snapshots'
 import pool from '@db/pool'
 import { client as redisClient } from '@db/redis'
@@ -199,12 +199,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     if (updatedAt === undefined || now - updatedAt > updateInterval) {
       status = updatedAt === undefined ? 'empty' : 'stale'
 
-      // restrict to one concurrent update of the same address
-      const updateStatus = await getUpdateBalancesStatus(address)
-      if (!updateStatus) {
-        await putUpdateBalancesStatus(address, Math.floor(now / 1000))
-        await invokeLambda(`llamafolio-api-${process.env.stage}-updateBalances`, { address }, 'Event')
-      }
+      await invokeLambda(`llamafolio-api-${process.env.stage}-updateBalances`, { address }, 'Event')
     }
 
     const balancesResponse: BalancesResponse = {

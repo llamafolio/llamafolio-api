@@ -1,6 +1,6 @@
 import { adapterById } from '@adapters/index'
 import { selectDefinedAdaptersContractsProps } from '@db/adapters'
-import { deleteUpdateBalancesStatus, insertBalances } from '@db/balances'
+import { insertBalances } from '@db/balances'
 import { BalancesSnapshot, insertBalancesSnapshots } from '@db/balances-snapshots'
 import { getAllContractsInteractions, groupContracts } from '@db/contracts'
 import { getAllTokensInteractions } from '@db/contracts'
@@ -198,7 +198,6 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     console.error('Failed to update balances', { error, address })
     return serverError('Failed to update balances')
   } finally {
-    await deleteUpdateBalancesStatus(address)
     client.release(true)
   }
 }

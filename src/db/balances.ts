@@ -1,5 +1,4 @@
 import { ContractStorage } from '@db/contracts'
-import { dynamodb } from '@db/dynamo'
 import { PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
 import { bufToStr, strToBuf } from '@lib/buf'
@@ -117,20 +116,4 @@ export function insertBalances(
       ),
     ),
   )
-}
-
-export async function getUpdateBalancesStatus(address: string) {
-  const PK = `UBS#${address.toLowerCase()}`
-  const res = await dynamodb.get({ PK, SK: PK })
-  return res.Item
-}
-
-export function putUpdateBalancesStatus(address: string, timestamp: number) {
-  const PK = `UBS#${address.toLowerCase()}`
-  return dynamodb.put({ PK, SK: PK, timestamp })
-}
-
-export function deleteUpdateBalancesStatus(address: string) {
-  const PK = `UBS#${address.toLowerCase()}`
-  return dynamodb.delete({ PK, SK: PK })
 }
