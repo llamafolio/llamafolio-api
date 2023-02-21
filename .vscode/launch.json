@@ -47,6 +47,7 @@
       "id": "adapter",
       "description": "What adapter to run?",
       "options": [
+        "0vix",
         "aave-v2",
         "aave-v3",
         "abracadabra",

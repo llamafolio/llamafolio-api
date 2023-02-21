@@ -1,3 +1,4 @@
+import _0vix from '@adapters/0vix'
 import aaveV2 from '@adapters/aave-v2'
 import aaveV3 from '@adapters/aave-v3'
 import abracadabra from '@adapters/abracadabra'
@@ -92,6 +93,7 @@ import yearnFinance from '@adapters/yearn-finance'
 import { Adapter } from '@lib/adapter'
 
 export const adapters: Adapter[] = [
+  _0vix,
   aaveV2,
   aaveV3,
   abracadabra,
