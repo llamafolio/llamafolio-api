@@ -1,15 +1,13 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import {
-  BalanceWithExtraProps,
-  getHealthFactor,
-  getMarketsBalances,
-  getMarketsContracts,
-} from '@lib/compound/v2/lending'
+import { BalanceWithExtraProps, getHealthFactor } from '@lib/compound/v2/lending'
+
+import { getMarketsBalances } from '../common/balance'
+import { getMarketsContracts } from '../common/contract'
 
 const Comptroller: Contract = {
-  chain: 'ethereum',
-  address: '0x95Af143a021DF745bc78e845b54591C53a8B3A51',
+  chain: 'bsc',
+  address: '0x6d290f45A280A688Ff58d095de480364069af110',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
