@@ -1,3 +1,4 @@
+import _0vix from '@adapters/0vix'
 import aaveV2 from '@adapters/aave-v2'
 import aaveV3 from '@adapters/aave-v3'
 import abracadabra from '@adapters/abracadabra'
@@ -23,6 +24,7 @@ import curve from '@adapters/curve'
 import dydx from '@adapters/dydx'
 import euler from '@adapters/euler'
 import floorDao from '@adapters/floor-dao'
+import fluxFinance from '@adapters/flux-finance'
 import fraxlend from '@adapters/fraxlend'
 import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
@@ -37,6 +39,7 @@ import klimaDao from '@adapters/klima-dao'
 import leonicornswap from '@adapters/leonicornswap'
 import lido from '@adapters/lido'
 import lifeDao from '@adapters/life-dao'
+import liqee from '@adapters/liqee'
 import liquity from '@adapters/liquity'
 import llamapay from '@adapters/llamapay'
 import looksrare from '@adapters/looksrare'
@@ -64,6 +67,7 @@ import rocketPool from '@adapters/rocket-pool'
 import scream from '@adapters/scream'
 import setProtocol from '@adapters/set-protocol'
 import shibaswap from '@adapters/shibaswap'
+import sonneFinance from '@adapters/sonne-finance'
 import spartacus from '@adapters/spartacus'
 import spiritswap from '@adapters/spiritswap'
 import spookyswap from '@adapters/spookyswap'
@@ -89,6 +93,7 @@ import yearnFinance from '@adapters/yearn-finance'
 import { Adapter } from '@lib/adapter'
 
 export const adapters: Adapter[] = [
+  _0vix,
   aaveV2,
   aaveV3,
   abracadabra,
@@ -114,6 +119,7 @@ export const adapters: Adapter[] = [
   dydx,
   euler,
   floorDao,
+  fluxFinance,
   fraxlend,
   gearbox,
   geist,
@@ -128,6 +134,7 @@ export const adapters: Adapter[] = [
   leonicornswap,
   lido,
   lifeDao,
+  liqee,
   liquity,
   llamapay,
   looksrare,
@@ -155,6 +162,7 @@ export const adapters: Adapter[] = [
   scream,
   setProtocol,
   shibaswap,
+  sonneFinance,
   spartacus,
   spiritswap,
   spookyswap,
