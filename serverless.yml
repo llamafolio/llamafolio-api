@@ -96,6 +96,15 @@ functions:
           method: get
           path: /balances/{address}
 
+  getUpdatedBalances:
+    handler: src/handlers/getUpdatedBalances.handler
+    description: Get updated address balances
+    events:
+      - httpApi:
+          method: get
+          path: /updatedBalances/{address}
+    timeout: 29
+
   getBalancesTokens:
     handler: src/handlers/getBalancesTokens.handler
     description: Get address erc20 balances

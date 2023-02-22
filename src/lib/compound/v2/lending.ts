@@ -206,6 +206,9 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
 }
 
 export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promise<number | undefined> {
+  // TODO: batch getPricedBalances into 1 call for all balances
+  return
+
   const nonZerobalances = balances.filter((balance) => balance.amount.gt(0))
 
   const nonZeroSupplyBalances = nonZerobalances.filter((supply) => supply.category === 'lend')

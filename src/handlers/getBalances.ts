@@ -6,10 +6,10 @@ import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, ContractStandard, Lock } from '@lib/adapter'
 import { groupBy } from '@lib/array'
+import { areBalancesStale } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
-import { invokeLambda } from '@lib/lambda'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 import { Redis } from 'ioredis'
@@ -17,7 +17,7 @@ import { Redis } from 'ioredis'
 /**
  * Add yields info to given balances
  */
-async function getBalancesYields<T extends Balance>(client: Redis, balances: T[]): Promise<T[]> {
+export async function getBalancesYields<T extends Balance>(client: Redis, balances: T[]): Promise<T[]> {
   const yieldKeys = balances.map((balance) => balance.yieldKey).filter(isNotNullish)
 
   const yieldsByKey = await selectYieldsByKeys(client, yieldKeys)
@@ -144,6 +144,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   if (!address) {
     return badRequest('Missing address parameter')
   }
+
   if (!isHex(address)) {
     return badRequest('Invalid address parameter, expected hex')
   }
@@ -189,17 +190,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       : undefined
 
     let status: TStatus = 'success'
-    // Trigger update if data is "stale" (or "empty" == never been updated).
-    // At the moment, balances are considered "stale" if they haven't been updated in the last 2 minutes.
-    // Later, we can use more advanced strategies using transactions events, scheduled updates etc
-    const now = new Date().getTime()
-    // 2 minutes
-    const updateInterval = 2 * 60 * 1000
-
-    if (updatedAt === undefined || now - updatedAt > updateInterval) {
-      status = updatedAt === undefined ? 'empty' : 'stale'
-
-      await invokeLambda(`llamafolio-api-${process.env.stage}-updateBalances`, { address }, 'Event')
+    if (updatedAt === undefined) {
+      status = 'empty'
+    } else if (areBalancesStale(updatedAt)) {
+      status = 'stale'
     }
 
     const balancesResponse: BalancesResponse = {
@@ -208,7 +202,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       protocols,
     }
 
-    return success(balancesResponse, { maxAge: status === 'success' ? 15 : 5 })
+    return success(balancesResponse, { maxAge: 5 * 60 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
