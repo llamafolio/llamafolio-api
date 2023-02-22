@@ -12,8 +12,6 @@ export async function getBeefyContracts(ctx: BaseContext): Promise<Contract[]> {
       continue
     }
 
-    console.log(data)
-
     const {
       chain,
       name,
@@ -58,8 +56,16 @@ const getUnderlyingsFromBeefyApi = async (ctx: BaseContext, pools: Contract[]): 
       const underlying = underlyings[i] as string
       const token = tokens[underlying]
       if (token) {
-        underlyings[i] = token
+        underlyings[i] = { ...token, chain: ctx.chain }
       }
+    }
+
+    const sBTCIndex = underlyings.findIndex((underlying: any) => underlying.symbol === 'sBTC')
+    const WBTCIndex = underlyings.findIndex((underlying: any) => underlying.symbol === 'WBTC')
+
+    if (sBTCIndex !== -1 && WBTCIndex !== -1 && sBTCIndex !== WBTCIndex) {
+      // Swap underlyings positions for `sBTC` and `WBTC`. It requires to call further curve registry
+      ;[underlyings[sBTCIndex], underlyings[WBTCIndex]] = [underlyings[WBTCIndex], underlyings[sBTCIndex]]
     }
   }
 
