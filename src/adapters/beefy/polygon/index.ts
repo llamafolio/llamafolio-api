@@ -6,7 +6,6 @@ import { getBeefyContracts } from '../common/contract'
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getBeefyContracts(ctx)
 
-  console.log(pools)
   return {
     contracts: { pools },
   }
