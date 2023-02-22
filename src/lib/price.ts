@@ -32,10 +32,12 @@ interface PricesResponse {
 }
 
 export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
+  const coins = new Set(tokens.map(getTokenKey).filter(isNotNullish))
+
   const pricesRes = await fetch('https://coins.llama.fi/prices', {
     method: 'POST',
     body: JSON.stringify({
-      coins: tokens.map(getTokenKey).filter(isNotNullish),
+      coins: Array.from(coins),
     }),
   })
   return pricesRes.json()
