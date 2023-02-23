@@ -2,6 +2,9 @@ org: llamafolio
 app: llamafolio-api
 service: llamafolio-api
 
+package:
+  individually: true
+
 frameworkVersion: '3'
 
 provider:
@@ -233,11 +236,15 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   esbuild:
     bundle: true
-    minify: false
+    minify: true
+    keepNames: true
     concurrency: 4
     external:
       - pg-native
       - pg-format
+    watch:
+      pattern: ['src/**/*.ts']
+      ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules']
     # for debugging
     #keepOutputDirectory: true
   prune:
