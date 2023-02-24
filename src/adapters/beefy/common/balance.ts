@@ -9,7 +9,7 @@ import { groupBy } from 'lodash'
 import {
   fmtBalancerProvider,
   fmtCurveProvider,
-  fmtGmxProvider,
+  fmtNoProvider,
   fmtProviderBalancesParams,
   fmtSolidlyProvider,
   fmtSushiProvider,
@@ -71,40 +71,17 @@ const getUnderlyingsBeefyBalances = async (ctx: BalancesContext, pools: Contract
       curve: (...args) =>
         fmtCurveProvider(...args, [{ address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC', underlyingAbi: true }]),
     },
-    avax: {
-      traderjoe: fmtSushiProvider,
-      pangolin: fmtSushiProvider,
-      oliveswap: fmtSushiProvider,
-      swapsicle: fmtSushiProvider,
-      gmx: (...args) => fmtGmxProvider(...args, '0x9ab2De34A33fB459b538c43f251eB825645e8595'),
-      // curve: (...args) =>
-      //   fmtCurveProvider(...args, [
-      //     { address: '0x90f421832199e93d01b64DaF378b183809EB0988', underlyingAbi: false },
-      //     { address: '0x8474DdbE98F5aA3179B3B3F5942D724aFcdec9f6', underlyingAbi: true },
-      //     { address: '0xb17b674D9c5CB2e441F8e196a2f048A81355d031', underlyingAbi: true },
-      //   ]),
+    arbitrum: {
+      // TODO: List all providers used on arbitrum and other altchains
+      sushi: fmtSushiProvider,
+      swapfish: fmtSushiProvider,
+      curve: (...args) =>
+        fmtCurveProvider(...args, [
+          { address: '0x0e9fbb167df83ede3240d6a5fa5d40c6c6851e15', underlyingAbi: false },
+          { address: '0x445FE580eF8d70FF569aB36e80c647af338db351', underlyingAbi: true },
+          { address: '0xb17b674D9c5CB2e441F8e196a2f048A81355d031', underlyingAbi: true },
+        ]),
     },
-    // fantom: {
-    // spookyswap: fmtSushiProvider,
-    // beethovenx: (...args) => fmtBalancerProvider(...args, '0x20dd72ed959b6147912c2e529f0a0c651c33c9ce'),
-    // tombswap: fmtSushiProvider,
-    // curve: (...args) =>
-    //   fmtCurveProvider(...args, [
-    //     { address: '0x4fb93D7d320E8A263F22f62C2059dFC2A8bCbC4c', underlyingAbi: false },
-    //     { address: '0x0f854EA9F38ceA4B1c2FC79047E9D0134419D5d6', underlyingAbi: true },
-    //     { address: '0x686d67265703D1f124c45E33d47d794c566889Ba', underlyingAbi: true },
-    //   ]),
-    // },
-    // arbitrum: {
-    //   sushi: fmtSushiProvider,
-    //   swapfish: fmtSushiProvider,
-    //   curve: (...args) =>
-    //     fmtCurveProvider(...args, [
-    //       { address: '0x0e9fbb167df83ede3240d6a5fa5d40c6c6851e15', underlyingAbi: false },
-    //       { address: '0x445FE580eF8d70FF569aB36e80c647af338db351', underlyingAbi: true },
-    //       { address: '0xb17b674D9c5CB2e441F8e196a2f048A81355d031', underlyingAbi: true },
-    //     ]),
-    // },
   }
 
   for (const pool of pools) {
@@ -119,7 +96,7 @@ const getUnderlyingsBeefyBalances = async (ctx: BalancesContext, pools: Contract
     if (!chainProviders) {
       return undefined
     }
-    return chainProviders[provider] /*?? fmtNoProvider */
+    return chainProviders[provider] || fmtNoProvider
   }
 
   const sortedPools = groupBy(pools, 'provider')

@@ -108,7 +108,10 @@ export const fmtNoProvider = async (
   pools: fmtProviderBalancesParams[],
 ): Promise<fmtProviderBalancesParams[]> => {
   for (const pool of pools) {
-    ;(pool.underlyings![0] as Balance).amount = pool.amount
+    const { amount, underlyings } = pool
+    if (underlyings && underlyings.length < 2) {
+      ;(pool.underlyings![0] as Balance).amount = amount
+    }
   }
 
   return pools
@@ -156,7 +159,6 @@ export const fmtBalancerProvider = async (
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const underlyings = pools[poolIdx].underlyings
     const poolIdRes = poolIdsRes[poolIdx]
-
     if (!underlyings || !isSuccess(poolIdRes)) {
       continue
     }
@@ -168,20 +170,26 @@ export const fmtBalancerProvider = async (
 
   const underlyingsBalancesRes = await multicall({ ctx, calls, abi: abi.getPoolTokenInfo })
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const { amount, totalSupply, underlyings } = pools[poolIdx]
-
+  let balanceOfIdx = 0
+  for (const pool of pools) {
+    const { underlyings, amount, totalSupply } = pool
     if (!underlyings) {
       continue
     }
 
-    underlyings.forEach((underlying, underlyingIdx) => {
-      const underlyingsBalance = underlyingsBalancesRes[underlyingIdx]
+    for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
+      const underlying = underlyings[underlyingIdx]
+      const underlyingBalanceOfRes = underlyingsBalancesRes[balanceOfIdx]
 
-      if (isSuccess(underlyingsBalance)) {
-        ;(underlying as Balance).amount = BigNumber.from(underlyingsBalance.output.cash).mul(amount).div(totalSupply)
-      }
-    })
+      const underlyingsBalance =
+        isSuccess(underlyingBalanceOfRes) && underlyingBalanceOfRes.output != undefined
+          ? BigNumber.from(underlyingBalanceOfRes.output.cash)
+          : BN_ZERO
+
+      ;(underlying as Balance).amount = underlyingsBalance.mul(amount).div(totalSupply)
+
+      balanceOfIdx++
+    }
   }
 
   return pools
@@ -195,7 +203,6 @@ export const fmtSushiProvider = async (
 
   for (const pool of pools) {
     const { underlyings, lpToken } = pool
-
     if (!underlyings) {
       continue
     }
