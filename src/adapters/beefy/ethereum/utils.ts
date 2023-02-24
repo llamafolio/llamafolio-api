@@ -192,6 +192,7 @@ export const fmtSushiProvider = async (
   pools: fmtProviderBalancesParams[],
 ): Promise<fmtProviderBalancesParams[]> => {
   const calls: Call[] = []
+
   for (const pool of pools) {
     const { underlyings, lpToken } = pool
 
@@ -206,19 +207,26 @@ export const fmtSushiProvider = async (
 
   const underlyingsBalancesRes = await multicall({ ctx, calls, abi: erc20Abi.balanceOf })
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const { amount, totalSupply, underlyings } = pools[poolIdx]
-    const underlyingsBalanceRes = underlyingsBalancesRes[poolIdx]
-
-    if (!underlyings || !isSuccess(underlyingsBalanceRes)) {
+  let balanceOfIdx = 0
+  for (const pool of pools) {
+    const { underlyings, amount, totalSupply } = pool
+    if (!underlyings) {
       continue
     }
 
-    underlyings.forEach((underlying, underlyingIdx) => {
-      const underlyingsBalance = underlyingsBalanceRes.output[underlyingIdx]
+    for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
+      const underlying = underlyings[underlyingIdx]
+      const underlyingBalanceOfRes = underlyingsBalancesRes[balanceOfIdx]
 
-      ;(underlying as Balance).amount = BigNumber.from(underlyingsBalance).mul(amount).div(totalSupply)
-    })
+      const underlyingsBalance =
+        isSuccess(underlyingBalanceOfRes) && underlyingBalanceOfRes.output != undefined
+          ? BigNumber.from(underlyingBalanceOfRes.output)
+          : BN_ZERO
+
+      ;(underlying as Balance).amount = underlyingsBalance.mul(amount).div(totalSupply)
+
+      balanceOfIdx++
+    }
   }
 
   return pools
