@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
@@ -9,7 +8,6 @@ import { groupBy } from 'lodash'
 import {
   fmtBalancerProvider,
   fmtCurveProvider,
-  fmtNoProvider,
   fmtProviderBalancesParams,
   fmtSolidlyProvider,
   fmtSushiProvider,
@@ -58,59 +56,57 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]):
   return getUnderlyingsBeefyBalances(ctx, balances)
 }
 
+const providers: Record<string, Record<string, Provider | undefined>> = {
+  ethereum: {
+    solidly: fmtSolidlyProvider,
+    sushi: fmtSushiProvider,
+    balancer: (...args) => fmtBalancerProvider(...args, '0xba12222222228d8ba445958a75a0704d566bf2c8'),
+    curve: (...args) =>
+      fmtCurveProvider(...args, [{ address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC', underlyingAbi: true }]),
+  },
+  arbitrum: {
+    // TODO: List all providers used on arbitrum and other altchains
+    sushi: fmtSushiProvider,
+    swapfish: fmtSushiProvider,
+    curve: (...args) =>
+      fmtCurveProvider(...args, [
+        { address: '0x0e9fbb167df83ede3240d6a5fa5d40c6c6851e15', underlyingAbi: false },
+        { address: '0x445FE580eF8d70FF569aB36e80c647af338db351', underlyingAbi: true },
+        { address: '0xb17b674D9c5CB2e441F8e196a2f048A81355d031', underlyingAbi: true },
+      ]),
+  },
+}
+
 type Provider = (ctx: BalancesContext, pools: fmtProviderBalancesParams[]) => Promise<fmtProviderBalancesParams[]>
 
 const getUnderlyingsBeefyBalances = async (ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> => {
-  const balancesWithUnderlyings: Balance[] = []
+  // add totalSupply
+  const totalSuppliesRes = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: pool.lpToken })),
+    abi: erc20Abi.totalSupply,
+  })
 
-  const providers: Record<string, Record<string, Provider | undefined>> = {
-    ethereum: {
-      solidly: fmtSolidlyProvider,
-      sushi: fmtSushiProvider,
-      balancer: (...args) => fmtBalancerProvider(...args, '0xba12222222228d8ba445958a75a0704d566bf2c8'),
-      curve: (...args) =>
-        fmtCurveProvider(...args, [{ address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC', underlyingAbi: true }]),
-    },
-    arbitrum: {
-      // TODO: List all providers used on arbitrum and other altchains
-      sushi: fmtSushiProvider,
-      swapfish: fmtSushiProvider,
-      curve: (...args) =>
-        fmtCurveProvider(...args, [
-          { address: '0x0e9fbb167df83ede3240d6a5fa5d40c6c6851e15', underlyingAbi: false },
-          { address: '0x445FE580eF8d70FF569aB36e80c647af338db351', underlyingAbi: true },
-          { address: '0xb17b674D9c5CB2e441F8e196a2f048A81355d031', underlyingAbi: true },
-        ]),
-    },
-  }
-
-  for (const pool of pools) {
-    const lpToken = pool.lpToken
-    const { output: poolSuppliesRes } = await call({ ctx, target: lpToken, abi: erc20Abi.totalSupply })
-
-    pool.totalSupply = BigNumber.from(poolSuppliesRes)
-  }
-
-  const getProviderFunction = (chain: string, provider: string): Provider | undefined => {
-    const chainProviders = providers[chain]
-    if (!chainProviders) {
-      return undefined
+  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+    const totalSupplyRes = totalSuppliesRes[poolIdx]
+    if (isSuccess(totalSupplyRes)) {
+      pools[poolIdx].totalSupply = BigNumber.from(totalSupplyRes.output)
     }
-    return chainProviders[provider] || fmtNoProvider
   }
 
-  const sortedPools = groupBy(pools, 'provider')
+  // resolve underlyings
+  const poolsByProvider = groupBy(pools, 'provider')
 
-  for (const provider of Object.keys(sortedPools)) {
-    const providerFunction = getProviderFunction(ctx.chain, provider)
+  return (
+    await Promise.all(
+      Object.keys(poolsByProvider).map((providerId) => {
+        const providerFn = providers[ctx.chain]?.[providerId]
+        if (!providerFn) {
+          return poolsByProvider[providerId] as Balance[]
+        }
 
-    if (!providerFunction) {
-      continue
-    }
-
-    const providerPools = sortedPools[provider] as fmtProviderBalancesParams[]
-
-    balancesWithUnderlyings.push(...(await providerFunction(ctx, providerPools)))
-  }
-  return balancesWithUnderlyings
+        return providerFn(ctx, poolsByProvider[providerId] as fmtProviderBalancesParams[])
+      }),
+    )
+  ).flat()
 }
