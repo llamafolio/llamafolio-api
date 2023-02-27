@@ -32,6 +32,7 @@ import gmx from '@adapters/gmx'
 import granaryFinance from '@adapters/granary-finance'
 import hectorNetwork from '@adapters/hector-network'
 import hex from '@adapters/hex'
+import homoraV2 from '@adapters/homora-v2'
 import hundredFinance from '@adapters/hundred-finance'
 import inverseFinance from '@adapters/inverse-finance'
 import ironBank from '@adapters/iron-bank'
@@ -127,6 +128,7 @@ export const adapters: Adapter[] = [
   granaryFinance,
   hectorNetwork,
   hex,
+  homoraV2,
   hundredFinance,
   inverseFinance,
   ironBank,
