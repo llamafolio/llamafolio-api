@@ -1,5 +1,5 @@
 import { BaseContext, Contract } from '@lib/adapter'
-import { Call, multicall } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
 const abi = {
@@ -33,39 +33,28 @@ const abi = {
 export async function getPoolsContract(ctx: BaseContext, pools: string[]): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: pool }))
+  const cTokensRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool })), abi: abi.cToken })
 
-  const cTokens = await multicall({ ctx, calls, abi: abi.cToken })
+  const underlyingsTokens = await multicall({
+    ctx,
+    calls: cTokensRes.map((res) => (isSuccess(res) ? { target: res.output } : null)),
+    abi: abi.underlying,
+  })
 
-  const underlyingsCalls: Call[] = []
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
-    const cToken = cTokens[poolIdx]
+    const underlyingRes = underlyingsTokens[poolIdx]
 
-    if (!isSuccess(cToken)) {
+    if (!isSuccess(underlyingRes)) {
       continue
     }
 
     contracts.push({
       chain: ctx.chain,
       address: pool,
-      cToken: cToken.output,
+      cToken: underlyingRes.input.target,
+      underlyings: [underlyingRes.output],
     })
-
-    underlyingsCalls.push({ target: cToken.output })
-  }
-
-  const underlyingsTokens = await multicall({ ctx, calls: underlyingsCalls, abi: abi.underlying })
-
-  for (let idx = 0; idx < contracts.length; idx++) {
-    const contract = contracts[idx]
-    const underlyingsToken = underlyingsTokens[idx]
-
-    if (!isSuccess(underlyingsToken)) {
-      continue
-    }
-
-    contract.underlyings = [underlyingsToken.output]
   }
 
   return contracts
