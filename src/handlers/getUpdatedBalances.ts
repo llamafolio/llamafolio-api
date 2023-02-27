@@ -239,7 +239,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       protocols,
     }
 
-    return success(balancesResponse, { maxAge: 5 * 50 })
+    return success(balancesResponse, { maxAge: 2 * 60 })
   } catch (error) {
     console.error('Failed to update balances', { error, address })
     return serverError('Failed to update balances')

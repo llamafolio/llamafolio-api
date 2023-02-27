@@ -202,7 +202,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       protocols,
     }
 
-    return success(balancesResponse, { maxAge: 5 * 60 })
+    return success(balancesResponse, { maxAge: 2 * 60 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')

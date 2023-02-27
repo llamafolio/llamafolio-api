@@ -137,7 +137,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         .sort((a, b) => sumBalances(b.balances) - sumBalances(a.balances)),
     }
 
-    return success(balancesResponse, { maxAge: 20 })
+    return success(balancesResponse, { maxAge: 2 * 60 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
