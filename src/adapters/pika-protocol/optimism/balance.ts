@@ -212,7 +212,6 @@ interface GetPositionsParams extends Balance {
   id?: string
   positionId?: string
   side?: string
-  position: BigNumber
   entryPrice: BigNumber
   margin: BigNumber
   marketPrice: BigNumber
@@ -251,7 +250,7 @@ const getPositions = async (
     positionsIds.push({
       ...product,
       positionId: positionIdRes.output,
-      side: long ? 'Long' : 'Short',
+      side: long ? 'long' : 'short',
     })
   }
 
@@ -274,7 +273,6 @@ const getPositions = async (
     positionsDatas.push({
       ...positionId,
       amount: formatValue(BigNumber.from(margin).mul(leverage), positionId.decimals),
-      position: formatValue(BigNumber.from(margin).mul(leverage), positionId.decimals),
       margin: BigNumber.from(margin),
       entryPrice: BigNumber.from(entryPrice),
       marketPrice: BigNumber.from(marketPrice),

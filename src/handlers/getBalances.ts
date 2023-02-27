@@ -42,7 +42,7 @@ export async function getBalancesYields<T extends Balance>(client: Redis, balanc
   return balances
 }
 
-export interface FormattedBalance {
+export interface BaseFormattedBalance {
   standard?: ContractStandard
   name?: string
   chain: Chain
@@ -65,6 +65,18 @@ export interface FormattedBalance {
   underlyings?: FormattedBalance[]
   rewards?: FormattedBalance[]
 }
+
+export interface PerpFormattedBalance extends BaseFormattedBalance {
+  category: 'perpetual'
+  side: 'long' | 'short'
+  margin: string
+  entryPrice: string
+  marketPrice: string
+  leverage: string
+  funding: string
+}
+
+type FormattedBalance = BaseFormattedBalance | PerpFormattedBalance
 
 /**
  * If there's only one underlying, replace balance by its underlying
@@ -110,6 +122,12 @@ export function formatBalance(balance: any): FormattedBalance {
     apyMean30d: balance.apyMean30d,
     ilRisk: balance.ilRisk,
     lock: balance.lock,
+    side: balance.side,
+    margin: balance.margin,
+    entryPrice: balance.entryPrice,
+    marketPrice: balance.marketPrice,
+    leverage: balance.leverage,
+    funding: balance.funding,
     timestamp: balance.timestamp,
     underlyings: balance.underlyings?.map(formatBalance),
     rewards: balance.rewards?.map(formatBalance),
