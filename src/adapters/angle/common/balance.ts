@@ -1,7 +1,9 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { abi as erc20Abi } from '@lib/erc20'
 import { BN_TEN, isZero } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
+import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 import fetch from 'node-fetch'
 
@@ -17,14 +19,32 @@ const abi = {
     outputs: [{ name: '', type: 'uint256' }],
     gas: 26704,
   },
+  getUnderlyingBalances: {
+    inputs: [],
+    name: 'getUnderlyingBalances',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount0Current',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount1Current',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
 const API_URL = 'https://api.angle.money/v1/pools'
 
-export async function getPoolBalancesFromAPI(
+export async function getStablePoolBalancesFromAPI(
   ctx: BalancesContext,
   pools: Contract[],
-  chainId: string,
+  chainId: number,
 ): Promise<Balance[]> {
   const poolsBalances: Balance[] = []
 
@@ -96,4 +116,73 @@ const getAnglePoolsRewards = async (ctx: BalancesContext, pools: Balance[]): Pro
   }
 
   return balances
+}
+
+export async function getAnglePoolsBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
+  const swapBalances: Balance[] = []
+  const gelatoBalances: Balance[] = []
+
+  const calls: Call[] = pools.map((pool) => ({ target: pool.address, params: [ctx.address] }))
+
+  const balancesOfsRes = await multicall({ ctx, calls, abi: erc20Abi.balanceOf })
+
+  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+    const pool = pools[poolIdx]
+    const balancesOfRes = balancesOfsRes[poolIdx]
+
+    if (!isSuccess(balancesOfRes)) {
+      continue
+    }
+
+    if (pool.gaugeType === 'swap') {
+      swapBalances.push({
+        ...pool,
+        address: pool.lpToken,
+        amount: BigNumber.from(balancesOfRes.output),
+        underlyings: pool.underlyings as Contract[],
+        rewards: pool.rewards as Balance[],
+        category: 'farm',
+      })
+    } else {
+      gelatoBalances.push({
+        ...pool,
+        address: pool.lpToken,
+        amount: BigNumber.from(balancesOfRes.output),
+        underlyings: pool.underlyings as Contract[],
+        rewards: pool.rewards as Balance[],
+        category: 'farm',
+      })
+    }
+  }
+
+  const swapBalancesWithUnderlyings = await getUnderlyingBalances(ctx, swapBalances)
+
+  const gelatoCalls: Call[] = []
+  const suppliesCall: Call[] = []
+
+  for (const gelatoBalance of gelatoBalances) {
+    gelatoCalls.push({ target: gelatoBalance.address })
+    suppliesCall.push({ target: gelatoBalance.address })
+  }
+
+  const [underlyingBalancesRes, suppliesRes] = await Promise.all([
+    multicall({ ctx, calls: gelatoCalls, abi: abi.getUnderlyingBalances }),
+    multicall({ ctx, calls: gelatoCalls, abi: erc20Abi.totalSupply }),
+  ])
+
+  for (let poolIdx = 0; poolIdx < gelatoBalances.length; poolIdx++) {
+    const gelatoBalance = gelatoBalances[poolIdx]
+    const { underlyings, amount } = gelatoBalance
+    const underlyingBalanceRes = underlyingBalancesRes[poolIdx]
+    const supplyRes = suppliesRes[poolIdx]
+
+    if (!underlyings || !isSuccess(underlyingBalanceRes) || !isSuccess(supplyRes) || isZero(supplyRes.output)) {
+      continue
+    }
+
+    ;(underlyings[0] as Balance).amount = amount.mul(underlyingBalanceRes.output.amount0Current).div(supplyRes.output)
+    ;(underlyings[1] as Balance).amount = amount.mul(underlyingBalanceRes.output.amount1Current).div(supplyRes.output)
+  }
+
+  return [...swapBalancesWithUnderlyings, ...gelatoBalances]
 }

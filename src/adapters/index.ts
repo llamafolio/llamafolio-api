@@ -4,6 +4,7 @@ import aaveV3 from '@adapters/aave-v3'
 import abracadabra from '@adapters/abracadabra'
 import alchemix from '@adapters/alchemix'
 import alpacaFinance from '@adapters/alpaca-finance'
+import angle from '@adapters/angle'
 import apeswapAmm from '@adapters/apeswap-amm'
 import apeswapLending from '@adapters/apeswap-lending'
 import api3 from '@adapters/api3'
@@ -101,6 +102,7 @@ export const adapters: Adapter[] = [
   abracadabra,
   alchemix,
   alpacaFinance,
+  angle,
   apeswapAmm,
   apeswapLending,
   api3,
