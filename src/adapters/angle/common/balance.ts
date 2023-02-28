@@ -123,14 +123,23 @@ export async function getAnglePoolsBalances(ctx: BalancesContext, pools: Contrac
   const gelatoBalances: Balance[] = []
 
   const calls: Call[] = pools.map((pool) => ({ target: pool.address, params: [ctx.address] }))
+  const rewardsCalls: Call[] = pools.map((pool) => ({
+    target: pool.address,
+    params: [ctx.address, '0x31429d1856aD1377A8A0079410B297e1a9e214c2'],
+  }))
 
-  const balancesOfsRes = await multicall({ ctx, calls, abi: erc20Abi.balanceOf })
+  const [balancesOfsRes, claimablesOfsRes] = await Promise.all([
+    multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
+    multicall({ ctx, calls: rewardsCalls, abi: abi.claimable_reward }),
+  ])
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
+    const reward = pool.rewards?.[0] as Balance
     const balancesOfRes = balancesOfsRes[poolIdx]
+    const claimablesOfRes = claimablesOfsRes[poolIdx]
 
-    if (!isSuccess(balancesOfRes)) {
+    if (!isSuccess(balancesOfRes) || !isSuccess(claimablesOfRes)) {
       continue
     }
 
@@ -140,7 +149,7 @@ export async function getAnglePoolsBalances(ctx: BalancesContext, pools: Contrac
         address: pool.lpToken,
         amount: BigNumber.from(balancesOfRes.output),
         underlyings: pool.underlyings as Contract[],
-        rewards: pool.rewards as Balance[],
+        rewards: [{ ...reward, amount: BigNumber.from(claimablesOfRes.output) }],
         category: 'farm',
       })
     } else {
@@ -149,7 +158,7 @@ export async function getAnglePoolsBalances(ctx: BalancesContext, pools: Contrac
         address: pool.lpToken,
         amount: BigNumber.from(balancesOfRes.output),
         underlyings: pool.underlyings as Contract[],
-        rewards: pool.rewards as Balance[],
+        rewards: [{ ...reward, amount: BigNumber.from(claimablesOfRes.output) }],
         category: 'farm',
       })
     }
