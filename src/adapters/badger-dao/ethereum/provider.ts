@@ -40,11 +40,6 @@ const abi = {
   },
 }
 
-interface RegistryParams {
-  address: string
-  underlyingAbi: boolean
-}
-
 export interface ProviderBalancesParams extends Balance {
   amount: BigNumber
   totalSupply: BigNumber
