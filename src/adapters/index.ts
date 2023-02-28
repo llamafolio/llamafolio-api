@@ -10,6 +10,7 @@ import api3 from '@adapters/api3'
 import arrakis from '@adapters/arrakis'
 import atlasUsv from '@adapters/atlas-usv'
 import aura from '@adapters/aura'
+import badgerDao from '@adapters/badger-dao'
 import balancer from '@adapters/balancer'
 import bancorV3 from '@adapters/bancor-v3'
 import beefy from '@adapters/beefy'
@@ -107,6 +108,7 @@ export const adapters: Adapter[] = [
   arrakis,
   atlasUsv,
   aura,
+  badgerDao,
   balancer,
   bancorV3,
   beefy,
