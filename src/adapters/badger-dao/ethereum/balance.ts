@@ -61,7 +61,7 @@ const providers: Record<string, Provider | undefined> = {
 }
 
 const getUnderlyingsBadgerBalances = async (ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> => {
-  // add totalSupply, it requires to get formatted underlyings balances
+  // add totalSupply, required to get formatted underlyings balances
   const totalSuppliesRes = await multicall({
     ctx,
     calls: pools.map((pool) => ({ target: pool.lpToken })),
