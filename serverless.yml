@@ -99,6 +99,7 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}
+    timeout: 10
 
   getUpdatedBalances:
     handler: src/handlers/getUpdatedBalances.handler
