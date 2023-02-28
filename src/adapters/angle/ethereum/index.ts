@@ -26,8 +26,10 @@ const poolsAddresses: Record<string, string[]> = {
   gelato: ['0xEB7547a8a734b6fdDBB8Ce0C314a9E6485100a3C', '0x3785Ce82be62a342052b9E5431e9D3a839cfB581'],
 }
 export const getContracts = async (ctx: BaseContext) => {
-  const stablePools = await getStablePoolContractsFromAPI(ctx, 1)
-  const pools = await getAnglePoolsContract(ctx, poolsAddresses)
+  const [stablePools, pools] = await Promise.all([
+    getStablePoolContractsFromAPI(ctx, 1),
+    getAnglePoolsContract(ctx, poolsAddresses),
+  ])
 
   return {
     contracts: { stablePools, locker, pools },

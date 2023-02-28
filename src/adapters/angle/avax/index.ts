@@ -1,7 +1,7 @@
-import { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-export const getContracts = async (ctx: BaseContext) => {
+export const getContracts = async () => {
   return {
     contracts: {},
   }
