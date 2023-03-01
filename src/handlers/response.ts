@@ -40,6 +40,8 @@ export function response({ statusCode, body, headers, maxAge, eTag, replacer = d
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'OPTIONS,GET',
       ...headers,
     },
     body: JSON.stringify(body, replacer),
