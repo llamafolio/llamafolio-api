@@ -6,7 +6,6 @@ import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber, ethers } from 'ethers'
-import { groupBy } from 'lodash'
 
 const abi = {
   getBNFTAssetList: {
@@ -261,48 +260,46 @@ const apeStakingBalances = async (
   apeStaker: Contract,
 ): Promise<Balance[]> => {
   const apeBalances: Balance[] = []
-  const sortedNFTs = groupBy(nftsBalances, 'category')
+  const lendNFTBalances = nftsBalances.filter((balance) => balance.category === 'lend')
 
-  if (sortedNFTs.lend) {
-    const stakedProxiesRes = await multicall({
-      ctx,
-      calls: sortedNFTs.lend.map((nft) =>
-        nft.nftId ? { target: apeStaker.address, params: [nft.address, nft.nftId] } : null,
-      ),
-      abi: abi.getStakedProxies,
-    })
+  const stakedProxiesRes = await multicall({
+    ctx,
+    calls: lendNFTBalances.map((nft) =>
+      nft.nftId ? { target: apeStaker.address, params: [nft.address, nft.nftId] } : null,
+    ),
+    abi: abi.getStakedProxies,
+  })
 
-    const calls: Call[] = stakedProxiesRes.map((proxy) => ({
-      target: apeStaker.address,
-      params:
-        isSuccess(proxy) && proxy.output.length >= 1
-          ? [proxy.output[0], ctx.address]
-          : [ethers.constants.AddressZero, ctx.address],
-    }))
+  const calls: Call[] = stakedProxiesRes.map((proxy) => ({
+    target: apeStaker.address,
+    params:
+      isSuccess(proxy) && proxy.output.length >= 1
+        ? [proxy.output[0], ctx.address]
+        : [ethers.constants.AddressZero, ctx.address],
+  }))
 
-    const [totalStakedBalancesRes, claimablesRes] = await Promise.all([
-      multicall({ ctx, calls, abi: abi.totalStaked }),
-      multicall({ ctx, calls, abi: abi.claimable }),
-    ])
+  const [totalStakedBalancesRes, claimablesRes] = await Promise.all([
+    multicall({ ctx, calls, abi: abi.totalStaked }),
+    multicall({ ctx, calls, abi: abi.claimable }),
+  ])
 
-    for (let nftIdx = 0; nftIdx < sortedNFTs.lend.length; nftIdx++) {
-      const totalStakedBalanceRes = totalStakedBalancesRes[nftIdx]
-      const claimableRes = claimablesRes[nftIdx]
+  for (let nftIdx = 0; nftIdx < lendNFTBalances.length; nftIdx++) {
+    const totalStakedBalanceRes = totalStakedBalancesRes[nftIdx]
+    const claimableRes = claimablesRes[nftIdx]
 
-      if (!isSuccess(totalStakedBalanceRes) || !isSuccess(claimableRes)) {
-        continue
-      }
-
-      apeBalances.push({
-        ...apeStaker,
-        symbol: ape.symbol,
-        decimals: ape.decimals,
-        amount: BigNumber.from(totalStakedBalanceRes.output),
-        underlyings: [ape],
-        rewards: [{ ...ape, amount: BigNumber.from(claimableRes.output) }],
-        category: 'stake',
-      })
+    if (!isSuccess(totalStakedBalanceRes) || !isSuccess(claimableRes)) {
+      continue
     }
+
+    apeBalances.push({
+      ...apeStaker,
+      symbol: ape.symbol,
+      decimals: ape.decimals,
+      amount: BigNumber.from(totalStakedBalanceRes.output),
+      underlyings: [ape],
+      rewards: [{ ...ape, amount: BigNumber.from(claimableRes.output) }],
+      category: 'stake',
+    })
   }
 
   return [...nftsBalances, ...apeBalances]
