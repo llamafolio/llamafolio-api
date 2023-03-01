@@ -15,6 +15,7 @@ import badgerDao from '@adapters/badger-dao'
 import balancer from '@adapters/balancer'
 import bancorV3 from '@adapters/bancor-v3'
 import beefy from '@adapters/beefy'
+import benddao from '@adapters/benddao'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
 import biswap from '@adapters/biswap'
@@ -114,6 +115,7 @@ export const adapters: Adapter[] = [
   balancer,
   bancorV3,
   beefy,
+  benddao,
   benqiLending,
   benqiStakedAvax,
   biswap,
