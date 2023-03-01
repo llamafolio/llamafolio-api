@@ -19,6 +19,7 @@ import benddao from '@adapters/benddao'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
 import biswap from '@adapters/biswap'
+import blur from '@adapters/blur'
 import capFinance from '@adapters/cap-finance'
 import compound from '@adapters/compound'
 import compoundV3 from '@adapters/compound-v3'
@@ -119,6 +120,7 @@ export const adapters: Adapter[] = [
   benqiLending,
   benqiStakedAvax,
   biswap,
+  blur,
   capFinance,
   compound,
   compoundV3,

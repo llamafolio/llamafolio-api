@@ -6,7 +6,6 @@ import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber, ethers } from 'ethers'
-import { groupBy } from 'lodash'
 
 const abi = {
   getBNFTAssetList: {
@@ -261,11 +260,11 @@ const apeStakingBalances = async (
   apeStaker: Contract,
 ): Promise<Balance[]> => {
   const apeBalances: Balance[] = []
-  const sortedNFTs = groupBy(nftsBalances, 'category')
+  const lendNFTBalances = nftsBalances.filter((balance) => balance.category === 'lend')
 
   const stakedProxiesRes = await multicall({
     ctx,
-    calls: sortedNFTs.lend.map((nft) =>
+    calls: lendNFTBalances.map((nft) =>
       nft.nftId ? { target: apeStaker.address, params: [nft.address, nft.nftId] } : null,
     ),
     abi: abi.getStakedProxies,
@@ -284,7 +283,7 @@ const apeStakingBalances = async (
     multicall({ ctx, calls, abi: abi.claimable }),
   ])
 
-  for (let nftIdx = 0; nftIdx < sortedNFTs.lend.length; nftIdx++) {
+  for (let nftIdx = 0; nftIdx < lendNFTBalances.length; nftIdx++) {
     const totalStakedBalanceRes = totalStakedBalancesRes[nftIdx]
     const claimableRes = claimablesRes[nftIdx]
 
