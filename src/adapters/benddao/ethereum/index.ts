@@ -1,10 +1,9 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { groupBy } from 'lodash'
 
 import { getBendBalances } from './balance'
 import { getBendDaoLocker } from './locker'
-import { getNftBalances, getNftContracts, getNFTHealthFactor, NFTBorrowBalance } from './nft'
+import { getNftBalances, getNftContracts } from './nft'
 
 const veBend: Contract = {
   chain: 'ethereum',
@@ -54,8 +53,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     nfts: (...args) => getNftBalances(...args, lendPool, apeStaker),
   })
 
-  const sortedBalances = groupBy(balances, '__key')
-  const healthFactor = await getNFTHealthFactor((sortedBalances.nfts as NFTBorrowBalance[]) || [])
+  // const sortedBalances = groupContracts(balances)
+  // const healthFactor = await getNFTHealthFactor((sortedBalances.nfts as NFTBorrowBalance[]) || [])
 
   return {
     balances,
