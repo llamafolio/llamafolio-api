@@ -6,6 +6,36 @@ import {
   getMarketsBalances,
   getMarketsContracts,
 } from '@lib/compound/v2/lending'
+import { Token } from '@lib/token'
+
+import { getAtlantisFarmBalances } from '../common/farm'
+
+const atlx: Token = {
+  chain: 'polygon',
+  address: '0x0b68782eff3177f1f9240b64a7e2f8e0497e2454',
+  decimals: 18,
+  symbol: 'ATLX',
+}
+
+const usdc: Token = {
+  chain: 'polygon',
+  address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+  decimals: 6,
+  symbol: 'USDC',
+}
+
+const atlStaker: Contract = {
+  chain: 'polygon',
+  address: '0xc8cf4af53fe1ae6ba29be86d4bcb97fac6d4f7de',
+  underlyings: [atlx],
+}
+
+const lpStaker: Contract = {
+  chain: 'polygon',
+  address: '0xd771bf2930628258bfcc37707f4334b4b0c0f2dc',
+  lpToken: { address: '0x350cac55be4db9f043e5c20e8ef0e0dbd604fea5', symbol: 'UNI-V2' },
+  underlyings: [atlx, usdc],
+}
 
 const Comptroller: Contract = {
   chain: 'polygon',
@@ -22,13 +52,14 @@ export const getContracts = async (ctx: BaseContext) => {
   })
 
   return {
-    contracts: { markets, Comptroller },
+    contracts: { markets, Comptroller, stakers: [atlStaker, lpStaker] },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     markets: getMarketsBalances,
+    stakers: (...args) => getAtlantisFarmBalances(...args, atlx),
   })
 
   const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])

@@ -8,7 +8,7 @@ import {
 } from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
 
-import { getAtlantisFarmBalances } from './farm'
+import { getAtlantisFarmBalances } from '../common/farm'
 
 const atl: Token = {
   chain: 'bsc',
@@ -22,6 +22,12 @@ const busd: Token = {
   address: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
   decimals: 18,
   symbol: 'BUSD',
+}
+
+const atlStaker: Contract = {
+  chain: 'bsc',
+  address: '0x9afc9877b1621e414e907f13a8d3ed9511be03de',
+  underlyings: [atl],
 }
 
 const lpStaker: Contract = {
@@ -46,14 +52,14 @@ export const getContracts = async (ctx: BaseContext) => {
   })
 
   return {
-    contracts: { markets, Comptroller, lpStaker },
+    contracts: { markets, Comptroller, stakers: [atlStaker, lpStaker] },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     markets: getMarketsBalances,
-    lpStaker: getAtlantisFarmBalances,
+    stakers: (...args) => getAtlantisFarmBalances(...args, atl),
   })
 
   const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
