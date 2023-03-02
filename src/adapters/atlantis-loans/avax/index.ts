@@ -16,7 +16,7 @@ export const getContracts = async (ctx: BaseContext) => {
   const markets = await getMarketsContracts(ctx, {
     comptrollerAddress: Comptroller.address,
     underlyingAddressByMarketAddress: {
-      // aBNB -> WBNB
+      // aWAVAX -> WAVAX
       '0x6bd2154fbc086cb43411966e0e72584196ccd065': '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
     },
   })
