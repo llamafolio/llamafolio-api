@@ -9,6 +9,7 @@ import apeswapAmm from '@adapters/apeswap-amm'
 import apeswapLending from '@adapters/apeswap-lending'
 import api3 from '@adapters/api3'
 import arrakis from '@adapters/arrakis'
+import atlantisLoans from '@adapters/atlantis-loans'
 import atlasUsv from '@adapters/atlas-usv'
 import aura from '@adapters/aura'
 import badgerDao from '@adapters/badger-dao'
@@ -110,6 +111,7 @@ export const adapters: Adapter[] = [
   apeswapLending,
   api3,
   arrakis,
+  atlantisLoans,
   atlasUsv,
   aura,
   badgerDao,
