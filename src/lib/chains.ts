@@ -32,7 +32,11 @@ export const chains: IChainInfo[] = [
     id: 'avax',
     chainId: 43114,
     name: 'Avalanche',
-    rpcUrl: ['https://api.avax.network/ext/bc/C/rpc', 'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc'],
+    rpcUrl: [
+      'https://avalanche.public-rpc.com',
+      'https://api.avax.network/ext/bc/C/rpc',
+      'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc',
+    ],
   },
   {
     id: 'bsc',
@@ -68,7 +72,7 @@ export const chains: IChainInfo[] = [
     id: 'fantom',
     chainId: 250,
     name: 'Fantom',
-    rpcUrl: ['https://rpc.ankr.com/fantom', 'https://rpc.ftm.tools/', 'https://rpcapi.fantom.network'],
+    rpcUrl: ['https://rpc.ftm.tools/', 'https://rpc.ankr.com/fantom', 'https://rpcapi.fantom.network'],
   },
   {
     id: 'harmony',
