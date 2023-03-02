@@ -32,7 +32,7 @@ export const chains: IChainInfo[] = [
     id: 'avax',
     chainId: 43114,
     name: 'Avalanche',
-    rpcUrl: [`https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc`],
+    rpcUrl: ['https://api.avax.network/ext/bc/C/rpc', 'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc'],
   },
   {
     id: 'bsc',
@@ -101,7 +101,7 @@ export const chains: IChainInfo[] = [
     id: 'xdai',
     chainId: 100,
     name: 'Gnosis Chain',
-    rpcUrl: ['https://rpc.ankr.com/gnosis', 'https://xdai-archive.blockscout.com'],
+    rpcUrl: ['wss://rpc.gnosischain.com/wss', 'https://rpc.ankr.com/gnosis', 'https://xdai-archive.blockscout.com'],
   },
 ]
 
