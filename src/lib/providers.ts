@@ -10,10 +10,13 @@ function createProvider(name: string, rpcs: string[], chainId: number) {
 
   return new ethersProviders.FallbackProvider(
     rpcs.map((url, i) => ({
-      provider: new ethersProviders.StaticJsonRpcProvider(url, {
-        name,
-        chainId,
-      }),
+      provider: new ethersProviders.StaticJsonRpcProvider(
+        { url, allowGzip: true },
+        {
+          name,
+          chainId,
+        },
+      ),
       priority: i,
     })),
     1,
