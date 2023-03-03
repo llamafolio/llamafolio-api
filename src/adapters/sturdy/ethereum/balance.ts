@@ -37,9 +37,7 @@ export async function getSturdyBalances(ctx: BalancesContext, pools: Contract[])
     singleUnderlyings.push(poolBalance)
   }
 
-  const test = await underlyingsBalances(ctx, multipleUnderlyings)
-
-  return [...singleUnderlyings, ...test]
+  return [...singleUnderlyings, ...(await underlyingsBalances(ctx, multipleUnderlyings))]
 }
 
 const underlyingsBalances = async (ctx: BalancesContext, pools: Balance[]): Promise<Balance[]> => {
