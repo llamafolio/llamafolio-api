@@ -147,7 +147,8 @@
         "wallet",
         "wepiggy",
         "wonderland",
-        "yearn-finance"
+        "yearn-finance",
+        "zyberswap"
       ],
       "default": "curve"
     },
