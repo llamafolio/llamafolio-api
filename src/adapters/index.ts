@@ -83,6 +83,7 @@ import spool from '@adapters/spool'
 import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
 import strike from '@adapters/strike'
+import sturdy from '@adapters/sturdy'
 import sushiswap from '@adapters/sushiswap'
 import synapse from '@adapters/synapse'
 import synthetix from '@adapters/synthetix'
@@ -186,6 +187,7 @@ export const adapters: Adapter[] = [
   stakewise,
   stargate,
   strike,
+  sturdy,
   sushiswap,
   synapse,
   synthetix,
