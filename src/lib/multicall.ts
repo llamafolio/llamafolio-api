@@ -18,7 +18,7 @@ function abiObjectToString(abi: object) {
   }
 }
 
-// Merge incoming multicalls into multicalls batches and dispatch results
+// Merge incoming calls/multicalls and dispatch results
 class BatchCaller {
   _pendingBatchAggregator: NodeJS.Timer | null = null
   _pendingBatch: Array<{
@@ -116,7 +116,7 @@ class BatchCaller {
   }
 }
 
-const callers: { [key: string]: BatchCaller } = {}
+export const callers: { [key: string]: BatchCaller } = {}
 for (const chain of chains) {
   callers[chain.id] = new BatchCaller()
 }
