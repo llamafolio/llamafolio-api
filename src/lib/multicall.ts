@@ -10,12 +10,8 @@ import { ethers } from 'ethers'
 export type MultiCallParams = Parameters<typeof multiCall>[0]
 
 function abiObjectToString(abi: object) {
-  try {
-    const iface = new ethers.utils.Interface([abi])
-    return iface.format(ethers.utils.FormatTypes.full)[0]
-  } catch (error) {
-    return JSON.stringify(abi)
-  }
+  const frag = ethers.utils.Fragment.fromObject(abi)
+  return frag.format(ethers.utils.FormatTypes.full)
 }
 
 // Merge incoming calls/multicalls and dispatch results
@@ -116,9 +112,9 @@ class BatchCaller {
   }
 }
 
-export const callers: { [key: string]: BatchCaller } = {}
+export const batchCallers: { [key: string]: BatchCaller } = {}
 for (const chain of chains) {
-  callers[chain.id] = new BatchCaller()
+  batchCallers[chain.id] = new BatchCaller()
 }
 
 export interface MultiCallOptions {
@@ -145,12 +141,16 @@ export interface MultiCallResult<T = string, P = any[], O = any | null> {
 
 export async function multicall<T = string, P = any[], O = any>(params: MultiCallOptions) {
   const results: MultiCallResult<T, P, O>[] = []
+  if (!params.calls?.length) {
+    return results
+  }
+
   // Allow nullish input calls but don't pass them to the underlying multicall function.
   // Nullish calls results are automatically unsuccessful.
   // This allows us to "chain" multicall responses while preserving input indices
   const calls = params.calls.filter(isNotNullish)
 
-  const multicallRes = await callers[params.ctx.chain]!.call({
+  const multicallRes = await batchCallers[params.ctx.chain]!.call({
     ...params,
     calls,
     chain: params.ctx.chain,

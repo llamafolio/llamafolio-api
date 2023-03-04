@@ -1,7 +1,7 @@
 import '@lib/providers'
 
 import { BaseContext } from '@lib/adapter'
-import { callers } from '@lib/multicall'
+import { batchCallers } from '@lib/multicall'
 
 export type CallParams = string | number | (string | number)[] | undefined
 
@@ -13,7 +13,7 @@ export interface CallOptions {
 }
 
 export async function call(options: CallOptions) {
-  const res = await callers[options.ctx.chain]!.call({
+  const res = await batchCallers[options.ctx.chain]!.call({
     ...options,
     calls: [{ target: options.target, params: options.params }],
     chain: options.ctx.chain,
