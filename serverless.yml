@@ -211,13 +211,6 @@ functions:
       # every new hour
       - schedule: cron(0 * * * ? *)
 
-  scheduledUpdateProtocols:
-    handler: src/handlers/updateProtocols.scheduledUpdateProtocol
-    description: Scheduled update protocols information
-    events:
-      # every new hour
-      - schedule: cron(0 * * * ? *)    
-
   revalidateAdapterContracts:
     handler: src/handlers/revalidateAdapters.revalidateAdapterContracts
     description: Revalidate adapter contracts

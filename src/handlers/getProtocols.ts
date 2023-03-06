@@ -1,8 +1,6 @@
-import { selectProcols } from '@db/protocols'
-import { client as redisClient } from '@db/redis'
 import { success } from '@handlers/response'
 import { Cache } from '@lib/cache'
-import { getProtocolColor, IProtocolLite } from '@lib/protocols'
+import { fetchProtocolsLite, getProtocolColor, IProtocolLite } from '@lib/protocols'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
 const cache = new Cache<string, IProtocolLite[] | string | undefined | null>()
@@ -12,7 +10,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
   let protocols = cache.get<IProtocolLite[]>('protocols')
   if (!protocols) {
-    protocols = await selectProcols(redisClient)
+    protocols = await fetchProtocolsLite()
     // update protocols cache
     cache.set('protocols', protocols, 0)
   }
