@@ -1,0 +1,212 @@
+{
+  "staking_contracts": [
+    { "name": "Aave aFRAX", "address": "0x02577b426F223A6B4f2351315A19ecD6F357d65c", "provider": "aave" },
+    {
+      "name": "Convex stkcvxagEURFRAXBP",
+      "address": "0xd1f21322bBDd3586dC1151ADCcaA2684641c2b31",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxALCXFRAXBP",
+      "address": "0xA0657642224Fc53dAB4a3d2069430afe157BEc5D",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxBADGERFRAXBP",
+      "address": "0x5a92EF27f4baA7C766aee6d751f754EBdEBd9fae",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxBUSDFRAXBP",
+      "address": "0xaCf54f101B86f9e55d35C0674Ebd8C854E5f80e4",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxclevUSDFRAXBP",
+      "address": "0x5745506D56b0088f800085b1227B3f1F7d419c89",
+      "provider": "convex"
+    },
+    { "name": "Convex stkcvxCVXFRAXBP", "address": "0xeC670c5e0A8A8d5ae5639158565D840DE44CA03f", "provider": "convex" },
+    {
+      "name": "Convex stkcvxcvxCRVFRAXBP",
+      "address": "0x57c9F019B25AaAF822926f4Cacf0a860f61eDd8D",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxcvxFXSFRAXBP",
+      "address": "0x2F9504988675c91787E188Ed928D6E042d9052e9",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxDOLAFRAXBP",
+      "address": "0xE7211E87D60177575846936F2123b5FA6f0ce8Ab",
+      "provider": "convex"
+    },
+    { "name": "Convex stkcvxFPIFRAX", "address": "0x0a08673E3d7c454E1c6b27acD059C50Df6727FC9", "provider": "convex" },
+    { "name": "Convex stkcvxFRAXBP", "address": "0x963f487796d54d2f27bA6F3Fbe91154cA103b199", "provider": "convex" },
+    { "name": "Convex stkcvxfrxETHETH", "address": "0xa537d64881b84faffb9Ae43c951EEbF368b71cdA", "provider": "convex" },
+    {
+      "name": "Convex stkcvxGUSDFRAXBP",
+      "address": "0xF0Ffe16810B7f412c52C1610e3BC9819A7Dcb366",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxLUSDFRAXBP",
+      "address": "0xF0A9b6F6593b4Bf96E1Ab13921A8a3FbFd9d4F16",
+      "provider": "convex"
+    },
+    { "name": "Convex stkcvxMAIFRAXBP", "address": "0xdE5684F85a78F6CcCFFB4b9301ad0944eb5CE3eE", "provider": "convex" },
+    {
+      "name": "Convex stkcvxmsUSDFRAXBP",
+      "address": "0xfB2CCc82755A734C53C8B45f260fFc2df026fe87",
+      "provider": "convex"
+    },
+    { "name": "Convex stkcvxOHMFRAXBP", "address": "0xc96e1a26264D965078bd01eaceB129A65C09FFE7", "provider": "convex" },
+    {
+      "name": "Convex stkcvxpUSDFRAXBP",
+      "address": "0x40b42E4ab3c044e67CBFb0bD99C9E975dcB83668",
+      "provider": "convex"
+    },
+    { "name": "Convex stkcvxRSRFRAXBP", "address": "0xF22D3C85e41Ef4b5Ac8Cb8B89a14718e290a0561", "provider": "convex" },
+    { "name": "Convex stkcvxSDTFRAXBP", "address": "0x9C8d9667d5726aEcA4d24171958BeE9F46861bed", "provider": "convex" },
+    {
+      "name": "Convex stkcvxTUSDFRAXBP",
+      "address": "0xb324b2BD8a3Dc55b04111E84d5cce0c3771F8889",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxUSDDFRAXBP",
+      "address": "0xF7242A1cE383174802818febB36B6eebb56d5BFb",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxalUSDFRAXBP",
+      "address": "0x711d650Cd10dF656C2c28D375649689f137005fA",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxapeUSDFRAXBP",
+      "address": "0xa810D1268cEF398EC26095c27094596374262826",
+      "provider": "convex"
+    },
+    {
+      "name": "Convex stkcvxsUSDFRAXBP",
+      "address": "0x560c7668459221e33ED515D1D17c09ECda1996f5",
+      "provider": "convex"
+    },
+    { "name": "Convex stkcvxXAIFRAXBP", "address": "0x4edF7C64dAD8c256f6843AcFe56876024b54A1b6", "provider": "convex" },
+    {
+      "name": "Fraxswap V1 FRAX/IQ V2",
+      "address": "0xBF33B67F243a4DAbED494Ff5840f113B2E202a0d",
+      "provider": "uniswap"
+    },
+    {
+      "name": "Fraxswap V1 FRAX/IQ V3",
+      "address": "0x35678017e1D252dA1CdD6745b147E3e75d1f9C27",
+      "provider": "uniswap"
+    },
+    { "name": "Fraxswap V1 FRAX/IQ", "address": "0x5e15E40A3AA06bECA711EdE9F3F76E1d80C34490", "provider": "uniswap" },
+    { "name": "Fraxswap V1 FRAX/SYN", "address": "0xE8453a2e8E97cba69365A1d727Fde3768b18d814", "provider": "uniswap" },
+    {
+      "name": "Fraxswap V1 FRAX/SYN_OLD",
+      "address": "0xe679312C16200Bc42B7a05eddE8B0162b340a1f3",
+      "provider": "uniswap"
+    },
+    {
+      "name": "Fraxswap V1 FRAX/SYN_OLD2",
+      "address": "0xb8e49724a342c5F4C02918a1cDa6B3b25632d04b",
+      "provider": "uniswap"
+    },
+    {
+      "name": "Fraxswap V1 FRAX/pitchFXS V2",
+      "address": "0x899Aa575E0e46344D18471f69337663C48b76e35",
+      "provider": "uniswap"
+    },
+    {
+      "name": "Fraxswap V1 FRAX/pitchFXS V3",
+      "address": "0x24C66Ba25ca2A53bB97B452B9F45DD075b07Cf55",
+      "provider": "uniswap"
+    },
+    {
+      "name": "Fraxswap V1 FRAX/pitchFXS",
+      "address": "0x9E66E7811fEacf5402B65021475d1A293f7ea797",
+      "provider": "uniswap"
+    },
+    { "name": "Fraxswap V2 FRAX/FPIS", "address": "0x9d46C0584C5C89e14fb1143e2414712feF36f00F", "provider": "uniswap" },
+    { "name": "Fraxswap V2 FRAX/FXS", "address": "0x3F2E53B1A3036Fd33F3c2f3cC49daB26A88DF2e0", "provider": "uniswap" },
+    { "name": "Fraxswap V2 FRAX/IQ", "address": "0x7af00CF8D3a8A75210a5Ed74f2254E2EC43B5B5b", "provider": "uniswap" },
+    { "name": "Fraxswap V2 FRAX/OHM", "address": "0xf562B2f33b3c90d5D273f88Cdf0CeD866E17092e", "provider": "uniswap" },
+    {
+      "name": "Fraxswap V2 FRAX/pitchFXS",
+      "address": "0xa632Fab76Fe013199c8271Ac22b466b9D11BFe88",
+      "provider": "uniswap"
+    },
+    { "name": "Fraxswap V2 FRAX/SDL", "address": "0x8875A328EaDb1e142f4021Fc2098096796a30cf8", "provider": "uniswap" },
+    { "name": "Fraxswap V2 FRAX/SYN", "address": "0x788E44b6424A0e4160Ae4766E86640EC5a6baD5b", "provider": "uniswap" },
+    { "name": "Fraxswap V2 FRAX/ZZ", "address": "0x38950D42CD549842B3Fc862a45F00eB24331F462", "provider": "uniswap" },
+    {
+      "name": "Gelato Uniswap FRAX/DAI",
+      "address": "0xcdfc491804A420b677f8e788B5157856910E2F6f",
+      "provider": "arrakis"
+    },
+    {
+      "name": "KyberSwap Elastic FRAX/USDC 0.04%",
+      "address": "0x59f91AA50DfB3e4aC6d3580e5A2fC22A7C24f505",
+      "provider": "uniswap3"
+    },
+    { "name": "StakeDAO sdFRAX3CRV-f", "address": "0xEB81b86248d3C2b618CcB071ADB122109DA96Da2", "provider": "curve", "curvePool" : "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B" },
+    { "name": "Sushi FRAX/SUSHI", "address": "0xb4Ab0dE6581FBD3A02cF8f9f265138691c3A7d5D", "provider": "uniswap" },
+    { "name": "Temple FRAX/TEMPLE", "address": "0x10460d02226d6ef7B2419aE150E6377BdbB7Ef16", "provider": "uniswap" },
+    {
+      "name": "Temple FRAX/TEMPLE_OLD",
+      "address": "0x016563F5EB22cF84fA0Ff8B593DdC5343ca15856",
+      "provider": "uniswap"
+    },
+    { "name": "Uniswap FEI/TRIBE", "address": "0x9928e4046d7c6513326cCeA028cD3e7a91c7590A", "provider": "uniswap" },
+    { "name": "Uniswap FRAX/FXS", "address": "0xda2c338350a0E59Ce71CDCED9679A3A590Dd9BEC", "provider": "uniswapBUG" },
+    { "name": "Uniswap FRAX/IQ", "address": "0xF37057823910653a554d996B49E3399DC87fAE1b", "provider": "uniswap3" },
+    { "name": "Uniswap FRAX/IQ_OLD", "address": "0x35fc5Fd90e06c47c0D9dEBfEDB1daF55bCE14E6d", "provider": "uniswap3" },
+    { "name": "Uniswap FRAX/OHM", "address": "0xfC77A420f56Dec53e3b91D7FC936902e132335FF", "provider": "uniswap3" },
+    { "name": "Uniswap FRAX/USDC", "address": "0xa29367a3f057F3191b62bd4055845a33411892b6", "provider": "uniswapBUG" },
+    { "name": "Uniswap FRAX/WETH", "address": "0xD875628B942f8970De3CcEaf6417005F68540d4f", "provider": "uniswap" },
+    { "name": "Uniswap FXS/WETH", "address": "0xDc65f3514725206Dd83A8843AAE2aC3D99771C88", "provider": "uniswap" },
+    { "name": "Uniswap V3 FRAX/DAI", "address": "0xF22471AC2156B489CC4a59092c56713F813ff53e", "provider": "uniswap3" },
+    {
+      "name": "Uniswap V3 FRAX/DAI_OLD",
+      "address": "0xD922cD347eb367FC4FB4bbcb68A84C6CDD3bA4ba",
+      "provider": "uniswap3"
+    },
+    { "name": "Uniswap V3 FRAX/USDC", "address": "0x3EF26504dbc8Dd7B7aa3E97Bc9f3813a9FC0B4B0", "provider": "uniswap3" },
+    {
+      "name": "Uniswap V3 FRAX/USDC_OLD",
+      "address": "0xF397Abd7495EB6FE4697F45b5BA17166f03533b9",
+      "provider": "uniswap3"
+    },
+    {
+      "name": "Uniswap V3 FRAX/USDC_OLD2",
+      "address": "0x1C21Dd0cE3bA89375Fc39F1B134AD15671022660",
+      "provider": "uniswap3"
+    },
+    {
+      "name": "Uniswap V3 FRAX/USDC_OLD3",
+      "address": "0xCbe6ea4725e4ba34aa215B95239DfA6E8854B49a",
+      "provider": "uniswap3"
+    },
+    {
+      "name": "Uniswap V3 FRAX/USDC_OLD4",
+      "address": "0x1e1356Eb81a56daEcfAdA456E007b26C86c56670",
+      "provider": "uniswap3"
+    },
+    {
+      "name": "Uniswap V3 FRAX/agEUR",
+      "address": "0xf8caEd1943B15B877D7105B9906a618c154f69E8",
+      "provider": "uniswap3"
+    },
+    {
+      "name": "StakeDAO sdETH-FraxPut",
+      "address": "0x0A53544b2194Dd8Ebc62c779043fc0624705BB56",
+      "provider": "stakedao"
+    },
+    { "name": "Vesper Orbit FRAX", "address": "0x698137C473bc1F0Ea9b85adE45Caf64ef2DF48d6", "provider": "fraxpool" }
+  ]
+}
