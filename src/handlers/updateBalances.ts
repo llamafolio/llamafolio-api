@@ -8,7 +8,7 @@ import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, BalancesConfig, BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy, groupBy2, keyBy2 } from '@lib/array'
-import { sanitizeBalances, sumBalances } from '@lib/balance'
+import { resolveStandardBalances, sanitizeBalances, sumBalances } from '@lib/balance'
 import { isHex, strToBuf } from '@lib/buf'
 import { Chain } from '@lib/chains'
 import { getPricedBalances } from '@lib/price'
@@ -56,8 +56,19 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       selectDefinedAdaptersContractsProps(client),
     ])
 
-    const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
-    contractsByAdapterIdChain['wallet'] = groupBy(tokens, 'chain')
+    for (const token of tokens) {
+      token.adapterId = 'wallet'
+    }
+
+    // Batch pre-fetch tokens balances with multicalls
+    const allContractsByChain = groupBy([...contracts, ...tokens], 'chain')
+    const allContracts = await Promise.all(
+      Object.keys(allContractsByChain).map((chain) =>
+        resolveStandardBalances({ chain: chain as Chain, address, adapterId: '' }, allContractsByChain[chain]),
+      ),
+    )
+
+    const contractsByAdapterIdChain = groupBy2(allContracts.flat(2), 'adapterId', 'chain')
     const adaptersContractsPropsByIdChain = keyBy2(adaptersContractsProps, 'id', 'chain')
     // add adapters with contracts_props, even if there was no user interaction with any of the contracts
     for (const adapter of adaptersContractsProps) {

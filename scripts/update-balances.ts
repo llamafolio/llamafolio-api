@@ -51,16 +51,19 @@ async function main() {
       selectDefinedAdaptersContractsProps(client),
     ])
 
+    for (const token of tokens) {
+      token.adapterId = 'wallet'
+    }
+
     // Batch pre-fetch tokens balances with multicalls
     const allContractsByChain = groupBy([...contracts, ...tokens], 'chain')
-    await Promise.all(
+    const allContracts = await Promise.all(
       Object.keys(allContractsByChain).map((chain) =>
         resolveStandardBalances({ chain, address, adapterId: '' }, allContractsByChain[chain]),
       ),
     )
 
-    const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
-    contractsByAdapterIdChain['wallet'] = groupBy(tokens, 'chain')
+    const contractsByAdapterIdChain = groupBy2(allContracts.flat(2), 'adapterId', 'chain')
     const adaptersContractsPropsByIdChain = keyBy2(adaptersContractsProps, 'id', 'chain')
     // add adapters with contracts_props, even if there was no user interaction with any of the contracts
     for (const adapter of adaptersContractsProps) {

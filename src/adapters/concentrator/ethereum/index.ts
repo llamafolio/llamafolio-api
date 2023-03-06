@@ -136,10 +136,10 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts, props) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    concentratorIFOVault: (...args) => getFarmBalances(...args, props.concentratorIFOPools),
-    aladdinConvexVault: (...args) => getFarmBalances(...args, props.aladdinConvexPools),
-    aladdinFXSConvexVault: (...args) => getFarmBalances(...args, props.aladdinFXSConvexPools),
-    concentratorAladdinETHVault: (...args) => getFarmBalances(...args, props.concentratorAladdinETHPools),
+    concentratorIFOVault: (ctx, vault) => getFarmBalances(ctx, vault, props.concentratorIFOPools),
+    aladdinConvexVault: (ctx, vault) => getFarmBalances(ctx, vault, props.aladdinConvexPools),
+    aladdinFXSConvexVault: (ctx, vault) => getFarmBalances(ctx, vault, props.aladdinFXSConvexPools),
+    concentratorAladdinETHVault: (ctx, vault) => getFarmBalances(ctx, vault, props.concentratorAladdinETHPools),
     aCRV: getStakeBalances,
     abcCVX: getOldStaleInPools,
     stakers: getStakeInPools,

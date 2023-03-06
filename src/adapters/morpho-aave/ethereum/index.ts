@@ -19,7 +19,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      markets: (...args) => getLendBorrowBalances(...args, lens),
+      markets: (ctx, markets) => getLendBorrowBalances(ctx, markets, lens),
     }),
     getUserHealthFactor(ctx, lens),
   ])

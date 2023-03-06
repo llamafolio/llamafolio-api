@@ -123,11 +123,18 @@ export async function multicallBalances(params: MultiCallOptions) {
  * @param contracts
  */
 export async function resolveStandardBalances(ctx: BalancesContext, contracts: Contract[]) {
+  const balances: Balance[] = []
+
   const hrstart = process.hrtime()
 
-  const standards = contracts.filter((contract) => contract.standard === 'erc20' || contract.standard === 'erc721')
+  const standards = contracts.filter(
+    (contract) =>
+      contract.standard === 'erc20' ||
+      contract.standard === 'erc721' ||
+      contract.address === ethers.constants.AddressZero,
+  )
 
-  const balancesOfRes = await multicall({
+  const balancesOfRes = await multicallBalances({
     ctx,
     calls: standards.map((contract) => ({ target: contract.address, params: [ctx.address] })),
     abi: erc20Abi.balanceOf,
@@ -138,9 +145,9 @@ export async function resolveStandardBalances(ctx: BalancesContext, contracts: C
     const contract = standards[balanceIdx]
 
     if (balanceOfRes.success) {
-      contract.amount = BigNumber.from(balanceOfRes.output || '0')
+      balances.push({ ...contract, amount: BigNumber.from(balanceOfRes.output || '0') })
     } else {
-      contract.amount = BigNumber.from('0')
+      balances.push({ ...contract, amount: BigNumber.from('0') })
     }
   }
 
@@ -148,7 +155,7 @@ export async function resolveStandardBalances(ctx: BalancesContext, contracts: C
 
   console.log(`[${ctx.chain}] resolveStandardBalances ${standards.length} in %ds %dms`, hrend[0], hrend[1] / 1000000)
 
-  return contracts
+  return balances
 }
 
 export function sanitizeBalances(balances: Balance[]) {

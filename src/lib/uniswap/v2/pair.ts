@@ -1,7 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 export const abi = {
@@ -44,9 +42,9 @@ export const abi = {
  * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
  */
 export async function getPairsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
-  const balances = await getERC20BalanceOf(ctx, contracts as Token[])
+  const nonEmptyBalances = contracts.filter((contract) => contract.amount && contract.amount.gt(0)) as Balance[]
 
-  return getUnderlyingBalances(ctx, balances)
+  return getUnderlyingBalances(ctx, nonEmptyBalances)
 }
 
 /**

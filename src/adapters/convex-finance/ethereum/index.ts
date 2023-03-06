@@ -83,7 +83,7 @@ const getConvexPsBalances = async (ctx: BalancesContext, pools: Contract[], regi
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getConvexPsBalances(...args, metaRegistry),
+    pools: (ctx, pools) => getConvexPsBalances(ctx, pools, metaRegistry),
     cvxRewardPool: getCVXStakeBalance,
     cvxCRVStaker: getCvxCrvStakeBalance,
     locker: getLockerBalances,

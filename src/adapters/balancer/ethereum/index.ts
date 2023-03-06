@@ -68,8 +68,8 @@ const getBalancerBalances = async (ctx: BalancesContext, pools: Contract[], vaul
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     oldPools: (ctx, oldPools) => getPoolsBalances(ctx, oldPools, { getPoolAddress: (pool) => pool.address }),
-    pools: (...args) => getBalancerBalances(...args, vault),
-    votingEscrow: (...args) => getLockerBalances(...args, vault),
+    pools: (ctx, pools) => getBalancerBalances(ctx, pools, vault),
+    votingEscrow: (ctx, escrow) => getLockerBalances(ctx, escrow, vault),
   })
 
   return {
