@@ -3,17 +3,18 @@ import {
   BalancesContext,
   BaseBalance,
   BaseContract,
+  Contract,
   ExcludeRawContract,
   GetContractsHandler,
 } from '@lib/adapter'
 import { Category } from '@lib/category'
-import { getERC20BalanceOf } from '@lib/erc20'
+import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, BN_ZERO } from '@lib/math'
 import { Call, multicall, MultiCallOptions, MultiCallResult } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 
 export async function getBalances(ctx: BalancesContext, contracts: BaseContract[]) {
   const coins: Token[] = []
@@ -116,6 +117,40 @@ export async function multicallBalances(params: MultiCallOptions) {
   return res
 }
 
+/**
+ * Resolve standard balances: ERC20, ERC721 and native coin
+ * @param address
+ * @param contracts
+ */
+export async function resolveStandardBalances(ctx: BalancesContext, contracts: Contract[]) {
+  const hrstart = process.hrtime()
+
+  const standards = contracts.filter((contract) => contract.standard === 'erc20' || contract.standard === 'erc721')
+
+  const balancesOfRes = await multicall({
+    ctx,
+    calls: standards.map((contract) => ({ target: contract.address, params: [ctx.address] })),
+    abi: erc20Abi.balanceOf,
+  })
+
+  for (let balanceIdx = 0; balanceIdx < standards.length; balanceIdx++) {
+    const balanceOfRes = balancesOfRes[balanceIdx]
+    const contract = standards[balanceIdx]
+
+    if (balanceOfRes.success) {
+      contract.amount = BigNumber.from(balanceOfRes.output || '0')
+    } else {
+      contract.amount = BigNumber.from('0')
+    }
+  }
+
+  const hrend = process.hrtime(hrstart)
+
+  console.log(`[${ctx.chain}] resolveStandardBalances ${standards.length} in %ds %dms`, hrend[0], hrend[1] / 1000000)
+
+  return contracts
+}
+
 export function sanitizeBalances(balances: Balance[]) {
   const sanitizedBalances: Balance[] = []
 
@@ -183,7 +218,7 @@ export async function resolveBalances<C extends GetContractsHandler>(
           const balances = await resolver(ctx, contracts[contractKey]!)
           return balances
         } catch (error) {
-          console.error(`Resolver ${contractKey} failed`, error)
+          console.error(`[${ctx.adapterId}][${ctx.chain}] Resolver ${contractKey} failed`, error)
           return null
         }
       }),

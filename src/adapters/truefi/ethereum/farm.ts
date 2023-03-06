@@ -62,7 +62,9 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], m
     const claimable = claimables[i]
 
     if (isSuccess(staked)) {
-      const amount = BigNumber.from(staked.output).mul(pool.poolValue).div(pool.totalSupply)
+      const amount = BigNumber.from(staked.output || '0')
+        .mul(pool.poolValue)
+        .div(pool.totalSupply)
 
       const balance: Balance = {
         ...(pool as Balance),
@@ -73,7 +75,7 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], m
       }
 
       if (isSuccess(claimable)) {
-        balance.rewards?.push({ ...TRU, amount: BigNumber.from(claimable.output) })
+        balance.rewards?.push({ ...TRU, amount: BigNumber.from(claimable.output || '0') })
       }
 
       balances.push(balance)

@@ -1,8 +1,7 @@
 import { getUnderlyingsPoolsBalances } from '@adapters/curve/common/balance'
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
-import { Call, multicall } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
@@ -19,17 +18,11 @@ const abi = {
 export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
-  for (const staker of stakers) {
-    calls.push({ target: staker.address, params: [ctx.address] })
-  }
-  const balanceOfsRes = await multicall({ ctx, calls, abi: erc20Abi.balanceOf })
-
   const balanceOfAssetsRes = await multicall({
     ctx,
-    calls: stakers.map((staker, idx) => ({
+    calls: stakers.map((staker) => ({
       target: staker.address,
-      params: [isSuccess(balanceOfsRes[idx]) ? balanceOfsRes[idx].output : '0'],
+      params: [staker.amount],
     })),
     abi: abi.convertToAssets,
   })
@@ -56,12 +49,10 @@ export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[
 }
 
 export async function getPoolStakingBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
-  const balanceOfsRes = await call({ ctx, target: contract.address, params: [ctx.address], abi: erc20Abi.balanceOf })
-
   const balanceOfAssetsRes = await call({
     ctx,
     target: contract.address,
-    params: [balanceOfsRes.output],
+    params: [contract.amount],
     abi: abi.convertToAssets,
   })
 

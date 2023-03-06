@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
 const abiSNX = {
@@ -22,23 +21,14 @@ export async function getVestBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [balanceOf, earnedRes] = await Promise.all([
-    call({
-      ctx,
-      target: escrow.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
+  const earnedRes = await call({
+    ctx,
+    target: liquidator.address,
+    params: [ctx.address],
+    abi: abiSNX.earned,
+  })
 
-    call({
-      ctx,
-      target: liquidator.address,
-      params: [ctx.address],
-      abi: abiSNX.earned,
-    }),
-  ])
-
-  const amount = BigNumber.from(balanceOf.output)
+  const amount = BigNumber.from(escrow.amount)
   const rewards = BigNumber.from(earnedRes.output)
   const SNX = escrow.underlyings?.[0]
 

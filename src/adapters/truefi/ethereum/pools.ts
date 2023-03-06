@@ -91,8 +91,8 @@ export async function getPoolsSupplies(ctx: BaseContext, pools: Contract[]) {
 
     poolsSupplies.push({
       ...pool,
-      poolValue: BigNumber.from(poolValue.output),
-      totalSupply: BigNumber.from(totalSupply.output),
+      poolValue: BigNumber.from(poolValue.output || '0'),
+      totalSupply: BigNumber.from(totalSupply.output || '0'),
     })
   }
 

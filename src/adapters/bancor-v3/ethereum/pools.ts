@@ -1,11 +1,9 @@
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Category } from '@lib/category'
-import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
-import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber, ethers } from 'ethers'
 
@@ -136,10 +134,8 @@ export async function getPoolsContracts(ctx: BaseContext): Promise<Contract[]> {
   }))
 }
 
-export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[]) {
-  const balances = await getERC20BalanceOf(ctx, pools as Token[])
-
-  return balances.map((balance) => ({ ...balance, category: 'lp' as Category }))
+export async function getPoolsBalances(_ctx: BalancesContext, pools: Contract[]) {
+  return pools.map((balance) => ({ ...balance, category: 'lp' as Category }))
 }
 
 export async function getProgramsContracts(ctx: BaseContext): Promise<Program[]> {

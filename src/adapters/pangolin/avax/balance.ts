@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -24,16 +23,13 @@ const pangolin: Token = {
 export async function getPangolinStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [userBalanceOfRes, userEarnedRes] = await Promise.all([
-    call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.earned }),
-  ])
+  const userEarnedRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.earned })
 
   balances.push({
     ...staker,
     decimals: pangolin.decimals,
     symbol: pangolin.symbol,
-    amount: BigNumber.from(userBalanceOfRes.output),
+    amount: staker.amount,
     underlyings: [pangolin],
     rewards: [{ ...pangolin, amount: BigNumber.from(userEarnedRes.output) }],
     category: 'stake',

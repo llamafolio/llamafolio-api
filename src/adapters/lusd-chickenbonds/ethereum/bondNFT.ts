@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
-import { call } from '@lib/call'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isNotNullish, isSuccess } from '@lib/type'
@@ -58,14 +57,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
 
   const balances: Balance[] = []
 
-  const balanceOfRes = await call({
-    ctx,
-    target: bondNFT.address,
-    params: [ctx.address],
-    abi: abi.balanceOf,
-  })
-
-  const bondsLength = balanceOfRes.output
+  const bondsLength = bondNFT.amount
 
   const tokenOfOwnerByIndexRes = await multicall({
     ctx,

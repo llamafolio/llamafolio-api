@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
@@ -73,17 +72,11 @@ export async function getPoolsBalances(
     params: [],
   }))
 
-  const balanceOfCalls = pools.map((pool) => ({
-    target: pool.address,
-    params: [ctx.address],
-  }))
-
-  const [userInfosRes, pendingRewardsRes, totalTokensRes, totalSuppliesRes, balancesOfRes] = await Promise.all([
+  const [userInfosRes, pendingRewardsRes, totalTokensRes, totalSuppliesRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
     multicall({ ctx, calls, abi: abi.pendingAlpaca }),
     multicall({ ctx, calls: supplyCalls, abi: abi.totalToken }),
     multicall({ ctx, calls: supplyCalls, abi: abi.totalSupply }),
-    multicall({ ctx, calls: balanceOfCalls, abi: erc20Abi.balanceOf }),
   ])
 
   for (let i = 0; i < pools.length; i++) {
@@ -92,7 +85,6 @@ export async function getPoolsBalances(
     const pendingRewardRes = pendingRewardsRes[i]
     const totalTokenRes = totalTokensRes[i]
     const totalSupplyRes = totalSuppliesRes[i]
-    const balanceOfRes = balancesOfRes[i]
 
     if (!isSuccess(totalTokenRes) || !isSuccess(totalSupplyRes) || totalSupplyRes.output == 0) {
       continue
@@ -114,15 +106,13 @@ export async function getPoolsBalances(
     }
 
     // lp
-    if (isSuccess(balanceOfRes)) {
-      const lpBalance: Balance = {
-        ...(pool as Balance),
-        amount: BigNumber.from(balanceOfRes.output).mul(totalTokenRes.output).div(totalSupplyRes.output),
-        category: 'lp',
-      }
-
-      balances.push(lpBalance)
+    const lpBalance: Balance = {
+      ...(pool as Balance),
+      amount: pool.amount.mul(totalTokenRes.output).div(totalSupplyRes.output),
+      category: 'lp',
     }
+
+    balances.push(lpBalance)
   }
 
   return balances

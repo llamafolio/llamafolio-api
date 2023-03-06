@@ -1,9 +1,8 @@
 import { Adapter, Balance, BalancesContext, GetBalancesHandler } from '@lib/adapter'
-import { resolveBalances } from '@lib/balance'
 import { Chain, chains } from '@lib/chains'
-import { getERC20BalanceOf } from '@lib/erc20'
 import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 import { ethers } from 'ethers'
 
@@ -40,13 +39,8 @@ const getChainHandlers = (chain: Chain) => {
   }
 
   const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-    const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-      coin: getCoinBalance,
-      erc20: getERC20BalanceOf,
-    })
-
     return {
-      balances,
+      balances: [...(contracts.erc20 || []), contracts.coin].filter(isNotNullish),
     }
   }
 

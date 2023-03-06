@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -24,9 +23,7 @@ const BOO: Token = {
 export async function getStakexBOOBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const balanceOfRes = await call({ ctx, target: contract.address, params: [ctx.address], abi: erc20Abi.balanceOf })
-
-  const balanceOf = balanceOfRes.output
+  const balanceOf = contract.amount
 
   const xBOOForBOORes = await call({ ctx, target: contract.address, params: [balanceOf], abi: abi.xBOOForBOO })
 

@@ -1,9 +1,6 @@
 import { Balance, Contract } from '@lib/adapter'
 import { BalancesContext } from '@lib/adapter'
-import { call } from '@lib/call'
-import { abi } from '@lib/erc20'
 import { Token } from '@lib/token'
-import { BigNumber } from 'ethers/lib/ethers'
 
 // multi-chain underlying token
 const USV: Token = {
@@ -14,19 +11,10 @@ const USV: Token = {
 }
 
 export async function getStakeBalance(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const balanceOfRes = await call({
-    ctx,
-    target: contract.address,
-    params: [ctx.address],
-    abi: abi.balanceOf,
-  })
-
-  const amount = BigNumber.from(balanceOfRes.output)
-
   const balance: Balance = {
     ...contract,
-    amount,
-    underlyings: [{ ...USV, amount }],
+    amount: contract.amount,
+    underlyings: [{ ...USV, amount: contract.amount }],
     rewards: undefined,
     category: 'stake',
   }

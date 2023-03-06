@@ -1,7 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { call } from '@lib/call'
-import { abi } from '@lib/erc20'
-import { BigNumber } from 'ethers'
 
 const NMS: Contract = {
   name: 'Nemesis DAO',
@@ -14,14 +11,7 @@ const NMS: Contract = {
 export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const balanceOfRes = await call({
-    ctx,
-    target: contract.address,
-    params: [ctx.address],
-    abi: abi.balanceOf,
-  })
-
-  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const balanceOf = contract.amount
 
   balances.push({
     chain: ctx.chain,

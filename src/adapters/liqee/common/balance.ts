@@ -1,8 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 
@@ -12,9 +10,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
     cTokenByAddress[contract.address] = contract
   }
 
-  const [cTokensBalances, cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all([
-    getERC20BalanceOf(ctx, contracts as Token[]),
-
+  const [cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all([
     multicall({
       ctx,
       calls: contracts.map((token) => ({
@@ -59,7 +55,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
     exchangeRateCurrentBycTokenAddress[res.input.target] = BigNumber.from(res.output)
   }
 
-  const cTokensSupplyBalances = cTokensBalances
+  const cTokensSupplyBalances = contracts
     .filter((bal) => exchangeRateCurrentBycTokenAddress[bal.address] && bal.underlyings?.[0])
     .map((bal) => {
       const underlying = bal.underlyings?.[0]

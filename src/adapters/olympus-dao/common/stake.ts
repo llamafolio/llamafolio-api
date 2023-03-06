@@ -1,9 +1,6 @@
 import { Balance, Contract } from '@lib/adapter'
 import { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi } from '@lib/erc20'
-import { Call, multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
 
 const abiOlympus = {
@@ -27,24 +24,12 @@ const OHM: Contract = {
 export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]) {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
-  for (const staker of stakers) {
-    calls.push({ target: staker.address, params: [ctx.address] })
-  }
-
-  const balancesOfRes = await multicall({ ctx, calls, abi: abi.balanceOf })
-
   for (let idx = 0; idx < stakers.length; idx++) {
     const staker = stakers[idx]
-    const balanceOfRes = balancesOfRes[idx]
-
-    if (!isSuccess(balanceOfRes)) {
-      continue
-    }
 
     balances.push({
       ...staker,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: staker.amount,
       underlyings: [OHM],
       rewards: undefined,
       category: 'stake',
@@ -57,14 +42,7 @@ export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]
 export async function getFormattedStakeBalances(ctx: BalancesContext, contract: Contract) {
   const balances: Balance[] = []
 
-  const balanceOfRes = await call({
-    ctx,
-    target: contract.address,
-    params: [ctx.address],
-    abi: abi.balanceOf,
-  })
-
-  const balanceOf = balanceOfRes.output
+  const balanceOf = contract.amount
 
   const formattedBalanceOfRes = await call({
     ctx,

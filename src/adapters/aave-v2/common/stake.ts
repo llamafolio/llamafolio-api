@@ -1,6 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi, getERC20Details } from '@lib/erc20'
+import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
@@ -23,29 +23,19 @@ const ABPT: Contract = {
 export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [balanceOfRes, rewardsRes] = await Promise.all([
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
+  const rewardsRes = await call({
+    ctx,
+    target: contract.address,
+    params: [ctx.address],
+    abi: {
+      inputs: [{ internalType: 'address', name: 'staker', type: 'address' }],
+      name: 'getTotalRewardsBalance',
+      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+      stateMutability: 'view',
+      type: 'function',
+    },
+  })
 
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: 'staker', type: 'address' }],
-        name: 'getTotalRewardsBalance',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-  ])
-
-  const amount = BigNumber.from(balanceOfRes.output)
   const rewards = BigNumber.from(rewardsRes.output)
 
   balances.push({
@@ -53,9 +43,9 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     address: contract.address,
     decimals: contract.decimals,
     symbol: contract.symbol,
-    amount,
+    amount: contract.amount,
     category: 'stake',
-    underlyings: [{ ...AAVE, amount }],
+    underlyings: [{ ...AAVE, amount: contract.amount }],
     rewards: [{ ...AAVE, amount: rewards }],
   })
 
@@ -68,7 +58,7 @@ export async function getStakeBalancerPoolBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [bPoolRes, stakingBalanceOfRes, stakingRewardsRes] = await Promise.all([
+  const [bPoolRes, stakingRewardsRes] = await Promise.all([
     call({
       ctx,
       target: ABPT.address,
@@ -79,13 +69,6 @@ export async function getStakeBalancerPoolBalances(
         stateMutability: 'view',
         type: 'function',
       },
-    }),
-
-    call({
-      ctx,
-      target: stakingContract.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
     }),
 
     call({
@@ -103,7 +86,7 @@ export async function getStakeBalancerPoolBalances(
   ])
 
   // staked balancer pool token
-  const stakedBalance = BigNumber.from(stakingBalanceOfRes.output)
+  const stakedBalance = stakingContract.amount
   const stakingRewards = BigNumber.from(stakingRewardsRes.output)
 
   // Underlyings

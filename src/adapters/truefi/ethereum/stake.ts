@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi } from '@lib/erc20'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -52,23 +51,14 @@ const TrueUSD: Token = {
 export async function getTRUStakeBalances(ctx: BalancesContext, stkTRU: Contract) {
   const balances: Balance[] = []
 
-  const [balanceOfRes, claimableRes] = await Promise.all([
-    call({
-      ctx,
-      target: stkTRU.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
+  const claimableRes = await call({
+    ctx,
+    target: stkTRU.address,
+    params: [ctx.address, TRU.address],
+    abi: abiTRU.claimable,
+  })
 
-    call({
-      ctx,
-      target: stkTRU.address,
-      params: [ctx.address, TRU.address],
-      abi: abiTRU.claimable,
-    }),
-  ])
-
-  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const balanceOf = stkTRU.amount
   const claimable = BigNumber.from(claimableRes.output)
 
   balances.push({
@@ -88,14 +78,7 @@ export async function getTRUStakeBalances(ctx: BalancesContext, stkTRU: Contract
 export async function getTUSDStakeBalances(ctx: BalancesContext, TUSD: Contract) {
   const balances: Balance[] = []
 
-  const [balanceOfRes, poolValueRes, totalSupplyRes] = await Promise.all([
-    call({
-      ctx,
-      target: TUSD.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
-
+  const [poolValueRes, totalSupplyRes] = await Promise.all([
     call({
       ctx,
       target: TUSD.address,
@@ -111,7 +94,7 @@ export async function getTUSDStakeBalances(ctx: BalancesContext, TUSD: Contract)
     }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const balanceOf = BigNumber.from(TUSD.amount)
   const poolValue = BigNumber.from(poolValueRes.output)
   const totalSupply = BigNumber.from(totalSupplyRes.output)
 

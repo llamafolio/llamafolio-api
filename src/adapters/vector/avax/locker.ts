@@ -1,7 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { abi } from '@lib/erc20'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -16,14 +15,7 @@ const VTX: Token = {
 
 export async function getLockerBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
-  const [userTotalDepositRes, rewarderAddressRes, userExtraLockedSlots] = await Promise.all([
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
-
+  const [rewarderAddressRes, userExtraLockedSlots] = await Promise.all([
     call({
       ctx,
       target: contract.address,
@@ -51,7 +43,6 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
     }),
   ])
 
-  const userTotalDeposit = BigNumber.from(userTotalDepositRes.output)
   const rewarderAddress = rewarderAddressRes.output
 
   const rewards = await lockedRewardsBalances(ctx, rewarderAddress)
@@ -61,7 +52,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
     address: contract.address,
     decimals: contract.decimals,
     symbol: contract.symbol,
-    amount: userTotalDeposit,
+    amount: contract.amount,
     underlyings: [VTX as Balance],
     rewards,
     category: 'lock',

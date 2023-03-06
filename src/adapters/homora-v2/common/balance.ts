@@ -1,8 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { getERC20BalanceOf } from '@lib/erc20'
-import { BN_TEN, isZero } from '@lib/math'
+import { BN_TEN } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 
 const abi = {
@@ -25,16 +23,13 @@ export async function getHomoraBalances(ctx: BalancesContext, contracts: Contrac
     calls.push({ target: contract.cToken })
   }
 
-  const [tokensBalances, exchangeRatesOfs] = await Promise.all([
-    getERC20BalanceOf(ctx, contracts as Token[]),
-    multicall({ ctx, calls, abi: abi.exchangeRateCurrent }),
-  ])
+  const exchangeRatesOfs = await multicall({ ctx, calls, abi: abi.exchangeRateCurrent })
 
-  for (let balanceIdx = 0; balanceIdx < tokensBalances.length; balanceIdx++) {
-    const tokensBalance = tokensBalances[balanceIdx]
+  for (let balanceIdx = 0; balanceIdx < contracts.length; balanceIdx++) {
+    const tokensBalance = contracts[balanceIdx] as Balance
     const exchangeRatesOf = exchangeRatesOfs[balanceIdx]
 
-    if (isZero(tokensBalance.amount) || !isSuccess(exchangeRatesOf)) {
+    if (!isSuccess(exchangeRatesOf)) {
       continue
     }
 

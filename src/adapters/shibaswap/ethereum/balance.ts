@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -36,13 +35,11 @@ const abi = {
 export async function getStakerBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const underlyings = contract.underlyings![0] as Contract
 
-  const balanceOfRes = await call({ ctx, target: contract.address, params: ctx.address, abi: erc20Abi.balanceOf })
-
   return [
     {
       ...contract,
       category: 'stake',
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: contract.amount,
       underlyings: [underlyings],
       rewards: undefined,
     },

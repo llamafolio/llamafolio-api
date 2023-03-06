@@ -238,8 +238,8 @@ export async function getMasterChefPoolsBalances(
       ...masterchefPool,
       underlyings: masterchefPool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output.amount),
-      rewards: [{ ...rewardToken, amount: BigNumber.from(pendingRewardRes.output) }],
+      amount: BigNumber.from(poolBalanceRes.output.amount || '0'),
+      rewards: [{ ...rewardToken, amount: BigNumber.from(pendingRewardRes.output || '0') }],
     })
   }
 

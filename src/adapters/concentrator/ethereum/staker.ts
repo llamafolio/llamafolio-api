@@ -1,7 +1,6 @@
 import { getUnderlyingsPoolsBalances } from '@adapters/curve/common/balance'
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -21,19 +20,18 @@ const metaRegistry: Contract = {
 
 export async function getStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
   const underlyings = staker.underlyings as Contract[]
-  const balanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf })
 
   const underlyingsBalances = await call({
     ctx,
     target: staker.address,
-    params: [balanceOfRes.output],
+    params: [staker.amount.toString()],
     abi: abi.convertToAssets,
   })
 
   if (underlyings.length < 2) {
     return {
       ...staker,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: staker.amount,
       underlyings: [{ ...underlyings[0], amount: BigNumber.from(underlyingsBalances.output) }],
       rewards: undefined,
       category: 'stake',
@@ -60,11 +58,10 @@ export async function getStakeInPools(ctx: BalancesContext, stakers: Contract[])
 
 export async function getOldStaleInPools(ctx: BalancesContext, staker: Contract): Promise<Balance[]> {
   const underlyings = staker.underlyings as Contract[]
-  const balanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf })
 
   const balance: Balance = {
     ...staker,
-    amount: BigNumber.from(balanceOfRes.output),
+    amount: staker.amount,
     underlyings,
     rewards: undefined,
     category: 'stake',

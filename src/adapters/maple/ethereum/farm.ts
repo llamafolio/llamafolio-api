@@ -1,9 +1,7 @@
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
@@ -77,7 +75,7 @@ export async function getFarmContracts(ctx: BaseContext, contract: Contract): Pr
 export async function getFarmBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const farmBalances: Balance[] = []
 
-  const balances = await getERC20BalanceOf(ctx, contracts as Token[])
+  const balances = contracts
 
   const getRewards = await multicall({
     ctx,

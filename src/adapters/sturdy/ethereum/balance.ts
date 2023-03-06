@@ -66,7 +66,9 @@ const underlyingsBalances = async (ctx: BalancesContext, pools: Balance[]): Prom
     underlyings.forEach((underlying, underlyingIdx) => {
       const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
       ;(underlying as Balance).amount =
-        BigNumber.from(underlyingBalance).mul(amount).div(totalSupplyRes.output) || BN_ZERO
+        BigNumber.from(underlyingBalance || '0')
+          .mul(amount)
+          .div(totalSupplyRes.output) || BN_ZERO
     })
   }
 

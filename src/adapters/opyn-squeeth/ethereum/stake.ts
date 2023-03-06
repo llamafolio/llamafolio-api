@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -22,9 +21,7 @@ const oSQTH: Token = {
 }
 
 export async function getOpynStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const userBalanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf })
-
-  const amount = await call({ ctx, target: staker.address, params: [userBalanceOfRes.output], abi: abi.getWsqueeth })
+  const amount = await call({ ctx, target: staker.address, params: [staker.amount], abi: abi.getWsqueeth })
 
   return {
     ...staker,

@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
@@ -46,14 +45,7 @@ const wMEMO: Contract = {
 }
 
 export async function getTIMEStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const balanceOfRes = await call({
-    ctx,
-    target: contract.address,
-    params: [ctx.address],
-    abi: erc20Abi.balanceOf,
-  })
-
-  const balanceOf = balanceOfRes.output
+  const balanceOf = contract.amount
 
   const formattedBalanceOfRes = await call({
     ctx,
@@ -80,14 +72,7 @@ export async function getTIMEStakeBalances(ctx: BalancesContext, contract: Contr
 export async function getwMEMOStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const rewards = contract.rewards
 
-  const balanceOfRes = await call({
-    ctx,
-    target: contract.address,
-    params: [ctx.address],
-    abi: erc20Abi.balanceOf,
-  })
-
-  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const balanceOf = contract.amount
 
   const balance: Balance = {
     chain: ctx.chain,

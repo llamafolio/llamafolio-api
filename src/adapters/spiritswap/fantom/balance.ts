@@ -43,14 +43,11 @@ const spirit: Token = {
 export async function getLockerBalances(ctx: BalancesContext, locker: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [balanceOfRes, lockendRes] = await Promise.all([
-    call({ ctx, target: locker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-    call({ ctx, target: locker.address, params: [ctx.address], abi: abi.locked_end }),
-  ])
+  const lockendRes = await call({ ctx, target: locker.address, params: [ctx.address], abi: abi.locked_end })
 
   balances.push({
     ...locker,
-    amount: BigNumber.from(balanceOfRes.output),
+    amount: BigNumber.from(locker.amount),
     lock: { end: lockendRes.output },
     underlyings: [spirit],
     rewards: undefined,

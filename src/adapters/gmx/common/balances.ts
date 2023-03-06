@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { getPoolsUnderlyingBalances } from '@lib/pools'
 import { BigNumber } from 'ethers'
 
@@ -113,12 +112,9 @@ export async function getGMXVesterBalance(ctx: BalancesContext, gmxVester: Contr
     return []
   }
 
-  const [balanceOfRes, claimableRes] = await Promise.all([
-    call({ ctx, target: gmxVester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-    call({ ctx, target: gmxVester.address, params: [ctx.address], abi: abi.claimable }),
-  ])
+  const claimableRes = await call({ ctx, target: gmxVester.address, params: [ctx.address], abi: abi.claimable })
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const balanceOf = gmxVester.amount
   const claimable = BigNumber.from(claimableRes.output)
 
   const balance: Balance = {
@@ -177,12 +173,9 @@ export async function getGLPStakerBalance(ctx: BalancesContext, glpStaker: Contr
 }
 
 export async function getGLPVesterBalance(ctx: BalancesContext, glpVester: Contract) {
-  const [balanceOfRes, claimableRes] = await Promise.all([
-    call({ ctx, target: glpVester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-    call({ ctx, target: glpVester.address, params: [ctx.address], abi: abi.claimable }),
-  ])
+  const claimableRes = await call({ ctx, target: glpVester.address, params: [ctx.address], abi: abi.claimable })
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const balanceOf = glpVester.amount
   const claimable = BigNumber.from(claimableRes.output)
 
   const balance: Balance = {

@@ -1,9 +1,7 @@
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 export interface PoolContract extends Contract {
   pool: string
@@ -93,21 +91,9 @@ export async function getPoolsContracts(ctx: BaseContext, contractsRegister: str
 export async function getPoolsBalances(ctx: BalancesContext, pools: PoolContract[]) {
   const balances: Balance[] = []
 
-  const balancesOfRes = await multicall({
-    ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
-    abi: erc20Abi.balanceOf,
-  })
-
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const balanceOfRes = balancesOfRes[poolIdx]
-    if (!isSuccess(balanceOfRes)) {
-      continue
-    }
-
     const balance: Balance = {
       ...pools[poolIdx],
-      amount: BigNumber.from(balanceOfRes.output),
       category: 'lp',
     }
 

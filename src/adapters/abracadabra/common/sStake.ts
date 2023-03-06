@@ -40,14 +40,7 @@ export async function getSStakeContract(ctx: BaseContext, contract: Contract): P
 export async function getSStakeBalance(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [balanceOfRes, totalSupplyRes, balanceOfTokenInUnderlyingRes] = await Promise.all([
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: erc20Abi.balanceOf,
-    }),
-
+  const [totalSupplyRes, balanceOfTokenInUnderlyingRes] = await Promise.all([
     call({
       ctx,
       target: contract.address,
@@ -63,7 +56,7 @@ export async function getSStakeBalance(ctx: BalancesContext, contract: Contract)
     }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const balanceOf = contract.amount
   const totalSupply = BigNumber.from(totalSupplyRes.output)
   const balanceOfTokenInUnderlying = BigNumber.from(balanceOfTokenInUnderlyingRes.output)
 

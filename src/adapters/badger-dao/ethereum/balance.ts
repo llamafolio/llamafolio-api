@@ -21,27 +21,23 @@ const abi = {
 export async function getBadgerBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [balanceOfsRes, rateOfsRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
-      abi: erc20Abi.balanceOf,
-    }),
-    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.getPricePerFullShare }),
-  ])
+  const rateOfsRes = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: pool.address })),
+    abi: abi.getPricePerFullShare,
+  })
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
-    const balanceOfRes = balanceOfsRes[poolIdx]
     const rateOfRes = rateOfsRes[poolIdx]
 
-    if (!isSuccess(balanceOfRes) || isZero(balanceOfRes.output) || !isSuccess(rateOfRes)) {
+    if (isZero(pool.amount) || !isSuccess(rateOfRes)) {
       continue
     }
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output).mul(rateOfRes.output).div(utils.parseEther('1.0')),
+      amount: pool.amount.mul(rateOfRes.output).div(utils.parseEther('1.0')),
       underlyings: pool.underlyings as Contract[],
       rewards: undefined,
       category: 'farm',

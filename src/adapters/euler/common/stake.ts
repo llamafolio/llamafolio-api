@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { abi as erc20Abi } from '@lib/erc20'
 import { sumBN } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -42,26 +41,24 @@ export async function getETokenStakes(ctx: BalancesContext, stakers: Contract[])
     calls.push({ target: staker.address, params: [ctx.address] })
   }
 
-  const [balancesOfRes, earnedRewardsRes] = await Promise.all([
-    multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
-    multicall({ ctx, calls, abi: abi.earned }),
-  ])
+  const earnedRewardsRes = await multicall({ ctx, calls, abi: abi.earned })
 
   for (let idx = 0; idx < stakers.length; idx++) {
     const staker = stakers[idx]
     const token = staker.underlyings?.[0] as Contract
-    const balanceOfRes = balancesOfRes[idx]
     const earnedRewardRes = earnedRewardsRes[idx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(earnedRewardRes) || !token) {
+    if (!token) {
       continue
     }
 
     balances.push({
       ...token,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: staker.amount,
       underlyings: [token.underlyings?.[0] as Contract],
-      rewards: [{ ...EUL, amount: BigNumber.from(earnedRewardRes.output) }],
+      rewards: [
+        { ...EUL, amount: isSuccess(earnedRewardRes) ? BigNumber.from(earnedRewardRes.output) : BigNumber.from('0') },
+      ],
       category: 'stake',
     })
   }

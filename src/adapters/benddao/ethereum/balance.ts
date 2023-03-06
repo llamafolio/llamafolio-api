@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -32,15 +31,17 @@ const bend: Token = {
 }
 
 export async function getBendBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const [balanceOfRes, rewardsOfRes] = await Promise.all([
-    call({ ctx, target: contract.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+  const rewardsOfRes = await call({
+    ctx,
+    target: contract.rewarder,
     // @ts-ignore
-    call({ ctx, target: contract.rewarder, params: [[contract.address], ctx.address], abi: abi.getRewardsBalance }),
-  ])
+    params: [[contract.address], ctx.address],
+    abi: abi.getRewardsBalance,
+  })
 
   return {
     ...contract,
-    amount: BigNumber.from(balanceOfRes.output),
+    amount: contract.amount,
     underlyings: [weth],
     rewards: [{ ...bend, amount: BigNumber.from(rewardsOfRes.output) }],
     category: 'farm',

@@ -9,7 +9,7 @@ import { groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Balance, BalancesConfig, BalancesContext } from '../src/lib/adapter'
 import { groupBy, groupBy2, keyBy2 } from '../src/lib/array'
-import { sanitizeBalances, sumBalances } from '../src/lib/balance'
+import { resolveStandardBalances, sanitizeBalances, sumBalances } from '../src/lib/balance'
 import { strToBuf } from '../src/lib/buf'
 import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
@@ -50,6 +50,14 @@ async function main() {
       getAllTokensInteractions(client, address),
       selectDefinedAdaptersContractsProps(client),
     ])
+
+    // Batch pre-fetch tokens balances with multicalls
+    const allContractsByChain = groupBy([...contracts, ...tokens], 'chain')
+    await Promise.all(
+      Object.keys(allContractsByChain).map((chain) =>
+        resolveStandardBalances({ chain, address, adapterId: '' }, allContractsByChain[chain]),
+      ),
+    )
 
     const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
     contractsByAdapterIdChain['wallet'] = groupBy(tokens, 'chain')
