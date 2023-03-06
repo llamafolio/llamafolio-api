@@ -17,6 +17,7 @@ export interface ResponseOptions {
     [key: string]: any
   }
   maxAge?: number
+  eTag?: string
   replacer?: (key: string, value: any) => any
 }
 
@@ -32,13 +33,15 @@ function defaultReplacer(_key: string, value: any) {
   return value
 }
 
-export function response({ statusCode, body, headers, maxAge, replacer = defaultReplacer }: ResponseOptions) {
+export function response({ statusCode, body, headers, maxAge, eTag, replacer = defaultReplacer }: ResponseOptions) {
   const response: Response = {
     statusCode,
     headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Credentials': true,
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Allow-Methods': 'OPTIONS,GET',
       ...headers,
     },
     body: JSON.stringify(body, replacer),
@@ -46,6 +49,10 @@ export function response({ statusCode, body, headers, maxAge, replacer = default
 
   if (maxAge !== undefined) {
     response.headers['Cache-Control'] = `max-age=${maxAge}`
+  }
+
+  if (eTag !== undefined) {
+    response.headers['ETag'] = eTag
   }
 
   return response

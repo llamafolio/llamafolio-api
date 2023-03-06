@@ -1,6 +1,6 @@
 import { adapterById } from '@adapters/index'
 import { selectDefinedAdaptersContractsProps } from '@db/adapters'
-import { deleteUpdateBalancesStatus, insertBalances } from '@db/balances'
+import { insertBalances } from '@db/balances'
 import { BalancesSnapshot, insertBalancesSnapshots } from '@db/balances-snapshots'
 import { getAllContractsInteractions, groupContracts } from '@db/contracts'
 import { getAllTokensInteractions } from '@db/contracts'
@@ -184,11 +184,14 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     await client.query(format('delete from balances where from_address = %L::bytea', strToBuf(address)), [])
 
     // Insert new balances
-    // TODO: insert all at once
-    await Promise.all(
-      Object.keys(pricedBalancesByAdapterId).map((adapterId) =>
-        insertBalances(client, pricedBalancesByAdapterId[adapterId] as PricedBalance[], adapterId, address, now),
-      ),
+    await insertBalances(
+      client,
+      Object.keys(pricedBalancesByAdapterId).map((adapterId) => ({
+        balances: pricedBalancesByAdapterId[adapterId] as PricedBalance[],
+        adapterId,
+        fromAddress: address,
+        timestamp: now,
+      })),
     )
 
     await client.query('COMMIT')
@@ -198,7 +201,6 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     console.error('Failed to update balances', { error, address })
     return serverError('Failed to update balances')
   } finally {
-    await deleteUpdateBalancesStatus(address)
     client.release(true)
   }
 }

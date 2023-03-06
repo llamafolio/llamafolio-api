@@ -26,7 +26,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
           address: bufToStr(row.address),
         })),
       },
-      { maxAge: 2 * 60 },
+      { maxAge: 10 * 60 },
     )
   } catch (e) {
     console.error('Failed to fetch adapters contracts', e)

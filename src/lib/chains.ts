@@ -1,4 +1,4 @@
-import { LLAMANODES_API_KEY, OPTIMISM_RPC } from '../../env'
+import { ARBITRUM_RPC, LLAMANODES_API_KEY, OPTIMISM_RPC } from '../../env'
 import { isNotNullish } from './type'
 
 export declare type Chain =
@@ -26,13 +26,17 @@ export const chains: IChainInfo[] = [
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
-    rpcUrl: ['https://arb1.arbitrum.io/rpc'],
+    rpcUrl: [ARBITRUM_RPC, 'https://arb1.arbitrum.io/rpc'].filter(isNotNullish),
   },
   {
     id: 'avax',
     chainId: 43114,
     name: 'Avalanche',
-    rpcUrl: [`https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc`],
+    rpcUrl: [
+      'https://avalanche.public-rpc.com',
+      'https://api.avax.network/ext/bc/C/rpc',
+      'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc',
+    ],
   },
   {
     id: 'bsc',
@@ -57,7 +61,7 @@ export const chains: IChainInfo[] = [
     chainId: 1,
     name: 'Ethereum',
     rpcUrl: [
-      `https://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      `wss://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79',
       'https://cloudflare-eth.com/',
       'https://main-light.eth.linkpool.io/',
@@ -68,7 +72,7 @@ export const chains: IChainInfo[] = [
     id: 'fantom',
     chainId: 250,
     name: 'Fantom',
-    rpcUrl: ['https://rpc.ankr.com/fantom', 'https://rpc.ftm.tools/', 'https://rpcapi.fantom.network'],
+    rpcUrl: ['https://rpc.ftm.tools/', 'https://rpc.ankr.com/fantom', 'https://rpcapi.fantom.network'],
   },
   {
     id: 'harmony',
@@ -86,7 +90,7 @@ export const chains: IChainInfo[] = [
     chainId: 137,
     name: 'Polygon',
     rpcUrl: [
-      `https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      `wss://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
       'https://polygon-rpc.com/',
       'https://rpc-mainnet.maticvigil.com/',
     ],
@@ -95,13 +99,13 @@ export const chains: IChainInfo[] = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcUrl: ['https://mainnet.optimism.io/', OPTIMISM_RPC, 'https://rpc.ankr.com/optimism'].filter(isNotNullish),
+    rpcUrl: [OPTIMISM_RPC, 'https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism'].filter(isNotNullish),
   },
   {
     id: 'xdai',
     chainId: 100,
     name: 'Gnosis Chain',
-    rpcUrl: ['https://rpc.ankr.com/gnosis', 'https://xdai-archive.blockscout.com'],
+    rpcUrl: ['wss://rpc.gnosischain.com/wss', 'https://rpc.ankr.com/gnosis', 'https://xdai-archive.blockscout.com'],
   },
 ]
 

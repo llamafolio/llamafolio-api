@@ -204,8 +204,8 @@ export function flattenContracts(contracts: { [key: string]: Contract | Contract
   return contractsList
 }
 
-export function groupContracts(contracts: Contract[]) {
-  const contractsMap: { [key: string]: Contract | Contract[] } = {}
+export function groupContracts<T extends Contract>(contracts: T[]) {
+  const contractsMap: { [key: string]: T | T[] } = {}
 
   for (const contract of contracts) {
     if (contract.__key != null) {

@@ -18,5 +18,6 @@ module.exports = {
   INDEXER_ADMIN_TOKEN: process.env.INDEXER_ADMIN_TOKEN,
   // RPCs
   LLAMANODES_API_KEY: process.env.LLAMANODES_API_KEY,
+  ARBITRUM_RPC: process.env.ARBITRUM_RPC,
   OPTIMISM_RPC: process.env.OPTIMISM_RPC,
 }

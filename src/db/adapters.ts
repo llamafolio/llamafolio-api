@@ -100,6 +100,12 @@ export function toStorage(adapters: Adapter[]) {
   return adaptersStorable
 }
 
+export async function countAdapters(client: PoolClient) {
+  const res = await client.query(`select count(distinct(id)) from adapters;`, [])
+
+  return parseInt(res.rows[0].count)
+}
+
 export async function selectAdapter(client: PoolClient, chain: Chain, adapterId: string) {
   const adaptersRes = await client.query(`select * from adapters where id = $1 and chain = $2;`, [adapterId, chain])
 

@@ -85,11 +85,17 @@ function capitalize(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1)
 }
 
+function isCharNumeric(char: string) {
+  return /\d/.test(char)
+}
+
 function slugify(adapter: string) {
-  return adapter
+  const slug = adapter
     .split('-')
     .map((part, idx) => (idx > 0 ? capitalize(part) : part))
     .join('')
+
+  return isCharNumeric(slug[0]) ? `_${slug}` : slug
 }
 
 function getAdapters() {

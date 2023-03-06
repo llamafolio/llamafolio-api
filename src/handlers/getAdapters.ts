@@ -1,14 +1,28 @@
-import { adapters } from '@adapters/index'
-import { success } from '@handlers/response'
+import { selectDistinctIdAdapters } from '@db/adapters'
+import pool from '@db/pool'
+import { serverError, success } from '@handlers/response'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
-export const handler: APIGatewayProxyHandler = async () => {
-  return success(
-    {
-      data: {
-        adapters: adapters.map((adapter) => ({ id: adapter.id })),
+export const handler: APIGatewayProxyHandler = async (_event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false
+
+  const client = await pool.connect()
+
+  try {
+    const adapters = await selectDistinctIdAdapters(client)
+
+    return success(
+      {
+        data: {
+          adapters: adapters.map((adapter) => ({ id: adapter.id })),
+        },
       },
-    },
-    { maxAge: 10 * 60 },
-  )
+      { maxAge: 30 * 60 },
+    )
+  } catch (error) {
+    console.error('Failed to get adapters', { error })
+    return serverError('Failed to get adapters')
+  } finally {
+    client.release(true)
+  }
 }

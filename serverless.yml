@@ -2,6 +2,9 @@ org: llamafolio
 app: llamafolio-api
 service: llamafolio-api
 
+package:
+  individually: true
+
 frameworkVersion: '3'
 
 provider:
@@ -49,13 +52,15 @@ provider:
     PGDATABASE: ${file(./env.js):PGDATABASE}
     PGPASSWORD: ${file(./env.js):PGPASSWORD}
     PGPORT: ${file(./env.js):PGPORT}
-    LLAMANODES_API_KEY: ${file(./env.js):LLAMANODES_API_KEY}
     REDIS_PORT: ${file(./env.js):REDIS_PORT}
     REDIS_HOST: ${file(./env.js):REDIS_HOST}
     REDIS_PASSWORD: ${file(./env.js):REDIS_PASSWORD}
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    LLAMANODES_API_KEY: ${file(./env.js):LLAMANODES_API_KEY}
+    ARBITRUM_RPC: ${file(./env.js):ARBITRUM_RPC}
+    OPTIMISM_RPC: ${file(./env.js):OPTIMISM_RPC}
 
   httpApi:
     metrics: true
@@ -85,6 +90,7 @@ functions:
       - httpApi:
           method: get
           path: /adapters/{chain}
+    timeout: 29
 
   getBalances:
     handler: src/handlers/getBalances.handler
@@ -93,6 +99,7 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}
+    timeout: 10
 
   getBalancesTokens:
     handler: src/handlers/getBalancesTokens.handler
@@ -229,11 +236,15 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   esbuild:
     bundle: true
-    minify: false
+    minify: true
+    keepNames: true
     concurrency: 4
     external:
       - pg-native
       - pg-format
+    watch:
+      pattern: ['src/**/*.ts']
+      ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules']
     # for debugging
     #keepOutputDirectory: true
   prune:
