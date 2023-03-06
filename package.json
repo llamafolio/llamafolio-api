@@ -37,6 +37,7 @@
     "graphql": "^16.6.0",
     "graphql-request": "^5.1.0",
     "ioredis": "^5.2.4",
+    "jsbi": "^3.2.5",
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.2",
     "pg": "^8.7.3",
