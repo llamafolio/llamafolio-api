@@ -7,4 +7,5 @@ export interface ProviderBalancesParams extends Balance {
   lpToken: string
   provider: string
   curvePool?: string
+  uniPoolAddress?: string
 }

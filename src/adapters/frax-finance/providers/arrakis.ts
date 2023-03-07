@@ -4,7 +4,7 @@ import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
-import { ProviderBalancesParams } from './utils'
+import { ProviderBalancesParams } from './interface'
 
 const abi = {
   getUnderlyingBalances: {

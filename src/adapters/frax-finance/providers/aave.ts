@@ -1,6 +1,6 @@
 import { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 
-import { ProviderBalancesParams } from './utils'
+import { ProviderBalancesParams } from './interface'
 
 export const aaveProvider = async (_ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
   for (const pool of pools) {

@@ -10,6 +10,7 @@ import { fraxpoolProvider } from '../providers/fraxpool'
 import { stakedaoProvider } from '../providers/stakedao'
 import { uniswapProvider } from '../providers/uniswap'
 import { uniswap3Provider } from '../providers/uniswap3'
+import { uniswapNFTProvider } from '../providers/uniswapNFT'
 
 const abi = {
   stakingToken: {
@@ -52,11 +53,9 @@ export async function getFraxContracts(ctx: BaseContext, contractList: IContract
   farmContracts.forEach((contract, idx) => {
     const stakeTokenRes = stakeTokensRes[idx]
     const lpToken = isSuccess(stakeTokenRes) ? stakeTokenRes.output : contract.address
-    const rewardsTokenRes = rewardsTokensRes[idx]
-
-    if (!isSuccess(rewardsTokenRes)) {
-      return
-    }
+    const rewards = isSuccess(rewardsTokensRes[idx])
+      ? rewardsTokensRes[idx].output
+      : ['0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0']
 
     contracts.push({
       ...contract,
@@ -64,7 +63,7 @@ export async function getFraxContracts(ctx: BaseContext, contractList: IContract
       chain: ctx.chain,
       lpToken,
       stakeAddress: contract.address,
-      rewards: rewardsTokenRes.output,
+      rewards,
       decimals: 18,
     })
   })
@@ -81,6 +80,7 @@ const providers: Record<string, Provider | undefined> = {
   convex: convexProvider,
   uniswap: uniswapProvider,
   uniswap3: uniswap3Provider,
+  uniswapNFT: uniswapNFTProvider,
   stakedao: stakedaoProvider,
   fraxpool: fraxpoolProvider,
 }

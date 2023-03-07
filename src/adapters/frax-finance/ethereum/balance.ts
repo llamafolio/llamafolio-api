@@ -1,4 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { BN_ZERO, isZero } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
@@ -8,9 +9,10 @@ import { aaveBalancesProvider } from '../providers/aave'
 import { arrakisBalancesProvider } from '../providers/arrakis'
 import { convexBalancesProvider } from '../providers/convex'
 import { fraxpoolBalancesProvider } from '../providers/fraxpool'
+import { ProviderBalancesParams } from '../providers/interface'
 import { uniswapBalancesProvider } from '../providers/uniswap'
 import { uniswap3BalancesProvider } from '../providers/uniswap3'
-import { ProviderBalancesParams } from '../providers/utils'
+import { uniswapNFTBalancesProvider } from '../providers/uniswapNFT'
 
 const abi = {
   lockedLiquidityOf: {
@@ -39,17 +41,18 @@ export async function getFraxBalances(ctx: BalancesContext, pools: Contract[]): 
     multicall({ ctx, calls, abi: abi.earned }),
   ])
 
-  pools.forEach((pool, idx) => {
+  pools.forEach((pool, poolIdx) => {
     const rewards = pool.rewards
-    const balanceOfRes = balancesOfsRes[idx]
-    const earnedRes = earnedsRes[idx]
+    const balanceOfRes = balancesOfsRes[poolIdx]
 
-    if (!rewards || !isSuccess(balanceOfRes) || !isSuccess(earnedRes)) {
+    if (!rewards || !isSuccess(balanceOfRes) || isZero(balanceOfRes.output)) {
       return
     }
 
     rewards.forEach((reward, idx) => {
-      ;(reward as Balance).amount = BigNumber.from(earnedRes.output[idx])
+      ;(reward as Balance).amount = isSuccess(earnedsRes[poolIdx])
+        ? BigNumber.from(earnedsRes[poolIdx].output[idx])
+        : BN_ZERO
     })
 
     balances.push({
@@ -73,6 +76,7 @@ const providers: Record<string, Provider | undefined> = {
   arrakis: arrakisBalancesProvider,
   uniswap: uniswapBalancesProvider,
   uniswap3: uniswap3BalancesProvider,
+  uniswapNFT: uniswapNFTBalancesProvider,
   stakedao: convexBalancesProvider,
   fraxpool: fraxpoolBalancesProvider,
 }

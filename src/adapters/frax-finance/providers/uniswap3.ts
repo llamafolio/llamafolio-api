@@ -36,7 +36,7 @@ const abi = {
   },
 }
 
-import { ProviderBalancesParams } from './utils'
+import { ProviderBalancesParams } from './interface'
 
 export const uniswap3Provider = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
   const res: Contract[] = []

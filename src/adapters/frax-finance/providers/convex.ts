@@ -7,7 +7,7 @@ import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber, ethers, utils } from 'ethers'
 
-import { ProviderBalancesParams } from './utils'
+import { ProviderBalancesParams } from './interface'
 
 const abi = {
   convexPoolId: {

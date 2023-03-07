@@ -3,7 +3,7 @@ import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { utils } from 'ethers'
 
-import { ProviderBalancesParams } from './utils'
+import { ProviderBalancesParams } from './interface'
 
 const abi = {
   pricePerShare: {
