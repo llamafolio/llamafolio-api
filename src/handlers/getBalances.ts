@@ -6,7 +6,7 @@ import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, ContractStandard, Lock } from '@lib/adapter'
 import { groupBy } from '@lib/array'
-import { areBalancesStale, BALANCES_UPDATE_INTEVAL_S } from '@lib/balance'
+import { areBalancesStale } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
@@ -222,7 +222,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       protocols,
     }
 
-    return success(balancesResponse, { maxAge: BALANCES_UPDATE_INTEVAL_S })
+    return success(balancesResponse, { maxAge: 20 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')

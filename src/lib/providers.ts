@@ -8,12 +8,18 @@ function createProvider(name: string, rpcs: string[], chainId: number) {
     return new ethersProviders.WebSocketProvider(rpcs[0], chainId)
   }
 
-  return new ethersProviders.StaticJsonRpcProvider(
-    { url: rpcs[0], allowGzip: true },
-    {
-      name,
-      chainId,
-    },
+  return new ethersProviders.FallbackProvider(
+    rpcs.map((url, i) => ({
+      provider: new ethersProviders.StaticJsonRpcProvider(
+        { url, allowGzip: true },
+        {
+          name,
+          chainId,
+        },
+      ),
+      priority: i,
+    })),
+    1,
   )
 }
 
