@@ -5,6 +5,7 @@ import {
   BaseContract,
   ExcludeRawContract,
   GetContractsHandler,
+  PricedBalance,
 } from '@lib/adapter'
 import { Category } from '@lib/category'
 import { getERC20BalanceOf } from '@lib/erc20'
@@ -191,6 +192,33 @@ export async function resolveBalances<C extends GetContractsHandler>(
   return balances.flat(2).filter(isNotNullish)
 }
 
+export function isBalanceUSDGtZero(balance: Balance | PricedBalance) {
+  if ((balance as PricedBalance).price != null && ((balance as PricedBalance).balanceUSD || 0) > 0) {
+    return true
+  }
+
+  if (balance.underlyings) {
+    for (const underlying of balance.underlyings) {
+      if (((underlying as PricedBalance).price != null && (underlying as PricedBalance).balanceUSD) || 0 > 0) {
+        return true
+      }
+    }
+  }
+
+  if (balance.rewards) {
+    for (const reward of balance.rewards) {
+      if (
+        (reward as PricedBalance).price != null &&
+        (((reward as PricedBalance).claimableUSD || 0) > 0 || ((reward as PricedBalance).balanceUSD || 0) > 0)
+      ) {
+        return true
+      }
+    }
+  }
+
+  return false
+}
+
 export interface SortBalance {
   balanceUSD?: number
   rewards?: SortBalance[]
@@ -232,8 +260,6 @@ export function sumBalances(balances: SumBalance[]) {
   return res
 }
 
-export const BALANCES_UPDATE_INTEVAL_S = 2 * 60
-
 /**
  * At the moment, balances are considered "stale" if they haven't been updated in the last x minutes.
  * Later, we can use more advanced strategies using transactions events, scheduled updates etc
@@ -242,7 +268,7 @@ export const BALANCES_UPDATE_INTEVAL_S = 2 * 60
 export function areBalancesStale(lastUpdateTimestamp: number) {
   const now = new Date().getTime()
 
-  const updateInterval = BALANCES_UPDATE_INTEVAL_S * 1000
+  const updateInterval = 2 * 60 * 1000
 
   return now - lastUpdateTimestamp > updateInterval
 }
