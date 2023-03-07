@@ -6,7 +6,7 @@ import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, ContractStandard, Lock } from '@lib/adapter'
 import { groupBy } from '@lib/array'
-import { areBalancesStale } from '@lib/balance'
+import { areBalancesStale, isBalanceUSDGtZero } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
@@ -176,7 +176,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       selectLastBalancesSnapshotsByFromAddress(client, address),
     ])
 
-    const pricedBalancesWithYields = await getBalancesYields(redisClient, pricedBalances)
+    const nonZeroPricedBalances = pricedBalances.filter(isBalanceUSDGtZero)
+
+    const pricedBalancesWithYields = await getBalancesYields(redisClient, nonZeroPricedBalances)
 
     const protocols: BalancesProtocolResponse[] = []
     const balancesByAdapterId = groupBy(pricedBalancesWithYields, 'adapterId')
