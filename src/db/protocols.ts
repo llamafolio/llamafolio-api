@@ -79,10 +79,10 @@ const paletteFromStorable = (storedPalette: string[]): number[][] => {
   return palette
 }
 
-export async function selectProtocols(client: PoolClient, ids?: string[]): Promise<IProtocol[]> {
+export async function selectProtocols(client: PoolClient, id?: string): Promise<IProtocol[]> {
   let query
-  if (ids && ids.length > 0) {
-    query = format(`select * from protocols where slug in (%L);`, ids)
+  if (id) {
+    query = format(`select * from protocols where slug = '%I';`, id)
   } else {
     query = 'select * from protocols'
   }

@@ -4,16 +4,11 @@ import { success } from '@handlers/response'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  const ids = event.queryStringParameters?.ids?.split(',') ?? []
+  const id = event.queryStringParameters?.id as string
 
   const client = await pool.connect()
 
-  const protocols = await selectProtocols(client, ids)
+  const protocols = await selectProtocols(client, id)
 
-  return success(
-    {
-      protocols,
-    },
-    { maxAge: 60 * 60 },
-  )
+  return success(protocols, { maxAge: 60 * 60 })
 }
