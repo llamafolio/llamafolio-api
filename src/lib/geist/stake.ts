@@ -1,4 +1,5 @@
 import { Balance, BalancesContext, Contract, RewardBalance } from '@lib/adapter'
+import { keyBy } from '@lib/array'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
@@ -42,10 +43,7 @@ export async function getMultiFeeDistributionBalances(
 
   const tokens = claimableRewards.map((res: any) => res.token)
   const tokenDetails = await getERC20Details(ctx, tokens)
-  const tokenByAddress: { [key: string]: Token } = {}
-  for (const token of tokenDetails) {
-    tokenByAddress[token.address] = token
-  }
+  const tokenByAddress = keyBy(tokenDetails, 'address', { lowercase: true })
 
   const lockedBalance: Balance = {
     chain: ctx.chain,
@@ -101,7 +99,7 @@ export async function getMultiFeeDistributionBalances(
   for (let i = 0; i < claimableRewards.length; i++) {
     const rewardData = claimableRewards[i]
 
-    const token = tokenByAddress[rewardData.token]
+    const token = tokenByAddress[rewardData.token.toLowerCase()]
     if (!token) {
       continue
     }

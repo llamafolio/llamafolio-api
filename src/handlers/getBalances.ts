@@ -6,10 +6,11 @@ import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, ContractStandard, Lock } from '@lib/adapter'
 import { groupBy } from '@lib/array'
-import { areBalancesStale } from '@lib/balance'
+import { areBalancesStale, BALANCES_UPDATE_INTEVAL_S } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
+import { invokeLambda } from '@lib/lambda'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 import { Redis } from 'ioredis'
@@ -197,10 +198,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         })
       }
 
-      protocols.push({
-        id: adapterId,
-        chains,
-      })
+      protocols.push({ id: adapterId, chains })
     }
 
     const updatedAt = lastBalancesSnapshots[0]?.timestamp
@@ -214,13 +212,17 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       status = 'stale'
     }
 
+    if (status !== 'success') {
+      await invokeLambda(`llamafolio-api-${process.env.stage}-updateBalances`, { address }, 'Event')
+    }
+
     const balancesResponse: BalancesResponse = {
       status,
       updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
       protocols,
     }
 
-    return success(balancesResponse, { maxAge: 2 * 60 })
+    return success(balancesResponse, { maxAge: BALANCES_UPDATE_INTEVAL_S })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')

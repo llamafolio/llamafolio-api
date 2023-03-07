@@ -133,6 +133,7 @@
         "stakewise",
         "stargate",
         "strike",
+        "sturdy",
         "sushiswap",
         "synapse",
         "synthetix",
@@ -140,6 +141,7 @@
         "traderjoe",
         "truefi",
         "uniswap-v2",
+        "uniswap-v3",
         "uwu-lend",
         "valas-finance",
         "vector",
@@ -147,7 +149,8 @@
         "wallet",
         "wepiggy",
         "wonderland",
-        "yearn-finance"
+        "yearn-finance",
+        "zyberswap"
       ],
       "default": "curve"
     },

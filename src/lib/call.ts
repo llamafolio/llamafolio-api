@@ -1,7 +1,7 @@
 import '@lib/providers'
 
-import { call as sdkCall } from '@defillama/sdk/build/abi'
 import { BaseContext } from '@lib/adapter'
+import { batchCallers } from '@lib/multicall'
 
 export type CallParams = string | number | (string | number)[] | undefined
 
@@ -13,11 +13,12 @@ export interface CallOptions {
 }
 
 export async function call(options: CallOptions) {
-  const res = await sdkCall({
+  const res = await batchCallers[options.ctx.chain]!.call({
     ...options,
+    calls: [{ target: options.target, params: options.params }],
     chain: options.ctx.chain,
     block: options.ctx.blockHeight,
   })
 
-  return res
+  return res.output[0]
 }

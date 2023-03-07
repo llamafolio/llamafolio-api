@@ -232,15 +232,17 @@ export function sumBalances(balances: SumBalance[]) {
   return res
 }
 
+export const BALANCES_UPDATE_INTEVAL_S = 2 * 60
+
 /**
- * At the moment, balances are considered "stale" if they haven't been updated in the last 5 minutes.
+ * At the moment, balances are considered "stale" if they haven't been updated in the last x minutes.
  * Later, we can use more advanced strategies using transactions events, scheduled updates etc
  * @param lastUpdateTimestamp
  */
 export function areBalancesStale(lastUpdateTimestamp: number) {
   const now = new Date().getTime()
 
-  const updateInterval = 5 * 60 * 1000
+  const updateInterval = BALANCES_UPDATE_INTEVAL_S * 1000
 
   return now - lastUpdateTimestamp > updateInterval
 }

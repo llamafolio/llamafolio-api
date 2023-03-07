@@ -84,6 +84,7 @@ import spool from '@adapters/spool'
 import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
 import strike from '@adapters/strike'
+import sturdy from '@adapters/sturdy'
 import sushiswap from '@adapters/sushiswap'
 import synapse from '@adapters/synapse'
 import synthetix from '@adapters/synthetix'
@@ -91,6 +92,7 @@ import templedao from '@adapters/templedao'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
 import uniswapV2 from '@adapters/uniswap-v2'
+import uniswapV3 from '@adapters/uniswap-v3'
 import uwuLend from '@adapters/uwu-lend'
 import valasFinance from '@adapters/valas-finance'
 import vector from '@adapters/vector'
@@ -99,6 +101,7 @@ import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
 import wonderland from '@adapters/wonderland'
 import yearnFinance from '@adapters/yearn-finance'
+import zyberswap from '@adapters/zyberswap'
 import { Adapter } from '@lib/adapter'
 
 export const adapters: Adapter[] = [
@@ -188,6 +191,7 @@ export const adapters: Adapter[] = [
   stakewise,
   stargate,
   strike,
+  sturdy,
   sushiswap,
   synapse,
   synthetix,
@@ -195,6 +199,7 @@ export const adapters: Adapter[] = [
   traderjoe,
   truefi,
   uniswapV2,
+  uniswapV3,
   uwuLend,
   valasFinance,
   vector,
@@ -203,6 +208,7 @@ export const adapters: Adapter[] = [
   wepiggy,
   wonderland,
   yearnFinance,
+  zyberswap,
 ]
 
 export const adapterById: { [key: string]: Adapter } = {}
