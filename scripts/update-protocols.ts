@@ -12,7 +12,7 @@ async function main() {
     const adaptersIds = adapters.map((adapter) => adapter.id)
 
     const protocols = await fetchProtocols(adaptersIds)
-    console.log(protocols)
+
     await insertProtocols(client, protocols)
 
     console.log(`Inserted ${protocols.length} protocols`)
