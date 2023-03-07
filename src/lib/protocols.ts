@@ -83,7 +83,7 @@ export interface IProtocol {
   twitter?: string
   description?: string
   address?: string
-  pallete?: number[][]
+  palette?: number[][]
 }
 
 export async function fetchProtocols(adapters: string[]): Promise<IProtocol[]> {
@@ -92,29 +92,29 @@ export async function fetchProtocols(adapters: string[]): Promise<IProtocol[]> {
     fetchProtocolsConfig(adapters),
   ])
 
-  const palletes = await fetchProtocolColorPallete(protocols)
+  const palettes = await fetchProtocolColorPalette(protocols)
 
   const fullProtocolsData = []
 
   for (let i = 0; i < protocols.length; i++) {
     const extraData = protocolsDetails.find((protocol: { slug: string }) => protocol.slug === protocols[i].slug)
-    const pallete = palletes.find((protocol: { slug: string }) => protocol.slug === protocols[i].slug)
+    const palette = palettes.find((protocol: { slug: string }) => protocol.slug === protocols[i].slug)
 
-    fullProtocolsData.push({ ...protocols[i], ...extraData, pallete: pallete?.pallete })
+    fullProtocolsData.push({ ...protocols[i], ...extraData, palette: palette?.palette })
   }
 
   return fullProtocolsData
 }
 
-async function fetchProtocolColorPallete(protocols: IProtocol[]): Promise<{ pallete: number[][]; slug: string }[]> {
-  const palletes = await Promise.all(protocols.map((protocol) => getProtocolPallete(protocol)))
+async function fetchProtocolColorPalette(protocols: IProtocol[]): Promise<{ palette: number[][]; slug: string }[]> {
+  const palettes = await Promise.all(protocols.map((protocol) => getProtocolPalette(protocol)))
 
-  return palletes
+  return palettes
 }
 
-async function getProtocolPallete(protocol: IProtocol): Promise<{ pallete: number[][]; slug: string }> {
-  const pallete = await getPaletteFromURL(protocol.logo, 10, 10)
-  return { pallete, slug: protocol.slug }
+async function getProtocolPalette(protocol: IProtocol): Promise<{ palette: number[][]; slug: string }> {
+  const palette = await getPaletteFromURL(protocol.logo, 10, 10)
+  return { palette, slug: protocol.slug }
 }
 
 async function fetchProtocolsConfig(adapters: string[]) {
