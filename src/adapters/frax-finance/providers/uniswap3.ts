@@ -34,6 +34,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  earned: {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'earned',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
 import { ProviderBalancesParams } from './interface'
@@ -70,6 +77,7 @@ export const uniswap3BalancesProvider = async (
 ): Promise<ProviderBalancesParams[]> => {
   const underlyingsCalls: Call[] = []
   const suppliesCalls: Call[] = []
+  const rewardsCalls: Call[] = []
 
   for (const pool of pools) {
     const { underlyings, lpToken } = pool
@@ -81,19 +89,22 @@ export const uniswap3BalancesProvider = async (
 
     underlyingsCalls.push(...underlyings.map((underlying) => ({ target: underlying.address, params: [lpToken] })))
     suppliesCalls.push({ target: lpToken })
+    rewardsCalls.push({ target: pool.stakeAddress, params: [ctx.address] })
   }
 
-  const [underlyingsBalancesRes, totalSuppliesRes] = await Promise.all([
+  const [underlyingsBalancesRes, totalSuppliesRes, earnedsFXSRes] = await Promise.all([
     multicall({ ctx, calls: underlyingsCalls, abi: erc20Abi.balanceOf }),
     multicall({ ctx, calls: suppliesCalls, abi: abi.liquidity }),
+    multicall({ ctx, calls: rewardsCalls, abi: abi.earned }),
   ])
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
     const { underlyings, amount } = pool
     const totalSupplyRes = totalSuppliesRes[poolIdx]
+    const earnedFXSRes = earnedsFXSRes[poolIdx]
 
-    if (!underlyings || !amount || !totalSupplyRes || isZero(totalSupplyRes.output)) {
+    if (!underlyings || !amount || !totalSupplyRes || isZero(totalSupplyRes.output) || !isSuccess(earnedFXSRes)) {
       continue
     }
 
@@ -105,6 +116,7 @@ export const uniswap3BalancesProvider = async (
         : BN_ZERO
 
       ;(underlying as Balance).amount = underlyingsBalance.mul(amount).div(totalSupplyRes.output)
+      // ;(pool.rewards?.[0] as Balance).amount = BigNumber.from(earnedFXSRes.output)
     })
   }
 

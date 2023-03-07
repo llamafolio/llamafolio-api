@@ -79,6 +79,7 @@ const providers: Record<string, Provider | undefined> = {
   curve: curveProvider,
   convex: convexProvider,
   uniswap: uniswapProvider,
+  uniswapBoosted: uniswapProvider,
   uniswap3: uniswap3Provider,
   uniswapNFT: uniswapNFTProvider,
   stakedao: stakedaoProvider,

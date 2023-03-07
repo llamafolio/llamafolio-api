@@ -163,7 +163,7 @@
       "provider": "uniswap"
     },
     { "name": "Uniswap FEI/TRIBE", "address": "0x9928e4046d7c6513326cCeA028cD3e7a91c7590A", "provider": "uniswap" },
-    { "name": "Uniswap FRAX/FXS", "address": "0xda2c338350a0E59Ce71CDCED9679A3A590Dd9BEC", "provider": "uniswapBUG" },
+    { "name": "Uniswap FRAX/FXS", "address": "0xda2c338350a0E59Ce71CDCED9679A3A590Dd9BEC", "provider": "uniswapBoosted" },
     { "name": "Uniswap FRAX/IQ", "address": "0xF37057823910653a554d996B49E3399DC87fAE1b", "provider": "uniswap3" },
     { "name": "Uniswap FRAX/IQ_OLD", "address": "0x35fc5Fd90e06c47c0D9dEBfEDB1daF55bCE14E6d", "provider": "uniswap3" },
     { "name": "Uniswap FRAX/OHM", "address": "0xfC77A420f56Dec53e3b91D7FC936902e132335FF", "provider": "uniswap3" },

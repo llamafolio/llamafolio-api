@@ -1,5 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
@@ -12,6 +12,7 @@ import { fraxpoolBalancesProvider } from '../providers/fraxpool'
 import { ProviderBalancesParams } from '../providers/interface'
 import { uniswapBalancesProvider } from '../providers/uniswap'
 import { uniswap3BalancesProvider } from '../providers/uniswap3'
+import { uniswapBoostedBalancesProvider } from '../providers/uniswapBoosted'
 import { uniswapNFTBalancesProvider } from '../providers/uniswapNFT'
 
 const abi = {
@@ -43,21 +44,21 @@ export async function getFraxBalances(ctx: BalancesContext, pools: Contract[]): 
 
   pools.forEach((pool, poolIdx) => {
     const rewards = pool.rewards
-    const balanceOfRes = balancesOfsRes[poolIdx]
 
-    if (!rewards || !isSuccess(balanceOfRes) || isZero(balanceOfRes.output)) {
+    if (!rewards) {
       return
     }
 
     rewards.forEach((reward, idx) => {
-      ;(reward as Balance).amount = isSuccess(earnedsRes[poolIdx])
-        ? BigNumber.from(earnedsRes[poolIdx].output[idx])
-        : BN_ZERO
+      ;(reward as Balance).amount =
+        isSuccess(earnedsRes[poolIdx]) && earnedsRes[poolIdx].output.length > 0
+          ? BigNumber.from(earnedsRes[poolIdx].output[idx])
+          : BN_ZERO
     })
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: isSuccess(balancesOfsRes[poolIdx]) ? BigNumber.from(balancesOfsRes[poolIdx].output) : BN_ZERO,
       rewards: rewards as Balance[],
       underlyings: pool.underlyings as Contract[],
       category: 'farm',
@@ -76,6 +77,7 @@ const providers: Record<string, Provider | undefined> = {
   arrakis: arrakisBalancesProvider,
   uniswap: uniswapBalancesProvider,
   uniswap3: uniswap3BalancesProvider,
+  uniswapBoosted: uniswapBoostedBalancesProvider,
   uniswapNFT: uniswapNFTBalancesProvider,
   stakedao: convexBalancesProvider,
   fraxpool: fraxpoolBalancesProvider,
