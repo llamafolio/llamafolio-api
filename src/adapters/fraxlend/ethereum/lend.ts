@@ -57,7 +57,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
         address: pair.address,
         amount: userCollateralBalance,
         category: 'lend',
-        underlyings: pair.underlyings,
+        underlyings: pair.underlyings as Contract[],
       }
 
       balances.push(collateral)

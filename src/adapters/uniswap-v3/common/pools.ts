@@ -4,7 +4,7 @@ import { call } from '@lib/call'
 import { Category } from '@lib/category'
 import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isNotNullish } from '@lib/type'
+import { isNotNullish, isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 import JSBI from 'jsbi'
 
@@ -118,17 +118,24 @@ export async function getPoolsBalances(ctx: BalancesContext, nonFungiblePosition
     abi: abi.tokenOfOwnerByIndex,
   })
 
+  const tokenIds = tokensOfOwnerByIndexRes.filter(isSuccess).map((res) => res.output)
+
+  return getTokenIdsBalances(ctx, nonFungiblePositionManager, factory, tokenIds)
+}
+
+export async function getTokenIdsBalances(
+  ctx: BalancesContext,
+  nonFungiblePositionManager: Contract,
+  factory: Contract,
+  tokenIds: number[],
+) {
   // positions
   const positionsRes = await multicall({
     ctx,
-    calls: tokensOfOwnerByIndexRes.map((tokenIdRes) =>
-      tokenIdRes.success
-        ? {
-            target: nonFungiblePositionManager.address,
-            params: [tokenIdRes.output],
-          }
-        : null,
-    ),
+    calls: tokenIds.map((tokenId) => ({
+      target: nonFungiblePositionManager.address,
+      params: [tokenId],
+    })),
     abi: abi.positions,
   })
 

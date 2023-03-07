@@ -32,6 +32,7 @@ import euler from '@adapters/euler'
 import floorDao from '@adapters/floor-dao'
 import fluxFinance from '@adapters/flux-finance'
 import fortressLoans from '@adapters/fortress-loans'
+import fraxFinance from '@adapters/frax-finance'
 import fraxlend from '@adapters/fraxlend'
 import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
@@ -138,6 +139,7 @@ export const adapters: Adapter[] = [
   floorDao,
   fluxFinance,
   fortressLoans,
+  fraxFinance,
   fraxlend,
   gearbox,
   geist,
