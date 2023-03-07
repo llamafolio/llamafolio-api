@@ -1,6 +1,7 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
+import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 import { getFraxBalances } from './balance'
 import { getFraxContracts } from './contract'
@@ -67,7 +68,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     contracts: getFraxBalances,
     staker: getStakedFraxBalances,
     lockers: getFraxLockerBalances,
-    // pairs: getPairsBalances,
+    pairs: getPairsBalances,
   })
 
   return {

@@ -1,5 +1,5 @@
 import { BaseContext, Contract } from '@lib/adapter'
-import { multicall } from '@lib/multicall'
+import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { groupBy } from 'lodash'
 
@@ -37,17 +37,11 @@ export async function getFraxContracts(ctx: BaseContext, contractList: IContract
   const farmContracts = contractList.staking_contracts
   const contracts: Contract[] = []
 
+  const calls: Call[] = farmContracts.map((contract) => ({ target: contract.address }))
+
   const [stakeTokensRes, rewardsTokensRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: farmContracts.map((contract) => ({ target: contract.address })),
-      abi: abi.stakingToken,
-    }),
-    multicall({
-      ctx,
-      calls: farmContracts.map((contract) => ({ target: contract.address })),
-      abi: abi.getAllRewardTokens,
-    }),
+    multicall({ ctx, calls, abi: abi.stakingToken }),
+    multicall({ ctx, calls, abi: abi.getAllRewardTokens }),
   ])
 
   farmContracts.forEach((contract, idx) => {
@@ -55,7 +49,7 @@ export async function getFraxContracts(ctx: BaseContext, contractList: IContract
     const lpToken = isSuccess(stakeTokenRes) ? stakeTokenRes.output : contract.address
     const rewards = isSuccess(rewardsTokensRes[idx])
       ? rewardsTokensRes[idx].output
-      : ['0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0']
+      : ['0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'] // FXS
 
     contracts.push({
       ...contract,

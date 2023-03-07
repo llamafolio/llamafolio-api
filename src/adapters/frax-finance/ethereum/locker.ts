@@ -1,5 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { multicall } from '@lib/multicall'
+import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
@@ -27,17 +27,11 @@ const abi = {
 export async function getFraxLockerBalances(ctx: BalancesContext, lockers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
+  const calls: Call[] = lockers.map((locker) => ({ target: locker.address, params: [ctx.address] }))
+
   const [lockedBalancesOf, incentivesEarnedRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] })),
-      abi: abi.locked,
-    }),
-    multicall({
-      ctx,
-      calls: lockers.map((locker) => ({ target: locker.rewarder, params: [ctx.address] })),
-      abi: abi.earned,
-    }),
+    multicall({ ctx, calls, abi: abi.locked }),
+    multicall({ ctx, calls, abi: abi.earned }),
   ])
 
   for (let lockerIdx = 0; lockerIdx < lockers.length; lockerIdx++) {

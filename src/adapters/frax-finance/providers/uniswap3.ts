@@ -116,7 +116,7 @@ export const uniswap3BalancesProvider = async (
         : BN_ZERO
 
       ;(underlying as Balance).amount = underlyingsBalance.mul(amount).div(totalSupplyRes.output)
-      // ;(pool.rewards?.[0] as Balance).amount = BigNumber.from(earnedFXSRes.output)
+      ;(pool.rewards?.[0] as Balance).amount = BigNumber.from(earnedFXSRes.output)
     })
   }
 

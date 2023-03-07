@@ -29,10 +29,7 @@ const abi = {
 import { ProviderBalancesParams } from './interface'
 
 export const uniswapProvider = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
-  const calls: Call[] = pools.map((pool) => ({
-    target: pool.lpToken,
-    params: [],
-  }))
+  const calls: Call[] = pools.map((pool) => ({ target: pool.lpToken }))
 
   const [token0sRes, token1sRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.token0 }),

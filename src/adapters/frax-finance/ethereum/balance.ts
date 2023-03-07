@@ -44,7 +44,6 @@ export async function getFraxBalances(ctx: BalancesContext, pools: Contract[]): 
 
   pools.forEach((pool, poolIdx) => {
     const rewards = pool.rewards
-
     if (!rewards) {
       return
     }
