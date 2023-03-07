@@ -6,4 +6,4 @@ export async function selectProtocols(): Promise<IProtocol[]> {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-export function insertProtocols(client: PoolClient, protocols: IProtocol[]) {}
+export async function insertProtocols(client: PoolClient, protocols: IProtocol[]) {}
