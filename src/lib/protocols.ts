@@ -1,5 +1,5 @@
-// @ts-ignore
 import { chainById, chainIdResolver } from '@lib/chains'
+// @ts-ignore
 import { getPaletteFromURL } from 'color-thief-node'
 import { sum } from 'lodash'
 import fetch from 'node-fetch'
