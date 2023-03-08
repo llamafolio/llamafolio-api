@@ -1,4 +1,4 @@
-import { selectDistinctIdAdapters } from '@db/adapters'
+import { selectDistinctAdaptersIds } from '@db/adapters'
 import pool from '@db/pool'
 import { serverError, success } from '@handlers/response'
 import { APIGatewayProxyHandler } from 'aws-lambda'
@@ -9,7 +9,7 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
   const client = await pool.connect()
 
   try {
-    const adapters = await selectDistinctIdAdapters(client)
+    const adapters = await selectDistinctAdaptersIds(client)
 
     return success(
       {

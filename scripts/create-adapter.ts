@@ -2,7 +2,6 @@ import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
-import { keyBy } from '../src/lib/array'
 import { chainIdResolver } from '../src/lib/chains'
 import { fetchProtocolsLite } from '../src/lib/protocols'
 
@@ -71,9 +70,8 @@ async function main() {
     return
   }
 
-  const protocols = await fetchProtocolsLite()
-  const protocolBySlug = keyBy(protocols, 'slug')
-  const protocol = protocolBySlug[slug]
+  const protocols = await fetchProtocolsLite([slug])
+  const protocol = protocols[0]
 
   if (!protocol) {
     console.error(`Failed to create adapter: ${slug} doesn't exist on DefiLlama`)

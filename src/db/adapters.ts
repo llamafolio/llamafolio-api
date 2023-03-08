@@ -112,8 +112,8 @@ export async function selectAdapter(client: PoolClient, chain: Chain, adapterId:
   return adaptersRes.rows.length === 1 ? fromStorage(adaptersRes.rows)[0] : null
 }
 
-export async function selectDistinctIdAdapters(client: PoolClient) {
-  const adaptersRes = await client.query(`select distinct(id), * from adapters;`, [])
+export async function selectDistinctAdaptersIds(client: PoolClient) {
+  const adaptersRes = await client.query(`select distinct(id) from adapters;`, [])
 
   return fromStorage(adaptersRes.rows)
 }
