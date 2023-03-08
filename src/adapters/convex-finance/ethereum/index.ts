@@ -77,6 +77,11 @@ export const getContracts = async (ctx: BaseContext) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  for (let poolIdx = 19; poolIdx < 30; poolIdx++) {
+    const contract = contracts.pools![poolIdx]
+    console.log(contract)
+  }
+
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (...args) => getConvexGaugesBalances(...args, metaRegistry),
     cvxRewardPool: getCVXStakeBalance,
