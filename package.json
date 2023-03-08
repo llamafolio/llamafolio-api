@@ -4,7 +4,8 @@
   "description": "LlamaFolio API",
   "scripts": {
     "adapter": "ts-node -T scripts/run-adapter.ts",
-    "build": "ts-node -T scripts/build-adapters.ts",
+    "build-adapters": "ts-node -T scripts/build-adapters.ts",
+    "build": "npm run build-adapters",
     "dev": "sls offline",
     "deploy:dev": "npm run postinstall && npm run build && NODE_ENV=dev sls deploy --stage dev",
     "deploy:prod": "npm run postinstall && npm run build && NODE_ENV=prod sls deploy --stage prod",
@@ -33,8 +34,6 @@
     "@defillama/sdk": "^3.0.8",
     "@llamafolio/tokens": "file:./llamafolio-tokens",
     "aws-sdk": "^2.1189.0",
-    "canvas": "^2.11.0",
-    "color-thief-node": "^1.0.4",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.9",
     "graphql": "^16.6.0",

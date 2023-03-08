@@ -1,19 +1,25 @@
-import { selectDistinctIdAdapters } from '../src/db/adapters'
+import { selectDistinctAdaptersIds } from '../src/db/adapters'
 import pool from '../src/db/pool'
-import { insertProtocols } from '../src/db/protocols'
+import { deleteAllProtocols, insertProtocols } from '../src/db/protocols'
 import { fetchProtocols } from '../src/lib/protocols'
 
 async function main() {
   const client = await pool.connect()
 
   try {
-    const adapters = await selectDistinctIdAdapters(client)
+    const adapters = await selectDistinctAdaptersIds(client)
 
     const adaptersIds = adapters.map((adapter) => adapter.id)
 
     const protocols = await fetchProtocols(adaptersIds)
 
+    await client.query('BEGIN')
+
+    await deleteAllProtocols(client)
+
     await insertProtocols(client, protocols)
+
+    await client.query('COMMIT')
 
     console.log(`Inserted ${protocols.length} protocols`)
   } catch (e) {

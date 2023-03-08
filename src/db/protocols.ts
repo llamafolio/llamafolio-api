@@ -1,9 +1,10 @@
+import { sliceIntoChunks } from '@lib/array'
 import { IProtocol } from '@lib/protocols'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
 /* 
-CREATE TABLE tmp1.protocols (
+CREATE TABLE protocols (
   name VARCHAR NOT NULL,
   url VARCHAR NOT NULL,
   logo VARCHAR NOT NULL,
@@ -16,7 +17,7 @@ CREATE TABLE tmp1.protocols (
   twitter VARCHAR,
   description VARCHAR,
   address VARCHAR,
-  palette VARCHAR[]
+  color VARCHAR
 );
 */
 
@@ -33,23 +34,11 @@ export interface IProtocolStorable {
   twitter?: string
   description?: string
   address?: string
-  palette?: string[]
-}
-
-const paletteToStorable = (palette: number[][] | undefined): string[] => {
-  const storablePalette: string[] = []
-  if (palette) {
-    for (const color of palette) {
-      storablePalette.push(`${color[0]}-${color[1]}-${color[2]}`)
-    }
-  }
-
-  return storablePalette
+  color?: string
 }
 
 const toRow = (protocol: IProtocolStorable) => {
   const chains = protocol.chains.toString()
-  const pallete = protocol.palette?.toString()
 
   return [
     protocol.name,
@@ -64,19 +53,12 @@ const toRow = (protocol: IProtocolStorable) => {
     protocol.twitter,
     protocol.description,
     protocol.address,
-    `{ ${pallete} }`,
+    protocol.color,
   ]
 }
 
-const paletteFromStorable = (storedPalette: string[]): number[][] => {
-  const palette: number[][] = []
-  for (const color of storedPalette) {
-    const colors = color.split('-')
-
-    palette.push([parseInt(colors[0]), parseInt(colors[1]), parseInt(colors[2])])
-  }
-
-  return palette
+export function deleteAllProtocols(client: PoolClient) {
+  return client.query('DELETE FROM protocols WHERE true;', [])
 }
 
 export async function selectProtocols(client: PoolClient, ids?: string[]): Promise<IProtocol[]> {
@@ -89,18 +71,25 @@ export async function selectProtocols(client: PoolClient, ids?: string[]): Promi
 
   const protocolsRes = await client.query(query, [])
 
-  return protocolsRes.rows.map((protocol) => ({ ...protocol, palette: paletteFromStorable(protocol.palette) }))
+  return protocolsRes.rows
 }
 
 export async function insertProtocols(client: PoolClient, protocols: IProtocol[]) {
-  const protocolsStorable = protocols
-    .map((protocol) => ({ ...protocol, palette: paletteToStorable(protocol.palette) }))
-    .map(toRow)
+  const protocolsStorable = protocols.map(toRow)
 
-  const query = format(
-    `insert into protocols (name, url, logo, category, slug, chain, chains, symbol, tvl, twitter, description, address, palette) values %L;`,
-    protocolsStorable,
+  if (protocolsStorable.length === 0) {
+    return
+  }
+
+  return Promise.all(
+    sliceIntoChunks(protocolsStorable, 200).map((chunk) =>
+      client.query(
+        format(
+          `INSERT INTO protocols (name, url, logo, category, slug, chain, chains, symbol, tvl, twitter, description, address, color) VALUES %L;`,
+          chunk,
+        ),
+        [],
+      ),
+    ),
   )
-
-  await client.query(query, [])
 }

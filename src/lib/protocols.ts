@@ -1,8 +1,10 @@
+import { keyBy } from '@lib/array'
 import { chainById, chainIdResolver } from '@lib/chains'
-// @ts-ignore
-import { getPaletteFromURL } from 'color-thief-node'
-import { sum } from 'lodash'
+import { sum } from '@lib/math'
+import { isNotNullish } from '@lib/type'
 import fetch from 'node-fetch'
+
+export const DEFILLAMA_ICONS_PALETTE_CDN = 'https://icons.llamao.fi/palette'
 
 export interface IParentProtocolLiteResponse {
   chains: string[]
@@ -83,47 +85,41 @@ export interface IProtocol {
   twitter?: string
   description?: string
   address?: string
-  palette?: number[][]
+  color?: string
 }
 
-export async function fetchProtocols(adapters: string[]): Promise<IProtocol[]> {
-  const [protocols, protocolsDetails] = await Promise.all([
-    fetchProtocolsLite(adapters),
-    fetchProtocolsConfig(adapters),
+export async function fetchProtocols(adapterIds: string[]): Promise<IProtocol[]> {
+  const [colors, protocols, protocolsDetails] = await Promise.all([
+    Promise.all(adapterIds.map((adapter) => getProtocolColor(adapter))),
+    fetchProtocolsLite(adapterIds),
+    fetchProtocolsConfig(adapterIds),
   ])
 
-  const palettes = await fetchProtocolColorPalette(protocols)
+  const protocolBySlug = keyBy(protocols, 'slug')
+  const protocolDetailsBySlug = keyBy(protocolsDetails, 'slug')
 
-  const fullProtocolsData = []
+  return adapterIds
+    .map((id, idx) => {
+      const protocol = protocolBySlug[id]
+      const protocolDetails = protocolDetailsBySlug[id]
+      if (!protocol) {
+        console.log('Failed to fetch protocol info', id)
+        return null
+      }
 
-  for (let i = 0; i < protocols.length; i++) {
-    const extraData = protocolsDetails.find((protocol: { slug: string }) => protocol.slug === protocols[i].slug)
-    const palette = palettes.find((protocol: { slug: string }) => protocol.slug === protocols[i].slug)
-
-    fullProtocolsData.push({ ...protocols[i], ...extraData, palette: palette?.palette })
-  }
-
-  return fullProtocolsData
+      return { ...protocol, ...(protocolDetails || {}), color: colors[idx] }
+    })
+    .filter(isNotNullish)
 }
 
-async function fetchProtocolColorPalette(protocols: IProtocol[]): Promise<{ palette: number[][]; slug: string }[]> {
-  const palettes = await Promise.all(protocols.map((protocol) => getProtocolPalette(protocol)))
-
-  return palettes
-}
-
-async function getProtocolPalette(protocol: IProtocol): Promise<{ palette: number[][]; slug: string }> {
-  const palette = await getPaletteFromURL(protocol.logo, 10, 10)
-  return { palette, slug: protocol.slug }
-}
-
-async function fetchProtocolsConfig(adapters: string[]) {
+async function fetchProtocolsConfig(adapterIds: string[]) {
   const res = await fetch('https://api.llama.fi/config')
-
   const data = await res.json()
 
+  const _adapterIds = new Set(adapterIds)
+
   const filteredData = data.protocols
-    .filter((protocol: { name: string }) => adapters.includes(getProtocolSlug(protocol.name)))
+    .filter((protocol: { name: string }) => _adapterIds.has(getProtocolSlug(protocol.name)))
     .map((protocol: { symbol: string; twitter: string; description: string; address: string; name: string }) => ({
       symbol: protocol.symbol,
       twitter: protocol.twitter,
@@ -135,29 +131,23 @@ async function fetchProtocolsConfig(adapters: string[]) {
   return filteredData
 }
 
-async function fetchProtocolsLite(adapters: string[]) {
+export async function fetchProtocolsLite(adapterIds: string[]) {
   const res = await fetch('https://api.llama.fi/lite/protocols2')
-
   const data = await res.json()
 
-  const filteredData = {
-    parentProtocols: data.parentProtocols.filter((protocol: { name: string }) =>
-      adapters.includes(getProtocolSlug(protocol.name)),
-    ),
-    protocols: data.protocols.filter((protocol: { name: string }) => adapters.includes(getProtocolSlug(protocol.name))),
-  }
+  const _adapterIds = new Set(adapterIds)
 
   const protocols: IProtocol[] = []
 
   const parentProtocolById: { [key: string]: IParentProtocolLiteResponse } = {}
 
-  for (const parentProtocol of filteredData.parentProtocols) {
+  for (const parentProtocol of data.parentProtocols) {
     parentProtocolById[parentProtocol.id] = parentProtocol
   }
 
   const childrenByParentId: { [key: string]: IProtocolLiteResponse[] } = {}
 
-  for (const protocol of filteredData.protocols) {
+  for (const protocol of data.protocols) {
     if (protocol.parentProtocol) {
       if (!childrenByParentId[protocol.parentProtocol]) {
         childrenByParentId[protocol.parentProtocol] = []
@@ -196,7 +186,7 @@ async function fetchProtocolsLite(adapters: string[]) {
     }
   }
 
-  return protocols
+  return protocols.filter((protocol) => _adapterIds.has(protocol.slug))
 }
 
 export function getProtocolSlug(name: string) {
@@ -219,4 +209,23 @@ function getChainName(chains: string[]) {
   }
 
   return chains[0]
+}
+
+function defillamaProtocolPaletteUrl(name: string) {
+  const x = name ?? ''
+  return `${DEFILLAMA_ICONS_PALETTE_CDN}/protocols/${x.toLowerCase().split(' ').join('-').split("'").join('')}`
+}
+
+async function getColor(path: string) {
+  try {
+    const color = await fetch(path).then((res) => res.text())
+
+    return color
+  } catch (error) {
+    return undefined
+  }
+}
+
+export function getProtocolColor(name: string) {
+  return getColor(defillamaProtocolPaletteUrl(name))
 }

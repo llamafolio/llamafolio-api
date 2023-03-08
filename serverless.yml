@@ -204,6 +204,13 @@ functions:
     events:
       - schedule: rate(10 minutes)
 
+  scheduledUpdateProtocols:
+    handler: src/handlers/updateProtocols.scheduledUpdateProtocols
+    description: Scheduled update protocols
+    events:
+      # every new hour
+      - schedule: cron(0 * * * ? *)
+
   scheduledUpdateYields:
     handler: src/handlers/updateYields.scheduledUpdateYields
     description: Scheduled update yields

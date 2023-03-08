@@ -3,7 +3,7 @@ import {
   Adapter as DBAdapter,
   selectAdapter,
   selectAdaptersContractsExpired,
-  selectDistinctIdAdapters,
+  selectDistinctAdaptersIds,
   upsertAdapters,
 } from '@db/adapters'
 import { deleteContractsByAdapter, insertContracts } from '@db/contracts'
@@ -23,7 +23,7 @@ const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, conte
   try {
     const [expiredAdaptersRes, adapterIdsRes] = await Promise.all([
       selectAdaptersContractsExpired(client),
-      selectDistinctIdAdapters(client),
+      selectDistinctAdaptersIds(client),
     ])
 
     const adapterIds = new Set(adapterIdsRes.map((adapter) => adapter.id))
