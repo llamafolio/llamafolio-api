@@ -238,63 +238,22 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
   return poolContracts
 }
 
-export async function getGaugesContracts(ctx: BaseContext, gaugeController: Contract, pools: Contract[], CRV: Token) {
-  const gaugeContracts: Contract[] = []
-  const gauges: Contract[] = []
-
-  const gaugesCountRes = await call({
-    ctx,
-    target: gaugeController.address,
-    params: [],
-    abi: abiGauges.n_gauges,
-  })
-
-  const gaugesCounts = parseInt(gaugesCountRes.output)
-
-  // lists of gauges
-  const gaugesCalls: Call[] = range(0, gaugesCounts).map((i) => ({
-    target: gaugeController.address,
-    params: [i],
-  }))
-
-  const gaugesLists = await multicall({ ctx, calls: gaugesCalls, abi: abiGauges.gauges })
-
-  for (let gaugeIdx = 0; gaugeIdx < gaugesLists.length; gaugeIdx++) {
-    const gaugeList = gaugesLists[gaugeIdx]
-    if (!isSuccess(gaugeList)) {
-      continue
-    }
-
-    gauges.push({ chain: ctx.chain, address: gaugeList.output, gauge: gaugeList.output })
-  }
-
-  const poolsDetailsByGaugesAddresses: { [key: string]: Contract } = {}
-  for (const pool of pools) {
-    poolsDetailsByGaugesAddresses[pool.gauge.toLowerCase()] = pool
-  }
-
-  for (const gauge of gauges) {
-    const gaugeDetails = poolsDetailsByGaugesAddresses[gauge.address.toLowerCase()]
-    if (gaugeDetails != undefined) {
-      gaugeContracts.push({
-        ...gaugeDetails,
-        address: gauge.address,
-      })
-    }
-  }
+export async function getGaugesContracts(ctx: BaseContext, pools: Contract[], CRV: Token) {
+  const gauges: Contract[] = pools
+    .filter((pool) => pool.gauge !== ethers.constants.AddressZero)
+    .map((pool) => ({ ...pool, address: pool.gauge }))
 
   const gaugesRewardsCalls: Call[] = []
-
-  for (let gaugeIdx = 0; gaugeIdx < gaugeContracts.length; gaugeIdx++) {
+  for (let gaugeIdx = 0; gaugeIdx < gauges.length; gaugeIdx++) {
     for (let rewardIdx = 0; rewardIdx < 4; rewardIdx++) {
-      gaugesRewardsCalls.push({ target: gaugeContracts[gaugeIdx].gauge, params: [rewardIdx] })
+      gaugesRewardsCalls.push({ target: gauges[gaugeIdx].gauge, params: [rewardIdx] })
     }
   }
 
   const rewardTokensRes = await multicall({ ctx, calls: gaugesRewardsCalls, abi: abiGauges.reward_tokens })
 
   let callIdx = 0
-  for (let gaugeIdx = 0; gaugeIdx < gaugeContracts.length; gaugeIdx++) {
+  for (let gaugeIdx = 0; gaugeIdx < gauges.length; gaugeIdx++) {
     const rewards = [CRV]
 
     for (let rewardIdx = 0; rewardIdx < 4; rewardIdx++) {
@@ -304,8 +263,9 @@ export async function getGaugesContracts(ctx: BaseContext, gaugeController: Cont
       }
       callIdx++
     }
-    gaugeContracts[gaugeIdx].rewards = rewards
+
+    gauges[gaugeIdx].rewards = rewards
   }
 
-  return gaugeContracts
+  return gauges
 }
