@@ -1,5 +1,4 @@
-import { getPoolsBalances } from '@adapters/curve/common/balance'
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
@@ -77,13 +76,9 @@ export const getContracts = async (ctx: BaseContext) => {
   }
 }
 
-const getConvexPsBalances = async (ctx: BalancesContext, pools: Contract[], registry: Contract) => {
-  return Promise.all([getPoolsBalances(ctx, pools, registry), getConvexGaugesBalances(ctx, pools, registry)])
-}
-
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getConvexPsBalances(...args, metaRegistry),
+    pools: (...args) => getConvexGaugesBalances(...args, metaRegistry),
     cvxRewardPool: getCVXStakeBalance,
     cvxCRVStaker: getCvxCrvStakeBalance,
     locker: getLockerBalances,
