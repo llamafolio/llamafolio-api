@@ -72,8 +72,6 @@ export async function getLeverageFarming(ctx: BalancesContext, pools: Contract[]
     }),
   ])
 
-  const creditAccounts = creditAccountsRes.filter(isSuccess).map((res) => res.output)
-
   const [creditAccountAccruedInterestsRes, creditFacadeTotalValuesRes] = await Promise.all([
     multicall({
       ctx,
@@ -85,7 +83,9 @@ export async function getLeverageFarming(ctx: BalancesContext, pools: Contract[]
     multicall({
       ctx,
       calls: creditFacadesRes.map((creditFacade, idx) =>
-        isSuccess(creditFacade) ? { target: creditFacade.output, params: [creditAccounts[idx]] } : null,
+        isSuccess(creditFacade) && isSuccess(creditAccountsRes[idx])
+          ? { target: creditFacade.output, params: [creditAccountsRes[idx].output] }
+          : null,
       ),
       abi: abi.calcTotalValue,
     }),
