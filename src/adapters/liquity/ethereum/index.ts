@@ -2,7 +2,7 @@ import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getFarmBalance } from './farm'
-import { getLendBalances } from './lend'
+import { getHealthFactor, getLendBalances } from './lend'
 import { getStakeBalances } from './stake'
 
 const stabilityPool: Contract = {
@@ -63,7 +63,10 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     lqtyStaking: getStakeBalances,
   })
 
+  const healthFactor = await getHealthFactor(ctx, balances)
+
   return {
     balances,
+    healthFactor,
   }
 }
