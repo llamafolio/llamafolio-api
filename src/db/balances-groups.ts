@@ -153,7 +153,7 @@ export async function selectRowsLatestBalancesGroupsWithBalancesByFromAddress(cl
     [strToBuf(fromAddress)],
   )
 
-  return balancesRes.rows.map((balance) => ({ ...fromRowStorage(balance), ...fromBalanceRowStorage(balance) }))
+  return balancesRes.rows.map((balance) => ({ ...fromBalanceRowStorage(balance), ...fromRowStorage(balance) }))
 }
 
 export async function selectLatestBalancesGroupsWithBalancesByFromAddress(client: PoolClient, fromAddress: string) {
