@@ -107,7 +107,9 @@ export async function getPoolsBalances(ctx: BalancesContext, pools: PoolContract
 
     const balance: Balance = {
       ...pools[poolIdx],
+      underlyings: pools[poolIdx].underlyings as Contract[],
       amount: BigNumber.from(balanceOfRes.output),
+      rewards: undefined,
       category: 'lp',
     }
 
