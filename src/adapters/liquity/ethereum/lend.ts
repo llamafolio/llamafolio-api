@@ -90,8 +90,7 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
   return balances
 }
 
-export const getHealthFactor = async (ctx: BalancesContext, balances: Balance[]): Promise<number[] | undefined> => {
-  const healthFactor: number[] = []
+export const getHealthFactor = async (ctx: BalancesContext, balances: Balance[]): Promise<number | undefined> => {
   const priceFeedRes = await call({ ctx, target: priceFeed.address, abi: abi.Price })
 
   const lendAmounts = balances
@@ -102,16 +101,7 @@ export const getHealthFactor = async (ctx: BalancesContext, balances: Balance[])
     .filter((balance) => balance.category === 'borrow')
     .map((balance) => balance.amount.mul(MCR).div(utils.parseEther('1.0')))
 
-  for (let idx = 0; idx < lendAmounts.length; idx++) {
-    const lendAmount = lendAmounts[idx]
-    const borrowAmount = borrowAmounts[idx]
-
-    if (!borrowAmount) {
-      return
-    }
-
-    healthFactor.push(+lendAmount.mul(1e3).div(borrowAmount) / 1e3)
-  }
+  const healthFactor = Number(lendAmounts[0].mul(1e3).div(borrowAmounts[0])) / 1e3
 
   return healthFactor
 }
