@@ -1,20 +1,20 @@
 import { adapterById } from '@adapters/index'
 import { selectDefinedAdaptersContractsProps } from '@db/adapters'
-import { insertBalances } from '@db/balances'
-import { BalancesSnapshot, insertBalancesSnapshots } from '@db/balances-snapshots'
+import { Balance as BalanceStore, insertBalances } from '@db/balances'
+import { BalancesGroup, insertBalancesGroups } from '@db/balances-groups'
 import { getAllContractsInteractions, groupContracts } from '@db/contracts'
 import { getAllTokensInteractions } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, BalancesConfig, BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy, groupBy2, keyBy2 } from '@lib/array'
-import { sanitizeBalances, sumBalances } from '@lib/balance'
-import { isHex, strToBuf } from '@lib/buf'
+import { balancesTotalBreakdown, sanitizeBalances } from '@lib/balance'
+import { isHex } from '@lib/buf'
 import { Chain } from '@lib/chains'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
-import format from 'pg-format'
+import { v4 as uuidv4 } from 'uuid'
 
 type ExtendedBalance =
   | (Balance & {
@@ -152,47 +152,52 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const now = new Date()
 
-    const balancesSnapshots = adaptersBalancesConfigs
-      .map((balanceConfig) => {
-        const pricedBalances = pricedBalancesByAdapterId[balanceConfig.adapterId]
-        if (!pricedBalances) {
-          return null
-        }
+    const balancesGroupsStore: BalancesGroup[] = []
+    const balancesStore: BalanceStore[] = []
 
-        const balancesSnapshot: BalancesSnapshot = {
+    for (const balanceConfig of adaptersBalancesConfigs) {
+      const pricedBalances = pricedBalancesByAdapterId[balanceConfig.adapterId]
+      if (!pricedBalances) {
+        continue
+      }
+
+      const balances = pricedBalances.filter(
+        (balance) => isNotNullish(balance) && balance.chain === balanceConfig.chain,
+      )
+
+      // TODO: add full support for groups of balances
+      const balancesByCategory = groupBy(balances, 'category')
+
+      for (const category in balancesByCategory) {
+        const id = uuidv4()
+
+        const balancesGroup: BalancesGroup = {
+          id,
           fromAddress: address,
           adapterId: balanceConfig.adapterId,
           chain: balanceConfig.chain,
-          balanceUSD: sumBalances(
-            pricedBalances.filter((balance) => isNotNullish(balance) && balance.chain === balanceConfig.chain),
-          ),
+          category,
+          ...balancesTotalBreakdown(balancesByCategory[category]),
           timestamp: now,
           healthFactor: balanceConfig.healthFactor,
         }
 
-        return balancesSnapshot
-      })
-      .filter(isNotNullish)
+        for (const balance of balancesByCategory[category]) {
+          balancesStore.push({ groupId: id, ...balance })
+        }
+
+        balancesGroupsStore.push(balancesGroup)
+      }
+    }
 
     // Update balances
     await client.query('BEGIN')
 
-    // Insert balances snapshots
-    await insertBalancesSnapshots(client, balancesSnapshots, address)
+    // Insert balances groups
+    await insertBalancesGroups(client, balancesGroupsStore)
 
-    // Delete old balances
-    await client.query(format('delete from balances where from_address = %L::bytea', strToBuf(address)), [])
-
-    // Insert new balances
-    await insertBalances(
-      client,
-      Object.keys(pricedBalancesByAdapterId).map((adapterId) => ({
-        balances: pricedBalancesByAdapterId[adapterId] as PricedBalance[],
-        adapterId,
-        fromAddress: address,
-        timestamp: now,
-      })),
-    )
+    // Insert balances
+    await insertBalances(client, balancesStore)
 
     await client.query('COMMIT')
 

@@ -260,6 +260,44 @@ export function sumBalances(balances: SumBalance[]) {
   return res
 }
 
+export interface BalancesTotalBreakdown {
+  balanceUSD: number
+  debtUSD: number
+  rewardUSD: number
+}
+
+/**
+ * Get debt, claimable and total of given balances
+ */
+export function balancesTotalBreakdown(balances: PricedBalance[]): BalancesTotalBreakdown {
+  let balanceUSD = 0
+  let debtUSD = 0
+  let rewardUSD = 0
+
+  for (const balance of balances) {
+    if (balance.category === 'borrow') {
+      debtUSD += balance.balanceUSD || 0
+    } else if (balance.category === 'reward') {
+      rewardUSD += balance.claimableUSD || balance.balanceUSD || 0
+    } else {
+      balanceUSD += balance.balanceUSD || 0
+    }
+
+    // nested rewards
+    if (balance.rewards) {
+      for (const reward of balance.rewards) {
+        rewardUSD += reward.claimableUSD || reward.balanceUSD || 0
+      }
+    }
+  }
+
+  return {
+    balanceUSD,
+    debtUSD,
+    rewardUSD,
+  }
+}
+
 /**
  * At the moment, balances are considered "stale" if they haven't been updated in the last x minutes.
  * Later, we can use more advanced strategies using transactions events, scheduled updates etc
