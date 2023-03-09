@@ -89,7 +89,7 @@ export interface Lock {
 export interface BalancesConfig {
   balances: Balance[]
   // Metadata
-  healthFactor?: number | number[]
+  healthFactor?: number
 }
 
 export interface ContractsMap {

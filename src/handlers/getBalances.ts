@@ -1,11 +1,10 @@
-import { selectBalancesByFromAddress } from '@db/balances'
-import { selectLastBalancesSnapshotsByFromAddress } from '@db/balances-snapshots'
+import { selectRowsLatestBalancesGroupsWithBalancesByFromAddress } from '@db/balances-groups'
 import pool from '@db/pool'
 import { client as redisClient } from '@db/redis'
 import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, ContractStandard, Lock } from '@lib/adapter'
-import { groupBy } from '@lib/array'
+import { groupBy2 } from '@lib/array'
 import { areBalancesStale, isBalanceUSDGtZero } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
@@ -171,41 +170,35 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const client = await pool.connect()
 
   try {
-    const [pricedBalances, lastBalancesSnapshots] = await Promise.all([
-      selectBalancesByFromAddress(client, address),
-      selectLastBalancesSnapshotsByFromAddress(client, address),
-    ])
+    const protocols: BalancesProtocolResponse[] = []
+
+    const pricedBalances = await selectRowsLatestBalancesGroupsWithBalancesByFromAddress(client, address)
 
     const nonZeroPricedBalances = pricedBalances.filter(isBalanceUSDGtZero)
 
     const pricedBalancesWithYields = await getBalancesYields(redisClient, nonZeroPricedBalances)
 
-    const protocols: BalancesProtocolResponse[] = []
-    const balancesByAdapterId = groupBy(pricedBalancesWithYields, 'adapterId')
-    const balancesSnapshotsByAdapterId = groupBy(lastBalancesSnapshots, 'adapterId')
+    const balancesGroupsByAdapterIdChain = groupBy2(pricedBalancesWithYields, 'adapterId', 'chain')
 
-    for (const adapterId in balancesByAdapterId) {
-      const balancesByChain = groupBy(balancesByAdapterId[adapterId], 'chain')
-      const balancesSnapshotsByChain = groupBy(balancesSnapshotsByAdapterId[adapterId] || [], 'chain')
+    for (const adapterId in balancesGroupsByAdapterIdChain) {
+      const protocol: BalancesProtocolResponse = { id: adapterId, chains: [] }
 
-      const chains: BalancesProtocolChainResponse[] = []
+      for (const chainId in balancesGroupsByAdapterIdChain[adapterId]) {
+        // TODO: full support for groups of balances
+        const group = balancesGroupsByAdapterIdChain[adapterId][chainId][0]
+        const chain: BalancesProtocolChainResponse = {
+          id: chainId as Chain,
+          balances: balancesGroupsByAdapterIdChain[adapterId][chainId].map(formatBalance),
+          healthFactor: group.healthFactor || undefined,
+        }
 
-      for (const chain in balancesByChain) {
-        const balanceSnapshot = balancesSnapshotsByChain[chain]?.[0]
-
-        chains.push({
-          id: chain as Chain,
-          balances: balancesByChain[chain].map(formatBalance),
-          healthFactor: balanceSnapshot?.healthFactor,
-        })
+        protocol.chains.push(chain)
       }
 
-      protocols.push({ id: adapterId, chains })
+      protocols.push(protocol)
     }
 
-    const updatedAt = lastBalancesSnapshots[0]?.timestamp
-      ? new Date(lastBalancesSnapshots[0]?.timestamp).getTime()
-      : undefined
+    const updatedAt = pricedBalances[0]?.timestamp ? new Date(pricedBalances[0]?.timestamp).getTime() : undefined
 
     let status: TStatus = 'success'
     if (updatedAt === undefined) {
