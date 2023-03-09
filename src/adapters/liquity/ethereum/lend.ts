@@ -1,6 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 
 const abi = {
   Troves: {
@@ -42,7 +42,20 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  Price: {
+    inputs: [],
+    name: 'lastGoodPrice',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
+
+const priceFeed: Contract = {
+  chain: 'ethereum',
+  address: '0x4c517D4e2C851CA76d7eC94B805269Df0f2201De',
+}
+const MCR = utils.parseEther('1.1')
 
 export async function getLendBalances(ctx: BalancesContext, troveManager: Contract) {
   const balances: Balance[] = []
@@ -75,4 +88,30 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
   })
 
   return balances
+}
+
+export const getHealthFactor = async (ctx: BalancesContext, balances: Balance[]): Promise<number[] | undefined> => {
+  const healthFactor: number[] = []
+  const priceFeedRes = await call({ ctx, target: priceFeed.address, abi: abi.Price })
+
+  const lendAmounts = balances
+    .filter((balance) => balance.category === 'lend')
+    .map((balance) => balance.amount.mul(priceFeedRes.output).div(utils.parseEther('1.0')))
+
+  const borrowAmounts = balances
+    .filter((balance) => balance.category === 'borrow')
+    .map((balance) => balance.amount.mul(MCR).div(utils.parseEther('1.0')))
+
+  for (let idx = 0; idx < lendAmounts.length; idx++) {
+    const lendAmount = lendAmounts[idx]
+    const borrowAmount = borrowAmounts[idx]
+
+    if (!borrowAmount) {
+      return
+    }
+
+    healthFactor.push(+lendAmount.mul(1e3).div(borrowAmount) / 1e3)
+  }
+
+  return healthFactor
 }

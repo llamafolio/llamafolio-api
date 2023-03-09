@@ -63,7 +63,10 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     lqtyStaking: getStakeBalances,
   })
 
+  // const healthFactor = await getHealthFactor(ctx, balances)
+
   return {
     balances,
+    // healthFactor,
   }
 }
