@@ -1,5 +1,5 @@
 import { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccess, mapSuccessOr } from '@lib/array'
+import { mapSuccess, mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -35,11 +35,11 @@ export async function getPoolsContract(ctx: BaseContext, pools: string[]): Promi
 
   const underlyingsTokens = await multicall({
     ctx,
-    calls: mapSuccessOr(cTokensRes, (res) => ({ target: res.output })),
+    calls: mapSuccess(cTokensRes, (res) => ({ target: res.output })),
     abi: abi.underlying,
   })
 
-  return mapSuccess(underlyingsTokens, (underlyingRes, poolIdx) => ({
+  return mapSuccessFilter(underlyingsTokens, (underlyingRes, poolIdx) => ({
     chain: ctx.chain,
     address: pools[poolIdx],
     cToken: underlyingRes.input.target,

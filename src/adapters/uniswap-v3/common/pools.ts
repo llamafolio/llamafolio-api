@@ -1,10 +1,10 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { keyBy, range } from '@lib/array'
+import { keyBy, mapSuccess, mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
 import { Category } from '@lib/category'
 import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 import JSBI from 'jsbi'
 
@@ -118,7 +118,7 @@ export async function getPoolsBalances(ctx: BalancesContext, nonFungiblePosition
     abi: abi.tokenOfOwnerByIndex,
   })
 
-  const tokenIds = tokensOfOwnerByIndexRes.filter(isSuccess).map((res) => res.output)
+  const tokenIds = mapSuccessFilter(tokensOfOwnerByIndexRes, (res) => res.output)
 
   return getTokenIdsBalances(ctx, nonFungiblePositionManager, factory, tokenIds)
 }
@@ -142,14 +142,10 @@ export async function getTokenIdsBalances(
   // pools
   const poolsRes = await multicall({
     ctx,
-    calls: positionsRes.map((positionRes) =>
-      positionRes.success
-        ? {
-            target: factory.address,
-            params: [positionRes.output.token0, positionRes.output.token1, positionRes.output.fee],
-          }
-        : null,
-    ),
+    calls: mapSuccess(positionsRes, (positionRes) => ({
+      target: factory.address,
+      params: [positionRes.output.token0, positionRes.output.token1, positionRes.output.fee],
+    })),
     abi: abi.getPools,
   })
 
@@ -157,45 +153,37 @@ export async function getTokenIdsBalances(
     await Promise.all([
       multicall({
         ctx,
-        calls: poolsRes.map((poolRes) => (poolRes.success ? { target: poolRes.output } : null)),
+        calls: mapSuccess(poolsRes, (poolRes) => ({ target: poolRes.output })),
         abi: abi.slot0,
       }),
 
       multicall({
         ctx,
-        calls: poolsRes.map((poolRes, idx) =>
-          poolRes.success
-            ? {
-                target: poolRes.output,
-                params: [positionsRes[idx].output.tickLower],
-              }
-            : null,
-        ),
+        calls: mapSuccess(poolsRes, (poolRes, idx) => ({
+          target: poolRes.output,
+          params: [positionsRes[idx].output.tickLower],
+        })),
         abi: abi.ticks,
       }),
 
       multicall({
         ctx,
-        calls: poolsRes.map((poolRes, idx) =>
-          poolRes.success
-            ? {
-                target: poolRes.output,
-                params: [positionsRes[idx].output.tickUpper],
-              }
-            : null,
-        ),
+        calls: mapSuccess(poolsRes, (poolRes, idx) => ({
+          target: poolRes.output,
+          params: [positionsRes[idx].output.tickUpper],
+        })),
         abi: abi.ticks,
       }),
 
       multicall({
         ctx,
-        calls: poolsRes.map((poolRes) => (poolRes.success ? { target: poolRes.output } : null)),
+        calls: mapSuccess(poolsRes, (poolRes) => ({ target: poolRes.output })),
         abi: abi.feeGrowthGlobal0X128,
       }),
 
       multicall({
         ctx,
-        calls: poolsRes.map((poolRes) => (poolRes.success ? { target: poolRes.output } : null)),
+        calls: mapSuccess(poolsRes, (poolRes) => ({ target: poolRes.output })),
         abi: abi.feeGrowthGlobal1X128,
       }),
     ])

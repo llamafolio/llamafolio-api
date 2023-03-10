@@ -113,10 +113,23 @@ export function groupBy2<T extends Record<string, any>>(
   return groups
 }
 
-export function mapSuccessOr<T>(results: MultiCallResult[], mapFn: (res: MultiCallResult, index: number) => T | null) {
+/**
+ * Map successful Multicall results array and include errors in return
+ * @param results
+ * @param mapFn
+ */
+export function mapSuccess<T>(results: MultiCallResult[], mapFn: (res: MultiCallResult, index: number) => T | null) {
   return results.map((res, index) => (isSuccess(res) ? mapFn(res, index) : null))
 }
 
-export function mapSuccess<T>(results: MultiCallResult[], mapFn: (res: MultiCallResult, index: number) => T | null) {
-  return mapSuccessOr(results, mapFn).filter(isNotNullish)
+/**
+ * Map successful Multicall results array and filter errors in return
+ * @param results
+ * @param mapFn
+ */
+export function mapSuccessFilter<T>(
+  results: MultiCallResult[],
+  mapFn: (res: MultiCallResult, index: number) => T | null,
+) {
+  return mapSuccess(results, mapFn).filter(isNotNullish)
 }
