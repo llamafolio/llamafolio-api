@@ -107,8 +107,10 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], c
     }
   })
 
-  const sushiBalances = await getUnderlyingBalances(ctx, sushiPools)
-  const curveBalances = await getUnderlyingsPoolsBalances(ctx, curvePools, metaRegistry, true)
+  const [sushiBalances, curveBalances] = await Promise.all([
+    getUnderlyingBalances(ctx, sushiPools),
+    getUnderlyingsPoolsBalances(ctx, curvePools, metaRegistry, true),
+  ])
 
   return [...sushiBalances, ...curveBalances]
 }
