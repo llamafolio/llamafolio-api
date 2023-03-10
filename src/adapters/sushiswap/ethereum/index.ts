@@ -6,12 +6,20 @@ import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 import { getMeowshiYieldBalance, getXSushiStakeBalance } from '../common/balances'
+import { getBalancesFromMasterchefV2 } from './balance'
 
 const masterChef: Contract = {
   name: 'masterChef',
   displayName: 'MasterChef',
   chain: 'ethereum',
   address: '0xc2edad668740f1aa35e4d8f227fb8e17dca888cd',
+}
+
+const masterChef2: Contract = {
+  name: 'masterChef v2',
+  displayName: 'MasterChef v2',
+  chain: 'ethereum',
+  address: '0xef0881ec094552b2e128cf945ef17a6752b4ec5d',
 }
 
 const sushi: Token = {
@@ -37,7 +45,7 @@ const meowshi: Contract = {
 
 export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
-  const limit = 100
+  const limit = 1000
 
   const { pairs, allPairsLength } = await getPairsContracts({
     ctx,
@@ -64,6 +72,7 @@ function getSushiswapPairsBalances(
   ctx: BalancesContext,
   pairs: Pair[],
   masterchef: Contract,
+  masterchef2: Contract,
   rewardToken: Token,
   rewardTokenName?: string,
   lpTokenAbi?: boolean,
@@ -71,12 +80,13 @@ function getSushiswapPairsBalances(
   return Promise.all([
     getPairsBalances(ctx, pairs),
     getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
+    getBalancesFromMasterchefV2(ctx, pairs, masterchef2, sushi),
   ])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getSushiswapPairsBalances(...args, masterChef, sushi, 'Sushi'),
+    pairs: (...args) => getSushiswapPairsBalances(...args, masterChef, masterChef2, sushi, 'Sushi'),
     xSushi: getXSushiStakeBalance,
     meowshi: getMeowshiYieldBalance,
   })
