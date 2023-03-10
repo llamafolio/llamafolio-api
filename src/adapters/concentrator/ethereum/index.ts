@@ -146,5 +146,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     veCTR: getLockerBalances,
   })
 
-  return { balances }
+  return {
+    groups: [{ balances }],
+  }
 }

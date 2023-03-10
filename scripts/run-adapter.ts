@@ -61,7 +61,8 @@ async function main() {
     ])
 
     const balancesRes = await adapter[chain]?.getBalances(ctx, contracts, props)
-    const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])
+    // TODO: add full support for groups of balances
+    const sanitizedBalances = sanitizeBalances(balancesRes?.groups?.[0]?.balances || [])
 
     const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
     const yieldsData = (await yieldsRes.json()).data
