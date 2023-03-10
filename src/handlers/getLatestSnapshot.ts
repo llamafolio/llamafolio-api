@@ -1,4 +1,4 @@
-import { selectLastBalancesSnapshotsByFromAddress } from '@db/balances-snapshots'
+import { selectLastBalancesGroupsByFromAddress } from '@db/balances-groups'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { groupBy } from '@lib/array'
@@ -33,9 +33,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const client = await pool.connect()
 
   try {
-    const lastBalancesSnapshots = await selectLastBalancesSnapshotsByFromAddress(client, address)
+    const lastBalancesGroups = await selectLastBalancesGroupsByFromAddress(client, address)
 
-    if (lastBalancesSnapshots.length === 0) {
+    if (lastBalancesGroups.length === 0) {
       const response: LatestSnapshotResponse = {
         balanceUSD: 0,
         chains: [],
@@ -44,15 +44,15 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       return success(response, { maxAge: 2 * 60 })
     }
 
-    const timestamp = lastBalancesSnapshots[0].timestamp
+    const timestamp = lastBalancesGroups[0].timestamp
 
-    const lastBalancesSnapshotsByChain = groupBy(lastBalancesSnapshots, 'chain')
+    const lastBalancesGroupsByChain = groupBy(lastBalancesGroups, 'chain')
 
     const response: LatestSnapshotResponse = {
-      balanceUSD: sumBalances(lastBalancesSnapshots),
-      chains: Object.keys(lastBalancesSnapshotsByChain).map((chain) => ({
+      balanceUSD: sumBalances(lastBalancesGroups),
+      chains: Object.keys(lastBalancesGroupsByChain).map((chain) => ({
         id: chain as Chain,
-        balanceUSD: sumBalances(lastBalancesSnapshotsByChain[chain]),
+        balanceUSD: sumBalances(lastBalancesGroupsByChain[chain]),
       })),
       updatedAt: Math.floor(new Date(timestamp).getTime() / 1000),
     }

@@ -86,10 +86,14 @@ export interface Lock {
   end?: number
 }
 
-export interface BalancesConfig {
+export interface BalancesGroup {
   balances: Balance[]
   // Metadata
-  healthFactor?: number | number[]
+  healthFactor?: number
+}
+
+export interface BalancesConfig {
+  groups: BalancesGroup[]
 }
 
 export interface ContractsMap {

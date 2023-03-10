@@ -1,87 +1,75 @@
-import { ContractStorage } from '@db/contracts'
-import { PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
 import { bufToStr, strToBuf } from '@lib/buf'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
-// balances table is a duplicate of contracts (not normalized)
-// because references might be stale as we don't update balances when revalidating contracts
-export interface BalanceStorage extends ContractStorage {
-  from_address: Buffer
+export interface Balance {
+  groupId: string
   amount: string
   price?: string
-  balance_usd?: string
-  timestamp: string
+  balanceUSD: string
+  address: string
+  data?: any
+}
+
+export interface BalanceStorage {
+  group_id: string
+  amount: string
+  price?: string
+  balance_usd: string
+  address: Buffer
+  data?: any
+}
+
+export interface BalanceStorable {
+  group_id: string
+  amount: string
+  price?: string
+  balance_usd: string
+  address: Buffer
+  data?: any
+}
+
+export function fromRowStorage(balanceStorage: BalanceStorage) {
+  const balance: Balance = {
+    ...balanceStorage.data,
+    address: bufToStr(balanceStorage.address),
+    price: balanceStorage.price ? parseFloat(balanceStorage.price) : undefined,
+    amount: balanceStorage.amount,
+    balanceUSD: balanceStorage.balance_usd ? parseFloat(balanceStorage.balance_usd) : undefined,
+  }
+
+  return balance
 }
 
 export function fromStorage(balancesStorage: BalanceStorage[]) {
-  const balances: (PricedBalance & { adapterId: string })[] = []
-
-  for (const balanceStorage of balancesStorage) {
-    const balance = {
-      ...balanceStorage.data,
-      standard: balanceStorage.standard,
-      name: balanceStorage.name,
-      chain: balanceStorage.chain,
-      address: bufToStr(balanceStorage.address),
-      category: balanceStorage.category,
-      adapterId: balanceStorage.adapter_id,
-      price: balanceStorage.price ? parseFloat(balanceStorage.price) : undefined,
-      amount: balanceStorage.amount,
-      balanceUSD: balanceStorage.balance_usd ? parseFloat(balanceStorage.balance_usd) : undefined,
-      timestamp: balanceStorage.timestamp,
-    }
-
-    balances.push(balance)
-  }
-
-  return balances
+  return balancesStorage.map(fromRowStorage)
 }
 
-export function toRow(balance: BalanceStorage) {
-  return [
-    balance.from_address,
-    balance.standard,
-    balance.category,
-    balance.name,
-    balance.chain,
-    balance.address,
-    balance.adapter_id,
-    balance.price,
-    balance.amount,
-    balance.balance_usd,
-    balance.timestamp,
-    balance.data,
-  ]
+export function toRow(balance: BalanceStorable) {
+  return [balance.group_id, balance.amount, balance.price, balance.balance_usd, balance.address, balance.data]
 }
 
-export function toStorage(balances: PricedBalance[], adapterId: string, fromAddress: string, timestamp: Date) {
-  const balancesStorage: BalanceStorage[] = []
+export function toStorage(balances: Balance[]) {
+  const balancesStorable: BalanceStorable[] = []
 
   for (const balance of balances) {
-    const { standard, name, chain, address, category, price, amount, balanceUSD, ...data } = balance
+    const { groupId, address, price, amount, balanceUSD, ...data } = balance
 
-    const balanceStorage = {
-      from_address: strToBuf(fromAddress),
-      standard,
-      name,
-      chain,
-      address: strToBuf(address),
-      category,
-      adapter_id: adapterId,
-      price,
+    const balanceStorable: BalanceStorable = {
+      group_id: groupId,
       amount: amount.toString(),
+      price,
       balance_usd: balanceUSD,
-      timestamp,
+      address: strToBuf(address),
       // \\u0000 cannot be converted to text
       data: JSON.parse(JSON.stringify(data).replace(/\\u0000/g, '')),
     }
 
-    balancesStorage.push(balanceStorage)
+    balancesStorable.push(balanceStorable)
   }
 
-  return balancesStorage
+  return balancesStorable
 }
 
 export async function selectBalancesByFromAddress(client: PoolClient, fromAddress: string) {
@@ -92,24 +80,12 @@ export async function selectBalancesByFromAddress(client: PoolClient, fromAddres
   return fromStorage(balancesRes.rows)
 }
 
-interface BalancesStorable<B extends PricedBalance> {
-  balances: B[]
-  adapterId: string
-  fromAddress: string
-  timestamp: Date
+export function deleteBalancesByFromAddress(client: PoolClient, fromAddress: string) {
+  return client.query(format('delete from balances where from_address = %L::bytea', [strToBuf(fromAddress)]), [])
 }
 
-export function insertBalances<B extends PricedBalance>(client: PoolClient, balancesStorables: BalancesStorable<B>[]) {
-  const values = []
-
-  for (const balancesStorable of balancesStorables) {
-    const { balances, adapterId, fromAddress, timestamp } = balancesStorable
-    const storageBalances = toStorage(balances, adapterId, fromAddress, timestamp)
-
-    for (const balance of storageBalances) {
-      values.push(toRow(balance))
-    }
-  }
+export function insertBalances(client: PoolClient, balances: Balance[]) {
+  const values = toStorage(balances).map(toRow)
 
   if (values.length === 0) {
     return
@@ -119,7 +95,7 @@ export function insertBalances<B extends PricedBalance>(client: PoolClient, bala
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          'INSERT INTO balances (from_address, standard, category, name, chain, address, adapter_id, price, amount, balance_usd, timestamp, data) VALUES %L ON CONFLICT DO NOTHING;',
+          'INSERT INTO balances (group_id, amount, price, balance_usd, address, data) VALUES %L ON CONFLICT DO NOTHING;',
           chunk,
         ),
         [],

@@ -65,7 +65,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
 
   return {
-    balances,
-    healthFactor,
+    groups: [{ balances, healthFactor }],
   }
 }
