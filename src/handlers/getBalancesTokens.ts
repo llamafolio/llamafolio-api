@@ -65,7 +65,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const chains = Object.keys(tokensByChain)
 
-    const chainsBalancesConfig = await Promise.all(
+    const chainsBalances = await Promise.all(
       chains
         .filter((chain) => walletAdapter[chain as Chain])
         .map(async (chain) => {
@@ -85,12 +85,12 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
             const hrend = process.hrtime(hrstart)
 
             console.log(
-              `[${walletAdapter.id}][${chain}] found ${balancesConfig.balances.length} balances in %ds %dms`,
+              `[${walletAdapter.id}][${chain}] found ${balancesConfig.groups[0].balances.length} balances in %ds %dms`,
               hrend[0],
               hrend[1] / 1000000,
             )
 
-            return balancesConfig
+            return balancesConfig.groups[0].balances
           } catch (error) {
             console.error(`[${walletAdapter.id}][${chain}]: Failed to getBalances`, error)
             return
@@ -98,10 +98,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         }),
     )
 
-    const walletBalancesConfigs = chainsBalancesConfig.filter(isNotNullish)
+    const walletBalances = chainsBalances.filter(isNotNullish)
 
     // Ungroup balances to make only 1 call to the price API
-    const balances = walletBalancesConfigs.flatMap((balanceConfig) => balanceConfig?.balances).filter(isNotNullish)
+    const balances = walletBalances.flat().filter(isNotNullish)
 
     const sanitizedBalances = sanitizeBalances(balances)
 

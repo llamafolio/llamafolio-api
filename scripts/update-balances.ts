@@ -98,15 +98,16 @@ async function main() {
           const hrend = process.hrtime(hrstart)
 
           console.log(
-            `[${adapterId}][${chain}] getBalances ${contractsByAdapterIdChain[adapterId][chain].length} contracts, found ${balancesConfig.balances.length} balances in %ds %dms`,
+            `[${adapterId}][${chain}] getBalances ${contractsByAdapterIdChain[adapterId][chain].length} contracts, found ${balancesConfig.groups[0].balances.length} balances in %ds %dms`,
             hrend[0],
             hrend[1] / 1000000,
           )
 
+          // TODO: add full support for groups of balances
           const extendedBalancesConfig: ExtendedBalancesConfig = {
             ...balancesConfig,
             // Tag balances with adapterId
-            balances: balancesConfig.balances.map((balance) => ({ ...balance, adapterId })),
+            balances: balancesConfig.groups[0].balances.map((balance) => ({ ...balance, adapterId })),
             adapterId,
             chain,
           }

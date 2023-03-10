@@ -13,6 +13,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx) 
   const streams = await getPayeeStreams(ctx)
 
   return {
-    balances: streams,
+    groups: [{ balances: streams }],
   }
 }

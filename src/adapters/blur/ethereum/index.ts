@@ -29,6 +29,10 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   })
 
   return {
-    balances: balances.map((balance) => ({ ...balance, symbol: weth.symbol, category: 'stake' })),
+    groups: [
+      {
+        balances: balances.map((balance) => ({ ...balance, symbol: weth.symbol, category: 'stake' })),
+      },
+    ],
   }
 }

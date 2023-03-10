@@ -58,7 +58,8 @@ async function main() {
       groupContracts(contracts) || [],
       adapterProps?.contractsProps || {},
     )
-    const sanitizedBalances = sanitizeBalances(balancesRes?.balances || [])
+    // TODO: add full support for groups of balances
+    const sanitizedBalances = sanitizeBalances(balancesRes?.groups?.[0]?.balances || [])
 
     const pricedBalances = await getPricedBalances(sanitizedBalances)
 
