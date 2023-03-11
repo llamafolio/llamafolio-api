@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS balances_groups (
     from_address bytea not null,
     adapter_id varchar not null,
     chain varchar not null,
-    category varchar not null,
     balance_usd numeric not null,
     debt_usd numeric,
     reward_usd numeric,
@@ -32,6 +31,7 @@ CREATE TABLE IF NOT EXISTS balances (
     balance_usd numeric,
     address bytea,
     data jsonb,
+    category varchar not null,
     unique (group_id, address)
 );
 
