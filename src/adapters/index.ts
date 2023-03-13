@@ -57,6 +57,7 @@ import makerdao from '@adapters/makerdao'
 import maple from '@adapters/maple'
 import mdex from '@adapters/mdex'
 import meritCircle from '@adapters/merit-circle'
+import metronome from '@adapters/metronome'
 import morphoAave from '@adapters/morpho-aave'
 import morphoCompound from '@adapters/morpho-compound'
 import nemesisDao from '@adapters/nemesis-dao'
@@ -164,6 +165,7 @@ export const adapters: Adapter[] = [
   maple,
   mdex,
   meritCircle,
+  metronome,
   morphoAave,
   morphoCompound,
   nemesisDao,

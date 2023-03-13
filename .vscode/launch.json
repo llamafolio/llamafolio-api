@@ -4,14 +4,6 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Run dev server",
-      "skipFiles": ["<node_internals>/**"],
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"]
-    },
-    {
-      "type": "node",
-      "request": "launch",
       "name": "Run adapter",
       "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "npm",
@@ -114,6 +106,7 @@
         "maple",
         "mdex",
         "merit-circle",
+        "metronome",
         "morpho-aave",
         "morpho-compound",
         "nemesis-dao",
