@@ -103,8 +103,9 @@ async function main() {
 
           const hrend = process.hrtime(hrstart)
 
+          const balancesLength = balancesConfig.groups.reduce((acc, group) => acc + (group.balances?.length || 0), 0)
           console.log(
-            `[${adapterId}][${chain}] getBalances ${contractsByAdapterIdChain[adapterId][chain].length} contracts, found ${balancesConfig.groups[0].balances.length} balances in %ds %dms`,
+            `[${adapterId}][${chain}] getBalances ${contractsByAdapterIdChain[adapterId][chain].length} contracts, found ${balancesLength} balances in %ds %dms`,
             hrend[0],
             hrend[1] / 1000000,
           )
