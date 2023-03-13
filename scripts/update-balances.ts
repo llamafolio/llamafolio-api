@@ -16,12 +16,18 @@ import { isNotNullish } from '../src/lib/type'
 
 interface ExtendedBalance extends Balance {
   adapterId: string
+  groupIdx: number
+}
+
+interface BalancesGroupExtended {
+  balances: ExtendedBalance[]
+  healthFactor?: number
 }
 
 interface ExtendedBalancesConfig extends BalancesConfig {
   adapterId: string
   chain: Chain
-  balances: ExtendedBalance[]
+  groups: BalancesGroupExtended[]
 }
 
 function help() {
@@ -76,7 +82,7 @@ async function main() {
       adapterIdsChains.map(async ([adapterId, chain]) => {
         const adapter = adapterById[adapterId]
         if (!adapter) {
-          console.error(`Could not find adapter`, adapterId)
+          console.error(`Could not find adapter with id`, adapterId)
           return
         }
         const handler = adapter[chain]
@@ -103,11 +109,13 @@ async function main() {
             hrend[1] / 1000000,
           )
 
-          // TODO: add full support for groups of balances
           const extendedBalancesConfig: ExtendedBalancesConfig = {
             ...balancesConfig,
-            // Tag balances with adapterId
-            balances: balancesConfig.groups[0].balances.map((balance) => ({ ...balance, adapterId })),
+            // Tag balances with adapterId abd groupIdx
+            groups: balancesConfig.groups.map((balancesGroup, groupIdx) => ({
+              ...balancesGroup,
+              balances: balancesGroup.balances.map((balance) => ({ ...balance, adapterId, groupIdx })),
+            })),
             adapterId,
             chain,
           }
@@ -123,7 +131,10 @@ async function main() {
     const adaptersBalancesConfigs = adaptersBalancesConfigsRes.filter(isNotNullish)
 
     // Ungroup balances to make only 1 call to the price API
-    const balances = adaptersBalancesConfigs.flatMap((balanceConfig) => balanceConfig?.balances).filter(isNotNullish)
+    const balances = adaptersBalancesConfigs
+      .map((balanceConfig) => balanceConfig?.groups.map((balancesGroup) => balancesGroup.balances))
+      .flat(2)
+      .filter(isNotNullish)
 
     const sanitizedBalances = sanitizeBalances(balances)
 
@@ -139,10 +150,11 @@ async function main() {
       hrend[1] / 1000000,
     )
 
-    // Group balances back by adapter
-    const pricedBalancesByAdapterId = groupBy(
+    // Group balances back by adapter/chain
+    const pricedBalancesByAdapterIdChain = groupBy2(
       (pricedBalances as ExtendedBalance[]).filter((pricedBalance) => pricedBalance.adapterId),
       'adapterId',
+      'chain',
     )
 
     const now = new Date()
@@ -150,20 +162,21 @@ async function main() {
     const balancesGroupsStore: BalancesGroup[] = []
     const balancesStore: BalanceStore[] = []
 
-    for (const balanceConfig of adaptersBalancesConfigs) {
-      const pricedBalances = pricedBalancesByAdapterId[balanceConfig.adapterId]
-      if (!pricedBalances) {
+    for (let balancesConfigIdx = 0; balancesConfigIdx < adaptersBalancesConfigs.length; balancesConfigIdx++) {
+      const balanceConfig = adaptersBalancesConfigs[balancesConfigIdx]
+      const pricedBalances = pricedBalancesByAdapterIdChain[balanceConfig.adapterId]?.[balanceConfig.chain]
+      if (!pricedBalances || pricedBalances.length === 0) {
         continue
       }
 
-      const balances = pricedBalances.filter(
-        (balance) => isNotNullish(balance) && balance.chain === balanceConfig.chain,
-      )
+      const balancesByGroupIdx = groupBy(pricedBalances.filter(isNotNullish), 'groupIdx')
 
-      // TODO: add full support for groups of balances
-      const balancesByCategory = groupBy(balances, 'category')
+      for (let groupIdx = 0; groupIdx < balanceConfig.groups.length; groupIdx++) {
+        const balances = balancesByGroupIdx[groupIdx]
+        if (!balances || balances.length === 0) {
+          continue
+        }
 
-      for (const category in balancesByCategory) {
         const id = uuidv4()
 
         const balancesGroup: BalancesGroup = {
@@ -171,13 +184,12 @@ async function main() {
           fromAddress: address,
           adapterId: balanceConfig.adapterId,
           chain: balanceConfig.chain,
-          category,
-          ...balancesTotalBreakdown(balancesByCategory[category]),
+          ...balancesTotalBreakdown(balances),
           timestamp: now,
-          healthFactor: balanceConfig.healthFactor,
+          healthFactor: balanceConfig.groups[groupIdx].healthFactor,
         }
 
-        for (const balance of balancesByCategory[category]) {
+        for (const balance of balances) {
           balancesStore.push({ groupId: id, ...balance })
         }
 

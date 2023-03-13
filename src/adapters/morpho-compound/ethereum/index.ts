@@ -1,27 +1,35 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getLendBorrowBalances, getMarketsContracts, getUserHealthFactor } from './balances'
+import { getMorphoMarketsBalances } from './balance'
+import { getUserHealthFactor } from './healthfactor'
+import { getMorphoMarketsContracts } from './market'
 
-const lens: Contract = {
+const morphoLens: Contract = {
   chain: 'ethereum',
   address: '0x930f1b46e1d081ec1524efd95752be3ece51ef67',
 }
 
+const comptroller: Contract = {
+  chain: 'ethereum',
+  address: '0x8888882f8f843896699869179fb6e4f7e3b58888',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
-  const markets = await getMarketsContracts(ctx, lens)
+  const markets = await getMorphoMarketsContracts(ctx, morphoLens)
+  comptroller.markets = markets
 
   return {
-    contracts: { markets },
+    contracts: { markets, morphoLens, comptroller },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      markets: (...args) => getLendBorrowBalances(...args, lens),
+      comptroller: (...args) => getMorphoMarketsBalances(...args, morphoLens),
     }),
-    getUserHealthFactor(ctx, lens, contracts.markets || []),
+    getUserHealthFactor(ctx, morphoLens, contracts.markets || []),
   ])
 
   return {

@@ -4,11 +4,10 @@ import { client as redisClient } from '@db/redis'
 import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, ContractStandard, Lock } from '@lib/adapter'
-import { groupBy2 } from '@lib/array'
+import { groupBy } from '@lib/array'
 import { areBalancesStale, isBalanceUSDGtZero } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
-import { Chain } from '@lib/chains'
 import { invokeLambda } from '@lib/lambda'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyHandler } from 'aws-lambda'
@@ -45,12 +44,10 @@ export async function getBalancesYields<T extends Balance>(client: Redis, balanc
 export interface BaseFormattedBalance {
   standard?: ContractStandard
   name?: string
-  chain: Chain
   address: string
   symbol?: string
   decimals?: number
   category: Category
-  adapterId: string
   stable?: boolean
   price?: number
   amount?: string
@@ -61,7 +58,6 @@ export interface BaseFormattedBalance {
   apyMean30d?: number
   ilRisk?: boolean
   lock?: Lock
-  timestamp?: number
   underlyings?: FormattedBalance[]
   rewards?: FormattedBalance[]
 }
@@ -105,13 +101,11 @@ function unwrapUnderlyings(balance: FormattedBalance) {
 export function formatBalance(balance: any): FormattedBalance {
   const formattedBalance: FormattedBalance = {
     standard: balance.standard,
-    name: balance.name,
-    chain: balance.chain,
+    name: balance.name || undefined,
     address: balance.address,
     symbol: balance.symbol,
     decimals: balance.decimals,
     category: balance.category,
-    adapterId: balance.adapterId,
     stable: balance.stable,
     price: balance.price,
     amount: balance.amount,
@@ -128,7 +122,6 @@ export function formatBalance(balance: any): FormattedBalance {
     marketPrice: balance.marketPrice,
     leverage: balance.leverage,
     funding: balance.funding,
-    timestamp: balance.timestamp,
     underlyings: balance.underlyings?.map(formatBalance),
     rewards: balance.rewards?.map(formatBalance),
   }
@@ -136,15 +129,11 @@ export function formatBalance(balance: any): FormattedBalance {
   return unwrapUnderlyings(formattedBalance)
 }
 
-export interface BalancesProtocolChainResponse {
-  id: Chain
-  balances: FormattedBalance[]
+interface GroupResponse {
+  protocol: string
+  chain: string
   healthFactor?: number
-}
-
-export interface BalancesProtocolResponse {
-  id: string
-  chains: BalancesProtocolChainResponse[]
+  balances: FormattedBalance[]
 }
 
 export type TStatus = 'empty' | 'stale' | 'success'
@@ -152,7 +141,7 @@ export type TStatus = 'empty' | 'stale' | 'success'
 export interface BalancesResponse {
   status: TStatus
   updatedAt?: number
-  protocols: BalancesProtocolResponse[]
+  groups: GroupResponse[]
 }
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
@@ -170,32 +159,23 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const client = await pool.connect()
 
   try {
-    const protocols: BalancesProtocolResponse[] = []
-
     const pricedBalances = await selectRowsLatestBalancesGroupsWithBalancesByFromAddress(client, address)
 
     const nonZeroPricedBalances = pricedBalances.filter(isBalanceUSDGtZero)
 
     const pricedBalancesWithYields = await getBalancesYields(redisClient, nonZeroPricedBalances)
 
-    const balancesGroupsByAdapterIdChain = groupBy2(pricedBalancesWithYields, 'adapterId', 'chain')
+    const balancesByGroup = groupBy(pricedBalancesWithYields, 'id')
 
-    for (const adapterId in balancesGroupsByAdapterIdChain) {
-      const protocol: BalancesProtocolResponse = { id: adapterId, chains: [] }
+    const groups: GroupResponse[] = []
 
-      for (const chainId in balancesGroupsByAdapterIdChain[adapterId]) {
-        // TODO: full support for groups of balances
-        const group = balancesGroupsByAdapterIdChain[adapterId][chainId][0]
-        const chain: BalancesProtocolChainResponse = {
-          id: chainId as Chain,
-          balances: balancesGroupsByAdapterIdChain[adapterId][chainId].map(formatBalance),
-          healthFactor: group.healthFactor || undefined,
-        }
-
-        protocol.chains.push(chain)
-      }
-
-      protocols.push(protocol)
+    for (const groupId in balancesByGroup) {
+      groups.push({
+        protocol: balancesByGroup[groupId][0].adapterId,
+        chain: balancesByGroup[groupId][0].chain,
+        healthFactor: balancesByGroup[groupId][0].healthFactor || undefined,
+        balances: balancesByGroup[groupId].map(formatBalance),
+      })
     }
 
     const updatedAt = pricedBalances[0]?.timestamp ? new Date(pricedBalances[0]?.timestamp).getTime() : undefined
@@ -214,7 +194,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const balancesResponse: BalancesResponse = {
       status,
       updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
-      protocols,
+      groups,
     }
 
     return success(balancesResponse, { maxAge: 20 })
