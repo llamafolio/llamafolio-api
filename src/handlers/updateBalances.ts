@@ -16,15 +16,10 @@ import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 import { v4 as uuidv4 } from 'uuid'
 
-type ExtendedBalance =
-  | (Balance & {
-      adapterId: string
-      groupIdx: number
-    })
-  | (PricedBalance & {
-      adapterId: string
-      groupIdx: number
-    })
+type ExtendedBalance = (Balance | PricedBalance) & {
+  adapterId: string
+  groupIdx: number
+}
 
 interface BalancesGroupExtended {
   balances: ExtendedBalance[]
@@ -110,8 +105,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
           const hrend = process.hrtime(hrstart)
 
+          const balancesLength = balancesConfig.groups.reduce((acc, group) => acc + (group.balances?.length || 0), 0)
           console.log(
-            `[${adapterId}][${chain}] getBalances ${contractsByAdapterIdChain[adapterId][chain].length} contracts, found ${balancesConfig.groups[0].balances.length} balances in %ds %dms`,
+            `[${adapterId}][${chain}] getBalances ${contractsByAdapterIdChain[adapterId][chain].length} contracts, found ${balancesLength} balances in %ds %dms`,
             hrend[0],
             hrend[1] / 1000000,
           )
@@ -138,10 +134,14 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const adaptersBalancesConfigs = adaptersBalancesConfigsRes.filter(isNotNullish)
 
     // Ungroup balances to make only 1 call to the price API
-    const balances = adaptersBalancesConfigs
-      .map((balanceConfig) => balanceConfig?.groups.map((balancesGroup) => balancesGroup.balances))
-      .flat(2)
-      .filter(isNotNullish)
+    const balances: ExtendedBalance[] = []
+    for (const balancesConfig of adaptersBalancesConfigs) {
+      for (const group of balancesConfig.groups) {
+        for (const balance of group.balances) {
+          balances.push(balance)
+        }
+      }
+    }
 
     const sanitizedBalances = sanitizeBalances(balances)
 
@@ -158,19 +158,14 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     )
 
     // Group balances back by adapter/chain
-    const pricedBalancesByAdapterIdChain = groupBy2(
-      (pricedBalances as ExtendedBalance[]).filter((pricedBalance) => pricedBalance.adapterId),
-      'adapterId',
-      'chain',
-    )
+    const pricedBalancesByAdapterIdChain = groupBy2(pricedBalances, 'adapterId', 'chain')
 
     const now = new Date()
 
     const balancesGroupsStore: BalancesGroup[] = []
     const balancesStore: BalanceStore[] = []
 
-    for (let balancesConfigIdx = 0; balancesConfigIdx < adaptersBalancesConfigs.length; balancesConfigIdx++) {
-      const balanceConfig = adaptersBalancesConfigs[balancesConfigIdx]
+    for (const balanceConfig of adaptersBalancesConfigs) {
       const pricedBalances = pricedBalancesByAdapterIdChain[balanceConfig.adapterId]?.[balanceConfig.chain]
       if (!pricedBalances || pricedBalances.length === 0) {
         continue

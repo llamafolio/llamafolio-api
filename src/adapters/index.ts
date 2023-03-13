@@ -59,6 +59,7 @@ import mdex from '@adapters/mdex'
 import meritCircle from '@adapters/merit-circle'
 import morphoAave from '@adapters/morpho-aave'
 import morphoCompound from '@adapters/morpho-compound'
+import multichain from '@adapters/multichain'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
 import olympusDao from '@adapters/olympus-dao'
@@ -166,6 +167,7 @@ export const adapters: Adapter[] = [
   meritCircle,
   morphoAave,
   morphoCompound,
+  multichain,
   nemesisDao,
   nexusMutual,
   olympusDao,
