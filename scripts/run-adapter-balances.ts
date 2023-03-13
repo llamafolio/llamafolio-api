@@ -4,15 +4,112 @@ import path from 'path'
 import { selectAdapterProps } from '../src/db/adapters'
 import { getAllChainTokensInteractions, getChainContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { Adapter, BalancesContext, PricedBalance } from '../src/lib/adapter'
+import { Adapter, Balance, BalancesContext, PricedBalance } from '../src/lib/adapter'
+import { groupBy } from '../src/lib/array'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 
+interface ExtendedBalance extends Balance {
+  groupIdx: number
+}
 interface CategoryBalances {
   title: string
   totalUSD: number
   balances: PricedBalance[]
+}
+
+function printBalances(balances: PricedBalance[]) {
+  // group by category
+  const balancesByCategory = groupBy(balances, 'category')
+
+  const categoriesBalances: CategoryBalances[] = []
+  for (const category in balancesByCategory) {
+    const cat: CategoryBalances = {
+      title: category,
+      totalUSD: 0,
+      balances: [],
+    }
+
+    for (const balance of balancesByCategory[category]) {
+      cat.totalUSD += balance.balanceUSD || 0
+      cat.balances.push(balance)
+    }
+
+    // sort by balanceUSD
+    cat.balances.sort((a, b) => {
+      if (a.balanceUSD != null && b.balanceUSD == null) {
+        return -1
+      }
+      if (a.balanceUSD == null && b.balanceUSD != null) {
+        return 1
+      }
+      return b.balanceUSD - a.balanceUSD
+    })
+
+    categoriesBalances.push(cat)
+  }
+
+  // sort categories by total balances
+  categoriesBalances.sort((a, b) => b.totalUSD - a.totalUSD)
+
+  for (const categoryBalances of categoriesBalances) {
+    console.log(
+      `Category: ${categoryBalances.title}, totalUSD: ${millify(categoryBalances.totalUSD)} (${
+        categoryBalances.totalUSD
+      })`,
+    )
+
+    const data: any[] = []
+
+    for (const balance of categoryBalances.balances) {
+      const decimals = balance.decimals ? 10 ** balance.decimals : 1
+
+      const d = {
+        chain: balance.chain,
+        address: balance.address,
+        category: balance.category,
+        symbol: balance.symbol,
+        balance: millify(balance.amount.div(decimals.toString()).toNumber()),
+        balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
+        stable: balance.stable,
+        type: balance.type,
+        reward: '',
+        underlying: '',
+      }
+
+      if (balance.rewards) {
+        d.reward = balance.rewards
+          .map((reward) => {
+            const decimals = reward.decimals ? 10 ** reward.decimals : 1
+
+            return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
+          })
+          .join(' + ')
+      }
+
+      if (balance.underlyings) {
+        d.underlying = balance.underlyings
+          .map((underlying) => {
+            const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
+
+            return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
+          })
+          .join(' + ')
+      }
+
+      if (balance.category === 'perpetual') {
+        d.margin = millify(balance.margin.div(decimals.toString()).toNumber())
+        d.entryPrice = millify(balance.entryPrice.div(decimals.toString()).toNumber())
+        d.marketPrice = millify(balance.marketPrice.div(decimals.toString()).toNumber())
+        d.leverage = millify(balance.leverage.div(decimals.toString()).toNumber())
+      }
+
+      data.push(d)
+    }
+
+    console.table(data)
+  }
 }
 
 function help() {
@@ -53,118 +150,37 @@ async function main() {
 
     console.log(`Interacted with ${contracts.length} contracts`)
 
-    const balancesRes = await adapter[chain]?.getBalances(
+    const balancesConfigRes = await adapter[chain]?.getBalances(
       ctx,
       groupContracts(contracts) || [],
       adapterProps?.contractsProps || {},
     )
-    // TODO: add full support for groups of balances
-    const sanitizedBalances = sanitizeBalances(balancesRes?.groups?.[0]?.balances || [])
+
+    // flatten balances and fetch their prices
+    const balances: ExtendedBalance[] =
+      balancesConfigRes?.groups?.flatMap((group, groupIdx) =>
+        (group.balances || []).map((balance) => ({ ...balance, groupIdx })),
+      ) || []
+
+    const sanitizedBalances = sanitizeBalances(balances)
 
     const pricedBalances = await getPricedBalances(sanitizedBalances)
 
     console.log(`Found ${pricedBalances.length} non zero balances`)
 
-    // group by category
-    const balancesByCategory: Record<string, PricedBalance[]> = {}
-    for (const balance of pricedBalances) {
-      if (!balancesByCategory[balance.category]) {
-        balancesByCategory[balance.category] = []
+    const balancesByGroupIdx = groupBy(pricedBalances, 'groupIdx')
+
+    const groupsLen = balancesConfigRes?.groups.length || 0
+    for (let groupIdx = 0; groupIdx < groupsLen; groupIdx++) {
+      const balances = balancesByGroupIdx[groupIdx]
+      if (balances?.length > 0) {
+        console.log('\nGroup:')
+        const { healthFactor } = balancesConfigRes?.groups?.[groupIdx] || {}
+        console.log('Metadata:')
+        console.table({ healthFactor })
+        printBalances(balances)
       }
-      balancesByCategory[balance.category].push(balance)
     }
-
-    const categoriesBalances: CategoryBalances[] = []
-    for (const category in balancesByCategory) {
-      const cat: CategoryBalances = {
-        title: category,
-        totalUSD: 0,
-        balances: [],
-      }
-
-      for (const balance of balancesByCategory[category]) {
-        cat.totalUSD += balance.balanceUSD || 0
-        cat.balances.push(balance)
-      }
-
-      // sort by balanceUSD
-      cat.balances.sort((a, b) => {
-        if (a.balanceUSD != null && b.balanceUSD == null) {
-          return -1
-        }
-        if (a.balanceUSD == null && b.balanceUSD != null) {
-          return 1
-        }
-        return b.balanceUSD - a.balanceUSD
-      })
-
-      categoriesBalances.push(cat)
-    }
-
-    // sort categories by total balances
-    categoriesBalances.sort((a, b) => b.totalUSD - a.totalUSD)
-
-    for (const categoryBalances of categoriesBalances) {
-      console.log(
-        `Category: ${categoryBalances.title}, totalUSD: ${millify(categoryBalances.totalUSD)} (${
-          categoryBalances.totalUSD
-        })`,
-      )
-
-      const data: any[] = []
-
-      for (const balance of categoryBalances.balances) {
-        const decimals = balance.decimals ? 10 ** balance.decimals : 1
-
-        const d = {
-          chain: balance.chain,
-          address: balance.address,
-          category: balance.category,
-          symbol: balance.symbol,
-          balance: millify(balance.amount.div(decimals.toString()).toNumber()),
-          balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-          stable: balance.stable,
-          type: balance.type,
-          reward: '',
-          underlying: '',
-        }
-
-        if (balance.rewards) {
-          d.reward = balance.rewards
-            .map((reward) => {
-              const decimals = reward.decimals ? 10 ** reward.decimals : 1
-
-              return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
-            })
-            .join(' + ')
-        }
-
-        if (balance.underlyings) {
-          d.underlying = balance.underlyings
-            .map((underlying) => {
-              const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
-
-              return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
-            })
-            .join(' + ')
-        }
-
-        if (balance.category === 'perpetual') {
-          d.margin = millify(balance.margin.div(decimals.toString()).toNumber())
-          d.entryPrice = millify(balance.entryPrice.div(decimals.toString()).toNumber())
-          d.marketPrice = millify(balance.marketPrice.div(decimals.toString()).toNumber())
-          d.leverage = millify(balance.leverage.div(decimals.toString()).toNumber())
-        }
-
-        data.push(d)
-      }
-
-      console.table(data)
-    }
-
-    const { healthFactor } = balancesRes || {}
-    console.log('Metadata:')
-    console.table({ healthFactor })
 
     const endTime = Date.now()
     console.log(`Completed in ${endTime - startTime}ms`)

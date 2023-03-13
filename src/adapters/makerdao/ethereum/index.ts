@@ -1,7 +1,7 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { isNotNullish } from '@lib/type'
 
-import { getProxiesBalances } from './balances'
+import { getHealthFactor, getProxiesBalances } from './balances'
 import { getCdpidFromProxiesAddresses } from './cdpid'
 import { getInstaDappContracts, getMakerContracts } from './proxies'
 
@@ -67,11 +67,9 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
 
   const cdpid = await getCdpidFromProxiesAddresses(ctx, getCdps, cdpManager, proxies)
 
-  const balances = await getProxiesBalances(ctx, Vat, IlkRegistry, Spot, cdpid)
-
-  // const healthFactor = getHealthFactor(balances as BalanceWithExtraProps[])
+  const balancesGroups = await getProxiesBalances(ctx, Vat, IlkRegistry, Spot, cdpid)
 
   return {
-    groups: [{ balances }],
+    groups: balancesGroups.map((balances) => ({ balances, healthFactor: getHealthFactor(balances) })),
   }
 }
