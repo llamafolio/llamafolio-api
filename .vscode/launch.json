@@ -4,14 +4,6 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Run dev server",
-      "skipFiles": ["<node_internals>/**"],
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"]
-    },
-    {
-      "type": "node",
-      "request": "launch",
       "name": "Run adapter",
       "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "npm",
@@ -116,6 +108,7 @@
         "merit-circle",
         "morpho-aave",
         "morpho-compound",
+        "multichain",
         "nemesis-dao",
         "nexus-mutual",
         "olympus-dao",
