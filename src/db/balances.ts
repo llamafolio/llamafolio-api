@@ -1,5 +1,6 @@
 import { sliceIntoChunks } from '@lib/array'
 import { bufToStr, strToBuf } from '@lib/buf'
+import { Category } from '@lib/category'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -9,6 +10,7 @@ export interface Balance {
   price?: string
   balanceUSD: string
   address: string
+  category: Category
   data?: any
 }
 
@@ -18,6 +20,7 @@ export interface BalanceStorage {
   price?: string
   balance_usd: string
   address: Buffer
+  category: string
   data?: any
 }
 
@@ -27,6 +30,7 @@ export interface BalanceStorable {
   price?: string
   balance_usd: string
   address: Buffer
+  category: Category
   data?: any
 }
 
@@ -37,6 +41,7 @@ export function fromRowStorage(balanceStorage: BalanceStorage) {
     price: balanceStorage.price ? parseFloat(balanceStorage.price) : undefined,
     amount: balanceStorage.amount,
     balanceUSD: balanceStorage.balance_usd ? parseFloat(balanceStorage.balance_usd) : undefined,
+    category: balanceStorage.category,
   }
 
   return balance
@@ -47,14 +52,22 @@ export function fromStorage(balancesStorage: BalanceStorage[]) {
 }
 
 export function toRow(balance: BalanceStorable) {
-  return [balance.group_id, balance.amount, balance.price, balance.balance_usd, balance.address, balance.data]
+  return [
+    balance.group_id,
+    balance.amount,
+    balance.price,
+    balance.balance_usd,
+    balance.address,
+    balance.category,
+    balance.data,
+  ]
 }
 
 export function toStorage(balances: Balance[]) {
   const balancesStorable: BalanceStorable[] = []
 
   for (const balance of balances) {
-    const { groupId, address, price, amount, balanceUSD, ...data } = balance
+    const { groupId, address, price, amount, balanceUSD, category, ...data } = balance
 
     const balanceStorable: BalanceStorable = {
       group_id: groupId,
@@ -62,6 +75,7 @@ export function toStorage(balances: Balance[]) {
       price,
       balance_usd: balanceUSD,
       address: strToBuf(address),
+      category,
       // \\u0000 cannot be converted to text
       data: JSON.parse(JSON.stringify(data).replace(/\\u0000/g, '')),
     }
@@ -95,7 +109,16 @@ export function insertBalances(client: PoolClient, balances: Balance[]) {
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          'INSERT INTO balances (group_id, amount, price, balance_usd, address, data) VALUES %L ON CONFLICT DO NOTHING;',
+          `INSERT INTO balances (
+            group_id,
+            amount,
+            price,
+            balance_usd,
+            address,
+            category,
+            data
+          ) VALUES %L ON CONFLICT DO NOTHING;
+          `,
           chunk,
         ),
         [],

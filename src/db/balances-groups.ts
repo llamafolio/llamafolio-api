@@ -1,7 +1,6 @@
 import { Balance, fromRowStorage as fromBalanceRowStorage } from '@db/balances'
 import { sliceIntoChunks } from '@lib/array'
 import { bufToStr, strToBuf } from '@lib/buf'
-import { Category } from '@lib/category'
 import { Chain } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
@@ -11,7 +10,6 @@ export interface BalancesGroup {
   fromAddress: string
   adapterId: string
   chain: Chain
-  category: Category
   balanceUSD: number
   debtUSD?: number | null
   rewardUSD?: number | null
@@ -24,7 +22,6 @@ export interface BalancesGroupStorage {
   from_address: Buffer
   adapter_id: string
   chain: string
-  category: string
   balance_usd: string
   debt_usd: string | null
   reward_usd: string | null
@@ -37,7 +34,6 @@ export interface BalancesGroupStorable {
   from_address: Buffer
   adapter_id: string
   chain: Chain
-  category: string
   balance_usd: number
   debt_usd?: number | null
   reward_usd?: number | null
@@ -51,7 +47,6 @@ export function fromRowStorage(balanceGroupsStorage: BalancesGroupStorage) {
     fromAddress: bufToStr(balanceGroupsStorage.from_address),
     adapterId: balanceGroupsStorage.adapter_id,
     chain: balanceGroupsStorage.chain as Chain,
-    category: balanceGroupsStorage.category as Category,
     balanceUSD: balanceGroupsStorage.balance_usd != null ? parseFloat(balanceGroupsStorage.balance_usd) : 0,
     debtUSD: balanceGroupsStorage.debt_usd != null ? parseFloat(balanceGroupsStorage.debt_usd) : 0,
     rewardUSD: balanceGroupsStorage.reward_usd != null ? parseFloat(balanceGroupsStorage.reward_usd) : 0,
@@ -72,7 +67,6 @@ export function toRow(snapshot: BalancesGroupStorable) {
     snapshot.from_address,
     snapshot.adapter_id,
     snapshot.chain,
-    snapshot.category,
     snapshot.balance_usd,
     snapshot.debt_usd,
     snapshot.reward_usd,
@@ -85,15 +79,13 @@ export function toStorage(balancesGroups: BalancesGroup[]) {
   const balanceGroupsStorable: BalancesGroupStorable[] = []
 
   for (const balanceGroup of balancesGroups) {
-    const { id, fromAddress, adapterId, chain, category, balanceUSD, debtUSD, rewardUSD, healthFactor, timestamp } =
-      balanceGroup
+    const { id, fromAddress, adapterId, chain, balanceUSD, debtUSD, rewardUSD, healthFactor, timestamp } = balanceGroup
 
     const balancesGroupStorable: BalancesGroupStorable = {
       id,
       from_address: strToBuf(fromAddress),
       chain,
       adapter_id: adapterId,
-      category,
       balance_usd: balanceUSD,
       debt_usd: debtUSD,
       reward_usd: rewardUSD,
@@ -202,7 +194,6 @@ export function insertBalancesGroups(client: PoolClient, balancesGroups: Balance
             from_address,
             adapter_id,
             chain,
-            category,
             balance_usd,
             debt_usd,
             reward_usd,
