@@ -20,6 +20,7 @@ const staker: Contract = {
 export const getContracts = async () => {
   return {
     contracts: { staker },
+    // TODO: check contract interaction
     props: { staker },
   }
 }
