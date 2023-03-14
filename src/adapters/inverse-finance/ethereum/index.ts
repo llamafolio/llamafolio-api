@@ -16,6 +16,7 @@ export const getContracts = async (ctx: BaseContext) => {
     underlyingAddressByMarketAddress: {
       // anETH -> wETH
       '0x697b4acaa24430f254224eb794d2a85ba1fa1fb8': '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+      '0x1637e4e9941d55703a7a5e7807d6ada3f7dcd61b': '0x41d5d79431a913c4ae7d69a668ecdfe5ff9dfb68',
     },
   })
 
@@ -25,8 +26,6 @@ export const getContracts = async (ctx: BaseContext) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  console.log(contracts)
-
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (...args) => getInverseLendingBalances(...args, comptroller),
   })

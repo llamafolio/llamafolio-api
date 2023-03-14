@@ -35,6 +35,13 @@ export async function getInverseLendingBalances(
     call({ ctx, target: comptroller.address, params: [ctx.address], abi: abi.compAccrued }),
   ])
 
+  for (const marketsBalance of marketsBalancesRes) {
+    if (marketsBalance.address === '0x1637e4e9941d55703a7a5e7807d6ada3f7dcd61b') {
+      marketsBalance.decimals = 8
+      marketsBalance.underlyings![0].decimals = 8
+    }
+  }
+
   rewards.push({ ...INV, amount: BigNumber.from(marketsRewardsRes), category: 'reward' })
 
   return [...marketsBalancesRes, ...rewards]
