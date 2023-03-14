@@ -22,6 +22,7 @@ import benqiStakedAvax from '@adapters/benqi-staked-avax'
 import biswap from '@adapters/biswap'
 import blur from '@adapters/blur'
 import capFinance from '@adapters/cap-finance'
+import chainlink from '@adapters/chainlink'
 import compound from '@adapters/compound'
 import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
@@ -131,6 +132,7 @@ export const adapters: Adapter[] = [
   biswap,
   blur,
   capFinance,
+  chainlink,
   compound,
   compoundV3,
   concentrator,
