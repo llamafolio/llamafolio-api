@@ -11,6 +11,7 @@
     "deploy:prod": "npm run postinstall && npm run build && NODE_ENV=prod sls deploy --stage prod",
     "create-adapter": "ts-node -T scripts/create-adapter.ts",
     "delete-adapter": "ts-node -T scripts/delete-adapter.ts",
+    "invalidate-protocols": "ts-node -T scripts/invalidate-protocols.ts",
     "adapter-balances": "ts-node -T scripts/run-adapter-balances.ts",
     "update-balances": "ts-node -T scripts/update-balances.ts",
     "migrate": "node-pg-migrate",
