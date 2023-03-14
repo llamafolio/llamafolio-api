@@ -35,6 +35,7 @@ export async function getInverseLendingBalances(
     call({ ctx, target: comptroller.address, params: [ctx.address], abi: abi.compAccrued }),
   ])
 
+  //  small fix allowing to use a decimal value of 8 instead of 18 for INV token only
   for (const marketsBalance of marketsBalancesRes) {
     if (marketsBalance.address === '0x1637e4e9941d55703a7a5e7807d6ada3f7dcd61b') {
       marketsBalance.decimals = 8
