@@ -98,6 +98,10 @@ function printBalances(balances: PricedBalance[]) {
           .join(' + ')
       }
 
+      if (balance.category === 'vest' && balance.vest?.claimable) {
+        d.claimable = millify(balance.vest?.claimable.div(decimals.toString()).toNumber())
+      }
+
       if (balance.category === 'perpetual') {
         d.margin = millify(balance.margin.div(decimals.toString()).toNumber())
         d.entryPrice = millify(balance.entryPrice.div(decimals.toString()).toNumber())
