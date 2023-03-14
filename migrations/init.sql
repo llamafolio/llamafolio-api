@@ -56,3 +56,20 @@ ALTER TABLE
     ONLY contracts
 ADD
     CONSTRAINT contracts_key UNIQUE (adapter_id, chain, address, category);
+
+-- Protocols
+CREATE TABLE protocols (
+    name VARCHAR NOT NULL,
+    url VARCHAR NOT NULL,
+    logo VARCHAR NOT NULL,
+    category VARCHAR NOT NULL,
+    slug VARCHAR NOT NULL,
+    chain VARCHAR NOT NULL,
+    chains VARCHAR [] NOT NULL,
+    symbol VARCHAR,
+    tvl DECIMAL NOT NULL,
+    twitter VARCHAR,
+    description VARCHAR,
+    address VARCHAR,
+    color VARCHAR
+);
