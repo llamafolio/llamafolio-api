@@ -61,15 +61,8 @@ export function deleteAllProtocols(client: PoolClient) {
   return client.query('DELETE FROM protocols WHERE true;', [])
 }
 
-export async function selectProtocols(client: PoolClient, ids?: string[]): Promise<IProtocol[]> {
-  let query
-  if (ids && ids.length > 0) {
-    query = format(`select * from protocols where slug in (%L);`, ids)
-  } else {
-    query = 'select * from protocols'
-  }
-
-  const protocolsRes = await client.query(query, [])
+export async function selectProtocols(client: PoolClient): Promise<IProtocol[]> {
+  const protocolsRes = await client.query('select * from protocols', [])
 
   return protocolsRes.rows
 }

@@ -1,12 +1,20 @@
 import pool from '@db/pool'
 import { selectProtocols } from '@db/protocols'
-import { success } from '@handlers/response'
+import { serverError, success } from '@handlers/response'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
-export const handler: APIGatewayProxyHandler = async () => {
+export const handler: APIGatewayProxyHandler = async (_event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false
+
   const client = await pool.connect()
 
-  const protocols = await selectProtocols(client)
-
-  return success({ protocols }, { maxAge: 60 * 60 })
+  try {
+    const protocols = await selectProtocols(client)
+    return success({ protocols }, { maxAge: 60 * 60 })
+  } catch (error) {
+    console.error('Failed to get protocols', { error })
+    return serverError('Failed to get protocols')
+  } finally {
+    client.release(true)
+  }
 }
