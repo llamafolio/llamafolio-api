@@ -1,4 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { abi as erc20Abi } from '@lib/erc20'
+import { BN_TEN } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
@@ -28,6 +30,13 @@ const abi = {
       { internalType: 'address', name: '_user', type: 'address' },
     ],
     name: 'claimable',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getPricePerShare: {
+    inputs: [],
+    name: 'getPricePerShare',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
@@ -104,4 +113,37 @@ const getUnderlyingsBalances = async (ctx: BalancesContext, balances: Balance[])
       }),
     )
   ).flat()
+}
+
+export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
+  const balances: Balance[] = []
+
+  const [balancesOfRes, pricePerSharesRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+      abi: erc20Abi.balanceOf,
+    }),
+    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.getPricePerShare }),
+  ])
+
+  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+    const pool = pools[poolIdx]
+    const balanceOfRes = balancesOfRes[poolIdx]
+    const pricePerShareRes = pricePerSharesRes[poolIdx]
+
+    if (!isSuccess(balanceOfRes) || !isSuccess(pricePerShareRes)) {
+      continue
+    }
+
+    balances.push({
+      ...pool,
+      amount: BigNumber.from(balanceOfRes.output).mul(pricePerShareRes.output).div(BN_TEN.pow(pool.decimals!)),
+      underlyings: pool.underlyings as Contract[],
+      rewards: undefined,
+      category: 'farm',
+    })
+  }
+
+  return balances
 }

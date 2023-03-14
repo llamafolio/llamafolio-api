@@ -28,6 +28,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  token: {
+    inputs: [],
+    name: 'token',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
 export async function getGroContracts(ctx: BaseContext, masterchef: Contract): Promise<Contract[]> {
@@ -87,4 +94,23 @@ const getUnderlyingsContracts = async (ctx: BaseContext, contracts: Contract[]):
       }),
     )
   ).flat()
+}
+
+export async function getYieldContracts(ctx: BaseContext, pools: string[]): Promise<Contract[]> {
+  const contracts: Contract[] = []
+
+  const underlyingsRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool })), abi: abi.token })
+
+  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+    const pool = pools[poolIdx]
+    const underlyingRes = underlyingsRes[poolIdx]
+
+    if (!isSuccess(underlyingRes)) {
+      continue
+    }
+
+    contracts.push({ chain: ctx.chain, address: pool, underlyings: [underlyingRes.output] })
+  }
+
+  return contracts
 }

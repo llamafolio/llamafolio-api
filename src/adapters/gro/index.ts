@@ -1,12 +1,12 @@
+import { Adapter } from '@lib/adapter'
 
-import { Adapter } from '@lib/adapter';
-
-import * as ethereum from './ethereum';import * as avax from './avax'
+import * as avax from './avax'
+import * as ethereum from './ethereum'
 
 const adapter: Adapter = {
   id: 'gro',
-  ethereum,avax
-};
+  ethereum,
+  avax,
+}
 
-export default adapter;
-
+export default adapter
