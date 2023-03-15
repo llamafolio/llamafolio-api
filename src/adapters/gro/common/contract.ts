@@ -69,6 +69,7 @@ export async function getGroContracts(ctx: BaseContext, masterchef: Contract): P
 type Provider = (ctx: BaseContext, pools: Contract[]) => Promise<Contract[]>
 
 const providers: Record<string, Provider | undefined> = {
+  // https://docs.gro.xyz/gro-docs/contract-address/gro-tokens
   0: getGroProvider,
   1: getSushiProvider,
   2: getSushiProvider,
