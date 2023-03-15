@@ -1,15 +1,4 @@
-export type Category =
-  | 'wallet'
-  | 'lend'
-  | 'borrow'
-  | 'stake'
-  | 'vest'
-  | 'lock'
-  | 'unlockable'
-  | 'lp'
-  | 'farm'
-  | 'reward'
-  | 'perpetual'
+export type Category = 'wallet' | 'lend' | 'borrow' | 'stake' | 'vest' | 'lock' | 'lp' | 'farm' | 'reward' | 'perpetual'
 
 export interface CategoryInfo {
   category: Category
@@ -47,11 +36,6 @@ export const Categories: Record<Category, CategoryInfo> = {
     category: 'lock',
     title: 'Locking',
     description: 'Assets locked in a protocol',
-  },
-  unlockable: {
-    category: 'lock',
-    title: 'Locking',
-    description: 'Assets unlockabled in a protocol',
   },
   lp: {
     category: 'lp',

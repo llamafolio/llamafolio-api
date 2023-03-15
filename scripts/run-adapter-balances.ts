@@ -98,8 +98,16 @@ function printBalances(balances: PricedBalance[]) {
           .join(' + ')
       }
 
-      if (balance.category === 'vest' && balance.vest?.claimable) {
-        d.claimable = millify(balance.vest?.claimable.div(decimals.toString()).toNumber())
+      if (balance.category === 'lock' && balance.lock?.available) {
+        d.available = `${millify(balance.lock?.available.amount.div(decimals.toString()).toNumber())} ${
+          balance.lock?.available.symbol
+        }`
+      }
+
+      if (balance.category === 'vest' && balance.vest?.available) {
+        d.available = `${millify(balance.vest?.available.amount.div(decimals.toString()).toNumber())} ${
+          balance.vest?.available.symbol
+        }`
       }
 
       if (balance.category === 'perpetual') {

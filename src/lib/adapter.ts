@@ -79,18 +79,21 @@ export interface RewardBalance extends Balance {
 export interface PricedBalance extends BasePricedBalance {
   rewards?: BasePricedBalance[]
   underlyings?: BasePricedBalance[]
-  vest?: { claimable: BigNumber }
+  vest?: { available: BaseBalance }
+  lock?: { end: number; available: BaseBalance }
   type?: string
 }
 
 export interface Lock {
   // Unix timestamp
   end?: number
+  // Claimable balance
+  available?: BaseBalance
 }
 
 export interface Vest {
   // Claimable balance
-  claimable?: BigNumber
+  available?: BaseBalance
 }
 
 export interface BalancesGroup {
