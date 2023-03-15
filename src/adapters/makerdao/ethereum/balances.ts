@@ -175,7 +175,7 @@ export async function getProxiesBalances(
 }
 
 const getUrnsBalances = async (ctx: BalancesContext, vat: Contract, urnHandlers: UrnHandlerParams[]) => {
-  const balances: Balance[] = []
+  const balancesGroups: BalanceWithExtraProps[][] = []
 
   const [urnsRes, ilksRes] = await Promise.all([
     multicall({
@@ -244,52 +244,39 @@ const getUrnsBalances = async (ctx: BalancesContext, vat: Contract, urnHandlers:
         category: 'borrow',
       }
 
-      balances.push(lend, borrow)
+      balancesGroups.push([lend, borrow])
     }
   }
 
-  return balances
+  return balancesGroups
 }
 
-export function getHealthFactor(balances: BalanceWithExtraProps[]): number[] | undefined {
-  const healthFactor: number[] = []
-  const nonZeroBalances = balances.filter((balance) => balance.amount.gt(0))
+export function getHealthFactor(balancesGroup: BalanceWithExtraProps[]) {
+  const [lend, borrow] = balancesGroup
 
-  const lends = nonZeroBalances.filter((lend) => lend.category === 'lend')
-  const borrows = nonZeroBalances.filter((lend) => lend.category === 'borrow')
+  /**
+   * Art: wad
+   * rate: ray
+   * spot: ray
+   * mat: ray
+   * formula: Collateralization Ratio = Vat.urn.ink * Vat.ilk.spot * Spot.ilk.mat / (Vat.urn.art * Vat.ilk.rate)
+   * Vat.urn.ink = balance.amount (lend)
+   * Vat.ilk.spot = balance.spot
+   * Spot.ilk.mat = balance.mat
+   * (Vat.urn.art * Vat.ilk.rate) = balance.amount (borrow)
+   */
 
-  if (borrows.length === 0) {
-    return
+  if (lend.mat && lend.spot && borrow.amount.gt(0)) {
+    const PRECISION_FACTOR = 1000
+
+    const collateralizationRatio = lend.amount
+      .mul(PRECISION_FACTOR)
+      .mul(lend.mat)
+      .div(DECIMALS.ray)
+      .mul(lend.spot)
+      .div(DECIMALS.ray)
+      .div(borrow.amount)
+
+    return +collateralizationRatio / PRECISION_FACTOR
   }
-
-  for (let i = 0; i < lends.length; i++) {
-    const lend = lends[i]
-    const borrow = borrows[i]
-
-    /**
-     * Art: wad
-     * rate: ray
-     * spot: ray
-     * mat: ray
-     * formula: Collateralization Ratio = Vat.urn.ink * Vat.ilk.spot * Spot.ilk.mat / (Vat.urn.art * Vat.ilk.rate)
-     * Vat.urn.ink = balance.amount (lend)
-     * Vat.ilk.spot = balance.spot
-     * Spot.ilk.mat = balance.mat
-     * (Vat.urn.art * Vat.ilk.rate) = balance.amount (borrow)
-     */
-
-    if (lend.mat && lend.spot && borrow.amount.gt(0)) {
-      const PRECISION_FACTOR = 1000 // to prevent the risk of rounding numbers since BigNumber hates floating numbers
-      const collateralizationRatio = lend.amount
-        .mul(PRECISION_FACTOR)
-        .mul(lend.mat)
-        .div(DECIMALS.ray)
-        .mul(lend.spot)
-        .div(DECIMALS.ray)
-        .div(borrow.amount)
-
-      healthFactor.push(+collateralizationRatio / PRECISION_FACTOR)
-    }
-  }
-  return healthFactor
 }

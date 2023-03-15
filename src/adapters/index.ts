@@ -22,6 +22,7 @@ import benqiStakedAvax from '@adapters/benqi-staked-avax'
 import biswap from '@adapters/biswap'
 import blur from '@adapters/blur'
 import capFinance from '@adapters/cap-finance'
+import chainlink from '@adapters/chainlink'
 import compound from '@adapters/compound'
 import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
@@ -38,6 +39,7 @@ import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
 import gmx from '@adapters/gmx'
 import granaryFinance from '@adapters/granary-finance'
+import gro from '@adapters/gro'
 import hectorNetwork from '@adapters/hector-network'
 import hex from '@adapters/hex'
 import homoraV2 from '@adapters/homora-v2'
@@ -57,8 +59,10 @@ import makerdao from '@adapters/makerdao'
 import maple from '@adapters/maple'
 import mdex from '@adapters/mdex'
 import meritCircle from '@adapters/merit-circle'
+import metronome from '@adapters/metronome'
 import morphoAave from '@adapters/morpho-aave'
 import morphoCompound from '@adapters/morpho-compound'
+import multichain from '@adapters/multichain'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
 import olympusDao from '@adapters/olympus-dao'
@@ -129,6 +133,7 @@ export const adapters: Adapter[] = [
   biswap,
   blur,
   capFinance,
+  chainlink,
   compound,
   compoundV3,
   concentrator,
@@ -145,6 +150,7 @@ export const adapters: Adapter[] = [
   geist,
   gmx,
   granaryFinance,
+  gro,
   hectorNetwork,
   hex,
   homoraV2,
@@ -164,8 +170,10 @@ export const adapters: Adapter[] = [
   maple,
   mdex,
   meritCircle,
+  metronome,
   morphoAave,
   morphoCompound,
+  multichain,
   nemesisDao,
   nexusMutual,
   olympusDao,

@@ -3,13 +3,17 @@ import aws from 'aws-sdk'
 
 type InvocationType = 'RequestResponse' | 'Event' | 'DryRun'
 
-export function invokeLambda(functioName: string, event: any, invocationType?: InvocationType) {
+export function invokeLambda(functionName: string, event: any, invocationType?: InvocationType) {
+  if (process.env.IS_OFFLINE) {
+    return
+  }
+
   return new Promise((resolve) => {
     new aws.Lambda({
       endpoint: process.env.IS_OFFLINE ? 'http://localhost:3002' : undefined,
     }).invoke(
       {
-        FunctionName: functioName,
+        FunctionName: functionName,
         InvocationType: invocationType || 'Event',
         Payload: JSON.stringify(event, null, 2), // pass params
       },

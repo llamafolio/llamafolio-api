@@ -4,12 +4,14 @@
   "description": "LlamaFolio API",
   "scripts": {
     "adapter": "ts-node -T scripts/run-adapter.ts",
-    "build": "ts-node -T scripts/build-adapters.ts",
+    "build-adapters": "ts-node -T scripts/build-adapters.ts",
+    "build": "npm run build-adapters",
     "dev": "sls offline",
     "deploy:dev": "npm run postinstall && npm run build && NODE_ENV=dev sls deploy --stage dev",
     "deploy:prod": "npm run postinstall && npm run build && NODE_ENV=prod sls deploy --stage prod",
     "create-adapter": "ts-node -T scripts/create-adapter.ts",
     "delete-adapter": "ts-node -T scripts/delete-adapter.ts",
+    "invalidate-protocols": "ts-node -T scripts/invalidate-protocols.ts",
     "adapter-balances": "ts-node -T scripts/run-adapter-balances.ts",
     "update-balances": "ts-node -T scripts/update-balances.ts",
     "migrate": "node-pg-migrate",
@@ -19,6 +21,7 @@
     "insert-tokens": "ts-node -T scripts/insert-tokens.ts",
     "update-tokens": "ts-node -T scripts/update-tokens.ts",
     "update-yields": "ts-node -T scripts/update-yields.ts",
+    "update-protocols": "ts-node -T scripts/update-protocols.ts",
     "lint": "eslint --ignore-path .gitignore --ignore-path .eslintignore \"**/*.{js,ts}\" --max-warnings=0",
     "format": "prettier --ignore-path .gitignore --ignore-path .prettierignore '**/*.{md,json,js,ts}' --write",
     "postinstall": "npm run update-llamafolio-tokens",
@@ -41,7 +44,8 @@
     "lodash": "^4.17.21",
     "node-fetch": "^2.6.2",
     "pg": "^8.7.3",
-    "pg-format": "^1.0.4"
+    "pg-format": "^1.0.4",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.101",
@@ -49,6 +53,7 @@
     "@types/node-fetch": "^2.6.2",
     "@types/pg": "^8.6.5",
     "@types/pg-format": "^1.0.2",
+    "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "eslint": "^8.27.0",
     "eslint-config-prettier": "^8.5.0",

@@ -118,7 +118,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: 
     shibaStaker: getStakerBalances,
     locker: getLockerBalances,
   })
+
   return {
-    balances,
+    groups: [{ balances }],
   }
 }

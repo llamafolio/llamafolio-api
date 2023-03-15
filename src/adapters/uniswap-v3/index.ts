@@ -1,10 +1,10 @@
 import { Adapter } from '@lib/adapter'
 
-import * as ethereum from './ethereum'
 import * as arbitrum from './arbitrum'
-import * as polygon from './polygon'
-import * as optimism from './optimism'
 import * as celo from './celo'
+import * as ethereum from './ethereum'
+import * as optimism from './optimism'
+import * as polygon from './polygon'
 
 const adapter: Adapter = {
   id: 'uniswap-v3',

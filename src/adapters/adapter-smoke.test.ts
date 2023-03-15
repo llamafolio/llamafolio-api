@@ -1,13 +1,13 @@
 import { adapters } from '@adapters/index'
 import { groupBy } from '@lib/array'
-import { fetchProtocolsLite, IProtocolLite } from '@lib/protocols'
+import { fetchProtocolsLite, IProtocol } from '@lib/protocols'
 
 describe('metadata basic validations', () => {
   let protocolById: { [key: string]: any } = {}
-  let protocols: IProtocolLite[] = []
+  let protocols: IProtocol[] = []
 
   beforeAll(async () => {
-    protocols = await fetchProtocolsLite()
+    protocols = await fetchProtocolsLite(adapters.map((adapter) => adapter.id))
     protocolById = groupBy(protocols, 'slug')
   })
 

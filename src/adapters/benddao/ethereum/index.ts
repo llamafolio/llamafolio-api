@@ -57,7 +57,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   // const healthFactor = await getNFTHealthFactor((sortedBalances.nfts as NFTBorrowBalance[]) || [])
 
   return {
-    balances,
-    // healthFactor,
+    groups: [{ balances }],
   }
 }

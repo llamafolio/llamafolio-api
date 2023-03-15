@@ -1,3 +1,6 @@
+import { MultiCallResult } from '@lib/multicall'
+import { isNotNullish, isSuccess } from '@lib/type'
+
 export function range(start: number, end: number, step = 1) {
   const nums: number[] = []
 
@@ -108,4 +111,25 @@ export function groupBy2<T extends Record<string, any>>(
   }
 
   return groups
+}
+
+/**
+ * Map successful Multicall results array and include errors in return
+ * @param results
+ * @param mapFn
+ */
+export function mapSuccess<T>(results: MultiCallResult[], mapFn: (res: MultiCallResult, index: number) => T | null) {
+  return results.map((res, index) => (isSuccess(res) ? mapFn(res, index) : null))
+}
+
+/**
+ * Map successful Multicall results array and filter errors in return
+ * @param results
+ * @param mapFn
+ */
+export function mapSuccessFilter<T>(
+  results: MultiCallResult[],
+  mapFn: (res: MultiCallResult, index: number) => T | null,
+) {
+  return mapSuccess(results, mapFn).filter(isNotNullish)
 }

@@ -32,15 +32,9 @@ const metaRegistry: Contract = {
   address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
 }
 
-const gaugeController: Contract = {
-  name: 'Curve Gauge Controller',
-  chain: 'ethereum',
-  address: '0x2F50D538606Fa9EDD2B11E2446BEb18C9D5846bB',
-}
-
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getPoolsContracts(ctx, metaRegistry)
-  const gauges = await getGaugesContracts(ctx, gaugeController, pools, CRV)
+  const gauges = await getGaugesContracts(ctx, pools, CRV)
 
   return {
     contracts: { gauges, pools, metaRegistry, locker },
@@ -55,6 +49,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   })
 
   return {
-    balances,
+    groups: [{ balances }],
   }
 }
