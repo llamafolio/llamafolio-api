@@ -32,9 +32,9 @@ export async function getGroVestingBalances(ctx: BalancesContext, vester: Contra
     ...token,
     address: vester.address,
     amount: BigNumber.from(balancesOfRes),
+    claimable: BigNumber.from(claimableBalancesRes),
     underlyings: [token],
     rewards: undefined,
-    vest: { available: { ...token, amount: BigNumber.from(claimableBalancesRes) } },
     category: 'vest',
   })
 

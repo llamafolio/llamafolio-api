@@ -69,9 +69,6 @@ export interface Balance extends BaseBalance {
 }
 
 export interface RewardBalance extends Balance {
-  // claimable amount. Can be lower than balance amount but not higher.
-  // ex: vested reward of 1000 but only 100 currently claimable.
-  claimable: BigNumber
   // TODO: rewards interface
   rates?: any
 }
@@ -79,21 +76,19 @@ export interface RewardBalance extends Balance {
 export interface PricedBalance extends BasePricedBalance {
   rewards?: BasePricedBalance[]
   underlyings?: BasePricedBalance[]
-  vest?: { available: BaseBalance }
-  lock?: { end: number; available: BaseBalance }
+  vest?: Vest
+  lock?: Lock
   type?: string
 }
 
 export interface Lock {
   // Unix timestamp
   end?: number
-  // Claimable balance
-  available?: BaseBalance
 }
 
 export interface Vest {
-  // Claimable balance
-  available?: BaseBalance
+  // Unix timestamp
+  end?: number
 }
 
 export interface BalancesGroup {

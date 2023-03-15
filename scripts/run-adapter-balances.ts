@@ -72,6 +72,7 @@ function printBalances(balances: PricedBalance[]) {
         symbol: balance.symbol,
         balance: millify(balance.amount.div(decimals.toString()).toNumber()),
         balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
+        claimable: balance.claimable ? millify(balance.claimable.div(decimals.toString()).toNumber()) : undefined,
         stable: balance.stable,
         type: balance.type,
         reward: '',
@@ -96,18 +97,6 @@ function printBalances(balances: PricedBalance[]) {
             return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
           })
           .join(' + ')
-      }
-
-      if (balance.category === 'lock' && balance.lock?.available) {
-        d.available = `${millify(balance.lock?.available.amount.div(decimals.toString()).toNumber())} ${
-          balance.lock?.available.symbol
-        }`
-      }
-
-      if (balance.category === 'vest' && balance.vest?.available) {
-        d.available = `${millify(balance.vest?.available.amount.div(decimals.toString()).toNumber())} ${
-          balance.vest?.available.symbol
-        }`
       }
 
       if (balance.category === 'perpetual') {
