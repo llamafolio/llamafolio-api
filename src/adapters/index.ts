@@ -38,6 +38,7 @@ import fraxlend from '@adapters/fraxlend'
 import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
 import gmx from '@adapters/gmx'
+import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
 import granaryFinance from '@adapters/granary-finance'
 import gro from '@adapters/gro'
 import hectorNetwork from '@adapters/hector-network'
@@ -149,6 +150,7 @@ export const adapters: Adapter[] = [
   gearbox,
   geist,
   gmx,
+  gnosisProtocolV1,
   granaryFinance,
   gro,
   hectorNetwork,
