@@ -12,6 +12,7 @@ import arrakis from '@adapters/arrakis'
 import atlantisLoans from '@adapters/atlantis-loans'
 import atlasUsv from '@adapters/atlas-usv'
 import aura from '@adapters/aura'
+import babylonFinance from '@adapters/babylon-finance'
 import badgerDao from '@adapters/badger-dao'
 import balancer from '@adapters/balancer'
 import bancorV3 from '@adapters/bancor-v3'
@@ -124,6 +125,7 @@ export const adapters: Adapter[] = [
   atlantisLoans,
   atlasUsv,
   aura,
+  babylonFinance,
   badgerDao,
   balancer,
   bancorV3,
