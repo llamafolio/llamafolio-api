@@ -93,6 +93,7 @@ function printBalances({ balances, yieldsByNewKeys, yieldsByPoolAddress, yieldsB
         symbol: balance.symbol,
         balance: millify(balance.amount.div(decimals.toString()).toNumber()),
         balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
+        claimable: balance.claimable ? millify(balance.claimable.div(decimals.toString()).toNumber()) : undefined,
         yield: `${yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + '%' : '-'}`,
         il: `${yieldObject !== undefined ? yieldObject?.ilRisk : '-'}`,
         stable: balance.stable,
