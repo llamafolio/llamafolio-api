@@ -39,6 +39,7 @@ import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
 import gmx from '@adapters/gmx'
 import granaryFinance from '@adapters/granary-finance'
+import gro from '@adapters/gro'
 import hectorNetwork from '@adapters/hector-network'
 import hex from '@adapters/hex'
 import homoraV2 from '@adapters/homora-v2'
@@ -149,6 +150,7 @@ export const adapters: Adapter[] = [
   geist,
   gmx,
   granaryFinance,
+  gro,
   hectorNetwork,
   hex,
   homoraV2,

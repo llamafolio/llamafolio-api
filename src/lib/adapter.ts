@@ -65,6 +65,7 @@ export interface Balance extends BaseBalance {
   // ex: Uniswap Pair -> [token0, token1]
   underlyings?: BaseBalance[] | BaseContract[]
   lock?: Lock
+  vest?: Vest
 }
 
 export interface RewardBalance extends Balance {
@@ -78,12 +79,18 @@ export interface RewardBalance extends Balance {
 export interface PricedBalance extends BasePricedBalance {
   rewards?: BasePricedBalance[]
   underlyings?: BasePricedBalance[]
+  vest?: { claimable: BigNumber }
   type?: string
 }
 
 export interface Lock {
   // Unix timestamp
   end?: number
+}
+
+export interface Vest {
+  // Claimable balance
+  claimable?: BigNumber
 }
 
 export interface BalancesGroup {
