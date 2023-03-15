@@ -30,7 +30,7 @@
     "update-llamafolio-tokens": "cd llamafolio-tokens && git checkout master && git pull && rm -rf build && npm run build"
   },
   "keywords": [],
-  "license": "ISC",
+  "license": "GPL-3.0-or-later",
   "dependencies": {
     "@defillama/sdk": "^3.0.8",
     "@llamafolio/tokens": "file:./llamafolio-tokens",
