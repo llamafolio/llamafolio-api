@@ -47,6 +47,7 @@ const abi = {
 export interface getPairsContractsParams {
   ctx: BaseContext
   factoryAddress: string
+  allPairsLengthABI?: object
   offset?: number
   limit?: number
 }
@@ -56,10 +57,16 @@ export interface Pair extends Contract {
   underlyings: [string, string]
 }
 
-export async function getPairsContracts({ ctx, factoryAddress, offset = 0, limit = 100 }: getPairsContractsParams) {
+export async function getPairsContracts({
+  ctx,
+  factoryAddress,
+  offset = 0,
+  limit = 100,
+  allPairsLengthABI = abi.allPairsLength,
+}: getPairsContractsParams) {
   const allPairsLengthRes = await call({
     ctx,
-    abi: abi.allPairsLength,
+    abi: allPairsLengthABI,
     target: factoryAddress,
   })
 

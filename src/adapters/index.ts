@@ -104,6 +104,7 @@ import uniswapV3 from '@adapters/uniswap-v3'
 import uwuLend from '@adapters/uwu-lend'
 import valasFinance from '@adapters/valas-finance'
 import vector from '@adapters/vector'
+import velodrome from '@adapters/velodrome'
 import venus from '@adapters/venus'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
@@ -219,6 +220,7 @@ export const adapters: Adapter[] = [
   uwuLend,
   valasFinance,
   vector,
+  velodrome,
   venus,
   wallet,
   wepiggy,

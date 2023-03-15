@@ -123,11 +123,11 @@ for (const chain of chains) {
   let provider
 
   // prioritize websocket RPC (better performance)
-  if (chain.rpcWssUrl) {
-    provider = new WebSocketFailoverProvider(chain.rpcWssUrl, chain)
-  } else {
-    provider = createJsonRpcProvider(chain)
-  }
+  // if (chain.rpcWssUrl) {
+  // provider = new WebSocketFailoverProvider(chain.rpcWssUrl, chain)
+  // } else {
+  provider = createJsonRpcProvider(chain)
+  // }
 
   providers[chain.id] = provider
   // update defillama sdk providers (used by calls and multicalls)
