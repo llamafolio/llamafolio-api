@@ -26,6 +26,7 @@ import chainlink from '@adapters/chainlink'
 import compound from '@adapters/compound'
 import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
+import conicFinance from '@adapters/conic-finance'
 import convexFinance from '@adapters/convex-finance'
 import curve from '@adapters/curve'
 import dydx from '@adapters/dydx'
@@ -137,6 +138,7 @@ export const adapters: Adapter[] = [
   compound,
   compoundV3,
   concentrator,
+  conicFinance,
   convexFinance,
   curve,
   dydx,
