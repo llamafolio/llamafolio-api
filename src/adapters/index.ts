@@ -96,6 +96,7 @@ import sushiswap from '@adapters/sushiswap'
 import synapse from '@adapters/synapse'
 import synthetix from '@adapters/synthetix'
 import templedao from '@adapters/templedao'
+import theOpenDaoSos from '@adapters/the-open-dao-sos'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
 import uniswapV2 from '@adapters/uniswap-v2'
@@ -210,6 +211,7 @@ export const adapters: Adapter[] = [
   synapse,
   synthetix,
   templedao,
+  theOpenDaoSos,
   traderjoe,
   truefi,
   uniswapV2,
