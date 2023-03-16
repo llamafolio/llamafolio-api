@@ -60,8 +60,8 @@ export interface Token {
   logoURI: null | string
 }
 
-export interface PairContract extends Contract {
-  gaugeAddress?: string
+export interface GaugeContract extends Contract {
+  token: string
   bribeAddress?: string
   feesAddress?: string
 }
@@ -72,7 +72,7 @@ export async function getPairsContracts(ctx: BaseContext) {
   const res = await fetch('https://api.velodrome.finance/api/v1/pairs')
   const json: PairsResponse = await res.json()
 
-  const pairs: PairContract[] = (json?.data || []).map((pair) => ({
+  const pairs: Contract[] = (json?.data || []).map((pair) => ({
     chain: ctx.chain,
     address: pair.address,
     stable: pair.stable,
@@ -80,10 +80,11 @@ export async function getPairsContracts(ctx: BaseContext) {
     underlyings: [pair.token0_address, pair.token1_address],
   }))
 
-  const gauges: PairContract[] = (json?.data || [])
+  const gauges: GaugeContract[] = (json?.data || [])
     .map((pair) => ({
       chain: ctx.chain,
       address: pair.gauge_address,
+      token: pair.address,
       stable: pair.stable,
       bribeAddress: pair.gauge?.bribeAddress,
       feesAddress: pair.gauge?.feesAddress,

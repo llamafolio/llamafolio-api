@@ -83,6 +83,7 @@ import rocketPool from '@adapters/rocket-pool'
 import scream from '@adapters/scream'
 import setProtocol from '@adapters/set-protocol'
 import shibaswap from '@adapters/shibaswap'
+import solidlyV2 from '@adapters/solidly-v2'
 import sonneFinance from '@adapters/sonne-finance'
 import spartacus from '@adapters/spartacus'
 import spiritswap from '@adapters/spiritswap'
@@ -199,6 +200,7 @@ export const adapters: Adapter[] = [
   scream,
   setProtocol,
   shibaswap,
+  solidlyV2,
   sonneFinance,
   spartacus,
   spiritswap,

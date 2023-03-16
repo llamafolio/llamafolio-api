@@ -123,6 +123,18 @@ export function mapSuccess<T>(results: MultiCallResult[], mapFn: (res: MultiCall
 }
 
 /**
+ * FlatMap successful Multicall results array and include errors in return
+ * @param results
+ * @param mapFn
+ */
+export function flatMapSuccess<T>(
+  results: MultiCallResult[],
+  mapFn: (res: MultiCallResult, index: number) => T[] | null,
+) {
+  return results.flatMap((res, index) => (isSuccess(res) ? mapFn(res, index) : []))
+}
+
+/**
  * Map successful Multicall results array and filter errors in return
  * @param results
  * @param mapFn

@@ -36,6 +36,14 @@ export const WETH: Token = {
   coingeckoId: 'weth',
 }
 
+function resolveTokenAddress(contract: Contract) {
+  if (contract.token) {
+    return contract.token.toLowerCase()
+  }
+
+  return contract.address.toLowerCase()
+}
+
 export async function resolveContractsTokens(
   client: PoolClient,
   contractsMap: {
@@ -43,6 +51,7 @@ export async function resolveContractsTokens(
   },
   storeMissingTokens = false,
 ) {
+  // collect token addresses
   const chainsAddresses: Partial<Record<Chain, Set<string>>> = {}
   const res: { [key: string]: BaseContract | BaseContract[] | undefined } = {}
 
@@ -54,7 +63,7 @@ export async function resolveContractsTokens(
         if (!chainsAddresses[contract.chain]) {
           chainsAddresses[contract.chain] = new Set<string>()
         }
-        chainsAddresses[contract.chain]?.add(contract.address.toLowerCase())
+        chainsAddresses[contract.chain]?.add(resolveTokenAddress(contract))
         if (contract.underlyings) {
           for (const underlying of contract.underlyings) {
             if (typeof underlying === 'string') {
@@ -74,7 +83,7 @@ export async function resolveContractsTokens(
       if (!chainsAddresses[contracts.chain]) {
         chainsAddresses[contracts.chain] = new Set<string>()
       }
-      chainsAddresses[contracts.chain]?.add(contracts.address.toLowerCase())
+      chainsAddresses[contracts.chain]?.add(resolveTokenAddress(contracts))
       if (contracts.underlyings) {
         for (const underlying of contracts.underlyings) {
           if (typeof underlying === 'string') {
@@ -174,8 +183,8 @@ export async function resolveContractsTokens(
           rewardTokens?.length === contract.rewards?.length
         ) {
           resContracts.push({
+            ...(chainsTokens[contract.chain]?.[resolveTokenAddress(contract)] || {}),
             ...contract,
-            ...(chainsTokens[contract.chain]?.[contract.address.toLowerCase()] || {}),
             underlyings: underlyingTokens,
             rewards: rewardTokens,
           })
@@ -197,8 +206,8 @@ export async function resolveContractsTokens(
         rewardTokens?.length === contracts.rewards?.length
       ) {
         resContracts = {
+          ...(chainsTokens[contracts.chain]?.[resolveTokenAddress(contracts)] || {}),
           ...contracts,
-          ...(chainsTokens[contracts.chain]?.[contracts.address.toLowerCase()] || {}),
           underlyings: underlyingTokens,
           rewards: rewardTokens,
         }
