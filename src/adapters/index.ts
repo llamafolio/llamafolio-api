@@ -68,6 +68,7 @@ import morphoCompound from '@adapters/morpho-compound'
 import multichain from '@adapters/multichain'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
+import nf3Ape from '@adapters/nf3-ape'
 import olympusDao from '@adapters/olympus-dao'
 import opynSqueeth from '@adapters/opyn-squeeth'
 import pancakeswap from '@adapters/pancakeswap'
@@ -185,6 +186,7 @@ export const adapters: Adapter[] = [
   multichain,
   nemesisDao,
   nexusMutual,
+  nf3Ape,
   olympusDao,
   opynSqueeth,
   pancakeswap,
