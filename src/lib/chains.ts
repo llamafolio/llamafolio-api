@@ -1,4 +1,4 @@
-import { ARBITRUM_RPC, LLAMANODES_API_KEY } from '../../env'
+import { LLAMANODES_API_KEY } from '../../env'
 import { isNotNullish } from './type'
 
 export declare type Chain =
@@ -27,8 +27,7 @@ export const chains: IChainInfo[] = [
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
-    rpcWssUrl: ARBITRUM_RPC,
-    rpcUrls: [ARBITRUM_RPC, 'https://arb1.arbitrum.io/rpc'].filter(isNotNullish),
+    rpcUrls: ['https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'].filter(isNotNullish),
   },
   {
     id: 'avax',
@@ -107,7 +106,7 @@ export const chains: IChainInfo[] = [
     id: 'xdai',
     chainId: 100,
     name: 'Gnosis Chain',
-    rpcUrls: ['https://rpc.gnosischain.com/wss', 'https://rpc.ankr.com/gnosis', 'https://xdai-archive.blockscout.com'],
+    rpcUrls: ['https://rpc.gnosischain.com', 'https://xdai-archive.blockscout.com'],
   },
 ]
 
