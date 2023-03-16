@@ -68,7 +68,7 @@ export async function getHealthFactor(ctx: BalancesContext, lensContract: Contra
     },
   })
 
-  if (ethers.constants.MaxUint256.eq(getHealthFactor.output.healthScore)) {
+  if (!getHealthFactor.success || ethers.constants.MaxUint256.eq(getHealthFactor.output.healthScore)) {
     return
   }
 
