@@ -57,6 +57,7 @@ export async function getILVContracts(ctx: BaseContext, pools: IPools[]): Promis
     const contract: Contract = {
       chain: ctx.chain,
       address: pool.address,
+      staker: pool.staker,
       decimals: decimalRes.output,
       symbol: symbolRes.output,
       provider: pool.provider,
@@ -75,11 +76,6 @@ export async function getILVContracts(ctx: BaseContext, pools: IPools[]): Promis
           '0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E',
           '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
         ]
-        contracts.push(contract)
-        break
-
-      case 'xyz':
-        contract.underlyings = ['0x618679dF9EfCd19694BB1daa8D00718Eacfa2883']
         contracts.push(contract)
         break
 

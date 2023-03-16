@@ -61,28 +61,31 @@ export async function getILVBalances(ctx: BalancesContext, pools: Contract[]): P
   const multipleUnderlyingsBalances: Balance[] = []
 
   const calls: Call[] = pools.map((pool) => ({ target: pool.address, params: [ctx.address] }))
+  const stakersCalls: Call[] = pools.map((pool) => ({ target: pool.staker, params: [ctx.address] }))
 
-  const [balancesOfRes, pendingRewardsRes] = await Promise.all([
+  const [balancesOfRes, stakerBalancesOfRes, pendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
+    multicall({ ctx, calls: stakersCalls, abi: erc20Abi.balanceOf }),
     multicall({ ctx, calls, abi: abi.pendingRewards }),
   ])
 
   pools.forEach((pool, poolIdx) => {
     const balanceOfRes = balancesOfRes[poolIdx]
+    const stakerBalanceOfRes = stakerBalancesOfRes[poolIdx]
     const underlyings = pool.underlyings as Contract[]
 
     const pendingRewards = isSuccess(pendingRewardsRes[poolIdx])
       ? BigNumber.from(pendingRewardsRes[poolIdx].output.pendingYield)
       : BN_ZERO
 
-    if (!underlyings || !isSuccess(balanceOfRes)) {
+    if (!underlyings || !isSuccess(balanceOfRes) || !isSuccess(stakerBalanceOfRes)) {
       return
     }
 
     const balance: Balance = {
       ...pool,
       address: pool.lpToken,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: BigNumber.from(balanceOfRes.output).add(stakerBalanceOfRes.output),
       underlyings,
       rewards: [{ ...ILV, amount: pendingRewards }],
       category: 'farm',
