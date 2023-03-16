@@ -23,6 +23,8 @@ export interface BaseContract {
   displayName?: string
   chain: Chain
   address: string
+  // if specified, used to retrieve token details: symbol / decimals
+  token?: string
   symbol?: string
   decimals?: number
   stable?: boolean

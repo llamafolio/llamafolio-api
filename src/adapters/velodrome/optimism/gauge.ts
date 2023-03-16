@@ -5,6 +5,8 @@ import { getStakingPoolsBalances } from '@lib/pools'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
+import { GaugeContract } from './pair'
+
 const abi = {
   last_gauge: {
     inputs: [],
@@ -32,10 +34,10 @@ export async function getGaugeContract(ctx: BaseContext, gaugeFactory: Contract)
   return contract
 }
 
-export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]) {
+export async function getGaugesBalances(ctx: BalancesContext, gauges: GaugeContract[]) {
   const stakingBalances = await getStakingPoolsBalances(ctx, gauges, {
-    getPoolAddress: (gauge) => gauge.pool,
-    getLPTokenAddress: (gauge) => gauge.pool,
+    getPoolAddress: (gauge) => (gauge as GaugeContract).token,
+    getLPTokenAddress: (gauge) => (gauge as GaugeContract).token,
   })
 
   const rewardsRes = await multicall({
