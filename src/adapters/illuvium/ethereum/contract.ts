@@ -1,5 +1,4 @@
 import { BaseContext, Contract } from '@lib/adapter'
-import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -23,8 +22,12 @@ const ILV: Token = {
   symbol: 'ILV',
 }
 
+export interface ILVContract extends Contract {
+  token: string
+}
+
 export async function getILVContracts(ctx: BaseContext, pools: IPools[]): Promise<Contract[]> {
-  const contracts: Contract[] = []
+  const contracts: ILVContract[] = []
 
   const poolTokensRes = await multicall({
     ctx,
@@ -32,36 +35,19 @@ export async function getILVContracts(ctx: BaseContext, pools: IPools[]): Promis
     abi: abi.poolToken,
   })
 
-  const [decimalsRes, symbolsRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: poolTokensRes.map((pool) => (isSuccess(pool) ? { target: pool.output } : null)),
-      abi: erc20Abi.decimals,
-    }),
-    multicall({
-      ctx,
-      calls: poolTokensRes.map((pool) => (isSuccess(pool) ? { target: pool.output } : null)),
-      abi: erc20Abi.symbol,
-    }),
-  ])
-
   pools.forEach(async (pool, poolIdx) => {
     const poolTokenRes = poolTokensRes[poolIdx]
-    const decimalRes = decimalsRes[poolIdx]
-    const symbolRes = symbolsRes[poolIdx]
 
-    if (!isSuccess(poolTokenRes) || !isSuccess(decimalRes) || !isSuccess(symbolRes)) {
+    if (!isSuccess(poolTokenRes)) {
       return
     }
 
-    const contract: Contract = {
+    const contract: ILVContract = {
       chain: ctx.chain,
       address: pool.address,
+      token: poolTokenRes.output,
       staker: pool.staker,
-      decimals: decimalRes.output,
-      symbol: symbolRes.output,
       provider: pool.provider,
-      lpToken: poolTokenRes.output,
       rewards: [ILV],
     }
 

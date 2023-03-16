@@ -7,6 +7,8 @@ import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
+import { ILVContract } from './contract'
+
 const abi = {
   pendingRewards: {
     inputs: [{ internalType: 'address', name: '_staker', type: 'address' }],
@@ -56,7 +58,7 @@ const ILV: Token = {
   symbol: 'ILV',
 }
 
-export async function getILVBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
+export async function getILVBalances(ctx: BalancesContext, pools: ILVContract[]): Promise<Balance[]> {
   const singleUnderlyingsBalances: Balance[] = []
   const multipleUnderlyingsBalances: Balance[] = []
 
@@ -84,7 +86,7 @@ export async function getILVBalances(ctx: BalancesContext, pools: Contract[]): P
 
     const balance: Balance = {
       ...pool,
-      address: pool.lpToken,
+      address: pool.token,
       amount: BigNumber.from(balanceOfRes.output).add(stakerBalanceOfRes.output),
       underlyings,
       rewards: [{ ...ILV, amount: pendingRewards }],
