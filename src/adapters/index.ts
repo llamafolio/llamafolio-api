@@ -47,6 +47,7 @@ import hectorNetwork from '@adapters/hector-network'
 import hex from '@adapters/hex'
 import homoraV2 from '@adapters/homora-v2'
 import hundredFinance from '@adapters/hundred-finance'
+import illuvium from '@adapters/illuvium'
 import inverseFinance from '@adapters/inverse-finance'
 import ironBank from '@adapters/iron-bank'
 import klimaDao from '@adapters/klima-dao'
@@ -165,6 +166,7 @@ export const adapters: Adapter[] = [
   hex,
   homoraV2,
   hundredFinance,
+  illuvium,
   inverseFinance,
   ironBank,
   klimaDao,
