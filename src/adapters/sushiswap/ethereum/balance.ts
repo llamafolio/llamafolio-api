@@ -1,5 +1,6 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { getERC20Details } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -81,16 +82,25 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  rewardToken: {
+    inputs: [],
+    name: 'rewardToken',
+    outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
 export async function getContractsFromMasterchefV2(
-  ctx: BalancesContext,
+  ctx: BaseContext,
   pairs: Contract[],
   masterchef: Contract,
 ): Promise<Contract[]> {
   const pools: Contract[] = []
+  const extraRewardsPools: Contract[] = []
+  const nonExtraRewardsPools: Contract[] = []
 
-  const { output: poolLengthRes } = await call({ ctx, target: masterchef.address, params: [], abi: abi.poolLength })
+  const { output: poolLengthRes } = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
 
   const calls: Call[] = range(0, poolLengthRes).map((idx) => ({ target: masterchef.address, params: [idx] }))
 
@@ -99,9 +109,17 @@ export async function getContractsFromMasterchefV2(
     multicall({ ctx, calls, abi: abi.rewarder }),
   ])
 
+  const rewardsTokensRes = await multicall({
+    ctx,
+    calls: rewardersRes.map((rewarder) => (isSuccess(rewarder) ? { target: rewarder.output } : null)),
+    abi: abi.rewardToken,
+  })
+
   for (let poolIdx = 0; poolIdx < poolInfosRes.length; poolIdx++) {
     const poolInfoRes = poolInfosRes[poolIdx]
     const rewarderRes = rewardersRes[poolIdx]
+    const rewards = isSuccess(rewardsTokensRes[poolIdx]) ? [rewardsTokensRes[poolIdx].output] : []
+
     if (!isSuccess(poolInfoRes)) {
       continue
     }
@@ -111,6 +129,7 @@ export async function getContractsFromMasterchefV2(
       address: poolInfoRes.output,
       lpToken: poolInfoRes.output,
       rewarder: isSuccess(rewarderRes) ? rewarderRes.output : undefined,
+      rewards,
       pid: poolInfoRes.input.params[0],
     })
   }
@@ -120,7 +139,7 @@ export async function getContractsFromMasterchefV2(
     pairByAddress[pair.address.toLowerCase()] = pair
   }
 
-  const masterchefPools = pools
+  pools
     .map((pool) => {
       const pair = pairByAddress[pool.lpToken.toLowerCase()]
 
@@ -128,12 +147,28 @@ export async function getContractsFromMasterchefV2(
         return null
       }
 
-      const contract: Contract = { ...pair, pid: pool.pid, rewarder: pool.rewarder, category: 'farm' }
-      return contract
+      const contract: Contract = {
+        ...pair,
+        pid: pool.pid,
+        rewarder: pool.rewarder,
+        rewards: pool.rewards,
+        category: 'farm',
+      }
+
+      contract.rewards!.length > 0 ? extraRewardsPools.push(contract) : nonExtraRewardsPools.push(contract)
     })
     .filter(isNotNullish)
 
-  return masterchefPools
+  const rewardTokens = await getERC20Details(
+    ctx,
+    extraRewardsPools.map((pool) => (pool.rewards as string[])?.[0]),
+  )
+
+  extraRewardsPools.forEach((pool, idx) => {
+    pool.rewards = [rewardTokens[idx]]
+  })
+
+  return [...extraRewardsPools, ...nonExtraRewardsPools]
 }
 
 export async function getBalancesFromMasterchefV2(
@@ -164,7 +199,8 @@ export async function getBalancesFromMasterchefV2(
 
   for (let userIdx = 0; userIdx < poolsBalancesRes.length; userIdx++) {
     const pool = pools[userIdx]
-    const underlying = pool.underlyings?.[0] as Contract
+    const reward = pool.rewards?.[0] as Contract
+
     const poolBalanceRes = poolsBalancesRes[userIdx]
     const pendingSushiRes = pendingSushisRes[userIdx]
     const pendingTokenRes = pendingTokensRes[userIdx]
@@ -180,7 +216,7 @@ export async function getBalancesFromMasterchefV2(
       amount: BigNumber.from(poolBalanceRes.output.amount),
       rewards: [
         { ...rewardToken, amount: BigNumber.from(pendingSushiRes.output) },
-        { ...underlying, amount: isSuccess(pendingTokenRes) ? BigNumber.from(pendingTokenRes.output) : BN_ZERO },
+        { ...reward, amount: isSuccess(pendingTokenRes) ? BigNumber.from(pendingTokenRes.output) : BN_ZERO },
       ],
     })
   }
