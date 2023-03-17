@@ -52,8 +52,10 @@ const locker: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getInchPools(ctx, poolDeployer)
-  const farmingPools = await getInchFarmingPools(ctx, farmingPoolsAddresses)
+  const [pools, farmingPools] = await Promise.all([
+    getInchPools(ctx, poolDeployer),
+    getInchFarmingPools(ctx, farmingPoolsAddresses),
+  ])
 
   return {
     contracts: { pools, farmingPools, staker, locker },

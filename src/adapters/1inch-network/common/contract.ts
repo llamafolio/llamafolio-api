@@ -1,4 +1,5 @@
 import { BaseContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
@@ -21,26 +22,22 @@ const abi = {
 }
 
 export async function getInchPools(ctx: BaseContext, deployer: Contract): Promise<Contract[]> {
-  const contracts: Contract[] = []
-
   const { output: allPoolsRes } = await call({ ctx, target: deployer.address, abi: abi.getAllPools })
 
-  allPoolsRes.forEach((pool: string) => {
-    contracts.push({ chain: ctx.chain, address: pool })
-  })
+  const contracts: Contract[] = (allPoolsRes || []).map((address: string) => ({ chain: ctx.chain, address }))
 
   return getPairsDetails(ctx, contracts)
 }
 
 export async function getInchFarmingPools(ctx: BaseContext, pools: string[]): Promise<Contract[]> {
-  const contracts: Contract[] = []
-
   const lpTokensRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool })), abi: abi.mooniswap })
 
-  pools.forEach((pool, poolIdx) => {
-    const lpTokenRes = lpTokensRes[poolIdx]
-    contracts.push({ chain: ctx.chain, address: lpTokenRes.output, lpToken: lpTokenRes.output, pool })
-  })
+  const contracts: Contract[] = mapSuccessFilter(lpTokensRes, (res, idx) => ({
+    chain: ctx.chain,
+    address: res.output,
+    lpToken: res.output,
+    pool: pools[idx],
+  }))
 
   return (await getPairsDetails(ctx, contracts)).map((res) => ({
     ...res,
