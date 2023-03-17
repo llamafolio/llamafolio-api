@@ -41,7 +41,5 @@ export const uniswapBoostedBalancesProvider = async (
     ;(pool.rewards?.[0] as Balance).amount = BigNumber.from(earnedFXSRes.output)
   }
 
-  console.log(pools)
-
   return uniswapBalancesProvider(ctx, pools as ProviderBalancesParams[])
 }
