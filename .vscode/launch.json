@@ -48,6 +48,7 @@
       "description": "What adapter to run?",
       "options": [
         "0vix",
+        "1inch-network",
         "aave-v2",
         "aave-v3",
         "abracadabra",
