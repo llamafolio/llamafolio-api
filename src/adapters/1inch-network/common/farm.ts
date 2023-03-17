@@ -52,6 +52,11 @@ const Inch: Token = {
   symbol: '1INCH',
 }
 
+const ADDRESS: { [key: string]: string } = {
+  ethereum: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  bsc: '0x55f5af28075f37e6e02d0c741e268e462215ca33',
+}
+
 export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
@@ -114,11 +119,9 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
       const getUnderlyingsBalanceRes = getUnderlyingsBalancesRes[underlyingIdx]
       const earnedOfRes = earnedOfsRes[underlyingIdx]
 
-      // replace ETH alias
+      // replace native token alias
       const underlyingAddress =
-        underlying.address === ethers.constants.AddressZero
-          ? '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'
-          : underlying.address
+        underlying.address === ethers.constants.AddressZero ? ADDRESS[ctx.chain] : underlying.address
 
       const underlyingBalance = isSuccess(getUnderlyingsBalanceRes)
         ? BigNumber.from(getUnderlyingsBalanceRes.output).mul(balanceOfRes.output).div(totalSupplyRes.output)

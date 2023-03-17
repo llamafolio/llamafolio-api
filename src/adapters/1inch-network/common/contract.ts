@@ -29,9 +29,7 @@ export async function getInchPools(ctx: BaseContext, deployer: Contract): Promis
     contracts.push({ chain: ctx.chain, address: pool })
   })
 
-  const poolsWithUnderlyings = await getPairsDetails(ctx, contracts)
-
-  return poolsWithUnderlyings
+  return getPairsDetails(ctx, contracts)
 }
 
 export async function getInchFarmingPools(ctx: BaseContext, pools: string[]): Promise<Contract[]> {
@@ -44,10 +42,8 @@ export async function getInchFarmingPools(ctx: BaseContext, pools: string[]): Pr
     contracts.push({ chain: ctx.chain, address: lpTokenRes.output, lpToken: lpTokenRes.output, pool })
   })
 
-  const poolsWithUnderlyings = (await getPairsDetails(ctx, contracts)).map((res) => ({
+  return (await getPairsDetails(ctx, contracts)).map((res) => ({
     ...res,
     address: res.pool,
   }))
-
-  return poolsWithUnderlyings
 }
