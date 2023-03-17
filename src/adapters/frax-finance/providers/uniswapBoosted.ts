@@ -1,6 +1,5 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
@@ -34,13 +33,15 @@ export const uniswapBoostedBalancesProvider = async (
     const balanceOfRes = balancesOfRes[poolIdx]
     const earnedFXSRes = earnedsFXSRes[poolIdx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(earnedFXSRes) || isZero(pool.amount)) {
+    if (!isSuccess(balanceOfRes) || !isSuccess(earnedFXSRes)) {
       continue
     }
 
     pool.amount = BigNumber.from(balanceOfRes.output)
     ;(pool.rewards?.[0] as Balance).amount = BigNumber.from(earnedFXSRes.output)
   }
+
+  console.log(pools)
 
   return uniswapBalancesProvider(ctx, pools as ProviderBalancesParams[])
 }
