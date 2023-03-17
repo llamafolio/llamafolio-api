@@ -31,7 +31,11 @@ export async function getFraxLockerBalances(ctx: BalancesContext, lockers: Contr
 
   const [lockedBalancesOf, incentivesEarnedRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.locked }),
-    multicall({ ctx, calls, abi: abi.earned }),
+    multicall({
+      ctx,
+      calls: lockers.map((locker) => ({ target: locker.rewarder, params: [ctx.address] })),
+      abi: abi.earned,
+    }),
   ])
 
   for (let lockerIdx = 0; lockerIdx < lockers.length; lockerIdx++) {
