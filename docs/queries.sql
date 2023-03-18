@@ -333,7 +333,7 @@ BEGIN
 				(SELECT %L::bytea as token_address, %L::varchar AS chain 
 				FROM %I.transactions 
 				WHERE (
-					to_address = %L AND value > 0 OR
+					(to_address = %L AND value > 0) OR
 					from_address = %L
 				)
 				LIMIT 1)',
