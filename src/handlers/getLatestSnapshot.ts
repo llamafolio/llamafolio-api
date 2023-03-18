@@ -2,19 +2,23 @@ import { selectLastBalancesGroupsByFromAddress } from '@db/balances-groups'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { groupBy } from '@lib/array'
-import { sumBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Chain } from '@lib/chains'
+import { sum } from '@lib/math'
 import { TUnixTimestamp } from '@lib/type'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface SnapshotChainResponse {
   id: Chain
   balanceUSD: number
+  debtUSD: number
+  rewardUSD: number
 }
 
 export interface LatestSnapshotResponse {
   balanceUSD: number
+  debtUSD: number
+  rewardUSD: number
   chains: SnapshotChainResponse[]
   updatedAt?: TUnixTimestamp
 }
@@ -38,6 +42,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     if (lastBalancesGroups.length === 0) {
       const response: LatestSnapshotResponse = {
         balanceUSD: 0,
+        debtUSD: 0,
+        rewardUSD: 0,
         chains: [],
       }
       // balances updates minimum interval is 2 minutes
@@ -48,12 +54,18 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const lastBalancesGroupsByChain = groupBy(lastBalancesGroups, 'chain')
 
+    const chains = Object.keys(lastBalancesGroupsByChain).map((chain) => ({
+      id: chain as Chain,
+      balanceUSD: sum(lastBalancesGroupsByChain[chain].map((group) => group.balanceUSD)),
+      debtUSD: sum(lastBalancesGroupsByChain[chain].map((group) => group.debtUSD || 0)),
+      rewardUSD: sum(lastBalancesGroupsByChain[chain].map((group) => group.rewardUSD || 0)),
+    }))
+
     const response: LatestSnapshotResponse = {
-      balanceUSD: sumBalances(lastBalancesGroups),
-      chains: Object.keys(lastBalancesGroupsByChain).map((chain) => ({
-        id: chain as Chain,
-        balanceUSD: sumBalances(lastBalancesGroupsByChain[chain]),
-      })),
+      balanceUSD: sum(chains.map((group) => group.balanceUSD)),
+      debtUSD: sum(chains.map((group) => group.debtUSD)),
+      rewardUSD: sum(chains.map((group) => group.rewardUSD)),
+      chains,
       updatedAt: Math.floor(new Date(timestamp).getTime() / 1000),
     }
 
