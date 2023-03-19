@@ -78,12 +78,7 @@ export const chains: IChainInfo[] = [
     id: 'harmony',
     chainId: 1666600000,
     name: 'Harmony',
-    rpcUrls: [
-      `https://api.harmony.one`,
-      'https://harmony-0-rpc.gateway.pokt.network',
-      'https://api.harmony.one',
-      'https://api.s0.t.hmny.io',
-    ],
+    rpcUrls: [`https://api.harmony.one`, 'https://harmony-0-rpc.gateway.pokt.network', 'https://api.s0.t.hmny.io'],
   },
   {
     id: 'polygon',

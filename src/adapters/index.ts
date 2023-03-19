@@ -32,6 +32,7 @@ import conicFinance from '@adapters/conic-finance'
 import convexFinance from '@adapters/convex-finance'
 import curve from '@adapters/curve'
 import dydx from '@adapters/dydx'
+import equalizerExchange from '@adapters/equalizer-exchange'
 import euler from '@adapters/euler'
 import floorDao from '@adapters/floor-dao'
 import fluxFinance from '@adapters/flux-finance'
@@ -152,6 +153,7 @@ export const adapters: Adapter[] = [
   convexFinance,
   curve,
   dydx,
+  equalizerExchange,
   euler,
   floorDao,
   fluxFinance,
