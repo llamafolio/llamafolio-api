@@ -65,7 +65,7 @@ export async function getLockerIzumiBalances(ctx: BalancesContext, locker: Contr
     abi: abi.nftLocked,
   })
 
-  for (let idx = 0; idx < balanceOfsRes.length; idx++) {
+  for (let idx = 0; idx < balanceOfsRes; idx++) {
     const lockedRes = lockedsRes[idx]
 
     if (!isSuccess(lockedRes)) {
