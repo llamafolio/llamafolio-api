@@ -3,11 +3,11 @@ import fetch from 'node-fetch'
 
 export interface PairsResponse {
   success: boolean
-  data: Datum[]
+  data: Pair[]
   meta: Meta
 }
 
-export interface Datum {
+export interface Pair {
   address: string
   symbol: string
   totalSupply: number
