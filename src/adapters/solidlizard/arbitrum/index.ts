@@ -1,26 +1,26 @@
-// https://docs.velodrome.finance/
+// https://solidlizard.gitbook.io/solidlizard/security/contracts
 
+import { getGaugesBalances } from '@adapters/velodrome/optimism/gauge'
+import { getVotingEscrowBalances } from '@adapters/velodrome/optimism/votingEscrow'
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
-import { getGaugesBalances } from './gauge'
 import { getPairsContracts } from './pair'
-import { getVotingEscrowBalances } from './votingEscrow'
 
-const velo: Contract = {
-  chain: 'optimism',
-  address: '0x3c8b650257cfb5f272f799f5e2b4e65093a11a05',
-  name: 'Velodrome Finance',
-  symbol: 'VELO',
+const sliz: Contract = {
+  chain: 'arbitrum',
+  address: '0x463913d3a3d3d291667d53b8325c598eb88d3b0e',
+  name: 'SolidLizard',
+  symbol: 'SLIZ',
   decimals: 18,
-  coingeckoId: 'velodrome-finance',
+  coingeckoId: 'solidlizard',
   stable: false,
 }
 
 const votingEscrow: Contract = {
-  chain: 'optimism',
-  address: '0x9c7305eb78a432ced5C4D14Cac27E8Ed569A2e26',
+  chain: 'arbitrum',
+  address: '0x29d3622c78615A1E7459e4bE434d816b7de293e4',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
@@ -36,7 +36,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: getPairsBalances,
     gauges: getGaugesBalances,
-    votingEscrow: (ctx, votingEscrow) => getVotingEscrowBalances(ctx, votingEscrow, velo),
+    votingEscrow: (ctx, votingEscrow) => getVotingEscrowBalances(ctx, votingEscrow, sliz),
   })
 
   return {

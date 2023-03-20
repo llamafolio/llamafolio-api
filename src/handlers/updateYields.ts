@@ -44,6 +44,10 @@ export interface YieldOldResponse {
 
 export async function fetchYields() {
   const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
+  if (!yieldsRes.ok) {
+    throw new Error('failed to fetch yields')
+  }
+
   const yields: YieldOldResponse = await yieldsRes.json()
   return yields.data
 }

@@ -29,6 +29,32 @@ Object.defineProperties(BigNumber.prototype, {
   },
 })
 
+async function fetchYields() {
+  const yieldsByPoolAddress: { [key: string]: any } = {}
+  const yieldsByKeys: { [key: string]: any } = {}
+  const yieldsByNewKeys: { [key: string]: any } = {}
+
+  try {
+    const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
+
+    if (!yieldsRes.ok) {
+      throw new Error('failed to fetch yields')
+    }
+
+    const yieldsData = (await yieldsRes.json()).data
+
+    for (let i = 0; i < yieldsData.length; i++) {
+      yieldsByPoolAddress[yieldsData[i].pool_old.toLowerCase()] = yieldsData[i]
+      yieldsByKeys[yieldsData[i].pool_old] = yieldsData[i]
+      yieldsByNewKeys[yieldsData[i].pool] = yieldsData[i]
+    }
+
+    return { yieldsByKeys, yieldsByPoolAddress, yieldsByNewKeys }
+  } catch (error) {
+    return { yieldsByKeys, yieldsByPoolAddress, yieldsByNewKeys }
+  }
+}
+
 function printBalances({ balances, yieldsByNewKeys, yieldsByPoolAddress, yieldsByKeys }) {
   // group by category
   const balancesByCategory = groupBy(balances, 'category')
@@ -165,20 +191,10 @@ async function main() {
       resolveContractsTokens(client, contractsRes?.props || {}, true),
     ])
 
-    const balancesConfigRes = await adapter[chain]?.getBalances(ctx, contracts, props)
-
-    const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
-    const yieldsData = (await yieldsRes.json()).data
-
-    const yieldsByPoolAddress: { [key: string]: any } = {}
-    const yieldsByKeys: { [key: string]: any } = {}
-    const yieldsByNewKeys: { [key: string]: any } = {}
-
-    for (let i = 0; i < yieldsData.length; i++) {
-      yieldsByPoolAddress[yieldsData[i].pool_old.toLowerCase()] = yieldsData[i]
-      yieldsByKeys[yieldsData[i].pool_old] = yieldsData[i]
-      yieldsByNewKeys[yieldsData[i].pool] = yieldsData[i]
-    }
+    const [balancesConfigRes, { yieldsByKeys, yieldsByNewKeys, yieldsByPoolAddress }] = await Promise.all([
+      adapter[chain]?.getBalances(ctx, contracts, props),
+      fetchYields(),
+    ])
 
     // flatten balances and fetch their prices
     const balances: ExtendedBalance[] =
