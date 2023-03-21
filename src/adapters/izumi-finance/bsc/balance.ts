@@ -1,12 +1,12 @@
+import { getUnderlyingAmounts } from '@adapters/uniswap-v3/common/pools'
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { keyBy, mapSuccessFilter, range } from '@lib/array'
+import { flatMapSuccess, keyBy, mapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { Category } from '@lib/category'
 import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
-import JSBI from 'jsbi'
 
 const abi = {
   tokenOfOwnerByIndex: {
@@ -117,61 +117,62 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
 
   const liquiditiesRes = await multicall({
     ctx,
-    calls: tokensOfOwnerByIndexRes.map((tokenIds) =>
-      isSuccess(tokenIds) ? { target: contract.address, params: [tokenIds.output] } : null,
-    ),
+    calls: mapSuccess(tokensOfOwnerByIndexRes, (tokenIds) => ({
+      target: contract.address,
+      params: [tokenIds.output],
+    })),
     abi: abi.liquidities,
   })
 
   const poolsInfosRes = await multicall({
     ctx,
-    calls: liquiditiesRes.map((liquidity) =>
-      isSuccess(liquidity) ? { target: contract.address, params: [liquidity.output.poolId] } : null,
-    ),
+    calls: mapSuccess(liquiditiesRes, (liquidity) => ({
+      target: contract.address,
+      params: [liquidity.output.poolId],
+    })),
     abi: abi.poolMetas,
   })
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: poolsInfosRes.map((infos) =>
-      isSuccess(infos)
-        ? { target: factory.address, params: [infos.output.tokenX, infos.output.tokenY, infos.output.fee] }
-        : null,
-    ),
+    calls: mapSuccess(poolsInfosRes, (infos) => ({
+      target: factory.address,
+      params: [infos.output.tokenX, infos.output.tokenY, infos.output.fee],
+    })),
     abi: abi.pool,
   })
 
   const poolsStates = await multicall({
     ctx,
-    calls: poolsAddressesRes.map((pool) => (isSuccess(pool) ? { target: pool.output } : null)),
+    calls: mapSuccess(poolsAddressesRes, (pool) => ({ target: pool.output })),
     abi: abi.state,
   })
 
   const underlyingTokens = await getERC20Details(
     ctx,
-    poolsInfosRes.flatMap((infosRes) => (infosRes.success ? [infosRes.output.tokenX, infosRes.output.tokenY] : [])),
+    flatMapSuccess(poolsInfosRes, (infosRes) => [infosRes.output.tokenX, infosRes.output.tokenY]),
   )
 
   const underlyingTokenByAddress = keyBy(underlyingTokens, 'address', { lowercase: true })
 
-  const sqrt96s = mapSuccessFilter(poolsStates, (res) => res.output.sqrtPrice_96)
-  const liquidities = mapSuccessFilter(poolsStates, (res) => res.output.liquidity)
-  const lowerTicks = mapSuccessFilter(liquiditiesRes, (res) => res.output.leftPt)
-  const upperTicks = mapSuccessFilter(liquiditiesRes, (res) => res.output.rightPt)
-
   for (let poolIdx = 0; poolIdx < balancesLength; poolIdx++) {
-    const poolsInfoRes = poolsInfosRes[poolIdx].output
-    const poolsAddressRes = poolsAddressesRes[poolIdx]
-    const sqrt96 = sqrt96s[poolIdx]
-    const liquidity = liquidities[poolIdx]
-    const lowerTick = lowerTicks[poolIdx]
-    const upperTick = upperTicks[poolIdx]
-    const tokenX = underlyingTokenByAddress[poolsInfoRes.tokenX.toLowerCase()]
-    const tokenY = underlyingTokenByAddress[poolsInfoRes.tokenY.toLowerCase()]
+    const poolStateRes = poolsStates[poolIdx]
+    if (!isSuccess(poolStateRes)) {
+      continue
+    }
+
+    const address = poolsAddressesRes[poolIdx].output
+    const poolInfo = poolsInfosRes[poolIdx].output
+    const poolState = poolsStates[poolIdx].output
+    const { liquidity, sqrtPrice_96: sqrt96 } = poolState
+    const liquidities = liquiditiesRes[poolIdx].output
+    const { leftPt: lowerTick, rightPt: upperTick } = liquidities
+    const tokenX = underlyingTokenByAddress[poolInfo.tokenX.toLowerCase()]
+    const tokenY = underlyingTokenByAddress[poolInfo.tokenY.toLowerCase()]
 
     const underlyingAmounts = getUnderlyingAmounts(
       parseInt(liquidity),
-      sqrt96,
+      parseInt(sqrt96),
       parseInt(lowerTick),
       parseInt(upperTick),
     )
@@ -179,7 +180,7 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
     balances.push({
       standard: 'erc721',
       chain: ctx.chain,
-      address: poolsAddressRes.output,
+      address,
       symbol: `${tokenX.symbol}/${tokenY.symbol}`,
       category: 'lp' as Category,
       amount: BigNumber.from('1'),
@@ -189,37 +190,6 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
       ],
     })
   }
+
   return balances
-}
-
-const Q96 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(96))
-
-function getTickAtSqrtRatio(sqrtPriceX96: number) {
-  const tick = Math.floor(Math.log((sqrtPriceX96 / +Q96) ** 2) / Math.log(1.0001))
-  return tick
-}
-
-function getUnderlyingAmounts(liquidity: number, sqrtPriceX96: number, tickLow: number, tickHigh: number) {
-  const sqrtRatioA = Math.sqrt(1.0001 ** tickLow)
-  const sqrtRatioB = Math.sqrt(1.0001 ** tickHigh)
-
-  const currentTick = getTickAtSqrtRatio(sqrtPriceX96)
-  const sqrtPrice = sqrtPriceX96 / +Q96
-
-  let amount0 = 0
-  let amount1 = 0
-  if (currentTick <= tickLow) {
-    amount0 = Math.floor(liquidity * ((sqrtRatioB - sqrtRatioA) / (sqrtRatioA * sqrtRatioB)))
-  } else if (currentTick > tickHigh) {
-    amount1 = Math.floor(liquidity * (sqrtRatioB - sqrtRatioA))
-  } else if (currentTick >= tickLow && currentTick < tickHigh) {
-    amount0 = Math.floor(liquidity * ((sqrtRatioB - sqrtPrice) / (sqrtPrice * sqrtRatioB)))
-    amount1 = Math.floor(liquidity * (sqrtPrice - sqrtRatioA))
-  }
-
-  return [
-    // Note: convert exponent to fullwide string to please BigNumber
-    BigNumber.from(amount0.toLocaleString('fullwide', { useGrouping: false })),
-    BigNumber.from(amount1.toLocaleString('fullwide', { useGrouping: false })),
-  ]
 }

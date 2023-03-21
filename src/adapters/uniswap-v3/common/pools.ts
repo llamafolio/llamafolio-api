@@ -276,12 +276,12 @@ const Q128 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(128))
 const Q256 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(256))
 const Q96 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(96))
 
-function getTickAtSqrtRatio(sqrtPriceX96: number) {
+export function getTickAtSqrtRatio(sqrtPriceX96: number) {
   const tick = Math.floor(Math.log((sqrtPriceX96 / Q96) ** 2) / Math.log(1.0001))
   return tick
 }
 
-function getUnderlyingAmounts(liquidity: number, sqrtPriceX96: number, tickLow: number, tickHigh: number) {
+export function getUnderlyingAmounts(liquidity: number, sqrtPriceX96: number, tickLow: number, tickHigh: number) {
   const sqrtRatioA = Math.sqrt(1.0001 ** tickLow)
   const sqrtRatioB = Math.sqrt(1.0001 ** tickHigh)
 
