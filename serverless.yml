@@ -126,6 +126,14 @@ functions:
           method: get
           path: /contracts/{address}
 
+  getGasPriceChart:
+    handler: src/handlers/getGasPriceChart.handler
+    description: Get gas price chart
+    events:
+      - httpApi:
+          method: get
+          path: /gas_price/{chain}/chart
+
   getHistory:
     handler: src/handlers/getHistory.handler
     description: Get address history
