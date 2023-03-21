@@ -1,10 +1,21 @@
 import { Balance, Contract } from '@lib/adapter'
 import { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
+import { abi as erc20Abi } from '@lib/erc20'
+import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
-const WAVAX: Contract = {
-  name: 'Wrapped AVAX',
+const abi = {
+  getPooledAvaxByShares: {
+    inputs: [{ internalType: 'uint256', name: 'shareAmount', type: 'uint256' }],
+    name: 'getPooledAvaxByShares',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+const WAVAX: Token = {
   chain: 'avax',
   address: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
   symbol: 'WAVAX ',
@@ -12,59 +23,24 @@ const WAVAX: Contract = {
 }
 
 export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const [balanceOfRes, poolValueRes, totalSupplyRes] = await Promise.all([
-    call({
-      ctx,
-      target: contract.address,
-      params: ctx.address,
-      abi: {
-        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-        name: 'balanceOf',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+  const { output: balanceOfRes } = await call({
+    ctx,
+    target: contract.address,
+    params: ctx.address,
+    abi: erc20Abi.balanceOf,
+  })
 
-    call({
-      ctx,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'totalPooledAvax',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+  const { output: fmtBalanceOf } = await call({
+    ctx,
+    target: contract.address,
+    params: [balanceOfRes],
+    abi: abi.getPooledAvaxByShares,
+  })
 
-    call({
-      ctx,
-      target: contract.address,
-      params: [],
-      abi: {
-        inputs: [],
-        name: 'totalSupply',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-  ])
-
-  const balanceOf = BigNumber.from(balanceOfRes.output)
-  const poolValue = BigNumber.from(poolValueRes.output)
-  const totalSupply = BigNumber.from(totalSupplyRes.output)
-
-  const amount = balanceOf.mul(poolValue).div(totalSupply)
-
-  const balance: Balance = {
+  return {
     ...contract,
     rewards: undefined,
-    amount,
-    underlyings: [{ ...WAVAX, amount }],
+    amount: BigNumber.from(fmtBalanceOf),
+    underlyings: [{ ...WAVAX }],
   }
-
-  return balance
 }
