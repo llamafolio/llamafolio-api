@@ -2,6 +2,7 @@ import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getLyraStakeBalances } from '../common/stake'
+import { getLyraFarmBalances } from './farm'
 
 const stakers: Contract[] = [
   {
@@ -30,15 +31,26 @@ const stakers: Contract[] = [
   },
 ]
 
+const lyraFarms: Contract[] = [
+  {
+    chain: 'ethereum',
+    address: '0x1a364a7e66b21ed3045b13d3465627f9e9613f07',
+    lpToken: '0xE6f375A29cDd3B40fa7aA0932fF510D304D95FA6',
+    underlyings: ['0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'],
+    rewards: ['0x01BA67AAC7f75f647D94220Cc98FB30FCc5105Bf'],
+  },
+]
+
 export const getContracts = () => {
   return {
-    contracts: { stakers },
+    contracts: { stakers, lyraFarms },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     stakers: getLyraStakeBalances,
+    lyraFarms: getLyraFarmBalances,
   })
 
   return {
