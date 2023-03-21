@@ -1,10 +1,11 @@
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { call } from '@lib/call'
 import { getERC20Details } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber, ethers } from 'ethers'
 import { range } from 'lodash'
@@ -111,7 +112,7 @@ export async function getContractsFromMasterchefV2(
 
   const rewardsTokensRes = await multicall({
     ctx,
-    calls: rewardersRes.map((rewarder) => (isSuccess(rewarder) ? { target: rewarder.output } : null)),
+    calls: mapSuccess(rewardersRes, (rewarder) => ({ target: rewarder.output })),
     abi: abi.rewardToken,
   })
 
@@ -139,25 +140,26 @@ export async function getContractsFromMasterchefV2(
     pairByAddress[pair.address.toLowerCase()] = pair
   }
 
-  pools
-    .map((pool) => {
-      const pair = pairByAddress[pool.lpToken.toLowerCase()]
+  for (const pool of pools) {
+    const pair = pairByAddress[pool.lpToken.toLowerCase()]
+    if (!pair) {
+      continue
+    }
 
-      if (!pair) {
-        return null
-      }
+    const contract: Contract = {
+      ...pair,
+      pid: pool.pid,
+      rewarder: pool.rewarder,
+      rewards: pool.rewards,
+      category: 'farm',
+    }
 
-      const contract: Contract = {
-        ...pair,
-        pid: pool.pid,
-        rewarder: pool.rewarder,
-        rewards: pool.rewards,
-        category: 'farm',
-      }
-
-      contract.rewards!.length > 0 ? extraRewardsPools.push(contract) : nonExtraRewardsPools.push(contract)
-    })
-    .filter(isNotNullish)
+    if (contract.rewards && contract.rewards.length > 0) {
+      extraRewardsPools.push(contract)
+    } else {
+      nonExtraRewardsPools.push(contract)
+    }
+  }
 
   const rewardTokens = await getERC20Details(
     ctx,
