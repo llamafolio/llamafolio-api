@@ -1,0 +1,766 @@
+[
+  {
+    "inputs": [{ "internalType": "address", "name": "_gov", "type": "address" }],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "oldGov", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "newGov", "type": "address" }
+    ],
+    "name": "GovernanceUpdated",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "BPS_DIVIDER",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "FUNDING_INTERVAL",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_FEE",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_KEEPER_FEE_SHARE",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MAX_POOL_WITHDRAWAL_FEE",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "bool", "name": "isLong", "type": "bool" },
+          { "internalType": "uint64", "name": "timestamp", "type": "uint64" },
+          { "internalType": "address", "name": "user", "type": "address" },
+          { "internalType": "string", "name": "market", "type": "string" },
+          { "internalType": "int256", "name": "fundingTracker", "type": "int256" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint256", "name": "margin", "type": "uint256" },
+          { "internalType": "uint256", "name": "size", "type": "uint256" }
+        ],
+        "internalType": "struct IStore.Position",
+        "name": "position",
+        "type": "tuple"
+      }
+    ],
+    "name": "addOrUpdatePosition",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "bool", "name": "isLong", "type": "bool" },
+          { "internalType": "bool", "name": "isReduceOnly", "type": "bool" },
+          { "internalType": "uint8", "name": "orderType", "type": "uint8" },
+          { "internalType": "uint72", "name": "orderId", "type": "uint72" },
+          { "internalType": "address", "name": "user", "type": "address" },
+          { "internalType": "string", "name": "market", "type": "string" },
+          { "internalType": "uint64", "name": "timestamp", "type": "uint64" },
+          { "internalType": "uint192", "name": "fee", "type": "uint192" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint256", "name": "margin", "type": "uint256" },
+          { "internalType": "uint256", "name": "size", "type": "uint256" }
+        ],
+        "internalType": "struct IStore.Order",
+        "name": "order",
+        "type": "tuple"
+      }
+    ],
+    "name": "addOrder",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bufferBalance",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "bufferPayoutPeriod",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "burnCLP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "clp",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "currency",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "decrementBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "name": "decrementBufferBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "market", "type": "string" },
+      { "internalType": "uint256", "name": "size", "type": "uint256" },
+      { "internalType": "bool", "name": "isLong", "type": "bool" }
+    ],
+    "name": "decrementOI",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "name": "decrementPoolBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getBalance",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCLPSupply",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "amountIn", "type": "uint256" },
+      { "internalType": "address", "name": "tokenIn", "type": "address" },
+      { "internalType": "uint24", "name": "poolFee", "type": "uint24" }
+    ],
+    "name": "getEstimatedOutputTokens",
+    "outputs": [{ "internalType": "uint256", "name": "amountOut", "type": "uint256" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "market", "type": "string" }],
+    "name": "getFundingFactor",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "market", "type": "string" }],
+    "name": "getFundingLastUpdated",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "market", "type": "string" }],
+    "name": "getFundingTracker",
+    "outputs": [{ "internalType": "int256", "name": "", "type": "int256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getLockedMargin",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "market", "type": "string" }],
+    "name": "getMarket",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "string", "name": "symbol", "type": "string" },
+          { "internalType": "address", "name": "feed", "type": "address" },
+          { "internalType": "uint16", "name": "minSettlementTime", "type": "uint16" },
+          { "internalType": "uint16", "name": "maxLeverage", "type": "uint16" },
+          { "internalType": "uint32", "name": "fee", "type": "uint32" },
+          { "internalType": "uint32", "name": "fundingFactor", "type": "uint32" },
+          { "internalType": "uint256", "name": "maxOI", "type": "uint256" },
+          { "internalType": "uint256", "name": "minSize", "type": "uint256" }
+        ],
+        "internalType": "struct IStore.Market",
+        "name": "_market",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getMarketList",
+    "outputs": [{ "internalType": "string[]", "name": "", "type": "string[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "market", "type": "string" }],
+    "name": "getOILong",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "market", "type": "string" }],
+    "name": "getOIShort",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "id", "type": "uint256" }],
+    "name": "getOrder",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "bool", "name": "isLong", "type": "bool" },
+          { "internalType": "bool", "name": "isReduceOnly", "type": "bool" },
+          { "internalType": "uint8", "name": "orderType", "type": "uint8" },
+          { "internalType": "uint72", "name": "orderId", "type": "uint72" },
+          { "internalType": "address", "name": "user", "type": "address" },
+          { "internalType": "string", "name": "market", "type": "string" },
+          { "internalType": "uint64", "name": "timestamp", "type": "uint64" },
+          { "internalType": "uint192", "name": "fee", "type": "uint192" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint256", "name": "margin", "type": "uint256" },
+          { "internalType": "uint256", "name": "size", "type": "uint256" }
+        ],
+        "internalType": "struct IStore.Order",
+        "name": "_order",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getOrders",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "bool", "name": "isLong", "type": "bool" },
+          { "internalType": "bool", "name": "isReduceOnly", "type": "bool" },
+          { "internalType": "uint8", "name": "orderType", "type": "uint8" },
+          { "internalType": "uint72", "name": "orderId", "type": "uint72" },
+          { "internalType": "address", "name": "user", "type": "address" },
+          { "internalType": "string", "name": "market", "type": "string" },
+          { "internalType": "uint64", "name": "timestamp", "type": "uint64" },
+          { "internalType": "uint192", "name": "fee", "type": "uint192" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint256", "name": "margin", "type": "uint256" },
+          { "internalType": "uint256", "name": "size", "type": "uint256" }
+        ],
+        "internalType": "struct IStore.Order[]",
+        "name": "_orders",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "string", "name": "market", "type": "string" }
+    ],
+    "name": "getPosition",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "bool", "name": "isLong", "type": "bool" },
+          { "internalType": "uint64", "name": "timestamp", "type": "uint64" },
+          { "internalType": "address", "name": "user", "type": "address" },
+          { "internalType": "string", "name": "market", "type": "string" },
+          { "internalType": "int256", "name": "fundingTracker", "type": "int256" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint256", "name": "margin", "type": "uint256" },
+          { "internalType": "uint256", "name": "size", "type": "uint256" }
+        ],
+        "internalType": "struct IStore.Position",
+        "name": "position",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getUserOrders",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "bool", "name": "isLong", "type": "bool" },
+          { "internalType": "bool", "name": "isReduceOnly", "type": "bool" },
+          { "internalType": "uint8", "name": "orderType", "type": "uint8" },
+          { "internalType": "uint72", "name": "orderId", "type": "uint72" },
+          { "internalType": "address", "name": "user", "type": "address" },
+          { "internalType": "string", "name": "market", "type": "string" },
+          { "internalType": "uint64", "name": "timestamp", "type": "uint64" },
+          { "internalType": "uint192", "name": "fee", "type": "uint192" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint256", "name": "margin", "type": "uint256" },
+          { "internalType": "uint256", "name": "size", "type": "uint256" }
+        ],
+        "internalType": "struct IStore.Order[]",
+        "name": "_orders",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getUserPoolBalance",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "user", "type": "address" }],
+    "name": "getUserPositions",
+    "outputs": [
+      {
+        "components": [
+          { "internalType": "bool", "name": "isLong", "type": "bool" },
+          { "internalType": "uint64", "name": "timestamp", "type": "uint64" },
+          { "internalType": "address", "name": "user", "type": "address" },
+          { "internalType": "string", "name": "market", "type": "string" },
+          { "internalType": "int256", "name": "fundingTracker", "type": "int256" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint256", "name": "margin", "type": "uint256" },
+          { "internalType": "uint256", "name": "size", "type": "uint256" }
+        ],
+        "internalType": "struct IStore.Position[]",
+        "name": "_positions",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "i", "type": "uint256" }],
+    "name": "getUserWithLockedMargin",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getUsersWithLockedMarginLength",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "gov",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "incrementBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "name": "incrementBufferBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "market", "type": "string" },
+      { "internalType": "uint256", "name": "size", "type": "uint256" },
+      { "internalType": "bool", "name": "isLong", "type": "bool" }
+    ],
+    "name": "incrementOI",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "name": "incrementPoolBalance",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "keeperFeeShare",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_trade", "type": "address" },
+      { "internalType": "address", "name": "_pool", "type": "address" },
+      { "internalType": "address", "name": "_currency", "type": "address" },
+      { "internalType": "address", "name": "_clp", "type": "address" }
+    ],
+    "name": "link",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "_swapRouter", "type": "address" },
+      { "internalType": "address", "name": "_quoter", "type": "address" },
+      { "internalType": "address", "name": "_weth", "type": "address" }
+    ],
+    "name": "linkUniswap",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "lockMargin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "marketList",
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "minimumMarginLevel",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "mintCLP",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "pool",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "poolBalance",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "poolFeeShare",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "poolLastPaid",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "poolWithdrawalFee",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "quoter",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_orderId", "type": "uint256" }],
+    "name": "removeOrder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "string", "name": "market", "type": "string" }
+    ],
+    "name": "removePosition",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "name": "setBufferPayoutPeriod",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "market", "type": "string" },
+      { "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "name": "setFundingLastUpdated",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "name": "setKeeperFeeShare",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "market", "type": "string" },
+      {
+        "components": [
+          { "internalType": "string", "name": "symbol", "type": "string" },
+          { "internalType": "address", "name": "feed", "type": "address" },
+          { "internalType": "uint16", "name": "minSettlementTime", "type": "uint16" },
+          { "internalType": "uint16", "name": "maxLeverage", "type": "uint16" },
+          { "internalType": "uint32", "name": "fee", "type": "uint32" },
+          { "internalType": "uint32", "name": "fundingFactor", "type": "uint32" },
+          { "internalType": "uint256", "name": "maxOI", "type": "uint256" },
+          { "internalType": "uint256", "name": "minSize", "type": "uint256" }
+        ],
+        "internalType": "struct IStore.Market",
+        "name": "marketInfo",
+        "type": "tuple"
+      }
+    ],
+    "name": "setMarket",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "name": "setMinimumMarginLevel",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "name": "setPoolFeeShare",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "timestamp", "type": "uint256" }],
+    "name": "setPoolLastPaid",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "amount", "type": "uint256" }],
+    "name": "setPoolWithdrawalFee",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "amountIn", "type": "uint256" },
+      { "internalType": "uint256", "name": "amountOutMin", "type": "uint256" },
+      { "internalType": "address", "name": "tokenIn", "type": "address" },
+      { "internalType": "uint24", "name": "poolFee", "type": "uint24" }
+    ],
+    "name": "swapExactInputSingle",
+    "outputs": [{ "internalType": "uint256", "name": "amountOut", "type": "uint256" }],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "swapRouter",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "trade",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "transferIn",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "transferOut",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "address", "name": "user", "type": "address" },
+      { "internalType": "uint256", "name": "amount", "type": "uint256" }
+    ],
+    "name": "unlockMargin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string", "name": "market", "type": "string" },
+      { "internalType": "int256", "name": "fundingIncrement", "type": "int256" }
+    ],
+    "name": "updateFundingTracker",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_gov", "type": "address" }],
+    "name": "updateGov",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "components": [
+          { "internalType": "bool", "name": "isLong", "type": "bool" },
+          { "internalType": "bool", "name": "isReduceOnly", "type": "bool" },
+          { "internalType": "uint8", "name": "orderType", "type": "uint8" },
+          { "internalType": "uint72", "name": "orderId", "type": "uint72" },
+          { "internalType": "address", "name": "user", "type": "address" },
+          { "internalType": "string", "name": "market", "type": "string" },
+          { "internalType": "uint64", "name": "timestamp", "type": "uint64" },
+          { "internalType": "uint192", "name": "fee", "type": "uint192" },
+          { "internalType": "uint256", "name": "price", "type": "uint256" },
+          { "internalType": "uint256", "name": "margin", "type": "uint256" },
+          { "internalType": "uint256", "name": "size", "type": "uint256" }
+        ],
+        "internalType": "struct IStore.Order",
+        "name": "order",
+        "type": "tuple"
+      }
+    ],
+    "name": "updateOrder",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "weth",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

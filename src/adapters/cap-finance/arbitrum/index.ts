@@ -1,7 +1,7 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getDepositBalances, getStakeBalances } from './balance'
+import { getDepositBalances, getStakeBalances, getYieldBalances } from './balance'
 
 const usdcPool: Contract = {
   chain: 'arbitrum',
@@ -21,9 +21,15 @@ const capPool: Contract = {
   underlyings: ['0x031d35296154279DC1984dCD93E392b1f946737b'], // CAP
 }
 
+const capYield: Contract = {
+  chain: 'arbitrum',
+  address: '0x3e4cdcdc5e3f46dce516adb428d107ce62a6d24a',
+  lpToken: '0xf16033d20adda47dc99ea291d0f4c4fef2ff47af',
+}
+
 export const getContracts = () => {
   return {
-    contracts: { pools: [usdcPool, ethPool], capPool },
+    contracts: { pools: [usdcPool, ethPool], capPool, capYield },
   }
 }
 
@@ -31,6 +37,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: getDepositBalances,
     capPool: getStakeBalances,
+    capYield: getYieldBalances,
   })
 
   return {

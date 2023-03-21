@@ -1,4 +1,4 @@
-import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Balance, BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getBenqiLockerBalances } from './locker'
@@ -29,12 +29,12 @@ export const getContracts = () => {
   }
 }
 
-async function getBenqiBalances(ctx: BalancesContext, sAVAX: Contract) {
-  const [stakeBalances, lockBalances] = await Promise.all([
+async function getBenqiBalances(ctx: BalancesContext, sAVAX: Contract): Promise<Balance[]> {
+  const [stakeBalance, lockBalance] = await Promise.all([
     getStakeBalances(ctx, sAVAX),
     getBenqiLockerBalances(ctx, sAVAX),
   ])
-  return [stakeBalances, ...lockBalances]
+  return [stakeBalance, lockBalance!]
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {

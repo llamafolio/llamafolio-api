@@ -20,6 +20,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  getUserPoolBalance: {
+    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
+    name: 'getUserPoolBalance',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 }
 
 const CAP: Token = {
@@ -27,6 +34,13 @@ const CAP: Token = {
   address: '0x031d35296154279DC1984dCD93E392b1f946737b',
   decimals: 18,
   symbol: 'CAP',
+}
+
+const USDC: Token = {
+  chain: 'arbitrum',
+  address: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
+  decimals: 6,
+  symbol: 'USDC',
 }
 
 export async function getDepositBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
@@ -73,5 +87,24 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     underlyings: [CAP],
     rewards: undefined,
     category: 'stake',
+  }
+}
+
+export async function getYieldBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
+  const { output: userBalancesRes } = await call({
+    ctx,
+    target: contract.lpToken,
+    params: [ctx.address],
+    abi: abi.getUserPoolBalance,
+  })
+
+  return {
+    ...contract,
+    decimals: USDC.decimals,
+    symbol: USDC.symbol,
+    amount: BigNumber.from(userBalancesRes),
+    underlyings: [USDC],
+    rewards: undefined,
+    category: 'farm',
   }
 }

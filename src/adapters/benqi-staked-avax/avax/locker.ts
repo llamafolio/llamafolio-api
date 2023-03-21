@@ -1,8 +1,7 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { multicall } from '@lib/multicall'
+import { isZero } from '@lib/math'
 import { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -58,9 +57,7 @@ const WAVAX: Token = {
   decimals: 18,
 }
 
-export async function getBenqiLockerBalances(ctx: BalancesContext, locker: Contract): Promise<Balance[]> {
-  const balances: Balance[] = []
-
+export async function getBenqiLockerBalances(ctx: BalancesContext, locker: Contract): Promise<Balance | undefined> {
   const [{ output: lockersPositionsLength }, { output: cooldownPeriodRes }] = await Promise.all([
     call({
       ctx,
@@ -71,37 +68,35 @@ export async function getBenqiLockerBalances(ctx: BalancesContext, locker: Contr
     call({ ctx, target: locker.address, abi: abi.cooldownPeriod }),
   ])
 
-  const { output: lockersBalances } = await call({
+  if (isZero(lockersPositionsLength)) {
+    return
+  }
+
+  const lockersBalancesRes = await call({
     ctx,
     target: locker.address,
     params: [ctx.address, 0, lockersPositionsLength],
     abi: abi.getPaginatedUnlockRequests,
   })
 
-  const fmtLockerBalancesRes = await multicall({
+  //@ts-ignore
+  const lockerBalance = lockersBalancesRes.output.flat()[0]
+
+  const fmtLockerBalancesRes = await call({
     ctx,
-    calls: lockersBalances[0].map((balance: any) => ({ target: locker.address, params: balance.shareAmount })),
+    target: locker.address,
+    params: [lockerBalance.shareAmount],
     abi: abi.getPooledAvaxByShares,
   })
 
-  for (let idx = 0; idx < lockersPositionsLength; idx++) {
-    const lockersBalance = lockersBalances[0][idx]
-    const fmtLockerBalanceRes = fmtLockerBalancesRes[idx]
-    const lockEnd = parseInt(lockersBalance.startedAt) + parseInt(cooldownPeriodRes)
+  const lockEnd = parseInt(lockerBalance.startedAt) + parseInt(cooldownPeriodRes)
 
-    if (!isSuccess(fmtLockerBalanceRes) || !lockEnd) {
-      continue
-    }
-
-    balances.push({
-      ...locker,
-      rewards: undefined,
-      amount: BigNumber.from(fmtLockerBalanceRes.output),
-      lock: { end: lockEnd },
-      underlyings: [{ ...WAVAX }],
-      category: 'lock',
-    })
+  return {
+    ...locker,
+    rewards: undefined,
+    amount: BigNumber.from(fmtLockerBalancesRes.output),
+    lock: { end: lockEnd },
+    underlyings: [{ ...WAVAX }],
+    category: 'lock',
   }
-
-  return balances
 }
