@@ -62,6 +62,7 @@ import liquity from '@adapters/liquity'
 import llamapay from '@adapters/llamapay'
 import looksrare from '@adapters/looksrare'
 import lusdChickenbonds from '@adapters/lusd-chickenbonds'
+import lyra from '@adapters/lyra'
 import makerdao from '@adapters/makerdao'
 import maple from '@adapters/maple'
 import mdex from '@adapters/mdex'
@@ -186,6 +187,7 @@ export const adapters: Adapter[] = [
   llamapay,
   looksrare,
   lusdChickenbonds,
+  lyra,
   makerdao,
   maple,
   mdex,
