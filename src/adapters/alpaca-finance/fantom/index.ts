@@ -2,6 +2,7 @@ import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getPoolsBalances } from '../common/balances'
+import { getLockerBalance } from '../common/locker'
 import { getPoolsContracts } from './pools'
 
 const MiniFL: Contract = {
@@ -17,17 +18,26 @@ const ALPACA: Contract = {
   symbols: 'ALPACA',
 }
 
+const xALPACA: Contract = {
+  chain: 'fantom',
+  address: '0x9e698f779cec7f42663b051ff8176a55fcb8d471',
+  decimals: 18,
+  symbol: 'xALPACA',
+  underlyings: [ALPACA],
+}
+
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getPoolsContracts(ctx, MiniFL)
 
   return {
-    contracts: { pools },
+    contracts: { pools, xALPACA },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (ctx, pools) => getPoolsBalances(ctx, pools, MiniFL, ALPACA),
+    xALPACA: getLockerBalance,
   })
 
   return {
