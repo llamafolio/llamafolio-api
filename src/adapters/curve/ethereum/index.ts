@@ -6,6 +6,7 @@ import { getGaugesBalances } from '../common/balance'
 import { getLockerBalances } from './locker'
 import { getLpCurveBalances } from './lpBalance'
 import { getGaugesContracts, getPoolsContracts } from './pools'
+import { getVesterBalances } from './vester'
 
 const CRV: Token = {
   chain: 'ethereum',
@@ -32,12 +33,19 @@ const metaRegistry: Contract = {
   address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
 }
 
+const vesters: Contract[] = [
+  { chain: 'ethereum', address: '0xd2d43555134dc575bf7279f4ba18809645db0f1d' },
+  { chain: 'ethereum', address: '0x2a7d59e327759acd5d11a8fb652bf4072d28ac04' },
+  { chain: 'ethereum', address: '0x679fcb9b33fc4ae10ff4f96caef49c1ae3f8fa67' },
+  { chain: 'ethereum', address: '0x575ccd8e2d300e2377b43478339e364000318e2c' },
+]
+
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getPoolsContracts(ctx, metaRegistry)
   const gauges = await getGaugesContracts(ctx, pools, CRV)
 
   return {
-    contracts: { gauges, pools, metaRegistry, locker },
+    contracts: { gauges, pools, metaRegistry, locker, vesters },
   }
 }
 
@@ -46,6 +54,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     pools: (...args) => getLpCurveBalances(...args, metaRegistry),
     gauges: (...args) => getGaugesBalances(...args, metaRegistry, true),
     locker: (...args) => getLockerBalances(...args, feeDistributor),
+    vesters: getVesterBalances,
   })
 
   return {
