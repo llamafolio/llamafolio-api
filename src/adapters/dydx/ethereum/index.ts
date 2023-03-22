@@ -1,6 +1,8 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getSingleStakeBalance } from '@lib/stake'
+import { getSingleStakeBalances } from '@lib/stake'
+
+import { getDepositBalances, getDepositMarkets } from './deposit'
 
 const DYDX: Contract = {
   name: 'DYDX',
@@ -13,6 +15,13 @@ const DYDX: Contract = {
   stable: false,
 }
 
+const USDC: Contract = {
+  chain: 'ethereum',
+  address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+  decimals: 6,
+  symbol: 'USDC',
+}
+
 // dYdX Governance
 const stkDYDX: Contract = {
   chain: 'ethereum',
@@ -23,15 +32,32 @@ const stkDYDX: Contract = {
   underlyings: [DYDX],
 }
 
-export const getContracts = async () => {
+const stkUSDC: Contract = {
+  chain: 'ethereum',
+  address: '0x5aa653a076c1dbb47cec8c1b4d152444cad91941',
+  symbol: 'stkUSDC',
+  decimals: 6,
+  category: 'stake',
+  underlyings: [USDC],
+}
+
+const dydxSoloMargin: Contract = {
+  chain: 'ethereum',
+  address: '0x1e0447b19bb6ecfdae1e4ae1694b0c3659614e4e',
+}
+
+export const getContracts = async (ctx: BaseContext) => {
+  const markets = await getDepositMarkets(ctx, dydxSoloMargin)
+
   return {
-    contracts: { stkDYDX },
+    contracts: { stakers: [stkDYDX, stkUSDC], markets },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    stkDYDX: getSingleStakeBalance,
+    stakers: getSingleStakeBalances,
+    markets: (...args) => getDepositBalances(...args, dydxSoloMargin),
   })
 
   return {
