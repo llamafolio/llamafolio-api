@@ -6,6 +6,16 @@ import { APIGatewayProxyHandler } from 'aws-lambda'
 
 const SUPPORTED_CHAINS: Chain[] = ['ethereum']
 
+interface GasPrice {
+  timestamp: number
+  minGasPrice: number
+  medianGasPrice: number
+}
+
+interface GasPriceChartResponse {
+  data: GasPrice[]
+}
+
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
@@ -19,7 +29,15 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   try {
     const gasPrices = await selectGasPriceChart(client, chain)
 
-    return success({ data: gasPrices }, { maxAge: 50 * 60 })
+    const response: GasPriceChartResponse = {
+      data: gasPrices.map((gasPrice) => ({
+        timestamp: Math.floor(gasPrice.timestamp.getTime() / 1000),
+        minGasPrice: gasPrice.minGasPrice,
+        medianGasPrice: gasPrice.medianGasPrice,
+      })),
+    }
+
+    return success(response, { maxAge: 50 * 60 })
   } catch (error) {
     console.error('Failed to gas price chart', { error })
     return serverError('Failed to get gas price chart')
