@@ -2,6 +2,7 @@ import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getFormattedStakeBalances, getStakeBalances } from './stake'
+import { getVesterBalances } from './vester'
 
 const FLOOR: Contract = {
   name: 'Floor',
@@ -29,9 +30,15 @@ const gFLOOR: Contract = {
   underlyings: [FLOOR],
 }
 
+const vester: Contract = {
+  chain: 'ethereum',
+  address: '0xe1d71b60642d597e6e3dbf6d0cd106ac3cfa65fa',
+  underlyings: [gFLOOR],
+}
+
 export const getContracts = () => {
   return {
-    contracts: { sFLOOR, gFLOOR },
+    contracts: { sFLOOR, gFLOOR, vester },
   }
 }
 
@@ -39,6 +46,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     sFLOOR: getStakeBalances,
     gFLOOR: getFormattedStakeBalances,
+    vester: getVesterBalances,
   })
 
   return {
