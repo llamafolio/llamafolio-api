@@ -42,8 +42,6 @@ const CRV: Token = {
 export async function getVesterBalances(ctx: BalancesContext, vesters: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  console.log(vesters)
-
   const calls: Call[] = vesters.map((vester) => ({ target: vester.address, params: [ctx.address] }))
 
   const [initialBalancesRes, claimedBalancesRes, balanceOfsRes, endTimesRes] = await Promise.all([
