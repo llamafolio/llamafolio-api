@@ -1,7 +1,6 @@
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
@@ -64,12 +63,7 @@ export async function getDepositMarkets(ctx: BaseContext, staker: Contract): Pro
     abi: abi.getMarketTokenAddress,
   })
 
-  return (
-    await getERC20Details(
-      ctx,
-      (marketsAddressesRes || []).map((address) => address.output),
-    )
-  ).map((token, idx) => ({ ...token, pid: idx }))
+  return (marketsAddressesRes || []).map((address, idx) => ({ chain: ctx.chain, address: address.output, pid: idx }))
 }
 
 export async function getDepositBalances(
