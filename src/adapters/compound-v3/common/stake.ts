@@ -1,36 +1,37 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { call } from '@lib/call'
 import { abi } from '@lib/erc20'
-import { Token } from '@lib/token'
+import { multicall } from '@lib/multicall'
+import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-const USDC: Token = {
-  chain: 'ethereum',
-  address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-  decimals: 6,
-  symbol: 'USDC',
-}
-
-export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
+export async function getStakeBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const balanceOfRes = await call({
+  const balanceOfsRes = await multicall({
     ctx,
-    target: contract.address,
-    params: [ctx.address],
+    calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] })),
     abi: abi.balanceOf,
   })
 
-  const amount = BigNumber.from(balanceOfRes.output)
+  for (let idx = 0; idx < contracts.length; idx++) {
+    const contract = contracts[idx]
+    const underlying = contract.underlyings?.[0] as Contract
 
-  balances.push({
-    chain: ctx.chain,
-    address: USDC.address,
-    decimals: USDC.decimals,
-    symbol: USDC.symbol,
-    amount,
-    category: 'stake',
-  })
+    const balanceOfRes = balanceOfsRes[idx]
+
+    if (!isSuccess(balanceOfRes)) {
+      continue
+    }
+
+    balances.push({
+      chain: ctx.chain,
+      address: underlying.address,
+      decimals: underlying.decimals,
+      symbol: underlying.symbol,
+      amount: BigNumber.from(balanceOfRes.output),
+      category: 'stake',
+    })
+  }
 
   return balances
 }

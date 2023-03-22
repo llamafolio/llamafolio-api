@@ -1,4 +1,4 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { BalanceWithExtraProps, getHealthFactor } from '@lib/compound/v2/lending'
 import { Token } from '@lib/token'
@@ -14,10 +14,23 @@ const USDC: Token = {
   symbol: 'USDC',
 }
 
+const WETH: Token = {
+  chain: 'ethereum',
+  address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+  decimals: 18,
+  symbol: 'WETH',
+}
+
 const CompoundUSDCv3: Contract = {
   chain: 'ethereum',
   address: '0xc3d688B66703497DAA19211EEdff47f25384cdc3',
   underlyings: [USDC],
+}
+
+const CompoundWETHv3: Contract = {
+  chain: 'ethereum',
+  address: '0xa17581a9e3356d9a858b789d68b4d866e593ae94',
+  underlyings: [WETH],
 }
 
 const CompoundRewards: Contract = {
@@ -26,18 +39,21 @@ const CompoundRewards: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const assets = await getAssetsContracts(ctx, CompoundUSDCv3)
+  const assets = await getAssetsContracts(ctx, [CompoundUSDCv3, CompoundWETHv3])
 
   return {
-    contracts: { CompoundUSDCv3, assets, CompoundRewards },
+    contracts: { compounders: [CompoundUSDCv3, CompoundWETHv3], assets, CompoundRewards },
   }
+}
+
+const compoundBalances = async (ctx: BalancesContext, compounders: Contract[], rewarder: Contract) => {
+  return Promise.all([getStakeBalances(ctx, compounders), getRewardBalances(ctx, rewarder, compounders)])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    CompoundUSDCv3: getStakeBalances,
-    assets: (...args) => getLendBorrowBalances(...args, CompoundUSDCv3),
-    CompoundRewards: (...args) => getRewardBalances(...args, CompoundUSDCv3),
+    assets: (...args) => getLendBorrowBalances(...args, [CompoundUSDCv3, CompoundWETHv3]),
+    compounders: (...args) => compoundBalances(...args, CompoundRewards),
   })
 
   const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
