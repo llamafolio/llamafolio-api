@@ -1,7 +1,8 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getLockerBalance, getPoolsBalances } from '../common/balances'
+import { getPoolsBalances } from '../common/balances'
+import { getLockerBalance } from '../common/locker'
 import { getPoolsContracts } from './pools'
 
 const fairLaunch: Contract = {

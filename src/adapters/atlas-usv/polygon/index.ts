@@ -3,6 +3,7 @@ import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
 import { getStakeBalance } from '../common/stake'
+import { getVestingBalances } from './vest'
 
 const USV: Token = {
   chain: 'polygon',
@@ -20,15 +21,35 @@ const sUSV: Contract = {
   underlyings: [USV],
 }
 
+const vesters: Contract[] = [
+  {
+    chain: 'polygon',
+    address: '0x8cbcaacf6d5e13f17b71ad98f6910d5656ac3c8f',
+  },
+  {
+    chain: 'polygon',
+    address: '0x96eadc4ffabbfa6b2fc30dd98f527009e167214b',
+  },
+  {
+    chain: 'polygon',
+    address: '0x95199ff1acf40e04bb9d04b21a87154fbaafb9ee',
+  },
+  {
+    chain: 'polygon',
+    address: '0x20a1dc647f26ca38ed19a7e66c7eef621cc75b0e',
+  },
+]
+
 export const getContracts = () => {
   return {
-    contracts: { sUSV },
+    contracts: { sUSV, vesters },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     sUSV: getStakeBalance,
+    vesters: getVestingBalances,
   })
 
   return {

@@ -7,4 +7,6 @@ const adapter: Adapter = {
   arbitrum,
 }
 
+// TODO: getPerpetualsBalances
+
 export default adapter
