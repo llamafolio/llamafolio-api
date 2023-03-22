@@ -51,8 +51,6 @@ const compoundBalances = async (ctx: BalancesContext, compounders: Contract[], r
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  console.log(contracts)
-
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     assets: (...args) => getLendBorrowBalances(...args, [CompoundUSDCv3, CompoundWETHv3]),
     compounders: (...args) => compoundBalances(...args, CompoundRewards),
