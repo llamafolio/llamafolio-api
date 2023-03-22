@@ -1,8 +1,6 @@
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
-import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
@@ -75,44 +73,40 @@ interface BalanceWithExtraProps extends Balance {
   collateralFactor: string
 }
 
-const USDC: Token = {
-  chain: 'ethereum',
-  address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-  decimals: 6,
-  symbol: 'USDC',
-}
-
-export async function getAssetsContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
+export async function getAssetsContracts(ctx: BaseContext, compounders: Contract[]): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const numberOfAssets = await call({
+  const numberOfAssets = await multicall({
     ctx,
-    target: contract.address,
-    params: [],
+    calls: compounders.map((contract) => ({ target: contract.address })),
     abi: abi.numAssets,
   })
 
   const assetsInfoRes = await multicall({
     ctx,
-    calls: range(0, numberOfAssets.output).map((i) => ({
-      target: contract.address,
-      params: [i],
-    })),
+    calls: numberOfAssets.flatMap((numberOfAsset) =>
+      isSuccess(numberOfAsset)
+        ? range(0, numberOfAsset.output).map((_, idx) => ({ target: numberOfAsset.input.target, params: [idx] }))
+        : null,
+    ),
     abi: abi.getAssetInfo,
   })
 
-  for (let i = 0; i < assetsInfoRes.length; i++) {
-    const assetInfoRes = assetsInfoRes[i]
+  for (let contractIdx = 0; contractIdx < compounders.length; contractIdx++) {
+    for (let i = 0; i < assetsInfoRes.length; i++) {
+      const assetInfoRes = assetsInfoRes[i]
 
-    if (!isSuccess(assetInfoRes)) {
-      continue
+      if (!isSuccess(assetInfoRes)) {
+        continue
+      }
+
+      contracts.push({
+        chain: ctx.chain,
+        address: assetInfoRes.output.asset,
+        compounder: assetInfoRes.input.target,
+        collateralFactor: assetInfoRes.output.borrowCollateralFactor,
+      })
     }
-
-    contracts.push({
-      chain: ctx.chain,
-      address: assetInfoRes.output.asset,
-      collateralFactor: assetInfoRes.output.borrowCollateralFactor,
-    })
   }
 
   return contracts
@@ -121,7 +115,7 @@ export async function getAssetsContracts(ctx: BaseContext, contract: Contract): 
 export async function getLendBorrowBalances(
   ctx: BalancesContext,
   assets: Contract[],
-  contract: Contract,
+  compounders: Contract[],
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
@@ -129,53 +123,61 @@ export async function getLendBorrowBalances(
     multicall({
       ctx,
       calls: assets.map((asset) => ({
-        target: contract.address,
+        target: asset.compounder,
         params: [ctx.address, asset.address],
       })),
       abi: abi.userCollateral,
     }),
 
-    call({
+    multicall({
       ctx,
-      target: contract.address,
-      params: [ctx.address],
+      calls: compounders.map((contract) => ({
+        target: contract.address,
+        params: [ctx.address],
+      })),
       abi: abi.borrowBalanceOf,
     }),
   ])
 
-  const userCollateralBalances = userCollateralBalancesRes
-    .filter((res) => res.success)
-    .map((res) => BigNumber.from(res.output.balance))
+  for (let supplyIdx = 0; supplyIdx < assets.length; supplyIdx++) {
+    const asset = assets[supplyIdx]
+    const userCollateralBalanceRes = userCollateralBalancesRes[supplyIdx]
 
-  const userBorrowBalances = BigNumber.from(userBorrowBalancesRes.output)
+    if (!isSuccess(userCollateralBalanceRes)) {
+      continue
+    }
 
-  for (let i = 0; i < assets.length; i++) {
-    const asset = assets[i]
-    const userCollateralBalance = userCollateralBalances[i]
-
-    const supply: BalanceWithExtraProps = {
+    const supplyBalances: BalanceWithExtraProps = {
       chain: ctx.chain,
       decimals: asset.decimals,
       symbol: asset.symbol,
       address: asset.address,
-      amount: userCollateralBalance,
+      amount: BigNumber.from(userCollateralBalanceRes.output.balance),
       collateralFactor: asset.collateralFactor,
       category: 'lend',
     }
 
-    balances.push(supply)
+    balances.push(supplyBalances)
   }
 
-  const borrow: Balance = {
-    chain: ctx.chain,
-    decimals: USDC.decimals,
-    symbol: USDC.symbol,
-    address: USDC.address,
-    amount: userBorrowBalances,
-    category: 'borrow',
-  }
+  for (let borrowIdx = 0; borrowIdx < compounders.length; borrowIdx++) {
+    const compounder = compounders[borrowIdx]
+    const underlying = compounder.underlyings?.[0] as Contract
+    const userBorrowBalanceRes = userBorrowBalancesRes[borrowIdx]
 
-  balances.push(borrow)
+    if (!underlying || !isSuccess(userBorrowBalanceRes)) {
+      continue
+    }
+
+    balances.push({
+      chain: ctx.chain,
+      decimals: underlying.decimals,
+      symbol: underlying.symbol,
+      address: underlying.address,
+      amount: BigNumber.from(userBorrowBalanceRes.output),
+      category: 'borrow',
+    })
+  }
 
   return balances
 }
