@@ -38,6 +38,7 @@ async function getBenqiBalances(ctx: BalancesContext, sAVAX: Contract): Promise<
   if (lockBalance) {
     return [stakeBalance, lockBalance]
   }
+
   return [stakeBalance]
 }
 
