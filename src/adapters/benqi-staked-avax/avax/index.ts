@@ -29,12 +29,16 @@ export const getContracts = () => {
   }
 }
 
-async function getBenqiBalances(ctx: BalancesContext, sAVAX: Contract): Promise<Balance[]> {
+async function getBenqiBalances(ctx: BalancesContext, sAVAX: Contract): Promise<Balance[] | undefined> {
   const [stakeBalance, lockBalance] = await Promise.all([
     getStakeBalances(ctx, sAVAX),
     getBenqiLockerBalances(ctx, sAVAX),
   ])
-  return [stakeBalance, lockBalance!]
+
+  if (lockBalance) {
+    return [stakeBalance, lockBalance]
+  }
+  return [stakeBalance]
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
