@@ -1,7 +1,17 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi } from '@lib/erc20'
+import { abi as erc20Abi } from '@lib/erc20'
 import { BigNumber } from 'ethers'
+
+const abi = {
+  wsHECTosHEC: {
+    inputs: [{ internalType: 'uint256', name: '_amount', type: 'uint256' }],
+    name: 'wsHECTosHEC',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
 
 const HEC: Contract = {
   name: 'Hector',
@@ -16,7 +26,7 @@ export async function getsStakeBalances(ctx: BalancesContext, contract: Contract
     ctx,
     target: contract.address,
     params: [ctx.address],
-    abi: abi.balanceOf,
+    abi: erc20Abi.balanceOf,
   })
 
   const amount = BigNumber.from(balanceOfRes.output)
@@ -39,7 +49,7 @@ export async function getWsStakeBalances(ctx: BalancesContext, contract: Contrac
     ctx,
     target: contract.address,
     params: [ctx.address],
-    abi: abi.balanceOf,
+    abi: erc20Abi.balanceOf,
   })
 
   const balanceOf = balanceOfRes.output
@@ -48,13 +58,7 @@ export async function getWsStakeBalances(ctx: BalancesContext, contract: Contrac
     ctx,
     target: contract.address,
     params: [balanceOf],
-    abi: {
-      inputs: [{ internalType: 'uint256', name: '_amount', type: 'uint256' }],
-      name: 'wsHECTosHEC',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.wsHECTosHEC,
   })
 
   const amount = BigNumber.from(formattedBalanceOfRes.output)
