@@ -2,6 +2,48 @@ import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { BigNumber } from 'ethers'
 
+const abi = {
+  calWithdrawAndEarned: {
+    inputs: [{ internalType: 'address', name: 'wallet', type: 'address' }],
+    name: 'calWithdrawAndEarned',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '_torWithdrawAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_daiWithdrawAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_usdcWithdrawAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_earnedRewardAmount',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getTorAndDaiAndUsdc: {
+    inputs: [],
+    name: 'getTorAndDaiAndUsdc',
+    outputs: [
+      { internalType: 'uint256', name: 'torAmount', type: 'uint256' },
+      { internalType: 'uint256', name: 'daiAmount', type: 'uint256' },
+      { internalType: 'uint256', name: 'usdcAmount', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
 const Helper: Contract = {
   name: 'TORCurve Helper',
   address: '0x2cFC70B2c114De258F05069c8f8416f6215C4A68',
@@ -56,51 +98,13 @@ export async function getFarmingBalances(ctx: BalancesContext, contract: Contrac
       ctx,
       target: contract.address,
       params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: 'wallet', type: 'address' }],
-        name: 'calWithdrawAndEarned',
-        outputs: [
-          {
-            internalType: 'uint256',
-            name: '_torWithdrawAmount',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: '_daiWithdrawAmount',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: '_usdcWithdrawAmount',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: '_earnedRewardAmount',
-            type: 'uint256',
-          },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.calWithdrawAndEarned,
     }),
-
     call({
       ctx,
       target: Helper.address,
       params: [],
-      abi: {
-        inputs: [],
-        name: 'getTorAndDaiAndUsdc',
-        outputs: [
-          { internalType: 'uint256', name: 'torAmount', type: 'uint256' },
-          { internalType: 'uint256', name: 'daiAmount', type: 'uint256' },
-          { internalType: 'uint256', name: 'usdcAmount', type: 'uint256' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.getTorAndDaiAndUsdc,
     }),
   ])
 
@@ -115,7 +119,7 @@ export async function getFarmingBalances(ctx: BalancesContext, contract: Contrac
   const totalToken = TORAmount.add(DAIAmount).add(USDCAmount)
 
   const underlyings = Curve_fiFactoryUSDMetapool.underlyings?.map((token, i) => ({
-    ...token,
+    ...(token as Contract),
     amount: amount.mul(underlyingAmounts[i]).div(totalToken),
   }))
 
