@@ -15,7 +15,7 @@ const adapter: Adapter = {
   polygon,
 }
 
-// TODO: Stake(+/- gauge) + Lock
+// TODO: Stake(+/- gauge)
 // https://docs.hundred.finance/
 
 export default adapter
