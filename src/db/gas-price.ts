@@ -24,8 +24,17 @@ export function fromRowStorage(gasPriceStorage: GasPriceStorage) {
   return gasPrice
 }
 
-export async function selectGasPriceChart(client: PoolClient, chain: Chain) {
-  const balancesRes = await client.query(format('select * from %I.daily_gas_price;', [chain]))
+export type Window = 'D' | 'W' | 'M' | 'Y'
+
+export async function selectGasPriceChart(client: PoolClient, chain: Chain, window: Window) {
+  const views: { [key in Window]: string } = {
+    D: 'gas_price_1D',
+    W: 'gas_price_1W',
+    M: 'gas_price_1M',
+    Y: 'gas_price_1Y',
+  }
+
+  const balancesRes = await client.query(format('select * from %I.%s;', chain, views[window]))
 
   return balancesRes.rows.map(fromRowStorage)
 }
