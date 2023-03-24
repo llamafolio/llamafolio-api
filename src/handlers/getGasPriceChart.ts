@@ -1,10 +1,12 @@
-import { selectGasPriceChart } from '@db/gas-price'
+import { selectGasPriceChart, Window } from '@db/gas-price'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Chain } from '@lib/chains'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
 const SUPPORTED_CHAINS: Chain[] = ['ethereum']
+
+const WINDOWS: Window[] = ['D', 'W', 'M', 'Y']
 
 interface GasPrice {
   timestamp: number
@@ -24,10 +26,15 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Unsupported chain')
   }
 
+  const window = (event.queryStringParameters?.w || 'D') as Window
+  if (!WINDOWS.includes(window)) {
+    return badRequest('Unsupported window')
+  }
+
   const client = await pool.connect()
 
   try {
-    const gasPrices = await selectGasPriceChart(client, chain)
+    const gasPrices = await selectGasPriceChart(client, chain, window)
 
     const response: GasPriceChartResponse = {
       data: gasPrices.map((gasPrice) => ({
