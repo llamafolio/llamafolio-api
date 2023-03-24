@@ -1,4 +1,4 @@
-import { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import {
   BalanceWithExtraProps,
@@ -7,6 +7,16 @@ import {
   getMarketsContracts,
 } from '@lib/compound/v2/lending'
 
+import { getNFTLocker } from '../common/locker'
+import { getIronFarmBalances } from './farm'
+
+const locker: Contract = {
+  chain: 'optimism',
+  address: '0x707648dfbf9df6b0898f78edf191b85e327e0e05',
+  token: '0x00a35fd824c717879bf370e70ac6868b95870dfb',
+  underlyings: ['0x00a35fd824c717879bf370e70ac6868b95870dfb'],
+}
+
 export const getContracts = async (ctx: BaseContext) => {
   const markets = await getMarketsContracts(ctx, {
     // Iron-Bank Unitroller on Optimism chain
@@ -14,13 +24,22 @@ export const getContracts = async (ctx: BaseContext) => {
   })
 
   return {
-    contracts: { markets },
+    contracts: { markets, locker },
   }
+}
+
+const getIBbalances = async (ctx: BalancesContext, markets: Contract[]): Promise<Balance[]> => {
+  const [marketsBalances, farmBalances] = await Promise.all([
+    getMarketsBalances(ctx, markets),
+    getIronFarmBalances(ctx, markets),
+  ])
+  return [...marketsBalances, ...farmBalances]
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    markets: getMarketsBalances,
+    markets: getIBbalances,
+    locker: getNFTLocker,
   })
 
   const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
