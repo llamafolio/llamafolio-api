@@ -1,4 +1,4 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import {
   BalanceWithExtraProps,
@@ -8,6 +8,7 @@ import {
 } from '@lib/compound/v2/lending'
 
 import { getNFTLocker } from '../common/locker'
+import { getIronFarmBalances } from './farm'
 
 const locker: Contract = {
   chain: 'optimism',
@@ -27,9 +28,17 @@ export const getContracts = async (ctx: BaseContext) => {
   }
 }
 
+const getIBbalances = async (ctx: BalancesContext, markets: Contract[]): Promise<Balance[]> => {
+  const [marketsBalances, farmBalances] = await Promise.all([
+    getMarketsBalances(ctx, markets),
+    getIronFarmBalances(ctx, markets),
+  ])
+  return [...marketsBalances, ...farmBalances]
+}
+
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    markets: getMarketsBalances,
+    markets: getIBbalances,
     locker: getNFTLocker,
   })
 
