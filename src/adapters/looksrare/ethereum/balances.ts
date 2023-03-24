@@ -1,7 +1,35 @@
 import { BalancesContext, Contract } from '@lib/adapter'
 import { Balance } from '@lib/adapter'
 import { call } from '@lib/call'
+import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
+
+const abi = {
+  calculateSharesValueInLOOKS: {
+    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
+    name: 'calculateSharesValueInLOOKS',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  calculatePendingRewards: {
+    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
+    name: 'calculatePendingRewards',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  userInfo: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'userInfo',
+    outputs: [
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+      { internalType: 'uint256', name: 'rewardDebt', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
 
 const LOOKS: Contract = {
   name: 'LooksRare Token',
@@ -19,66 +47,43 @@ const WETH: Contract = {
   symbols: 'WETH',
 }
 
-export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Contract) => {
+export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Contract): Promise<Balance> => {
   const [stakeBalanceOfRes, rewardsBalanceOfRes] = await Promise.all([
     call({
       ctx,
       target: stakingContract.address,
       params: ctx.address,
-      abi: {
-        inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
-        name: 'calculateSharesValueInLOOKS',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.calculateSharesValueInLOOKS,
     }),
 
     call({
       ctx,
       target: stakingContract.address,
       params: ctx.address,
-      abi: {
-        inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
-        name: 'calculatePendingRewards',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
+      abi: abi.calculatePendingRewards,
     }),
   ])
 
-  const stakeBalanceOf = BigNumber.from(stakeBalanceOfRes.output)
-  const rewardsBalanceOf = BigNumber.from(rewardsBalanceOfRes.output)
-
-  const stakebalance: Balance = {
+  return {
     chain: ctx.chain,
     address: LOOKS.address,
     decimals: LOOKS.decimals,
     symbol: LOOKS.symbols,
-    amount: stakeBalanceOf,
-    rewards: [{ ...WETH, amount: rewardsBalanceOf }],
+    amount: BigNumber.from(stakeBalanceOfRes.output),
+    rewards: [{ ...WETH, amount: BigNumber.from(rewardsBalanceOfRes.output) }],
     category: 'stake',
   }
-
-  return stakebalance
 }
 
-export const getCompounderBalances = async (ctx: BalancesContext, compounder: Contract) => {
+export const getCompounderBalances = async (ctx: BalancesContext, compounder: Contract): Promise<Balance> => {
   const sharesValue = await call({
     ctx,
     target: compounder.address,
     params: [ctx.address],
-    abi: {
-      inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
-      name: 'calculateSharesValueInLOOKS',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.calculateSharesValueInLOOKS,
   })
 
-  const compounderBalance: Balance = {
+  return {
     chain: ctx.chain,
     address: LOOKS.address,
     decimals: LOOKS.decimals,
@@ -87,6 +92,22 @@ export const getCompounderBalances = async (ctx: BalancesContext, compounder: Co
     yieldKey: compounder.address,
     category: 'farm',
   }
+}
 
-  return compounderBalance
+export const getFarmBalances = async (ctx: BalancesContext, farmer: Contract): Promise<Balance[]> => {
+  const [{ output: balanceOfRes }, { output: earnedOfRes }] = await Promise.all([
+    call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.userInfo }),
+    call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.calculatePendingRewards }),
+  ])
+
+  const balance: Balance = {
+    ...farmer,
+    address: farmer.token as string,
+    amount: BigNumber.from(balanceOfRes.amount),
+    underlyings: farmer.underlyings as Contract[],
+    rewards: [{ ...LOOKS, amount: BigNumber.from(earnedOfRes) }],
+    category: 'farm',
+  }
+
+  return getUnderlyingBalances(ctx, [balance])
 }
