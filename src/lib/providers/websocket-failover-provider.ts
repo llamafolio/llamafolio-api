@@ -1,19 +1,8 @@
-import { setProvider } from '@defillama/sdk/build/general'
-import { Chain, chains, IChainInfo } from '@lib/chains'
+import { IChainInfo } from '@lib/chains'
 import { ethers } from 'ethers'
 
-function createJsonRpcProvider(chain: IChainInfo) {
-  return new ethers.providers.FallbackProvider(
-    chain.rpcUrls.map((url, i) => ({
-      provider: new ethers.providers.StaticJsonRpcProvider(
-        { url, allowGzip: true },
-        { name: chain.id, chainId: chain.chainId },
-      ),
-      priority: i,
-    })),
-    1,
-  )
-}
+import { FailoverProvider } from './failover-provider'
+import { createJsonRpcProvider } from './provider'
 
 // See: https://github.com/ethers-io/ethers.js/issues/1053
 const WEBSOCKET_PING_INTERVAL = 10000
@@ -23,7 +12,7 @@ const WEBSOCKET_RECONNECT_DELAY = 100
 const WebSocketProviderClass = (): new () => ethers.providers.WebSocketProvider => class {} as never
 
 export class WebSocketFailoverProvider extends WebSocketProviderClass() {
-  private provider?: ethers.providers.WebSocketProvider | ethers.providers.FallbackProvider
+  private provider?: ethers.providers.WebSocketProvider | ethers.providers.FallbackProvider | FailoverProvider
   private events: ethers.providers.WebSocketProvider['_events'] = []
   private requests: ethers.providers.WebSocketProvider['_requests'] = {}
   private attempts = 0
@@ -114,22 +103,4 @@ export class WebSocketFailoverProvider extends WebSocketProviderClass() {
 
     this.provider = provider
   }
-}
-
-export const providers: { [chain in Chain]: ethers.providers.BaseProvider } = Object.assign({})
-
-// update providers
-for (const chain of chains) {
-  let provider
-
-  // prioritize websocket RPC (better performance)
-  // if (chain.rpcWssUrl) {
-  // provider = new WebSocketFailoverProvider(chain.rpcWssUrl, chain)
-  // } else {
-  provider = createJsonRpcProvider(chain)
-  // }
-
-  providers[chain.id] = provider
-  // update defillama sdk providers (used by calls and multicalls)
-  setProvider(chain.id, provider)
 }

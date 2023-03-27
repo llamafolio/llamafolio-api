@@ -58,6 +58,7 @@ provider:
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+    CUSTOM_PROVIDER: ${file(./env.js):CUSTOM_PROVIDER}
     LLAMANODES_API_KEY: ${file(./env.js):LLAMANODES_API_KEY}
     ARBITRUM_RPC: ${file(./env.js):ARBITRUM_RPC}
     OPTIMISM_RPC: ${file(./env.js):OPTIMISM_RPC}

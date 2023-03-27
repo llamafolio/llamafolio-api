@@ -42,6 +42,7 @@ jobs:
           REDIS_PORT: ${{ secrets.REDIS_PORT }}
           REDIS_HOST: ${{ secrets.REDIS_HOST }}
           REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+          CUSTOM_PROVIDER: ${{ secrets.CUSTOM_PROVIDER }}
           LLAMANODES_API_KEY: ${{ secrets.LLAMANODES_API_KEY }}
           ARBITRUM_RPC: ${{ secrets.ARBITRUM_RPC }}
           OPTIMISM_RPC: ${{ secrets.OPTIMISM_RPC }}
