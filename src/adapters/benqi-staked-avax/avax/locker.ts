@@ -89,13 +89,13 @@ export async function getBenqiLockerBalances(ctx: BalancesContext, locker: Contr
     abi: abi.getPooledAvaxByShares,
   })
 
-  const lockEnd = parseInt(lockerBalance.startedAt) + parseInt(cooldownPeriodRes)
+  const unlockAt = parseInt(lockerBalance.startedAt) + parseInt(cooldownPeriodRes)
 
   return {
     ...locker,
     rewards: undefined,
     amount: BigNumber.from(fmtLockerBalancesRes.output),
-    lock: { end: lockEnd },
+    unlockAt,
     underlyings: [{ ...WAVAX }],
     category: 'lock',
   }

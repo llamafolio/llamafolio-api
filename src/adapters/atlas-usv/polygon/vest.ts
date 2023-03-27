@@ -40,7 +40,7 @@ export async function getVestingBalances(ctx: BalancesContext, vesters: Contract
     const vester = vesters[vesterIdx]
     const pendingPayoutBalanceRes = pendingPayoutBalancesRes[vesterIdx]
     const provider = providers[ctx.chain]
-    const block = (await provider.getBlock(parseInt(pendingPayoutBalanceRes.output.lastBlock))).timestamp
+    const unlockAt = (await provider.getBlock(parseInt(pendingPayoutBalanceRes.output.lastBlock))).timestamp
 
     if (!isSuccess(pendingPayoutBalanceRes)) {
       continue
@@ -50,7 +50,7 @@ export async function getVestingBalances(ctx: BalancesContext, vesters: Contract
       decimals: USV.decimals,
       symbol: USV.symbol,
       amount: BigNumber.from(pendingPayoutBalanceRes.output.payout),
-      lock: { end: block },
+      unlockAt,
       underlyings: [USV],
       rewards: undefined,
       category: 'vest',

@@ -82,7 +82,7 @@ export async function getLockerBalances(
   ])
 
   const lockerBalance = BigNumber.from(lockerBalanceRes.output.amount)
-  const lockEnd = lockerBalanceRes.output.end
+  const unlockAt = lockerBalanceRes.output.end
   const claimableBalance = BigNumber.from(claimableBalanceRes.output)
 
   balances.push({
@@ -91,7 +91,7 @@ export async function getLockerBalances(
     decimals: CRV.decimals,
     address: CRV.address,
     amount: lockerBalance,
-    lock: { end: lockEnd },
+    unlockAt,
     rewards: [{ ...triCrv, amount: claimableBalance }],
     category: 'lock',
   })

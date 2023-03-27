@@ -31,7 +31,7 @@ export async function getBendDaoLocker(ctx: BalancesContext, locker: Contract): 
     ...locker,
     underlyings: [bend],
     amount: BigNumber.from(lockedBalancesOf.output.amount),
-    lock: { end: lockedBalancesOf.output.end },
+    unlockAt: lockedBalancesOf.output.end,
     rewards: undefined,
     category: 'lock',
   }

@@ -127,7 +127,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
     ...contract,
     amount: BigNumber.from(lockedPositionsRes.output.ptpLocked),
     underlyings: [PTP],
-    lock: { end: lockedPositionsRes.output.unlockTime },
+    unlockAt: lockedPositionsRes.output.unlockTime,
     rewards: undefined,
     category: 'lock',
   }

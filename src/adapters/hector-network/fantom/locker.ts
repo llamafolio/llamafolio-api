@@ -89,7 +89,7 @@ export async function getHECLockerBalances(ctx: BalancesContext, lockers: Contra
         address: locker.lpToken ? locker.lpToken : locker.address,
         amount: BigNumber.from(amount),
         underlyings,
-        lock: { end: parseInt(secs) + parseInt(startTime) },
+        unlockAt: parseInt(secs) + parseInt(startTime),
         rewards: [{ ...HEC, amount: BigNumber.from(pendingRewardRes.output) }],
         category: 'lock',
       }

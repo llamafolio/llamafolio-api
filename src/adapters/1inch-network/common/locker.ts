@@ -23,7 +23,7 @@ export async function getInchLockerBalances(ctx: BalancesContext, locker: Contra
     ...locker,
     amount: BigNumber.from(lockerInfosRes.output.amount),
     underlyings: locker.underlyings as Contract[],
-    lock: { end: lockerInfosRes.output.unlockTime },
+    unlockAt: lockerInfosRes.output.unlockTime,
     rewards: undefined,
     category: 'lock',
   }

@@ -46,7 +46,7 @@ export async function getLockerBalances(ctx: BalancesContext, lockers: Contract[
         ...locker,
         address: locker.lpToken ? locker.lpToken : locker.address,
         amount: BigNumber.from(lockerBalanceInfo.amount),
-        lock: { end: lockerBalanceInfo.end },
+        unlockAt: lockerBalanceInfo.end,
         underlyings,
         rewards: undefined,
         category: 'lock',

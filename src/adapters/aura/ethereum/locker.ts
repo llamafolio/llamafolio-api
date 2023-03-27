@@ -76,9 +76,7 @@ export async function getAuraLockerBalances(ctx: BalancesContext, locker: Contra
       amount: BigNumber.from(lockedData.amount),
       claimable: BigNumber.from(lockedDatas.unlockable).mul(lockedData.amount).div(lockedDatas.locked),
       underlyings: [AURA],
-      lock: {
-        end: lockedData.unlockTime,
-      },
+      unlockAt: lockedData.unlockTime,
       rewards: [{ ...auraBal, amount: BigNumber.from(lockedData.amount).mul(earned).div(totalLocked) }],
       category: 'lock',
     })
