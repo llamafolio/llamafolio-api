@@ -82,7 +82,8 @@ import pangolin from '@adapters/pangolin'
 import pikaProtocol from '@adapters/pika-protocol'
 import platypusFinance from '@adapters/platypus-finance'
 import quickswapDex from '@adapters/quickswap-dex'
-import radiant from '@adapters/radiant'
+import radiantV1 from '@adapters/radiant-v1'
+import radiantV2 from '@adapters/radiant-v2'
 import rageTrade from '@adapters/rage-trade'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
@@ -207,7 +208,8 @@ export const adapters: Adapter[] = [
   pikaProtocol,
   platypusFinance,
   quickswapDex,
-  radiant,
+  radiantV1,
+  radiantV2,
   rageTrade,
   ribbonFinance,
   rocketPool,
