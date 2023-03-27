@@ -23,7 +23,7 @@ export async function getLockerBalance(ctx: BalancesContext, locker: Contract): 
     ...locker,
     amount: BigNumber.from(lockerBalancesOfRes.output.amount),
     underlyings: [underlyings as Contract],
-    lock: { end: lockerBalancesOfRes.output.end },
+    unlockAt: lockerBalancesOfRes.output.end,
     rewards: undefined,
     category: 'lock',
   }

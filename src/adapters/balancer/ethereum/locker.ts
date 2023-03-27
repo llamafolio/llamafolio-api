@@ -78,7 +78,7 @@ export async function getLockerBalances(
     symbol: votingEscrow.symbol,
     decimals: votingEscrow.decimals,
     amount: BigNumber.from(balanceOf.output),
-    lock: { end: lockedEndRes.output },
+    unlockAt: lockedEndRes.output,
     underlyings: [
       { ...BAL, amount: underlyings0Balances },
       { ...WETH, amount: underlyings1Balances },

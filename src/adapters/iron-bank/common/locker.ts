@@ -70,7 +70,7 @@ export async function getNFTLocker(ctx: BalancesContext, locker: Contract): Prom
     balances.push({
       ...locker,
       amount: BigNumber.from(amount),
-      lock: { end },
+      unlockAt: end,
       underlyings: locker.underlyings as Contract[],
       rewards: undefined,
       category: 'lock',

@@ -52,7 +52,7 @@ export async function getLockerBalance(
     amount: BigNumber.from(lockedBalances.output.amount),
     underlyings: [RBN],
     rewards: [{ ...RBN, amount: BigNumber.from(claimableLockedBalancesRewards.output) }],
-    lock: { end: lockedBalances.output.end },
+    unlockAt: lockedBalances.output.end,
     category: 'lock',
   }
 }

@@ -59,38 +59,38 @@ export interface BasePricedBalance extends BaseBalance {
   timestamp: number
 }
 
-export interface Balance extends BaseBalance {
+export interface RewardBalance extends BaseBalance {
+  // TODO: rates interface
+  rates?: any
+}
+
+export interface RootBaseBalance extends BaseBalance {
   // optional rewards
   rewards?: BaseBalance[]
   // optional underlying tokens.
   // ex: aToken -> token (AAVE)
   // ex: Uniswap Pair -> [token0, token1]
-  underlyings?: BaseBalance[] | BaseContract[]
-  lock?: Lock
-  vest?: Vest
+  underlyings?: RewardBalance[] | BaseContract[]
 }
 
-export interface RewardBalance extends Balance {
-  // TODO: rewards interface
-  rates?: any
+export interface VestBalance extends RootBaseBalance {
+  category: 'vest'
+  // Unix timestamp
+  unlockAt?: number
 }
+
+export interface LockBalance extends RootBaseBalance {
+  category: 'lock'
+  // Unix timestamp
+  unlockAt?: number
+}
+
+export type Balance = VestBalance | LockBalance | RootBaseBalance
 
 export interface PricedBalance extends BasePricedBalance {
   rewards?: BasePricedBalance[]
   underlyings?: BasePricedBalance[]
-  vest?: Vest
-  lock?: Lock
   type?: string
-}
-
-export interface Lock {
-  // Unix timestamp
-  end?: number
-}
-
-export interface Vest {
-  // Unix timestamp
-  end?: number
 }
 
 export interface BalancesGroup {

@@ -73,7 +73,7 @@ export async function getVesterBalances(ctx: BalancesContext, vesters: Contract[
       symbol: CRV.symbol,
       amount: BigNumber.from(initialBalanceRes.output).sub(claimedBalanceRes.output),
       claimable: BigNumber.from(balanceOfRes.output),
-      lock: { end: endTimeRes.output },
+      unlockAt: endTimeRes.output,
       underlyings: [CRV],
       rewards: undefined,
       category: 'vest',

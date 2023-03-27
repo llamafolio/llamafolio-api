@@ -76,7 +76,7 @@ export async function getMultiBalances(ctx: BalancesContext, staker: Contract): 
         ...staker,
         amount: BigNumber.from(lock.output.amount),
         nft: lock.input.params[0],
-        lock: { end: lock.output.end },
+        unlockAt: lock.output.end,
         underlyings: [underlying],
         rewards: undefined,
         category: 'lock',

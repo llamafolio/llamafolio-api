@@ -31,7 +31,7 @@ export async function getAngleLockBalances(ctx: BalancesContext, locker: Contrac
     ...locker,
     underlyings: [angle],
     amount: BigNumber.from(lockedBalancesOf.output.amount),
-    lock: { end: lockedBalancesOf.output.end },
+    unlockAt: lockedBalancesOf.output.end,
     rewards: undefined,
     category: 'lock',
   }

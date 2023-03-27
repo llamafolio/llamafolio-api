@@ -105,7 +105,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
       symbol: contract.symbol,
       amount: extraUserLockedBySlot.amount,
       underlyings: [{ ...VTX, amount: extraUserLockedBySlot.amount }],
-      lock: { end: extraUserLockedBySlot.endTime },
+      unlockAt: extraUserLockedBySlot.endTime,
       category: 'lock',
     })
   }

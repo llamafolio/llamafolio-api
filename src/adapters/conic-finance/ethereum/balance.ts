@@ -173,7 +173,7 @@ export async function getCNCLockerBalances(ctx: BalancesContext, lockers: Contra
       symbol: CNC.symbol,
       decimals: CNC.decimals,
       amount: BigNumber.from(lockedBalanceRes.output.amount),
-      lock: { end: lockedBalanceRes.output.unlockTime },
+      unlockAt: lockedBalanceRes.output.unlockTime,
       underlyings: [CNC],
       rewards: undefined,
       category: 'lock',

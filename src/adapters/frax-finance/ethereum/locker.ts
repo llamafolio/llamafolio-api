@@ -52,7 +52,7 @@ export async function getFraxLockerBalances(ctx: BalancesContext, lockers: Contr
       ...locker,
       underlyings: locker.underlyings as Contract[],
       amount: BigNumber.from(lockedBalanceOf.output.amount),
-      lock: { end: lockedBalanceOf.output.end },
+      unlockAt: lockedBalanceOf.output.end,
       rewards: [{ ...reward, amount: BigNumber.from(incentiveEarnedRes.output) }],
       category: 'lock',
     })

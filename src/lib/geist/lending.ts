@@ -2,7 +2,7 @@ import {
   getLendingPoolBalances as getAaveLendingPoolBalances,
   getLendingPoolContracts as getAaveLendingPoolContracts,
 } from '@lib/aave/v2/lending'
-import { Balance, BalancesContext, BaseContext, Contract, RewardBalance } from '@lib/adapter'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
@@ -101,7 +101,7 @@ export async function getLendingPoolBalances(
   for (let i = 0; i < claimableRewards.length; i++) {
     const balance = balanceByAddress[registeredTokensAddresses[i]]
     if (balance && balance.rewards?.[0]) {
-      const reward = balance.rewards[0] as RewardBalance
+      const reward = balance.rewards[0]
       reward.amount = claimableRewards[i]
       reward.claimable = claimableRewards[i]
     }

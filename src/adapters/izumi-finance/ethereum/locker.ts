@@ -76,7 +76,7 @@ export async function getLockerIzumiBalances(ctx: BalancesContext, locker: Contr
       ...locker,
       nftId: lockedRes.input.params[0],
       amount: BigNumber.from(lockedRes.output.amount),
-      lock: { end: lockedRes.output.end },
+      unlockAt: lockedRes.output.end,
       underlyings: [IZI],
       rewards: undefined,
       category: 'lock',

@@ -23,7 +23,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   })
 
   return {
-    // Lock:end is an universal timestamp for all users who have lock on gnosis-protocol-v1, and which corresponds to the deposit deadline (1644944444) + 1 year of lock duration (31536000)
-    groups: [{ balances: balances.map((balance) => ({ ...balance, category: 'lock', lock: { end: 1676480444 } })) }],
+    // Lock end is an universal timestamp for all users who have lock on gnosis-protocol-v1, and which corresponds to the deposit deadline (1644944444) + 1 year of lock duration (31536000)
+    groups: [{ balances: balances.map((balance) => ({ ...balance, category: 'lock', unlockAt: 1676480444 })) }],
   }
 }

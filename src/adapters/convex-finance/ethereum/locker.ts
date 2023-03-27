@@ -113,7 +113,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
     const balance: Balance = {
       ...contract,
       amount: BigNumber.from(lockedData.amount),
-      lock: { end: lockedData.unlockTime },
+      unlockAt: lockedData.unlockTime,
       underlyings: [CVX],
       rewards: [],
       category: 'lock',

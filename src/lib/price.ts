@@ -1,4 +1,4 @@
-import { Balance, BaseBalance, PricedBalance, RewardBalance } from '@lib/adapter'
+import { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { BN_ZERO, mulPrice, sum } from '@lib/math'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -45,7 +45,7 @@ export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
 
 export async function getPricedBalances(balances: Balance[]): Promise<(Balance | PricedBalance)[]> {
   // Filter empty balances
-  balances = balances.filter((balance) => balance.amount.gt(0) || (balance as RewardBalance).claimable?.gt(0))
+  balances = balances.filter((balance) => balance.amount.gt(0) || balance.claimable?.gt(0))
 
   const priced: BaseBalance[] = balances.slice()
 
@@ -53,7 +53,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
   for (const balance of balances) {
     if (balance.rewards) {
       for (const reward of balance.rewards) {
-        if (reward.amount?.gt(0) || (reward as RewardBalance).claimable?.gt(0)) {
+        if (reward.amount?.gt(0) || reward.claimable?.gt(0)) {
           priced.push(reward)
         }
       }
@@ -97,9 +97,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
       ...balance,
       priceTimestamp: price.timestamp ? new Date(price.timestamp * 1000) : undefined,
       balanceUSD: mulPrice(balance.amount, decimals, price.price),
-      claimableUSD: (balance as RewardBalance).claimable
-        ? mulPrice((balance as RewardBalance).claimable || BN_ZERO, decimals, price.price)
-        : undefined,
+      claimableUSD: balance.claimable ? mulPrice(balance.claimable || BN_ZERO, decimals, price.price) : undefined,
     }
   }
 

@@ -65,9 +65,7 @@ export async function getTokenIdsBalances(
     ...velo,
     category: 'lock' as Category,
     amount: BigNumber.from(res.output.amount),
-    lock: {
-      end: res.output.end,
-    },
+    unlockAt: res.output.end,
   }))
 
   // TODO: get bribes

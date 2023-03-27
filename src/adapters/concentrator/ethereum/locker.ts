@@ -38,7 +38,7 @@ export async function getLockerBalances(ctx: BalancesContext, locker: Contract):
     amount: BigNumber.from(lockedInfosRes.output.amount),
     underlyings: [CTR],
     rewards: undefined,
-    lock: { end: lockedInfosRes.output.end },
+    unlockAt: lockedInfosRes.output.end,
     category: 'lock',
   }
 }
