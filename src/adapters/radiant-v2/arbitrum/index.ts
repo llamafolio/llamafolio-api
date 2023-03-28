@@ -2,7 +2,7 @@ import {
   getLendingPoolContracts as getAaveLendingPoolContracts,
   getLendingPoolHealthFactor,
 } from '@lib/aave/v2/lending'
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
@@ -53,32 +53,19 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { pools, fmtMultifeeDistributionContract },
-    props: { fmtMultifeeDistributionContract },
   }
 }
 
-async function getLendingBalances(
-  ctx: BalancesContext,
-  contracts: Contract[],
-  fmtMultifeeDistributionContract: Contract,
-) {
-  const [lendBalances, multifeeBalances] = await Promise.all([
-    getLendingPoolBalances(ctx, contracts, chefIncentivesControllerContract, radiantToken),
-    getMultiFeeDistributionBalances(ctx, contracts, {
-      multiFeeDistribution: multiFeeDistributionContract,
-      multiFeeDistributionContract: fmtMultifeeDistributionContract,
-      lendingPool: lendingPoolContract,
-      stakingToken: RDNT_WETH,
-    }),
-  ])
-
-  return [...lendBalances, ...multifeeBalances!]
-}
-
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts, props) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      pools: (...args) => getLendingBalances(...args, props.fmtMultifeeDistributionContract),
+      pools: (...args) => getLendingPoolBalances(...args, chefIncentivesControllerContract, radiantToken),
+      fmtMultifeeDistributionContract: (...args) =>
+        getMultiFeeDistributionBalances(...args, {
+          multiFeeDistribution: multiFeeDistributionContract,
+          lendingPool: lendingPoolContract,
+          stakingToken: RDNT_WETH,
+        }),
     }),
     getLendingPoolHealthFactor(ctx, lendingPoolContract),
   ])

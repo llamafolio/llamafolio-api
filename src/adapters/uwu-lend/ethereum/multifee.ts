@@ -97,7 +97,6 @@ const abi = {
 export interface GetMultiFeeDistributionBalancesParams {
   lendingPool: Contract
   multiFeeDistribution: Contract
-  multiFeeDistributionContract: Contract
   stakingToken: Token
 }
 
@@ -110,13 +109,13 @@ const UwU: Token = {
 
 export async function getUWUMultiFeeDistributionBalances(
   ctx: BalancesContext,
-  _lendingPoolContracts: Contract[],
+  multiFeeDistributionContract: Contract,
   params: GetMultiFeeDistributionBalancesParams,
 ) {
   const balances: Balance[] = []
   const lockerBalances: Balance[] = []
 
-  const contract = params.multiFeeDistributionContract
+  const contract = multiFeeDistributionContract
 
   const stakingToken = params.stakingToken
   const rewards = contract.rewards as Contract[]

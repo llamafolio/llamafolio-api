@@ -1,5 +1,5 @@
 import { getLendingPoolHealthFactor } from '@adapters/aave-v3/common/lending'
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
 import { getMultiFeeDistributionBalances, getMultiFeeDistributionContracts } from '@lib/geist/stake'
@@ -41,32 +41,19 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { pools, fmtMultiFeeDistributionContracts },
-    props: { fmtMultiFeeDistributionContracts },
   }
 }
 
-async function getLendingBalances(
-  ctx: BalancesContext,
-  contracts: Contract[],
-  fmtMultifeeDistributionContract: Contract,
-) {
-  const [lendBalances, multifeeBalances] = await Promise.all([
-    getLendingPoolBalances(ctx, contracts, chefIncentivesControllerContract),
-    getMultiFeeDistributionBalances(ctx, contracts, {
-      multiFeeDistribution: multiFeeDistributionContract,
-      multiFeeDistributionContract: fmtMultifeeDistributionContract,
-      lendingPool: lendingPoolContract,
-      stakingToken: valasToken,
-    }),
-  ])
-
-  return [...lendBalances, ...multifeeBalances!]
-}
-
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts, props) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      pools: (...args) => getLendingBalances(...args, props.fmtMultiFeeDistributionContracts),
+      pools: (...args) => getLendingPoolBalances(...args, chefIncentivesControllerContract),
+      fmtMultiFeeDistributionContracts: (...args) =>
+        getMultiFeeDistributionBalances(...args, {
+          multiFeeDistribution: multiFeeDistributionContract,
+          lendingPool: lendingPoolContract,
+          stakingToken: valasToken,
+        }),
     }),
     getLendingPoolHealthFactor(ctx, lendingPoolContract),
   ])

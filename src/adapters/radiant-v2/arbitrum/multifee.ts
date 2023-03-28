@@ -114,7 +114,6 @@ const radiantToken: Token = {
 export interface GetMultiFeeDistributionBalancesParams {
   lendingPool: Contract
   multiFeeDistribution: Contract
-  multiFeeDistributionContract: Contract
   stakingToken: Contract
 }
 
@@ -147,12 +146,12 @@ export async function getMultiFeeDistributionContracts(
 
 export async function getMultiFeeDistributionBalances(
   ctx: BalancesContext,
-  _lendingPoolContracts: Contract[],
+  multiFeeDistributionContract: Contract,
   params: GetMultiFeeDistributionBalancesParams,
 ): Promise<Balance[] | undefined> {
   const balances: Balance[] = []
 
-  const contract = params.multiFeeDistributionContract
+  const contract = multiFeeDistributionContract
   const rewards = contract.rewards as Contract[]
   const underlyings = contract.underlyings as Contract[]
 
