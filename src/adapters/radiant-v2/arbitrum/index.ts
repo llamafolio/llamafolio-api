@@ -53,6 +53,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { pools, fmtMultifeeDistributionContract },
+    props: { fmtMultifeeDistributionContract },
   }
 }
 
@@ -61,7 +62,7 @@ async function getLendingBalances(
   contracts: Contract[],
   fmtMultifeeDistributionContract: Contract,
 ) {
-  return Promise.all([
+  const [lendBalances, multifeeBalances] = await Promise.all([
     getLendingPoolBalances(ctx, contracts, chefIncentivesControllerContract, radiantToken),
     getMultiFeeDistributionBalances(ctx, contracts, {
       multiFeeDistribution: multiFeeDistributionContract,
@@ -70,12 +71,14 @@ async function getLendingBalances(
       stakingToken: RDNT_WETH,
     }),
   ])
+
+  return [...lendBalances, ...multifeeBalances!]
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts, props) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      pools: (...args) => getLendingBalances(...args, contracts.fmtMultifeeDistributionContract!),
+      pools: (...args) => getLendingBalances(...args, props.fmtMultifeeDistributionContract),
     }),
     getLendingPoolHealthFactor(ctx, lendingPoolContract),
   ])

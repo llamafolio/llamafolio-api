@@ -3,14 +3,39 @@ import {
   getLendingPoolContracts as getAaveLendingPoolContracts,
 } from '@lib/aave/v2/lending'
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { keyBy, range } from '@lib/array'
+import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { providers } from '@lib/providers'
 import { Token } from '@lib/token'
-import { isNotNullish } from '@lib/type'
-import { BigNumber, ethers } from 'ethers'
+import { isSuccess } from '@lib/type'
+import { BigNumber } from 'ethers'
 
-import ChefIncentivesControllerABI from './abis/ChefIncentivesController.json'
+const abi = {
+  registeredTokens: {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'registeredTokens',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  poolLength: {
+    inputs: [],
+    name: 'poolLength',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  claimableReward: {
+    inputs: [
+      { internalType: 'address', name: '_user', type: 'address' },
+      { internalType: 'address[]', name: '_tokens', type: 'address[]' },
+    ],
+    name: 'claimableReward',
+    outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
 
 export interface GetLendingPoolContractsParams {
   ctx: BaseContext
@@ -22,54 +47,39 @@ export interface GetLendingPoolContractsParams {
 /**
  * Get AAVE LendingPool lending and borrowing contracts with rewards from ChefIncentives
  */
-export async function getLendingPoolContracts({
-  ctx,
-  lendingPool,
-  chefIncentivesController,
-  rewardToken,
-}: GetLendingPoolContractsParams) {
-  const provider = providers[ctx.chain]
 
+export async function getLendingPoolContracts(
+  ctx: BaseContext,
+  lendingPool: Contract,
+  chefIncentivesController: Contract,
+  rewardToken: Token,
+) {
+  const contracts: Contract[] = []
   const aaveLendingPoolContracts = await getAaveLendingPoolContracts(ctx, lendingPool)
+  const aaveLendingPoolContractsByAddress = keyBy(aaveLendingPoolContracts, 'address', { lowercase: false })
 
-  const aaveLendingPoolContractsByAddress: { [key: string]: Contract } = {}
-  for (const contract of aaveLendingPoolContracts) {
-    aaveLendingPoolContractsByAddress[contract.address] = contract
-  }
-
-  // add ChefIncentives rewards
-  const chefIncentives = new ethers.Contract(chefIncentivesController.address, ChefIncentivesControllerABI, provider)
-
-  const lmRewardsCount = (await chefIncentives.poolLength()).toNumber()
+  const { output: lmRewardsCount } = await call({ ctx, target: chefIncentivesController.address, abi: abi.poolLength })
 
   const registeredTokensRes = await multicall({
     ctx,
-    calls: range(0, lmRewardsCount).map((i) => ({
-      target: chefIncentives.address,
-      params: [i],
+    calls: range(0, lmRewardsCount).map((_, idx) => ({
+      target: chefIncentivesController.address,
+      params: [idx],
     })),
-    abi: {
-      inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      name: 'registeredTokens',
-      outputs: [{ internalType: 'address', name: '', type: 'address' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.registeredTokens,
   })
-  const registeredTokensAddresses = registeredTokensRes.map((res) => res.output)
 
-  for (const address of registeredTokensAddresses) {
-    const contract = aaveLendingPoolContractsByAddress[address]
+  for (const registeredTokenRes of registeredTokensRes) {
+    if (!isSuccess(registeredTokenRes)) {
+      continue
+    }
+    const contract = aaveLendingPoolContractsByAddress[registeredTokenRes.output]
     if (contract) {
-      const reward: Contract = {
-        ...rewardToken,
-        category: 'reward',
-      }
-      contract.rewards = [reward]
+      contracts.push({ ...contract, rewards: [rewardToken] })
     }
   }
 
-  return aaveLendingPoolContracts
+  return contracts
 }
 
 export interface GetLendingPoolBalancesParams {
@@ -79,31 +89,38 @@ export interface GetLendingPoolBalancesParams {
 export async function getLendingPoolBalances(
   ctx: BalancesContext,
   contracts: Contract[],
-  { chefIncentivesController }: GetLendingPoolBalancesParams,
+  chefIncentivesController: Contract,
 ) {
-  const provider = providers[ctx.chain]
+  const balances: Balance[] = []
+  const lendBalances = await getAaveLendingPoolBalances(ctx, contracts)
+  const balanceByAddress = keyBy(lendBalances, 'address', { lowercase: false })
 
-  const balances = await getAaveLendingPoolBalances(ctx, contracts)
-
-  const balanceByAddress: { [key: string]: Balance } = {}
-  for (const balance of balances) {
-    balanceByAddress[balance.address] = balance
-  }
-
-  // lending / borrowing rewards
-  const chefIncentives = new ethers.Contract(chefIncentivesController.address, ChefIncentivesControllerABI, provider)
-
-  const registeredTokensAddresses = contracts.map((contract) => contract.address).filter(isNotNullish)
-
-  const claimableRewards: BigNumber[] = await chefIncentives.claimableReward(ctx.address, registeredTokensAddresses)
+  const claimableRewards = await multicall({
+    ctx,
+    // @ts-ignore
+    calls: contracts.map((contract) => ({
+      target: chefIncentivesController.address,
+      params: [ctx.address, [contract.address]],
+    })),
+    abi: abi.claimableReward,
+  })
 
   // Attach ChefIncentives rewards
-  for (let i = 0; i < claimableRewards.length; i++) {
-    const balance = balanceByAddress[registeredTokensAddresses[i]]
-    if (balance && balance.rewards?.[0]) {
-      const reward = balance.rewards[0]
-      reward.amount = claimableRewards[i]
-      reward.claimable = claimableRewards[i]
+  for (let rewardIdx = 0; rewardIdx < claimableRewards.length; rewardIdx++) {
+    const claimableReward = claimableRewards[rewardIdx]
+
+    if (!isSuccess(claimableReward)) {
+      continue
+    }
+
+    const balance = balanceByAddress[contracts[rewardIdx].address]
+    const reward = balance.rewards?.[0] as Contract
+
+    if (balance && reward) {
+      balances.push({
+        ...(balance as Balance),
+        rewards: [{ ...(reward as Contract), amount: BigNumber.from(claimableReward.output[0]) }],
+      })
     }
   }
 

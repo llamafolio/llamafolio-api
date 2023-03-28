@@ -2,7 +2,7 @@ import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
 import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
-import { getMultiFeeDistributionBalances } from '@lib/geist/stake'
+import { getMultiFeeDistributionBalances, getMultiFeeDistributionContracts } from '@lib/geist/stake'
 import { Token } from '@lib/token'
 
 const lendingPoolContract: Contract = {
@@ -34,33 +34,39 @@ const radiantToken: Token = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getLendingPoolContracts({
-    ctx,
-    lendingPool: lendingPoolContract,
-    chefIncentivesController: chefIncentivesControllerContract,
-    rewardToken: radiantToken,
-  })
+  const [pools, fmtMultiFeeDistributionContracts] = await Promise.all([
+    getLendingPoolContracts(ctx, lendingPoolContract, chefIncentivesControllerContract, radiantToken),
+    getMultiFeeDistributionContracts(ctx, multiFeeDistributionContract, radiantToken),
+  ])
 
   return {
-    contracts: { pools },
+    contracts: { pools, fmtMultiFeeDistributionContracts },
+    props: { fmtMultiFeeDistributionContracts },
   }
 }
 
-function getLendingBalances(ctx: BalancesContext, contracts: Contract[]) {
-  return Promise.all([
-    getLendingPoolBalances(ctx, contracts, { chefIncentivesController: chefIncentivesControllerContract }),
+async function getLendingBalances(
+  ctx: BalancesContext,
+  contracts: Contract[],
+  fmtMultifeeDistributionContract: Contract,
+) {
+  const [lendBalances, multifeeBalances] = await Promise.all([
+    getLendingPoolBalances(ctx, contracts, chefIncentivesControllerContract),
     getMultiFeeDistributionBalances(ctx, contracts, {
       multiFeeDistribution: multiFeeDistributionContract,
+      multiFeeDistributionContract: fmtMultifeeDistributionContract,
       lendingPool: lendingPoolContract,
       stakingToken: radiantToken,
     }),
   ])
+
+  return [...lendBalances, ...multifeeBalances!]
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts, props) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      pools: getLendingBalances,
+      pools: (...args) => getLendingBalances(...args, props.fmtMultiFeeDistributionContracts),
     }),
     getLendingPoolHealthFactor(ctx, lendingPoolContract),
   ])

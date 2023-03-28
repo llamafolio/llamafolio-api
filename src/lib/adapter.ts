@@ -60,6 +60,7 @@ export interface BasePricedBalance extends BaseBalance {
 }
 
 export interface RewardBalance extends BaseBalance {
+  underlyings?: RewardBalance[] | BaseContract[]
   // TODO: rates interface
   rates?: any
 }
