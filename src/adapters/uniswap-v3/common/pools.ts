@@ -277,6 +277,7 @@ const Q256 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(256))
 const Q96 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(96))
 
 export function getTickAtSqrtRatio(sqrtPriceX96: number) {
+  // @ts-ignore
   const tick = Math.floor(Math.log((sqrtPriceX96 / Q96) ** 2) / Math.log(1.0001))
   return tick
 }
@@ -286,6 +287,7 @@ export function getUnderlyingAmounts(liquidity: number, sqrtPriceX96: number, ti
   const sqrtRatioB = Math.sqrt(1.0001 ** tickHigh)
 
   const currentTick = getTickAtSqrtRatio(sqrtPriceX96)
+  // @ts-ignore
   const sqrtPrice = sqrtPriceX96 / Q96
 
   let amount0 = 0
@@ -306,15 +308,15 @@ export function getUnderlyingAmounts(liquidity: number, sqrtPriceX96: number, ti
   ]
 }
 
-function toBigNumber(numstr: string) {
-  let bi = numstr
-  if (typeof sqrtRatio !== 'bigint') {
-    bi = JSBI.BigInt(numstr)
+function toBigNumber(num: string | JSBI): JSBI {
+  if (typeof num !== 'bigint') {
+    return JSBI.BigInt(num)
   }
-  return bi
+
+  return num
 }
 
-function subIn256(x, y) {
+function subIn256(x: JSBI, y: JSBI) {
   const difference = JSBI.subtract(x, y)
 
   if (JSBI.lessThan(difference, ZERO)) {
@@ -374,7 +376,9 @@ function getRewardAmounts(
   const feeGrowthInsideLast_0 = toBigNumber(feeGrowthInside0)
   const feeGrowthInsideLast_1 = toBigNumber(feeGrowthInside1)
 
+  // @ts-ignore
   const uncollectedFees_0 = Math.floor((liquidity * subIn256(fr_t1_0, feeGrowthInsideLast_0)) / Q128)
+  // @ts-ignore
   const uncollectedFees_1 = Math.floor((liquidity * subIn256(fr_t1_1, feeGrowthInsideLast_1)) / Q128)
 
   return [
