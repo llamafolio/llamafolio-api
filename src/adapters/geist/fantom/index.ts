@@ -1,8 +1,8 @@
 import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
-import { getMultiFeeDistributionBalances } from '@lib/geist/stake'
+import { getMultiFeeDistributionBalances, getMultiFeeDistributionContracts } from '@lib/geist/stake'
 import { Token } from '@lib/token'
 
 const lendingPoolContract: Contract = {
@@ -34,34 +34,26 @@ const geistToken: Token = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getLendingPoolContracts({
-    ctx,
-    lendingPool: lendingPoolContract,
-    chefIncentivesController: chefIncentivesControllerContract,
-    rewardToken: geistToken,
-  })
+  const [pools, fmtMultiFeeDistributionContracts] = await Promise.all([
+    getLendingPoolContracts(ctx, lendingPoolContract, chefIncentivesControllerContract, geistToken),
+    getMultiFeeDistributionContracts(ctx, multiFeeDistributionContract, geistToken),
+  ])
 
   return {
-    contracts: { pools },
-    props: { pools },
+    contracts: { pools, fmtMultiFeeDistributionContracts },
   }
 }
 
-function getLendingBalances(ctx: BalancesContext, pools: Contract[], allPools: Contract[]) {
-  return Promise.all([
-    getLendingPoolBalances(ctx, pools, { chefIncentivesController: chefIncentivesControllerContract }),
-    getMultiFeeDistributionBalances(ctx, allPools, {
-      multiFeeDistribution: multiFeeDistributionContract,
-      lendingPool: lendingPoolContract,
-      stakingToken: geistToken,
-    }),
-  ])
-}
-
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts, props) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      pools: (ctx, pools) => getLendingBalances(ctx, pools, props.pools || []),
+      pools: (...args) => getLendingPoolBalances(...args, chefIncentivesControllerContract),
+      fmtMultiFeeDistributionContracts: (...args) =>
+        getMultiFeeDistributionBalances(...args, {
+          multiFeeDistribution: multiFeeDistributionContract,
+          lendingPool: lendingPoolContract,
+          stakingToken: geistToken,
+        }),
     }),
     getLendingPoolHealthFactor(ctx, lendingPoolContract),
   ])

@@ -1,8 +1,8 @@
 import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
-import { getMultiFeeDistributionBalances } from '@lib/geist/stake'
+import { getMultiFeeDistributionBalances, getMultiFeeDistributionContracts } from '@lib/geist/stake'
 import { Token } from '@lib/token'
 
 const lendingPoolContract: Contract = {
@@ -34,33 +34,26 @@ const radiantToken: Token = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getLendingPoolContracts({
-    ctx,
-    lendingPool: lendingPoolContract,
-    chefIncentivesController: chefIncentivesControllerContract,
-    rewardToken: radiantToken,
-  })
+  const [pools, fmtMultiFeeDistributionContracts] = await Promise.all([
+    getLendingPoolContracts(ctx, lendingPoolContract, chefIncentivesControllerContract, radiantToken),
+    getMultiFeeDistributionContracts(ctx, multiFeeDistributionContract, radiantToken),
+  ])
 
   return {
-    contracts: { pools },
+    contracts: { pools, fmtMultiFeeDistributionContracts },
   }
-}
-
-function getLendingBalances(ctx: BalancesContext, contracts: Contract[]) {
-  return Promise.all([
-    getLendingPoolBalances(ctx, contracts, { chefIncentivesController: chefIncentivesControllerContract }),
-    getMultiFeeDistributionBalances(ctx, contracts, {
-      multiFeeDistribution: multiFeeDistributionContract,
-      lendingPool: lendingPoolContract,
-      stakingToken: radiantToken,
-    }),
-  ])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      pools: getLendingBalances,
+      pools: (...args) => getLendingPoolBalances(...args, chefIncentivesControllerContract),
+      fmtMultiFeeDistributionContracts: (...args) =>
+        getMultiFeeDistributionBalances(...args, {
+          multiFeeDistribution: multiFeeDistributionContract,
+          lendingPool: lendingPoolContract,
+          stakingToken: radiantToken,
+        }),
     }),
     getLendingPoolHealthFactor(ctx, lendingPoolContract),
   ])

@@ -1,10 +1,11 @@
 import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
+import { getMultiFeeDistributionContracts } from '@lib/geist/stake'
 import { Token } from '@lib/token'
 
-import { getMultiFeeDistributionBalances } from './lock'
+import { getUWUMultiFeeDistributionBalances } from './multifee'
 
 const lendingPoolContract: Contract = {
   name: 'LendingPool',
@@ -14,10 +15,10 @@ const lendingPoolContract: Contract = {
 }
 
 const multiFeeDistributionContract: Contract = {
-  name: 'MultiFeeDistribution',
+  name: 'MultiFeeDistribution v2',
   displayName: 'UwU Locker',
   chain: 'ethereum',
-  address: '0x7c0bF1108935e7105E218BBB4f670E5942c5e237',
+  address: '0x0a7B2A21027F92243C5e5E777aa30BB7969b0188',
 }
 
 const chefIncentivesControllerContract: Contract = {
@@ -34,34 +35,36 @@ const UwU: Token = {
   symbol: 'UwU',
 }
 
-export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getLendingPoolContracts({
-    ctx,
-    lendingPool: lendingPoolContract,
-    chefIncentivesController: chefIncentivesControllerContract,
-    rewardToken: UwU,
-  })
-
-  return {
-    contracts: { pools },
-  }
+const UWU_WETH: Contract = {
+  chain: 'ethereum',
+  address: '0x3E04863DBa602713Bb5d0edbf7DB7C3A9A2B6027',
+  underlyings: [
+    { chain: 'ethereum', address: '0x55C08ca52497e2f1534B59E2917BF524D4765257', symbol: 'UWU', decimals: 18 },
+    { chain: 'ethereum', address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', symbol: 'WETH', decimals: 18 },
+  ],
 }
 
-function getLendingBalances(ctx: BalancesContext, contracts: Contract[]) {
-  return Promise.all([
-    getLendingPoolBalances(ctx, contracts, {
-      chefIncentivesController: chefIncentivesControllerContract,
-    }),
-    getMultiFeeDistributionBalances(ctx, contracts, {
-      multiFeeDistributionAddress: multiFeeDistributionContract.address,
-    }),
+export const getContracts = async (ctx: BaseContext) => {
+  const [pools, fmtMultiFeeDistributionContracts] = await Promise.all([
+    getLendingPoolContracts(ctx, lendingPoolContract, chefIncentivesControllerContract, UwU),
+    getMultiFeeDistributionContracts(ctx, multiFeeDistributionContract, UWU_WETH),
   ])
+
+  return {
+    contracts: { pools, fmtMultiFeeDistributionContracts },
+  }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      pools: getLendingBalances,
+      pools: (...args) => getLendingPoolBalances(...args, chefIncentivesControllerContract),
+      fmtMultiFeeDistributionContracts: (...args) =>
+        getUWUMultiFeeDistributionBalances(...args, {
+          multiFeeDistribution: multiFeeDistributionContract,
+          lendingPool: lendingPoolContract,
+          stakingToken: UWU_WETH as Token,
+        }),
     }),
     getLendingPoolHealthFactor(ctx, lendingPoolContract),
   ])

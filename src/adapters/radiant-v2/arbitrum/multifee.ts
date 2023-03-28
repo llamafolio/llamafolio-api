@@ -1,8 +1,7 @@
-import { Balance, BalancesContext, BaseContext, Contract, RewardBalance } from '@lib/adapter'
-import { keyBy } from '@lib/array'
+import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { Call, multicall } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
@@ -24,8 +23,28 @@ const abi = {
           { internalType: 'address', name: 'token', type: 'address' },
           { internalType: 'uint256', name: 'amount', type: 'uint256' },
         ],
-        internalType: 'struct MultiFeeDistribution.RewardData[]',
-        name: 'rewards',
+        internalType: 'struct IFeeDistribution.RewardData[]',
+        name: 'rewardsData',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  earnedBalances: {
+    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
+    name: 'earnedBalances',
+    outputs: [
+      { internalType: 'uint256', name: 'total', type: 'uint256' },
+      { internalType: 'uint256', name: 'unlocked', type: 'uint256' },
+      {
+        components: [
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+          { internalType: 'uint256', name: 'unlockTime', type: 'uint256' },
+          { internalType: 'uint256', name: 'penalty', type: 'uint256' },
+        ],
+        internalType: 'struct EarnedBalance[]',
+        name: 'earningsData',
         type: 'tuple[]',
       },
     ],
@@ -39,12 +58,15 @@ const abi = {
       { internalType: 'uint256', name: 'total', type: 'uint256' },
       { internalType: 'uint256', name: 'unlockable', type: 'uint256' },
       { internalType: 'uint256', name: 'locked', type: 'uint256' },
+      { internalType: 'uint256', name: 'lockedWithMultiplier', type: 'uint256' },
       {
         components: [
           { internalType: 'uint256', name: 'amount', type: 'uint256' },
           { internalType: 'uint256', name: 'unlockTime', type: 'uint256' },
+          { internalType: 'uint256', name: 'multiplier', type: 'uint256' },
+          { internalType: 'uint256', name: 'duration', type: 'uint256' },
         ],
-        internalType: 'struct MultiFeeDistribution.LockedBalance[]',
+        internalType: 'struct LockedBalance[]',
         name: 'lockData',
         type: 'tuple[]',
       },
@@ -52,58 +74,47 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  earnedBalances: {
-    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
-    name: 'earnedBalances',
+  rewardConverter: {
+    inputs: [],
+    name: 'rewardConverter',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  viewPendingRewards: {
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'viewPendingRewards',
     outputs: [
-      { internalType: 'uint256', name: 'total', type: 'uint256' },
-      {
-        components: [
-          { internalType: 'uint256', name: 'amount', type: 'uint256' },
-          { internalType: 'uint256', name: 'unlockTime', type: 'uint256' },
-        ],
-        internalType: 'struct MultiFeeDistribution.LockedBalance[]',
-        name: 'earningsData',
-        type: 'tuple[]',
-      },
+      { internalType: 'address[]', name: 'tokens', type: 'address[]' },
+      { internalType: 'uint256[]', name: 'amts', type: 'uint256[]' },
     ],
     stateMutability: 'view',
     type: 'function',
   },
-  unlockedBalance: {
-    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
-    name: 'unlockedBalance',
-    outputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  rewardData: {
-    inputs: [{ internalType: 'address', name: '', type: 'address' }],
-    name: 'rewardData',
+  getPoolTokens: {
+    inputs: [{ internalType: 'bytes32', name: 'poolId', type: 'bytes32' }],
+    name: 'getPoolTokens',
     outputs: [
-      { internalType: 'uint256', name: 'periodFinish', type: 'uint256' },
-      { internalType: 'uint256', name: 'rewardRate', type: 'uint256' },
-      {
-        internalType: 'uint256',
-        name: 'lastUpdateTime',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'rewardPerTokenStored',
-        type: 'uint256',
-      },
-      { internalType: 'uint256', name: 'balance', type: 'uint256' },
+      { internalType: 'contract IERC20[]', name: 'tokens', type: 'address[]' },
+      { internalType: 'uint256[]', name: 'balances', type: 'uint256[]' },
+      { internalType: 'uint256', name: 'lastChangeBlock', type: 'uint256' },
     ],
     stateMutability: 'view',
     type: 'function',
   },
 }
 
+const radiantToken: Token = {
+  chain: 'arbitrum',
+  address: '0x3082CC23568eA640225c2467653dB90e9250AaA0',
+  symbol: 'RDNT',
+  decimals: 18,
+}
+
 export interface GetMultiFeeDistributionBalancesParams {
   lendingPool: Contract
   multiFeeDistribution: Contract
-  stakingToken: Token
+  stakingToken: Contract
 }
 
 export async function getMultiFeeDistributionContracts(
@@ -129,8 +140,7 @@ export async function getMultiFeeDistributionContracts(
     ...stakingToken,
     address: multiFeeDistribution.address,
     token: stakingToken.address,
-    underlyings: underlyingsTokensRes.filter(isSuccess).map((token) => token.output),
-    rewards: underlyingsTokensRes.filter(isSuccess).map((token) => token.input.target),
+    rewards: underlyingsTokensRes.filter(isSuccess).map((token) => token.output),
   }
 }
 
@@ -142,52 +152,52 @@ export async function getMultiFeeDistributionBalances(
   const balances: Balance[] = []
 
   const contract = multiFeeDistributionContract
-  const stakingToken = params.stakingToken
   const rewards = contract.rewards as Contract[]
   const underlyings = contract.underlyings as Contract[]
 
-  if (!contract || !rewards) {
+  if (!rewards || !underlyings) {
     return
   }
 
-  const tokens: Contract[] = rewards.map((reward, tokenIdx) => {
-    return {
-      ...reward,
-      underlyings: underlyings[tokenIdx] ? [underlyings[tokenIdx]] : undefined,
-    }
-  })
-
-  const tokenByAddress = keyBy(tokens, 'address', { lowercase: true })
-
-  const calls: Call[] = rewards.map((token) => ({ target: contract.address, params: token.address }))
-
   const [
-    { output: claimableRewards },
     { output: lockedBalances },
     { output: earnedBalances },
-    { output: unlockableBalance },
-    { output: totalSupplyRes },
-    rewardRatesRes,
+    { output: rewardConverter },
+    { output: totalSupply },
+    { output: vaultBalances },
   ] = await Promise.all([
-    call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.claimableRewards }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.lockedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.earnedBalances }),
-    call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.unlockedBalance }),
-    call({ ctx, target: params.multiFeeDistribution.address, abi: erc20Abi.totalSupply }),
-    multicall({ ctx, calls, abi: abi.rewardData }),
+    call({ ctx, target: params.multiFeeDistribution.address, abi: abi.rewardConverter }),
+    call({ ctx, target: contract.token as string, abi: erc20Abi.totalSupply }),
+    call({ ctx, target: contract.vault, params: [contract.poolId], abi: abi.getPoolTokens }),
   ])
 
-  // Locker
+  const { output: pendingRewards } = await call({
+    ctx,
+    target: rewardConverter,
+    params: [ctx.address],
+    abi: abi.viewPendingRewards,
+  })
+
+  const underlyingBalances = (underlyings: Contract[], vaultBalances: any, amount: BigNumber, supply: BigNumber) => {
+    return underlyings.map((underlying: Contract, index: number) => ({
+      ...underlying,
+      amount: BigNumber.from(vaultBalances.balances[index]).mul(amount).div(supply),
+      underlyings: undefined,
+    }))
+  }
+
   for (let lockIdx = 0; lockIdx < lockedBalances.lockData.length; lockIdx++) {
     const lockedBalance = lockedBalances.lockData[lockIdx]
     const { amount, unlockTime } = lockedBalance
 
     balances.push({
       chain: ctx.chain,
-      address: contract.token!,
+      address: contract.address,
       symbol: contract.symbol,
       decimals: contract.decimals,
-      underlyings: undefined,
+      underlyings: underlyingBalances(underlyings, vaultBalances, BigNumber.from(amount), BigNumber.from(totalSupply)),
       rewards: undefined,
       amount: BigNumber.from(amount),
       unlockAt: unlockTime,
@@ -195,16 +205,15 @@ export async function getMultiFeeDistributionBalances(
     })
   }
 
-  // Vester
   for (let vestIdx = 0; vestIdx < earnedBalances.earningsData.length; vestIdx++) {
     const earnedBalance = earnedBalances.earningsData[vestIdx]
     const { amount, unlockTime } = earnedBalance
 
     balances.push({
       chain: ctx.chain,
-      address: stakingToken.address,
-      symbol: stakingToken.symbol,
-      decimals: stakingToken.decimals,
+      address: radiantToken.address,
+      symbol: radiantToken.symbol,
+      decimals: radiantToken.decimals,
       underlyings: undefined,
       rewards: undefined,
       amount: BigNumber.from(amount),
@@ -213,53 +222,37 @@ export async function getMultiFeeDistributionBalances(
     })
   }
 
-  // Staker
+  for (let rewardIdx = 0; rewardIdx < rewards.length; rewardIdx++) {
+    const reward = rewards[rewardIdx]
+    const pendingReward = pendingRewards.amts[rewardIdx]
+
+    balances.push({
+      chain: ctx.chain,
+      address: reward.address,
+      symbol: reward.symbol,
+      decimals: reward.decimals,
+      underlyings: undefined,
+      rewards: undefined,
+      amount: BigNumber.from(pendingReward),
+      category: 'reward',
+    })
+  }
+
   balances.push({
     chain: ctx.chain,
     address: contract.address,
     symbol: contract.symbol,
     decimals: contract.decimals,
-    underlyings: undefined,
+    underlyings: underlyingBalances(
+      underlyings,
+      vaultBalances,
+      BigNumber.from(lockedBalances.unlockable),
+      BigNumber.from(totalSupply),
+    ),
     rewards: undefined,
-    amount: BigNumber.from(unlockableBalance),
+    amount: BigNumber.from(lockedBalances.unlockable),
     category: 'stake',
   })
-
-  for (let claimableIdx = 0; claimableIdx < rewards.length; claimableIdx++) {
-    const rewardData = claimableRewards[claimableIdx]
-    const rewardRate = rewardRatesRes[claimableIdx]
-    const token = tokenByAddress[rewardData.token.toLowerCase()]
-
-    if (!token || !rewardData || !isSuccess(rewardRate)) {
-      continue
-    }
-
-    // let apy =  (604800 * (rData.rewardRate / decimal) * assetPrice * 365 / 7  /(geistPrice * totalSupply /1e18));
-
-    const rewardBalance: RewardBalance = {
-      chain: ctx.chain,
-      address: rewardData.token,
-      amount: BigNumber.from(rewardData.amount),
-      underlyings: token.underlyings as Contract[],
-      decimals: token.decimals,
-      symbol: token.symbol,
-      category: 'reward',
-      rates: {
-        rate: rewardRate.output.rewardRate,
-        period: 604800,
-        token: rewardData.token,
-        decimals: token.decimals,
-        symbol: token.symbol,
-        //below is the token that you stake or lock to receive the above reward, it is required to calculate an APR
-        stakedToken: params.stakingToken.address,
-        stakedSymbol: params.stakingToken.symbol,
-        stakedDecimals: params.stakingToken.decimals,
-        stakedSupply: totalSupplyRes,
-      },
-    }
-
-    balances.push(rewardBalance)
-  }
 
   return balances
 }

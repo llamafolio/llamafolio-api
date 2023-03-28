@@ -1,20 +1,14 @@
-import { Balance, BalancesContext, BaseContext, Contract, RewardBalance } from '@lib/adapter'
+import { Balance, BalancesContext, Contract, RewardBalance } from '@lib/adapter'
 import { keyBy } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
+import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
 const abi = {
-  UNDERLYING_ASSET_ADDRESS: {
-    inputs: [],
-    name: 'UNDERLYING_ASSET_ADDRESS',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
   claimableRewards: {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
     name: 'claimableRewards',
@@ -106,44 +100,26 @@ export interface GetMultiFeeDistributionBalancesParams {
   stakingToken: Token
 }
 
-export async function getMultiFeeDistributionContracts(
-  ctx: BaseContext,
-  multiFeeDistribution: Contract,
-  stakingToken: Contract,
-): Promise<Contract> {
-  const { output: claimableRewards } = await call({
-    ctx,
-    target: multiFeeDistribution.address,
-    // any addresses could return reward addresses
-    params: [multiFeeDistribution.address],
-    abi: abi.claimableRewards,
-  })
-
-  const underlyingsTokensRes = await multicall({
-    ctx,
-    calls: claimableRewards.map((reward: { token: string; amount: string }) => ({ target: reward.token })),
-    abi: abi.UNDERLYING_ASSET_ADDRESS,
-  })
-
-  return {
-    ...stakingToken,
-    address: multiFeeDistribution.address,
-    token: stakingToken.address,
-    underlyings: underlyingsTokensRes.filter(isSuccess).map((token) => token.output),
-    rewards: underlyingsTokensRes.filter(isSuccess).map((token) => token.input.target),
-  }
+const UwU: Token = {
+  chain: 'ethereum',
+  address: '0x55C08ca52497e2f1534B59E2917BF524D4765257',
+  decimals: 18,
+  symbol: 'UwU',
 }
 
-export async function getMultiFeeDistributionBalances(
+export async function getUWUMultiFeeDistributionBalances(
   ctx: BalancesContext,
   multiFeeDistributionContract: Contract,
   params: GetMultiFeeDistributionBalancesParams,
-): Promise<Balance[] | undefined> {
+) {
   const balances: Balance[] = []
+  const lockerBalances: Balance[] = []
 
   const contract = multiFeeDistributionContract
+
   const stakingToken = params.stakingToken
   const rewards = contract.rewards as Contract[]
+
   const underlyings = contract.underlyings as Contract[]
 
   if (!contract || !rewards) {
@@ -165,14 +141,12 @@ export async function getMultiFeeDistributionBalances(
     { output: claimableRewards },
     { output: lockedBalances },
     { output: earnedBalances },
-    { output: unlockableBalance },
     { output: totalSupplyRes },
     rewardRatesRes,
   ] = await Promise.all([
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.claimableRewards }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.lockedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.earnedBalances }),
-    call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.unlockedBalance }),
     call({ ctx, target: params.multiFeeDistribution.address, abi: erc20Abi.totalSupply }),
     multicall({ ctx, calls, abi: abi.rewardData }),
   ])
@@ -180,20 +154,23 @@ export async function getMultiFeeDistributionBalances(
   // Locker
   for (let lockIdx = 0; lockIdx < lockedBalances.lockData.length; lockIdx++) {
     const lockedBalance = lockedBalances.lockData[lockIdx]
+    const underlyingsFromToken = (stakingToken as Contract).underlyings
     const { amount, unlockTime } = lockedBalance
 
-    balances.push({
+    lockerBalances.push({
       chain: ctx.chain,
       address: contract.token!,
       symbol: contract.symbol,
       decimals: contract.decimals,
-      underlyings: undefined,
+      underlyings: underlyingsFromToken as Contract[],
       rewards: undefined,
       amount: BigNumber.from(amount),
       unlockAt: unlockTime,
       category: 'lock',
     })
   }
+
+  balances.push(...(await getUnderlyingBalances(ctx, lockerBalances)))
 
   // Vester
   for (let vestIdx = 0; vestIdx < earnedBalances.earningsData.length; vestIdx++) {
@@ -202,9 +179,9 @@ export async function getMultiFeeDistributionBalances(
 
     balances.push({
       chain: ctx.chain,
-      address: stakingToken.address,
-      symbol: stakingToken.symbol,
-      decimals: stakingToken.decimals,
+      address: UwU.address,
+      symbol: UwU.symbol,
+      decimals: UwU.decimals,
       underlyings: undefined,
       rewards: undefined,
       amount: BigNumber.from(amount),
@@ -212,18 +189,6 @@ export async function getMultiFeeDistributionBalances(
       category: 'vest',
     })
   }
-
-  // Staker
-  balances.push({
-    chain: ctx.chain,
-    address: contract.address,
-    symbol: contract.symbol,
-    decimals: contract.decimals,
-    underlyings: undefined,
-    rewards: undefined,
-    amount: BigNumber.from(unlockableBalance),
-    category: 'stake',
-  })
 
   for (let claimableIdx = 0; claimableIdx < rewards.length; claimableIdx++) {
     const rewardData = claimableRewards[claimableIdx]
