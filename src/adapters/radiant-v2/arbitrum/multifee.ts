@@ -1,6 +1,7 @@
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
+import { BN_ZERO, sumBN } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -188,6 +189,22 @@ export async function getMultiFeeDistributionBalances(
     }))
   }
 
+  // Locker
+  const locked = sumBN((lockedBalances.lockData || []).map((lockData: any) => lockData.amount))
+  const expiredLocked = BigNumber.from(lockedBalances.total).sub(locked)
+
+  balances.push({
+    chain: ctx.chain,
+    address: contract.token!,
+    symbol: contract.symbol,
+    decimals: contract.decimals,
+    underlyings: undefined,
+    rewards: undefined,
+    amount: expiredLocked,
+    claimable: expiredLocked,
+    category: 'lock',
+  })
+
   for (let lockIdx = 0; lockIdx < lockedBalances.lockData.length; lockIdx++) {
     const lockedBalance = lockedBalances.lockData[lockIdx]
     const { amount, unlockTime } = lockedBalance
@@ -201,10 +218,12 @@ export async function getMultiFeeDistributionBalances(
       rewards: undefined,
       amount: BigNumber.from(amount),
       unlockAt: unlockTime,
+      claimable: BN_ZERO,
       category: 'lock',
     })
   }
 
+  // Vester
   for (let vestIdx = 0; vestIdx < earnedBalances.earningsData.length; vestIdx++) {
     const earnedBalance = earnedBalances.earningsData[vestIdx]
     const { amount, unlockTime } = earnedBalance
@@ -237,22 +256,6 @@ export async function getMultiFeeDistributionBalances(
       category: 'reward',
     })
   }
-
-  balances.push({
-    chain: ctx.chain,
-    address: contract.address,
-    symbol: contract.symbol,
-    decimals: contract.decimals,
-    underlyings: underlyingBalances(
-      underlyings,
-      vaultBalances,
-      BigNumber.from(lockedBalances.unlockable),
-      BigNumber.from(totalSupply),
-    ),
-    rewards: undefined,
-    amount: BigNumber.from(lockedBalances.unlockable),
-    category: 'stake',
-  })
 
   return balances
 }
