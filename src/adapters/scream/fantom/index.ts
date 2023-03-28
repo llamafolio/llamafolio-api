@@ -8,6 +8,15 @@ import {
 } from '@lib/compound/v2/lending'
 
 import { getScreamLockerBalances } from './locker'
+import { getScreamStakeBalances } from './stake'
+
+const xSCREAM: Contract = {
+  chain: 'fantom',
+  address: '0xe3d17c7e840ec140a7a51aca351a482231760824',
+  symbol: 'xSCREAM',
+  decimals: 18,
+  underlyings: ['0xe0654c8e6fd4d733349ac7e09f6f23da256bf475'],
+}
 
 const locker: Contract = {
   chain: 'fantom',
@@ -40,7 +49,7 @@ export const getContracts = async (ctx: BaseContext) => {
   ])
 
   return {
-    contracts: { markets, markets_v1, locker },
+    contracts: { markets, markets_v1, locker, xSCREAM },
   }
 }
 
@@ -49,6 +58,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     markets: getMarketsBalances,
     markets_v1: getMarketsBalances,
     locker: getScreamLockerBalances,
+    xSCREAM: getScreamStakeBalances,
   })
 
   const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
