@@ -2,7 +2,7 @@ import { Balance, BalancesContext, BaseContext, Contract, RewardBalance } from '
 import { keyBy } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
+import { BN_ZERO, sumBN } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -179,6 +179,21 @@ export async function getMultiFeeDistributionBalances(
   ])
 
   // Locker
+  const locked = sumBN((lockedBalances.lockData || []).map((lockData: any) => lockData.amount))
+  const expiredLocked = BigNumber.from(lockedBalances.total).sub(locked)
+
+  balances.push({
+    chain: ctx.chain,
+    address: contract.token!,
+    symbol: contract.symbol,
+    decimals: contract.decimals,
+    underlyings: undefined,
+    rewards: undefined,
+    amount: expiredLocked,
+    claimable: expiredLocked,
+    category: 'lock',
+  })
+
   for (let lockIdx = 0; lockIdx < lockedBalances.lockData.length; lockIdx++) {
     const lockedBalance = lockedBalances.lockData[lockIdx]
     const { amount, unlockTime } = lockedBalance
@@ -192,7 +207,7 @@ export async function getMultiFeeDistributionBalances(
       rewards: undefined,
       amount: BigNumber.from(amount),
       unlockAt: unlockTime,
-      claimable: unlockTime < Date.now() ? BigNumber.from(lockedBalances.unlockable) : BN_ZERO,
+      claimable: BN_ZERO,
       category: 'lock',
     })
   }
