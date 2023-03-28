@@ -93,7 +93,7 @@ interface FarmContract extends Contract {
   rewarder: string
 }
 
-interface FarmBalance extends Balance {
+type FarmBalance = Balance & {
   rewarder: string
 }
 

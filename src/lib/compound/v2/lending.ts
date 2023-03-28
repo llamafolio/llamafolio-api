@@ -54,7 +54,7 @@ export interface GetMarketsContractsProps {
   underlyingAddressByMarketAddress?: { [key: string]: string }
 }
 
-export interface BalanceWithExtraProps extends Balance {
+export type BalanceWithExtraProps = Balance & {
   collateralFactor: BigNumber
 }
 

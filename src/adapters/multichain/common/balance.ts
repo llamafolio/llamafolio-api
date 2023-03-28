@@ -37,7 +37,7 @@ const abi = {
   },
 }
 
-interface MultiBalancesParams extends Balance {
+type MultiBalancesParams = Balance & {
   nft: string
 }
 

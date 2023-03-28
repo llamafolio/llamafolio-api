@@ -149,12 +149,12 @@ export async function getNftContracts(ctx: BaseContext, registry: Contract): Pro
   return nfts
 }
 
-interface NFTBalance extends Balance {
+type NFTBalance = Balance & {
   nftId?: string
   proxy?: string
 }
 
-export interface NFTBorrowBalance extends Balance {
+export type NFTBorrowBalance = Balance & {
   healthfactor: number | undefined
 }
 

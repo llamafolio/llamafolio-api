@@ -59,19 +59,29 @@ export interface BasePricedBalance extends BaseBalance {
   timestamp: number
 }
 
-export interface RewardBalance extends BaseBalance {
-  underlyings?: RewardBalance[] | BaseContract[]
-  // TODO: rates interface
-  rates?: any
-}
-
 export interface RootBaseBalance extends BaseBalance {
   // optional rewards
   rewards?: BaseBalance[]
   // optional underlying tokens.
   // ex: aToken -> token (AAVE)
   // ex: Uniswap Pair -> [token0, token1]
-  underlyings?: RewardBalance[] | BaseContract[]
+  underlyings?: BaseBalance[] | BaseContract[]
+}
+
+export interface WalletBalance extends RootBaseBalance {
+  category: 'wallet'
+}
+
+export interface LendBalance extends RootBaseBalance {
+  category: 'lend'
+}
+
+export interface BorrowBalance extends RootBaseBalance {
+  category: 'borrow'
+}
+
+export interface StakeBalance extends RootBaseBalance {
+  category: 'stake'
 }
 
 export interface VestBalance extends RootBaseBalance {
@@ -86,7 +96,35 @@ export interface LockBalance extends RootBaseBalance {
   unlockAt?: number
 }
 
-export type Balance = VestBalance | LockBalance | RootBaseBalance
+export interface LpBalance extends RootBaseBalance {
+  category: 'lp'
+}
+
+export interface FarmBalance extends RootBaseBalance {
+  category: 'farm'
+}
+
+export interface RewardBalance extends RootBaseBalance {
+  category: 'reward'
+  // TODO: rates interface
+  rates?: any
+}
+
+export interface PerpetualBalance extends RootBaseBalance {
+  category: 'perpetual'
+}
+
+export type Balance =
+  | WalletBalance
+  | LendBalance
+  | BorrowBalance
+  | StakeBalance
+  | VestBalance
+  | LockBalance
+  | LpBalance
+  | FarmBalance
+  | RewardBalance
+  | PerpetualBalance
 
 export interface PricedBalance extends BasePricedBalance {
   rewards?: BasePricedBalance[]

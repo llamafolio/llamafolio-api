@@ -259,7 +259,7 @@ const getMasterChefLpToken = async (
   return masterchefPools
 }
 
-interface MasterchefPoolsBalancesParams extends Balance {
+type MasterchefPoolsBalancesParams = Balance & {
   stablePool: boolean
   lpToken: string
 }

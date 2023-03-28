@@ -10,7 +10,7 @@ import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 
-interface ExtendedBalance extends Balance {
+type ExtendedBalance = Balance & {
   groupIdx: number
 }
 interface CategoryBalances {

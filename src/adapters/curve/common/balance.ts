@@ -82,7 +82,7 @@ const abi = {
   },
 }
 
-interface PoolBalance extends Balance {
+type PoolBalance = Balance & {
   pool?: string
   lpToken?: string
   totalSupply?: BigNumber

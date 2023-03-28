@@ -40,7 +40,7 @@ const abi = {
   },
 }
 
-export interface ProviderBalancesParams extends Balance {
+export type ProviderBalancesParams = Balance & {
   amount: BigNumber
   totalSupply: BigNumber
   lpToken: string

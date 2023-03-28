@@ -94,7 +94,7 @@ interface UrnHandlerParams {
   asset: Contract
 }
 
-export interface BalanceWithExtraProps extends Balance {
+export type BalanceWithExtraProps = Balance & {
   proxy: string
   urnAddress?: string
   id?: string

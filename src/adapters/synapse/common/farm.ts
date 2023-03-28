@@ -37,7 +37,7 @@ const abi = {
   },
 }
 
-interface getSynapseBalancesParams extends Balance {
+type getSynapseBalancesParams = Balance & {
   totalSupply: BigNumber
   pool: string
 }

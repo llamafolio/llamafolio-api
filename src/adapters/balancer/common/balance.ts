@@ -27,7 +27,7 @@ const abi = {
   },
 }
 
-export interface getBalancerPoolsBalancesParams extends Balance {
+export type getBalancerPoolsBalancesParams = Balance & {
   totalSupply: BigNumber
   actualSupply?: BigNumber
 }

@@ -84,7 +84,7 @@ const abi = {
   },
 }
 
-interface VaultBalance extends Balance {
+type VaultBalance = Balance & {
   lpToken?: string
   poolAddress?: string
   underlyingAmount?: BigNumber

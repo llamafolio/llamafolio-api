@@ -69,7 +69,7 @@ const abi = {
   },
 }
 
-interface BalanceWithExtraProps extends Balance {
+type BalanceWithExtraProps = Balance & {
   collateralFactor: string
 }
 

@@ -14,7 +14,7 @@ import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
 
-interface ExtendedBalance extends Balance {
+type ExtendedBalance = Balance & {
   adapterId: string
   groupIdx: number
 }

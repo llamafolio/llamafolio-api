@@ -208,7 +208,7 @@ const getProducts = async (ctx: BalancesContext, contract: Contract): Promise<Co
   return products
 }
 
-interface GetPositionsParams extends Balance {
+type GetPositionsParams = Balance & {
   id?: string
   positionId?: string
   side?: string

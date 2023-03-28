@@ -11,7 +11,7 @@ import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 import { resolveContractsTokens } from '../src/lib/token'
 
-interface ExtendedBalance extends Balance {
+type ExtendedBalance = Balance & {
   groupIdx: number
 }
 

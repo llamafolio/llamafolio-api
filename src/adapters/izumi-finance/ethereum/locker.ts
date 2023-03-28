@@ -30,7 +30,7 @@ const abi = {
   },
 }
 
-interface NFTBalance extends Balance {
+type NFTBalance = Balance & {
   nftId: string
 }
 

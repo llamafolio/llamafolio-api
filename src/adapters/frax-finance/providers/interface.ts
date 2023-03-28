@@ -1,7 +1,7 @@
 import { Balance } from '@lib/adapter'
 import { BigNumber } from 'ethers'
 
-export interface ProviderBalancesParams extends Balance {
+export type ProviderBalancesParams = Balance & {
   stakeAddress?: string
   amount: BigNumber
   totalSupply: BigNumber

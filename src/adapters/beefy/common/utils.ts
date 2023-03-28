@@ -96,7 +96,7 @@ interface RegistryParams {
   underlyingAbi: boolean
 }
 
-export interface fmtProviderBalancesParams extends Balance {
+export type fmtProviderBalancesParams = Balance & {
   amount: BigNumber
   totalSupply: BigNumber
   lpToken: string
