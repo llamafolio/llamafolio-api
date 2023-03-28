@@ -1,6 +1,7 @@
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
+import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
@@ -201,6 +202,7 @@ export async function getMultiFeeDistributionBalances(
       rewards: undefined,
       amount: BigNumber.from(amount),
       unlockAt: unlockTime,
+      claimable: unlockTime < Date.now() ? BigNumber.from(lockedBalances.unlockable) : BN_ZERO,
       category: 'lock',
     })
   }
@@ -237,22 +239,6 @@ export async function getMultiFeeDistributionBalances(
       category: 'reward',
     })
   }
-
-  balances.push({
-    chain: ctx.chain,
-    address: contract.address,
-    symbol: contract.symbol,
-    decimals: contract.decimals,
-    underlyings: underlyingBalances(
-      underlyings,
-      vaultBalances,
-      BigNumber.from(lockedBalances.unlockable),
-      BigNumber.from(totalSupply),
-    ),
-    rewards: undefined,
-    amount: BigNumber.from(lockedBalances.unlockable),
-    category: 'stake',
-  })
 
   return balances
 }
