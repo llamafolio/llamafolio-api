@@ -7,6 +7,16 @@ import {
   getMarketsContracts,
 } from '@lib/compound/v2/lending'
 
+import { getSonneStakeBalances } from './stake'
+
+const sSonne: Contract = {
+  chain: 'optimism',
+  address: '0xdc05d85069dc4aba65954008ff99f2d73ff12618',
+  decimals: 18,
+  symbol: 'sSonne',
+  underlyings: ['0x1db2466d9f5e10d7090e7152b68d62703a2245f0'],
+}
+
 const Comptroller: Contract = {
   chain: 'optimism',
   address: '0x60CF091cD3f50420d50fD7f707414d0DF4751C58',
@@ -22,13 +32,14 @@ export const getContracts = async (ctx: BaseContext) => {
   })
 
   return {
-    contracts: { markets, Comptroller },
+    contracts: { markets, Comptroller, sSonne },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     markets: getMarketsBalances,
+    sSonne: getSonneStakeBalances,
   })
 
   const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
