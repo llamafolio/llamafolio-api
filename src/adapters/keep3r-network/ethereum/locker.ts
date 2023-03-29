@@ -26,7 +26,7 @@ export async function getKeeperLockerBalances(ctx: BalancesContext, locker: Cont
 
   return {
     ...locker,
-    amount: end > actualTimestamp ? BigNumber.from(amount) : BN_ZERO,
+    amount: BigNumber.from(amount),
     claimable: end < actualTimestamp ? BigNumber.from(amount) : BN_ZERO,
     unlockAt: end,
     underlyings: locker.underlyings as Contract[],
