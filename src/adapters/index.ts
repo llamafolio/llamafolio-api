@@ -81,6 +81,7 @@ import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
 import pikaProtocol from '@adapters/pika-protocol'
 import platypusFinance from '@adapters/platypus-finance'
+import popsicleFinance from '@adapters/popsicle-finance'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
 import radiantV2 from '@adapters/radiant-v2'
@@ -207,6 +208,7 @@ export const adapters: Adapter[] = [
   pangolin,
   pikaProtocol,
   platypusFinance,
+  popsicleFinance,
   quickswapDex,
   radiantV1,
   radiantV2,
