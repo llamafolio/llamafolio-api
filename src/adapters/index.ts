@@ -25,6 +25,7 @@ import biswap from '@adapters/biswap'
 import blur from '@adapters/blur'
 import capFinance from '@adapters/cap-finance'
 import chainlink from '@adapters/chainlink'
+import charmFinance from '@adapters/charm-finance'
 import compound from '@adapters/compound'
 import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
@@ -152,6 +153,7 @@ export const adapters: Adapter[] = [
   blur,
   capFinance,
   chainlink,
+  charmFinance,
   compound,
   compoundV3,
   concentrator,
