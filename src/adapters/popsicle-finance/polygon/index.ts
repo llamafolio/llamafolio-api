@@ -50,8 +50,10 @@ const yieldsPools: Contract[] = [
 ]
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pairs = await getPairsDetails(ctx, yieldsPools)
-  const contracts = await getPopsicleFarmContracts(ctx, farmer)
+  const [pairs, contracts] = await Promise.all([
+    getPairsDetails(ctx, yieldsPools),
+    getPopsicleFarmContracts(ctx, farmer),
+  ])
 
   return {
     contracts: { pairs, contracts },
