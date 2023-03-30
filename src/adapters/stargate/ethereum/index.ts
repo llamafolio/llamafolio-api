@@ -4,6 +4,7 @@ import { Token } from '@lib/token'
 
 import { getStargateLpContracts } from '../common/contract'
 import { getStargateFarmBalances } from '../common/farm'
+import { getStargateLockerBalances } from '../common/locker'
 import { getStargateLPBalances } from '../common/lp'
 
 const STG: Token = {
@@ -40,11 +41,19 @@ const farmStakings: Contract[] = [
   { chain: 'ethereum', address: '0x1c3000b8f475A958b87c73a5cc5780Ab763122FC' },
 ]
 
+const locker: Contract = {
+  chain: 'ethereum',
+  address: '0x0e42acbd23faee03249daff896b78d7e79fbd58e',
+  decimals: 18,
+  symbol: 'veSTG',
+  underlyings: [STG],
+}
+
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getStargateLpContracts(ctx, lpStakings)
 
   return {
-    contracts: { pools },
+    contracts: { pools, locker },
   }
 }
 
@@ -55,6 +64,7 @@ const stargateBalances = async (ctx: BalancesContext, pools: Contract[]) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: stargateBalances,
+    locker: getStargateLockerBalances,
   })
 
   return {
