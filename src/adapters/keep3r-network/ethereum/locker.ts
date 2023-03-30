@@ -18,7 +18,7 @@ const abi = {
 }
 
 export async function getKeeperLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance> {
-  const actualTimestamp = Math.floor(Date.now() / 1000)
+  const now = Math.floor(Date.now() / 1000)
 
   const {
     output: { amount, end },
@@ -27,7 +27,7 @@ export async function getKeeperLockerBalances(ctx: BalancesContext, locker: Cont
   return {
     ...locker,
     amount: BigNumber.from(amount),
-    claimable: end < actualTimestamp ? BigNumber.from(amount) : BN_ZERO,
+    claimable: end < now ? BigNumber.from(amount) : BN_ZERO,
     unlockAt: end,
     underlyings: locker.underlyings as Contract[],
     rewards: undefined,
