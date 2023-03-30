@@ -1,9 +1,10 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { Token } from '@lib/token'
 
-import { getPoolsContracts } from '../common/contracts'
-import { getStakeBalances } from '../common/stake'
+import { getStargateLpContracts } from '../common/contract'
+import { getStargateFarmBalances } from '../common/farm'
+import { getStargateLPBalances } from '../common/lp'
 
 const STG: Token = {
   chain: 'fantom',
@@ -11,25 +12,29 @@ const STG: Token = {
   decimals: 18,
   symbol: 'STG',
 }
-const lpStaking: Contract = {
-  name: 'lpStaking',
-  displayName: 'LP Staking Pool Fantom',
-  chain: 'fantom',
-  address: '0x224D8Fd7aB6AD4c6eb4611Ce56EF35Dec2277F03',
-  rewards: [STG],
-}
+
+// https://stargateprotocol.gitbook.io/stargate/developers/contract-addresses/mainnet
+const lpStakings: Contract[] = [
+  { chain: 'fantom', address: '0x12edeA9cd262006cC3C4E77c90d2CD2DD4b1eb97', rewards: [STG] },
+]
+
+const farmStakings: Contract[] = [{ chain: 'fantom', address: '0x224D8Fd7aB6AD4c6eb4611Ce56EF35Dec2277F03' }]
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getPoolsContracts(ctx, lpStaking)
+  const pools = await getStargateLpContracts(ctx, lpStakings)
 
   return {
-    contracts: { lpStaking, pools },
+    contracts: { pools },
   }
+}
+
+const stargateBalances = async (ctx: BalancesContext, pools: Contract[]) => {
+  return Promise.all([getStargateLPBalances(ctx, pools), getStargateFarmBalances(ctx, pools, farmStakings)])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getStakeBalances(...args, lpStaking),
+    pools: stargateBalances,
   })
 
   return {
