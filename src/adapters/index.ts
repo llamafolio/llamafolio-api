@@ -53,6 +53,7 @@ import illuvium from '@adapters/illuvium'
 import inverseFinance from '@adapters/inverse-finance'
 import ironBank from '@adapters/iron-bank'
 import izumiFinance from '@adapters/izumi-finance'
+import keep3rNetwork from '@adapters/keep3r-network'
 import klimaDao from '@adapters/klima-dao'
 import leonicornswap from '@adapters/leonicornswap'
 import lido from '@adapters/lido'
@@ -179,6 +180,7 @@ export const adapters: Adapter[] = [
   inverseFinance,
   ironBank,
   izumiFinance,
+  keep3rNetwork,
   klimaDao,
   leonicornswap,
   lido,
