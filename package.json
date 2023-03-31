@@ -18,6 +18,7 @@
     "migrate": "node-pg-migrate",
     "revalidate-contracts": "ts-node -T scripts/revalidate-contracts.ts",
     "revalidate-contracts-rec": "ts-node -T scripts/revalidate-contracts-rec.ts",
+    "revalidate-tokens": "ts-node -T scripts/revalidate-tokens.ts",
     "find-user": "ts-node -T scripts/find-user.ts",
     "insert-tokens": "ts-node -T scripts/insert-tokens.ts",
     "update-tokens": "ts-node -T scripts/update-tokens.ts",
