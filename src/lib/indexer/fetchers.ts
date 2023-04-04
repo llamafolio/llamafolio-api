@@ -9,7 +9,7 @@ import {
 import { IIndexerContract, IIndexerTransaction } from './types'
 
 export const indexer_graph = async (query: string, variables = {}, headers = {}) =>
-  request('https://graph.kindynos.mx/v1/graphql', query, variables, headers)
+  request('https://graph.llamafolio.com/v1/graphql', query, variables, headers)
 
 export const getChainBlocks = async (headers = {}): Promise<{ chain: string; indexed_blocks_amount: number }[]> => {
   const { chains_indexed_state } = await indexer_graph(getChainsIndexedStateQuery(), {}, headers)
