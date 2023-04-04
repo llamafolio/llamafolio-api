@@ -25,7 +25,7 @@ export const getContracts = async (ctx: BaseContext) => {
     getMarketsContracts(ctx, {
       comptrollerAddress: comptroller.address,
       underlyingAddressByMarketAddress: {
-        // cETH -> WETH
+        // oETH -> WETH
         '0x714bd93ab6ab2f0bcfd2aeaf46a46719991d0d79': '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
       },
     }),
