@@ -77,6 +77,7 @@ import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
 import nf3Ape from '@adapters/nf3-ape'
 import olympusDao from '@adapters/olympus-dao'
+import onyxProtocol from '@adapters/onyx-protocol'
 import opynSqueeth from '@adapters/opyn-squeeth'
 import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
@@ -206,6 +207,7 @@ export const adapters: Adapter[] = [
   nexusMutual,
   nf3Ape,
   olympusDao,
+  onyxProtocol,
   opynSqueeth,
   pancakeswap,
   pandora,
