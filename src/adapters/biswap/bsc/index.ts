@@ -6,12 +6,20 @@ import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 import { getStakeBalances, getUniqueUnderlyingsMasterchefBalances } from './balance'
+import { getBiswapLockerBalances } from './lock'
 
 const BSW: Token = {
   chain: 'bsc',
   address: '0x965f527d9159dce6288a2219db51fc6eef120dd1',
   decimals: 18,
   symbol: 'BSW',
+}
+
+const locker: Contract = {
+  chain: 'bsc',
+  address: '0x4c1ad5a67315d31f7a882c7d4b0e8d1a94c50255',
+  token: '0x965f527d9159dce6288a2219db51fc6eef120dd1',
+  underlyings: ['0x965f527d9159dce6288a2219db51fc6eef120dd1'],
 }
 
 const bswStaker: Contract = {
@@ -51,6 +59,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
       pairs,
       masterChef,
       stakers: [bswStaker, bswStaker2],
+      locker,
     },
     revalidate: 60 * 60,
     revalidateProps: {
@@ -78,6 +87,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: (...args) => getBiswapPairsBalances(...args, masterChef, BSW, 'BSW'),
     stakers: getStakeBalances,
+    locker: getBiswapLockerBalances,
   })
 
   return {

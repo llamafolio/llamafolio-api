@@ -1,8 +1,8 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getSingleLockerBalance } from '@lib/lock'
 import { Token } from '@lib/token'
 
-import { getLockerBalances } from './locker'
 import { getOldContracts, getPoolsContracts } from './pool'
 import { getOldStaleInPools, getStakeBalances, getStakeInPools } from './staker'
 import { getFarmBalances } from './vault'
@@ -143,7 +143,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     aCRV: getStakeBalances,
     abcCVX: getOldStaleInPools,
     stakers: getStakeInPools,
-    veCTR: getLockerBalances,
+    veCTR: (...args) => getSingleLockerBalance(...args, CTR, 'locked'),
   })
 
   return {

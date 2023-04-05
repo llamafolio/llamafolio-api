@@ -1,5 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { getSingleLockerBalance } from '@lib/lock'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -42,17 +43,10 @@ export async function getLockerBalance(
   locker: Contract,
   lockerPenaltyRewards: Contract,
 ): Promise<Balance> {
-  const [lockedBalances, claimableLockedBalancesRewards] = await Promise.all([
-    call({ ctx, target: locker.address, params: [ctx.address], abi: abi.locked }),
+  const [lockedBalance, { output: claimableLockedBalancesRewards }] = await Promise.all([
+    getSingleLockerBalance(ctx, locker, RBN, 'locked'),
     call({ ctx, target: lockerPenaltyRewards.address, params: [ctx.address], abi: abi.claimable }),
   ])
 
-  return {
-    ...locker,
-    amount: BigNumber.from(lockedBalances.output.amount),
-    underlyings: [RBN],
-    rewards: [{ ...RBN, amount: BigNumber.from(claimableLockedBalancesRewards.output) }],
-    unlockAt: lockedBalances.output.end,
-    category: 'lock',
-  }
+  return { ...lockedBalance, rewards: [{ ...RBN, amount: BigNumber.from(claimableLockedBalancesRewards) }] }
 }

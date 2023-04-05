@@ -1,11 +1,12 @@
 import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getSingleLockerBalance } from '@lib/lock'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
 import { Token } from '@lib/token'
 import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
-import { getGaugesBalances, getLockerBalances } from './balance'
+import { getGaugesBalances } from './balance'
 
 const spirit: Token = {
   chain: 'fantom',
@@ -74,7 +75,7 @@ function getSpiritswapBalances(
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: (...args) => getSpiritswapBalances(...args, masterChef, spirit, 'Spirit'),
-    locker: getLockerBalances,
+    locker: (...args) => getSingleLockerBalance(...args, spirit, 'locked'),
   })
 
   return {

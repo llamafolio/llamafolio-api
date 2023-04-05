@@ -1,8 +1,8 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getSingleLockerBalance } from '@lib/lock'
 
 import { getPoolsBalances } from '../common/balances'
-import { getLockerBalance } from '../common/locker'
 import { getPoolsContracts } from './pools'
 
 const fairLaunch: Contract = {
@@ -37,7 +37,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (ctx, pools) => getPoolsBalances(ctx, pools, fairLaunch, ALPACA),
-    xALPACA: getLockerBalance,
+    xALPACA: (...args) => getSingleLockerBalance(...args, ALPACA, 'locks'),
   })
 
   return {

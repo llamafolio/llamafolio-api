@@ -6,9 +6,17 @@ import {
   getMarketsBalances,
   getMarketsContracts,
 } from '@lib/compound/v2/lending'
+import { getSingleLockerBalance } from '@lib/lock'
+import { Token } from '@lib/token'
 
-import { getScreamLockerBalances } from './locker'
 import { getScreamStakeBalances } from './stake'
+
+const SCREAM: Token = {
+  chain: 'fantom',
+  address: '0xe0654c8e6fd4d733349ac7e09f6f23da256bf475',
+  decimals: 18,
+  symbol: 'SCREAM',
+}
 
 const xSCREAM: Contract = {
   chain: 'fantom',
@@ -57,7 +65,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     markets: getMarketsBalances,
     markets_v1: getMarketsBalances,
-    locker: getScreamLockerBalances,
+    locker: (...args) => getSingleLockerBalance(...args, SCREAM, 'locked'),
     xSCREAM: getScreamStakeBalances,
   })
 

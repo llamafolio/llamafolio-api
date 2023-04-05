@@ -1,7 +1,13 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getSingleLockerBalance } from '@lib/lock'
 
-import { getKeeperLockerBalances } from './locker'
+const KP3R: Contract = {
+  chain: 'ethereum',
+  address: '0x1cEB5cB57C4D4E2b2433641b95Dd330A33185A44',
+  decimals: 18,
+  symbol: 'KP3R',
+}
 
 const locker: Contract = {
   chain: 'ethereum',
@@ -19,7 +25,7 @@ export const getContracts = () => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    locker: getKeeperLockerBalances,
+    locker: (...args) => getSingleLockerBalance(...args, KP3R, 'locked'),
   })
 
   return {
