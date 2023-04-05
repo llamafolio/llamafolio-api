@@ -2,10 +2,10 @@ import { factory } from '@adapters/uniswap-v3/ethereum'
 import { nonFungiblePositionManager } from '@adapters/uniswap-v3/ethereum'
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getNFTLockerBalances } from '@lib/lock'
 import { Token } from '@lib/token'
 
 import { getIzumiBalances } from '../common/balance'
-import { getLockerIzumiBalances } from './locker'
 
 const IZI: Token = {
   chain: 'ethereum',
@@ -34,7 +34,7 @@ export const getContracts = () => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    nftlocker: getLockerIzumiBalances,
+    nftlocker: (...args) => getNFTLockerBalances(...args, IZI, 'nftLocked'),
     pools: (...args) => getIzumiBalances(...args, nonFungiblePositionManager, factory, IZI),
   })
 

@@ -1,9 +1,15 @@
 import { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getNFTLockerBalances } from '@lib/lock'
 
-import { getMultiBalances } from '../common/balance'
+const MULTI: Contract = {
+  chain: 'ethereum',
+  address: '0x65Ef703f5594D2573eb71Aaf55BC0CB548492df4',
+  decimals: 18,
+  symbol: 'MULTI',
+}
 
-const staker: Contract = {
+const locker: Contract = {
   chain: 'ethereum',
   address: '0xbba4115ecb1f811061ecb5a8dc8fcdee2748ceba',
   decimals: 18,
@@ -13,13 +19,13 @@ const staker: Contract = {
 
 export const getContracts = async () => {
   return {
-    contracts: { staker },
+    contracts: { locker },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    staker: getMultiBalances,
+    locker: (...args) => getNFTLockerBalances(...args, MULTI, 'locked'),
   })
 
   return {
