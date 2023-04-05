@@ -1,9 +1,9 @@
-import { BalancesContext, Contract, LockBalance } from '@lib/adapter'
+import { Balance, BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { call } from '@lib/call'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
-import { BN_ZERO } from './math'
+import { BN_ZERO, sumBN } from './math'
 import { multicall } from './multicall'
 import { isSuccess } from './type'
 
@@ -18,6 +18,43 @@ const abi = {
       { name: 'end', type: 'uint256' },
     ],
     gas: 5653,
+  },
+  claimableRewards: {
+    inputs: [{ internalType: 'address', name: '_account', type: 'address' }],
+    name: 'claimableRewards',
+    outputs: [
+      {
+        components: [
+          { internalType: 'address', name: 'token', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+        ],
+        internalType: 'struct AuraLocker.EarnedData[]',
+        name: 'userRewards',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  lockedBalances: {
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'lockedBalances',
+    outputs: [
+      { internalType: 'uint256', name: 'total', type: 'uint256' },
+      { internalType: 'uint256', name: 'unlockable', type: 'uint256' },
+      { internalType: 'uint256', name: 'locked', type: 'uint256' },
+      {
+        components: [
+          { internalType: 'uint112', name: 'amount', type: 'uint112' },
+          { internalType: 'uint32', name: 'unlockTime', type: 'uint32' },
+        ],
+        internalType: 'struct AuraLocker.LockedBalance[]',
+        name: 'lockData',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
   },
 }
 
@@ -90,4 +127,68 @@ export async function getSingleLockerBalances(
   }
 
   return balances
+}
+
+export async function getMultipleLockerBalances(
+  ctx: BalancesContext,
+  locker: Contract,
+  underlying: Token | Contract,
+  rewards?: Token[],
+): Promise<LockBalance[]> {
+  const balances: LockBalance[] = []
+
+  const [{ output: lockedBalances }, { output: earnedRes }] = await Promise.all([
+    call({ ctx, target: locker.address, params: [ctx.address], abi: abi.lockedBalances }),
+    call({ ctx, target: locker.address, params: [ctx.address], abi: abi.claimableRewards }),
+  ])
+
+  const locked = sumBN((lockedBalances.lockData || []).map((lockData: any) => lockData.amount))
+  const totalLocked = BigNumber.from(lockedBalances.total)
+  const expiredLocked = totalLocked.sub(locked)
+
+  const claimableBalance: Balance = {
+    ...locker,
+    underlyings: [underlying],
+    rewards: [],
+    amount: expiredLocked,
+    claimable: expiredLocked,
+    category: 'lock',
+  }
+
+  if (rewards) {
+    rewards.map((reward, idx: number) => {
+      claimableBalance.rewards?.push({
+        ...reward,
+        amount: BigNumber.from(claimableBalance.amount).mul(earnedRes[idx].amount).div(totalLocked),
+      })
+    })
+  }
+
+  for (let lockIdx = 0; lockIdx < lockedBalances.lockData.length; lockIdx++) {
+    const lockedBalance = lockedBalances.lockData[lockIdx]
+    const { amount, unlockTime } = lockedBalance
+
+    const balance: Balance = {
+      ...locker,
+      amount: BigNumber.from(amount),
+      claimable: BN_ZERO,
+      underlyings: [underlying],
+      unlockAt: unlockTime,
+      rewards: [],
+      category: 'lock',
+    }
+
+    if (rewards) {
+      rewards.map((reward, idx: number) => {
+        balance.rewards?.push({
+          ...reward,
+          amount: BigNumber.from(balance.amount).mul(earnedRes[idx].amount).div(totalLocked),
+        })
+      })
+    }
+
+    balances.push(balance)
+  }
+
+  return [claimableBalance, ...balances]
 }
