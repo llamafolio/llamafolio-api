@@ -47,6 +47,7 @@ import gmx from '@adapters/gmx'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
 import granaryFinance from '@adapters/granary-finance'
 import gro from '@adapters/gro'
+import gyro from '@adapters/gyro'
 import hectorNetwork from '@adapters/hector-network'
 import hex from '@adapters/hex'
 import homoraV2 from '@adapters/homora-v2'
@@ -181,6 +182,7 @@ export const adapters: Adapter[] = [
   gnosisProtocolV1,
   granaryFinance,
   gro,
+  gyro,
   hectorNetwork,
   hex,
   homoraV2,
