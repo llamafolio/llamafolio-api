@@ -41,6 +41,7 @@ import fluxFinance from '@adapters/flux-finance'
 import fortressLoans from '@adapters/fortress-loans'
 import fraxFinance from '@adapters/frax-finance'
 import fraxlend from '@adapters/fraxlend'
+import gainsNetwork from '@adapters/gains-network'
 import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
 import gmx from '@adapters/gmx'
@@ -177,6 +178,7 @@ export const adapters: Adapter[] = [
   fortressLoans,
   fraxFinance,
   fraxlend,
+  gainsNetwork,
   gearbox,
   geist,
   gmx,
