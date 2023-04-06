@@ -84,6 +84,7 @@ import opynSqueeth from '@adapters/opyn-squeeth'
 import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
+import perennial from '@adapters/perennial'
 import pikaProtocol from '@adapters/pika-protocol'
 import platypusFinance from '@adapters/platypus-finance'
 import popsicleFinance from '@adapters/popsicle-finance'
@@ -219,6 +220,7 @@ export const adapters: Adapter[] = [
   pancakeswap,
   pandora,
   pangolin,
+  perennial,
   pikaProtocol,
   platypusFinance,
   popsicleFinance,
