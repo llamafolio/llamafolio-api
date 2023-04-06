@@ -1,44 +1,14 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { getSingleLockerBalance } from '@lib/lock'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 const abi = {
-  locked: {
-    name: 'locked',
-    outputs: [
-      {
-        type: 'int128',
-        name: 'amount',
-      },
-      {
-        type: 'uint256',
-        name: 'end',
-      },
-    ],
-    inputs: [
-      {
-        type: 'address',
-        name: 'arg0',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
   claim: {
     name: 'claim',
-    outputs: [
-      {
-        type: 'uint256',
-        name: '',
-      },
-    ],
-    inputs: [
-      {
-        type: 'address',
-        name: '_addr',
-      },
-    ],
+    outputs: [{ type: 'uint256', name: '' }],
+    inputs: [{ type: 'address', name: '_addr' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -62,17 +32,9 @@ export async function getLockerBalances(
   ctx: BalancesContext,
   contract: Contract,
   feeDistributorContract: Contract,
-): Promise<Balance[]> {
-  const balances: Balance[] = []
-
-  const [lockerBalanceRes, claimableBalanceRes] = await Promise.all([
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.locked,
-    }),
-
+): Promise<Balance> {
+  const [lockedBalance, { output: claimableBalanceRes }] = await Promise.all([
+    getSingleLockerBalance(ctx, contract, CRV, 'locked'),
     call({
       ctx,
       target: feeDistributorContract.address,
@@ -81,20 +43,5 @@ export async function getLockerBalances(
     }),
   ])
 
-  const lockerBalance = BigNumber.from(lockerBalanceRes.output.amount)
-  const unlockAt = lockerBalanceRes.output.end
-  const claimableBalance = BigNumber.from(claimableBalanceRes.output)
-
-  balances.push({
-    chain: ctx.chain,
-    symbol: CRV.symbol,
-    decimals: CRV.decimals,
-    address: CRV.address,
-    amount: lockerBalance,
-    unlockAt,
-    rewards: [{ ...triCrv, amount: claimableBalance }],
-    category: 'lock',
-  })
-
-  return balances
+  return { ...lockedBalance, rewards: [{ ...triCrv, amount: BigNumber.from(claimableBalanceRes) }] }
 }

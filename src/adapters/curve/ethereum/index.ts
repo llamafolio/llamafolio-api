@@ -18,6 +18,7 @@ const CRV: Token = {
 const locker: Contract = {
   chain: 'ethereum',
   address: '0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2',
+  token: '0xD533a949740bb3306d119CC777fa900bA034cd52',
   name: 'Locker',
 }
 

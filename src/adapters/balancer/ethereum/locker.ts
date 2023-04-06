@@ -1,6 +1,7 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
+import { BN_ZERO } from '@lib/math'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers/lib/ethers'
 
@@ -72,13 +73,17 @@ export async function getLockerBalances(
     .mul(tokensBalancesRes.output.balances[1])
     .div(supplyRes.output)
 
+  const now = Date.now() / 1000
+  const unlockAt = lockedEndRes.output
+
   return {
     chain: ctx.chain,
     address: votingEscrow.address,
     symbol: votingEscrow.symbol,
     decimals: votingEscrow.decimals,
     amount: BigNumber.from(balanceOf.output),
-    unlockAt: lockedEndRes.output,
+    claimable: now > unlockAt ? BigNumber.from(balanceOf.output) : BN_ZERO,
+    unlockAt,
     underlyings: [
       { ...BAL, amount: underlyings0Balances },
       { ...WETH, amount: underlyings1Balances },

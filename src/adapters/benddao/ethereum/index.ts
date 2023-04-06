@@ -1,9 +1,16 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getSingleLockerBalance } from '@lib/lock'
 
 import { getBendBalances } from './balance'
-import { getBendDaoLocker } from './locker'
 import { getNftBalances, getNftContracts } from './nft'
+
+const bend: Contract = {
+  chain: 'ethereum',
+  address: '0x0d02755a5700414B26FF040e1dE35D337DF56218',
+  decimals: 18,
+  symbol: 'BEND',
+}
 
 const veBend: Contract = {
   chain: 'ethereum',
@@ -49,7 +56,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     bendWeth: getBendBalances,
-    veBend: getBendDaoLocker,
+    veBend: (...args) => getSingleLockerBalance(...args, bend, 'locked'),
     nfts: (...args) => getNftBalances(...args, lendPool, apeStaker),
   })
 

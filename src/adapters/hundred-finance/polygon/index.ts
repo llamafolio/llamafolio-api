@@ -6,8 +6,7 @@ import {
   getMarketsBalances,
   getMarketsContracts,
 } from '@lib/compound/v2/lending'
-
-import { getLockerBalance } from '../common/locker'
+import { getSingleLockerBalance } from '@lib/lock'
 
 const HND: Contract = {
   chain: 'polygon',
@@ -46,7 +45,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: getMarketsBalances,
-    locker: (...args) => getLockerBalance(...args, HND),
+    locker: (...args) => getSingleLockerBalance(...args, HND, 'locked'),
   })
 
   const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])

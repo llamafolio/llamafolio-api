@@ -1,10 +1,10 @@
 import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getSingleLockerBalance } from '@lib/lock'
 import { Token } from '@lib/token'
 
 import { getStargateLpContracts } from '../common/contract'
 import { getStargateFarmBalances } from '../common/farm'
-import { getStargateLockerBalances } from '../common/locker'
 import { getStargateLPBalances } from '../common/lp'
 
 const STG: Token = {
@@ -44,7 +44,7 @@ const stargateBalances = async (ctx: BalancesContext, pools: Contract[]) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: stargateBalances,
-    locker: getStargateLockerBalances,
+    locker: (...args) => getSingleLockerBalance(...args, STG, 'locked'),
   })
 
   return {

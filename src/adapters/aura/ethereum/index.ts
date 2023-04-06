@@ -1,9 +1,9 @@
 import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getMultipleLockerBalances } from '@lib/lock'
 import { Token } from '@lib/token'
 
 import { getAuraBalStakerBalances, getAuraPoolsBalances } from './balance'
-import { getAuraLockerBalances } from './locker'
 import { getAuraPools } from './pool'
 
 const auraBal: Token = {
@@ -57,7 +57,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (...args) => getAuraPoolsBalances(...args, vaultBAL),
     auraStaker: getAuraBalStakerBalances,
-    auraLocker: getAuraLockerBalances,
+    auraLocker: (...args) => getMultipleLockerBalances(...args, AURA, [auraBal]),
   })
 
   return {

@@ -2,7 +2,6 @@ import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { Call, multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
 import { isNotNullish, isSuccess } from '@lib/type'
 import { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
@@ -23,41 +22,6 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  locked_end: {
-    name: 'locked__end',
-    outputs: [{ type: 'uint256', name: '' }],
-    inputs: [{ type: 'address', name: '_addr' }],
-    stateMutability: 'view',
-    type: 'function',
-    gas: 1564,
-  },
-}
-
-const spirit: Token = {
-  chain: 'fantom',
-  address: '0x5cc61a78f164885776aa610fb0fe1257df78e59b',
-  symbol: 'SPIRIT',
-  decimals: 18,
-}
-
-export async function getLockerBalances(ctx: BalancesContext, locker: Contract): Promise<Balance[]> {
-  const balances: Balance[] = []
-
-  const [balanceOfRes, lockendRes] = await Promise.all([
-    call({ ctx, target: locker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-    call({ ctx, target: locker.address, params: [ctx.address], abi: abi.locked_end }),
-  ])
-
-  balances.push({
-    ...locker,
-    amount: BigNumber.from(balanceOfRes.output),
-    unlockAt: lockendRes.output,
-    underlyings: [spirit],
-    rewards: undefined,
-    category: 'lock',
-  })
-
-  return balances
 }
 
 const getGaugesContracts = async (ctx: BaseContext, pairs: Pair[], gaugeController: Contract): Promise<Contract[]> => {
@@ -137,6 +101,7 @@ export async function getGaugesBalances(
       amount: BigNumber.from(balanceOfRes.output),
       underlyings: gaugesContract.underlyings as Contract[],
       rewards: undefined,
+      category: 'farm',
     })
   }
 

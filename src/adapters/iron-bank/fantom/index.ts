@@ -6,8 +6,14 @@ import {
   getMarketsBalances,
   getMarketsContracts,
 } from '@lib/compound/v2/lending'
+import { getNFTLockerBalances } from '@lib/lock'
 
-import { getNFTLocker } from '../common/locker'
+const IB: Contract = {
+  chain: 'fantom',
+  address: '0x00a35fd824c717879bf370e70ac6868b95870dfb',
+  symbol: 'IB',
+  decimals: 18,
+}
 
 const locker: Contract = {
   chain: 'fantom',
@@ -30,7 +36,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     markets: getMarketsBalances,
-    locker: getNFTLocker,
+    locker: (...args) => getNFTLockerBalances(...args, IB, 'locked'),
   })
 
   const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])

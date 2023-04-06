@@ -1,6 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { isZero } from '@lib/math'
+import { BN_ZERO, isZero } from '@lib/math'
 import { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -89,12 +89,14 @@ export async function getBenqiLockerBalances(ctx: BalancesContext, locker: Contr
     abi: abi.getPooledAvaxByShares,
   })
 
+  const now = Date.now() / 1000
   const unlockAt = parseInt(lockerBalance.startedAt) + parseInt(cooldownPeriodRes)
 
   return {
     ...locker,
     rewards: undefined,
     amount: BigNumber.from(fmtLockerBalancesRes.output),
+    claimable: now > unlockAt ? BigNumber.from(fmtLockerBalancesRes.output) : BN_ZERO,
     unlockAt,
     underlyings: [{ ...WAVAX }],
     category: 'lock',
