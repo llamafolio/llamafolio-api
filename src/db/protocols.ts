@@ -100,7 +100,21 @@ export async function insertProtocols(client: PoolClient, protocols: IProtocol[]
     sliceIntoChunks(protocolsStorable, 200).map((chunk) =>
       client.query(
         format(
-          `INSERT INTO protocols (name, url, logo, category, slug, chain, chains, symbol, tvl, twitter, description, address, color) VALUES %L;`,
+          `INSERT INTO protocols (
+            name,
+            url,
+            logo,
+            category,
+            slug,
+            chain,
+            chains,
+            symbol,
+            tvl,
+            twitter,
+            description,
+            address,
+            color
+          ) VALUES %L;`,
           chunk,
         ),
         [],

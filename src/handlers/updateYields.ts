@@ -1,55 +1,9 @@
-import { client as redisClient } from '@db/redis'
-import { replaceYields } from '@db/yields'
+import pool from '@db/pool2'
+import { deleteAllYields, fetchYields, insertYields } from '@db/yields'
 import environment from '@environment'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { APIGatewayProxyHandler } from 'aws-lambda'
-
-export interface YieldOld {
-  chain: string
-  project: string
-  symbol: string
-  tvlUsd: number
-  apyBase: number | null
-  apyReward: number | null
-  apy: number
-  rewardTokens: string[] | null
-  pool: string
-  pool_old: string
-  apyPct1D: number | null
-  apyPct7D: number | null
-  apyPct30D: number | null
-  stablecoin: boolean
-  ilRisk: string
-  exposure: string
-  predictions: object
-  poolMeta: null | string
-  mu: number
-  sigma: number
-  count: number
-  outlier: boolean
-  underlyingTokens: string[] | null
-  il7d: number | null
-  apyBase7d: number | null
-  apyMean30d: number
-  volumeUsd1d: number | null
-  volumeUsd7d: number | null
-}
-
-export interface YieldOldResponse {
-  status: string
-  data: YieldOld[]
-}
-
-export async function fetchYields() {
-  const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
-  if (!yieldsRes.ok) {
-    throw new Error('failed to fetch yields')
-  }
-
-  const yields: YieldOldResponse = await yieldsRes.json()
-  return yields.data
-}
 
 const updateYields: APIGatewayProxyHandler = async () => {
   // run in a Lambda because of APIGateway timeout
@@ -65,10 +19,18 @@ export const handleUpdateYields = updateYields
 export const handler: APIGatewayProxyHandler = async (_event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
+  const client = await pool.connect()
+
   try {
     const yields = await fetchYields()
 
-    await replaceYields(redisClient, yields)
+    await client.query('BEGIN')
+
+    await deleteAllYields(client)
+
+    await insertYields(client, yields)
+
+    await client.query('COMMIT')
 
     console.log(`Inserted ${yields.length} yields`)
 
@@ -76,5 +38,7 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
   } catch (e) {
     console.error('Failed to update yields', e)
     return serverError('Failed to update yields')
+  } finally {
+    client.release(true)
   }
 }

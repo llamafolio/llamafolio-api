@@ -1,45 +1,13 @@
 import { selectRowsLatestBalancesGroupsWithBalancesByFromAddress } from '@db/balances-groups'
 import pool from '@db/pool'
-import { client as redisClient } from '@db/redis'
-import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
-import { Balance, ContractStandard } from '@lib/adapter'
+import { ContractStandard } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { areBalancesStale, isBalanceUSDGtZero } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
 import { invokeLambda } from '@lib/lambda'
-import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyHandler } from 'aws-lambda'
-import { Redis } from 'ioredis'
-
-/**
- * Add yields info to given balances
- */
-export async function getBalancesYields<T extends Balance>(client: Redis, balances: T[]): Promise<T[]> {
-  const yieldKeys = balances.map((balance) => balance.yieldKey).filter(isNotNullish)
-
-  const yieldsByKey = await selectYieldsByKeys(client, yieldKeys)
-
-  for (const balance of balances) {
-    if (!balance.yieldKey) {
-      continue
-    }
-
-    const _yield = yieldsByKey[balance.yieldKey]
-    if (!_yield) {
-      continue
-    }
-
-    balance.apy = _yield.apy
-    balance.apyBase = _yield.apyBase
-    balance.apyReward = _yield.apyReward
-    balance.apyMean30d = _yield.apyMean30d
-    balance.ilRisk = _yield.ilRisk
-  }
-
-  return balances
-}
 
 export interface BaseFormattedBalance {
   standard?: ContractStandard
@@ -163,9 +131,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const nonZeroPricedBalances = pricedBalances.filter(isBalanceUSDGtZero)
 
-    const pricedBalancesWithYields = await getBalancesYields(redisClient, nonZeroPricedBalances)
-
-    const balancesByGroup = groupBy(pricedBalancesWithYields, 'id')
+    const balancesByGroup = groupBy(nonZeroPricedBalances, 'id')
 
     const groups: GroupResponse[] = []
 
