@@ -1,5 +1,5 @@
 import { sliceIntoChunks } from '@lib/array'
-import { bufToStr, strToBuf } from '@lib/buf'
+import { strToBuf } from '@lib/buf'
 import { Category } from '@lib/category'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
@@ -19,7 +19,7 @@ export interface BalanceStorage {
   amount: string
   price?: string
   balance_usd: string
-  address: Buffer
+  address: string
   category: string
   data?: any
 }
@@ -29,7 +29,7 @@ export interface BalanceStorable {
   amount: string
   price?: string
   balance_usd: string
-  address: Buffer
+  address: string
   category: Category
   data?: any
 }
@@ -37,7 +37,7 @@ export interface BalanceStorable {
 export function fromRowStorage(balanceStorage: BalanceStorage) {
   const balance: Balance = {
     ...balanceStorage.data,
-    address: bufToStr(balanceStorage.address),
+    address: balanceStorage.address,
     price: balanceStorage.price ? parseFloat(balanceStorage.price) : undefined,
     amount: balanceStorage.amount,
     balanceUSD: balanceStorage.balance_usd ? parseFloat(balanceStorage.balance_usd) : undefined,
@@ -74,7 +74,7 @@ export function toStorage(balances: Balance[]) {
       amount: amount.toString(),
       price,
       balance_usd: balanceUSD,
-      address: strToBuf(address),
+      address,
       category,
       // \\u0000 cannot be converted to text
       data: JSON.parse(JSON.stringify(data).replace(/\\u0000/g, '')),
@@ -87,15 +87,13 @@ export function toStorage(balances: Balance[]) {
 }
 
 export async function selectBalancesByFromAddress(client: PoolClient, fromAddress: string) {
-  const balancesRes = await client.query(`select * from balances where from_address = $1::bytea;`, [
-    strToBuf(fromAddress),
-  ])
+  const balancesRes = await client.query(`select * from balances where from_address = $1;`, [fromAddress])
 
   return fromStorage(balancesRes.rows)
 }
 
 export function deleteBalancesByFromAddress(client: PoolClient, fromAddress: string) {
-  return client.query(format('delete from balances where from_address = %L::bytea', [strToBuf(fromAddress)]), [])
+  return client.query(format('delete from balances where from_address = %L', [strToBuf(fromAddress)]), [])
 }
 
 export function insertBalances(client: PoolClient, balances: Balance[]) {

@@ -122,6 +122,7 @@ export const chainIdResolver: { [key: string]: string } = {
   celo: 'celo',
   ethereum: 'ethereum',
   fantom: 'fantom',
+  gnosis: 'xdai',
   optimism: 'optimism',
   polygon: 'polygon',
 }

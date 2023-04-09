@@ -1,7 +1,10 @@
+import { Contract } from '@lib/adapter'
+import { Chain, chainIdResolver } from '@lib/chains'
 import request from 'graphql-request'
 
 import {
   getChainsIndexedStateQuery,
+  getContractsInteractionsQuery,
   getContractsQuery,
   getTokensHoldersQuery,
   getTransactionHistoryQuery,
@@ -66,4 +69,59 @@ export const getContracts = async (
   const { contracts } = await indexer_graph(getContractsQuery(contract, chain), {}, headers)
 
   return { contracts }
+}
+
+/**
+ * Return unique contracts used (transactions from) and unique tokens received by given address
+ * @param params
+ */
+export const getContractsInteractions = async ({
+  fromAddress,
+  chain,
+  adapterId,
+  headers = {},
+}: {
+  fromAddress: string
+  chain?: Chain
+  adapterId?: string
+  headers?: any
+}) => {
+  const contracts: Contract[] = []
+  const erc20Transfers: Contract[] = []
+
+  const { transactions, erc20_transfers } = await indexer_graph(
+    getContractsInteractionsQuery({ fromAddress, chain, adapterId }),
+    {},
+    headers,
+  )
+
+  for (const transaction of transactions) {
+    for (const contract of transaction.adapters_contracts) {
+      contracts.push({
+        ...contract.data,
+        chain: (chainIdResolver[transaction.chain] || transaction.chain) as Chain,
+        address: transaction.to_address,
+        standard: contract.standard,
+        name: contract.name,
+        category: contract.category,
+        adapterId: contract.adapter_id,
+      })
+    }
+  }
+
+  for (const transfer of erc20_transfers) {
+    for (const contract of transfer.adapters_contracts) {
+      erc20Transfers.push({
+        ...contract.data,
+        chain: (chainIdResolver[transfer.chain] || transfer.chain) as Chain,
+        address: transfer.token,
+        standard: contract.standard,
+        name: contract.name,
+        category: contract.category,
+        adapterId: contract.adapter_id,
+      })
+    }
+  }
+
+  return { contracts, erc20Transfers }
 }

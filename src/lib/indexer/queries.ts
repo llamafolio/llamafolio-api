@@ -143,3 +143,63 @@ export const getContractsQuery = (contract: string, chain?: string): string => {
     }
   `
 }
+
+export const getContractsInteractionsQuery = ({
+  fromAddress,
+  chain,
+  adapterId,
+}: {
+  fromAddress: string
+  chain?: string
+  adapterId?: string
+}): string => {
+  let transactionsFilter = `{ from_address: { _eq: "${fromAddress}" }`
+  let erc20TransfersFilter = `{ to_address: { _eq: "${fromAddress}" }`
+
+  if (chain) {
+    transactionsFilter = transactionsFilter + `, chain: { _eq: "${chain}" }`
+    erc20TransfersFilter = erc20TransfersFilter + `, chain: { _eq: "${chain}" }`
+  }
+
+  if (adapterId) {
+    transactionsFilter = transactionsFilter + `, adapters_contracts: { adapter_id: { _eq: "${adapterId}" } }`
+    erc20TransfersFilter = erc20TransfersFilter + `, adapters_contracts: { adapter_id: { _eq: "${adapterId}" } }`
+  }
+
+  transactionsFilter += '}'
+  erc20TransfersFilter += '}'
+
+  return gql`
+    query contracts_interactions {
+      transactions(
+        where: ${transactionsFilter}
+        distinct_on: [chain, to_address]
+      ) {
+        chain
+        to_address
+        adapters_contracts {
+          adapter_id
+          category
+          name
+          standard
+          data
+        }
+      }
+
+      erc20_transfers(
+        where: ${erc20TransfersFilter}
+        distinct_on: [chain, token]
+      ) {
+        chain
+        token
+        adapters_contracts {
+          adapter_id
+          category
+          name
+          standard
+          data
+        }
+      }
+    }
+`
+}

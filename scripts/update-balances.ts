@@ -3,14 +3,18 @@ import { v4 as uuidv4 } from 'uuid'
 import { adapterById } from '../src/adapters'
 import { selectDefinedAdaptersContractsProps } from '../src/db/adapters'
 import { Balance as BalanceStore, insertBalances } from '../src/db/balances'
-import { BalancesGroup, insertBalancesGroups } from '../src/db/balances-groups'
-import { getAllContractsInteractions, getAllTokensInteractions } from '../src/db/contracts'
+import {
+  BalancesGroup,
+  deleteBalancesGroupsCascadeByFromAddress,
+  insertBalancesGroups,
+} from '../src/db/balances-groups'
 import { groupContracts } from '../src/db/contracts'
-import pool from '../src/db/pool'
+import pool from '../src/db/pool2'
 import { Balance, BalancesConfig, BalancesContext } from '../src/lib/adapter'
 import { groupBy, groupBy2, keyBy2 } from '../src/lib/array'
 import { balancesTotalBreakdown, sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
+import { getContractsInteractions, HASURA_HEADERS } from '../src/lib/indexer'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
 
@@ -50,9 +54,8 @@ async function main() {
   try {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
-    const [contracts, tokens, adaptersContractsProps] = await Promise.all([
-      getAllContractsInteractions(client, address),
-      getAllTokensInteractions(client, address),
+    const [{ contracts, erc20Transfers: tokens }, adaptersContractsProps] = await Promise.all([
+      getContractsInteractions({ fromAddress: address, headers: HASURA_HEADERS }),
       selectDefinedAdaptersContractsProps(client),
     ])
 
@@ -199,6 +202,9 @@ async function main() {
 
     // Update balances
     await client.query('BEGIN')
+
+    // Delete old balances
+    await deleteBalancesGroupsCascadeByFromAddress(client, address)
 
     // Insert balances groups
     await insertBalancesGroups(client, balancesGroupsStore)

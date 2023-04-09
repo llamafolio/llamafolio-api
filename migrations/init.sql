@@ -4,6 +4,7 @@ CREATE TABLE IF NOT EXISTS adapters (
     chain varchar,
     contracts_expire_at timestamp with time zone,
     contracts_revalidate_props jsonb,
+    contracts_props jsonb,
     created_at timestamp with time zone,
     primary key (id, chain)
 );
@@ -73,3 +74,13 @@ CREATE TABLE protocols (
     address VARCHAR,
     color VARCHAR
 );
+
+-- Labels
+create table labels (
+    address text not null,
+    type text not null,
+    value text not null,
+    updated_at timestamp with time zone not null
+);
+
+CREATE INDEX IF NOT EXISTS labels_address_idx ON labels (address);
