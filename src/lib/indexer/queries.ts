@@ -30,11 +30,7 @@ export const getTransactionHistoryQuery = (
           transactions(
             where: {
               _and: [
-                {
-                  _or: [
-                    { from_address: { _eq: "${address}" } }, { to_address: { _eq:"${address}" } }
-                  ]
-                }
+                { from_address: { _eq: "${address}" } }
                 ${filtersParams}
               ]
             }
@@ -42,13 +38,8 @@ export const getTransactionHistoryQuery = (
             offset: ${offset}
             order_by: { timestamp: desc }
           ) {
-            contract_interacted {
-              adapter {
-                adapter_id
-              }
-              contract
-              parsed
-              verified
+            adapters_contracts {
+              adapter_id
             }
             block_number
             chain
@@ -59,12 +50,12 @@ export const getTransactionHistoryQuery = (
             method_name {
               name
             }
-            receipts {
+            receipt {
               status
             }
             timestamp
             to_address
-            token_transfers_aggregate(order_by: { log_index: asc }) {
+            erc20_transfers_aggregate(order_by: { log_index: asc }) {
               nodes {
                 from_address
                 to_address
@@ -83,11 +74,7 @@ export const getTransactionHistoryQuery = (
           transactions_aggregate(
             where: {
               _and: [
-                {
-                  _or: [
-                    { from_address: { _eq: "${address}" } }, { to_address: { _eq:"${address}" } }
-                  ]
-                }
+                { from_address: { _eq: "${address}" } }
                 ${filtersParams}
               ]
             }
