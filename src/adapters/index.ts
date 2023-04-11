@@ -83,6 +83,7 @@ import nf3Ape from '@adapters/nf3-ape'
 import olympusDao from '@adapters/olympus-dao'
 import onyxProtocol from '@adapters/onyx-protocol'
 import opynSqueeth from '@adapters/opyn-squeeth'
+import originDollar from '@adapters/origin-dollar'
 import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
@@ -222,6 +223,7 @@ export const adapters: Adapter[] = [
   olympusDao,
   onyxProtocol,
   opynSqueeth,
+  originDollar,
   pancakeswap,
   pandora,
   pangolin,
