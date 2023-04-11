@@ -119,6 +119,7 @@ import templedao from '@adapters/templedao'
 import theOpenDaoSos from '@adapters/the-open-dao-sos'
 import thena from '@adapters/thena'
 import tokemak from '@adapters/tokemak'
+import tokenlon from '@adapters/tokenlon'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
 import uniswapV2 from '@adapters/uniswap-v2'
@@ -258,6 +259,7 @@ export const adapters: Adapter[] = [
   theOpenDaoSos,
   thena,
   tokemak,
+  tokenlon,
   traderjoe,
   truefi,
   uniswapV2,
