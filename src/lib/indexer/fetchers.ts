@@ -3,6 +3,7 @@ import { Chain, chainIdResolver } from '@lib/chains'
 import request from 'graphql-request'
 
 import {
+  getBalancesGroupsQuery,
   getChainsIndexedStateQuery,
   getContractsInteractionsQuery,
   getContractsQuery,
@@ -124,4 +125,59 @@ export const getContractsInteractions = async ({
   }
 
   return { contracts, erc20Transfers }
+}
+
+export interface Balance {
+  address: string
+  amount: string
+  balance_usd: number
+  debt_usd?: number
+  reward_usd?: number
+  category: string
+  price: number
+  data?: { [key: string]: any }
+  yields?: {
+    chain: string
+    adapter_id: string
+    apy?: number
+    apy_base?: number
+    apy_reward?: number
+    apy_mean_30d?: number
+    il_risk?: boolean
+  }[]
+}
+
+export interface BalancesGroup {
+  adapter_id: string
+  chain: Chain
+  balance_usd: number
+  debt_usd?: number
+  reward_usd?: number
+  health_factor?: number
+  timestamp: string
+  balances: Balance[]
+}
+
+/**
+ * Return grouped balances received by given address
+ * @param params
+ */
+export const getBalancesGroups = async ({
+  fromAddress,
+  chain,
+  adapterId,
+  headers = {},
+}: {
+  fromAddress: string
+  chain?: Chain
+  adapterId?: string
+  headers?: any
+}) => {
+  const { balances_groups } = (await indexer_graph(
+    getBalancesGroupsQuery({ fromAddress, chain, adapterId }),
+    {},
+    headers,
+  )) as { balances_groups: BalancesGroup[] }
+
+  return { balances_groups }
 }

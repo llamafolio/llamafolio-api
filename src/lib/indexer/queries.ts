@@ -203,3 +203,56 @@ export const getContractsInteractionsQuery = ({
     }
 `
 }
+
+export const getBalancesGroupsQuery = ({
+  fromAddress,
+  chain,
+  adapterId,
+}: {
+  fromAddress: string
+  chain?: string
+  adapterId?: string
+}) => {
+  let filter = `{ from_address: { _eq: "${fromAddress}" }`
+
+  if (chain) {
+    filter = filter + `, chain: { _eq: "${chain}" }`
+  }
+
+  if (adapterId) {
+    filter = filter + `, adapters_contracts: { adapter_id: { _eq: "${adapterId}" } }`
+  }
+
+  filter += '}'
+
+  return gql`
+    query balances_groups {
+      balances_groups(where:  ${filter}) {
+        adapter_id
+        chain
+        balance_usd
+        debt_usd
+        reward_usd
+        health_factor
+        timestamp
+        balances {
+          address
+          amount
+          balance_usd
+          category
+          price
+          data
+          yields {
+            chain
+            adapter_id
+            apy
+            apy_base
+            apy_reward
+            apy_mean_30d
+            il_risk
+          }
+        }
+      }
+    }
+  `
+}

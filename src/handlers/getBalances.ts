@@ -1,11 +1,11 @@
-import { selectRowsLatestBalancesGroupsWithBalancesByFromAddress } from '@db/balances-groups'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { ContractStandard } from '@lib/adapter'
-import { groupBy } from '@lib/array'
-import { areBalancesStale, isBalanceUSDGtZero } from '@lib/balance'
+import { areBalancesStale } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
+import { Balance, BalancesGroup } from '@lib/indexer'
+import { getBalancesGroups, HASURA_HEADERS } from '@lib/indexer'
 import { invokeLambda } from '@lib/lambda'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -66,35 +66,50 @@ function unwrapUnderlyings(balance: FormattedBalance) {
   return balance
 }
 
-export function formatBalance(balance: any): FormattedBalance {
+export function formatBalance(balancesGroup: BalancesGroup, balance: Balance): FormattedBalance {
+  const _yield = balance.yields?.find(
+    (_yield) => _yield.chain === balancesGroup.chain && _yield.adapter_id === balancesGroup.adapter_id,
+  )
+
+  console.log(balance.data)
+
   const formattedBalance: FormattedBalance = {
-    standard: balance.standard,
-    name: balance.name || undefined,
+    standard: balance.data?.standard,
+    name: balance.data?.name || undefined,
     address: balance.address,
-    symbol: balance.symbol,
-    decimals: balance.decimals,
-    category: balance.category,
-    stable: balance.stable,
+    symbol: balance.data?.symbol,
+    decimals: balance.data?.decimals,
+    category: balance.category as Category,
+    stable: balance.data?.stable,
     price: balance.price,
     amount: balance.amount,
-    balanceUSD: balance.balanceUSD,
-    apy: balance.apy,
-    apyBase: balance.apyBase,
-    apyReward: balance.apyReward,
-    apyMean30d: balance.apyMean30d,
-    ilRisk: balance.ilRisk,
-    unlockAt: balance.unlockAt,
-    side: balance.side,
-    margin: balance.margin,
-    entryPrice: balance.entryPrice,
-    marketPrice: balance.marketPrice,
-    leverage: balance.leverage,
-    funding: balance.funding,
-    underlyings: balance.underlyings?.map(formatBalance),
-    rewards: balance.rewards?.map(formatBalance),
+    balanceUSD: balance.balance_usd,
+    apy: _yield?.apy,
+    apyBase: _yield?.apy_base,
+    apyReward: _yield?.apy_reward,
+    apyMean30d: _yield?.apy_mean_30d,
+    ilRisk: _yield?.il_risk,
+    unlockAt: balance.data?.unlockAt,
+    side: balance.data?.side,
+    margin: balance.data?.margin,
+    entryPrice: balance.data?.entryPrice,
+    marketPrice: balance.data?.marketPrice,
+    leverage: balance.data?.leverage,
+    funding: balance.data?.funding,
+    underlyings: balance.data?.underlyings?.map(formatBalance),
+    rewards: balance.data?.rewards?.map(formatBalance),
   }
 
   return unwrapUnderlyings(formattedBalance)
+}
+
+export function formatBalancesGroups(balancesGroups: BalancesGroup[]) {
+  return balancesGroups.map((balancesGroup) => ({
+    protocol: balancesGroup.adapter_id,
+    chain: balancesGroup.chain,
+    healthFactor: balancesGroup.health_factor || undefined,
+    balances: balancesGroup.balances.map((balance) => formatBalance(balancesGroup, balance)),
+  }))
 }
 
 interface GroupResponse {
@@ -127,24 +142,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const client = await pool.connect()
 
   try {
-    const pricedBalances = await selectRowsLatestBalancesGroupsWithBalancesByFromAddress(client, address)
+    const { balances_groups } = await getBalancesGroups({ fromAddress: address, headers: HASURA_HEADERS })
 
-    const nonZeroPricedBalances = pricedBalances.filter(isBalanceUSDGtZero)
-
-    const balancesByGroup = groupBy(nonZeroPricedBalances, 'id')
-
-    const groups: GroupResponse[] = []
-
-    for (const groupId in balancesByGroup) {
-      groups.push({
-        protocol: balancesByGroup[groupId][0].adapterId,
-        chain: balancesByGroup[groupId][0].chain,
-        healthFactor: balancesByGroup[groupId][0].healthFactor || undefined,
-        balances: balancesByGroup[groupId].map(formatBalance),
-      })
-    }
-
-    const updatedAt = pricedBalances[0]?.timestamp ? new Date(pricedBalances[0]?.timestamp).getTime() : undefined
+    const updatedAt = balances_groups[0]?.timestamp ? new Date(balances_groups[0]?.timestamp).getTime() : undefined
 
     let status: TStatus = 'success'
     if (updatedAt === undefined) {
@@ -160,7 +160,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const balancesResponse: BalancesResponse = {
       status,
       updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
-      groups,
+      groups: formatBalancesGroups(balances_groups),
     }
 
     return success(balancesResponse, { maxAge: 20 })
