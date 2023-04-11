@@ -130,6 +130,7 @@ import venus from '@adapters/venus'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
 import wonderland from '@adapters/wonderland'
+import x2y2 from '@adapters/x2y2'
 import yearnFinance from '@adapters/yearn-finance'
 import zyberswap from '@adapters/zyberswap'
 import { Adapter } from '@lib/adapter'
@@ -267,6 +268,7 @@ export const adapters: Adapter[] = [
   wallet,
   wepiggy,
   wonderland,
+  x2y2,
   yearnFinance,
   zyberswap,
 ]
