@@ -36,6 +36,7 @@ import dydx from '@adapters/dydx'
 import equalizerExchange from '@adapters/equalizer-exchange'
 import euler from '@adapters/euler'
 import fantohm from '@adapters/fantohm'
+import flamincome from '@adapters/flamincome'
 import floorDao from '@adapters/floor-dao'
 import fluxFinance from '@adapters/flux-finance'
 import fortressLoans from '@adapters/fortress-loans'
@@ -173,6 +174,7 @@ export const adapters: Adapter[] = [
   equalizerExchange,
   euler,
   fantohm,
+  flamincome,
   floorDao,
   fluxFinance,
   fortressLoans,
