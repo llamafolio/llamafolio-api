@@ -83,7 +83,11 @@ const abi = {
  * @function getMasterChefPoolsInfos used by `getMasterChefPoolsBalances` when `abi` does not includes `lpToken` function
  */
 
-const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterchef: Contract): Promise<Contract[]> => {
+export const getMasterChefPoolsInfos = async (
+  ctx: BaseContext,
+  pairs: Pair[],
+  masterchef: Contract,
+): Promise<Contract[]> => {
   const pools: Contract[] = []
 
   const poolLengthRes = await call({ ctx, target: masterchef.address, params: [], abi: abi.poolLength })
@@ -136,7 +140,11 @@ const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterch
  * @function getMasterChefLpToken used by `getMasterChefPoolsBalances` when `abi` does includes `lpToken` function
  */
 
-const getMasterChefLpToken = async (ctx: BaseContext, pairs: Pair[], masterchef: Contract): Promise<Contract[]> => {
+export const getMasterChefLpToken = async (
+  ctx: BaseContext,
+  pairs: Pair[],
+  masterchef: Contract,
+): Promise<Contract[]> => {
   const pools: Contract[] = []
 
   const poolLengthRes = await call({ ctx, target: masterchef.address, params: [], abi: abi.poolLength })

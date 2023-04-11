@@ -133,10 +133,10 @@ export async function getSingleLockerBalances(
 
   for (let lockerIdx = 0; lockerIdx < lockers.length; lockerIdx++) {
     const locker = lockers[lockerIdx]
-    const underlying = locker.underlyings?.[0] as Contract
+    const underlyings = locker.underlyings as Contract[]
     const lockBalanceRes = lockBalancesRes[lockerIdx]
 
-    if (!underlying || !isSuccess(lockBalanceRes)) {
+    if (!underlyings || !isSuccess(lockBalanceRes)) {
       continue
     }
 
@@ -145,7 +145,7 @@ export async function getSingleLockerBalances(
     balances.push({
       ...locker,
       amount: BigNumber.from(lockBalanceRes.output.amount),
-      underlyings: [underlying],
+      underlyings: underlyings,
       claimable: now > unlockAt ? BigNumber.from(lockBalanceRes.output.amount) : BN_ZERO,
       unlockAt,
       rewards: undefined,
