@@ -98,6 +98,7 @@ import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
 import radiantV2 from '@adapters/radiant-v2'
 import rageTrade from '@adapters/rage-trade'
+import railgun from '@adapters/railgun'
 import redacted from '@adapters/redacted'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
@@ -244,6 +245,7 @@ export const adapters: Adapter[] = [
   radiantV1,
   radiantV2,
   rageTrade,
+  railgun,
   redacted,
   ribbonFinance,
   rocketPool,
