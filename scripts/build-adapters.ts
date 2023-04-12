@@ -91,7 +91,7 @@ function isCharNumeric(char: string) {
 
 function slugify(adapter: string) {
   const slug = adapter
-    .split('-')
+    .split(/[-,.]+/)
     .map((part, idx) => (idx > 0 ? capitalize(part) : part))
     .join('')
 
