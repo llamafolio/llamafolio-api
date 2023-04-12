@@ -9,19 +9,19 @@ import { Chain } from '../src/lib/chains'
 import { multicall } from '../src/lib/multicall'
 
 // See: https://github.com/o-az/evm-balances/tree/master
-const contracts = {
-  ethereum: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
-  optimism: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+const multiCoinContracts = {
   arbitrum: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
-  opera: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  avax: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  avax_test: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  bsc_test: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
   bsc: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
-  avalanche: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
-  avalancheTest: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
-  bsctestnet: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
-  ropsten: '0x1207602eBE2d77801081d57162577cbEf1414D78',
-  rinkeby: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  ethereum: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  fantom: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  optimism: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
   polygon: '0xE052Ef907f09c0053B237647aD7387D4BDF11A5A',
-  polygonTestnet: '0xE052Ef907f09c0053B237647aD7387D4BDF11A5A',
+  polygon_test: '0xE052Ef907f09c0053B237647aD7387D4BDF11A5A',
+  rinkeby: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  ropsten: '0x1207602eBE2d77801081d57162577cbEf1414D78',
 }
 
 const abi = {
@@ -83,7 +83,7 @@ async function main() {
       ctx,
       // @ts-ignore
       calls: slices.map((tokens) => ({
-        target: contracts[chain],
+        target: multiCoinContracts[chain],
         params: [ctx.address, tokens.map((token) => token.address)],
       })),
       abi: abi.getBalances,
