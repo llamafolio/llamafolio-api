@@ -66,6 +66,7 @@ import lido from '@adapters/lido'
 import lifeDao from '@adapters/life-dao'
 import liqee from '@adapters/liqee'
 import liquity from '@adapters/liquity'
+import llamaAirforce from '@adapters/llama-airforce'
 import llamapay from '@adapters/llamapay'
 import looksrare from '@adapters/looksrare'
 import lusdChickenbonds from '@adapters/lusd-chickenbonds'
@@ -208,6 +209,7 @@ export const adapters: Adapter[] = [
   lifeDao,
   liqee,
   liquity,
+  llamaAirforce,
   llamapay,
   looksrare,
   lusdChickenbonds,
