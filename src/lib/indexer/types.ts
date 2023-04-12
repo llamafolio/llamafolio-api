@@ -12,7 +12,7 @@ export interface IIndexerTransaction {
   method_name?: {
     name: string
   }
-  receipts: {
+  receipt: {
     status: string
   }
   timestamp: string
