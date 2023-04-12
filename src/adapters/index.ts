@@ -133,6 +133,7 @@ import valasFinance from '@adapters/valas-finance'
 import vector from '@adapters/vector'
 import velodrome from '@adapters/velodrome'
 import venus from '@adapters/venus'
+import verse from '@adapters/verse'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
 import wonderland from '@adapters/wonderland'
@@ -277,6 +278,7 @@ export const adapters: Adapter[] = [
   vector,
   velodrome,
   venus,
+  verse,
   wallet,
   wepiggy,
   wonderland,
