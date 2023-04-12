@@ -35,6 +35,7 @@ import convexFinance from '@adapters/convex-finance'
 import curve from '@adapters/curve'
 import dydx from '@adapters/dydx'
 import equalizerExchange from '@adapters/equalizer-exchange'
+import etherFi from '@adapters/ether.fi'
 import euler from '@adapters/euler'
 import fantohm from '@adapters/fantohm'
 import flamincome from '@adapters/flamincome'
@@ -179,6 +180,7 @@ export const adapters: Adapter[] = [
   curve,
   dydx,
   equalizerExchange,
+  etherFi,
   euler,
   fantohm,
   flamincome,
