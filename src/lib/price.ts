@@ -95,7 +95,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
       ...price,
       ...balance,
       priceTimestamp: price.timestamp ? new Date(price.timestamp * 1000) : undefined,
-      balanceUSD: mulPrice(balance.amount || BN_ZERO, decimals, price.price),
+      balanceUSD: mulPrice(balance.amount, decimals, price.price),
       claimableUSD: balance.claimable ? mulPrice(balance.claimable || BN_ZERO, decimals, price.price) : undefined,
     }
   }

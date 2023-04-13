@@ -66,12 +66,25 @@ function unwrapUnderlyings(balance: FormattedBalance) {
   return balance
 }
 
+function formatBaseBalance(balance: any) {
+  return {
+    standard: balance.standard,
+    name: balance.name,
+    address: balance.address,
+    symbol: balance.symbol,
+    decimals: balance.decimals,
+    category: balance.category as Category,
+    stable: balance.stable,
+    price: balance.price,
+    amount: balance.amount,
+    balanceUSD: balance.balance_usd,
+  }
+}
+
 export function formatBalance(balancesGroup: BalancesGroup, balance: Balance): FormattedBalance {
   const _yield = balance.yields?.find(
     (_yield) => _yield.chain === balancesGroup.chain && _yield.adapter_id === balancesGroup.adapter_id,
   )
-
-  console.log(balance.data)
 
   const formattedBalance: FormattedBalance = {
     standard: balance.data?.standard,
@@ -96,8 +109,8 @@ export function formatBalance(balancesGroup: BalancesGroup, balance: Balance): F
     marketPrice: balance.data?.marketPrice,
     leverage: balance.data?.leverage,
     funding: balance.data?.funding,
-    underlyings: balance.data?.underlyings?.map(formatBalance),
-    rewards: balance.data?.rewards?.map(formatBalance),
+    underlyings: balance.data?.underlyings?.map(formatBaseBalance),
+    rewards: balance.data?.rewards?.map(formatBaseBalance),
   }
 
   return unwrapUnderlyings(formattedBalance)
@@ -107,6 +120,9 @@ export function formatBalancesGroups(balancesGroups: BalancesGroup[]) {
   return balancesGroups.map((balancesGroup) => ({
     protocol: balancesGroup.adapter_id,
     chain: balancesGroup.chain,
+    balanceUSD: balancesGroup.balance_usd,
+    debtUSD: balancesGroup.debt_usd,
+    rewardUSD: balancesGroup.reward_usd,
     healthFactor: balancesGroup.health_factor || undefined,
     balances: balancesGroup.balances.map((balance) => formatBalance(balancesGroup, balance)),
   }))
@@ -115,6 +131,9 @@ export function formatBalancesGroups(balancesGroups: BalancesGroup[]) {
 interface GroupResponse {
   protocol: string
   chain: string
+  balanceUSD: number
+  debtUSD?: number
+  rewardUSD?: number
   healthFactor?: number
   balances: FormattedBalance[]
 }
