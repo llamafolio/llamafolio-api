@@ -1,9 +1,8 @@
 import { adapterById } from '@adapters/index'
 import { selectDefinedAdaptersContractsProps } from '@db/adapters'
 import { Balance as BalanceStore, insertBalances } from '@db/balances'
-import { BalancesGroup, insertBalancesGroups } from '@db/balances-groups'
-import { getAllContractsInteractions, groupContracts } from '@db/contracts'
-import { getAllTokensInteractions } from '@db/contracts'
+import { BalancesGroup, deleteBalancesGroupsCascadeByFromAddress, insertBalancesGroups } from '@db/balances-groups'
+import { groupContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, BalancesConfig, BalancesContext, PricedBalance } from '@lib/adapter'
@@ -11,6 +10,7 @@ import { groupBy, groupBy2, keyBy2 } from '@lib/array'
 import { balancesTotalBreakdown, sanitizeBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Chain } from '@lib/chains'
+import { getContractsInteractions, HASURA_HEADERS } from '@lib/indexer'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
@@ -52,9 +52,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   try {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
-    const [contracts, tokens, adaptersContractsProps] = await Promise.all([
-      getAllContractsInteractions(client, address),
-      getAllTokensInteractions(client, address),
+    const [{ contracts, erc20Transfers: tokens }, adaptersContractsProps] = await Promise.all([
+      getContractsInteractions({ fromAddress: address, headers: HASURA_HEADERS }),
       selectDefinedAdaptersContractsProps(client),
     ])
 
@@ -201,6 +200,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     // Update balances
     await client.query('BEGIN')
+
+    // Delete old balances
+    await deleteBalancesGroupsCascadeByFromAddress(client, address)
 
     // Insert balances groups
     await insertBalancesGroups(client, balancesGroupsStore)

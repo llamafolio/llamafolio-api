@@ -1,5 +1,5 @@
 import { countAdapters } from '@db/adapters'
-import pool from '@db/pool'
+import pool from '@db/pool2'
 import { serverError, success } from '@handlers/response'
 import { chains } from '@lib/chains'
 import { sum } from '@lib/math'
