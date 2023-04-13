@@ -5,7 +5,7 @@ import { BigNumber } from 'ethers'
 
 import { range } from './array'
 import { abi as erc20Abi } from './erc20'
-import { BN_ZERO, sumBN } from './math'
+import { BN_ZERO, isZero, sumBN } from './math'
 import { multicall } from './multicall'
 import { isSuccess } from './type'
 
@@ -182,7 +182,7 @@ export async function getMultipleLockerBalances(
     category: 'lock',
   }
 
-  if (rewards) {
+  if (rewards && !isZero(totalLocked)) {
     rewards.map((reward, idx: number) => {
       claimableBalance.rewards?.push({
         ...reward,
@@ -205,7 +205,7 @@ export async function getMultipleLockerBalances(
       category: 'lock',
     }
 
-    if (rewards) {
+    if (rewards && !isZero(totalLocked)) {
       rewards.map((reward, idx: number) => {
         balance.rewards?.push({
           ...reward,
