@@ -1,6 +1,7 @@
 import { sliceIntoChunks } from '@lib/array'
 import { strToBuf } from '@lib/buf'
 import { Category } from '@lib/category'
+import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
@@ -99,6 +100,28 @@ export async function selectBalancesByFromAddress(client: PoolClient, fromAddres
   const balancesRes = await client.query(`select * from balances where from_address = $1;`, [fromAddress])
 
   return fromStorage(balancesRes.rows)
+}
+
+export async function selectBalancesHolders(client: PoolClient, contractAddress: string, chain: Chain, limit: number) {
+  const res = await client.query(
+    format(
+      `
+      select bg.from_address as address, b.amount from balances b
+      inner join balances_groups bg on b.group_id = bg.id
+      where (
+        b.address = %L and
+        bg.chain = %L and
+        bg.adapter_id = 'wallet'
+      )
+      order by b.amount desc limit %L;
+      `,
+      contractAddress,
+      chain,
+      limit,
+    ),
+  )
+
+  return res.rows
 }
 
 export function deleteBalancesByFromAddress(client: PoolClient, fromAddress: string) {

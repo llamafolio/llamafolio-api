@@ -112,6 +112,17 @@ export const getContractsInteractions = async ({
 
   for (const transfer of erc20_transfers) {
     for (const contract of transfer.adapters_contracts) {
+      // also consider token received as part of contracts
+      contracts.push({
+        ...contract.data,
+        chain: (chainIdResolver[transfer.chain] || transfer.chain) as Chain,
+        address: transfer.token,
+        standard: contract.standard,
+        name: contract.name,
+        category: contract.category,
+        adapterId: contract.adapter_id,
+      })
+
       erc20Transfers.push({
         ...contract.data,
         chain: (chainIdResolver[transfer.chain] || transfer.chain) as Chain,
