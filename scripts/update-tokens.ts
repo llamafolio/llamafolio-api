@@ -1,6 +1,6 @@
 import '../env'
 
-import pool from '../src/db/pool2'
+import pool from '../src/db/pool'
 import { ERC20Token, insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/tokens'
 import { getERC20Details } from '../src/lib/erc20'
 

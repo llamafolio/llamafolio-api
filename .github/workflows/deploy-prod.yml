@@ -39,11 +39,6 @@ jobs:
           PGDATABASE: ${{ secrets.PGDATABASE }}
           PGPASSWORD: ${{ secrets.PGPASSWORD }}
           PGPORT: ${{ secrets.PGPORT }}
-          PGHOST2: ${{ secrets.PGHOST2 }}
-          PGUSER2: ${{ secrets.PGUSER2 }}
-          PGDATABASE2: ${{ secrets.PGDATABASE2 }}
-          PGPASSWORD2: ${{ secrets.PGPASSWORD2 }}
-          PGPORT2: ${{ secrets.PGPORT2 }}
           CUSTOM_PROVIDER: ${{ secrets.CUSTOM_PROVIDER }}
           LLAMANODES_API_KEY: ${{ secrets.LLAMANODES_API_KEY }}
           ARBITRUM_RPC: ${{ secrets.ARBITRUM_RPC }}

@@ -1,6 +1,6 @@
 import '../env'
 
-import pool from '../src/db/pool2'
+import pool from '../src/db/pool'
 import { deleteAllYields, fetchYields, insertYields } from '../src/db/yields'
 
 async function main() {

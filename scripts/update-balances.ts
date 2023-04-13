@@ -9,7 +9,7 @@ import {
   insertBalancesGroups,
 } from '../src/db/balances-groups'
 import { groupContracts } from '../src/db/contracts'
-import pool from '../src/db/pool2'
+import pool from '../src/db/pool'
 import { Balance, BalancesConfig, BalancesContext } from '../src/lib/adapter'
 import { groupBy, groupBy2, keyBy2 } from '../src/lib/array'
 import { balancesTotalBreakdown, sanitizeBalances } from '../src/lib/balance'

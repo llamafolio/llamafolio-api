@@ -1,4 +1,4 @@
-import pool from '@db/pool2'
+import pool from '@db/pool'
 import { deleteAllYields, fetchYields, insertYields } from '@db/yields'
 import environment from '@environment'
 import { serverError, success } from '@handlers/response'

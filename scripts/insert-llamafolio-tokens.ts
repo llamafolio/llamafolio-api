@@ -2,7 +2,7 @@ import '../env'
 
 import { chains } from '@llamafolio/tokens'
 
-import pool from '../src/db/pool2'
+import pool from '../src/db/pool'
 import { ERC20Token, insertERC20Tokens } from '../src/db/tokens'
 
 async function main() {

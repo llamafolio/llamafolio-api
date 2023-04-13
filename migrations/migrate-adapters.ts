@@ -2,7 +2,7 @@ import '../env'
 import fs from 'fs'
 import format from 'pg-format'
 
-import pool from '../src/db/pool2'
+import pool from '../src/db/pool'
 import { sliceIntoChunks } from '@defillama/sdk/build/util'
 
 function help() {

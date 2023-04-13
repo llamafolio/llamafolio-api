@@ -1,5 +1,5 @@
 import { selectDistinctAdaptersIds } from '../src/db/adapters'
-import pool from '../src/db/pool2'
+import pool from '../src/db/pool'
 import { deleteAllProtocols, insertProtocols } from '../src/db/protocols'
 import { fetchProtocols } from '../src/lib/protocols'
 

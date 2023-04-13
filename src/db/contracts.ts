@@ -1,6 +1,5 @@
 import { Contract, ContractStandard } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { bufToStr, strToBuf } from '@lib/buf'
 import { Chain } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
@@ -9,7 +8,7 @@ export interface ContractStorage {
   standard?: ContractStandard
   name?: string
   chain: string
-  address: Buffer
+  address: string
   category?: string
   adapter_id: string
   data?: any
@@ -24,7 +23,7 @@ export function fromStorage(contractsStorage: ContractStorage[]) {
       standard: contractStorage.standard,
       name: contractStorage.name,
       chain: contractStorage.chain,
-      address: bufToStr(contractStorage.address),
+      address: contractStorage.address,
       category: contractStorage.category,
       adapterId: contractStorage.adapter_id,
     }
@@ -57,7 +56,7 @@ export function toStorage(contracts: Contract[], adapterId: string) {
       standard,
       name,
       chain,
-      address: strToBuf(address),
+      address,
       category,
       adapter_id: adapterId,
       // \\u0000 cannot be converted to text
@@ -71,12 +70,14 @@ export function toStorage(contracts: Contract[], adapterId: string) {
 }
 
 export async function selectContractsByAdapterId(client: PoolClient, adapterId: string) {
-  const adaptersContractsRes = await client.query('select * from contracts where adapter_id = $1;', [adapterId])
+  const adaptersContractsRes = await client.query('select * from adapters_contracts where adapter_id = $1;', [
+    adapterId,
+  ])
 
   return fromStorage(adaptersContractsRes.rows)
 }
 
-export function insertContracts(
+export function insertAdaptersContracts(
   client: PoolClient,
   contracts: { [key: string]: Contract | Contract[] | undefined },
   adapterId: string,
@@ -91,7 +92,16 @@ export function insertContracts(
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          'INSERT INTO contracts (standard, category, name, chain, address, adapter_id, data) VALUES %L ON CONFLICT DO NOTHING;',
+          `
+          INSERT INTO adapters_contracts (
+            standard,
+            category,
+            name,
+            chain,
+            address,
+            adapter_id,
+            data
+          ) VALUES %L ON CONFLICT DO NOTHING;`,
           chunk,
         ),
         [],
@@ -108,7 +118,7 @@ export function insertContracts(
  */
 export async function getContractsInteractions(client: PoolClient, address: string, adapterId: string) {
   const res = await client.query('select * from all_contract_interactions($1) where adapter_id = $2;', [
-    strToBuf(address),
+    address,
     adapterId,
   ])
 
@@ -121,9 +131,7 @@ export async function getContractsInteractions(client: PoolClient, address: stri
  * @param address
  */
 export async function getAllContractsInteractions(client: PoolClient, address: string) {
-  const res = await client.query("select * from all_contract_interactions($1) where adapter_id <> 'wallet';", [
-    strToBuf(address),
-  ])
+  const res = await client.query("select * from all_contract_interactions($1) where adapter_id <> 'wallet';", [address])
 
   return fromStorage(res.rows)
 }
@@ -142,7 +150,7 @@ export async function getChainContractsInteractions(
   adapterId: string,
 ) {
   const res = await client.query('select * from all_contract_interactions($1) where chain = $2 and adapter_id = $3;', [
-    strToBuf(address),
+    address,
     chain,
     adapterId,
   ])
@@ -156,7 +164,7 @@ export async function getChainContractsInteractions(
  * @param address
  */
 export async function getAllTokensInteractions(client: PoolClient, address: string) {
-  const res = await client.query('select * from all_token_received($1);', [strToBuf(address)])
+  const res = await client.query('select * from all_token_received($1);', [address])
 
   return fromStorage(res.rows)
 }
@@ -168,7 +176,7 @@ export async function getAllTokensInteractions(client: PoolClient, address: stri
  * @param address
  */
 export async function getAllChainTokensInteractions(client: PoolClient, chain: Chain, address: string) {
-  const res = await client.query('select * from all_token_received($1) where chain = $2;', [strToBuf(address), chain])
+  const res = await client.query('select * from all_token_received($1) where chain = $2;', [address, chain])
 
   return fromStorage(res.rows)
 }
@@ -179,11 +187,11 @@ export async function getAllChainTokensInteractions(client: PoolClient, chain: C
  * @param adapterId
  */
 export function deleteContractsByAdapterId(client: PoolClient, adapterId: string) {
-  return client.query('DELETE FROM contracts WHERE adapter_id = $1;', [adapterId])
+  return client.query('DELETE FROM adapters_contracts WHERE adapter_id = $1;', [adapterId])
 }
 
 export function deleteContractsByAdapter(client: PoolClient, adapterId: string, chain: Chain) {
-  return client.query('DELETE FROM contracts WHERE adapter_id = $1 AND chain = $2;', [adapterId, chain])
+  return client.query('DELETE FROM adapters_contracts WHERE adapter_id = $1 AND chain = $2;', [adapterId, chain])
 }
 
 export function flattenContracts(contracts: { [key: string]: Contract | Contract[] | undefined }) {

@@ -52,11 +52,6 @@ provider:
     PGDATABASE: ${file(./env.js):PGDATABASE}
     PGPASSWORD: ${file(./env.js):PGPASSWORD}
     PGPORT: ${file(./env.js):PGPORT}
-    PGHOST2: ${file(./env.js):PGHOST2}
-    PGUSER2: ${file(./env.js):PGUSER2}
-    PGDATABASE2: ${file(./env.js):PGDATABASE2}
-    PGPASSWORD2: ${file(./env.js):PGPASSWORD2}
-    PGPORT2: ${file(./env.js):PGPORT2}
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
