@@ -17,4 +17,7 @@ const adapter: Adapter = {
   celo,
 }
 
+// TODO: Find logic behind rewards
+// https://docs.gamma.xyz/gamma/learn/scans
+
 export default adapter
