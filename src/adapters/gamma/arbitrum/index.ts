@@ -4,10 +4,13 @@ import { resolveBalances } from '@lib/balance'
 import { getGammaFarmBalances } from '../common/balance'
 import { getPoolContractsFromAPI } from '../common/contract'
 
-const API_URL = 'https://wire2.gamma.xyz/arbitrum/hypervisors/allData'
+const API_URLs = [
+  'https://wire2.gamma.xyz/arbitrum/hypervisors/allData',
+  'https://wire2.gamma.xyz/zyberswap/arbitrum/hypervisors/allData',
+]
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getPoolContractsFromAPI(ctx, API_URL)
+  const pools = await getPoolContractsFromAPI(ctx, API_URLs)
 
   return {
     contracts: { pools },

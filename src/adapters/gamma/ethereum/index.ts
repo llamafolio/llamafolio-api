@@ -5,7 +5,7 @@ import { getGammaFarmBalances } from '../common/balance'
 import { getPoolContractsFromAPI } from '../common/contract'
 import { getxGammaBalances } from './stake'
 
-const API_URL = 'https://wire2.gamma.xyz/hypervisors/allData'
+const API_URLs = ['https://wire2.gamma.xyz/hypervisors/allData']
 
 const xGamma: Contract = {
   chain: 'ethereum',
@@ -16,7 +16,7 @@ const xGamma: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getPoolContractsFromAPI(ctx, API_URL)
+  const pools = await getPoolContractsFromAPI(ctx, API_URLs)
 
   return {
     contracts: { xGamma, pools },

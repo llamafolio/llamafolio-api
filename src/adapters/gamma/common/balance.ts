@@ -1,6 +1,6 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
@@ -39,12 +39,12 @@ export async function getGammaFarmBalances(ctx: BalancesContext, pools: Contract
     }),
   ])
 
-  for (let idx = 0; idx < pools.length; idx++) {
-    const pool = pools[idx]
+  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+    const pool = pools[poolIdx]
     const underlyings = pool.underlyings as Contract[]
-    const balancesOfRes = balancesOfsRes[idx]
-    const totalAmountRes = totalAmountsRes[idx]
-    const totalSupplyRes = totalSuppliesRes[idx]
+    const balancesOfRes = balancesOfsRes[poolIdx]
+    const totalAmountRes = totalAmountsRes[poolIdx]
+    const totalSupplyRes = totalSuppliesRes[poolIdx]
 
     if (
       !underlyings ||
@@ -56,21 +56,23 @@ export async function getGammaFarmBalances(ctx: BalancesContext, pools: Contract
       continue
     }
 
-    const balance: Balance = {
-      ...pool,
-      amount: BigNumber.from(balancesOfRes.output),
-      underlyings,
-      rewards: undefined,
-      category: 'farm',
-    }
-
-    underlyings.forEach((underlying, underlyingIdx) => {
-      const underlyingBalance = totalAmountRes.output[underlyingIdx]
-      ;(underlying as Balance).amount =
-        BigNumber.from(underlyingBalance).mul(balance.amount).div(totalSupplyRes.output) || BN_ZERO
+    const tokens = underlyings.map((underlying, index) => {
+      const amount = BigNumber.from(balancesOfRes.output)
+        .mul(totalAmountRes.output[`total${index}`])
+        .div(totalSupplyRes.output)
+      return {
+        ...underlying,
+        amount,
+      }
     })
 
-    balances.push(balance)
+    balances.push({
+      ...pool,
+      amount: BigNumber.from(balancesOfRes.output),
+      underlyings: tokens,
+      rewards: undefined,
+      category: 'farm',
+    })
   }
 
   return balances
