@@ -1,4 +1,5 @@
 import { Balance, BalancesContext, BaseContext } from '@lib/adapter'
+import { sliceIntoChunks } from '@lib/array'
 import { Call, multicall, MultiCallResult } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -56,6 +57,41 @@ export const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  getBalances: {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'address[]',
+        name: 'tokens',
+        type: 'address[]',
+      },
+    ],
+    name: 'getBalances',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
+// See: https://github.com/o-az/evm-balances/tree/master
+const multiCoinContracts = {
+  arbitrum: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  avax: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  bsc: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  ethereum: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  fantom: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  optimism: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  polygon: '0xE052Ef907f09c0053B237647aD7387D4BDF11A5A',
 }
 
 export interface GetERC20BalanceOfParams {
@@ -68,6 +104,41 @@ export async function getERC20BalanceOf(
   params?: GetERC20BalanceOfParams,
 ): Promise<Balance[]> {
   const { getContractAddress } = params || { getContractAddress: (contract) => contract.address }
+
+  if (ctx.chain in multiCoinContracts) {
+    // TODO: find the max number of tokens fitting as params
+    const slices = sliceIntoChunks(tokens, 1000)
+
+    const balances = await multicall({
+      ctx,
+      // @ts-ignore
+      calls: slices.map((tokens) => ({
+        // @ts-ignore
+        target: multiCoinContracts[ctx.chain],
+        params: [ctx.address, tokens.map((token) => token.address)],
+      })),
+      abi: abi.getBalances,
+    })
+
+    let callIdx = 0
+    for (let sliceIdx = 0; sliceIdx < slices.length; sliceIdx++) {
+      if (!balances[sliceIdx].success || balances[sliceIdx].output == null) {
+        console.error(
+          `Could not get balanceOf for tokens ${ctx.chain}:`,
+          slices[sliceIdx].map((token) => token.address),
+        )
+        continue
+      }
+
+      for (let tokenIdx = 0; tokenIdx < slices[sliceIdx].length; tokenIdx++) {
+        const token = tokens[callIdx] as Balance
+        token.amount = BigNumber.from(balances[sliceIdx].output[tokenIdx] || '0')
+        callIdx++
+      }
+    }
+
+    return tokens.filter((token) => (token as Balance).amount != null) as Balance[]
+  }
 
   const balances = await multicall({
     ctx,
