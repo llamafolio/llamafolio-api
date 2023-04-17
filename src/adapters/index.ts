@@ -134,6 +134,7 @@ import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
 import uniswapV2 from '@adapters/uniswap-v2'
 import uniswapV3 from '@adapters/uniswap-v3'
+import unsheth from '@adapters/unsheth'
 import uwuLend from '@adapters/uwu-lend'
 import valasFinance from '@adapters/valas-finance'
 import vector from '@adapters/vector'
@@ -285,6 +286,7 @@ export const adapters: Adapter[] = [
   truefi,
   uniswapV2,
   uniswapV3,
+  unsheth,
   uwuLend,
   valasFinance,
   vector,
