@@ -71,6 +71,7 @@ import liqee from '@adapters/liqee'
 import liquity from '@adapters/liquity'
 import llamaAirforce from '@adapters/llama-airforce'
 import llamapay from '@adapters/llamapay'
+import lodestarFinance from '@adapters/lodestar-finance'
 import looksrare from '@adapters/looksrare'
 import lusdChickenbonds from '@adapters/lusd-chickenbonds'
 import lyra from '@adapters/lyra'
@@ -223,6 +224,7 @@ export const adapters: Adapter[] = [
   liquity,
   llamaAirforce,
   llamapay,
+  lodestarFinance,
   looksrare,
   lusdChickenbonds,
   lyra,
