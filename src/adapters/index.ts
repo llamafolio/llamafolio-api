@@ -10,6 +10,7 @@ import angle from '@adapters/angle'
 import apeswapAmm from '@adapters/apeswap-amm'
 import apeswapLending from '@adapters/apeswap-lending'
 import api3 from '@adapters/api3'
+import arbitrumExchange from '@adapters/arbitrum-exchange'
 import arrakis from '@adapters/arrakis'
 import atlantisLoans from '@adapters/atlantis-loans'
 import atlasUsv from '@adapters/atlas-usv'
@@ -163,6 +164,7 @@ export const adapters: Adapter[] = [
   apeswapAmm,
   apeswapLending,
   api3,
+  arbitrumExchange,
   arrakis,
   atlantisLoans,
   atlasUsv,
