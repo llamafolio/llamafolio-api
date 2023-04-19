@@ -147,6 +147,7 @@ import wepiggy from '@adapters/wepiggy'
 import wonderland from '@adapters/wonderland'
 import x2y2 from '@adapters/x2y2'
 import yearnFinance from '@adapters/yearn-finance'
+import yoshiExchange from '@adapters/yoshi-exchange'
 import zyberswap from '@adapters/zyberswap'
 import { Adapter } from '@lib/adapter'
 
@@ -300,6 +301,7 @@ export const adapters: Adapter[] = [
   wonderland,
   x2y2,
   yearnFinance,
+  yoshiExchange,
   zyberswap,
 ]
 
