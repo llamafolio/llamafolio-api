@@ -136,6 +136,7 @@ import tokemak from '@adapters/tokemak'
 import tokenlon from '@adapters/tokenlon'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
+import trustswap from '@adapters/trustswap'
 import uniswapV2 from '@adapters/uniswap-v2'
 import uniswapV3 from '@adapters/uniswap-v3'
 import unsheth from '@adapters/unsheth'
@@ -294,6 +295,7 @@ export const adapters: Adapter[] = [
   tokenlon,
   traderjoe,
   truefi,
+  trustswap,
   uniswapV2,
   uniswapV3,
   unsheth,
