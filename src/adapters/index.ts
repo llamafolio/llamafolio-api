@@ -3,6 +3,7 @@ import _1inchNetwork from '@adapters/1inch-network'
 import aaveV2 from '@adapters/aave-v2'
 import aaveV3 from '@adapters/aave-v3'
 import abracadabra from '@adapters/abracadabra'
+import agilityLsd from '@adapters/agility-lsd'
 import alchemix from '@adapters/alchemix'
 import alpacaFinance from '@adapters/alpaca-finance'
 import ambireWallet from '@adapters/ambire-wallet'
@@ -162,6 +163,7 @@ export const adapters: Adapter[] = [
   aaveV2,
   aaveV3,
   abracadabra,
+  agilityLsd,
   alchemix,
   alpacaFinance,
   ambireWallet,
