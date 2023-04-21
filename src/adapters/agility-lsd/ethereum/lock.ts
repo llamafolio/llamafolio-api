@@ -1,5 +1,6 @@
 import { BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { range } from '@lib/array'
+import { call } from '@lib/call'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
@@ -39,47 +40,42 @@ const AGI: Token = {
   symbol: 'AGI',
 }
 
-export async function getAgilityLockerBalances(ctx: BalancesContext, lockers: Contract[]): Promise<LockBalance[]> {
+export async function getAgilityLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance[]> {
   const balances: LockBalance[] = []
 
-  const userRedeemsLengthsRes = await multicall({
+  const { output: userRedeemsLengthsRes } = await call({
     ctx,
-    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] })),
+    target: locker.address,
+    params: [ctx.address],
     abi: abi.getUserRedeemsLength,
   })
 
   const getUserRedeemsRes = await multicall({
     ctx,
-    calls: userRedeemsLengthsRes.flatMap((length) =>
-      isSuccess(length)
-        ? range(0, length.output).map((_, idx) => ({ target: length.input.target, params: [ctx.address, idx] }))
-        : null,
-    ),
+    calls: range(0, userRedeemsLengthsRes).map((_, idx) => ({ target: locker.address, params: [ctx.address, idx] })),
     abi: abi.getUserRedeem,
   })
 
-  for (const locker of lockers) {
-    for (let resIdx = 0; resIdx < getUserRedeemsRes.length; resIdx++) {
-      const getUserRedeemRes = getUserRedeemsRes[resIdx]
+  for (let resIdx = 0; resIdx < getUserRedeemsRes.length; resIdx++) {
+    const getUserRedeemRes = getUserRedeemsRes[resIdx]
 
-      if (!isSuccess(getUserRedeemRes)) {
-        continue
-      }
-
-      const { agiAmount, ESAGIAmount, endTime } = getUserRedeemRes.output
-      const now = Date.now() / 1000
-      const unlockAt = endTime
-
-      balances.push({
-        ...locker,
-        amount: BigNumber.from(ESAGIAmount),
-        claimable: now > unlockAt ? BigNumber.from(agiAmount) : BN_ZERO,
-        underlyings: [{ ...AGI, amount: BigNumber.from(agiAmount) }],
-        rewards: undefined,
-        unlockAt,
-        category: 'lock',
-      })
+    if (!isSuccess(getUserRedeemRes)) {
+      continue
     }
+
+    const { agiAmount, ESAGIAmount, endTime } = getUserRedeemRes.output
+    const now = Date.now() / 1000
+    const unlockAt = endTime
+
+    balances.push({
+      ...locker,
+      amount: BigNumber.from(ESAGIAmount),
+      claimable: now > unlockAt ? BigNumber.from(agiAmount) : BN_ZERO,
+      underlyings: [{ ...AGI, amount: BigNumber.from(agiAmount) }],
+      rewards: undefined,
+      unlockAt,
+      category: 'lock',
+    })
   }
 
   return balances

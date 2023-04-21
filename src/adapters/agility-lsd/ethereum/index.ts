@@ -72,13 +72,7 @@ export const getContracts = () => {
 }
 
 const getAgilityBalances = async (ctx: BalancesContext, contracts: Contract[]) => {
-  return Promise.all([
-    getAgilityStakeBalances(ctx, contracts),
-    getAgilityLockerBalances(
-      ctx,
-      contracts.filter((contract) => contract.category === 'lock'),
-    ),
-  ])
+  return Promise.all([getAgilityStakeBalances(ctx, contracts), getAgilityLockerBalances(ctx, esAGI)])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
