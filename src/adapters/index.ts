@@ -130,6 +130,7 @@ import sushiswap from '@adapters/sushiswap'
 import synapse from '@adapters/synapse'
 import synthetix from '@adapters/synthetix'
 import templedao from '@adapters/templedao'
+import theIdols from '@adapters/the-idols'
 import theOpenDaoSos from '@adapters/the-open-dao-sos'
 import thena from '@adapters/thena'
 import tokemak from '@adapters/tokemak'
@@ -289,6 +290,7 @@ export const adapters: Adapter[] = [
   synapse,
   synthetix,
   templedao,
+  theIdols,
   theOpenDaoSos,
   thena,
   tokemak,
