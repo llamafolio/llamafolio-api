@@ -108,6 +108,7 @@ import railgun from '@adapters/railgun'
 import redacted from '@adapters/redacted'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
+import rook from '@adapters/rook'
 import scream from '@adapters/scream'
 import setProtocol from '@adapters/set-protocol'
 import sharedstake from '@adapters/sharedstake'
@@ -267,6 +268,7 @@ export const adapters: Adapter[] = [
   redacted,
   ribbonFinance,
   rocketPool,
+  rook,
   scream,
   setProtocol,
   sharedstake,
