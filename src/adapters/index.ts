@@ -114,6 +114,7 @@ import setProtocol from '@adapters/set-protocol'
 import sharedstake from '@adapters/sharedstake'
 import shibaswap from '@adapters/shibaswap'
 import sideshift from '@adapters/sideshift'
+import smardex from '@adapters/smardex'
 import snowbank from '@adapters/snowbank'
 import solidlizard from '@adapters/solidlizard'
 import solidlyV2 from '@adapters/solidly-v2'
@@ -276,6 +277,7 @@ export const adapters: Adapter[] = [
   sharedstake,
   shibaswap,
   sideshift,
+  smardex,
   snowbank,
   solidlizard,
   solidlyV2,
