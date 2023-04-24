@@ -81,6 +81,7 @@ import looksrare from '@adapters/looksrare'
 import lusdChickenbonds from '@adapters/lusd-chickenbonds'
 import lyra from '@adapters/lyra'
 import makerdao from '@adapters/makerdao'
+import mantisswap from '@adapters/mantisswap'
 import maple from '@adapters/maple'
 import mdex from '@adapters/mdex'
 import meritCircle from '@adapters/merit-circle'
@@ -247,6 +248,7 @@ export const adapters: Adapter[] = [
   lusdChickenbonds,
   lyra,
   makerdao,
+  mantisswap,
   maple,
   mdex,
   meritCircle,
