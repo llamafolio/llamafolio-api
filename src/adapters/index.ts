@@ -52,6 +52,7 @@ import gainsNetwork from '@adapters/gains-network'
 import gamma from '@adapters/gamma'
 import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
+import gensokishi from '@adapters/gensokishi'
 import gmx from '@adapters/gmx'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
 import granaryFinance from '@adapters/granary-finance'
@@ -217,6 +218,7 @@ export const adapters: Adapter[] = [
   gamma,
   gearbox,
   geist,
+  gensokishi,
   gmx,
   gnosisProtocolV1,
   granaryFinance,
