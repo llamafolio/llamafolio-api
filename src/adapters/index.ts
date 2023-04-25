@@ -135,6 +135,7 @@ import sturdy from '@adapters/sturdy'
 import sushiswap from '@adapters/sushiswap'
 import synapse from '@adapters/synapse'
 import synthetix from '@adapters/synthetix'
+import tangible from '@adapters/tangible'
 import templedao from '@adapters/templedao'
 import theIdols from '@adapters/the-idols'
 import theOpenDaoSos from '@adapters/the-open-dao-sos'
@@ -302,6 +303,7 @@ export const adapters: Adapter[] = [
   sushiswap,
   synapse,
   synthetix,
+  tangible,
   templedao,
   theIdols,
   theOpenDaoSos,
