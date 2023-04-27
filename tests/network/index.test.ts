@@ -1,3 +1,9 @@
+/**
+ *
+ * WIP
+ *
+ */
+
 import { environment } from '@environment'
 import { describe, expect, it } from 'vitest'
 
@@ -21,12 +27,13 @@ describe('Network', () => {
   })
 })
 routes.forEach(async (route) => {
+  //
   console.log(`calling ${route.method} ${route.path}`)
+  //
   it(`should call ${route.method} ${route.path}`, async () => {
+    //
     const urlPath = generateUrl({ route, testData })
     const url = `${environment.API_URL}${urlPath}`
-    console.log(`calling ${url}`)
-    // const response = await fetch(url)
     const request = () => fetch(url)
     // await expect(request()).resolves.toBeTruthy()
     await expect(request()).resolves.toHaveProperty('status', 200)
