@@ -1,11 +1,13 @@
 import { selectDistinctAdaptersIds } from '@db/adapters'
 import pool from '@db/pool'
 import { deleteAllProtocols, insertProtocols } from '@db/protocols'
-import { STAGE } from '@env'
+import { environment } from '@environment'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { fetchProtocols } from '@lib/protocols'
 import { APIGatewayProxyHandler } from 'aws-lambda'
+
+const { STAGE } = environment
 
 const updateProtocols: APIGatewayProxyHandler = async () => {
   await invokeLambda(`llamafolio-api-${STAGE}-updateProtocols`, {}, 'Event')

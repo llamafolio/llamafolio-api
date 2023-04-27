@@ -154,7 +154,12 @@
       "address": "0x59f91AA50DfB3e4aC6d3580e5A2fC22A7C24f505",
       "provider": "uniswap3"
     },
-    { "name": "StakeDAO sdFRAX3CRV-f", "address": "0xEB81b86248d3C2b618CcB071ADB122109DA96Da2", "provider": "curve", "curvePool" : "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B" },
+    {
+      "name": "StakeDAO sdFRAX3CRV-f",
+      "address": "0xEB81b86248d3C2b618CcB071ADB122109DA96Da2",
+      "provider": "curve",
+      "curvePool": "0xd632f22692FaC7611d2AA1C0D552930D43CAEd3B"
+    },
     { "name": "Sushi FRAX/SUSHI", "address": "0xb4Ab0dE6581FBD3A02cF8f9f265138691c3A7d5D", "provider": "uniswap" },
     { "name": "Temple FRAX/TEMPLE", "address": "0x10460d02226d6ef7B2419aE150E6377BdbB7Ef16", "provider": "uniswap" },
     {
@@ -163,12 +168,21 @@
       "provider": "uniswap"
     },
     { "name": "Uniswap FEI/TRIBE", "address": "0x9928e4046d7c6513326cCeA028cD3e7a91c7590A", "provider": "uniswap" },
-    { "name": "Uniswap FRAX/FXS", "address": "0xda2c338350a0E59Ce71CDCED9679A3A590Dd9BEC", "provider": "uniswapBoosted" },
+    {
+      "name": "Uniswap FRAX/FXS",
+      "address": "0xda2c338350a0E59Ce71CDCED9679A3A590Dd9BEC",
+      "provider": "uniswapBoosted"
+    },
     { "name": "Uniswap FRAX/IQ", "address": "0xF37057823910653a554d996B49E3399DC87fAE1b", "provider": "uniswap3" },
     { "name": "Uniswap FRAX/IQ_OLD", "address": "0x35fc5Fd90e06c47c0D9dEBfEDB1daF55bCE14E6d", "provider": "uniswap3" },
     { "name": "Uniswap FRAX/OHM", "address": "0xfC77A420f56Dec53e3b91D7FC936902e132335FF", "provider": "uniswap3" },
     { "name": "Uniswap FRAX/USDC", "address": "0xa29367a3f057F3191b62bd4055845a33411892b6", "provider": "uniswap3" },
-    { "name": "Uniswap FRAX/USDC", "address": "0x3ef26504dbc8dd7b7aa3e97bc9f3813a9fc0b4b0", "provider": "uniswapNFT", "uniPoolAddress" : "0xc63B0708E2F7e69CB8A1df0e1389A98C35A76D52" },
+    {
+      "name": "Uniswap FRAX/USDC",
+      "address": "0x3ef26504dbc8dd7b7aa3e97bc9f3813a9fc0b4b0",
+      "provider": "uniswapNFT",
+      "uniPoolAddress": "0xc63B0708E2F7e69CB8A1df0e1389A98C35A76D52"
+    },
     { "name": "Uniswap FRAX/WETH", "address": "0xD875628B942f8970De3CcEaf6417005F68540d4f", "provider": "uniswap" },
     { "name": "Uniswap FXS/WETH", "address": "0xDc65f3514725206Dd83A8843AAE2aC3D99771C88", "provider": "uniswap" },
     { "name": "Uniswap V3 FRAX/DAI", "address": "0xF22471AC2156B489CC4a59092c56713F813ff53e", "provider": "uniswap3" },

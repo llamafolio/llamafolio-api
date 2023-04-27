@@ -1,4 +1,5 @@
-import '../env'
+import environment from '@environment'
+const _env = environment
 
 import { chains as tokensByChain } from '@llamafolio/tokens'
 import { BigNumber } from 'ethers'

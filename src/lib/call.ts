@@ -13,12 +13,12 @@ export interface CallOptions {
 }
 
 export async function call(options: CallOptions) {
-  const res = await batchCallers[options.ctx.chain]!.call({
+  const res = (await batchCallers[options.ctx.chain]!.call({
     ...options,
     calls: [{ target: options.target, params: options.params }],
     chain: options.ctx.chain,
     block: options.ctx.blockHeight,
-  })
+  })) as any
 
   return res.output[0]
 }

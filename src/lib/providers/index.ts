@@ -1,9 +1,11 @@
 import { setProvider } from '@defillama/sdk/build/general'
-import { CUSTOM_PROVIDER } from '@env'
+import environment from '@environment'
 import { Chain, chains } from '@lib/chains'
 import { ethers } from 'ethers'
 
 import { createProvider } from './provider'
+
+const { CUSTOM_PROVIDER } = environment
 
 if (CUSTOM_PROVIDER) {
   console.log('Custom provider', CUSTOM_PROVIDER)

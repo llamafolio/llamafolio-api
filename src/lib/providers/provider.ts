@@ -1,4 +1,4 @@
-import { CUSTOM_PROVIDER } from '@env'
+import environment from '@environment'
 import { IChainInfo } from '@lib/chains'
 import { ethers } from 'ethers'
 
@@ -7,6 +7,8 @@ import { RetryProvider } from './retry-provider'
 import { WebSocketFailoverProvider } from './websocket-failover-provider'
 
 export type CustomProvider = 'http-fallback-retry' | 'http-failover' | 'ws-failover'
+
+const { CUSTOM_PROVIDER } = environment
 
 export function createJsonRpcProvider(chain: IChainInfo) {
   if (CUSTOM_PROVIDER === 'http-fallback-retry') {

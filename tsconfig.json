@@ -1,36 +1,28 @@
 {
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs"
-    },
-    "require": ["tsconfig-paths/register"]
-  },
   "compilerOptions": {
-    "target": "es2019",
+    "target": "ESNext",
     "skipLibCheck": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noEmit": false,
     "jsx": "preserve",
-    "allowJs": true,
+    "allowJs": false,
     "noImplicitThis": false,
     "noUnusedLocals": false,
+    "types": ["node", "bun-types"],
     "noUnusedParameters": true,
-    "lib": ["ES2019"],
+    "lib": ["ESNext"],
     "baseUrl": ".",
     "paths": {
-      "@adapters/*": ["./src/adapters/*"],
-      "@db/*": ["./src/db/*"],
-      "@env": ["./env"],
-      "@handlers/*": ["./src/handlers/*"],
-      "@lib/*": ["./src/lib/*"]
+      "@*": ["./src/*"],
+      "@environment": ["./environment.ts"]
     }
   },
-  "include": ["src"],
-  "exclude": ["src/setupTestEnv.js"]
+  "include": ["src", "scripts", "tests", "environment.ts", "bench"],
+  "exclude": [".esbuild", "node_modules", "./env.js"]
 }

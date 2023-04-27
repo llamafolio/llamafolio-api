@@ -62,7 +62,7 @@ export class RetryProvider extends ethers.providers.BaseProvider {
         (result) => {
           return result
         },
-        (error) => {
+        (_error) => {
           return undefined
         },
       )
