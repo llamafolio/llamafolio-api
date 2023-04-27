@@ -164,7 +164,14 @@ export async function getChainContractsInteractions(
  * @param address
  */
 export async function getAllTokensInteractions(client: PoolClient, address: string) {
-  const res = await client.query('select * from all_token_received($1);', [address])
+  const res = await client.query(
+    `
+    select distinct on (c.chain, c.address) c.* from erc20_transfers t
+    inner join adapters_contracts c on t.chain = c.chain and t.token = c.address
+    where to_address = $1;
+    `,
+    [address],
+  )
 
   return fromStorage(res.rows)
 }
