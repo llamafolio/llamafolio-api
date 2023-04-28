@@ -23,7 +23,6 @@
     "update-yields": "esno scripts/update-yields.ts",
     "update-protocols": "esno scripts/update-protocols.ts",
     "lint": "eslint --fix . --ext js,cjs,mjs,ts,d.ts,json --cache",
-    "lint:check": "eslint . --ext js,cjs,mjs,ts,d.ts,json --cache",
     "format": "prettier --write --ignore-path='./.eslintignore' '**/*.{md,json,js,ts}' --ignore-unknown --cache",
     "typecheck": "tsc --noEmit --skipLibCheck",
     "dev-test": "sls offline --httpPort 3034",
