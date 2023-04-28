@@ -37,7 +37,7 @@ env:
 
 jobs:
   endpoints-cron-test:
-    name: 'Lint, Typecheck, Build, Test'
+    name: 'Lint, Build, Test'
     runs-on: [ubuntu-latest]
     permissions: write-all
     steps:
@@ -79,6 +79,10 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
           AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_OUTPUT: json
         run: |
           pnpm test:ci
 
