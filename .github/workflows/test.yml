@@ -70,8 +70,7 @@ jobs:
       - name: 'Comment Results to Iusse'
         uses: peter-evans/create-or-update-comment@v2
         with:
-          issue-number: 1
-          # the json report file is at ./test/reports/report.json
+          issue-number: 521
           body: |
             Test Results from ${{ github.sha }}:
 
