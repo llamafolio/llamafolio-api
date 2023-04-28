@@ -18,8 +18,8 @@ export default defineConfig({
       reporter: ['json'],
       reportsDirectory: './test/coverage',
     },
-    reporters: ['json'],
-    outputFile: './test/reports/report.json',
+    // reporters: ['json'],
+    // outputFile: './test/reports/report.json',
     env: {
       NODE_ENV: 'test',
       API_URL: 'http://localhost:3034',
