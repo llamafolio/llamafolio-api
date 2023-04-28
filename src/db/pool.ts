@@ -9,7 +9,6 @@ const pool = new Pool({
   min: 0,
   idleTimeoutMillis: 120000,
   connectionTimeoutMillis: 10000,
-  ssl: { rejectUnauthorized: false },
 })
 
 export default pool
