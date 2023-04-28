@@ -1,14 +1,8 @@
-/**
- *
- * WIP
- *
- */
-
-import { getApiURL } from 'test/network/config/api-url'
 import { describe, expect, it } from 'vitest'
 
+import { generateTestableRoute, getRoutes, testData } from './config'
+import { getApiURL } from './config/api-url'
 import { routes as expectedRoutes } from './fixtures/routes'
-import { generateTestableRoute, getRoutes, testData } from './network/config'
 
 /**
  * Routes to not test: /holders, /history
@@ -60,7 +54,7 @@ routes.forEach(async (route) => {
         const request = () => fetch(testableURL)
         await expect(request()).resolves.toHaveProperty('status', 200)
         await expect(request()).resolves.toHaveProperty('body')
-        await expect(request()).resolves.toHaveProperty('body', expect.anything())
+        /* will be updated to actually check for valid JSON */
         await expect(request()).resolves.toHaveProperty('body', expect.anything())
         await expect(request()).resolves.toHaveProperty('body', expect.not.stringContaining('error'))
       }

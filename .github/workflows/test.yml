@@ -14,7 +14,7 @@ on:
       test-timeout:
         description: 'Test timeout in ms'
         required: false
-        default: '10000'
+        default: '11000'
   push:
 
 defaults:
@@ -87,7 +87,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
-          TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout }}
+          TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 11000 }}
         run: |
           pnpm test:ci
             
