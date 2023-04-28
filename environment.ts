@@ -3,14 +3,19 @@ import 'dotenv/config'
 import { z } from 'zod'
 
 export const environmentSchema = z.object({
-  STAGE: z.string().optional(),
+  NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]),
+  STAGE: z.union([
+    z.union([z.literal('development'), z.literal('dev')]),
+    z.union([z.literal('production'), z.literal('prod')]),
+    z.literal('local'),
+  ]),
   DDB_TABLE_NAME: z.string().optional(),
   PGHOST: z.string(),
   PGUSER: z.string(),
   PGDATABASE: z.string(),
   PGPASSWORD: z.string(),
-  PGPORT: z.number().or(z.string()),
-  REDIS_PORT: z.number().or(z.string()),
+  PGPORT: z.string(),
+  REDIS_PORT: z.string(),
   REDIS_HOST: z.string(),
   REDIS_PASSWORD: z.string(),
   INDEXER_ADMIN_TOKEN: z.string(),
@@ -18,8 +23,8 @@ export const environmentSchema = z.object({
   LLAMANODES_API_KEY: z.string(),
   ARBITRUM_RPC: z.string(),
   OPTIMISM_RPC: z.string(),
-  IS_OFFLINE: z.literal('true').optional(),
-  API_URL: z.string(),
+  IS_OFFLINE: z.literal('true').or(z.literal('false')).optional(),
+  API_URL: z.string().optional(),
 })
 
 export type Environment = z.infer<typeof environmentSchema>

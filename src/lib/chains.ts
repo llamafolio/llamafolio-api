@@ -1,5 +1,8 @@
-import { LLAMANODES_API_KEY } from '../../env'
+import environment from '@environment'
+
 import { isNotNullish } from './type'
+
+const { LLAMANODES_API_KEY } = environment
 
 export declare type Chain =
   | 'ethereum'

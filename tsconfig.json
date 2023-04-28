@@ -23,6 +23,6 @@
       "@environment": ["./environment.ts"]
     }
   },
-  "include": ["src", "scripts", "tests", "environment.ts", "bench"],
+  "include": ["src", "scripts", "test", "environment.ts", "bench"],
   "exclude": [".esbuild", "node_modules", "./env.js"]
 }

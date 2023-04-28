@@ -1,5 +1,15 @@
 # Llamafolio API
 
+## Prerequisites
+
+- [pnpm v8+](https://pnpm.io/installation)
+
+```sh
+npm install --global pnpm
+# if already installed, update to latest
+pnpm add --global pnpm@latest
+```
+
 ## Adapters
 
 An adapter specifies how to resolve the balances of an address for your protocol.
@@ -11,7 +21,7 @@ To learn more about adapters, check our [docs](https://docs.llamafolio.com).
 To test your adapter, run the command below which will output most details an adapter can find
 
 ```bash
-npm run adapter curve ethereum 0x0000000000000000000000000000000000000000
+pnpm run adapter curve ethereum 0x0000000000000000000000000000000000000000
 ```
 
 ## API
@@ -23,7 +33,7 @@ Start by [setting up your environment](./docs/setup.md).
 You can run the API locally using:
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 ## Contributing and listing your protocol

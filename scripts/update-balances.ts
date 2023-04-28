@@ -31,7 +31,7 @@ interface ExtendedBalancesConfig extends BalancesConfig {
 }
 
 function help() {
-  console.log('npm run update-balances {address}')
+  console.log('pnpm update-balances {address}')
 }
 
 async function main() {

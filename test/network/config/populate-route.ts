@@ -1,9 +1,9 @@
-import { RouteResponse } from './fetch-endpoints'
-import type { TestData } from './test-data'
+import type { TestData } from '../../fixtures/test-data'
+import type { Route } from './types'
 
 // based on on the route, this function generates a valid path with params
 
-export function generateUrl({ route, testData }: { route: RouteResponse; testData: TestData }): string {
+export function generateTestableRoute({ route, testData }: { route: Route; testData: TestData }): string {
   const { path, pathParams, queryParams } = route
   let url = path
   pathParams.forEach((param) => {

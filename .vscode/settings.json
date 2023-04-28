@@ -1,8 +1,12 @@
 {
+  "eslint.enable": true,
   "editor.formatOnSave": false,
+  "npm.packageManager": "pnpm",
+  "eslint.packageManager": "pnpm",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.preferences.importModuleSpecifier": "non-relative"
 }

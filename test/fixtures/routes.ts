@@ -1,0 +1,92 @@
+export const routes = [
+  {
+    method: 'GET',
+    path: '/adapters',
+    pathParams: [],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
+    path: '/categories',
+    pathParams: [],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
+    path: '/contracts/{address}',
+    pathParams: ['address'],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
+    path: '/protocols',
+    pathParams: [],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
+    path: '/gas_price/{chain}/chart',
+    pathParams: ['chain'],
+    queryParams: [],
+  },
+  // {
+  //   method: 'GET',
+  //   path: '/history/{address}',
+  //   pathParams: ['address'],
+  //   queryParams: [],
+  // },
+  {
+    method: 'GET',
+    path: '/tokens/{address}',
+    pathParams: ['address'],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
+    path: '/info/stats',
+    pathParams: [],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
+    path: '/balances/{address}/tokens',
+    pathParams: ['address'],
+    queryParams: [],
+  },
+  // {
+  //   method: 'GET',
+  //   path: '/holders/{address}',
+  //   pathParams: ['address'],
+  //   queryParams: [],
+  // },
+  {
+    method: 'GET',
+    path: '/sync_status',
+    pathParams: [],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
+    path: '/balances/{address}',
+    pathParams: ['address'],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
+    path: '/labels/{address}',
+    pathParams: ['address'],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
+    path: '/protocols/latest',
+    pathParams: [],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
+    path: '/snapshots/{address}/latest',
+    pathParams: ['address'],
+    queryParams: [],
+  },
+]

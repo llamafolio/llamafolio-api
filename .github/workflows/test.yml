@@ -1,4 +1,4 @@
-name: 'Test API Endpoints'
+name: 'Test API'
 
 # Runs:
 # - daily at 00:00 UTC
@@ -22,7 +22,7 @@ env:
 
 jobs:
   endpoints-cron-test:
-    name: 'Test API Endpoints'
+    name: 'Lint, Typecheck, Build, Test'
     runs-on: [ubuntu-latest]
     steps:
       - name: 'Checkout'
@@ -60,4 +60,23 @@ jobs:
 
       - name: 'Test'
         run: |
-          echo "WIP: pnpm test"
+          pnpm test
+
+      - name: 'Get Test Report'
+        id: test-report
+        run: |
+          echo report=$(cat ./test/reports/report.json) >> $GITHUB_OUTPUT"
+
+      - name: 'Comment Results to Iusse'
+        uses: peter-evans/create-or-update-comment@v2
+        with:
+          issue-number: 1
+          # the json report file is at ./test/reports/report.json
+          body: |
+            Test Results from ${{ github.sha }}:
+
+            \`\`\`json
+            ${{ steps.test-report.outputs.report }}
+            \`\`\`
+
+            

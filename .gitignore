@@ -49,3 +49,7 @@ tests/local
 .env.production
 .env.development
 bun.lockb
+
+test/coverage/*
+test/reports
+test/fixtures/*.json
