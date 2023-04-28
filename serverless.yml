@@ -9,7 +9,7 @@ frameworkVersion: '3'
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs18.x
   stage: dev
   region: eu-central-1
   tracing:
