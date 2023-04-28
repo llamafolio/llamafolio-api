@@ -1,3 +1,6 @@
+// Get balances of all ERC20 tokens owned by an address.
+// Uses the "wallet" adapter internally to narrow down the list of contracts to llamafolio-tokens ("allow list")
+
 import walletAdapter from '@adapters/wallet'
 import { getAllTokensInteractions, groupContracts } from '@db/contracts'
 import pool from '@db/pool'
