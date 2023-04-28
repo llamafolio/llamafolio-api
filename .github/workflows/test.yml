@@ -17,8 +17,23 @@ defaults:
     shell: bash
 
 env:
-  CI: true
   ACTIONS_RUNNER_DEBUG: true
+  NODE_ENV: 'test'
+  STAGE: 'dev'
+  SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+  INDEXER_ADMIN_TOKEN: ${{ secrets.INDEXER_ADMIN_TOKEN }}
+  PGHOST: ${{ secrets.PGHOST }}
+  PGUSER: ${{ secrets.PGUSER }}
+  PGDATABASE: ${{ secrets.PGDATABASE }}
+  PGPASSWORD: ${{ secrets.PGPASSWORD }}
+  PGPORT: ${{ secrets.PGPORT }}
+  REDIS_PORT: ${{ secrets.REDIS_PORT }}
+  REDIS_HOST: ${{ secrets.REDIS_HOST }}
+  REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
+  CUSTOM_PROVIDER: ${{ secrets.CUSTOM_PROVIDER }}
+  LLAMANODES_API_KEY: ${{ secrets.LLAMANODES_API_KEY }}
+  ARBITRUM_RPC: ${{ secrets.ARBITRUM_RPC }}
+  OPTIMISM_RPC: ${{ secrets.OPTIMISM_RPC }}
 
 jobs:
   endpoints-cron-test:
