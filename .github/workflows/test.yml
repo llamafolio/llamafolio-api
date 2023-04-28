@@ -17,23 +17,23 @@ defaults:
     shell: bash
 
 env:
-  ACTIONS_RUNNER_DEBUG: true
-  NODE_ENV: 'test'
   STAGE: 'dev'
-  SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-  INDEXER_ADMIN_TOKEN: ${{ secrets.INDEXER_ADMIN_TOKEN }}
+  NODE_ENV: 'test'
+  ACTIONS_RUNNER_DEBUG: true
   PGHOST: ${{ secrets.PGHOST }}
   PGUSER: ${{ secrets.PGUSER }}
+  PGPORT: ${{ secrets.PGPORT }}
   PGDATABASE: ${{ secrets.PGDATABASE }}
   PGPASSWORD: ${{ secrets.PGPASSWORD }}
-  PGPORT: ${{ secrets.PGPORT }}
   REDIS_PORT: ${{ secrets.REDIS_PORT }}
   REDIS_HOST: ${{ secrets.REDIS_HOST }}
+  ARBITRUM_RPC: ${{ secrets.ARBITRUM_RPC }}
+  OPTIMISM_RPC: ${{ secrets.OPTIMISM_RPC }}
   REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
   CUSTOM_PROVIDER: ${{ secrets.CUSTOM_PROVIDER }}
   LLAMANODES_API_KEY: ${{ secrets.LLAMANODES_API_KEY }}
-  ARBITRUM_RPC: ${{ secrets.ARBITRUM_RPC }}
-  OPTIMISM_RPC: ${{ secrets.OPTIMISM_RPC }}
+  INDEXER_ADMIN_TOKEN: ${{ secrets.INDEXER_ADMIN_TOKEN }}
+  SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
 
 jobs:
   endpoints-cron-test:

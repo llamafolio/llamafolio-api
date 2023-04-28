@@ -27,7 +27,7 @@ const getFilteredRoutes = async () => {
   return allRoutes.filter((route) => !SKIP_ROUTES.includes(route.path))
 }
 
-describe.only('Network', () => {
+describe('Network', () => {
   it('should have routes', async () => {
     const routes = () => getFilteredRoutes()
     expect(routes()).resolves.toBeDefined()
@@ -55,7 +55,7 @@ routes.forEach(async (route) => {
     async () => {
       //
       if (route.pathParams.length === 0 || route.queryParams.length === 0) {
-        const url = getApiURL('local')
+        const url = getApiURL(process.env.STAGE)
         const testableURL = `${url}${generateTestableRoute({ route, testData })}`
         const request = () => fetch(testableURL)
         await expect(request()).resolves.toHaveProperty('status', 200)
