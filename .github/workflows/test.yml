@@ -18,6 +18,8 @@ defaults:
 
 env:
   ACTIONS_RUNNER_DEBUG: true
+  NODE_ENV: 'test'
+  STAGE: 'dev'
   SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
   INDEXER_ADMIN_TOKEN: ${{ secrets.INDEXER_ADMIN_TOKEN }}
   PGHOST: ${{ secrets.PGHOST }}
@@ -37,6 +39,7 @@ jobs:
   endpoints-cron-test:
     name: 'Lint, Typecheck, Build, Test'
     runs-on: [ubuntu-latest]
+    permissions: write-all
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
@@ -73,8 +76,6 @@ jobs:
 
       - name: 'Test'
         env:
-          NODE_ENV: 'test'
-          STAGE: 'dev'
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
           AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}
