@@ -1,31 +1,28 @@
-import { APIGatewayProxyHandler } from 'aws-lambda'
-import aws from 'aws-sdk'
+import { InvokeCommand, LambdaClient, LogType } from '@aws-sdk/client-lambda'
 
 type InvocationType = 'RequestResponse' | 'Event' | 'DryRun'
 
-export function invokeLambda(functionName: string, event: any, invocationType?: InvocationType) {
+export async function invokeLambda(functionName: string, event: any, invocationType?: InvocationType) {
   if (process.env.IS_OFFLINE) {
     return
   }
 
-  return new Promise((resolve) => {
-    new aws.Lambda({
-      endpoint: process.env.IS_OFFLINE ? 'http://localhost:3002' : undefined,
-    }).invoke(
-      {
-        FunctionName: functionName,
-        InvocationType: invocationType || 'Event',
-        Payload: JSON.stringify(event, null, 2), // pass params
-      },
-      function (error, data) {
-        console.log(error, data)
-        resolve(data)
-      },
-    )
+  const client = new LambdaClient({ region: 'eu-central-1' })
+  const command = new InvokeCommand({
+    FunctionName: functionName,
+    Payload: Buffer.from(JSON.stringify(event)),
+    InvocationType: invocationType,
+    LogType: LogType.Tail,
   })
+
+  const { Payload, LogResult } = await client.send(command)
+  const result = Buffer.from(Payload || '').toString()
+  const logs = Buffer.from(LogResult || '', 'base64').toString()
+
+  return { logs, result }
 }
 
-export function wrapScheduledLambda(lambdaFunc: APIGatewayProxyHandler): APIGatewayProxyHandler {
+export function wrapScheduledLambda(lambdaFunc: any): any {
   if (process.env.stage !== 'prod') {
     return () => {
       console.log('This lambda is getting ignored, stage is not prod')

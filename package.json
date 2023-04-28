@@ -11,7 +11,6 @@
     "deploy:prod": "pnpm build && sls deploy --stage prod",
     "create-adapter": "esno scripts/create-adapter.ts",
     "delete-adapter": "esno scripts/delete-adapter.ts",
-    "invalidate-protocols": "esno scripts/invalidate-protocols.ts",
     "provider-bench": "esno scripts/provider-bench.ts",
     "adapter-balances": "esno scripts/run-adapter-balances.ts",
     "update-balances": "esno scripts/update-balances.ts",
@@ -39,9 +38,9 @@
   "keywords": [],
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@aws-sdk/client-lambda": "^3.322.0",
     "@defillama/sdk": "^3.0.8",
     "@llamafolio/tokens": "github:llamafolio/llamafolio-tokens",
-    "aws-sdk": "^2.1189.0",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.9",
     "graphql": "^16.6.0",
@@ -55,9 +54,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.101",
     "@types/eslint": "^8.37.0",
-    "@types/jest": "^28.1.6",
     "@types/js-yaml": "^4.0.5",
     "@types/node": "^18.16.1",
     "@types/pg": "^8.6.5",
