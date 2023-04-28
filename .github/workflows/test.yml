@@ -39,7 +39,6 @@ jobs:
   endpoints-cron-test:
     name: 'Lint, Build, Test'
     runs-on: [ubuntu-latest]
-    permissions: write-all
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
@@ -85,21 +84,4 @@ jobs:
           AWS_DEFAULT_OUTPUT: json
         run: |
           pnpm test:ci
-
-      # - name: 'Get Test Report'
-      #   id: test-report
-      #   run: |
-      #     echo report=$(cat ./test/reports/report.json) >> $GITHUB_OUTPUT"
-
-      # - name: 'Comment Results to Iusse'
-      #   uses: peter-evans/create-or-update-comment@v2
-      #   with:
-      #     issue-number: 521
-      #     body: |
-      #       Test Results from ${{ github.sha }}:
-
-      #       \`\`\`json
-      #       ${{ steps.test-report.outputs.report }}
-      #       \`\`\`
-
             
