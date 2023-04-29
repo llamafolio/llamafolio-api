@@ -4,7 +4,6 @@ import environment from '@environment'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { APIGatewayProxyHandler } from 'aws-lambda'
-import fetch from 'node-fetch'
 
 export interface YieldOld {
   chain: string

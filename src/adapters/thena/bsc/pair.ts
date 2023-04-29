@@ -1,5 +1,4 @@
 import { BaseContext, Contract } from '@lib/adapter'
-import fetch from 'node-fetch'
 
 export interface PairsResponse {
   success: boolean

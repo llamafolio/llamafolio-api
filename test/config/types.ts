@@ -1,7 +1,7 @@
 import { possibleParameters, possibleQueryParameters } from './constants'
 
-export type PossibleParameter = typeof possibleParameters[number]
-export type PossibleQueryParameter = typeof possibleQueryParameters[number]
+export type PossibleParameter = (typeof possibleParameters)[number]
+export type PossibleQueryParameter = (typeof possibleQueryParameters)[number]
 
 export interface ApiGatewayRoute {
   ApiKeyRequired: boolean

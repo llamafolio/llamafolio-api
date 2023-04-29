@@ -5,7 +5,6 @@ import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
-import fetch from 'node-fetch'
 
 const abi = {
   claimable_reward: {

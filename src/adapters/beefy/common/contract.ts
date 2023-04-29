@@ -1,5 +1,4 @@
 import { BaseContext, Contract } from '@lib/adapter'
-import fetch from 'node-fetch'
 
 export async function getBeefyContracts(ctx: BaseContext): Promise<Contract[]> {
   const contracts: Contract[] = []

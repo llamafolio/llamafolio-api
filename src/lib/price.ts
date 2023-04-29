@@ -2,7 +2,6 @@ import { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { BN_ZERO, mulPrice, sum } from '@lib/math'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import fetch from 'node-fetch'
 
 // Defillama prices API requires a prefix to know where the token comes from.
 // It can be a chain or a market provider like coingecko

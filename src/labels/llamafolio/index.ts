@@ -1,5 +1,3 @@
-import fetch from 'node-fetch'
-
 export interface LlamaLabel {
   labels?: string[]
   links?: { [key: string]: string }

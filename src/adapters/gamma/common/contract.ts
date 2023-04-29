@@ -1,5 +1,4 @@
 import { BaseContext, Contract } from '@lib/adapter'
-import fetch from 'node-fetch'
 
 export async function getPoolContractsFromAPI(ctx: BaseContext, API_URLs: string[]): Promise<Contract[]> {
   const contracts: Contract[] = []
