@@ -45,6 +45,9 @@ dependencies:
     version: 3.21.4
 
 devDependencies:
+  '@types/aws-lambda':
+    specifier: ^8.10.114
+    version: 8.10.114
   '@types/eslint':
     specifier: ^8.37.0
     version: 8.37.0
@@ -2100,6 +2103,10 @@ packages:
 
   /@tokenizer/token@0.3.0:
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
+    dev: true
+
+  /@types/aws-lambda@8.10.114:
+    resolution: {integrity: sha512-M8WpEGfC9iQ6V2Ccq6nGIXoQgeVc6z0Ngk8yCOL5V/TYIxshvb0MWQYLFFTZDesL0zmsoBc4OBjG9DB/4rei6w==}
     dev: true
 
   /@types/cacheable-request@6.0.3:

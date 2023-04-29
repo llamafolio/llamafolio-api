@@ -53,6 +53,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.114",
     "@types/eslint": "^8.37.0",
     "@types/node": "^18.16.1",
     "@types/pg": "^8.6.5",
