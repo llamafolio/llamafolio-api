@@ -48,6 +48,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.114",
     "@types/jest": "^28.1.6",
     "@types/node-fetch": "^2.6.2",
     "@types/pg": "^8.6.5",
