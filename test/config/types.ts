@@ -1,4 +1,4 @@
-import { possibleParameters, possibleQueryParameters } from 'test/config/config/constants'
+import { possibleParameters, possibleQueryParameters } from './constants'
 
 export type PossibleParameter = typeof possibleParameters[number]
 export type PossibleQueryParameter = typeof possibleQueryParameters[number]

@@ -1,5 +1,6 @@
 import { AwsGatewayApiId, AwsStage } from './constants'
 
+// TODO: should probably move this to `src/config
 export const getApiGatewayURL = (awsStage: AwsStage = 'dev') =>
   `https://${AwsGatewayApiId[awsStage]}.execute-api.${process.env.AWS_REGION}.amazonaws.com`
 

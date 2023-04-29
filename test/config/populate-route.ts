@@ -1,4 +1,4 @@
-import type { TestData } from '../../fixtures/test-data'
+import type { TestData } from '../fixtures/test-data'
 import type { Route } from './types'
 
 // based on on the route, this function generates a valid path with params

@@ -1,13 +1,13 @@
 import childProcess from 'node:child_process'
-import fs from 'node:fs/promises'
+import fs from 'node:fs'
 
 import { getApiURL } from './api-url'
 import { AwsStage } from './constants'
 import type { ApiGatewayRoutes, Route } from './types'
 
-export async function getRoutes({ stage }: { stage: AwsStage | 'local' }): Promise<Array<Route>> {
+export function getRoutes({ stage }: { stage: AwsStage | 'local' }): Array<Route> {
   const apiURL = getApiURL(stage)
-  return stage === 'local' ? await getLocalRoutes(apiURL) : await getGatewayRoutes()
+  return stage === 'local' ? getLocalRoutes(apiURL) : getGatewayRoutes()
 }
 
 /**
@@ -16,13 +16,14 @@ export async function getRoutes({ stage }: { stage: AwsStage | 'local' }): Promi
  * parse the json file and return a list of objects,
  * object: method, path, pathParams, queryParams
  */
-export async function getGatewayRoutes(): Promise<Array<Route>> {
+export function getGatewayRoutes(): Array<Route> {
   const command = childProcess.spawnSync('aws', [
     'apigatewayv2',
     'get-routes',
     '--api-id',
     process.env.AWS_GATEWAY_API_ID_DEV,
   ])
+  if (command.stderr.toString()) throw new Error('Getting routes from `aws apigatewayv2 get-routes` failed')
   const data = JSON.parse(command.stdout.toString()) as ApiGatewayRoutes
   const routes = data.Items.map((route) => {
     const method = route.RouteKey.split(' ')[0]
@@ -36,15 +37,17 @@ export async function getGatewayRoutes(): Promise<Array<Route>> {
       queryParams,
     }
   }) as Array<Route>
-  await fs.writeFile('test/fixtures/apigateway-routes.json', JSON.stringify(routes, undefined, 2))
+  fs.writeFileSync('test/fixtures/apigateway-routes.json', JSON.stringify(routes, undefined, 2))
   return routes
 }
 
 // we will parse the 'existingRoutes' and return a list of objects,
 // object: method, path, pathParams, queryParams
-async function getLocalRoutes(url = process.env.API_URL): Promise<Array<Route>> {
+function getLocalRoutes(url = process.env.API_URL): Array<Route> {
+  if (!url) throw new Error('API_URL is not defined')
   // curl --silent --location --request GET 'http://localhost:3034'
-  const command = childProcess.spawnSync('curl', ['--silent', '--location', '--request', 'GET', url as string])
+  const command = childProcess.spawnSync('curl', ['--silent', '--location', '--request', 'GET', url])
+  if (command.stderr.toString()) throw new Error('Getting routes from `curl` failed')
   const data = JSON.parse(command.stdout.toString()) as {
     currentRoute: string
     error: string

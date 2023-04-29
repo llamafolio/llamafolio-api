@@ -1,5 +1,6 @@
 {
   "eslint.enable": true,
+  "eslint.format.enable": true,
   "editor.formatOnSave": false,
   "npm.packageManager": "pnpm",
   "eslint.packageManager": "pnpm",

@@ -3,11 +3,24 @@
 ## Prerequisites
 
 - [pnpm v8+](https://pnpm.io/installation)
+- [Node.js LTS (v18+)](https://nodejs.org/en/download/)
+- `.env`: Create a `.env` from `.env.example` and fill in the values
 
 ```sh
 npm install --global pnpm
 # if already installed, update to latest
 pnpm add --global pnpm@latest
+```
+
+- To run any TypeScript file, you can use [`tsx`](https://github.com/esbuild-kit/tsx) (TypeScript Execute):
+
+```sh
+# Any of these should work
+pnpx tsx path/to/file.ts
+pnpm tsx path/to/file.ts
+pnpm dlx tsx path/to/file.ts
+npx tsx path/to/file.ts
+node_modules/.bin/tsx path/to/file.ts
 ```
 
 ## Adapters

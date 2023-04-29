@@ -1,8 +1,9 @@
 import { describe, expect, it } from 'vitest'
 
-import { generateTestableRoute, getRoutes, testData } from './config'
+import { generateTestableRoute, getRoutes } from './config'
 import { getApiURL } from './config/api-url'
 import { routes as expectedRoutes } from './fixtures/routes'
+import { testData } from './fixtures/test-data'
 
 /**
  * Routes to not test: /holders, /history
@@ -34,9 +35,7 @@ describe('Network', () => {
  * The test calls every endpoint/route in the network and checks:
  * - the response status code is 200
  * - the response body is not empty
- * - the response body is valid JSON
- * - the response body is not an error
- * - the response body is not a redirect
+ * - TODO: the response body is valid JSON
  */
 
 const routes = await getFilteredRoutes()
@@ -51,6 +50,7 @@ routes.forEach(async (route) => {
       if (route.pathParams.length === 0 || route.queryParams.length === 0) {
         const url = getApiURL(process.env.STAGE)
         const testableURL = `${url}${generateTestableRoute({ route, testData })}`
+        console.log(`calling ${testableURL}`)
         const request = () => fetch(testableURL)
         await expect(request()).resolves.toHaveProperty('status', 200)
         await expect(request()).resolves.toHaveProperty('body')

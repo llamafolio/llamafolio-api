@@ -13,13 +13,15 @@
     "jsx": "preserve",
     "allowJs": false,
     "noImplicitThis": false,
+    "noErrorTruncation": true,
     "noUnusedLocals": false,
-    "types": ["node", "bun-types"],
+    "types": ["node"],
     "noUnusedParameters": true,
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM"],
     "baseUrl": ".",
     "paths": {
       "@*": ["./src/*"],
+      "@env": ["./env.js"],
       "@environment": ["./environment.ts"]
     }
   },
