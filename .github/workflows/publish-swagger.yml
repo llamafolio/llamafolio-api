@@ -1,0 +1,53 @@
+name: 'Update Swagger & Publish'
+
+# Grab up to date swagger JSON from AWS API Gateway
+# Update Swagger UI static S3 bucket website with new JSON
+
+on:
+  schedule:
+    # run every day at 12:00 UTC
+    - cron: '0 12 * * *'
+  workflow_dispatch:
+  push:
+    branches: [master]
+
+defaults:
+  run:
+    working-directory: ./docs/swagger
+    shell: bash
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+    
+      - name: 'Pull Latest Swagger'
+        env:
+          AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
+        run: |
+          aws apigatewayv2 \
+            export-api \
+            --api-id=$AWS_GATEWAY_API_ID_DEV \
+            --output-type='JSON' \
+            --specification='OAS30' \
+            'swagger.json'
+
+      - name: 'curl Swagger UI index.html'
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_SWAGGER_URL }}
+          INDEX_HTML_URL: 'https://gist.githubusercontent.com/o-az/36b94d57a8df23421f229a15b5ae7a10/raw/77000aac04a068b085917db982bbabd1e724262d/swagger-ui-index.html'
+        run: |
+          curl --silent --location $INDEX_HTML_URL --output index.html
+
+      - name: 'Update Swagger Bucket'
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_S3_SWAGGER }}
+        run: |
+          rm -rf .gitkeep || true
+          aws s3 sync ./ s3://$AWS_S3_BUCKET
