@@ -2,7 +2,6 @@ import { keyBy } from '@lib/array'
 import { chainById, chainIdResolver } from '@lib/chains'
 import { sum } from '@lib/math'
 import { isNotNullish } from '@lib/type'
-import fetch from 'node-fetch'
 
 export const DEFILLAMA_ICONS_PALETTE_CDN = 'https://icons.llamao.fi/palette'
 

@@ -78,7 +78,7 @@ async function main() {
       ctx,
       // @ts-ignore
       calls: slices.map((tokens) => ({
-        target: multiCoinContracts[chain],
+        target: multiCoinContracts[chain as keyof typeof multiCoinContracts],
         params: [ctx.address, tokens.map((token) => token.address)],
       })),
       abi: abi.getBalances,

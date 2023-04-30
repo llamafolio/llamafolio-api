@@ -1,12 +1,10 @@
-
-import { Adapter } from '@lib/adapter';
+import { Adapter } from '@lib/adapter'
 
 import * as ethereum from './ethereum'
 
 const adapter: Adapter = {
   id: 'cat-in-a-box',
-  ethereum
-};
+  ethereum,
+}
 
-export default adapter;
-
+export default adapter

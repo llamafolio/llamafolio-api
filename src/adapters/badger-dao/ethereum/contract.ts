@@ -1,5 +1,4 @@
 import { BaseContext, Contract } from '@lib/adapter'
-import fetch from 'node-fetch'
 
 const API_URL = 'https://api.badger.com/v2/vaults'
 

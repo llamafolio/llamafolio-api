@@ -1,3 +1,5 @@
 migrations/
 llamafolio-tokens/
 LICENSE
+node_modules/
+.esbuild

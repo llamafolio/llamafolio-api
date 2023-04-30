@@ -1,10 +1,9 @@
 import { client as redisClient } from '@db/redis'
 import { replaceYields } from '@db/yields'
-import { STAGE } from '@env'
+import environment from '@environment'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { APIGatewayProxyHandler } from 'aws-lambda'
-import fetch from 'node-fetch'
 
 export interface YieldOld {
   chain: string
@@ -54,6 +53,7 @@ export async function fetchYields() {
 
 const updateYields: APIGatewayProxyHandler = async () => {
   // run in a Lambda because of APIGateway timeout
+  const { STAGE } = environment
   await invokeLambda(`llamafolio-api-${STAGE}-updateYields`, {}, 'Event')
 
   return success({})

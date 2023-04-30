@@ -235,6 +235,7 @@ functions:
 custom:
   stage: ${opt:stage, self:provider.stage}
   esbuild:
+    packager: pnpm
     bundle: true
     minify: true
     keepNames: true
@@ -244,7 +245,7 @@ custom:
       - pg-format
     watch:
       pattern: ['src/**/*.ts']
-      ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules']
+      ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules', 'test']
     # for debugging
     #keepOutputDirectory: true
   prune:

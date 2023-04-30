@@ -1,7 +1,7 @@
+import path from 'node:path'
+
 import { BigNumber } from 'ethers'
 import millify from 'millify'
-import fetch from 'node-fetch'
-import path from 'path'
 
 import pool from '../src/db/pool'
 import { Adapter, Balance, BalancesContext, PricedBalance } from '../src/lib/adapter'

@@ -32,7 +32,7 @@ async function main() {
     const limit = 1000
     let offset = 0
 
-    while (true) {
+    for (;;) {
       console.log('Offset', offset)
       const addresses = await selectUndecodedChainAddresses(client, chain, limit, offset)
       if (addresses.length === 0) {
