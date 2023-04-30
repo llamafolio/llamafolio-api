@@ -1,6 +1,5 @@
 import { sliceIntoChunks } from '@lib/array'
 import { Chain, chainIdResolver } from '@lib/chains'
-import fetch from 'node-fetch'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -146,7 +145,7 @@ export function fromStorage(yieldsStorage: YieldStorage[]) {
 
   for (const yieldStorage of yieldsStorage) {
     const _yield: Yield = {
-      chain: yieldStorage.chain as Chain,
+      chain: (chainIdResolver[yieldStorage.chain] || yieldStorage.chain) as Chain,
       adapterId: yieldStorage.adapter_id,
       address: yieldStorage.address,
       pool: yieldStorage.pool,

@@ -223,18 +223,6 @@ export async function getAllTokensInteractions(client: PoolClient, address: stri
 }
 
 /**
- * Get a list of all unique tokens received by a given account, filtered by chain
- * @param client
- * @param chain
- * @param address
- */
-export async function getAllChainTokensInteractions(client: PoolClient, chain: Chain, address: string) {
-  const res = await client.query('select * from all_token_received($1) where chain = $2;', [address, chain])
-
-  return fromStorage(res.rows)
-}
-
-/**
  *
  * @param client
  * @param adapterId

@@ -1,5 +1,5 @@
 import { sliceIntoChunks } from '@lib/array'
-import { Chain } from '@lib/chains'
+import { Chain, chainIdResolver } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -36,7 +36,7 @@ export function fromStorage(adaptersStorage: AdapterStorage[]) {
   for (const adapterStorage of adaptersStorage) {
     const adapter: Adapter = {
       id: adapterStorage.id,
-      chain: adapterStorage.chain as Chain,
+      chain: (chainIdResolver[adapterStorage.chain] || adapterStorage.chain) as Chain,
       contractsExpireAt: adapterStorage.contracts_expire_at ? new Date(adapterStorage.contracts_expire_at) : undefined,
       contractsRevalidateProps: adapterStorage.contracts_revalidate_props || {},
       contractsProps: adapterStorage.contracts_props || {},
@@ -224,9 +224,9 @@ export function upsertAdapters(client: PoolClient, adapters: Adapter[]) {
           `
           INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, contracts_props, created_at)
           VALUES %L
-          ON CONFLICT (id, chain) 
-          DO 
-            UPDATE SET 
+          ON CONFLICT (id, chain)
+          DO
+            UPDATE SET
               contracts_expire_at = EXCLUDED.contracts_expire_at,
               contracts_revalidate_props = EXCLUDED.contracts_revalidate_props,
               contracts_props = EXCLUDED.contracts_props

@@ -1,6 +1,6 @@
 import { Balance, fromRowStorage as fromBalanceRowStorage } from '@db/balances'
 import { sliceIntoChunks } from '@lib/array'
-import { Chain } from '@lib/chains'
+import { Chain, chainIdResolver } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -45,7 +45,7 @@ export function fromRowStorage(balanceGroupsStorage: BalancesGroupStorage) {
     id: balanceGroupsStorage.id,
     fromAddress: balanceGroupsStorage.from_address,
     adapterId: balanceGroupsStorage.adapter_id,
-    chain: balanceGroupsStorage.chain as Chain,
+    chain: (chainIdResolver[balanceGroupsStorage.chain] || balanceGroupsStorage.chain) as Chain,
     balanceUSD: balanceGroupsStorage.balance_usd != null ? parseFloat(balanceGroupsStorage.balance_usd) : 0,
     debtUSD: balanceGroupsStorage.debt_usd != null ? parseFloat(balanceGroupsStorage.debt_usd) : 0,
     rewardUSD: balanceGroupsStorage.reward_usd != null ? parseFloat(balanceGroupsStorage.reward_usd) : 0,

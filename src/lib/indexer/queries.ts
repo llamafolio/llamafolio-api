@@ -1,14 +1,5 @@
 import { gql } from 'graphql-request'
 
-export const getChainsIndexedStateQuery = (): string => gql`
-  query getChainsIndexedState @cached(refresh: true) {
-    chains_indexed_state(order_by: { chain: asc }) {
-      chain
-      indexed_blocks_amount
-    }
-  }
-`
-
 export const getTransactionHistoryQuery = (
   address: string,
   limit: number,
@@ -86,34 +77,6 @@ export const getTransactionHistoryQuery = (
         }
       `
 }
-
-export const getTokensHoldersQuery = (token: string, chain: string, limit: number, offset: number): string => gql`
-  query getTokensBalances {
-    erc20_balances(
-      where: { token: { _eq: "${token}" }, chain: { _eq: "${chain}" } }
-      limit: ${limit}
-      offset: ${offset}
-      order_by: { balance: desc }
-    ) {
-      balance
-      address
-    }
-    erc20_balances_aggregate(
-      where: {
-        token: { _eq: "${token}" }
-        chain: { _eq: "${chain}" }
-        balance: { _gt: "0" }
-      }
-    ) {
-      aggregate {
-        count
-        sum {
-          balance
-        }
-      }
-    }
-  }
-`
 
 export const getContractsQuery = (contract: string, chain?: string): string => {
   let filter = `contract: { _eq: "${contract}" }`

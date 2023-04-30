@@ -1,5 +1,5 @@
 import { sliceIntoChunks } from '@lib/array'
-import { Chain } from '@lib/chains'
+import { Chain, chainIdResolver } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -39,7 +39,7 @@ export function fromERC20Storage(tokensStorage: ERC20TokenStorage[]) {
   for (const tokenStorage of tokensStorage) {
     const token: ERC20Token = {
       address: tokenStorage.address,
-      chain: tokenStorage.chain as Chain,
+      chain: (chainIdResolver[tokenStorage.chain] || tokenStorage.chain) as Chain,
       name: tokenStorage.name || undefined,
       symbol: tokenStorage.symbol,
       decimals: tokenStorage.decimals,
@@ -94,7 +94,7 @@ export async function selectUndecodedChainAddresses(client: PoolClient, limit?: 
       `
       select distinct transfer.chain, transfer.token from erc20_transfers as transfer
       where not exists (
-        select 1 from erc20_tokens as token 
+        select 1 from erc20_tokens as token
         where token.chain = transfer.chain and token.address = transfer.token
         ) limit %L offset %L;
       `,
