@@ -2,13 +2,12 @@ import millify from 'millify'
 import path from 'path'
 
 import { selectAdapterProps } from '../src/db/adapters'
-import { groupContracts } from '../src/db/contracts'
+import { getContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter, Balance, BalancesContext, PricedBalance } from '../src/lib/adapter'
 import { groupBy } from '../src/lib/array'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
-import { getContractsInteractions, HASURA_HEADERS } from '../src/lib/indexer'
 import { getPricedBalances } from '../src/lib/price'
 
 type ExtendedBalance = Balance & {
@@ -143,12 +142,10 @@ async function main() {
   const client = await pool.connect()
 
   try {
-    const [contractsInteractions, adapterProps] = await Promise.all([
-      getContractsInteractions({ chain, fromAddress: ctx.address, adapterId: adapter.id, headers: HASURA_HEADERS }),
+    const [contracts, adapterProps] = await Promise.all([
+      getContractsInteractions(client, address, adapterId),
       selectAdapterProps(client, adapter.id, chain),
     ])
-
-    const contracts = adapter.id === 'wallet' ? contractsInteractions.erc20Transfers : contractsInteractions.contracts
 
     console.log(`Interacted with ${contracts.length} contracts`)
 

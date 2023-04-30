@@ -117,10 +117,34 @@ export function insertAdaptersContracts(
  * @param adapterId
  */
 export async function getContractsInteractions(client: PoolClient, address: string, adapterId: string) {
-  const res = await client.query('select * from all_contract_interactions($1) where adapter_id = $2;', [
-    address,
-    adapterId,
-  ])
+  const walletQuery = `
+    with interactions as (
+      (
+        select t.chain, t.token as address from erc20_transfers t
+        where to_address = $1
+      )
+        union all
+      (
+        select t.chain, '0x0000000000000000000000000000000000000000' as address from transactions t
+        where from_address = $1 limit 1
+      )
+    )
+    select distinct on (c.chain, c.address) c.* from interactions i
+    inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
+    where c.adapter_id = $2;
+  `
+
+  const protocolQuery = `
+    with interactions as (
+      select t.chain, t.to_address as address from transactions t
+      where from_address = $1
+    )
+    select distinct on (c.chain, c.address) c.* from interactions i
+    inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
+    where c.adapter_id = $2;
+  `
+
+  const res = await client.query(adapterId === 'wallet' ? walletQuery : protocolQuery, [address, adapterId])
 
   return fromStorage(res.rows)
 }
