@@ -1,6 +1,6 @@
 import { Contract, ContractStandard } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { Chain } from '@lib/chains'
+import { Chain, chainIdResolver } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -22,7 +22,7 @@ export function fromStorage(contractsStorage: ContractStorage[]) {
       ...contractStorage.data,
       standard: contractStorage.standard,
       name: contractStorage.name,
-      chain: contractStorage.chain,
+      chain: chainIdResolver[contractStorage.chain] || contractStorage.chain,
       address: contractStorage.address,
       category: contractStorage.category,
       adapterId: contractStorage.adapter_id,
@@ -126,12 +126,34 @@ export async function getContractsInteractions(client: PoolClient, address: stri
 }
 
 /**
- * Get a list of all unique protocols and contracts a given account interacted with
+ * Get a list of all contracts a given account interacted with
  * @param client
  * @param address
  */
 export async function getAllContractsInteractions(client: PoolClient, address: string) {
-  const res = await client.query("select * from all_contract_interactions($1) where adapter_id <> 'wallet';", [address])
+  const res = await client.query(
+    `
+  with interactions as (
+    (
+      select t.chain, t.to_address as address from transactions t
+      where from_address = $1
+    )
+      union all
+    (
+      select t.chain, t.token as address from erc20_transfers t
+      where to_address = $1
+    )
+      union all
+    (
+      select t.chain, '0x0000000000000000000000000000000000000000' as address from transactions t
+      where from_address = $1 limit 1
+    )
+  )
+  select distinct on (c.chain, c.address) c.* from interactions i
+  inner join adapters_contracts c on c.chain = i.chain and c.address = i.address;
+  `,
+    [address],
+  )
 
   return fromStorage(res.rows)
 }

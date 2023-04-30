@@ -1,7 +1,7 @@
-import { sliceIntoChunks } from '@lib/array'
+import { groupBy, sliceIntoChunks } from '@lib/array'
 import { strToBuf } from '@lib/buf'
 import { Category } from '@lib/category'
-import { Chain } from '@lib/chains'
+import { Chain, chainIdResolver } from '@lib/chains'
 import { BigNumber } from 'ethers'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
@@ -100,6 +100,72 @@ export async function selectBalancesByFromAddress(client: PoolClient, fromAddres
   const balancesRes = await client.query(`select * from balances where from_address = $1;`, [fromAddress])
 
   return fromStorage(balancesRes.rows)
+}
+
+export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: PoolClient, fromAddress: string) {
+  const balancesGroups: any[] = []
+
+  const queryRes = await client.query(
+    `
+    select
+      bg.id as group_id,
+      bg.adapter_id,
+      bg.chain,
+      bg.balance_usd as g_balance_usd,
+      bg.debt_usd as g_debt_usd,
+      bg.reward_usd as g_reward_usd,
+      bg.health_factor,
+      bg.timestamp,
+      bg.from_address,
+      b.amount,
+      b.price,
+      b.balance_usd,
+      b.address,
+      b.category,
+      b.data,
+      y.apy,
+      y.apy_base,
+      y.apy_reward,
+      y.apy_mean_30d,
+      y.il_risk
+    from balances_groups bg
+    inner join balances b on b.group_id = bg.id
+    left join yields y on y.chain = bg.chain and y.address = b.address
+    where bg.from_address = $1;
+  `,
+    [fromAddress],
+  )
+
+  const balancesByGroupId = groupBy(queryRes.rows, 'group_id')
+
+  for (const groupId in balancesByGroupId) {
+    const balances = balancesByGroupId[groupId]
+
+    balancesGroups.push({
+      adapterId: balances[0].adapter_id,
+      chain: chainIdResolver[balances[0].chain] || balances[0].chain,
+      balanceUSD: balances[0].g_balance_usd != null ? parseFloat(balances[0].g_balance_usd) : undefined,
+      debtUSD: balances[0].g_debt_usd != null ? parseFloat(balances[0].g_debt_usd) : undefined,
+      rewardUSD: balances[0].g_reward_usd != null ? parseFloat(balances[0].g_reward_usd) : undefined,
+      healthFactor: balances[0].health_factor != null ? parseFloat(balances[0].health_factor) : undefined,
+      timestamp: balances[0].timestamp,
+      balances: balances.map((balance) => ({
+        address: balance.address,
+        price: balance.price != null ? parseFloat(balance.price) : undefined,
+        amount: balance.amount,
+        balanceUSD: balance.balance_usd != null ? parseFloat(balance.balance_usd) : undefined,
+        category: balance.category,
+        data: balance.data,
+        apy: balance.apy ?? undefined,
+        apyBase: balance.apy_base ?? undefined,
+        apyReward: balance.apy_reward ?? undefined,
+        apyMean30d: balance.apy_mean_30d ?? undefined,
+        ilRisk: balance.il_risk ?? undefined,
+      })),
+    })
+  }
+
+  return balancesGroups
 }
 
 export async function selectBalancesHolders(client: PoolClient, contractAddress: string, chain: Chain, limit: number) {

@@ -8,13 +8,12 @@ import {
   deleteBalancesGroupsCascadeByFromAddress,
   insertBalancesGroups,
 } from '../src/db/balances-groups'
-import { groupContracts } from '../src/db/contracts'
+import { getAllContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Balance, BalancesConfig, BalancesContext } from '../src/lib/adapter'
 import { groupBy, groupBy2, keyBy2 } from '../src/lib/array'
 import { balancesTotalBreakdown, sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
-import { getContractsInteractions, HASURA_HEADERS } from '../src/lib/indexer'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
 
@@ -54,13 +53,12 @@ async function main() {
   try {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
-    const [{ contracts, erc20Transfers: tokens }, adaptersContractsProps] = await Promise.all([
-      getContractsInteractions({ fromAddress: address, headers: HASURA_HEADERS }),
+    const [contracts, adaptersContractsProps] = await Promise.all([
+      getAllContractsInteractions(client, address),
       selectDefinedAdaptersContractsProps(client),
     ])
 
     const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
-    contractsByAdapterIdChain['wallet'] = groupBy(tokens, 'chain')
     const adaptersContractsPropsByIdChain = keyBy2(adaptersContractsProps, 'id', 'chain')
     // add adapters with contracts_props, even if there was no user interaction with any of the contracts
     for (const adapter of adaptersContractsProps) {

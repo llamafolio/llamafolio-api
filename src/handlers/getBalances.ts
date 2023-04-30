@@ -1,11 +1,10 @@
+import { selectBalancesWithGroupsAndYieldsByFromAddress } from '@db/balances'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { ContractStandard } from '@lib/adapter'
 import { areBalancesStale } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
-import { Balance, BalancesGroup } from '@lib/indexer'
-import { getBalancesGroups, HASURA_HEADERS } from '@lib/indexer'
 import { invokeLambda } from '@lib/lambda'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -77,15 +76,11 @@ function formatBaseBalance(balance: any) {
     stable: balance.stable,
     price: balance.price,
     amount: balance.amount,
-    balanceUSD: balance.balance_usd,
+    balanceUSD: balance.balanceUSD,
   }
 }
 
-export function formatBalance(balancesGroup: BalancesGroup, balance: Balance): FormattedBalance {
-  const _yield = balance.yields?.find(
-    (_yield) => _yield.chain === balancesGroup.chain && _yield.adapter_id === balancesGroup.adapter_id,
-  )
-
+export function formatBalance(balance: any): FormattedBalance {
   const formattedBalance: FormattedBalance = {
     standard: balance.data?.standard,
     name: balance.data?.name || undefined,
@@ -96,12 +91,12 @@ export function formatBalance(balancesGroup: BalancesGroup, balance: Balance): F
     stable: balance.data?.stable,
     price: balance.price,
     amount: balance.amount,
-    balanceUSD: balance.balance_usd,
-    apy: _yield?.apy,
-    apyBase: _yield?.apy_base,
-    apyReward: _yield?.apy_reward,
-    apyMean30d: _yield?.apy_mean_30d,
-    ilRisk: _yield?.il_risk,
+    balanceUSD: balance.balanceUSD,
+    apy: balance.yield?.apy,
+    apyBase: balance.yield?.apyBase,
+    apyReward: balance.yield?.apyReward,
+    apyMean30d: balance.yield?.apyMean30d,
+    ilRisk: balance.yield?.ilRisk,
     unlockAt: balance.data?.unlockAt,
     side: balance.data?.side,
     margin: balance.data?.margin,
@@ -116,15 +111,15 @@ export function formatBalance(balancesGroup: BalancesGroup, balance: Balance): F
   return unwrapUnderlyings(formattedBalance)
 }
 
-export function formatBalancesGroups(balancesGroups: BalancesGroup[]) {
+export function formatBalancesGroups(balancesGroups: any[]) {
   return balancesGroups.map((balancesGroup) => ({
-    protocol: balancesGroup.adapter_id,
+    protocol: balancesGroup.adapterId,
     chain: balancesGroup.chain,
-    balanceUSD: balancesGroup.balance_usd,
-    debtUSD: balancesGroup.debt_usd,
-    rewardUSD: balancesGroup.reward_usd,
-    healthFactor: balancesGroup.health_factor || undefined,
-    balances: balancesGroup.balances.map((balance) => formatBalance(balancesGroup, balance)),
+    balanceUSD: balancesGroup.balanceUSD,
+    debtUSD: balancesGroup.debtUSD,
+    rewardUSD: balancesGroup.rewardUSD,
+    healthFactor: balancesGroup.healthFactor || undefined,
+    balances: balancesGroup.balances.map(formatBalance),
   }))
 }
 
@@ -161,9 +156,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const client = await pool.connect()
 
   try {
-    const { balances_groups } = await getBalancesGroups({ fromAddress: address, headers: HASURA_HEADERS })
+    const balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
 
-    const updatedAt = balances_groups[0]?.timestamp ? new Date(balances_groups[0]?.timestamp).getTime() : undefined
+    const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
 
     let status: TStatus = 'success'
     if (updatedAt === undefined) {
@@ -179,7 +174,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const balancesResponse: BalancesResponse = {
       status,
       updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
-      groups: formatBalancesGroups(balances_groups),
+      groups: formatBalancesGroups(balancesGroups),
     }
 
     return success(balancesResponse, { maxAge: 20 })
