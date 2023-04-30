@@ -18,7 +18,7 @@
     "revalidate-contracts": "tsx scripts/revalidate-contracts.ts",
     "revalidate-contracts-rec": "tsx scripts/revalidate-contracts-rec.ts",
     "find-user": "tsx scripts/find-user.ts",
-    "insert-tokens": "tsx scripts/insert-tokens.ts",
+    "insert-llamafolio-tokens": "tsx scripts/insert-llamafolio-tokens.ts",
     "update-tokens": "tsx scripts/update-tokens.ts",
     "update-yields": "tsx scripts/update-yields.ts",
     "update-protocols": "tsx scripts/update-protocols.ts",
