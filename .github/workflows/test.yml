@@ -83,6 +83,7 @@ jobs:
 
   test-on-pr:
     if: github.event_name == 'pull_request'
+    needs: [lint-typecheck-build]
     name: 'Test [PR]'
     runs-on: [ubuntu-latest]
     env:
@@ -109,7 +110,7 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       # Start sls offline in the background,
-      # wait for it to start (https://explainshell.com/explain?cmd=while+%21+nc+-z+0.0.0.0+3034%3B+do+sleep+1%3B+done),
+      # wait for it to start (https://explainshell.com/explain?cmd=timeout+5+bash+-c+%27until+echo+%3E%2Fdev%2Ftcp%2F0.0.0.0%2F3034%3B+do+sleep+1%3B+done%27),
       # run tests.
       - name: 'Test'
         run: |
@@ -120,7 +121,7 @@ jobs:
           #
           # wait for serverless-offline to start
           #
-          while ! nc -z 0.0.0.0 3034; do sleep 1; done
+          timeout 5 bash -c 'until echo >/dev/tcp/0.0.0.0/3034; do sleep 1; done'
           #
           # run tests
           #
@@ -144,6 +145,7 @@ jobs:
 
   test-on-push-and-cron:
     if:  github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'schedule'
+    needs: [lint-typecheck-build]
     name: 'Test [Push, Cron]'
     runs-on: [ubuntu-latest]
     env:
