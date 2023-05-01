@@ -86,7 +86,7 @@ export function formatBalance(balance: any): FormattedBalance {
     name: balance.data?.name || undefined,
     address: balance.address,
     symbol: balance.data?.symbol,
-    decimals: balance.data?.decimals,
+    decimals: balance.data?.decimals != null ? parseInt(balance.data.decimals) : balance.data?.decimals,
     category: balance.category as Category,
     stable: balance.data?.stable,
     price: balance.price,
