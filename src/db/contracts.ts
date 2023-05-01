@@ -216,28 +216,6 @@ export async function getContracts(client: PoolClient, address: string, chain?: 
 }
 
 /**
- * Get a list of all unique protocols and contracts a given account interacted with, filtered by chain
- * @param client
- * @param chain
- * @param address
- * @param adapterId
- */
-export async function getChainContractsInteractions(
-  client: PoolClient,
-  chain: Chain,
-  address: string,
-  adapterId: string,
-) {
-  const res = await client.query('select * from all_contract_interactions($1) where chain = $2 and adapter_id = $3;', [
-    address,
-    chain,
-    adapterId,
-  ])
-
-  return fromStorage(res.rows)
-}
-
-/**
  * Get a list of all unique tokens received by a given account
  * @param client
  * @param address

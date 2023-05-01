@@ -1,6 +1,7 @@
+import { selectHistory, selectHistoryAggregate } from '@db/history'
+import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
-import { getTransactionHistory, HASURA_HEADERS } from '@lib/indexer'
 import { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface ITransaction {
@@ -26,7 +27,9 @@ export interface ITransaction {
   value: string
 }
 
-export const handler: APIGatewayProxyHandler = async (event) => {
+export const handler: APIGatewayProxyHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false
+
   const address = event.pathParameters?.address
 
   if (!address) {
@@ -58,32 +61,18 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
   const offsetNumber = parseInt(offset)
 
-  const { transactions, transactions_aggregate } = await getTransactionHistory(
-    address.toLowerCase(),
-    limit,
-    offsetNumber,
-    chains,
-    protocols,
-    HASURA_HEADERS,
-  )
+  const client = await pool.connect()
 
-  const pages = parseInt((transactions_aggregate.aggregate.count / limit).toFixed(0))
+  try {
+    const [transactions, transactionsAggregate] = await Promise.all([
+      selectHistory(client, address.toLowerCase(), limit, offsetNumber, chains, protocols),
+      selectHistoryAggregate(client, address.toLowerCase(), chains, protocols),
+    ])
 
-  const transactionsData: ITransaction[] = transactions.map((tx) => {
-    let chain = tx.chain
+    const pages = parseInt((transactionsAggregate.aggregate.count / limit).toFixed(0))
 
-    // Special cases to match the indexer chain name
-
-    if (chain === 'mainnet') {
-      chain = 'ethereum'
-    }
-
-    if (chain === 'avalanche') {
-      chain = 'avax'
-    }
-
-    return {
-      chain,
+    const transactionsData: ITransaction[] = transactions.map((tx: any) => ({
+      chain: tx.chain,
       block_number: tx.block_number,
       timestamp: tx.timestamp,
       hash: tx.hash,
@@ -93,9 +82,9 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       gas_price: tx.gas_price,
       input_function_name: tx.method_name?.name,
       success: tx.receipt?.status === '1',
-      adapter_id: tx.contract_interacted?.adapter?.adapter_id,
+      adapter_id: tx.adapters_contracts?.[0]?.adapter_id,
       value: tx.value,
-      token_transfers: tx.token_transfers_aggregate?.nodes.map((token_transfer) => ({
+      token_transfers: tx.erc20_transfers_aggregate?.nodes.map((token_transfer: any) => ({
         name: token_transfer?.token_details?.name,
         symbol: token_transfer?.token_details?.symbol,
         decimals: token_transfer?.token_details?.decimals,
@@ -104,10 +93,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         to_address: token_transfer?.to_address,
         value: token_transfer?.value,
       })),
-    }
-  })
+    }))
 
-  try {
     return success(
       {
         transactions: transactionsData,
@@ -120,5 +107,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   } catch (e) {
     console.error('Failed to retrieve history', e)
     return serverError('Failed to retrieve history')
+  } finally {
+    client.release(true)
   }
 }
