@@ -108,18 +108,23 @@ jobs:
       - name: 'Install Dependencies'
         run: pnpm install --frozen-lockfile
 
-      # start serverless-offline in the background
-      - name: 'Run serverless-offline'
-        run: |
-          ./node_modules/.bin/sls offline --httpPort 3034 &
-
-      - name: 'Wait for serverless-offline to start'
-        # check this to understand what exactly this command does
-        # https://explainshell.com/explain?cmd=while+%21+nc+-z+0.0.0.0+3034%3B+do+sleep+1%3B+done
-        run: |
-          while ! nc -z 0.0.0.0 3034; do sleep 1; done
-
+      # Start sls offline in the background,
+      # wait for it to start (https://explainshell.com/explain?cmd=while+%21+nc+-z+0.0.0.0+3034%3B+do+sleep+1%3B+done),
+      # run tests.
       - name: 'Test'
+        run: |
+          #
+          # start serverless-offline
+          #
+          ./node_modules/.bin/sls offline --httpPort 3034 &
+          #
+          # wait for serverless-offline to start
+          #
+          while ! nc -z 0.0.0.0 3034; do sleep 1; done
+          #
+          # run tests
+          #
+          node_modules/.bin/vitest run
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
@@ -129,8 +134,6 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
           TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 9000 }}
-        run: |
-          pnpm test:ci
 
       - name: 'Stop serverless-offline'
         run: |
