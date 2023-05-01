@@ -1,4 +1,4 @@
-name: 'Test API'
+name: 'Test'
 
 # Runs:
 # - daily at 00:00 UTC
@@ -83,7 +83,7 @@ jobs:
 
   test-on-pr:
     if: github.event_name == 'pull_request'
-    name: 'Lint, Build, Test'
+    name: 'Test [PR]'
     runs-on: [ubuntu-latest]
     env:
       # must be set to 'local' to test against pr changes
@@ -108,17 +108,16 @@ jobs:
       - name: 'Install Dependencies'
         run: pnpm install --frozen-lockfile
 
+      # start serverless-offline in the background
       - name: 'Run serverless-offline'
         run: |
-          #
-          # start serverless-offline
-          #
-          ./node_modules/.bin/sls offline --httpPort 3034
+          ./node_modules/.bin/sls offline --httpPort 3034 &
 
-          #
-          # wait for serverless-offline to start
-          #
-          sleep 5
+      - name: 'Wait for serverless-offline to start'
+        # check this to understand what exactly this command does
+        # https://explainshell.com/explain?cmd=while+%21+nc+-z+0.0.0.0+3034%3B+do+sleep+1%3B+done
+        run: |
+          while ! nc -z 0.0.0.0 3034; do sleep 1; done
 
       - name: 'Test'
         env:
@@ -133,9 +132,16 @@ jobs:
         run: |
           pnpm test:ci
 
+      - name: 'Stop serverless-offline'
+        run: |
+          #
+          # stop serverless-offline
+          #
+          kill $(lsof -t -i:3034)
+
   test-on-push-and-cron:
     if:  github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'schedule'
-    name: 'Test'
+    name: 'Test [Push, Cron]'
     runs-on: [ubuntu-latest]
     env:
       STAGE: ${{ github.event.inputs.stage || 'dev' }}

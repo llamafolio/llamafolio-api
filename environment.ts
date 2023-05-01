@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 export const environmentSchema = z.object({
   NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]).default('development'),
-  STAGE: z.union([z.literal('dev'), z.literal('prod'), z.literal('local')]),
+  STAGE: z.union([z.literal('dev'), z.literal('prod'), z.literal('local')]).optional(),
   DDB_TABLE_NAME: z.string().optional(),
   PGHOST: z.string(),
   PGUSER: z.string(),

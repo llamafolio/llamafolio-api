@@ -15,6 +15,7 @@ const SKIP_ROUTES = [
 
 const getFilteredRoutes = () => {
   const allRoutes = getRoutes({
+    // @ts-ignore
     stage: process.env.STAGE,
   })
   return allRoutes
@@ -61,6 +62,7 @@ describe('API Routes', () => {
   test.each(routes)(
     'method: $method, path: $path',
     async (route) => {
+      // @ts-ignore
       const url = getApiURL(process.env.STAGE)
       const testableURL = `${url}${generateTestableRoute({ route, testData })}`
       console.log(`calling ${testableURL}`)
