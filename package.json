@@ -30,7 +30,6 @@
     "test:ci": "vitest run",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "tscheck": "tsc -p tsconfig.json --noEmit --skipLibCheck",
     "ts-node": "tsx",
     "preinstall": "npx only-allow pnpm"
   },

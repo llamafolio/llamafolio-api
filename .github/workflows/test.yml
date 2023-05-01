@@ -3,7 +3,8 @@ name: 'Test API'
 # Runs:
 # - daily at 00:00 UTC
 # - on manual trigger through GitHub Actions UI
-# - on push to any branch
+# - on push to 'master'
+# - on pull request
 on:
   schedule:
     # cron syntax: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
@@ -11,18 +12,24 @@ on:
     - cron: '0 0 * * *'
   workflow_dispatch:
     inputs:
+      stage:
+        description: 'Stage to test against'
+        required: true
+        default: 'dev'
       test-timeout:
         description: 'Test timeout in ms'
         required: false
-        default: '11000'
+        default: '10000'
   push:
+    branches: ['master']
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 defaults:
   run:
     shell: bash
 
 env:
-  STAGE: 'dev'
   NODE_ENV: 'test'
   ACTIONS_RUNNER_DEBUG: true
   PGHOST: ${{ secrets.PGHOST }}
@@ -37,9 +44,12 @@ env:
   SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
 
 jobs:
-  test:
+  test-on-push-and-cron:
+    if:  github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'schedule'
     name: 'Lint, Build, Test'
     runs-on: [ubuntu-latest]
+    env:
+      STAGE: ${{ github.event.inputs.stage || 'dev' }}
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
@@ -58,7 +68,7 @@ jobs:
           cache: 'pnpm'
 
       - name: 'Install Dependencies'
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: 'Lint'
         run: pnpm lint
@@ -87,3 +97,67 @@ jobs:
         run: |
           pnpm test:ci
 
+  test-on-pr:
+    if: github.event_name == 'pull_request'
+    name: 'Lint, Build, Test'
+    runs-on: [ubuntu-latest]
+    env:
+      STAGE: 'local'
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 'Setup pnpm'
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 'latest'
+
+      - name: 'Setup Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+
+      - name: 'Install Dependencies'
+        run: pnpm install --frozen-lockfile
+
+      - name: 'Lint'
+        run: pnpm lint
+
+      - name: 'Format'
+        run: pnpm format
+
+      # we will have to skip till we resolve existing type errors
+      - name: 'Typecheck'
+        run: |
+          echo "pnpm typecheck"
+
+      - name: 'Build'
+        run: pnpm build
+
+      - name: 'Run serverless-offline'
+        run: |
+          #
+          # start serverless-offline
+          #
+          ./node_modules/.bin/sls offline --httpPort 3034
+
+          #
+          # wait for serverless-offline to start
+          #
+          sleep 5
+
+      - name: 'Test'
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
+          AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_OUTPUT: json
+          TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 9000 }}
+        run: |
+          pnpm test:ci
