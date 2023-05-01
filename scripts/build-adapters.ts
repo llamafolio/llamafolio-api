@@ -109,7 +109,7 @@ function getAdapters() {
     }
   })
 
-  return adapters
+  return adapters.sort()
 }
 
 async function main() {
@@ -125,10 +125,7 @@ async function main() {
 
   fs.writeFileSync(
     path.join(vsCodeSrc, 'launch.json'),
-    vsCodeLaunchTemplate(
-      adapters,
-      chains.map((chain) => chain.id),
-    ),
+    vsCodeLaunchTemplate(adapters, chains.map((chain) => chain.id).sort()),
   )
 
   // format

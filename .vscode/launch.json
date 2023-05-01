@@ -46,10 +46,10 @@
         "celo",
         "ethereum",
         "fantom",
+        "gnosis",
         "harmony",
-        "polygon",
         "optimism",
-        "gnosis"
+        "polygon"
       ],
       "default": "ethereum"
     },
