@@ -68,10 +68,12 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: 'Lint'
-        run: pnpm lint
+        run: |
+          node_modules/.bin/eslint --fix . --ext js,cjs,mjs,ts,d.ts,json 
 
       - name: 'Format'
-        run: pnpm format
+        run: |
+          node_modules/.bin/prettier --write --ignore-path='./.eslintignore' '**/*.{md,json,js,cjs,mjs,ts}' --ignore-unknown
 
       # we will have to skip till we resolve existing type errors
       - name: 'Typecheck'

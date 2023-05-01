@@ -234,11 +234,14 @@ custom:
     packager: pnpm
     bundle: true
     minify: true
+    format: esm
+    target: node18
     keepNames: true
     concurrency: 4
     external:
       - pg-native
       - pg-format
+      - '@llamafolio/tokens'
     watch:
       pattern: ['src/**/*.ts']
       ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules', 'test']
