@@ -7,9 +7,6 @@ on:
   schedule:
     # run every day at 12:00 UTC
     - cron: '0 12 * * *'
-  workflow_dispatch:
-  push:
-    branches: [master]
 
 defaults:
   run:
