@@ -44,12 +44,9 @@ env:
   SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
 
 jobs:
-  test-on-push-and-cron:
-    if:  github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'schedule'
-    name: 'Lint, Build, Test'
+  lint-typecheck-build:
+    name: 'Lint, Typecheck, Build'
     runs-on: [ubuntu-latest]
-    env:
-      STAGE: ${{ github.event.inputs.stage || 'dev' }}
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
@@ -84,24 +81,12 @@ jobs:
       - name: 'Build'
         run: pnpm build
 
-      - name: 'Test'
-        env:
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
-          AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-          AWS_DEFAULT_OUTPUT: json
-          TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 11000 }}
-        run: |
-          pnpm test:ci
-
   test-on-pr:
     if: github.event_name == 'pull_request'
     name: 'Lint, Build, Test'
     runs-on: [ubuntu-latest]
     env:
+      # must be set to 'local' to test against pr changes
       STAGE: 'local'
     steps:
       - name: 'Checkout'
@@ -122,20 +107,6 @@ jobs:
 
       - name: 'Install Dependencies'
         run: pnpm install --frozen-lockfile
-
-      - name: 'Lint'
-        run: pnpm lint
-
-      - name: 'Format'
-        run: pnpm format
-
-      # we will have to skip till we resolve existing type errors
-      - name: 'Typecheck'
-        run: |
-          echo "pnpm typecheck"
-
-      - name: 'Build'
-        run: pnpm build
 
       - name: 'Run serverless-offline'
         run: |
@@ -159,5 +130,44 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
           TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 9000 }}
+        run: |
+          pnpm test:ci
+
+  test-on-push-and-cron:
+    if:  github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'schedule'
+    name: 'Test'
+    runs-on: [ubuntu-latest]
+    env:
+      STAGE: ${{ github.event.inputs.stage || 'dev' }}
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 'Setup pnpm'
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 'latest'
+
+      - name: 'Setup Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+
+      - name: 'Install Dependencies'
+        run: pnpm install --frozen-lockfile
+
+      - name: 'Test'
+        env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
+          AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_OUTPUT: json
+          TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 11000 }}
         run: |
           pnpm test:ci
