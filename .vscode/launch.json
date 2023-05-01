@@ -39,7 +39,18 @@
       "type": "pickString",
       "id": "chain",
       "description": "What chain?",
-      "options": ["arbitrum", "avalanche", "bsc", "celo", "ethereum", "fantom", "gnosis", "harmony", "polygon", "optimism"],
+      "options": [
+        "arbitrum",
+        "avalanche",
+        "bsc",
+        "celo",
+        "ethereum",
+        "fantom",
+        "harmony",
+        "polygon",
+        "optimism",
+        "gnosis"
+      ],
       "default": "ethereum"
     },
     {
