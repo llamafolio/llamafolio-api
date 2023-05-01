@@ -8,11 +8,7 @@ import { testData } from './fixtures/test-data'
 /**
  * Routes to not test: /holders, /history
  */
-const SKIP_ROUTES = [
-  //
-  `/history/{address}`,
-  `/holders/{address}`,
-]
+const SKIP_ROUTES = ['/gas_price/{chain}/chart']
 
 const getFilteredRoutes = async () => {
   const allRoutes = await getRoutes({
