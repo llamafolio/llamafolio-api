@@ -1,4 +1,4 @@
-name: Deploy master branch prod
+name: 'Deploy Master - Prod'
 
 on:
   workflow_dispatch:
@@ -11,6 +11,18 @@ jobs:
   deploy:
     name: deploy
     runs-on: ubuntu-latest
+    env:
+      STAGE: 'prod'
+      ACTIONS_RUNNER_DEBUG: true
+      PGHOST: ${{ secrets.PGHOST }}
+      PGUSER: ${{ secrets.PGUSER }}
+      PGPORT: ${{ secrets.PGPORT }}
+      PGDATABASE: ${{ secrets.PGDATABASE }}
+      PGPASSWORD: ${{ secrets.PGPASSWORD }}
+      ARBITRUM_RPC: ${{ secrets.ARBITRUM_RPC }}
+      OPTIMISM_RPC: ${{ secrets.OPTIMISM_RPC }}
+      CUSTOM_PROVIDER: ${{ secrets.CUSTOM_PROVIDER }}
+      LLAMANODES_API_KEY: ${{ secrets.LLAMANODES_API_KEY }}
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
@@ -40,12 +52,3 @@ jobs:
           args: deploy --stage prod
         env:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
-          PGHOST: ${{ secrets.PGHOST }}
-          PGUSER: ${{ secrets.PGUSER }}
-          PGDATABASE: ${{ secrets.PGDATABASE }}
-          PGPASSWORD: ${{ secrets.PGPASSWORD }}
-          PGPORT: ${{ secrets.PGPORT }}
-          CUSTOM_PROVIDER: ${{ secrets.CUSTOM_PROVIDER }}
-          LLAMANODES_API_KEY: ${{ secrets.LLAMANODES_API_KEY }}
-          ARBITRUM_RPC: ${{ secrets.ARBITRUM_RPC }}
-          OPTIMISM_RPC: ${{ secrets.OPTIMISM_RPC }}
