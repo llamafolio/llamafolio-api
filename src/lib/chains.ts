@@ -9,9 +9,9 @@ export declare type Chain =
   | 'bsc'
   | 'polygon'
   | 'fantom'
-  | 'xdai'
+  | 'gnosis'
   | 'optimism'
-  | 'avax'
+  | 'avalanche'
   | 'arbitrum'
   | 'celo'
   | 'harmony'
@@ -33,7 +33,7 @@ export const chains: IChainInfo[] = [
     rpcUrls: ['https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'].filter(isNotNullish),
   },
   {
-    id: 'avax',
+    id: 'avalanche',
     chainId: 43114,
     name: 'Avalanche',
     rpcUrls: [
@@ -101,7 +101,7 @@ export const chains: IChainInfo[] = [
     rpcUrls: ['https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism'].filter(isNotNullish),
   },
   {
-    id: 'xdai',
+    id: 'gnosis',
     chainId: 100,
     name: 'Gnosis Chain',
     rpcUrls: ['https://rpc.gnosischain.com', 'https://xdai-archive.blockscout.com'],
@@ -112,17 +112,4 @@ export const chainById: { [key: string]: IChainInfo } = {}
 
 for (const chain of chains) {
   chainById[chain.id] = chain
-}
-
-// Helper to match DefiLlama chains to our keys
-export const chainIdResolver: { [key: string]: string } = {
-  arbitrum: 'arbitrum',
-  avalanche: 'avax',
-  bsc: 'bsc',
-  celo: 'celo',
-  ethereum: 'ethereum',
-  fantom: 'fantom',
-  gnosis: 'xdai',
-  optimism: 'optimism',
-  polygon: 'polygon',
 }

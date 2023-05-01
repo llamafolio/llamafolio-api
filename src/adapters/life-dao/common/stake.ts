@@ -6,7 +6,7 @@ import { BigNumber } from 'ethers/lib/ethers'
 
 const LF: Contract = {
   name: 'Life',
-  chain: 'avax',
+  chain: 'avalanche',
   address: '0x5684a087C739A2e845F4AaAaBf4FBd261edc2bE8',
   symbol: 'LF',
   decimals: 9,

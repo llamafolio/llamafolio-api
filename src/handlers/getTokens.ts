@@ -6,7 +6,7 @@ import { APIGatewayProxyHandler } from 'aws-lambda'
 /**
  * Get tokens of given addresses
  * Tokens are comma separated and should be prefixed by their chain: `{chain}:{address}`
- * Or only the name of the chain to get the native coin. Ex: `arbitrum,avax,ethereum`
+ * Or only the name of the chain to get the native coin. Ex: `arbitrum,avalanche,ethereum`
  * (Chain 'ethereum' is used by default if no chain is specified)
  */
 export const handler: APIGatewayProxyHandler = async (event) => {

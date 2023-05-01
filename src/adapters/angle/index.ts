@@ -1,7 +1,7 @@
 import { Adapter } from '@lib/adapter'
 
 import * as arbitrum from './arbitrum'
-import * as avax from './avax'
+import * as avalanche from './avalanche'
 import * as ethereum from './ethereum'
 import * as optimism from './optimism'
 import * as polygon from './polygon'
@@ -12,7 +12,7 @@ const adapter: Adapter = {
   arbitrum,
   optimism,
   polygon,
-  avax,
+  avalanche,
 }
 
 // TODO: Altchains using API logic ?

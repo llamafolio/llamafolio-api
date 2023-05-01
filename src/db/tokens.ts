@@ -1,5 +1,5 @@
 import { sliceIntoChunks } from '@lib/array'
-import { Chain, chainIdResolver } from '@lib/chains'
+import { Chain } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -39,7 +39,7 @@ export function fromERC20Storage(tokensStorage: ERC20TokenStorage[]) {
   for (const tokenStorage of tokensStorage) {
     const token: ERC20Token = {
       address: tokenStorage.address,
-      chain: (chainIdResolver[tokenStorage.chain] || tokenStorage.chain) as Chain,
+      chain: tokenStorage.chain as Chain,
       name: tokenStorage.name || undefined,
       symbol: tokenStorage.symbol,
       decimals: tokenStorage.decimals,

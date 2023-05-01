@@ -1,5 +1,5 @@
 import { keyBy } from '@lib/array'
-import { chainById, chainIdResolver } from '@lib/chains'
+import { chainById } from '@lib/chains'
 import { sum } from '@lib/math'
 import { isNotNullish } from '@lib/type'
 
@@ -202,7 +202,7 @@ function getChainName(chains: string[]) {
   }
 
   // use our naming if possible
-  const chain = chainById[chainIdResolver[chains[0].toLowerCase()]]
+  const chain = chainById[chains[0].toLowerCase()]
   if (chain) {
     return chain.name
   }

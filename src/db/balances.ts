@@ -1,7 +1,7 @@
 import { groupBy, sliceIntoChunks } from '@lib/array'
 import { strToBuf } from '@lib/buf'
 import { Category } from '@lib/category'
-import { Chain, chainIdResolver } from '@lib/chains'
+import { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
@@ -143,7 +143,7 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
 
     balancesGroups.push({
       adapterId: balances[0].adapter_id,
-      chain: chainIdResolver[balances[0].chain] || balances[0].chain,
+      chain: balances[0].chain,
       balanceUSD: balances[0].g_balance_usd != null ? parseFloat(balances[0].g_balance_usd) : undefined,
       debtUSD: balances[0].g_debt_usd != null ? parseFloat(balances[0].g_debt_usd) : undefined,
       rewardUSD: balances[0].g_reward_usd != null ? parseFloat(balances[0].g_reward_usd) : undefined,

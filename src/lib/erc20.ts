@@ -86,7 +86,7 @@ export const abi = {
 // See: https://github.com/o-az/evm-balances/tree/master
 const multiCoinContracts = {
   arbitrum: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
-  avax: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
+  avalanche: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
   bsc: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
   ethereum: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
   fantom: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',

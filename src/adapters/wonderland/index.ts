@@ -1,10 +1,10 @@
 import { Adapter } from '@lib/adapter'
 
-import * as avax from './avax'
+import * as avalanche from './avalanche'
 
 const adapter: Adapter = {
   id: 'wonderland',
-  avax,
+  avalanche,
 }
 
 export default adapter

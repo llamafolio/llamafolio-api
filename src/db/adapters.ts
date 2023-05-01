@@ -1,5 +1,5 @@
 import { sliceIntoChunks } from '@lib/array'
-import { Chain, chainIdResolver } from '@lib/chains'
+import { Chain } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -36,7 +36,7 @@ export function fromStorage(adaptersStorage: AdapterStorage[]) {
   for (const adapterStorage of adaptersStorage) {
     const adapter: Adapter = {
       id: adapterStorage.id,
-      chain: (chainIdResolver[adapterStorage.chain] || adapterStorage.chain) as Chain,
+      chain: adapterStorage.chain as Chain,
       contractsExpireAt: adapterStorage.contracts_expire_at ? new Date(adapterStorage.contracts_expire_at) : undefined,
       contractsRevalidateProps: adapterStorage.contracts_revalidate_props || {},
       contractsProps: adapterStorage.contracts_props || {},

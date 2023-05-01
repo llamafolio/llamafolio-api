@@ -1,4 +1,4 @@
-import env from '@env'
+import env from '@environment'
 import { Pool } from 'pg'
 
 const connectionString = `postgresql://${env.PGUSER}:${env.PGPASSWORD}@${env.PGHOST}:${env.PGPORT}/${env.PGDATABASE}`

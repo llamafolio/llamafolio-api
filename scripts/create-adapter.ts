@@ -2,7 +2,6 @@ import { execSync } from 'child_process'
 import fs from 'fs'
 import path from 'path'
 
-import { chainIdResolver } from '../src/lib/chains'
 import { fetchProtocolsLite } from '../src/lib/protocols'
 
 const adapterTemplate = (slug: string, chains: string[]) => `
@@ -80,7 +79,7 @@ async function main() {
     return
   }
 
-  const chains = protocol.chains.map((chain) => chainIdResolver[chain.toLowerCase()])
+  const chains = protocol.chains.map((chain) => chain.toLowerCase())
 
   fs.mkdirSync(dst)
   fs.writeFileSync(path.join(dst, 'index.ts'), adapterTemplate(slug, chains))

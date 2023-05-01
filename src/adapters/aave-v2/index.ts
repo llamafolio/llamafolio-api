@@ -1,12 +1,12 @@
 import { Adapter } from '@lib/adapter'
 
-import * as avax from './avax'
+import * as avalanche from './avalanche'
 import * as ethereum from './ethereum'
 import * as polygon from './polygon'
 
 const adapter: Adapter = {
   id: 'aave-v2',
-  avax,
+  avalanche,
   ethereum,
   polygon,
 }

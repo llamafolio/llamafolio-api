@@ -1,13 +1,13 @@
 import { Adapter } from '@lib/adapter'
 
-import * as avax from './avax'
+import * as avalanche from './avalanche'
 import * as bsc from './bsc'
 import * as ethereum from './ethereum'
 import * as polygon from './polygon'
 
 const adapter: Adapter = {
   id: 'atlas-usv',
-  avax,
+  avalanche,
   bsc,
   ethereum,
   polygon,

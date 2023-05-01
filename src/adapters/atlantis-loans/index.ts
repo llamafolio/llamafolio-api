@@ -1,6 +1,6 @@
 import { Adapter } from '@lib/adapter'
 
-import * as avax from './avax'
+import * as avalanche from './avalanche'
 import * as bsc from './bsc'
 import * as polygon from './polygon'
 
@@ -8,7 +8,7 @@ const adapter: Adapter = {
   id: 'atlantis-loans',
   bsc,
   polygon,
-  avax,
+  avalanche,
 }
 
 export default adapter

@@ -25,13 +25,13 @@ const abi = {
 
 const endpoints: Partial<Record<Chain, string>> = {
   arbitrum: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-arbitrum',
-  avax: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-avalanche-mainnet',
+  avalanche: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-avalanche-mainnet',
   bsc: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-bsc',
   fantom: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-fantom',
   ethereum: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-mainnet',
   optimism: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-optimism',
   polygon: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-polygon',
-  xdai: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-xdai',
+  gnosis: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-xdai',
 }
 
 const payeeStreamsQuery = gql`

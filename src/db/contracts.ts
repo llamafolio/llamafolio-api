@@ -1,6 +1,6 @@
 import { Contract, ContractStandard } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { Chain, chainIdResolver } from '@lib/chains'
+import { Chain } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -22,7 +22,7 @@ export function fromStorage(contractsStorage: ContractStorage[]) {
       ...contractStorage.data,
       standard: contractStorage.standard,
       name: contractStorage.name,
-      chain: chainIdResolver[contractStorage.chain] || contractStorage.chain,
+      chain: contractStorage.chain,
       address: contractStorage.address,
       category: contractStorage.category,
       adapterId: contractStorage.adapter_id,
