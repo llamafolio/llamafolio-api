@@ -218,5 +218,3 @@ export async function insertYields(client: PoolClient, yields: YieldStorable[]) 
     ),
   )
 }
-
-export async function resetYields() {}
