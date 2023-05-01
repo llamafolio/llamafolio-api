@@ -14,7 +14,6 @@ export const environmentSchema = z.object({
   REDIS_PORT: z.string(),
   REDIS_HOST: z.string(),
   REDIS_PASSWORD: z.string(),
-  INDEXER_ADMIN_TOKEN: z.string(),
   CUSTOM_PROVIDER: z.string(),
   LLAMANODES_API_KEY: z.string(),
   ARBITRUM_RPC: z.string(),

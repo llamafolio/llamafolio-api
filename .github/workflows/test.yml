@@ -37,7 +37,6 @@ env:
   REDIS_PASSWORD: ${{ secrets.REDIS_PASSWORD }}
   CUSTOM_PROVIDER: ${{ secrets.CUSTOM_PROVIDER }}
   LLAMANODES_API_KEY: ${{ secrets.LLAMANODES_API_KEY }}
-  INDEXER_ADMIN_TOKEN: ${{ secrets.INDEXER_ADMIN_TOKEN }}
   SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
 
 jobs:
@@ -90,4 +89,4 @@ jobs:
           TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 11000 }}
         run: |
           pnpm test:ci
-            
+
