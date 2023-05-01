@@ -225,7 +225,7 @@ export async function getAllTokensInteractions(client: PoolClient, address: stri
     `
     select distinct on (c.chain, c.address) c.* from erc20_transfers t
     inner join adapters_contracts c on t.chain = c.chain and t.token = c.address
-    where to_address = $1;
+    where to_address = $1 and c.adapter_id = 'wallet';
     `,
     [address],
   )
