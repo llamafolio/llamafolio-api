@@ -23,18 +23,18 @@ export const routes = [
     pathParams: [],
     queryParams: [],
   },
-  {
-    method: 'GET',
-    path: '/gas_price/{chain}/chart',
-    pathParams: ['chain'],
-    queryParams: [],
-  },
   // {
   //   method: 'GET',
-  //   path: '/history/{address}',
-  //   pathParams: ['address'],
+  //   path: '/gas_price/{chain}/chart',
+  //   pathParams: ['chain'],
   //   queryParams: [],
   // },
+  {
+    method: 'GET',
+    path: '/history/{address}',
+    pathParams: ['address'],
+    queryParams: [],
+  },
   {
     method: 'GET',
     path: '/tokens/{address}',
@@ -53,12 +53,12 @@ export const routes = [
     pathParams: ['address'],
     queryParams: [],
   },
-  // {
-  //   method: 'GET',
-  //   path: '/holders/{address}',
-  //   pathParams: ['address'],
-  //   queryParams: [],
-  // },
+  {
+    method: 'GET',
+    path: '/holders/{address}',
+    pathParams: ['address'],
+    queryParams: [],
+  },
   {
     method: 'GET',
     path: '/sync_status',

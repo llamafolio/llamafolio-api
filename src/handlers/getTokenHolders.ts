@@ -22,11 +22,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   try {
     const queries = event.queryStringParameters
 
-    if (!queries?.chain) {
-      return badRequest('Missing chain parameter')
-    }
-
-    const chain = queries.chain.replace(/['"]/g, '') as Chain
+    const chain = (queries?.chain || 'ethereum').replace(/['"]/g, '') as Chain
 
     const limit = queries?.limit ?? '100'
 
