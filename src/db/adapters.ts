@@ -224,9 +224,9 @@ export function upsertAdapters(client: PoolClient, adapters: Adapter[]) {
           `
           INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, contracts_props, created_at)
           VALUES %L
-          ON CONFLICT (id, chain) 
-          DO 
-            UPDATE SET 
+          ON CONFLICT (id, chain)
+          DO
+            UPDATE SET
               contracts_expire_at = EXCLUDED.contracts_expire_at,
               contracts_revalidate_props = EXCLUDED.contracts_revalidate_props,
               contracts_props = EXCLUDED.contracts_props

@@ -73,8 +73,6 @@ export const getContracts = () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  console.log(contracts)
-
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     miniPoolManager: getMiniPoolManagerBalance,
     nodeStaking: getNodeStakingBalance,

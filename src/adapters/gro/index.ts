@@ -1,12 +1,12 @@
 import { Adapter } from '@lib/adapter'
 
-import * as avax from './avax'
+import * as avalanche from './avalanche'
 import * as ethereum from './ethereum'
 
 const adapter: Adapter = {
   id: 'gro',
   ethereum,
-  avax,
+  avalanche,
 }
 
 export default adapter

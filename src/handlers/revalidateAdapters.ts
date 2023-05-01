@@ -6,7 +6,7 @@ import {
   selectDistinctAdaptersIds,
   upsertAdapters,
 } from '@db/adapters'
-import { deleteContractsByAdapter, insertContracts } from '@db/contracts'
+import { deleteContractsByAdapter, insertAdaptersContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { BaseContext } from '@lib/adapter'
@@ -134,7 +134,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     }
 
     // Insert new contracts
-    await insertContracts(client, contracts, adapter.id)
+    await insertAdaptersContracts(client, contracts, adapter.id)
 
     await client.query('COMMIT')
 

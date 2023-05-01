@@ -12,9 +12,6 @@ module.exports = {
   PGDATABASE: process.env.PGDATABASE,
   PGPASSWORD: process.env.PGPASSWORD,
   PGPORT: parseInt(process.env.PGPORT),
-  REDIS_PORT: parseInt(process.env.REDIS_PORT),
-  REDIS_HOST: process.env.REDIS_HOST,
-  REDIS_PASSWORD: process.env.REDIS_PASSWORD,
   INDEXER_ADMIN_TOKEN: process.env.INDEXER_ADMIN_TOKEN,
   // RPCs
   CUSTOM_PROVIDER: process.env.CUSTOM_PROVIDER,

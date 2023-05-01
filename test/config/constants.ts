@@ -12,14 +12,13 @@ export const AwsGatewayApiId = {
 } satisfies { [key in AwsStage]: string }
 
 export const chains = [
-  'ethereum',
-  'polygon',
-  'bsc',
-  'fantom',
-  'xdai',
   'arbitrum',
-  'avax',
+  'avalanche',
+  'bsc',
+  'ethereum',
+  'fantom',
+  'gnosis',
   'harmony',
-  'xdai',
   'optimism',
+  'polygon',
 ] satisfies ReadonlyArray<Chain>

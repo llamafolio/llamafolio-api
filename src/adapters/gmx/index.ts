@@ -1,12 +1,12 @@
 import { Adapter } from '@lib/adapter'
 
 import * as arbitrum from './arbitrum'
-import * as avax from './avax'
+import * as avalanche from './avalanche'
 
 const adapter: Adapter = {
   id: 'gmx',
   arbitrum,
-  avax,
+  avalanche,
 }
 
 export default adapter

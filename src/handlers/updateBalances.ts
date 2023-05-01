@@ -1,9 +1,8 @@
 import { adapterById } from '@adapters/index'
 import { selectDefinedAdaptersContractsProps } from '@db/adapters'
 import { Balance as BalanceStore, insertBalances } from '@db/balances'
-import { BalancesGroup, insertBalancesGroups } from '@db/balances-groups'
+import { BalancesGroup, deleteBalancesGroupsCascadeByFromAddress, insertBalancesGroups } from '@db/balances-groups'
 import { getAllContractsInteractions, groupContracts } from '@db/contracts'
-import { getAllTokensInteractions } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { Balance, BalancesConfig, BalancesContext, PricedBalance } from '@lib/adapter'
@@ -52,14 +51,12 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   try {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
-    const [contracts, tokens, adaptersContractsProps] = await Promise.all([
+    const [contracts, adaptersContractsProps] = await Promise.all([
       getAllContractsInteractions(client, address),
-      getAllTokensInteractions(client, address),
       selectDefinedAdaptersContractsProps(client),
     ])
 
     const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
-    contractsByAdapterIdChain['wallet'] = groupBy(tokens, 'chain')
     const adaptersContractsPropsByIdChain = keyBy2(adaptersContractsProps, 'id', 'chain')
     // add adapters with contracts_props, even if there was no user interaction with any of the contracts
     for (const adapter of adaptersContractsProps) {
@@ -201,6 +198,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     // Update balances
     await client.query('BEGIN')
+
+    // Delete old balances
+    await deleteBalancesGroupsCascadeByFromAddress(client, address)
 
     // Insert balances groups
     await insertBalancesGroups(client, balancesGroupsStore)

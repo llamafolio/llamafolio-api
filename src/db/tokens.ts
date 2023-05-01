@@ -1,60 +1,50 @@
-import { ContractStandard } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { bufToStr, strToBuf } from '@lib/buf'
 import { Chain } from '@lib/chains'
 import { PoolClient } from 'pg'
 import format from 'pg-format'
 
-export interface Token {
+export interface ERC20Token {
   address: string
-  standard?: ContractStandard
+  chain: Chain
   name?: string
   symbol: string
   decimals: number
-  totalSupply?: number
   coingeckoId?: string
   cmcId?: string | null
-  updated_at: Date
 }
 
-export interface TokenStorage {
-  address: Buffer
-  standard: ContractStandard | null
+export interface ERC20TokenStorage {
+  address: string
+  chain: string
   name: string | null
   symbol: string
   decimals: number
-  total_supply: string | null
   coingecko_id: string | null
   cmc_id: string | null
-  updated_at: string
 }
 
-export interface TokenStorable {
-  address: Buffer
-  standard?: ContractStandard
+export interface ERC20TokenStorable {
+  address: string
+  chain: Chain
   name?: string
   symbol: string
   decimals: number
-  totalSupply?: number
-  coingeckoId?: string
+  coingeckoId?: string | null
   cmcId?: string | null
-  updated_at: Date
 }
 
-export function fromStorage(tokensStorage: TokenStorage[]) {
-  const tokens: Token[] = []
+export function fromERC20Storage(tokensStorage: ERC20TokenStorage[]) {
+  const tokens: ERC20Token[] = []
 
   for (const tokenStorage of tokensStorage) {
-    const token: Token = {
-      address: bufToStr(tokenStorage.address),
-      standard: tokenStorage.standard || undefined,
+    const token: ERC20Token = {
+      address: tokenStorage.address,
+      chain: tokenStorage.chain as Chain,
       name: tokenStorage.name || undefined,
       symbol: tokenStorage.symbol,
       decimals: tokenStorage.decimals,
-      totalSupply: tokenStorage.total_supply ? parseInt(tokenStorage.total_supply) : undefined,
       coingeckoId: tokenStorage.coingecko_id || undefined,
       cmcId: tokenStorage.cmc_id,
-      updated_at: new Date(tokenStorage.updated_at),
     }
 
     tokens.push(token)
@@ -63,36 +53,24 @@ export function fromStorage(tokensStorage: TokenStorage[]) {
   return tokens
 }
 
-export function toRow(token: TokenStorable) {
-  return [
-    token.address,
-    token.standard,
-    token.name,
-    token.symbol,
-    token.decimals,
-    token.totalSupply,
-    token.coingeckoId,
-    token.cmcId,
-    token.updated_at,
-  ]
+export function toRow(token: ERC20TokenStorable) {
+  return [token.address, token.chain, token.name, token.symbol, token.decimals, token.coingeckoId, token.cmcId]
 }
 
-export function toStorage(tokens: Token[]) {
-  const tokensStorable: TokenStorable[] = []
+export function toERC20Storage(tokens: ERC20Token[]) {
+  const tokensStorable: ERC20TokenStorable[] = []
 
   for (const token of tokens) {
-    const { address, standard, name, symbol, decimals, totalSupply, coingeckoId, cmcId, updated_at } = token
+    const { address, chain, name, symbol, decimals, coingeckoId, cmcId } = token
 
-    const tokenStorable: TokenStorable = {
-      address: strToBuf(address),
-      standard,
+    const tokenStorable: ERC20TokenStorable = {
+      address,
+      chain,
       name,
       symbol,
       decimals,
-      totalSupply,
       coingeckoId,
       cmcId,
-      updated_at,
     }
 
     tokensStorable.push(tokenStorable)
@@ -103,30 +81,34 @@ export function toStorage(tokens: Token[]) {
 
 export async function selectChainTokens(client: PoolClient, chain: Chain, tokens: string[]) {
   const tokensRes = await client.query(
-    format(`select * from %I.tokens where address in (%L);`, chain, tokens.map(strToBuf)),
+    format(`select * from erc20_tokens where chain = %L and address in (%L);`, chain, tokens),
     [],
   )
 
-  return fromStorage(tokensRes.rows)
+  return fromERC20Storage(tokensRes.rows)
 }
 
-export async function selectUndecodedChainAddresses(client: PoolClient, chain: Chain, limit?: number, offset?: number) {
+export async function selectUndecodedChainAddresses(client: PoolClient, limit?: number, offset?: number) {
   const tokensRes = await client.query(
     format(
-      `select distinct(token_address) from %I.token_transfers where token_address not in (select address from %I.tokens) limit %L offset %L;`,
-      chain,
-      chain,
+      `
+      select distinct transfer.chain, transfer.token from erc20_transfers as transfer
+      where not exists (
+        select 1 from erc20_tokens as token
+        where token.chain = transfer.chain and token.address = transfer.token
+        ) limit %L offset %L;
+      `,
       limit || 100,
       offset || 0,
     ),
     [],
   )
 
-  return tokensRes.rows.map(({ token_address }) => bufToStr(token_address))
+  return tokensRes.rows.map(({ chain, token }) => [chain, token])
 }
 
-export function insertTokens(client: PoolClient, chain: Chain, tokens: Token[]) {
-  const values = toStorage(tokens).map(toRow)
+export function insertERC20Tokens(client: PoolClient, tokens: ERC20Token[]) {
+  const values = toERC20Storage(tokens).map(toRow)
 
   if (values.length === 0) {
     return
@@ -136,8 +118,17 @@ export function insertTokens(client: PoolClient, chain: Chain, tokens: Token[]) 
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          'INSERT INTO %I.tokens (address, standard, name, symbol, decimals, total_supply, coingecko_id, cmc_id, updated_at) VALUES %L ON CONFLICT DO NOTHING;',
-          chain,
+          `INSERT INTO erc20_tokens (
+            address,
+            chain,
+            name,
+            symbol,
+            decimals,
+            coingecko_id,
+            cmc_id
+          ) VALUES %L ON CONFLICT (address, chain) DO
+            UPDATE SET
+              (coingecko_id, cmc_id) = (EXCLUDED.coingecko_id, EXCLUDED.cmc_id);`,
           chunk,
         ),
         [],

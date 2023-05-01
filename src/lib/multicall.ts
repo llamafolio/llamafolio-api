@@ -150,7 +150,17 @@ export async function multicall<T = string, P = any[], O = any>(params: MultiCal
   // This allows us to "chain" multicall responses while preserving input indices
   const calls = params.calls.filter(isNotNullish)
 
-  const multicallRes = await batchCallers[params.ctx.chain]!.call({
+  // chain not supported
+  if (!batchCallers[params.ctx.chain]) {
+    console.error(`Chain ${params.ctx.chain} not supported yet`)
+    for (let callIdx = 0; callIdx < calls.length; callIdx++) {
+      results.push({ input: params.calls[callIdx], success: false, output: null } as MultiCallResult<T, P, O>)
+    }
+
+    return results
+  }
+
+  const multicallRes = await batchCallers[params.ctx.chain].call({
     ...params,
     calls,
     chain: params.ctx.chain,

@@ -52,9 +52,6 @@ provider:
     PGDATABASE: ${file(./env.js):PGDATABASE}
     PGPASSWORD: ${file(./env.js):PGPASSWORD}
     PGPORT: ${file(./env.js):PGPORT}
-    REDIS_PORT: ${file(./env.js):REDIS_PORT}
-    REDIS_HOST: ${file(./env.js):REDIS_HOST}
-    REDIS_PASSWORD: ${file(./env.js):REDIS_PASSWORD}
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1

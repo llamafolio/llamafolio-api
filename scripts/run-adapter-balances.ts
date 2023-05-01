@@ -2,7 +2,7 @@ import millify from 'millify'
 import path from 'path'
 
 import { selectAdapterProps } from '../src/db/adapters'
-import { getAllChainTokensInteractions, getChainContractsInteractions, groupContracts } from '../src/db/contracts'
+import { getContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter, Balance, BalancesContext, PricedBalance } from '../src/lib/adapter'
 import { groupBy } from '../src/lib/array'
@@ -143,9 +143,7 @@ async function main() {
 
   try {
     const [contracts, adapterProps] = await Promise.all([
-      adapter.id === 'wallet'
-        ? getAllChainTokensInteractions(client, chain, ctx.address)
-        : getChainContractsInteractions(client, chain, ctx.address, adapter.id),
+      getContractsInteractions(client, address, adapterId),
       selectAdapterProps(client, adapter.id, chain),
     ])
 

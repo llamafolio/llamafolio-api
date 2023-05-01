@@ -1,12 +1,12 @@
 import { Adapter } from '@lib/adapter'
 
+import * as gnosis from './gnosis'
 import * as polygon from './polygon'
-import * as xdai from './xdai'
 
 const adapter: Adapter = {
   id: 'honeyswap',
+  gnosis,
   polygon,
-  xdai,
 }
 
 export default adapter

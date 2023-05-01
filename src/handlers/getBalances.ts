@@ -1,45 +1,12 @@
-import { selectRowsLatestBalancesGroupsWithBalancesByFromAddress } from '@db/balances-groups'
+import { selectBalancesWithGroupsAndYieldsByFromAddress } from '@db/balances'
 import pool from '@db/pool'
-import { client as redisClient } from '@db/redis'
-import { selectYieldsByKeys } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
-import { Balance, ContractStandard } from '@lib/adapter'
-import { groupBy } from '@lib/array'
-import { areBalancesStale, isBalanceUSDGtZero } from '@lib/balance'
+import { ContractStandard } from '@lib/adapter'
+import { areBalancesStale } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import { Category } from '@lib/category'
 import { invokeLambda } from '@lib/lambda'
-import { isNotNullish } from '@lib/type'
 import { APIGatewayProxyHandler } from 'aws-lambda'
-import { Redis } from 'ioredis'
-
-/**
- * Add yields info to given balances
- */
-export async function getBalancesYields<T extends Balance>(client: Redis, balances: T[]): Promise<T[]> {
-  const yieldKeys = balances.map((balance) => balance.yieldKey).filter(isNotNullish)
-
-  const yieldsByKey = await selectYieldsByKeys(client, yieldKeys)
-
-  for (const balance of balances) {
-    if (!balance.yieldKey) {
-      continue
-    }
-
-    const _yield = yieldsByKey[balance.yieldKey]
-    if (!_yield) {
-      continue
-    }
-
-    balance.apy = _yield.apy
-    balance.apyBase = _yield.apyBase
-    balance.apyReward = _yield.apyReward
-    balance.apyMean30d = _yield.apyMean30d
-    balance.ilRisk = _yield.ilRisk
-  }
-
-  return balances
-}
 
 export interface BaseFormattedBalance {
   standard?: ContractStandard
@@ -98,15 +65,30 @@ function unwrapUnderlyings(balance: FormattedBalance) {
   return balance
 }
 
-export function formatBalance(balance: any): FormattedBalance {
-  const formattedBalance: FormattedBalance = {
+function formatBaseBalance(balance: any) {
+  return {
     standard: balance.standard,
-    name: balance.name || undefined,
+    name: balance.name,
     address: balance.address,
     symbol: balance.symbol,
     decimals: balance.decimals,
-    category: balance.category,
+    category: balance.category as Category,
     stable: balance.stable,
+    price: balance.price,
+    amount: balance.amount,
+    balanceUSD: balance.balanceUSD,
+  }
+}
+
+export function formatBalance(balance: any): FormattedBalance {
+  const formattedBalance: FormattedBalance = {
+    standard: balance.data?.standard,
+    name: balance.data?.name || undefined,
+    address: balance.address,
+    symbol: balance.data?.symbol,
+    decimals: balance.data?.decimals,
+    category: balance.category as Category,
+    stable: balance.data?.stable,
     price: balance.price,
     amount: balance.amount,
     balanceUSD: balance.balanceUSD,
@@ -115,23 +97,38 @@ export function formatBalance(balance: any): FormattedBalance {
     apyReward: balance.apyReward,
     apyMean30d: balance.apyMean30d,
     ilRisk: balance.ilRisk,
-    unlockAt: balance.unlockAt,
-    side: balance.side,
-    margin: balance.margin,
-    entryPrice: balance.entryPrice,
-    marketPrice: balance.marketPrice,
-    leverage: balance.leverage,
-    funding: balance.funding,
-    underlyings: balance.underlyings?.map(formatBalance),
-    rewards: balance.rewards?.map(formatBalance),
+    unlockAt: balance.data?.unlockAt,
+    side: balance.data?.side,
+    margin: balance.data?.margin,
+    entryPrice: balance.data?.entryPrice,
+    marketPrice: balance.data?.marketPrice,
+    leverage: balance.data?.leverage,
+    funding: balance.data?.funding,
+    underlyings: balance.data?.underlyings?.map(formatBaseBalance),
+    rewards: balance.data?.rewards?.map(formatBaseBalance),
   }
 
   return unwrapUnderlyings(formattedBalance)
 }
 
+export function formatBalancesGroups(balancesGroups: any[]) {
+  return balancesGroups.map((balancesGroup) => ({
+    protocol: balancesGroup.adapterId,
+    chain: balancesGroup.chain,
+    balanceUSD: balancesGroup.balanceUSD,
+    debtUSD: balancesGroup.debtUSD,
+    rewardUSD: balancesGroup.rewardUSD,
+    healthFactor: balancesGroup.healthFactor || undefined,
+    balances: balancesGroup.balances.map(formatBalance),
+  }))
+}
+
 interface GroupResponse {
   protocol: string
   chain: string
+  balanceUSD: number
+  debtUSD?: number
+  rewardUSD?: number
   healthFactor?: number
   balances: FormattedBalance[]
 }
@@ -159,26 +156,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const client = await pool.connect()
 
   try {
-    const pricedBalances = await selectRowsLatestBalancesGroupsWithBalancesByFromAddress(client, address)
+    const balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
 
-    const nonZeroPricedBalances = pricedBalances.filter(isBalanceUSDGtZero)
-
-    const pricedBalancesWithYields = await getBalancesYields(redisClient, nonZeroPricedBalances)
-
-    const balancesByGroup = groupBy(pricedBalancesWithYields, 'id')
-
-    const groups: GroupResponse[] = []
-
-    for (const groupId in balancesByGroup) {
-      groups.push({
-        protocol: balancesByGroup[groupId][0].adapterId,
-        chain: balancesByGroup[groupId][0].chain,
-        healthFactor: balancesByGroup[groupId][0].healthFactor || undefined,
-        balances: balancesByGroup[groupId].map(formatBalance),
-      })
-    }
-
-    const updatedAt = pricedBalances[0]?.timestamp ? new Date(pricedBalances[0]?.timestamp).getTime() : undefined
+    const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
 
     let status: TStatus = 'success'
     if (updatedAt === undefined) {
@@ -194,7 +174,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const balancesResponse: BalancesResponse = {
       status,
       updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
-      groups,
+      groups: formatBalancesGroups(balancesGroups),
     }
 
     return success(balancesResponse, { maxAge: 20 })

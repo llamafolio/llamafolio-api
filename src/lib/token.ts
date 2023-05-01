@@ -1,5 +1,5 @@
-import { insertTokens, selectChainTokens } from '@db/tokens'
-import { BaseContract, Contract, ContractStandard, RawContract } from '@lib/adapter'
+import { ERC20Token, insertERC20Tokens, selectChainTokens } from '@db/tokens'
+import { BaseContract, Contract, RawContract } from '@lib/adapter'
 import { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { isNotNullish } from '@lib/type'
@@ -218,30 +218,25 @@ export async function resolveContractsTokens(
   }
 
   if (storeMissingTokens) {
-    const now = new Date()
+    const missingTokens: ERC20Token[] = []
 
-    await Promise.all(
-      missingTokensChains
-        .map((chain, i) => {
-          const tokens = (missingChainsTokensRes[i] || []).map((token) => ({
-            address: token.address,
-            standard: 'erc20' as ContractStandard,
-            name: undefined,
-            symbol: token.symbol,
-            decimals: token.decimals,
-            totalSupply: undefined,
-            coingeckoId: token.coingeckoId || undefined,
-            cmcId: undefined,
-            updated_at: now,
-          }))
-
-          if (tokens.length > 0) {
-            console.log(`Inserting ${tokens.length} tokens on ${chain}`)
-            return insertTokens(client, chain as Chain, tokens)
-          }
+    for (let chainIdx = 0; chainIdx < missingTokensChains.length; chainIdx++) {
+      for (const token of missingChainsTokensRes[chainIdx]) {
+        missingTokens.push({
+          address: token.address,
+          chain: missingTokensChains[chainIdx] as Chain,
+          name: token.name,
+          symbol: token.symbol,
+          decimals: token.decimals,
+          coingeckoId: token.coingeckoId || undefined,
+          cmcId: undefined,
         })
-        .filter(isNotNullish),
-    )
+      }
+    }
+
+    await insertERC20Tokens(client, missingTokens)
+
+    console.log(`Inserted ${missingTokens.length} tokens`)
   }
 
   return res

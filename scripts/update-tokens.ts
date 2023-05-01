@@ -1,56 +1,73 @@
 import '../env'
 
-import { argv } from 'process'
-
 import pool from '../src/db/pool'
-import { insertTokens, selectUndecodedChainAddresses } from '../src/db/tokens'
-import { BaseContext } from '../src/lib/adapter'
-import { Chain } from '../src/lib/chains'
+import { ERC20Token, insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/tokens'
 import { getERC20Details } from '../src/lib/erc20'
 
 function help() {
-  console.log('npm run update-tokens {chain}')
+  console.log('npm run update-tokens')
 }
 
 async function main() {
   // argv[0]: ts-node
   // argv[1]: update-tokens.ts
-  // argv[2]: chain
-  if (process.argv.length < 3) {
+  if (process.argv.length < 2) {
     console.error('Missing arguments')
     return help()
   }
 
-  const chain = argv[2] as Chain
-  const now = new Date()
-
-  const ctx: BaseContext = { chain, adapterId: '' }
-
   const client = await pool.connect()
 
   try {
-    const limit = 1000
+    const limit = 100
     let offset = 0
 
     for (;;) {
       console.log('Offset', offset)
-      const addresses = await selectUndecodedChainAddresses(client, chain, limit, offset)
-      if (addresses.length === 0) {
+      const chainsAddresses = await selectUndecodedChainAddresses(client, limit, offset)
+      if (chainsAddresses.length === 0) {
         console.log(`Insert tokens done`)
         return
       }
 
-      const tokens = (await getERC20Details(ctx, addresses)).map((token) => ({
-        ...token,
-        symbol: token.symbol.replaceAll('\x00', ''),
-        updated_at: now,
-      }))
+      const tokensByChain: { [chain: string]: string[] } = {}
+
+      for (const [chain, address] of chainsAddresses) {
+        if (!tokensByChain[chain]) {
+          tokensByChain[chain] = []
+        }
+        tokensByChain[chain].push(address)
+      }
+
+      const chains = Object.keys(tokensByChain)
+
+      const chainsTokens = await Promise.all(
+        chains.map((chain) => getERC20Details({ chain, adapterId: '' }, tokensByChain[chain])),
+      )
+
+      const tokens: ERC20Token[] = []
+
+      for (let chainIdx = 0; chainIdx < chains.length; chainIdx++) {
+        const chain = chains[chainIdx]
+
+        for (const token of chainsTokens[chainIdx]) {
+          tokens.push({
+            address: token.address,
+            chain,
+            name: token.name,
+            symbol: token.symbol.replaceAll('\x00', ''),
+            decimals: token.decimals,
+            coingeckoId: token.coingeckoId || undefined,
+            cmcId: undefined,
+          })
+        }
+      }
 
       console.log(tokens)
 
-      console.log(`Inserting ${tokens.length} tokens on ${chain}`)
+      await insertERC20Tokens(client, tokens)
 
-      await insertTokens(client, chain, tokens)
+      console.log(`Inserted ${tokens.length} tokens`)
 
       offset += limit
     }

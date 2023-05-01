@@ -2,7 +2,7 @@ import { isEqual } from 'lodash'
 import path from 'path'
 
 import { Adapter as DBAdapter, selectAdapter, upsertAdapters } from '../src/db/adapters'
-import { deleteContractsByAdapter, insertContracts } from '../src/db/contracts'
+import { deleteContractsByAdapter, insertAdaptersContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import { Adapter, BaseContext } from '../src/lib/adapter'
 import { Chain } from '../src/lib/chains'
@@ -91,7 +91,7 @@ async function main() {
       }
 
       // Insert new contracts
-      await insertContracts(client, contracts, adapter.id)
+      await insertAdaptersContracts(client, contracts, adapter.id)
 
       await client.query('COMMIT')
     } catch (e) {
