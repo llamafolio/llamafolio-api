@@ -182,6 +182,39 @@ export async function getAllContractsInteractions(client: PoolClient, address: s
   return fromStorage(res.rows)
 }
 
+export async function getContracts(client: PoolClient, address: string, chain?: Chain) {
+  const chainQuery = `
+    select c.*, ci.name, ci.abi, ac.adapter_id from contracts c
+    left join contracts_information ci on ci.contract = c.contract and ci.chain = c.chain
+    left join adapters_contracts ac on ac.address = c.contract and ac.chain = c.chain
+    where c.contract = $1 and c.chain = $2;
+  `
+
+  const noChainQuery = `
+    select c.*, ci.name, ci.abi, ac.adapter_id from contracts c
+    left join contracts_information ci on ci.contract = c.contract and ci.chain = c.chain
+    left join adapters_contracts ac on ac.address = c.contract and ac.chain = c.chain
+    where c.contract = $1;
+  `
+
+  const query = chain ? chainQuery : noChainQuery
+  const args = chain ? [address, chain] : [address]
+
+  const queryRes = await client.query(query, args)
+
+  return queryRes.rows.map((row) => ({
+    block: parseInt(row.block),
+    chain: row.chain,
+    contract: row.contract,
+    creator: row.creator,
+    hash: row.hash,
+    verified: row.verified,
+    abi: row.abi ?? undefined,
+    name: row.name ?? undefined,
+    protocol: row.adapter_id ?? undefined,
+  }))
+}
+
 /**
  * Get a list of all unique protocols and contracts a given account interacted with, filtered by chain
  * @param client

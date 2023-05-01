@@ -77,32 +77,3 @@ export const getTransactionHistoryQuery = (
         }
       `
 }
-
-export const getContractsQuery = (contract: string, chain?: string): string => {
-  let filter = `contract: { _eq: "${contract}" }`
-
-  if (chain) {
-    filter = filter + `, chain: { _eq: "${chain}" }`
-  }
-
-  return gql`
-    query getContract {
-      contracts(where: { ${filter} }) {
-        block
-        chain
-        contract
-        creator
-        hash
-        parsed
-        verified
-        contract_information {
-          abi
-          name
-        }
-        adapter {
-          adapter_id
-        }
-      }
-    }
-  `
-}
