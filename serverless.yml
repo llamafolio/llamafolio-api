@@ -241,6 +241,7 @@ custom:
     external:
       - pg-native
       - pg-format
+      - '@llamafolio/tokens'
 
     watch:
       pattern: ['src/**/*.ts']
