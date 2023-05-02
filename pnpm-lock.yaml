@@ -8,7 +8,7 @@ dependencies:
     specifier: ^3.0.8
     version: 3.0.8
   '@llamafolio/tokens':
-    specifier: github:llamafolio/llamafolio-tokens#master
+    specifier: github:llamafolio/llamafolio-tokens
     version: github.com/llamafolio/llamafolio-tokens/60a623db7acb11134e289ee53981d1518854d998
   dotenv:
     specifier: ^16.0.1

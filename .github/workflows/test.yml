@@ -109,7 +109,9 @@ jobs:
           cache: 'pnpm'
 
       - name: 'Install Dependencies'
-        run: pnpm install --frozen-lockfile
+        run: |
+          pnpm install --frozen-lockfile
+          ls -la node_modules/.pnpm
 
       # Start sls offline in the background,
       # wait for it to start (https://explainshell.com/explain?cmd=timeout+20+bash+-c+%27until+echo+%3E%2Fdev%2Ftcp%2F0.0.0.0%2F3034%3B+do+sleep+1%3B+done%27+%7C%7C+true),
