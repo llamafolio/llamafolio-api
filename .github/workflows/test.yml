@@ -114,20 +114,22 @@ jobs:
       # Start sls offline in the background,
       # wait for it to start (https://explainshell.com/explain?cmd=timeout+5+bash+-c+%27until+echo+%3E%2Fdev%2Ftcp%2F0.0.0.0%2F3034%3B+do+sleep+1%3B+done%27),
       # run tests.
+      # - name: 'Test'
+      #   run: |
+      #     #
+      #     # start serverless-offline
+      #     #
+      #     ./node_modules/.bin/sls offline --httpPort 3034 &
+      #     #
+      #     # wait for serverless-offline to start
+      #     #
+      #     timeout 5 bash -c 'until echo >/dev/tcp/0.0.0.0/3034; do sleep 1; done'
+      #     #
+      #     # run tests
+      #     #
+      #     node_modules/.bin/vitest run
       - name: 'Test'
-        run: |
-          #
-          # start serverless-offline
-          #
-          ./node_modules/.bin/sls offline --httpPort 3034 &
-          #
-          # wait for serverless-offline to start
-          #
-          timeout 5 bash -c 'until echo >/dev/tcp/0.0.0.0/3034; do sleep 1; done'
-          #
-          # run tests
-          #
-          node_modules/.bin/vitest run
+        run: test:ci
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
@@ -138,12 +140,12 @@ jobs:
           AWS_DEFAULT_OUTPUT: json
           TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 9000 }}
 
-      - name: 'Stop serverless-offline'
-        run: |
-          #
-          # stop serverless-offline
-          #
-          kill $(lsof -t -i:3034)
+      # - name: 'Stop serverless-offline'
+      #   run: |
+      #     #
+      #     # stop serverless-offline
+      #     #
+      #     kill $(lsof -t -i:3034)
 
   test-on-push-and-cron:
     if:  github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'schedule'
