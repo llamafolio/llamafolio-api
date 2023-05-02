@@ -1,6 +1,6 @@
 import { type Chain } from '@lib/chains'
 
-export const testAddresses = ['0xbdfa4f4492dd7b7cf211209c4791af8d52bf5c50']
+export const testAddresses = ['0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045']
 
 export const testTokens: { [chain in Chain]: string[] } = {
   arbitrum: [],

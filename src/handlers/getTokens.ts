@@ -30,7 +30,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       address = split[1]
     }
 
+    console.log({ chain, address })
+
     const token = getToken(chain, address?.toLowerCase()) as Token
+
+    console.log({ token })
 
     if (token) {
       data[chainAddress] = token

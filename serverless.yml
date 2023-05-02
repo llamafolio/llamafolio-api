@@ -235,13 +235,14 @@ custom:
   esbuild:
     packager: pnpm
     bundle: true
-    minify: true
+    minify: false
     target: es2020
     keepNames: true
     concurrency: 4
     external:
       - pg-native
       - pg-format
+      - '@llamafolio/tokens'
     watch:
       pattern: ['src/**/*.ts']
       ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules', 'test']
