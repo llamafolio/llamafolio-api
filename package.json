@@ -2,6 +2,7 @@
   "name": "llamafolio-api",
   "version": "0.0.1",
   "description": "LlamaFolio API",
+  "type": "module",
   "scripts": {
     "adapter": "tsx scripts/run-adapter.ts",
     "build-adapters": "tsx scripts/build-adapters.ts",
@@ -27,7 +28,9 @@
     "typecheck": "tsc --noEmit --skipLibCheck",
     "dev-test": "sls offline --httpPort 3034",
     "test": "vitest",
-    "test:ci": "vitest run",
+    "pretest:ci": "rm -rf .build && sls offline --httpPort 3034 & sleep 5",
+    "test:ci": "vitest --run",
+    "posttest:ci": "kill $(lsof -t -i:3034)",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "ts-node": "tsx",
@@ -38,7 +41,7 @@
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.322.0",
     "@defillama/sdk": "^3.0.8",
-    "@llamafolio/tokens": "github:llamafolio/llamafolio-tokens",
+    "@llamafolio/tokens": "github:llamafolio/llamafolio-tokens#master",
     "dotenv": "^16.0.1",
     "ethers": "^5.6.9",
     "graphql": "^16.6.0",
