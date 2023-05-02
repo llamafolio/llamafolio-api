@@ -143,6 +143,7 @@ import thena from '@adapters/thena'
 import timewarp from '@adapters/timewarp'
 import tokemak from '@adapters/tokemak'
 import tokenlon from '@adapters/tokenlon'
+import tonpound from '@adapters/tonpound'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
 import trustswap from '@adapters/trustswap'
@@ -311,6 +312,7 @@ export const adapters: Adapter[] = [
   timewarp,
   tokemak,
   tokenlon,
+  tonpound,
   traderjoe,
   truefi,
   trustswap,
