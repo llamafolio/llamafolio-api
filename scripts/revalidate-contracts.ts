@@ -1,4 +1,5 @@
-import path from 'path'
+import path from 'node:path'
+import url from 'node:url'
 
 import { Adapter as DBAdapter, selectAdapter, upsertAdapters } from '../src/db/adapters'
 import { deleteContractsByAdapter, insertAdaptersContracts } from '../src/db/contracts'
@@ -6,6 +7,8 @@ import pool from '../src/db/pool'
 import { Adapter, BaseContext } from '../src/lib/adapter'
 import { Chain, chains } from '../src/lib/chains'
 import { resolveContractsTokens } from '../src/lib/token'
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 function help() {
   console.log('npm run revalidate-contracts {adapter} ?{chain}')

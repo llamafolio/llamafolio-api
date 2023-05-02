@@ -1,6 +1,9 @@
-import { execSync } from 'child_process'
-import fs from 'fs'
-import path from 'path'
+import { execSync } from 'node:child_process'
+import fs from 'node:fs'
+import path from 'node:path'
+import url from 'node:url'
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 import { fetchProtocolsLite } from '../src/lib/protocols'
 
