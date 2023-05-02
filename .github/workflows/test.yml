@@ -117,18 +117,7 @@ jobs:
       # run tests.
       - name: 'Test'
         run: |
-          #
-          # start serverless-offline
-          #
-          ./node_modules/.bin/sls offline --httpPort 3034 &
-          #
-          # wait for serverless-offline to start
-          #
-          timeout 20 bash -c 'until echo >/dev/tcp/0.0.0.0/3034; do sleep 1; done' || true
-          #
-          # run tests
-          #
-          node_modules/.bin/vitest --run
+          /bin/bash ./scripts/test.sh
         env:
           DEBUG: '*'
           AWS_REGION: ${{ secrets.AWS_REGION }}
@@ -141,7 +130,7 @@ jobs:
           TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 9000 }}
 
   test-on-push-and-cron:
-    if:  github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'schedule'
+    if: github.event_name == 'schedule' || (github.event_name == 'push' && github.ref == 'refs/heads/master')
     needs: [lint-typecheck-build]
     name: 'Test [Push, Cron]'
     runs-on: [ubuntu-latest]

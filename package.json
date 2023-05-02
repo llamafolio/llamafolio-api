@@ -28,7 +28,7 @@
     "typecheck": "tsc --noEmit --skipLibCheck",
     "dev-test": "sls offline --httpPort 3034",
     "test": "vitest",
-    "test:ci": "vitest --run",
+    "test:ci": "/bin/bash ./scripts/test.sh",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "ts-node": "tsx",
