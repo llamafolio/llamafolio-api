@@ -10,6 +10,10 @@ on:
     # cron syntax: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
     # every day at 00:00 UTC
     - cron: '0 0 * * *'
+  push:
+    branches: ['master']
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
     inputs:
       stage:
@@ -20,10 +24,6 @@ on:
         description: 'Test timeout in ms'
         required: false
         default: '10000'
-  push:
-    branches: ['master']
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
 
 defaults:
   run:
@@ -115,7 +115,6 @@ jobs:
       # wait for it to start (https://explainshell.com/explain?cmd=timeout+20+bash+-c+%27until+echo+%3E%2Fdev%2Ftcp%2F0.0.0.0%2F3034%3B+do+sleep+1%3B+done%27+%7C%7C+true),
       # run tests.
       - name: 'Test'
-        continue-on-error: true
         run: |
           #
           # start serverless-offline
@@ -124,7 +123,7 @@ jobs:
           #
           # wait for serverless-offline to start
           #
-          timeout 20 bash -c 'until echo >/dev/tcp/0.0.0.0/3034; do sleep 1; done' || true
+          timeout 10 bash -c 'until echo >/dev/tcp/0.0.0.0/3034; do sleep 1; done' || true
           #
           # run tests
           #
@@ -139,10 +138,6 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
           TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 9000 }}
-
-      # - name: 'Stop serverless-offline'
-      #   run: |
-      #     kill $(lsof -t -i:3034)
 
   test-on-push-and-cron:
     if:  github.event_name == 'push' && github.ref == 'refs/heads/master' || github.event_name == 'schedule'
@@ -182,4 +177,4 @@ jobs:
           AWS_DEFAULT_OUTPUT: json
           TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 11000 }}
         run: |
-          pnpm test:ci
+          node_modules/.bin/vitest --run
