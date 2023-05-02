@@ -129,7 +129,8 @@ jobs:
       #     #
       #     node_modules/.bin/vitest run
       - name: 'Test'
-        run: test:ci
+        run: |
+          pnpm test:ci
         env:
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
