@@ -1,4 +1,4 @@
-import '../env'
+import '../environment'
 
 import { chains } from '@llamafolio/tokens'
 
