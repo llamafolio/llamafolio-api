@@ -2,11 +2,11 @@ import { balancerProvider } from '@adapters/piedao/ethereum/providers/balancer'
 import { pieProvider } from '@adapters/piedao/ethereum/providers/pie'
 import { sushiProvider } from '@adapters/piedao/ethereum/providers/sushi'
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { groupBy } from '@lib/array'
 import { Call, multicall } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
-import { groupBy } from 'lodash'
 
 const abi = {
   getStakeTotalDeposited: {

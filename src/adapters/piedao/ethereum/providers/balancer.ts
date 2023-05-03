@@ -1,10 +1,9 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter } from '@lib/array'
+import { groupBy, mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
-import { groupBy } from 'lodash'
 
 const abi = {
   getBalance: {
