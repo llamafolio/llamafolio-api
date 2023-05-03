@@ -68,7 +68,6 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
-    "millify": "^5.0.1",
     "node-pg-migrate": "^6.2.2",
     "prettier": "^2.8.8",
     "serverless": "^3.30.1",
