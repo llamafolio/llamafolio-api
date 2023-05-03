@@ -146,7 +146,7 @@ async function main() {
 
   try {
     const [contracts, adapterProps] = await Promise.all([
-      getContractsInteractions(client, address, adapterId),
+      getContractsInteractions(client, address, chain, adapterId),
       selectAdapterProps(client, adapter.id, chain),
     ])
 
