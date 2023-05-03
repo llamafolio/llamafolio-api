@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - master
+      # for debugging purposes
+      - 'debug-*'
 
 defaults:
   run:
