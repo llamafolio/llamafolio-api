@@ -5,9 +5,8 @@ import { resolveBalances } from '@lib/balance'
 const wTBT: Contract = {
   chain: 'ethereum',
   address: '0xd38e031f4529a07996aab977d2b79f0e00656c56',
-  decimal: 18,
+  decimals: 18,
   symbol: 'wTBT',
-  underlyings: ['0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'],
 }
 
 export const getContracts = () => {
