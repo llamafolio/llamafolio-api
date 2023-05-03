@@ -2,8 +2,8 @@ import { selectBalancesHolders } from '@db/balances'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
-import { Chain } from '@lib/chains'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { Chain } from '@lib/chains'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false

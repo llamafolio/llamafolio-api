@@ -23,7 +23,7 @@ function getAdapters() {
  * Revalidate contracts of all adapters
  */
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: revalidate-all-contracts.ts
 
   const adapters = getAdapters()

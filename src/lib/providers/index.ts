@@ -1,7 +1,8 @@
 import { setProvider } from '@defillama/sdk/build/general'
 import environment from '@environment'
-import { Chain, chains } from '@lib/chains'
-import { ethers } from 'ethers'
+import type { Chain } from '@lib/chains'
+import { chains } from '@lib/chains'
+import type { ethers } from 'ethers'
 
 import { createProvider } from './provider'
 

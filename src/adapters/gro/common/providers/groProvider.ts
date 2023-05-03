@@ -1,4 +1,4 @@
-import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 
 export async function getGroProvider(_ctx: BaseContext, contracts: Contract[]): Promise<Contract[]> {
   for (const contract of contracts) {

@@ -1,8 +1,9 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
-import { Category } from '@lib/category'
-import { Call, multicall } from '@lib/multicall'
+import type { Category } from '@lib/category'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isNotNullish, isSuccess } from '@lib/type'
 
 const abi = {

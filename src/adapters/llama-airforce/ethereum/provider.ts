@@ -1,11 +1,11 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO, isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isNotNullish, isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-import { LlamaBalancesParams } from './balance'
+import type { LlamaBalancesParams } from './balance'
 
 const abi = {
   balanceOfUnderlying: {

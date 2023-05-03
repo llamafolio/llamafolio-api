@@ -1,5 +1,6 @@
-import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { Call, multicall } from '@lib/multicall'
+import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 

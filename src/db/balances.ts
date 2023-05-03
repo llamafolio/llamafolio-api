@@ -1,9 +1,9 @@
 import { groupBy, sliceIntoChunks } from '@lib/array'
 import { strToBuf } from '@lib/buf'
-import { Category } from '@lib/category'
-import { Chain } from '@lib/chains'
+import type { Category } from '@lib/category'
+import type { Chain } from '@lib/chains'
 import { BigNumber } from 'ethers'
-import { PoolClient } from 'pg'
+import type { PoolClient } from 'pg'
 import format from 'pg-format'
 
 export interface Balance {

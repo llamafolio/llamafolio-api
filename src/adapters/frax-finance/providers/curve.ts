@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 import { ethers } from 'ethers'

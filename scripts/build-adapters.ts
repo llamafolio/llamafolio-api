@@ -9,7 +9,7 @@ import { chains } from '../src/lib/chains'
 
 const exportsTemplate = (adapters: string[]) => `
 ${adapters.map((adapter) => `import ${slugify(adapter)} from '@adapters/${adapter}'`).join(';')}
-import { Adapter } from '@lib/adapter';
+import type { Adapter } from '@lib/adapter';
 
 
 export const adapters: Adapter[] = [
@@ -116,7 +116,7 @@ function getAdapters() {
 }
 
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: build-adapters.ts
 
   const adapters = getAdapters()
@@ -131,9 +131,12 @@ async function main() {
     vsCodeLaunchTemplate(adapters, chains.map((chain) => chain.id).sort()),
   )
 
+  // lint
+  execSync('./node_modules/.bin/eslint --fix "./src/adapters/index.ts"')
+  execSync('./node_modules/.bin/eslint --fix "./.vscode/launch.json"')
   // format
-  execSync(`npx prettier --ignore-path .gitignore --ignore-path .prettierignore 'src/adapters/index.ts' --write`)
-  execSync(`npx prettier --ignore-path .gitignore --ignore-path .prettierignore '.vscode/launch.json' --write`)
+  execSync('./node_modules/.bin/prettier --ignore-path="./.eslintignore" "./src/adapters/index.ts" --write')
+  execSync('./node_modules/.bin/prettier --ignore-path="./.eslintignore" "./.vscode/launch.json" --write')
 }
 
 main()

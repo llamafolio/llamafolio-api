@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 
 export async function getBeefyContracts(ctx: BaseContext): Promise<Contract[]> {
   const contracts: Contract[] = []

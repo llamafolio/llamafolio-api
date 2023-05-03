@@ -1,6 +1,6 @@
 import '@lib/providers'
 
-import { BaseContext } from '@lib/adapter'
+import type { BaseContext } from '@lib/adapter'
 import { batchCallers } from '@lib/multicall'
 
 export type CallParams = string | number | (string | number)[] | undefined

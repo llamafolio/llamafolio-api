@@ -1,4 +1,4 @@
-import { BalancesContext, Contract, LockBalance } from '@lib/adapter'
+import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { call } from '@lib/call'
 import { BN_ZERO } from '@lib/math'
 import { BigNumber } from 'ethers'

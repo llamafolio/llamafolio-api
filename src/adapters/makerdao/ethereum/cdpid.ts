@@ -1,4 +1,4 @@
-import { BalancesContext, Contract } from '@lib/adapter'
+import type { BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 

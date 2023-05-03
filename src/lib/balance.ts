@@ -1,4 +1,4 @@
-import {
+import type {
   Balance,
   BalancesContext,
   BaseBalance,
@@ -7,12 +7,13 @@ import {
   GetContractsHandler,
   PricedBalance,
 } from '@lib/adapter'
-import { Category } from '@lib/category'
+import type { Category } from '@lib/category'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, BN_ZERO } from '@lib/math'
-import { Call, multicall, MultiCallOptions, MultiCallResult } from '@lib/multicall'
+import type { Call, MultiCallOptions, MultiCallResult } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { ethers } from 'ethers'
 

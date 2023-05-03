@@ -1,7 +1,8 @@
-import { Balance, fromRowStorage as fromBalanceRowStorage } from '@db/balances'
+import type { Balance } from '@db/balances'
+import { fromRowStorage as fromBalanceRowStorage } from '@db/balances'
 import { sliceIntoChunks } from '@lib/array'
-import { Chain } from '@lib/chains'
-import { PoolClient } from 'pg'
+import type { Chain } from '@lib/chains'
+import type { PoolClient } from 'pg'
 import format from 'pg-format'
 
 export interface BalancesGroup {

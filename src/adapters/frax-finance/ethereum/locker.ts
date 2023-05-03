@@ -1,4 +1,4 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getSingleLockerBalances } from '@lib/lock'
 import { multicall } from '@lib/multicall'
 import { isNotNullish, isSuccess } from '@lib/type'

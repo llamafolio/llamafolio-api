@@ -1,4 +1,4 @@
-import { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getBabylonBalances } from './balance'

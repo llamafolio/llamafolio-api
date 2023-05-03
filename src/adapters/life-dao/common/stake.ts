@@ -1,5 +1,5 @@
-import { Balance, Contract } from '@lib/adapter'
-import { BalancesContext } from '@lib/adapter'
+import type { Balance, Contract } from '@lib/adapter'
+import type { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi } from '@lib/erc20'
 import { BigNumber } from 'ethers/lib/ethers'

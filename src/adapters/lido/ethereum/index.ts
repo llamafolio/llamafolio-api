@@ -1,6 +1,6 @@
 import { getStEthStakeBalances, getWStEthStakeBalances } from '@adapters/lido/ethereum/stake'
 import { getStMaticBalances } from '@adapters/lido/ethereum/stake'
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const stETH: Contract = {

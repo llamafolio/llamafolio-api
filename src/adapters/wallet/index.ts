@@ -1,9 +1,10 @@
-import { Adapter, Balance, BalancesContext, GetBalancesHandler } from '@lib/adapter'
+import type { Adapter, Balance, BalancesContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Chain, chains } from '@lib/chains'
+import type { Chain } from '@lib/chains'
+import { chains } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { providers } from '@lib/providers'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 import { ethers } from 'ethers'
 

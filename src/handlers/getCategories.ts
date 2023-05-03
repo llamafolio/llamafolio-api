@@ -1,6 +1,6 @@
 import { success } from '@handlers/response'
 import { Categories } from '@lib/category'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async () => {
   return success(

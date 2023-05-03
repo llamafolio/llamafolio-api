@@ -2,7 +2,7 @@ import { selectLabelsByAddresses } from '@db/labels'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 const LINKS = ['github', 'telegram', 'twitter', 'website']
 

@@ -1,9 +1,11 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
-import { getStakerBalances, getStakerContracts, getStakerContractsParams } from '../common/stake'
-import { getTransmutationBalances, getTransmutationContractsParams } from '../common/transmuter'
+import type { getStakerContractsParams } from '../common/stake'
+import { getStakerBalances, getStakerContracts } from '../common/stake'
+import type { getTransmutationContractsParams } from '../common/transmuter'
+import { getTransmutationBalances } from '../common/transmuter'
 
 const DAI: Token = {
   chain: 'ethereum',

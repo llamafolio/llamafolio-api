@@ -1,4 +1,4 @@
-import { PoolClient } from 'pg'
+import type { PoolClient } from 'pg'
 
 export interface IHistoryTransaction {
   contract_interacted?: {

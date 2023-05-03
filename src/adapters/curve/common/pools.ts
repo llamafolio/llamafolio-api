@@ -1,10 +1,11 @@
-import { BaseContext, Contract } from '@lib/adapter'
-import { Call, multicall } from '@lib/multicall'
+import type { BaseContext, Contract } from '@lib/adapter'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { ethers } from 'ethers'
 
-import { Registry } from './registries'
+import type { Registry } from './registries'
 
 const abi = {
   pool_count: {

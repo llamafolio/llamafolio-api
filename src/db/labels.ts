@@ -1,5 +1,5 @@
 import { bufToStr, strToBuf } from '@lib/buf'
-import { PoolClient } from 'pg'
+import type { PoolClient } from 'pg'
 import format from 'pg-format'
 
 export interface Label {

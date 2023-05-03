@@ -1,11 +1,12 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { BN_ZERO } from '@lib/math'
-import { Call, multicall } from '@lib/multicall'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
 
-import { ProviderBalancesParams } from '../providers/interface'
+import type { ProviderBalancesParams } from '../providers/interface'
 import { curveBalancesProvider } from './providers/curve'
 import { saddleBalancesProvider } from './providers/saddle'
 

@@ -1,6 +1,7 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { BalanceWithExtraProps, getHealthFactor, getMarketsContracts } from '@lib/compound/v2/lending'
+import type { BalanceWithExtraProps } from '@lib/compound/v2/lending'
+import { getHealthFactor, getMarketsContracts } from '@lib/compound/v2/lending'
 
 import { getInverseLendingBalances } from './balance'
 

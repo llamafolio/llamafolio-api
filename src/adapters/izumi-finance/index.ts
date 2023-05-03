@@ -1,6 +1,6 @@
 // https://developer.izumi.finance/iZiSwap/deployed_contracts/mainnet.html
 
-import { Adapter } from '@lib/adapter'
+import type { Adapter } from '@lib/adapter'
 
 import * as arbitrum from './arbitrum'
 // import * as bsc from './bsc'

@@ -1,6 +1,6 @@
 import { sliceIntoChunks } from '@lib/array'
-import { Chain } from '@lib/chains'
-import { PoolClient } from 'pg'
+import type { Chain } from '@lib/chains'
+import type { PoolClient } from 'pg'
 import format from 'pg-format'
 
 export interface YieldOld {

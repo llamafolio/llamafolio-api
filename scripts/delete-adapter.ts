@@ -7,7 +7,7 @@ function help() {
 }
 
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: delete-adapter.ts
   // argv[2]: adapter
   if (process.argv.length < 3) {

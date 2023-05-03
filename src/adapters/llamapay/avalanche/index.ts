@@ -1,4 +1,4 @@
-import { GetBalancesHandler } from '@lib/adapter'
+import type { GetBalancesHandler } from '@lib/adapter'
 
 import { getPayeeStreams } from '../common/streams'
 

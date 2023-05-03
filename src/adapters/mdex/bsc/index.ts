@@ -1,8 +1,9 @@
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
-import { Token } from '@lib/token'
-import { getPairsContracts, Pair } from '@lib/uniswap/v2/factory'
+import type { Token } from '@lib/token'
+import type { Pair } from '@lib/uniswap/v2/factory'
+import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 const MDX: Token = {

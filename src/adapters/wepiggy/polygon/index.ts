@@ -1,7 +1,7 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
 import { getMarketsRewards } from '../common/rewards'
 
