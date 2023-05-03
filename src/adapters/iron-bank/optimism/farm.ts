@@ -1,9 +1,9 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { keyBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
-import { keyBy } from 'lodash'
 
 const abi = {
   earned: {

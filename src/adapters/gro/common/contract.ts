@@ -1,8 +1,8 @@
 import { BaseContext, Contract } from '@lib/adapter'
+import { groupBy, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
-import { groupBy, range } from 'lodash'
 
 import { getBalancerProvider } from './providers/balancerProvider'
 import { getGroProvider } from './providers/groProvider'

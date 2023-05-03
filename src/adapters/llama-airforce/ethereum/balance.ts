@@ -1,9 +1,9 @@
 import { Balance, BalancesContext, Contract, FarmBalance } from '@lib/adapter'
+import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
-import { groupBy } from 'lodash'
 
 import { convexProvider, curveProvider, llamaProvider } from './provider'
 

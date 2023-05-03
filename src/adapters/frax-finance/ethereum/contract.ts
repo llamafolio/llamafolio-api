@@ -1,7 +1,7 @@
 import { BaseContext, Contract } from '@lib/adapter'
+import { groupBy } from '@lib/array'
 import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
-import { groupBy } from 'lodash'
 
 import { aaveProvider } from '../providers/aave'
 import { convexProvider } from '../providers/convex'

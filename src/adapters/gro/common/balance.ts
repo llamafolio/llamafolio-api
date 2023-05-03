@@ -1,10 +1,10 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_TEN } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
-import { groupBy } from 'lodash'
 
 import { getBalancerProviderBalances } from './providers/balancerProvider'
 import { getGroProviderBalances } from './providers/groProvider'
@@ -79,6 +79,7 @@ export async function getGroBalances(
       amount: BigNumber.from(userInfosBalanceRes.output.amount),
       underlyings,
       rewards: [{ ...reward, amount: BigNumber.from(claimableBalanceRes.output) }],
+      category: 'farm',
     })
   }
 
@@ -99,7 +100,7 @@ const providers: Record<string, Provider | undefined> = {
 
 const getUnderlyingsBalances = async (ctx: BalancesContext, balances: Balance[]): Promise<Balance[]> => {
   // resolve underlyings
-  const poolsByPid = groupBy(balances, 'pid')
+  const poolsByPid = groupBy(balances as Contract[], 'pid')
 
   return (
     await Promise.all(
