@@ -12,6 +12,10 @@ defaults:
   run:
     shell: bash
 
+env:
+  STAGE: 'dev'
+  ACTIONS_RUNNER_DEBUG: true
+
 jobs:
   deploy:
     name: deploy
@@ -22,8 +26,6 @@ jobs:
         pnvm-version: [latest]
     runs-on: ${{ matrix.os }}
     env:
-      STAGE: 'dev'
-      ACTIONS_RUNNER_DEBUG: true
       PGHOST: ${{ secrets.PGHOST }}
       PGUSER: ${{ secrets.PGUSER }}
       PGPORT: ${{ secrets.PGPORT }}
@@ -49,7 +51,15 @@ jobs:
           cache: pnpm
 
       - name: 'Install Dependencies'
-        run: pnpm install --frozen-lockfile
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm add --global serverless serverless-esbuild
+          echo "Node.js VERSION:"
+          node --version
+          echo "PNPM VERSION:"
+          pnpm --version
+          echo "Serverless VERSION:"
+          serverless --version
 
       - name: 'Build'
         run: pnpm build
@@ -58,6 +68,8 @@ jobs:
         uses: serverless/github-action@v3.1
         with:
           entrypoint: /bin/bash
-          args: -c "serverless plugin install --name serverless-esbuild && serverless deploy --stage ${{ env.STAGE }} --verbose"
+          args: -c "serverless deploy --stage ${{ env.STAGE }} --verbose"
         env:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          # enables verbose logging
+          ACTIONS_STEP_DEBUG: true
