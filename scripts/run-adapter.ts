@@ -2,13 +2,13 @@ import path from 'node:path'
 import url from 'node:url'
 
 import { BigNumber } from 'ethers'
-import millify from 'millify'
 
 import pool from '../src/db/pool'
 import { Adapter, Balance, BalancesContext, PricedBalance } from '../src/lib/adapter'
 import { groupBy } from '../src/lib/array'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
+import { millify } from '../src/lib/fmt'
 import { getPricedBalances } from '../src/lib/price'
 import { resolveContractsTokens } from '../src/lib/token'
 
