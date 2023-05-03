@@ -1,4 +1,4 @@
-import '../env'
+import '../environment'
 
 import { chains as tokensByChain } from '@llamafolio/tokens'
 import { BigNumber } from 'ethers'
