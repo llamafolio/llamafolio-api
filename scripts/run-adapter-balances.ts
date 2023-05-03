@@ -1,8 +1,6 @@
 import path from 'node:path'
 import url from 'node:url'
 
-import millify from 'millify'
-
 import { selectAdapterProps } from '../src/db/adapters'
 import { getContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
@@ -10,6 +8,7 @@ import { Adapter, Balance, BalancesContext, PricedBalance } from '../src/lib/ada
 import { groupBy } from '../src/lib/array'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
+import { millify } from '../src/lib/fmt'
 import { getPricedBalances } from '../src/lib/price'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
