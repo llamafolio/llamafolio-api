@@ -24,6 +24,6 @@
       "@environment": ["./environment.ts"]
     }
   },
-  "include": ["src", "scripts", "test", "environment.ts", "bench"],
+  "include": ["src", "scripts", "test", "environment.ts", "bench", "vitest.config.ts", "tsup.config.ts"],
   "exclude": [".esbuild", "node_modules"]
 }
