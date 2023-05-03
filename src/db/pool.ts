@@ -1,10 +1,10 @@
 import env from '@environment'
-import { Pool } from 'pg'
+import pg from 'pg'
 
 const connectionString = `postgresql://${env.PGUSER}:${env.PGPASSWORD}@${env.PGHOST}:${env.PGPORT}/${env.PGDATABASE}`
 
 // See: https://gist.github.com/streamich/6175853840fb5209388405910c6cc04b
-const pool = new Pool({
+const pool = new pg.Pool({
   max: 1,
   min: 0,
   idleTimeoutMillis: 120000,

@@ -21,10 +21,9 @@
     "baseUrl": ".",
     "paths": {
       "@*": ["./src/*"],
-      "@env": ["./env.js"],
       "@environment": ["./environment.ts"]
     }
   },
   "include": ["src", "scripts", "test", "environment.ts", "bench"],
-  "exclude": [".esbuild", "node_modules", "./env.js"]
+  "exclude": [".esbuild", "node_modules"]
 }

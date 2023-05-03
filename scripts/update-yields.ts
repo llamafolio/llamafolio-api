@@ -1,4 +1,4 @@
-import '../env'
+import '../environment'
 
 import pool from '../src/db/pool'
 import { deleteAllYields, fetchYields, insertYields } from '../src/db/yields'
