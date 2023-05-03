@@ -1,4 +1,4 @@
-import { Adapter } from '@lib/adapter'
+import type { Adapter } from '@lib/adapter'
 
 import * as ethereum from './ethereum'
 // import * as optimism from './optimism'

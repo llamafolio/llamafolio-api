@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 
 export interface PairsResponse {
   data: Pair[]

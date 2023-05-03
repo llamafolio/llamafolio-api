@@ -1,4 +1,4 @@
-import { LabelSource } from '../src/labels'
+import type { LabelSource } from '../src/labels'
 import { fetchENSName } from '../src/labels/ens'
 import { fetchLlamaFolioLabel } from '../src/labels/llamafolio'
 import { fetchOpenSeaUser } from '../src/labels/opensea'

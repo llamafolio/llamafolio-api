@@ -2,7 +2,7 @@ import * as arbitrum from '@adapters/abracadabra/arbitrum'
 import * as avalanche from '@adapters/abracadabra/avalanche'
 import * as ethereum from '@adapters/abracadabra/ethereum'
 import * as fantom from '@adapters/abracadabra/fantom'
-import { Adapter } from '@lib/adapter'
+import type { Adapter } from '@lib/adapter'
 
 const adapter: Adapter = {
   id: 'abracadabra',

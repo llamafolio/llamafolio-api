@@ -1,9 +1,9 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 
-import { IPools } from '.'
+import type { IPools } from '.'
 
 const abi = {
   poolToken: {

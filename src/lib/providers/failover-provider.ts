@@ -1,5 +1,5 @@
 import { Logger } from '@ethersproject/logger'
-import { Network } from '@ethersproject/networks'
+import type { Network } from '@ethersproject/networks'
 import { defineReadOnly } from '@ethersproject/properties'
 import { version } from '@ethersproject/providers/lib/_version'
 import { timeout } from '@lib/promise'

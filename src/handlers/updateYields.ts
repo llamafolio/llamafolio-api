@@ -3,7 +3,7 @@ import { deleteAllYields, fetchYields, insertYields } from '@db/yields'
 import environment from '@environment'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 const updateYields: APIGatewayProxyHandler = async () => {
   // run in a Lambda because of APIGateway timeout

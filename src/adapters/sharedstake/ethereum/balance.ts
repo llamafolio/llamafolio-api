@@ -1,5 +1,6 @@
-import { Balance, BalancesContext, Contract, FarmBalance } from '@lib/adapter'
-import { Call, multicall } from '@lib/multicall'
+import type { Balance, BalancesContext, Contract, FarmBalance } from '@lib/adapter'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'

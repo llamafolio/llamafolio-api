@@ -1,8 +1,8 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
-import { Token } from '@lib/token'
-import { Pair } from '@lib/uniswap/v2/factory'
+import type { Token } from '@lib/token'
+import type { Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber, utils } from 'ethers'
 

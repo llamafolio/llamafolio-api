@@ -5,14 +5,15 @@ import walletAdapter from '@adapters/wallet'
 import { getAllTokensInteractions, groupContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
-import { BalancesContext, PricedBalance } from '@lib/adapter'
+import type { BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { isBalanceUSDGtZero, sanitizeBalances, sortBalances, sumBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
-import { Chain, chainById } from '@lib/chains'
+import type { Chain } from '@lib/chains'
+import { chainById } from '@lib/chains'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 function formatBalance(balance: any): FormattedBalance {
   return {

@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { isNotNullish } from '@lib/type'
 
 import { getHealthFactor, getProxiesBalances } from './balances'

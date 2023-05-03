@@ -1,7 +1,8 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { GetMarketsContractsProps } from '@lib/compound/v2/lending'
-import { Call, multicall } from '@lib/multicall'
+import type { GetMarketsContractsProps } from '@lib/compound/v2/lending'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
 const abi = {

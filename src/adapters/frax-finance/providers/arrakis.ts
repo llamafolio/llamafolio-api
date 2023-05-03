@@ -1,10 +1,10 @@
-import { Balance, BalancesContext } from '@lib/adapter'
+import type { Balance, BalancesContext } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
-import { ProviderBalancesParams } from './interface'
+import type { ProviderBalancesParams } from './interface'
 
 const abi = {
   getUnderlyingBalances: {

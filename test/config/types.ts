@@ -1,4 +1,4 @@
-import { possibleParameters, possibleQueryParameters } from './constants'
+import type { possibleParameters, possibleQueryParameters } from './constants'
 
 export type PossibleParameter = (typeof possibleParameters)[number]
 export type PossibleQueryParameter = (typeof possibleQueryParameters)[number]

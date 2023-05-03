@@ -28,6 +28,7 @@ module.exports = {
     ],
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
+    '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',

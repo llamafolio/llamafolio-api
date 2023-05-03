@@ -1,7 +1,7 @@
-import { Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getERC20BalanceOf } from '@lib/erc20'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
 import { getFarmBalances, getLockerBalances, getStakeBalances } from './balance'
 import { getPlatypusContract } from './contract'

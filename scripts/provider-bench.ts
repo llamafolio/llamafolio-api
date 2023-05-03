@@ -2,7 +2,7 @@ import '../environment'
 
 import { chains as tokensByChain } from '@llamafolio/tokens'
 
-import { BaseContext } from '../src/lib/adapter'
+import type { BaseContext } from '../src/lib/adapter'
 import { call } from '../src/lib/call'
 import { abi as erc20Abi } from '../src/lib/erc20'
 

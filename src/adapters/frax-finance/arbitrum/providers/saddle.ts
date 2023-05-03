@@ -1,4 +1,4 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO, isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
@@ -15,7 +15,7 @@ const abi = {
   },
 }
 
-import { ProviderBalancesParams } from '../../providers/interface'
+import type { ProviderBalancesParams } from '../../providers/interface'
 
 export const saddleBalancesProvider = async (
   ctx: BalancesContext,

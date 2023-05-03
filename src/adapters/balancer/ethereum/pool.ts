@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 import request, { gql } from 'graphql-request'
 
 export async function getOldBalancerPools(ctx: BaseContext, url: string): Promise<Contract[]> {

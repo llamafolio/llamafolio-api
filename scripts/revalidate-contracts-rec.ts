@@ -3,11 +3,12 @@ import url from 'node:url'
 
 import { isEqual } from 'lodash'
 
-import { Adapter as DBAdapter, selectAdapter, upsertAdapters } from '../src/db/adapters'
+import type { Adapter as DBAdapter } from '../src/db/adapters'
+import { selectAdapter, upsertAdapters } from '../src/db/adapters'
 import { deleteContractsByAdapter, insertAdaptersContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { Adapter, BaseContext } from '../src/lib/adapter'
-import { Chain } from '../src/lib/chains'
+import type { Adapter, BaseContext } from '../src/lib/adapter'
+import type { Chain } from '../src/lib/chains'
 import { resolveContractsTokens } from '../src/lib/token'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))

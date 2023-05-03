@@ -1,6 +1,6 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getERC20BalanceOf } from '@lib/erc20'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
 const FROM_veSOS_TO_SOS = 21669 // 2.1669 * 1e4 to prevent underflow
 

@@ -1,8 +1,8 @@
-import { BalancesContext, Contract, VestBalance } from '@lib/adapter'
+import type { BalancesContext, Contract, VestBalance } from '@lib/adapter'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 

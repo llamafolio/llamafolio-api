@@ -1,13 +1,14 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
-import { Call, multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
+import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
-import { ILVContract } from './contract'
+import type { ILVContract } from './contract'
 
 const abi = {
   pendingRewards: {

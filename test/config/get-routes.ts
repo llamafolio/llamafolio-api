@@ -2,7 +2,7 @@ import childProcess from 'node:child_process'
 import fs from 'node:fs'
 
 import { getApiURL } from './api-url'
-import { AwsStage } from './constants'
+import type { AwsStage } from './constants'
 import type { ApiGatewayRoutes, Route } from './types'
 
 export function getRoutes({ stage }: { stage: AwsStage | 'local' }): Array<Route> {

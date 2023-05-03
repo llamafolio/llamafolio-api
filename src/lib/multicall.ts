@@ -1,8 +1,8 @@
 import '@lib/providers'
 
 import { multiCall } from '@defillama/sdk/build/abi/index'
-import { BaseContext } from '@lib/adapter'
-import { CallParams } from '@lib/call'
+import type { BaseContext } from '@lib/adapter'
+import type { CallParams } from '@lib/call'
 import { chains } from '@lib/chains'
 import { isNotNullish } from '@lib/type'
 import { ethers } from 'ethers'

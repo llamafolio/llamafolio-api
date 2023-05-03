@@ -1,4 +1,4 @@
-import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'

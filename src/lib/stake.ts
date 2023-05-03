@@ -1,8 +1,9 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { call, CallOptions } from '@lib/call'
-import { Category } from '@lib/category'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { CallOptions } from '@lib/call'
+import { call } from '@lib/call'
+import type { Category } from '@lib/category'
 import { abi as erc20ABI, getERC20BalanceOf } from '@lib/erc20'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 export async function getSingleStakeBalance(

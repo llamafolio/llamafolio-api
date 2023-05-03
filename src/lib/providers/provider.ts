@@ -1,5 +1,5 @@
 import environment from '@environment'
-import { IChainInfo } from '@lib/chains'
+import type { IChainInfo } from '@lib/chains'
 import { ethers } from 'ethers'
 
 import { FailoverProvider } from './failover-provider'

@@ -1,4 +1,4 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getDepositBalances, getDepositV2Balances, getStakeBalances, getYieldBalances } from './balance'

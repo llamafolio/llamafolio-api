@@ -1,4 +1,5 @@
-import { AwsGatewayApiId, AwsStage } from './constants'
+import type { AwsStage } from './constants'
+import { AwsGatewayApiId } from './constants'
 
 // TODO: should probably move this to `src/config
 export const getApiGatewayURL = (awsStage: AwsStage = 'dev') =>

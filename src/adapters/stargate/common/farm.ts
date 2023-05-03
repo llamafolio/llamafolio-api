@@ -1,6 +1,7 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { keyBy, range } from '@lib/array'
-import { Call, multicall } from '@lib/multicall'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 

@@ -3,9 +3,9 @@ import '../environment'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 import { BigNumber } from 'ethers'
 
-import { BalancesContext } from '../src/lib/adapter'
+import type { BalancesContext } from '../src/lib/adapter'
 import { sliceIntoChunks } from '../src/lib/array'
-import { Chain } from '../src/lib/chains'
+import type { Chain } from '../src/lib/chains'
 import { multicall } from '../src/lib/multicall'
 
 // See: https://github.com/o-az/evm-balances/tree/master

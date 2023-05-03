@@ -3,10 +3,10 @@ import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { groupBy } from '@lib/array'
 import { isHex } from '@lib/buf'
-import { Chain } from '@lib/chains'
+import type { Chain } from '@lib/chains'
 import { sum } from '@lib/math'
-import { TUnixTimestamp } from '@lib/type'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { TUnixTimestamp } from '@lib/type'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface SnapshotChainResponse {
   id: Chain

@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 import { gql, request } from 'graphql-request'
 
 const THE_GRAPH_URL = 'https://api.thegraph.com/subgraphs/name/solidlizardfinance/sliz'

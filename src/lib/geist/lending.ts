@@ -2,11 +2,11 @@ import {
   getLendingPoolBalances as getAaveLendingPoolBalances,
   getLendingPoolContracts as getAaveLendingPoolContracts,
 } from '@lib/aave/v2/lending'
-import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { keyBy, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 

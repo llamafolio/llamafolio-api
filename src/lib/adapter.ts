@@ -1,6 +1,6 @@
-import { Category } from '@lib/category'
-import { Chain } from '@lib/chains'
-import { BigNumber } from 'ethers'
+import type { Category } from '@lib/category'
+import type { Chain } from '@lib/chains'
+import type { BigNumber } from 'ethers'
 
 export interface BaseContext {
   chain: Chain

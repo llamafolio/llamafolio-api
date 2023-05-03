@@ -1,17 +1,12 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
-import {
-  fmtBalancerProvider,
-  fmtCurveProvider,
-  fmtProviderBalancesParams,
-  fmtSolidlyProvider,
-  fmtSushiProvider,
-} from './utils'
+import type { fmtProviderBalancesParams } from './utils'
+import { fmtBalancerProvider, fmtCurveProvider, fmtSolidlyProvider, fmtSushiProvider } from './utils'
 
 const abi = {
   getPricePerFullShare: {

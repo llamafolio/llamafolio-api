@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 
 export async function getPoolContractsFromAPI(ctx: BaseContext, API_URLs: string[]): Promise<Contract[]> {
   const contracts: Contract[] = []

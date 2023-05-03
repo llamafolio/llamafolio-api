@@ -1,7 +1,8 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Call, multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
+import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 
 const abi = {

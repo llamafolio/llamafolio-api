@@ -1,7 +1,7 @@
-import { IChainInfo } from '@lib/chains'
+import type { IChainInfo } from '@lib/chains'
 import { ethers } from 'ethers'
 
-import { FailoverProvider } from './failover-provider'
+import type { FailoverProvider } from './failover-provider'
 import { createJsonRpcProvider } from './provider'
 
 // See: https://github.com/ethers-io/ethers.js/issues/1053

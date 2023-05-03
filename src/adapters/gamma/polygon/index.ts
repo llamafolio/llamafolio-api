@@ -1,6 +1,6 @@
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Pair } from '@lib/uniswap/v2/factory'
+import type { Pair } from '@lib/uniswap/v2/factory'
 
 import { getGammaFarmBalances, getGammaMasterchefBalances } from '../common/balance'
 import { getPoolContractsFromAPI } from '../common/contract'

@@ -1,7 +1,8 @@
-import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO, isZero } from '@lib/math'
-import { Call, multicall } from '@lib/multicall'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
@@ -43,7 +44,7 @@ const abi = {
   },
 }
 
-import { ProviderBalancesParams } from './interface'
+import type { ProviderBalancesParams } from './interface'
 
 export const uniswap3Provider = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
   const res: Contract[] = []

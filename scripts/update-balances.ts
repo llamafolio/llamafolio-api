@@ -2,18 +2,16 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { adapterById } from '../src/adapters'
 import { selectDefinedAdaptersContractsProps } from '../src/db/adapters'
-import { Balance as BalanceStore, insertBalances } from '../src/db/balances'
-import {
-  BalancesGroup,
-  deleteBalancesGroupsCascadeByFromAddress,
-  insertBalancesGroups,
-} from '../src/db/balances-groups'
+import type { Balance as BalanceStore } from '../src/db/balances'
+import { insertBalances } from '../src/db/balances'
+import type { BalancesGroup } from '../src/db/balances-groups'
+import { deleteBalancesGroupsCascadeByFromAddress, insertBalancesGroups } from '../src/db/balances-groups'
 import { getAllContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { Balance, BalancesConfig, BalancesContext } from '../src/lib/adapter'
+import type { Balance, BalancesConfig, BalancesContext } from '../src/lib/adapter'
 import { groupBy, groupBy2, keyBy2 } from '../src/lib/array'
 import { balancesTotalBreakdown, sanitizeBalances } from '../src/lib/balance'
-import { Chain } from '../src/lib/chains'
+import type { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
 

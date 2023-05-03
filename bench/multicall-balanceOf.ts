@@ -3,8 +3,8 @@ import '../environment'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 import { BigNumber } from 'ethers'
 
-import { BalancesContext } from '../src/lib/adapter'
-import { Chain } from '../src/lib/chains'
+import type { BalancesContext } from '../src/lib/adapter'
+import type { Chain } from '../src/lib/chains'
 import { multicall } from '../src/lib/multicall'
 
 const abi = {

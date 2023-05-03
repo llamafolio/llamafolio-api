@@ -1,8 +1,8 @@
 import { selectLatestCreatedAdapters } from '@db/adapters'
 import pool from '@db/pool'
 import { serverError, success } from '@handlers/response'
-import { Chain } from '@lib/chains'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { Chain } from '@lib/chains'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface ProtocolResponse {
   id: string

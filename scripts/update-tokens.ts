@@ -1,7 +1,8 @@
 import '../environment'
 
 import pool from '../src/db/pool'
-import { ERC20Token, insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/tokens'
+import type { ERC20Token } from '../src/db/tokens'
+import { insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/tokens'
 import { getERC20Details } from '../src/lib/erc20'
 
 function help() {

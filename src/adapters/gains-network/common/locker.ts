@@ -1,4 +1,4 @@
-import { BalancesContext, Contract, LockBalance } from '@lib/adapter'
+import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'

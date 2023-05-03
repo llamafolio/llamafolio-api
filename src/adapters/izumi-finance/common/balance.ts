@@ -1,9 +1,9 @@
 import { getTokenIdsBalances } from '@adapters/uniswap-v3/common/pools'
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 

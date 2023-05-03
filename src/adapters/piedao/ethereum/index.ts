@@ -1,9 +1,9 @@
 import { getPieDaoFarmBalances } from '@adapters/piedao/ethereum/farm'
 import { getPieDaoLockerBalances } from '@adapters/piedao/ethereum/lock'
 import { getPieDaoStakeBalances } from '@adapters/piedao/ethereum/stake'
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
 const DOUGH: Token = {
   chain: 'ethereum',

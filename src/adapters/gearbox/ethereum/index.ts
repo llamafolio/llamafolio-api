@@ -1,8 +1,9 @@
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getLeverageFarming } from './leverage'
-import { getContractsRegister, getPoolsBalances, getPoolsContracts, PoolContract } from './pools'
+import type { PoolContract } from './pools'
+import { getContractsRegister, getPoolsBalances, getPoolsContracts } from './pools'
 
 export const getContracts = async (ctx: BaseContext) => {
   const contractsRegister = await getContractsRegister(ctx)

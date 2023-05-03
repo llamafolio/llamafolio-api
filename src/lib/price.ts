@@ -1,6 +1,6 @@
-import { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
+import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { BN_ZERO, mulPrice, sum } from '@lib/math'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
 // Defillama prices API requires a prefix to know where the token comes from.

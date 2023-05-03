@@ -1,13 +1,14 @@
-import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO, isZero } from '@lib/math'
-import { Call, multicall } from '@lib/multicall'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber, ethers, utils } from 'ethers'
 
-import { ProviderBalancesParams } from './interface'
+import type { ProviderBalancesParams } from './interface'
 
 const abi = {
   convexPoolId: {

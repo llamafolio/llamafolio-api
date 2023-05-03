@@ -1,5 +1,5 @@
 import { getTProtocolBalances } from '@adapters/tprotocol/ethereum/balance'
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const wTBT: Contract = {

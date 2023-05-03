@@ -1,7 +1,7 @@
 import { getLendingPoolBalances as getAaveLendingPoolBalances } from '@lib/aave/v2/lending'
-import { BalancesContext, Contract } from '@lib/adapter'
+import type { BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 const abi = {

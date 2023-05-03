@@ -1,9 +1,10 @@
 import { getBalancerPoolsBalances } from '@adapters/balancer/common/balance'
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { Call, multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
+import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
 
