@@ -1,5 +1,4 @@
 import { Balance, BalancesContext, BaseContext } from '@lib/adapter'
-import { sliceIntoChunks } from '@lib/array'
 import { Call, multicall, MultiCallResult } from '@lib/multicall'
 import { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -106,36 +105,57 @@ export async function getERC20BalanceOf(
   const { getContractAddress } = params || { getContractAddress: (contract) => contract.address }
 
   if (ctx.chain in multiCoinContracts) {
-    // TODO: find the max number of tokens fitting as params
-    const slices = sliceIntoChunks(tokens, 1000)
+    const tokenByAddress: { [key: string]: Token } = {}
+    let nextTokens = tokens.slice()
 
-    const balances = await multicall({
-      ctx,
-      // @ts-ignore
-      calls: slices.map((tokens) => ({
-        // @ts-ignore
-        target: multiCoinContracts[ctx.chain],
-        params: [ctx.address, tokens.map((token) => token.address)],
-      })),
-      abi: abi.getBalances,
-    })
-
-    let callIdx = 0
-    for (let sliceIdx = 0; sliceIdx < slices.length; sliceIdx++) {
-      if (!balances[sliceIdx].success || balances[sliceIdx].output == null) {
-        console.error(
-          `Could not get balanceOf for tokens ${ctx.chain}:`,
-          slices[sliceIdx].map((token) => token.address),
-        )
-        continue
-      }
-
-      for (let tokenIdx = 0; tokenIdx < slices[sliceIdx].length; tokenIdx++) {
-        const token = tokens[callIdx] as Balance
-        token.amount = BigNumber.from(balances[sliceIdx].output[tokenIdx] || '0')
-        callIdx++
-      }
+    for (let i = 0; i < tokens.length; i++) {
+      tokenByAddress[tokens[i].address] = tokens[i]
     }
+
+    do {
+      // binary search to handle errors as the whole call will fail if one token fails
+      const mid = Math.floor(nextTokens.length / 2)
+      const left = nextTokens.slice(0, mid)
+      const right = nextTokens.slice(mid)
+      const slices = [left, right]
+
+      const balances = await multicall({
+        ctx,
+        // @ts-ignore
+        calls: slices.map((tokens) => ({
+          // @ts-ignore
+          target: multiCoinContracts[ctx.chain],
+          params: [ctx.address, tokens.map((token) => token.address)],
+        })),
+        abi: abi.getBalances,
+      })
+
+      const failedTokens: Token[] = []
+      for (const balancesRes of balances) {
+        if (!balancesRes.success || balancesRes.output == null) {
+          // Found error
+          if (balancesRes.input.params[1].length === 1) {
+            console.error(`Could not get balanceOf for token ${balancesRes.input.params[1][0]}`)
+            continue
+          }
+
+          for (let tokenIdx = 0; tokenIdx < balancesRes.input.params[1].length; tokenIdx++) {
+            const tokenAddress = balancesRes.input.params[1][tokenIdx]
+            failedTokens.push(tokenByAddress[tokenAddress])
+          }
+        } else {
+          for (let tokenIdx = 0; tokenIdx < balancesRes.input.params[1].length; tokenIdx++) {
+            const tokenAddress = balancesRes.input.params[1][tokenIdx]
+            const token = tokenByAddress[tokenAddress]
+            if (token) {
+              token.amount = BigNumber.from(balancesRes.output[tokenIdx] || '0')
+            }
+          }
+        }
+      }
+
+      nextTokens = failedTokens.slice()
+    } while (nextTokens.length > 0)
 
     return tokens.filter((token) => (token as Balance).amount != null) as Balance[]
   }
