@@ -10,7 +10,7 @@ function help() {
 }
 
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: update-tokens.ts
   if (process.argv.length < 2) {
     console.error('Missing arguments')

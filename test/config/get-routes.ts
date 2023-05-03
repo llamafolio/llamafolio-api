@@ -12,7 +12,7 @@ export function getRoutes({ stage }: { stage: AwsStage | 'local' }): Array<Route
 
 /**
  * this function runs aws command to get the routes,
- * save to test/network/config/apigateway-routes.json,
+ * save to test/network/config/routes.json,
  * parse the json file and return a list of objects,
  * object: method, path, pathParams, queryParams
  */
@@ -37,7 +37,7 @@ export function getGatewayRoutes(): Array<Route> {
       queryParams,
     }
   }) as Array<Route>
-  fs.writeFileSync('test/fixtures/apigateway-routes.json', JSON.stringify(routes, undefined, 2))
+  fs.writeFileSync('test/fixtures/routes.json', JSON.stringify(routes, undefined, 2))
   return routes
 }
 

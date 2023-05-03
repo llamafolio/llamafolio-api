@@ -21,7 +21,7 @@ function help() {
  * Recursively revalidate contracts of a chain for a given adapter
  */
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: revalidate-contracts-rec.ts
   // argv[2]: adapter
   // argv[3]: chain

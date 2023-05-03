@@ -121,7 +121,7 @@ function help() {
 }
 
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: run-balances.ts
   // argv[2]: adapter
   // argv[3]: chain

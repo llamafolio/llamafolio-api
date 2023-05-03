@@ -1,12 +1,17 @@
 {
-  "eslint.enable": true,
-  "eslint.format.enable": true,
+  "window.title": "🦙 ${rootName} ${separator} ${activeEditorMedium} 🦙",
+  "git.autofetch": true,
+  "git.enableCommitSigning": true,
+  "git.inputValidationSubjectLength": 72,
+  "editor.linkedEditing": true,
   "editor.formatOnSave": false,
-  "npm.packageManager": "pnpm",
-  "eslint.packageManager": "pnpm",
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
+  "eslint.enable": true,
+  "eslint.format.enable": true,
+  "eslint.packageManager": "pnpm",
+  "npm.packageManager": "pnpm",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.preferences.importModuleSpecifier": "non-relative"

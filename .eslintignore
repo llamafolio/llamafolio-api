@@ -7,3 +7,6 @@ dist
 .serverless
 coverage
 migrations
+test/*.json
+test/**/*.json
+_

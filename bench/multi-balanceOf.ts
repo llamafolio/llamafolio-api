@@ -51,7 +51,7 @@ function help() {
 }
 
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: multi-balanceOf.ts
   // argv[2]: chain
   // argv[3]: address

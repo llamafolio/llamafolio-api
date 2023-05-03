@@ -7,7 +7,7 @@ import { call } from '../src/lib/call'
 import { abi as erc20Abi } from '../src/lib/erc20'
 
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: provider-bench.ts
   // argv[2]: ?chain
 

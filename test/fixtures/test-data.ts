@@ -1,4 +1,4 @@
-import { type Chain } from '@lib/chains'
+import type { Chain } from '@lib/chains'
 
 export const testAddresses = ['0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045']
 
