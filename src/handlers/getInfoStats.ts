@@ -4,7 +4,7 @@ import { serverError, success } from '@handlers/response'
 import { chains } from '@lib/chains'
 import { sum } from '@lib/math'
 import { chains as tokensByChain } from '@llamafolio/tokens'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 /**
  * Get stats on supported protocols, chains and tokens

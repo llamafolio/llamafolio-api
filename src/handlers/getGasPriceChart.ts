@@ -1,8 +1,9 @@
-import { selectGasPriceChart, Window } from '@db/gas-price'
+import type { Window } from '@db/gas-price'
+import { selectGasPriceChart } from '@db/gas-price'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
-import { Chain } from '@lib/chains'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { Chain } from '@lib/chains'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 const SUPPORTED_CHAINS: Chain[] = ['ethereum']
 

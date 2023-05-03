@@ -1,4 +1,4 @@
-import { BalancesContext, Contract } from '@lib/adapter'
+import type { BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { ethers } from 'ethers'

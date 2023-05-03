@@ -1,6 +1,6 @@
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
 import { getFarmBalances } from './farm'
 import { getPoolsContracts, getPoolsSupplies } from './pools'

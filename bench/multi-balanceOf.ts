@@ -3,9 +3,9 @@ import '../environment'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 import { BigNumber } from 'ethers'
 
-import { BalancesContext } from '../src/lib/adapter'
+import type { BalancesContext } from '../src/lib/adapter'
 import { sliceIntoChunks } from '../src/lib/array'
-import { Chain } from '../src/lib/chains'
+import type { Chain } from '../src/lib/chains'
 import { multicall } from '../src/lib/multicall'
 
 // See: https://github.com/o-az/evm-balances/tree/master
@@ -51,7 +51,7 @@ function help() {
 }
 
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: multi-balanceOf.ts
   // argv[2]: chain
   // argv[3]: address

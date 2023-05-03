@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 
 const API_URL = 'https://api.badger.com/v2/vaults'
 

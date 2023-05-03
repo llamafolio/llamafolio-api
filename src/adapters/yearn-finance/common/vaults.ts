@@ -1,4 +1,4 @@
-import { Balance, BalancesContext, BaseContext, BaseContract, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, BaseContract, Contract } from '@lib/adapter'
 import { keyBy } from '@lib/array'
 import { call } from '@lib/call'
 import { BigNumber } from 'ethers'

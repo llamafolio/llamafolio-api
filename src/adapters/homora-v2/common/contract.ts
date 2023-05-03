@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 import { mapSuccess, mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
 

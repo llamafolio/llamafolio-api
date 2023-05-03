@@ -1,8 +1,8 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 

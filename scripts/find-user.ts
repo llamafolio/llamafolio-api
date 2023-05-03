@@ -1,4 +1,4 @@
-import { LabelSource } from '../src/labels'
+import type { LabelSource } from '../src/labels'
 import { fetchENSName } from '../src/labels/ens'
 import { fetchLlamaFolioLabel } from '../src/labels/llamafolio'
 import { fetchOpenSeaUser } from '../src/labels/opensea'
@@ -14,7 +14,7 @@ function help() {
 }
 
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: find-user.ts
   // argv[2]: adapter
   // argv[3]: address

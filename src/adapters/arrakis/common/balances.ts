@@ -1,7 +1,7 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 export async function getLpBalances(ctx: BalancesContext, contracts: Contract[]) {

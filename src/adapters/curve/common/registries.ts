@@ -1,4 +1,4 @@
-import { BaseContext } from '@lib/adapter'
+import type { BaseContext } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 
 const abi = {

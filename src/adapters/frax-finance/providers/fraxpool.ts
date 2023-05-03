@@ -1,9 +1,9 @@
-import { BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { utils } from 'ethers'
 
-import { ProviderBalancesParams } from './interface'
+import type { ProviderBalancesParams } from './interface'
 
 const abi = {
   pricePerShare: {

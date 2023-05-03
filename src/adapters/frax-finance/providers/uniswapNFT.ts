@@ -1,7 +1,8 @@
 import { getTokenIdsBalances } from '@adapters/uniswap-v3/common/pools'
 import { factory, nonFungiblePositionManager } from '@adapters/uniswap-v3/ethereum'
-import { BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { Call, multicall } from '@lib/multicall'
+import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 
 const abi = {
@@ -43,7 +44,7 @@ const abi = {
   },
 }
 
-import { ProviderBalancesParams } from './interface'
+import type { ProviderBalancesParams } from './interface'
 
 export const uniswapNFTProvider = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
   const res: Contract[] = []

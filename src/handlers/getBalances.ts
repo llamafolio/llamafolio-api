@@ -1,12 +1,12 @@
 import { selectBalancesWithGroupsAndYieldsByFromAddress } from '@db/balances'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
-import { ContractStandard } from '@lib/adapter'
+import type { ContractStandard } from '@lib/adapter'
 import { areBalancesStale } from '@lib/balance'
 import { isHex } from '@lib/buf'
-import { Category } from '@lib/category'
+import type { Category } from '@lib/category'
 import { invokeLambda } from '@lib/lambda'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface BaseFormattedBalance {
   standard?: ContractStandard

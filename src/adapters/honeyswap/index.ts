@@ -1,4 +1,4 @@
-import { Adapter } from '@lib/adapter'
+import type { Adapter } from '@lib/adapter'
 
 import * as gnosis from './gnosis'
 import * as polygon from './polygon'

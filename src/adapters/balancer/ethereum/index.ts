@@ -1,7 +1,7 @@
-import { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPoolsBalances } from '@lib/pools'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
 import { getBalancerPoolsBalances, getLpBalancerPoolsBalances } from '../common/balance'
 import { getBalancerPools } from '../common/pool'

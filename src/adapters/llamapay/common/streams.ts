@@ -1,5 +1,5 @@
-import { Balance, BalancesContext } from '@lib/adapter'
-import { Chain } from '@lib/chains'
+import type { Balance, BalancesContext } from '@lib/adapter'
+import type { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'

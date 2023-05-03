@@ -1,7 +1,8 @@
 import { getUnderlyingsPoolsBalances } from '@adapters/curve/common/balance'
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { isZero } from '@lib/math'
-import { Call, multicall } from '@lib/multicall'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 

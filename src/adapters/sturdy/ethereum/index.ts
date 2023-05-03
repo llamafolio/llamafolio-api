@@ -1,8 +1,8 @@
 import { getLendingRewardsBalances } from '@adapters/aave-v2/common/rewards'
 import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
 import { getSturdyBalances } from './balance'
 import { getSturdyContracts } from './contract'

@@ -1,19 +1,15 @@
 import { adapters } from '@adapters/index'
-import {
-  Adapter as DBAdapter,
-  selectAdapter,
-  selectAdaptersContractsExpired,
-  selectDistinctAdaptersIds,
-  upsertAdapters,
-} from '@db/adapters'
+import type { Adapter as DBAdapter } from '@db/adapters'
+import { selectAdapter, selectAdaptersContractsExpired, selectDistinctAdaptersIds, upsertAdapters } from '@db/adapters'
 import { deleteContractsByAdapter, insertAdaptersContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
-import { BaseContext } from '@lib/adapter'
-import { Chain, chains } from '@lib/chains'
+import type { BaseContext } from '@lib/adapter'
+import type { Chain } from '@lib/chains'
+import { chains } from '@lib/chains'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { resolveContractsTokens } from '@lib/token'
-import { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
+import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 
 const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, context) => {
   context.callbackWaitsForEmptyEventLoop = false

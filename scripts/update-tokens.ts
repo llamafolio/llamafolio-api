@@ -1,7 +1,8 @@
 import '../environment'
 
 import pool from '../src/db/pool'
-import { ERC20Token, insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/tokens'
+import type { ERC20Token } from '../src/db/tokens'
+import { insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/tokens'
 import { getERC20Details } from '../src/lib/erc20'
 
 function help() {
@@ -9,7 +10,7 @@ function help() {
 }
 
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: update-tokens.ts
   if (process.argv.length < 2) {
     console.error('Missing arguments')

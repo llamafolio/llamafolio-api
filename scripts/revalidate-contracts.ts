@@ -1,11 +1,13 @@
 import path from 'node:path'
 import url from 'node:url'
 
-import { Adapter as DBAdapter, selectAdapter, upsertAdapters } from '../src/db/adapters'
+import type { Adapter as DBAdapter } from '../src/db/adapters'
+import { selectAdapter, upsertAdapters } from '../src/db/adapters'
 import { deleteContractsByAdapter, insertAdaptersContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { Adapter, BaseContext } from '../src/lib/adapter'
-import { Chain, chains } from '../src/lib/chains'
+import type { Adapter, BaseContext } from '../src/lib/adapter'
+import type { Chain } from '../src/lib/chains'
+import { chains } from '../src/lib/chains'
 import { resolveContractsTokens } from '../src/lib/token'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -18,7 +20,7 @@ function help() {
  * Revalidate contracts of all (or given) chain(s) for given adapter
  */
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: revalidate-contracts.ts
   // argv[2]: adapter
   // argv[3]: ?chain

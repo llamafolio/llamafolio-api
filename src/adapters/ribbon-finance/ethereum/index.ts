@@ -1,6 +1,6 @@
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
 import { getFarmLPContracts } from '../common/contract'
 import { getFarmBalances } from '../common/farm'

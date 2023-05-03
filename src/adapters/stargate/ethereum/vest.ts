@@ -1,8 +1,8 @@
-import { BalancesContext, Contract, VestBalance } from '@lib/adapter'
+import type { BalancesContext, Contract, VestBalance } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 const abi = {

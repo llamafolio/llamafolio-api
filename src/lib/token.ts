@@ -1,9 +1,10 @@
-import { ERC20Token, insertERC20Tokens, selectChainTokens } from '@db/tokens'
-import { BaseContract, Contract, RawContract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
+import type { ERC20Token } from '@db/tokens'
+import { insertERC20Tokens, selectChainTokens } from '@db/tokens'
+import type { BaseContract, Contract, RawContract } from '@lib/adapter'
+import type { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
 import { isNotNullish } from '@lib/type'
-import { PoolClient } from 'pg'
+import type { PoolClient } from 'pg'
 
 export const ETH_ADDR = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 

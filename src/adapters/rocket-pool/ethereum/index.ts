@@ -1,8 +1,9 @@
-import { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { BN_TEN } from '@lib/math'
 import { getSingleStakeBalance } from '@lib/stake'
-import { ETH, Token } from '@lib/token'
+import type { Token } from '@lib/token'
+import { ETH } from '@lib/token'
 import { BigNumber } from 'ethers'
 
 const abi = {

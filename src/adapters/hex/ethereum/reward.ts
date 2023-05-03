@@ -1,4 +1,4 @@
-import { BaseContext, Contract } from '@lib/adapter'
+import type { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { sumBN } from '@lib/math'
 import { BigNumber } from 'ethers'

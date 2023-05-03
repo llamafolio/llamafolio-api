@@ -1,11 +1,11 @@
-import { BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { getStakingPoolsBalances } from '@lib/pools'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
-import { GaugeContract } from './pair'
+import type { GaugeContract } from './pair'
 
 const abi = {
   last_gauge: {

@@ -3,7 +3,11 @@ llamafolio-tokens/
 LICENSE
 node_modules/
 .esbuild
+resources
 dist
+.serverless
 coverage
 migrations
-resources
+test/*.json
+test/**/*.json
+_

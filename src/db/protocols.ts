@@ -1,6 +1,6 @@
 import { sliceIntoChunks } from '@lib/array'
-import { IProtocol } from '@lib/protocols'
-import { PoolClient } from 'pg'
+import type { IProtocol } from '@lib/protocols'
+import type { PoolClient } from 'pg'
 import format from 'pg-format'
 
 export interface IProtocolStorable {

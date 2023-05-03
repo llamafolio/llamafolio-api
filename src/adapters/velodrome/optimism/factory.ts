@@ -1,9 +1,7 @@
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
-import {
-  getPairsContracts as getUniswapPairsContracts,
-  getPairsContractsParams as getUniswapPairsContractsParams,
-} from '@lib/uniswap/v2/factory'
+import type { getPairsContractsParams as getUniswapPairsContractsParams } from '@lib/uniswap/v2/factory'
+import { getPairsContracts as getUniswapPairsContracts } from '@lib/uniswap/v2/factory'
 
 const abi = {
   stable: {

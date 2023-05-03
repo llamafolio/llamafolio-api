@@ -1,7 +1,7 @@
 import { success } from '@handlers/response'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { getToken } from '@llamafolio/tokens'
-import { APIGatewayProxyHandler } from 'aws-lambda'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 /**
  * Get tokens of given addresses

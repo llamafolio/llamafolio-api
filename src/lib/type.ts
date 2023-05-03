@@ -1,4 +1,4 @@
-import { MultiCallResult } from '@lib/multicall'
+import type { MultiCallResult } from '@lib/multicall'
 
 export function isNotNullish<T>(param: T | undefined | null): param is T {
   return param != null

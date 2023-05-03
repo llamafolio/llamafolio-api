@@ -1,4 +1,4 @@
-import { MultiCallResult } from '@lib/multicall'
+import type { MultiCallResult } from '@lib/multicall'
 import { isNotNullish, isSuccess } from '@lib/type'
 
 export function range(start: number, end: number, step = 1) {

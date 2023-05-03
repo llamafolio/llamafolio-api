@@ -1,7 +1,7 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalance } from '@lib/stake'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
 const weth: Token = {
   chain: 'ethereum',

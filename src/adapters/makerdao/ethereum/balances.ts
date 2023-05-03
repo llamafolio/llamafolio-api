@@ -1,11 +1,11 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Chain } from '@lib/chains'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
-import { Token } from '@lib/token'
+import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
-import { cdpid } from './cdpid'
+import type { cdpid } from './cdpid'
 
 const abi = {
   ilkData: {

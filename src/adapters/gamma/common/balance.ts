@@ -1,10 +1,10 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { getMasterChefLpToken } from '@lib/masterchef/masterchef'
 import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
-import { Pair } from '@lib/uniswap/v2/factory'
+import type { Pair } from '@lib/uniswap/v2/factory'
 import { BigNumber } from 'ethers'
 
 const abi = {

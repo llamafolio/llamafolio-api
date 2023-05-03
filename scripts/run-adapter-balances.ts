@@ -4,10 +4,10 @@ import url from 'node:url'
 import { selectAdapterProps } from '../src/db/adapters'
 import { getContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
-import { Adapter, Balance, BalancesContext, PricedBalance } from '../src/lib/adapter'
+import type { Adapter, Balance, BalancesContext, PricedBalance } from '../src/lib/adapter'
 import { groupBy } from '../src/lib/array'
 import { sanitizeBalances } from '../src/lib/balance'
-import { Chain } from '../src/lib/chains'
+import type { Chain } from '../src/lib/chains'
 import { millify } from '../src/lib/fmt'
 import { getPricedBalances } from '../src/lib/price'
 
@@ -121,7 +121,7 @@ function help() {
 }
 
 async function main() {
-  // argv[0]: ts-node
+  // argv[0]: node_modules/.bin/tsx
   // argv[1]: run-balances.ts
   // argv[2]: adapter
   // argv[3]: chain

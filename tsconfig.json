@@ -5,12 +5,12 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
+    "alwaysStrict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "noEmit": false,
-    "jsx": "preserve",
     "allowJs": false,
     "noImplicitThis": false,
     "noErrorTruncation": true,
@@ -24,6 +24,6 @@
       "@environment": ["./environment.ts"]
     }
   },
-  "include": ["src", "scripts", "test", "environment.ts", "bench", "vitest.config.ts", "tsup.config.ts"],
-  "exclude": [".esbuild", "node_modules"]
+  "include": ["src", "scripts", "test", "bench", "*.ts", "*.js", "*.cjs", ".*.cjs", "*.json"],
+  "exclude": [".esbuild", "node_modules", "coverage", "dist"]
 }

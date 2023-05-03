@@ -1,4 +1,4 @@
-import { Balance, BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getBenqiLockerBalances } from './locker'
