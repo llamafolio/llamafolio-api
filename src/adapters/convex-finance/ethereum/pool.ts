@@ -1,11 +1,11 @@
 import { BaseContext, Contract } from '@lib/adapter'
+import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR, Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { ethers } from 'ethers'
-import { range } from 'lodash'
 
 const abi = {
   poolLength: {

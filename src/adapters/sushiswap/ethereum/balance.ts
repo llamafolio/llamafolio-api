@@ -1,5 +1,5 @@
 import { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { mapSuccess } from '@lib/array'
+import { mapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { getERC20Details } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
@@ -8,7 +8,6 @@ import { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber, ethers } from 'ethers'
-import { range } from 'lodash'
 
 const abi = {
   poolLength: {

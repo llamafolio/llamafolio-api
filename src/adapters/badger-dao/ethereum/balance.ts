@@ -1,10 +1,10 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
-import { groupBy } from 'lodash'
 
 import { auraProvider, convexProvider, ProviderBalancesParams, sushiProvider } from './provider'
 

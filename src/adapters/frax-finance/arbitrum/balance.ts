@@ -1,9 +1,9 @@
 import { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { groupBy } from '@lib/array'
 import { BN_ZERO } from '@lib/math'
 import { Call, multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
-import { groupBy } from 'lodash'
 
 import { ProviderBalancesParams } from '../providers/interface'
 import { curveBalancesProvider } from './providers/curve'
