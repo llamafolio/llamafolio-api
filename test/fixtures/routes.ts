@@ -89,4 +89,4 @@ export const routes = [
     pathParams: ['address'],
     queryParams: [],
   },
-]
+].sort((a, b) => a.path.localeCompare(b.path))

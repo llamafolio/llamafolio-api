@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, test } from 'vitest'
 
 import { generateTestableRoute, getRoutes } from './config'
 import { getApiURL } from './config/api-url'
@@ -6,24 +6,37 @@ import { routes as expectedRoutes } from './fixtures/routes'
 import { testData } from './fixtures/test-data'
 
 /**
- * Routes to not test: /holders, /history
+ * Routes to skip in the test
  */
-const SKIP_ROUTES = ['/gas_price/{chain}/chart']
+const SKIP_ROUTES = [
+  //
+  '/gas_price/{chain}/chart',
+]
 
-const getFilteredRoutes = async () => {
-  const allRoutes = await getRoutes({
-    //@ts-ignore
+const getFilteredRoutes = () => {
+  const allRoutes = getRoutes({
+    // @ts-ignore
     stage: process.env.STAGE,
   })
-  return allRoutes.filter((route) => !SKIP_ROUTES.includes(route.path))
+  return allRoutes
+    .filter((route) => !SKIP_ROUTES.includes(route.path))
+    .sort((a, b) => a.path.localeCompare(b.path))
+    .map((route) => ({
+      ...route,
+      // this is a hack since serverless-offline returns lowercase methods
+      method: route.method.toUpperCase(),
+    }))
 }
 
-describe('Network', () => {
-  it('should have routes', async () => {
-    const routes = () => getFilteredRoutes()
-    expect(routes()).resolves.toBeDefined()
-    expect(routes()).resolves.toHaveLength(expectedRoutes.length)
-    expect(routes()).resolves.toEqual(expectedRoutes)
+describe('All routes', () => {
+  const routes = () => getFilteredRoutes()
+  test('should have routes', () => {
+    expect(routes()).toBeDefined()
+  })
+  test('should have expected routes', () => {
+    const expected = expectedRoutes.map((route) => route.path)
+    const actual = routes().map((route) => route.path)
+    expect(actual).toEqual(expected)
   })
 })
 
@@ -34,27 +47,31 @@ describe('Network', () => {
  * - TODO: the response body is valid JSON
  */
 
-const routes = await getFilteredRoutes()
+const routes = getFilteredRoutes()
 
-routes.forEach(async (route) => {
-  expect(route).toBeDefined()
-  //
-  it(
-    `should call ${route.method} ${route.path}`,
-    async () => {
-      //
-      if (route.pathParams.length === 0 || route.queryParams.length === 0) {
-        const url = getApiURL(process.env.STAGE)
-        const testableURL = `${url}${generateTestableRoute({ route, testData })}`
-        console.log(`calling ${testableURL}`)
-        const request = () => fetch(testableURL)
-        await expect(request()).resolves.toHaveProperty('status', 200)
-        await expect(request()).resolves.toHaveProperty('body')
-        /* will be updated to actually check for valid JSON */
-        await expect(request()).resolves.toHaveProperty('body', expect.anything())
-        await expect(request()).resolves.toHaveProperty('body', expect.not.stringContaining('error'))
-      }
-      console.log(`calling ${route.method} ${route.path}`)
+describe('API Routes', () => {
+  // test against expected routes
+  test.each(routes)('Route: %s', (route) => {
+    const index = expectedRoutes.findIndex((r) => r.path === route.path)
+    expect(index).toBeGreaterThan(-1)
+    expect(expectedRoutes[index]).toBeDefined()
+    expect(route).toEqual(expectedRoutes[index])
+  })
+
+  // test actual routes
+  test.each(routes)(
+    'method: $method, path: $path',
+    async (route) => {
+      // @ts-ignore
+      const url = getApiURL(process.env.STAGE)
+      const testableURL = `${url}${generateTestableRoute({ route, testData })}`
+      console.log(`calling ${testableURL}`)
+      const request = () => fetch(testableURL)
+      expect(request()).resolves.toHaveProperty('status', 200)
+      expect(request()).resolves.toHaveProperty('body')
+      /* will be updated to actually check for valid JSON */
+      expect(request()).resolves.toHaveProperty('body', expect.anything())
+      expect(request()).resolves.toHaveProperty('body', expect.not.stringContaining('error'))
     },
     // timeout is in milliseconds
     Number(process.env.TEST_WAIT_TIME) || 8000,

@@ -7,6 +7,8 @@ package:
 
 frameworkVersion: '3'
 
+useDotenv: true
+
 provider:
   name: aws
   runtime: nodejs18.x
@@ -46,18 +48,18 @@ provider:
           Resource:
             - 'Fn::GetAtt': [DynamoTable, Arn]
   environment:
-    PGHOST: ${file(./env.js):PGHOST}
-    PGUSER: ${file(./env.js):PGUSER}
-    PGDATABASE: ${file(./env.js):PGDATABASE}
-    PGPASSWORD: ${file(./env.js):PGPASSWORD}
-    PGPORT: ${file(./env.js):PGPORT}
+    PGHOST: ${env:PGHOST}
+    PGUSER: ${env:PGUSER}
+    PGDATABASE: ${env:PGDATABASE}
+    PGPASSWORD: ${env:PGPASSWORD}
+    PGPORT: ${env:PGPORT}
     stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    CUSTOM_PROVIDER: ${file(./env.js):CUSTOM_PROVIDER}
-    LLAMANODES_API_KEY: ${file(./env.js):LLAMANODES_API_KEY}
-    ARBITRUM_RPC: ${file(./env.js):ARBITRUM_RPC}
-    OPTIMISM_RPC: ${file(./env.js):OPTIMISM_RPC}
+    CUSTOM_PROVIDER: ${env:CUSTOM_PROVIDER}
+    LLAMANODES_API_KEY: ${env:LLAMANODES_API_KEY}
+    ARBITRUM_RPC: ${env:ARBITRUM_RPC}
+    OPTIMISM_RPC: ${env:OPTIMISM_RPC}
 
   httpApi:
     metrics: true
@@ -239,20 +241,19 @@ custom:
     external:
       - pg-native
       - pg-format
+      - '@llamafolio/tokens'
+
     watch:
       pattern: ['src/**/*.ts']
       ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules', 'test']
     # for debugging
-    #keepOutputDirectory: true
+    keepOutputDirectory: true
   prune:
     automatic: true
     number: 5 # Number of versions to keep
   tableName: ${self:custom.stage}-llamafolio-table
 
-resources:
-  - ${file(resources/dynamodb.yml)}
-
 plugins:
-  - serverless-offline
   - serverless-esbuild
+  - serverless-offline
   - serverless-prune-plugin

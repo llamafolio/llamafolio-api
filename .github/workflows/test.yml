@@ -1,28 +1,35 @@
-name: 'Test API'
+name: 'Test'
 
 # Runs:
 # - daily at 00:00 UTC
 # - on manual trigger through GitHub Actions UI
-# - on push to any branch
+# - on push to 'master'
+# - on pull request
 on:
   schedule:
     # cron syntax: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
     # every day at 00:00 UTC
     - cron: '0 0 * * *'
+  push:
+    branches: ['master']
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
     inputs:
+      stage:
+        description: 'Stage to test against'
+        required: true
+        default: 'dev'
       test-timeout:
         description: 'Test timeout in ms'
         required: false
-        default: '11000'
-  push:
+        default: '10000'
 
 defaults:
   run:
     shell: bash
 
 env:
-  STAGE: 'dev'
   NODE_ENV: 'test'
   ACTIONS_RUNNER_DEBUG: true
   PGHOST: ${{ secrets.PGHOST }}
@@ -37,8 +44,8 @@ env:
   SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
 
 jobs:
-  test:
-    name: 'Lint, Build, Test'
+  lint-typecheck-build:
+    name: 'Lint, Typecheck, Build'
     runs-on: [ubuntu-latest]
     steps:
       - name: 'Checkout'
@@ -58,13 +65,15 @@ jobs:
           cache: 'pnpm'
 
       - name: 'Install Dependencies'
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - name: 'Lint'
-        run: pnpm lint
+        run: |
+          node_modules/.bin/eslint --fix . --ext js,cjs,mjs,ts,d.ts,json 
 
       - name: 'Format'
-        run: pnpm format
+        run: |
+          node_modules/.bin/prettier --write --ignore-path='./.eslintignore' '**/*.{md,json,js,cjs,mjs,ts}' --ignore-unknown
 
       # we will have to skip till we resolve existing type errors
       - name: 'Typecheck'
@@ -73,6 +82,79 @@ jobs:
 
       - name: 'Build'
         run: pnpm build
+
+  test-on-pr:
+    if: github.event_name == 'pull_request'
+    needs: [lint-typecheck-build]
+    name: 'Test [PR]'
+    runs-on: [ubuntu-latest]
+    env:
+      # must be set to 'local' to test against pr changes
+      STAGE: 'local'
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 'Setup pnpm'
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 'latest'
+
+      - name: 'Setup Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+
+      - name: 'Install Dependencies'
+        run: |
+          pnpm install --frozen-lockfile
+
+      # Start sls offline in the background,
+      # wait for it to start (https://explainshell.com/explain?cmd=timeout+20+bash+-c+%27until+echo+%3E%2Fdev%2Ftcp%2F0.0.0.0%2F3034%3B+do+sleep+1%3B+done%27+%7C%7C+true),
+      # run tests.
+      - name: 'Test'
+        run: |
+          /bin/bash ./scripts/test.sh
+        env:
+          DEBUG: '*'
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
+          AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
+          AWS_DEFAULT_OUTPUT: json
+          TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 9000 }}
+
+  test-on-push-and-cron:
+    if: github.event_name == 'schedule' || (github.event_name == 'push' && github.ref == 'refs/heads/master')
+    needs: [lint-typecheck-build]
+    name: 'Test [Push, Cron]'
+    runs-on: [ubuntu-latest]
+    env:
+      STAGE: ${{ github.event.inputs.stage || 'dev' }}
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 'Setup pnpm'
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 'latest'
+
+      - name: 'Setup Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'
+
+      - name: 'Install Dependencies'
+        run: pnpm install --frozen-lockfile
 
       - name: 'Test'
         env:
@@ -85,5 +167,4 @@ jobs:
           AWS_DEFAULT_OUTPUT: json
           TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 11000 }}
         run: |
-          pnpm test:ci
-
+          node_modules/.bin/vitest --run

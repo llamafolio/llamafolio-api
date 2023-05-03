@@ -1,5 +1,7 @@
+import path from 'node:path'
+import url from 'node:url'
+
 import millify from 'millify'
-import path from 'path'
 
 import { selectAdapterProps } from '../src/db/adapters'
 import { getContractsInteractions, groupContracts } from '../src/db/contracts'
@@ -9,6 +11,8 @@ import { groupBy } from '../src/lib/array'
 import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 type ExtendedBalance = Balance & {
   groupIdx: number

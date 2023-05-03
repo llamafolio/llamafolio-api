@@ -1,4 +1,5 @@
 import path from 'node:path'
+import url from 'node:url'
 
 import { BigNumber } from 'ethers'
 import millify from 'millify'
@@ -10,6 +11,8 @@ import { sanitizeBalances } from '../src/lib/balance'
 import { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 import { resolveContractsTokens } from '../src/lib/token'
+
+const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 type ExtendedBalance = Balance & {
   groupIdx: number

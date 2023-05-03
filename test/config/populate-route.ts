@@ -7,7 +7,8 @@ export function generateTestableRoute({ route, testData }: { route: Route; testD
   const { path, pathParams, queryParams } = route
   let url = path
   pathParams.forEach((param) => {
-    url = url.replace(`{${param}}`, testData[param])
+    const data = url.includes('tokens') ? testData['token'] : testData[param]
+    url = url.replace(`{${param}}`, data)
   })
   if (queryParams.length === 0) return url
   url += '?'

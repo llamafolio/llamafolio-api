@@ -9,10 +9,9 @@ export default defineConfig({
   test: {
     globals: true,
     allowOnly: true,
-    setupFiles: ['dotenv/config'],
+    globalSetup: ['./test/setup/global.ts'],
     env: {
       NODE_ENV: 'test',
-      API_URL: 'http://localhost:3034',
       // disable experimental node warnings
       NODE_NO_WARNINGS: '1',
     },
