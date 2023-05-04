@@ -52,7 +52,7 @@ export interface BaseBalance extends BaseContract {
 
 export interface BasePricedBalance extends BaseBalance {
   price: number
-  balanceUSD: number
+  balanceUSD?: number
   claimableUSD?: number
 
   // price updated at

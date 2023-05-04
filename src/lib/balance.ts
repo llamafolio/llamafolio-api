@@ -261,41 +261,40 @@ export function sumBalances(balances: SumBalance[]) {
   return res
 }
 
-export interface BalancesTotalBreakdown {
-  balanceUSD: number
-  debtUSD: number
-  rewardUSD: number
+export interface BalanceBreakdown {
+  balanceUSD?: number
+  debtUSD?: number
+  rewardUSD?: number
 }
 
 /**
- * Get debt, claimable and total of given balances
+ * Get debt, claimable and total of given balance
  */
-export function balancesTotalBreakdown(balances: PricedBalance[]): BalancesTotalBreakdown {
+export function fmtBalanceBreakdown(balance: PricedBalance): PricedBalance & BalanceBreakdown {
   let balanceUSD = 0
   let debtUSD = 0
   let rewardUSD = 0
 
-  for (const balance of balances) {
-    if (balance.category === 'borrow') {
-      debtUSD += balance.balanceUSD || 0
-    } else if (balance.category === 'reward') {
-      rewardUSD += balance.claimableUSD || balance.balanceUSD || 0
-    } else {
-      balanceUSD += balance.balanceUSD || 0
-    }
+  if (balance.category === 'borrow') {
+    debtUSD += balance.balanceUSD || 0
+  } else if (balance.category === 'reward') {
+    rewardUSD += balance.claimableUSD || balance.balanceUSD || 0
+  } else {
+    balanceUSD += balance.balanceUSD || 0
+  }
 
-    // nested rewards
-    if (balance.rewards) {
-      for (const reward of balance.rewards) {
-        rewardUSD += reward.claimableUSD || reward.balanceUSD || 0
-      }
+  // nested rewards
+  if (balance.rewards) {
+    for (const reward of balance.rewards) {
+      rewardUSD += reward.claimableUSD || reward.balanceUSD || 0
     }
   }
 
   return {
-    balanceUSD,
-    debtUSD,
-    rewardUSD,
+    ...balance,
+    balanceUSD: balanceUSD || undefined,
+    debtUSD: debtUSD || undefined,
+    rewardUSD: rewardUSD || undefined,
   }
 }
 

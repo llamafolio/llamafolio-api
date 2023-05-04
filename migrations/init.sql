@@ -30,6 +30,8 @@ CREATE TABLE IF NOT EXISTS balances (
     amount numeric,
     price numeric,
     balance_usd numeric,
+    debt_usd numeric,
+    reward_usd numeric,
     address bytea,
     data jsonb,
     category varchar not null,

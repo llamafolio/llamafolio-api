@@ -1,3 +1,4 @@
+import { sum } from '@lib/math'
 import { v4 as uuidv4 } from 'uuid'
 
 import { adapterById } from '../src/adapters'
@@ -10,7 +11,7 @@ import { getAllContractsInteractions, groupContracts } from '../src/db/contracts
 import pool from '../src/db/pool'
 import type { Balance, BalancesConfig, BalancesContext } from '../src/lib/adapter'
 import { groupBy, groupBy2, keyBy2 } from '../src/lib/array'
-import { balancesTotalBreakdown, sanitizeBalances } from '../src/lib/balance'
+import { fmtBalanceBreakdown, sanitizeBalances } from '../src/lib/balance'
 import type { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
 import { isNotNullish } from '../src/lib/type'
@@ -178,18 +179,22 @@ async function main() {
 
         const id = uuidv4()
 
+        const groupBalances = balances.map((balance) => ({ groupId: id, ...fmtBalanceBreakdown(balance) }))
+
+        for (const balance of groupBalances) {
+          balancesStore.push(balance)
+        }
+
         const balancesGroup: BalancesGroup = {
           id,
           fromAddress: address,
           adapterId: balanceConfig.adapterId,
           chain: balanceConfig.chain,
-          ...balancesTotalBreakdown(balances),
+          balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
+          rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
+          debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
           timestamp: now,
           healthFactor: balanceConfig.groups[groupIdx].healthFactor,
-        }
-
-        for (const balance of balances) {
-          balancesStore.push({ groupId: id, ...balance })
         }
 
         balancesGroupsStore.push(balancesGroup)
