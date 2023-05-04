@@ -255,6 +255,9 @@ custom:
     number: 5 # Number of versions to keep
   tableName: ${self:custom.stage}-llamafolio-table
 
+resources:
+  - ${file(resources/dynamodb.yml)}
+
 plugins:
   - serverless-esbuild
   - serverless-offline
