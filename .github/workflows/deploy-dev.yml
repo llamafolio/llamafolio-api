@@ -59,11 +59,26 @@ jobs:
         run: pnpm build
 
       - name: 'Deploy'
-        uses: serverless/github-action@v3.1
-        with:
-          entrypoint: /bin/bash
-          args: -c "serverless deploy --stage ${{ env.STAGE }} --verbose"
+        run: |
+          #
+          # auth
+          #
+          serverless config credentials \
+            --provider aws \
+            --key ${{ env.AWS_ACCESS_KEY_ID }} \
+            --secret ${{ env.AWS_SECRET_ACCESS_KEY }}
+          #
+          # deploy
+          #
+          serverless deploy \
+            --config serverless.yml \
+            --stage ${{ env.STAGE }} \
+            --region ${{ env.AWS_REGION }} \
+            --verbose
         env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
           # enables verbose logging
           ACTIONS_STEP_DEBUG: true
