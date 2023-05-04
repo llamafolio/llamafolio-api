@@ -1,5 +1,3 @@
-import type { Balance } from '@db/balances'
-import { fromRowStorage as fromBalanceRowStorage } from '@db/balances'
 import { sliceIntoChunks } from '@lib/array'
 import type { Chain } from '@lib/chains'
 import type { PoolClient } from 'pg'
@@ -99,81 +97,30 @@ export function toStorage(balancesGroups: BalancesGroup[]) {
   return balanceGroupsStorable
 }
 
-export async function selectBalancesGroupsByFromAddress(client: PoolClient, fromAddress: string) {
-  const balancesRes = await client.query(`select * from balances_groups where from_address = $1;`, [fromAddress])
-
-  return fromStorage(balancesRes.rows)
-}
-
 export async function selectLastBalancesGroupsByFromAddress(client: PoolClient, fromAddress: string) {
   const balancesRes = await client.query(
     `
-  WITH last_balances_group AS (
-    SELECT timestamp FROM balances_groups
-    WHERE from_address = $1
-    ORDER BY timestamp DESC
-    LIMIT 1
-  )
-  SELECT *
-  FROM balances_groups b
-  WHERE b.from_address = $1 AND
-  b.timestamp IN (SELECT timestamp FROM last_balances_group);
+    select
+      chain,
+      sum(balance_usd) as balance_usd,
+      sum(debt_usd) as debt_usd,
+      sum(reward_usd) as reward_usd,
+      timestamp
+    from balances_groups
+    where from_address = $1
+    group by chain, timestamp
+    order by balance_usd desc;
   `,
     [fromAddress],
   )
 
-  return fromStorage(balancesRes.rows)
-}
-
-export async function selectRowsLatestBalancesGroupsWithBalancesByFromAddress(client: PoolClient, fromAddress: string) {
-  const balancesRes = await client.query(
-    `
-    WITH last_balances_group AS (
-      SELECT timestamp FROM balances_groups
-        WHERE from_address = $1
-        ORDER BY timestamp DESC
-        LIMIT 1
-    )
-    SELECT *
-    FROM balances_groups bg
-    JOIN balances b ON bg.id = b.group_id
-    WHERE bg.from_address = $1 AND
-    bg.timestamp IN (SELECT timestamp FROM last_balances_group);
-    `,
-    [fromAddress],
-  )
-
-  return balancesRes.rows.map((balance) => ({ ...fromBalanceRowStorage(balance), ...fromRowStorage(balance) }))
-}
-
-export async function selectLatestBalancesGroupsWithBalancesByFromAddress(client: PoolClient, fromAddress: string) {
-  const balancesRes = await client.query(
-    `
-    WITH last_balances_group AS (
-      SELECT timestamp FROM balances_groups
-        WHERE from_address = $1
-        ORDER BY timestamp DESC
-        LIMIT 1
-    )
-    SELECT *
-    FROM balances_groups bg
-    JOIN balances b ON bg.id = b.group_id
-    WHERE bg.from_address = $1 AND
-    bg.timestamp IN (SELECT timestamp FROM last_balances_group);
-    `,
-    [fromAddress],
-  )
-
-  const balancesGroupsById: { [key: string]: BalancesGroup & { balances: Balance[] } } = {}
-
-  for (const row of balancesRes.rows) {
-    if (!balancesGroupsById[row.id]) {
-      balancesGroupsById[row.id] = { ...fromRowStorage(row), balances: [] }
-    }
-    balancesGroupsById[row.id].balances.push(fromBalanceRowStorage(row))
-  }
-
-  return Object.values(balancesGroupsById)
+  return balancesRes.rows.map((row) => ({
+    timestamp: row.timestamp,
+    chain: row.chain,
+    balanceUSD: parseFloat(row.balance_usd),
+    debtUSD: parseFloat(row.debt_usd),
+    rewardUSD: parseFloat(row.reward_usd),
+  }))
 }
 
 export function deleteBalancesGroupsCascadeByFromAddress(client: PoolClient, fromAddress: string) {

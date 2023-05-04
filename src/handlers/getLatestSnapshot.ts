@@ -1,7 +1,6 @@
 import { selectLastBalancesGroupsByFromAddress } from '@db/balances-groups'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
-import { groupBy } from '@lib/array'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
 import { sum } from '@lib/math'
@@ -52,13 +51,11 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const timestamp = lastBalancesGroups[0].timestamp
 
-    const lastBalancesGroupsByChain = groupBy(lastBalancesGroups, 'chain')
-
-    const chains = Object.keys(lastBalancesGroupsByChain).map((chain) => ({
-      id: chain as Chain,
-      balanceUSD: sum(lastBalancesGroupsByChain[chain].map((group) => group.balanceUSD)),
-      debtUSD: sum(lastBalancesGroupsByChain[chain].map((group) => group.debtUSD || 0)),
-      rewardUSD: sum(lastBalancesGroupsByChain[chain].map((group) => group.rewardUSD || 0)),
+    const chains = lastBalancesGroups.map((row) => ({
+      id: row.chain as Chain,
+      balanceUSD: row.balanceUSD,
+      debtUSD: row.debtUSD,
+      rewardUSD: row.rewardUSD,
     }))
 
     const response: LatestSnapshotResponse = {
