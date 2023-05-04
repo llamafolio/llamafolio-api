@@ -1,22 +1,33 @@
-name: 'Deploy Master - Dev'
+name: 'Deploy - Dev'
 
 on:
   workflow_dispatch:
   push:
     branches:
       - master
+      # for debugging purposes
+      - 'debug-*'
 
 defaults:
   run:
     shell: bash
 
+env:
+  STAGE: 'dev'
+  ACTIONS_RUNNER_DEBUG: true
+
 jobs:
   deploy:
+    # if workflow_dispatch or branch is master or branch name starts with debug- and commit message contains [deploy]
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/debug-')) && contains(github.event.head_commit.message, '[deploy]'))
     name: deploy
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [lts/*]
+        pnvm-version: [latest]
+    runs-on: ${{ matrix.os }}
     env:
-      STAGE: 'dev'
-      ACTIONS_RUNNER_DEBUG: true
       PGHOST: ${{ secrets.PGHOST }}
       PGUSER: ${{ secrets.PGUSER }}
       PGPORT: ${{ secrets.PGPORT }}
@@ -29,29 +40,47 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
-      - name: 'Setup pnpm'
+      - name: 'Setup pnpm [${{ matrix.pnvm-version }}]'
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: 'latest'
+          version: ${{ matrix.pnvm-version }}
 
-      - name: 'Setup Node.js'
+      - name: 'Setup Node.js [${{ matrix.node-version }}]'
         uses: actions/setup-node@v3
         with:
-          node-version: 'lts/*'
+          node-version: ${{ matrix.node-version }}
           cache: pnpm
 
       - name: 'Install Dependencies'
-        run: pnpm install --frozen-lockfile
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm add --global serverless serverless-esbuild
 
       - name: 'Build'
         run: pnpm build
 
       - name: 'Deploy'
-        uses: serverless/github-action@v3.1
-        with:
-          args: deploy --stage dev
+        run: |
+          #
+          # auth
+          #
+          serverless config credentials \
+            --provider aws \
+            --key ${{ env.AWS_ACCESS_KEY_ID }} \
+            --secret ${{ env.AWS_SECRET_ACCESS_KEY }}
+          #
+          # deploy
+          #
+          serverless deploy \
+            --config serverless.yml \
+            --stage ${{ env.STAGE }} \
+            --region ${{ env.AWS_REGION }} \
+            --verbose
         env:
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
+          # enables verbose logging
+          ACTIONS_STEP_DEBUG: true

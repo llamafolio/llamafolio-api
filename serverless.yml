@@ -237,21 +237,25 @@ custom:
     bundle: true
     minify: true
     keepNames: true
+    platform: node
+    format: cjs
     concurrency: 4
     external:
       - pg-native
       - pg-format
-      - '@llamafolio/tokens'
 
     watch:
       pattern: ['src/**/*.ts']
       ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules', 'test']
     # for debugging
-    keepOutputDirectory: true
+    # keepOutputDirectory: true
   prune:
     automatic: true
     number: 5 # Number of versions to keep
   tableName: ${self:custom.stage}-llamafolio-table
+
+resources:
+  - ${file(resources/dynamodb.yml)}
 
 plugins:
   - serverless-esbuild

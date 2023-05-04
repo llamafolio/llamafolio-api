@@ -149,7 +149,7 @@ export async function getERC20BalanceOf(
             const tokenAddress = balancesRes.input.params[1][tokenIdx]
             const token = tokenByAddress[tokenAddress]
             if (token) {
-              token.amount = BigNumber.from(balancesRes.output[tokenIdx] || '0')
+              ;(token as any).amount = BigNumber.from(balancesRes.output[tokenIdx] || '0')
             }
           }
         }
@@ -273,7 +273,7 @@ export async function resolveERC20Details<K extends string>(
         continue
       }
 
-      const address = calls[callsIdx].target
+      const address = calls[callsIdx].target as string
       if (!symbols[callsIdx].success) {
         console.error(`Could not get symbol for token ${ctx.chain}:${address}`)
         callsIdx++
@@ -285,12 +285,12 @@ export async function resolveERC20Details<K extends string>(
         continue
       }
 
-      const token: Token = {
+      const token = {
         chain: ctx.chain,
         address,
         symbol: symbols[callsIdx].output,
         decimals: parseInt(decimals[callsIdx].output),
-      }
+      } satisfies Token
       results[key][i].success = true
       results[key][i].output = token
 
