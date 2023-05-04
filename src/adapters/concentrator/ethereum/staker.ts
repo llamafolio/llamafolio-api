@@ -1,4 +1,4 @@
-import { getUnderlyingsPoolsBalances } from '@adapters/curve/common/balance'
+import { getUnderlyingsPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
