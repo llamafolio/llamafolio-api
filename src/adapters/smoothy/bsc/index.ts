@@ -1,22 +1,34 @@
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { getSmoothyStakeBalances } from '@adapters/smoothy/common/stake'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-export const getContracts = async (_ctx: BaseContext) => {
+const tokens: string[] = [
+  '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+  '0x55d398326f99059ff775485246999027b3197955',
+  '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
+  '0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3',
+  '0xb9fd14912cd2ff2f0d6d3c2b46ddc73705d77d3c',
+  '0x9bb6128e20cf5496cf4db5f827f6d951be63d503',
+]
+
+const staker: Contract = {
+  chain: 'bsc',
+  address: '0xe5859f4efc09027a9b718781dcb2c6910cac6e91',
+  decimals: 18,
+  underlyings: tokens,
+  symbol: 'syUSD',
+}
+
+export const getContracts = () => {
   return {
-    // Contracts grouped by keys. They will be passed to getBalances, filtered by user interaction
-    contracts: {},
-    // Optional revalidate time (in seconds).
-    // Contracts returned by the adapter are cached by default and can be updated by interval with this parameter.
-    // This is mostly used for Factory contracts, where the number of contracts deployed increases over time
-    // revalidate: 60 * 60,
+    contracts: { staker },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  // Any method to check the contracts retrieved above (based on user interaction).
-  // This function will be run each time a user queries his balances.
-  // As static contracts info is filled in getContracts, this should ideally only fetch the current amount of each contract (+ underlyings and rewards)
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {})
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    staker: getSmoothyStakeBalances,
+  })
 
   return {
     groups: [{ balances }],
