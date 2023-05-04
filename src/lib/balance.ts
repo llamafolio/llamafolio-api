@@ -194,13 +194,13 @@ export async function resolveBalances<C extends GetContractsHandler>(
 }
 
 export function isBalanceUSDGtZero(balance: Balance | PricedBalance) {
-  if ((balance as PricedBalance).price != null && ((balance as PricedBalance).balanceUSD || 0) > 0) {
+  if ((balance as PricedBalance).price != null && ((balance as PricedBalance).balanceUSD || 0) > 1e-5) {
     return true
   }
 
   if (balance.underlyings) {
     for (const underlying of balance.underlyings) {
-      if (((underlying as PricedBalance).price != null && (underlying as PricedBalance).balanceUSD) || 0 > 0) {
+      if (((underlying as PricedBalance).price != null && (underlying as PricedBalance).balanceUSD) || 0 > 1e-5) {
         return true
       }
     }
@@ -210,7 +210,7 @@ export function isBalanceUSDGtZero(balance: Balance | PricedBalance) {
     for (const reward of balance.rewards) {
       if (
         (reward as PricedBalance).price != null &&
-        (((reward as PricedBalance).claimableUSD || 0) > 0 || ((reward as PricedBalance).balanceUSD || 0) > 0)
+        (((reward as PricedBalance).claimableUSD || 0) > 0 || ((reward as PricedBalance).balanceUSD || 0) > 1e-5)
       ) {
         return true
       }
