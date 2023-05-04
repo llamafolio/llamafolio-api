@@ -9,7 +9,7 @@ async function main() {
   try {
     const adapters = await selectDistinctAdaptersIds(client)
 
-    // 'wallet' is a custom LlamaFolio adapter (not an protocol)
+    // 'wallet' is a custom LlamaFolio adapter (not a protocol)
     const adaptersIds = adapters.map((adapter) => adapter.id).filter((id) => id !== 'wallet')
 
     const protocols = await fetchProtocols(adaptersIds)

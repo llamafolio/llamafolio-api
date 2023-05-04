@@ -25,7 +25,8 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
   try {
     const adapters = await selectDistinctAdaptersIds(client)
 
-    const adaptersIds = adapters.map((adapter) => adapter.id)
+    // 'wallet' is a custom LlamaFolio adapter (not a protocol)
+    const adaptersIds = adapters.map((adapter) => adapter.id).filter((id) => id !== 'wallet')
 
     const protocols = await fetchProtocols(adaptersIds)
 
