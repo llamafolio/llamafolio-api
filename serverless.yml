@@ -235,7 +235,7 @@ custom:
   esbuild:
     packager: pnpm
     bundle: true
-    minify: false
+    minify: true
     keepNames: true
     platform: node
     format: cjs
@@ -243,13 +243,12 @@ custom:
     external:
       - pg-native
       - pg-format
-      # - '@llamafolio/tokens'
 
     watch:
       pattern: ['src/**/*.ts']
       ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules', 'test']
     # for debugging
-    keepOutputDirectory: true
+    # keepOutputDirectory: true
   prune:
     automatic: true
     number: 5 # Number of versions to keep
