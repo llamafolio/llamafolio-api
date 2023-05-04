@@ -133,6 +133,7 @@ import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
 import strike from '@adapters/strike'
 import sturdy from '@adapters/sturdy'
+import superfarm from '@adapters/superfarm'
 import sushiswap from '@adapters/sushiswap'
 import swell from '@adapters/swell'
 import synapse from '@adapters/synapse'
@@ -305,6 +306,7 @@ export const adapters: Adapter[] = [
   stargate,
   strike,
   sturdy,
+  superfarm,
   sushiswap,
   swell,
   synapse,
