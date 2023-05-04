@@ -1,4 +1,5 @@
 import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
+import { sliceIntoChunks } from '@lib/array'
 import { BN_ZERO, mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -19,14 +20,16 @@ function getTokenKey(token: Token) {
   }
 }
 
+interface CoinResponse {
+  price: number
+  symbol: string
+  decimals?: number
+  timestamp: number
+}
+
 interface PricesResponse {
   coins: {
-    [key: string]: {
-      price: number
-      symbol: string
-      decimals?: number
-      timestamp: number
-    }
+    [key: string]: CoinResponse
   }
 }
 
@@ -68,7 +71,15 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
     }
   }
 
-  const prices = await getTokenPrices(priced as Token[])
+  const prices: { [key: string]: CoinResponse } = {}
+
+  // too many tokens fail, break down into multiple calls
+  const batchPrices = await Promise.all(sliceIntoChunks(priced as Token[], 150).map(getTokenPrices))
+  for (const batchPrice of batchPrices) {
+    for (const key in batchPrice.coins) {
+      prices[key] = batchPrice.coins[key]
+    }
+  }
 
   function getPricedBalance(balance: BaseBalance): PricedBalance {
     const key = getTokenKey(balance as Token)
@@ -77,7 +88,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
       return balance
     }
 
-    const price = prices.coins[key]
+    const price = prices[key]
     if (price === undefined) {
       console.log(`Failed to get price on Defillama API for ${key}`)
       return balance
