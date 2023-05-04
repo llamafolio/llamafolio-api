@@ -2,6 +2,9 @@ name: 'Deploy - Prod'
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - 'debug-*'
 
 defaults:
   run:
@@ -13,6 +16,8 @@ env:
 
 jobs:
   deploy:
+    # if workflow_dispatch or branch name starts with debug- and commit message contains [deploy]
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && startsWith(github.ref, 'refs/heads/debug-') && contains(github.event.head_commit.message, '[deploy]'))
     name: deploy
     strategy:
       matrix:
