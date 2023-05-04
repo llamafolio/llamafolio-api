@@ -137,8 +137,15 @@ export async function getContractsInteractions(client: PoolClient, address: stri
 
   const protocolQuery = `
     with interactions as (
-      select t.chain, t.to_address as address from transactions t
-      where from_address = $1 and chain = $2
+      (
+        select t.chain, t.to_address as address from transactions t
+        where from_address = $1 and chain = $2
+      )
+        union all
+      (
+        select t.chain, t.token as address from erc20_transfers t
+        where to_address = $1 and chain = $2
+      )
     )
     select distinct on (c.chain, c.address) c.* from interactions i
     inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
