@@ -1,6 +1,6 @@
 import { getSuperFarmBalances } from '@adapters/superfarm/ethereum/balance'
 import { getSuperfarmContracts } from '@adapters/superfarm/ethereum/contract'
-import { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const gemFarm: Contract = {

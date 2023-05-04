@@ -36,7 +36,7 @@ import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
 import conicFinance from '@adapters/conic-finance'
 import convexFinance from '@adapters/convex-finance'
-import curve from '@adapters/curve'
+import curveDex from '@adapters/curve-dex'
 import dydx from '@adapters/dydx'
 import equalizerExchange from '@adapters/equalizer-exchange'
 import etherFi from '@adapters/ether.fi'
@@ -209,7 +209,7 @@ export const adapters: Adapter[] = [
   concentrator,
   conicFinance,
   convexFinance,
-  curve,
+  curveDex,
   dydx,
   equalizerExchange,
   etherFi,

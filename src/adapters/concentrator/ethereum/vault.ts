@@ -1,4 +1,4 @@
-import { getUnderlyingsPoolsBalances } from '@adapters/curve/common/balance'
+import { getUnderlyingsPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
