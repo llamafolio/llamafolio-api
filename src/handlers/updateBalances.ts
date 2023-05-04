@@ -9,9 +9,10 @@ import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { Balance, BalancesConfig, BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy, groupBy2, keyBy2 } from '@lib/array'
-import { balancesTotalBreakdown, sanitizeBalances } from '@lib/balance'
+import { fmtBalanceBreakdown, sanitizeBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
+import { sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
@@ -180,18 +181,20 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
         const id = uuidv4()
 
+        for (const balance of balances) {
+          balancesStore.push({ groupId: id, ...fmtBalanceBreakdown(balance) })
+        }
+
         const balancesGroup: BalancesGroup = {
           id,
           fromAddress: address,
           adapterId: balanceConfig.adapterId,
           chain: balanceConfig.chain,
-          ...balancesTotalBreakdown(balances),
+          balanceUSD: sum(balancesStore.map((balance) => balance.balanceUSD || 0)),
+          rewardUSD: sum(balancesStore.map((balance) => balance.rewardUSD || 0)),
+          debtUSD: sum(balancesStore.map((balance) => balance.debtUSD || 0)),
           timestamp: now,
           healthFactor: balanceConfig.groups[groupIdx].healthFactor,
-        }
-
-        for (const balance of balances) {
-          balancesStore.push({ groupId: id, ...balance })
         }
 
         balancesGroupsStore.push(balancesGroup)

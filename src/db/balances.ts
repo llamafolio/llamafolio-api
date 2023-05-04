@@ -10,7 +10,9 @@ export interface Balance {
   groupId: string
   amount: string
   price?: string
-  balanceUSD: string
+  balanceUSD?: number
+  rewardUSD?: number
+  debtUSD?: number
   address: string
   category: Category
   data?: any
@@ -20,7 +22,9 @@ export interface BalanceStorage {
   group_id: string
   amount: string
   price?: string
-  balance_usd: string
+  balance_usd?: string
+  reward_usd?: string
+  debt_usd?: string
   address: string
   category: string
   data?: any
@@ -30,7 +34,9 @@ export interface BalanceStorable {
   group_id: string
   amount: string
   price?: string
-  balance_usd: string
+  balance_usd?: number
+  reward_usd?: number
+  debt_usd?: number
   address: string
   category: Category
   data?: any
@@ -51,6 +57,8 @@ export function fromRowStorage(balanceStorage: BalanceStorage) {
     price: balanceStorage.price ? parseFloat(balanceStorage.price) : undefined,
     amount: balanceStorage.amount,
     balanceUSD: balanceStorage.balance_usd ? parseFloat(balanceStorage.balance_usd) : undefined,
+    rewardUSD: balanceStorage.reward_usd ? parseFloat(balanceStorage.reward_usd) : undefined,
+    debtUSD: balanceStorage.debt_usd ? parseFloat(balanceStorage.debt_usd) : undefined,
     category: balanceStorage.category,
   }
 
@@ -67,6 +75,8 @@ export function toRow(balance: BalanceStorable) {
     balance.amount,
     balance.price,
     balance.balance_usd,
+    balance.reward_usd,
+    balance.debt_usd,
     balance.address,
     balance.category,
     balance.data,
@@ -77,13 +87,15 @@ export function toStorage(balances: Balance[]) {
   const balancesStorable: BalanceStorable[] = []
 
   for (const balance of balances) {
-    const { groupId, address, price, amount, balanceUSD, category, ...data } = balance
+    const { groupId, address, price, amount, balanceUSD, rewardUSD, debtUSD, category, ...data } = balance
 
     const balanceStorable: BalanceStorable = {
       group_id: groupId,
       amount: amount.toString(),
       price,
       balance_usd: balanceUSD,
+      reward_usd: rewardUSD,
+      debt_usd: debtUSD,
       address,
       category,
       // \\u0000 cannot be converted to text
@@ -120,6 +132,8 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
       b.amount,
       b.price,
       b.balance_usd,
+      b.reward_usd,
+      b.debt_usd,
       b.address,
       b.category,
       b.data,
@@ -154,6 +168,8 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
         price: balance.price != null ? parseFloat(balance.price) : undefined,
         amount: balance.amount,
         balanceUSD: balance.balance_usd != null ? parseFloat(balance.balance_usd) : undefined,
+        rewardUSD: balance.reward_usd != null ? parseFloat(balance.reward_usd) : undefined,
+        debtUSD: balance.debt_usd != null ? parseFloat(balance.debt_usd) : undefined,
         category: balance.category,
         data: balance.data,
         apy: balance.apy != null ? parseFloat(balance.apy) : undefined,
@@ -210,6 +226,8 @@ export function insertBalances(client: PoolClient, balances: Balance[]) {
             amount,
             price,
             balance_usd,
+            reward_usd,
+            debt_usd,
             address,
             category,
             data

@@ -19,6 +19,8 @@ export interface BaseFormattedBalance {
   price?: number
   amount?: string
   balanceUSD?: number
+  rewardUSD?: number
+  debtUSD?: number
   apy?: number
   apyBase?: number
   apyReward?: number
@@ -57,7 +59,6 @@ function unwrapUnderlyings(balance: FormattedBalance) {
       stable: underlying.stable,
       price: underlying.price,
       amount: underlying.amount,
-      balanceUSD: underlying.balanceUSD,
       underlyings: undefined,
     }
   }
@@ -77,6 +78,8 @@ function formatBaseBalance(balance: any) {
     price: balance.price,
     amount: balance.amount,
     balanceUSD: balance.balanceUSD,
+    rewardUSD: balance.rewardUSD,
+    debtUSD: balance.debtUSD,
   }
 }
 
@@ -92,6 +95,8 @@ export function formatBalance(balance: any): FormattedBalance {
     price: balance.price,
     amount: balance.amount,
     balanceUSD: balance.balanceUSD,
+    rewardUSD: balance.rewardUSD,
+    debtUSD: balance.debtUSD,
     apy: balance.apy,
     apyBase: balance.apyBase,
     apyReward: balance.apyReward,
