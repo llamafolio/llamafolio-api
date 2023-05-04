@@ -8,8 +8,8 @@ dependencies:
     specifier: ^3.0.8
     version: 3.0.8
   '@llamafolio/tokens':
-    specifier: github:llamafolio/llamafolio-tokens
-    version: github.com/llamafolio/llamafolio-tokens/60a623db7acb11134e289ee53981d1518854d998
+    specifier: ^0.1.60
+    version: 0.1.60
   dotenv:
     specifier: ^16.0.1
     version: 16.0.1
@@ -1957,6 +1957,10 @@ packages:
   /@kwsites/promise-deferred@1.1.1:
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
     dev: true
+
+  /@llamafolio/tokens@0.1.60:
+    resolution: {integrity: sha512-vnnFS380HRGHzWIsWzkMb8jFel+imn+P52+KQ+PUNhgmuWIuEKxliS/+ewBfLfIRrt+CkuLQiVYdRSSm9Hy2oA==}
+    dev: false
 
   /@nodelib/fs.scandir@2.1.5:
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -7376,10 +7380,4 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
-    dev: false
-
-  github.com/llamafolio/llamafolio-tokens/60a623db7acb11134e289ee53981d1518854d998:
-    resolution: {tarball: https://codeload.github.com/llamafolio/llamafolio-tokens/tar.gz/60a623db7acb11134e289ee53981d1518854d998}
-    name: '@llamafolio/tokens'
-    version: 0.1.40
     dev: false

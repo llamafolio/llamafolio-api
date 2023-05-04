@@ -54,12 +54,6 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
           pnpm add --global serverless serverless-esbuild
-          echo "Node.js VERSION:"
-          node --version
-          echo "PNPM VERSION:"
-          pnpm --version
-          echo "Serverless VERSION:"
-          serverless --version
 
       - name: 'Build'
         run: pnpm build
