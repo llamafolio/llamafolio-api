@@ -179,8 +179,10 @@ async function main() {
 
         const id = uuidv4()
 
-        for (const balance of balances) {
-          balancesStore.push({ groupId: id, ...fmtBalanceBreakdown(balance) })
+        const groupBalances = balances.map((balance) => ({ groupId: id, ...fmtBalanceBreakdown(balance) }))
+
+        for (const balance of groupBalances) {
+          balancesStore.push(balance)
         }
 
         const balancesGroup: BalancesGroup = {
@@ -188,9 +190,9 @@ async function main() {
           fromAddress: address,
           adapterId: balanceConfig.adapterId,
           chain: balanceConfig.chain,
-          balanceUSD: sum(balancesStore.map((balance) => balance.balanceUSD || 0)),
-          rewardUSD: sum(balancesStore.map((balance) => balance.rewardUSD || 0)),
-          debtUSD: sum(balancesStore.map((balance) => balance.debtUSD || 0)),
+          balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
+          rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
+          debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
           timestamp: now,
           healthFactor: balanceConfig.groups[groupIdx].healthFactor,
         }
