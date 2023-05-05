@@ -1,22 +1,25 @@
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { getEverriseBalances } from '@adapters/everrise/common/stake'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-export const getContracts = async (_ctx: BaseContext) => {
+const nftStaker: Contract = {
+  chain: 'fantom',
+  address: '0x23cd2e6b283754fd2340a75732f9ddbb5d11807e',
+  token: '0xc17c30e98541188614df99239cabd40280810ca3',
+  underlyings: ['0xc17c30e98541188614df99239cabd40280810ca3'],
+  rewards: ['0xc17c30e98541188614df99239cabd40280810ca3'],
+}
+
+export const getContracts = () => {
   return {
-    // Contracts grouped by keys. They will be passed to getBalances, filtered by user interaction
-    contracts: {},
-    // Optional revalidate time (in seconds).
-    // Contracts returned by the adapter are cached by default and can be updated by interval with this parameter.
-    // This is mostly used for Factory contracts, where the number of contracts deployed increases over time
-    // revalidate: 60 * 60,
+    contracts: { nftStaker },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  // Any method to check the contracts retrieved above (based on user interaction).
-  // This function will be run each time a user queries his balances.
-  // As static contracts info is filled in getContracts, this should ideally only fetch the current amount of each contract (+ underlyings and rewards)
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {})
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    nftStaker: getEverriseBalances,
+  })
 
   return {
     groups: [{ balances }],
