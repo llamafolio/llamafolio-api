@@ -181,7 +181,7 @@ export async function getAllContractsInteractions(client: PoolClient, address: s
       where from_address = $1 limit 1
     )
   )
-  select distinct on (c.chain, c.address) c.* from interactions i
+  select distinct on (c.chain, c.address, c.adapter_id) c.* from interactions i
   inner join adapters_contracts c on c.chain = i.chain and c.address = i.address;
   `,
     [address],
