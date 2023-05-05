@@ -169,7 +169,7 @@ export function toRow(_yield: YieldStorable) {
   return [
     _yield.chain,
     _yield.adapterId,
-    _yield.address,
+    _yield.address.toLowerCase(),
     _yield.pool,
     _yield.apy,
     _yield.apyBase,
