@@ -131,7 +131,7 @@ export async function getContractsInteractions(client: PoolClient, address: stri
       )
     )
     select distinct on (c.chain, c.address) c.* from interactions i
-    inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
+    inner join adapters_contracts c on c.chain = i.chain and lower(c.address) = lower(i.address)
     where c.adapter_id = $3;
   `
 
@@ -148,7 +148,7 @@ export async function getContractsInteractions(client: PoolClient, address: stri
       )
     )
     select distinct on (c.chain, c.address) c.* from interactions i
-    inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
+    inner join adapters_contracts c on c.chain = i.chain and lower(c.address) = lower(i.address)
     where c.adapter_id = $3;
   `
 
@@ -182,7 +182,7 @@ export async function getAllContractsInteractions(client: PoolClient, address: s
     )
   )
   select distinct on (c.chain, c.address, c.adapter_id) c.* from interactions i
-  inner join adapters_contracts c on c.chain = i.chain and c.address = i.address;
+  inner join adapters_contracts c on c.chain = i.chain and lower(c.address) = lower(i.address);
   `,
     [address],
   )
