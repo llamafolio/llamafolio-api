@@ -140,6 +140,14 @@ functions:
           method: get
           path: /info/stats
 
+  getInfoAddress:
+    handler: src/handlers/getInfoAddress.handler
+    description: Get address info
+    events:
+      - httpApi:
+          method: get
+          path: /info/{address}
+
   getLabels:
     handler: src/handlers/getLabels.handler
     description: Get labels

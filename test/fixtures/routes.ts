@@ -43,6 +43,12 @@ export const routes = [
   },
   {
     method: 'GET',
+    path: '/info/{address}',
+    pathParams: ['address'],
+    queryParams: [],
+  },
+  {
+    method: 'GET',
     path: '/info/stats',
     pathParams: [],
     queryParams: [],
