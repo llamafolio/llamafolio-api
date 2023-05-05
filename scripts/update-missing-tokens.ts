@@ -14,7 +14,7 @@ function help() {
 
 async function main() {
   // argv[0]: node_modules/.bin/tsx
-  // argv[1]: update-tokens.ts
+  // argv[1]: update-missing-tokens.ts
   if (process.argv.length < 2) {
     console.error('Missing arguments')
     return help()
@@ -24,7 +24,7 @@ async function main() {
 
   try {
     const queryRes = await client.query(`
-      select ac.chain, ac.address from adapters_contracts ac
+      select distinct on (ac.chain, ac.address) ac.chain, ac.address from adapters_contracts ac
       where ac.address not in (
         select address from erc20_tokens
       );
