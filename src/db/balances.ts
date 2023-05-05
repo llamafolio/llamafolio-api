@@ -77,7 +77,7 @@ export function toRow(balance: BalanceStorable) {
     balance.balance_usd,
     balance.reward_usd,
     balance.debt_usd,
-    balance.address,
+    balance.address.toLowerCase(),
     balance.category,
     balance.data,
   ]

@@ -40,7 +40,7 @@ export function toRow(contract: ContractStorage) {
     contract.category,
     contract.name,
     contract.chain,
-    contract.address,
+    contract.address.toLowerCase(),
     contract.adapter_id,
     contract.data,
   ]

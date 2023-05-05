@@ -62,7 +62,7 @@ export function fromStorage(balancesGroupsStorage: BalancesGroupStorage[]) {
 export function toRow(snapshot: BalancesGroupStorable) {
   return [
     snapshot.id,
-    snapshot.from_address,
+    snapshot.from_address.toLowerCase(),
     snapshot.adapter_id,
     snapshot.chain,
     snapshot.balance_usd,

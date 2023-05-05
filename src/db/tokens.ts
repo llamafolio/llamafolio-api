@@ -54,7 +54,15 @@ export function fromERC20Storage(tokensStorage: ERC20TokenStorage[]) {
 }
 
 export function toRow(token: ERC20TokenStorable) {
-  return [token.address, token.chain, token.name, token.symbol, token.decimals, token.coingeckoId, token.cmcId]
+  return [
+    token.address.toLowerCase(),
+    token.chain,
+    token.name,
+    token.symbol,
+    token.decimals,
+    token.coingeckoId,
+    token.cmcId,
+  ]
 }
 
 export function toERC20Storage(tokens: ERC20Token[]) {
