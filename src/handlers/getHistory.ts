@@ -7,7 +7,7 @@ import type { APIGatewayProxyHandler } from 'aws-lambda'
 export interface ITransaction {
   chain: string
   block_number: string
-  timestamp: string
+  timestamp: number
   hash: string
   from_address: string
   to_address: string
@@ -74,7 +74,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const transactionsData: ITransaction[] = transactions.map((tx: any) => ({
       chain: tx.chain,
       block_number: tx.block_number,
-      timestamp: tx.timestamp,
+      timestamp: parseInt(tx.timestamp),
       hash: tx.hash,
       from_address: tx.from_address,
       to_address: tx.to_address,
