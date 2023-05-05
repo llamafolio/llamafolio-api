@@ -292,7 +292,7 @@ FROM
   ) AS "_root"
   `,
     [
-      address,
+      address.toLowerCase(),
       limit,
       offset,
       chainsFilter.length > 0 ? chainsFilter : true,
@@ -356,7 +356,11 @@ FROM
       ) AS "_root.base"
   ) AS "_root"
   `,
-    [address, chainsFilter.length > 0 ? chainsFilter : true, protocolsFilter.length > 0 ? protocolsFilter : true],
+    [
+      address.toLowerCase(),
+      chainsFilter.length > 0 ? chainsFilter : true,
+      protocolsFilter.length > 0 ? protocolsFilter : true,
+    ],
   )
 
   return queryRes.rows[0].root

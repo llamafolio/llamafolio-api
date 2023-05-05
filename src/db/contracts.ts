@@ -152,7 +152,11 @@ export async function getContractsInteractions(client: PoolClient, address: stri
     where c.adapter_id = $3;
   `
 
-  const res = await client.query(adapterId === 'wallet' ? walletQuery : protocolQuery, [address, chain, adapterId])
+  const res = await client.query(adapterId === 'wallet' ? walletQuery : protocolQuery, [
+    address.toLowerCase(),
+    chain,
+    adapterId,
+  ])
 
   return fromStorage(res.rows)
 }
@@ -184,7 +188,7 @@ export async function getAllContractsInteractions(client: PoolClient, address: s
   select distinct on (c.chain, c.address, c.adapter_id) c.* from interactions i
   inner join adapters_contracts c on c.chain = i.chain and c.address = i.address;
   `,
-    [address],
+    [address.toLowerCase()],
   )
 
   return fromStorage(res.rows)
@@ -235,7 +239,7 @@ export async function getAllTokensInteractions(client: PoolClient, address: stri
     inner join adapters_contracts c on t.chain = c.chain and t.token = c.address
     where to_address = $1 and c.adapter_id = 'wallet';
     `,
-    [address],
+    [address.toLowerCase()],
   )
 
   return fromStorage(res.rows)

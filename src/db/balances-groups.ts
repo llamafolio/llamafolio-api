@@ -111,7 +111,7 @@ export async function selectLastBalancesGroupsByFromAddress(client: PoolClient, 
     group by chain, timestamp
     order by balance_usd desc;
   `,
-    [fromAddress],
+    [fromAddress.toLowerCase()],
   )
 
   return balancesRes.rows.map((row) => ({
@@ -131,7 +131,7 @@ export function deleteBalancesGroupsCascadeByFromAddress(client: PoolClient, fro
     )
     DELETE FROM balances WHERE group_id IN (SELECT id FROM balances_groups_ids)
     `,
-    [fromAddress],
+    [fromAddress.toLowerCase()],
   )
 }
 

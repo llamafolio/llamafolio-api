@@ -147,7 +147,7 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
     left join yields y on y.chain = bg.chain and y.address = b.address
     where bg.from_address = $1;
   `,
-    [fromAddress],
+    [fromAddress.toLowerCase()],
   )
 
   const balancesByGroupId = groupBy(queryRes.rows, 'group_id')
