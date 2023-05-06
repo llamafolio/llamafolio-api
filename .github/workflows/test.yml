@@ -69,7 +69,7 @@ jobs:
 
       - name: 'Lint'
         run: |
-          node_modules/.bin/eslint --fix . --ext js,cjs,mjs,ts,d.ts,json 
+          node_modules/.bin/eslint --fix . --ext js,cjs,mjs,ts,d.ts,json
 
       - name: 'Format'
         run: |

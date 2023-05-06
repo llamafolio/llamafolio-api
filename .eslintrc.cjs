@@ -15,8 +15,26 @@ module.exports = {
   },
   reportUnusedDisableDirectives: true,
   parser: '@typescript-eslint/parser',
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'prettier'],
+  extends: [
+    //
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:security/recommended',
+    'prettier',
+  ],
   plugins: ['@typescript-eslint', 'simple-import-sort', 'unused-imports', 'prettier'],
+  overrides: [
+    // Markdown
+    {
+      files: ['*.md'],
+      processor: 'markdown/markdown',
+      parser: 'eslint-plugin-markdownlint/parser',
+      extends: ['plugin:markdown/recommended', 'plugin:markdownlint/recommended'],
+      rules: {
+        'markdownlint/md041': ['off'],
+      },
+    },
+  ],
   rules: {
     'prettier/prettier': [
       'warn',
