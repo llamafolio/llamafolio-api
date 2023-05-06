@@ -242,15 +242,8 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   esbuild:
     packager: pnpm
-    bundle: true
-    minify: true
-    keepNames: true
-    platform: node
-    format: cjs
     concurrency: 4
-    external:
-      - pg-native
-      - pg-format
+    config: './esbuild.config.cjs'
 
     watch:
       pattern: ['src/**/*.ts']
