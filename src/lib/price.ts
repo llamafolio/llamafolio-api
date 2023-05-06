@@ -34,13 +34,25 @@ interface PricesResponse {
 }
 
 export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
-  const coins = new Set(tokens.map(getTokenKey).filter(isNotNullish))
+  try {
+    const coins = new Set(tokens.map(getTokenKey).filter(isNotNullish))
+    const coinsParam = Array.from(coins).join(',')
 
-  const pricesRes = await fetch(`https://coins.llama.fi/prices/current/${Array.from(coins).join(',')}`, {
-    method: 'GET',
-  })
+    const pricesRes = await fetch(`https://coins.llama.fi/prices/current/${coinsParam}`, {
+      method: 'GET',
+    })
 
-  return pricesRes.json()
+    if (!pricesRes.ok) {
+      throw new Error(`bad response for coins ${coinsParam}`)
+    }
+
+    return pricesRes.json()
+  } catch (error) {
+    console.error('Failed to get DefiLlama current prices', error)
+    return {
+      coins: {},
+    }
+  }
 }
 
 export async function getPricedBalances(balances: Balance[]): Promise<(Balance | PricedBalance)[]> {

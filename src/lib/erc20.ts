@@ -106,6 +106,7 @@ export async function getERC20BalanceOf(
   const { getContractAddress } = params || { getContractAddress: (contract) => contract.address }
 
   if (ctx.chain in multiCoinContracts) {
+    let attempts = 0
     const tokenByAddress: { [key: string]: Token } = {}
     let nextTokens = tokens.slice()
 
@@ -114,7 +115,7 @@ export async function getERC20BalanceOf(
     }
 
     do {
-      // binary search to handle errors as the whole call will fail if one token fails
+      // "binary search" (not sorted) to handle errors as the whole call will fail if one token fails
       const mid = Math.floor(nextTokens.length / 2)
       const left = nextTokens.slice(0, mid)
       const right = nextTokens.slice(mid)
@@ -155,8 +156,9 @@ export async function getERC20BalanceOf(
         }
       }
 
+      attempts++
       nextTokens = failedTokens.slice()
-    } while (nextTokens.length > 0)
+    } while (nextTokens.length > 0 && attempts < 10)
 
     return tokens.filter((token) => (token as Balance).amount != null) as Balance[]
   }
