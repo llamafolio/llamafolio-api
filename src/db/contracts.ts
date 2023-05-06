@@ -181,8 +181,8 @@ export async function getAllContractsInteractions(client: PoolClient, address: s
     )
       union all
     (
-      select t.chain, '0x0000000000000000000000000000000000000000' as address from transactions t
-      where from_address = $1 limit 1
+      select distinct on (chain, address) t.chain, '0x0000000000000000000000000000000000000000' as address from transactions t
+      where from_address = $1
     )
   )
   select distinct on (c.chain, c.address, c.adapter_id) c.* from interactions i
