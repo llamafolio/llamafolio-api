@@ -241,10 +241,7 @@ functions:
 custom:
   stage: ${opt:stage, self:provider.stage}
   esbuild:
-    packager: pnpm
-    concurrency: 4
     config: './esbuild.config.cjs'
-
     watch:
       pattern: ['src/**/*.ts']
       ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules', 'test']

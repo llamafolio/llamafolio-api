@@ -25,14 +25,16 @@ const esbuildPlugins = [
 
 /**
  * @param {import('serverless').Options} _
- * @returns {import('esbuild').BuildOptions}
+ * @returns {import('esbuild').BuildOptions & { packager: string, concurrency: number }}
  */
 module.exports = (_) => ({
+  packager: 'pnpm',
+  concurrency: 4,
   bundle: true,
   format: 'cjs',
   keepNames: true,
   platform: 'node',
-  tsconfig: './tsconfig.json',
+  sourcemap: true,
   minify: isProduction,
   drop: isProduction ? ['console', 'debugger'] : [],
   external: ['pg-native', 'pg-format'],
