@@ -58,3 +58,4 @@ docs/swagger/*.json
 docs/swagger/*.html
 
 _
+swagger.json
