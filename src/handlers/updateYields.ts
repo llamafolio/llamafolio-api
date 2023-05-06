@@ -36,6 +36,7 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
 
     return success({})
   } catch (e) {
+    await client.query('ROLLBACK')
     console.error('Failed to update yields', e)
     return serverError('Failed to update yields')
   } finally {
