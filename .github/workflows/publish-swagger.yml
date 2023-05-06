@@ -24,21 +24,21 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v3
 
+      - name: 'Setup Bun 🍞'
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 'latest'
+
       - name: 'Pull Latest Swagger'
         env:
           AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
         run: |
-          aws apigatewayv2 \
-            export-api \
-            --api-id=$AWS_GATEWAY_API_ID_DEV \
-            --output-type='JSON' \
-            --specification='OAS30' \
-            'swagger.json'
+          bun ./scripts/update-swagger.ts
 
       - name: 'curl Swagger UI index.html'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_SWAGGER_URL }}
-          INDEX_HTML_URL: 'https://gist.githubusercontent.com/o-az/36b94d57a8df23421f229a15b5ae7a10/raw/77000aac04a068b085917db982bbabd1e724262d/swagger-ui-index.html'
+          INDEX_HTML_URL: 'https://gist.githubusercontent.com/o-az/36b94d57a8df23421f229a15b5ae7a10/raw/d684172357888c68ac0d9a5007e82bdc5f812e90/index.html'
         run: |
           curl --silent --location $INDEX_HTML_URL --output index.html
 

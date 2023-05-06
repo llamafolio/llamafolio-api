@@ -12,3 +12,4 @@ test/*.json
 test/**/*.json
 _
 pnpm-lock.yaml
+docs
