@@ -11,3 +11,4 @@ migrations
 test/*.json
 test/**/*.json
 _
+pnpm-lock.yaml

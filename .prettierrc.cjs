@@ -4,4 +4,13 @@ module.exports = {
   semi: false,
   singleQuote: true,
   trailingComma: 'all',
+  overrides: [
+    {
+      files: ['*.json', '*.jsonc'],
+      options: {
+        parser: 'json',
+      },
+    },
+  ],
+  plugins: ['prettier-plugin-sh', 'prettier-plugin-sql'],
 }
