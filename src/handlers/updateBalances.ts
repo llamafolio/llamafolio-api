@@ -220,6 +220,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     return success({})
   } catch (error) {
     console.error('Failed to update balances', { error, address })
+    await client.query('ROLLBACK')
     return serverError('Failed to update balances')
   } finally {
     client.release(true)

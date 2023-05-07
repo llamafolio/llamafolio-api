@@ -42,6 +42,7 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
 
     return success({})
   } catch (e) {
+    await client.query('ROLLBACK')
     console.log('Failed to update protocols', e)
     return serverError('Failed to update protocols')
   }
