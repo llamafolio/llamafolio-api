@@ -9,12 +9,9 @@
     "forceConsistentCasingInFileNames": true,
     "module": "ESNext",
     "moduleResolution": "node",
-    "sourceMap": true,
-    "inlineSources": true,
-    "sourceRoot": "/",
     "resolveJsonModule": true,
     "noEmit": false,
-    "allowJs": false,
+    "allowJs": true,
     "noImplicitThis": false,
     "noErrorTruncation": true,
     "noUnusedLocals": false,
@@ -22,11 +19,12 @@
     "noUnusedParameters": true,
     "lib": ["ESNext", "DOM"],
     "baseUrl": ".",
+    "outDir": "./.esbuild",
     "paths": {
       "@*": ["./src/*"],
       "@environment": ["./environment.ts"]
     }
   },
-  "include": ["src", "scripts", "test", "bench", "*.ts", "*.js", "*.cjs", ".*.cjs","*.cts", "*.json"],
+  "include": ["src", "scripts", "test", "*.js", "*.cjs", "*.mjs", "*.ts"],
   "exclude": [".esbuild", "node_modules", "coverage", "dist"]
 }
