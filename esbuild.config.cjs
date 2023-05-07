@@ -15,11 +15,12 @@ module.exports = (_) => ({
   bundle: true,
   format: 'cjs',
   keepNames: true,
+  target: 'node18',
   platform: 'node',
   minify: isProduction,
   external: ['pg-native', 'pg-format'],
   drop: isProduction ? ['console', 'debugger'] : [],
-  metafile: !isProduction,
+  metafile: Boolean(process.env.ESBUILD_ANALYZE),
   plugins: [
     AnalyzerPlugin({
       outfile: './.esbuild/esbuild-analyzer.html',

@@ -1,7 +1,11 @@
-export function isHex(str: string): boolean {
-  const regexp = /^0x[0-9A-F]+$/i
-  return regexp.test(str)
+import { Buffer } from 'node:buffer'
+
+export function isHex(string_: string): boolean {
+  const regexp = /^0x[\dA-Fa-f]{40}$/
+  return regexp.test(string_)
 }
+
+export const isAddress = isHex
 
 /**
  *

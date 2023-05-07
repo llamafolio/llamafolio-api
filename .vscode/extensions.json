@@ -4,6 +4,7 @@
     "dbaeumer.vscode-eslint",
     "github.vscode-github-actions",
     "esbenp.prettier-vscode",
-    "EditorConfig.EditorConfig"
+    "EditorConfig.EditorConfig",
+    "bierner.comment-tagged-templates"
   ]
 }

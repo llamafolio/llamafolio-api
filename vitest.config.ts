@@ -4,9 +4,17 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 import { defineConfig } from 'vitest/config'
 import GithubActionsReporter from 'vitest-github-actions-reporter'
 
+const timestamp = new Date().toISOString()
+
 export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
+    benchmark: {
+      reporters: ['default', 'json'],
+      outputFile: {
+        json: `./test/benchmark/reports/${timestamp}.json`,
+      },
+    },
     globals: true,
     allowOnly: true,
     globalSetup: ['./test/setup/global.ts'],

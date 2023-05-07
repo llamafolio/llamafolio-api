@@ -8,10 +8,10 @@ import { testData } from './fixtures/test-data'
 /**
  * Routes to skip in the test
  */
-const SKIP_ROUTES = [
+const SKIP_ROUTES = new Set([
   //
   '/gas_price/{chain}/chart',
-]
+])
 
 const getFilteredRoutes = () => {
   const allRoutes = getRoutes({
@@ -19,7 +19,7 @@ const getFilteredRoutes = () => {
     stage: process.env.STAGE,
   })
   return allRoutes
-    .filter((route) => !SKIP_ROUTES.includes(route.path))
+    .filter((route) => !SKIP_ROUTES.has(route.path))
     .sort((a, b) => a.path.localeCompare(b.path))
     .map((route) => ({
       ...route,
@@ -67,11 +67,11 @@ describe('API Routes', () => {
       const testableURL = `${url}${generateTestableRoute({ route, testData })}`
       console.log(`calling ${testableURL}`)
       const request = () => fetch(testableURL)
-      expect(request()).resolves.toHaveProperty('status', 200)
-      expect(request()).resolves.toHaveProperty('body')
+      await expect(request()).resolves.toHaveProperty('status', 200)
+      await expect(request()).resolves.toHaveProperty('body')
       /* will be updated to actually check for valid JSON */
-      expect(request()).resolves.toHaveProperty('body', expect.anything())
-      expect(request()).resolves.toHaveProperty('body', expect.not.stringContaining('error'))
+      await expect(request()).resolves.toHaveProperty('body', expect.anything())
+      await expect(request()).resolves.toHaveProperty('body', expect.not.stringContaining('error'))
     },
     // timeout is in milliseconds
     Number(process.env.TEST_WAIT_TIME) || 8000,

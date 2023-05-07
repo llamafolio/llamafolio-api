@@ -35,6 +35,7 @@ module.exports = {
     },
   ],
   rules: {
+    'security/detect-object-injection': ['off'],
     'prettier/prettier': [
       'warn',
       {},
