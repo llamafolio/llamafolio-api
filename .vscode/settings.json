@@ -1,4 +1,9 @@
 {
+  "search.exclude": {
+    "**/node_modules": true,
+    "pnpm-lock.yaml": true,
+    ".esbuild": true
+  },
   "window.title": "🦙 ${rootName} ${separator} ${activeEditorMedium} 🦙",
   // git
   "git.autofetch": true,
@@ -31,5 +36,6 @@
   },
   "files.associations": {
     ".markdownlint.json": "jsonc"
-  }
+  },
+  "cmake.configureOnOpen": false
 }
