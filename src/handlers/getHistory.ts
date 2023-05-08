@@ -2,7 +2,11 @@ import { selectHistory, selectHistoryAggregate } from '@db/history'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
+import { mulPrice } from '@lib/math'
+import { getTokenKey, getTokenPrices } from '@lib/price'
+import type { Token } from '@lib/token'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
+import { BigNumber, ethers } from 'ethers'
 
 export interface ITransaction {
   chain: string
@@ -23,8 +27,19 @@ export interface ITransaction {
     from_address: string
     to_address: string
     value: string
+    price?: number
+    valueUSD?: number
   }[]
   value: string
+  price?: number
+  valueUSD?: number
+}
+
+interface IHistory {
+  transactions: ITransaction[]
+  total_pages: number
+  current_page: number
+  next_page: number
 }
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
@@ -95,15 +110,73 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       })),
     }))
 
-    return success(
-      {
-        transactions: transactionsData,
-        total_pages: pages,
-        current_page: pageQuery >= pages ? pages : pageQuery,
-        next_page: pageQuery >= pages ? pages : pageQuery + 1,
-      },
-      { maxAge: 2 * 60 },
+    // 1. collect tokens / coins
+    // 2. fetch their prices
+    // 3. attach prices to tokens / coins
+    const tokensByChain: { [chain: string]: string[] } = {}
+
+    for (const transaction of transactionsData) {
+      // gas transfer
+      if (transaction.value !== '0') {
+        if (!tokensByChain[transaction.chain]) {
+          tokensByChain[transaction.chain] = []
+        }
+        tokensByChain[transaction.chain].push(ethers.constants.AddressZero)
+      }
+
+      // token transfers
+      if (transaction.token_transfers) {
+        for (const transfer of transaction.token_transfers) {
+          if (!tokensByChain[transaction.chain]) {
+            tokensByChain[transaction.chain] = []
+          }
+          tokensByChain[transaction.chain].push(transfer.token_address)
+        }
+      }
+    }
+
+    const tokens = Object.keys(tokensByChain).flatMap((chain) =>
+      tokensByChain[chain].map((address) => ({ chain, address } as Token)),
     )
+
+    const prices = await getTokenPrices(tokens)
+
+    for (const transaction of transactionsData) {
+      // gas transfer
+      if (transaction.value !== '0') {
+        const key = getTokenKey({ chain: transaction.chain, address: ethers.constants.AddressZero } as Token)
+        if (key) {
+          const priceInfo = prices.coins[key]
+          if (priceInfo && priceInfo.decimals) {
+            transaction.price = priceInfo.price
+            transaction.valueUSD = mulPrice(BigNumber.from(transaction.value), priceInfo.decimals, priceInfo.price)
+          }
+        }
+      }
+
+      // token transfers
+      if (transaction.token_transfers) {
+        for (const transfer of transaction.token_transfers) {
+          const key = getTokenKey({ chain: transaction.chain, address: transfer.token_address } as Token)
+          if (key) {
+            const priceInfo = prices.coins[key]
+            if (priceInfo && priceInfo.decimals) {
+              transfer.price = priceInfo.price
+              transfer.valueUSD = mulPrice(BigNumber.from(transfer.value), priceInfo.decimals, priceInfo.price)
+            }
+          }
+        }
+      }
+    }
+
+    const response: IHistory = {
+      transactions: transactionsData,
+      total_pages: pages,
+      current_page: pageQuery >= pages ? pages : pageQuery,
+      next_page: pageQuery >= pages ? pages : pageQuery + 1,
+    }
+
+    return success(response, { maxAge: 2 * 60 })
   } catch (e) {
     console.error('Failed to retrieve history', e)
     return serverError('Failed to retrieve history')

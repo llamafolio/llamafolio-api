@@ -3,7 +3,21 @@ import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
+import { mulPrice } from '@lib/math'
+import { getTokenPrice } from '@lib/price'
+import type { Token } from '@lib/token'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
+import { BigNumber } from 'ethers'
+
+interface IHolder {
+  address: string
+  amount: string
+  balanceUSD?: number
+}
+
+interface TokenHoldersResponse {
+  holders: IHolder[]
+}
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
@@ -28,16 +42,23 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const limitQuery = parseInt(limit) > 100 ? 100 : parseInt(limit)
 
-    const balances = await selectBalancesHolders(client, address, chain, limitQuery)
+    const [balances, tokenPrice] = await Promise.all([
+      selectBalancesHolders(client, address, chain, limitQuery),
+      getTokenPrice({ chain, address } as Token),
+    ])
 
-    return success(
-      {
-        data: {
-          balances,
-        },
-      },
-      { maxAge: 10 * 60 },
-    )
+    const response: TokenHoldersResponse = {
+      holders: balances.map((balance) => ({
+        address: balance.address,
+        amount: balance.amount,
+        balanceUSD:
+          tokenPrice && tokenPrice.decimals
+            ? mulPrice(BigNumber.from(balance.amount), tokenPrice.decimals, tokenPrice.price)
+            : undefined,
+      })),
+    }
+
+    return success(response, { maxAge: 10 * 60 })
   } catch (e) {
     console.error('Failed to retrieve token holders', e)
     return serverError('Failed to retrieve token holders')
