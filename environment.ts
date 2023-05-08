@@ -12,7 +12,6 @@ const { assert: environmentSchema } = type({
   PGDATABASE: 'string',
   PGPASSWORD: 'string',
   PGPORT: 'string',
-  PGCONNECTION_STRING: 'string',
   'CUSTOM_PROVIDER?': 'string',
   LLAMANODES_API_KEY: 'string',
   'ARBITRUM_RPC?': 'string',
