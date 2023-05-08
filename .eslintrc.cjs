@@ -19,6 +19,7 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
     'plugin:json/recommended',
     'plugin:security/recommended',
+    'plugin:vitest/recommended',
     'prettier',
   ],
   plugins: ['@typescript-eslint', 'simple-import-sort', 'unused-imports', 'prettier'],

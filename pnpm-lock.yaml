@@ -108,6 +108,9 @@ devDependencies:
   eslint-plugin-unused-imports:
     specifier: ^2.0.0
     version: 2.0.0(@typescript-eslint/eslint-plugin@5.59.2)(eslint@8.39.0)
+  eslint-plugin-vitest:
+    specifier: ^0.2.2
+    version: 0.2.2(eslint@8.39.0)(typescript@5.0.4)
   node-pg-migrate:
     specifier: ^6.2.2
     version: 6.2.2(pg@8.7.3)
@@ -4170,6 +4173,19 @@ packages:
       '@typescript-eslint/eslint-plugin': 5.59.2(@typescript-eslint/parser@5.59.2)(eslint@8.39.0)(typescript@5.0.4)
       eslint: 8.39.0
       eslint-rule-composer: 0.3.0
+    dev: true
+
+  /eslint-plugin-vitest@0.2.2(eslint@8.39.0)(typescript@5.0.4):
+    resolution: {integrity: sha512-f6E90twgtAAuIE8P2YOy4f1RBVbZ0NB9yoyeHSpwYL6xiNxT4fmq6UHZoR4tHN+NMkbtAoZtiTr1EmqSpB2C4A==}
+    engines: {node: 14.x || >= 16}
+    peerDependencies:
+      eslint: '>=8.0.0'
+    dependencies:
+      '@typescript-eslint/utils': 5.59.2(eslint@8.39.0)(typescript@5.0.4)
+      eslint: 8.39.0
+    transitivePeerDependencies:
+      - supports-color
+      - typescript
     dev: true
 
   /eslint-rule-composer@0.3.0:
