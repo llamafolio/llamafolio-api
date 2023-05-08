@@ -6,7 +6,7 @@ import { isNotNullish } from '@lib/type'
 
 // Defillama prices API requires a prefix to know where the token comes from.
 // It can be a chain or a market provider like coingecko
-function getTokenKey(token: Token) {
+export function getTokenKey(token: Token) {
   if (token.coingeckoId) {
     return `coingecko:${token.coingeckoId}`
   }
@@ -33,10 +33,9 @@ interface PricesResponse {
   }
 }
 
-export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
+export async function fetchTokenPrices(keys: string[]): Promise<PricesResponse> {
   try {
-    const coins = new Set(tokens.map(getTokenKey).filter(isNotNullish))
-    const coinsParam = Array.from(coins).join(',')
+    const coinsParam = keys.join(',')
 
     const pricesRes = await fetch(`https://coins.llama.fi/prices/current/${coinsParam}`, {
       method: 'GET',
@@ -53,6 +52,23 @@ export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
       coins: {},
     }
   }
+}
+
+export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
+  const keys = new Set(tokens.map(getTokenKey).filter(isNotNullish))
+
+  return fetchTokenPrices(Array.from(keys))
+}
+
+export async function getTokenPrice(token: Token) {
+  const tokenKey = getTokenKey(token)
+  if (!tokenKey) {
+    return null
+  }
+
+  const tokenPricesRes = await fetchTokenPrices([tokenKey])
+
+  return tokenPricesRes.coins?.[tokenKey] ?? null
 }
 
 export async function getPricedBalances(balances: Balance[]): Promise<(Balance | PricedBalance)[]> {
