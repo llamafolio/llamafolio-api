@@ -114,49 +114,65 @@ export function insertAdaptersContracts(
  * Get a list of all contracts a given account interacted with for a given protocol
  * @param client
  * @param address
- * @param chain
  * @param adapterId
+ * @param chain
  */
-export async function getContractsInteractions(client: PoolClient, address: string, chain: Chain, adapterId: string) {
-  const walletQuery = `
+export async function getContractsInteractions(client: PoolClient, address: string, adapterId: string, chain?: Chain) {
+  if (chain) {
+    const res = await client.query(
+      `
+      with interactions as (
+        (
+          select t.chain, t.to_address as address from transactions t
+          where from_address = $1
+        )
+          union all
+        (
+          select t.chain, t.token as address from erc20_transfers t
+          where to_address = $1
+        )
+          union all
+        (
+          select t.chain, '0x0000000000000000000000000000000000000000' as address from transactions t
+          where from_address = $1
+        )
+      )
+      select c.* from interactions i
+      inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
+      where c.adapter_id = $2 and c.chain = $3
+      group by c.chain, c.address, c.adapter_id;
+    `,
+      [address.toLowerCase(), adapterId, chain],
+    )
+
+    return fromStorage(res.rows)
+  }
+
+  const res = await client.query(
+    `
     with interactions as (
       (
+        select t.chain, t.to_address as address from transactions t
+        where from_address = $1
+      )
+        union all
+      (
         select t.chain, t.token as address from erc20_transfers t
-        where to_address = $1 and chain = $2
+        where to_address = $1
       )
         union all
       (
         select t.chain, '0x0000000000000000000000000000000000000000' as address from transactions t
-        where from_address = $1 and chain = $2 limit 1
+        where from_address = $1
       )
     )
-    select distinct on (c.chain, c.address) c.* from interactions i
+    select c.* from interactions i
     inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
-    where c.adapter_id = $3;
-  `
-
-  const protocolQuery = `
-    with interactions as (
-      (
-        select t.chain, t.to_address as address from transactions t
-        where from_address = $1 and chain = $2
-      )
-        union all
-      (
-        select t.chain, t.token as address from erc20_transfers t
-        where to_address = $1 and chain = $2
-      )
-    )
-    select distinct on (c.chain, c.address) c.* from interactions i
-    inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
-    where c.adapter_id = $3;
-  `
-
-  const res = await client.query(adapterId === 'wallet' ? walletQuery : protocolQuery, [
-    address.toLowerCase(),
-    chain,
-    adapterId,
-  ])
+    where c.adapter_id = $2
+    group by c.chain, c.address, c.adapter_id;
+  `,
+    [address.toLowerCase(), adapterId],
+  )
 
   return fromStorage(res.rows)
 }
@@ -225,36 +241,6 @@ export async function getContracts(client: PoolClient, address: string, chain?: 
     name: row.name ?? undefined,
     protocol: row.adapter_id ?? undefined,
   }))
-}
-
-/**
- * Get a list of all unique tokens received by a given account
- * @param client
- * @param address
- */
-export async function getAllTokensInteractions(client: PoolClient, address: string) {
-  const res = await client.query(
-    `
-    with interactions as (
-      (
-        select t.chain, t.token as address from erc20_transfers t
-        where to_address = $1
-      )
-        union all
-      (
-        select t.chain, '0x0000000000000000000000000000000000000000' as address from transactions t
-        where from_address = $1
-      )
-    )
-    select c.* from interactions i
-    inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
-    where c.adapter_id = 'wallet'
-    group by c.chain, c.address, c.adapter_id;
-    `,
-    [address.toLowerCase()],
-  )
-
-  return fromStorage(res.rows)
 }
 
 /**

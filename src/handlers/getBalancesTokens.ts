@@ -2,7 +2,7 @@
 // Uses the "wallet" adapter internally to narrow down the list of contracts to llamafolio-tokens ("allow list")
 
 import walletAdapter from '@adapters/wallet'
-import { getAllTokensInteractions, groupContracts } from '@db/contracts'
+import { getContractsInteractions, groupContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext, PricedBalance } from '@lib/adapter'
@@ -62,8 +62,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const client = await pool.connect()
 
   try {
-    // Fetch all tokens received
-    const tokens = await getAllTokensInteractions(client, address)
+    const tokens = await getContractsInteractions(client, address, 'wallet')
 
     const tokensByChain = groupBy(tokens, 'chain')
 
