@@ -46,7 +46,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         chains: [],
       }
       // balances updates minimum interval is 2 minutes
-      return success(response, { maxAge: 2 * 60 })
+      return success(response, { maxAge: 5 * 60 })
     }
 
     const timestamp = lastBalancesGroups[0].timestamp
@@ -66,7 +66,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       updatedAt: Math.floor(new Date(timestamp).getTime() / 1000),
     }
 
-    return success(response, { maxAge: 2 * 60 })
+    return success(response, { maxAge: 5 * 60 })
   } catch (e) {
     console.error('Failed to retrieve latest snapshot', e)
     return serverError('Failed to retrieve latest snapshot')

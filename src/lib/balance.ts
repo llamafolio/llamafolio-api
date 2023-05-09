@@ -306,7 +306,7 @@ export function fmtBalanceBreakdown(balance: PricedBalance): PricedBalance & Bal
 export function areBalancesStale(lastUpdateTimestamp: number) {
   const now = new Date().getTime()
 
-  const updateInterval = 2 * 60 * 1000
+  const updateInterval = 5 * 60 * 1000
 
   return now - lastUpdateTimestamp > updateInterval
 }
