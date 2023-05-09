@@ -1,9 +1,8 @@
 #!/usr/bin/env node
-
 import fs from 'node:fs'
 import path from 'node:path'
 
-import yaml from 'js-yaml'
+import YAML from 'yaml'
 
 /**
  * Parses `serverless.yml` and returns JSON.
@@ -19,7 +18,7 @@ import yaml from 'js-yaml'
 export function parsedYAML(target = process.argv[2] ?? 'routes') {
   try {
     const serverlessYmlFile = path.resolve(process.cwd(), 'serverless.yml')
-    const serverless = yaml.load(fs.readFileSync(serverlessYmlFile, 'utf8')) as Serverless
+    const serverless = YAML.parse(fs.readFileSync(serverlessYmlFile, 'utf8')) as Serverless
     if (target !== 'routes') {
       console.info('Not implemented yet. Only routes are supported.')
       return [] as Array<Route>

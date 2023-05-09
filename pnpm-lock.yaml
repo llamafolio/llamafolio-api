@@ -114,9 +114,6 @@ devDependencies:
   eslint-plugin-vitest:
     specifier: ^0.2.2
     version: 0.2.2(eslint@8.39.0)(typescript@5.0.4)
-  js-yaml:
-    specifier: ^4.1.0
-    version: 4.1.0
   node-pg-migrate:
     specifier: ^6.2.2
     version: 6.2.2(pg@8.7.3)
@@ -159,6 +156,9 @@ devDependencies:
   vitest-github-actions-reporter:
     specifier: ^0.10.0
     version: 0.10.0(vitest@0.30.1)
+  yaml:
+    specifier: ^2.2.2
+    version: 2.2.2
 
 packages:
   /2-thenable@1.0.0:
@@ -8572,6 +8572,11 @@ packages:
   /yaml-ast-parser@0.0.43:
     resolution:
       { integrity: sha512-2PTINUwsRqSd+s8XxKaJWQlUuEMHJQyEuh2edBbW8KNJz0SJPwUSD2zRWqezFEdN7IzAgeuYHFUCF7o8zRdZ0A== }
+    dev: true
+
+  /yaml@2.2.2:
+    resolution: {integrity: sha512-CBKFWExMn46Foo4cldiChEzn7S7SRV+wqiluAb6xmueD/fGyRHIhX8m14vVGgeFWjN540nKCNVj6P21eQjgTuA==}
+    engines: {node: '>= 14'}
     dev: true
 
   /yamljs@0.3.0:

@@ -9,12 +9,7 @@ const timestamp = new Date().toISOString()
 export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
-    benchmark: {
-      reporters: ['default', 'json'],
-      outputFile: {
-        json: `./test/benchmark/reports/${timestamp}.json`,
-      },
-    },
+    environment: 'node',
     globals: true,
     allowOnly: true,
     globalSetup: ['./test/setup/global.ts'],
@@ -25,12 +20,22 @@ export default defineConfig({
     },
     deps: {
       registerNodeLoader: true,
+      experimentalOptimizer: {
+        enabled: true,
+      },
     },
-    reporters: process.env.GITHUB_ACTIONS ? ['default', new GithubActionsReporter()] : [],
+    benchmark: {
+      reporters: ['default', 'json'],
+      outputFile: {
+        json: `./test/benchmark/reports/${timestamp}.json`,
+      },
+    },
     coverage: {
       provider: 'istanbul',
       reporter: ['json'],
       reportsDirectory: './test/coverage',
     },
+    threads: !process.env.GITHUB_ACTIONS,
+    reporters: process.env.GITHUB_ACTIONS ? ['default', new GithubActionsReporter()] : [],
   },
 })

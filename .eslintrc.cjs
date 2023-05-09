@@ -36,6 +36,7 @@ module.exports = {
     },
   ],
   rules: {
+    'vitest/no-commented-out-tests': ['warn'],
     'security/detect-object-injection': ['off'],
     'prettier/prettier': [
       'warn',

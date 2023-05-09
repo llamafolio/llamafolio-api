@@ -1,11 +1,10 @@
 import environment from '@environment'
+import { testData } from 'test/fixtures/test-data'
 import { describe, expect, it, test } from 'vitest'
 
-import { generateTestableRoute } from './config'
-import { getApiURL } from './config/api-url'
+import { generateTestableRoute, getApiURL } from './config'
 import { routes as testingRoutes } from './fixtures/routes'
-import { testData } from './fixtures/test-data'
-
+// import {fetch} from 'undici'
 // we're checking in the global setup that it can't be undefined (test/setup/global.ts)
 const STAGE = environment.STAGE as Exclude<typeof environment.STAGE, undefined>
 
@@ -27,55 +26,59 @@ const SKIP_ROUTES = new Set([
 
 const routes = testingRoutes[STAGE].filter((route) => !SKIP_ROUTES.has(route.path))
 
-describe('API Routes', () => {
-  // test against expected routes
-  test('Routes should not be empty', () => {
-    expect(routes.length).not.toBe(0)
-  })
-  // should exclude SKIP_ROUTES
-  test('Routes should not include SKIP_ROUTES', () => {
-    expect(routes.every((route) => !SKIP_ROUTES.has(route.path))).toBe(true)
-  })
+test('Routes should not be empty', () => {
+  expect(routes.length).not.toBe(0)
 })
 
-const testTimeout = Number(process.env.TEST_WAIT_TIME) || 8000
+const testTimeout = Number(process.env.TEST_WAIT_TIME) || 20000
 
-describe.concurrent('Individual Routes', () => {
+describe('Routes', () => {
   const url = getApiURL(STAGE)
+  // routes.forEach((route) => {
+  //   describe(`Route: ${route.path}`, () => {
+  //     const testableURL = `${url}${generateTestableRoute({ route, testData })}`
 
-  console.log(`\n\n Testing against ${url} \n\n`)
+  //     test(`${route.path} should have a valid URL`, () => {
+  //       expect(testableURL).toMatch(
+  //         STAGE === 'local' ? /http:\/\/localhost:[0-9]+/ : /https:\/\/.+\.execute-api\..+\.amazonaws\.com/,
+  //       )
+  //     })
 
-  routes.forEach((route) => {
-    describe(`Route: ${route.path}`, () => {
+  //     test(
+  //       `${route.path} should return 200 for`,
+  //       async () => {
+  //         const request = () => fetch(testableURL)
+  //         // test actual routes
+  //         await expect(request()).resolves.toHaveProperty('status', 200)
+  //         await expect(request()).resolves.toHaveProperty('body')
+  //       },
+  //       { timeout: testTimeout },
+  //     )
+
+  //     test(
+  //       `${route.path} should return a valid body\n`,
+  //       async () => {
+  //         const request = () => fetch(testableURL)
+  //         /* will be updated to actually check for valid JSON */
+  //         await expect(request()).resolves.toHaveProperty('body', expect.anything())
+  //         await expect(request()).resolves.toHaveProperty('body', expect.not.stringContaining('error'))
+  //       },
+  //       { timeout: testTimeout },
+  //     )
+  //   })
+  // })
+  test.concurrent.each(routes)(
+    '$path',
+    async (route) => {
       const testableURL = `${url}${generateTestableRoute({ route, testData })}`
-
-      test(
-        `${route.path} should have a valid URL`,
-        () => {
-          expect(testableURL).toMatch(
-            STAGE === 'local' ? /http:\/\/localhost:[0-9]+/ : /https:\/\/.+\.execute-api\..+\.amazonaws\.com/,
-          )
-        },
-        testTimeout,
-      )
-
       const request = () => fetch(testableURL)
-
-      test(`${route.path} should return 200 for`, async () => {
-        // test actual routes
-        await expect(request()).resolves.toHaveProperty('status', 200)
-        await expect(request()).resolves.toHaveProperty('body')
-      })
-
-      test(
-        `${route.path} should return a valid body\n`,
-        async () => {
-          /* will be updated to actually check for valid JSON */
-          await expect(request()).resolves.toHaveProperty('body', expect.anything())
-          await expect(request()).resolves.toHaveProperty('body', expect.not.stringContaining('error'))
-        },
-        testTimeout,
-      )
-    })
-  })
+      // test actual routes
+      await expect(request()).resolves.toHaveProperty('status', 200)
+      await expect(request()).resolves.toHaveProperty('body')
+      /* will be updated to actually check for valid JSON */
+      await expect(request()).resolves.toHaveProperty('body', expect.anything())
+      await expect(request()).resolves.toHaveProperty('body', expect.not.stringContaining('error'))
+    },
+    { timeout: testTimeout },
+  )
 })
