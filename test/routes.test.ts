@@ -46,33 +46,36 @@ describe.concurrent('Individual Routes', () => {
   console.log(`\n\n Testing against ${url} \n\n`)
 
   routes.forEach((route) => {
-    describe(
-      `Route: ${route.path}`,
-      () => {
-        const testableURL = `${url}${generateTestableRoute({ route, testData })}`
+    describe(`Route: ${route.path}`, () => {
+      const testableURL = `${url}${generateTestableRoute({ route, testData })}`
 
-        test(`${route.path} should have a valid URL`, () => {
+      test(
+        `${route.path} should have a valid URL`,
+        () => {
           expect(testableURL).toMatch(
             STAGE === 'local' ? /http:\/\/localhost:[0-9]+/ : /https:\/\/.+\.execute-api\..+\.amazonaws\.com/,
           )
-        })
+        },
+        testTimeout,
+      )
 
-        const request = () => fetch(testableURL)
+      const request = () => fetch(testableURL)
 
-        test(`${route.path} should return 200 for`, async () => {
-          // test actual routes
-          await expect(request()).resolves.toHaveProperty('status', 200)
-          await expect(request()).resolves.toHaveProperty('body')
-        })
+      test(`${route.path} should return 200 for`, async () => {
+        // test actual routes
+        await expect(request()).resolves.toHaveProperty('status', 200)
+        await expect(request()).resolves.toHaveProperty('body')
+      })
 
-        test(`${route.path} should return a valid body\n`, async () => {
+      test(
+        `${route.path} should return a valid body\n`,
+        async () => {
           /* will be updated to actually check for valid JSON */
           await expect(request()).resolves.toHaveProperty('body', expect.anything())
           await expect(request()).resolves.toHaveProperty('body', expect.not.stringContaining('error'))
-        })
-      },
-      // timeout is in milliseconds
-      { timeout: testTimeout },
-    )
+        },
+        testTimeout,
+      )
+    })
   })
 })
