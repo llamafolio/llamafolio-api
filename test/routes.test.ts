@@ -8,6 +8,12 @@ import { routes as testingRoutes } from './fixtures/routes'
 // we're checking in the global setup that it can't be undefined (test/setup/global.ts)
 const STAGE = environment.STAGE as Exclude<typeof environment.STAGE, undefined>
 
+test.only('fetch', async () => {
+  const request = async () => fetch('https://jsonplaceholder.typicode.com/todos/1').then((response) => response)
+  await expect(request()).resolves.toHaveProperty('status', 200)
+  await expect(request()).resolves.toHaveProperty('body')
+}, 20000)
+
 describe('API URL', () => {
   it('Should return a valid URL', () => {
     expect(getApiURL(STAGE)).toMatch(
