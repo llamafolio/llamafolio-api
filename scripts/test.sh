@@ -25,6 +25,12 @@ echo "serverless-offline is up. Status code: $?"
 
 sleep 1
 
+# clear screen logs
+clear
+
+
+curl --request GET --silent --url http://localhost:3034/adapters | jq
+curl --request GET --silent --url http://localhost:3034/protocols | jq
 #
 # run tests
 ./node_modules/.bin/vitest --run

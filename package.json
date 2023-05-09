@@ -91,7 +91,7 @@
     "tsx": "^3.12.7",
     "typescript": "^5.0.4",
     "vite-tsconfig-paths": "^4.2.0",
-    "vitest": "^0.30.1",
+    "vitest": "^0.31.0",
     "vitest-github-actions-reporter": "^0.10.0",
     "yaml": "^2.2.2"
   },

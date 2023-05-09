@@ -7,6 +7,10 @@ import GithubActionsReporter from 'vitest-github-actions-reporter'
 const timestamp = new Date().toISOString()
 
 export default defineConfig({
+  server: {
+    host: '127.0.0.1',
+    port: 3034,
+  },
   plugins: [tsconfigPaths()],
   test: {
     globals: true,
