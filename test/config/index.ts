@@ -1,2 +1,2 @@
-export * from './get-routes'
+export * from './get-remote-routes'
 export * from './populate-route'

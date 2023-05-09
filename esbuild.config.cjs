@@ -20,7 +20,7 @@ module.exports = (_) => ({
   minify: isProduction,
   external: ['pg-native', 'pg-format'],
   drop: isProduction ? ['console', 'debugger'] : [],
-  metafile: Boolean(process.env.ESBUILD_ANALYZE),
+  metafile: !isProduction,
   plugins: [
     AnalyzerPlugin({
       outfile: './.esbuild/esbuild-analyzer.html',

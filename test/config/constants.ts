@@ -1,9 +1,5 @@
 import type { Chain } from '@lib/chains'
 
-export const possibleParameters = ['address', 'chain'] as const
-
-export const possibleQueryParameters = [] as const
-
 export type AwsStage = 'prod' | 'dev'
 
 export const AwsGatewayApiId = {
