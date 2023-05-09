@@ -21,8 +21,8 @@ const { assert: environmentSchema } = type({
   // used when testing
   'API_URL?': 'string',
   'AWS_REGION?': 'string',
-  AWS_GATEWAY_API_ID_DEV: 'string | ""',
-  AWS_GATEWAY_API_ID_PROD: 'string | ""',
+  'AWS_GATEWAY_API_ID_DEV?': 'string',
+  'AWS_GATEWAY_API_ID_PROD?': 'string',
   'TEST_WAIT_TIME?': 'string',
 })
 

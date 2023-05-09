@@ -11,4 +11,12 @@ export default () => {
     console.error('\nSTAGE environment variable is required in .env\n\n')
     process.exit(1)
   }
+  if (process.env.STAGE == 'dev' && !process.env.AWS_GATEWAY_API_ID_DEV) {
+    console.error('\nAWS_GATEWAY_API_ID_DEV environment variable is required in .env\n\n')
+    process.exit(1)
+  }
+  if (process.env.STAGE == 'prod' && !process.env.AWS_GATEWAY_API_ID_PROD) {
+    console.error('\nAWS_GATEWAY_API_ID_PROD environment variable is required in .env\n\n')
+    process.exit(1)
+  }
 }
