@@ -71,7 +71,7 @@ describe('Routes', () => {
     '$path',
     async (route) => {
       const testableURL = `${url}${generateTestableRoute({ route, testData })}`
-      const request = () => fetch(testableURL)
+      const request = async () => fetch(testableURL).then((response) => response)
       // test actual routes
       await expect(request()).resolves.toHaveProperty('status', 200)
       await expect(request()).resolves.toHaveProperty('body')

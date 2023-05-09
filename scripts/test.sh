@@ -22,10 +22,13 @@ while true; do
 done
 
 echo "serverless-offline is up. Status code: $?"
+
+sleep 1
+
 #
 # run tests
 ./node_modules/.bin/vitest --run
 
 #
 # kill serverless-offline (port 3034)
-kill $(lsof -t -i:3034)
+(lsof -ti tcp:3034 | xargs kill || lsof -ti tcp:3034 | xargs kill -9) || true

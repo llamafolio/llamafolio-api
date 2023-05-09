@@ -9,9 +9,9 @@ const timestamp = new Date().toISOString()
 export default defineConfig({
   plugins: [tsconfigPaths()],
   test: {
-    environment: 'node',
     globals: true,
     allowOnly: true,
+    environment: 'node',
     globalSetup: ['./test/setup/global.ts'],
     env: {
       NODE_ENV: 'test',
