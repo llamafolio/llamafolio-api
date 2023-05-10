@@ -15,6 +15,7 @@ module.exports = (_) => ({
   bundle: true,
   format: 'cjs',
   keepNames: true,
+  target: 'node18',
   platform: 'node',
   minify: isProduction,
   external: ['pg-native', 'pg-format'],

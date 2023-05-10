@@ -1,8 +1,3 @@
-import type { possibleParameters, possibleQueryParameters } from './constants'
-
-export type PossibleParameter = (typeof possibleParameters)[number]
-export type PossibleQueryParameter = (typeof possibleQueryParameters)[number]
-
 export interface ApiGatewayRoute {
   ApiKeyRequired: boolean
   AuthorizationScopes: any[]
@@ -20,6 +15,6 @@ export interface ApiGatewayRoutes {
 export interface Route {
   method: string
   path: string
-  pathParams: PossibleParameter[]
-  queryParams: PossibleQueryParameter[]
+  pathParams: Array<string>
+  queryParams: Array<string>
 }
