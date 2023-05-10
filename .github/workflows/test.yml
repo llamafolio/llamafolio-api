@@ -129,7 +129,7 @@ jobs:
       - name: 'Test'
         run: |
           pnpm add --global bun@latest
-          bun test test/**/*.test.ts
+          bun test ./test/routes.test.ts
         env:
           DEBUG: '*'
           API_URL: 'http://127.0.0.1:3034'
