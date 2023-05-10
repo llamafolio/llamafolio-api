@@ -17,6 +17,9 @@ export default defineConfig({
     },
     deps: {
       registerNodeLoader: true,
+      experimentalOptimizer: {
+        enabled: true,
+      },
     },
     reporters: process.env.GITHUB_ACTIONS ? ['default', new GithubActionsReporter()] : [],
     coverage: {

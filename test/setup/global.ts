@@ -4,18 +4,18 @@
  *  2. Ensures that the `STAGE` environment variable is set
  */
 
-import 'dotenv/config'
+import environment from '@environment'
 
 export default () => {
-  if (!process.env.STAGE) {
+  if (!environment.STAGE) {
     console.error('\nSTAGE environment variable is required in .env\n\n')
     process.exit(1)
   }
-  if (process.env.STAGE == 'dev' && !process.env.AWS_GATEWAY_API_ID_DEV) {
+  if (environment.STAGE == 'dev' && !environment.AWS_GATEWAY_API_ID_DEV) {
     console.error('\nAWS_GATEWAY_API_ID_DEV environment variable is required in .env\n\n')
     process.exit(1)
   }
-  if (process.env.STAGE == 'prod' && !process.env.AWS_GATEWAY_API_ID_PROD) {
+  if (environment.STAGE == 'prod' && !environment.AWS_GATEWAY_API_ID_PROD) {
     console.error('\nAWS_GATEWAY_API_ID_PROD environment variable is required in .env\n\n')
     process.exit(1)
   }
