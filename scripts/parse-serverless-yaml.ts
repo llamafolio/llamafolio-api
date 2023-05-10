@@ -36,8 +36,8 @@ export function parsedYAML(target = process.argv[2] ?? 'routes') {
         const queryParams = path.match(/\?([^}]+)}/g)?.map((_) => _.slice(1, -1)) ?? []
         return { method, path, pathParams, queryParams }
       })
-      .filter(Boolean)
-    return routes as Array<Route>
+      .filter(Boolean) as Array<Route>
+    return routes.sort((a, b) => a.path.localeCompare(b.path))
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : `Encoutered an error: ` + error
     console.error(errorMessage)

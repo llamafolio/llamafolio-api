@@ -5,11 +5,11 @@
 # This is needed to make serverless-offline work in CI
 #
 
-set xtrace pipefail
+set -o xtrace pipefail
 
 #
 # if port 3034 is already in use, kill it
-lsof -i :3034 | awk 'NR!=1 {print $2}' | xargs kill || true
+# lsof -i:3034 | awk 'NR!=1 {print $2}' | xargs kill || true
 
 export STAGE="local"
 export API_URL="http://127.0.0.1:3034"
@@ -29,4 +29,4 @@ node_modules/.bin/vitest --run
 
 #
 # kill serverless-offline
-# lsof -i :3034 | awk 'NR!=1 {print $2}' | xargs kill || true
+lsof -i:3034 | awk 'NR!=1 {print $2}' | xargs kill || true
