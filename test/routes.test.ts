@@ -31,7 +31,11 @@ const routes = _routes[STAGE].filter((route) => !SKIP_ROUTES.has(route.path))
  * - TODO: the response body is valid JSON
  */
 
-const fetchLambda = async (url: string) => await fetch(url)
+const fetchLambda = async (url: string) =>
+  await fetch(url).catch((error) => {
+    console.error('ERROR: fetchLambda', error)
+    throw error
+  })
 
 describe.concurrent('API Routes', () => {
   // test actual routes
@@ -53,6 +57,6 @@ describe.concurrent('API Routes', () => {
       // expect(body).toBeDefined()
     },
     // timeout is in milliseconds
-    Number(process.env.TEST_WAIT_TIME) || 10000,
+    10000,
   )
 })
