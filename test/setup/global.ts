@@ -20,5 +20,5 @@ export default () => {
     process.exit(1)
   }
   // colorize console output
-  console.info('\x1b[36m%s\x1b[0m', `\nRUNNING TESTS AGAINST THE FOLLOWING STAGE: ${process.env.STAGE}\n`)
+  console.info('\x1b[36m%s\x1b[0m', `\nRUNNING TESTS AGAINST THE FOLLOWING STAGE: ${environment.STAGE}\n`)
 }

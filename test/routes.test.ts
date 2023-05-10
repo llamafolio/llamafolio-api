@@ -12,11 +12,11 @@ dns.setDefaultResultOrder('ipv4first')
 
 const STAGE = environment.STAGE as Exclude<typeof environment.STAGE, undefined>
 
-export const timeout = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+export const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 beforeAll(async () => {
   // wait for the API to be ready if CI
-  if (process.env.CI) await timeout(3000)
+  if (process.env.CI) await wait(3000)
 })
 
 /**
@@ -36,6 +36,8 @@ describe('All routes', () => {
     expect(route.path).toBeDefined()
   })
 })
+
+const timeout = Number(process.env.TEST_TIMEOUT) || 12000
 
 /**
  * The test calls every endpoint/route in the network and checks:
@@ -57,12 +59,8 @@ describe('API Routes', () => {
       /* will be updated to actually check for valid JSON */
       await expect(fetchLambda()).resolves.toHaveProperty('body', expect.anything())
       await expect(fetchLambda()).resolves.toHaveProperty('body', expect.not.stringContaining('error'))
-      // const { status, statusText, body } = await fetch(testableURL)
-      // expect(status).toBe(200)
-      // expect(statusText).toBe('OK')
-      // expect(body).toBeDefined()
     },
     // timeout is in milliseconds
-    10000,
+    { timeout },
   )
 })

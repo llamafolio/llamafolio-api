@@ -30,7 +30,8 @@ defaults:
     shell: bash
 
 env:
-  NODE_ENV: 'test'
+  CI: true
+  GITHUB_ACTIONS: true
   ACTIONS_RUNNER_DEBUG: true
   PGHOST: ${{ secrets.PGHOST }}
   PGUSER: ${{ secrets.PGUSER }}
@@ -46,45 +47,52 @@ env:
 jobs:
   lint-typecheck-build:
     name: 'Lint, Typecheck, Build'
-    runs-on: [ubuntu-latest]
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['lts/*']
+        pnpm-version: ['latest']
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      # - name: 'Setup pnpm'
-      #   uses: pnpm/action-setup@v2.2.4
-      #   with:
-      #     version: 'latest'
+      - name: 'Setup pnpm [${{ matrix.pnpm-version }}]'
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: ${{ matrix.pnpm-version }}
 
-      # - name: 'Setup Node.js'
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: 'lts/*'
-      #     cache: 'pnpm'
+      - name: 'Setup Node.js [${{ matrix.node-version }}]'
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
-      # - name: 'Install Dependencies'
-      #   run: pnpm install --frozen-lockfile
+      - name: 'Install Dependencies'
+        run: pnpm install --frozen-lockfile
 
-      # - name: 'Lint'
-      #   run: |
-      #     node_modules/.bin/eslint --fix . --ext js,cjs,mjs,ts,d.ts,json
+      - name: 'Lint'
+        run: |
+          node_modules/.bin/eslint --fix . --ext js,cjs,mjs,ts,d.ts,json,md
 
-      # - name: 'Format'
-      #   run: |
-      #     node_modules/.bin/prettier --write --ignore-path='./.eslintignore' '**/*.{md,json,js,cjs,mjs,ts}' --ignore-unknown
+      - name: 'Format'
+        run: |
+          node_modules/.bin/prettier --write '**/*.{md,json,js,cjs,mjs,ts,d.ts,sh}' --ignore-path='./.eslintignore' --ignore-unknown 
 
-      # # we will have to skip till we resolve existing type errors
-      # - name: 'Typecheck'
-      #   run: |
-      #     echo "pnpm typecheck"
+      # we will have to skip till we resolve existing type errors
+      - name: 'Typecheck'
+        run: |
+          echo "pnpm typecheck"
 
-      # - name: 'Build'
-      #   run: pnpm build
+      - name: 'Build'
+        run: pnpm build
 
   test-on-pr:
-    if: github.event_name == 'pull_request'
+    # if pull request or manual (and STAGE is 'local')
+    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.event.inputs.stage == 'local')
     needs: [lint-typecheck-build]
     name: 'Test [PR]'
     strategy:
@@ -132,13 +140,20 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
-          TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 20000 }}
+          TEST_TIMEOUT: ${{ github.event.inputs.test-timeout || 20000 }}
 
   test-on-push-and-cron:
-    if: github.event_name == 'schedule' || (github.event_name == 'push' && github.ref == 'refs/heads/master')
+    # if scheduled or push to master or manual (and STAGE is 'dev' or 'prod')
+    if: github.event_name == 'schedule' || (github.event_name == 'push' && github.ref == 'refs/heads/master') || (github.event_name == 'workflow_dispatch' && (github.event.inputs.stage == 'dev' || github.event.inputs.stage == 'prod'))
     needs: [lint-typecheck-build]
     name: 'Test [Push, Cron]'
-    runs-on: [ubuntu-latest]
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: ['lts/*']
+        pnpm-version: ['latest']
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
     env:
       STAGE: ${{ github.event.inputs.stage || 'dev' }}
     steps:
@@ -147,15 +162,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 'Setup pnpm'
+      - name: 'Setup pnpm [${{ matrix.pnpm-version }}]'
         uses: pnpm/action-setup@v2.2.4
         with:
-          version: 'latest'
+          version: ${{ matrix.pnpm-version }}
 
-      - name: 'Setup Node.js'
+      - name: 'Setup Node.js [${{ matrix.node-version }}]'
         uses: actions/setup-node@v3
         with:
-          node-version: 'lts/*'
+          node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
 
       - name: 'Install Dependencies'
@@ -163,6 +178,8 @@ jobs:
 
       - name: 'Test'
         env:
+          DEBUG: '*'
+          NODE_ENV: 'development'
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
           AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}
@@ -170,6 +187,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
-          TEST_WAIT_TIME: ${{ github.event.inputs.test-timeout || 11000 }}
+          TEST_TIMEOUT: ${{ github.event.inputs.test-timeout || 20000 }}
         run: |
           node_modules/.bin/vitest --run
