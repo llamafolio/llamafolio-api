@@ -41,7 +41,7 @@
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.322.0",
     "@defillama/sdk": "^3.0.8",
-    "@llamafolio/tokens": "latest",
+    "@llamafolio/tokens": "^0.1.62",
     "dotenv": "^16.0.1",
     "ethers": "^5.7.2",
     "graphql": "^16.6.0",
