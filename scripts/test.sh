@@ -5,33 +5,21 @@
 # This is needed to make serverless-offline work in CI
 #
 
-export STAGE="local"
+set -o xtrace pipefail
+
+#
+# if port 3034 is already in use, kill it
+lsof -i :3034 | awk 'NR!=1 {print $2}' | xargs kill || true
 
 #
 # start serverless-offline
-./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3034 --verbose --debug='*' &
+./node_modules/.bin/sls offline --httpPort 3034 &
 #
-# keep checking if serverless-offline is up
-while true; do
-  curl --request GET --silent --url http://127.0.0.1:3034 > /dev/null
-  if [ $? -eq 0 ]; then
-    break
-  fi
-  echo "serverless-offline is not up yet. Status code: $?. Retrying in 0.2 seconds..."
-  sleep 0.2
-done
-
-echo "serverless-offline is up. Status code: $?"
-
-sleep 1
-
-# clear screen logs
-clear
-
+# wait for serverless-offline to start
+# https://explainshell.com/explain?cmd=timeout+20+bash+-c+%27until+echo+%3E%2Fdev%2Ftcp%2F0.0.0.0%2F3034%3B+do+sleep+1%3B+done%27+%7C%7C+true
+#
+timeout 20 bash -c 'until echo >/dev/tcp/0.0.0.0/3034; do sleep 1; done' || true
 #
 # run tests
-./node_modules/.bin/bun test test/**/*.test.ts
-
 #
-# kill serverless-offline (port 3034)
-(lsof -ti tcp:3034 | xargs kill || lsof -ti tcp:3034 | xargs kill -9) || true
+node_modules/.bin/vitest --run

@@ -97,7 +97,6 @@ jobs:
     env:
       # must be set to 'local' to test against pr changes
       STAGE: 'local'
-      API_URL: 'http://127.0.0.1:3034'
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
@@ -119,20 +118,11 @@ jobs:
         run: |
           pnpm install --frozen-lockfile
 
-      - name: 'Run Serverless Offline in Background'
-        continue-on-error: true
-        run: |
-          ./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3034 --verbose --debug='*' &
-
-          sleep 20
-
       - name: 'Test'
         run: |
-          pnpm add --global bun@latest
-          bun test ./test/routes.test.ts
+          /bin/bash ./scripts/test.sh
         env:
           DEBUG: '*'
-          API_URL: 'http://127.0.0.1:3034'
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
           AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}
