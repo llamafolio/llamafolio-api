@@ -33,7 +33,8 @@ jobs:
         env:
           AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
         run: |
-          bun ./scripts/update-swagger.ts
+          bun add --global tsx@latest
+          bun ./scripts/update-swagger.ts || tsx ./scripts/update-swagger.ts
 
       - name: 'curl Swagger UI index.html'
         env:

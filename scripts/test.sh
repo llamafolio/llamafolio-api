@@ -9,11 +9,11 @@ set -o xtrace pipefail
 
 export STAGE="local"
 export API_URL="http://127.0.0.1:3035"
-export CI=true
-export GITHUB_ACTIONS=true
+export CI=$CI
+export GITHUB_ACTIONS=$GITHUB_ACTIONS
 #
 # start serverless-offline
-./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3035 &
+./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3035 --verbose --debug='*' &
 #
 # wait for serverless-offline to start
 # https://explainshell.com/explain?cmd=timeout+20+bash+-c+%27until+echo+%3E%2Fdev%2Ftcp%2F0.0.0.0%2F3034%3B+do+sleep+1%3B+done%27+%7C%7C+true
