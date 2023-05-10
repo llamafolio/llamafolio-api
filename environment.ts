@@ -24,6 +24,7 @@ const { assert: environmentSchema } = type({
   'AWS_GATEWAY_API_ID_DEV?': 'string',
   'AWS_GATEWAY_API_ID_PROD?': 'string',
   'TEST_WAIT_TIME?': 'string',
+  'CI?': "'true' | 'false'",
 })
 
 export type Environment = ReturnType<typeof environmentSchema>

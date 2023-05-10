@@ -33,7 +33,7 @@ curl --request GET --silent --url http://localhost:3034/adapters | jq
 curl --request GET --silent --url http://localhost:3034/protocols | jq
 #
 # run tests
-./node_modules/.bin/vitest --run
+./node_modules/.bin/bun test test/**/*.test.ts
 
 #
 # kill serverless-offline (port 3034)

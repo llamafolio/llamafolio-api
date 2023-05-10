@@ -7,10 +7,6 @@ import GithubActionsReporter from 'vitest-github-actions-reporter'
 const timestamp = new Date().toISOString()
 
 export default defineConfig({
-  server: {
-    host: '127.0.0.1',
-    port: 3034,
-  },
   plugins: [tsconfigPaths()],
   test: {
     globals: true,
@@ -39,7 +35,7 @@ export default defineConfig({
       reporter: ['json'],
       reportsDirectory: './test/coverage',
     },
-    threads: !process.env.GITHUB_ACTIONS,
-    reporters: process.env.GITHUB_ACTIONS ? ['default', new GithubActionsReporter()] : [],
+    threads: !process.env.CI,
+    reporters: process.env.CI ? ['default', new GithubActionsReporter()] : [],
   },
 })
