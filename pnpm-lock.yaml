@@ -40,6 +40,9 @@ dependencies:
   uuid:
     specifier: ^9.0.0
     version: 9.0.0
+  zod:
+    specifier: ^3.21.4
+    version: 3.21.4
 
 devDependencies:
   '@types/aws-lambda':
@@ -2982,12 +2985,6 @@ packages:
     resolution:
       { integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q== }
     dev: true
-
-  /arktype@1.0.14-alpha:
-    resolution:
-      { integrity: sha512-theD5K4QrYCWMtQ52Masj169IgtMJ8Argld/MBS4lotEwR3b+GzfBvsqVJ1OIKhJDTdES02FLQTjcfRe00//mA== }
-    requiresBuild: true
-    dev: false
 
   /array-buffer-byte-length@1.0.0:
     resolution:
@@ -8756,3 +8753,8 @@ packages:
       compress-commons: 4.1.1
       readable-stream: 3.6.2
     dev: true
+
+  /zod@3.21.4:
+    resolution:
+      { integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw== }
+    dev: false

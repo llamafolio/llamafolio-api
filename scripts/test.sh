@@ -9,7 +9,8 @@ set -o xtrace pipefail
 
 export STAGE="local"
 export API_URL="http://127.0.0.1:3035"
-
+export CI=true
+export GITHUB_ACTIONS=true
 #
 # start serverless-offline
 ./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3035 &

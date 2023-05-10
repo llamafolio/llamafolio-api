@@ -2,7 +2,7 @@
 
 import tsconfigPaths from 'vite-tsconfig-paths'
 import { defineConfig } from 'vitest/config'
-import GithubActionsReporter from 'vitest-github-actions-reporter'
+// import GithubActionsReporter from 'vitest-github-actions-reporter'
 
 export default defineConfig({
   plugins: [tsconfigPaths()],
@@ -21,7 +21,7 @@ export default defineConfig({
         enabled: true,
       },
     },
-    reporters: process.env.GITHUB_ACTIONS ? ['default', new GithubActionsReporter()] : [],
+    // reporters: process.env.GITHUB_ACTIONS ? ['default', new GithubActionsReporter()] : [],
     coverage: {
       provider: 'istanbul',
       reporter: ['json'],
