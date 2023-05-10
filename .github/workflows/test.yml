@@ -124,22 +124,12 @@ jobs:
         run: |
           ./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3034 --verbose --debug='*' &
 
-          while true; do
-            curl --request GET --silent --url http://127.0.0.1:3034 > /dev/null
-            if [ $? -eq 0 ]; then
-              break
-            fi
-            echo "serverless-offline is not up yet. Status code: $?. Retrying in 0.2 seconds..."
-            sleep 0.2
-          done
-
-          echo "serverless-offline is up. Status code: $?"
-
-          sleep 1
+          sleep 20
 
       - name: 'Test'
         run: |
-          ./node_modules/.bin/bun test test/**/*.test.ts
+          pnpm add --global bun@latest
+          bun test test/**/*.test.ts
         env:
           DEBUG: '*'
           API_URL: 'http://127.0.0.1:3034'
