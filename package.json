@@ -27,14 +27,13 @@
     "format": "prettier --write . --ignore-path='./.eslintignore' --ignore-unknown --cache",
     "typecheck": "tsc --noEmit --skipLibCheck",
     "predev-test": "pnpm clean",
-    "dev-test": "sls offline --httpPort 3034",
+    "dev-test": "./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3034 --verbose --debug='*'",
     "test": "vitest",
     "test:ci": "/bin/bash ./scripts/test.sh",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
     "ts-node": "tsx",
-    "clean": "rm -rf dist .esbuild .serverless",
-    "preinstall": "npx only-allow pnpm"
+    "clean": "rm -rf dist .esbuild .serverless"
   },
   "keywords": [],
   "license": "GPL-3.0-or-later",

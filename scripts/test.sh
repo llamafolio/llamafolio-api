@@ -9,11 +9,11 @@ export STAGE="local"
 
 #
 # start serverless-offline
-./node_modules/.bin/sls offline --httpPort 3034 &
+./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3034 --verbose --debug='*' &
 #
 # keep checking if serverless-offline is up
 while true; do
-  curl --request GET --silent --url http://localhost:3034 > /dev/null
+  curl --request GET --silent --url http://127.0.0.1:3034 > /dev/null
   if [ $? -eq 0 ]; then
     break
   fi
@@ -28,9 +28,6 @@ sleep 1
 # clear screen logs
 clear
 
-
-curl --request GET --silent --url http://localhost:3034/adapters | jq
-curl --request GET --silent --url http://localhost:3034/protocols | jq
 #
 # run tests
 ./node_modules/.bin/bun test test/**/*.test.ts
