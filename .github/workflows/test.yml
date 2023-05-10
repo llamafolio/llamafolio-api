@@ -122,8 +122,6 @@ jobs:
         run: |
           /bin/bash ./scripts/test.sh
         env:
-          DEBUG: '*'
-          API_URL: '127.0.0.1:3034'
           AWS_REGION: ${{ secrets.AWS_REGION }}
           AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
           AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}

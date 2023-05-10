@@ -29,4 +29,4 @@ node_modules/.bin/vitest --run
 
 #
 # kill serverless-offline
-lsof -i :3034 | awk 'NR!=1 {print $2}' | xargs kill || true
+# lsof -i :3034 | awk 'NR!=1 {print $2}' | xargs kill || true

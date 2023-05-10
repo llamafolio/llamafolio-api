@@ -19,4 +19,6 @@ export default () => {
     console.error('\nAWS_GATEWAY_API_ID_PROD environment variable is required in .env\n\n')
     process.exit(1)
   }
+  // colorize console output
+  console.info('\x1b[36m%s\x1b[0m', `\nRUNNING TESTS AGAINST THE FOLLOWING STAGE: ${process.env.STAGE}\n`)
 }

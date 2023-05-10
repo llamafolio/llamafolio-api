@@ -18,12 +18,9 @@ export default defineConfig({
       // disable experimental node warnings
       NODE_NO_WARNINGS: '1',
     },
-    deps: {
-      registerNodeLoader: true,
-      experimentalOptimizer: {
-        enabled: true,
-      },
-    },
+    // deps: {
+    //   registerNodeLoader: true,
+    // },
     benchmark: {
       reporters: ['default', 'json'],
       outputFile: {

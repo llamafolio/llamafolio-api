@@ -15,7 +15,7 @@
     "noImplicitThis": false,
     "noErrorTruncation": true,
     "noUnusedLocals": false,
-    "types": ["node", "bun-types"],
+    "types": ["node"],
     "noUnusedParameters": true,
     "lib": ["ESNext", "DOM"],
     "baseUrl": ".",
