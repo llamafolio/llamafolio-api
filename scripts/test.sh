@@ -12,16 +12,16 @@ set -o xtrace pipefail
 # lsof -i:3034 | awk 'NR!=1 {print $2}' | xargs kill || true
 
 export STAGE="local"
-export API_URL="http://127.0.0.1:3034"
+export API_URL="http://127.0.0.1:3035"
 
 #
 # start serverless-offline
-./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3034 &
+./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3035 &
 #
 # wait for serverless-offline to start
 # https://explainshell.com/explain?cmd=timeout+20+bash+-c+%27until+echo+%3E%2Fdev%2Ftcp%2F0.0.0.0%2F3034%3B+do+sleep+1%3B+done%27+%7C%7C+true
 #
-timeout 20 bash -c 'until echo >/dev/tcp/127.0.0.1/3034; do sleep 1; done' || true
+timeout 20 bash -c 'until echo >/dev/tcp/127.0.0.1/3035; do sleep 1; done' || true
 #
 # run tests
 #
