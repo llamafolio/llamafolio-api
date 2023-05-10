@@ -5,8 +5,8 @@ dependencies:
     specifier: ^3.329.0
     version: 3.329.0
   '@defillama/sdk':
-    specifier: ^4.0.14
-    version: 4.0.14
+    specifier: ^3.0.55
+    version: 3.0.55
   '@llamafolio/tokens':
     specifier: ^0.1.62
     version: 0.1.62
@@ -1088,8 +1088,8 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
-  /@defillama/sdk@4.0.14:
-    resolution: {integrity: sha512-otbgUwSxi9EfIfDvGxLI2vyEFJsOD6No6/Nf1dJ0VHVFQ/9qqwJ8LW2qNNxVVVegjfQtMux5j4SjDfXaVeZjqw==}
+  /@defillama/sdk@3.0.55:
+    resolution: {integrity: sha512-3JgB081T8mXs1WmiFI4di/PV20YJ1f2748tVBSTk+7LXuRVq0QFkAQWu43uh7m5Agu9lUWB9wBmB3rIhGRk2YA==}
     dependencies:
       '@supercharge/promise-pool': 2.4.0
       ethers: 5.7.2
