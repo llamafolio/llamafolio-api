@@ -41,7 +41,6 @@
     "@aws-sdk/client-lambda": "^3.322.0",
     "@defillama/sdk": "^3.0.8",
     "@llamafolio/tokens": "^0.1.62",
-    "arktype": "1.0.14-alpha",
     "dotenv": "^16.0.1",
     "ethers": "^5.7.2",
     "graphql": "^16.6.0",
@@ -51,7 +50,8 @@
     "pg": "^8.7.3",
     "pg-format": "^1.0.4",
     "postgres": "^3.3.4",
-    "uuid": "^9.0.0"
+    "uuid": "^9.0.0",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.114",
