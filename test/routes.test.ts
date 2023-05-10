@@ -1,3 +1,5 @@
+import dns from 'node:dns'
+
 import { environment } from '@environment'
 import { describe, expect, test } from 'vitest'
 
@@ -5,6 +7,8 @@ import { generateTestableRoute } from './config'
 import { getApiURL } from './config/api-url'
 import { routes as _routes } from './fixtures/routes'
 import { testData } from './fixtures/test-data'
+
+dns.setDefaultResultOrder('ipv4first')
 
 const STAGE = environment.STAGE as Exclude<typeof environment.STAGE, undefined>
 
