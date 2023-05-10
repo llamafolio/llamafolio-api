@@ -27,7 +27,7 @@ const routes = _routes[STAGE].filter((route) => !SKIP_ROUTES.includes(route.path
 
 describe('API Routes', () => {
   // test actual routes
-  test.each(routes)(
+  test.concurrent.each(routes)(
     'method: $method, path: $path',
     async (route) => {
       const url = getApiURL(STAGE)
