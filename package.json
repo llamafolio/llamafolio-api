@@ -24,7 +24,7 @@
     "update-yields": "tsx scripts/update-yields.ts",
     "update-protocols": "tsx scripts/update-protocols.ts",
     "lint": "eslint --fix . --ext js,cjs,mjs,ts,d.ts,json,md --cache",
-    "format": "prettier --write --ignore-path='./.eslintignore' '**/*.{md,json,js,cjs,mjs,ts,d.ts,sh}' --ignore-unknown --cache",
+    "format": "prettier --write '**/*.{md,json,js,cjs,mjs,ts,d.ts,sh}' --ignore-path='./.eslintignore' --ignore-unknown --cache",
     "typecheck": "tsc --noEmit --skipLibCheck",
     "predev-test": "pnpm clean",
     "dev-test": "./node_modules/.bin/sls offline --host 127.0.0.1 --httpPort 3035 --verbose --debug='*'",

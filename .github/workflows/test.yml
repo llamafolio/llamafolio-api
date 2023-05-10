@@ -80,7 +80,7 @@ jobs:
 
       - name: 'Format'
         run: |
-          node_modules/.bin/prettier --write . --ignore-path='./.eslintignore' --ignore-unknown
+          node_modules/.bin/prettier --write '**/*.{md,json,js,cjs,mjs,ts,d.ts,sh}' --ignore-path='./.eslintignore' --ignore-unknown 
 
       # we will have to skip till we resolve existing type errors
       - name: 'Typecheck'
@@ -91,8 +91,8 @@ jobs:
         run: pnpm build
 
   test-on-pr:
-        # if pull request or manual (and STAGE is 'local')
-    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && (github.event.inputs.stage == 'local'))
+    # if pull request or manual (and STAGE is 'local')
+    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.event.inputs.stage == 'local')
     needs: [lint-typecheck-build]
     name: 'Test [PR]'
     strategy:
