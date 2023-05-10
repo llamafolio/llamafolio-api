@@ -8,8 +8,8 @@ dependencies:
     specifier: ^3.0.8
     version: 3.0.8
   '@llamafolio/tokens':
-    specifier: ^0.1.60
-    version: 0.1.60
+    specifier: ^0.1.62
+    version: 0.1.62
   dotenv:
     specifier: ^16.0.1
     version: 16.0.1
@@ -1976,8 +1976,9 @@ packages:
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
     dev: true
 
-  /@llamafolio/tokens@0.1.60:
-    resolution: {integrity: sha512-vnnFS380HRGHzWIsWzkMb8jFel+imn+P52+KQ+PUNhgmuWIuEKxliS/+ewBfLfIRrt+CkuLQiVYdRSSm9Hy2oA==}
+  /@llamafolio/tokens@0.1.62:
+    resolution: {integrity: sha512-+dks6Xn8tkQZXhUcw4/IyqcU1k7zqKQF64c3YVts0vqV//TCc8NbA6U+iUUVwbmyEp5l5oPkBjyWPwfaQZozlA==}
+    engines: {node: '>=18', npm: '------>PLEASE USE PNPM<------', pnpm: '>=8.0.0', yarn: '------>PLEASE USE PNPM<------'}
     dev: false
 
   /@nodelib/fs.scandir@2.1.5:
