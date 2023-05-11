@@ -1,5 +1,5 @@
 import { getApolloFarmBalances, getApolloStakeBalances } from '@adapters/apollox/bsc/balance'
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const staker: Contract = {
