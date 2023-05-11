@@ -11,6 +11,7 @@ import angle from '@adapters/angle'
 import apeswapAmm from '@adapters/apeswap-amm'
 import apeswapLending from '@adapters/apeswap-lending'
 import api3 from '@adapters/api3'
+import apollox from '@adapters/apollox'
 import arbitrumExchange from '@adapters/arbitrum-exchange'
 import arrakis from '@adapters/arrakis'
 import asymetrixProtocol from '@adapters/asymetrix-protocol'
@@ -187,6 +188,7 @@ export const adapters: Adapter[] = [
   apeswapAmm,
   apeswapLending,
   api3,
+  apollox,
   arbitrumExchange,
   arrakis,
   asymetrixProtocol,
