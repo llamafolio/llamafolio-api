@@ -11,7 +11,6 @@ on:
 
 defaults:
   run:
-    working-directory: ./docs/swagger
     shell: bash
 
 jobs:
@@ -38,6 +37,7 @@ jobs:
           bun ./scripts/update-swagger.ts || tsx ./scripts/update-swagger.ts
 
       - name: 'curl Swagger UI index.html'
+        working-directory: './docs/swagger'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_SWAGGER_URL }}
           INDEX_HTML_URL: 'https://gist.githubusercontent.com/o-az/36b94d57a8df23421f229a15b5ae7a10/raw/d684172357888c68ac0d9a5007e82bdc5f812e90/index.html'
@@ -45,6 +45,7 @@ jobs:
           curl --silent --location $INDEX_HTML_URL --output index.html
 
       - name: 'Update Swagger Bucket'
+        working-directory: './docs/swagger'
         env:
           AWS_S3_BUCKET: ${{ secrets.AWS_S3_SWAGGER }}
         run: |
