@@ -32,33 +32,7 @@ Object.defineProperties(BigNumber.prototype, {
   },
 })
 
-async function fetchYields() {
-  const yieldsByPoolAddress: { [key: string]: any } = {}
-  const yieldsByKeys: { [key: string]: any } = {}
-  const yieldsByNewKeys: { [key: string]: any } = {}
-
-  try {
-    const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
-
-    if (!yieldsRes.ok) {
-      throw new Error('failed to fetch yields')
-    }
-
-    const yieldsData = (await yieldsRes.json()).data
-
-    for (let i = 0; i < yieldsData.length; i++) {
-      yieldsByPoolAddress[yieldsData[i].pool_old.toLowerCase()] = yieldsData[i]
-      yieldsByKeys[yieldsData[i].pool_old] = yieldsData[i]
-      yieldsByNewKeys[yieldsData[i].pool] = yieldsData[i]
-    }
-
-    return { yieldsByKeys, yieldsByPoolAddress, yieldsByNewKeys }
-  } catch (error) {
-    return { yieldsByKeys, yieldsByPoolAddress, yieldsByNewKeys }
-  }
-}
-
-function printBalances({ balances, yieldsByNewKeys, yieldsByPoolAddress, yieldsByKeys }) {
+function printBalances({ balances }) {
   // group by category
   const balancesByCategory = groupBy(balances, 'category')
 
@@ -102,17 +76,6 @@ function printBalances({ balances, yieldsByNewKeys, yieldsByPoolAddress, yieldsB
     const data: any[] = []
 
     for (const balance of categoryBalances.balances) {
-      const key = `${balance.yieldKey?.toLowerCase()}-${balance.chain}`
-      const subKey = `${balance.yieldKey?.toLowerCase()}`
-      const nonAddressKey = `${balance.yieldKey}` //in a case where a yields key may be a string instead of an address
-      const newKey = `${balance.yieldKey?.toLowerCase()}` //new unique identifiers recently introduced on llamayield
-
-      const yieldObject =
-        yieldsByNewKeys[newKey] ||
-        yieldsByPoolAddress[key] ||
-        yieldsByPoolAddress[subKey] ||
-        yieldsByKeys[nonAddressKey]
-
       const decimals = balance.decimals ? 10 ** balance.decimals : 1
 
       const d = {
@@ -123,8 +86,6 @@ function printBalances({ balances, yieldsByNewKeys, yieldsByPoolAddress, yieldsB
         balance: millify(balance.amount.div(decimals.toString()).toNumber()),
         balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
         claimable: balance.claimable ? millify(balance.claimable.div(decimals.toString()).toNumber()) : undefined,
-        yield: `${yieldObject !== undefined ? yieldObject?.apy.toFixed(2) + '%' : '-'}`,
-        il: `${yieldObject !== undefined ? yieldObject?.ilRisk : '-'}`,
         stable: balance.stable,
         type: balance.type,
         reward: '',
@@ -194,10 +155,7 @@ async function main() {
       resolveContractsTokens(client, contractsRes?.props || {}, true),
     ])
 
-    const [balancesConfigRes, { yieldsByKeys, yieldsByNewKeys, yieldsByPoolAddress }] = await Promise.all([
-      adapter[chain]?.getBalances(ctx, contracts, props),
-      fetchYields(),
-    ])
+    const balancesConfigRes = await adapter[chain]?.getBalances(ctx, contracts, props)
 
     // flatten balances and fetch their prices
     const balances: ExtendedBalance[] =
@@ -221,7 +179,7 @@ async function main() {
         const { healthFactor } = balancesConfigRes?.groups?.[groupIdx] || {}
         console.log('Metadata:')
         console.table({ healthFactor })
-        printBalances({ balances, yieldsByKeys, yieldsByNewKeys, yieldsByPoolAddress })
+        printBalances({ balances })
       }
     }
 
