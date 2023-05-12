@@ -151,6 +151,7 @@ import timewarp from '@adapters/timewarp'
 import tokemak from '@adapters/tokemak'
 import tokenlon from '@adapters/tokenlon'
 import tonpound from '@adapters/tonpound'
+import tornadoCash from '@adapters/tornado-cash'
 import tprotocol from '@adapters/tprotocol'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
@@ -328,6 +329,7 @@ export const adapters: Adapter[] = [
   tokemak,
   tokenlon,
   tonpound,
+  tornadoCash,
   tprotocol,
   traderjoe,
   truefi,
