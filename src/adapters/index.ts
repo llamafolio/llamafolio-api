@@ -58,6 +58,7 @@ import geist from '@adapters/geist'
 import gensokishi from '@adapters/gensokishi'
 import gmx from '@adapters/gmx'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
+import goldfinch from '@adapters/goldfinch'
 import granaryFinance from '@adapters/granary-finance'
 import gro from '@adapters/gro'
 import gyro from '@adapters/gyro'
@@ -236,6 +237,7 @@ export const adapters: Adapter[] = [
   gensokishi,
   gmx,
   gnosisProtocolV1,
+  goldfinch,
   granaryFinance,
   gro,
   gyro,
