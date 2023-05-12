@@ -5,16 +5,17 @@ import { isNotNullish } from './type'
 const { LLAMANODES_API_KEY } = environment
 
 export declare type Chain =
-  | 'ethereum'
+  | 'arbitrum'
+  | 'avalanche'
   | 'bsc'
-  | 'polygon'
+  | 'celo'
+  | 'ethereum'
   | 'fantom'
   | 'gnosis'
-  | 'optimism'
-  | 'avalanche'
-  | 'arbitrum'
-  | 'celo'
   | 'harmony'
+  | 'moonbeam'
+  | 'optimism'
+  | 'polygon'
 
 export interface IChainInfo {
   id: Chain
@@ -30,7 +31,7 @@ export const chains: IChainInfo[] = [
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
-    rpcUrls: ['https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'].filter(isNotNullish),
+    rpcUrls: ['https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'],
   },
   {
     id: 'avalanche',
@@ -64,12 +65,12 @@ export const chains: IChainInfo[] = [
     id: 'ethereum',
     chainId: 1,
     name: 'Ethereum',
-    rpcWssUrl: `wss://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+    rpcWssUrl: LLAMANODES_API_KEY ? `wss://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}` : undefined,
     rpcUrls: [
-      `https://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      LLAMANODES_API_KEY ? `https://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}` : undefined,
       'https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79',
       'https://cloudflare-eth.com/',
-    ],
+    ].filter(isNotNullish),
   },
   {
     id: 'fantom',
@@ -87,18 +88,24 @@ export const chains: IChainInfo[] = [
     id: 'polygon',
     chainId: 137,
     name: 'Polygon',
-    rpcWssUrl: `wss://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+    rpcWssUrl: LLAMANODES_API_KEY ? `wss://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}` : undefined,
     rpcUrls: [
-      `https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`,
+      LLAMANODES_API_KEY ? `https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}` : undefined,
       'https://polygon-rpc.com/',
       'https://rpc-mainnet.maticvigil.com/',
-    ],
+    ].filter(isNotNullish),
+  },
+  {
+    id: 'moonbeam',
+    chainId: 1284,
+    name: 'Moonbeam',
+    rpcUrls: ['https://rpc.api.moonbeam.network', 'https://rpc.ankr.com/moonbeam'],
   },
   {
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcUrls: ['https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism'].filter(isNotNullish),
+    rpcUrls: ['https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism'],
   },
   {
     id: 'gnosis',
