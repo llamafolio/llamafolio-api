@@ -103,6 +103,7 @@ import originDollar from '@adapters/origin-dollar'
 import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
+import paraswap from '@adapters/paraswap'
 import perennial from '@adapters/perennial'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
@@ -281,6 +282,7 @@ export const adapters: Adapter[] = [
   pancakeswap,
   pandora,
   pangolin,
+  paraswap,
   perennial,
   piedao,
   pikaProtocol,
