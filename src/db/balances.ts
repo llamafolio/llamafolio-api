@@ -144,7 +144,7 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
       y.il_risk
     from balances_groups bg
     inner join balances b on b.group_id = bg.id
-    left join yields y on y.chain = bg.chain and y.address = b.address
+    left join yields y on y.chain = bg.chain and y.address = b.address and y.adapter_id = bg.adapter_id
     where bg.from_address = $1;
   `,
     [fromAddress.toLowerCase()],
