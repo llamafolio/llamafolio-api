@@ -13,7 +13,6 @@ defaults:
     shell: bash
 
 env:
-  STAGE: 'dev'
   ACTIONS_RUNNER_DEBUG: true
 
 jobs:
@@ -76,7 +75,7 @@ jobs:
           #
           serverless deploy \
             --config serverless.yml \
-            --stage ${{ env.STAGE }} \
+            --stage dev \
             --region ${{ env.AWS_REGION }} \
             --verbose
         env:
