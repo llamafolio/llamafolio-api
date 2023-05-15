@@ -229,6 +229,11 @@ functions:
     handler: src/handlers/revalidateAdapters.revalidateAdapterContracts
     description: Revalidate adapter contracts
 
+  updateProtocols:
+    handler: src/handlers/updateProtocols.handler
+    description: Update protocols
+    timeout: 300
+
   updateYields:
     handler: src/handlers/updateYields.handler
     description: Update yields
