@@ -76,7 +76,7 @@ jobs:
           #
           serverless deploy \
             --config serverless.yml \
-            --stage ${{ env.STAGE }} \
+            --stage dev \
             --region ${{ env.AWS_REGION }} \
             --verbose
         env:
