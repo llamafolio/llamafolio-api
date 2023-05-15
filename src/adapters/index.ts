@@ -134,6 +134,7 @@ import spartacus from '@adapters/spartacus'
 import spiritswap from '@adapters/spiritswap'
 import spookyswap from '@adapters/spookyswap'
 import spool from '@adapters/spool'
+import stader from '@adapters/stader'
 import stakeLink from '@adapters/stake.link'
 import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
@@ -314,6 +315,7 @@ export const adapters: Adapter[] = [
   spiritswap,
   spookyswap,
   spool,
+  stader,
   stakeLink,
   stakewise,
   stargate,
