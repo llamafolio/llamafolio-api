@@ -59,6 +59,9 @@ const providers: Record<string, Provider | undefined> = {
   Convex: convexProvider,
   Curve: convexProvider,
   Sushiswap: sushiProvider,
+  Swapr: sushiProvider,
+  Solidex: sushiProvider,
+  Quickswap: sushiProvider,
 }
 
 const getUnderlyingsBadgerBalances = async (ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> => {
