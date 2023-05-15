@@ -45,10 +45,7 @@ const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, conte
     if (adaptersToRevalidate.length > 0) {
       // Run "getContracts" in Lambdas
       for (const [adapterId, chain] of adaptersToRevalidate) {
-        invokeLambda(`llamafolio-api-${process.env.stage}-revalidateAdapterContracts`, {
-          adapterId,
-          chain,
-        })
+        invokeLambda('revalidateAdapterContracts', { adapterId, chain })
       }
     }
 
