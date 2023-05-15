@@ -39,6 +39,14 @@ const abi = {
     inputs: [{ name: '_pool', type: 'address' }],
     outputs: [{ name: '', type: 'uint256[8]' }],
   },
+  get_balances: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'get_balances',
+    inputs: [],
+    outputs: [{ name: '', type: 'uint256[2]' }],
+    gas: 4677,
+  },
 }
 
 export type ProviderBalancesParams = Balance & {
@@ -147,20 +155,57 @@ export const convexProvider = async (
   ctx: BalancesContext,
   pools: ProviderBalancesParams[],
 ): Promise<ProviderBalancesParams[]> => {
+  const balances: ProviderBalancesParams[] = []
   const CURVE_REGISTRY_ADDRESS = '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC'
 
-  const poolAddressesRes = await multicall({
+  if (ctx.chain === 'ethereum') {
+    const poolAddressesRes = await multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.lpToken] })),
+      abi: abi.get_pool_from_lp_token,
+    })
+
+    const calls: Call[] = poolAddressesRes.map((pool) => ({
+      target: CURVE_REGISTRY_ADDRESS,
+      params: [isSuccess(pool) ? pool.output : null],
+    }))
+
+    const underlyingsBalancesRes = await multicall({ ctx, calls, abi: abi.get_underlying_balances })
+
+    for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
+      const pool = pools[poolIdx]
+      const { underlyings, amount, totalSupply } = pool
+      const underlyingsBalanceRes = underlyingsBalancesRes[poolIdx]
+
+      if (!underlyings || !isSuccess(underlyingsBalanceRes)) {
+        continue
+      }
+
+      underlyings.forEach((underlying, underlyingIdx) => {
+        const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
+        ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(amount).div(totalSupply) || BN_ZERO
+      })
+
+      balances.push(pool)
+    }
+  } else {
+    balances.push(...(await curveAltChains(ctx, pools)))
+  }
+
+  return balances
+}
+
+export const curveAltChains = async (
+  ctx: BalancesContext,
+  pools: ProviderBalancesParams[],
+): Promise<ProviderBalancesParams[]> => {
+  const balances: ProviderBalancesParams[] = []
+
+  const underlyingsBalancesRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.lpToken] })),
-    abi: abi.get_pool_from_lp_token,
+    calls: pools.map((pool) => ({ target: pool.lpToken })),
+    abi: abi.get_balances,
   })
-
-  const calls: Call[] = poolAddressesRes.map((pool) => ({
-    target: CURVE_REGISTRY_ADDRESS,
-    params: [isSuccess(pool) ? pool.output : null],
-  }))
-
-  const underlyingsBalancesRes = await multicall({ ctx, calls, abi: abi.get_underlying_balances })
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
@@ -175,7 +220,9 @@ export const convexProvider = async (
       const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
       ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(amount).div(totalSupply) || BN_ZERO
     })
+
+    balances.push(pool)
   }
 
-  return pools
+  return balances
 }
