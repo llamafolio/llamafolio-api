@@ -60,6 +60,7 @@ provider:
     LLAMANODES_API_KEY: ${env:LLAMANODES_API_KEY}
     ARBITRUM_RPC: ${env:ARBITRUM_RPC}
     OPTIMISM_RPC: ${env:OPTIMISM_RPC}
+    SENTRY_DSN: ${env:SENTRY_DSN}
 
   httpApi:
     metrics: true
