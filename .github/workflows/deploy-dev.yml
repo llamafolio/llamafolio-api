@@ -37,6 +37,7 @@ jobs:
       OPTIMISM_RPC: ${{ secrets.OPTIMISM_RPC }}
       CUSTOM_PROVIDER: ${{ secrets.CUSTOM_PROVIDER }}
       LLAMANODES_API_KEY: ${{ secrets.LLAMANODES_API_KEY }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
@@ -76,7 +77,7 @@ jobs:
           #
           serverless deploy \
             --config serverless.yml \
-            --stage ${{ env.STAGE }} \
+            --stage dev \
             --region ${{ env.AWS_REGION }} \
             --verbose
         env:

@@ -1,14 +1,12 @@
 import pool from '@db/pool'
 import { deleteAllYields, fetchYields, insertYields } from '@db/yields'
-import environment from '@environment'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 const updateYields: APIGatewayProxyHandler = async () => {
   // run in a Lambda because of APIGateway timeout
-  const { STAGE } = environment
-  await invokeLambda(`llamafolio-api-${STAGE}-updateYields`, {}, 'Event')
+  await invokeLambda('updateYields', {}, 'Event')
 
   return success({})
 }

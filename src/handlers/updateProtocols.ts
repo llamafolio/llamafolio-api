@@ -1,16 +1,13 @@
 import { selectDistinctAdaptersIds } from '@db/adapters'
 import pool from '@db/pool'
 import { deleteAllProtocols, insertProtocols } from '@db/protocols'
-import { environment } from '@environment'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { fetchProtocols } from '@lib/protocols'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
-const { STAGE } = environment
-
 const updateProtocols: APIGatewayProxyHandler = async () => {
-  await invokeLambda(`llamafolio-api-${STAGE}-updateProtocols`, {}, 'Event')
+  await invokeLambda('updateProtocols', {}, 'Event')
 
   return success({})
 }
@@ -42,8 +39,8 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
 
     return success({})
   } catch (e) {
-    await client.query('ROLLBACK')
     console.log('Failed to update protocols', e)
+    await client.query('ROLLBACK')
     return serverError('Failed to update protocols')
   }
 }

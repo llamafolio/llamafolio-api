@@ -173,7 +173,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     }
 
     if (status !== 'success') {
-      await invokeLambda(`llamafolio-api-${process.env.stage}-updateBalances`, { address }, 'Event')
+      await invokeLambda('updateBalances', { address }, 'Event')
     }
 
     const balancesResponse: BalancesResponse = {

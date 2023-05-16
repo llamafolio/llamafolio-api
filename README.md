@@ -34,7 +34,7 @@ To learn more about adapters, check our [docs](https://docs.llamafolio.com).
 To test your adapter, run the command below which will output most details an adapter can find
 
 ```bash
-pnpm run adapter curve ethereum 0x0000000000000000000000000000000000000000
+pnpm run adapter curve-dex ethereum 0x0000000000000000000000000000000000000000
 ```
 
 ## API

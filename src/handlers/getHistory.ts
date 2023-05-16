@@ -37,9 +37,8 @@ export interface ITransaction {
 
 interface IHistory {
   transactions: ITransaction[]
-  total_pages: number
-  current_page: number
-  next_page: number
+  count: number
+  next: number
 }
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
@@ -68,23 +67,18 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     protocols = queries.protocols.replace(/"/g, '').replace(/'/g, '').split(',') ?? []
   }
 
-  const limit = 50
-
-  const pageQuery = queries?.page === '0' ? 1 : queries?.page ? parseInt(queries?.page) : 1
-
-  const offset = ((pageQuery - 1) * limit).toFixed(0)
-
-  const offsetNumber = parseInt(offset)
+  const offset = parseInt(queries?.offset || '') || 0
+  const limit = parseInt(queries?.limit || '') || 50
 
   const client = await pool.connect()
 
   try {
     const [transactions, transactionsAggregate] = await Promise.all([
-      selectHistory(client, address.toLowerCase(), limit, offsetNumber, chains, protocols),
+      selectHistory(client, address.toLowerCase(), limit, offset, chains, protocols),
       selectHistoryAggregate(client, address.toLowerCase(), chains, protocols),
     ])
 
-    const pages = parseInt((transactionsAggregate.aggregate.count / limit).toFixed(0))
+    const count = parseInt(transactionsAggregate.aggregate.count)
 
     const transactionsData: ITransaction[] = transactions.map((tx: any) => ({
       chain: tx.chain,
@@ -171,9 +165,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const response: IHistory = {
       transactions: transactionsData,
-      total_pages: pages,
-      current_page: pageQuery >= pages ? pages : pageQuery,
-      next_page: pageQuery >= pages ? pages : pageQuery + 1,
+      count,
+      next: Math.min(offset + limit, count),
     }
 
     return success(response, { maxAge: 2 * 60 })

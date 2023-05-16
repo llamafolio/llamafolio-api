@@ -22,6 +22,7 @@ export const environmentSchema = z.object({
   API_URL: z.string().optional(),
   AWS_GATEWAY_API_ID_DEV: z.string().optional(),
   AWS_GATEWAY_API_ID_PROD: z.string().optional(),
+  SENTRY_DSN: z.string().optional(),
 })
 
 export type Environment = z.infer<typeof environmentSchema>

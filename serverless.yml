@@ -53,13 +53,14 @@ provider:
     PGDATABASE: ${env:PGDATABASE}
     PGPASSWORD: ${env:PGPASSWORD}
     PGPORT: ${env:PGPORT}
-    stage: ${self:custom.stage}
-    tableName: ${self:custom.tableName}
+    STAGE: ${self:custom.stage}
+    DDB_TABLE_NAME: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     CUSTOM_PROVIDER: ${env:CUSTOM_PROVIDER}
     LLAMANODES_API_KEY: ${env:LLAMANODES_API_KEY}
     ARBITRUM_RPC: ${env:ARBITRUM_RPC}
     OPTIMISM_RPC: ${env:OPTIMISM_RPC}
+    SENTRY_DSN: ${env:SENTRY_DSN}
 
   httpApi:
     metrics: true
@@ -227,6 +228,11 @@ functions:
   revalidateAdapterContracts:
     handler: src/handlers/revalidateAdapters.revalidateAdapterContracts
     description: Revalidate adapter contracts
+
+  updateProtocols:
+    handler: src/handlers/updateProtocols.handler
+    description: Update protocols
+    timeout: 300
 
   updateYields:
     handler: src/handlers/updateYields.handler

@@ -3,6 +3,7 @@ import _1inchNetwork from '@adapters/1inch-network'
 import aaveV2 from '@adapters/aave-v2'
 import aaveV3 from '@adapters/aave-v3'
 import abracadabra from '@adapters/abracadabra'
+import across from '@adapters/across'
 import agilityLsd from '@adapters/agility-lsd'
 import alchemix from '@adapters/alchemix'
 import alpacaFinance from '@adapters/alpaca-finance'
@@ -11,6 +12,7 @@ import angle from '@adapters/angle'
 import apeswapAmm from '@adapters/apeswap-amm'
 import apeswapLending from '@adapters/apeswap-lending'
 import api3 from '@adapters/api3'
+import apollox from '@adapters/apollox'
 import arbitrumExchange from '@adapters/arbitrum-exchange'
 import arrakis from '@adapters/arrakis'
 import asymetrixProtocol from '@adapters/asymetrix-protocol'
@@ -57,6 +59,7 @@ import geist from '@adapters/geist'
 import gensokishi from '@adapters/gensokishi'
 import gmx from '@adapters/gmx'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
+import goldfinch from '@adapters/goldfinch'
 import granaryFinance from '@adapters/granary-finance'
 import gro from '@adapters/gro'
 import gyro from '@adapters/gyro'
@@ -102,6 +105,7 @@ import originDollar from '@adapters/origin-dollar'
 import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
+import paraswap from '@adapters/paraswap'
 import perennial from '@adapters/perennial'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
@@ -131,6 +135,7 @@ import spartacus from '@adapters/spartacus'
 import spiritswap from '@adapters/spiritswap'
 import spookyswap from '@adapters/spookyswap'
 import spool from '@adapters/spool'
+import stader from '@adapters/stader'
 import stakeLink from '@adapters/stake.link'
 import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
@@ -150,6 +155,7 @@ import timewarp from '@adapters/timewarp'
 import tokemak from '@adapters/tokemak'
 import tokenlon from '@adapters/tokenlon'
 import tonpound from '@adapters/tonpound'
+import tornadoCash from '@adapters/tornado-cash'
 import tprotocol from '@adapters/tprotocol'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
@@ -179,6 +185,7 @@ export const adapters: Adapter[] = [
   aaveV2,
   aaveV3,
   abracadabra,
+  across,
   agilityLsd,
   alchemix,
   alpacaFinance,
@@ -187,6 +194,7 @@ export const adapters: Adapter[] = [
   apeswapAmm,
   apeswapLending,
   api3,
+  apollox,
   arbitrumExchange,
   arrakis,
   asymetrixProtocol,
@@ -233,6 +241,7 @@ export const adapters: Adapter[] = [
   gensokishi,
   gmx,
   gnosisProtocolV1,
+  goldfinch,
   granaryFinance,
   gro,
   gyro,
@@ -278,6 +287,7 @@ export const adapters: Adapter[] = [
   pancakeswap,
   pandora,
   pangolin,
+  paraswap,
   perennial,
   piedao,
   pikaProtocol,
@@ -307,6 +317,7 @@ export const adapters: Adapter[] = [
   spiritswap,
   spookyswap,
   spool,
+  stader,
   stakeLink,
   stakewise,
   stargate,
@@ -326,6 +337,7 @@ export const adapters: Adapter[] = [
   tokemak,
   tokenlon,
   tonpound,
+  tornadoCash,
   tprotocol,
   traderjoe,
   truefi,
