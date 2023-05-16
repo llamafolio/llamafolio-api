@@ -94,6 +94,7 @@ import metronome from '@adapters/metronome'
 import morphex from '@adapters/morphex'
 import morphoAave from '@adapters/morpho-aave'
 import morphoCompound from '@adapters/morpho-compound'
+import mstable from '@adapters/mstable'
 import multichain from '@adapters/multichain'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
@@ -276,6 +277,7 @@ export const adapters: Adapter[] = [
   morphex,
   morphoAave,
   morphoCompound,
+  mstable,
   multichain,
   nemesisDao,
   nexusMutual,
