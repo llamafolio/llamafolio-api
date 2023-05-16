@@ -3,18 +3,27 @@ import { resolveBalances } from '@lib/balance'
 import type { Chain } from '@lib/chains'
 import { chains } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
-import { providers } from '@lib/providers'
+// import { ethers } from 'ethers'
+import { evmClient } from '@lib/providers/v2/provider'
+// import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { chains as tokensByChain } from '@llamafolio/tokens'
-import { ethers } from 'ethers'
+import { getAddress } from 'viem'
 
 async function getCoinBalance(ctx: BalancesContext, token?: Token) {
   if (!token) {
     return null
   }
 
-  const provider = providers[ctx.chain]
-  const amount = await provider.getBalance(ctx.address, ctx.blockHeight)
+  // const provider = providers[ctx.chain]
+  const provider = evmClient(ctx.chain)
+  // const amount = await provider.getBalance(ctx.address, ctx.blockHeight)
+  const amount = await provider.getBalance({
+    address: getAddress(ctx.address),
+    blockNumber: ctx.blockHeight ? BigInt(ctx.blockHeight) : undefined,
+  })
+
+  // @ts-ignore
   return { ...token, amount } as Balance
 }
 
@@ -24,7 +33,7 @@ const getChainHandlers = (chain: Chain) => {
     const erc20: Token[] = []
 
     for (const token of tokensByChain[chain]) {
-      if (token.address === ethers.constants.AddressZero) {
+      if (token.address === '0x0000000000000000000000000000000000000000') {
         coin = { ...token, chain, category: 'wallet' } as Token
         continue
       }

@@ -1,7 +1,6 @@
 import type {
   Balance,
   BalancesContext,
-  BaseBalance,
   BaseContract,
   ExcludeRawContract,
   GetContractsHandler,
@@ -12,10 +11,10 @@ import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, BN_ZERO } from '@lib/math'
 import type { Call, MultiCallOptions, MultiCallResult } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { providers } from '@lib/providers'
+import { evmClient } from '@lib/providers/v2/provider'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import { ethers } from 'ethers'
+import { getAddress } from 'viem'
 
 export async function getBalances(ctx: BalancesContext, contracts: BaseContract[]) {
   const coins: Token[] = []
@@ -23,7 +22,7 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
 
   for (const token of contracts) {
     // native chain coin
-    if (token.address === ethers.constants.AddressZero) {
+    if (token.address === '0x0000000000000000000000000000000000000000') {
       coins.push(token as Token)
       continue
     }
@@ -39,9 +38,11 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
     await Promise.all(
       coins.map(async (token) => {
         try {
-          const provider = providers[token.chain]
-          const balance = await provider.getBalance(ctx.address)
-          ;(token as BaseBalance).amount = balance
+          // const provider = providers[token.chain]
+          const provider = evmClient(token.chain)
+          const balance = await provider.getBalance({ address: getAddress(ctx.address) })
+          // @ts-ignore TODO: fix this
+          token.amount = balance
           return token
         } catch (err) {
           console.error(`Failed to get coin balance for chain ${token.chain}`, err)
@@ -65,12 +66,13 @@ export async function multicallBalances(params: MultiCallOptions) {
   const res: MultiCallResult[] = []
 
   for (const call of params.calls) {
-    if (call.target === ethers.constants.AddressZero) {
+    // @ts-ignore
+    if (call.target === '0x0000000000000000000000000000000000000000') {
       // native chain coin
       // @ts-ignore
       coinsCallsAddresses.push(call.params[0])
     } else {
-      // token
+      // @ts-ignore token
       tokensCalls.push(call)
     }
   }
@@ -78,8 +80,9 @@ export async function multicallBalances(params: MultiCallOptions) {
   const coinsBalancesRes = await Promise.all(
     coinsCallsAddresses.map(async (address) => {
       try {
-        const provider = providers[chain]
-        const balance = await provider.getBalance(address)
+        const provider = evmClient(chain)
+        // const balance = await provider.getBalance(address)
+        const balance = await provider.getBalance({ address: getAddress(address) })
         return balance
       } catch (err) {
         console.error(`Failed to get coin balance for chain ${chain}`, err)
@@ -98,8 +101,8 @@ export async function multicallBalances(params: MultiCallOptions) {
   let tokenIdx = 0
   for (let i = 0; i < params.calls.length; i++) {
     const call = params.calls[i]
-
-    if (call.target === ethers.constants.AddressZero) {
+    // @ts-ignore
+    if (call.target === '0x0000000000000000000000000000000000000000') {
       // native chain coin
       res.push({
         success: coinsBalancesRes[coinIdx] != null,

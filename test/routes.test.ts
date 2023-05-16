@@ -1,6 +1,7 @@
 import dns from 'node:dns'
 
 import { environment } from '@environment'
+import { wait } from '@lib/wait'
 import { beforeAll, describe, expect, test } from 'vitest'
 
 import { generateTestableRoute } from './config'
@@ -11,8 +12,6 @@ import { testData } from './fixtures/test-data'
 dns.setDefaultResultOrder('ipv4first')
 
 const STAGE = environment.STAGE as Exclude<typeof environment.STAGE, undefined>
-
-export const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 beforeAll(async () => {
   // wait for the API to be ready if CI

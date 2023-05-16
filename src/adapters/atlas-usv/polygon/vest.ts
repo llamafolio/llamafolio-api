@@ -1,6 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { providers } from '@lib/providers'
+// import { providers } from '@lib/providers'
+import { evmClient } from '@lib/providers/v2/provider'
 import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
@@ -39,9 +40,16 @@ export async function getVestingBalances(ctx: BalancesContext, vesters: Contract
   for (let vesterIdx = 0; vesterIdx < vesters.length; vesterIdx++) {
     const vester = vesters[vesterIdx]
     const pendingPayoutBalanceRes = pendingPayoutBalancesRes[vesterIdx]
-    const provider = providers[ctx.chain]
-    const unlockAt = (await provider.getBlock(parseInt(pendingPayoutBalanceRes.output.lastBlock))).timestamp
-
+    // const _provider = providers[ctx.chain]
+    // const _unlockAt = (await _provider.getBlock(parseInt(pendingPayoutBalanceRes.output.lastBlock))).timestamp
+    const provider = evmClient(ctx.chain)
+    const unlockAt = Number(
+      (
+        await provider.getBlock({
+          blockNumber: BigInt(pendingPayoutBalanceRes.output.lastBlock),
+        })
+      ).timestamp,
+    )
     if (!isSuccess(pendingPayoutBalanceRes)) {
       continue
     }
