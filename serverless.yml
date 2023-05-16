@@ -101,14 +101,6 @@ functions:
           path: /balances/{address}/tokens
     timeout: 29
 
-  getCategories:
-    handler: src/handlers/getCategories.handler
-    description: Get categories
-    events:
-      - httpApi:
-          method: get
-          path: /categories
-
   getContracts:
     handler: src/handlers/getContracts.getContract
     description: Get contracts
