@@ -1,13 +1,8 @@
-import { cmd } from '@lib/cmd'
-import { evmClient } from '@lib/providers/v2/provider'
-import { wait } from '@lib/wait'
-import { afterAll, beforeAll, describe, expect, test } from 'vitest'
+import { evmClient } from '@lib/provider/provider'
+// import { createTestClient, http } from 'viem'
+// import { foundry,mainnet } from 'viem/chains'
+import { beforeAll, describe, expect, test } from 'vitest'
 
-// const client = createTestClient({
-//   chain: foundry,
-//   mode: 'anvil',
-//   transport: http(),
-// })
 /**
  * TODO: WIP
  *
@@ -25,16 +20,21 @@ import { afterAll, beforeAll, describe, expect, test } from 'vitest'
 describe.todo('Local RPC Provider', () => {
   beforeAll(async () => {
     // start local node
-    await cmd(
-      /* @see https://github.com/foundry-rs/foundry/blob/master/anvil/src/cmd.rs for all args */
-      'anvil',
-      '--chain-id=1',
-      '--balance=10000', // default is 10000
-      '--port=8545', // default is 8545
-    )
-    // wait for anvil to start
-    wait(2_000)
+    // await cmd(
+    //   /* @see https://github.com/foundry-rs/foundry/blob/master/anvil/src/cmd.rs for all args */
+    //   'anvil',
+    //   '--chain-id=1',
+    //   '--balance=10000', // default is 10000
+    //   '--port=8545', // default is 8545
+    // )
+    // // wait for anvil to start
+    // wait(2_000)
   })
+  // const client = createTestClient({
+  //   chain: mainnet,
+  //   mode: 'anvil',
+  //   transport: http(),
+  // })
 
   test.todo('[local]: getBlockNumber', async () => {
     const client = evmClient('localhost', { protocol: 'http' })
@@ -42,10 +42,10 @@ describe.todo('Local RPC Provider', () => {
     expect(blockNumber).toBeGreaterThan(0)
   })
 
-  afterAll(async () => {
-    // stop local node
-    await cmd('killall', 'anvil')
-  })
+  // afterAll(async () => {
+  //   // stop local node
+  //   await cmd('killall', 'anvil')
+  // })
 })
 
 describe.todo('HTTP RPC Provider', () => {

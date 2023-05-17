@@ -1,6 +1,6 @@
 import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { BN_ZERO, mulPrice, sum } from '@lib/math'
+import { BigInt_ZERO, mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
@@ -73,7 +73,8 @@ export async function getTokenPrice(token: Token) {
 
 export async function getPricedBalances(balances: Balance[]): Promise<(Balance | PricedBalance)[]> {
   // Filter empty balances
-  balances = balances.filter((balance) => balance.amount.gt(0) || balance.claimable?.gt(0))
+  balances = balances.filter((balance) => Number(balance.amount) > 0 || Number(balance.claimable) > 0)
+  console.log(`[getPricedBalances] balances: [${balances.length}]`)
 
   const priced: BaseBalance[] = balances.slice()
 
@@ -81,7 +82,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
   for (const balance of balances) {
     if (balance.rewards) {
       for (const reward of balance.rewards) {
-        if (reward.amount?.gt(0) || reward.claimable?.gt(0)) {
+        if (Number(reward.amount) > 0 || Number(reward.claimable) > 0) {
           priced.push(reward)
         }
       }
@@ -92,7 +93,9 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
   for (const balance of balances) {
     if (balance.underlyings) {
       for (const underlying of balance.underlyings) {
-        if (underlying.amount?.gt(0)) {
+        // @ts-ignore
+        if (Number(underlying.amount) > 0) {
+          // @ts-ignore
           priced.push(underlying)
         }
       }
@@ -113,27 +116,31 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
     const key = getTokenKey(balance as Token)
     if (!key) {
       console.log('Failed to get price token key for balance', balance)
+      // @ts-ignore
       return balance
     }
 
     const price = prices[key]
     if (price === undefined) {
       console.log(`Failed to get price on Defillama API for ${key}`)
+      // @ts-ignore
       return balance
     }
 
     const decimals = balance.decimals || price.decimals
     if (decimals === undefined) {
       console.log(`Failed to get decimals for ${key}`)
+      // @ts-ignore
       return balance
     }
 
     return {
       ...price,
       ...balance,
+      // @ts-ignore
       priceTimestamp: price.timestamp ? new Date(price.timestamp * 1000) : undefined,
       balanceUSD: mulPrice(balance.amount, decimals, price.price),
-      claimableUSD: balance.claimable ? mulPrice(balance.claimable || BN_ZERO, decimals, price.price) : undefined,
+      claimableUSD: balance.claimable ? mulPrice(balance.claimable || BigInt_ZERO, decimals, price.price) : undefined,
     }
   }
 
@@ -143,6 +150,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
       balance.rewards = pricedRewards
     }
     if (balance.underlyings) {
+      // @ts-ignore
       const pricedUnderlyings = balance.underlyings.map(getPricedBalance)
       return {
         ...balance,

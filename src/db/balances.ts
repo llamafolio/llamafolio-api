@@ -89,6 +89,8 @@ export function toStorage(balances: Balance[]) {
   for (const balance of balances) {
     const { groupId, address, price, amount, balanceUSD, rewardUSD, debtUSD, category, ...data } = balance
 
+    console.log('o%', { data })
+
     const balanceStorable: BalanceStorable = {
       group_id: groupId,
       amount: amount.toString(),

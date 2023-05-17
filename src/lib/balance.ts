@@ -8,10 +8,10 @@ import type {
 } from '@lib/adapter'
 import type { Category } from '@lib/category'
 import { getERC20BalanceOf } from '@lib/erc20'
-import { BN_TEN, BN_ZERO } from '@lib/math'
+import { BigInt_ZERO } from '@lib/math'
 import type { Call, MultiCallOptions, MultiCallResult } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { evmClient } from '@lib/providers/v2/provider'
+import { evmClient } from '@lib/provider/provider'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { getAddress } from 'viem'
@@ -37,10 +37,11 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
   const coinsBalances = (
     await Promise.all(
       coins.map(async (token) => {
+        console.log(token.chain)
         try {
-          // const provider = providers[token.chain]
           const provider = evmClient(token.chain)
           const balance = await provider.getBalance({ address: getAddress(ctx.address) })
+          console.log(`[getBalance - ${token.chain}]`, balance.toString())
           // @ts-ignore TODO: fix this
           token.amount = balance
           return token
@@ -81,7 +82,6 @@ export async function multicallBalances(params: MultiCallOptions) {
     coinsCallsAddresses.map(async (address) => {
       try {
         const provider = evmClient(chain)
-        // const balance = await provider.getBalance(address)
         const balance = await provider.getBalance({ address: getAddress(address) })
         return balance
       } catch (err) {
@@ -142,8 +142,8 @@ export function sanitizeBalances(balances: Balance[]) {
             ...underlying,
             amount:
               deltaMantissa > 0
-                ? balance.amount.div(BN_TEN.pow(deltaMantissaAbs))
-                : balance.amount.mul(BN_TEN.pow(deltaMantissaAbs)),
+                ? Number(balance.amount) / Math.pow(10, deltaMantissaAbs)
+                : Number(balance.amount) * Math.pow(10, deltaMantissaAbs),
           }))
         }
       }
@@ -152,7 +152,7 @@ export function sanitizeBalances(balances: Balance[]) {
     if (balance.rewards) {
       sanitizedBalance.rewards = balance.rewards.map((reward) => ({
         ...reward,
-        amount: reward.amount || BN_ZERO,
+        amount: reward.amount || BigInt_ZERO,
       }))
     }
 

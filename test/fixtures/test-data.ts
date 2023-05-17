@@ -16,6 +16,7 @@ export const testTokens: { [chain in Chain]: string[] } = {
   bsc: [],
   celo: [],
   fantom: [],
+  moonbeam: [],
   gnosis: [],
   harmony: [],
   optimism: [],

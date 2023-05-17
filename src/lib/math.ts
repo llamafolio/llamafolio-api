@@ -3,12 +3,23 @@ import { BigNumber, utils } from 'ethers'
 export const BN_ZERO = BigNumber.from('0')
 export const BN_TEN = BigNumber.from('10')
 
-export function isZero<T extends BigNumber | string | number>(num: T) {
+export const BigInt_ZERO = BigInt(0)
+export const BigInt_TEN = BigInt(10)
+
+// export function isZero<T extends BigNumber | string | number>(num: T) {
+//   return num.toString() === '0'
+// }
+
+export function isZero<T extends bigint | string | number>(num: T) {
   return num.toString() === '0'
 }
 
-export function decimalsBN(num: BigNumber, decimals: number) {
-  return num.div(BN_TEN.pow(decimals))
+// export function decimalsBN(num: BigNumber, decimals: number) {
+//   return num.div(BN_TEN.pow(decimals))
+// }
+
+export function decimalsBN(num: bigint, decimals: number) {
+  return Number(num) / Number(BigInt_TEN ** BigInt(decimals))
 }
 
 export function sumBN(nums: BigNumber[]) {
@@ -27,15 +38,15 @@ export function sum(nums: number[]) {
   return res
 }
 
-export function mulPrice(amountBN: BigNumber, decimals: number, price: number) {
+export function mulPrice(amountBigInt: bigint, decimals: number, price: number) {
   try {
-    const priceBN = utils.parseUnits(price.toFixed(decimals), decimals)
+    const priceBigInt = utils.parseUnits(price.toFixed(decimals), decimals)
 
-    const mulBN = amountBN.mul(priceBN)
+    const mulBigInt = Number(amountBigInt) * Number(priceBigInt)
 
-    return parseFloat(utils.formatUnits(mulBN, 2 * decimals))
+    return mulBigInt / 10 ** (2 * decimals)
   } catch (err) {
-    console.error(`Failed to mulPrice ${amountBN.toString()}, ${decimals}, ${price}`, err)
+    console.error(`Failed to mulPrice ${amountBigInt.toString()}, ${decimals}, ${price}`, err)
     return 0
   }
 }

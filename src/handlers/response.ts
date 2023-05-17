@@ -1,12 +1,7 @@
-import { BigNumber } from 'ethers'
-
-Object.defineProperties(BigNumber.prototype, {
-  toJSON: {
-    value: function (this: BigNumber) {
-      return this.toString()
-    },
-  },
-})
+// @ts-expect-error
+BigInt.prototype.toJSON = function () {
+  return this.toString()
+}
 
 export interface ResponseOptions {
   statusCode: number

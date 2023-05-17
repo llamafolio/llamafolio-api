@@ -90,7 +90,7 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}
-    timeout: 10
+    timeout: 18
 
   getBalancesTokens:
     handler: src/handlers/getBalancesTokens.handler
@@ -99,7 +99,7 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}/tokens
-    timeout: 29
+    timeout: 30
 
   getCategories:
     handler: src/handlers/getCategories.handler

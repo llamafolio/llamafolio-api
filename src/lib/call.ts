@@ -1,5 +1,3 @@
-import '@lib/providers'
-
 import type { BaseContext } from '@lib/adapter'
 import { batchCallers } from '@lib/multicall'
 

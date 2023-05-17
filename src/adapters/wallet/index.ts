@@ -3,9 +3,7 @@ import { resolveBalances } from '@lib/balance'
 import type { Chain } from '@lib/chains'
 import { chains } from '@lib/chains'
 import { getERC20BalanceOf } from '@lib/erc20'
-// import { ethers } from 'ethers'
-import { evmClient } from '@lib/providers/v2/provider'
-// import { providers } from '@lib/providers'
+import { evmClient } from '@lib/provider/provider'
 import type { Token } from '@lib/token'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 import { getAddress } from 'viem'
@@ -34,12 +32,14 @@ const getChainHandlers = (chain: Chain) => {
 
     for (const token of tokensByChain[chain]) {
       if (token.address === '0x0000000000000000000000000000000000000000') {
+        // @ts-ignore
         coin = { ...token, chain, category: 'wallet' } as Token
         continue
       }
       // llamafolio-tokens registers all tokens to help get metadata but some are protocol specific (ex: stETH, aTokens).
       // wallet flag indicates wallet-only tokens
       if (token.wallet) {
+        // @ts-ignore
         erc20.push({ ...token, chain, category: 'wallet' } as Token)
       }
     }
@@ -48,8 +48,9 @@ const getChainHandlers = (chain: Chain) => {
       contracts: { coin, erc20 },
     }
   }
-
+  // @ts-ignore
   const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+    // @ts-ignore
     const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
       coin: getCoinBalance,
       erc20: getERC20BalanceOf,
@@ -71,6 +72,7 @@ const adapter: Adapter = {
 }
 
 for (const chain of chains) {
+  // @ts-ignore
   adapter[chain.id] = getChainHandlers(chain.id)
 }
 

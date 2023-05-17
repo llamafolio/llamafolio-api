@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getERC20BalanceOf } from '@lib/erc20'
-import { BN_TEN, sum } from '@lib/math'
+import { sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { getPricedBalances } from '@lib/price'
 import type { Token } from '@lib/token'
@@ -170,12 +170,17 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
         return
       }
 
-      const amount = bal.amount.mul(exchangeRateCurrentBycTokenAddress[bal.address]).div(BN_TEN.pow(10))
+      const amount = (Number(bal.amount) * Number(exchangeRateCurrentBycTokenAddress[bal.address])) / 10 ** 18
 
       return {
         ...bal,
-        amount: BigNumber.from(amount).div(BN_TEN.pow(underlying.decimals)),
-        underlyings: [{ ...underlying, amount: BigNumber.from(amount).div(BN_TEN.pow(bal.decimals)) }],
+        amount: amount,
+        underlyings: [
+          {
+            ...underlying,
+            amount: amount,
+          },
+        ],
         category: 'lend',
       }
     })
@@ -190,7 +195,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
       }
 
       // add amount
-      const amount = BigNumber.from(res.output)
+      const amount = Number(res.output) / 10 ** 18
 
       return {
         ...cToken,
@@ -209,7 +214,7 @@ export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promis
   // TODO: batch getPricedBalances into 1 call for all balances
   return
 
-  const nonZerobalances = balances.filter((balance) => balance.amount.gt(0))
+  const nonZerobalances = balances.filter((balance) => Number(balance.amount) > 0)
 
   const nonZeroSupplyBalances = nonZerobalances.filter((supply) => supply.category === 'lend')
   const nonZeroBorrowBalances = nonZerobalances.filter((borrow) => borrow.category === 'borrow')

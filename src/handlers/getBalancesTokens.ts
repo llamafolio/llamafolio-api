@@ -14,14 +14,16 @@ import { chainById } from '@lib/chains'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
+import { formatUnits } from 'viem'
 
 function formatBalance(balance: any): FormattedBalance {
+  console.log('o%', balance)
   return {
     address: balance.address,
     symbol: balance.symbol,
     decimals: balance.decimals,
     price: balance.price,
-    amount: balance.amount,
+    amount: formatUnits(balance.amount, balance.decimals),
     balanceUSD: balance.balanceUSD,
   }
 }

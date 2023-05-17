@@ -1,10 +1,9 @@
 import type { BalancesContext, Contract, VestBalance } from '@lib/adapter'
-import { BN_ZERO } from '@lib/math'
+import { BigInt_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { providers } from '@lib/providers'
+import { evmClient } from '@lib/provider'
 import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 const abi = {
   bondInfo: {
@@ -46,13 +45,19 @@ export async function getGyroVesterBalances(ctx: BalancesContext, vesters: Contr
       continue
     }
 
-    const provider = providers[ctx.chain]
-    const unlockAt = (await provider.getBlock(parseInt(bondInfoRes.output.lastBlock))).timestamp
+    const provider = evmClient(ctx.chain)
+    const unlockAt = Number(
+      (
+        await provider.getBlock({
+          blockNumber: BigInt(bondInfoRes.output.lastBlock),
+        })
+      ).timestamp,
+    )
 
     balances.push({
       ...vester,
-      amount: BigNumber.from(bondInfoRes.output.payout),
-      claimable: now > unlockAt ? BigNumber.from(bondInfoRes.output.payout) : BN_ZERO,
+      amount: bondInfoRes.output.payout,
+      claimable: now > unlockAt ? bondInfoRes.output.payout : BigInt_ZERO,
       unlockAt,
       decimals: 9,
       underlyings: [GYRO],

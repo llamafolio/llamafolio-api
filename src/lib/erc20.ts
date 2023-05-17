@@ -1,11 +1,13 @@
+import fs from 'node:fs'
+
 import type { Balance, BalancesContext, BaseContext } from '@lib/adapter'
 import type { Call, MultiCallResult } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
+import { evmClient } from '@lib/provider'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { getToken } from '@llamafolio/tokens'
-import { BigNumber } from 'ethers'
-
+import { getAddress } from 'viem'
 export const abi = {
   balanceOf: {
     constant: true,
@@ -83,6 +85,83 @@ export const abi = {
   },
 }
 
+const _abi = <const>[
+  {
+    constant: true,
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'decimals',
+    outputs: [
+      {
+        name: '',
+        type: 'uint8',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'symbol',
+    outputs: [
+      {
+        name: '',
+        type: 'string',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'address[]',
+        name: 'tokens',
+        type: 'address[]',
+      },
+    ],
+    name: 'getBalances',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+]
+
 // See: https://github.com/o-az/evm-balances/tree/master
 const multiCoinContracts = {
   arbitrum: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
@@ -92,97 +171,98 @@ const multiCoinContracts = {
   fantom: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
   optimism: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
   polygon: '0xE052Ef907f09c0053B237647aD7387D4BDF11A5A',
+  gnosis: '0xc9bA77C9b27481B6789840A7C3128D4f691f8296',
+  celo: '0xc9ba77c9b27481b6789840a7c3128d4f691f8296',
+  moonbeam: '0xc9bA77C9b27481B6789840A7C3128D4f691f8296',
+  // 'harmony':'',
 }
 
 export interface GetERC20BalanceOfParams {
   getContractAddress: (contract: any) => string
 }
-
 export async function getERC20BalanceOf(
   ctx: BalancesContext,
   tokens: Token[],
   params?: GetERC20BalanceOfParams,
 ): Promise<Balance[]> {
-  const { getContractAddress } = params || { getContractAddress: (contract) => contract.address }
-
+  console.log('%o', { ctx, params })
+  fs.writeFileSync('getERC20BalanceOf.json', JSON.stringify({ params }, undefined, 2))
+  //
+  const provider = evmClient(ctx.chain, {
+    protocol: 'http',
+    options: {
+      batch: {
+        multicall: {
+          batchSize: 1_024 * 2,
+          wait: 18,
+        },
+      },
+    },
+  })
+  // @ts-ignore
+  let balances
   if (ctx.chain in multiCoinContracts) {
-    let attempts = 0
-    const tokenByAddress: { [key: string]: Token } = {}
-    let nextTokens = tokens.slice()
+    // balances = await provider.multicall({
+    //   allowFailure: true,
+    //   // The maximum size (in bytes) for each calldata chunk. Set to 0 to disable the size limit. @default 1_024
+    //   // will make it dynamic based on tokens size
+    //   // batchSize:
+    //   contracts: [
+    //     {
+    //       address: getAddress(multiCoinContracts[ctx.chain as keyof typeof multiCoinContracts]),
+    //       abi: _abi,
+    //       functionName: 'getBalances',
+    //       args: [getAddress(ctx.address), tokens.map((token) => getAddress(token.address))],
+    //     },
+    //   ],
+    // })
 
-    for (let i = 0; i < tokens.length; i++) {
-      tokenByAddress[tokens[i].address] = tokens[i]
-    }
+    // const contract = getContract({
+    //   address: getAddress(multiCoinContracts[ctx.chain as keyof typeof multiCoinContracts]),
+    //   abi: _abi,
+    //   publicClient: provider,
+    // })
+    // balances = contract.read.getBalances([getAddress(ctx.address), tokens.map((token) => getAddress(token.address))])
 
-    do {
-      // "binary search" (not sorted) to handle errors as the whole call will fail if one token fails
-      const mid = Math.floor(nextTokens.length / 2)
-      const left = nextTokens.slice(0, mid)
-      const right = nextTokens.slice(mid)
-      const slices = [left, right]
-
-      const balances = await multicall({
-        ctx,
-        // @ts-ignore
-        calls: slices.map((tokens) => ({
-          // @ts-ignore
-          target: multiCoinContracts[ctx.chain],
-          params: [ctx.address, tokens.map((token) => token.address)],
-        })),
-        abi: abi.getBalances,
-      })
-
-      const failedTokens: Token[] = []
-      for (const balancesRes of balances) {
-        if (!balancesRes.success || balancesRes.output == null) {
-          // Found error
-          if (balancesRes.input.params[1].length === 1) {
-            console.error(`Could not get balanceOf for token ${balancesRes.input.params[1][0]}`)
-            continue
-          }
-
-          for (let tokenIdx = 0; tokenIdx < balancesRes.input.params[1].length; tokenIdx++) {
-            const tokenAddress = balancesRes.input.params[1][tokenIdx]
-            failedTokens.push(tokenByAddress[tokenAddress])
-          }
-        } else {
-          for (let tokenIdx = 0; tokenIdx < balancesRes.input.params[1].length; tokenIdx++) {
-            const tokenAddress = balancesRes.input.params[1][tokenIdx]
-            const token = tokenByAddress[tokenAddress]
-            if (token) {
-              ;(token as any).amount = BigNumber.from(balancesRes.output[tokenIdx] || '0')
-            }
-          }
-        }
-      }
-
-      attempts++
-      nextTokens = failedTokens.slice()
-    } while (nextTokens.length > 0 && attempts < 10)
-
-    return tokens.filter((token) => (token as Balance).amount != null) as Balance[]
+    const multiBalanceCall = await provider.readContract({
+      address: getAddress(multiCoinContracts[ctx.chain as keyof typeof multiCoinContracts]),
+      abi: _abi,
+      functionName: 'getBalances',
+      args: [getAddress(ctx.address), tokens.map((token) => getAddress(token.address))],
+    })
+    balances = tokens.map((token, index) => ({ ...token, amount: multiBalanceCall[index] }))
+    fs.writeFileSync('getBalances.json', JSON.stringify(balances, undefined, 2))
+  } else {
+    const _balances = await provider.multicall({
+      contracts: tokens.map((token) => ({
+        abi: _abi,
+        functionName: 'balanceOf',
+        address: getAddress(token.address),
+        args: [getAddress(token.address)],
+      })),
+    })
+    balances = _balances
+      .filter(
+        (balance) => balance.status === 'success' && balance.result != null && balance.result !== 0n,
+        // && Number(balance.result) > 0.00001,
+      )
+      .map((balance, index) => ({ amount: balance.result, ...tokens[index] }))
+    fs.writeFileSync('balanceOf.json', JSON.stringify(balances, undefined, 2))
   }
 
-  const balances = await multicall({
-    ctx,
-    calls: tokens.map((token) => ({
-      target: getContractAddress(token),
-      params: [ctx.address],
-    })),
-    abi: abi.balanceOf,
-  })
+  return balances as Balance[]
+  // // const _balances = Array.
+  // return tokens
+  //   .map((token, i) => {
+  //     if (!balances[i].success || balances[i].output == null) {
+  //       console.error(`Could not get balanceOf for token ${ctx.chain}:${token.address}`)
+  //       return null
+  //     }
 
-  return tokens
-    .map((token, i) => {
-      if (!balances[i].success || balances[i].output == null) {
-        console.error(`Could not get balanceOf for token ${ctx.chain}:${token.address}`)
-        return null
-      }
-
-      ;(token as Balance).amount = BigNumber.from(balances[i].output || '0')
-      return token as Balance
-    })
-    .filter(isNotNullish)
+  //     ;(token as Balance).amount = balances[i].output || '0'
+  //     return token as Balance
+  //   })
+  //   .filter(isNotNullish)
 }
 
 export async function getERC20Details(ctx: BaseContext, tokens: string[]): Promise<Token[]> {

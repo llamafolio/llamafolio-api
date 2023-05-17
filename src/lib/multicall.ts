@@ -1,5 +1,3 @@
-import '@lib/providers'
-
 import { multiCall } from '@defillama/sdk/build/abi/index'
 import type { BaseContext } from '@lib/adapter'
 import type { CallParams } from '@lib/call'

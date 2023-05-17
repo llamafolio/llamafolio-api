@@ -2,7 +2,6 @@ import type { Balance, BalancesContext } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
-import { BigNumber } from 'ethers'
 import { gql, request } from 'graphql-request'
 
 const abi = {
@@ -66,6 +65,7 @@ export async function getPayeeStreams(ctx: BalancesContext) {
 
   const balances: Balance[] = []
 
+  // @ts-ignore
   const { streams } = await request(endpoint, payeeStreamsQuery, { id: ctx.address.toLowerCase() })
 
   const withdrawablesRes = await multicall({
@@ -89,7 +89,7 @@ export async function getPayeeStreams(ctx: BalancesContext) {
       address: stream.token.address,
       symbol: stream.token.symbol,
       decimals: stream.token.decimals,
-      amount: BigNumber.from(withdrawableRes.output.withdrawableAmount),
+      amount: withdrawableRes.output.withdrawableAmount,
       category: 'reward',
     })
   }

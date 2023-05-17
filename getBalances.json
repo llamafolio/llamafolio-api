@@ -1,0 +1,19 @@
+[
+  {
+    "__key": "erc20",
+    "__key_is_array": true,
+    "cmcId": null,
+    "coingeckoId": "usd-coin",
+    "decimals": 6,
+    "stable": true,
+    "symbol": "USDC",
+    "wallet": true,
+    "standard": null,
+    "name": "USD Coin",
+    "chain": "arbitrum",
+    "address": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+    "category": "wallet",
+    "adapterId": "wallet",
+    "amount": "5000000000"
+  }
+]
