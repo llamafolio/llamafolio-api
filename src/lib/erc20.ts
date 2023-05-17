@@ -1,5 +1,3 @@
-import fs from 'node:fs'
-
 import type { Balance, BalancesContext, BaseContext } from '@lib/adapter'
 import type { Call, MultiCallResult } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
@@ -180,14 +178,8 @@ const multiCoinContracts = {
 export interface GetERC20BalanceOfParams {
   getContractAddress: (contract: any) => string
 }
-export async function getERC20BalanceOf(
-  ctx: BalancesContext,
-  tokens: Token[],
-  params?: GetERC20BalanceOfParams,
-): Promise<Balance[]> {
-  console.log('%o', { ctx, params })
-  fs.writeFileSync('getERC20BalanceOf.json', JSON.stringify({ params }, undefined, 2))
-  //
+
+export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): Promise<Balance[]> {
   const provider = evmClient(ctx.chain, {
     protocol: 'http',
     options: {
@@ -202,21 +194,6 @@ export async function getERC20BalanceOf(
   // @ts-ignore
   let balances
   if (ctx.chain in multiCoinContracts) {
-    // balances = await provider.multicall({
-    //   allowFailure: true,
-    //   // The maximum size (in bytes) for each calldata chunk. Set to 0 to disable the size limit. @default 1_024
-    //   // will make it dynamic based on tokens size
-    //   // batchSize:
-    //   contracts: [
-    //     {
-    //       address: getAddress(multiCoinContracts[ctx.chain as keyof typeof multiCoinContracts]),
-    //       abi: _abi,
-    //       functionName: 'getBalances',
-    //       args: [getAddress(ctx.address), tokens.map((token) => getAddress(token.address))],
-    //     },
-    //   ],
-    // })
-
     // const contract = getContract({
     //   address: getAddress(multiCoinContracts[ctx.chain as keyof typeof multiCoinContracts]),
     //   abi: _abi,
