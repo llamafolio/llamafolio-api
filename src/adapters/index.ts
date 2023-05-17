@@ -67,6 +67,7 @@ import hectorNetwork from '@adapters/hector-network'
 import hex from '@adapters/hex'
 import homoraV2 from '@adapters/homora-v2'
 import honeyswap from '@adapters/honeyswap'
+import horizonProtocol from '@adapters/horizon-protocol'
 import hundredFinance from '@adapters/hundred-finance'
 import illuvium from '@adapters/illuvium'
 import inverseFinance from '@adapters/inverse-finance'
@@ -94,6 +95,7 @@ import metronome from '@adapters/metronome'
 import morphex from '@adapters/morphex'
 import morphoAave from '@adapters/morpho-aave'
 import morphoCompound from '@adapters/morpho-compound'
+import mstable from '@adapters/mstable'
 import multichain from '@adapters/multichain'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
@@ -110,6 +112,7 @@ import perennial from '@adapters/perennial'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
 import platypusFinance from '@adapters/platypus-finance'
+import polkastarter from '@adapters/polkastarter'
 import popsicleFinance from '@adapters/popsicle-finance'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
@@ -249,6 +252,7 @@ export const adapters: Adapter[] = [
   hex,
   homoraV2,
   honeyswap,
+  horizonProtocol,
   hundredFinance,
   illuvium,
   inverseFinance,
@@ -276,6 +280,7 @@ export const adapters: Adapter[] = [
   morphex,
   morphoAave,
   morphoCompound,
+  mstable,
   multichain,
   nemesisDao,
   nexusMutual,
@@ -292,6 +297,7 @@ export const adapters: Adapter[] = [
   piedao,
   pikaProtocol,
   platypusFinance,
+  polkastarter,
   popsicleFinance,
   quickswapDex,
   radiantV1,
