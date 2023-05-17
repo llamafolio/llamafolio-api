@@ -90,7 +90,7 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}
-    timeout: 10
+    timeout: 15
 
   getBalancesTokens:
     handler: src/handlers/getBalancesTokens.handler
@@ -124,6 +124,7 @@ functions:
       - httpApi:
           method: get
           path: /history/{address}
+    timeout: 15
 
   getInfoStats:
     handler: src/handlers/getInfoStats.handler
@@ -165,6 +166,7 @@ functions:
       - httpApi:
           method: get
           path: /protocols/latest
+    timeout: 15
 
   getLatestSnapshot:
     handler: src/handlers/getLatestSnapshot.handler
@@ -173,6 +175,7 @@ functions:
       - httpApi:
           method: get
           path: /snapshots/{address}/latest
+    timeout: 15
 
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler
