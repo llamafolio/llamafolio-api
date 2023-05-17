@@ -140,6 +140,7 @@ functions:
       - httpApi:
           method: get
           path: /info/{address}
+    timeout: 15
 
   getLabels:
     handler: src/handlers/getLabels.handler
