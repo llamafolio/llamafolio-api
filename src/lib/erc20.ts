@@ -231,7 +231,6 @@ export async function getERC20BalanceOf(
       args: [getAddress(ctx.address), tokens.map((token) => getAddress(token.address))],
     })
     balances = tokens.map((token, index) => ({ ...token, amount: multiBalanceCall[index] }))
-    fs.writeFileSync('getBalances.json', JSON.stringify(balances, undefined, 2))
   } else {
     const _balances = await provider.multicall({
       contracts: tokens.map((token) => ({
@@ -247,22 +246,9 @@ export async function getERC20BalanceOf(
         // && Number(balance.result) > 0.00001,
       )
       .map((balance, index) => ({ amount: balance.result, ...tokens[index] }))
-    fs.writeFileSync('balanceOf.json', JSON.stringify(balances, undefined, 2))
   }
 
   return balances as Balance[]
-  // // const _balances = Array.
-  // return tokens
-  //   .map((token, i) => {
-  //     if (!balances[i].success || balances[i].output == null) {
-  //       console.error(`Could not get balanceOf for token ${ctx.chain}:${token.address}`)
-  //       return null
-  //     }
-
-  //     ;(token as Balance).amount = balances[i].output || '0'
-  //     return token as Balance
-  //   })
-  //   .filter(isNotNullish)
 }
 
 export async function getERC20Details(ctx: BaseContext, tokens: string[]): Promise<Token[]> {

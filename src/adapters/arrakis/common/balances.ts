@@ -66,7 +66,6 @@ export async function getLpBalances(ctx: BalancesContext, contracts: Contract[])
     ;(nonZeroBalances[i].underlyings![0] as Balance).amount = BigInt(
       (Number(nonZeroBalances[i].amount) * underlyingBalancesRes[i].output.amount0Current) / totalSupplyRes[i].output,
     )
-
     ;(nonZeroBalances[i].underlyings![1] as Balance).amount = BigInt(
       (Number(nonZeroBalances[i].amount) * underlyingBalancesRes[i].output.amount1Current) / totalSupplyRes[i].output,
     )
