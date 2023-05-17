@@ -264,9 +264,9 @@ export async function updateBalances(
   // Do the transaction in a loop (with exponential backoff) to prevent Cockroach contention errors
   // See: https://www.cockroachlabs.com/docs/stable/transaction-retry-error-reference.html
   while (tries <= maxTries) {
-    tries = 0
-
     await client.query('BEGIN')
+
+    tries++
 
     try {
       // Delete old balances
