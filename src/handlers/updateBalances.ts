@@ -1,9 +1,8 @@
 import { adapterById } from '@adapters/index'
 import { selectDefinedAdaptersContractsProps } from '@db/adapters'
 import type { Balance as BalanceStore } from '@db/balances'
-import { insertBalances } from '@db/balances'
+import { updateBalances } from '@db/balances'
 import type { BalancesGroup } from '@db/balances-groups'
-import { deleteBalancesGroupsCascadeByFromAddress, insertBalancesGroups } from '@db/balances-groups'
 import { getAllContractsInteractions, groupContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
@@ -204,23 +203,11 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     }
 
     // Update balances
-    await client.query('BEGIN')
-
-    // Delete old balances
-    await deleteBalancesGroupsCascadeByFromAddress(client, address)
-
-    // Insert balances groups
-    await insertBalancesGroups(client, balancesGroupsStore)
-
-    // Insert balances
-    await insertBalances(client, balancesStore)
-
-    await client.query('COMMIT')
+    await updateBalances(client, address, balancesGroupsStore, balancesStore)
 
     return success({})
   } catch (error) {
     console.error('Failed to update balances', { error, address })
-    await client.query('ROLLBACK')
     return serverError('Failed to update balances')
   } finally {
     client.release(true)

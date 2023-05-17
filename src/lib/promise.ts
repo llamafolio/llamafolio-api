@@ -7,3 +7,7 @@ export function timeout<T>(promise: Promise<T>, ms = 10_000, timeoutError = new 
 
   return Promise.race<T>([promise, timeout])
 }
+
+export function sleep(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
