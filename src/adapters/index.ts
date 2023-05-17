@@ -67,6 +67,7 @@ import hectorNetwork from '@adapters/hector-network'
 import hex from '@adapters/hex'
 import homoraV2 from '@adapters/homora-v2'
 import honeyswap from '@adapters/honeyswap'
+import horizonProtocol from '@adapters/horizon-protocol'
 import hundredFinance from '@adapters/hundred-finance'
 import illuvium from '@adapters/illuvium'
 import inverseFinance from '@adapters/inverse-finance'
@@ -251,6 +252,7 @@ export const adapters: Adapter[] = [
   hex,
   homoraV2,
   honeyswap,
+  horizonProtocol,
   hundredFinance,
   illuvium,
   inverseFinance,
