@@ -7,7 +7,6 @@ import { mulPrice } from '@lib/math'
 import { getTokenPrice } from '@lib/price'
 import type { Token } from '@lib/token'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-import { BigNumber } from 'ethers'
 
 interface IHolder {
   address: string
@@ -53,7 +52,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         amount: balance.amount,
         balanceUSD:
           tokenPrice && tokenPrice.decimals
-            ? mulPrice(BigNumber.from(balance.amount), tokenPrice.decimals, tokenPrice.price)
+            ? mulPrice(balance.amount, tokenPrice.decimals, tokenPrice.price)
             : undefined,
       })),
     }

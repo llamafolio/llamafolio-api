@@ -1,12 +1,11 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicallBalances } from '@lib/balance'
 import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BigInt_ZERO, isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 export interface GetPoolsBalancesParams {
   getPoolAddress: (contract: Contract) => string
@@ -80,7 +79,7 @@ export async function getPoolsUnderlyingBalances(
     }
 
     const poolAmount = pools[poolIdx].amount
-    const poolTotalSupply = BigNumber.from(totalSupplyRes.output)
+    const poolTotalSupply = totalSupplyRes.output
 
     const poolBalance: Balance = {
       ...pools[poolIdx],
@@ -91,7 +90,7 @@ export async function getPoolsUnderlyingBalances(
     for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
       const underlyingBalanceRes = underlyingsBalanceOfRes[balanceOfIdx]
       // fallback to 0 in case of failure, better than not showing anything at all
-      const underlyingBalance = isSuccess(underlyingBalanceRes) ? BigNumber.from(underlyingBalanceRes.output) : BN_ZERO
+      const underlyingBalance = isSuccess(underlyingBalanceRes) ? underlyingBalanceRes.output : BigInt_ZERO
 
       const underlyingAmount = underlyingBalance.mul(poolAmount).div(poolTotalSupply)
 
@@ -153,8 +152,8 @@ export async function getStakingPoolsBalances(
       continue
     }
 
-    const totalSupply = BigNumber.from(totalSupplyRes.output)
-    const amount = BigNumber.from(stakingTokenBalanceRes.output)
+    const totalSupply = totalSupplyRes.output
+    const amount = stakingTokenBalanceRes.output
     const underlyings = poolsBalances[poolIdx].underlyings
     if (!underlyings) {
       continue
@@ -167,7 +166,8 @@ export async function getStakingPoolsBalances(
       // adjust amounts with staking token ratio
       underlyings: underlyings.map((underlying) => ({
         ...underlying,
-        amount: BigNumber.from(underlying.amount).mul(amount).div(totalSupply),
+        //@ts-ignore
+        amount: (underlying.amount * amount) / totalSupply,
       })),
     }
 

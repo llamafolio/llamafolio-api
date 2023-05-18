@@ -17,7 +17,7 @@
     "noUnusedLocals": false,
     "types": ["node"],
     "noUnusedParameters": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable", "ESNext.Array"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "baseUrl": ".",
     "outDir": "./.esbuild",
     "paths": {

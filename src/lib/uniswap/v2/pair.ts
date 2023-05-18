@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 export const abi = {
   balanceOf: {
@@ -55,7 +54,7 @@ export async function getPairsBalances(ctx: BalancesContext, contracts: Contract
  */
 export async function getUnderlyingBalances(ctx: BalancesContext, balances: Balance[]) {
   // filter empty balances
-  balances = balances.filter((balance) => balance.amount?.gt(0) && balance.underlyings?.[0] && balance.underlyings?.[1])
+  balances = balances.filter((balance) => balance.amount > 0n && balance.underlyings?.[0] && balance.underlyings?.[1])
 
   const [token0sBalanceOfRes, token1sBalanceOfRes, totalSupplyRes] = await Promise.all([
     multicall({
@@ -100,11 +99,11 @@ export async function getUnderlyingBalances(ctx: BalancesContext, balances: Bala
       continue
     }
 
-    const totalSupply = BigNumber.from(totalSupplyRes[i].output)
+    const totalSupply = totalSupplyRes[i].output
 
-    const balance0 = BigNumber.from(token0sBalanceOfRes[i].output).mul(balances[i].amount).div(totalSupply)
+    const balance0 = token0sBalanceOfRes[i].output.mul(balances[i].amount).div(totalSupply)
 
-    const balance1 = BigNumber.from(token1sBalanceOfRes[i].output).mul(balances[i].amount).div(totalSupply)
+    const balance1 = token1sBalanceOfRes[i].output.mul(balances[i].amount).div(totalSupply)
 
     balances[i].underlyings = [
       {

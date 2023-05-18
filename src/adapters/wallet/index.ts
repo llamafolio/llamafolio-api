@@ -13,9 +13,7 @@ async function getCoinBalance(ctx: BalancesContext, token?: Token) {
     return null
   }
 
-  // const provider = providers[ctx.chain]
   const provider = evmClient(ctx.chain)
-  // const amount = await provider.getBalance(ctx.address, ctx.blockHeight)
   const amount = await provider.getBalance({
     address: getAddress(ctx.address),
     blockNumber: ctx.blockHeight ? BigInt(ctx.blockHeight) : undefined,

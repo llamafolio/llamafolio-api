@@ -8,7 +8,6 @@ import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 const abi = {
   registeredTokens: {
@@ -119,7 +118,7 @@ export async function getLendingPoolBalances(
     if (balance && reward) {
       balances.push({
         ...(balance as Balance),
-        rewards: [{ ...(reward as Contract), amount: BigNumber.from(claimableReward.output[0]) }],
+        rewards: [{ ...(reward as Contract), amount: claimableReward.output[0] }],
       })
     }
   }

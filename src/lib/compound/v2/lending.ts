@@ -6,7 +6,6 @@ import { multicall } from '@lib/multicall'
 import { getPricedBalances } from '@lib/price'
 import type { Token } from '@lib/token'
 import { isNotNullish, isSuccess } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getAllMarkets: {
@@ -55,7 +54,7 @@ export interface GetMarketsContractsProps {
 }
 
 export type BalanceWithExtraProps = Balance & {
-  collateralFactor: BigNumber
+  collateralFactor: bigint
 }
 
 export async function getMarketsContracts(
@@ -152,13 +151,13 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
     }),
   ])
 
-  const exchangeRateCurrentBycTokenAddress: { [key: string]: BigNumber } = {}
+  const exchangeRateCurrentBycTokenAddress: { [key: string]: bigint } = {}
   for (const res of cTokensExchangeRateCurrentRes) {
     if (!res.success) {
       continue
     }
 
-    exchangeRateCurrentBycTokenAddress[res.input.target] = BigNumber.from(res.output)
+    exchangeRateCurrentBycTokenAddress[res.input.target] = res.output
   }
 
   const cTokensSupplyBalances = cTokensBalances

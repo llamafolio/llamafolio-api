@@ -5,7 +5,6 @@ import { strToBuf } from '@lib/buf'
 import type { Category } from '@lib/category'
 import type { Chain } from '@lib/chains'
 import { sleep } from '@lib/promise'
-import { BigNumber } from 'ethers'
 import type { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -45,13 +44,13 @@ export interface BalanceStorable {
   data?: any
 }
 
-Object.defineProperties(BigNumber.prototype, {
-  toJSON: {
-    value: function (this: BigNumber) {
-      return this.toString()
-    },
-  },
-})
+// Object.defineProperties(BigNumber.prototype, {
+//   toJSON: {
+//     value: function (this: BigNumber) {
+//       return this.toString()
+//     },
+//   },
+// })
 
 export function fromRowStorage(balanceStorage: BalanceStorage) {
   const balance: Balance = {

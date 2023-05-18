@@ -6,7 +6,6 @@ import type { Token } from '@lib/token'
 import { isNotNullish, isSuccess } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   poolLength: {
@@ -247,8 +246,8 @@ export async function getMasterChefPoolsBalances(
       ...masterchefPool,
       underlyings: masterchefPool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output.amount),
-      rewards: [{ ...rewardToken, amount: BigNumber.from(pendingRewardRes.output) }],
+      amount: poolBalanceRes.output.amount,
+      rewards: [{ ...rewardToken, amount: pendingRewardRes.output }],
     })
   }
 

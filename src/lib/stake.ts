@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { abi as erc20ABI, getERC20BalanceOf } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 export async function getSingleStakeBalance(
   ctx: BalancesContext,
@@ -19,7 +18,7 @@ export async function getSingleStakeBalance(
     ...callOptions,
   })
 
-  const amount = BigNumber.from(amountRes.output)
+  const amount = amountRes.output
 
   const balance: Balance = {
     ...(contract as Balance),

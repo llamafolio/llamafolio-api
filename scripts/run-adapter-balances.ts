@@ -47,6 +47,7 @@ function printBalances(balances: PricedBalance[]) {
       if (a.balanceUSD == null && b.balanceUSD != null) {
         return 1
       }
+      // @ts-ignore
       return b.balanceUSD - a.balanceUSD
     })
 
@@ -73,9 +74,9 @@ function printBalances(balances: PricedBalance[]) {
         address: balance.address,
         category: balance.category,
         symbol: balance.symbol,
-        balance: millify(balance.amount.div(decimals.toString()).toNumber()),
+        balance: millify(Number(balance.amount) / decimals),
         balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-        claimable: balance.claimable ? millify(balance.claimable.div(decimals.toString()).toNumber()) : undefined,
+        claimable: balance.claimable ? millify(Number(balance.claimable) / decimals) : undefined,
         stable: balance.stable,
         type: balance.type,
         reward: '',
@@ -87,7 +88,7 @@ function printBalances(balances: PricedBalance[]) {
           .map((reward) => {
             const decimals = reward.decimals ? 10 ** reward.decimals : 1
 
-            return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
+            return `${millify(Number(reward.amount) / decimals)} ${reward.symbol}`
           })
           .join(' + ')
       }
@@ -97,16 +98,25 @@ function printBalances(balances: PricedBalance[]) {
           .map((underlying) => {
             const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
 
-            return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
+            return `${millify(Number(underlying.amount) / decimals)} ${underlying.symbol}`
           })
           .join(' + ')
       }
 
       if (balance.category === 'perpetual') {
-        d.margin = millify(balance.margin.div(decimals.toString()).toNumber())
-        d.entryPrice = millify(balance.entryPrice.div(decimals.toString()).toNumber())
-        d.marketPrice = millify(balance.marketPrice.div(decimals.toString()).toNumber())
-        d.leverage = millify(balance.leverage.div(decimals.toString()).toNumber())
+        // d.margin = millify(balance.margin.div(decimals.toString()).toNumber())
+        // d.entryPrice = millify(balance.entryPrice.div(decimals.toString()).toNumber())
+        // d.marketPrice = millify(balance.marketPrice.div(decimals.toString()).toNumber())
+        // d.leverage = millify(balance.leverage.div(decimals.toString()).toNumber())
+
+        // @ts-ignore
+        d.margin = millify(Number(balance.margin) / decimals)
+        // @ts-ignore
+        d.entryPrice = millify(Number(balance.entryPrice) / decimals)
+        // @ts-ignore
+        d.marketPrice = millify(Number(balance.marketPrice) / decimals)
+        // @ts-ignore
+        d.leverage = millify(Number(balance.leverage) / decimals)
       }
 
       data.push(d)
@@ -170,6 +180,7 @@ async function main() {
 
     console.log(`Found ${pricedBalances.length} non zero balances`)
 
+    // @ts-ignore
     const balancesByGroupIdx = groupBy(pricedBalances, 'groupIdx')
 
     const groupsLen = balancesConfigRes?.groups.length || 0
@@ -180,6 +191,7 @@ async function main() {
         const { healthFactor } = balancesConfigRes?.groups?.[groupIdx] || {}
         console.log('Metadata:')
         console.table({ healthFactor })
+        // @ts-ignore
         printBalances(balances)
       }
     }

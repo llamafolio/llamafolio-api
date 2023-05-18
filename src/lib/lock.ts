@@ -1,11 +1,10 @@
 import type { Balance, BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 import { range } from './array'
 import { abi as erc20Abi } from './erc20'
-import { BN_ZERO, isZero, sumBN } from './math'
+import { BigInt_ZERO, isZero, sumBN } from './math'
 import { multicall } from './multicall'
 import { isSuccess } from './type'
 
@@ -106,9 +105,9 @@ export async function getSingleLockerBalance(
 
   return {
     ...locker,
-    amount: BigNumber.from(amount),
+    amount: amount,
     underlyings: [underlying],
-    claimable: now > unlockAt ? BigNumber.from(amount) : BN_ZERO,
+    claimable: now > unlockAt ? amount : BigInt_ZERO,
     unlockAt,
     rewards: undefined,
     category: 'lock',
@@ -144,9 +143,9 @@ export async function getSingleLockerBalances(
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(lockBalanceRes.output.amount),
+      amount: lockBalanceRes.output.amount,
       underlyings: underlyings,
-      claimable: now > unlockAt ? BigNumber.from(lockBalanceRes.output.amount) : BN_ZERO,
+      claimable: now > unlockAt ? lockBalanceRes.output.amount : BigInt_ZERO,
       unlockAt,
       rewards: undefined,
       category: 'lock',
@@ -170,7 +169,7 @@ export async function getMultipleLockerBalances(
   ])
 
   const locked = sumBN((lockedBalances.lockData || []).map((lockData: any) => lockData.amount))
-  const totalLocked = BigNumber.from(lockedBalances.total)
+  const totalLocked = lockedBalances.total
   const expiredLocked = totalLocked.sub(locked)
 
   const claimableBalance: Balance = {
@@ -186,7 +185,7 @@ export async function getMultipleLockerBalances(
     rewards.map((reward, idx: number) => {
       claimableBalance.rewards?.push({
         ...reward,
-        amount: BigNumber.from(claimableBalance.amount).mul(earnedRes[idx].amount).div(totalLocked),
+        amount: (claimableBalance.amount * earnedRes[idx].amount) / totalLocked,
       })
     })
   }
@@ -197,8 +196,8 @@ export async function getMultipleLockerBalances(
 
     const balance: Balance = {
       ...locker,
-      amount: BigNumber.from(amount),
-      claimable: BN_ZERO,
+      amount: amount,
+      claimable: BigInt_ZERO,
       underlyings: [underlying],
       unlockAt: unlockTime,
       rewards: [],
@@ -209,7 +208,7 @@ export async function getMultipleLockerBalances(
       rewards.map((reward, idx: number) => {
         balance.rewards?.push({
           ...reward,
-          amount: BigNumber.from(balance.amount).mul(earnedRes[idx].amount).div(totalLocked),
+          amount: (balance.amount * earnedRes[idx].amount) / totalLocked,
         })
       })
     }
@@ -262,9 +261,9 @@ export async function getNFTLockerBalances(
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(lockedRes.output.amount),
+      amount: lockedRes.output.amount,
       unlockAt,
-      claimable: now > unlockAt ? BigNumber.from(lockedRes.output.amount) : BN_ZERO,
+      claimable: now > unlockAt ? lockedRes.output.amount : BigInt_ZERO,
       underlyings: [underlying],
       rewards: undefined,
       category: 'lock',

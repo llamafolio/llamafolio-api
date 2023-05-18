@@ -1,4 +1,5 @@
-import { BigNumber, utils } from 'ethers'
+import { BigNumber } from 'ethers'
+import { parseUnits } from 'viem'
 
 export const BN_ZERO = BigNumber.from('0')
 export const BN_TEN = BigNumber.from('10')
@@ -38,9 +39,9 @@ export function sum(nums: number[]) {
   return res
 }
 
-export function mulPrice(amountBigInt: bigint, decimals: number, price: number) {
+export function mulPrice(amountBigInt: bigint | number, decimals: number, price: number) {
   try {
-    const priceBigInt = utils.parseUnits(price.toFixed(decimals), decimals)
+    const priceBigInt = parseUnits(`${Number(price.toFixed(decimals))}`, decimals)
 
     const mulBigInt = Number(amountBigInt) * Number(priceBigInt)
 

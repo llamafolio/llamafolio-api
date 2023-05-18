@@ -6,7 +6,7 @@ import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
 import type { Token } from '@lib/token'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-import { BigNumber, ethers } from 'ethers'
+import { getAddress } from 'viem'
 
 export interface ITransaction {
   chain: string
@@ -115,7 +115,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         if (!tokensByChain[transaction.chain]) {
           tokensByChain[transaction.chain] = []
         }
-        tokensByChain[transaction.chain].push(ethers.constants.AddressZero)
+        tokensByChain[transaction.chain].push(getAddress('0x0000000000000000000000000000000000000000'))
       }
 
       // token transfers
@@ -138,12 +138,15 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     for (const transaction of transactionsData) {
       // gas transfer
       if (transaction.value !== '0') {
-        const key = getTokenKey({ chain: transaction.chain, address: ethers.constants.AddressZero } as Token)
+        const key = getTokenKey({
+          chain: transaction.chain,
+          address: '0x0000000000000000000000000000000000000000',
+        } as Token)
         if (key) {
           const priceInfo = prices.coins[key]
           if (priceInfo && priceInfo.decimals) {
             transaction.price = priceInfo.price
-            transaction.valueUSD = mulPrice(BigNumber.from(transaction.value), priceInfo.decimals, priceInfo.price)
+            transaction.valueUSD = mulPrice(BigInt(transaction.value), priceInfo.decimals, priceInfo.price)
           }
         }
       }
@@ -156,7 +159,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
             const priceInfo = prices.coins[key]
             if (priceInfo && priceInfo.decimals) {
               transfer.price = priceInfo.price
-              transfer.valueUSD = mulPrice(BigNumber.from(transfer.value), priceInfo.decimals, priceInfo.price)
+              transfer.valueUSD = mulPrice(BigInt(transfer.value), priceInfo.decimals, priceInfo.price)
             }
           }
         }

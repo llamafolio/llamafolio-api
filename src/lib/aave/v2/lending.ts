@@ -4,7 +4,8 @@ import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { BigNumber, ethers } from 'ethers'
+import { ethers } from 'ethers'
+import { formatUnits } from 'viem'
 
 const abi = {
   getReservesList: {
@@ -178,10 +179,10 @@ export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Co
 
     // use the same amount for underlyings
     for (const balance of balances) {
-      if (balance.amount.gt(0) && balance.underlyings) {
+      if (balance.amount > 0n && balance.underlyings) {
         balance.underlyings[0] = {
           ...balance.underlyings[0],
-          amount: BigNumber.from(balance.amount),
+          amount: balance.amount,
         }
       }
     }
@@ -206,7 +207,8 @@ export async function getLendingPoolHealthFactor(ctx: BalancesContext, lendingPo
       return
     }
 
-    const healthFactor = parseFloat(ethers.utils.formatUnits(userAccountDataRes.output.healthFactor, 18))
+    // const healthFactor = parseFloat(ethers.utils.formatUnits(userAccountDataRes.output.healthFactor, 18))
+    const healthFactor = parseFloat(formatUnits(userAccountDataRes.output.healthFactor, 18))
 
     // TODO: return other metadata like LTV, available borrow etc
     return healthFactor

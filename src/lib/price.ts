@@ -140,7 +140,9 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
       // @ts-ignore
       priceTimestamp: price.timestamp ? new Date(price.timestamp * 1000) : undefined,
       balanceUSD: mulPrice(balance.amount, decimals, price.price),
-      claimableUSD: balance.claimable ? mulPrice(balance.claimable || BigInt_ZERO, decimals, price.price) : undefined,
+      claimableUSD: balance.claimable
+        ? mulPrice(Number(balance.claimable || BigInt_ZERO), decimals, price.price)
+        : undefined,
     }
   }
 
