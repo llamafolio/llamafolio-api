@@ -1,7 +1,10 @@
+import type { BalancesGroup } from '@db/balances-groups'
+import { deleteBalancesGroupsCascadeByFromAddress, insertBalancesGroups } from '@db/balances-groups'
 import { groupBy, sliceIntoChunks } from '@lib/array'
 import { strToBuf } from '@lib/buf'
 import type { Category } from '@lib/category'
 import type { Chain } from '@lib/chains'
+import { sleep } from '@lib/promise'
 import { BigNumber } from 'ethers'
 import type { PoolClient } from 'pg'
 import format from 'pg-format'
@@ -241,4 +244,55 @@ export function insertBalances(client: PoolClient, balances: Balance[]) {
       ),
     ),
   )
+}
+
+/**
+ * Update wallet balances in a transaction (delete previous and insert new ones)
+ * @param client
+ * @param address
+ * @param balancesGroups
+ * @param balances
+ */
+export async function updateBalances(
+  client: PoolClient,
+  address: string,
+  balancesGroups: BalancesGroup[],
+  balances: Balance[],
+) {
+  const backoffIntervalMs = 100
+  const maxTries = 5
+  let tries = 0
+
+  // Do the transaction in a loop (with exponential backoff) to prevent Cockroach contention errors
+  // See: https://www.cockroachlabs.com/docs/stable/transaction-retry-error-reference.html
+  while (tries <= maxTries) {
+    await client.query('BEGIN')
+
+    tries++
+
+    try {
+      // Delete old balances
+      await deleteBalancesGroupsCascadeByFromAddress(client, address)
+
+      // Insert balances groups
+      await insertBalancesGroups(client, balancesGroups)
+
+      // Insert new balances
+      await insertBalances(client, balances)
+
+      await client.query('COMMIT')
+
+      return
+    } catch (err: any) {
+      await client.query('ROLLBACK')
+
+      console.error('Failed to insert balances: code', err.code)
+      if (err.code !== '40001' || tries == maxTries) {
+        throw err
+      } else {
+        console.error('Failed to insert balances, transaction contention retry', tries)
+        await sleep(tries * backoffIntervalMs)
+      }
+    }
+  }
 }

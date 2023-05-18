@@ -4,9 +4,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { adapterById } from '../src/adapters'
 import { selectDefinedAdaptersContractsProps } from '../src/db/adapters'
 import type { Balance as BalanceStore } from '../src/db/balances'
-import { insertBalances } from '../src/db/balances'
+import { updateBalances } from '../src/db/balances'
 import type { BalancesGroup } from '../src/db/balances-groups'
-import { deleteBalancesGroupsCascadeByFromAddress, insertBalancesGroups } from '../src/db/balances-groups'
 import { getAllContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import type { Balance, BalancesConfig, BalancesContext } from '../src/lib/adapter'
@@ -202,21 +201,9 @@ async function main() {
     }
 
     // Update balances
-    await client.query('BEGIN')
-
-    // Delete old balances
-    await deleteBalancesGroupsCascadeByFromAddress(client, address)
-
-    // Insert balances groups
-    await insertBalancesGroups(client, balancesGroupsStore)
-
-    // Insert new balances
-    await insertBalances(client, balancesStore)
-
-    await client.query('COMMIT')
+    await updateBalances(client, address, balancesGroupsStore, balancesStore)
   } catch (e) {
     console.log('Failed to update balances', e)
-    await client.query('ROLLBACK')
   } finally {
     client.release(true)
   }
