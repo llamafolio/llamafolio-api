@@ -1,4 +1,4 @@
-export const balanceABI = <const>[
+export const balanceOfABI = <const>[
   {
     constant: true,
     inputs: [{ internalType: 'address', name: '', type: 'address' }],
@@ -8,16 +8,14 @@ export const balanceABI = <const>[
     stateMutability: 'view',
     type: 'function',
   },
+]
+export const getBalancesABI = <const>[
+  ...balanceOfABI,
   {
     constant: true,
     inputs: [],
     name: 'decimals',
-    outputs: [
-      {
-        name: '',
-        type: 'uint8',
-      },
-    ],
+    outputs: [{ name: '', type: 'uint8' }],
     payable: false,
     stateMutability: 'view',
     type: 'function',
@@ -26,12 +24,7 @@ export const balanceABI = <const>[
     constant: true,
     inputs: [],
     name: 'symbol',
-    outputs: [
-      {
-        name: '',
-        type: 'string',
-      },
-    ],
+    outputs: [{ name: '', type: 'string' }],
     payable: false,
     stateMutability: 'view',
     type: 'function',
@@ -39,37 +32,17 @@ export const balanceABI = <const>[
   {
     inputs: [],
     name: 'totalSupply',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
-        internalType: 'address[]',
-        name: 'tokens',
-        type: 'address[]',
-      },
+      { internalType: 'address', name: 'user', type: 'address' },
+      { internalType: 'address[]', name: 'tokens', type: 'address[]' },
     ],
     name: 'getBalances',
-    outputs: [
-      {
-        internalType: 'uint256[]',
-        name: '',
-        type: 'uint256[]',
-      },
-    ],
+    outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
     stateMutability: 'view',
     type: 'function',
   },

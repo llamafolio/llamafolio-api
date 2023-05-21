@@ -48,10 +48,7 @@ export function evmClient(
     transport:
       protocol === 'ws'
         ? fallback(rpcURLs.map(webSocket), { rank: true })
-        : fallback(
-            rpcURLs.map((rpcURL) => http(rpcURL, { timeout: 60_000, retryDelay: 1_00 })),
-            { rank: true },
-          ),
+        : fallback(rpcURLs.map((rpcURL) => http(rpcURL, { timeout: 60_000, retryDelay: 1_00 }))),
     ...options,
   })
 }

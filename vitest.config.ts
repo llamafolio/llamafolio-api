@@ -22,6 +22,7 @@ export default defineConfig({
       },
     },
     reporters: process.env.GITHUB_ACTIONS ? ['default', new GithubActionsReporter()] : [],
+    benchmark: { reporters: ['default', 'json'] },
     coverage: {
       provider: 'istanbul',
       reporter: ['json'],

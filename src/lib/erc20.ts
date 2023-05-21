@@ -1,7 +1,7 @@
 import fs from 'node:fs'
 
 import type { Balance, BalancesContext, BaseContext } from '@lib/adapter'
-import { balanceABI } from '@lib/balance/abi'
+import { getBalancesABI } from '@lib/erc20/abi'
 import { evmClient } from '@lib/provider'
 import type { Token } from '@lib/token'
 import { getToken } from '@llamafolio/tokens'
@@ -120,7 +120,7 @@ export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): 
   if (ctx.chain in multiCoinContracts) {
     const multiBalanceCall = await provider.readContract({
       address: getAddress(multiCoinContracts[ctx.chain as keyof typeof multiCoinContracts]),
-      abi: balanceABI,
+      abi: getBalancesABI,
       functionName: 'getBalances',
       args: [getAddress(ctx.address), tokens.map((token) => getAddress(token.address))],
     })
@@ -128,7 +128,7 @@ export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): 
   } else {
     const _balances = await provider.multicall({
       contracts: tokens.map((token) => ({
-        abi: balanceABI,
+        abi: getBalancesABI,
         functionName: 'balanceOf',
         address: getAddress(token.address),
         args: [getAddress(token.address)],
@@ -172,7 +172,7 @@ export async function getERC20Details(ctx: BaseContext, tokens: string[]): Promi
 
   const symbols = await provider.multicall({
     contracts: missingTokens.map((address) => ({
-      abi: balanceABI,
+      abi: getBalancesABI,
       address: getAddress(address),
       functionName: 'symbol',
       args: [],
@@ -181,7 +181,7 @@ export async function getERC20Details(ctx: BaseContext, tokens: string[]): Promi
 
   const decimals = await provider.multicall({
     contracts: missingTokens.map((address) => ({
-      abi: balanceABI,
+      abi: getBalancesABI,
       address: getAddress(address),
       functionName: 'decimals',
       args: [],

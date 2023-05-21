@@ -15,7 +15,7 @@ const STAGE = environment.STAGE as Exclude<typeof environment.STAGE, undefined>
 
 beforeAll(async () => {
   // wait for the API to be ready if CI
-  if (process.env.CI) await wait(3000)
+  if (process.env.CI) await wait(1500)
 })
 
 /**

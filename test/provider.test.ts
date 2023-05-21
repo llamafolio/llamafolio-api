@@ -1,3 +1,7 @@
+// @ts-nocheck
+
+// WIP
+
 import { evmClient } from '@lib/provider/provider'
 // import { createTestClient, http } from 'viem'
 // import { foundry,mainnet } from 'viem/chains'
