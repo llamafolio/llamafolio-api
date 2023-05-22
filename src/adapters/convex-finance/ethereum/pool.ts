@@ -96,9 +96,7 @@ const metaRegistry: Contract = {
 export async function getPoolsContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const pools: Contract[] = []
 
-  const poolsCountRes = await call({ ctx, target: contract.address, params: [], abi: abi.poolLength })
-
-  const poolsCount: number = parseInt(poolsCountRes.output)
+  const { output: poolsCount } = await call({ ctx, target: contract.address, abi: abi.poolLength })
 
   const poolInfosRes = await multicall({
     ctx,
@@ -175,7 +173,6 @@ const getExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise<Con
     ctx,
     calls: pools.map((pool) => ({
       target: pool.crvRewards,
-      params: [],
     })),
     abi: abi.extraRewardsLength,
   })
