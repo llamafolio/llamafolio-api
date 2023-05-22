@@ -1,4 +1,7 @@
+//@ts-nocheck
+// file is at https://www.npoint.io/docs/854d809af3ebc7a3740a - download and save as ./ethers.json
 import ethersBalances from './ethers.json'
+// file is at https://www.npoint.io/docs/cad4f076144115a247d6 - download and save as ./viem.json
 import viemBalances from './viem.json'
 
 const viemBalancesFiltered = viemBalances

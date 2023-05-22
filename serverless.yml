@@ -99,7 +99,7 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}/tokens
-    timeout: 30
+    timeout: 29
 
   getContracts:
     handler: src/handlers/getContracts.getContract

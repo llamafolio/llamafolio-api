@@ -43,22 +43,3 @@ export function contractDetails(chain: SupportedNetwork) {
     abi: abi.getBalancesABI,
   }
 }
-
-// export function contractDetails<T extends Network>(
-//   parameters: T extends SupportedNetwork ? { chain: T; tokenAddress?: string } : { chain: T; tokenAddress: string },
-// ) {
-//   if (chainIsSupported(parameters.chain))
-//     return {
-//       address: getAddress(multiCoinBalanceContracts[parameters.chain]),
-//       abi: abi.getBalancesABI,
-//     }
-
-//   if (!parameters.tokenAddress) {
-//     throw new Error(`Unsupported network: ${parameters.chain}. Token address is required.`)
-//   }
-
-//   return {
-//     address: getAddress(parameters.tokenAddress),
-//     abi: abi.getBalancesABI,
-//   }
-// }
