@@ -92,6 +92,7 @@ import maple from '@adapters/maple'
 import mdex from '@adapters/mdex'
 import meritCircle from '@adapters/merit-circle'
 import metronome from '@adapters/metronome'
+import morpheusSwap from '@adapters/morpheus-swap'
 import morphex from '@adapters/morphex'
 import morphoAave from '@adapters/morpho-aave'
 import morphoCompound from '@adapters/morpho-compound'
@@ -277,6 +278,7 @@ export const adapters: Adapter[] = [
   mdex,
   meritCircle,
   metronome,
+  morpheusSwap,
   morphex,
   morphoAave,
   morphoCompound,
