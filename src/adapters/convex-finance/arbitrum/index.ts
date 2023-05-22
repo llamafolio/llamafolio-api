@@ -17,8 +17,6 @@ export const getContracts = async (ctx: BaseContext) => {
   const pools = await getPoolsContracts(ctx, registries)
   const cvxPools = await getConvexAltChainsPools(ctx, booster, pools)
 
-  console.log(cvxPools)
-
   return {
     contracts: { cvxPools },
   }
