@@ -14,6 +14,13 @@ const OP: Token = {
   symbol: 'OP',
 }
 
+const STG: Token = {
+  chain: 'optimism',
+  address: '0x296f55f8fb28e498b858d0bcda06d955b2cb3f97',
+  decimals: 18,
+  symbol: 'STG',
+}
+
 // https://stargateprotocol.gitbook.io/stargate/developers/contract-addresses/mainnet
 const lpStakings: Contract[] = [
   { chain: 'optimism', address: '0xd22363e3762cA7339569F3d33EADe20127D5F98C', rewards: [OP] },
@@ -50,7 +57,7 @@ const stargateBalances = async (ctx: BalancesContext, pools: Contract[]) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: stargateBalances,
-    locker: (...args) => getSingleLockerBalance(...args, OP, 'locked'),
+    locker: (...args) => getSingleLockerBalance(...args, STG, 'locked'),
   })
 
   return {
