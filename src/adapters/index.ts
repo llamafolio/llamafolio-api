@@ -32,6 +32,7 @@ import biswap from '@adapters/biswap'
 import blur from '@adapters/blur'
 import capFinance from '@adapters/cap-finance'
 import catInABox from '@adapters/cat-in-a-box'
+import cega from '@adapters/cega'
 import chainlink from '@adapters/chainlink'
 import charmFinance from '@adapters/charm-finance'
 import compound from '@adapters/compound'
@@ -220,6 +221,7 @@ export const adapters: Adapter[] = [
   blur,
   capFinance,
   catInABox,
+  cega,
   chainlink,
   charmFinance,
   compound,
