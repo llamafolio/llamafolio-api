@@ -138,6 +138,7 @@ import smoothy from '@adapters/smoothy'
 import snowbank from '@adapters/snowbank'
 import solidlizard from '@adapters/solidlizard'
 import solidlyV2 from '@adapters/solidly-v2'
+import sommelier from '@adapters/sommelier'
 import sonneFinance from '@adapters/sonne-finance'
 import spartacus from '@adapters/spartacus'
 import spiritswap from '@adapters/spiritswap'
@@ -328,6 +329,7 @@ export const adapters: Adapter[] = [
   snowbank,
   solidlizard,
   solidlyV2,
+  sommelier,
   sonneFinance,
   spartacus,
   spiritswap,
