@@ -1,7 +1,9 @@
 import '@lib/providers'
 
 import type { BaseContext } from '@lib/adapter'
-import { batchCallers } from '@lib/multicall'
+import { formatOutput, formatValue } from '@lib/multicall'
+import { providers } from '@lib/providers'
+import { getAddress } from 'viem'
 
 export type CallParams = string | number | (string | number)[] | undefined
 
@@ -13,12 +15,18 @@ export interface CallOptions {
 }
 
 export async function call(options: CallOptions) {
-  const res = (await batchCallers[options.ctx.chain]!.call({
-    ...options,
-    calls: [{ target: options.target, params: options.params }],
-    chain: options.ctx.chain,
-    block: options.ctx.blockHeight,
-  })) as any
+  const args = options.params == null ? [] : Array.isArray(options.params) ? options.params : [options.params]
 
-  return res.output[0]
+  const output = await providers[options.ctx.chain].readContract({
+    address: getAddress(options.target),
+    abi: [options.abi],
+    functionName: options.abi.name,
+    args,
+  })
+
+  if (options.abi.outputs.length === 1) {
+    return { output: formatValue(output) }
+  }
+
+  return { output: formatOutput(options.abi, output) }
 }

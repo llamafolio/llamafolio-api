@@ -92,7 +92,6 @@ interface Serverless {
       stage: string
       tableName: string
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: number
-      CUSTOM_PROVIDER: string
       LLAMANODES_API_KEY: string
       ARBITRUM_RPC: string
       OPTIMISM_RPC: string

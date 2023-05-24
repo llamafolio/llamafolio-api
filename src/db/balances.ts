@@ -53,6 +53,14 @@ Object.defineProperties(BigNumber.prototype, {
   },
 })
 
+Object.defineProperties(BigInt.prototype, {
+  toJSON: {
+    value: function (this: bigint) {
+      return this.toString()
+    },
+  },
+})
+
 export function fromRowStorage(balanceStorage: BalanceStorage) {
   const balance: Balance = {
     ...balanceStorage.data,

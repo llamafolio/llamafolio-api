@@ -56,7 +56,6 @@ provider:
     STAGE: ${self:custom.stage}
     DDB_TABLE_NAME: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
-    CUSTOM_PROVIDER: ${env:CUSTOM_PROVIDER}
     LLAMANODES_API_KEY: ${env:LLAMANODES_API_KEY}
     ARBITRUM_RPC: ${env:ARBITRUM_RPC}
     OPTIMISM_RPC: ${env:OPTIMISM_RPC}

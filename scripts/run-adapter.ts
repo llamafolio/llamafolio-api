@@ -32,6 +32,14 @@ Object.defineProperties(BigNumber.prototype, {
   },
 })
 
+Object.defineProperties(BigInt.prototype, {
+  toJSON: {
+    value: function (this: bigint) {
+      return this.toString()
+    },
+  },
+})
+
 function printBalances({ balances }) {
   // group by category
   const balancesByCategory = groupBy(balances, 'category')
@@ -76,43 +84,47 @@ function printBalances({ balances }) {
     const data: any[] = []
 
     for (const balance of categoryBalances.balances) {
-      const decimals = balance.decimals ? 10 ** balance.decimals : 1
+      try {
+        const decimals = balance.decimals ? 10 ** balance.decimals : 1
 
-      const d = {
-        chain: balance.chain,
-        address: balance.address,
-        category: balance.category,
-        symbol: balance.symbol,
-        balance: millify(balance.amount.div(decimals.toString()).toNumber()),
-        balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-        claimable: balance.claimable ? millify(balance.claimable.div(decimals.toString()).toNumber()) : undefined,
-        stable: balance.stable,
-        type: balance.type,
-        reward: '',
-        underlying: '',
+        const d = {
+          chain: balance.chain,
+          address: balance.address,
+          category: balance.category,
+          symbol: balance.symbol,
+          balance: millify(balance.amount.div(decimals.toString()).toNumber()),
+          balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
+          claimable: balance.claimable ? millify(balance.claimable.div(decimals.toString()).toNumber()) : undefined,
+          stable: balance.stable,
+          type: balance.type,
+          reward: '',
+          underlying: '',
+        }
+
+        if (balance.rewards) {
+          d.reward = balance.rewards
+            .map((reward) => {
+              const decimals = reward.decimals ? 10 ** reward.decimals : 1
+
+              return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
+            })
+            .join(' + ')
+        }
+
+        if (balance.underlyings) {
+          d.underlying = balance.underlyings
+            .map((underlying) => {
+              const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
+
+              return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
+            })
+            .join(' + ')
+        }
+
+        data.push(d)
+      } catch (error) {
+        console.log('Failed to format balance', { balance, error })
       }
-
-      if (balance.rewards) {
-        d.reward = balance.rewards
-          .map((reward) => {
-            const decimals = reward.decimals ? 10 ** reward.decimals : 1
-
-            return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
-          })
-          .join(' + ')
-      }
-
-      if (balance.underlyings) {
-        d.underlying = balance.underlyings
-          .map((underlying) => {
-            const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
-
-            return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
-          })
-          .join(' + ')
-      }
-
-      data.push(d)
     }
 
     console.table(data)

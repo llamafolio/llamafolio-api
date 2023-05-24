@@ -6,7 +6,7 @@ import { getERC20BalanceOf } from '@lib/erc20'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { chains as tokensByChain } from '@llamafolio/tokens'
-import { ethers } from 'ethers'
+import { BigNumber, ethers } from 'ethers'
 
 async function getCoinBalance(ctx: BalancesContext, token?: Token) {
   if (!token) {
@@ -14,8 +14,11 @@ async function getCoinBalance(ctx: BalancesContext, token?: Token) {
   }
 
   const provider = providers[ctx.chain]
-  const amount = await provider.getBalance(ctx.address, ctx.blockHeight)
-  return { ...token, amount } as Balance
+  const amount = await provider.getBalance({
+    address: ctx.address,
+    blockNumber: ctx.blockHeight ? BigInt(ctx.blockHeight) : undefined,
+  })
+  return { ...token, amount: BigNumber.from(amount.toString()) } as Balance
 }
 
 const getChainHandlers = (chain: Chain) => {
