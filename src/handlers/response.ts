@@ -8,6 +8,14 @@ Object.defineProperties(BigNumber.prototype, {
   },
 })
 
+Object.defineProperties(BigInt.prototype, {
+  toJSON: {
+    value: function (this: bigint) {
+      return this.toString()
+    },
+  },
+})
+
 export interface ResponseOptions {
   statusCode: number
   body: {

@@ -35,7 +35,6 @@ jobs:
       PGPASSWORD: ${{ secrets.PGPASSWORD }}
       ARBITRUM_RPC: ${{ secrets.ARBITRUM_RPC }}
       OPTIMISM_RPC: ${{ secrets.OPTIMISM_RPC }}
-      CUSTOM_PROVIDER: ${{ secrets.CUSTOM_PROVIDER }}
       LLAMANODES_API_KEY: ${{ secrets.LLAMANODES_API_KEY }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
     steps:
