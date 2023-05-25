@@ -11,10 +11,6 @@ export function getTokenKey(token: Token) {
     return `coingecko:${token.coingeckoId}`
   }
 
-  if (token.chain && token.priceSubstitute) {
-    return `${token.chain}:${token.priceSubstitute.toLowerCase()}`
-  }
-
   if (token.chain && token.address) {
     return `${token.chain}:${token.address.toLowerCase()}`
   }

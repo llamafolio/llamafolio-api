@@ -15,9 +15,6 @@ export interface Token {
   decimals: number
   native?: boolean
   coingeckoId?: string
-  // optional token used to retrieve price.
-  // ex: WETH -> ETH
-  priceSubstitute?: string
 }
 
 export const ETH: Token = {
