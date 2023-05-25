@@ -1,12 +1,13 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO, isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { BigNumber, ethers, utils } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 
 import type { ProviderBalancesParams } from './interface'
 
@@ -131,9 +132,9 @@ export const convexProvider = async (ctx: BaseContext, pools: Contract[]): Promi
       underlyings: underlyingRes.output
         .map((address: string) => address.toLowerCase())
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address: string) => address !== ethers.constants.AddressZero)
+        .filter((address: string) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address: string) => (address === ETH_ADDR ? ethers.constants.AddressZero : address)),
+        .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
     })
   })
 

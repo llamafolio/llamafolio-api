@@ -1,7 +1,7 @@
 import type { BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
-import { ethers } from 'ethers'
 
 const abi = {
   userLink: {
@@ -84,7 +84,7 @@ export async function getInstaDappContracts(ctx: BalancesContext, instaList: Con
   const instadAppAddressesProxiesFromId: string[] = getInstadAppAddressesProxiesFromId
     .filter((res) => res.success)
     .map((res) => res.output)
-    .filter((res) => res !== ethers.constants.AddressZero)
+    .filter((res) => res !== ADDRESS_ZERO)
 
   return instadAppAddressesProxiesFromId.map((address) => ({
     chain: ctx.chain,
@@ -103,7 +103,7 @@ export async function getMakerContracts(ctx: BalancesContext, proxyRegistry: Con
   })
 
   return [proxiesRes.output]
-    .filter((res) => res !== ethers.constants.AddressZero)
+    .filter((res) => res !== ADDRESS_ZERO)
     .map((address) => ({
       chain: ctx.chain,
       address,

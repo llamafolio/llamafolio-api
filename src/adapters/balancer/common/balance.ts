@@ -1,11 +1,12 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
 import { isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { isSuccess } from '@lib/type'
-import { BigNumber, ethers } from 'ethers'
+import { BigNumber } from 'ethers'
 
 const abi = {
   getPoolTokens: {
@@ -34,7 +35,7 @@ export type getBalancerPoolsBalancesParams = Balance & {
 }
 
 export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Contract[], vault: Contract) {
-  pools = pools.filter((pool) => pool.gauge !== ethers.constants.AddressZero)
+  pools = pools.filter((pool) => pool.gauge !== ADDRESS_ZERO)
 
   const balances: getBalancerPoolsBalancesParams[] = []
 

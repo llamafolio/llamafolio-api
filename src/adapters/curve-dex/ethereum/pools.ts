@@ -1,12 +1,12 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
+import { ADDRESS_ZERO } from '@lib/contract'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { ethers } from 'ethers'
 
 const abiPools = {
   pool_count: {
@@ -222,15 +222,15 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
       tokens: coinRes.output
         .map((address: string) => address.toLowerCase())
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address: string) => address !== ethers.constants.AddressZero)
+        .filter((address: string) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address: string) => (address === ETH_ADDR ? ethers.constants.AddressZero : address)),
+        .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
       underlyings: underlyingRes.output
         .map((address: string) => address.toLowerCase())
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address: string) => address !== ethers.constants.AddressZero)
+        .filter((address: string) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address: string) => (address === ETH_ADDR ? ethers.constants.AddressZero : address)),
+        .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
     })
 
     poolIdx++
@@ -241,7 +241,7 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
 
 export async function getGaugesContracts(ctx: BaseContext, pools: Contract[], CRV: Token) {
   const gauges: Contract[] = pools
-    .filter((pool) => pool.gauge !== ethers.constants.AddressZero)
+    .filter((pool) => pool.gauge !== ADDRESS_ZERO)
     .map((pool) => ({ ...pool, address: pool.gauge }))
 
   const gaugesRewardsCalls: Call[] = []
@@ -259,7 +259,7 @@ export async function getGaugesContracts(ctx: BaseContext, pools: Contract[], CR
 
     for (let rewardIdx = 0; rewardIdx < 4; rewardIdx++) {
       const rewardTokenRes = rewardTokensRes[callIdx]
-      if (isSuccess(rewardTokenRes) && rewardTokenRes.output !== ethers.constants.AddressZero) {
+      if (isSuccess(rewardTokenRes) && rewardTokenRes.output !== ADDRESS_ZERO) {
         rewards.push(rewardTokenRes.output)
       }
       callIdx++

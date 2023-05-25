@@ -2,11 +2,12 @@ import { selectHistory, selectHistoryAggregate } from '@db/history'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
 import type { Token } from '@lib/token'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-import { BigNumber, ethers } from 'ethers'
+import { BigNumber } from 'ethers'
 
 export interface ITransaction {
   chain: string
@@ -115,7 +116,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         if (!tokensByChain[transaction.chain]) {
           tokensByChain[transaction.chain] = []
         }
-        tokensByChain[transaction.chain].push(ethers.constants.AddressZero)
+        tokensByChain[transaction.chain].push(ADDRESS_ZERO)
       }
 
       // token transfers
@@ -138,7 +139,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     for (const transaction of transactionsData) {
       // gas transfer
       if (transaction.value !== '0') {
-        const key = getTokenKey({ chain: transaction.chain, address: ethers.constants.AddressZero } as Token)
+        const key = getTokenKey({ chain: transaction.chain, address: ADDRESS_ZERO } as Token)
         if (key) {
           const priceInfo = prices.coins[key]
           if (priceInfo && priceInfo.decimals) {

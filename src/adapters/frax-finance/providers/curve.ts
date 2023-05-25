@@ -1,7 +1,7 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
-import { ethers } from 'ethers'
 
 const abi = {
   get_underlying_coins: {
@@ -39,9 +39,9 @@ export const curveProvider = async (ctx: BaseContext, pools: Contract[]): Promis
       underlyings: underlyingRes.output
         .map((address: string) => address.toLowerCase())
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address: string) => address !== ethers.constants.AddressZero)
+        .filter((address: string) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address: string) => (address === ETH_ADDR ? ethers.constants.AddressZero : address)),
+        .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
     })
   })
 

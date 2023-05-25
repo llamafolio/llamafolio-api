@@ -1,10 +1,11 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO, isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { BigNumber, ethers } from 'ethers'
+import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -120,8 +121,7 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
       const earnedOfRes = earnedOfsRes[underlyingIdx]
 
       // replace native token alias
-      const underlyingAddress =
-        underlying.address === ethers.constants.AddressZero ? ADDRESS[ctx.chain] : underlying.address
+      const underlyingAddress = underlying.address === ADDRESS_ZERO ? ADDRESS[ctx.chain] : underlying.address
 
       const underlyingBalance = isSuccess(getUnderlyingsBalanceRes)
         ? BigNumber.from(getUnderlyingsBalanceRes.output).mul(balanceOfRes.output).div(totalSupplyRes.output)

@@ -1,6 +1,7 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { mapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20Details } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
@@ -8,7 +9,7 @@ import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber, ethers } from 'ethers'
+import { BigNumber } from 'ethers'
 
 const abi = {
   poolLength: {
@@ -191,7 +192,7 @@ export async function getBalancesFromMasterchefV2(
     multicall({
       ctx,
       calls: pools.map((pool) =>
-        pool.rewarder && pool.rewarder !== ethers.constants.AddressZero
+        pool.rewarder && pool.rewarder !== ADDRESS_ZERO
           ? { target: pool.rewarder, params: [pool.pid, ctx.address] }
           : null,
       ),

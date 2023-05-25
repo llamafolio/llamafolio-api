@@ -1,9 +1,9 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import { ADDRESS_ZERO } from '@lib/contract'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { ethers } from 'ethers'
 
 const abi = {
   get_gauge_from_lp_token: {
@@ -37,7 +37,7 @@ export async function getGaugesContracts(ctx: BaseContext, pools: Contract[], ga
     const pool = pools[idx]
     const gauge = gaugesAddressesRes[idx]
 
-    if (!isSuccess(gauge) || gauge.output === ethers.constants.AddressZero) {
+    if (!isSuccess(gauge) || gauge.output === ADDRESS_ZERO) {
       continue
     }
     gauges.push({ ...pool, address: gauge.output, gauge: gauge.output, rewards: [CRV] })
@@ -54,7 +54,7 @@ export async function getGaugesContracts(ctx: BaseContext, pools: Contract[], ga
     const gauge = gauges[gaugeIdx]
     const rewardTokenRes = rewardsTokensRes[gaugeIdx]
 
-    if (!isSuccess(rewardTokenRes) || rewardTokenRes.output === ethers.constants.AddressZero) {
+    if (!isSuccess(rewardTokenRes) || rewardTokenRes.output === ADDRESS_ZERO) {
       continue
     }
     gauge!.rewards?.push(rewardTokenRes.output)

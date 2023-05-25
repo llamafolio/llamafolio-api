@@ -1,10 +1,10 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { ethers } from 'ethers'
 
 const abi = {
   poolLength: {
@@ -198,9 +198,9 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
       pool.underlyings = underlyingRes.output
         .map((address: string) => address.toLowerCase())
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address: string) => address !== ethers.constants.AddressZero)
+        .filter((address: string) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address: string) => (address === ETH_ADDR ? ethers.constants.AddressZero : address))
+        .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
     }
   }
 
@@ -277,9 +277,9 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
     pool.underlyings = underlyingRes.output
       .map((address: string) => address.toLowerCase())
       // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-      .filter((address: string) => address !== ethers.constants.AddressZero)
+      .filter((address: string) => address !== ADDRESS_ZERO)
       // replace ETH alias
-      .map((address: string) => (address === ETH_ADDR ? ethers.constants.AddressZero : address))
+      .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
   }
 
   return pools

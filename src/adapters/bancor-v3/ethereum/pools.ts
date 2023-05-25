@@ -1,13 +1,14 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Category } from '@lib/category'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { BigNumber, ethers } from 'ethers'
+import { BigNumber } from 'ethers'
 
 const abi = {
   poolCollections: {
@@ -122,7 +123,7 @@ export async function getPoolsContracts(ctx: BaseContext): Promise<Contract[]> {
         ? poolsRes.output.map((pool: string) => ({
             target: poolCollections[poolCollectionIdx],
             // replace ETH alias
-            params: [pool === ETH_ADDR ? ethers.constants.AddressZero : pool],
+            params: [pool === ETH_ADDR ? ADDRESS_ZERO : pool],
           }))
         : [],
     ),
@@ -158,7 +159,7 @@ export async function getProgramsContracts(ctx: BaseContext): Promise<Program[]>
     chain: ctx.chain,
     address: programData.poolToken,
     // replace ETH alias
-    underlyings: [programData.pool === ETH_ADDR ? ethers.constants.AddressZero : programData.pool],
+    underlyings: [programData.pool === ETH_ADDR ? ADDRESS_ZERO : programData.pool],
     rewards: [programData.rewardsToken],
   }))
 }

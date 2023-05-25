@@ -1,5 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
 import { isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
@@ -273,10 +274,7 @@ const apeStakingBalances = async (
 
   const calls: Call[] = stakedProxiesRes.map((proxy) => ({
     target: apeStaker.address,
-    params:
-      isSuccess(proxy) && proxy.output.length >= 1
-        ? [proxy.output[0], ctx.address]
-        : [ethers.constants.AddressZero, ctx.address],
+    params: isSuccess(proxy) && proxy.output.length >= 1 ? [proxy.output[0], ctx.address] : [ADDRESS_ZERO, ctx.address],
   }))
 
   const [totalStakedBalancesRes, claimablesRes] = await Promise.all([

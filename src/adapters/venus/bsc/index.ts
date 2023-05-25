@@ -3,8 +3,8 @@ import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import type { BalanceWithExtraProps } from '@lib/compound/v2/lending'
 import { getHealthFactor, getMarketsContracts } from '@lib/compound/v2/lending'
+import { ADDRESS_ZERO } from '@lib/contract'
 import type { Token } from '@lib/token'
-import { ethers } from 'ethers'
 
 import { getLendBorrowBalances } from './lend'
 import { getRewardsBalances } from './rewards'
@@ -57,7 +57,7 @@ export const getContracts = async (ctx: BaseContext) => {
     comptrollerAddress: Comptroller.address,
     underlyingAddressByMarketAddress: {
       // cBNB -> BNB
-      '0xa07c5b74c9b40447a954e1466938b865b6bbea36': ethers.constants.AddressZero,
+      '0xa07c5b74c9b40447a954e1466938b865b6bbea36': ADDRESS_ZERO,
     },
   })
 

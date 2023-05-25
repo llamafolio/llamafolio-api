@@ -1,9 +1,9 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import { ADDRESS_ZERO } from '@lib/contract'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 import { isSuccess } from '@lib/type'
-import { ethers } from 'ethers'
 
 import type { Registry } from './registries'
 
@@ -268,9 +268,9 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
           underlyings: coinsRes.output
             .map((address) => address.toLowerCase())
             // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-            .filter((address) => address !== ethers.constants.AddressZero)
+            .filter((address) => address !== ADDRESS_ZERO)
             // replace ETH alias
-            .map((address) => (address === ETH_ADDR ? ethers.constants.AddressZero : address)),
+            .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
         }
 
         poolContracts.push(contract)

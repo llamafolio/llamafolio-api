@@ -8,6 +8,7 @@ import type {
   PricedBalance,
 } from '@lib/adapter'
 import type { Category } from '@lib/category'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, BN_ZERO } from '@lib/math'
 import type { Call, MultiCallOptions, MultiCallResult } from '@lib/multicall'
@@ -15,7 +16,6 @@ import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import { ethers } from 'ethers'
 
 export async function getBalances(ctx: BalancesContext, contracts: BaseContract[]) {
   const coins: Token[] = []
@@ -23,7 +23,7 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
 
   for (const token of contracts) {
     // native chain coin
-    if (token.address === ethers.constants.AddressZero) {
+    if (token.address === ADDRESS_ZERO) {
       coins.push(token as Token)
       continue
     }
@@ -65,7 +65,7 @@ export async function multicallBalances(params: MultiCallOptions) {
   const res: MultiCallResult[] = []
 
   for (const call of params.calls) {
-    if (call.target === ethers.constants.AddressZero) {
+    if (call.target === ADDRESS_ZERO) {
       // native chain coin
       // @ts-ignore
       coinsCallsAddresses.push(call.params[0])
@@ -99,7 +99,7 @@ export async function multicallBalances(params: MultiCallOptions) {
   for (let i = 0; i < params.calls.length; i++) {
     const call = params.calls[i]
 
-    if (call.target === ethers.constants.AddressZero) {
+    if (call.target === ADDRESS_ZERO) {
       // native chain coin
       res.push({
         success: coinsBalancesRes[coinIdx] != null,
