@@ -39,7 +39,6 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.329.0",
-    "@defillama/sdk": "^3.0.55",
     "@llamafolio/tokens": "^0.1.64",
     "dotenv": "^16.0.3",
     "ethers": "^5.7.2",
@@ -50,7 +49,7 @@
     "pg": "^8.10.0",
     "pg-format": "^1.0.4",
     "uuid": "^9.0.0",
-    "viem": "^0.3.33",
+    "viem": "^0.3.36",
     "zod": "^3.21.4"
   },
   "devDependencies": {
