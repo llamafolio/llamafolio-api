@@ -1,7 +1,7 @@
 import path from 'node:path'
 import url from 'node:url'
 
-import { isEqual } from 'lodash'
+import isEqual from 'lodash/isEqual'
 
 import type { Adapter as DBAdapter } from '../src/db/adapters'
 import { selectAdapter, upsertAdapters } from '../src/db/adapters'
