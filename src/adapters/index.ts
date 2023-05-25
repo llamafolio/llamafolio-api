@@ -182,6 +182,7 @@ import verse from '@adapters/verse'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
 import wigoswap from '@adapters/wigoswap'
+import wombatExchange from '@adapters/wombat-exchange'
 import wonderland from '@adapters/wonderland'
 import x2y2 from '@adapters/x2y2'
 import yearnFinance from '@adapters/yearn-finance'
@@ -374,6 +375,7 @@ export const adapters: Adapter[] = [
   wallet,
   wepiggy,
   wigoswap,
+  wombatExchange,
   wonderland,
   x2y2,
   yearnFinance,
