@@ -35,6 +35,7 @@ import catInABox from '@adapters/cat-in-a-box'
 import cega from '@adapters/cega'
 import chainlink from '@adapters/chainlink'
 import charmFinance from '@adapters/charm-finance'
+import coinwind from '@adapters/coinwind'
 import compound from '@adapters/compound'
 import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
@@ -226,6 +227,7 @@ export const adapters: Adapter[] = [
   cega,
   chainlink,
   charmFinance,
+  coinwind,
   compound,
   compoundV3,
   concentrator,
