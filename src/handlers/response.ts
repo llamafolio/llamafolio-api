@@ -1,21 +1,3 @@
-import { BigNumber } from 'ethers'
-
-Object.defineProperties(BigNumber.prototype, {
-  toJSON: {
-    value: function (this: BigNumber) {
-      return this.toString()
-    },
-  },
-})
-
-Object.defineProperties(BigInt.prototype, {
-  toJSON: {
-    value: function (this: bigint) {
-      return this.toString()
-    },
-  },
-})
-
 export interface ResponseOptions {
   statusCode: number
   body: {
