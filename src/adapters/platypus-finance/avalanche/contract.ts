@@ -57,7 +57,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const PTP: Token = {
   chain: 'avalanche',
@@ -69,8 +69,8 @@ const PTP: Token = {
 export async function getPlatypusContract(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const poolLengthRes = await call({ ctx, target: contract.address, params: [], abi: abi.poolLength })
-  const poolLength = parseInt(poolLengthRes.output)
+  const poolLengthRes = await call({ ctx, target: contract.address, abi: abi.poolLength })
+  const poolLength = Number(poolLengthRes)
 
   const calls: Call[] = []
   for (let idx = 0; idx < poolLength; idx++) {

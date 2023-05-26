@@ -15,7 +15,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -62,13 +62,13 @@ export async function getPoolStakingBalances(ctx: BalancesContext, contract: Con
   const balanceOfAssetsRes = await call({
     ctx,
     target: contract.address,
-    params: [balanceOfsRes.output],
+    params: [balanceOfsRes],
     abi: abi.convertToAssets,
   })
 
   const balance: Balance = {
     ...contract,
-    amount: BigNumber.from(balanceOfAssetsRes.output),
+    amount: BigNumber.from(balanceOfAssetsRes),
     underlyings: contract.underlyings as Contract[],
     rewards: undefined,
     category: 'stake',

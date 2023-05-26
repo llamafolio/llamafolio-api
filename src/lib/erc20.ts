@@ -82,7 +82,7 @@ export const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 // See: https://github.com/o-az/evm-balances/tree/master
 const multiCoinContracts = {
@@ -106,11 +106,10 @@ export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): 
   const balances: Balance[] = []
 
   if (ctx.chain in multiCoinContracts) {
-    const { output: multiBalances } = await call({
+    const multiBalances = await call({
       ctx,
       target: multiCoinContracts[ctx.chain as keyof typeof multiCoinContracts],
       abi: abi.getBalances,
-      // @ts-ignore
       params: [ctx.address, tokens.map((token) => token.address)],
     })
 
@@ -138,7 +137,7 @@ export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): 
   return balances
 }
 
-export async function getERC20Details(ctx: BaseContext, tokens: string[]): Promise<Token[]> {
+export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${string}`[]): Promise<Token[]> {
   const found: { [key: string]: Token } = {}
   for (const address of tokens) {
     const tokenInfo = getToken(ctx.chain, address.toLowerCase())

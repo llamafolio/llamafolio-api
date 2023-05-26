@@ -52,14 +52,14 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getDepositMarkets(ctx: BaseContext, staker: Contract): Promise<Contract[]> {
-  const { output: marketsLength } = await call({ ctx, target: staker.address, abi: abi.getNumMarkets })
+  const marketsLength = await call({ ctx, target: staker.address, abi: abi.getNumMarkets })
 
   const marketsAddressesRes = await multicall({
     ctx,
-    calls: range(0, marketsLength).map((idx: number) => ({ target: staker.address, params: [idx] })),
+    calls: range(0, Number(marketsLength)).map((idx: number) => ({ target: staker.address, params: [idx] })),
     abi: abi.getMarketTokenAddress,
   })
 

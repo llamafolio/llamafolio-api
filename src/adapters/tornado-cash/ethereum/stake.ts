@@ -18,7 +18,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const TORN: Token = {
   chain: 'ethereum',
@@ -28,7 +28,7 @@ const TORN: Token = {
 }
 
 export async function getTornadoStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: userBalance }, { output: pendingReward }] = await Promise.all([
+  const [userBalance, pendingReward] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.lockedBalance }),
     call({ ctx, target: staker.rewarder, params: [ctx.address], abi: abi.checkReward }),
   ])

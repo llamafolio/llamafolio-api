@@ -35,12 +35,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getGroContracts(ctx: BaseContext, masterchef: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const { output: poolLength } = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
+  const poolLengthBI = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
+  const poolLength = Number(poolLengthBI)
 
   const poolInfosRes = await multicall({
     ctx,
@@ -97,7 +98,7 @@ const getUnderlyingsContracts = async (ctx: BaseContext, contracts: Contract[]):
   ).flat()
 }
 
-export async function getYieldContracts(ctx: BaseContext, pools: string[]): Promise<Contract[]> {
+export async function getYieldContracts(ctx: BaseContext, pools: `0x${string}`[]): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const underlyingsRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool })), abi: abi.token })

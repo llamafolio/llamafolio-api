@@ -21,10 +21,10 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getStaderFarmBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const { output: userBalance } = await call({
+  const userBalance = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],

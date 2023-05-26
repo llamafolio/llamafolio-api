@@ -129,15 +129,15 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const getPancakeStablePairs = async (ctx: BaseContext, factory: Contract) => {
   const res: Contract[] = []
   const masterchefStablePools: Contract[] = []
 
-  const poolLengthRes = await call({ ctx, target: factory.address, params: [], abi: abi.pairLength })
+  const poolLengthRes = await call({ ctx, target: factory.address, abi: abi.pairLength })
 
-  const poolLength = parseInt(poolLengthRes.output)
+  const poolLength = Number(poolLengthRes)
 
   const calls: Call[] = []
   for (let idx = 0; idx < poolLength; idx++) {
@@ -200,10 +200,10 @@ const getMasterChefLpToken = async (
 
   const [masterchefStablePools, poolLengthRes] = await Promise.all([
     getPancakeStablePairs(ctx, factory),
-    call({ ctx, target: masterchef.address, params: [], abi: abi.poolLength }),
+    call({ ctx, target: masterchef.address, abi: abi.poolLength }),
   ])
 
-  const poolLength = parseInt(poolLengthRes.output)
+  const poolLength = Number(poolLengthRes)
 
   const calls: Call[] = []
   for (let idx = 0; idx < poolLength; idx++) {
@@ -286,7 +286,7 @@ const getPancakeUnderlyingsMasterChefPoolsBalances = async (
   for (let idx = 0; idx < masterchefPoolsBalances.length; idx++) {
     const masterchefPoolBalances = masterchefPoolsBalances[idx]
     const underlyingsBalanceInStablePool = underlyingsBalanceInStablePools[idx]
-    const underlyings = masterchefPoolBalances.underlyings as string[]
+    const underlyings = masterchefPoolBalances.underlyings as `0x${string}`[]
     if (!underlyings) {
       continue
     }

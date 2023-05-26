@@ -18,20 +18,20 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getSetProtocolPools(ctx: BaseContext, controller: Contract): Promise<Contract[]> {
   const pools: Contract[] = []
 
-  const setsContractsRes = await call({ ctx, target: controller.address, params: [], abi: abi.getSets })
+  const setsContractsRes = await call({ ctx, target: controller.address, abi: abi.getSets })
 
   const setsUnderlyingsRes = await multicall({
     ctx,
-    calls: setsContractsRes.output.map((target: string) => ({ target })),
+    calls: setsContractsRes.map((target) => ({ target })),
     abi: abi.getComponents,
   })
 
-  for (let idx = 0; idx < setsContractsRes.output.length; idx++) {
+  for (let idx = 0; idx < setsContractsRes.length; idx++) {
     const underlyingsRes = setsUnderlyingsRes[idx]
     if (!isSuccess(underlyingsRes)) {
       continue
@@ -39,7 +39,7 @@ export async function getSetProtocolPools(ctx: BaseContext, controller: Contract
 
     pools.push({
       chain: ctx.chain,
-      address: setsContractsRes.output[idx],
+      address: setsContractsRes[idx],
       underlyings: underlyingsRes.output,
     })
   }

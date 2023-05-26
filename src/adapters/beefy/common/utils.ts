@@ -90,7 +90,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 interface RegistryParams {
   address: string
@@ -254,7 +254,7 @@ export const fmtCurveProvider = async (
       continue
     }
 
-    const { output: poolAddress } = await call({ ctx, target: strategy, abi: abi.pool })
+    const poolAddress = await call({ ctx, target: strategy, abi: abi.pool })
 
     const calls: Call[] = []
     for (const registry of registries) {

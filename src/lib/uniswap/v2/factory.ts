@@ -43,7 +43,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export interface getPairsContractsParams {
   ctx: BaseContext
@@ -71,7 +71,7 @@ export async function getPairsContracts({
     target: factoryAddress,
   })
 
-  const allPairsLength = parseInt(allPairsLengthRes.output)
+  const allPairsLength = Number(allPairsLengthRes)
   const end = Math.min(offset + limit, allPairsLength)
 
   const pids = range(offset, end)

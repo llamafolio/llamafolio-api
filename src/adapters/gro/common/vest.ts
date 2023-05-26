@@ -17,13 +17,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getGroVestingBalances(ctx: BalancesContext, vester: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
   const token = vester.underlyings?.[0] as Contract
 
-  const [{ output: balancesOfRes }, { output: claimableBalancesRes }] = await Promise.all([
+  const [balancesOfRes, claimableBalancesRes] = await Promise.all([
     call({ ctx, target: vester.address, params: [ctx.address], abi: abi.totalBalance }),
     call({ ctx, target: vester.address, params: [ctx.address], abi: abi.vestedBalance }),
   ])

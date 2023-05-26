@@ -117,7 +117,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const metaRegistry: Contract = {
   chain: 'ethereum',
@@ -128,8 +128,8 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
   const pools: Contract[] = []
 
   for (const contract of contracts) {
-    const poolsCountRes = await call({ ctx, target: contract.address, params: [], abi: abi.poolLength })
-    const poolsCount: number = parseInt(poolsCountRes.output)
+    const poolsCountBI = await call({ ctx, target: contract.address, abi: abi.poolLength })
+    const poolsCount = Number(poolsCountBI)
 
     const poolInfosRes = await multicall({
       ctx,
@@ -210,8 +210,8 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 export async function getOldContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const pools: Contract[] = []
 
-  const poolsCountRes = await call({ ctx, target: contract.address, params: [], abi: abi.poolLength })
-  const poolsCount: number = parseInt(poolsCountRes.output)
+  const poolsCountBI = await call({ ctx, target: contract.address, abi: abi.poolLength })
+  const poolsCount = Number(poolsCountBI)
 
   const poolInfosRes = await multicall({
     ctx,

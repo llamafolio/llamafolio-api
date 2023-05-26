@@ -120,7 +120,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 type NFTBalances = Balance & {
   poolId: string
@@ -144,7 +144,7 @@ const apeCoin: Token = {
 export async function getApeStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance[]> {
   const balances: NFTBalances[] = []
 
-  const { output: allStakesBalancesRes } = await call({
+  const allStakesBalancesRes = await call({
     ctx,
     target: staker.address,
     params: [ctx.address],
@@ -159,11 +159,11 @@ export async function getApeStakeBalances(ctx: BalancesContext, staker: Contract
     balances.push({
       chain: ctx.chain,
       address: staker.address,
-      symbol: symbol[poolId],
+      symbol: symbol[Number(poolId)],
       decimals: 18,
       amount: BigNumber.from(deposited),
-      poolId,
-      tokenId,
+      poolId: poolId.toString(),
+      tokenId: tokenId.toString(),
       underlyings: [apeCoin],
       rewards: [{ ...apeCoin, amount: BigNumber.from(unclaimed) }],
       category: 'stake',

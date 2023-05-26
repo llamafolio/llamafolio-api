@@ -12,7 +12,7 @@ const LON: Token = {
 }
 
 export async function getxLONstakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: userBalanceOfRes }, { output: tokenBalanceOfRes }, { output: totalSupplyRes }] = await Promise.all([
+  const [userBalanceOfRes, tokenBalanceOfRes, totalSupplyRes] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: LON.address, params: [staker.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: staker.address, abi: erc20Abi.totalSupply }),

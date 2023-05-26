@@ -47,14 +47,14 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getCoinWindContracts(ctx: BaseContext, masterchef: Contract): Promise<Contract[]> {
-  const { output: poolLength } = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
+  const poolLengthBI = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLength).map((_, idx) => ({ target: masterchef.address, params: [idx] })),
+    calls: range(0, Number(poolLengthBI)).map((_, idx) => ({ target: masterchef.address, params: [idx] })),
     abi: abi.poolInfo,
   })
 

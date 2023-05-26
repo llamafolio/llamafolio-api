@@ -14,7 +14,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const VAI: Token = {
   chain: 'bsc',
@@ -39,7 +39,7 @@ export async function getLendBorrowBalances(
     abi: abi.mintedVAIs,
   })
 
-  const VAIBalances = BigNumber.from(VAIBalancesRes.output)
+  const VAIBalances = BigNumber.from(VAIBalancesRes)
 
   VAIMinted.push({
     chain: ctx.chain,

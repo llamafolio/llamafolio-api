@@ -25,10 +25,10 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getGaugeContract(ctx: BaseContext, gaugeFactory: Contract) {
-  const { output: address } = await call({ ctx, target: gaugeFactory.address, abi: abi.last_gauge })
+  const address = await call({ ctx, target: gaugeFactory.address, abi: abi.last_gauge })
   const contract: Contract = { chain: ctx.chain, address }
 
   return contract

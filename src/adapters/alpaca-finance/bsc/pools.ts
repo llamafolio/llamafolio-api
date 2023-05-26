@@ -44,19 +44,18 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getPoolsContracts(ctx: BaseContext, fairLaunch: Contract) {
   const contracts: Contract[] = []
 
-  const poolsLengthRes = await call({
+  const poolsLengthBI = await call({
     ctx,
     target: fairLaunch.address,
-    params: [],
     abi: abi.poolLength,
   })
 
-  const poolsLength = parseInt(poolsLengthRes.output)
+  const poolsLength = Number(poolsLengthBI)
 
   const poolsInfoRes = await multicall({
     ctx,

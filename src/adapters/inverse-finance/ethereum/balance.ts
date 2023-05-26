@@ -14,7 +14,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const INV: Token = {
   chain: 'ethereum',
@@ -30,7 +30,7 @@ export async function getInverseLendingBalances(
 ): Promise<Balance[]> {
   const rewards: Balance[] = []
 
-  const [marketsBalancesRes, { output: marketsRewardsRes }] = await Promise.all([
+  const [marketsBalancesRes, marketsRewardsRes] = await Promise.all([
     getMarketsBalances(ctx, markets),
     call({ ctx, target: comptroller.address, params: [ctx.address], abi: abi.compAccrued }),
   ])

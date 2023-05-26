@@ -18,18 +18,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getPairsContracts(ctx: BaseContext, registry: string) {
   const contracts: Contract[] = []
 
-  const allPairAddressesRes = await call({
+  const pairs = await call({
     ctx,
     target: registry,
     abi: abi.getAllPairAddresses,
   })
-
-  const pairs: string[] = allPairAddressesRes.output
 
   const collateralContractsRes = await multicall({
     ctx,

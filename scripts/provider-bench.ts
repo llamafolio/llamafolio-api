@@ -1,5 +1,6 @@
 import '../environment'
 
+import type { Chain } from '@lib/chains'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 
 import type { BaseContext } from '../src/lib/adapter'
@@ -12,7 +13,7 @@ async function main() {
   // argv[2]: ?chain
 
   try {
-    const chain = process.argv[2] || 'ethereum'
+    const chain = (process.argv[2] || 'ethereum') as Chain
     const ctx: BaseContext = { chain, adapterId: '' }
 
     const tokens = tokensByChain[ctx.chain]
@@ -37,7 +38,7 @@ async function main() {
 
       const hrend = process.hrtime(hrstart)
 
-      const errors = responses.reduce((acc, res) => acc + (res.output == null ? 1 : 0), 0)
+      const errors = responses.reduce((acc, res) => acc + (res == null ? 1 : 0), 0)
 
       console.log(`Fetched ${length} balances, found ${errors} errors in %ds %dms`, hrend[0], hrend[1] / 1000000)
     }

@@ -49,7 +49,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const priceFeed: Contract = {
   chain: 'ethereum',
@@ -67,7 +67,7 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
     abi: abi.Troves,
   })
 
-  const troveDetails = troveDetailsRes.output
+  const [debt, coll, _stake, _status, _arrayIndex] = troveDetailsRes
 
   balances.push({
     chain: ctx.chain,
@@ -75,7 +75,7 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
     symbol: 'ETH',
     decimals: 18,
     address: '0x0000000000000000000000000000000000000000',
-    amount: BigNumber.from(troveDetails.coll),
+    amount: BigNumber.from(coll),
   })
 
   balances.push({
@@ -84,7 +84,7 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
     symbol: 'LUSD',
     decimals: 18,
     address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
-    amount: BigNumber.from(troveDetails.debt),
+    amount: BigNumber.from(debt),
   })
 
   return balances
@@ -95,7 +95,7 @@ export const getHealthFactor = async (ctx: BalancesContext, balances: Balance[])
 
   const lendAmounts = balances
     .filter((balance) => balance.category === 'lend')
-    .map((balance) => balance.amount.mul(priceFeedRes.output).div(utils.parseEther('1.0')))
+    .map((balance) => balance.amount.mul(priceFeedRes).div(utils.parseEther('1.0')))
 
   const borrowAmounts = balances
     .filter((balance) => balance.category === 'borrow')

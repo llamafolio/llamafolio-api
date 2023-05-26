@@ -103,7 +103,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const radiantToken: Token = {
   chain: 'arbitrum',
@@ -123,7 +123,7 @@ export async function getMultiFeeDistributionContracts(
   multiFeeDistribution: Contract,
   stakingToken: Contract,
 ): Promise<Contract> {
-  const { output: claimableRewards } = await call({
+  const claimableRewards = await call({
     ctx,
     target: multiFeeDistribution.address,
     // any addresses could return reward addresses
@@ -133,7 +133,7 @@ export async function getMultiFeeDistributionContracts(
 
   const underlyingsTokensRes = await multicall({
     ctx,
-    calls: claimableRewards.map((reward: { token: string; amount: string }) => ({ target: reward.token })),
+    calls: claimableRewards.map((reward) => ({ target: reward.token })),
     abi: abi.UNDERLYING_ASSET_ADDRESS,
   })
 
@@ -160,26 +160,23 @@ export async function getMultiFeeDistributionBalances(
     return
   }
 
-  const [
-    { output: lockedBalances },
-    { output: earnedBalances },
-    { output: rewardConverter },
-    { output: totalSupply },
-    { output: vaultBalances },
-  ] = await Promise.all([
+  const [lockedBalances, earnedBalances, rewardConverter, totalSupply, vaultBalances] = await Promise.all([
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.lockedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.earnedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, abi: abi.rewardConverter }),
     call({ ctx, target: contract.token as string, abi: erc20Abi.totalSupply }),
     call({ ctx, target: contract.vault, params: [contract.poolId], abi: abi.getPoolTokens }),
   ])
+  const [total, _unlockable, _locked, _lockedWithMultiplier, lockData] = lockedBalances
+  const [_total, _unlocked, earningsData] = earnedBalances
 
-  const { output: pendingRewards } = await call({
+  const pendingRewards = await call({
     ctx,
     target: rewardConverter,
     params: [ctx.address],
     abi: abi.viewPendingRewards,
   })
+  const [_tokens, amts] = pendingRewards
 
   const underlyingBalances = (underlyings: Contract[], vaultBalances: any, amount: BigNumber, supply: BigNumber) => {
     return underlyings.map((underlying: Contract, index: number) => ({
@@ -190,8 +187,8 @@ export async function getMultiFeeDistributionBalances(
   }
 
   // Locker
-  const locked = sumBN((lockedBalances.lockData || []).map((lockData: any) => lockData.amount))
-  const expiredLocked = BigNumber.from(lockedBalances.total).sub(locked)
+  const sumLocked = sumBN((lockData || []).map((lockData: any) => lockData.amount))
+  const expiredLocked = BigNumber.from(total).sub(sumLocked)
 
   balances.push({
     chain: ctx.chain,
@@ -205,8 +202,8 @@ export async function getMultiFeeDistributionBalances(
     category: 'lock',
   })
 
-  for (let lockIdx = 0; lockIdx < lockedBalances.lockData.length; lockIdx++) {
-    const lockedBalance = lockedBalances.lockData[lockIdx]
+  for (let lockIdx = 0; lockIdx < lockData.length; lockIdx++) {
+    const lockedBalance = lockData[lockIdx]
     const { amount, unlockTime } = lockedBalance
 
     balances.push({
@@ -217,15 +214,15 @@ export async function getMultiFeeDistributionBalances(
       underlyings: underlyingBalances(underlyings, vaultBalances, BigNumber.from(amount), BigNumber.from(totalSupply)),
       rewards: undefined,
       amount: BigNumber.from(amount),
-      unlockAt: unlockTime,
+      unlockAt: Number(unlockTime),
       claimable: BN_ZERO,
       category: 'lock',
     })
   }
 
   // Vester
-  for (let vestIdx = 0; vestIdx < earnedBalances.earningsData.length; vestIdx++) {
-    const earnedBalance = earnedBalances.earningsData[vestIdx]
+  for (let vestIdx = 0; vestIdx < earningsData.length; vestIdx++) {
+    const earnedBalance = earningsData[vestIdx]
     const { amount, unlockTime } = earnedBalance
 
     balances.push({
@@ -236,14 +233,14 @@ export async function getMultiFeeDistributionBalances(
       underlyings: undefined,
       rewards: undefined,
       amount: BigNumber.from(amount),
-      unlockAt: unlockTime,
+      unlockAt: Number(unlockTime),
       category: 'vest',
     })
   }
 
   for (let rewardIdx = 0; rewardIdx < rewards.length; rewardIdx++) {
     const reward = rewards[rewardIdx]
-    const pendingReward = pendingRewards.amts[rewardIdx]
+    const pendingReward = amts[rewardIdx]
 
     balances.push({
       chain: ctx.chain,

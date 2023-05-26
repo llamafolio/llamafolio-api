@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getLendingPoolBalances(
   ctx: BalancesContext,
@@ -25,7 +25,7 @@ export async function getLendingPoolBalances(
     call({ ctx, target: chefIncentivesController.address, params: [ctx.address], abi: abi.allPendingRewards }),
   ])
 
-  balances.push({ ...rewardToken, amount: BigNumber.from(pendingRewards.output), category: 'reward' })
+  balances.push({ ...rewardToken, amount: BigNumber.from(pendingRewards), category: 'reward' })
 
   return balances
 }

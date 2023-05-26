@@ -45,16 +45,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export interface GaugeContract extends Contract {
-  token: string
-  bribeAddress: string
-  feesAddress: string
+  token: `0x${string}`
+  bribeAddress: `0x${string}`
+  feesAddress: `0x${string}`
 }
 
 export async function getLensContracts(ctx: BaseContext, lens: Contract) {
-  const { output: poolsInfo } = await call({ ctx, target: lens.address, abi: abi.poolsInfo })
+  const poolsInfo = await call({ ctx, target: lens.address, abi: abi.poolsInfo })
 
   const pairs: Contract[] = (poolsInfo || []).map((pool: any) => ({
     chain: ctx.chain,

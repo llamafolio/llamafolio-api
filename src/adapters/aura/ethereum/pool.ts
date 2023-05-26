@@ -46,7 +46,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const BAL: Token = {
   chain: 'ethereum',
@@ -58,9 +58,9 @@ const BAL: Token = {
 export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: Contract): Promise<Contract[]> {
   const pools: Contract[] = []
 
-  const poolLengthRes = await call({ ctx, target: booster.address, params: [], abi: abi.poolLength })
+  const poolLengthBI = await call({ ctx, target: booster.address, abi: abi.poolLength })
 
-  const poolLength = parseInt(poolLengthRes.output)
+  const poolLength = Number(poolLengthBI)
 
   const calls: Call[] = []
   for (let idx = 0; idx < poolLength; idx++) {

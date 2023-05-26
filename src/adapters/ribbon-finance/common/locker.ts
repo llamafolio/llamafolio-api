@@ -29,7 +29,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const RBN: Token = {
   chain: 'ethereum',
@@ -43,7 +43,7 @@ export async function getLockerBalance(
   locker: Contract,
   lockerPenaltyRewards: Contract,
 ): Promise<Balance> {
-  const [lockedBalance, { output: claimableLockedBalancesRewards }] = await Promise.all([
+  const [lockedBalance, claimableLockedBalancesRewards] = await Promise.all([
     getSingleLockerBalance(ctx, locker, RBN, 'locked'),
     call({ ctx, target: lockerPenaltyRewards.address, params: [ctx.address], abi: abi.claimable }),
   ])

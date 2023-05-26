@@ -65,7 +65,7 @@ const abiPools = {
     inputs: [{ name: '_pool', type: 'address' }],
     outputs: [{ name: '', type: 'address[8]' }],
   },
-}
+} as const
 
 const abiGauges = {
   n_gauges: {
@@ -138,20 +138,19 @@ const abiGauges = {
     outputs: [{ name: '', type: 'uint256' }],
     gas: 3034,
   },
-}
+} as const
 
 export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
   const poolContracts: Contract[] = []
   const pools: Contract[] = []
 
-  const poolsCountRes = await call({
+  const poolsCountBI = await call({
     ctx,
     target: registry.address,
-    params: [],
     abi: abiPools.pool_count,
   })
 
-  const poolsCounts = parseInt(poolsCountRes.output)
+  const poolsCounts = Number(poolsCountBI)
 
   // lists of pools
   const poolsCalls: Call[] = range(0, poolsCounts).map((i) => ({

@@ -55,7 +55,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const BAL: Token = {
   chain: 'ethereum',
@@ -91,8 +91,8 @@ export async function getAuraBalStakerBalances(ctx: BalancesContext, staker: Con
 
   return {
     ...auraBal,
-    amount: BigNumber.from(balanceOfRes.output),
-    rewards: [{ ...BAL, amount: BigNumber.from(earnedRes.output) }],
+    amount: BigNumber.from(balanceOfRes),
+    rewards: [{ ...BAL, amount: BigNumber.from(earnedRes) }],
     category: 'farm',
   }
 }
@@ -143,16 +143,16 @@ export const getAuraMintAmount = async (
   const balancesWithExtraRewards: Balance[] = []
 
   const [auraReductionPerCliffRes, auraMaxSupplyRes, auraTotalSupplyRes, auraTotalCliffsRes] = await Promise.all([
-    call({ ctx, target: auraRewards.address, params: [], abi: abi.reductionPerCliff }),
-    call({ ctx, target: auraRewards.address, params: [], abi: abi.EMISSIONS_MAX_SUPPLY }),
-    call({ ctx, target: auraRewards.address, params: [], abi: abi.totalSupply }),
-    call({ ctx, target: auraRewards.address, params: [], abi: abi.totalCliffs }),
+    call({ ctx, target: auraRewards.address, abi: abi.reductionPerCliff }),
+    call({ ctx, target: auraRewards.address, abi: abi.EMISSIONS_MAX_SUPPLY }),
+    call({ ctx, target: auraRewards.address, abi: abi.totalSupply }),
+    call({ ctx, target: auraRewards.address, abi: abi.totalCliffs }),
   ])
 
-  const reductionPerCliff = BigNumber.from(auraReductionPerCliffRes.output)
-  const maxSupply = BigNumber.from(auraMaxSupplyRes.output)
-  const totalSupply = BigNumber.from(auraTotalSupplyRes.output)
-  const totalCliffs = BigNumber.from(auraTotalCliffsRes.output)
+  const reductionPerCliff = BigNumber.from(auraReductionPerCliffRes)
+  const maxSupply = BigNumber.from(auraMaxSupplyRes)
+  const totalSupply = BigNumber.from(auraTotalSupplyRes)
+  const totalCliffs = BigNumber.from(auraTotalCliffsRes)
   const minterMinted = BigNumber.from(0)
 
   // e.g. emissionsMinted = 6e25 - 5e25 - 0 = 1e25;

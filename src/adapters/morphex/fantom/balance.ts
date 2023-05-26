@@ -48,7 +48,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const vault: Contract = {
   chain: 'fantom',
@@ -77,7 +77,7 @@ const MPX: Token = {
 }
 
 export async function getMorphexMLPBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
-  const { output: stakedBalance } = await call({
+  const stakedBalance = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
@@ -132,13 +132,11 @@ export async function getMorphexYieldBalances(ctx: BalancesContext, farmers: Con
 }
 
 export async function getMorphexStakeMLPBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
-  const [{ output: stakedBalance }, { output: claimableNativeToken }, { output: claimableEsToken }] = await Promise.all(
-    [
-      call({ ctx, target: contract.address, params: [ctx.address], abi: abi.stakedAmounts }),
-      call({ ctx, target: contract.address, params: [ctx.address], abi: abi.claimable }),
-      call({ ctx, target: contract.rewarder, params: [ctx.address], abi: abi.claimable }),
-    ],
-  )
+  const [stakedBalance, claimableNativeToken, claimableEsToken] = await Promise.all([
+    call({ ctx, target: contract.address, params: [ctx.address], abi: abi.stakedAmounts }),
+    call({ ctx, target: contract.address, params: [ctx.address], abi: abi.claimable }),
+    call({ ctx, target: contract.rewarder, params: [ctx.address], abi: abi.claimable }),
+  ])
 
   const balance: Balance = {
     ...contract,
@@ -162,15 +160,9 @@ export async function getMorphexStakeMPXBalances(
   if (!underlyings) {
     return
   }
-  const [
-    { output: stakedBalance },
-    { output: claimableEsToken },
-    { output: claimableNativeToken },
-    underlyingsBalancesRes,
-  ] = await Promise.all([
+  const [stakedBalance, claimableEsToken, claimableNativeToken, underlyingsBalancesRes] = await Promise.all([
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.stakedAmounts }),
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.claimable }),
-    call({ ctx, target: contract.rewarder, params: [ctx.address], abi: abi.claimable }),
     call({ ctx, target: contract.address, abi: erc20Abi.totalSupply }),
     multicall({
       ctx,

@@ -14,19 +14,21 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getEtherBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const { output: userBalanceOf } = await call({
+  const depositInfo = await call({
     ctx,
     target: staker.address,
     params: [ctx.address],
     abi: abi.depositInfo,
   })
 
+  const [_depositTime, etherBalance, _totalERC20Balance] = depositInfo
+
   return {
     ...staker,
-    amount: BigNumber.from(userBalanceOf.etherBalance),
+    amount: BigNumber.from(etherBalance),
     underlyings: undefined,
     rewards: undefined,
     category: 'stake',

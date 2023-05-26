@@ -43,7 +43,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const TNGBL: Token = {
   chain: 'polygon',
@@ -55,16 +55,17 @@ const TNGBL: Token = {
 export async function getTangibleLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance[]> {
   const balances: LockBalance[] = []
 
-  const { output: balanceOfsRes } = await call({
+  const balanceOfsRes = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
+  const balanceOf = Number(balanceOfsRes)
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, balanceOfsRes).map((idx) => ({ target: locker.address, params: [ctx.address, idx] })),
+    calls: range(0, balanceOf).map((idx) => ({ target: locker.address, params: [ctx.address, idx] })),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -85,7 +86,7 @@ export async function getTangibleLockerBalances(ctx: BalancesContext, locker: Co
     }),
   ])
 
-  for (let idx = 0; idx < balanceOfsRes; idx++) {
+  for (let idx = 0; idx < balanceOf; idx++) {
     const lockedRes = lockedsRes[idx]
     const earnedRes = earnedsRes[idx]
 

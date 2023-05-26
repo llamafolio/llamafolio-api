@@ -26,7 +26,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const boxETH: Token = {
   chain: 'ethereum',
@@ -38,7 +38,7 @@ const boxETH: Token = {
 const CONVERTER = '0xe4b91faf8810f8895772e7ca065d4cb889120f94'
 
 export async function getCatStakeEscrowBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const { output: userBalancesOfsRes } = await call({
+  const balanceOf = await call({
     ctx,
     target: staker.address,
     params: [ctx.address],
@@ -47,7 +47,7 @@ export async function getCatStakeEscrowBalance(ctx: BalancesContext, staker: Con
 
   const balance: Balance = {
     ...staker,
-    amount: BigNumber.from(userBalancesOfsRes),
+    amount: BigNumber.from(balanceOf),
     underlyings: [boxETH],
     rewards: undefined,
     category: 'stake',
@@ -57,7 +57,7 @@ export async function getCatStakeEscrowBalance(ctx: BalancesContext, staker: Con
 }
 
 export async function getCatStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: deposited }, { output: earned }] = await Promise.all([
+  const [deposited, earned] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.deposited }),
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.Owing }),
   ])
@@ -74,10 +74,10 @@ export async function getCatStakeBalance(ctx: BalancesContext, staker: Contract)
 }
 
 const ftmCatBalances = async (ctx: BalancesContext, balance: Balance): Promise<Balance> => {
-  const { output: ftmBalances } = await call({
+  const ftmBalances = await call({
     ctx,
     target: CONVERTER,
-    params: [balance.amount.toString()],
+    params: [BigInt(balance.amount.toString())],
     abi: abi.convertToAssets,
   })
 

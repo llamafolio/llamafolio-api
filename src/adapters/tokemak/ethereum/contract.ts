@@ -18,16 +18,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getTokemakContracts(ctx: BaseContext, manager: Contract): Promise<Contract[]> {
   const pools: Contract[] = []
 
-  const { output: getPoolsAddresses } = await call({ ctx, target: manager.address, abi: abi.getPools })
+  const getPoolsAddresses = await call({ ctx, target: manager.address, abi: abi.getPools })
 
   const underlyingsAddresses = await multicall({
     ctx,
-    calls: getPoolsAddresses.map((pool: string) => ({ target: pool })),
+    calls: getPoolsAddresses.map((pool) => ({ target: pool })),
     abi: abi.underlyer,
   })
 

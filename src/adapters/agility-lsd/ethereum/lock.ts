@@ -31,7 +31,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const AGI: Token = {
   chain: 'ethereum',
@@ -43,7 +43,7 @@ const AGI: Token = {
 export async function getAgilityLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance[]> {
   const balances: LockBalance[] = []
 
-  const { output: userRedeemsLengthsRes } = await call({
+  const userRedeemsLengthsRes = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],
@@ -52,7 +52,10 @@ export async function getAgilityLockerBalances(ctx: BalancesContext, locker: Con
 
   const getUserRedeemsRes = await multicall({
     ctx,
-    calls: range(0, userRedeemsLengthsRes).map((_, idx) => ({ target: locker.address, params: [ctx.address, idx] })),
+    calls: range(0, Number(userRedeemsLengthsRes)).map((_, idx) => ({
+      target: locker.address,
+      params: [ctx.address, idx],
+    })),
     abi: abi.getUserRedeem,
   })
 

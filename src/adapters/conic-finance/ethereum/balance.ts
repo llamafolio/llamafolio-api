@@ -78,7 +78,7 @@ const abi = {
     inputs: [{ name: '_pool', type: 'address' }],
     outputs: [{ name: '', type: 'uint256[8]' }],
   },
-}
+} as const
 
 const CNC: Token = {
   chain: 'ethereum',
@@ -187,30 +187,28 @@ export async function getCNCLockerBalances(ctx: BalancesContext, lockers: Contra
 export async function getConicFarmBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const underlyings = contract.underlyings as Contract[]
 
-  const [balanceOfRes, claimableRewardsRes, underlyingsBalancesRes, totalSuppliesRes, symbolsRes, decimalsRes] =
-    await Promise.all([
-      call({ ctx, target: contract.address, params: [ctx.address], abi: abi.balances }),
-      call({ ctx, target: contract.address, params: [ctx.address], abi: abi.claimableReward }),
-      call({ ctx, target: metaRegistry.address, params: [contract.pool], abi: abi.get_underlying_balances }),
-      call({ ctx, target: contract.lpToken, abi: erc20Abi.totalSupply }),
-      call({ ctx, target: contract.lpToken, abi: erc20Abi.symbol }),
-      call({ ctx, target: contract.lpToken, abi: erc20Abi.decimals }),
-    ])
+  const [balanceOf, claimableRewards, underlyingsBalances, totalSupplies, symbol, decimals] = await Promise.all([
+    call({ ctx, target: contract.address, params: [ctx.address], abi: abi.balances }),
+    call({ ctx, target: contract.address, params: [ctx.address], abi: abi.claimableReward }),
+    call({ ctx, target: metaRegistry.address, params: [contract.pool], abi: abi.get_underlying_balances }),
+    call({ ctx, target: contract.lpToken, abi: erc20Abi.totalSupply }),
+    call({ ctx, target: contract.lpToken, abi: erc20Abi.symbol }),
+    call({ ctx, target: contract.lpToken, abi: erc20Abi.decimals }),
+  ])
 
   underlyings.forEach((underlying, underlyingIdx) => {
-    const underlyingBalance = underlyingsBalancesRes.output[underlyingIdx]
-    ;(underlying as Balance).amount =
-      BigNumber.from(underlyingBalance).mul(balanceOfRes.output).div(totalSuppliesRes.output) || BN_ZERO
+    const underlyingBalance = underlyingsBalances[underlyingIdx]
+    ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(balanceOf).div(totalSupplies) || BN_ZERO
   })
 
   return {
     chain: ctx.chain,
     address: contract.lpToken,
-    symbol: symbolsRes.output,
-    decimals: decimalsRes.output,
-    amount: BigNumber.from(balanceOfRes.output),
+    symbol,
+    decimals,
+    amount: BigNumber.from(balanceOf),
     underlyings,
-    rewards: [{ ...CNC, amount: BigNumber.from(claimableRewardsRes.output) }],
+    rewards: [{ ...CNC, amount: BigNumber.from(claimableRewards) }],
     category: 'farm',
   }
 }

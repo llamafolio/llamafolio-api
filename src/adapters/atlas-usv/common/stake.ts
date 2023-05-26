@@ -14,7 +14,7 @@ export async function getStakeBalance(ctx: BalancesContext, contract: Contract):
     abi: abi.balanceOf,
   })
 
-  const amount = BigNumber.from(balanceOfRes.output)
+  const amount = BigNumber.from(balanceOfRes)
 
   const balance: Balance = {
     ...contract,

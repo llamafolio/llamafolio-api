@@ -53,7 +53,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getPopsicleFarmContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
@@ -63,14 +63,15 @@ export async function getPopsicleFarmContracts(ctx: BaseContext, contract: Contr
     target: contract.address,
     abi: abi.poolLength,
   })
+  const poolLength = Number(poolLengthRes)
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLengthRes.output).map((_, idx) => ({ target: contract.address, params: [idx] })),
+    calls: range(0, poolLength).map((_, idx) => ({ target: contract.address, params: [idx] })),
     abi: abi.poolInfo,
   })
 
-  for (let poolIdx = 0; poolIdx < poolLengthRes.output; poolIdx++) {
+  for (let poolIdx = 0; poolIdx < poolLength; poolIdx++) {
     const poolInfoRes = poolInfosRes[poolIdx]
 
     if (!isSuccess(poolInfoRes)) {

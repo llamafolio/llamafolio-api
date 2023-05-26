@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const OUSD: Token = {
   chain: 'ethereum',
@@ -22,14 +22,14 @@ const OUSD: Token = {
 }
 
 export async function getOriginDollarStakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const { output: balanceOfRes } = await call({
+  const balanceOfRes = await call({
     ctx,
     target: staker.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
 
-  const { output: convertRateRes } = await call({
+  const convertRateRes = await call({
     ctx,
     target: staker.address,
     params: [balanceOfRes],

@@ -18,7 +18,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const link: Token = {
   chain: 'ethereum',
@@ -28,18 +28,18 @@ const link: Token = {
 }
 
 export async function getChainlinkStakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [balanceOfRes, rewardsOfRes] = await Promise.all([
+  const [balanceOf, rewardsOf] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getStake }),
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getBaseReward }),
   ])
 
   return {
     ...staker,
-    amount: BigNumber.from(balanceOfRes.output),
+    amount: BigNumber.from(balanceOf),
     decimals: link.decimals,
     symbol: link.symbol,
     underlyings: staker.underlyings as Contract[],
-    rewards: [{ ...link, amount: BigNumber.from(rewardsOfRes.output) }],
+    rewards: [{ ...link, amount: BigNumber.from(rewardsOf) }],
     category: 'stake',
   }
 }

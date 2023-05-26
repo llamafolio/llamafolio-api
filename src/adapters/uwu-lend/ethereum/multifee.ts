@@ -94,7 +94,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export interface GetMultiFeeDistributionBalancesParams {
   lendingPool: Contract
@@ -139,23 +139,19 @@ export async function getUWUMultiFeeDistributionBalances(
 
   const calls: Call[] = rewards.map((token) => ({ target: contract.address, params: token.address }))
 
-  const [
-    { output: claimableRewards },
-    { output: lockedBalances },
-    { output: earnedBalances },
-    { output: totalSupplyRes },
-    rewardRatesRes,
-  ] = await Promise.all([
+  const [claimableRewards, lockedBalances, earnedBalances, totalSupplyRes, rewardRatesRes] = await Promise.all([
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.claimableRewards }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.lockedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.earnedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, abi: erc20Abi.totalSupply }),
     multicall({ ctx, calls, abi: abi.rewardData }),
   ])
+  const [_lockedTotal, unlockable, _locked, lockData] = lockedBalances
+  const [_earnedTotal, earningsData] = earnedBalances
 
   // Locker
-  for (let lockIdx = 0; lockIdx < lockedBalances.lockData.length; lockIdx++) {
-    const lockedBalance = lockedBalances.lockData[lockIdx]
+  for (let lockIdx = 0; lockIdx < lockData.length; lockIdx++) {
+    const lockedBalance = lockData[lockIdx]
     const underlyingsFromToken = (stakingToken as Contract).underlyings
     const { amount, unlockTime } = lockedBalance
 
@@ -167,8 +163,8 @@ export async function getUWUMultiFeeDistributionBalances(
       underlyings: underlyingsFromToken as Contract[],
       rewards: undefined,
       amount: BigNumber.from(amount),
-      claimable: unlockTime < Date.now() ? BigNumber.from(lockedBalances.unlockable) : BN_ZERO,
-      unlockAt: unlockTime,
+      claimable: unlockTime < Date.now() ? BigNumber.from(unlockable) : BN_ZERO,
+      unlockAt: Number(unlockTime),
       category: 'lock',
     })
   }
@@ -176,8 +172,8 @@ export async function getUWUMultiFeeDistributionBalances(
   balances.push(...(await getUnderlyingBalances(ctx, lockerBalances)))
 
   // Vester
-  for (let vestIdx = 0; vestIdx < earnedBalances.earningsData.length; vestIdx++) {
-    const earnedBalance = earnedBalances.earningsData[vestIdx]
+  for (let vestIdx = 0; vestIdx < earningsData.length; vestIdx++) {
+    const earnedBalance = earningsData[vestIdx]
     const { amount, unlockTime } = earnedBalance
 
     balances.push({
@@ -188,7 +184,7 @@ export async function getUWUMultiFeeDistributionBalances(
       underlyings: undefined,
       rewards: undefined,
       amount: BigNumber.from(amount),
-      unlockAt: unlockTime,
+      unlockAt: Number(unlockTime),
       category: 'vest',
     })
   }

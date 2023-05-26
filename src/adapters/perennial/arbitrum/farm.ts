@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const USDC: Token = {
   chain: 'arbitrum',
@@ -22,14 +22,14 @@ const USDC: Token = {
 }
 
 export async function getPVAFarmBalances(ctx: BalancesContext, farmer: Contract): Promise<Balance> {
-  const { output: balanceOfRes } = await call({
+  const balanceOfRes = await call({
     ctx,
     target: farmer.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
 
-  const { output: fmtBalances } = await call({
+  const fmtBalances = await call({
     ctx,
     target: farmer.address,
     params: [balanceOfRes],

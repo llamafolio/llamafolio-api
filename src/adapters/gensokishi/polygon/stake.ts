@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const MV: Token = {
   chain: 'polygon',
@@ -29,7 +29,7 @@ const ROND: Token = {
 }
 
 export async function getGensokishiStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: userBalance }, { output: earned }] = await Promise.all([
+  const [userBalance, earned] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.earned }),
   ])

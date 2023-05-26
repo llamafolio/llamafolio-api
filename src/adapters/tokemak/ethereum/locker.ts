@@ -37,7 +37,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const TOKE: Token = {
   chain: 'ethereum',
@@ -47,19 +47,13 @@ const TOKE: Token = {
 }
 
 export async function getTokemakLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance> {
-  const [
-    { output: currentCycleIndexRes },
-    { output: currentCycleRes },
-    { output: cycleDurationRes },
-    {
-      output: { lockCycle, lockDuration, amount },
-    },
-  ] = await Promise.all([
+  const [currentCycleIndexRes, currentCycleRes, cycleDurationRes, depositInfo] = await Promise.all([
     call({ ctx, target: locker.manager, abi: abi.currentCycleIndex }),
     call({ ctx, target: locker.manager, abi: abi.currentCycle }),
     call({ ctx, target: locker.manager, abi: abi.cycleDuration }),
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.getDepositInfo }),
   ])
+  const [lockCycle, lockDuration, amount] = depositInfo
 
   const lockerDate = calculateLockerDate(
     currentCycleIndexRes,
@@ -77,22 +71,19 @@ export async function getTokemakLockerBalances(ctx: BalancesContext, locker: Con
     underlyings: [TOKE],
     claimable: lockerDate < now ? BigNumber.from(amount) : BN_ZERO,
     rewards: undefined,
-    unlockAt: lockerDate,
+    unlockAt: Number(lockerDate),
     category: 'lock',
   }
 }
 
 function calculateLockerDate(
-  currentCycleIndexRes: string,
-  currentCycleRes: string,
-  lockCycle: string,
-  lockDuration: string,
-  cycleDurationRes: string,
+  currentCycleIndexRes: bigint,
+  currentCycleRes: bigint,
+  lockCycle: bigint,
+  lockDuration: bigint,
+  cycleDurationRes: bigint,
 ) {
-  const now = parseInt(currentCycleRes)
+  const userLockCycle = (currentCycleIndexRes - (lockCycle + lockDuration)) * cycleDurationRes
 
-  const userLockCycle =
-    (parseInt(currentCycleIndexRes) - (parseInt(lockCycle) + parseInt(lockDuration))) * parseInt(cycleDurationRes)
-
-  return now - userLockCycle
+  return currentCycleRes - userLockCycle
 }

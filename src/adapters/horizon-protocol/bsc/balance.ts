@@ -27,7 +27,7 @@ const abi = {
     outputs: [{ name: '', type: 'uint256[4]' }],
     gas: 20935,
   },
-}
+} as const
 
 const HZN: Token = {
   chain: 'bsc',
@@ -37,9 +37,9 @@ const HZN: Token = {
 }
 
 interface HorizonBalanceParams extends FarmBalance {
-  pool: string
-  factory: string
-  token: string
+  pool: `0x${string}`
+  factory: `0x${string}`
+  token: `0x${string}`
 }
 
 export async function getHorizonFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
@@ -95,7 +95,7 @@ export async function getHorizonFarmBalances(ctx: BalancesContext, farmers: Cont
 const getUnderlyingsCurveBalance = async (ctx: BalancesContext, crvBalance: HorizonBalanceParams): Promise<Balance> => {
   const underlyings = crvBalance.underlyings as Contract[]
 
-  const [{ output: underlyingsBalances }, { output: totalSupplyRes }] = await Promise.all([
+  const [underlyingsBalances, totalSupplyRes] = await Promise.all([
     call({ ctx, target: crvBalance.factory, params: [crvBalance.pool], abi: abi.get_balances }),
     call({ ctx, target: crvBalance.token!, abi: erc20Abi.totalSupply }),
   ])

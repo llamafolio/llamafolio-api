@@ -26,7 +26,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const wigo: Token = {
   chain: 'fantom',
@@ -36,14 +36,15 @@ const wigo: Token = {
 }
 
 export async function getWigoBalances(ctx: BalancesContext, pool: Contract): Promise<Balance> {
-  const [{ output: balanceOf }, { output: pricePerFullShare }] = await Promise.all([
+  const [userInfo, pricePerFullShare] = await Promise.all([
     call({ ctx, target: pool.address, params: [ctx.address], abi: abi.userInfo }),
     call({ ctx, target: pool.address, abi: abi.getPricePerFullShare }),
   ])
+  const [shares] = userInfo
 
   return {
     ...pool,
-    amount: BigNumber.from(balanceOf.shares).mul(pricePerFullShare).div(utils.parseEther('1.0')),
+    amount: BigNumber.from(shares).mul(pricePerFullShare).div(utils.parseEther('1.0')),
     underlyings: [wigo],
     rewards: undefined,
     category: 'farm',

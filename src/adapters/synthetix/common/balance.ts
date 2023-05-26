@@ -37,30 +37,31 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getSNXBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
-  const [{ output: userLendBalanceOf }, { output: userDebtBalanceOf }, { output: userPendingRewardBalanceOf }] =
-    await Promise.all([
-      call({
-        ctx,
-        target: contract.token!,
-        params: [ctx.address],
-        abi: abi.collateral,
-      }),
-      call({
-        ctx,
-        target: contract.token!,
-        params: [ctx.address],
-        abi: abi.remainingIssuableSynths,
-      }),
-      call({
-        ctx,
-        target: contract.rewarder,
-        params: [ctx.address],
-        abi: abi.feesAvailable,
-      }),
-    ])
+  const [userLendBalanceOf, userDebtBalanceOf, userPendingRewardBalanceOf] = await Promise.all([
+    call({
+      ctx,
+      target: contract.token!,
+      params: [ctx.address],
+      abi: abi.collateral,
+    }),
+    call({
+      ctx,
+      target: contract.token!,
+      params: [ctx.address],
+      abi: abi.remainingIssuableSynths,
+    }),
+    call({
+      ctx,
+      target: contract.rewarder,
+      params: [ctx.address],
+      abi: abi.feesAvailable,
+    }),
+  ])
+
+  const [_maxIssuable, alreadyIssued, _totalSystemDebt] = userDebtBalanceOf
 
   const lendBalance: LendBalance = {
     ...contract,
@@ -72,7 +73,7 @@ export async function getSNXBalances(ctx: BalancesContext, contract: Contract): 
 
   const borrowBalance: BorrowBalance = {
     ...contract,
-    amount: BigNumber.from(userDebtBalanceOf.alreadyIssued),
+    amount: BigNumber.from(alreadyIssued),
     underlyings: contract.underlyings as Contract[],
     rewards: undefined,
     category: 'borrow',

@@ -39,12 +39,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getContractsRegister(ctx: BaseContext) {
   const ADDRESS_PROVIDER = '0xcf64698aff7e5f27a11dff868af228653ba53be0'
 
-  const { output: contractsRegister } = await call({
+  const contractsRegister = await call({
     ctx,
     abi: abi.getContractsRegister,
     target: ADDRESS_PROVIDER,
@@ -56,13 +56,11 @@ export async function getContractsRegister(ctx: BaseContext) {
 export async function getPoolsContracts(ctx: BaseContext, contractsRegister: string) {
   const contracts: PoolContract[] = []
 
-  const poolsRes = await call({
+  const pools = await call({
     ctx,
     target: contractsRegister,
     abi: abi.getPools,
   })
-
-  const pools: string[] = poolsRes.output
 
   const calls: Call[] = pools.map((pool) => ({ target: pool }))
 

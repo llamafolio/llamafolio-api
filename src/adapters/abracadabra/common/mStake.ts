@@ -35,18 +35,18 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getMStakeContract(ctx: BaseContext, contract: Contract): Promise<Contract> {
   const [underlyingTokenAddressRes, rewardTokenAddressRes] = await Promise.all([
-    call({ ctx, target: contract.address, params: [], abi: abi.spell }),
-    call({ ctx, target: contract.address, params: [], abi: abi.mim }),
+    call({ ctx, target: contract.address, abi: abi.spell }),
+    call({ ctx, target: contract.address, abi: abi.mim }),
   ])
 
   const stakeContract: Contract = {
     ...contract,
-    underlyings: [underlyingTokenAddressRes.output],
-    rewards: [rewardTokenAddressRes.output],
+    underlyings: [underlyingTokenAddressRes],
+    rewards: [rewardTokenAddressRes],
   }
 
   return stakeContract
@@ -57,7 +57,7 @@ export async function getMStakeBalance(ctx: BalancesContext, contract: Contract)
   const underlying = contract.underlyings?.[0]
   const reward = contract.rewards?.[0]
 
-  const [balanceOfRes, pendingRewardsRes] = await Promise.all([
+  const [[amount], pendingRewardsRes] = await Promise.all([
     call({
       ctx,
       target: contract.address,
@@ -73,8 +73,8 @@ export async function getMStakeBalance(ctx: BalancesContext, contract: Contract)
     }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes.output.amount)
-  const pendingRewards = BigNumber.from(pendingRewardsRes.output)
+  const balanceOf = BigNumber.from(amount)
+  const pendingRewards = BigNumber.from(pendingRewardsRes)
 
   if (contract) {
     const balance: Balance = {

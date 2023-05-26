@@ -87,7 +87,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const factory: Contract = {
   chain: 'bsc',
@@ -104,7 +104,7 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
     abi: erc20Abi.balanceOf,
   })
 
-  const balancesLength = parseInt(balanceOf.output)
+  const balancesLength = Number(balanceOf)
 
   const tokensOfOwnerByIndexRes = await multicall({
     ctx,

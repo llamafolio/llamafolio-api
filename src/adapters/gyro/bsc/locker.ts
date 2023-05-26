@@ -29,7 +29,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const GYRO: Token = {
   chain: 'bsc',
@@ -42,16 +42,17 @@ export async function getGyroLocker(ctx: BalancesContext, locker: Contract): Pro
   const balances: LockBalance[] = []
   const now = Date.now() / 1000
 
-  const { output: balancesOfsRes } = await call({
+  const balancesOfsRes = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
+  const balancesOf = Number(balancesOfsRes)
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, balancesOfsRes).map((_, idx) => ({ target: locker.address, params: [ctx.address, idx] })),
+    calls: range(0, balancesOf).map((_, idx) => ({ target: locker.address, params: [ctx.address, idx] })),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -63,7 +64,7 @@ export async function getGyroLocker(ctx: BalancesContext, locker: Contract): Pro
     abi: abi.locked,
   })
 
-  for (let balanceIdx = 0; balanceIdx < balancesOfsRes; balanceIdx++) {
+  for (let balanceIdx = 0; balanceIdx < balancesOf; balanceIdx++) {
     const lockedInfosResByIndex = lockedInfosResByIndexes[balanceIdx]
 
     if (!isSuccess(lockedInfosResByIndex)) {

@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const XAI: Token = {
   chain: 'ethereum',
@@ -22,14 +22,14 @@ const XAI: Token = {
 }
 
 export async function getsvXAIBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const { output: balanceOf } = await call({
+  const balanceOf = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
 
-  const { output: fmtBalanceOf } = await call({
+  const fmtBalanceOf = await call({
     ctx,
     target: contract.address,
     params: [balanceOf],

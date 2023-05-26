@@ -55,7 +55,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const cake: Token = {
   chain: 'bsc',
@@ -96,8 +96,20 @@ export async function getStakersBalances(ctx: BalancesContext, stakers: Contract
 export async function getStakerCake(ctx: BalancesContext, staker: Contract) {
   const balance: Balance[] = []
 
-  const balanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.userInfos })
-  const balanceOf = BigNumber.from(balanceOfRes.output.lockedAmount)
+  const userInfos = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.userInfos })
+  const [
+    _shares,
+    _lastDepositedTime,
+    _cakeAtLastUserAction,
+    _lastUserActionTime,
+    _lockStartTime,
+    _lockEndTime,
+    _userBoostedShare,
+    _locked,
+    lockedAmount,
+  ] = userInfos
+
+  const balanceOf = BigNumber.from(lockedAmount)
 
   balance.push({
     ...staker,

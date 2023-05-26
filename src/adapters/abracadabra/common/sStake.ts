@@ -19,19 +19,18 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getSStakeContract(ctx: BaseContext, contract: Contract): Promise<Contract> {
   const underlyingTokenAddressRes = await call({
     ctx,
     target: contract.address,
-    params: [],
     abi: abi.token,
   })
 
   const stakeContract: Contract = {
     ...contract,
-    underlyings: [underlyingTokenAddressRes.output],
+    underlyings: [underlyingTokenAddressRes],
   }
 
   return stakeContract
@@ -51,7 +50,6 @@ export async function getSStakeBalance(ctx: BalancesContext, contract: Contract)
     call({
       ctx,
       target: contract.address,
-      params: [],
       abi: erc20Abi.totalSupply,
     }),
 
@@ -63,9 +61,9 @@ export async function getSStakeBalance(ctx: BalancesContext, contract: Contract)
     }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
-  const totalSupply = BigNumber.from(totalSupplyRes.output)
-  const balanceOfTokenInUnderlying = BigNumber.from(balanceOfTokenInUnderlyingRes.output)
+  const balanceOf = BigNumber.from(balanceOfRes)
+  const totalSupply = BigNumber.from(totalSupplyRes)
+  const balanceOfTokenInUnderlying = BigNumber.from(balanceOfTokenInUnderlyingRes)
 
   const formattedBalanceOf = balanceOf.mul(balanceOfTokenInUnderlying).div(totalSupply)
 

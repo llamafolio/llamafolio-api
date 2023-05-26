@@ -18,7 +18,8 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
+
 const x2y2: Token = {
   chain: 'ethereum',
   address: '0x1E4EDE388cbc9F4b5c79681B7f94d36a11ABEBC9',
@@ -34,7 +35,7 @@ const weth: Token = {
 }
 
 export async function getX2Y2StakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: balanceOf }, { output: pendingReward }] = await Promise.all([
+  const [balanceOf, pendingReward] = await Promise.all([
     call({
       ctx,
       target: staker.address,

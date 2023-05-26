@@ -1,4 +1,4 @@
-import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContract, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { BN_ZERO } from '@lib/math'
@@ -47,11 +47,11 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Contract) {
-  const LUSD = bondNFT.underlyings?.[0]
-  const bLUSD = bondNFT.rewards?.[0]
+  const LUSD = bondNFT.underlyings?.[0] as BaseContract
+  const bLUSD = bondNFT.rewards?.[0] as BaseContract
   if (!LUSD || !bLUSD) {
     return []
   }
@@ -65,7 +65,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
     abi: abi.balanceOf,
   })
 
-  const bondsLength = balanceOfRes.output
+  const bondsLength = Number(balanceOfRes)
 
   const tokenOfOwnerByIndexRes = await multicall({
     ctx,

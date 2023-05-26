@@ -27,12 +27,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getVotingEscrowBalances(ctx: BalancesContext, votingEscrow: Contract, velo: Contract) {
   const balanceOfRes = await call({ ctx, target: votingEscrow.address, abi: erc20Abi.balanceOf, params: [ctx.address] })
 
-  const balancesLength = parseInt(balanceOfRes.output)
+  const balancesLength = Number(balanceOfRes)
 
   // token IDS
   const tokensOfOwnerByIndexRes = await multicall({

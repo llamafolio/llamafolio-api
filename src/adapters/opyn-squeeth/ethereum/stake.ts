@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const oSQTH: Token = {
   chain: 'ethereum',
@@ -24,11 +24,11 @@ const oSQTH: Token = {
 export async function getOpynStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
   const userBalanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf })
 
-  const amount = await call({ ctx, target: staker.address, params: [userBalanceOfRes.output], abi: abi.getWsqueeth })
+  const amount = await call({ ctx, target: staker.address, params: [userBalanceOfRes], abi: abi.getWsqueeth })
 
   return {
     ...staker,
-    amount: BigNumber.from(amount.output),
+    amount: BigNumber.from(amount),
     underlyings: [oSQTH],
     rewards: undefined,
     category: 'stake',

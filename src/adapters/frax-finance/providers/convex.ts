@@ -70,7 +70,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const convexBooster: Contract = {
   chain: 'ethereum',
@@ -147,7 +147,7 @@ export const convexBalancesProvider = async (
 ): Promise<ProviderBalancesParams[]> => {
   for (const pool of pools) {
     if (pool.provider === 'curve') {
-      const { output: pricePerShare } = await call({ ctx, target: pool.lpToken, abi: abi.getPricePerFullShare })
+      const pricePerShare = await call({ ctx, target: pool.lpToken, abi: abi.getPricePerFullShare })
       pool.amount = pool.amount.mul(pricePerShare).div(utils.parseEther('1.0'))
     }
   }

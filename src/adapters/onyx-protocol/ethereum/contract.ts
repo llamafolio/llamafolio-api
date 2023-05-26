@@ -26,7 +26,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const Onyx: Token = {
   chain: 'ethereum',
@@ -38,7 +38,8 @@ const Onyx: Token = {
 export async function getOnyxPoolsContracts(ctx: BaseContext, lendingPool: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const { output: poolLength } = await call({ ctx, target: lendingPool.address, abi: abi.poolLength })
+  const poolLengthBI = await call({ ctx, target: lendingPool.address, abi: abi.poolLength })
+  const poolLength = Number(poolLengthBI)
 
   const poolsInfos = await multicall({
     ctx,

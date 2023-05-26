@@ -11,20 +11,20 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getStakedFraxBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const { output: BalanceOfRes } = await call({
+  const balanceOf = await call({
     ctx,
     target: staker.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
 
-  const { output: fmtBalances } = await call({
+  const fmtBalances = await call({
     ctx,
     target: staker.address,
-    params: [BalanceOfRes],
+    params: [balanceOf],
     abi: abi.convertToAssets,
   })
 

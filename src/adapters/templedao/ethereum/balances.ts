@@ -21,14 +21,12 @@ export async function getStakeBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const balanceOfRes = await call({
+  const balanceOf = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
   })
-
-  const balanceOf = balanceOfRes.output
 
   const formattedBalanceRes = await call({
     ctx,
@@ -43,7 +41,7 @@ export async function getStakeBalances(
     },
   })
 
-  const formattedBalance = BigNumber.from(formattedBalanceRes.output)
+  const formattedBalance = BigNumber.from(formattedBalanceRes)
 
   const balance: Balance = {
     chain: ctx.chain,

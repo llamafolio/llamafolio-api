@@ -22,7 +22,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const LODE: Token = {
   chain: 'arbitrum',
@@ -32,15 +32,16 @@ const LODE: Token = {
 }
 
 export async function getFarmBalances(ctx: BalancesContext, farmer: Contract): Promise<Balance[]> {
-  const [{ output: userInfo }, { output: pendingReward }] = await Promise.all([
+  const [userInfo, pendingReward] = await Promise.all([
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.userInfo }),
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.pendingRewards }),
   ])
+  const [amount, _lodeRewardDebt] = userInfo
 
   const balance: Balance = {
     ...farmer,
-    address: farmer.token as string,
-    amount: BigNumber.from(userInfo.amount),
+    address: farmer.token as `0x${string}`,
+    amount: BigNumber.from(amount),
     underlyings: farmer.underlyings as Contract[],
     rewards: [{ ...LODE, amount: BigNumber.from(pendingReward) }],
     category: 'farm',

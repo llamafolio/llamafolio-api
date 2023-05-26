@@ -24,7 +24,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const TOKE: Token = {
   chain: 'ethereum',
@@ -34,7 +34,7 @@ const TOKE: Token = {
 }
 
 export async function getTokemakStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const { output: balanceOfRes } = await call({
+  const balanceOfRes = await call({
     ctx,
     target: staker.address,
     params: [ctx.address],

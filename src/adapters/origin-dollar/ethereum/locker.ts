@@ -29,7 +29,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const OGV: Token = {
   chain: 'ethereum',
@@ -41,7 +41,7 @@ const OGV: Token = {
 export async function getOriginDollarLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance[]> {
   const balances: LockBalance[] = []
 
-  const [lockupsRes, { output: rewardRes }] = await Promise.all([
+  const [lockupsRes, rewardRes] = await Promise.all([
     multicall({
       ctx,
       // There is no logic function to know in advance number of positions taken by users, as far i could checked, 10 seems to be the maximum positions length found

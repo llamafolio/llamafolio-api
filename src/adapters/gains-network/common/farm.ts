@@ -11,21 +11,21 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getGainsBalances(ctx: BalancesContext, farmer: Contract): Promise<Balance> {
   const underlying = farmer.underlyings?.[0] as Contract
-  const { output: balanceOfRes } = await call({
+  const balanceOf = await call({
     ctx,
     target: farmer.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
 
-  const { output: fmtBalances } = await call({
+  const fmtBalances = await call({
     ctx,
     target: farmer.address,
-    params: [balanceOfRes],
+    params: [balanceOf],
     abi: abi.convertToAssets,
   })
 

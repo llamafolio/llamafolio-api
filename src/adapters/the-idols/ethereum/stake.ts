@@ -25,7 +25,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const WETH: Token = {
   chain: 'ethereum',
@@ -35,7 +35,7 @@ const WETH: Token = {
 }
 
 export async function getVirtueStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: userBalance }, { output: userPendingReward }, { output: userExtraReward }] = await Promise.all([
+  const [userBalance, userPendingReward, userExtraReward] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getUserVirtueStake }),
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getPendingETHGain }),
     call({ ctx, target: staker.rewarder, params: [ctx.address], abi: abi.earned }),
@@ -43,7 +43,7 @@ export async function getVirtueStakeBalances(ctx: BalancesContext, staker: Contr
 
   return {
     ...staker,
-    address: staker.token as string,
+    address: staker.token!,
     amount: BigNumber.from(userBalance),
     underlyings: undefined,
     rewards: [{ ...WETH, amount: BigNumber.from(userPendingReward).add(userExtraReward) }],

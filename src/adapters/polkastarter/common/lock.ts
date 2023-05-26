@@ -25,16 +25,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getPolkaLockedBalance(ctx: BalancesContext, locker: Contract): Promise<Balance | undefined> {
-  const [{ output: userBalance }, { output: lockTime }] = await Promise.all([
+  const [userBalance, lockTime] = await Promise.all([
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.stakeAmount }),
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.getUnlockTime }),
   ])
 
   const now = Date.now() / 1000
-  const unlockAt = lockTime
+  const unlockAt = Number(lockTime)
 
   return {
     ...locker,

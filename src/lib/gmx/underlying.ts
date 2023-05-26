@@ -16,7 +16,7 @@ export const get_xLP_UnderlyingsBalances = async (
       continue
     }
 
-    const [{ output: totalSupply }, underlyingsBalancesOfsRes] = await Promise.all([
+    const [totalSupply, underlyingsBalancesOfsRes] = await Promise.all([
       call({ ctx, target: balance.address, abi: erc20Abi.totalSupply }),
       multicall({
         ctx,

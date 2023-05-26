@@ -51,7 +51,7 @@ export async function getMarketsContracts(ctx: BaseContext): Promise<Contract[]>
 }
 
 export async function getHealthFactor(ctx: BalancesContext, lensContract: Contract): Promise<number | undefined> {
-  const getHealthFactor = await call({
+  const [_collateralValue, _liabilityValue, healthScore] = await call({
     ctx,
     target: lensContract.address,
     params: [ctx.address],
@@ -68,11 +68,11 @@ export async function getHealthFactor(ctx: BalancesContext, lensContract: Contra
     },
   })
 
-  if (!getHealthFactor.success || ethers.constants.MaxUint256.eq(getHealthFactor.output.healthScore)) {
+  if (ethers.constants.MaxUint256.eq(healthScore)) {
     return
   }
 
-  const healthFactor = parseFloat(utils.formatUnits(getHealthFactor.output.healthScore, 18))
+  const healthFactor = parseFloat(utils.formatUnits(healthScore, 18))
 
   return healthFactor
 }

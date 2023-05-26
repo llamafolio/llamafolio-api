@@ -13,7 +13,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const WAVAX: Token = {
   chain: 'avalanche',
@@ -22,25 +22,27 @@ const WAVAX: Token = {
   decimals: 18,
 }
 
-export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const { output: balanceOfRes } = await call({
+export async function getStakeBalances(ctx: BalancesContext, contract: Contract) {
+  const balanceOfRes = await call({
     ctx,
     target: contract.address,
-    params: ctx.address,
+    params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
 
-  const { output: fmtBalanceOf } = await call({
+  const fmtBalanceOf = await call({
     ctx,
     target: contract.address,
     params: [balanceOfRes],
     abi: abi.getPooledAvaxByShares,
   })
 
-  return {
+  const balance: Balance = {
     ...contract,
     rewards: undefined,
     amount: BigNumber.from(fmtBalanceOf),
     underlyings: [{ ...WAVAX }],
   }
+
+  return balance
 }

@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const USDC: Token = {
   chain: 'ethereum',
@@ -22,14 +22,14 @@ const USDC: Token = {
 }
 
 export async function getTProtocolBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const { output: userBalanceOf } = await call({
+  const userBalanceOf = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
 
-  const { output: fmtBalance } = await call({
+  const fmtBalance = await call({
     ctx,
     target: contract.address,
     params: [userBalanceOf],

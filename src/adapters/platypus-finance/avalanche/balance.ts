@@ -66,7 +66,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const PTP: Token = {
   chain: 'avalanche',
@@ -123,28 +123,30 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
     params: [ctx.address],
     abi: abi.lockedPositions,
   })
+  const [_initialLockTime, unlockTime, ptpLocked, _vePtpAmount] = lockedPositionsRes
 
   return {
     ...contract,
-    amount: BigNumber.from(lockedPositionsRes.output.ptpLocked),
+    amount: BigNumber.from(ptpLocked),
     underlyings: [PTP],
-    unlockAt: lockedPositionsRes.output.unlockTime,
+    unlockAt: Number(unlockTime),
     rewards: undefined,
     category: 'lock',
   }
 }
 
 export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const [stakeBalancesRes, vePTPGeneratedRes] = await Promise.all([
+  const [stakeBalancesRes, claimableWithXp] = await Promise.all([
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.getStakedPtp }),
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.claimableWithXp }),
   ])
+  const [amount, _xp] = claimableWithXp
 
   return {
     ...contract,
-    amount: BigNumber.from(stakeBalancesRes.output),
+    amount: BigNumber.from(stakeBalancesRes),
     underlyings: [PTP],
-    rewards: [{ ...contract, amount: BigNumber.from(vePTPGeneratedRes.output.amount) }],
+    rewards: [{ ...contract, amount: BigNumber.from(amount) }],
     category: 'stake',
   }
 }

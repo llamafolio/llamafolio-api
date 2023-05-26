@@ -11,10 +11,10 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getBadgerStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [balance, { output: exchangeRate }] = await Promise.all([
+  const [balance, exchangeRate] = await Promise.all([
     getSingleStakeBalance(ctx, staker),
     call({ ctx, target: staker.address, abi: abi.pricePerShare }),
   ])

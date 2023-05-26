@@ -27,12 +27,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getPieDaoLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance[]> {
   const now = Date.now() / 1000
 
-  const { output: getLocksOfLength } = await call({
+  const getLocksOfLength = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],
@@ -41,7 +41,7 @@ export async function getPieDaoLockerBalances(ctx: BalancesContext, locker: Cont
 
   const locksOfRes = await multicall({
     ctx,
-    calls: range(0, getLocksOfLength).map((_, idx) => ({ target: locker.address, params: [ctx.address, idx] })),
+    calls: range(0, Number(getLocksOfLength)).map((_, idx) => ({ target: locker.address, params: [ctx.address, idx] })),
     abi: abi.locksOf,
   })
 

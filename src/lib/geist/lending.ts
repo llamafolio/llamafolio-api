@@ -35,7 +35,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export interface GetLendingPoolContractsParams {
   ctx: BaseContext
@@ -58,11 +58,11 @@ export async function getLendingPoolContracts(
   const aaveLendingPoolContracts = await getAaveLendingPoolContracts(ctx, lendingPool)
   const aaveLendingPoolContractsByAddress = keyBy(aaveLendingPoolContracts, 'address', { lowercase: false })
 
-  const { output: lmRewardsCount } = await call({ ctx, target: chefIncentivesController.address, abi: abi.poolLength })
+  const lmRewardsCount = await call({ ctx, target: chefIncentivesController.address, abi: abi.poolLength })
 
   const registeredTokensRes = await multicall({
     ctx,
-    calls: range(0, lmRewardsCount).map((_, idx) => ({
+    calls: range(0, Number(lmRewardsCount)).map((_, idx) => ({
       target: chefIncentivesController.address,
       params: [idx],
     })),

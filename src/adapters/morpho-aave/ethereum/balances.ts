@@ -54,7 +54,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getMarketsContracts(ctx: BaseContext, lens: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
@@ -62,13 +62,12 @@ export async function getMarketsContracts(ctx: BaseContext, lens: Contract): Pro
   const marketsContractsRes = await call({
     ctx,
     target: lens.address,
-    params: [],
     abi: abi.getAllMarkets,
   })
 
   const underlyingsRes = await multicall({
     ctx,
-    calls: marketsContractsRes.output.map((token: string) => ({
+    calls: marketsContractsRes.map((token) => ({
       target: token,
       params: [],
     })),
@@ -76,7 +75,7 @@ export async function getMarketsContracts(ctx: BaseContext, lens: Contract): Pro
   })
 
   for (let idx = 0; idx < underlyingsRes.length; idx++) {
-    const market = marketsContractsRes.output[idx]
+    const market = marketsContractsRes[idx]
     const underlying = underlyingsRes[idx]
 
     if (!isSuccess(underlying)) {
@@ -151,9 +150,9 @@ export async function getUserHealthFactor(ctx: BalancesContext, morphoLens: Cont
     abi: abi.getUserHealthFactor,
   })
 
-  if (ethers.constants.MaxUint256.eq(userHealthFactorRes.output)) {
+  if (ethers.constants.MaxUint256.eq(userHealthFactorRes)) {
     return
   }
 
-  return userHealthFactorRes.output / 1e18
+  return Number(userHealthFactorRes) / 1e18
 }

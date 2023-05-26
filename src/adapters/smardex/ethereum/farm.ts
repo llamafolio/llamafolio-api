@@ -56,7 +56,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const SDEX: Token = {
   chain: 'ethereum',
@@ -104,7 +104,7 @@ export async function getSmarDexFarmBalances(
 const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterchef: Contract): Promise<Contract[]> => {
   const pairByAddress = keyBy(pairs, 'address', { lowercase: true })
 
-  const { output: poolLengthRes } = await call({
+  const poolLengthRes = await call({
     ctx,
     target: masterchef.address,
     abi: abi.campaignInfoLen,
@@ -112,7 +112,7 @@ const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterch
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLengthRes).map((_, idx) => ({ target: masterchef.address, params: [idx] })),
+    calls: range(0, Number(poolLengthRes)).map((_, idx) => ({ target: masterchef.address, params: [idx] })),
     abi: abi.campaignInfo,
   })
 

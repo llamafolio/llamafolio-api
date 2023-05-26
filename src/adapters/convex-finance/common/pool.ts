@@ -33,18 +33,18 @@ const abi = {
     outputs: [{ name: '', type: 'address' }],
     gas: 3123,
   },
-}
+} as const
 
 export async function getConvexAltChainsPools(
   ctx: BaseContext,
   booster: Contract,
   curvePools: Contract[],
 ): Promise<Contract[]> {
-  const { output: poolLength } = await call({ ctx, target: booster.address, abi: abi.poolLength })
+  const poolLengthBI = await call({ ctx, target: booster.address, abi: abi.poolLength })
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLength).map((i) => ({
+    calls: range(0, Number(poolLengthBI)).map((i) => ({
       target: booster.address,
       params: [i],
     })),

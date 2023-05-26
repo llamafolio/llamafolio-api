@@ -57,7 +57,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const GFI: Token = {
   chain: 'ethereum',
@@ -73,11 +73,9 @@ const USDC: Token = {
   decimals: 6,
 }
 
-const FiduToUSDC = async (ctx: BalancesContext): Promise<number> => {
+const FiduToUSDC = async (ctx: BalancesContext) => {
   const RATE_ADDRESS = '0x8481a6EbAf5c7DABc3F7e09e44A89531fd31F822'
-  const { output: rate } = await call({ ctx, target: RATE_ADDRESS, abi: abi.sharePrice })
-
-  return rate
+  return call({ ctx, target: RATE_ADDRESS, abi: abi.sharePrice })
 }
 
 export async function getGoldFinchStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
@@ -92,7 +90,7 @@ export async function getGoldFinchStakeBalances(ctx: BalancesContext, staker: Co
 export async function getGoldFinchNFTStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [{ output: nftLength }, rate] = await Promise.all([
+  const [nftLength, rate] = await Promise.all([
     call({
       ctx,
       target: staker.address,
@@ -104,7 +102,7 @@ export async function getGoldFinchNFTStakeBalances(ctx: BalancesContext, staker:
 
   const tokenIdsRes = await multicall({
     ctx,
-    calls: range(0, nftLength).map((idx) => ({ target: staker.address, params: [ctx.address, idx] })),
+    calls: range(0, Number(nftLength)).map((idx) => ({ target: staker.address, params: [ctx.address, idx] })),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -148,14 +146,16 @@ export async function getGoldFinchNFTStakeBalances(ctx: BalancesContext, staker:
 }
 
 export async function getGFIFarmBalances(ctx: BalancesContext, farmer: Contract): Promise<Balance> {
-  const [{ output: userBalance }, { output: pendingReward }] = await Promise.all([
+  const [totalGFIHeldBy, pendingReward] = await Promise.all([
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.totalGFIHeldBy }),
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.claimableRewards }),
   ])
 
+  const [eligibleAmount, _totalAmount] = totalGFIHeldBy
+
   return {
     ...farmer,
-    amount: BigNumber.from(userBalance.eligibleAmount),
+    amount: BigNumber.from(eligibleAmount),
     underlyings: [GFI],
     rewards: [{ ...GFI, amount: BigNumber.from(pendingReward) }],
     category: 'farm',

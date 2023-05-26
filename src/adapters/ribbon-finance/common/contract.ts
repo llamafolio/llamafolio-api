@@ -54,16 +54,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getFarmLPContracts(ctx: BaseContext, gaugeController: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const gaugesLength = await call({ ctx, target: gaugeController.address, params: [], abi: abi.n_gauges })
+  const gaugesLength = await call({ ctx, target: gaugeController.address, abi: abi.n_gauges })
 
   const gaugesAddressesRes = await multicall({
     ctx,
-    calls: range(0, gaugesLength.output).map((i) => ({
+    calls: range(0, Number(gaugesLength)).map((i) => ({
       target: gaugeController.address,
       params: [i],
     })),
@@ -113,8 +113,9 @@ export async function getFarmLPContracts(ctx: BaseContext, gaugeController: Cont
     const contract = contracts[idx]
 
     if (!isSuccess(underlyings)) {
-      const underlyings = await call({ ctx, target: contract.lpToken, params: [], abi: abi.vaultParamsOptions })
-      contract.underlyings = [underlyings.output.underlying]
+      const vaultParamsOptions = await call({ ctx, target: contract.lpToken, abi: abi.vaultParamsOptions })
+      const [_decimals, underlying, _minimumSupply, _cap] = vaultParamsOptions
+      contract.underlyings = [underlying]
     } else {
       contract.underlyings = [underlyings.output.asset]
     }
