@@ -16,20 +16,22 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getStaderFarmBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const { output: userBalance } = await call({
+  const userRequestStatus = await call({
     ctx,
     target: contract.address,
-    params: [ctx.address, 0],
+    params: [ctx.address, 0n],
     abi: abi.getUserRequestStatus,
   })
+
+  const [_isClaimable, _amount] = userRequestStatus
 
   return {
     ...contract,
     address: contract.token!,
-    amount: BigNumber.from(userBalance._amount),
+    amount: BigNumber.from(_amount),
     underlyings: undefined,
     rewards: undefined,
     category: 'farm',

@@ -44,14 +44,14 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export interface GetMarketsContractsProps {
-  comptrollerAddress: string
+  comptrollerAddress: `0x${string}`
   /**
    * map of underlying tokens by address not defined in Comptroller markets (ex: cETH -> WETH).
    */
-  underlyingAddressByMarketAddress?: { [key: string]: string }
+  underlyingAddressByMarketAddress?: { [key: string]: `0x${string}` }
 }
 
 export type BalanceWithExtraProps = Balance & {
@@ -64,12 +64,11 @@ export async function getMarketsContracts(
 ): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const cTokensAddressesRes = await call({
+  const cTokensAddresses = await call({
     ctx,
     abi: abi.getAllMarkets,
     target: comptrollerAddress,
   })
-  const cTokensAddresses: string[] = cTokensAddressesRes.output
 
   const [marketsRes, underlyingTokensAddressesRes] = await Promise.all([
     multicall({

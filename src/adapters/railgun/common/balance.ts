@@ -29,12 +29,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getRailgunBalances(ctx: BalancesContext, staker: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const { output: userStakeLength } = await call({
+  const userStakeLength = await call({
     ctx,
     target: staker.address,
     params: [ctx.address],
@@ -43,7 +43,7 @@ export async function getRailgunBalances(ctx: BalancesContext, staker: Contract)
 
   const userStakesRes = await multicall({
     ctx,
-    calls: range(0, userStakeLength).map((_, idx) => ({ target: staker.address, params: [ctx.address, idx] })),
+    calls: range(0, Number(userStakeLength)).map((_, idx) => ({ target: staker.address, params: [ctx.address, idx] })),
     abi: abi.stakes,
   })
 

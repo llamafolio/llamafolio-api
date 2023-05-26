@@ -19,7 +19,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const WETH: Token = {
   chain: 'ethereum',
@@ -33,7 +33,7 @@ export async function getCatMarketsBalances(
   market: Contract,
   tokensLists: Contract[],
 ): Promise<Balance[]> {
-  const [{ output: deposited }, { output: debt }] = await Promise.all([
+  const [deposited, debt] = await Promise.all([
     call({ ctx, target: market.address, params: [ctx.address], abi: abi.deposited }),
     call({ ctx, target: market.address, params: [ctx.address], abi: abi.debt }),
   ])

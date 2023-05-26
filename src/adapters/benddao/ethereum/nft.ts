@@ -97,7 +97,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const weth: Token = {
   chain: 'ethereum',
@@ -116,11 +116,11 @@ const ape: Token = {
 export async function getNftContracts(ctx: BaseContext, registry: Contract): Promise<Contract[]> {
   const nfts: Contract[] = []
 
-  const { output: nftsAddresses } = await call({ ctx, target: registry.address, abi: abi.getBNFTAssetList })
+  const nftsAddresses = await call({ ctx, target: registry.address, abi: abi.getBNFTAssetList })
 
   const nftsProxies = await multicall({
     ctx,
-    calls: nftsAddresses.map((nft: string) => ({ target: registry.address, params: [nft] })),
+    calls: nftsAddresses.map((nft) => ({ target: registry.address, params: [nft] })),
     abi: abi.bNftProxys,
   })
 

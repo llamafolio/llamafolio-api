@@ -100,7 +100,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export interface GetMultiFeeDistributionBalancesParams {
   lendingPool: Contract
@@ -113,7 +113,7 @@ export async function getMultiFeeDistributionContracts(
   multiFeeDistribution: Contract,
   stakingToken: Contract,
 ): Promise<Contract> {
-  const { output: claimableRewards } = await call({
+  const claimableRewards = await call({
     ctx,
     target: multiFeeDistribution.address,
     // any addresses could return reward addresses
@@ -123,7 +123,7 @@ export async function getMultiFeeDistributionContracts(
 
   const underlyingsTokensRes = await multicall({
     ctx,
-    calls: claimableRewards.map((reward: { token: string; amount: string }) => ({ target: reward.token })),
+    calls: claimableRewards.map((reward) => ({ target: reward.token })),
     abi: abi.UNDERLYING_ASSET_ADDRESS,
   })
 
@@ -163,25 +163,21 @@ export async function getMultiFeeDistributionBalances(
 
   const calls: Call[] = rewards.map((token) => ({ target: contract.address, params: token.address }))
 
-  const [
-    { output: claimableRewards },
-    { output: lockedBalances },
-    { output: earnedBalances },
-    { output: unlockableBalance },
-    { output: totalSupplyRes },
-    rewardRatesRes,
-  ] = await Promise.all([
-    call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.claimableRewards }),
-    call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.lockedBalances }),
-    call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.earnedBalances }),
-    call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.unlockedBalance }),
-    call({ ctx, target: params.multiFeeDistribution.address, abi: erc20Abi.totalSupply }),
-    multicall({ ctx, calls, abi: abi.rewardData }),
-  ])
+  const [claimableRewards, lockedBalances, earnedBalances, unlockableBalance, totalSupplyRes, rewardRatesRes] =
+    await Promise.all([
+      call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.claimableRewards }),
+      call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.lockedBalances }),
+      call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.earnedBalances }),
+      call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.unlockedBalance }),
+      call({ ctx, target: params.multiFeeDistribution.address, abi: erc20Abi.totalSupply }),
+      multicall({ ctx, calls, abi: abi.rewardData }),
+    ])
+  const [totalLocked, _unlockable, _locked, lockData] = lockedBalances
+  const [_totalEarned, earningsData] = earnedBalances
 
   // Locker
-  const locked = sumBN((lockedBalances.lockData || []).map((lockData: any) => lockData.amount))
-  const expiredLocked = BigNumber.from(lockedBalances.total).sub(locked)
+  const locked = sumBN((lockData || []).map((lockData: any) => lockData.amount))
+  const expiredLocked = BigNumber.from(totalLocked).sub(locked)
 
   balances.push({
     chain: ctx.chain,
@@ -195,8 +191,8 @@ export async function getMultiFeeDistributionBalances(
     category: 'lock',
   })
 
-  for (let lockIdx = 0; lockIdx < lockedBalances.lockData.length; lockIdx++) {
-    const lockedBalance = lockedBalances.lockData[lockIdx]
+  for (let lockIdx = 0; lockIdx < lockData.length; lockIdx++) {
+    const lockedBalance = lockData[lockIdx]
     const { amount, unlockTime } = lockedBalance
 
     balances.push({
@@ -207,15 +203,15 @@ export async function getMultiFeeDistributionBalances(
       underlyings: undefined,
       rewards: undefined,
       amount: BigNumber.from(amount),
-      unlockAt: unlockTime,
+      unlockAt: Number(unlockTime),
       claimable: BN_ZERO,
       category: 'lock',
     })
   }
 
   // Vester
-  for (let vestIdx = 0; vestIdx < earnedBalances.earningsData.length; vestIdx++) {
-    const earnedBalance = earnedBalances.earningsData[vestIdx]
+  for (let vestIdx = 0; vestIdx < earningsData.length; vestIdx++) {
+    const earnedBalance = earningsData[vestIdx]
     const { amount, unlockTime } = earnedBalance
 
     balances.push({
@@ -226,7 +222,7 @@ export async function getMultiFeeDistributionBalances(
       underlyings: undefined,
       rewards: undefined,
       amount: BigNumber.from(amount),
-      unlockAt: unlockTime,
+      unlockAt: Number(unlockTime),
       category: 'vest',
     })
   }

@@ -14,7 +14,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const CRV: Token = {
   chain: 'ethereum',
@@ -38,15 +38,15 @@ const cvxCRV: Token = {
 }
 
 export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contract): Promise<Balance> {
-  const [balanceOfRes, crvEarnedRes, cvxTotalSupplyRes] = await Promise.all([
+  const [balanceOfBI, crvEarnedBI, cvxTotalSupplyBI] = await Promise.all([
     call({ ctx, target: cvxCrv.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: cvxCrv.address, params: [ctx.address], abi: abi.earned }),
     call({ ctx, target: CVX.address, abi: erc20Abi.totalSupply }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes.output || '0')
-  const crvEarned = BigNumber.from(crvEarnedRes.output || '0')
-  const cvxTotalSupply = BigNumber.from(cvxTotalSupplyRes.output || '0')
+  const balanceOf = BigNumber.from(balanceOfBI || '0')
+  const crvEarned = BigNumber.from(crvEarnedBI || '0')
+  const cvxTotalSupply = BigNumber.from(cvxTotalSupplyBI || '0')
 
   const rewards: Balance[] = []
 
@@ -67,13 +67,13 @@ export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contra
 }
 
 export async function getCVXStakeBalance(ctx: BalancesContext, cvxRewardPool: Contract): Promise<Balance> {
-  const [balanceOfRes, earnedRes] = await Promise.all([
+  const [balanceOfBI, earnedBI] = await Promise.all([
     call({ ctx, target: cvxRewardPool.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: cvxRewardPool.address, params: [ctx.address], abi: abi.earned }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
-  const earned = BigNumber.from(earnedRes.output)
+  const balanceOf = BigNumber.from(balanceOfBI)
+  const earned = BigNumber.from(earnedBI)
 
   return {
     chain: ctx.chain,

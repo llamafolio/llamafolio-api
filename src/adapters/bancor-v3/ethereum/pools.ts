@@ -95,7 +95,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const bancorNetwork = '0xeEF417e1D5CC832e619ae18D2F140De2999dD4fB'
 const standardRewards = '0xb0B958398ABB0b5DB4ce4d7598Fb868f5A00f372'
@@ -105,8 +105,7 @@ export interface Program extends Contract {
 }
 
 export async function getPoolsContracts(ctx: BaseContext): Promise<Contract[]> {
-  const poolCollectionsRes = await call({ ctx, target: bancorNetwork, abi: abi.poolCollections })
-  const poolCollections: string[] = poolCollectionsRes.output
+  const poolCollections = await call({ ctx, target: bancorNetwork, abi: abi.poolCollections })
 
   // standard tokens: DAI, LINK, 1INCH...
   const collectionsPoolsRes = await multicall({
@@ -144,8 +143,7 @@ export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[]) 
 }
 
 export async function getProgramsContracts(ctx: BaseContext): Promise<Program[]> {
-  const programIdsRes = await call({ ctx, target: standardRewards, abi: abi.programIds })
-  const programIds = programIdsRes.output.map((str: string) => BigNumber.from(str))
+  const programIds = await call({ ctx, target: standardRewards, abi: abi.programIds })
 
   const programsRes = await call({
     ctx,
@@ -154,8 +152,8 @@ export async function getProgramsContracts(ctx: BaseContext): Promise<Program[]>
     abi: abi.programs,
   })
 
-  return programsRes.output.map((programData: any) => ({
-    id: parseInt(programData.id),
+  return programsRes.map((programData) => ({
+    id: Number(programData.id),
     chain: ctx.chain,
     address: programData.poolToken,
     // replace ETH alias

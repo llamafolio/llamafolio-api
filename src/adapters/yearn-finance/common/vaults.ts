@@ -82,7 +82,7 @@ const abi = {
     type: 'function',
     gas: 2370,
   },
-}
+} as const
 
 type VaultBalance = Balance & {
   lpToken?: string
@@ -96,19 +96,18 @@ export async function getVaultsContracts(ctx: BaseContext, registry: Contract) {
   const assetsStaticsRes = await call({
     ctx,
     target: registry.address,
-    params: [],
     abi: abi.assetsStatic,
   })
 
-  for (let i = 0; i < assetsStaticsRes.output.length; i++) {
-    const assetsStatic = assetsStaticsRes.output[i]
+  for (let i = 0; i < assetsStaticsRes.length; i++) {
+    const assetsStatic = assetsStaticsRes[i]
 
     const contract: Contract = {
       chain: ctx.chain,
       name: assetsStatic.name,
       address: assetsStatic.id,
       symbol: assetsStatic.symbol,
-      decimals: parseInt(assetsStatic.decimals),
+      decimals: assetsStatic.decimals,
       lpToken: assetsStatic.tokenId,
       underlyings: [assetsStatic.tokenId],
     }
@@ -130,8 +129,8 @@ export async function getVaultsBalances(ctx: BalancesContext, vaults: Contract[]
     abi: abi.assetsPositionsOf,
   })
 
-  for (let i = 0; i < assetsPositionsOf.output.length; i++) {
-    const assetsPositionOf = assetsPositionsOf.output[i]
+  for (let i = 0; i < assetsPositionsOf.length; i++) {
+    const assetsPositionOf = assetsPositionsOf[i]
 
     vaultBalances.push({
       chain: ctx.chain,

@@ -30,7 +30,7 @@ const abi = {
     outputs: [{ name: '', type: 'uint256' }],
     gas: 20255,
   },
-}
+} as const
 
 const CVX: Token = {
   chain: 'ethereum',
@@ -57,7 +57,7 @@ export async function getConvexGaugesBalances(
     calls.push({ target: (gaugeBalance as Contract).crvRewards, params: [ctx.address] })
   }
 
-  const [claimableRewards, cvxTotalSupplyRes] = await Promise.all([
+  const [claimableRewards, cvxTotalSupply] = await Promise.all([
     multicall({ ctx, calls, abi: abi.earned }),
     call({ ctx, target: CVX.address, abi: erc20Abi.totalSupply }),
   ])
@@ -74,7 +74,7 @@ export async function getConvexGaugesBalances(
     rewards[0].amount = BigNumber.from(claimableReward.output || BN_ZERO)
 
     // rewards[1] is the common reward for all pools: CVX
-    rewards[1].amount = getCvxCliffRatio(BigNumber.from(cvxTotalSupplyRes.output), rewards[0].amount)
+    rewards[1].amount = getCvxCliffRatio(BigNumber.from(cvxTotalSupply), rewards[0].amount)
 
     if (rewards.length < 3) {
       commonRewardsPools.push(gaugeBalance)

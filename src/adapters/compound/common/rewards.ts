@@ -53,7 +53,7 @@ export async function getRewardsBalances(
     },
   })
 
-  const compAllocatedRewards = BigNumber.from(compAllocatedRewardsRes.output.allocated)
+  const compAllocatedRewards = BigNumber.from(compAllocatedRewardsRes.allocated)
 
   rewards.push({
     chain: ctx.chain,

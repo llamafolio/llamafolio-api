@@ -30,7 +30,7 @@ export async function getLendingRewardsBalances(
     },
   })
 
-  const userRewards = BigNumber.from(userRewardsRes.output)
+  const userRewards = BigNumber.from(userRewardsRes)
 
   rewards.push({
     chain: rewardToken.chain,

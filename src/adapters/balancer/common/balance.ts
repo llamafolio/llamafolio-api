@@ -27,7 +27,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export type getBalancerPoolsBalancesParams = Balance & {
   totalSupply: BigNumber
@@ -202,9 +202,9 @@ export async function getLpBalancerPoolsBalances(ctx: BalancesContext, pools: Co
 const unwrappedUnderlyingsInPools = async (ctx: BalancesContext, balance: Contract, vault: Contract) => {
   const unwrappedUnderlyings: Contract[] = []
 
-  const [totalSupplyRes, actualSupplyRes, poolTokensBalancesRes] = await Promise.all([
-    call({ ctx, target: balance.address, params: [], abi: erc20Abi.totalSupply }),
-    call({ ctx, target: balance.address, params: [], abi: abi.getActualSupply }),
+  const [totalSupplyRes, actualSupplyRes, [_tokens, balances, _lastChangeBlock]] = await Promise.all([
+    call({ ctx, target: balance.address, abi: erc20Abi.totalSupply }),
+    call({ ctx, target: balance.address, abi: abi.getActualSupply }),
     call({ ctx, target: vault.address, params: [balance.id], abi: abi.getPoolTokens }),
   ])
 
@@ -212,13 +212,13 @@ const unwrappedUnderlyingsInPools = async (ctx: BalancesContext, balance: Contra
     return
   }
 
-  balance.totalSupply = BigNumber.from(totalSupplyRes.output)
-  balance.actualSupply = actualSupplyRes.output && BigNumber.from(actualSupplyRes.output)
+  balance.totalSupply = BigNumber.from(totalSupplyRes)
+  balance.actualSupply = actualSupplyRes && BigNumber.from(actualSupplyRes)
 
   for (let underlyingIdx = 0; underlyingIdx < balance.underlyings.length; underlyingIdx++) {
-    const underlying = balance.underlyings[underlyingIdx] as string
+    const underlying = balance.underlyings[underlyingIdx] as `0x${string}`
 
-    const poolTokenBalanceRes = poolTokensBalancesRes.output.balances[underlyingIdx]
+    const poolTokenBalanceRes = balances[underlyingIdx]
 
     const underlyingAmount = balance.amount
       .mul(poolTokenBalanceRes)

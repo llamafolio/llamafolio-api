@@ -28,10 +28,10 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getMorphoMarketsContracts(ctx: BaseContext, morphoLens: Contract): Promise<Contract[]> {
-  const { output: cTokensAddressesRes } = await call({ ctx, target: morphoLens.address, abi: abi.getAllMarkets })
+  const cTokensAddressesRes = await call({ ctx, target: morphoLens.address, abi: abi.getAllMarkets })
 
   const marketsDetailsRes = await multicall({
     ctx,
@@ -54,7 +54,7 @@ export async function getMorphoMarketsContracts(ctx: BaseContext, morphoLens: Co
   ])
 
   const markets = cTokensAddressesRes
-    .map((cToken: string, idx: number) => {
+    .map((cToken, idx) => {
       const marketsDetailRes = marketsDetailsRes[idx]
       const decimalRes = decimalsRes[idx]
       const symbolRes = symbolsRes[idx]

@@ -1,4 +1,4 @@
-import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContract, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { getPoolsUnderlyingBalances } from '@lib/pools'
@@ -55,7 +55,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getGMXStakerBalances(ctx: BalancesContext, gmxStaker: Contract) {
   if (!gmxStaker.underlyings || !gmxStaker.rewards) {
@@ -63,22 +63,22 @@ export async function getGMXStakerBalances(ctx: BalancesContext, gmxStaker: Cont
   }
 
   const balances: Balance[] = []
-  const sbfGMX = gmxStaker.underlyings?.[0]
-  const gmx = gmxStaker.underlyings?.[1]
-  const esGMX = gmxStaker.rewards?.[0]
-  const native = gmxStaker.rewards?.[1]
+  const sbfGMX = gmxStaker.underlyings?.[0] as BaseContract
+  const gmx = gmxStaker.underlyings?.[1] as BaseContract
+  const esGMX = gmxStaker.rewards?.[0] as BaseContract
+  const native = gmxStaker.rewards?.[1] as BaseContract
 
-  const [stakeGMXRes, stakeEsGMXRes, pendingesGMXRewardsRes, pendingETHRewardsRes] = await Promise.all([
+  const [stakeGMXBI, stakeEsGMXBI, pendingesGMXRewardsBI, pendingETHRewardsBI] = await Promise.all([
     call({ ctx, target: gmxStaker.address, params: [ctx.address, gmx.address], abi: abi.depositBalances }),
     call({ ctx, target: gmxStaker.address, params: [ctx.address, esGMX.address], abi: abi.depositBalances }),
     call({ ctx, target: gmxStaker.address, params: [ctx.address], abi: abi.claimable }),
     call({ ctx, target: sbfGMX.address, params: [ctx.address], abi: abi.claimable }),
   ])
 
-  const stakeGMX = BigNumber.from(stakeGMXRes.output)
-  const stakeEsGMX = BigNumber.from(stakeEsGMXRes.output)
-  const pendingesGMXRewards = BigNumber.from(pendingesGMXRewardsRes.output)
-  const pendingETHRewards = BigNumber.from(pendingETHRewardsRes.output)
+  const stakeGMX = BigNumber.from(stakeGMXBI)
+  const stakeEsGMX = BigNumber.from(stakeEsGMXBI)
+  const pendingesGMXRewards = BigNumber.from(pendingesGMXRewardsBI)
+  const pendingETHRewards = BigNumber.from(pendingETHRewardsBI)
 
   balances.push(
     {
@@ -108,18 +108,18 @@ export async function getGMXStakerBalances(ctx: BalancesContext, gmxStaker: Cont
 }
 
 export async function getGMXVesterBalance(ctx: BalancesContext, gmxVester: Contract) {
-  const gmx = gmxVester.underlyings?.[0]
+  const gmx = gmxVester.underlyings?.[0] as BaseContract
   if (!gmx) {
     return []
   }
 
-  const [balanceOfRes, claimableRes] = await Promise.all([
+  const [balanceOfBI, claimableBI] = await Promise.all([
     call({ ctx, target: gmxVester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: gmxVester.address, params: [ctx.address], abi: abi.claimable }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
-  const claimable = BigNumber.from(claimableRes.output)
+  const balanceOf = BigNumber.from(balanceOfBI)
+  const claimable = BigNumber.from(claimableBI)
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -140,18 +140,18 @@ export async function getGLPStakerBalance(ctx: BalancesContext, glpStaker: Contr
     return []
   }
 
-  const esGMX = glpStaker.rewards?.[0]
-  const native = glpStaker.rewards?.[1]
+  const esGMX = glpStaker.rewards?.[0] as BaseContract
+  const native = glpStaker.rewards?.[1] as BaseContract
 
-  const [stakeGLPRes, pendingesGMXRewardsRes, pendingETHRewardsRes] = await Promise.all([
+  const [stakeGLPBI, pendingesGMXRewardsBI, pendingETHRewardsBI] = await Promise.all([
     call({ ctx, target: glpStaker.address, params: [ctx.address], abi: abi.stakedAmounts }),
     call({ ctx, target: glpStaker.address, params: [ctx.address], abi: abi.claimable }),
     call({ ctx, target: glpStaker.fGlp, params: [ctx.address], abi: abi.claimable }),
   ])
 
-  const stakeGLP = BigNumber.from(stakeGLPRes.output)
-  const pendingesGMXRewards = BigNumber.from(pendingesGMXRewardsRes.output)
-  const pendingETHRewards = BigNumber.from(pendingETHRewardsRes.output)
+  const stakeGLP = BigNumber.from(stakeGLPBI)
+  const pendingesGMXRewards = BigNumber.from(pendingesGMXRewardsBI)
+  const pendingETHRewards = BigNumber.from(pendingETHRewardsBI)
 
   const balance: Balance = {
     ...glpStaker,
@@ -177,13 +177,13 @@ export async function getGLPStakerBalance(ctx: BalancesContext, glpStaker: Contr
 }
 
 export async function getGLPVesterBalance(ctx: BalancesContext, glpVester: Contract) {
-  const [balanceOfRes, claimableRes] = await Promise.all([
+  const [balanceOfBI, claimableBI] = await Promise.all([
     call({ ctx, target: glpVester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: glpVester.address, params: [ctx.address], abi: abi.claimable }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
-  const claimable = BigNumber.from(claimableRes.output)
+  const balanceOf = BigNumber.from(balanceOfBI)
+  const claimable = BigNumber.from(claimableBI)
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -195,11 +195,11 @@ export async function getGLPVesterBalance(ctx: BalancesContext, glpVester: Contr
   }
 
   if (glpVester.underlyings?.[0]) {
-    balance.underlyings = [{ ...glpVester.underlyings[0], amount: balanceOf }]
+    balance.underlyings = [{ ...(glpVester.underlyings[0] as BaseContract), amount: balanceOf }]
   }
 
   if (glpVester.rewards?.[0]) {
-    balance.rewards = [{ ...glpVester.rewards[0], amount: claimable }]
+    balance.rewards = [{ ...(glpVester.rewards[0] as BaseContract), amount: claimable }]
   }
 
   return balance

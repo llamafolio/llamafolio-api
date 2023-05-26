@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const ASX: Token = {
   chain: 'ethereum',
@@ -22,7 +22,7 @@ const ASX: Token = {
 }
 
 export async function getAsymetrixBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [balance, { output: pendingReward }] = await Promise.all([
+  const [balance, pendingReward] = await Promise.all([
     getSingleStakeBalance(ctx, { ...staker, address: staker.staker }),
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getClaimableReward }),
   ])

@@ -25,7 +25,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const BTRFLY_v2: Token = {
   chain: 'ethereum',
@@ -37,15 +37,16 @@ const BTRFLY_v2: Token = {
 export async function getRedactedLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance[]> {
   const balances: LockBalance[] = []
 
-  const { output: lockedBalances } = await call({
+  const lockedBalances = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],
     abi: abi.lockedBalances,
   })
+  const [total, _unlockable, _locked, lockData] = lockedBalances
 
-  const locked = sumBN((lockedBalances.lockData || []).map((lockData: any) => lockData.amount))
-  const expiredLocked = BigNumber.from(lockedBalances.total).sub(locked)
+  const locked = sumBN((lockData || []).map((lockData: any) => lockData.amount))
+  const expiredLocked = BigNumber.from(total).sub(locked)
 
   balances.push({
     ...locker,
@@ -56,8 +57,8 @@ export async function getRedactedLockerBalances(ctx: BalancesContext, locker: Co
     category: 'lock',
   })
 
-  for (let lockIdx = 0; lockIdx < lockedBalances.lockData.length; lockIdx++) {
-    const lockedBalance = lockedBalances.lockData[lockIdx]
+  for (let lockIdx = 0; lockIdx < lockData.length; lockIdx++) {
+    const lockedBalance = lockData[lockIdx]
     const { amount, unlockTime } = lockedBalance
 
     balances.push({

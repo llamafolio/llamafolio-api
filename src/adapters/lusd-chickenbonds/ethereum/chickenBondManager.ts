@@ -36,7 +36,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getBondNFTContract(ctx: BaseContext) {
   const [bondNFTRes, lusdTokenRes, bLUSDTokenRes] = await Promise.all([
@@ -59,9 +59,9 @@ export async function getBondNFTContract(ctx: BaseContext) {
 
   const contract: Contract = {
     chain: 'ethereum',
-    address: bondNFTRes.output,
-    underlyings: [lusdTokenRes.output],
-    rewards: [bLUSDTokenRes.output],
+    address: bondNFTRes,
+    underlyings: [lusdTokenRes],
+    rewards: [bLUSDTokenRes],
   }
 
   return contract

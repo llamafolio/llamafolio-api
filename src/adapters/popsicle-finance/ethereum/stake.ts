@@ -12,7 +12,7 @@ const Ice: Token = {
 }
 
 export async function getPopsicleStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: userBalanceOf }, { output: tokenBalancesOfRes }, { output: tokenSupplyRes }] = await Promise.all([
+  const [userBalanceOf, tokenBalancesOfRes, tokenSupplyRes] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: Ice.address, params: [staker.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: staker.address, abi: erc20Abi.totalSupply }),

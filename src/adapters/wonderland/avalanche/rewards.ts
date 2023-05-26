@@ -23,7 +23,7 @@ const abiWonderland = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const wMEMO: Contract = {
   name: 'Wrapped MEMO',
@@ -38,11 +38,10 @@ export async function getRewardsMEMOFarmTokens(ctx: BaseContext, wMEMOFarm: Cont
   const rewardTokenLengthRes = await call({
     ctx,
     target: wMEMOFarm.address,
-    params: [],
     abi: abiWonderland.rewardTokenLength,
   })
 
-  const rewardTokenLength = parseInt(rewardTokenLengthRes.output)
+  const rewardTokenLength = Number(rewardTokenLengthRes)
 
   const rewardTokensRes = await multicall({
     ctx,

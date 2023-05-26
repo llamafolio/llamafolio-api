@@ -9,7 +9,7 @@ export interface BaseContext {
 }
 
 export interface BalancesContext extends BaseContext {
-  address: string
+  address: `0x${string}`
 }
 
 export type ContractStandard = 'erc20' | 'erc721'
@@ -22,9 +22,9 @@ export interface BaseContract {
   name?: string
   displayName?: string
   chain: Chain
-  address: string
+  address: `0x${string}`
   // if specified, used to retrieve token details: symbol / decimals
-  token?: string
+  token?: `0x${string}`
   symbol?: string
   decimals?: number
   stable?: boolean

@@ -72,7 +72,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const CRV: Token = {
   chain: 'ethereum',
@@ -96,18 +96,19 @@ const metaRegistry: Contract = {
 export async function getPoolsContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const pools: Contract[] = []
 
-  const { output: poolsCount } = await call({ ctx, target: contract.address, abi: abi.poolLength })
+  const poolLengthBI = await call({ ctx, target: contract.address, abi: abi.poolLength })
+  const poolLength = Number(poolLengthBI)
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolsCount).map((i) => ({
+    calls: range(0, poolLength).map((i) => ({
       target: contract.address,
       params: [i],
     })),
     abi: abi.poolInfo,
   })
 
-  for (let idx = 0; idx < poolsCount; idx++) {
+  for (let idx = 0; idx < poolLength; idx++) {
     const poolInfoRes = poolInfosRes[idx]
     if (!isSuccess(poolInfoRes)) continue
 

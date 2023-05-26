@@ -91,7 +91,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getContractsFromMasterchefV2(
   ctx: BaseContext,
@@ -102,9 +102,9 @@ export async function getContractsFromMasterchefV2(
   const extraRewardsPools: Contract[] = []
   const nonExtraRewardsPools: Contract[] = []
 
-  const { output: poolLengthRes } = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
+  const poolLengthRes = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
 
-  const calls: Call[] = range(0, poolLengthRes).map((idx) => ({ target: masterchef.address, params: [idx] }))
+  const calls: Call[] = range(0, Number(poolLengthRes)).map((idx) => ({ target: masterchef.address, params: [idx] }))
 
   const [poolInfosRes, rewardersRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.lpToken }),
@@ -164,7 +164,7 @@ export async function getContractsFromMasterchefV2(
 
   const rewardTokens = await getERC20Details(
     ctx,
-    extraRewardsPools.map((pool) => (pool.rewards as string[])?.[0]),
+    extraRewardsPools.map((pool) => (pool.rewards as `0x${string}`[])?.[0]),
   )
 
   extraRewardsPools.forEach((pool, idx) => {

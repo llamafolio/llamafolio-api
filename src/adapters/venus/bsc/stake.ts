@@ -55,7 +55,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const XVS: Token = {
   chain: 'bsc',
@@ -65,29 +65,29 @@ const XVS: Token = {
 }
 
 export async function getVAIStakeBalance(ctx: BalancesContext, staker: Contract): Promise<StakeBalance> {
-  const [{ output: stakeBalance }, { output: pendingXVS }] = await Promise.all([
+  const [stakeBalance, pendingXVS] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.userInfo }),
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.pendingXVS }),
   ])
 
   return {
     ...staker,
-    amount: BigNumber.from(stakeBalance.amount),
+    amount: BigNumber.from(stakeBalance),
     underlyings: undefined,
-    rewards: [{ ...XVS, amount: pendingXVS }],
+    rewards: [{ ...XVS, amount: BigNumber.from(pendingXVS) }],
     category: 'stake',
   }
 }
 
 export async function getXVSStakeBalance(ctx: BalancesContext, staker: Contract): Promise<StakeBalance> {
-  const [{ output: stakeBalance }, { output: pendingXVS }] = await Promise.all([
-    call({ ctx, target: staker.address, params: [XVS.address, 0, ctx.address], abi: abi.getUserInfo }),
-    call({ ctx, target: staker.address, params: [XVS.address, 0, ctx.address], abi: abi.pendingReward }),
+  const [stakeBalance, pendingXVS] = await Promise.all([
+    call({ ctx, target: staker.address, params: [XVS.address, 0n, ctx.address], abi: abi.getUserInfo }),
+    call({ ctx, target: staker.address, params: [XVS.address, 0n, ctx.address], abi: abi.pendingReward }),
   ])
 
   return {
     ...staker,
-    amount: BigNumber.from(stakeBalance.amount),
+    amount: BigNumber.from(stakeBalance),
     underlyings: undefined,
     rewards: [{ ...XVS, amount: BigNumber.from(pendingXVS) }],
     category: 'stake',

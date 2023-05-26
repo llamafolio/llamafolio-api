@@ -14,7 +14,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getSmoothyStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance | undefined> {
   const balance = await getSingleStakeBalance(ctx, staker)
@@ -27,7 +27,7 @@ const getSmoothyUnderlyingsBalances = async (ctx: BalancesContext, staker: Balan
     return
   }
 
-  const [tokensBalancesRes, { output: totalSupply }] = await Promise.all([
+  const [tokensBalancesRes, totalSupply] = await Promise.all([
     multicall({
       ctx,
       calls: underlyings.map((_, idx) => ({ target: staker.address, params: [idx] })),

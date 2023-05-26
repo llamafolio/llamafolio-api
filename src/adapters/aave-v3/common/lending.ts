@@ -33,7 +33,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getLendingPoolContracts(
   ctx: BaseContext,
@@ -42,14 +42,11 @@ export async function getLendingPoolContracts(
 ): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const reserveListRes = await call({
+  const reservesList = await call({
     ctx,
     target: lendingPool.address,
-    params: [],
     abi: abi.getReservesList,
   })
-
-  const reservesList: string[] = reserveListRes.output
 
   const reserveTokensAddressesRes = await multicall({
     ctx,
@@ -119,7 +116,7 @@ export async function getLendingRewardsBalances(
   const rewards: Balance[] = []
   const assets: any = contracts.map((contract: Contract) => contract.address)
 
-  const rewardsListsRes = await call({
+  const [rewardsLists, unclaimedAmounts] = await call({
     ctx,
     target: incentiveController.address,
     params: [assets, ctx.address],
@@ -146,11 +143,8 @@ export async function getLendingRewardsBalances(
     },
   })
 
-  const rewardsLists = rewardsListsRes.output
-
-  const rewardsAddress = rewardsLists.rewardsList
-  const rewardsTokens = await getERC20Details(ctx, rewardsAddress)
-  const rewardsBalances = BigNumber.from(rewardsLists.unclaimedAmounts[0])
+  const rewardsTokens = await getERC20Details(ctx, rewardsLists)
+  const rewardsBalances = BigNumber.from(unclaimedAmounts[0])
 
   rewards.push({
     ...rewardsTokens[0],
@@ -162,7 +156,14 @@ export async function getLendingRewardsBalances(
 }
 
 export async function getLendingPoolHealthFactor(ctx: BalancesContext, lendingPool: Contract) {
-  const userAccountDataRes = await call({
+  const [
+    _totalCollateralBase,
+    _totalDebtBase,
+    _availableBorrowsBase,
+    _currentLiquidationThreshold,
+    _ltv,
+    healthFactor,
+  ] = await call({
     ctx,
     target: lendingPool.address,
     params: [ctx.address],
@@ -195,12 +196,12 @@ export async function getLendingPoolHealthFactor(ctx: BalancesContext, lendingPo
   })
 
   // no borrowed balance
-  if (ethers.constants.MaxUint256.eq(userAccountDataRes.output.healthFactor)) {
+  if (ethers.constants.MaxUint256.eq(healthFactor)) {
     return
   }
 
-  const healthFactor = parseFloat(ethers.utils.formatUnits(userAccountDataRes.output.healthFactor, 18))
+  const healthFactorFloat = parseFloat(ethers.utils.formatUnits(healthFactor, 18))
 
   // TODO: return other metadata like LTV, available borrow etc
-  return healthFactor
+  return healthFactorFloat
 }

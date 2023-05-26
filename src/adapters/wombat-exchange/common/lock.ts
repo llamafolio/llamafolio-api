@@ -13,20 +13,21 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getWombatLockBalance(ctx: BalancesContext, locker: Contract): Promise<Balance> {
-  const { output: userBalances } = await call({
+  const userOverview = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],
     abi: abi.getUserOverview,
   })
+  const [womLocked, veWomBalance] = userOverview
 
   return {
     ...locker,
-    amount: BigNumber.from(userBalances.veWomBalance),
-    underlyings: [{ ...(locker.underlyings?.[0] as Contract), amount: BigNumber.from(userBalances.womLocked) }],
+    amount: BigNumber.from(veWomBalance),
+    underlyings: [{ ...(locker.underlyings?.[0] as Contract), amount: BigNumber.from(womLocked) }],
     rewards: undefined,
     category: 'lock',
   }

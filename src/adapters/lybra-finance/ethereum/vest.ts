@@ -25,17 +25,17 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getLybraVestBalance(ctx: BalancesContext, vester: Contract): Promise<Balance> {
-  const [{ output: userBalance }, { output: userAutoCompoundEarned }, { output: userLockTime }] = await Promise.all([
+  const [userBalance, userAutoCompoundEarned, userLockTime] = await Promise.all([
     call({ ctx, target: vester.address, params: [ctx.address], abi: abi.getClaimAbleLBR }),
     call({ ctx, target: vester.address, params: [ctx.address], abi: abi.earned }),
     call({ ctx, target: vester.address, params: [ctx.address], abi: abi.time2fullRedemption }),
   ])
 
   const now = Date.now() / 1000
-  const unlockAt = userLockTime
+  const unlockAt = Number(userLockTime)
 
   return {
     ...vester,

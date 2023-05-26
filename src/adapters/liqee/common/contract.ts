@@ -37,7 +37,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getMarketsContracts(
   ctx: BaseContext,
@@ -45,10 +45,10 @@ export async function getMarketsContracts(
 ): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const { output: cTokensRes } = await call({ ctx, target: comptrollerAddress, abi: abi.getAlliTokens })
+  const cTokensRes = await call({ ctx, target: comptrollerAddress, abi: abi.getAlliTokens })
 
-  const calls: Call[] = cTokensRes.map((cToken: string) => ({ target: comptrollerAddress, params: [cToken] }))
-  const underlyingsCalls: Call[] = cTokensRes.map((cToken: string) => ({ target: cToken }))
+  const calls: Call[] = cTokensRes.map((cToken) => ({ target: comptrollerAddress, params: [cToken] }))
+  const underlyingsCalls: Call[] = cTokensRes.map((cToken) => ({ target: cToken }))
 
   const [marketsRes, underlyingTokensAddressesRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.markets }),

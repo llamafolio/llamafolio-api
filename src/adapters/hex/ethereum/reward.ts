@@ -54,10 +54,9 @@ const getDecodedDataFromRangeDays = async (
 ) => {
   const data = []
 
-  const currentDayRes = await call({
+  const today = await call({
     ctx,
     target: contract.address,
-    params: [],
     abi: {
       constant: true,
       inputs: [],
@@ -69,12 +68,10 @@ const getDecodedDataFromRangeDays = async (
     },
   })
 
-  const today = currentDayRes.output
-
-  const dataRangeRes = await call({
+  const dataRange = await call({
     ctx,
     target: contract.address,
-    params: [stakeAndIndex.lockedDays, today],
+    params: [BigInt(stakeAndIndex.lockedDays), today],
     abi: {
       constant: true,
       inputs: [
@@ -89,12 +86,10 @@ const getDecodedDataFromRangeDays = async (
     },
   })
 
-  const dataRange = dataRangeRes.output
-
   for (let i = 0; i < dataRange.length; i++) {
     const dailyData = dataRange[i]
 
-    data.push(HEX_DECODER(dailyData))
+    data.push(HEX_DECODER(dailyData.toString()))
   }
   return data
 }

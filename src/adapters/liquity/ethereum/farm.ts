@@ -60,16 +60,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getFarmBalance(ctx: BalancesContext, stabilityPool: Contract) {
   const [LUSDBalanceRes, ETHBalanceRes, LQTYBalanceRes] = await Promise.all([
-    call({ ctx, target: stabilityPool.address, params: ctx.address, abi: abi.getCompoundedLUSDDeposit }),
-    call({ ctx, target: stabilityPool.address, params: ctx.address, abi: abi.getDepositorETHGain }),
-    call({ ctx, target: stabilityPool.address, params: ctx.address, abi: abi.getDepositorLQTYGain }),
+    call({ ctx, target: stabilityPool.address, params: [ctx.address], abi: abi.getCompoundedLUSDDeposit }),
+    call({ ctx, target: stabilityPool.address, params: [ctx.address], abi: abi.getDepositorETHGain }),
+    call({ ctx, target: stabilityPool.address, params: [ctx.address], abi: abi.getDepositorLQTYGain }),
   ])
 
-  const amount = BigNumber.from(LUSDBalanceRes.output)
+  const amount = BigNumber.from(LUSDBalanceRes)
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -96,14 +96,14 @@ export async function getFarmBalance(ctx: BalancesContext, stabilityPool: Contra
         symbol: 'LQTY',
         decimals: 18,
         address: '0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d',
-        amount: BigNumber.from(LQTYBalanceRes.output),
+        amount: BigNumber.from(LQTYBalanceRes),
       },
       {
         chain: ctx.chain,
         symbol: 'ETH',
         decimals: 18,
         address: '0x0000000000000000000000000000000000000000',
-        amount: BigNumber.from(ETHBalanceRes.output),
+        amount: BigNumber.from(ETHBalanceRes),
       },
     ],
   }

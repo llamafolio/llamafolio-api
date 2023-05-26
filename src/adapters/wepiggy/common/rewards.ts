@@ -15,7 +15,7 @@ export async function getMarketsRewards(ctx: BalancesContext, piggyDistribution:
   const pendingWPCRewardsRes = await call({
     ctx,
     target: piggyDistribution.address,
-    params: [ctx.address, 'true', 'true'],
+    params: [ctx.address, true, true],
     abi: {
       inputs: [
         { internalType: 'address', name: 'holder', type: 'address' },
@@ -29,7 +29,7 @@ export async function getMarketsRewards(ctx: BalancesContext, piggyDistribution:
     },
   })
 
-  const pendingWPCRewards = BigNumber.from(pendingWPCRewardsRes.output).mul(Math.pow(10, 3))
+  const pendingWPCRewards = BigNumber.from(pendingWPCRewardsRes).mul(Math.pow(10, 3))
 
   const reward: Balance = {
     chain: ctx.chain,

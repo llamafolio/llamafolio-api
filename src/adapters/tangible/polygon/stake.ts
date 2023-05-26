@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const USDR: Token = {
   chain: 'polygon',
@@ -22,14 +22,14 @@ const USDR: Token = {
 }
 
 export async function getTangibleStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const { output: userBalance } = await call({
+  const userBalance = await call({
     ctx,
     target: staker.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
 
-  const { output: fmtBalance } = await call({
+  const fmtBalance = await call({
     ctx,
     target: staker.address,
     params: [userBalance],

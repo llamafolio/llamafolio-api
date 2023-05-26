@@ -21,7 +21,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const SDEX: Token = {
   chain: 'ethereum',
@@ -31,17 +31,19 @@ const SDEX: Token = {
 }
 
 export async function getSmarDexStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const { output: userBalanceOf } = await call({
+  const userInfo = await call({
     ctx,
     target: staker.address,
     params: [ctx.address],
     abi: abi.userInfo,
   })
 
-  const { output: sharesToTokens } = await call({
+  const [shares, _lastBlockUpdate] = userInfo
+
+  const sharesToTokens = await call({
     ctx,
     target: staker.address,
-    params: [userBalanceOf.shares],
+    params: [shares],
     abi: abi.sharesToTokens,
   })
 

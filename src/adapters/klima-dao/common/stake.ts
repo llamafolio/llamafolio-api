@@ -21,7 +21,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     abi: abi.balanceOf,
   })
 
-  const amount = BigNumber.from(balanceOfRes.output)
+  const amount = BigNumber.from(balanceOfRes)
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -37,14 +37,12 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
 }
 
 export async function getFormattedStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const balanceOfRes = await call({
+  const balanceOf = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
   })
-
-  const balanceOf = balanceOfRes.output
 
   const formattedBalanceOfRes = await call({
     ctx,
@@ -59,7 +57,7 @@ export async function getFormattedStakeBalances(ctx: BalancesContext, contract: 
     },
   })
 
-  const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes.output)
+  const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes)
 
   const balance: Balance = {
     chain: ctx.chain,

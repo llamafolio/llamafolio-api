@@ -23,14 +23,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const getGaugesContracts = async (ctx: BaseContext, pairs: Pair[], gaugeController: Contract): Promise<Contract[]> => {
   const gauges: Contract[] = []
 
-  const lpTokensRes = await call({ ctx, target: gaugeController.address, params: [], abi: abi.tokens })
-
-  const lpTokens = lpTokensRes.output
+  const lpTokens = await call({ ctx, target: gaugeController.address, abi: abi.tokens })
 
   const calls: Call[] = []
   for (let idx = 0; idx < lpTokens.length; idx++) {

@@ -48,7 +48,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const BSW: Token = {
   chain: 'bsc',
@@ -60,19 +60,20 @@ const BSW: Token = {
 export async function getUniqueUnderlyingsMasterchefBalances(ctx: BalancesContext, masterchef: Contract) {
   const balances: Balance[] = []
 
-  const [balanceOfRes, pendingRewardsRes] = await Promise.all([
-    call({ ctx, target: masterchef.address, params: [0, ctx.address], abi: abi.userInfo }),
-    call({ ctx, target: masterchef.address, params: [0, ctx.address], abi: abi.pendingBSW }),
+  const [userInfo, pendingRewards] = await Promise.all([
+    call({ ctx, target: masterchef.address, params: [0n, ctx.address], abi: abi.userInfo }),
+    call({ ctx, target: masterchef.address, params: [0n, ctx.address], abi: abi.pendingBSW }),
   ])
+  const [amount, _rewardDebt] = userInfo
 
   balances.push({
     chain: ctx.chain,
     address: BSW.address,
     decimals: BSW.decimals,
     symbol: 'BSW-LP',
-    amount: BigNumber.from(balanceOfRes.output.amount),
+    amount: BigNumber.from(amount),
     underlyings: [BSW],
-    rewards: [{ ...BSW, amount: BigNumber.from(pendingRewardsRes.output) }],
+    rewards: [{ ...BSW, amount: BigNumber.from(pendingRewards) }],
     category: 'farm',
   })
 

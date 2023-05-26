@@ -28,7 +28,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const BSW: Token = {
   chain: 'bsc',
@@ -38,10 +38,10 @@ const BSW: Token = {
 }
 
 export async function getBiswapLockerBalances(ctx: BalancesContext, locker: Contract): Promise<Balance> {
-  const { output: userInfo } = await call({ ctx, target: locker.address, params: [ctx.address], abi: abi.getUserInfo })
+  const userInfo = await call({ ctx, target: locker.address, params: [ctx.address], abi: abi.getUserInfo })
 
   const now = Date.now() / 1000
-  const unlockAt = userInfo[0].unlockTimestamp
+  const unlockAt = Number(userInfo[0].unlockTimestamp)
 
   return {
     ...locker,

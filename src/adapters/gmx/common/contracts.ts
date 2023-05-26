@@ -67,7 +67,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract, vault: Contract) {
   const [
@@ -82,48 +82,48 @@ export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract, vau
     glpVesterRes,
     vaultTokens,
   ] = await Promise.all([
-    call({ ctx, target: gmxRouter.address, params: [], abi: abi.stakedGmxTracker }),
-    call({ ctx, target: gmxRouter.address, params: [], abi: abi.stakedGlpTracker }),
-    call({ ctx, target: gmxRouter.address, params: [], abi: abi.gmx }),
-    call({ ctx, target: gmxRouter.address, params: [], abi: abi.glp }),
-    call({ ctx, target: gmxRouter.address, params: [], abi: abi.weth }),
-    call({ ctx, target: gmxRouter.address, params: [], abi: abi.feeGmxTracker }),
-    call({ ctx, target: gmxRouter.address, params: [], abi: abi.esGmx }),
-    call({ ctx, target: gmxRouter.address, params: [], abi: abi.gmxVester }),
-    call({ ctx, target: gmxRouter.address, params: [], abi: abi.glpVester }),
+    call({ ctx, target: gmxRouter.address, abi: abi.stakedGmxTracker }),
+    call({ ctx, target: gmxRouter.address, abi: abi.stakedGlpTracker }),
+    call({ ctx, target: gmxRouter.address, abi: abi.gmx }),
+    call({ ctx, target: gmxRouter.address, abi: abi.glp }),
+    call({ ctx, target: gmxRouter.address, abi: abi.weth }),
+    call({ ctx, target: gmxRouter.address, abi: abi.feeGmxTracker }),
+    call({ ctx, target: gmxRouter.address, abi: abi.esGmx }),
+    call({ ctx, target: gmxRouter.address, abi: abi.gmxVester }),
+    call({ ctx, target: gmxRouter.address, abi: abi.glpVester }),
     getVaultTokens(ctx, vault),
   ])
 
   // GMX
   const gmxVester: Contract = {
     chain: ctx.chain,
-    address: gmxVesterRes.output,
-    underlyings: [esGmxRes.output],
-    rewards: [gmxRes.output],
+    address: gmxVesterRes,
+    underlyings: [esGmxRes],
+    rewards: [gmxRes],
   }
 
   const gmxStaker: Contract = {
     chain: ctx.chain,
-    address: stakedGmxTrackerRes.output,
-    underlyings: [stakerGmxFeesRes.output, gmxRes.output],
-    rewards: [esGmxRes.output, wethRes.output],
+    address: stakedGmxTrackerRes,
+    underlyings: [stakerGmxFeesRes, gmxRes],
+    rewards: [esGmxRes, wethRes],
   }
 
   // GLP
   const glpStaker: Contract = {
     chain: ctx.chain,
-    address: stakedGlpTrackerRes.output,
-    fGlp: stakerGmxFeesRes.output,
-    glp: glpRes.output,
+    address: stakedGlpTrackerRes,
+    fGlp: stakerGmxFeesRes,
+    glp: glpRes,
     underlyings: vaultTokens,
-    rewards: [esGmxRes.output, wethRes.output],
+    rewards: [esGmxRes, wethRes],
   }
 
   const glpVester: Contract = {
     chain: ctx.chain,
-    address: glpVesterRes.output,
-    underlyings: [esGmxRes.output],
-    rewards: [gmxRes.output],
+    address: glpVesterRes,
+    underlyings: [esGmxRes],
+    rewards: [gmxRes],
   }
 
   return { gmxVester, gmxStaker, glpStaker, glpVester }

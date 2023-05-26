@@ -14,16 +14,21 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getInchLockerBalances(ctx: BalancesContext, locker: Contract): Promise<Balance> {
-  const lockerInfosRes = await call({ ctx, target: locker.address, params: [ctx.address], abi: abi.depositors })
+  const [_lockTime, unlockTime, amount] = await call({
+    ctx,
+    target: locker.address,
+    params: [ctx.address],
+    abi: abi.depositors,
+  })
 
   return {
     ...locker,
-    amount: BigNumber.from(lockerInfosRes.output.amount),
+    amount: BigNumber.from(amount),
     underlyings: locker.underlyings as Contract[],
-    unlockAt: lockerInfosRes.output.unlockTime,
+    unlockAt: unlockTime,
     rewards: undefined,
     category: 'lock',
   }

@@ -42,7 +42,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const Helper: Contract = {
   name: 'TORCurve Helper',
@@ -93,7 +93,7 @@ const Curve_fiFactoryUSDMetapool: Contract = {
 export async function getFarmingBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [balanceOfRes, shareRes] = await Promise.all([
+  const [calWithdrawAndEarned, getTorAndDaiAndUsdc] = await Promise.all([
     call({
       ctx,
       target: contract.address,
@@ -103,17 +103,19 @@ export async function getFarmingBalances(ctx: BalancesContext, contract: Contrac
     call({
       ctx,
       target: Helper.address,
-      params: [],
       abi: abi.getTorAndDaiAndUsdc,
     }),
   ])
 
-  const amount = BigNumber.from(balanceOfRes.output._torWithdrawAmount)
-  const rewardsBalanceOf = BigNumber.from(balanceOfRes.output._earnedRewardAmount)
+  const [_torWithdrawAmount, _daiWithdrawAmount, _usdcWithdrawAmount, _earnedRewardAmount] = calWithdrawAndEarned
+  const [torAmount, daiAmount, usdcAmount] = getTorAndDaiAndUsdc
 
-  const TORAmount = BigNumber.from(shareRes.output.torAmount)
-  const DAIAmount = BigNumber.from(shareRes.output.daiAmount)
-  const USDCAmount = BigNumber.from(shareRes.output.usdcAmount)
+  const amount = BigNumber.from(_torWithdrawAmount)
+  const rewardsBalanceOf = BigNumber.from(_earnedRewardAmount)
+
+  const TORAmount = BigNumber.from(torAmount)
+  const DAIAmount = BigNumber.from(daiAmount)
+  const USDCAmount = BigNumber.from(usdcAmount)
   const underlyingAmounts = [TORAmount, DAIAmount, USDCAmount]
 
   const totalToken = TORAmount.add(DAIAmount).add(USDCAmount)

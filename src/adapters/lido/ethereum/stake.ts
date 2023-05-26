@@ -22,12 +22,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getWStEthStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const balanceOfRes = await call({
+  const balanceOf = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
@@ -37,11 +37,11 @@ export async function getWStEthStakeBalances(ctx: BalancesContext, contract: Con
   const converterWStEthToStEthRes = await call({
     ctx,
     target: contract.address,
-    params: [balanceOfRes.output],
+    params: [balanceOf],
     abi: abi.getStETHByWstETH,
   })
 
-  const formattedBalanceOf = BigNumber.from(converterWStEthToStEthRes.output)
+  const formattedBalanceOf = BigNumber.from(converterWStEthToStEthRes)
 
   balances.push({
     chain: ctx.chain,
@@ -64,7 +64,7 @@ export async function getStEthStakeBalances(ctx: BalancesContext, contract: Cont
     abi: erc20Abi.balanceOf,
   })
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const balanceOf = BigNumber.from(balanceOfRes)
 
   balances.push({
     chain: ctx.chain,
@@ -91,11 +91,11 @@ export async function getStMaticBalances(ctx: BalancesContext, contract: Contrac
   const converterWStEthToStEthRes = await call({
     ctx,
     target: contract.address,
-    params: [balanceOfRes.output],
+    params: [balanceOfRes],
     abi: abi.convertStMaticToMatic,
   })
 
-  const formattedBalanceOf = BigNumber.from(converterWStEthToStEthRes.output[0])
+  const formattedBalanceOf = BigNumber.from(converterWStEthToStEthRes[0])
 
   balances.push({
     chain: ctx.chain,

@@ -18,7 +18,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const OGN: Token = {
   chain: 'ethereum',
@@ -28,7 +28,7 @@ const OGN: Token = {
 }
 
 export async function getOriginStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: userTotalStakeBalance }, { output: pendingReward }] = await Promise.all([
+  const [userTotalStakeBalance, pendingReward] = await Promise.all([
     call({
       ctx,
       target: staker.address,

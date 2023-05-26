@@ -68,20 +68,20 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getMetronomeContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const markets: Contract[] = []
 
-  const [{ output: depositTokensRes }, { output: debtTokensRes }] = await Promise.all([
+  const [depositTokensRes, debtTokensRes] = await Promise.all([
     call({ ctx, target: contract.address, abi: abi.getDepositTokens }),
     call({ ctx, target: contract.address, abi: abi.getDebtTokens }),
   ])
 
   const [tokens, syntheticTokens, collateralFactors] = await Promise.all([
-    multicall({ ctx, calls: depositTokensRes.map((token: string) => ({ target: token })), abi: abi.underlying }),
-    multicall({ ctx, calls: debtTokensRes.map((token: string) => ({ target: token })), abi: abi.syntheticToken }),
-    multicall({ ctx, calls: depositTokensRes.map((token: string) => ({ target: token })), abi: abi.collateralFactor }),
+    multicall({ ctx, calls: depositTokensRes.map((token) => ({ target: token })), abi: abi.underlying }),
+    multicall({ ctx, calls: debtTokensRes.map((token) => ({ target: token })), abi: abi.syntheticToken }),
+    multicall({ ctx, calls: depositTokensRes.map((token) => ({ target: token })), abi: abi.collateralFactor }),
   ])
 
   const underlyings = await multicall({

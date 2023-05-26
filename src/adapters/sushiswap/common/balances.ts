@@ -16,7 +16,7 @@ export async function getXSushiStakeBalance(ctx: BalancesContext, xSushi: Contra
 
   const balance: Balance = {
     ...xSushi,
-    amount: BigNumber.from(balanceOf.output),
+    amount: BigNumber.from(balanceOf),
     underlyings: undefined,
     rewards: undefined,
     category: 'stake',
@@ -32,8 +32,8 @@ export async function getMeowshiYieldBalance(ctx: BalancesContext, meowshi: Cont
 
   const balance: Balance = {
     ...meowshi,
-    amount: BigNumber.from(balanceOf.output),
-    underlyings: [{ ...xSushi, amount: BigNumber.from(balanceOf.output).div(meowConverter) }],
+    amount: BigNumber.from(balanceOf),
+    underlyings: [{ ...xSushi, amount: BigNumber.from(balanceOf).div(meowConverter) }],
     rewards: undefined,
     category: 'farm',
   }

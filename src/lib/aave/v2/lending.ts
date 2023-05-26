@@ -112,18 +112,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getLendingPoolContracts(ctx: BaseContext, lendingPool: Contract) {
   const contracts: Contract[] = []
 
-  const reservesListRes = await call({
+  const reservesList = await call({
     ctx,
     target: lendingPool.address,
     abi: abi.getReservesList,
   })
-
-  const reservesList: string[] = reservesListRes.output
 
   const reservesDataRes = await multicall({
     ctx,
@@ -200,13 +198,21 @@ export async function getLendingPoolHealthFactor(ctx: BalancesContext, lendingPo
       params: [ctx.address],
       abi: abi.getUserAccountData,
     })
+    const [
+      _totalCollateralBase,
+      _totalDebtBase,
+      _availableBorrowsBase,
+      _currentLiquidationThreshold,
+      _ltv,
+      healthFactorBI,
+    ] = userAccountDataRes
 
     // no borrowed balance
-    if (ethers.constants.MaxUint256.eq(userAccountDataRes.output.healthFactor)) {
+    if (ethers.constants.MaxUint256.eq(healthFactorBI)) {
       return
     }
 
-    const healthFactor = parseFloat(ethers.utils.formatUnits(userAccountDataRes.output.healthFactor, 18))
+    const healthFactor = parseFloat(ethers.utils.formatUnits(healthFactorBI, 18))
 
     // TODO: return other metadata like LTV, available borrow etc
     return healthFactor

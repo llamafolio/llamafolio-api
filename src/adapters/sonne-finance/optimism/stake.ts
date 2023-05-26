@@ -15,7 +15,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const SONNE: Token = {
   chain: 'optimism',
@@ -25,7 +25,7 @@ const SONNE: Token = {
 }
 
 export async function getSonneStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: balanceOfRes }, { output: claimableRewardRes }] = await Promise.all([
+  const [balanceOfRes, claimableRewardRes] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: staker.address, params: [SONNE.address, ctx.address], abi: abi.getClaimable }),
   ])

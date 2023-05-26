@@ -15,7 +15,7 @@ const abiOlympus = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const OHM: Contract = {
   name: 'Olympus',
@@ -58,14 +58,12 @@ export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]
 export async function getFormattedStakeBalances(ctx: BalancesContext, contract: Contract) {
   const balances: Balance[] = []
 
-  const balanceOfRes = await call({
+  const balanceOf = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
   })
-
-  const balanceOf = balanceOfRes.output
 
   const formattedBalanceOfRes = await call({
     ctx,
@@ -74,7 +72,7 @@ export async function getFormattedStakeBalances(ctx: BalancesContext, contract: 
     abi: abiOlympus.balanceFrom,
   })
 
-  const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes.output)
+  const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes)
 
   const balance: Balance = {
     chain: ctx.chain,

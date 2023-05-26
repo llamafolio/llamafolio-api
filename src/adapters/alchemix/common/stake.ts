@@ -48,7 +48,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const ALCX: Token = {
   chain: 'ethereum',
@@ -64,19 +64,20 @@ export interface getStakerContractsParams extends Contract {
 export async function getStakerContracts(ctx: BaseContext, staker: Contract): Promise<getStakerContractsParams[]> {
   const contracts: getStakerContractsParams[] = []
 
-  const poolLength = await call({ ctx, target: staker.address, params: [], abi: abi.poolCount })
+  const poolLengthBI = await call({ ctx, target: staker.address, abi: abi.poolCount })
+  const poolLength = Number(poolLengthBI)
 
   const tokensCalls: Call[] = []
   const rewardsCalls: Call[] = []
 
-  for (let idx = 0; idx < poolLength.output; idx++) {
+  for (let idx = 0; idx < poolLength; idx++) {
     tokensCalls.push({ target: staker.address, params: [idx] })
     rewardsCalls.push({ target: staker.address, params: [] })
   }
 
   const poolTokensRes = await multicall({ ctx, calls: tokensCalls, abi: abi.getPoolToken })
 
-  for (let idx = 0; idx < poolLength.output; idx++) {
+  for (let idx = 0; idx < poolLength; idx++) {
     const poolTokenRes = poolTokensRes[idx]
 
     if (!isSuccess(poolTokenRes)) {

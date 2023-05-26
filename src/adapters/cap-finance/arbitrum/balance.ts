@@ -49,7 +49,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const CAP: Token = {
   chain: 'arbitrum',
@@ -165,7 +165,7 @@ export async function getStakeBalances(ctx: BalancesContext, contracts: Contract
 export async function getYieldBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const underlying = contract.underlyings?.[0] as Contract
 
-  const { output: userBalancesRes } = await call({
+  const userBalances = await call({
     ctx,
     target: contract.lpToken,
     params: [ctx.address],
@@ -176,7 +176,7 @@ export async function getYieldBalances(ctx: BalancesContext, contract: Contract)
     ...contract,
     decimals: underlying.decimals,
     symbol: underlying.symbol,
-    amount: BigNumber.from(userBalancesRes),
+    amount: BigNumber.from(userBalances),
     underlyings: [underlying],
     rewards: undefined,
     category: 'farm',
@@ -184,10 +184,9 @@ export async function getYieldBalances(ctx: BalancesContext, contract: Contract)
 }
 
 export async function getDepositV2Balances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
-  const { output: balanceOfsRes } = await call({
+  const balanceOfsRes = await call({
     ctx,
     target: contract.pool,
-    // @ts-ignore
     params: [['0x0000000000000000000000000000000000000000', '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'], ctx.address],
     abi: abi.getUserBalances,
   })

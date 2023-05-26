@@ -50,7 +50,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getEverriseBalances(ctx: BalancesContext, nftStaker: Contract): Promise<Balance[] | undefined> {
   const RISE = nftStaker.underlyings?.[0] as Contract
@@ -58,7 +58,7 @@ export async function getEverriseBalances(ctx: BalancesContext, nftStaker: Contr
     return
   }
 
-  const [{ output: balanceOfLength }, { output: pendingReward }] = await Promise.all([
+  const [balanceOfLength, pendingReward] = await Promise.all([
     call({
       ctx,
       target: nftStaker.address,
@@ -75,7 +75,10 @@ export async function getEverriseBalances(ctx: BalancesContext, nftStaker: Contr
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, balanceOfLength).map((_, idx) => ({ target: nftStaker.address, params: [ctx.address, idx] })),
+    calls: range(0, Number(balanceOfLength)).map((_, idx) => ({
+      target: nftStaker.address,
+      params: [ctx.address, idx],
+    })),
     abi: abi.tokenOfOwnerByIndex,
   })
 

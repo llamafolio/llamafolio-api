@@ -33,7 +33,7 @@ const abiTRU = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const TRU: Token = {
   chain: 'ethereum',
@@ -68,8 +68,8 @@ export async function getTRUStakeBalances(ctx: BalancesContext, stkTRU: Contract
     }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
-  const claimable = BigNumber.from(claimableRes.output)
+  const balanceOf = BigNumber.from(balanceOfRes)
+  const claimable = BigNumber.from(claimableRes)
 
   balances.push({
     chain: ctx.chain,
@@ -99,21 +99,19 @@ export async function getTUSDStakeBalances(ctx: BalancesContext, TUSD: Contract)
     call({
       ctx,
       target: TUSD.address,
-      params: [],
       abi: abiTRU.poolValue,
     }),
 
     call({
       ctx,
       target: TUSD.address,
-      params: [],
       abi: abiTRU.totalSupply,
     }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
-  const poolValue = BigNumber.from(poolValueRes.output)
-  const totalSupply = BigNumber.from(totalSupplyRes.output)
+  const balanceOf = BigNumber.from(balanceOfRes)
+  const poolValue = BigNumber.from(poolValueRes)
+  const totalSupply = BigNumber.from(totalSupplyRes)
 
   balances.push({
     chain: ctx.chain,

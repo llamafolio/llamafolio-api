@@ -19,12 +19,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getInchPools(ctx: BaseContext, deployer: Contract): Promise<Contract[]> {
-  const { output: allPoolsRes } = await call({ ctx, target: deployer.address, abi: abi.getAllPools })
+  const allPoolsRes = await call({ ctx, target: deployer.address, abi: abi.getAllPools })
 
-  const contracts: Contract[] = (allPoolsRes || []).map((address: string) => ({ chain: ctx.chain, address }))
+  const contracts: Contract[] = (allPoolsRes || []).map((address) => ({ chain: ctx.chain, address }))
 
   return getPairsDetails(ctx, contracts)
 }

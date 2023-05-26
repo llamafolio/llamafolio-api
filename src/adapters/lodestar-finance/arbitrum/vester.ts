@@ -29,7 +29,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const LODE: Token = {
   chain: 'arbitrum',
@@ -39,13 +39,14 @@ const LODE: Token = {
 }
 
 export async function getVestBalances(ctx: BalancesContext, vester: Contract): Promise<Balance> {
-  const [{ output: balanceOf }, { output: exchangeRate }, { output: claimable }, { output: vestingExpiry }] =
-    await Promise.all([
-      call({ ctx, target: vester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-      call({ ctx, target: vester.address, abi: abi.underlyingPerDealExchangeRate }),
-      call({ ctx, target: vester.address, params: [ctx.address], abi: abi.claimableTokens }),
-      call({ ctx, target: vester.address, abi: abi.vestingExpiry }),
-    ])
+  const [balanceOf, exchangeRate, claimable, vestingExpiry] = await Promise.all([
+    call({ ctx, target: vester.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: vester.address, abi: abi.underlyingPerDealExchangeRate }),
+    call({ ctx, target: vester.address, params: [ctx.address], abi: abi.claimableTokens }),
+    call({ ctx, target: vester.address, abi: abi.vestingExpiry }),
+  ])
+
+  const [underlyingClaimable, _dealTokensClaimable] = claimable
 
   const underlyings: Contract[] = [
     { ...LODE, amount: BigNumber.from(balanceOf).mul(exchangeRate).div(utils.parseEther('1.0')) },
@@ -55,8 +56,8 @@ export async function getVestBalances(ctx: BalancesContext, vester: Contract): P
     ...vester,
     amount: BigNumber.from(balanceOf),
     underlyings,
-    claimable: BigNumber.from(claimable.underlyingClaimable),
-    unlockAt: vestingExpiry,
+    claimable: BigNumber.from(underlyingClaimable),
+    unlockAt: Number(vestingExpiry),
     rewards: undefined,
     category: 'vest',
   }

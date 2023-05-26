@@ -37,7 +37,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getApolloStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance | undefined> {
   const underlyings = staker.underlyings as Contract[]
@@ -45,7 +45,7 @@ export async function getApolloStakeBalances(ctx: BalancesContext, staker: Contr
     return
   }
 
-  const [{ output: balanceOf }, { output: totalSupply }, underlyingsBalancesRes] = await Promise.all([
+  const [balanceOf, totalSupply, underlyingsBalancesRes] = await Promise.all([
     call({
       ctx,
       target: staker.address,
@@ -102,7 +102,7 @@ export async function getApolloFarmBalances(ctx: BalancesContext, farmers: Contr
 
     balances.push({
       ...farmer,
-      address: farmer.token as string,
+      address: farmer.token as `0x${string}`,
       amount: BigNumber.from(userBalanceOfRes.output),
       underlyings,
       rewards: [{ ...reward, amount: BigNumber.from(userPendingRewardRes.output) }],

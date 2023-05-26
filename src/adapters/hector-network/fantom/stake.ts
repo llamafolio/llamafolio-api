@@ -11,7 +11,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const HEC: Contract = {
   name: 'Hector',
@@ -29,7 +29,7 @@ export async function getsStakeBalances(ctx: BalancesContext, contract: Contract
     abi: erc20Abi.balanceOf,
   })
 
-  const amount = BigNumber.from(balanceOfRes.output)
+  const amount = BigNumber.from(balanceOfRes)
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -45,14 +45,12 @@ export async function getsStakeBalances(ctx: BalancesContext, contract: Contract
 }
 
 export async function getWsStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const balanceOfRes = await call({
+  const balanceOf = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
-
-  const balanceOf = balanceOfRes.output
 
   const formattedBalanceOfRes = await call({
     ctx,
@@ -61,7 +59,7 @@ export async function getWsStakeBalances(ctx: BalancesContext, contract: Contrac
     abi: abi.wsHECTosHEC,
   })
 
-  const amount = BigNumber.from(formattedBalanceOfRes.output)
+  const amount = BigNumber.from(formattedBalanceOfRes)
 
   const balance: Balance = {
     chain: ctx.chain,

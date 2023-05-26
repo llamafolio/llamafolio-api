@@ -31,10 +31,10 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getMapleSingleStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const { output: balanceOfsRes } = await call({
+  const balanceOfsRes = await call({
     ctx,
     target: staker.address,
     params: [ctx.address],

@@ -83,9 +83,9 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
-const pools = [
+const pools: `0x${string}`[] = [
   '0x1a731b2299e22fbac282e7094eda41046343cb51', // sJOE contract
   '0x25D85E17dD9e544F6E9F8D44F99602dbF5a97341', // veJOE contract
   '0x102D195C3eE8BF8A9A89d63FB3659432d3174d81', // rJOE contract
@@ -150,10 +150,12 @@ export async function getStakeBalance(ctx: BalancesContext) {
       abi: abi.rJoeUserInfo,
     }),
   ])
+  const [veJOEBalance] = veJOEbalanceOfRes
+  const [rJOEBalance] = rJOEbalanceOfRes
 
-  const sJOEbalanceOf = BigNumber.from(sJOEbalanceOfRes.output[0])
-  const veJOEbalanceOf = BigNumber.from(veJOEbalanceOfRes.output.balance)
-  const rJOEbalanceOf = BigNumber.from(rJOEbalanceOfRes.output.amount)
+  const sJOEbalanceOf = BigNumber.from(sJOEbalanceOfRes[0])
+  const veJOEbalanceOf = BigNumber.from(veJOEBalance)
+  const rJOEbalanceOf = BigNumber.from(rJOEBalance)
 
   const stakeAmount = [sJOEbalanceOf, veJOEbalanceOf, rJOEbalanceOf]
 
@@ -180,9 +182,9 @@ export async function getStakeBalance(ctx: BalancesContext) {
     }),
   ])
 
-  const sJOErewards = BigNumber.from(sJOErewardsRes.output)
-  const veJOErewards = BigNumber.from(veJOErewardsRes.output)
-  const rJOErewards = BigNumber.from(rJOErewardsRes.output)
+  const sJOErewards = BigNumber.from(sJOErewardsRes)
+  const veJOErewards = BigNumber.from(veJOErewardsRes)
+  const rJOErewards = BigNumber.from(rJOErewardsRes)
 
   const rewardsAmount = [sJOErewards, veJOErewards, rJOErewards]
 

@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const FHM: Token = {
   chain: 'fantom',
@@ -24,10 +24,10 @@ const FHM: Token = {
 export async function getwxFHMStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
   const balance = await getSingleStakeBalance(ctx, staker)
 
-  const { output: fmtBalances } = await call({
+  const fmtBalances = await call({
     ctx,
     target: staker.address,
-    params: [balance.amount.toString()],
+    params: [BigInt(balance.amount.toString())],
     abi: abi.sFHMValue,
   })
 

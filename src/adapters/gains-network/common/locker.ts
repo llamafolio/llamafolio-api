@@ -39,12 +39,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getGainsLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance[]> {
   const balances: LockBalance[] = []
 
-  const { output: nftBalanceOfRes } = await call({
+  const nftBalanceOf = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],
@@ -53,7 +53,7 @@ export async function getGainsLockerBalances(ctx: BalancesContext, locker: Contr
 
   const tokenOfOwnerByIndexes = await multicall({
     ctx,
-    calls: range(0, nftBalanceOfRes).map((index) => ({ target: locker.address, params: [ctx.address, index] })),
+    calls: range(0, Number(nftBalanceOf)).map((index) => ({ target: locker.address, params: [ctx.address, index] })),
     abi: abi.tokenOfOwnerByIndex,
   })
 

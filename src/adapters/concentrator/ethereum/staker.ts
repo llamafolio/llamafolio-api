@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const metaRegistry: Contract = {
   chain: 'ethereum',
@@ -21,20 +21,20 @@ const metaRegistry: Contract = {
 
 export async function getStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
   const underlyings = staker.underlyings as Contract[]
-  const balanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf })
+  const balanceOf = await call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf })
 
   const underlyingsBalances = await call({
     ctx,
     target: staker.address,
-    params: [balanceOfRes.output],
+    params: [balanceOf],
     abi: abi.convertToAssets,
   })
 
   if (underlyings.length < 2) {
     return {
       ...staker,
-      amount: BigNumber.from(balanceOfRes.output),
-      underlyings: [{ ...underlyings[0], amount: BigNumber.from(underlyingsBalances.output) }],
+      amount: BigNumber.from(balanceOf),
+      underlyings: [{ ...underlyings[0], amount: BigNumber.from(underlyingsBalances) }],
       rewards: undefined,
       category: 'stake',
     }
@@ -42,7 +42,7 @@ export async function getStakeBalances(ctx: BalancesContext, staker: Contract): 
 
   return {
     ...staker,
-    amount: BigNumber.from(underlyingsBalances.output),
+    amount: BigNumber.from(underlyingsBalances),
     underlyings,
     rewards: undefined,
     category: 'stake',
@@ -60,11 +60,11 @@ export async function getStakeInPools(ctx: BalancesContext, stakers: Contract[])
 
 export async function getOldStaleInPools(ctx: BalancesContext, staker: Contract): Promise<Balance[]> {
   const underlyings = staker.underlyings as Contract[]
-  const balanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf })
+  const balanceOf = await call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf })
 
   const balance: Balance = {
     ...staker,
-    amount: BigNumber.from(balanceOfRes.output),
+    amount: BigNumber.from(balanceOf),
     underlyings,
     rewards: undefined,
     category: 'stake',

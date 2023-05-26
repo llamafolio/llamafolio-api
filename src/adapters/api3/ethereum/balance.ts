@@ -11,7 +11,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const api3Token: Token = {
   chain: 'ethereum',
@@ -27,7 +27,7 @@ export async function getApi3StakeBalances(ctx: BalancesContext, staker: Contrac
     ...staker,
     symbol: api3Token.symbol,
     decimals: api3Token.decimals,
-    amount: BigNumber.from(userStakeRes.output),
+    amount: BigNumber.from(userStakeRes),
     underlyings: [api3Token],
     rewards: undefined,
     category: 'stake',

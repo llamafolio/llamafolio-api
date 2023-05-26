@@ -31,18 +31,18 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getStakerBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const underlyings = contract.underlyings![0] as Contract
 
-  const balanceOfRes = await call({ ctx, target: contract.address, params: ctx.address, abi: erc20Abi.balanceOf })
+  const balanceOfRes = await call({ ctx, target: contract.address, params: [ctx.address], abi: erc20Abi.balanceOf })
 
   return [
     {
       ...contract,
       category: 'stake',
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: BigNumber.from(balanceOfRes),
       underlyings: [underlyings],
       rewards: undefined,
     },
@@ -57,5 +57,5 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
     abi: abi.unclaimedTokensByUser,
   })
 
-  return [{ ...bone, category: 'lock', amount: BigNumber.from(lockerBalancesOfRes.output) }]
+  return [{ ...bone, category: 'lock', amount: BigNumber.from(lockerBalancesOfRes) }]
 }

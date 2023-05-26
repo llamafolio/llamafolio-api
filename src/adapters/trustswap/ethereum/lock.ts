@@ -22,13 +22,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getTrustLockBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance[]> {
   const balances: LockBalance[] = []
   const now = Date.now() / 1000
 
-  const { output: userLocksBalancesRes } = await call({
+  const userLocksBalancesRes = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],

@@ -15,7 +15,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const weth: Token = {
   chain: 'ethereum',
@@ -34,15 +34,14 @@ const bend: Token = {
 export async function getBendBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
   const [balanceOfRes, rewardsOfRes] = await Promise.all([
     call({ ctx, target: contract.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-    // @ts-ignore
     call({ ctx, target: contract.rewarder, params: [[contract.address], ctx.address], abi: abi.getRewardsBalance }),
   ])
 
   return {
     ...contract,
-    amount: BigNumber.from(balanceOfRes.output),
+    amount: BigNumber.from(balanceOfRes),
     underlyings: [weth],
-    rewards: [{ ...bend, amount: BigNumber.from(rewardsOfRes.output) }],
+    rewards: [{ ...bend, amount: BigNumber.from(rewardsOfRes) }],
     category: 'farm',
   }
 }

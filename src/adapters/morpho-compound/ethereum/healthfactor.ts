@@ -13,25 +13,25 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
+
 export async function getUserHealthFactor(
   ctx: BalancesContext,
   morphoLens: Contract,
   markets: Contract[],
 ): Promise<number | undefined> {
-  const marketsAddresses: string[] = markets.map((res) => res.address)
+  const marketsAddresses = markets.map((res) => res.address)
 
   const userHealthFactorRes = await call({
     ctx,
     target: morphoLens.address,
-    //@ts-ignore
     params: [ctx.address, marketsAddresses],
     abi: abi.getUserHealthFactor,
   })
 
-  if (ethers.constants.MaxUint256.eq(userHealthFactorRes.output)) {
+  if (ethers.constants.MaxUint256.eq(userHealthFactorRes)) {
     return
   }
 
-  return userHealthFactorRes.output / 1e18
+  return Number(userHealthFactorRes) / 1e18
 }

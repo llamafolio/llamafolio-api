@@ -109,7 +109,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getmStableBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const userBalanceOfRes = await multicall({
@@ -130,11 +130,12 @@ export async function getmStableBalances(ctx: BalancesContext, pools: Contract[]
 }
 
 export async function getmStableFarmingBalances(ctx: BalancesContext, farmer: Contract): Promise<Balance> {
-  const [{ output: userBalance }, { output: exchangeRate }, { output: pendingReward }] = await Promise.all([
+  const [userBalance, exchangeRate, unclaimedRewards] = await Promise.all([
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.rawBalanceOf }),
     call({ ctx, target: farmer.token as string, abi: abi.exchangeRate }),
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.unclaimedRewards }),
   ])
+  const [amount, _first, _last] = unclaimedRewards
 
   const fmtUnderlyings = {
     ...(farmer.underlyings?.[0] as Contract),
@@ -145,13 +146,13 @@ export async function getmStableFarmingBalances(ctx: BalancesContext, farmer: Co
     ...farmer,
     amount: BigNumber.from(userBalance),
     underlyings: [fmtUnderlyings],
-    rewards: [{ ...(farmer.rewards?.[0] as Contract), amount: BigNumber.from(pendingReward.amount) }],
+    rewards: [{ ...(farmer.rewards?.[0] as Contract), amount: BigNumber.from(amount) }],
     category: 'farm',
   }
 }
 
 export async function getstkMTABalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: userBalance }, { output: pendingReward }] = await Promise.all([
+  const [userBalance, pendingReward] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.stakeEarned }),
   ])
@@ -171,22 +172,16 @@ export async function getstkBPTBalance(ctx: BalancesContext, staker: Contract): 
     return
   }
 
-  const [
-    { output: userBalanceOf },
-    { output: pendingReward },
-    { output: underlyingsBalancesRes },
-    { output: totalSuppliesRes },
-  ] = await Promise.all([
+  const [userBalanceOf, pendingReward, poolTokens, totalSuppliesRes] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.stakeEarned }),
     call({ ctx, target: staker.vault, params: [staker.poolId], abi: abi.getPoolTokens }),
     call({ ctx, target: staker.address, abi: erc20Abi.totalSupply }),
   ])
+  const [_tokens, balances, _lastChangeBlock] = poolTokens
 
   underlyings.forEach((underlying, idx) => {
-    const underlyingAmount = BigNumber.from(underlyingsBalancesRes.balances[idx])
-      .mul(userBalanceOf)
-      .div(totalSuppliesRes)
+    const underlyingAmount = BigNumber.from(balances[idx]).mul(userBalanceOf).div(totalSuppliesRes)
 
     underlying.amount = underlyingAmount
   })
@@ -202,7 +197,7 @@ export async function getstkBPTBalance(ctx: BalancesContext, staker: Contract): 
 
 export async function getmStableLockerBalance(ctx: BalancesContext, locker: Contract): Promise<Balance> {
   const underlying = locker.underlyings?.[0] as Token
-  const [userBalanceRes, { output: userRewardRes }] = await Promise.all([
+  const [userBalanceRes, userRewardRes] = await Promise.all([
     getSingleLockerBalance(ctx, locker, underlying, 'locked'),
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.stakeEarned }),
   ])

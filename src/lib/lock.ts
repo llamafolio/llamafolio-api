@@ -78,11 +78,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 function getLockerAbi(methodName?: string): any {
   return JSON.parse(JSON.stringify(abi.locks).replace(abi.locks.name, methodName ? `${methodName}` : abi.locks.name))
 }
+
 function getNFTLockerAbi(methodName?: string): any {
   return JSON.parse(
     JSON.stringify(abi.nftLocked).replace(abi.nftLocked.name, methodName ? `${methodName}` : abi.nftLocked.name),
@@ -97,12 +98,10 @@ export async function getSingleLockerBalance(
 ): Promise<LockBalance> {
   const genericLocker = getLockerAbi(methodName)
 
-  const {
-    output: { amount, end },
-  } = await call({ ctx, target: locker.address, params: [ctx.address], abi: genericLocker })
+  const [amount, end] = await call({ ctx, target: locker.address, params: [ctx.address], abi: genericLocker })
 
   const now = Date.now() / 1000
-  const unlockAt = end
+  const unlockAt = Number(end)
 
   return {
     ...locker,
@@ -164,13 +163,14 @@ export async function getMultipleLockerBalances(
 ): Promise<LockBalance[]> {
   const balances: LockBalance[] = []
 
-  const [{ output: lockedBalances }, { output: earnedRes }] = await Promise.all([
+  const [lockedBalances, earnedRes] = await Promise.all([
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.lockedBalances }),
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.claimableRewards }),
   ])
+  const [total, _unlockable, _locked, lockData] = lockedBalances
 
-  const locked = sumBN((lockedBalances.lockData || []).map((lockData: any) => lockData.amount))
-  const totalLocked = BigNumber.from(lockedBalances.total)
+  const locked = sumBN((lockData || []).map((lockData: any) => lockData.amount))
+  const totalLocked = BigNumber.from(total)
   const expiredLocked = totalLocked.sub(locked)
 
   const claimableBalance: Balance = {
@@ -191,8 +191,8 @@ export async function getMultipleLockerBalances(
     })
   }
 
-  for (let lockIdx = 0; lockIdx < lockedBalances.lockData.length; lockIdx++) {
-    const lockedBalance = lockedBalances.lockData[lockIdx]
+  for (let lockIdx = 0; lockIdx < lockData.length; lockIdx++) {
+    const lockedBalance = lockData[lockIdx]
     const { amount, unlockTime } = lockedBalance
 
     const balance: Balance = {
@@ -229,7 +229,7 @@ export async function getNFTLockerBalances(
   const balances: LockBalance[] = []
   const genericLocker = getNFTLockerAbi(methodName)
 
-  const { output: balanceOfsRes } = await call({
+  const balanceOfsRes = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],
@@ -238,7 +238,7 @@ export async function getNFTLockerBalances(
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, balanceOfsRes).map((idx) => ({ target: locker.address, params: [ctx.address, idx] })),
+    calls: range(0, Number(balanceOfsRes)).map((idx) => ({ target: locker.address, params: [ctx.address, idx] })),
     abi: abi.tokenOfOwnerByIndex,
   })
 

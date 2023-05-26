@@ -29,7 +29,7 @@ const abi = {
     stateMutability: 'nonpayable',
     type: 'function',
   },
-}
+} as const
 
 const XVS: Token = {
   chain: 'bsc',
@@ -52,7 +52,7 @@ export async function getRewardsBalances(
     abi: abi.getXVSBalanceMetadataExt,
   })
 
-  const XVSAllocatedRewards = BigNumber.from(XVSAllocatedRewardsRes.output.allocated)
+  const XVSAllocatedRewards = BigNumber.from(XVSAllocatedRewardsRes.allocated)
 
   rewards.push({
     chain: ctx.chain,

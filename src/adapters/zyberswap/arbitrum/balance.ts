@@ -47,7 +47,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const zyber: Token = {
   chain: 'arbitrum',
@@ -95,12 +95,14 @@ export async function getZyberFarm3poolsBalances(
   pool: Contract,
   masterchef: Contract,
 ): Promise<Balance | undefined> {
-  const [balanceOfRes, pendingRewardsRes, underlyingsBalancesRes, totalSupplyRes] = await Promise.all([
+  const [userInfo, pendingRewardsRes, underlyingsBalancesRes, totalSupplyRes] = await Promise.all([
     call({ ctx, target: masterchef.address, params: [pool.pid, ctx.address], abi: abi.userInfo }),
     call({ ctx, target: masterchef.address, params: [pool.pid, ctx.address], abi: abi.pendingTokens }),
     call({ ctx, target: pool.address, abi: abi.getTokenBalances }),
     call({ ctx, target: pool.lpToken, abi: erc20Abi.totalSupply }),
   ])
+  const [amount] = userInfo
+  const [_addresses, _symbols, _decimals, pendRewardAmounts] = pendingRewardsRes
 
   let underlyings = pool.underlyings
   let rewards = pool.rewards
@@ -111,19 +113,17 @@ export async function getZyberFarm3poolsBalances(
 
   underlyings = underlyings.map((underlying, idx) => ({
     ...(underlying as Contract),
-    amount: BigNumber.from(balanceOfRes.output.amount)
-      .mul(underlyingsBalancesRes.output[idx])
-      .div(totalSupplyRes.output),
+    amount: BigNumber.from(amount).mul(underlyingsBalancesRes[idx]).div(totalSupplyRes),
   }))
 
   rewards = rewards.map((reward, idx) => ({
     ...(reward as Balance),
-    amount: BigNumber.from(pendingRewardsRes.output.amounts[idx]),
+    amount: BigNumber.from(pendRewardAmounts[idx]),
   }))
 
   return {
     ...pool,
-    amount: BigNumber.from(balanceOfRes.output.amount),
+    amount: BigNumber.from(amount),
     underlyings,
     rewards: rewards as Balance[],
     category: 'farm',

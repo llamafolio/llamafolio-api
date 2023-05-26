@@ -49,12 +49,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getFarmContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const { output: getPoolsNumber } = await call({
+  const getPoolsNumber = await call({
     ctx,
     target: contract.address,
     abi: abi.poolsCreated,
@@ -62,7 +62,7 @@ export async function getFarmContracts(ctx: BaseContext, contract: Contract): Pr
 
   const getPoolsAddresses = await multicall({
     ctx,
-    calls: range(0, getPoolsNumber).map((_, idx) => ({
+    calls: range(0, Number(getPoolsNumber)).map((_, idx) => ({
       target: contract.address,
       params: [idx],
     })),

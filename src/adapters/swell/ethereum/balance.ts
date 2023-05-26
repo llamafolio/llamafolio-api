@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const WETH: Token = {
   chain: 'ethereum',
@@ -22,14 +22,14 @@ const WETH: Token = {
 }
 
 export async function getSwellBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const { output: balanceOf } = await call({
+  const balanceOf = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
 
-  const { output: rate } = await call({ ctx, target: contract.address, abi: abi.getRate })
+  const rate = await call({ ctx, target: contract.address, abi: abi.getRate })
 
   return {
     ...contract,

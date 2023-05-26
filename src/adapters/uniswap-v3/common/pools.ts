@@ -95,7 +95,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getPoolsBalances(ctx: BalancesContext, nonFungiblePositionManager: Contract, factory: Contract) {
   // # of NFTs
@@ -106,7 +106,7 @@ export async function getPoolsBalances(ctx: BalancesContext, nonFungiblePosition
     abi: erc20Abi.balanceOf,
   })
 
-  const balancesLength = parseInt(balanceOf.output)
+  const balancesLength = Number(balanceOf)
 
   // token IDs
   const tokensOfOwnerByIndexRes = await multicall({

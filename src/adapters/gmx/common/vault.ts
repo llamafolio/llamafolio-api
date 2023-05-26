@@ -23,7 +23,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getVaultTokens(ctx: BaseContext, vault: Contract) {
   const allWhitelistedTokensLengthRes = await call({
@@ -32,7 +32,7 @@ export async function getVaultTokens(ctx: BaseContext, vault: Contract) {
     target: vault.address,
   })
 
-  const allWhitelistedTokensLength = parseInt(allWhitelistedTokensLengthRes.output)
+  const allWhitelistedTokensLength = Number(allWhitelistedTokensLengthRes)
 
   const allWhitelistedTokensRes = await multicall<string, [number], string>({
     ctx,

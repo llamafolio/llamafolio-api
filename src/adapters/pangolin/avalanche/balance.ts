@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const pangolin: Token = {
   chain: 'avalanche',
@@ -33,9 +33,9 @@ export async function getPangolinStakeBalances(ctx: BalancesContext, staker: Con
     ...staker,
     decimals: pangolin.decimals,
     symbol: pangolin.symbol,
-    amount: BigNumber.from(userBalanceOfRes.output),
+    amount: BigNumber.from(userBalanceOfRes),
     underlyings: [pangolin],
-    rewards: [{ ...pangolin, amount: BigNumber.from(userEarnedRes.output) }],
+    rewards: [{ ...pangolin, amount: BigNumber.from(userEarnedRes) }],
     category: 'stake',
   })
 

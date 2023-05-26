@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const BOO: Token = {
   chain: 'fantom',
@@ -24,16 +24,14 @@ const BOO: Token = {
 export async function getStakexBOOBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const balanceOfRes = await call({ ctx, target: contract.address, params: [ctx.address], abi: erc20Abi.balanceOf })
-
-  const balanceOf = balanceOfRes.output
+  const balanceOf = await call({ ctx, target: contract.address, params: [ctx.address], abi: erc20Abi.balanceOf })
 
   const xBOOForBOORes = await call({ ctx, target: contract.address, params: [balanceOf], abi: abi.xBOOForBOO })
 
   balances.push({
     ...contract,
     amount: BigNumber.from(balanceOf),
-    underlyings: [{ ...BOO, amount: BigNumber.from(xBOOForBOORes.output) }],
+    underlyings: [{ ...BOO, amount: BigNumber.from(xBOOForBOORes) }],
     rewards: undefined,
     category: 'stake',
   })

@@ -87,7 +87,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 interface FarmContract extends Contract {
   rewarder: string
@@ -110,13 +110,12 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
   const poolsLength = await call({
     ctx,
     target: masterChef.address,
-    params: [],
     abi: abi.poolLength,
   })
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: range(0, poolsLength.output).map((i) => ({
+    calls: range(0, Number(poolsLength)).map((i) => ({
       target: masterChef.address,
       params: [i],
     })),
@@ -289,7 +288,6 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
     call({
       ctx,
       target: contract.address,
-      params: [],
       abi: {
         inputs: [],
         name: 'token0',
@@ -302,7 +300,6 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
     call({
       ctx,
       target: contract.address,
-      params: [],
       abi: {
         inputs: [],
         name: 'token1',
@@ -315,7 +312,6 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
     call({
       ctx,
       target: contract.address,
-      params: [],
       abi: {
         inputs: [],
         name: 'getReserves',
@@ -332,7 +328,6 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
     call({
       ctx,
       target: contract.address,
-      params: [],
       abi: {
         inputs: [],
         name: 'totalSupply',
@@ -342,25 +337,19 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
       },
     }),
   ])
+  const [_reserve0, _reserve1] = underlyingsTokensReservesRes
 
-  const underlyingsTokensAddresses: string[] = []
-  const underlyingsTokensReserves: BigNumber[] = []
-  const totalPoolSupply = BigNumber.from(totalPoolSupplyRes.output)
+  const totalPoolSupply = BigNumber.from(totalPoolSupplyRes)
 
-  underlyingsTokensAddresses.push(underlyingToken0AddressesRes.output, underlyingsTokens1AddressesRes.output)
-  underlyingsTokensReserves.push(
-    BigNumber.from(underlyingsTokensReservesRes.output._reserve0),
-    BigNumber.from(underlyingsTokensReservesRes.output._reserve1),
-  )
-  const underlyings = await getERC20Details(ctx, underlyingsTokensAddresses)
+  const underlyings = await getERC20Details(ctx, [underlyingToken0AddressesRes, underlyingsTokens1AddressesRes])
 
   const underlyings0 = {
     ...underlyings[0],
-    amount: contract.amount.mul(underlyingsTokensReserves[0]).div(totalPoolSupply),
+    amount: contract.amount.mul(_reserve0).div(totalPoolSupply),
   }
   const underlyings1 = {
     ...underlyings[1],
-    amount: contract.amount.mul(underlyingsTokensReserves[1]).div(totalPoolSupply),
+    amount: contract.amount.mul(_reserve1).div(totalPoolSupply),
   }
 
   return [underlyings0, underlyings1]

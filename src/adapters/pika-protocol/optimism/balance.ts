@@ -116,7 +116,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const USDC: Token = {
   chain: 'optimism',
@@ -126,19 +126,17 @@ const USDC: Token = {
 }
 
 export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const [stakeBalancesRes, usdcRewardsRes, opRewardsRes, vaultBalancesRes] = await Promise.all([
+  const [stakeBalancesRes, usdcRewardsRes, opRewardsRes, vault] = await Promise.all([
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.getShare }),
     call({ ctx, target: contract.rewarder[0], params: [ctx.address], abi: abi.getClaimableReward }),
     call({ ctx, target: contract.rewarder[1], params: [ctx.address], abi: abi.earned }),
-    call({ ctx, target: contract.address, params: [], abi: abi.getVault }),
+    call({ ctx, target: contract.address, abi: abi.getVault }),
   ])
 
   const underlying = contract.underlyings?.[0] as Contract
   const rewards = contract.rewards as Contract[]
 
-  const balance = BigNumber.from(stakeBalancesRes.output)
-    .mul(vaultBalancesRes.output.balance)
-    .div(vaultBalancesRes.output.shares)
+  const balance = BigNumber.from(stakeBalancesRes).mul(vault.balance).div(vault.shares)
 
   return {
     ...contract,
@@ -147,8 +145,8 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     amount: balance,
     underlyings: [underlying],
     rewards: [
-      { ...rewards[0], amount: BigNumber.from(usdcRewardsRes.output) },
-      { ...rewards[1], amount: BigNumber.from(opRewardsRes.output) },
+      { ...rewards[0], amount: BigNumber.from(usdcRewardsRes) },
+      { ...rewards[1], amount: BigNumber.from(opRewardsRes) },
     ],
     category: 'stake',
   }

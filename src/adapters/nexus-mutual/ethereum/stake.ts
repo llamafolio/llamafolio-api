@@ -52,8 +52,8 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     }),
   ])
 
-  const stakeBalances = BigNumber.from(getStakeBalances.output)
-  const rewardsBalances = BigNumber.from(getRewardsBalances.output)
+  const stakeBalances = BigNumber.from(getStakeBalances)
+  const rewardsBalances = BigNumber.from(getRewardsBalances)
 
   balances.push({
     chain: NXM.chain,

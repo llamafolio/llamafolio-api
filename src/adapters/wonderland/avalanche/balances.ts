@@ -25,7 +25,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const TIME: Contract = {
   name: 'Time',
@@ -46,14 +46,12 @@ const wMEMO: Contract = {
 }
 
 export async function getTIMEStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const balanceOfRes = await call({
+  const balanceOf = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
-
-  const balanceOf = balanceOfRes.output
 
   const formattedBalanceOfRes = await call({
     ctx,
@@ -62,7 +60,7 @@ export async function getTIMEStakeBalances(ctx: BalancesContext, contract: Contr
     abi: abi.wMEMOToMEMO,
   })
 
-  const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes.output)
+  const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes)
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -87,7 +85,7 @@ export async function getwMEMOStakeBalances(ctx: BalancesContext, contract: Cont
     abi: erc20Abi.balanceOf,
   })
 
-  const balanceOf = BigNumber.from(balanceOfRes.output)
+  const balanceOf = BigNumber.from(balanceOfRes)
 
   const balance: Balance = {
     chain: ctx.chain,

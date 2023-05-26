@@ -47,15 +47,17 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getBellaContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const [{ output: poolLength }, { output: bellaToken }] = await Promise.all([
+  const [poolLengthBI, bellaToken] = await Promise.all([
     call({ ctx, target: contract.address, abi: abi.poolLength }),
     call({ ctx, target: contract.address, abi: abi.bella }),
   ])
+
+  const poolLength = Number(poolLengthBI)
 
   const poolInfosRes = await multicall({
     ctx,

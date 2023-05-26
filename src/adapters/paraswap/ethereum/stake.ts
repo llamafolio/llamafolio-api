@@ -24,7 +24,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const PSP: Token = {
   chain: 'ethereum',
@@ -42,16 +42,15 @@ export async function getParaspaceBPTStakeBalances(
     return
   }
 
-  const [balance, { output: totalSupply }, { output: underlyingsBalancesAmount }] = await Promise.all([
+  const [balance, totalSupply, poolTokens] = await Promise.all([
     getSingleStakeBalance(ctx, staker),
     call({ ctx, target: staker.token!, abi: erc20Abi.totalSupply }),
     call({ ctx, target: staker.vault, params: [staker.poolId], abi: abi.getPoolTokens }),
   ])
+  const [_tokens, balances, _lastChangeBlock] = poolTokens
 
   const fmtUnderlyings = underlyings.map((underlying, idx) => {
-    const underlyingsAmount = BigNumber.from(underlyingsBalancesAmount.balances[idx])
-      .mul(balance.amount)
-      .div(totalSupply)
+    const underlyingsAmount = BigNumber.from(balances[idx]).mul(balance.amount).div(totalSupply)
 
     return { ...underlying, amount: underlyingsAmount }
   })
@@ -68,18 +67,16 @@ export async function getParaspaceBPTFarmBalances(
     return
   }
 
-  const [balance, { output: totalSupply }, { output: underlyingsBalancesAmount }, { output: pendingReward }] =
-    await Promise.all([
-      getSingleStakeBalance(ctx, farmer),
-      call({ ctx, target: farmer.token!, abi: erc20Abi.totalSupply }),
-      call({ ctx, target: farmer.vault, params: [farmer.poolId], abi: abi.getPoolTokens }),
-      call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.getTotalRewardsBalance }),
-    ])
+  const [balance, totalSupply, poolTokens, pendingReward] = await Promise.all([
+    getSingleStakeBalance(ctx, farmer),
+    call({ ctx, target: farmer.token!, abi: erc20Abi.totalSupply }),
+    call({ ctx, target: farmer.vault, params: [farmer.poolId], abi: abi.getPoolTokens }),
+    call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.getTotalRewardsBalance }),
+  ])
+  const [_tokens, balances, _lastChangeBlock] = poolTokens
 
   const fmtUnderlyings = underlyings.map((underlying, idx) => {
-    const underlyingsAmount = BigNumber.from(underlyingsBalancesAmount.balances[idx])
-      .mul(balance.amount)
-      .div(totalSupply)
+    const underlyingsAmount = BigNumber.from(balances[idx]).mul(balance.amount).div(totalSupply)
 
     return { ...underlying, amount: underlyingsAmount }
   })

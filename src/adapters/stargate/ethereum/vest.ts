@@ -20,7 +20,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const STG: Token = {
   chain: 'ethereum',
@@ -39,7 +39,7 @@ const CONVERTER = 4
 export async function getStargateVesterBalances(ctx: BalancesContext, vester: Contract): Promise<VestBalance> {
   const now = Math.floor(Date.now() / 1000)
 
-  const [{ output: balancesOfRes }, { output: vestStartRes }, { output: vestDurationRes }] = await Promise.all([
+  const [balancesOfRes, vestStartRes, vestDurationRes] = await Promise.all([
     call({
       ctx,
       target: vester.address,
@@ -58,7 +58,7 @@ export async function getStargateVesterBalances(ctx: BalancesContext, vester: Co
     }),
   ])
 
-  const end = parseInt(vestStartRes) + parseInt(vestDurationRes)
+  const end = Number(vestStartRes) + Number(vestDurationRes)
 
   return {
     ...vester,

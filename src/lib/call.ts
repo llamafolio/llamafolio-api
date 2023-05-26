@@ -1,32 +1,26 @@
 import '@lib/providers'
 
 import type { BaseContext } from '@lib/adapter'
-import { formatOutput, formatValue } from '@lib/multicall'
 import { providers } from '@lib/providers'
-import { getAddress } from 'viem'
+import type { Abi } from 'abitype'
+import type { DecodeFunctionResultParameters, DecodeFunctionResultReturnType } from 'viem'
 
-export type CallParams = string | number | (string | number)[] | undefined
-
-export interface CallOptions {
+export async function call<TAbi extends Abi[number] | readonly unknown[]>(options: {
   ctx: BaseContext
   target: string
-  abi: any
-  params?: CallParams
-}
-
-export async function call(options: CallOptions) {
+  abi: DecodeFunctionResultParameters<TAbi[]>['abi'][number]
+  params?: DecodeFunctionResultParameters<TAbi[]>['args']
+}): Promise<DecodeFunctionResultReturnType<TAbi[]>> {
   const args = options.params == null ? [] : Array.isArray(options.params) ? options.params : [options.params]
 
+  // @ts-ignore
   const output = await providers[options.ctx.chain].readContract({
-    address: getAddress(options.target),
+    address: options.target,
     abi: [options.abi],
+    // @ts-ignore
     functionName: options.abi.name,
     args,
   })
 
-  if (options.abi.outputs.length === 1) {
-    return { output: formatValue(output) }
-  }
-
-  return { output: formatOutput(options.abi, output) }
+  return output as any
 }

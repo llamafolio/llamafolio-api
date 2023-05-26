@@ -17,12 +17,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getLybraLendingBalances(ctx: BalancesContext, lendingPool: Contract): Promise<Balance[]> {
   console.log(lendingPool)
 
-  const [{ output: userLendingBalance }, { output: userBorrowBalance }] = await Promise.all([
+  const [userLendingBalance, userBorrowBalance] = await Promise.all([
     call({ ctx, target: lendingPool.address, params: [ctx.address], abi: abi.depositedEther }),
     call({ ctx, target: lendingPool.address, params: [ctx.address], abi: abi.getBorrowedOf }),
   ])

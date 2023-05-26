@@ -44,24 +44,24 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getInstaDappContracts(ctx: BalancesContext, instaList: Contract): Promise<Contract[]> {
-  const getUserLinkCountFromInstadApp = await call({
+  const userLink = await call({
     ctx,
     target: instaList.address,
     params: [ctx.address],
     abi: abi.userLink,
   })
+  const [first, _last, count] = userLink
 
-  const ids: number[] = []
-  const userLinkCount = parseInt(getUserLinkCountFromInstadApp.output.count)
-  const userLinkFirst = parseInt(getUserLinkCountFromInstadApp.output.first)
+  const ids: bigint[] = []
+  const userLinkCount = Number(count)
 
-  ids.push(userLinkFirst)
+  ids.push(first)
 
   for (let i = 1; i < userLinkCount; i++) {
-    const userLinksRes = await call({
+    const userLinks = await call({
       ctx,
       target: instaList.address,
       // Previous value gives access to the next one Id
@@ -69,19 +69,21 @@ export async function getInstaDappContracts(ctx: BalancesContext, instaList: Con
       abi: abi.userList,
     })
 
-    ids.push(userLinksRes.output.next)
+    const [_prev, next] = userLinks
+
+    ids.push(next)
   }
 
   const getInstadAppAddressesProxiesFromId = await multicall({
     ctx,
     calls: ids.map((id) => ({
       target: instaList.address,
-      params: [id],
+      params: [id.toString()],
     })),
     abi: abi.accountAddr,
   })
 
-  const instadAppAddressesProxiesFromId: string[] = getInstadAppAddressesProxiesFromId
+  const instadAppAddressesProxiesFromId = getInstadAppAddressesProxiesFromId
     .filter((res) => res.success)
     .map((res) => res.output)
     .filter((res) => res !== ADDRESS_ZERO)
@@ -102,7 +104,7 @@ export async function getMakerContracts(ctx: BalancesContext, proxyRegistry: Con
     abi: abi.proxies,
   })
 
-  return [proxiesRes.output]
+  return [proxiesRes]
     .filter((res) => res !== ADDRESS_ZERO)
     .map((address) => ({
       chain: ctx.chain,

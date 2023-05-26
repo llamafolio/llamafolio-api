@@ -29,7 +29,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const LOOKS: Contract = {
   name: 'LooksRare Token',
@@ -52,14 +52,14 @@ export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Co
     call({
       ctx,
       target: stakingContract.address,
-      params: ctx.address,
+      params: [ctx.address],
       abi: abi.calculateSharesValueInLOOKS,
     }),
 
     call({
       ctx,
       target: stakingContract.address,
-      params: ctx.address,
+      params: [ctx.address],
       abi: abi.calculatePendingRewards,
     }),
   ])
@@ -69,8 +69,8 @@ export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Co
     address: LOOKS.address,
     decimals: LOOKS.decimals,
     symbol: LOOKS.symbols,
-    amount: BigNumber.from(stakeBalanceOfRes.output),
-    rewards: [{ ...WETH, amount: BigNumber.from(rewardsBalanceOfRes.output) }],
+    amount: BigNumber.from(stakeBalanceOfRes),
+    rewards: [{ ...WETH, amount: BigNumber.from(rewardsBalanceOfRes) }],
     category: 'stake',
   }
 }
@@ -88,22 +88,23 @@ export const getCompounderBalances = async (ctx: BalancesContext, compounder: Co
     address: LOOKS.address,
     decimals: LOOKS.decimals,
     symbol: LOOKS.symbols,
-    amount: BigNumber.from(sharesValue.output),
+    amount: BigNumber.from(sharesValue),
     yieldKey: compounder.address,
     category: 'farm',
   }
 }
 
 export const getFarmBalances = async (ctx: BalancesContext, farmer: Contract): Promise<Balance[]> => {
-  const [{ output: balanceOfRes }, { output: earnedOfRes }] = await Promise.all([
+  const [userInfo, earnedOfRes] = await Promise.all([
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.userInfo }),
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.calculatePendingRewards }),
   ])
+  const [amount, _rewardDebt] = userInfo
 
   const balance: Balance = {
     ...farmer,
-    address: farmer.token as string,
-    amount: BigNumber.from(balanceOfRes.amount),
+    address: farmer.token as `0x${string}`,
+    amount: BigNumber.from(amount),
     underlyings: farmer.underlyings as Contract[],
     rewards: [{ ...LOOKS, amount: BigNumber.from(earnedOfRes) }],
     category: 'farm',

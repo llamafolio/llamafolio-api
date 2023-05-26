@@ -1,11 +1,12 @@
 import '@lib/providers'
 
 import type { BaseContext } from '@lib/adapter'
-import type { CallParams } from '@lib/call'
 import { providers } from '@lib/providers'
 import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 import { getAddress } from 'viem'
+
+export type CallParams = string | number | (string | number)[] | undefined
 
 export function formatValue(value: any): any {
   if (value == null) {
@@ -45,12 +46,12 @@ export interface MultiCallOptions {
   ctx: BaseContext
   abi: any
   calls: (Call | null)[]
-  target?: string
+  target?: `0x${string}`
   chunkSize?: number
 }
 
 export interface Call {
-  target?: string
+  target?: `0x${string}`
   params?: CallParams
 }
 
@@ -63,7 +64,7 @@ export interface MultiCallResult<T = string, P = any[], O = any | null> {
   output: O
 }
 
-export async function multicall<T = string, P = any[], O = any>(params: MultiCallOptions) {
+export async function multicall<T = `0x${string}`, P = any[], O = any>(params: MultiCallOptions) {
   const results: MultiCallResult<T, P, O>[] = []
   if (!params.calls?.length) {
     return results

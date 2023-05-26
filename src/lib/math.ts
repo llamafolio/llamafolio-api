@@ -7,10 +7,6 @@ export function isZero<T extends BigNumber | string | number>(num: T) {
   return num.toString() === '0'
 }
 
-export function decimalsBN(num: BigNumber, decimals: number) {
-  return num.div(BN_TEN.pow(decimals))
-}
-
 export function sumBN(nums: BigNumber[]) {
   let res = BigNumber.from('0')
   for (const num of nums) {

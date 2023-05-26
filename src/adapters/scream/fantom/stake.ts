@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const SCREAM: Token = {
   chain: 'fantom',
@@ -22,7 +22,7 @@ const SCREAM: Token = {
 }
 
 export async function getScreamStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [{ output: balanceOfRes }, { output: getShareValueRes }] = await Promise.all([
+  const [balanceOfRes, getShareValueRes] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: staker.address, abi: abi.getShareValue }),
   ])

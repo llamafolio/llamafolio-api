@@ -27,7 +27,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const FLOOR: Token = {
   chain: 'ethereum',
@@ -44,7 +44,7 @@ const gFLOOR: Token = {
 }
 
 export async function getVesterBalances(ctx: BalancesContext, vester: Contract): Promise<Balance> {
-  const { output: userIndexesRes } = await call({
+  const userIndexesRes = await call({
     ctx,
     target: vester.address,
     params: [ctx.address],
@@ -53,11 +53,11 @@ export async function getVesterBalances(ctx: BalancesContext, vester: Contract):
 
   const balancesOfRes = await multicall({
     ctx,
-    calls: userIndexesRes.map((index: number) => ({ target: vester.address, params: [ctx.address, index] })),
+    calls: userIndexesRes.map((index) => ({ target: vester.address, params: [ctx.address, index.toString()] })),
     abi: abi.pendingFor,
   })
 
-  const aggregatedVestingBalances = balancesOfRes.reduce((acc: BigNumber, current: any) => {
+  const aggregatedVestingBalances = balancesOfRes.reduce((acc: BigNumber, current) => {
     const payout = isSuccess(current) ? BigNumber.from(current.output.payout_) : BN_ZERO
     return acc.add(payout)
   }, BN_ZERO)

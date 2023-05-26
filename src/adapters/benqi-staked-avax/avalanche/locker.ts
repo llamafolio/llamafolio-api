@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import type { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
@@ -48,7 +48,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const WAVAX: Token = {
   chain: 'avalanche',
@@ -58,7 +58,7 @@ const WAVAX: Token = {
 }
 
 export async function getBenqiLockerBalances(ctx: BalancesContext, locker: Contract): Promise<Balance | undefined> {
-  const [{ output: lockersPositionsLength }, { output: cooldownPeriodRes }] = await Promise.all([
+  const [lockersPositionsLength, cooldownPeriodRes] = await Promise.all([
     call({
       ctx,
       target: locker.address,
@@ -68,14 +68,14 @@ export async function getBenqiLockerBalances(ctx: BalancesContext, locker: Contr
     call({ ctx, target: locker.address, abi: abi.cooldownPeriod }),
   ])
 
-  if (isZero(lockersPositionsLength)) {
+  if (lockersPositionsLength === 0n) {
     return
   }
 
   const lockersBalancesRes = await call({
     ctx,
     target: locker.address,
-    params: [ctx.address, 0, lockersPositionsLength],
+    params: [ctx.address, 0n, lockersPositionsLength],
     abi: abi.getPaginatedUnlockRequests,
   })
 
@@ -90,13 +90,13 @@ export async function getBenqiLockerBalances(ctx: BalancesContext, locker: Contr
   })
 
   const now = Date.now() / 1000
-  const unlockAt = parseInt(lockerBalance.startedAt) + parseInt(cooldownPeriodRes)
+  const unlockAt = parseInt(lockerBalance.startedAt) + Number(cooldownPeriodRes)
 
   return {
     ...locker,
     rewards: undefined,
-    amount: BigNumber.from(fmtLockerBalancesRes.output),
-    claimable: now > unlockAt ? BigNumber.from(fmtLockerBalancesRes.output) : BN_ZERO,
+    amount: BigNumber.from(fmtLockerBalancesRes),
+    claimable: now > unlockAt ? BigNumber.from(fmtLockerBalancesRes) : BN_ZERO,
     unlockAt,
     underlyings: [{ ...WAVAX }],
     category: 'lock',

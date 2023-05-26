@@ -33,13 +33,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getSynapseContracts(ctx: BaseContext, miniChef: Contract): Promise<Contract[]> {
   const pools: Contract[] = []
 
-  const poolLengthRes = await call({ ctx, target: miniChef.address, params: [], abi: abi.poolLength })
-  const poolLength = parseInt(poolLengthRes.output)
+  const poolLengthRes = await call({ ctx, target: miniChef.address, abi: abi.poolLength })
+  const poolLength = Number(poolLengthRes)
 
   const calls: Call[] = []
   for (let idx = 0; idx < poolLength; idx++) {

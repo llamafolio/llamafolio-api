@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const LINK: Token = {
   chain: 'ethereum',
@@ -22,7 +22,7 @@ const LINK: Token = {
 }
 
 export async function getLinkStakesBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [balance, { output: earned }] = await Promise.all([
+  const [balance, earned] = await Promise.all([
     getSingleStakeBalance(ctx, staker),
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.withdrawableRewards }),
   ])

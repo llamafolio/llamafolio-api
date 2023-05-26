@@ -45,8 +45,8 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     }),
   ])
 
-  const amount = BigNumber.from(balanceOfRes.output)
-  const rewards = BigNumber.from(rewardsRes.output)
+  const amount = BigNumber.from(balanceOfRes)
+  const rewards = BigNumber.from(rewardsRes)
 
   balances.push({
     chain: ctx.chain,
@@ -103,8 +103,8 @@ export async function getStakeBalancerPoolBalances(
   ])
 
   // staked balancer pool token
-  const stakedBalance = BigNumber.from(stakingBalanceOfRes.output)
-  const stakingRewards = BigNumber.from(stakingRewardsRes.output)
+  const stakedBalance = BigNumber.from(stakingBalanceOfRes)
+  const stakingRewards = BigNumber.from(stakingRewardsRes)
 
   // Underlyings
   const totalSupplyRes = await multicall({
@@ -127,7 +127,7 @@ export async function getStakeBalancerPoolBalances(
   const stakingContractLPBalanceRes = await call({
     ctx,
     target: ABPT.address,
-    params: stakingContract.address,
+    params: [stakingContract.address],
     abi: {
       constant: true,
       inputs: [{ internalType: 'address', name: '', type: 'address' }],
@@ -141,8 +141,7 @@ export async function getStakeBalancerPoolBalances(
 
   const underlyingsTokensAddressesRes = await call({
     ctx,
-    target: bPoolRes.output,
-    params: [],
+    target: bPoolRes,
     abi: {
       constant: true,
       inputs: [],
@@ -154,9 +153,9 @@ export async function getStakeBalancerPoolBalances(
     },
   })
 
-  const underlyingsTokensAddresses = underlyingsTokensAddressesRes.output
+  const underlyingsTokensAddresses = underlyingsTokensAddressesRes
   const underlyingsTokens = await getERC20Details(ctx, underlyingsTokensAddresses)
-  if (underlyingsTokens.length !== underlyingsTokensAddressesRes.output.length) {
+  if (underlyingsTokens.length !== underlyingsTokensAddressesRes.length) {
     console.log('Failed to get underlyings details')
     return []
   }
@@ -165,7 +164,7 @@ export async function getStakeBalancerPoolBalances(
     ctx,
     calls: underlyingsTokens.map((token) => ({
       target: token.address,
-      params: [bPoolRes.output],
+      params: [bPoolRes],
     })),
     abi: {
       constant: true,
@@ -178,26 +177,26 @@ export async function getStakeBalancerPoolBalances(
     },
   })
 
-  const underlying0Balance: Balance = {
+  const underlying0Balance = {
     chain: ctx.chain,
     address: underlyingsTokens[0].address,
     decimals: underlyingsTokens[0].decimals,
     symbol: underlyingsTokens[0].symbol,
     // staking share * underlying share
     amount: stakedBalance
-      .mul(stakingContractLPBalanceRes.output)
+      .mul(stakingContractLPBalanceRes)
       .div(totalSupplyRes[0].output)
       .mul(underlyingsBalancesRes[0].output)
       .div(totalSupplyRes[1].output),
   }
-  const underlying1Balance: Balance = {
+  const underlying1Balance = {
     chain: ctx.chain,
     address: underlyingsTokens[1].address,
     decimals: underlyingsTokens[1].decimals,
     symbol: underlyingsTokens[1].symbol,
     // staking share * underlying share
     amount: stakedBalance
-      .mul(stakingContractLPBalanceRes.output)
+      .mul(stakingContractLPBalanceRes)
       .div(totalSupplyRes[0].output)
       .mul(underlyingsBalancesRes[1].output)
       .div(totalSupplyRes[1].output),
