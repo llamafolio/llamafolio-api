@@ -10,7 +10,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getAcrossContracts(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
   const lpTokensRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.l1Token })

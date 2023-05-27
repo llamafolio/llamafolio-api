@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -23,21 +22,24 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getLockerBalances(ctx: BalancesContext, lockers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
   const multipleUnderlyings: Balance[] = []
 
-  const calls = lockers.map((locker) => ({ target: locker.address, params: [ctx.address] }))
-  const lockerBalancesInfosRes = await multicall({ ctx, calls, abi: abi.getDepositsOf })
+  const lockerBalancesInfosRes = await multicall({
+    ctx,
+    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] } as const)),
+    abi: abi.getDepositsOf,
+  })
 
   for (let lockerIdx = 0; lockerIdx < lockers.length; lockerIdx++) {
     const locker = lockers[lockerIdx]
     const underlyings = locker.underlyings as Contract[]
     const lockerBalancesInfo = lockerBalancesInfosRes[lockerIdx]
 
-    if (!isSuccess(lockerBalancesInfo)) {
+    if (!lockerBalancesInfo.success) {
       continue
     }
 

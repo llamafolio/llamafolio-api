@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
+import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
 
 const abi = {
@@ -42,7 +42,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getPoolsBalances(
   ctx: BalancesContext,
@@ -52,17 +52,16 @@ export async function getPoolsBalances(
 ) {
   const balances: Balance[] = []
 
-  const calls = pools.map((pool) => ({
+  const calls: Call<typeof abi.userInfo>[] = pools.map((pool) => ({
     target: fairLaunch.address,
     params: [pool.pid, ctx.address],
   }))
 
-  const supplyCalls = pools.map((pool) => ({
+  const supplyCalls: Call<typeof abi.totalSupply>[] = pools.map((pool) => ({
     target: pool.address,
-    params: [],
   }))
 
-  const balanceOfCalls = pools.map((pool) => ({
+  const balanceOfCalls: Call<typeof erc20Abi.balanceOf>[] = pools.map((pool) => ({
     target: pool.address,
     params: [ctx.address],
   }))
@@ -83,19 +82,21 @@ export async function getPoolsBalances(
     const totalSupplyRes = totalSuppliesRes[i]
     const balanceOfRes = balancesOfRes[i]
 
-    if (!isSuccess(totalTokenRes) || !isSuccess(totalSupplyRes) || totalSupplyRes.output == 0) {
+    if (!userInfoRes.success || !totalTokenRes.success || !totalSupplyRes.success || totalSupplyRes.output == 0n) {
       continue
     }
 
+    const [amount] = userInfoRes.output
+
     // farm
-    if (isSuccess(userInfoRes)) {
+    if (userInfoRes.success) {
       const farmBalance: Balance = {
         ...(pool as Balance),
-        amount: BigNumber.from(userInfoRes.output.amount).mul(totalTokenRes.output).div(totalSupplyRes.output),
+        amount: BigNumber.from(amount).mul(totalTokenRes.output).div(totalSupplyRes.output),
         category: 'farm',
       }
 
-      if (isSuccess(pendingRewardRes)) {
+      if (pendingRewardRes.success) {
         farmBalance.rewards = [{ ...alpaca, amount: BigNumber.from(pendingRewardRes.output) }]
       }
 
@@ -103,7 +104,7 @@ export async function getPoolsBalances(
     }
 
     // lp
-    if (isSuccess(balanceOfRes)) {
+    if (balanceOfRes.success) {
       const lpBalance: Balance = {
         ...(pool as Balance),
         amount: BigNumber.from(balanceOfRes.output).mul(totalTokenRes.output).div(totalSupplyRes.output),

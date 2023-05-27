@@ -23,7 +23,7 @@ const MIM: Contract = {
   wallet: true,
 }
 
-const cauldrons = [
+const cauldrons: `0x${string}`[] = [
   //  v2
   '0xC89958B03A55B5de2221aCB25B58B89A000215E6', // WETH
   '0x5698135CA439f21a57bDdbe8b582C62f090406D5', // GLP Self-Repaying

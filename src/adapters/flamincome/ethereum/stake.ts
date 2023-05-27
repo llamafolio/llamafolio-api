@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 const abi = {
@@ -12,7 +11,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getFlamincomeFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -20,7 +19,7 @@ export async function getFlamincomeFarmBalances(ctx: BalancesContext, farmers: C
   const [balancesOfsRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] })),
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
@@ -36,7 +35,7 @@ export async function getFlamincomeFarmBalances(ctx: BalancesContext, farmers: C
     const balanceOfRes = balancesOfsRes[farmerIdx]
     const exchangeRateRes = exchangeRatesRes[farmerIdx]
 
-    if (!underlying || !isSuccess(balanceOfRes) || !isSuccess(exchangeRateRes)) {
+    if (!underlying || !balanceOfRes.success || !exchangeRateRes.success) {
       continue
     }
 

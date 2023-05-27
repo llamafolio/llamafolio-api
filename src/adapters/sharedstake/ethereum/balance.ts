@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract, FarmBalance } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -29,7 +28,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const SGT: Contract = {
   chain: 'ethereum',
@@ -51,7 +50,7 @@ export async function getShareStakeBalances(
   const balances: Balance[] = []
   const sushiBalances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.userInfo>[] = []
   for (let poolIdx = 0; poolIdx < contracts.length; poolIdx++) {
     calls.push({ target: masterchef.address, params: [contracts[poolIdx].pid, ctx.address] })
   }
@@ -67,15 +66,17 @@ export async function getShareStakeBalances(
     const poolBalanceRes = poolsBalancesRes[userIdx]
     const pendingRewardRes = pendingRewardsRes[userIdx]
 
-    if (!isSuccess(poolBalanceRes) || !isSuccess(pendingRewardRes)) {
+    if (!poolBalanceRes.success || !pendingRewardRes.success) {
       continue
     }
+
+    const [amount] = poolBalanceRes.output
 
     const balance: getShareStakeBalancesParams = {
       ...contract,
       underlyings: undefined,
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output.amount),
+      amount: BigNumber.from(amount),
       rewards: [{ ...SGT, amount: BigNumber.from(pendingRewardRes.output) }],
     }
 

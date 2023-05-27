@@ -1,5 +1,5 @@
 import type { MultiCallResult } from '@lib/multicall'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 
 export function range(start: number, end: number, step = 1) {
   const nums: number[] = []
@@ -11,7 +11,7 @@ export function range(start: number, end: number, step = 1) {
 }
 
 export function sliceIntoChunks<T>(arr: T[], chunkSize: number) {
-  const res = []
+  const res: T[][] = []
   for (let i = 0; i < arr.length; i += chunkSize) {
     const chunk = arr.slice(i, i + chunkSize)
     res.push(chunk)
@@ -118,8 +118,12 @@ export function groupBy2<T extends Record<string, any>>(
  * @param results
  * @param mapFn
  */
-export function mapSuccess<T>(results: MultiCallResult[], mapFn: (res: MultiCallResult, index: number) => T | null) {
-  return results.map((res, index) => (isSuccess(res) ? mapFn(res, index) : null))
+export function mapSuccess<T extends MultiCallResult<never>, S>(
+  results: T[],
+  mapFn: (res: { success: true; input: T['input']; output: NonNullable<T['output']> }, index: number) => S | null,
+) {
+  // @ts-ignore
+  return results.map((res, index) => (res.success ? mapFn(res, index) : null))
 }
 
 /**
@@ -127,11 +131,12 @@ export function mapSuccess<T>(results: MultiCallResult[], mapFn: (res: MultiCall
  * @param results
  * @param mapFn
  */
-export function flatMapSuccess<T>(
-  results: MultiCallResult[],
-  mapFn: (res: MultiCallResult, index: number) => T[] | null,
+export function flatMapSuccess<T extends MultiCallResult<never>, S>(
+  results: T[],
+  mapFn: (res: { success: true; input: T['input']; output: NonNullable<T['output']> }, index: number) => S[] | null,
 ) {
-  return results.flatMap((res, index) => (isSuccess(res) ? mapFn(res, index) : []))
+  // @ts-ignore
+  return results.flatMap((res, index) => (res.success ? mapFn(res, index) : []))
 }
 
 /**
@@ -139,9 +144,9 @@ export function flatMapSuccess<T>(
  * @param results
  * @param mapFn
  */
-export function mapSuccessFilter<T>(
-  results: MultiCallResult[],
-  mapFn: (res: MultiCallResult, index: number) => T | null,
+export function mapSuccessFilter<T extends MultiCallResult<never>, S>(
+  results: T[],
+  mapFn: (res: { success: true; input: T['input']; output: NonNullable<T['output']> }, index: number) => S | null,
 ) {
   return mapSuccess(results, mapFn).filter(isNotNullish)
 }

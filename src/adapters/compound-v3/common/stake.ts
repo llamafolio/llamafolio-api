@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 export async function getStakeBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
@@ -9,7 +8,7 @@ export async function getStakeBalances(ctx: BalancesContext, contracts: Contract
 
   const balanceOfsRes = await multicall({
     ctx,
-    calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] })),
+    calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] } as const)),
     abi: abi.balanceOf,
   })
 
@@ -19,7 +18,7 @@ export async function getStakeBalances(ctx: BalancesContext, contracts: Contract
 
     const balanceOfRes = balanceOfsRes[idx]
 
-    if (!isSuccess(balanceOfRes)) {
+    if (!balanceOfRes.success) {
       continue
     }
 

@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -15,7 +14,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export const pieProvider = async (ctx: BalancesContext, pools: Balance[]): Promise<Balance[]> => {
   const balances: Balance[] = []
@@ -23,7 +22,7 @@ export const pieProvider = async (ctx: BalancesContext, pools: Balance[]): Promi
   const [tokensBalancesRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [pool.amount.toString()] })),
+      calls: pools.map((pool) => ({ target: pool.address, params: [BigInt(pool.amount.toString())] } as const)),
       abi: abi.calcTokensForAmount,
     }),
     multicall({
@@ -39,11 +38,13 @@ export const pieProvider = async (ctx: BalancesContext, pools: Balance[]): Promi
     const tokensBalanceRes = tokensBalancesRes[poolIdx]
     const totalSupplyRes = totalSuppliesRes[poolIdx]
 
-    if (!underlyings || !isSuccess(tokensBalanceRes) || !isSuccess(totalSupplyRes)) {
+    if (!underlyings || !tokensBalanceRes.success || !totalSupplyRes.success) {
       continue
     }
 
-    const fmtUnderlyings = tokensBalanceRes.output.amounts.map((res: string, idx: number) => {
+    const [_tokens, amounts] = tokensBalanceRes.output
+
+    const fmtUnderlyings = amounts.map((res, idx) => {
       const amount = BigNumber.from(res).mul(pool.amount).div(totalSupplyRes.output)
       // AutoResolve underlyings to get Decimals and Symbol does not work for DeFi++
       const decimals = underlyings[idx].decimals == 0 ? 18 : underlyings[idx].decimals

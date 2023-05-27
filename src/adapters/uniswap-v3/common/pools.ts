@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { keyBy, mapSuccess, mapSuccessFilter, range } from '@lib/array'
+import { flatMapSuccess, keyBy, mapSuccess, mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
@@ -111,10 +111,9 @@ export async function getPoolsBalances(ctx: BalancesContext, nonFungiblePosition
   // token IDs
   const tokensOfOwnerByIndexRes = await multicall({
     ctx,
-    calls: range(0, balancesLength).map((idx) => ({
-      target: nonFungiblePositionManager.address,
-      params: [ctx.address, idx],
-    })),
+    calls: range(0, balancesLength).map(
+      (idx) => ({ target: nonFungiblePositionManager.address, params: [ctx.address, BigInt(idx)] } as const),
+    ),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -127,25 +126,22 @@ export async function getTokenIdsBalances(
   ctx: BalancesContext,
   nonFungiblePositionManager: Contract,
   factory: Contract,
-  tokenIds: number[],
+  tokenIds: bigint[],
 ) {
   // positions
   const positionsRes = await multicall({
     ctx,
-    calls: tokenIds.map((tokenId) => ({
-      target: nonFungiblePositionManager.address,
-      params: [tokenId],
-    })),
+    calls: tokenIds.map((tokenId) => ({ target: nonFungiblePositionManager.address, params: [tokenId] } as const)),
     abi: abi.positions,
   })
 
   // pools
   const poolsRes = await multicall({
     ctx,
-    calls: mapSuccess(positionsRes, (positionRes) => ({
-      target: factory.address,
-      params: [positionRes.output.token0, positionRes.output.token1, positionRes.output.fee],
-    })),
+    calls: mapSuccess(positionsRes, (positionRes) => {
+      const [_nonce, _operator, token0, token1, fee] = positionRes.output
+      return { target: factory.address, params: [token0, token1, fee] } as const
+    }),
     abi: abi.getPools,
   })
 
@@ -159,19 +155,29 @@ export async function getTokenIdsBalances(
 
       multicall({
         ctx,
-        calls: mapSuccess(poolsRes, (poolRes, idx) => ({
-          target: poolRes.output,
-          params: [positionsRes[idx].output.tickLower],
-        })),
+        calls: mapSuccess(poolsRes, (poolRes, idx) => {
+          const positionRes = positionsRes[idx]
+          if (!positionRes.success) {
+            return null
+          }
+
+          const [_nonce, _operator, _token0, _token1, _fee, tickLower] = positionRes.output
+          return { target: poolRes.output, params: [tickLower] } as const
+        }),
         abi: abi.ticks,
       }),
 
       multicall({
         ctx,
-        calls: mapSuccess(poolsRes, (poolRes, idx) => ({
-          target: poolRes.output,
-          params: [positionsRes[idx].output.tickUpper],
-        })),
+        calls: mapSuccess(poolsRes, (poolRes, idx) => {
+          const positionRes = positionsRes[idx]
+          if (!positionRes.success) {
+            return null
+          }
+
+          const [_nonce, _operator, _token0, _token1, _fee, _tickLower, tickUpper] = positionRes.output
+          return { target: poolRes.output, params: [tickUpper] } as const
+        }),
         abi: abi.ticks,
       }),
 
@@ -190,28 +196,47 @@ export async function getTokenIdsBalances(
 
   const underlyingTokens = await getERC20Details(
     ctx,
-    positionsRes.flatMap((positionRes) =>
-      positionRes.success ? [positionRes.output.token0, positionRes.output.token1] : [],
-    ),
+    flatMapSuccess(positionsRes, (positionRes) => {
+      const [_nonce, _operator, token0, token1] = positionRes.output
+      return [token0, token1]
+    }).filter(isNotNullish),
   )
   const underlyingTokenByAddress = keyBy(underlyingTokens, 'address', { lowercase: true })
 
   return slots0sRes
     .map((slot0Res, idx) => {
       const pool = poolsRes[idx].output
-      const position = positionsRes[idx].output
-      const token0 = underlyingTokenByAddress[position.token0.toLowerCase()]
-      const token1 = underlyingTokenByAddress[position.token1.toLowerCase()]
+      const positionRes = positionsRes[idx]
+      if (!pool || !positionRes.success) {
+        return null
+      }
+
+      const [
+        _nonce,
+        _operator,
+        _token0,
+        _token1,
+        _fee,
+        tickLower,
+        tickUpper,
+        liquidity,
+        feeGrowthInside0LastX128,
+        feeGrowthInside1LastX128,
+      ] = positionRes.output
+      const token0 = underlyingTokenByAddress[_token0.toLowerCase()]
+      const token1 = underlyingTokenByAddress[_token1.toLowerCase()]
 
       if (!slot0Res.success || !token0 || !token1) {
         return null
       }
 
+      const [sqrtPriceX96, tick] = slot0Res.output
+
       const underlyingAmounts = getUnderlyingAmounts(
-        parseInt(position.liquidity),
-        slot0Res.output.sqrtPriceX96,
-        parseInt(position.tickLower),
-        parseInt(position.tickUpper),
+        Number(liquidity),
+        Number(sqrtPriceX96),
+        Number(tickLower),
+        Number(tickUpper),
       )
 
       const balance: Balance = {
@@ -239,19 +264,32 @@ export async function getTokenIdsBalances(
         feeGrowthGlobal0X128Res.success &&
         feeGrowthGlobal1X128Res.success
       ) {
+        const [
+          _tickLowerLiquidityGross,
+          _tickLowerLiquidityNet,
+          tickLowerFeeGrowthOutside0X128,
+          tickLowerFeeGrowthOutside1X128,
+        ] = tickLowerRes.output
+        const [
+          _tickUpperLiquidityGross,
+          _tickUpperLiquidityNet,
+          tickUpperFeeGrowthOutside0X128,
+          tickUpperFeeGrowthOutside1X128,
+        ] = tickUpperRes.output
+
         const rewardAmounts = getRewardAmounts(
-          feeGrowthGlobal0X128Res.output,
-          feeGrowthGlobal1X128Res.output,
-          tickLowerRes.output.feeGrowthOutside0X128,
-          tickUpperRes.output.feeGrowthOutside0X128,
-          position.feeGrowthInside0LastX128,
-          tickLowerRes.output.feeGrowthOutside1X128,
-          tickUpperRes.output.feeGrowthOutside1X128,
-          position.feeGrowthInside1LastX128,
-          parseInt(position.liquidity),
-          parseInt(position.tickLower),
-          parseInt(position.tickUpper),
-          parseInt(slot0Res.output.tick),
+          feeGrowthGlobal0X128Res.output.toString(),
+          feeGrowthGlobal1X128Res.output.toString(),
+          tickLowerFeeGrowthOutside0X128.toString(),
+          tickUpperFeeGrowthOutside0X128.toString(),
+          feeGrowthInside0LastX128.toString(),
+          tickLowerFeeGrowthOutside1X128.toString(),
+          tickUpperFeeGrowthOutside1X128.toString(),
+          feeGrowthInside1LastX128.toString(),
+          Number(liquidity),
+          Number(tickLower),
+          Number(tickUpper),
+          Number(tick),
         )
 
         balance.rewards = [

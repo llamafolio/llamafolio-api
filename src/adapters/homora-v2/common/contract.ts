@@ -28,9 +28,9 @@ const abi = {
     stateMutability: 'nonpayable',
     type: 'function',
   },
-}
+} as const
 
-export async function getPoolsContract(ctx: BaseContext, pools: string[]): Promise<Contract[]> {
+export async function getPoolsContract(ctx: BaseContext, pools: `0x${string}`[]): Promise<Contract[]> {
   const cTokensRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool })), abi: abi.cToken })
 
   const underlyingsTokens = await multicall({

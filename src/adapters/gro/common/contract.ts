@@ -2,7 +2,6 @@ import type { BaseContext, Contract } from '@lib/adapter'
 import { groupBy, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 import { getBalancerProvider } from './providers/balancerProvider'
 import { getGroProvider } from './providers/groProvider'
@@ -45,20 +44,22 @@ export async function getGroContracts(ctx: BaseContext, masterchef: Contract): P
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLength).map((idx) => ({ target: masterchef.address, params: [idx] })),
+    calls: range(0, poolLength).map((idx) => ({ target: masterchef.address, params: [BigInt(idx)] } as const)),
     abi: abi.poolInfo,
   })
 
   for (let poolIdx = 0; poolIdx < poolLength; poolIdx++) {
     const poolInfoRes = poolInfosRes[poolIdx]
-    if (!isSuccess(poolInfoRes)) {
+    if (!poolInfoRes.success) {
       continue
     }
 
+    const [_accGroPerShare, _allocPoint, _lastRewardBlock, lpToken] = poolInfoRes.output
+
     contracts.push({
       chain: ctx.chain,
-      address: poolInfoRes.output.lpToken,
-      lpToken: poolInfoRes.output.lpToken,
+      address: lpToken,
+      lpToken,
       pid: poolIdx,
       rewards: masterchef.rewards,
     })
@@ -107,7 +108,7 @@ export async function getYieldContracts(ctx: BaseContext, pools: `0x${string}`[]
     const pool = pools[poolIdx]
     const underlyingRes = underlyingsRes[poolIdx]
 
-    if (!isSuccess(underlyingRes)) {
+    if (!underlyingRes.success) {
       continue
     }
 

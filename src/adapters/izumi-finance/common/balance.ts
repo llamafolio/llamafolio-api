@@ -4,7 +4,6 @@ import { mapSuccessFilter } from '@lib/array'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -46,7 +45,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getIzumiBalances(
   ctx: BalancesContext,
@@ -57,7 +56,7 @@ export async function getIzumiBalances(
 ): Promise<Balance[]> {
   const tokenIdsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
     abi: abi.getTokenIds,
   })
 
@@ -67,13 +66,15 @@ export async function getIzumiBalances(
 
   const iziRewardsRes = await multicall({
     ctx,
-    calls: pools.flatMap((pool) => tokenIds.map((token) => ({ target: pool.address, params: token }))),
+    calls: pools.flatMap((pool) =>
+      tokenIds.map((token) => ({ target: pool.address, params: [BigInt(token)] } as const)),
+    ),
     abi: abi.pendingReward,
   })
 
   balances.forEach((balance, balanceIdx) => {
     const iziRewardRes = iziRewardsRes[balanceIdx]
-    const rewardsAmount = isSuccess(iziRewardRes) ? BigNumber.from(iziRewardRes.output[0]) : BN_ZERO
+    const rewardsAmount = iziRewardRes.success ? BigNumber.from(iziRewardRes.output[0]) : BN_ZERO
 
     balance.rewards?.push({ ...IZI, amount: rewardsAmount })
     balance.category = 'farm'

@@ -1,4 +1,5 @@
 import type { BalancesContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
@@ -76,17 +77,13 @@ export async function getInstaDappContracts(ctx: BalancesContext, instaList: Con
 
   const getInstadAppAddressesProxiesFromId = await multicall({
     ctx,
-    calls: ids.map((id) => ({
-      target: instaList.address,
-      params: [id.toString()],
-    })),
+    calls: ids.map((id) => ({ target: instaList.address, params: [id] } as const)),
     abi: abi.accountAddr,
   })
 
-  const instadAppAddressesProxiesFromId = getInstadAppAddressesProxiesFromId
-    .filter((res) => res.success)
-    .map((res) => res.output)
-    .filter((res) => res !== ADDRESS_ZERO)
+  const instadAppAddressesProxiesFromId = mapSuccessFilter(getInstadAppAddressesProxiesFromId, (res) =>
+    res.output !== ADDRESS_ZERO ? res.output : null,
+  )
 
   return instadAppAddressesProxiesFromId.map((address) => ({
     chain: ctx.chain,
@@ -104,10 +101,5 @@ export async function getMakerContracts(ctx: BalancesContext, proxyRegistry: Con
     abi: abi.proxies,
   })
 
-  return [proxiesRes]
-    .filter((res) => res !== ADDRESS_ZERO)
-    .map((address) => ({
-      chain: ctx.chain,
-      address,
-    }))
+  return [proxiesRes].filter((res) => res !== ADDRESS_ZERO).map((address) => ({ chain: ctx.chain, address }))
 }

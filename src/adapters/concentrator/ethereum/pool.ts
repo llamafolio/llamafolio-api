@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolLength: {
@@ -133,26 +132,29 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 
     const poolInfosRes = await multicall({
       ctx,
-      calls: range(0, poolsCount).map((i) => ({
-        target: contract.address,
-        params: [i],
-      })),
+      calls: range(0, poolsCount).map(
+        (i) =>
+          ({
+            target: contract.address,
+            params: [BigInt(i)],
+          } as const),
+      ),
       abi: abi.poolInfo,
     })
 
     for (let idx = 0; idx < poolsCount; idx++) {
       const poolInfoRes = poolInfosRes[idx]
-      if (!isSuccess(poolInfoRes)) {
+      if (!poolInfoRes.success) {
         continue
       }
 
-      const { lpToken: address, convexPoolId, crvRewards } = poolInfoRes.output
+      const [_totalUnderlying, _totalShare, _accRewardPerShare, convexPoolId, lpToken, crvRewards] = poolInfoRes.output
       pools.push({
         chain: ctx.chain,
-        address,
+        address: lpToken,
         pid: idx,
         convexPoolId,
-        lpToken: address,
+        lpToken,
         crvRewards,
         vaultName: contract.name,
         vaultAddress: poolInfoRes.input.target,
@@ -162,17 +164,20 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 
     const poolsAddressesRes = await multicall({
       ctx,
-      calls: pools.map(({ address }) => ({
-        target: metaRegistry.address,
-        params: [address],
-      })),
+      calls: pools.map(
+        ({ address }) =>
+          ({
+            target: metaRegistry.address,
+            params: [address],
+          } as const),
+      ),
       abi: abi.getPoolFromLPToken,
     })
 
     for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
       const pool = pools[poolIdx]
       const poolAddressRes = poolsAddressesRes[poolIdx]
-      if (!isSuccess(poolAddressRes)) {
+      if (!poolAddressRes.success) {
         continue
       }
 
@@ -181,17 +186,20 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 
     const underlyingsRes = await multicall({
       ctx,
-      calls: pools.map(({ pool }) => ({
-        target: metaRegistry.address,
-        params: [pool],
-      })),
+      calls: pools.map(
+        ({ pool }) =>
+          ({
+            target: metaRegistry.address,
+            params: [pool],
+          } as const),
+      ),
       abi: abi.getUnderlyingsCoins,
     })
 
     for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
       const pool = pools[poolIdx]
       const underlyingRes = underlyingsRes[poolIdx]
-      if (!isSuccess(underlyingRes)) {
+      if (!underlyingRes.success) {
         continue
       }
 
@@ -215,16 +223,19 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolsCount).map((i) => ({
-      target: contract.address,
-      params: [i],
-    })),
+    calls: range(0, poolsCount).map(
+      (i) =>
+        ({
+          target: contract.address,
+          params: [BigInt(i)],
+        } as const),
+    ),
     abi: abi.poolInfoOld,
   })
 
   for (let idx = 0; idx < poolsCount; idx++) {
     const poolInfoRes = poolInfosRes[idx]
-    if (!isSuccess(poolInfoRes)) {
+    if (!poolInfoRes.success) {
       continue
     }
 
@@ -241,17 +252,20 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: pools.map(({ address }) => ({
-      target: metaRegistry.address,
-      params: [address],
-    })),
+    calls: pools.map(
+      ({ address }) =>
+        ({
+          target: metaRegistry.address,
+          params: [address],
+        } as const),
+    ),
     abi: abi.getPoolFromLPToken,
   })
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
     const poolAddressRes = poolsAddressesRes[poolIdx]
-    if (!isSuccess(poolAddressRes)) {
+    if (!poolAddressRes.success) {
       continue
     }
 
@@ -260,17 +274,20 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
 
   const underlyingsRes = await multicall({
     ctx,
-    calls: pools.map(({ pool }) => ({
-      target: metaRegistry.address,
-      params: [pool],
-    })),
+    calls: pools.map(
+      ({ pool }) =>
+        ({
+          target: metaRegistry.address,
+          params: [pool],
+        } as const),
+    ),
     abi: abi.getUnderlyingsCoins,
   })
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
     const underlyingRes = underlyingsRes[poolIdx]
-    if (!isSuccess(underlyingRes)) {
+    if (!underlyingRes.success) {
       continue
     }
 

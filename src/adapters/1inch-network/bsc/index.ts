@@ -6,7 +6,7 @@ import { getInchBalances } from '../common/farm'
 import { getLpInchBalances } from '../common/lp'
 import { getInchStakingBalances } from '../common/stake'
 
-const farmingPoolsAddresses: string[] = ['0x5d0ec1f843c1233d304b96dbde0cab9ec04d71ef']
+const farmingPoolsAddresses: `0x${string}`[] = ['0x5d0ec1f843c1233d304b96dbde0cab9ec04d71ef']
 
 const poolDeployer: Contract = {
   chain: 'bsc',

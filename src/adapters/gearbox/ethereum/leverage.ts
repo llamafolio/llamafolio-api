@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -46,14 +45,14 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getLeverageFarming(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const creditManagersRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.pool, params: [1] })),
+    calls: pools.map((pool) => ({ target: pool.pool, params: [1n] } as const)),
     abi: abi.creditManagers,
   })
 
@@ -61,13 +60,13 @@ export async function getLeverageFarming(ctx: BalancesContext, pools: Contract[]
     multicall({
       ctx,
       calls: creditManagersRes.map((manager) =>
-        isSuccess(manager) ? { target: manager.output, params: [ctx.address] } : null,
+        manager.success ? ({ target: manager.output, params: [ctx.address] } as const) : null,
       ),
       abi: abi.creditAccounts,
     }),
     multicall({
       ctx,
-      calls: creditManagersRes.map((manager) => (isSuccess(manager) ? { target: manager.output } : null)),
+      calls: creditManagersRes.map((manager) => (manager.success ? ({ target: manager.output } as const) : null)),
       abi: abi.creditFacade,
     }),
   ])
@@ -76,17 +75,21 @@ export async function getLeverageFarming(ctx: BalancesContext, pools: Contract[]
     multicall({
       ctx,
       calls: creditAccountsRes.map((creditAccount) =>
-        isSuccess(creditAccount) ? { target: creditAccount.input.target, params: [creditAccount.output] } : null,
+        creditAccount.success
+          ? ({ target: creditAccount.input.target, params: [creditAccount.output] } as const)
+          : null,
       ),
       abi: abi.calcCreditAccountAccruedInterest,
     }),
     multicall({
       ctx,
-      calls: creditFacadesRes.map((creditFacade, idx) =>
-        isSuccess(creditFacade) && isSuccess(creditAccountsRes[idx])
-          ? { target: creditFacade.output, params: [creditAccountsRes[idx].output] }
-          : null,
-      ),
+      calls: creditFacadesRes.map((creditFacade, idx) => {
+        const creditAccount = creditAccountsRes[idx]
+
+        return creditFacade.success && creditAccount.success
+          ? ({ target: creditFacade.output, params: [creditAccount.output] } as const)
+          : null
+      }),
       abi: abi.calcTotalValue,
     }),
   ])
@@ -97,13 +100,17 @@ export async function getLeverageFarming(ctx: BalancesContext, pools: Contract[]
     const creditAccountAccruedInterestRes = creditAccountAccruedInterestsRes[poolIdx]
     const creditFacadeTotalValueRes = creditFacadeTotalValuesRes[poolIdx]
 
-    if (!isSuccess(creditAccountAccruedInterestRes) || !isSuccess(creditFacadeTotalValueRes)) {
+    if (!creditAccountAccruedInterestRes.success || !creditFacadeTotalValueRes.success) {
       continue
     }
 
+    const [_borrowedAmount, borrowedAmountWithInterest, _borrowedAmountWithInterestAndFees] =
+      creditAccountAccruedInterestRes.output
+    const [total, _twv] = creditFacadeTotalValueRes.output
+
     balances.push({
       ...pool,
-      amount: BigNumber.from(creditAccountAccruedInterestRes.output.borrowedAmountWithInterest),
+      amount: BigNumber.from(borrowedAmountWithInterest),
       underlyings,
       rewards: undefined,
       category: 'borrow',
@@ -111,7 +118,7 @@ export async function getLeverageFarming(ctx: BalancesContext, pools: Contract[]
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(creditFacadeTotalValueRes.output.total),
+      amount: BigNumber.from(total),
       underlyings,
       rewards: undefined,
       category: 'lend',

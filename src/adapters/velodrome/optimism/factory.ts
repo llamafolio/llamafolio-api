@@ -1,5 +1,4 @@
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import type { getPairsContractsParams as getUniswapPairsContractsParams } from '@lib/uniswap/v2/factory'
 import { getPairsContracts as getUniswapPairsContracts } from '@lib/uniswap/v2/factory'
 
@@ -11,7 +10,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getPairsContracts({
   ctx,
@@ -26,7 +25,7 @@ export async function getPairsContracts({
   for (let pid = 0; pid < pairs.length; pid++) {
     const stableRes = stablesRes[pid]
 
-    if (isSuccess(stableRes)) {
+    if (stableRes.success) {
       pairs[pid].stable = stableRes.output
     }
   }

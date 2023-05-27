@@ -1,8 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -13,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 import type { ProviderBalancesParams } from '../../providers/interface'
 
@@ -25,7 +24,7 @@ export const saddleBalancesProvider = async (
     multicall({
       ctx,
       calls: pools.flatMap((pool) =>
-        pool.underlyings!.map((_, idx) => ({ target: (pool as Contract).swapper, params: [idx] })),
+        pool.underlyings!.map((_, idx) => ({ target: (pool as Contract).swapper, params: [idx] } as const)),
       ),
       abi: abi.getTokenBalance,
     }),
@@ -41,13 +40,13 @@ export const saddleBalancesProvider = async (
     const { underlyings, amount } = pool
     const poolSupplyRes = poolSuppliesRes[poolIdx]
 
-    if (!underlyings || !isSuccess(poolSupplyRes) || isZero(poolSupplyRes.output)) {
+    if (!underlyings || !poolSupplyRes.success || poolSupplyRes.output === 0n) {
       continue
     }
     underlyings.forEach((underlying: Contract, underlyingIdx: number) => {
-      const underlyingBalance = isSuccess(underlyingsBalancesRes[underlyingIdx])
-        ? underlyingsBalancesRes[underlyingIdx].output
-        : BN_ZERO
+      const underlyingsBalance = underlyingsBalancesRes[underlyingIdx]
+
+      const underlyingBalance = underlyingsBalance.success ? underlyingsBalance.output : BN_ZERO
       ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(amount).div(poolSupplyRes.output)
     })
   }

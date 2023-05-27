@@ -1,6 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   asset: {
@@ -17,9 +16,9 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
-export async function getCegaContracts(ctx: BaseContext, vaults: string[]): Promise<Contract[]> {
+export async function getCegaContracts(ctx: BaseContext, vaults: `0x${string}`[]): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const [assetsRes, addressesRes] = await Promise.all([
@@ -39,11 +38,11 @@ export async function getCegaContracts(ctx: BaseContext, vaults: string[]): Prom
     const assetRes = assetsRes[vaultIdx]
     const addressRes = addressesRes[vaultIdx]
 
-    if (!isSuccess(assetRes) || !isSuccess(addressRes)) {
+    if (!assetRes.success || !addressRes.success) {
       return
     }
 
-    addressRes.output.forEach((address: string) => {
+    addressRes.output.forEach((address) => {
       contracts.push({
         chain: ctx.chain,
         address,

@@ -10,12 +10,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
-export async function getSommelierContracts(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
+export async function getSommelierContracts(ctx: BaseContext, pools: Contract[]) {
   const underlyings = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.asset })
 
-  const contracts: Contract[] = mapSuccessFilter(underlyings, (res, idx: number) => ({
+  const contracts: Contract[] = mapSuccessFilter(underlyings, (res, idx) => ({
     ...pools[idx],
     underlyings: [res.output],
   }))

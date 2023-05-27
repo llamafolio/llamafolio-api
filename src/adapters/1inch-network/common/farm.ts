@@ -1,10 +1,9 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -44,7 +43,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const Inch: Token = {
   chain: 'ethereum',
@@ -53,7 +52,7 @@ const Inch: Token = {
   symbol: '1INCH',
 }
 
-const ADDRESS: { [key: string]: string } = {
+const ADDRESS: { [key: string]: `0x${string}` } = {
   ethereum: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
   bsc: '0x55f5af28075f37e6e02d0c741e268e462215ca33',
 }
@@ -65,28 +64,31 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
     await Promise.all([
       multicall({
         ctx,
-        calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+        calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
         abi: erc20Abi.balanceOf,
       }),
       multicall({
         ctx,
         calls: pools.flatMap((pool) =>
-          pool.underlyings!.map((_, idx) => ({ target: pool.address, params: [idx, ctx.address] })),
+          pool.underlyings!.map((_, idx) => ({ target: pool.address, params: [BigInt(idx), ctx.address] } as const)),
         ),
         abi: abi.earned,
       }),
       multicall({
         ctx,
-        calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+        calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
         abi: abi.singleEarned,
       }),
       multicall({
         ctx,
         calls: pools.flatMap((pool) =>
-          pool.underlyings!.map((underlying) => ({
-            target: pool.lpToken,
-            params: [(underlying as Contract).address],
-          })),
+          pool.underlyings!.map(
+            (underlying) =>
+              ({
+                target: pool.lpToken,
+                params: [(underlying as Contract).address],
+              } as const),
+          ),
         ),
         abi: abi.getBalanceForAddition,
       }),
@@ -104,7 +106,7 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
 
     const underlyings = pool.underlyings as Contract[]
 
-    if (!underlyings || !isSuccess(balanceOfRes) || !isSuccess(totalSupplyRes) || isZero(totalSupplyRes.output)) {
+    if (!underlyings || !balanceOfRes.success || !totalSupplyRes.success || totalSupplyRes.output === 0n) {
       return
     }
 
@@ -123,7 +125,7 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
       // replace native token alias
       const underlyingAddress = underlying.address === ADDRESS_ZERO ? ADDRESS[ctx.chain] : underlying.address
 
-      const underlyingBalance = isSuccess(getUnderlyingsBalanceRes)
+      const underlyingBalance = getUnderlyingsBalanceRes.success
         ? BigNumber.from(getUnderlyingsBalanceRes.output).mul(balanceOfRes.output).div(totalSupplyRes.output)
         : BN_ZERO
 
@@ -133,7 +135,7 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
         amount: underlyingBalance,
       })
 
-      if (!isSuccess(earnedOfRes)) {
+      if (!earnedOfRes.success) {
         return
       }
 
@@ -149,9 +151,7 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
     // But some old pools still use an unique reward: INCH
 
     if (balance.rewards!.length < 1) {
-      const singleRewardBalance = isSuccess(singleRewardEarnedRes)
-        ? BigNumber.from(singleRewardEarnedRes.output)
-        : BN_ZERO
+      const singleRewardBalance = singleRewardEarnedRes.success ? BigNumber.from(singleRewardEarnedRes.output) : BN_ZERO
 
       balance.rewards?.push({
         ...Inch,

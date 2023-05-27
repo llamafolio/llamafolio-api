@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -15,7 +14,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const AGI: Token = {
   chain: 'ethereum',
@@ -28,7 +27,7 @@ export async function getAgilityStakeBalances(ctx: BalancesContext, stakers: Con
   const balances: Balance[] = []
   const fmtUniBalances: Balance[] = []
 
-  const calls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.earned>[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
 
   const [userBalancesRes, earnedsRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
@@ -40,7 +39,7 @@ export async function getAgilityStakeBalances(ctx: BalancesContext, stakers: Con
     const userBalanceRes = userBalancesRes[stakeIdx]
     const earnedRes = earnedsRes[stakeIdx]
 
-    if (!isSuccess(userBalanceRes)) {
+    if (!userBalanceRes.success) {
       continue
     }
 
@@ -48,12 +47,12 @@ export async function getAgilityStakeBalances(ctx: BalancesContext, stakers: Con
       ...staker,
       amount: BigNumber.from(userBalanceRes.output),
       underlyings: staker.underlyings as Contract[],
-      rewards: isSuccess(earnedRes) ? [{ ...AGI, amount: BigNumber.from(earnedsRes[stakeIdx].output) }] : undefined,
+      rewards: earnedRes.success ? [{ ...AGI, amount: BigNumber.from(earnedsRes[stakeIdx].output || 0) }] : undefined,
       category: 'stake',
     }
 
-    if (balance.underlyings && balance.underlyings.length > 1) {
-      fmtUniBalances.push({ ...balance, address: balance.token as string })
+    if (balance.underlyings && balance.underlyings.length > 1 && balance.token) {
+      fmtUniBalances.push({ ...balance, address: balance.token })
       continue
     }
 

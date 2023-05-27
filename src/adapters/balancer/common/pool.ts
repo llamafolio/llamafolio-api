@@ -1,7 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import request, { gql } from 'graphql-request'
 
 const abi = {
@@ -19,7 +18,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getBalancerPools(ctx: BaseContext, url: string, gaugeController: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
@@ -55,7 +54,7 @@ export async function getBalancerPools(ctx: BaseContext, url: string, gaugeContr
     })
   }
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.getPoolGauge>[] = []
   for (const contract of contracts) {
     calls.push({ target: gaugeController.address, params: [contract.address] })
   }
@@ -70,12 +69,12 @@ export async function getBalancerPools(ctx: BaseContext, url: string, gaugeContr
     const gaugeRes = gaugesRes[idx]
     const rewarderRes = rewardersRes[idx]
 
-    if (!isSuccess(gaugeRes)) {
+    if (!gaugeRes.success) {
       contract.gauge = undefined
     }
     contract.gauge = gaugeRes.output
 
-    if (!isSuccess(rewarderRes)) {
+    if (!rewarderRes.success) {
       contract.rewarder = undefined
     }
     contract.rewarder = rewarderRes.output

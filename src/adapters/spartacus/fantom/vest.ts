@@ -2,6 +2,16 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
+const abi = {
+  pendingPayoutFor: {
+    inputs: [{ internalType: 'address', name: '_depositor', type: 'address' }],
+    name: 'pendingPayoutFor',
+    outputs: [{ internalType: 'uint256', name: 'pendingPayout_', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+} as const
+
 const SPA: Contract = {
   name: 'Spartacus ',
   displayName: 'Spartacus ',
@@ -14,21 +24,10 @@ const SPA: Contract = {
 export async function getVestBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls = contracts.map((contract) => ({
-    target: contract.address,
-    params: [ctx.address],
-  }))
-
   const vestingBalanceOfRes = await multicall({
     ctx,
-    calls,
-    abi: {
-      inputs: [{ internalType: 'address', name: '_depositor', type: 'address' }],
-      name: 'pendingPayoutFor',
-      outputs: [{ internalType: 'uint256', name: 'pendingPayout_', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] } as const)),
+    abi: abi.pendingPayoutFor,
   })
 
   const vestingBalanceOf = vestingBalanceOfRes.filter((res) => res.success).map((res) => BigNumber.from(res.output))

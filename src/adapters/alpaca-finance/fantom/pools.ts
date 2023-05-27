@@ -1,8 +1,7 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolLength: {
@@ -47,32 +46,37 @@ export async function getPoolsContracts(ctx: BaseContext, miniFairLaunch: Contra
 
   const poolsInfoRes = await multicall({
     ctx,
-    calls: range(0, poolsLength).map((i) => ({
-      target: miniFairLaunch.address,
-      params: [i],
-    })),
+    calls: range(0, poolsLength).map(
+      (i) =>
+        ({
+          target: miniFairLaunch.address,
+          params: [BigInt(i)],
+        } as const),
+    ),
     abi: abi.stakingToken,
   })
 
-  const poolsAddresses = poolsInfoRes.map((res) => res.output)
-
   const underlyingsAddressesRes = await multicall({
     ctx,
-    calls: poolsAddresses.map((token: string) => ({
-      target: token,
-      params: [],
+    calls: mapSuccess(poolsInfoRes, (res) => ({
+      target: res.output,
     })),
     abi: abi.token,
   })
 
-  for (let poolIdx = 0; poolIdx < poolsAddresses.length; poolIdx++) {
+  for (let poolIdx = 0; poolIdx < poolsInfoRes.length; poolIdx++) {
+    const address = poolsInfoRes[poolIdx].output
+    if (!address) {
+      continue
+    }
+
     const underlyingRes = underlyingsAddressesRes[poolIdx]
 
     contracts.push({
       chain: ctx.chain,
-      address: poolsAddresses[poolIdx],
+      address,
       pid: poolIdx,
-      underlyings: isSuccess(underlyingRes) ? [underlyingRes.output] : undefined,
+      underlyings: underlyingRes.success ? [underlyingRes.output] : undefined,
     })
   }
 

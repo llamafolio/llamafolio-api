@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 export interface PoolContract extends Contract {
@@ -53,7 +52,7 @@ export async function getContractsRegister(ctx: BaseContext) {
   return contractsRegister
 }
 
-export async function getPoolsContracts(ctx: BaseContext, contractsRegister: string) {
+export async function getPoolsContracts(ctx: BaseContext, contractsRegister: `0x${string}`) {
   const contracts: PoolContract[] = []
 
   const pools = await call({
@@ -62,7 +61,7 @@ export async function getPoolsContracts(ctx: BaseContext, contractsRegister: str
     abi: abi.getPools,
   })
 
-  const calls: Call[] = pools.map((pool) => ({ target: pool }))
+  const calls: Call<typeof abi.dieselToken>[] = pools.map((pool) => ({ target: pool }))
 
   const [dieselTokensRes, underlyingTokensRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.dieselToken }),
@@ -72,7 +71,7 @@ export async function getPoolsContracts(ctx: BaseContext, contractsRegister: str
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const dieselTokenRes = dieselTokensRes[poolIdx]
     const underlyingTokenRes = underlyingTokensRes[poolIdx]
-    if (!isSuccess(dieselTokenRes) || !isSuccess(underlyingTokenRes)) {
+    if (!dieselTokenRes.success || !underlyingTokenRes.success) {
       continue
     }
 
@@ -94,13 +93,13 @@ export async function getPoolsBalances(ctx: BalancesContext, pools: PoolContract
 
   const balancesOfRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
     abi: erc20Abi.balanceOf,
   })
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const balanceOfRes = balancesOfRes[poolIdx]
-    if (!isSuccess(balanceOfRes)) {
+    if (!balanceOfRes.success) {
       continue
     }
 

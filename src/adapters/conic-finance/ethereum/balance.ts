@@ -5,7 +5,6 @@ import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 const abi = {
@@ -103,12 +102,14 @@ export async function getConicBalances(
   const [balancesOfRes, claimableRewardsRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: staker.address, params: [contract.address, ctx.address] })),
+      calls: contracts.map(
+        (contract) => ({ target: staker.address, params: [contract.address, ctx.address] } as const),
+      ),
       abi: abi.getUserBalanceForPool,
     }),
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.rewarder, params: [ctx.address] })),
+      calls: contracts.map((contract) => ({ target: contract.rewarder, params: [ctx.address] } as const)),
       abi: abi.claimableRewards,
     }),
     multicall({
@@ -124,23 +125,25 @@ export async function getConicBalances(
     const rewards = contract.rewards as Contract[]
     const balanceOfRes = balancesOfRes[poolIdx]
     const claimableRewardRes = claimableRewardsRes[poolIdx]
-    const exchangeRateRes = isSuccess(exchangeRatesRes[poolIdx])
-      ? exchangeRatesRes[poolIdx].output
-      : utils.parseEther('1.0')
+    const exchangeRateRes = exchangeRatesRes[poolIdx]
+    const exchangeRate = exchangeRateRes.success ? exchangeRateRes.output : utils.parseEther('1.0')
 
-    if (!underlying || !rewards || !isSuccess(balanceOfRes) || !isSuccess(claimableRewardRes)) {
+    if (!underlying || !rewards || !balanceOfRes.success || !claimableRewardRes.success) {
       continue
     }
 
     balances.push({
       ...contract,
       category: 'stake',
-      amount: BigNumber.from(balanceOfRes.output).mul(exchangeRateRes).div(utils.parseEther('1.0')),
+      amount: BigNumber.from(balanceOfRes.output).mul(exchangeRate).div(utils.parseEther('1.0')),
       underlyings: [underlying],
       rewards: [
-        { ...rewards[0], amount: BigNumber.from(claimableRewardRes.output.cncRewards) },
-        { ...rewards[1], amount: BigNumber.from(claimableRewardRes.output.crvRewards) },
-        { ...rewards[2], amount: BigNumber.from(claimableRewardRes.output.cvxRewards) },
+        // cnc
+        { ...rewards[0], amount: BigNumber.from(claimableRewardRes.output[0]) },
+        // crv
+        { ...rewards[1], amount: BigNumber.from(claimableRewardRes.output[1]) },
+        // cvx
+        { ...rewards[2], amount: BigNumber.from(claimableRewardRes.output[2]) },
       ],
     })
   }
@@ -151,11 +154,11 @@ export async function getConicBalances(
 export async function getCNCLockerBalances(ctx: BalancesContext, lockers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.voteLocks>[] = []
   for (const locker of lockers) {
     // Number of iterations is not predictable but 10 seems to be a reasonable number of positions that an user locks
     for (let idx = 0; idx < 10; idx++) {
-      calls.push({ target: locker.address, params: [ctx.address, idx] })
+      calls.push({ target: locker.address, params: [ctx.address, BigInt(idx)] })
     }
   }
 
@@ -165,16 +168,18 @@ export async function getCNCLockerBalances(ctx: BalancesContext, lockers: Contra
     const locker = lockers[lockIdx]
     const lockedBalanceRes = lockedBalancesRes[lockIdx]
 
-    if (!isSuccess(lockedBalanceRes)) {
+    if (!lockedBalanceRes.success) {
       continue
     }
+
+    const [amount, unlockTime] = lockedBalanceRes.output
 
     balances.push({
       ...locker,
       symbol: CNC.symbol,
       decimals: CNC.decimals,
-      amount: BigNumber.from(lockedBalanceRes.output.amount),
-      unlockAt: lockedBalanceRes.output.unlockTime,
+      amount: BigNumber.from(amount),
+      unlockAt: Number(unlockTime),
       underlyings: [CNC],
       rewards: undefined,
       category: 'lock',

@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -25,7 +24,7 @@ const abi = {
     stateMutability: 'nonpayable',
     type: 'function',
   },
-}
+} as const
 
 const COMP: Token = {
   chain: 'ethereum',
@@ -43,14 +42,16 @@ export async function getRewardBalances(
 
   const pendingCompRewardsRes = await multicall({
     ctx,
-    calls: compounders.map((contract) => ({ target: rewarder.address, params: [contract.address, ctx.address] })),
+    calls: compounders.map(
+      (contract) => ({ target: rewarder.address, params: [contract.address, ctx.address] } as const),
+    ),
     abi: abi.getRewardOwed,
   })
 
   for (let idx = 0; idx < compounders.length; idx++) {
     const pendingCompRewardRes = pendingCompRewardsRes[idx]
 
-    if (!isSuccess(pendingCompRewardRes)) {
+    if (!pendingCompRewardRes.success) {
       continue
     }
 

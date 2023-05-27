@@ -44,7 +44,7 @@ async function main() {
     return help()
   }
 
-  const address = process.argv[2].toLowerCase()
+  const address = process.argv[2].toLowerCase() as `0x${string}`
 
   const client = await pool.connect()
 

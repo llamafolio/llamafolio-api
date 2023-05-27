@@ -2,7 +2,6 @@ import type { BaseContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 import { aaveProvider } from '../providers/aave'
 import { convexProvider } from '../providers/convex'
@@ -28,17 +27,17 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 interface IContractList {
-  [key: string]: { name: string; address: string; provider: string }[]
+  [key: string]: { name: string; address: `0x$Pstring}`; provider: string }[]
 }
 
 export async function getFraxContracts(ctx: BaseContext, contractList: IContractList): Promise<Contract[]> {
   const farmContracts = contractList.staking_contracts
   const contracts: Contract[] = []
 
-  const calls: Call[] = farmContracts.map((contract) => ({ target: contract.address }))
+  const calls: Call<typeof abi.stakingToken>[] = farmContracts.map((contract) => ({ target: contract.address }))
 
   const [stakeTokensRes, rewardsTokensRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.stakingToken }),
@@ -47,10 +46,11 @@ export async function getFraxContracts(ctx: BaseContext, contractList: IContract
 
   farmContracts.forEach((contract, idx) => {
     const stakeTokenRes = stakeTokensRes[idx]
-    const lpToken = isSuccess(stakeTokenRes) ? stakeTokenRes.output : contract.address
-    const rewards = isSuccess(rewardsTokensRes[idx])
-      ? rewardsTokensRes[idx].output
-      : ['0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'] // FXS
+    const lpToken = stakeTokenRes.success ? stakeTokenRes.output : contract.address
+    const rewardToken = rewardsTokensRes[idx]
+    const rewards = rewardToken.success
+      ? rewardToken.output
+      : (['0x3432b6a60d23ca0dfca7761b7ab56459d9c964d0'] as `0x${string}`[]) // FXS
 
     contracts.push({
       ...contract,

@@ -7,7 +7,7 @@ import type { DecodeFunctionResultParameters, DecodeFunctionResultReturnType } f
 
 export async function call<TAbi extends Abi[number] | readonly unknown[]>(options: {
   ctx: BaseContext
-  target: string
+  target: `0x${string}`
   abi: DecodeFunctionResultParameters<TAbi[]>['abi'][number]
   params?: DecodeFunctionResultParameters<TAbi[]>['args']
 }): Promise<DecodeFunctionResultReturnType<TAbi[]>> {

@@ -32,9 +32,9 @@ export const Registries: { [key in Registry]: number } = {
 }
 
 export const getRegistries = async (ctx: BaseContext, registries: Registry[]) => {
-  const res: Partial<Record<Registry, string>> = {}
+  const res: Partial<Record<Registry, `0x${string}`>> = {}
 
-  const registriesAddressRes = await multicall<string, [number], string>({
+  const registriesAddressRes = await multicall({
     ctx,
     calls: registries.map((id) => ({
       params: [Registries[id]],
@@ -53,5 +53,5 @@ export const getRegistries = async (ctx: BaseContext, registries: Registry[]) =>
     res[registries[i]] = registriesAddressRes[i].output
   }
 
-  return res as Record<Registry, string>
+  return res
 }

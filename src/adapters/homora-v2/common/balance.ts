@@ -4,7 +4,6 @@ import { BN_TEN, isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   exchangeRateCurrent: {
@@ -16,12 +15,12 @@ const abi = {
     stateMutability: 'nonpayable',
     type: 'function',
   },
-}
+} as const
 
 export async function getHomoraBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.exchangeRateCurrent>[] = []
   for (const contract of contracts) {
     calls.push({ target: contract.cToken })
   }
@@ -35,7 +34,7 @@ export async function getHomoraBalances(ctx: BalancesContext, contracts: Contrac
     const tokensBalance = tokensBalances[balanceIdx]
     const exchangeRatesOf = exchangeRatesOfs[balanceIdx]
 
-    if (isZero(tokensBalance.amount) || !isSuccess(exchangeRatesOf)) {
+    if (isZero(tokensBalance.amount) || !exchangeRatesOf.success) {
       continue
     }
 

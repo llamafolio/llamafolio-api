@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import { BN_TEN, isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -37,7 +36,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const API_URL = 'https://api.angle.money/v1/pools'
 
@@ -86,7 +85,7 @@ export async function getStablePoolBalancesFromAPI(
 const getAnglePoolsRewards = async (ctx: BalancesContext, pools: Balance[]): Promise<Balance[]> => {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.claimable_reward>[] = []
   for (const pool of pools) {
     const reward = pool.rewards?.[0] as Contract
 
@@ -107,11 +106,10 @@ const getAnglePoolsRewards = async (ctx: BalancesContext, pools: Balance[]): Pro
     const reward = pool.rewards?.[0]
     const claimableOfRes = claimablesOfsRes[poolIdx]
 
-    if (!isSuccess(claimableOfRes)) {
+    if (!reward || !claimableOfRes.success) {
       continue
     }
 
-    // @ts-ignore
     balances.push({ ...pool, rewards: [{ ...reward, amount: BigNumber.from(claimableOfRes.output) }] })
   }
 
@@ -122,8 +120,11 @@ export async function getAnglePoolsBalances(ctx: BalancesContext, pools: Contrac
   const swapBalances: Balance[] = []
   const gelatoBalances: Balance[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: pool.address, params: [ctx.address] }))
-  const rewardsCalls: Call[] = pools.map((pool) => ({
+  const calls: Call<typeof erc20Abi.balanceOf>[] = pools.map((pool) => ({
+    target: pool.address,
+    params: [ctx.address],
+  }))
+  const rewardsCalls: Call<typeof abi.claimable_reward>[] = pools.map((pool) => ({
     target: pool.address,
     params: [ctx.address, '0x31429d1856aD1377A8A0079410B297e1a9e214c2'],
   }))
@@ -139,7 +140,7 @@ export async function getAnglePoolsBalances(ctx: BalancesContext, pools: Contrac
     const balancesOfRes = balancesOfsRes[poolIdx]
     const claimablesOfRes = claimablesOfsRes[poolIdx]
 
-    if (!isSuccess(balancesOfRes) || !isSuccess(claimablesOfRes)) {
+    if (!balancesOfRes.success || !claimablesOfRes.success) {
       continue
     }
 
@@ -166,12 +167,10 @@ export async function getAnglePoolsBalances(ctx: BalancesContext, pools: Contrac
 
   const swapBalancesWithUnderlyings = await getUnderlyingBalances(ctx, swapBalances)
 
-  const gelatoCalls: Call[] = []
-  const suppliesCall: Call[] = []
+  const gelatoCalls: Call<typeof abi.getUnderlyingBalances>[] = []
 
   for (const gelatoBalance of gelatoBalances) {
     gelatoCalls.push({ target: gelatoBalance.address })
-    suppliesCall.push({ target: gelatoBalance.address })
   }
 
   const [underlyingBalancesRes, suppliesRes] = await Promise.all([
@@ -185,12 +184,14 @@ export async function getAnglePoolsBalances(ctx: BalancesContext, pools: Contrac
     const underlyingBalanceRes = underlyingBalancesRes[poolIdx]
     const supplyRes = suppliesRes[poolIdx]
 
-    if (!underlyings || !isSuccess(underlyingBalanceRes) || !isSuccess(supplyRes) || isZero(supplyRes.output)) {
+    if (!underlyings || !underlyingBalanceRes.success || !supplyRes.success || supplyRes.output === 0n) {
       continue
     }
 
-    ;(underlyings[0] as Balance).amount = amount.mul(underlyingBalanceRes.output.amount0Current).div(supplyRes.output)
-    ;(underlyings[1] as Balance).amount = amount.mul(underlyingBalanceRes.output.amount1Current).div(supplyRes.output)
+    const [amount0Current, amount1Current] = underlyingBalanceRes.output
+
+    ;(underlyings[0] as Balance).amount = amount.mul(amount0Current).div(supplyRes.output)
+    ;(underlyings[1] as Balance).amount = amount.mul(amount1Current).div(supplyRes.output)
   }
 
   return [...swapBalancesWithUnderlyings, ...gelatoBalances]

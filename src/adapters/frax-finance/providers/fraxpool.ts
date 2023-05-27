@@ -1,6 +1,5 @@
 import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { utils } from 'ethers'
 
 import type { ProviderBalancesParams } from './interface'
@@ -13,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export const fraxpoolProvider = async (_ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
   for (const pool of pools) {
@@ -37,7 +36,7 @@ export const fraxpoolBalancesProvider = async (
     const pool = pools[poolIdx]
     const fmtBalanceOfRes = fmtBalancesOfRes[poolIdx]
 
-    if (!isSuccess(fmtBalanceOfRes)) {
+    if (!fmtBalanceOfRes.success) {
       continue
     }
 

@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -11,14 +10,14 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getMapleFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balanceOfsRes = await multicall({
     ctx,
-    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] })),
+    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] } as const)),
     abi: abi.balanceOfAssets,
   })
 
@@ -26,7 +25,7 @@ export async function getMapleFarmBalances(ctx: BalancesContext, farmers: Contra
     const farmer = farmers[farmerIdx]
     const balanceOfRes = balanceOfsRes[farmerIdx]
 
-    if (!isSuccess(balanceOfRes)) {
+    if (!balanceOfRes.success) {
       continue
     }
 

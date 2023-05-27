@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber, ethers } from 'ethers'
 
 const abi = {
@@ -67,10 +67,7 @@ export async function getMarketsContracts(ctx: BaseContext, lens: Contract): Pro
 
   const underlyingsRes = await multicall({
     ctx,
-    calls: marketsContractsRes.map((token) => ({
-      target: token,
-      params: [],
-    })),
+    calls: marketsContractsRes.map((token) => ({ target: token })),
     abi: abi.underlyings_assets,
   })
 
@@ -78,7 +75,7 @@ export async function getMarketsContracts(ctx: BaseContext, lens: Contract): Pro
     const market = marketsContractsRes[idx]
     const underlying = underlyingsRes[idx]
 
-    if (!isSuccess(underlying)) {
+    if (!underlying.success) {
       continue
     }
 
@@ -99,7 +96,7 @@ export async function getLendBorrowBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls = markets.map((market) => ({
+  const calls: Call<typeof abi.getCurrentSupplyBalanceInOf>[] = markets.map((market) => ({
     target: lens.address,
     params: [market.address, ctx.address],
   }))
@@ -115,28 +112,32 @@ export async function getLendBorrowBalances(
     const borrowBalanceRes = borrowBalancesRes[marketIdx]
     const underlyings = market.underlyings?.[0] as Contract
 
-    if (isSuccess(lendBalanceRes)) {
+    if (lendBalanceRes.success) {
+      const [_balanceInP2P, _balanceOnPool, totalBalance] = lendBalanceRes.output
       balances.push({
         ...market,
         decimals: underlyings.decimals,
-        amount: BigNumber.from(lendBalanceRes.output.totalBalance),
+        amount: BigNumber.from(totalBalance),
         underlyings: [underlyings],
         rewards: undefined,
         category: 'lend',
       })
     }
 
-    balances.push({
-      ...market,
-      chain: ctx.chain,
-      address: market.address,
-      decimals: underlyings.decimals,
-      symbol: market.symbol,
-      amount: BigNumber.from(borrowBalanceRes.output.totalBalance),
-      underlyings: [underlyings],
-      rewards: undefined,
-      category: 'borrow',
-    })
+    if (borrowBalanceRes.success) {
+      const [_balanceInP2P, _balanceOnPool, totalBalance] = borrowBalanceRes.output
+      balances.push({
+        ...market,
+        chain: ctx.chain,
+        address: market.address,
+        decimals: underlyings.decimals,
+        symbol: market.symbol,
+        amount: BigNumber.from(totalBalance),
+        underlyings: [underlyings],
+        rewards: undefined,
+        category: 'borrow',
+      })
+    }
   }
 
   return balances

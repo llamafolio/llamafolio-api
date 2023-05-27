@@ -3,7 +3,7 @@ import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
@@ -95,24 +95,26 @@ export const getMasterChefPoolsInfos = async (
 
   const poolLength = Number(poolLengthRes)
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.poolInfo>[] = []
   for (let idx = 0; idx < poolLength; idx++) {
-    calls.push({ target: masterchef.address, params: [idx] })
+    calls.push({ target: masterchef.address, params: [BigInt(idx)] })
   }
 
   const poolInfosRes = await multicall({ ctx, calls, abi: abi.poolInfo })
 
   for (let poolIdx = 0; poolIdx < poolInfosRes.length; poolIdx++) {
     const poolInfoRes = poolInfosRes[poolIdx]
-    if (!isSuccess(poolInfoRes)) {
+    if (!poolInfoRes.success) {
       continue
     }
 
+    const [lpToken] = poolInfoRes.output
+
     pools.push({
       chain: ctx.chain,
-      address: poolInfoRes.output.lpToken,
-      lpToken: poolInfoRes.output.lpToken,
-      pid: poolInfoRes.input.params[0],
+      address: lpToken,
+      lpToken,
+      pid: poolInfoRes.input.params![0],
     })
   }
 
@@ -152,16 +154,16 @@ export const getMasterChefLpToken = async (
 
   const poolLength = Number(poolLengthRes)
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.lpToken>[] = []
   for (let idx = 0; idx < poolLength; idx++) {
-    calls.push({ target: masterchef.address, params: [idx] })
+    calls.push({ target: masterchef.address, params: [BigInt(idx)] })
   }
 
   const poolInfosRes = await multicall({ ctx, calls, abi: abi.lpToken })
 
   for (let poolIdx = 0; poolIdx < poolInfosRes.length; poolIdx++) {
     const poolInfoRes = poolInfosRes[poolIdx]
-    if (!isSuccess(poolInfoRes)) {
+    if (!poolInfoRes.success) {
       continue
     }
 
@@ -169,7 +171,7 @@ export const getMasterChefLpToken = async (
       chain: ctx.chain,
       address: poolInfoRes.output,
       lpToken: poolInfoRes.output,
-      pid: poolInfoRes.input.params[0],
+      pid: poolInfoRes.input.params![0],
     })
   }
 
@@ -224,7 +226,7 @@ export async function getMasterChefPoolsBalances(
     ),
   )
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.userInfo>[] = []
   for (let poolIdx = 0; poolIdx < masterchefPools.length; poolIdx++) {
     calls.push({ target: masterchef.address, params: [masterchefPools[poolIdx].pid, ctx.address] })
   }
@@ -239,7 +241,7 @@ export async function getMasterChefPoolsBalances(
     const poolBalanceRes = poolsBalancesRes[userIdx]
     const pendingRewardRes = pendingRewardsRes[userIdx]
 
-    if (!isSuccess(poolBalanceRes) || !isSuccess(pendingRewardRes)) {
+    if (!poolBalanceRes.success || !pendingRewardRes.success) {
       continue
     }
 
@@ -247,7 +249,7 @@ export async function getMasterChefPoolsBalances(
       ...masterchefPool,
       underlyings: masterchefPool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output.amount),
+      amount: BigNumber.from(poolBalanceRes.output[0]),
       rewards: [{ ...rewardToken, amount: BigNumber.from(pendingRewardRes.output) }],
     })
   }

@@ -1,8 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { keyBy, range } from '@lib/array'
+import { flatMapSuccess, keyBy, range } from '@lib/array'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -64,7 +63,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getStargateFarmBalances(
   ctx: BalancesContext,
@@ -84,26 +83,28 @@ export async function getStargateFarmBalances(
 
   const poolsInfosRes = await multicall({
     ctx,
-    calls: poolsLengthRes.flatMap((poolsLength) =>
-      isSuccess(poolsLength)
-        ? range(0, poolsLength.output).map((_, idx) => ({ target: poolsLength.input.target, params: [idx] }))
-        : null,
+    calls: flatMapSuccess(poolsLengthRes, (poolsLength) =>
+      range(0, Number(poolsLength.output)).map(
+        (_, idx) => ({ target: poolsLength.input.target, params: [BigInt(idx)] } as const),
+      ),
     ),
     abi: abi.poolInfos,
   })
 
   for (const poolsInfoRes of poolsInfosRes) {
-    if (!isSuccess(poolsInfoRes)) {
+    if (!poolsInfoRes.success) {
       continue
     }
 
-    const contract = poolByAddress[poolsInfoRes.output.lpToken.toLowerCase()]
+    const [lpToken] = poolsInfoRes.output
+
+    const contract = poolByAddress[lpToken.toLowerCase()]
     if (contract) {
       contracts.push({ ...contract, comptroller: poolsInfoRes.input.target, pid: poolsInfoRes.input.params[0] })
     }
   }
 
-  const calls: Call[] = contracts.map((contract) => ({
+  const calls: Call<typeof abi.userInfo>[] = contracts.map((contract) => ({
     target: contract.comptroller,
     params: [contract.pid, ctx.address],
   }))
@@ -122,18 +123,20 @@ export async function getStargateFarmBalances(
     const pendingRewardRes = pendingRewardsRes[idx]
     const pendingEmissionTokenRes = pendingEmissionsTokenRes[idx]
 
-    if (!underlyings || !isSuccess(userBalancesOfRes)) {
+    if (!underlyings || !userBalancesOfRes.success) {
       continue
     }
 
+    const [amount] = userBalancesOfRes.output
+
     balances.push({
       ...contract,
-      amount: BigNumber.from(userBalancesOfRes.output.amount),
+      amount: BigNumber.from(amount),
       underlyings,
       rewards: [
         {
           ...reward,
-          amount: isSuccess(pendingRewardRes)
+          amount: pendingRewardRes.success
             ? BigNumber.from(pendingRewardRes.output)
             : BigNumber.from(pendingEmissionTokenRes.output),
         },

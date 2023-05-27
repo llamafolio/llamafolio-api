@@ -1,8 +1,7 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -59,11 +58,17 @@ export async function getDepositMarkets(ctx: BaseContext, staker: Contract): Pro
 
   const marketsAddressesRes = await multicall({
     ctx,
-    calls: range(0, Number(marketsLength)).map((idx: number) => ({ target: staker.address, params: [idx] })),
+    calls: range(0, Number(marketsLength)).map(
+      (idx: number) => ({ target: staker.address, params: [BigInt(idx)] } as const),
+    ),
     abi: abi.getMarketTokenAddress,
   })
 
-  return (marketsAddressesRes || []).map((address, idx) => ({ chain: ctx.chain, address: address.output, pid: idx }))
+  return mapSuccessFilter(marketsAddressesRes, (address, idx) => ({
+    chain: ctx.chain,
+    address: address.output,
+    pid: idx,
+  }))
 }
 
 export async function getDepositBalances(
@@ -75,7 +80,9 @@ export async function getDepositBalances(
 
   const balancesOfsRes = await multicall({
     ctx,
-    calls: markets.map((market) => ({ target: staker.address, params: [[ctx.address, '0'], market.pid] })),
+    calls: markets.map(
+      (market) => ({ target: staker.address, params: [{ owner: ctx.address, number: 0n }, market.pid] } as const),
+    ),
     abi: abi.getAccountWei,
   })
 
@@ -83,7 +90,7 @@ export async function getDepositBalances(
     const market = markets[marketIdx]
     const balancesOfRes = balancesOfsRes[marketIdx]
 
-    if (!isSuccess(balancesOfRes)) {
+    if (!balancesOfRes.success) {
       continue
     }
 

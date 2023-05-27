@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 import type { fmtProviderBalancesParams } from './utils'
@@ -16,7 +15,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -24,7 +23,7 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]):
   const [balanceOfsRes, rateOfsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.getPricePerFullShare }),
@@ -35,7 +34,7 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]):
     const balanceOfRes = balanceOfsRes[poolIdx]
     const rateOfRes = rateOfsRes[poolIdx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(rateOfRes)) {
+    if (!balanceOfRes.success || !rateOfRes.success) {
       continue
     }
 
@@ -84,7 +83,7 @@ const getUnderlyingsBeefyBalances = async (ctx: BalancesContext, pools: Contract
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const totalSupplyRes = totalSuppliesRes[poolIdx]
-    if (isSuccess(totalSupplyRes)) {
+    if (totalSupplyRes.success) {
       pools[poolIdx].totalSupply = BigNumber.from(totalSupplyRes.output)
     }
   }

@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 import type { ProviderBalancesParams } from './provider'
@@ -17,7 +15,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getBadgerBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -25,7 +23,7 @@ export async function getBadgerBalances(ctx: BalancesContext, pools: Contract[])
   const [balanceOfsRes, rateOfsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.getPricePerFullShare }),
@@ -36,7 +34,7 @@ export async function getBadgerBalances(ctx: BalancesContext, pools: Contract[])
     const balanceOfRes = balanceOfsRes[poolIdx]
     const rateOfRes = rateOfsRes[poolIdx]
 
-    if (!isSuccess(balanceOfRes) || isZero(balanceOfRes.output) || !isSuccess(rateOfRes)) {
+    if (!balanceOfRes.success || balanceOfRes.output === 0n || !rateOfRes.success) {
       continue
     }
 
@@ -74,7 +72,7 @@ const getUnderlyingsBadgerBalances = async (ctx: BalancesContext, pools: Contrac
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const totalSupplyRes = totalSuppliesRes[poolIdx]
-    if (isSuccess(totalSupplyRes)) {
+    if (totalSupplyRes.success) {
       pools[poolIdx].totalSupply = BigNumber.from(totalSupplyRes.output)
     }
   }

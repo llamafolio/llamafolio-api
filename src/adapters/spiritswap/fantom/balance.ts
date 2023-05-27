@@ -3,7 +3,7 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
@@ -30,7 +30,7 @@ const getGaugesContracts = async (ctx: BaseContext, pairs: Pair[], gaugeControll
 
   const lpTokens = await call({ ctx, target: gaugeController.address, abi: abi.tokens })
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.getGauge>[] = []
   for (let idx = 0; idx < lpTokens.length; idx++) {
     calls.push({ target: gaugeController.address, params: [lpTokens[idx]] })
   }
@@ -39,14 +39,14 @@ const getGaugesContracts = async (ctx: BaseContext, pairs: Pair[], gaugeControll
 
   for (let gaugeIdx = 0; gaugeIdx < gaugesRes.length; gaugeIdx++) {
     const gaugeRes = gaugesRes[gaugeIdx]
-    if (!isSuccess(gaugeRes)) {
+    if (!gaugeRes.success) {
       continue
     }
 
     gauges.push({
       chain: ctx.chain,
-      address: gaugeRes.input.params[0],
-      lpToken: gaugeRes.input.params[0],
+      address: gaugeRes.input.params![0],
+      lpToken: gaugeRes.input.params![0],
       gauge: gaugeRes.output,
     })
   }
@@ -80,7 +80,7 @@ export async function getGaugesBalances(
   const gaugesBalances: Balance[] = []
   const gaugesContracts = await getGaugesContracts(ctx, pairs, gaugeController)
 
-  const calls: Call[] = []
+  const calls: Call<typeof erc20Abi.balanceOf>[] = []
   for (let gaugeIdx = 0; gaugeIdx < gaugesContracts.length; gaugeIdx++) {
     calls.push({ target: gaugesContracts[gaugeIdx].gauge, params: [ctx.address] })
   }
@@ -91,7 +91,7 @@ export async function getGaugesBalances(
     const gaugesContract = gaugesContracts[idx]
     const balanceOfRes = balancesOfRes[idx]
 
-    if (!isSuccess(balanceOfRes)) {
+    if (!balanceOfRes.success) {
       continue
     }
 

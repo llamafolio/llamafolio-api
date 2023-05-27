@@ -3,7 +3,7 @@ import { factory, nonFungiblePositionManager } from '@adapters/uniswap-v3/ethere
 import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   uni_token0: {
@@ -42,14 +42,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
+
+import { flatMapSuccess } from '@lib/array'
 
 import type { ProviderBalancesParams } from './interface'
 
 export const uniswapNFTProvider = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
   const res: Contract[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: pool.address }))
+  const calls: Call<typeof abi.uni_token0>[] = pools.map((pool) => ({ target: pool.address }))
 
   const [token0sRes, token1sRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.uni_token0 }),
@@ -60,7 +62,7 @@ export const uniswapNFTProvider = async (ctx: BaseContext, pools: Contract[]): P
     const token0Res = token0sRes[idx]
     const token1Res = token1sRes[idx]
 
-    if (!isSuccess(token0Res) || !isSuccess(token1Res)) {
+    if (!token0Res.success || !token1Res.success) {
       return
     }
 
@@ -76,14 +78,13 @@ export const uniswapNFTBalancesProvider = async (
 ): Promise<ProviderBalancesParams[]> => {
   const lockedNFTsOfRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
     abi: abi.lockedNFTsOf,
   })
 
-  const tokenIds = lockedNFTsOfRes
-    .filter(isSuccess)
-    .flatMap((res) => res.output.map((lockedNFT: any) => parseInt(lockedNFT.token_id)))
-    .filter((tokenId) => tokenId > 0)
+  const tokenIds = flatMapSuccess(lockedNFTsOfRes, (res) => res.output.map((lockedNFT) => lockedNFT.token_id)).filter(
+    isNotNullish,
+  )
 
   return getTokenIdsBalances(ctx, nonFungiblePositionManager, factory, tokenIds)
 }

@@ -3,7 +3,6 @@ import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolLength: {
@@ -43,20 +42,22 @@ export async function getOnyxPoolsContracts(ctx: BaseContext, lendingPool: Contr
 
   const poolsInfos = await multicall({
     ctx,
-    calls: range(0, poolLength).map((_, idx) => ({ target: lendingPool.address, params: [idx] })),
+    calls: range(0, poolLength).map((_, idx) => ({ target: lendingPool.address, params: [BigInt(idx)] } as const)),
     abi: abi.poolInfo,
   })
 
   for (let idx = 0; idx < poolLength; idx++) {
     const poolsInfo = poolsInfos[idx]
 
-    if (!isSuccess(poolsInfo)) {
+    if (!poolsInfo.success) {
       continue
     }
 
+    const [stakeToken] = poolsInfo.output
+
     contracts.push({
       chain: ctx.chain,
-      address: poolsInfo.output.stakeToken,
+      address: stakeToken,
       underlyings: undefined,
       reward: [Onyx],
       pid: idx,

@@ -1,7 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   collateralContract: {
@@ -20,7 +19,7 @@ const abi = {
   },
 } as const
 
-export async function getPairsContracts(ctx: BaseContext, registry: string) {
+export async function getPairsContracts(ctx: BaseContext, registry: `0x${string}`) {
   const contracts: Contract[] = []
 
   const pairs = await call({
@@ -33,7 +32,6 @@ export async function getPairsContracts(ctx: BaseContext, registry: string) {
     ctx,
     calls: pairs.map((address) => ({
       target: address,
-      params: [],
     })),
     abi: abi.collateralContract,
   })
@@ -42,7 +40,7 @@ export async function getPairsContracts(ctx: BaseContext, registry: string) {
     const pair = pairs[pairIdx]
     const collateralContractRes = collateralContractsRes[pairIdx]
 
-    if (!isSuccess(collateralContractRes)) {
+    if (!collateralContractRes.success) {
       continue
     }
 

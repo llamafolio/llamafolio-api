@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -24,7 +23,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const PAN: Token = {
   chain: 'bsc',
@@ -36,7 +35,7 @@ const PAN: Token = {
 export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.userInfo>[] = []
   for (let idx = 0; idx < stakers.length; idx++) {
     const staker = stakers[idx]
     calls.push({ target: staker.address, params: [ctx.address] })
@@ -53,13 +52,13 @@ export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]
     const userInfoRes = userInfosRes[idx]
     const pendingReward = pendingRewards[idx]
 
-    if (!isSuccess(userInfoRes) || !isSuccess(pendingReward) || !token) {
+    if (!userInfoRes.success || !pendingReward.success || !token) {
       continue
     }
 
     balances.push({
       ...token,
-      amount: BigNumber.from(userInfoRes.output.amount),
+      amount: BigNumber.from(userInfoRes.output[0]),
       underlyings: undefined,
       rewards: [{ ...PAN, amount: BigNumber.from(pendingReward.output) }],
       category: 'stake',

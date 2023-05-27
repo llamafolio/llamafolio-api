@@ -16,7 +16,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getRookStakeBalances(
   ctx: BalancesContext,
@@ -26,7 +26,7 @@ export async function getRookStakeBalances(
   const userBalancesRes = await multicall({
     ctx,
     calls: stakers.flatMap((staker) =>
-      tokenLists.map((underlying) => ({ target: staker.address, params: [underlying.address, ctx.address] })),
+      tokenLists.map((underlying) => ({ target: staker.address, params: [underlying.address, ctx.address] } as const)),
     ),
     abi: abi.underlyingBalance,
   })

@@ -1,6 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   token: {
@@ -10,7 +9,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getStargateLpContracts(ctx: BaseContext, lpStakers: Contract[]): Promise<Contract[]> {
   const contracts: Contract[] = []
@@ -25,7 +24,7 @@ export async function getStargateLpContracts(ctx: BaseContext, lpStakers: Contra
     const lpStaker = lpStakers[stakerIdx]
     const underlyingRes = underlyingsRes[stakerIdx]
 
-    if (!isSuccess(underlyingRes)) {
+    if (!underlyingRes.success) {
       continue
     }
 

@@ -1,6 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   reserveAsset: {
@@ -10,9 +9,9 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
-export async function getBabylonContracts(ctx: BaseContext, pools: string[]): Promise<Contract[]> {
+export async function getBabylonContracts(ctx: BaseContext, pools: `0x${string}`[]): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const reserveAssetsRes = await multicall({
@@ -25,7 +24,7 @@ export async function getBabylonContracts(ctx: BaseContext, pools: string[]): Pr
     const pool = pools[poolIdx]
     const reserveAssetRes = reserveAssetsRes[poolIdx]
 
-    if (!isSuccess(reserveAssetRes)) {
+    if (!reserveAssetRes.success) {
       continue
     }
 

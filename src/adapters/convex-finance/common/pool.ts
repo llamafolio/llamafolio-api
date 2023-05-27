@@ -44,15 +44,18 @@ export async function getConvexAltChainsPools(
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, Number(poolLengthBI)).map((i) => ({
-      target: booster.address,
-      params: [i],
-    })),
+    calls: range(0, Number(poolLengthBI)).map(
+      (i) =>
+        ({
+          target: booster.address,
+          params: [BigInt(i)],
+        } as const),
+    ),
     abi: abi.poolInfo,
   })
 
   const pools: Contract[] = mapSuccessFilter(poolInfosRes, (res) => {
-    const { lptoken: address, rewards, gauge, factory } = res.output
+    const [address, gauge, rewards, _shutdown, factory] = res.output
 
     return {
       chain: ctx.chain,

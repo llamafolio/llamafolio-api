@@ -1,8 +1,7 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolsCreated: {
@@ -62,34 +61,37 @@ export async function getFarmContracts(ctx: BaseContext, contract: Contract): Pr
 
   const getPoolsAddresses = await multicall({
     ctx,
-    calls: range(0, Number(getPoolsNumber)).map((_, idx) => ({
-      target: contract.address,
-      params: [idx],
-    })),
+    calls: range(0, Number(getPoolsNumber)).map(
+      (_, idx) =>
+        ({
+          target: contract.address,
+          params: [BigInt(idx)],
+        } as const),
+    ),
     abi: abi.pools,
   })
 
   const [getLPTokens, rewardsTokens, stakerAddressesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: getPoolsAddresses.map((pool) => (isSuccess(pool) ? { target: pool.output } : null)),
+      calls: mapSuccess(getPoolsAddresses, (pool) => ({ target: pool.output })),
       abi: abi.stakeAsset,
     }),
     multicall({
       ctx,
-      calls: getPoolsAddresses.map((pool) => (isSuccess(pool) ? { target: pool.output } : null)),
+      calls: mapSuccess(getPoolsAddresses, (pool) => ({ target: pool.output })),
       abi: abi.liquidityAsset,
     }),
     multicall({
       ctx,
-      calls: getPoolsAddresses.map((pool) => (isSuccess(pool) ? { target: pool.output } : null)),
+      calls: mapSuccess(getPoolsAddresses, (pool) => ({ target: pool.output })),
       abi: abi.stakeLocker,
     }),
   ])
 
   const getUnderlyingsTokensAddresses = await multicall({
     ctx,
-    calls: getLPTokens.map((token) => (isSuccess(token) ? { target: token.output } : null)),
+    calls: mapSuccess(getLPTokens, (token) => ({ target: token.output })),
     abi: abi.getCurrentTokens,
   })
 
@@ -101,11 +103,11 @@ export async function getFarmContracts(ctx: BaseContext, contract: Contract): Pr
     const getUnderlyingsTokensAddress = getUnderlyingsTokensAddresses[poolIdx]
 
     if (
-      !isSuccess(getPoolsAddress) ||
-      !isSuccess(getLPToken) ||
-      !isSuccess(rewardsToken) ||
-      !isSuccess(stakerAddressRes) ||
-      !isSuccess(getUnderlyingsTokensAddress)
+      !getPoolsAddress.success ||
+      !getLPToken.success ||
+      !rewardsToken.success ||
+      !stakerAddressRes.success ||
+      !getUnderlyingsTokensAddress.success
     ) {
       continue
     }

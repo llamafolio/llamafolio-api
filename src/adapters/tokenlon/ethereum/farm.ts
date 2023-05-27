@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -14,7 +13,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const LON: Token = {
   chain: 'ethereum',
@@ -29,12 +28,12 @@ export async function getLONFarmBalances(ctx: BalancesContext, farmers: Contract
   const [balanceOfsRes, earnedsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] })),
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] })),
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] } as const)),
       abi: abi.earned,
     }),
   ])
@@ -44,13 +43,13 @@ export async function getLONFarmBalances(ctx: BalancesContext, farmers: Contract
     const balanceOfRes = balanceOfsRes[farmerIdx]
     const earnedRes = earnedsRes[farmerIdx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(earnedRes)) {
+    if (!balanceOfRes.success || !earnedRes.success || !farmer.token) {
       continue
     }
 
     balances.push({
       ...farmer,
-      address: farmer.token as string,
+      address: farmer.token,
       amount: BigNumber.from(balanceOfRes.output),
       underlyings: farmer.underlyings as Contract[],
       rewards: [{ ...LON, amount: BigNumber.from(earnedRes.output) }],

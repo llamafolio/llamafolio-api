@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -20,7 +19,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export interface getTransmutationContractsParams extends Contract {
   lender: Token
@@ -33,7 +32,10 @@ export async function getTransmutationBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = transmuters.map((transmuter) => ({ target: transmuter.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.getCdpTotalDeposited>[] = transmuters.map((transmuter) => ({
+    target: transmuter.address,
+    params: [ctx.address],
+  }))
 
   const [lendBalancesRes, borrowBalancesRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.getCdpTotalDeposited }),
@@ -45,7 +47,7 @@ export async function getTransmutationBalances(
     const lendBalanceRes = lendBalancesRes[idx]
     const borrowBalanceRes = borrowBalancesRes[idx]
 
-    if (!isSuccess(lendBalanceRes) || !isSuccess(borrowBalanceRes)) {
+    if (!lendBalanceRes.success || !borrowBalanceRes.success) {
       continue
     }
 

@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 import type { ProviderBalancesParams } from './interface'
@@ -16,13 +15,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export const uniswapBoostedBalancesProvider = async (
   ctx: BalancesContext,
   pools: Contract[],
 ): Promise<ProviderBalancesParams[]> => {
-  const calls: Call[] = pools.map((pool) => ({ target: pool.stakeAddress, params: [ctx.address] }))
+  const calls: Call<typeof erc20Abi.balanceOf>[] = pools.map((pool) => ({
+    target: pool.stakeAddress,
+    params: [ctx.address],
+  }))
 
   const [balancesOfRes, earnedsFXSRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
@@ -34,7 +36,7 @@ export const uniswapBoostedBalancesProvider = async (
     const balanceOfRes = balancesOfRes[poolIdx]
     const earnedFXSRes = earnedsFXSRes[poolIdx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(earnedFXSRes)) {
+    if (!balanceOfRes.success || !earnedFXSRes.success) {
       continue
     }
 

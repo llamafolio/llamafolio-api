@@ -4,7 +4,7 @@ import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   allPairsLength: {
@@ -47,7 +47,7 @@ const abi = {
 
 export interface getPairsContractsParams {
   ctx: BaseContext
-  factoryAddress: string
+  factoryAddress: `0x${string}`
   allPairsLengthABI?: object
   offset?: number
   limit?: number
@@ -55,7 +55,7 @@ export interface getPairsContractsParams {
 
 export interface Pair extends Contract {
   pid: number
-  underlyings: [string, string]
+  underlyings: [`0x${string}`, `0x${string}`]
 }
 
 export async function getPairsContracts({
@@ -78,10 +78,13 @@ export async function getPairsContracts({
 
   const allPairsRes = await multicall({
     ctx,
-    calls: pids.map((idx) => ({
-      target: factoryAddress,
-      params: [idx],
-    })),
+    calls: pids.map(
+      (idx) =>
+        ({
+          target: factoryAddress,
+          params: [BigInt(idx)],
+        } as const),
+    ),
     abi: abi.allPairs,
   })
 
@@ -97,9 +100,8 @@ export async function getPairsContracts({
 export async function getPairsDetails<T extends Contract>(ctx: BaseContext, contracts: T[]): Promise<T[]> {
   const res: T[] = []
 
-  const calls: Call[] = contracts.map((contract) => ({
+  const calls: Call<typeof abi.token0>[] = contracts.map((contract) => ({
     target: contract.address,
-    params: [],
   }))
 
   const [token0sRes, token1sRes] = await Promise.all([
@@ -111,7 +113,7 @@ export async function getPairsDetails<T extends Contract>(ctx: BaseContext, cont
     const token0Res = token0sRes[i]
     const token1Res = token1sRes[i]
 
-    if (!isSuccess(token0Res) || !isSuccess(token1Res)) {
+    if (!token0Res.success || !token1Res.success) {
       continue
     }
 

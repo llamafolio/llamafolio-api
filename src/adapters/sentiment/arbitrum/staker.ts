@@ -1,8 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter } from '@lib/array'
+import { mapSuccess, mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -13,19 +12,20 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getSentimentStakerBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const userBalancesRes = await multicall({
     ctx,
-    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] })),
+    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] } as const)),
     abi: erc20Abi.balanceOf,
   })
 
   const fmtBalancesRes = await multicall({
     ctx,
-    calls: userBalancesRes.map((balance) =>
-      isSuccess(balance) ? { target: balance.input.target, params: [balance.output] } : null,
+    calls: mapSuccess(
+      userBalancesRes,
+      (balance) => ({ target: balance.input.target, params: [balance.output] } as const),
     ),
     abi: abi.convertToAssets,
   })

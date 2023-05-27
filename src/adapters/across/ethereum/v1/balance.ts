@@ -1,8 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 export async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
@@ -11,13 +9,15 @@ export async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[
   const [userBalancesOfsRes, totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: erc20Abi.totalSupply }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: (pool.underlyings![0] as Contract).address, params: [pool.address] })),
+      calls: pools.map(
+        (pool) => ({ target: (pool.underlyings![0] as Contract).address, params: [pool.address] } as const),
+      ),
       abi: erc20Abi.balanceOf,
     }),
   ])
@@ -31,10 +31,10 @@ export async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[
 
     if (
       !underlying ||
-      !isSuccess(userBalanceOfRes) ||
-      !isSuccess(totalSupplyRes) ||
-      !isSuccess(underlyingsBalanceRes) ||
-      isZero(totalSupplyRes.output)
+      !userBalanceOfRes.success ||
+      !totalSupplyRes.success ||
+      !underlyingsBalanceRes.success ||
+      totalSupplyRes.output === 0n
     ) {
       continue
     }

@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 const Bella: Token = {
@@ -47,7 +46,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getBellaBalances(
   ctx: BalancesContext,
@@ -64,7 +63,7 @@ async function getBellaFarmBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = contracts.map((contract) => ({
+  const calls: Call<typeof abi.stake>[] = contracts.map((contract) => ({
     target: comptroller.address,
     params: [contract.pid, ctx.address],
   }))
@@ -82,7 +81,7 @@ async function getBellaFarmBalances(
     const earnedRes = earnedsRes[contractIdx]
     const getPricePerFullShareRes = getPricePerFullSharesRes[contractIdx]
 
-    if (!isSuccess(userBalanceOfRes) || !isSuccess(earnedRes) || !isSuccess(getPricePerFullShareRes)) {
+    if (!userBalanceOfRes.success || !earnedRes.success || !getPricePerFullShareRes.success) {
       continue
     }
 
@@ -104,7 +103,7 @@ async function getBellaYieldBalances(ctx: BalancesContext, contracts: Contract[]
   const [balanceOfsRes, getPricePerFullSharesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] })),
+      calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: contracts.map((contract) => ({ target: contract.address })), abi: abi.converter }),
@@ -116,7 +115,7 @@ async function getBellaYieldBalances(ctx: BalancesContext, contracts: Contract[]
     const balanceOfRes = balanceOfsRes[contractIdx]
     const getPricePerFullShareRes = getPricePerFullSharesRes[contractIdx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(getPricePerFullShareRes)) {
+    if (!balanceOfRes.success || !getPricePerFullShareRes.success) {
       continue
     }
 

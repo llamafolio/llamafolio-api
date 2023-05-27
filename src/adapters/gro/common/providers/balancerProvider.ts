@@ -1,8 +1,7 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -39,7 +38,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const BALANCER_VAULT = '0xBA12222222228d8Ba445958a75a0704d566BF2C8'
 
@@ -52,7 +51,7 @@ export async function getBalancerProvider(ctx: BaseContext, contracts: Contract[
 
   const getPoolTokensRes = await multicall({
     ctx,
-    calls: poolIdsRes.map((poolId) => (isSuccess(poolId) ? { target: BALANCER_VAULT, params: [poolId.output] } : null)),
+    calls: mapSuccess(poolIdsRes, (poolId) => ({ target: BALANCER_VAULT, params: [poolId.output] } as const)),
     abi: abi.getPoolTokens,
   })
 
@@ -60,11 +59,13 @@ export async function getBalancerProvider(ctx: BaseContext, contracts: Contract[
     const contract = contracts[poolIdx]
     const getPoolTokenRes = getPoolTokensRes[poolIdx]
 
-    if (!isSuccess(getPoolTokenRes)) {
+    if (!getPoolTokenRes.success) {
       continue
     }
 
-    contract.underlyings = getPoolTokenRes.output.tokens
+    const [tokens] = getPoolTokenRes.output
+
+    contract.underlyings = tokens
     contract.poolId = getPoolTokenRes.input.params[0]
   }
 
@@ -82,7 +83,9 @@ export async function getBalancerProviderBalances(ctx: BalancesContext, contract
     }),
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: BALANCER_VAULT, params: [(contract as Contract).poolId] })),
+      calls: contracts.map(
+        (contract) => ({ target: BALANCER_VAULT, params: [(contract as Contract).poolId] } as const),
+      ),
       abi: abi.getPoolTokens,
     }),
   ])
@@ -93,19 +96,14 @@ export async function getBalancerProviderBalances(ctx: BalancesContext, contract
     const totalSupplyRes = totalSuppliesRes[pooldIdx]
     const underlyingsBalanceRes = underlyingsBalancesRes[pooldIdx]
 
-    if (
-      !underlyings ||
-      !isSuccess(totalSupplyRes) ||
-      isZero(totalSupplyRes.output) ||
-      !isSuccess(underlyingsBalanceRes)
-    ) {
+    if (!underlyings || !totalSupplyRes.success || totalSupplyRes.output === 0n || !underlyingsBalanceRes.success) {
       continue
     }
 
     underlyings.forEach((underlying, idx) => {
-      const underlyingAmount = BigNumber.from(underlyingsBalanceRes.output.balances[idx])
-        .mul(contract.amount)
-        .div(totalSupplyRes.output)
+      const [_tokens, balances] = underlyingsBalanceRes.output
+
+      const underlyingAmount = BigNumber.from(balances[idx]).mul(contract.amount).div(totalSupplyRes.output)
 
       underlying.amount = underlyingAmount
     })

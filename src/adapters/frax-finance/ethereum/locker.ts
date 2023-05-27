@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getSingleLockerBalances } from '@lib/lock'
 import { multicall } from '@lib/multicall'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -12,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getFraxLockerBalances(ctx: BalancesContext, lockers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -21,7 +21,7 @@ export async function getFraxLockerBalances(ctx: BalancesContext, lockers: Contr
     getSingleLockerBalances(ctx, lockers, 'locked'),
     multicall({
       ctx,
-      calls: lockers.map((locker) => ({ target: locker.rewarder, params: [ctx.address] })),
+      calls: lockers.map((locker) => ({ target: locker.rewarder, params: [ctx.address] } as const)),
       abi: abi.earned,
     }),
   ])
@@ -32,7 +32,7 @@ export async function getFraxLockerBalances(ctx: BalancesContext, lockers: Contr
       const reward = lockedBalance.underlyings?.[0] as Contract
       const incentiveEarnedRes = incentivesEarnedRes[idx]
 
-      if (!isSuccess(incentiveEarnedRes)) {
+      if (!incentiveEarnedRes.success) {
         return null
       }
 

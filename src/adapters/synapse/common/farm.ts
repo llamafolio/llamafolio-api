@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -36,11 +35,11 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 type getSynapseBalancesParams = Balance & {
   totalSupply: BigNumber
-  pool: string
+  pool: `0x${string}`
 }
 
 export async function getSynapseBalances(
@@ -50,11 +49,11 @@ export async function getSynapseBalances(
 ): Promise<Balance[]> {
   const balances: getSynapseBalancesParams[] = []
 
-  const calls: Call[] = []
-  const totalSuppliesCalls: Call[] = []
+  const calls: Call<typeof abi.userInfo>[] = []
+  const totalSuppliesCalls: Call<typeof erc20Abi.totalSupply>[] = []
   for (const pool of pools) {
     calls.push({ target: miniChef.address, params: [pool.pid, ctx.address] })
-    totalSuppliesCalls.push({ target: pool.address, params: [] })
+    totalSuppliesCalls.push({ target: pool.address })
   }
 
   const [userInfosRes, pendingSynapsesRes, totalSuppliesRes] = await Promise.all([
@@ -71,14 +70,16 @@ export async function getSynapseBalances(
     const pendingSynapseRes = pendingSynapsesRes[poolIdx]
     const totalSupplyRes = totalSuppliesRes[poolIdx]
 
-    if (!isSuccess(userInfoRes) || !isSuccess(pendingSynapseRes) || !isSuccess(totalSupplyRes)) {
+    if (!userInfoRes.success || !pendingSynapseRes.success || !totalSupplyRes.success) {
       continue
     }
+
+    const [amount] = userInfoRes.output
 
     balances.push({
       ...pool,
       pool: pool.pool,
-      amount: BigNumber.from(userInfoRes.output.amount),
+      amount: BigNumber.from(amount),
       underlyings: underlyings,
       rewards: [{ ...rewards, amount: BigNumber.from(pendingSynapseRes.output) }],
       totalSupply: BigNumber.from(totalSupplyRes.output),
@@ -97,13 +98,16 @@ async function getUnderlyingsBalances(ctx: BalancesContext, balances: getSynapse
       continue
     }
 
-    const calls = underlyings.map((_, i) => ({ target: pool, params: [i] }))
-    const underlyingsBalancesRes = await multicall({ ctx, calls, abi: abi.getTokenBalance })
+    const underlyingsBalancesRes = await multicall({
+      ctx,
+      calls: underlyings.map((_, i) => ({ target: pool, params: [i] } as const)),
+      abi: abi.getTokenBalance,
+    })
 
     underlyings.map((underlying, underlyingIdx) => {
       const underlyingsBalance = underlyingsBalancesRes[underlyingIdx]
 
-      if (isSuccess(underlyingsBalance)) {
+      if (underlyingsBalance.success) {
         ;(underlying as Balance).amount = BigNumber.from(underlyingsBalance.output)
           .mul(balance.amount)
           .div(balance.totalSupply)

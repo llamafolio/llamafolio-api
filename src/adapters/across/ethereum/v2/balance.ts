@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -54,7 +52,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const ACX: Token = {
   chain: 'ethereum',
@@ -73,7 +71,7 @@ export async function getAcrossV2LPBalances(
   const [userBalancesOfsRes, totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
@@ -83,7 +81,9 @@ export async function getAcrossV2LPBalances(
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: manager.address, params: [(pool.underlyings![0] as Contract).address] })),
+      calls: pools.map(
+        (pool) => ({ target: manager.address, params: [(pool.underlyings![0] as Contract).address] } as const),
+      ),
       abi: abi.pooledTokens,
     }),
   ])
@@ -97,22 +97,20 @@ export async function getAcrossV2LPBalances(
 
     if (
       !underlying ||
-      !isSuccess(userBalanceOfRes) ||
-      !isSuccess(totalSupplyRes) ||
-      isZero(totalSupplyRes.output) ||
-      !isSuccess(underlyingsBalanceRes)
+      !userBalanceOfRes.success ||
+      !totalSupplyRes.success ||
+      totalSupplyRes.output === 0n ||
+      !underlyingsBalanceRes.success
     ) {
       continue
     }
 
+    const [_lpToken, _isEnabled, _lastLpFeeUpdate, utilizedReserves, liquidReserves] = underlyingsBalanceRes.output
+
     const fmtUnderlyings = {
       ...underlying,
       amount: BigNumber.from(userBalanceOfRes.output)
-        .mul(
-          BigNumber.from(underlyingsBalanceRes.output.liquidReserves).add(
-            underlyingsBalanceRes.output.utilizedReserves,
-          ),
-        )
+        .mul(BigNumber.from(liquidReserves).add(utilizedReserves))
         .div(totalSupplyRes.output),
     }
 
@@ -134,7 +132,10 @@ export async function getAcrossV2FarmBalances(
   farmer: Contract,
 ): Promise<Balance[]> {
   const balances: Balance[] = []
-  const calls: Call[] = pools.map((pool) => ({ target: farmer.address, params: [pool.address, ctx.address] }))
+  const calls: Call<typeof abi.getUserStake>[] = pools.map((pool) => ({
+    target: farmer.address,
+    params: [pool.address, ctx.address],
+  }))
 
   const [userBalancesOfsRes, userPendingsRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.getUserStake }),
@@ -147,7 +148,7 @@ export async function getAcrossV2FarmBalances(
     const userBalanceOfRes = userBalancesOfsRes[poolIdx]
     const userPendingRewardRes = userPendingsRewardsRes[poolIdx]
 
-    if (!underlying || !isSuccess(userBalanceOfRes) || !isSuccess(userPendingRewardRes)) {
+    if (!underlying || !userBalanceOfRes.success || !userPendingRewardRes.success) {
       continue
     }
 

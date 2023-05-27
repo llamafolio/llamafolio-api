@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolInfo: {
@@ -72,25 +71,30 @@ export async function getPlatypusContract(ctx: BaseContext, contract: Contract):
   const poolLengthRes = await call({ ctx, target: contract.address, abi: abi.poolLength })
   const poolLength = Number(poolLengthRes)
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.poolInfo>[] = []
   for (let idx = 0; idx < poolLength; idx++) {
-    calls.push({ target: contract.address, params: [idx] })
+    calls.push({ target: contract.address, params: [BigInt(idx)] })
   }
 
   const poolsInfosRes = await multicall({ ctx, calls, abi: abi.poolInfo })
 
-  const lpTokensCalls: (Call | null)[] = []
-  const rewarderCalls: (Call | null)[] = []
+  const lpTokensCalls: (Call<typeof abi.pool> | null)[] = []
+  const rewarderCalls: (Call<typeof abi.rewardTokens> | null)[] = []
   for (let poolIdx = 0; poolIdx < poolLength; poolIdx++) {
     const poolsInfoRes = poolsInfosRes[poolIdx]
-
-    lpTokensCalls.push(isSuccess(poolsInfoRes) ? { target: poolsInfoRes.output.lpToken, params: [] } : null)
-    rewarderCalls.push(isSuccess(poolsInfoRes) ? { target: poolsInfoRes.output.rewarder, params: [] } : null)
+    if (poolsInfoRes.success) {
+      const [lpToken, rewarder] = poolsInfoRes.output
+      lpTokensCalls.push({ target: lpToken })
+      rewarderCalls.push({ target: rewarder })
+    } else {
+      lpTokensCalls.push(null)
+      rewarderCalls.push(null)
+    }
   }
 
   const [lpTokensInfosPoolsRes, lpTokensInfosUnderlyingsRes, rewarderTokensRes] = await Promise.all([
     multicall({ ctx, calls: lpTokensCalls, abi: abi.pool }),
-    multicall<string, [], string>({ ctx, calls: lpTokensCalls, abi: abi.underlyingToken }),
+    multicall({ ctx, calls: lpTokensCalls, abi: abi.underlyingToken }),
     multicall({ ctx, calls: rewarderCalls, abi: abi.rewardTokens }),
   ])
 
@@ -100,16 +104,18 @@ export async function getPlatypusContract(ctx: BaseContext, contract: Contract):
     const lpTokensInfosUnderlying = lpTokensInfosUnderlyingsRes[poolIdx]
     const rewarderToken = rewarderTokensRes[poolIdx]
 
-    if (!isSuccess(poolsInfoRes) || !isSuccess(lpTokensInfosPool) || !isSuccess(lpTokensInfosUnderlying)) {
+    if (!poolsInfoRes.success || !lpTokensInfosPool.success || !lpTokensInfosUnderlying.success) {
       continue
     }
+
+    const [lpToken, rewarder] = poolsInfoRes.output
 
     contracts.push({
       chain: ctx.chain,
       pid: poolIdx,
-      address: poolsInfoRes.output.lpToken,
-      rewarder: poolsInfoRes.output.rewarder,
-      rewards: [PTP, ...(isSuccess(rewarderToken) ? rewarderToken.output : [])],
+      address: lpToken,
+      rewarder: rewarder,
+      rewards: [PTP, ...(rewarderToken.success ? rewarderToken.output : [])],
       pool: lpTokensInfosPool.output,
       underlyings: [lpTokensInfosUnderlying.output],
     })

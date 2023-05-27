@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -15,7 +14,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const VERSE: Token = {
   chain: 'ethereum',
@@ -27,7 +26,10 @@ const VERSE: Token = {
 export async function getVerseBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }))
+  const calls: Call<typeof erc20Abi.balanceOf>[] = farmers.map((farmer) => ({
+    target: farmer.address,
+    params: [ctx.address],
+  }))
 
   const [balancesOfsRes, earnedsRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
@@ -40,7 +42,7 @@ export async function getVerseBalances(ctx: BalancesContext, farmers: Contract[]
     const balancesOfRes = balancesOfsRes[farmIdx]
     const earnedRes = earnedsRes[farmIdx]
 
-    if (!isSuccess(balancesOfRes) || !isSuccess(earnedRes)) {
+    if (!balancesOfRes.success || !earnedRes.success) {
       continue
     }
 

@@ -26,7 +26,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getCoinwindBalances(
   ctx: BalancesContext,
@@ -35,13 +35,13 @@ export async function getCoinwindBalances(
 ): Promise<Balance[]> {
   const userInfosRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] })),
+    calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] } as const)),
     abi: abi.userInfo,
   })
 
   const balances: Balance[] = mapSuccessFilter(userInfosRes, (res, idx: number) => ({
     ...pools[idx],
-    amount: BigNumber.from(res.output.amount),
+    amount: BigNumber.from(res.output[0]),
     underlyings: undefined,
     rewards: undefined,
     category: 'farm',

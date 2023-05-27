@@ -3,11 +3,10 @@ import { call } from '@lib/call'
 import type { Token } from '@lib/token'
 import { BigNumber } from 'ethers'
 
-import { range } from './array'
+import { mapSuccess, range } from './array'
 import { abi as erc20Abi } from './erc20'
 import { BN_ZERO, isZero, sumBN } from './math'
 import { multicall } from './multicall'
-import { isSuccess } from './type'
 
 const abi = {
   locks: {
@@ -135,17 +134,18 @@ export async function getSingleLockerBalances(
     const underlyings = locker.underlyings as Contract[]
     const lockBalanceRes = lockBalancesRes[lockerIdx]
 
-    if (!underlyings || !isSuccess(lockBalanceRes)) {
+    if (!underlyings || !lockBalanceRes.success) {
       continue
     }
 
-    const unlockAt = lockBalanceRes.output.end
+    const [amount, end] = lockBalanceRes.output
+    const unlockAt = Number(end)
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(lockBalanceRes.output.amount),
+      amount: BigNumber.from(amount),
       underlyings: underlyings,
-      claimable: now > unlockAt ? BigNumber.from(lockBalanceRes.output.amount) : BN_ZERO,
+      claimable: now > unlockAt ? BigNumber.from(amount) : BN_ZERO,
       unlockAt,
       rewards: undefined,
       category: 'lock',
@@ -238,33 +238,34 @@ export async function getNFTLockerBalances(
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, Number(balanceOfsRes)).map((idx) => ({ target: locker.address, params: [ctx.address, idx] })),
+    calls: range(0, Number(balanceOfsRes)).map(
+      (idx) => ({ target: locker.address, params: [ctx.address, BigInt(idx)] } as const),
+    ),
     abi: abi.tokenOfOwnerByIndex,
   })
 
   const lockedsRes = await multicall({
     ctx,
-    calls: tokenOfOwnerByIndexesRes.map((tokenIdx) =>
-      isSuccess(tokenIdx) ? { target: locker.address, params: [tokenIdx.output] } : null,
-    ),
+    calls: mapSuccess(tokenOfOwnerByIndexesRes, (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] })),
     abi: genericLocker,
   })
 
   for (let idx = 0; idx < balanceOfsRes; idx++) {
     const lockedRes = lockedsRes[idx]
 
-    if (!isSuccess(lockedRes)) {
+    if (!lockedRes.success) {
       continue
     }
 
     const now = Date.now() / 1000
-    const unlockAt = lockedRes.output.end
+    const [amount, end] = lockedRes.output
+    const unlockAt = Number(end)
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(lockedRes.output.amount),
+      amount: BigNumber.from(amount),
       unlockAt,
-      claimable: now > unlockAt ? BigNumber.from(lockedRes.output.amount) : BN_ZERO,
+      claimable: now > unlockAt ? BigNumber.from(amount) : BN_ZERO,
       underlyings: [underlying],
       rewards: undefined,
       category: 'lock',

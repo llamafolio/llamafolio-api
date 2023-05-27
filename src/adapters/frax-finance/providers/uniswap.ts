@@ -1,9 +1,8 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -25,12 +24,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 import type { ProviderBalancesParams } from './interface'
 
 export const uniswapProvider = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
-  const calls: Call[] = pools.map((pool) => ({ target: pool.lpToken }))
+  const calls: Call<typeof abi.token0>[] = pools.map((pool) => ({ target: pool.lpToken }))
 
   const [token0sRes, token1sRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.token0 }),
@@ -41,7 +40,7 @@ export const uniswapProvider = async (ctx: BaseContext, pools: Contract[]): Prom
     const token0Res = token0sRes[idx]
     const token1Res = token1sRes[idx]
 
-    if (!isSuccess(token0Res) || !isSuccess(token1Res)) {
+    if (!token0Res.success || !token1Res.success) {
       return
     }
 
@@ -55,7 +54,7 @@ export const uniswapBalancesProvider = async (
   ctx: BalancesContext,
   pools: ProviderBalancesParams[],
 ): Promise<ProviderBalancesParams[]> => {
-  const underlyingsCalls: Call[] = []
+  const underlyingsCalls: Call<typeof erc20Abi.balanceOf>[] = []
 
   for (const pool of pools) {
     const { underlyings, lpToken } = pool
@@ -78,7 +77,7 @@ export const uniswapBalancesProvider = async (
     const pool = pools[poolIdx]
     const { underlyings, amount } = pool
     const totalSupplyRes = totalSuppliesRes[poolIdx]
-    if (!underlyings || !isSuccess(totalSupplyRes) || isZero(totalSupplyRes.output)) {
+    if (!underlyings || !totalSupplyRes.success || totalSupplyRes.output === 0n) {
       continue
     }
 
@@ -86,7 +85,7 @@ export const uniswapBalancesProvider = async (
       const underlyingBalanceOfRes = underlyingsBalancesRes[balanceOfIdx]
 
       const underlyingsBalance =
-        isSuccess(underlyingBalanceOfRes) && underlyingBalanceOfRes.output != undefined
+        underlyingBalanceOfRes.success && underlyingBalanceOfRes.success
           ? BigNumber.from(underlyingBalanceOfRes.output)
           : BN_ZERO
 

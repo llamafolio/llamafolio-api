@@ -4,7 +4,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -100,7 +99,7 @@ interface RegistryParams {
 export type fmtProviderBalancesParams = Balance & {
   amount: BigNumber
   totalSupply: BigNumber
-  lpToken: string
+  lpToken: `0x${string}`
   strategy: string
 }
 
@@ -122,7 +121,7 @@ export const fmtSolidlyProvider = async (
   ctx: BalancesContext,
   pools: fmtProviderBalancesParams[],
 ): Promise<fmtProviderBalancesParams[]> => {
-  const calls = pools.map((pool) => ({ target: pool.lpToken }))
+  const calls: Call<typeof abi.metadata>[] = pools.map((pool) => ({ target: pool.lpToken }))
   const underlyingsBalancesRes = await multicall({ ctx, calls, abi: abi.metadata })
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
@@ -130,16 +129,14 @@ export const fmtSolidlyProvider = async (
     const { underlyings, amount, totalSupply } = pool
     const underlyingBalanceRes = underlyingsBalancesRes[poolIdx]
 
-    if (!underlyings || !isSuccess(underlyingBalanceRes)) {
+    if (!underlyings || !underlyingBalanceRes.success) {
       continue
     }
 
-    ;(pool.underlyings![0] as Balance).amount = BigNumber.from(underlyingBalanceRes.output.r0)
-      .mul(amount)
-      .div(totalSupply)
-    ;(pool.underlyings![1] as Balance).amount = BigNumber.from(underlyingBalanceRes.output.r1)
-      .mul(pool.amount)
-      .div(totalSupply)
+    const [_dec0, _dec1, r0, r1] = underlyingBalanceRes.output
+
+    ;(pool.underlyings![0] as Balance).amount = BigNumber.from(r0).mul(amount).div(totalSupply)
+    ;(pool.underlyings![1] as Balance).amount = BigNumber.from(r1).mul(pool.amount).div(totalSupply)
   }
 
   return pools
@@ -148,7 +145,7 @@ export const fmtSolidlyProvider = async (
 export const fmtBalancerProvider = async (
   ctx: BalancesContext,
   pools: fmtProviderBalancesParams[],
-  registry: string,
+  registry: `0x${string}`,
 ): Promise<fmtProviderBalancesParams[]> => {
   const poolIdsRes = await multicall({
     ctx,
@@ -156,11 +153,11 @@ export const fmtBalancerProvider = async (
     abi: abi.getPoolId,
   })
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.getPoolTokenInfo>[] = []
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const underlyings = pools[poolIdx].underlyings
     const poolIdRes = poolIdsRes[poolIdx]
-    if (!underlyings || !isSuccess(poolIdRes)) {
+    if (!underlyings || !poolIdRes.success) {
       continue
     }
 
@@ -183,8 +180,8 @@ export const fmtBalancerProvider = async (
       const underlyingBalanceOfRes = underlyingsBalancesRes[balanceOfIdx]
 
       const underlyingsBalance =
-        isSuccess(underlyingBalanceOfRes) && underlyingBalanceOfRes.output != undefined
-          ? BigNumber.from(underlyingBalanceOfRes.output.cash)
+        underlyingBalanceOfRes.success && underlyingBalanceOfRes.output != undefined
+          ? BigNumber.from(underlyingBalanceOfRes.output[0])
           : BN_ZERO
 
       ;(underlying as Balance).amount = underlyingsBalance.mul(amount).div(totalSupply)
@@ -200,7 +197,7 @@ export const fmtSushiProvider = async (
   ctx: BalancesContext,
   pools: fmtProviderBalancesParams[],
 ): Promise<fmtProviderBalancesParams[]> => {
-  const calls: Call[] = []
+  const calls: Call<typeof erc20Abi.balanceOf>[] = []
 
   for (const pool of pools) {
     const { underlyings, lpToken } = pool
@@ -227,7 +224,7 @@ export const fmtSushiProvider = async (
       const underlyingBalanceOfRes = underlyingsBalancesRes[balanceOfIdx]
 
       const underlyingsBalance =
-        isSuccess(underlyingBalanceOfRes) && underlyingBalanceOfRes.output != undefined
+        underlyingBalanceOfRes.success && underlyingBalanceOfRes.output != undefined
           ? BigNumber.from(underlyingBalanceOfRes.output)
           : BN_ZERO
 
@@ -256,7 +253,7 @@ export const fmtCurveProvider = async (
 
     const poolAddress = await call({ ctx, target: strategy, abi: abi.pool })
 
-    const calls: Call[] = []
+    const calls = []
     for (const registry of registries) {
       calls.push({ target: registry.address, params: [poolAddress] })
 
@@ -272,7 +269,7 @@ export const fmtCurveProvider = async (
     for (let registryIdx = 0; registryIdx < registries.length; registryIdx++) {
       const underlyingsBalanceRes = underlyingsBalancesRes[registryIdx]
 
-      if (!isSuccess(underlyingsBalanceRes)) {
+      if (!underlyingsBalanceRes.success) {
         continue
       }
 

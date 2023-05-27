@@ -4,7 +4,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -53,7 +52,10 @@ export async function getMapleSingleStakeBalances(ctx: BalancesContext, staker: 
 export async function getMapleStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = stakers.map((staker) => ({ target: staker.staker, params: [ctx.address] }))
+  const calls: Call<typeof erc20Abi.balanceOf>[] = stakers.map((staker) => ({
+    target: staker.staker,
+    params: [ctx.address],
+  }))
 
   const [balanceOfsRes, withdrawablesRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
@@ -64,10 +66,9 @@ export async function getMapleStakeBalances(ctx: BalancesContext, stakers: Contr
     multicall({
       ctx,
       calls: stakers.flatMap((staker) =>
-        staker.underlyings!.map((underlying) => ({
-          target: staker.lpToken,
-          params: [(underlying as Contract).address],
-        })),
+        staker.underlyings!.map(
+          (underlying) => ({ target: staker.lpToken, params: [(underlying as Contract).address] } as const),
+        ),
       ),
       abi: abi.getBalance,
     }),
@@ -82,7 +83,7 @@ export async function getMapleStakeBalances(ctx: BalancesContext, stakers: Contr
     const withdrawableRes = withdrawablesRes[stakerIdx]
     const totalSupplyRes = totalSuppliesRes[stakerIdx]
 
-    if (!underlyings || !isSuccess(balanceOfRes) || !isSuccess(withdrawableRes) || !isSuccess(totalSupplyRes)) {
+    if (!underlyings || !balanceOfRes.success || !withdrawableRes.success || !totalSupplyRes.success) {
       continue
     }
 
@@ -95,9 +96,9 @@ export async function getMapleStakeBalances(ctx: BalancesContext, stakers: Contr
     }
 
     underlyings.forEach((underlying, idx) => {
-      const underlyingsBalanceOfRes = isSuccess(underlyingsBalancesOfRes[idx])
-        ? underlyingsBalancesOfRes[idx].output
-        : BN_ZERO
+      const underlyingBalancesOf = underlyingsBalancesOfRes[idx]
+
+      const underlyingsBalanceOfRes = underlyingBalancesOf.success ? underlyingBalancesOf.output : BN_ZERO
 
       balance.underlyings?.push({
         ...underlying,

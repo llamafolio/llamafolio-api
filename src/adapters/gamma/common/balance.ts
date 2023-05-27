@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { getMasterChefLpToken } from '@lib/masterchef/masterchef'
-import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { BigNumber } from 'ethers'
 
@@ -41,14 +39,14 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getGammaFarmBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balancesOfsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
     abi: erc20Abi.balanceOf,
   })
 
@@ -57,7 +55,7 @@ export async function getGammaFarmBalances(ctx: BalancesContext, pools: Contract
     const underlyings = pool.underlyings as Contract[]
     const balancesOfRes = balancesOfsRes[poolIdx]
 
-    if (!underlyings || !isSuccess(balancesOfRes)) {
+    if (!underlyings || !balancesOfRes.success) {
       continue
     }
 
@@ -95,12 +93,12 @@ const getGammaUnderlyings = async (ctx: BalancesContext, pools: Balance[]): Prom
     const totalAmountRes = totalAmountsRes[poolIdx]
     const totalSupplyRes = totalSuppliesRes[poolIdx]
 
-    if (!underlyings || !isSuccess(totalAmountRes) || !isSuccess(totalSupplyRes) || isZero(totalSupplyRes.output)) {
+    if (!underlyings || !totalAmountRes.success || !totalSupplyRes.success || totalSupplyRes.output === 0n) {
       continue
     }
 
     const tokens = underlyings.map((underlying, index) => {
-      const amount = pool.amount.mul(totalAmountRes.output[`total${index}`]).div(totalSupplyRes.output)
+      const amount = pool.amount.mul(totalAmountRes.output[index]).div(totalSupplyRes.output)
       return {
         ...underlying,
         amount,
@@ -135,7 +133,7 @@ export async function getGammaMasterchefBalances(
 
   const poolsBalancesRes = await multicall({
     ctx,
-    calls: masterchefPools.map((pool) => ({ target: pool.provider, params: [pool.pid, ctx.address] })),
+    calls: masterchefPools.map((pool) => ({ target: pool.provider, params: [BigInt(pool.pid), ctx.address] } as const)),
     abi: abi.userInfo,
   })
 
@@ -143,7 +141,7 @@ export async function getGammaMasterchefBalances(
     const masterchefPool = masterchefPools[userIdx]
     const poolBalanceRes = poolsBalancesRes[userIdx]
 
-    if (!isSuccess(poolBalanceRes)) {
+    if (!poolBalanceRes.success) {
       continue
     }
 
@@ -151,7 +149,7 @@ export async function getGammaMasterchefBalances(
       ...masterchefPool,
       underlyings: masterchefPool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output.amount),
+      amount: BigNumber.from(poolBalanceRes.output[0]),
       rewards: undefined,
     })
   }

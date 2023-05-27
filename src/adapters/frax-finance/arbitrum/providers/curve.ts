@@ -1,8 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -14,7 +13,7 @@ const abi = {
     outputs: [{ name: '', type: 'uint256[2]' }],
     gas: 4707,
   },
-}
+} as const
 
 import type { ProviderBalancesParams } from '../../providers/interface'
 
@@ -33,12 +32,7 @@ export const curveBalancesProvider = async (
     const underlyingsBalanceRes = underlyingsBalancesRes[poolIdx]
     const poolSupplyRes = poolSuppliesRes[poolIdx]
 
-    if (
-      !underlyings ||
-      !isSuccess(underlyingsBalanceRes) ||
-      !isSuccess(poolSupplyRes) ||
-      isZero(poolSupplyRes.output)
-    ) {
+    if (!underlyings || !underlyingsBalanceRes.success || !poolSupplyRes.success || poolSupplyRes.output === 0n) {
       continue
     }
 

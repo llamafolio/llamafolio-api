@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -40,19 +39,19 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
-export async function getMarketsContracts(ctx: BaseContext, cauldrons: string[]): Promise<Contract[]> {
+export async function getMarketsContracts(ctx: BaseContext, cauldrons: `0x${string}`[]): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const calls: Call[] = cauldrons.map((cauldron) => ({ target: cauldron, params: [] }))
+  const calls: Call<typeof abi.collateral>[] = cauldrons.map((cauldron) => ({ target: cauldron }))
   const collateralTokensRes = await multicall({ ctx, calls, abi: abi.collateral })
 
-  const tokenCalls: Call[] = []
+  const tokenCalls: Call<typeof abi.token>[] = []
   for (let idx = 0; idx < collateralTokensRes.length; idx++) {
     const cauldron = cauldrons[idx]
     const collateralTokenRes = collateralTokensRes[idx]
-    if (!isSuccess(collateralTokenRes)) {
+    if (!collateralTokenRes.success) {
       continue
     }
 
@@ -63,7 +62,7 @@ export async function getMarketsContracts(ctx: BaseContext, cauldrons: string[])
       underlyings: [],
     }
 
-    tokenCalls.push({ target: contract.collateralToken, params: [] })
+    tokenCalls.push({ target: contract.collateralToken })
     contracts.push(contract)
   }
 
@@ -73,11 +72,12 @@ export async function getMarketsContracts(ctx: BaseContext, cauldrons: string[])
     const cauldron = contracts[cauldronIdx]
     const underlyingsTokenRes = underlyingsTokensRes[cauldronIdx]
 
-    if (!isSuccess(underlyingsTokenRes)) {
+    if (!underlyingsTokenRes.success) {
       cauldron.underlyings?.push(cauldron.collateralToken)
       continue
     }
-    cauldron.underlyings?.push(underlyingsTokenRes.output)
+
+    ;(cauldron.underlyings as `0x${string}`[])?.push(underlyingsTokenRes.output)
   }
 
   return contracts
@@ -86,7 +86,10 @@ export async function getMarketsContracts(ctx: BaseContext, cauldrons: string[])
 export async function getMarketsBalances(ctx: BalancesContext, markets: Contract[], MIM: Contract) {
   const balances: Balance[] = []
 
-  const calls: Call[] = markets.map((contract) => ({ target: contract.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.userCollateralShare>[] = markets.map((contract) => ({
+    target: contract.address,
+    params: [ctx.address],
+  }))
   const [lendingBalancesRes, borrowingBalancesRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userCollateralShare }),
     multicall({ ctx, calls, abi: abi.userBorrowPart }),
@@ -98,7 +101,7 @@ export async function getMarketsBalances(ctx: BalancesContext, markets: Contract
     const borrowingBalanceRes = borrowingBalancesRes[marketIdx]
     const underlying = market.underlyings?.[0] as Contract
 
-    if (isSuccess(lendingBalanceRes) && underlying) {
+    if (lendingBalanceRes.success && underlying) {
       const balance: Balance = {
         ...market,
         decimals: underlying.decimals,
@@ -112,7 +115,7 @@ export async function getMarketsBalances(ctx: BalancesContext, markets: Contract
       balances.push(balance)
     }
 
-    if (isSuccess(borrowingBalanceRes)) {
+    if (borrowingBalanceRes.success) {
       const balance: Balance = {
         ...MIM,
         amount: BigNumber.from(borrowingBalanceRes.output),

@@ -1,8 +1,7 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolInfo: {
@@ -61,13 +60,13 @@ export async function getBellaContracts(ctx: BaseContext, contract: Contract): P
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLength).map((_, idx) => ({ target: contract.address, params: [idx] })),
+    calls: range(0, poolLength).map((_, idx) => ({ target: contract.address, params: [BigInt(idx)] } as const)),
     abi: abi.poolInfo,
   })
 
   const tokensRes = await multicall({
     ctx,
-    calls: poolInfosRes.map((pool) => (isSuccess(pool) ? { target: pool.output.underlyingToken } : null)),
+    calls: mapSuccess(poolInfosRes, (poolRes) => ({ target: poolRes.output[0] })),
     abi: abi.token,
   })
 
@@ -75,13 +74,13 @@ export async function getBellaContracts(ctx: BaseContext, contract: Contract): P
     const poolInfoRes = poolInfosRes[poolIdx]
     const tokenRes = tokensRes[poolIdx]
 
-    if (!isSuccess(poolInfoRes) || !isSuccess(tokenRes)) {
+    if (!poolInfoRes.success || !tokenRes.success) {
       continue
     }
 
     contracts.push({
       chain: ctx.chain,
-      address: poolInfoRes.output.underlyingToken,
+      address: poolInfoRes.output[0],
       underlyings: [tokenRes.output],
       rewards: [bellaToken],
       pid: poolIdx,

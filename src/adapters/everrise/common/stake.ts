@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO, sumBN } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -75,26 +74,25 @@ export async function getEverriseBalances(ctx: BalancesContext, nftStaker: Contr
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, Number(balanceOfLength)).map((_, idx) => ({
-      target: nftStaker.address,
-      params: [ctx.address, idx],
-    })),
+    calls: range(0, Number(balanceOfLength)).map(
+      (_, idx) =>
+        ({
+          target: nftStaker.address,
+          params: [ctx.address, BigInt(idx)],
+        } as const),
+    ),
     abi: abi.tokenOfOwnerByIndex,
   })
 
   const nftDatasRes = await multicall({
     ctx,
     calls: tokenOfOwnerByIndexesRes.map((nft) =>
-      isSuccess(nft) ? { target: nftStaker.address, params: [nft.output] } : null,
+      nft.success ? ({ target: nftStaker.address, params: [BigInt(nft.output)] } as const) : null,
     ),
     abi: abi.getNftData,
   })
 
-  const totalStaking = sumBN(
-    mapSuccessFilter(nftDatasRes, (res) => {
-      return res.output.initialTokenAmount
-    }),
-  )
+  const totalStaking = sumBN(mapSuccessFilter(nftDatasRes, (res) => BigNumber.from(res.output.initialTokenAmount)))
 
   const balances: StakeBalance[] = mapSuccessFilter(nftDatasRes, (res) => {
     // Attach pro-rata rewards balances

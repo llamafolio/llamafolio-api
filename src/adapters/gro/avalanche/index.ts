@@ -4,7 +4,7 @@ import { resolveBalances } from '@lib/balance'
 import { getYieldBalances } from '../common/balance'
 import { getYieldContracts } from '../common/contract'
 
-const poolsAddresses: string[] = [
+const poolsAddresses: `0x${string}`[] = [
   '0x2eb05cffa24309b9aaf300392a4d8db745d4e592', // USDC.e
   '0x6063597b9356b246e706fd6a48c780f897e3ef55', // DAI.e
   '0x471f4b4b9a97f82c3a25b034b33a8e306ee9beb5', // USDT.e

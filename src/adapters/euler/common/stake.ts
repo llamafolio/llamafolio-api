@@ -1,10 +1,10 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { sumBN } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -25,7 +25,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const EUL: Token = {
   chain: 'ethereum',
@@ -37,7 +37,7 @@ const EUL: Token = {
 export async function getETokenStakes(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof erc20Abi.balanceOf>[] = []
   for (let idx = 0; idx < stakers.length; idx++) {
     const staker = stakers[idx]
     calls.push({ target: staker.address, params: [ctx.address] })
@@ -54,7 +54,7 @@ export async function getETokenStakes(ctx: BalancesContext, stakers: Contract[])
     const balanceOfRes = balancesOfRes[idx]
     const earnedRewardRes = earnedRewardsRes[idx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(earnedRewardRes) || !token) {
+    if (!balanceOfRes.success || !earnedRewardRes.success || !token) {
       continue
     }
 
@@ -71,7 +71,7 @@ export async function getETokenStakes(ctx: BalancesContext, stakers: Contract[])
 }
 
 export async function getEULStakes(ctx: BalancesContext, staker: Contract, tokens: Token[]): Promise<Balance> {
-  const calls: Call[] = []
+  const calls: Call<typeof abi.staked>[] = []
 
   for (let idx = 0; idx < tokens.length; idx++) {
     const token = tokens[idx]
@@ -79,7 +79,7 @@ export async function getEULStakes(ctx: BalancesContext, staker: Contract, token
   }
 
   const balancesOfRes = await multicall({ ctx, calls, abi: abi.staked })
-  const eulBalanceOf = sumBN(balancesOfRes.filter(isSuccess).map((res) => BigNumber.from(res.output)))
+  const eulBalanceOf = sumBN(mapSuccessFilter(balancesOfRes, (res) => BigNumber.from(res.output)))
 
   return {
     ...EUL,

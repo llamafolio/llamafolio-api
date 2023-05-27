@@ -3,7 +3,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -52,7 +51,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const SPELL: Token = {
   chain: 'ethereum',
@@ -71,7 +70,10 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], c
   const sushiPools: Balance[] = []
   const curvePools: Balance[] = []
 
-  const calls: Call[] = pools.map((_, idx) => ({ target: contract.address, params: [idx, ctx.address] }))
+  const calls: Call<typeof abi.userInfo>[] = pools.map((_, idx) => ({
+    target: contract.address,
+    params: [BigInt(idx), ctx.address],
+  }))
 
   const [poolBalances, poolRewards] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
@@ -83,14 +85,16 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], c
     const poolReward = poolRewards[idx]
     const underlyings = pool.underlyings as Contract[]
 
-    if (!isSuccess(poolBalance) || !underlyings || !isSuccess(poolReward)) {
+    if (!poolBalance.success || !underlyings || !poolReward.success) {
       return
     }
+
+    const [amount] = poolBalance.output
 
     if (pool.provider === 'sushi') {
       sushiPools.push({
         ...pool,
-        amount: BigNumber.from(poolBalance.output.amount),
+        amount: BigNumber.from(amount),
         underlyings,
         rewards: [{ ...SPELL, amount: BigNumber.from(poolReward.output) }],
         category: 'farm',
@@ -100,7 +104,7 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], c
     if (pool.provider === 'curve') {
       curvePools.push({
         ...pool,
-        amount: BigNumber.from(poolBalance.output.amount),
+        amount: BigNumber.from(amount),
         underlyings,
         rewards: [{ ...SPELL, amount: BigNumber.from(poolReward.output) }],
         category: 'farm',

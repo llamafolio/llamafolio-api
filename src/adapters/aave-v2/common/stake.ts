@@ -162,10 +162,13 @@ export async function getStakeBalancerPoolBalances(
 
   const underlyingsBalancesRes = await multicall({
     ctx,
-    calls: underlyingsTokens.map((token) => ({
-      target: token.address,
-      params: [bPoolRes],
-    })),
+    calls: underlyingsTokens.map(
+      (token) =>
+        ({
+          target: token.address,
+          params: [bPoolRes],
+        } as const),
+    ),
     abi: {
       constant: true,
       inputs: [{ internalType: 'address', name: '', type: 'address' }],
@@ -174,7 +177,7 @@ export async function getStakeBalancerPoolBalances(
       payable: false,
       stateMutability: 'view',
       type: 'function',
-    },
+    } as const,
   })
 
   const underlying0Balance = {
@@ -186,7 +189,7 @@ export async function getStakeBalancerPoolBalances(
     amount: stakedBalance
       .mul(stakingContractLPBalanceRes)
       .div(totalSupplyRes[0].output)
-      .mul(underlyingsBalancesRes[0].output)
+      .mul(underlyingsBalancesRes[0].success ? underlyingsBalancesRes[0].output : 0n)
       .div(totalSupplyRes[1].output),
   }
   const underlying1Balance = {
@@ -198,7 +201,7 @@ export async function getStakeBalancerPoolBalances(
     amount: stakedBalance
       .mul(stakingContractLPBalanceRes)
       .div(totalSupplyRes[0].output)
-      .mul(underlyingsBalancesRes[1].output)
+      .mul(underlyingsBalancesRes[1].success ? underlyingsBalancesRes[1].output : 0n)
       .div(totalSupplyRes[1].output),
   }
 

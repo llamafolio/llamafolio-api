@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolInfo: {
@@ -62,9 +61,9 @@ export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: C
 
   const poolLength = Number(poolLengthBI)
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.poolInfo>[] = []
   for (let idx = 0; idx < poolLength; idx++) {
-    calls.push({ target: booster.address, params: [idx] })
+    calls.push({ target: booster.address, params: [BigInt(idx)] })
   }
 
   const poolsInfosRes = await multicall({ ctx, calls, abi: abi.poolInfo })
@@ -72,16 +71,18 @@ export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: C
   for (let idx = 0; idx < poolLength; idx++) {
     const poolsInfoRes = poolsInfosRes[idx]
 
-    if (!isSuccess(poolsInfoRes)) {
+    if (!poolsInfoRes.success) {
       continue
     }
 
+    const [lptoken, _token, _gauge, crvRewards, _stash, _shutdown] = poolsInfoRes.output
+
     pools.push({
       chain: ctx.chain,
-      address: poolsInfoRes.output.lptoken,
-      pool: poolsInfoRes.output.lptoken,
-      lpToken: poolsInfoRes.output.lptoken,
-      gauge: poolsInfoRes.output.crvRewards,
+      address: lptoken,
+      pool: lptoken,
+      lpToken: lptoken,
+      gauge: crvRewards,
       rewards: [BAL],
     })
   }
@@ -92,9 +93,9 @@ export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: C
 const getAuraPoolsId = async (ctx: BaseContext, pools: Contract[], vault: Contract): Promise<Contract[]> => {
   const poolsWithIds: Contract[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.getPoolId>[] = []
   for (const pool of pools) {
-    calls.push({ target: pool.address, params: [] })
+    calls.push({ target: pool.address })
   }
 
   const poolIdsRes = await multicall({ ctx, calls, abi: abi.getPoolId })
@@ -103,7 +104,7 @@ const getAuraPoolsId = async (ctx: BaseContext, pools: Contract[], vault: Contra
     const pool = pools[idx]
     const poolIdRes = poolIdsRes[idx]
 
-    if (!isSuccess(poolIdRes)) {
+    if (!poolIdRes.success) {
       continue
     }
 
@@ -119,7 +120,7 @@ const getAuraPoolsId = async (ctx: BaseContext, pools: Contract[], vault: Contra
 const getAuraPoolsUnderlyings = async (ctx: BaseContext, pools: Contract[], vault: Contract): Promise<Contract[]> => {
   const poolsWithUnderlyings: Contract[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.getPoolTokens>[] = []
   for (const pool of pools) {
     calls.push({ target: vault.address, params: [pool.id] })
   }
@@ -130,13 +131,15 @@ const getAuraPoolsUnderlyings = async (ctx: BaseContext, pools: Contract[], vaul
     const pool = pools[idx]
     const underlyingRes = underlyingsRes[idx]
 
-    if (!isSuccess(underlyingRes)) {
+    if (!underlyingRes.success) {
       continue
     }
 
+    const [tokens] = underlyingRes.output
+
     poolsWithUnderlyings.push({
       ...pool,
-      underlyings: underlyingRes.output.tokens,
+      underlyings: tokens,
     })
   }
 

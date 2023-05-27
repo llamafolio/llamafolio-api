@@ -1,7 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter } from '@lib/array'
+import { flatMapSuccess, mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   getTokens: {
@@ -18,15 +17,15 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getWombatPoolsContracts(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
   const tokensRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.getTokens })
 
   const addressOfAssetsRes = await multicall({
     ctx,
-    calls: tokensRes.flatMap((token) =>
-      isSuccess(token) ? token.output.map((t: string) => ({ target: token.input.target, params: [t] })) : null,
+    calls: flatMapSuccess(tokensRes, (token) =>
+      token.output.map((tokenAddress) => ({ target: token.input.target, params: [tokenAddress] } as const)),
     ),
     abi: abi.addressOfAsset,
   })

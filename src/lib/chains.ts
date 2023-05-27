@@ -2,7 +2,7 @@ import environment from '@environment'
 
 import { isNotNullish } from './type'
 
-const { LLAMANODES_API_KEY } = environment
+const { ARBITRUM_RPC, LLAMANODES_API_KEY, OPTIMISM_RPC } = environment
 
 export declare type Chain =
   | 'arbitrum'
@@ -31,7 +31,7 @@ export const chains: IChainInfo[] = [
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
-    rpcUrls: ['https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'],
+    rpcUrls: [ARBITRUM_RPC, 'https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'].filter(isNotNullish),
   },
   {
     id: 'avalanche',
@@ -105,7 +105,7 @@ export const chains: IChainInfo[] = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcUrls: ['https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism'],
+    rpcUrls: [OPTIMISM_RPC, 'https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism'].filter(isNotNullish),
   },
   {
     id: 'gnosis',

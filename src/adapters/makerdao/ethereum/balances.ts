@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 import type { cdpid } from './cdpid'
@@ -71,7 +70,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const DECIMALS = {
   wad: utils.parseEther('1.0'), // 10 ** 18,
@@ -87,9 +86,9 @@ const DAI: Token = {
 
 interface UrnHandlerParams {
   chain: Chain
-  address: string
-  urnAddress: string
-  proxy: string
+  address: `0x${string}`
+  urnAddress: `0x${string}`
+  proxy: `0x${string}`
   id: string
   asset: Contract
 }
@@ -114,22 +113,12 @@ export async function getProxiesBalances(
   const [ilksInfosRes, ilksMatsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: cdpids.flatMap((cdpid) =>
-        cdpid.ilks.map((asset) => ({
-          target: ilk.address,
-          params: [asset],
-        })),
-      ),
+      calls: cdpids.flatMap((cdpid) => cdpid.ilks.map((asset) => ({ target: ilk.address, params: [asset] } as const))),
       abi: abi.ilkData,
     }),
     multicall({
       ctx,
-      calls: cdpids.flatMap((cdpid) =>
-        cdpid.ilks.map((asset) => ({
-          target: spot.address,
-          params: [asset],
-        })),
-      ),
+      calls: cdpids.flatMap((cdpid) => cdpid.ilks.map((asset) => ({ target: spot.address, params: [asset] } as const))),
       abi: abi.ilks,
     }),
   ])
@@ -145,9 +134,9 @@ export async function getProxiesBalances(
       const ilkId = cdpid.ilks[ilkIdx]
       const id = cdpid.ids[ilkIdx]
 
-      if (isSuccess(ilkInfoRes) && isSuccess(ilkMatRes)) {
-        const ilkInfo = ilkInfoRes.output
-        const ilkMat = ilkMatRes.output.mat
+      if (ilkInfoRes.success && ilkMatRes.success) {
+        const [_pos, _join, gem, dec, _class, _pip, _xlip, name, symbol] = ilkInfoRes.output
+        const [_ilkPip, ilkMat] = ilkMatRes.output
 
         urnHandlers.push({
           chain: ctx.chain,
@@ -157,11 +146,11 @@ export async function getProxiesBalances(
           id,
           asset: {
             chain: ctx.chain,
-            name: ilkInfo.name,
+            name,
             ilkId,
-            symbol: ilkInfo.symbol,
-            address: ilkInfo.gem,
-            decimals: ilkInfo.dec,
+            symbol,
+            address: gem,
+            decimals: dec,
             mat: BigNumber.from(ilkMat),
           },
         })
@@ -180,18 +169,12 @@ const getUrnsBalances = async (ctx: BalancesContext, vat: Contract, urnHandlers:
   const [urnsRes, ilksRes] = await Promise.all([
     multicall({
       ctx,
-      calls: urnHandlers.map((urn) => ({
-        target: vat.address,
-        params: [urn.asset.ilkId, urn.urnAddress],
-      })),
+      calls: urnHandlers.map((urn) => ({ target: vat.address, params: [urn.asset.ilkId, urn.urnAddress] } as const)),
       abi: abi.urns,
     }),
     multicall({
       ctx,
-      calls: urnHandlers.map((urn) => ({
-        target: vat.address,
-        params: [urn.asset.ilkId],
-      })),
+      calls: urnHandlers.map((urn) => ({ target: vat.address, params: [urn.asset.ilkId] } as const)),
       abi: abi.vatIlks,
     }),
   ])
@@ -201,11 +184,14 @@ const getUrnsBalances = async (ctx: BalancesContext, vat: Contract, urnHandlers:
     const urnRes = urnsRes[i]
     const ilkRes = ilksRes[i]
 
-    if (isSuccess(urnRes) && isSuccess(ilkRes)) {
-      const userSupply = BigNumber.from(urnRes.output.ink)
-      const userBorrow = BigNumber.from(urnRes.output.art)
-      const urnSpot = BigNumber.from(ilkRes.output.spot)
-      const rate = BigNumber.from(ilkRes.output.rate)
+    if (urnRes.success && ilkRes.success) {
+      const [ink, art] = urnRes.output
+      const [_Art, _rate, spot] = ilkRes.output
+
+      const userSupply = BigNumber.from(ink)
+      const userBorrow = BigNumber.from(art)
+      const urnSpot = BigNumber.from(spot)
+      const rate = BigNumber.from(_rate)
 
       const userBorrowFormatted = userBorrow.mul(rate).div(DECIMALS.ray)
 

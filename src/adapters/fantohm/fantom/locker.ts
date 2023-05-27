@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -12,7 +11,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const FHM: Token = {
   chain: 'fantom',
@@ -25,7 +24,7 @@ export async function getFantohmLockerBalances(ctx: BalancesContext, lockers: Co
   const balances: Balance[] = []
   const balancesOfsRes = await multicall({
     ctx,
-    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] })),
+    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] } as const)),
     abi: abi.balanceOfVotingToken,
   })
 
@@ -33,7 +32,7 @@ export async function getFantohmLockerBalances(ctx: BalancesContext, lockers: Co
     const locker = lockers[lockerIdx]
     const balancesOfRes = balancesOfsRes[lockerIdx]
 
-    if (!isSuccess(balancesOfRes)) {
+    if (!balancesOfRes.success) {
       continue
     }
 

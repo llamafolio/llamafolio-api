@@ -3,7 +3,6 @@ import { groupBy, mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -16,12 +15,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export const balancerProvider = async (ctx: BalancesContext, pools: Balance[]): Promise<Balance[]> => {
   const balances: Balance[] = []
 
-  const calls: Call[] = pools.flatMap((pool) =>
+  const calls: Call<typeof abi.getBalance>[] = pools.flatMap((pool) =>
     pool.underlyings!.map((underlying) => ({ target: pool.address, params: [underlying.address] })),
   )
 
@@ -44,7 +43,7 @@ export const balancerProvider = async (ctx: BalancesContext, pools: Balance[]): 
     const underlyings = pool.underlyings as Contract[]
     const poolSupplyRes = poolSuppliesRes[poolIdx]
 
-    if (!underlyings || !isSuccess(poolSupplyRes)) {
+    if (!underlyings || !poolSupplyRes.success) {
       continue
     }
 

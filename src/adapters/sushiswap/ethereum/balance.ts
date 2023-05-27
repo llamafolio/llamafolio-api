@@ -7,7 +7,6 @@ import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -104,7 +103,10 @@ export async function getContractsFromMasterchefV2(
 
   const poolLengthRes = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
 
-  const calls: Call[] = range(0, Number(poolLengthRes)).map((idx) => ({ target: masterchef.address, params: [idx] }))
+  const calls: Call<typeof abi.lpToken>[] = range(0, Number(poolLengthRes)).map((idx) => ({
+    target: masterchef.address,
+    params: [BigInt(idx)],
+  }))
 
   const [poolInfosRes, rewardersRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.lpToken }),
@@ -120,9 +122,10 @@ export async function getContractsFromMasterchefV2(
   for (let poolIdx = 0; poolIdx < poolInfosRes.length; poolIdx++) {
     const poolInfoRes = poolInfosRes[poolIdx]
     const rewarderRes = rewardersRes[poolIdx]
-    const rewards = isSuccess(rewardsTokensRes[poolIdx]) ? [rewardsTokensRes[poolIdx].output] : []
+    const rewardTokens = rewardsTokensRes[poolIdx]
+    const rewards = rewardTokens.success ? [rewardTokens.output] : []
 
-    if (!isSuccess(poolInfoRes)) {
+    if (!poolInfoRes.success) {
       continue
     }
 
@@ -130,9 +133,9 @@ export async function getContractsFromMasterchefV2(
       chain: ctx.chain,
       address: poolInfoRes.output,
       lpToken: poolInfoRes.output,
-      rewarder: isSuccess(rewarderRes) ? rewarderRes.output : undefined,
+      rewarder: rewarderRes.success ? rewarderRes.output : undefined,
       rewards,
-      pid: poolInfoRes.input.params[0],
+      pid: poolInfoRes.input.params![0],
     })
   }
 
@@ -184,7 +187,10 @@ export async function getBalancesFromMasterchefV2(
 
   const pools = await getContractsFromMasterchefV2(ctx, pairs, masterchef)
 
-  const calls: Call[] = pools.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] }))
+  const calls: Call<typeof abi.userInfo>[] = pools.map((pool) => ({
+    target: masterchef.address,
+    params: [pool.pid, ctx.address],
+  }))
 
   const [poolsBalancesRes, pendingSushisRes, pendingTokensRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
@@ -193,7 +199,7 @@ export async function getBalancesFromMasterchefV2(
       ctx,
       calls: pools.map((pool) =>
         pool.rewarder && pool.rewarder !== ADDRESS_ZERO
-          ? { target: pool.rewarder, params: [pool.pid, ctx.address] }
+          ? ({ target: pool.rewarder, params: [pool.pid, ctx.address] } as const)
           : null,
       ),
       abi: abi.pendingToken,
@@ -208,18 +214,20 @@ export async function getBalancesFromMasterchefV2(
     const pendingSushiRes = pendingSushisRes[userIdx]
     const pendingTokenRes = pendingTokensRes[userIdx]
 
-    if (!isSuccess(poolBalanceRes) || !isSuccess(pendingSushiRes)) {
+    if (!poolBalanceRes.success || !pendingSushiRes.success) {
       continue
     }
+
+    const [amount] = poolBalanceRes.output
 
     poolsBalances.push({
       ...pool,
       underlyings: pool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output.amount),
+      amount: BigNumber.from(amount),
       rewards: [
         { ...rewardToken, amount: BigNumber.from(pendingSushiRes.output) },
-        { ...reward, amount: isSuccess(pendingTokenRes) ? BigNumber.from(pendingTokenRes.output) : BN_ZERO },
+        { ...reward, amount: pendingTokenRes.success ? BigNumber.from(pendingTokenRes.output) : BN_ZERO },
       ],
     })
   }

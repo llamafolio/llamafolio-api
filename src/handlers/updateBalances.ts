@@ -36,7 +36,7 @@ interface ExtendedBalancesConfig extends BalancesConfig {
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false // !important to reuse pool
 
-  const { address } = event as APIGatewayProxyEvent & { address?: string }
+  const { address } = event as APIGatewayProxyEvent & { address?: `0x${string}` }
 
   if (!address) {
     return badRequest('Missing address parameter')

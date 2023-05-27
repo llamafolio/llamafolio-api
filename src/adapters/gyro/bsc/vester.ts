@@ -3,7 +3,6 @@ import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -19,7 +18,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const GYRO: Token = {
   chain: 'bsc',
@@ -34,7 +33,7 @@ export async function getGyroVesterBalances(ctx: BalancesContext, vesters: Contr
 
   const bondInfosRes = await multicall({
     ctx,
-    calls: vesters.map((vester) => ({ target: vester.address, params: [ctx.address] })),
+    calls: vesters.map((vester) => ({ target: vester.address, params: [ctx.address] } as const)),
     abi: abi.bondInfo,
   })
 
@@ -42,17 +41,19 @@ export async function getGyroVesterBalances(ctx: BalancesContext, vesters: Contr
     const vester = vesters[vesterIdx]
     const bondInfoRes = bondInfosRes[vesterIdx]
 
-    if (!isSuccess(bondInfoRes)) {
+    if (!bondInfoRes.success) {
       continue
     }
 
+    const [payout, _vesting, lastBlock] = bondInfoRes.output
+
     const provider = providers[ctx.chain]
-    const unlockAt = (await provider.getBlock(parseInt(bondInfoRes.output.lastBlock))).timestamp
+    const unlockAt = Number((await provider.getBlock({ blockNumber: lastBlock })).timestamp)
 
     balances.push({
       ...vester,
-      amount: BigNumber.from(bondInfoRes.output.payout),
-      claimable: now > unlockAt ? BigNumber.from(bondInfoRes.output.payout) : BN_ZERO,
+      amount: BigNumber.from(payout),
+      claimable: now > unlockAt ? BigNumber.from(payout) : BN_ZERO,
       unlockAt,
       decimals: 9,
       underlyings: [GYRO],

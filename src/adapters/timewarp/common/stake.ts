@@ -1,8 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -34,13 +34,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getTimeWarpStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
   const fmtBalances: Balance[] = []
 
-  const calls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.userStacked>[] = stakers.map((staker) => ({
+    target: staker.address,
+    params: [ctx.address],
+  }))
 
   const [userBalances, userLastRewardsIdxRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userStacked }),
@@ -49,8 +52,9 @@ export async function getTimeWarpStakeBalances(ctx: BalancesContext, stakers: Co
 
   const userRewards = await multicall({
     ctx,
-    calls: userLastRewardsIdxRes.map((reward) =>
-      isSuccess(reward) ? { target: reward.input.target, params: [ctx.address, reward.output] } : null,
+    calls: mapSuccess(
+      userLastRewardsIdxRes,
+      (reward) => ({ target: reward.input.target, params: [ctx.address, reward.output] } as const),
     ),
     abi: abi.getReward,
   })
@@ -60,15 +64,16 @@ export async function getTimeWarpStakeBalances(ctx: BalancesContext, stakers: Co
     const underlyings = staker.underlyings && (staker.underlyings as Contract[])
     const rewards = staker.rewards?.[0] as Contract
     const userBalance = userBalances[stakeIdx]
-    const userReward = isSuccess(userRewards[stakeIdx]) ? BigNumber.from(userRewards[stakeIdx].output.amount) : BN_ZERO
+    const _userRewards = userRewards[stakeIdx]
+    const userReward = _userRewards.success ? BigNumber.from(_userRewards.output[0]) : BN_ZERO
 
-    if (!isSuccess(userBalance)) {
+    if (!userBalance.success || !staker.token) {
       continue
     }
 
     const balance: Balance = {
       ...staker,
-      address: staker.token as string,
+      address: staker.token,
       amount: BigNumber.from(userBalance.output),
       underlyings,
       rewards: [{ ...rewards, amount: userReward }],

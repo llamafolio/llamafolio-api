@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, BaseContext } from '@lib/adapter'
 import { call } from '@lib/call'
-import type { Call, MultiCallResult } from '@lib/multicall'
+import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -85,7 +85,7 @@ export const abi = {
 } as const
 
 // See: https://github.com/o-az/evm-balances/tree/master
-const multiCoinContracts = {
+const multiCoinContracts: { [key: string]: `0x${string}` } = {
   arbitrum: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
   avalanche: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
   bsc: '0x7B1DB2CfCdd3DBd38d3700310CA3c76e94799081',
@@ -119,10 +119,7 @@ export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): 
   } else {
     const multiBalances = await multicall({
       ctx,
-      calls: tokens.map(() => ({
-        target: multiCoinContracts[ctx.chain as keyof typeof multiCoinContracts],
-        params: [ctx.address],
-      })),
+      calls: tokens.map((token) => ({ target: token.address, params: [ctx.address] } as const)),
       abi: abi.balanceOf,
     })
 
@@ -148,10 +145,7 @@ export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${st
 
   const missingTokens = tokens.filter((address) => !found[address])
 
-  const calls = missingTokens.map((address) => ({
-    target: address,
-    params: [],
-  }))
+  const calls: Call<typeof abi.symbol>[] = missingTokens.map((address) => ({ target: address }))
 
   const [symbols, decimals] = await Promise.all([
     multicall({ ctx, calls, abi: abi.symbol }),
@@ -160,11 +154,14 @@ export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${st
 
   for (let i = 0; i < missingTokens.length; i++) {
     const address = missingTokens[i]
-    if (!symbols[i].success) {
+    const symbolRes = symbols[i]
+    const decimalsRes = decimals[i]
+
+    if (!symbolRes.success) {
       console.error(`Could not get symbol for token ${ctx.chain}:${address}`)
       continue
     }
-    if (!decimals[i].success) {
+    if (!decimalsRes.success) {
       console.error(`Could not get decimals for token ${ctx.chain}:${address}`)
       continue
     }
@@ -172,85 +169,10 @@ export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${st
     found[address] = {
       chain: ctx.chain,
       address,
-      symbol: symbols[i].output,
-      decimals: parseInt(decimals[i].output),
+      symbol: symbolRes.output,
+      decimals: Number(decimalsRes.output),
     }
   }
 
   return tokens.map((address) => found[address]).filter(isNotNullish)
-}
-
-export async function resolveERC20Details<K extends string>(
-  ctx: BaseContext,
-  contracts: Record<K, (string | null)[]>,
-): Promise<Record<K, MultiCallResult<string | null, any[], Token | null>[]>> {
-  const results = {} as Record<K, MultiCallResult<string | null, any[], Token | null>[]>
-  const calls: Call[] = []
-
-  for (const key in contracts) {
-    results[key] = []
-
-    for (let i = 0; i < contracts[key].length; i++) {
-      const address = contracts[key][i]
-      const input = { params: [], target: address }
-
-      if (!address) {
-        results[key].push({ success: false, output: null, input })
-        continue
-      }
-
-      const token = getToken(ctx.chain, address.toLowerCase())
-
-      if (token) {
-        results[key].push({ success: true, output: token as Token, input })
-      } else {
-        calls.push({
-          target: address,
-          params: [],
-        })
-        results[key].push({ success: false, output: null, input })
-      }
-    }
-  }
-
-  // fetch missing info on-chain
-  const [symbols, decimals] = await Promise.all([
-    multicall({ ctx, calls, abi: abi.symbol }),
-    multicall({ ctx, calls, abi: abi.decimals }),
-  ])
-
-  let callsIdx = 0
-  for (const key in contracts) {
-    for (let i = 0; i < contracts[key].length; i++) {
-      // ignored nullish targets or successful responses (found in cache)
-      if (!contracts[key][i] || results[key][i].success) {
-        continue
-      }
-
-      const address = calls[callsIdx].target as string
-      if (!symbols[callsIdx].success) {
-        console.error(`Could not get symbol for token ${ctx.chain}:${address}`)
-        callsIdx++
-        continue
-      }
-      if (!decimals[callsIdx].success) {
-        console.error(`Could not get decimals for token ${ctx.chain}:${address}`)
-        callsIdx++
-        continue
-      }
-
-      const token = {
-        chain: ctx.chain,
-        address,
-        symbol: symbols[callsIdx].output,
-        decimals: parseInt(decimals[callsIdx].output),
-      } satisfies Token
-      results[key][i].success = true
-      results[key][i].output = token
-
-      callsIdx++
-    }
-  }
-
-  return results
 }

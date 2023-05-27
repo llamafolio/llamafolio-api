@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -78,7 +77,7 @@ const PTP: Token = {
 export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.userInfo>[] = []
   for (const pool of pools) {
     calls.push({ target: contract.address, params: [pool.pid, ctx.address] })
   }
@@ -94,20 +93,23 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], c
     const userInfo = userInfosRes[poolIdx]
     const userPendingReward = userPendingRewardsRes[poolIdx]
 
-    if (!rewards || !isSuccess(userInfo) || !isSuccess(userPendingReward)) {
+    if (!rewards || !userInfo.success || !userPendingReward.success) {
       continue
     }
 
+    const [amount] = userInfo.output
+    const [pendingPtp, _bonusTokenAddresses, _bonusTokenSymbols, pendingBonusTokens] = userPendingReward.output
+
     const balance: Balance = {
       ...pool,
-      amount: BigNumber.from(userInfo.output.amount),
+      amount: BigNumber.from(amount),
       underlyings: pool.underlyings as Contract[],
-      rewards: [{ ...rewards[0], amount: BigNumber.from(userPendingReward.output.pendingPtp) }],
+      rewards: [{ ...rewards[0], amount: BigNumber.from(pendingPtp) }],
       category: 'farm',
     }
 
     if (rewards.length > 1) {
-      balance.rewards?.push({ ...rewards[1], amount: BigNumber.from(userPendingReward.output.pendingBonusTokens[0]) })
+      balance.rewards?.push({ ...rewards[1], amount: BigNumber.from(pendingBonusTokens[0]) })
     }
 
     balances.push(balance)

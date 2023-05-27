@@ -1,11 +1,10 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { getSingleStakeBalance } from '@lib/stake'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 const abi = {
@@ -102,23 +101,21 @@ export async function getGoldFinchNFTStakeBalances(ctx: BalancesContext, staker:
 
   const tokenIdsRes = await multicall({
     ctx,
-    calls: range(0, Number(nftLength)).map((idx) => ({ target: staker.address, params: [ctx.address, idx] })),
+    calls: range(0, Number(nftLength)).map(
+      (idx) => ({ target: staker.address, params: [ctx.address, BigInt(idx)] } as const),
+    ),
     abi: abi.tokenOfOwnerByIndex,
   })
 
   const [tokenBalancesRes, tokenPendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: tokenIdsRes.map((tokenId) =>
-        isSuccess(tokenId) ? { target: staker.address, params: [tokenId.output] } : null,
-      ),
+      calls: mapSuccess(tokenIdsRes, (tokenId) => ({ target: staker.address, params: [tokenId.output] } as const)),
       abi: abi.stakedBalanceOf,
     }),
     multicall({
       ctx,
-      calls: tokenIdsRes.map((tokenId) =>
-        isSuccess(tokenId) ? { target: staker.address, params: [tokenId.output] } : null,
-      ),
+      calls: mapSuccess(tokenIdsRes, (tokenId) => ({ target: staker.address, params: [tokenId.output] } as const)),
       abi: abi.optimisticClaimable,
     }),
   ])
@@ -127,7 +124,7 @@ export async function getGoldFinchNFTStakeBalances(ctx: BalancesContext, staker:
     const tokenBalanceRes = tokenBalancesRes[index]
     const tokenPendingRewardRes = tokenPendingRewardsRes[index]
 
-    if (!isSuccess(tokenBalanceRes) || !isSuccess(tokenPendingRewardRes)) {
+    if (!tokenBalanceRes.success || !tokenPendingRewardRes.success) {
       continue
     }
 

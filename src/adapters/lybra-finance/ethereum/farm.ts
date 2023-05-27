@@ -1,10 +1,9 @@
 import type { Balance, BalancesContext, Contract, FarmBalance } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -23,12 +22,12 @@ const abi = {
     inputs: [{ name: '_pool', type: 'address' }],
     outputs: [{ name: '', type: 'uint256[8]' }],
   },
-}
+} as const
 
 interface getLybraFarmBalancesParams extends FarmBalance {
   provider: string
-  pool?: string
-  token?: string
+  pool?: `0x${string}`
+  token?: `0x${string}`
 }
 
 const esLBR: Token = {
@@ -42,7 +41,10 @@ export async function getLybraFarmBalances(ctx: BalancesContext, farmers: Contra
   const curveBalances: getLybraFarmBalancesParams[] = []
   const swapBalances: getLybraFarmBalancesParams[] = []
 
-  const calls: Call[] = farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }))
+  const calls: Call<typeof erc20Abi.balanceOf>[] = farmers.map((farmer) => ({
+    target: farmer.address,
+    params: [ctx.address],
+  }))
 
   const [userBalancesRes, userPendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
@@ -55,7 +57,7 @@ export async function getLybraFarmBalances(ctx: BalancesContext, farmers: Contra
     const userBalanceRes = userBalancesRes[farmerIdx]
     const userPendingRewardRes = userPendingRewardsRes[farmerIdx]
 
-    if (!underlyings || !isSuccess(userBalanceRes) || !isSuccess(userPendingRewardRes)) {
+    if (!underlyings || !userBalanceRes.success || !userPendingRewardRes.success) {
       continue
     }
 
@@ -91,7 +93,9 @@ const getCurveUnderlying = async (ctx: BalancesContext, pools: getLybraFarmBalan
   const [underlyingsBalancesRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.pool!] })),
+      calls: pools.map((pool) =>
+        pool.pool ? ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.pool] } as const) : null,
+      ),
       abi: abi.get_underlying_balances,
     }),
     multicall({
@@ -107,12 +111,7 @@ const getCurveUnderlying = async (ctx: BalancesContext, pools: getLybraFarmBalan
     const underlyingsBalanceRes = underlyingsBalancesRes[poolIdx]
     const totalSupplyRes = totalSuppliesRes[poolIdx]
 
-    if (
-      !underlyings ||
-      !isSuccess(underlyingsBalanceRes) ||
-      !isSuccess(totalSupplyRes) ||
-      isZero(totalSupplyRes.output)
-    ) {
+    if (!underlyings || !underlyingsBalanceRes.success || !totalSupplyRes.success || totalSupplyRes.output === 0n) {
       continue
     }
 

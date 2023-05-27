@@ -29,7 +29,7 @@ export async function getInchPools(ctx: BaseContext, deployer: Contract): Promis
   return getPairsDetails(ctx, contracts)
 }
 
-export async function getInchFarmingPools(ctx: BaseContext, pools: string[]): Promise<Contract[]> {
+export async function getInchFarmingPools(ctx: BaseContext, pools: `0x${string}`[]): Promise<Contract[]> {
   const lpTokensRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool })), abi: abi.mooniswap })
 
   const contracts: Contract[] = mapSuccessFilter(lpTokensRes, (res, idx) => ({

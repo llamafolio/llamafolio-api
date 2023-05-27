@@ -3,7 +3,6 @@ import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { BigNumber } from 'ethers'
 
@@ -35,7 +34,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const WETH: Token = {
   chain: 'arbitrum',
@@ -63,7 +62,7 @@ export const getArxMasterChefPoolsBalances = async (
     getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
     multicall({
       ctx,
-      calls: pairs.map((pair) => ({ target: masterchef.address, params: [pair.pid, ctx.address] })),
+      calls: pairs.map((pair) => ({ target: masterchef.address, params: [BigInt(pair.pid), ctx.address] } as const)),
       abi: abi.pendingWETH,
     }),
   ])
@@ -71,7 +70,7 @@ export const getArxMasterChefPoolsBalances = async (
   return poolBalances.map((poolBalance, idx) => {
     const extraRewardRes = extraRewardsRes[idx]
 
-    if (isSuccess(extraRewardRes)) {
+    if (extraRewardRes.success) {
       poolBalance.rewards?.push({ ...WETH, amount: BigNumber.from(extraRewardRes.output) })
     }
 
@@ -82,7 +81,10 @@ export const getArxMasterChefPoolsBalances = async (
 export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.userInfo>[] = stakers.map((staker) => ({
+    target: staker.address,
+    params: [ctx.address],
+  }))
 
   const [userInfosRes, pendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
@@ -95,13 +97,15 @@ export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[
     const userInfoRes = userInfosRes[stakerIdx]
     const pendingRewardRes = pendingRewardsRes[stakerIdx]
 
-    if (!reward || !isSuccess(userInfoRes) || !isSuccess(pendingRewardRes)) {
+    if (!reward || !userInfoRes.success || !pendingRewardRes.success) {
       continue
     }
 
+    const [amount] = userInfoRes.output
+
     balances.push({
       ...staker,
-      amount: BigNumber.from(userInfoRes.output.amount),
+      amount: BigNumber.from(amount),
       underlyings: [ARX],
       rewards: [{ ...reward, amount: BigNumber.from(pendingRewardRes.output) }],
       category: 'stake',

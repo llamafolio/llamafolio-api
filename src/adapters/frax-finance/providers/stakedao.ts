@@ -1,8 +1,8 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   get_pool_from_lp_token: {
@@ -26,7 +26,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const metaRegistry: Contract = {
   chain: 'ethereum',
@@ -46,19 +46,27 @@ export const stakedaoProvider = async (ctx: BaseContext, pools: Contract[]): Pro
 
   const curvePoolsRes = await multicall({
     ctx,
-    calls: curveLpTokensRes.map((lpToken) => ({
-      target: metaRegistry.address,
-      params: [isSuccess(lpToken) ? lpToken.output : null],
-    })),
+    calls: mapSuccess(
+      curveLpTokensRes,
+      (lpToken) =>
+        ({
+          target: metaRegistry.address,
+          params: [lpToken.output],
+        } as const),
+    ),
     abi: abi.get_pool_from_lp_token,
   })
 
   const underlyingsRes = await multicall({
     ctx,
-    calls: curvePoolsRes.map((poolAddress) => ({
-      target: metaRegistry.address,
-      params: [isSuccess(poolAddress) ? poolAddress.output : null],
-    })),
+    calls: mapSuccess(
+      curvePoolsRes,
+      (poolAddress) =>
+        ({
+          target: metaRegistry.address,
+          params: [poolAddress.output],
+        } as const),
+    ),
     abi: abi.get_underlying_coins,
   })
 
@@ -66,6 +74,10 @@ export const stakedaoProvider = async (ctx: BaseContext, pools: Contract[]): Pro
     const curveLpToken = curveLpTokensRes[idx]
     const curvePoolRes = curvePoolsRes[idx]
     const underlyingRes = underlyingsRes[idx]
+
+    if (!curveLpToken.success || !curvePoolRes.success || !underlyingRes.success) {
+      return
+    }
 
     res.push({
       ...pool,

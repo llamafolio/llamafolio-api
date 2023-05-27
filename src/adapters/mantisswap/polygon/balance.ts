@@ -3,7 +3,6 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getSingleStakeBalances } from '@lib/stake'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -34,7 +33,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const MNT: Token = {
   chain: 'polygon',
@@ -54,7 +53,10 @@ export async function getMantisFarmBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = pools.map((_, idx) => ({ target: masterChef.address, params: [idx, ctx.address] }))
+  const calls: Call<typeof abi.userInfo>[] = pools.map((_, idx) => ({
+    target: masterChef.address,
+    params: [BigInt(idx), ctx.address],
+  }))
 
   const [userInfosRes, userPendingsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
@@ -67,15 +69,15 @@ export async function getMantisFarmBalances(
     const userInfoRes = userInfosRes[poolIdx]
     const userPendingRes = userPendingsRes[poolIdx]
 
-    if (!underlyings || !isSuccess(userInfoRes) || !isSuccess(userPendingRes)) {
+    if (!underlyings || !userInfoRes.success || !userPendingRes.success) {
       continue
     }
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(userInfoRes.output.amount),
+      amount: BigNumber.from(userInfoRes.output[0]),
       underlyings,
-      rewards: [{ ...MNT, amount: BigNumber.from(userPendingRes.output.pendingMNT) }],
+      rewards: [{ ...MNT, amount: BigNumber.from(userPendingRes.output[0]) }],
       category: 'farm',
     })
   }

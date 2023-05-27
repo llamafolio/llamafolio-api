@@ -1,9 +1,8 @@
-import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseBalance, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber, ethers } from 'ethers'
 
 const abi = {
@@ -50,23 +49,24 @@ export async function getLendingPoolContracts(
 
   const reserveTokensAddressesRes = await multicall({
     ctx,
-    calls: reservesList.map((address) => ({
-      target: poolDataProvider.address,
-      params: [address],
-    })),
+    calls: reservesList.map(
+      (address) =>
+        ({
+          target: poolDataProvider.address,
+          params: [address],
+        } as const),
+    ),
     abi: abi.getReserveTokensAddresses,
   })
 
   for (let reserveIdx = 0; reserveIdx < reserveTokensAddressesRes.length; reserveIdx++) {
     const reserveTokensAddressRes = reserveTokensAddressesRes[reserveIdx]
-    if (!isSuccess(reserveTokensAddressRes)) {
+    if (!reserveTokensAddressRes.success) {
       continue
     }
 
     const underlyingToken = reserveTokensAddressRes.input.params[0]
-    const aToken = reserveTokensAddressRes.output.aTokenAddress
-    const stableDebtToken = reserveTokensAddressRes.output.stableDebtTokenAddress
-    const variableDebtToken = reserveTokensAddressRes.output.variableDebtTokenAddress
+    const [aToken, stableDebtToken, variableDebtToken] = reserveTokensAddressRes.output
 
     contracts.push(
       {
@@ -101,7 +101,7 @@ export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Co
   // use the same amount for underlyings
   for (const balance of balances) {
     if (balance.amount.gt(0) && balance.underlyings) {
-      balance.underlyings[0].amount = BigNumber.from(balance.amount)
+      ;(balance.underlyings[0] as BaseBalance).amount = BigNumber.from(balance.amount)
     }
   }
 

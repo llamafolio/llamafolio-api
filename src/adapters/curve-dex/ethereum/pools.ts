@@ -6,7 +6,6 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { ETH_ADDR } from '@lib/token'
-import { isSuccess } from '@lib/type'
 
 const abiPools = {
   pool_count: {
@@ -153,9 +152,9 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
   const poolsCounts = Number(poolsCountBI)
 
   // lists of pools
-  const poolsCalls: Call[] = range(0, poolsCounts).map((i) => ({
+  const poolsCalls: Call<typeof abiPools.pool_list>[] = range(0, poolsCounts).map((i) => ({
     target: registry.address,
-    params: [i],
+    params: [BigInt(i)],
   }))
 
   const poolsLists = await multicall({ ctx, calls: poolsCalls, abi: abiPools.pool_list })
@@ -163,7 +162,7 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
   for (let poolsIdx = 0; poolsIdx < poolsLists.length; poolsIdx++) {
     const poolList = poolsLists[poolsIdx]
 
-    if (!isSuccess(poolList)) {
+    if (!poolList.success) {
       continue
     }
 
@@ -171,7 +170,7 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
   }
 
   // pools details (gauge, gauge_type, lpTokens, coins, underlyings)
-  const poolsDetailsCalls: Call[] = pools.map((pool) => ({
+  const poolsDetailsCalls: Call<typeof abiPools.get_gauge>[] = pools.map((pool) => ({
     target: registry.address,
     params: [pool.address],
   }))
@@ -195,15 +194,15 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
     const underlyingRes = underlyingsRes[callIdx]
 
     if (
-      !isSuccess(gaugeRes) ||
-      !isSuccess(gaugeTypeRes) ||
-      !isSuccess(poolNameRes) ||
-      !isSuccess(lpTokenRes) ||
+      !gaugeRes.success ||
+      !gaugeTypeRes.success ||
+      !poolNameRes.success ||
+      !lpTokenRes.success ||
       // registry responses seem wrong for these addresses since it returns 1e24 number with only 8 decimals or 6 decimals underlyings
       lpTokenRes.output === '0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2' || // compound-gauge
       lpTokenRes.output === '0x5282a4eF67D9C33135340fB3289cc1711c13638C' || // ib3CRV-gauge
-      !isSuccess(coinRes) ||
-      !isSuccess(underlyingRes)
+      !coinRes.success ||
+      !underlyingRes.success
     ) {
       poolIdx++
       continue
@@ -219,17 +218,17 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
       lpToken: lpTokenRes.output,
       yieldKey: lpTokenRes.output,
       tokens: coinRes.output
-        .map((address: string) => address.toLowerCase())
+        .map((address) => address.toLowerCase())
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address: string) => address !== ADDRESS_ZERO)
+        .filter((address) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
+        .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
       underlyings: underlyingRes.output
-        .map((address: string) => address.toLowerCase())
+        .map((address) => address.toLowerCase())
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address: string) => address !== ADDRESS_ZERO)
+        .filter((address) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
+        .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
     })
 
     poolIdx++
@@ -243,10 +242,10 @@ export async function getGaugesContracts(ctx: BaseContext, pools: Contract[], CR
     .filter((pool) => pool.gauge !== ADDRESS_ZERO)
     .map((pool) => ({ ...pool, address: pool.gauge }))
 
-  const gaugesRewardsCalls: Call[] = []
+  const gaugesRewardsCalls: Call<typeof abiGauges.reward_tokens>[] = []
   for (let gaugeIdx = 0; gaugeIdx < gauges.length; gaugeIdx++) {
     for (let rewardIdx = 0; rewardIdx < 4; rewardIdx++) {
-      gaugesRewardsCalls.push({ target: gauges[gaugeIdx].gauge, params: [rewardIdx] })
+      gaugesRewardsCalls.push({ target: gauges[gaugeIdx].gauge, params: [BigInt(rewardIdx)] })
     }
   }
 
@@ -258,7 +257,7 @@ export async function getGaugesContracts(ctx: BaseContext, pools: Contract[], CR
 
     for (let rewardIdx = 0; rewardIdx < 4; rewardIdx++) {
       const rewardTokenRes = rewardTokensRes[callIdx]
-      if (isSuccess(rewardTokenRes) && rewardTokenRes.output !== ADDRESS_ZERO) {
+      if (rewardTokenRes.success && rewardTokenRes.output !== ADDRESS_ZERO) {
         rewards.push(rewardTokenRes.output)
       }
       callIdx++

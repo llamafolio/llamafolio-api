@@ -23,7 +23,7 @@ const MIM: Contract = {
   wallet: true,
 }
 
-const cauldrons = [
+const cauldrons: `0x${string}`[] = [
   '0x3CFEd0439aB822530b1fFBd19536d897EF30D2a2',
   '0x3b63f81Ad1fc724E44330b4cf5b5B6e355AD964B',
   '0x95cCe62C3eCD9A33090bBf8a9eAC50b699B54210',

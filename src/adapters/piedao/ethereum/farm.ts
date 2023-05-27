@@ -6,7 +6,6 @@ import { groupBy } from '@lib/array'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -30,7 +29,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const DOUGH: Token = {
   chain: 'ethereum',
@@ -46,7 +45,10 @@ export async function getPieDaoFarmBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: farmer.address, params: [ctx.address, pool.pid] }))
+  const calls: Call<typeof abi.getStakeTotalDeposited>[] = pools.map((pool) => ({
+    target: farmer.address,
+    params: [ctx.address, pool.pid],
+  }))
   const [userBalancesRes, userPendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.getStakeTotalDeposited }),
     multicall({ ctx, calls, abi: abi.getStakeTotalUnclaimed }),
@@ -58,7 +60,7 @@ export async function getPieDaoFarmBalances(
     const userBalanceRes = userBalancesRes[poolIdx]
     const userPendingRewardRes = userPendingRewardsRes[poolIdx]
 
-    if (!isSuccess(userBalanceRes) || !isSuccess(userPendingRewardRes)) {
+    if (!userBalanceRes.success || !userPendingRewardRes.success) {
       continue
     }
 

@@ -2,10 +2,8 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -39,13 +37,13 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
 
   const balances: getBalancerPoolsBalancesParams[] = []
 
-  const calls: Call[] = []
-  const suppliesCalls: Call[] = []
-  const poolTokensBalancesCalls: Call[] = []
+  const calls: Call<typeof erc20Abi.balanceOf>[] = []
+  const suppliesCalls: Call<typeof erc20Abi.totalSupply>[] = []
+  const poolTokensBalancesCalls: Call<typeof abi.getPoolTokens>[] = []
 
   for (const pool of pools) {
     calls.push({ target: pool.gauge, params: [ctx.address] })
-    suppliesCalls.push({ target: pool.address, params: [] })
+    suppliesCalls.push({ target: pool.address })
     poolTokensBalancesCalls.push({ target: vault.address, params: [pool.id] })
   }
 
@@ -66,10 +64,10 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
 
     if (
       !underlyings ||
-      !isSuccess(balanceOfRes) ||
-      !isSuccess(totalSupplyRes) ||
-      !isSuccess(poolTokenBalanceRes) ||
-      isZero(totalSupplyRes.output)
+      !balanceOfRes.success ||
+      !totalSupplyRes.success ||
+      !poolTokenBalanceRes.success ||
+      totalSupplyRes.output === 0n
     ) {
       continue
     }
@@ -81,7 +79,7 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
       rewards: undefined,
       totalSupply: BigNumber.from(totalSupplyRes.output),
       // actualSupply is only available for stablepools abi
-      actualSupply: actualSupplyRes.output && BigNumber.from(actualSupplyRes.output),
+      actualSupply: actualSupplyRes.output ? BigNumber.from(actualSupplyRes.output) : undefined,
       category: 'farm',
     }
 
@@ -89,7 +87,8 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
 
     for (let underlyingIdx = 0; underlyingIdx < balance.underlyings!.length; underlyingIdx++) {
       const underlying = balance.underlyings![underlyingIdx]
-      const underlyingsBalanceOf = poolTokenBalanceRes.output.balances[underlyingIdx]
+      const [_tokens, balances] = poolTokenBalanceRes.output
+      const underlyingsBalanceOf = balances[underlyingIdx]
 
       const underlyingAmount = balance.amount
         .mul(underlyingsBalanceOf)
@@ -127,13 +126,13 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
 export async function getLpBalancerPoolsBalances(ctx: BalancesContext, pools: Contract[], vault: Contract) {
   const balances: getBalancerPoolsBalancesParams[] = []
 
-  const balanceOfCalls: Call[] = []
-  const suppliesCalls: Call[] = []
-  const tokensCalls: Call[] = []
+  const balanceOfCalls: Call<typeof erc20Abi.balanceOf>[] = []
+  const suppliesCalls: Call<typeof erc20Abi.totalSupply>[] = []
+  const tokensCalls: Call<typeof abi.getPoolTokens>[] = []
 
   for (const pool of pools) {
     balanceOfCalls.push({ target: pool.address, params: [ctx.address] })
-    suppliesCalls.push({ target: pool.address, params: [] })
+    suppliesCalls.push({ target: pool.address })
     tokensCalls.push({ target: vault.address, params: [pool.id] })
   }
 
@@ -152,10 +151,10 @@ export async function getLpBalancerPoolsBalances(ctx: BalancesContext, pools: Co
 
     if (
       !underlyings ||
-      !isSuccess(balanceOfRes) ||
-      !isSuccess(totalSupplyRes) ||
-      !isSuccess(tokensBalanceRes) ||
-      isZero(totalSupplyRes.output)
+      !balanceOfRes.success ||
+      !totalSupplyRes.success ||
+      !tokensBalanceRes.success ||
+      totalSupplyRes.output === 0n
     ) {
       continue
     }
@@ -170,10 +169,11 @@ export async function getLpBalancerPoolsBalances(ctx: BalancesContext, pools: Co
     }
 
     const detailedUnderlyings: Contract[] = []
+    const [_tokens, underlyingsBalances] = tokensBalanceRes.output
 
     for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
       const underlying = balance.underlyings![underlyingIdx]
-      const underlyingsBalanceOf = tokensBalanceRes.output.balances[underlyingIdx]
+      const underlyingsBalanceOf = underlyingsBalances[underlyingIdx]
 
       const underlyingAmount = balance.amount.mul(underlyingsBalanceOf).div(balance.totalSupply)
 

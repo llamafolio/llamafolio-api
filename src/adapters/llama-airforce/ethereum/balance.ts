@@ -2,15 +2,14 @@ import type { Balance, BalancesContext, Contract, FarmBalance } from '@lib/adapt
 import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 import { convexProvider, curveProvider, llamaProvider } from './provider'
 
 export interface LlamaBalancesParams extends FarmBalance {
   provider: string
-  lpToken?: string
-  pool?: string
+  lpToken?: `0x${string}`
+  pool?: `0x${string}`
 }
 
 export async function getLlamaBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
@@ -18,7 +17,7 @@ export async function getLlamaBalances(ctx: BalancesContext, pools: Contract[]):
 
   const balanceOfsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
     abi: erc20Abi.balanceOf,
   })
 
@@ -26,7 +25,7 @@ export async function getLlamaBalances(ctx: BalancesContext, pools: Contract[]):
     const pool = pools[poolIdx]
     const balanceOfRes = balanceOfsRes[poolIdx]
 
-    if (!isSuccess(balanceOfRes)) {
+    if (!balanceOfRes.success) {
       continue
     }
 

@@ -27,7 +27,7 @@ export function mulPrice(amountBN: BigNumber, decimals: number, price: number) {
   try {
     const priceBN = utils.parseUnits(price.toFixed(decimals), decimals)
 
-    const mulBN = amountBN.mul(priceBN)
+    const mulBN = BigNumber.from(amountBN).mul(priceBN)
 
     return parseFloat(utils.formatUnits(mulBN, 2 * decimals))
   } catch (err) {

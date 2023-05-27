@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -30,11 +29,14 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getSuperFarmBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
-  const calls: Call[] = pools.map((pool) => ({ target: pool.staker, params: [pool.address, ctx.address] }))
+  const calls: Call<typeof abi.userInfo>[] = pools.map((pool) => ({
+    target: pool.staker,
+    params: [pool.address, ctx.address],
+  }))
 
   const [userBalancesRes, pendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
@@ -48,13 +50,15 @@ export async function getSuperFarmBalances(ctx: BalancesContext, pools: Contract
     const userBalanceRes = userBalancesRes[poolIdx]
     const pendingRewardRes = pendingRewardsRes[poolIdx]
 
-    if (!underlyings || !reward || !isSuccess(userBalanceRes) || !isSuccess(pendingRewardRes)) {
+    if (!underlyings || !reward || !userBalanceRes.success || !pendingRewardRes.success) {
       continue
     }
 
+    const [amount] = userBalanceRes.output
+
     balances.push({
       ...pool,
-      amount: BigNumber.from(userBalanceRes.output.amount),
+      amount: BigNumber.from(amount),
       underlyings,
       rewards: [{ ...reward, amount: BigNumber.from(pendingRewardRes.output) }],
       category: 'farm',

@@ -4,7 +4,7 @@ import { resolveBalances } from '@lib/balance'
 import { getBabylonBalances } from './balance'
 import { getBabylonContracts } from './contract'
 
-const pools: string[] = [
+const pools: `0x${string}`[] = [
   '0xb5bd20248cfe9480487cc0de0d72d0e19ee0acb6',
   '0xd42b3a30ca89155d6c3499c81f0c4e5a978be5c2',
   '0x1d50c4f18d7af4fce2ea93c7942aae6260788596',

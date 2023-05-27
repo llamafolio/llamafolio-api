@@ -4,7 +4,6 @@ import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -75,7 +74,7 @@ const USDC: Token = {
 export async function getDepositBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.getCurrencyBalance>[] = []
   for (const contract of contracts) {
     calls.push({ target: contract.address, params: [ctx.address] })
   }
@@ -87,7 +86,7 @@ export async function getDepositBalances(ctx: BalancesContext, contracts: Contra
     const underlying = contract.underlyings?.[0] as Contract
     const getCurrencyBalanceOf = getCurrencyBalancesOf[poolIdx]
 
-    if (!underlying || !isSuccess(getCurrencyBalanceOf)) {
+    if (!underlying || !getCurrencyBalanceOf.success) {
       continue
     }
 
@@ -111,19 +110,24 @@ export async function getStakeBalances(ctx: BalancesContext, contracts: Contract
   const [balanceOfsRes, pendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.staker, params: [ctx.address], abi: abi.getBalance })),
+      calls: contracts.map((contract) =>
+        contract.staker ? ({ target: contract.staker, params: [ctx.address], abi: abi.getBalance } as const) : null,
+      ),
       abi: abi.getBalance,
     }),
     multicall({
       ctx,
-      // @ts-ignore
-      calls: contracts.map((contract) => ({
-        target: contract.rewarder,
-        params: [
-          ['0x0000000000000000000000000000000000000000', '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'],
-          ctx.address,
-        ],
-      })),
+      calls: contracts.map((contract) =>
+        contract.rewarder
+          ? ({
+              target: contract.rewarder,
+              params: [
+                ['0x0000000000000000000000000000000000000000', '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'],
+                ctx.address,
+              ],
+            } as const)
+          : null,
+      ),
       abi: abi.getClaimableRewards,
     }),
   ])
@@ -134,7 +138,7 @@ export async function getStakeBalances(ctx: BalancesContext, contracts: Contract
     const balanceOfRes = balanceOfsRes[idx]
     const pendingRewardRes = pendingRewardsRes[idx]
 
-    if (!isSuccess(balanceOfRes)) {
+    if (!balanceOfRes.success) {
       continue
     }
 
@@ -150,7 +154,7 @@ export async function getStakeBalances(ctx: BalancesContext, contracts: Contract
 
     if (rewards) {
       rewards.forEach((token, idx) => {
-        const rewardsAmount = isSuccess(pendingRewardRes) ? BigNumber.from(pendingRewardRes.output[idx]) : BN_ZERO
+        const rewardsAmount = pendingRewardRes.success ? BigNumber.from(pendingRewardRes.output[idx]) : BN_ZERO
         const reward = { ...token, amount: rewardsAmount }
         balance.rewards!.push(reward)
       })

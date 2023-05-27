@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -11,14 +10,14 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getQuickswapBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const balancesOfsRes = await multicall({
     ctx,
-    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] })),
+    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] } as const)),
     abi: abi.QUICKBalance,
   })
 
@@ -27,7 +26,7 @@ export async function getQuickswapBalances(ctx: BalancesContext, stakers: Contra
     const underlyings = staker.underlyings as Contract[]
     const balancesOfRes = balancesOfsRes[stakerIdx]
 
-    if (!isSuccess(balancesOfRes)) {
+    if (!balancesOfRes.success) {
       continue
     }
 

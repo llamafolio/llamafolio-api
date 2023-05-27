@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -26,7 +25,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const Lyra: Token = {
   chain: 'ethereum',
@@ -38,8 +37,11 @@ const Lyra: Token = {
 export async function getLyraFarmBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = contracts.map((contract) => ({ target: contract.address, params: [ctx.address] }))
-  const arrakisCalls: Call[] = contracts.map((contract) => ({ target: contract.lpToken }))
+  const calls: Call<typeof erc20Abi.balanceOf>[] = contracts.map((contract) => ({
+    target: contract.address,
+    params: [ctx.address],
+  }))
+  const arrakisCalls: Call<typeof erc20Abi.totalSupply>[] = contracts.map((contract) => ({ target: contract.lpToken }))
 
   const [balanceOfsRes, earnedsRes, totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
@@ -57,14 +59,16 @@ export async function getLyraFarmBalances(ctx: BalancesContext, contracts: Contr
     const underlyingsBalanceRes = underlyingsBalancesRes[idx]
 
     if (
-      !isSuccess(balanceOfRes) ||
-      !isSuccess(earnedRes) ||
-      !isSuccess(totalSupplyRes) ||
-      !isSuccess(underlyingsBalanceRes) ||
+      !balanceOfRes.success ||
+      !earnedRes.success ||
+      !totalSupplyRes.success ||
+      !underlyingsBalanceRes.success ||
       !underlyings
     ) {
       continue
     }
+
+    const [amount0Current, amount1Current] = underlyingsBalanceRes.output
 
     balances.push({
       ...contract,
@@ -74,15 +78,11 @@ export async function getLyraFarmBalances(ctx: BalancesContext, contracts: Contr
       underlyings: [
         {
           ...underlyings[0],
-          amount: BigNumber.from(balanceOfRes.output)
-            .mul(underlyingsBalanceRes.output.amount0Current)
-            .div(totalSupplyRes.output),
+          amount: BigNumber.from(balanceOfRes.output).mul(amount0Current).div(totalSupplyRes.output),
         },
         {
           ...underlyings[1],
-          amount: BigNumber.from(balanceOfRes.output)
-            .mul(underlyingsBalanceRes.output.amount1Current)
-            .div(totalSupplyRes.output),
+          amount: BigNumber.from(balanceOfRes.output).mul(amount1Current).div(totalSupplyRes.output),
         },
       ],
       rewards: [{ ...Lyra, amount: BigNumber.from(earnedRes.output) }],
