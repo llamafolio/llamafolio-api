@@ -217,7 +217,7 @@ export async function getMasterChefPoolsBalances(
     masterchefPools.push(...(await getMasterChefLpToken(ctx, pairs, masterchef)))
   }
 
-  const pendingReward = JSON.parse(
+  const pendingReward: typeof abi.pendingReward = JSON.parse(
     JSON.stringify(abi.pendingReward).replace(
       'pending',
 

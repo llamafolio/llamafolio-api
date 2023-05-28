@@ -78,11 +78,11 @@ const abi = {
   },
 } as const
 
-function getLockerAbi(methodName?: string): any {
+function getLockerAbi(methodName?: string): typeof abi.locks {
   return JSON.parse(JSON.stringify(abi.locks).replace(abi.locks.name, methodName ? `${methodName}` : abi.locks.name))
 }
 
-function getNFTLockerAbi(methodName?: string): any {
+function getNFTLockerAbi(methodName?: string): typeof abi.nftLocked {
   return JSON.parse(
     JSON.stringify(abi.nftLocked).replace(abi.nftLocked.name, methodName ? `${methodName}` : abi.nftLocked.name),
   )
@@ -125,7 +125,7 @@ export async function getSingleLockerBalances(
 
   const lockBalancesRes = await multicall({
     ctx,
-    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] })),
+    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] } as const)),
     abi: genericLocker,
   })
 
@@ -245,7 +245,10 @@ export async function getNFTLockerBalances(
 
   const lockedsRes = await multicall({
     ctx,
-    calls: mapSuccess(tokenOfOwnerByIndexesRes, (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] })),
+    calls: mapSuccess(
+      tokenOfOwnerByIndexesRes,
+      (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] } as const),
+    ),
     abi: genericLocker,
   })
 

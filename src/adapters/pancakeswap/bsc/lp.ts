@@ -333,7 +333,7 @@ export async function getPancakeMasterChefPoolsBalances(
   const masterchefPoolsBalances: Balance[] = []
   const masterchefPools: Contract[] = await getMasterChefLpToken(ctx, pairs, masterchef, factory)
 
-  const pendingReward = JSON.parse(
+  const pendingReward: typeof abi.pendingReward = JSON.parse(
     JSON.stringify(abi.pendingReward).replace(
       'pendingSushi',
 
