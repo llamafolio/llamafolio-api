@@ -3,7 +3,6 @@ import { mapSuccessFilter, range } from '@lib/array'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
-import { BigNumber } from 'ethers'
 
 const abi = {
   bondDetails: {
@@ -102,17 +101,17 @@ export async function getBondsBalances(ctx: BalancesContext, contracts: Contract
     multicall({ ctx, calls, abi: abi.totalSupply }),
   ])
 
-  const pendingPayoutFor = mapSuccessFilter(pendingPayoutForRes, (res) => BigNumber.from(res.output))
-  const totalPoolSupplies = mapSuccessFilter(totalPoolSuppliesRes, (res) => BigNumber.from(res.output))
+  const pendingPayoutFor = mapSuccessFilter(pendingPayoutForRes, (res) => res.output)
+  const totalPoolSupplies = mapSuccessFilter(totalPoolSuppliesRes, (res) => res.output)
 
   const underlyingsTokensReserves0 = mapSuccessFilter(underlyingsTokensReservesRes, (res) => {
     const [reserve0] = res.output
-    return BigNumber.from(reserve0)
+    return reserve0
   })
 
   const underlyingsTokensReserves1 = mapSuccessFilter(underlyingsTokensReservesRes, (res) => {
     const [_reserve0, reserve1] = res.output
-    return BigNumber.from(reserve1)
+    return reserve1
   })
 
   for (let i = 0; i < underlyingsTokensReserves0.length; i++) {
@@ -126,12 +125,12 @@ export async function getBondsBalances(ctx: BalancesContext, contracts: Contract
 
       const underlyingToken0 = {
         ...contract.underlyings[0],
-        amount: pendingPayout.mul(underlyingTokenReserves0).div(totalPoolSupply),
+        amount: (pendingPayout * underlyingTokenReserves0) / totalPoolSupply,
       }
 
       const underlyingToken1 = {
         ...contract.underlyings[1],
-        amount: pendingPayout.mul(underlyingTokenReserves1).div(totalPoolSupply),
+        amount: (pendingPayout * underlyingTokenReserves1) / totalPoolSupply,
       }
 
       balances.push({

@@ -2,7 +2,6 @@ import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { getStakingPoolsBalances } from '@lib/pools'
-import { BigNumber } from 'ethers'
 
 import type { GaugeContract } from './pair'
 
@@ -61,7 +60,7 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: GaugeContr
       const rewardRes = rewardsRes[rewardIdx]
 
       if (rewardRes.success) {
-        reward.amount = BigNumber.from(rewardRes.output)
+        reward.amount = rewardRes.output
       }
 
       rewardIdx++

@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   ethBalanceOf: {
@@ -22,7 +21,7 @@ export async function getPieDaoStakeBalances(ctx: BalancesContext, stakers: Cont
 
   const balances: Balance[] = mapSuccessFilter(userBalances, (res, idx) => ({
     ...stakers[idx],
-    amount: BigNumber.from(res.output),
+    amount: res.output,
     underlyings: undefined,
     rewards: undefined,
     category: 'stake',

@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getTotalAmounts: {
@@ -50,12 +49,12 @@ export async function getCharmStakeBalances(ctx: BalancesContext, stakers: Contr
 
     const updateUnderlyings = underlyings.map((underlying, idx) => ({
       ...underlying,
-      amount: BigNumber.from(balanceOfRes.output).mul(totalAmountRes.output[idx]).div(totalSupplyRes.output),
+      amount: (balanceOfRes.output * totalAmountRes.output[idx]) / totalSupplyRes.output,
     }))
 
     balances.push({
       ...staker,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: updateUnderlyings,
       rewards: undefined,
       category: 'stake',

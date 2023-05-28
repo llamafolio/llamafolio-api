@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   uni_token0: {
@@ -115,14 +113,14 @@ export const uniswap3BalancesProvider = async (
     underlyings.forEach((underlying, underlyingIdx) => {
       const underlyingsBalanceRes = underlyingsBalancesRes[underlyingIdx]
 
-      const underlyingsBalance = underlyingsBalanceRes.success ? BigNumber.from(underlyingsBalanceRes.output) : BN_ZERO
+      const underlyingsBalance = underlyingsBalanceRes.success ? underlyingsBalanceRes.output : 0n
 
       if (!totalSupplyRes.success || totalSupplyRes.output === 0n) {
         return
       }
 
-      ;(underlying as Balance).amount = underlyingsBalance.mul(amount).div(totalSupplyRes.output)
-      ;(pool.rewards?.[0] as Balance).amount = BigNumber.from(earnedFXSRes.output)
+      ;(underlying as Balance).amount = (underlyingsBalance * amount) / totalSupplyRes.output
+      ;(pool.rewards?.[0] as Balance).amount = earnedFXSRes.output
     })
   }
 

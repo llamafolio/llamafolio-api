@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance, RewardBalance } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   collateral: {
@@ -65,7 +64,7 @@ export async function getSNXBalances(ctx: BalancesContext, contract: Contract): 
 
   const lendBalance: LendBalance = {
     ...contract,
-    amount: BigNumber.from(userLendBalanceOf),
+    amount: userLendBalanceOf,
     underlyings: undefined,
     rewards: undefined,
     category: 'lend',
@@ -73,7 +72,7 @@ export async function getSNXBalances(ctx: BalancesContext, contract: Contract): 
 
   const borrowBalance: BorrowBalance = {
     ...contract,
-    amount: BigNumber.from(alreadyIssued),
+    amount: alreadyIssued,
     underlyings: contract.underlyings as Contract[],
     rewards: undefined,
     category: 'borrow',
@@ -81,7 +80,7 @@ export async function getSNXBalances(ctx: BalancesContext, contract: Contract): 
 
   const rewardBalance: RewardBalance = {
     ...contract,
-    amount: BigNumber.from(userPendingRewardBalanceOf[1]),
+    amount: userPendingRewardBalanceOf[1],
     underlyings: undefined,
     rewards: undefined,
     category: 'reward',

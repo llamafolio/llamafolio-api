@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   users: {
@@ -31,7 +30,7 @@ export async function getGainsStakeBalances(ctx: BalancesContext, staker: Contra
 
   return {
     ...staker,
-    amount: BigNumber.from(stakedTokens),
+    amount: stakedTokens,
     underlyings: [underlying],
     rewards: undefined,
     category: 'stake',

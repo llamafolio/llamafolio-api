@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext } from '@lib/adapter'
 import { mapSuccess } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getPoolId: {
@@ -50,8 +48,8 @@ const abi = {
 } as const
 
 export type ProviderBalancesParams = Balance & {
-  amount: BigNumber
-  totalSupply: BigNumber
+  amount: bigint
+  totalSupply: bigint
   lpToken: `0x${string}`
   strategy: string
 }
@@ -102,10 +100,10 @@ export const sushiProvider = async (
 
       const underlyingsBalance =
         underlyingBalanceOfRes.success && underlyingBalanceOfRes.output != undefined
-          ? BigNumber.from(underlyingBalanceOfRes.output)
-          : BN_ZERO
+          ? underlyingBalanceOfRes.output
+          : 0n
 
-      ;(underlying as Balance).amount = underlyingsBalance.mul(amount).div(totalSupply)
+      ;(underlying as Balance).amount = (underlyingsBalance * amount) / totalSupply
 
       balanceOfIdx++
     }
@@ -128,14 +126,7 @@ export const auraProvider = async (
 
   const underlyingsBalancesRes = await multicall({
     ctx,
-    calls: mapSuccess(
-      poolIdsRes,
-      (pool) =>
-        ({
-          target: AURA_VAULT_ADDRESS,
-          params: [pool.output],
-        } as const),
-    ),
+    calls: mapSuccess(poolIdsRes, (pool) => ({ target: AURA_VAULT_ADDRESS, params: [pool.output] } as const)),
     abi: abi.getPoolTokens,
   })
 
@@ -152,7 +143,7 @@ export const auraProvider = async (
 
     underlyings.forEach((underlying, underlyingIdx) => {
       const underlyingBalance = balances[underlyingIdx]
-      ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(amount).div(totalSupply) || BN_ZERO
+      ;(underlying as Balance).amount = (underlyingBalance * amount) / totalSupply
     })
   }
 
@@ -177,11 +168,7 @@ export const convexProvider = async (
       ctx,
       calls: mapSuccess(
         poolAddressesRes,
-        (pool) =>
-          ({
-            target: CURVE_REGISTRY_ADDRESS,
-            params: [pool.output],
-          } as const),
+        (pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.output] } as const),
       ),
       abi: abi.get_underlying_balances,
     })
@@ -197,7 +184,7 @@ export const convexProvider = async (
 
       underlyings.forEach((underlying, underlyingIdx) => {
         const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
-        ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(amount).div(totalSupply) || BN_ZERO
+        ;(underlying as Balance).amount = (underlyingBalance * amount) / totalSupply
       })
 
       balances.push(pool)
@@ -232,7 +219,7 @@ export const curveAltChains = async (
 
     underlyings.forEach((underlying, underlyingIdx) => {
       const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
-      ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(amount).div(totalSupply) || BN_ZERO
+      ;(underlying as Balance).amount = (underlyingBalance * amount) / totalSupply
     })
 
     balances.push(pool)

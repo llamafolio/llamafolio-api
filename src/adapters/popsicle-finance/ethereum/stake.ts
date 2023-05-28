@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const Ice: Token = {
   chain: 'ethereum',
@@ -20,7 +19,7 @@ export async function getPopsicleStakeBalances(ctx: BalancesContext, staker: Con
 
   return {
     ...staker,
-    amount: BigNumber.from(userBalanceOf).mul(tokenBalancesOfRes).div(tokenSupplyRes),
+    amount: (userBalanceOf * tokenBalancesOfRes) / tokenSupplyRes,
     underlyings: [Ice],
     rewards: undefined,
     category: 'stake',

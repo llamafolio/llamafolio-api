@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 // multi-chain reward token
 const WPC: Token = {
@@ -29,7 +28,7 @@ export async function getMarketsRewards(ctx: BalancesContext, piggyDistribution:
     },
   })
 
-  const pendingWPCRewards = BigNumber.from(pendingWPCRewardsRes).mul(Math.pow(10, 3))
+  const pendingWPCRewards = pendingWPCRewardsRes * Math.pow(10, 3)
 
   const reward: Balance = {
     chain: ctx.chain,

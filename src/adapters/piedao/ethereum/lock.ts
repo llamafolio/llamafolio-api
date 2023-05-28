@@ -1,9 +1,7 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getLocksOfLength: {
@@ -55,10 +53,10 @@ export async function getPieDaoLockerBalances(ctx: BalancesContext, locker: Cont
 
     return {
       ...locker,
-      amount: BigNumber.from(amount),
+      amount: amount,
       underlyings: undefined,
       rewards: undefined,
-      claimable: isClaimable ? BigNumber.from(amount) : BN_ZERO,
+      claimable: isClaimable ? amount : 0n,
       unlockAt,
       category: 'lock',
     }

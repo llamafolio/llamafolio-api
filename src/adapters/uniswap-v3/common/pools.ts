@@ -5,7 +5,6 @@ import type { Category } from '@lib/category'
 import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
-import { BigNumber } from 'ethers'
 import JSBI from 'jsbi'
 
 const abi = {
@@ -245,7 +244,7 @@ export async function getTokenIdsBalances(
         address: pool,
         symbol: `${token0.symbol}/${token1.symbol}`,
         category: 'lp' as Category,
-        amount: BigNumber.from('1'),
+        amount: '1',
         underlyings: [
           { ...token0, amount: underlyingAmounts[0] },
           { ...token1, amount: underlyingAmounts[1] },
@@ -341,8 +340,8 @@ export function getUnderlyingAmounts(liquidity: number, sqrtPriceX96: number, ti
 
   return [
     // Note: convert exponent to fullwide string to please BigNumber
-    BigNumber.from(amount0.toLocaleString('fullwide', { useGrouping: false })),
-    BigNumber.from(amount1.toLocaleString('fullwide', { useGrouping: false })),
+    amount0.toLocaleString('fullwide', { useGrouping: false }),
+    amount1.toLocaleString('fullwide', { useGrouping: false }),
   ]
 }
 
@@ -358,7 +357,7 @@ function subIn256(x: JSBI, y: JSBI) {
   const difference = JSBI.subtract(x, y)
 
   if (JSBI.lessThan(difference, ZERO)) {
-    return JSBI.add(Q256, difference)
+    return JSBI + (Q256, difference)
   } else {
     return difference
   }
@@ -421,7 +420,7 @@ function getRewardAmounts(
 
   return [
     // Note: convert exponent to fullwide string to please BigNumber
-    BigNumber.from(uncollectedFees_0.toLocaleString('fullwide', { useGrouping: false })),
-    BigNumber.from(uncollectedFees_1.toLocaleString('fullwide', { useGrouping: false })),
+    uncollectedFees_0.toLocaleString('fullwide', { useGrouping: false }),
+    uncollectedFees_1.toLocaleString('fullwide', { useGrouping: false }),
   ]
 }

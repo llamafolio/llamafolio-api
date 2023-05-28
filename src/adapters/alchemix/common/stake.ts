@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   poolCount: {
@@ -118,9 +117,9 @@ export async function getStakerBalances(
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(balanceRes.output),
+      amount: balanceRes.output,
       underlyings: undefined,
-      rewards: [{ ...ALCX, amount: BigNumber.from(rewardsBalanceRes.output) }],
+      rewards: [{ ...ALCX, amount: rewardsBalanceRes.output }],
       category: 'stake',
     })
   }

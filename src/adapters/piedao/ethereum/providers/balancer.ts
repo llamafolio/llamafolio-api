@@ -3,7 +3,6 @@ import { groupBy, mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getBalance: {
@@ -48,7 +47,7 @@ export const balancerProvider = async (ctx: BalancesContext, pools: Balance[]): 
     }
 
     const fmtUnderlyings = balancesByAddresses[pool.address].map((res, idx) => {
-      const amount = BigNumber.from(res.output).mul(pool.amount).div(poolSupplyRes.output)
+      const amount = (res.output * pool.amount) / poolSupplyRes.output
 
       return {
         ...underlyings[idx],

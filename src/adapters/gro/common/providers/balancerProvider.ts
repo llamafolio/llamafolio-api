@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapt
 import { mapSuccess } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getPoolId: {
@@ -76,11 +75,7 @@ export async function getBalancerProviderBalances(ctx: BalancesContext, contract
   const res: Balance[] = []
 
   const [totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: contracts.map((contract) => ({ target: contract.address })),
-      abi: erc20Abi.totalSupply,
-    }),
+    multicall({ ctx, calls: contracts.map((contract) => ({ target: contract.address })), abi: erc20Abi.totalSupply }),
     multicall({
       ctx,
       calls: contracts.map(
@@ -103,7 +98,7 @@ export async function getBalancerProviderBalances(ctx: BalancesContext, contract
     underlyings.forEach((underlying, idx) => {
       const [_tokens, balances] = underlyingsBalanceRes.output
 
-      const underlyingAmount = BigNumber.from(balances[idx]).mul(contract.amount).div(totalSupplyRes.output)
+      const underlyingAmount = (balances[idx] * contract.amount) / totalSupplyRes.output
 
       underlying.amount = underlyingAmount
     })

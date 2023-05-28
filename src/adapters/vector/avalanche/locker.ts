@@ -5,7 +5,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -73,7 +72,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.getUserSlotLength }),
   ])
 
-  const userTotalDeposit = BigNumber.from(userTotalDepositRes)
+  const userTotalDeposit = userTotalDepositRes
   const rewarderAddress = rewarderAddressRes
 
   const rewards = await lockedRewardsBalances(ctx, rewarderAddress)
@@ -112,8 +111,8 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
       address: contract.address,
       decimals: contract.decimals,
       symbol: contract.symbol,
-      amount: BigNumber.from(extraUserLockedBySlot.amount),
-      underlyings: [{ ...VTX, amount: BigNumber.from(extraUserLockedBySlot.amount) }],
+      amount: extraUserLockedBySlot.amount,
+      underlyings: [{ ...VTX, amount: extraUserLockedBySlot.amount }],
       unlockAt: Number(extraUserLockedBySlot.endTime),
       category: 'lock',
     })
@@ -141,6 +140,6 @@ const lockedRewardsBalances = async (ctx: BalancesContext, rewarder: `0x${string
 
   return mapSuccessFilter(pendingRewardsBalancesRes, (pendingRewardRes, idx) => ({
     ...rewardsTokens[idx],
-    amount: BigNumber.from(pendingRewardRes.output),
+    amount: pendingRewardRes.output,
   }))
 }

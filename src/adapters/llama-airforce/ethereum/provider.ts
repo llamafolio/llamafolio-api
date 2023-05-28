@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 import type { LlamaBalancesParams } from './balance'
 
@@ -52,7 +50,7 @@ export const convexProvider = async (ctx: BalancesContext, pools: LlamaBalancesP
         return null
       }
 
-      return { ...pool, amount: BigNumber.from(fmtBalancesOfRes.output) }
+      return { ...pool, amount: fmtBalancesOfRes.output }
     })
     .filter(isNotNullish)
 }
@@ -71,7 +69,7 @@ export const llamaProvider = async (ctx: BalancesContext, pools: LlamaBalancesPa
         return null
       }
 
-      return { ...pool, amount: BigNumber.from(fmtBalancesOfRes.output) }
+      return { ...pool, amount: fmtBalancesOfRes.output }
     })
     .filter(isNotNullish)
 }
@@ -118,8 +116,7 @@ export const curveProvider = async (ctx: BalancesContext, pools: LlamaBalancesPa
 
     underlyings.forEach((underlying, underlyingIdx) => {
       const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
-      ;(underlying as Balance).amount =
-        BigNumber.from(underlyingBalance).mul(fmtBalancesOfRes.output).div(totalUnderlyingsSupply.output) || BN_ZERO
+      ;(underlying as Balance).amount = (underlyingBalance * fmtBalancesOfRes.output) / totalUnderlyingsSupply.output
     })
   }
 

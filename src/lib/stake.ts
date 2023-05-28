@@ -3,24 +3,17 @@ import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { abi as erc20ABI, getERC20BalanceOf } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
-export async function getSingleStakeBalance(ctx: BalancesContext, contract: Contract, callOptions?: any) {
-  const amountRes = await call({
+export async function getSingleStakeBalance(ctx: BalancesContext, contract: Contract, options?: any) {
+  const amount = await call({
     ctx,
     abi: erc20ABI.balanceOf,
     target: contract.address,
     params: [ctx.address],
-    ...callOptions,
+    ...options,
   })
 
-  const amount = BigNumber.from(amountRes)
-
-  const balance: Balance = {
-    ...(contract as Balance),
-    amount,
-    category: 'stake',
-  }
+  const balance: Balance = { ...(contract as Balance), amount, category: 'stake' }
 
   return balance
 }

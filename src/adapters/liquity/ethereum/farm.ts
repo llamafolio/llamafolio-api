@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getCompoundedLUSDDeposit: {
@@ -63,13 +62,11 @@ const abi = {
 } as const
 
 export async function getFarmBalance(ctx: BalancesContext, stabilityPool: Contract) {
-  const [LUSDBalanceRes, ETHBalanceRes, LQTYBalanceRes] = await Promise.all([
+  const [LUSDBalance, ETHBalance, LQTYBalance] = await Promise.all([
     call({ ctx, target: stabilityPool.address, params: [ctx.address], abi: abi.getCompoundedLUSDDeposit }),
     call({ ctx, target: stabilityPool.address, params: [ctx.address], abi: abi.getDepositorETHGain }),
     call({ ctx, target: stabilityPool.address, params: [ctx.address], abi: abi.getDepositorLQTYGain }),
   ])
-
-  const amount = BigNumber.from(LUSDBalanceRes)
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -77,7 +74,7 @@ export async function getFarmBalance(ctx: BalancesContext, stabilityPool: Contra
     address: stabilityPool.address,
     symbol: 'LUSD',
     decimals: 18,
-    amount,
+    amount: LUSDBalance,
     stable: true,
     underlyings: [
       {
@@ -87,7 +84,7 @@ export async function getFarmBalance(ctx: BalancesContext, stabilityPool: Contra
         symbol: 'LUSD',
         decimals: 18,
         stable: true,
-        amount,
+        amount: LUSDBalance,
       },
     ],
     rewards: [
@@ -96,14 +93,14 @@ export async function getFarmBalance(ctx: BalancesContext, stabilityPool: Contra
         symbol: 'LQTY',
         decimals: 18,
         address: '0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d',
-        amount: BigNumber.from(LQTYBalanceRes),
+        amount: LQTYBalance,
       },
       {
         chain: ctx.chain,
         symbol: 'ETH',
         decimals: 18,
         address: '0x0000000000000000000000000000000000000000',
-        amount: BigNumber.from(ETHBalanceRes),
+        amount: ETHBalance,
       },
     ],
   }

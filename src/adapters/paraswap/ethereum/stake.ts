@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { getSingleStakeBalance } from '@lib/stake'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getPoolTokens: {
@@ -50,7 +49,7 @@ export async function getParaspaceBPTStakeBalances(
   const [_tokens, balances, _lastChangeBlock] = poolTokens
 
   const fmtUnderlyings = underlyings.map((underlying, idx) => {
-    const underlyingsAmount = BigNumber.from(balances[idx]).mul(balance.amount).div(totalSupply)
+    const underlyingsAmount = (balances[idx] * balance.amount) / totalSupply
 
     return { ...underlying, amount: underlyingsAmount }
   })
@@ -76,7 +75,7 @@ export async function getParaspaceBPTFarmBalances(
   const [_tokens, balances, _lastChangeBlock] = poolTokens
 
   const fmtUnderlyings = underlyings.map((underlying, idx) => {
-    const underlyingsAmount = BigNumber.from(balances[idx]).mul(balance.amount).div(totalSupply)
+    const underlyingsAmount = (balances[idx] * balance.amount) / totalSupply
 
     return { ...underlying, amount: underlyingsAmount }
   })
@@ -84,7 +83,7 @@ export async function getParaspaceBPTFarmBalances(
   return {
     ...balance,
     underlyings: fmtUnderlyings,
-    rewards: [{ ...PSP, amount: BigNumber.from(pendingReward) }],
+    rewards: [{ ...PSP, amount: pendingReward }],
     category: 'farm',
   }
 }

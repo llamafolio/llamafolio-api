@@ -6,7 +6,6 @@ import type { Category } from '@lib/category'
 import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 const abi = {
   tokenOfOwnerByIndex: {
@@ -207,7 +206,7 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
       address,
       symbol: `${tokenX.symbol}/${tokenY.symbol}`,
       category: 'lp' as Category,
-      amount: BigNumber.from('1'),
+      amount: 1n,
       underlyings: [
         { ...tokenX, amount: underlyingAmounts[0] },
         { ...tokenY, amount: underlyingAmounts[1] },

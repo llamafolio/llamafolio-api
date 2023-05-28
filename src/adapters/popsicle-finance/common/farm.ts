@@ -5,7 +5,6 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   poolInfo: {
@@ -118,9 +117,9 @@ export async function getPopsicleFarmBalances(ctx: BalancesContext, contracts: C
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(amount),
+      amount: amount,
       underlyings,
-      rewards: [{ ...reward, amount: BigNumber.from(pendingIceRes.output) }],
+      rewards: [{ ...reward, amount: pendingIceRes.output }],
       category: 'farm',
     })
   }

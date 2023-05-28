@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   locked: {
@@ -65,7 +64,7 @@ export async function getTokenIdsBalances(
     return {
       ...velo,
       category: 'lock' as Category,
-      amount: BigNumber.from(amount),
+      amount: amount,
       unlockAt: end,
     }
   })

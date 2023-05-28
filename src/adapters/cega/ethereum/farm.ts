@@ -3,7 +3,6 @@ import { mapSuccess, mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   convertToAssets: {
@@ -33,11 +32,7 @@ export async function getCegaBalances(ctx: BalancesContext, pools: Contract[]): 
     ctx,
     calls: mapSuccess(
       userBalancesRes,
-      (userBalanceRes) =>
-        ({
-          target: userBalanceRes.input.target,
-          params: [userBalanceRes.output],
-        } as const),
+      (userBalanceRes) => ({ target: userBalanceRes.input.target, params: [userBalanceRes.output] } as const),
     ),
     abi: abi.convertToAssets,
   })
@@ -46,7 +41,7 @@ export async function getCegaBalances(ctx: BalancesContext, pools: Contract[]): 
     chain: ctx.chain,
     decimals: USDC.decimals,
     address: res.input.target,
-    amount: BigNumber.from(res.output),
+    amount: res.output,
     underlyings: [USDC],
     rewards: undefined,
     category: 'farm',

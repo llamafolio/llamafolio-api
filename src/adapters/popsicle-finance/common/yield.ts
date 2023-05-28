@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   usersAmounts: {
@@ -56,12 +55,12 @@ export async function getPopsicleYieldBalances(ctx: BalancesContext, pairs: Cont
 
     const updateUnderlyings = underlyings.map((underlying, idx) => ({
       ...underlying,
-      amount: BigNumber.from(balancesOfRes.output).mul(tokensAmount.output[idx]).div(totalSupplyRes.output),
+      amount: (balancesOfRes.output * tokensAmount.output[idx]) / totalSupplyRes.output,
     }))
 
     balances.push({
       ...pair,
-      amount: BigNumber.from(balancesOfRes.output),
+      amount: balancesOfRes.output,
       underlyings: updateUnderlyings,
       rewards: undefined,
       category: 'farm',

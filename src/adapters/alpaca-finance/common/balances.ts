@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers/lib/ethers'
 
 const abi = {
   userInfo: {
@@ -92,12 +91,12 @@ export async function getPoolsBalances(
     if (userInfoRes.success) {
       const farmBalance: Balance = {
         ...(pool as Balance),
-        amount: BigNumber.from(amount).mul(totalTokenRes.output).div(totalSupplyRes.output),
+        amount: (amount * totalTokenRes.output) / totalSupplyRes.output,
         category: 'farm',
       }
 
       if (pendingRewardRes.success) {
-        farmBalance.rewards = [{ ...alpaca, amount: BigNumber.from(pendingRewardRes.output) }]
+        farmBalance.rewards = [{ ...alpaca, amount: pendingRewardRes.output }]
       }
 
       balances.push(farmBalance)
@@ -107,7 +106,7 @@ export async function getPoolsBalances(
     if (balanceOfRes.success) {
       const lpBalance: Balance = {
         ...(pool as Balance),
-        amount: BigNumber.from(balanceOfRes.output).mul(totalTokenRes.output).div(totalSupplyRes.output),
+        amount: (balanceOfRes.output * totalTokenRes.output) / totalSupplyRes.output,
         category: 'lp',
       }
 

@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getSingleStakeBalance } from '@lib/stake'
-import { utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   pricePerShare: {
@@ -21,6 +21,6 @@ export async function getBadgerStakeBalances(ctx: BalancesContext, staker: Contr
 
   return {
     ...balance,
-    amount: balance.amount.mul(exchangeRate).div(utils.parseEther('1.0')),
+    amount: (balance.amount * exchangeRate) / parseEther('1.0'),
   }
 }

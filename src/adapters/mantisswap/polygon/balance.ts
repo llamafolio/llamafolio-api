@@ -3,7 +3,6 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getSingleStakeBalances } from '@lib/stake'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   pendingMnt: {
@@ -75,9 +74,9 @@ export async function getMantisFarmBalances(
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(userInfoRes.output[0]),
+      amount: userInfoRes.output[0],
       underlyings,
-      rewards: [{ ...MNT, amount: BigNumber.from(userPendingRes.output[0]) }],
+      rewards: [{ ...MNT, amount: userPendingRes.output[0] }],
       category: 'farm',
     })
   }

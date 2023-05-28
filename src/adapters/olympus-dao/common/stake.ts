@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers/lib/ethers'
 
 const abiOlympus = {
   balanceFrom: {
@@ -44,7 +43,7 @@ export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]
 
     balances.push({
       ...staker,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: [OHM],
       rewards: undefined,
       category: 'stake',
@@ -71,7 +70,7 @@ export async function getFormattedStakeBalances(ctx: BalancesContext, contract: 
     abi: abiOlympus.balanceFrom,
   })
 
-  const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes)
+  const formattedBalanceOf = formattedBalanceOfRes
 
   const balance: Balance = {
     chain: ctx.chain,

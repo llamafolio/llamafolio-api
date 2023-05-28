@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getSingleLockerBalance } from '@lib/lock'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   locked: {
@@ -48,5 +47,5 @@ export async function getLockerBalance(
     call({ ctx, target: lockerPenaltyRewards.address, params: [ctx.address], abi: abi.claimable }),
   ])
 
-  return { ...lockedBalance, rewards: [{ ...RBN, amount: BigNumber.from(claimableLockedBalancesRewards) }] }
+  return { ...lockedBalance, rewards: [{ ...RBN, amount: claimableLockedBalancesRewards }] }
 }

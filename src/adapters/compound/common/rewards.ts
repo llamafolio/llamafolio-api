@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const COMP: Token = {
   chain: 'ethereum',
@@ -53,14 +52,12 @@ export async function getRewardsBalances(
     },
   })
 
-  const compAllocatedRewards = BigNumber.from(compAllocatedRewardsRes.allocated)
-
   rewards.push({
     chain: ctx.chain,
     address: COMP.address,
     decimals: COMP.decimals,
     symbol: COMP.symbol,
-    amount: compAllocatedRewards,
+    amount: compAllocatedRewardsRes.allocated,
     category: 'reward',
   })
 

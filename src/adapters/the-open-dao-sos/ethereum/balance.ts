@@ -14,7 +14,7 @@ export async function getOpenDaoBalances(ctx: BalancesContext, staker: Contract)
       continue
     }
 
-    underlying.amount = balance.amount.mul(FROM_veSOS_TO_SOS).div(1e4) // 21669 -> 2.1669
+    underlying.amount = (balance.amount * FROM_veSOS_TO_SOS) / 1e4 // 21669 -> 2.1669
     balance.category = 'stake'
   }
 

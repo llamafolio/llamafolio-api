@@ -1,9 +1,7 @@
 import { getLendingPoolBalances } from '@lib/aave/v2/lending'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   get_underlying_balances: {
@@ -61,8 +59,7 @@ const underlyingsBalances = async (ctx: BalancesContext, pools: Balance[]): Prom
 
     underlyings.forEach((underlying, underlyingIdx) => {
       const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
-      ;(underlying as Balance).amount =
-        BigNumber.from(underlyingBalance).mul(amount).div(totalSupplyRes.output) || BN_ZERO
+      ;(underlying as Balance).amount = (underlyingBalance * amount) / totalSupplyRes.output || 0n
     })
   }
 

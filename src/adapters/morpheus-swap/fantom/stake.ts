@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   pendingReward: {
@@ -63,9 +62,9 @@ export async function getMorpheusStakersBalances(ctx: BalancesContext, stakers: 
     balances.push({
       ...staker,
       decimals: 18,
-      amount: BigNumber.from(userBalanceRes.output[0]),
+      amount: userBalanceRes.output[0],
       underlyings: [PILLS],
-      rewards: [{ ...WFTM, amount: BigNumber.from(pendingRewardRes.output) }],
+      rewards: [{ ...WFTM, amount: pendingRewardRes.output }],
       category: 'stake',
     })
   }

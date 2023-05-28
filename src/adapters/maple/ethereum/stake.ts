@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   balanceOfAssets: {
@@ -42,7 +40,7 @@ export async function getMapleSingleStakeBalances(ctx: BalancesContext, staker: 
 
   return {
     ...staker,
-    amount: BigNumber.from(balanceOfsRes),
+    amount: balanceOfsRes,
     underlyings: staker.underlyings as Contract[],
     rewards: undefined,
     category: 'stake',
@@ -89,20 +87,20 @@ export async function getMapleStakeBalances(ctx: BalancesContext, stakers: Contr
 
     const balance: Balance = {
       ...staker,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: [],
-      rewards: [{ ...reward, amount: BigNumber.from(withdrawableRes.output) }],
+      rewards: [{ ...reward, amount: withdrawableRes.output }],
       category: 'stake',
     }
 
     underlyings.forEach((underlying, idx) => {
       const underlyingBalancesOf = underlyingsBalancesOfRes[idx]
 
-      const underlyingsBalanceOfRes = underlyingBalancesOf.success ? underlyingBalancesOf.output : BN_ZERO
+      const underlyingsBalanceOfRes = underlyingBalancesOf.success ? underlyingBalancesOf.output : 0n
 
       balance.underlyings?.push({
         ...underlying,
-        amount: balance.amount.mul(underlyingsBalanceOfRes).div(totalSupplyRes.output),
+        amount: (balance.amount * underlyingsBalanceOfRes) / totalSupplyRes.output,
       })
     })
 

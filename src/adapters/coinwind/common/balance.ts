@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   userInfo: {
@@ -39,9 +38,9 @@ export async function getCoinwindBalances(
     abi: abi.userInfo,
   })
 
-  const balances: Balance[] = mapSuccessFilter(userInfosRes, (res, idx: number) => ({
+  const balances: Balance[] = mapSuccessFilter(userInfosRes, (res, idx) => ({
     ...pools[idx],
-    amount: BigNumber.from(res.output[0]),
+    amount: res.output[0],
     underlyings: undefined,
     rewards: undefined,
     category: 'farm',

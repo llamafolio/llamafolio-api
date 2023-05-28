@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   getShareValue: {
@@ -29,7 +29,7 @@ export async function getScreamStakeBalances(ctx: BalancesContext, staker: Contr
 
   return {
     ...staker,
-    amount: BigNumber.from(balanceOfRes).mul(getShareValueRes).div(utils.parseEther('1.0')),
+    amount: (balanceOfRes * getShareValueRes) / parseEther('1.0'),
     underlyings: [SCREAM],
     rewards: undefined,
     category: 'stake',

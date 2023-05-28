@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { keyBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   earned: {
@@ -147,10 +147,10 @@ export async function getIronFarmBalances(ctx: BalancesContext, markets: Contrac
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(balanceOfRes.output).mul(exchangeRatesCurrentRes.output).div(utils.parseEther('1.0')),
+      amount: (balanceOfRes.output * exchangeRatesCurrentRes.output) / parseEther('1.0'),
       decimals: 18,
       underlyings,
-      rewards: [{ ...IB, amount: BigNumber.from(earnedOfRes.output) }],
+      rewards: [{ ...IB, amount: earnedOfRes.output }],
       category: 'farm',
     })
   }

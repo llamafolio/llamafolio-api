@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   stakes: {
@@ -59,7 +58,7 @@ export async function getRailgunBalances(ctx: BalancesContext, staker: Contract)
 
     balances.push({
       ...staker,
-      amount: BigNumber.from(amount),
+      amount: amount,
       underlyings: undefined,
       rewards: undefined,
       category: 'stake',

@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers/lib/ethers'
 
 const abi = {
   stakedToken: {
@@ -79,8 +77,8 @@ export async function getStakersBalances(ctx: BalancesContext, stakers: Contract
 
   for (let stakerIdx = 0; stakerIdx < stakers.length; stakerIdx++) {
     const staker = stakers[stakerIdx]
-    const amount = BigNumber.from(userBalanceOfRes[stakerIdx].output?.[0] || '0')
-    const rewardsAmount = BigNumber.from(pendingRewardsRes[stakerIdx].output || '0')
+    const amount = userBalanceOfRes[stakerIdx].output?.[0] || '0'
+    const rewardsAmount = pendingRewardsRes[stakerIdx].output || '0'
 
     balances.push({
       ...staker,
@@ -112,7 +110,7 @@ export async function getStakerCake(ctx: BalancesContext, staker: Contract) {
     lockedAmount,
   ] = userInfos
 
-  const balanceOf = BigNumber.from(lockedAmount)
+  const balanceOf = lockedAmount
 
   balance.push({
     ...staker,
@@ -120,8 +118,8 @@ export async function getStakerCake(ctx: BalancesContext, staker: Contract) {
     decimals: cake.decimals,
     symbol: cake.symbol,
     underlyings: [cake],
-    // Rewards set as BN_ZERO until we find the way to get auto-compound formula
-    rewards: [{ ...cake, amount: BN_ZERO }],
+    // Rewards set as 0n until we find the way to get auto-compound formula
+    rewards: [{ ...cake, amount: 0n }],
     category: 'stake',
   })
 

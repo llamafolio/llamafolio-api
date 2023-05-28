@@ -4,7 +4,6 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -45,9 +44,9 @@ export async function getAgilityStakeBalances(ctx: BalancesContext, stakers: Con
 
     const balance: Balance = {
       ...staker,
-      amount: BigNumber.from(userBalanceRes.output),
+      amount: userBalanceRes.output,
       underlyings: staker.underlyings as Contract[],
-      rewards: earnedRes.success ? [{ ...AGI, amount: BigNumber.from(earnedsRes[stakeIdx].output || 0) }] : undefined,
+      rewards: earnedRes.success ? [{ ...AGI, amount: earnedsRes[stakeIdx].output || 0n }] : undefined,
       category: 'stake',
     }
 

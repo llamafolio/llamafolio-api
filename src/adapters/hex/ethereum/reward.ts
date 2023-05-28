@@ -1,7 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { sumBN } from '@lib/math'
-import { BigNumber } from 'ethers'
 
 interface stakeAndIndexParams {
   stakeId: number
@@ -22,7 +20,7 @@ export async function getRewardsBalances(
   contract: Contract,
   stakesAndIndexes: stakeAndIndexParams[],
 ) {
-  const rewards: BigNumber[] = []
+  const rewards: bigint[] = []
 
   for (const stakeAndIndex of stakesAndIndexes) {
     const reward = await getInterestForRangeDays(ctx, contract, stakeAndIndex)
@@ -95,19 +93,15 @@ const getDecodedDataFromRangeDays = async (
 }
 
 const getInterestForRangeDays = async (ctx: BaseContext, contract: Contract, stakeAndIndex: stakeAndIndexParams) => {
-  const interest: BigNumber[] = []
+  let interest = 0n
 
   const decodedData: decodedDataParams[] = await getDecodedDataFromRangeDays(ctx, contract, stakeAndIndex)
 
   for (let i = 0; i < decodedData.length; i++) {
     const dailyDecodedData = decodedData[i]
 
-    interest.push(
-      BigNumber.from(dailyDecodedData.payout)
-        .mul(BigNumber.from(stakeAndIndex.share))
-        .div(BigNumber.from(dailyDecodedData.shares)),
-    )
+    interest += (dailyDecodedData.payout * stakeAndIndex.share) / dailyDecodedData.shares
   }
 
-  return sumBN(interest)
+  return interest
 }

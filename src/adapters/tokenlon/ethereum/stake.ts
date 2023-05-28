@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const LON: Token = {
   chain: 'ethereum',
@@ -20,7 +19,7 @@ export async function getxLONstakerBalances(ctx: BalancesContext, staker: Contra
 
   return {
     ...staker,
-    amount: BigNumber.from(userBalanceOfRes).mul(tokenBalanceOfRes).div(totalSupplyRes),
+    amount: (userBalanceOfRes * tokenBalanceOfRes) / totalSupplyRes,
     underlyings: [LON],
     rewards: undefined,
     category: 'stake',

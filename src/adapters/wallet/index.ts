@@ -1,4 +1,4 @@
-import type { Adapter, Balance, BalancesContext, GetBalancesHandler } from '@lib/adapter'
+import type { Adapter, BalancesContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import type { Chain } from '@lib/chains'
 import { chains } from '@lib/chains'
@@ -7,7 +7,6 @@ import { getERC20BalanceOf } from '@lib/erc20'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { chains as tokensByChain } from '@llamafolio/tokens'
-import { BigNumber } from 'ethers'
 
 async function getCoinBalance(ctx: BalancesContext, token?: Token) {
   if (!token) {
@@ -19,7 +18,7 @@ async function getCoinBalance(ctx: BalancesContext, token?: Token) {
     address: ctx.address,
     blockNumber: ctx.blockHeight ? BigInt(ctx.blockHeight) : undefined,
   })
-  return { ...token, amount: BigNumber.from(amount.toString()) } as Balance
+  return { ...token, amount }
 }
 
 const getChainHandlers = (chain: Chain) => {

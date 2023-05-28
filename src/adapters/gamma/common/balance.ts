@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import { getMasterChefLpToken } from '@lib/masterchef/masterchef'
 import { multicall } from '@lib/multicall'
 import type { Pair } from '@lib/uniswap/v2/factory'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getTotalAmounts: {
@@ -61,7 +60,7 @@ export async function getGammaFarmBalances(ctx: BalancesContext, pools: Contract
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(balancesOfRes.output),
+      amount: balancesOfRes.output,
       underlyings,
       rewards: undefined,
       category: 'farm',
@@ -98,7 +97,7 @@ const getGammaUnderlyings = async (ctx: BalancesContext, pools: Balance[]): Prom
     }
 
     const tokens = underlyings.map((underlying, index) => {
-      const amount = pool.amount.mul(totalAmountRes.output[index]).div(totalSupplyRes.output)
+      const amount = (pool.amount * totalAmountRes.output[index]) / totalSupplyRes.output
       return {
         ...underlying,
         amount,
@@ -149,7 +148,7 @@ export async function getGammaMasterchefBalances(
       ...masterchefPool,
       underlyings: masterchefPool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output[0]),
+      amount: poolBalanceRes.output[0],
       rewards: undefined,
     })
   }

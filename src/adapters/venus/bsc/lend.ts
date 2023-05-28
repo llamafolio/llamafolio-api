@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getMarketsBalances } from '@lib/compound/v2/lending'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   mintedVAIs: {
@@ -39,7 +38,7 @@ export async function getLendBorrowBalances(
     abi: abi.mintedVAIs,
   })
 
-  const VAIBalances = BigNumber.from(VAIBalancesRes)
+  const VAIBalances = VAIBalancesRes
 
   VAIMinted.push({
     chain: ctx.chain,

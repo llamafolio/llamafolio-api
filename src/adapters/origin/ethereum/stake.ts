@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   totalStaked: {
@@ -45,9 +44,9 @@ export async function getOriginStakeBalance(ctx: BalancesContext, staker: Contra
 
   return {
     ...staker,
-    amount: BigNumber.from(userTotalStakeBalance),
+    amount: userTotalStakeBalance,
     underlyings: undefined,
-    rewards: [{ ...OGN, amount: BigNumber.from(pendingReward) }],
+    rewards: [{ ...OGN, amount: pendingReward }],
     category: 'stake',
   }
 }

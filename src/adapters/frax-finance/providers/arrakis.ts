@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 import type { ProviderBalancesParams } from './interface'
 
@@ -45,8 +44,8 @@ export const arrakisBalancesProvider = async (
 
     const [amount0Current, amount1Current] = underlyingsBalanceRes.output
 
-    ;(underlyings[0] as Balance).amount = BigNumber.from(amount0Current).mul(amount).div(totalSupplyRes.output)
-    ;(underlyings[1] as Balance).amount = BigNumber.from(amount1Current).mul(amount).div(totalSupplyRes.output)
+    ;(underlyings[0] as Balance).amount = (amount0Current * amount) / totalSupplyRes.output
+    ;(underlyings[1] as Balance).amount = (amount1Current * amount) / totalSupplyRes.output
   }
 
   return pools

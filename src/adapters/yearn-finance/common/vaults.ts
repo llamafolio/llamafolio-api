@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, BaseContract, Contract } from '@lib/adapter'
 import { keyBy } from '@lib/array'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   assetsPositionsOf: {
@@ -87,7 +86,7 @@ const abi = {
 type VaultBalance = Balance & {
   lpToken?: string
   poolAddress?: string
-  underlyingAmount?: BigNumber
+  underlyingAmount?: bigint
 }
 
 export async function getVaultsContracts(ctx: BaseContext, registry: Contract) {
@@ -135,8 +134,8 @@ export async function getVaultsBalances(ctx: BalancesContext, vaults: Contract[]
     vaultBalances.push({
       chain: ctx.chain,
       address: assetsPositionOf.assetId,
-      amount: BigNumber.from(assetsPositionOf.balance),
-      underlyingAmount: BigNumber.from(assetsPositionOf.underlyingTokenBalance.amount),
+      amount: assetsPositionOf.balance,
+      underlyingAmount: assetsPositionOf.underlyingTokenBalance.amount,
       category: 'farm',
     })
   }

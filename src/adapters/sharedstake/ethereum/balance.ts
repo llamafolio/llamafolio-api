@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract, FarmBalance } from '@lib/adapt
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   pendingReward: {
@@ -76,8 +75,8 @@ export async function getShareStakeBalances(
       ...contract,
       underlyings: undefined,
       category: 'farm',
-      amount: BigNumber.from(amount),
-      rewards: [{ ...SGT, amount: BigNumber.from(pendingRewardRes.output) }],
+      amount: amount,
+      rewards: [{ ...SGT, amount: pendingRewardRes.output }],
     }
 
     if (balance.provider === 'sushi') {

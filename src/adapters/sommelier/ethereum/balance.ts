@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccess, mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   convertToAssets: {
@@ -53,8 +52,8 @@ export async function getSommelierStakeBalances(ctx: BalancesContext, pools: Con
 
   const balances: Balance[] = mapSuccessFilter(fmtBalancesRes, (res, idx: number) => ({
     ...pools[idx],
-    amount: BigNumber.from(res.input.params[0]),
-    underlyings: [{ ...(pools[idx].underlyings?.[0] as Contract), amount: BigNumber.from(res.output) }],
+    amount: res.input.params[0],
+    underlyings: [{ ...(pools[idx].underlyings?.[0] as Contract), amount: res.output }],
     rewards: undefined,
     category: pools[idx].category!,
   }))
@@ -93,8 +92,8 @@ export async function getSommelierFarmBalances(ctx: BalancesContext, farmers: Co
 
     return {
       ...farmersBalances[idx],
-      amount: BigNumber.from(amount),
-      underlyings: [{ ...underlyings?.[0], amount: BigNumber.from(res.output) }],
+      amount: amount,
+      underlyings: [{ ...underlyings?.[0], amount: res.output }],
     }
   })
 

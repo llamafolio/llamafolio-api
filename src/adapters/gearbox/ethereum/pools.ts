@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 export interface PoolContract extends Contract {
   pool: string
@@ -106,7 +105,7 @@ export async function getPoolsBalances(ctx: BalancesContext, pools: PoolContract
     const balance: Balance = {
       ...pools[poolIdx],
       underlyings: pools[poolIdx].underlyings as Contract[],
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       rewards: undefined,
       category: 'lp',
     }

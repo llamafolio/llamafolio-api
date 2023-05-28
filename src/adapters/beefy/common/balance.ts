@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 import type { fmtProviderBalancesParams } from './utils'
 import { fmtBalancerProvider, fmtCurveProvider, fmtSolidlyProvider, fmtSushiProvider } from './utils'
@@ -40,7 +40,7 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]):
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output).mul(rateOfRes.output).div(utils.parseEther('1.0')),
+      amount: (balanceOfRes.output * rateOfRes.output) / parseEther('1.0'),
       underlyings: pool.underlyings as Contract[],
       rewards: undefined,
       category: 'farm',
@@ -84,7 +84,7 @@ const getUnderlyingsBeefyBalances = async (ctx: BalancesContext, pools: Contract
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const totalSupplyRes = totalSuppliesRes[poolIdx]
     if (totalSupplyRes.success) {
-      pools[poolIdx].totalSupply = BigNumber.from(totalSupplyRes.output)
+      pools[poolIdx].totalSupply = totalSupplyRes.output
     }
   }
 

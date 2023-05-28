@@ -1,8 +1,7 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO, sumBN } from '@lib/math'
+import { sumBI } from '@lib/math'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   lockedBalances: {
@@ -45,8 +44,8 @@ export async function getRedactedLockerBalances(ctx: BalancesContext, locker: Co
   })
   const [total, _unlockable, _locked, lockData] = lockedBalances
 
-  const locked = sumBN((lockData || []).map((lockData: any) => lockData.amount))
-  const expiredLocked = BigNumber.from(total).sub(locked)
+  const locked = sumBI((lockData || []).map((lockData) => lockData.amount))
+  const expiredLocked = total - locked
 
   balances.push({
     ...locker,
@@ -65,9 +64,9 @@ export async function getRedactedLockerBalances(ctx: BalancesContext, locker: Co
       ...locker,
       underlyings: [BTRFLY_v2],
       rewards: undefined,
-      amount: BigNumber.from(amount),
+      amount,
       unlockAt: unlockTime,
-      claimable: BN_ZERO,
+      claimable: 0n,
       category: 'lock',
     })
   }

@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   underlyingPerDealExchangeRate: {
@@ -48,15 +48,13 @@ export async function getVestBalances(ctx: BalancesContext, vester: Contract): P
 
   const [underlyingClaimable, _dealTokensClaimable] = claimable
 
-  const underlyings: Contract[] = [
-    { ...LODE, amount: BigNumber.from(balanceOf).mul(exchangeRate).div(utils.parseEther('1.0')) },
-  ]
+  const underlyings: Contract[] = [{ ...LODE, amount: (balanceOf * exchangeRate) / parseEther('1.0') }]
 
   return {
     ...vester,
-    amount: BigNumber.from(balanceOf),
+    amount: balanceOf,
     underlyings,
-    claimable: BigNumber.from(underlyingClaimable),
+    claimable: underlyingClaimable,
     unlockAt: Number(vestingExpiry),
     rewards: undefined,
     category: 'vest',

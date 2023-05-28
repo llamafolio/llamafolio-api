@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getStETHByWstETH: {
@@ -34,14 +33,12 @@ export async function getWStEthStakeBalances(ctx: BalancesContext, contract: Con
     abi: erc20Abi.balanceOf,
   })
 
-  const converterWStEthToStEthRes = await call({
+  const formattedBalanceOf = await call({
     ctx,
     target: contract.address,
     params: [balanceOf],
     abi: abi.getStETHByWstETH,
   })
-
-  const formattedBalanceOf = BigNumber.from(converterWStEthToStEthRes)
 
   balances.push({
     chain: ctx.chain,
@@ -57,14 +54,12 @@ export async function getWStEthStakeBalances(ctx: BalancesContext, contract: Con
 export async function getStEthStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const balanceOfRes = await call({
+  const balanceOf = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
-
-  const balanceOf = BigNumber.from(balanceOfRes)
 
   balances.push({
     chain: ctx.chain,
@@ -88,14 +83,12 @@ export async function getStMaticBalances(ctx: BalancesContext, contract: Contrac
     abi: erc20Abi.balanceOf,
   })
 
-  const converterWStEthToStEthRes = await call({
+  const [formattedBalanceOf] = await call({
     ctx,
     target: contract.address,
     params: [balanceOfRes],
     abi: abi.convertStMaticToMatic,
   })
-
-  const formattedBalanceOf = BigNumber.from(converterWStEthToStEthRes[0])
 
   balances.push({
     chain: ctx.chain,

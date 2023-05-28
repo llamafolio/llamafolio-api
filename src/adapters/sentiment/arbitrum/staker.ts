@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccess, mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   convertToAssets: {
@@ -36,7 +35,7 @@ export async function getSentimentStakerBalances(ctx: BalancesContext, stakers: 
 
     return {
       ...staker,
-      amount: BigNumber.from(res.output),
+      amount: res.output,
       underlyings: [underlying],
       rewards: undefined,
       category: 'stake',

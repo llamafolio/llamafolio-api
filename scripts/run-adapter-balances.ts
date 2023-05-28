@@ -8,7 +8,7 @@ import type { Adapter, Balance, BalancesContext, PricedBalance } from '../src/li
 import { groupBy } from '../src/lib/array'
 import { sanitizeBalances } from '../src/lib/balance'
 import type { Chain } from '../src/lib/chains'
-import { millify } from '../src/lib/fmt'
+import { millify, millifyBI } from '../src/lib/fmt'
 import { getPricedBalances } from '../src/lib/price'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -67,16 +67,16 @@ function printBalances(balances: PricedBalance[]) {
 
     for (const balance of categoryBalances.balances) {
       try {
-        const decimals = balance.decimals ? 10 ** balance.decimals : 1
+        const decimals = balance.decimals ? 10n ** BigInt(balance.decimals) : 1n
 
-        const d = {
+        const d: { [key: string]: any } = {
           chain: balance.chain,
           address: balance.address,
           category: balance.category,
           symbol: balance.symbol,
-          balance: millify(balance.amount.div(decimals.toString()).toNumber()),
+          balance: millifyBI(balance.amount / decimals),
           balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-          claimable: balance.claimable ? millify(balance.claimable.div(decimals.toString()).toNumber()) : undefined,
+          claimable: balance.claimable ? millifyBI(balance.claimable / decimals) : undefined,
           stable: balance.stable,
           type: balance.type,
           reward: '',
@@ -86,9 +86,9 @@ function printBalances(balances: PricedBalance[]) {
         if (balance.rewards) {
           d.reward = balance.rewards
             .map((reward) => {
-              const decimals = reward.decimals ? 10 ** reward.decimals : 1
+              const decimals = reward.decimals ? 10n ** BigInt(reward.decimals) : 1n
 
-              return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
+              return `${millifyBI(reward.amount / decimals)} ${reward.symbol}`
             })
             .join(' + ')
         }
@@ -96,18 +96,18 @@ function printBalances(balances: PricedBalance[]) {
         if (balance.underlyings) {
           d.underlying = balance.underlyings
             .map((underlying) => {
-              const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
+              const decimals = underlying.decimals ? 10n ** BigInt(underlying.decimals) : 1n
 
-              return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
+              return `${millify(Number(underlying.amount / decimals))} ${underlying.symbol}`
             })
             .join(' + ')
         }
 
         if (balance.category === 'perpetual') {
-          d.margin = millify(balance.margin.div(decimals.toString()).toNumber())
-          d.entryPrice = millify(balance.entryPrice.div(decimals.toString()).toNumber())
-          d.marketPrice = millify(balance.marketPrice.div(decimals.toString()).toNumber())
-          d.leverage = millify(balance.leverage.div(decimals.toString()).toNumber())
+          d.margin = balance.margin ? millifyBI(balance.margin / decimals) : undefined
+          d.entryPrice = balance.entryPrice ? millifyBI(balance.entryPrice / decimals) : undefined
+          d.marketPrice = balance.marketPrice ? millifyBI(balance.marketPrice / decimals) : undefined
+          d.leverage = balance.leverage ? millifyBI(balance.leverage / decimals) : undefined
         }
 
         data.push(d)
@@ -139,7 +139,7 @@ async function main() {
 
   const adapterId = process.argv[2]
   const chain = process.argv[3] as Chain
-  const address = process.argv[4].toLowerCase()
+  const address = process.argv[4].toLowerCase() as `0x${string}`
 
   const ctx: BalancesContext = { address, chain, adapterId }
 

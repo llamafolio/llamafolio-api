@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, BaseContract, Contract } from '@lib/adapter'
 import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 import { getAccruedBLUSD } from './chickenBondManager'
 
@@ -118,15 +116,15 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
     const balance: Balance = {
       ...LUSD,
       category: 'stake',
-      amount: BN_ZERO,
+      amount: 0n,
     }
 
     if (bondAmountRes.success) {
-      balance.amount = BigNumber.from(bondAmountRes.output)
+      balance.amount = bondAmountRes.output
     }
 
     if (bLUSDRes.success) {
-      balance.rewards = [{ ...bLUSD, amount: BigNumber.from(bLUSDRes.output) }]
+      balance.rewards = [{ ...bLUSD, amount: bLUSDRes.output }]
     }
 
     balances.push(balance)

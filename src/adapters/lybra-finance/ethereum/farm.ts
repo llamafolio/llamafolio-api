@@ -1,11 +1,9 @@
 import type { Balance, BalancesContext, Contract, FarmBalance } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -63,9 +61,9 @@ export async function getLybraFarmBalances(ctx: BalancesContext, farmers: Contra
 
     const balance: getLybraFarmBalancesParams = {
       ...farmer,
-      amount: BigNumber.from(userBalanceRes.output),
+      amount: userBalanceRes.output,
       underlyings,
-      rewards: [{ ...esLBR, amount: BigNumber.from(userPendingRewardRes.output) }],
+      rewards: [{ ...esLBR, amount: userPendingRewardRes.output }],
       provider: farmer.provider,
       category: 'farm',
     }
@@ -117,8 +115,7 @@ const getCurveUnderlying = async (ctx: BalancesContext, pools: getLybraFarmBalan
 
     underlyings.forEach((underlying, underlyingIdx) => {
       const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
-      ;(underlying as Balance).amount =
-        BigNumber.from(underlyingBalance).mul(amount).div(totalSupplyRes.output) || BN_ZERO
+      ;(underlying as Balance).amount = (underlyingBalance * amount) / totalSupplyRes.output || 0n
     })
 
     balances.push(pool)

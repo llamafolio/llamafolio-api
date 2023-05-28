@@ -3,7 +3,7 @@ import { call } from '@lib/call'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber, ethers } from 'ethers'
+import { ethers } from 'ethers'
 
 const abi = {
   getReservesList: {
@@ -174,11 +174,8 @@ export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Co
 
     // use the same amount for underlyings
     for (const balance of balances) {
-      if (balance.amount.gt(0) && balance.underlyings) {
-        balance.underlyings[0] = {
-          ...balance.underlyings[0],
-          amount: BigNumber.from(balance.amount),
-        }
+      if (balance.amount > 0n && balance.underlyings) {
+        balance.underlyings[0] = { ...balance.underlyings[0], amount: balance.amount }
       }
     }
 

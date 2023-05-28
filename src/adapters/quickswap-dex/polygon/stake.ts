@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   QUICKBalance: {
@@ -32,7 +31,7 @@ export async function getQuickswapBalances(ctx: BalancesContext, stakers: Contra
 
     balances.push({
       ...staker,
-      amount: BigNumber.from(balancesOfRes.output),
+      amount: balancesOfRes.output,
       underlyings,
       rewards: undefined,
       category: 'stake',

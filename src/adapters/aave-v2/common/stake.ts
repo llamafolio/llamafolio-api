@@ -1,8 +1,33 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi, getERC20Details } from '@lib/erc20'
+import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
+
+const abi = {
+  bPool: {
+    inputs: [],
+    name: 'bPool',
+    outputs: [{ internalType: 'contract IBPool', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getCurrentTokens: {
+    constant: true,
+    inputs: [],
+    name: 'getCurrentTokens',
+    outputs: [{ internalType: 'address[]', name: 'tokens', type: 'address[]' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getTotalRewardsBalance: {
+    inputs: [{ internalType: 'address', name: 'staker', type: 'address' }],
+    name: 'getTotalRewardsBalance',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+} as const
 
 const AAVE: Contract = {
   name: 'Aave Token',
@@ -23,30 +48,10 @@ const ABPT: Contract = {
 export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [balanceOfRes, rewardsRes] = await Promise.all([
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
-
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: 'staker', type: 'address' }],
-        name: 'getTotalRewardsBalance',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+  const [amount, rewards] = await Promise.all([
+    call({ ctx, target: contract.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: contract.address, params: [ctx.address], abi: abi.getTotalRewardsBalance }),
   ])
-
-  const amount = BigNumber.from(balanceOfRes)
-  const rewards = BigNumber.from(rewardsRes)
 
   balances.push({
     chain: ctx.chain,
@@ -68,55 +73,18 @@ export async function getStakeBalancerPoolBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [bPoolRes, stakingBalanceOfRes, stakingRewardsRes] = await Promise.all([
-    call({
-      ctx,
-      target: ABPT.address,
-      abi: {
-        inputs: [],
-        name: 'bPool',
-        outputs: [{ internalType: 'contract IBPool', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    call({
-      ctx,
-      target: stakingContract.address,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
-
-    call({
-      ctx,
-      target: stakingContract.address,
-      params: [ctx.address],
-      abi: {
-        inputs: [{ internalType: 'address', name: 'staker', type: 'address' }],
-        name: 'getTotalRewardsBalance',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-  ])
-
   // staked balancer pool token
-  const stakedBalance = BigNumber.from(stakingBalanceOfRes)
-  const stakingRewards = BigNumber.from(stakingRewardsRes)
+  const [bPoolRes, stakedBalance, stakingRewards] = await Promise.all([
+    call({ ctx, target: ABPT.address, abi: abi.bPool }),
+    call({ ctx, target: stakingContract.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: stakingContract.address, params: [ctx.address], abi: abi.getTotalRewardsBalance }),
+  ])
 
   // Underlyings
   const totalSupplyRes = await multicall({
     ctx,
     calls: [{ target: stakingContract.address }, { target: ABPT.address }],
-    abi: {
-      inputs: [],
-      name: 'totalSupply',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: erc20Abi.totalSupply,
   })
 
   if (!totalSupplyRes[0].success || !totalSupplyRes[1].success) {
@@ -128,30 +96,10 @@ export async function getStakeBalancerPoolBalances(
     ctx,
     target: ABPT.address,
     params: [stakingContract.address],
-    abi: {
-      constant: true,
-      inputs: [{ internalType: 'address', name: '', type: 'address' }],
-      name: 'balanceOf',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: erc20Abi.balanceOf,
   })
 
-  const underlyingsTokensAddressesRes = await call({
-    ctx,
-    target: bPoolRes,
-    abi: {
-      constant: true,
-      inputs: [],
-      name: 'getCurrentTokens',
-      outputs: [{ internalType: 'address[]', name: 'tokens', type: 'address[]' }],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    },
-  })
+  const underlyingsTokensAddressesRes = await call({ ctx, target: bPoolRes, abi: abi.getCurrentTokens })
 
   const underlyingsTokensAddresses = underlyingsTokensAddressesRes
   const underlyingsTokens = await getERC20Details(ctx, underlyingsTokensAddresses)
@@ -162,47 +110,31 @@ export async function getStakeBalancerPoolBalances(
 
   const underlyingsBalancesRes = await multicall({
     ctx,
-    calls: underlyingsTokens.map(
-      (token) =>
-        ({
-          target: token.address,
-          params: [bPoolRes],
-        } as const),
-    ),
-    abi: {
-      constant: true,
-      inputs: [{ internalType: 'address', name: '', type: 'address' }],
-      name: 'balanceOf',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      payable: false,
-      stateMutability: 'view',
-      type: 'function',
-    } as const,
+    calls: underlyingsTokens.map((token) => ({ target: token.address, params: [bPoolRes] } as const)),
+    abi: erc20Abi.balanceOf,
   })
 
+  const u0Balance = underlyingsBalancesRes[0].success ? underlyingsBalancesRes[0].output : 0n
   const underlying0Balance = {
     chain: ctx.chain,
     address: underlyingsTokens[0].address,
     decimals: underlyingsTokens[0].decimals,
     symbol: underlyingsTokens[0].symbol,
     // staking share * underlying share
-    amount: stakedBalance
-      .mul(stakingContractLPBalanceRes)
-      .div(totalSupplyRes[0].output)
-      .mul(underlyingsBalancesRes[0].success ? underlyingsBalancesRes[0].output : 0n)
-      .div(totalSupplyRes[1].output),
+    amount:
+      (((stakedBalance * stakingContractLPBalanceRes) / totalSupplyRes[0].output) * u0Balance) /
+      totalSupplyRes[1].output,
   }
+  const u1Balance = underlyingsBalancesRes[1].success ? underlyingsBalancesRes[1].output : 0n
   const underlying1Balance = {
     chain: ctx.chain,
     address: underlyingsTokens[1].address,
     decimals: underlyingsTokens[1].decimals,
     symbol: underlyingsTokens[1].symbol,
     // staking share * underlying share
-    amount: stakedBalance
-      .mul(stakingContractLPBalanceRes)
-      .div(totalSupplyRes[0].output)
-      .mul(underlyingsBalancesRes[1].success ? underlyingsBalancesRes[1].output : 0n)
-      .div(totalSupplyRes[1].output),
+    amount:
+      (((stakedBalance * stakingContractLPBalanceRes) / totalSupplyRes[0].output) * u1Balance) /
+      totalSupplyRes[1].output,
   }
 
   balances.push({

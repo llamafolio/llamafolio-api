@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers/lib/ethers'
 
 const abi = {
   getPoolTokens: {
@@ -66,9 +64,9 @@ export async function getLockerBalances(
   ])
   const [_tokens, balances, _lastChangeBlock] = poolTokens
 
-  const underlyings0Balances = BigNumber.from(balanceOf).mul(balances[0]).div(totalSupply)
+  const underlyings0Balances = (balanceOf * balances[0]) / totalSupply
 
-  const underlyings1Balances = BigNumber.from(balanceOf).mul(balances[1]).div(totalSupply)
+  const underlyings1Balances = (balanceOf * balances[1]) / totalSupply
 
   const now = Date.now() / 1000
   const unlockAt = Number(lockedEnd)
@@ -78,8 +76,8 @@ export async function getLockerBalances(
     address: votingEscrow.address,
     symbol: votingEscrow.symbol,
     decimals: votingEscrow.decimals,
-    amount: BigNumber.from(balanceOf),
-    claimable: now > unlockAt ? BigNumber.from(balanceOf) : BN_ZERO,
+    amount: balanceOf,
+    claimable: now > unlockAt ? balanceOf : 0n,
     unlockAt,
     underlyings: [
       { ...BAL, amount: underlyings0Balances },

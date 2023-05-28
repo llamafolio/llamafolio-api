@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   calculateSharesValueInX2Y2: {
@@ -30,7 +29,7 @@ export async function getX2Y2YieldBalances(ctx: BalancesContext, farmer: Contrac
 
   return {
     ...farmer,
-    amount: BigNumber.from(balanceOf),
+    amount: balanceOf,
     underlyings: [x2y2],
     rewards: undefined,
     category: 'farm',

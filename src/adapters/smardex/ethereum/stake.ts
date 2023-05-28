@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   sharesToTokens: {
@@ -49,7 +48,7 @@ export async function getSmarDexStakeBalances(ctx: BalancesContext, staker: Cont
 
   return {
     ...staker,
-    amount: BigNumber.from(sharesToTokens),
+    amount: sharesToTokens,
     underlyings: [SDEX],
     rewards: undefined,
     category: 'stake',

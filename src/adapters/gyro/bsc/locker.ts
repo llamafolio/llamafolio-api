@@ -2,10 +2,8 @@ import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { mapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   locked: {
@@ -79,8 +77,8 @@ export async function getGyroLocker(ctx: BalancesContext, locker: Contract): Pro
       ...locker,
       underlyings: [GYRO],
       decimals: 9,
-      amount: BigNumber.from(amount),
-      claimable: now > end ? BigNumber.from(amount) : BN_ZERO,
+      amount,
+      claimable: now > end ? amount : 0n,
       rewards: undefined,
       unlockAt: Number(end),
       category: 'lock',

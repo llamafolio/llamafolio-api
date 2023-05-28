@@ -8,7 +8,6 @@ import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   campaignInfo: {
@@ -98,8 +97,8 @@ export async function getSmarDexFarmBalances(
       ...masterchefPool,
       underlyings: masterchefPool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(amount),
-      rewards: [{ ...SDEX, amount: BigNumber.from(pendingRewardRes.output) }],
+      amount: amount,
+      rewards: [{ ...SDEX, amount: pendingRewardRes.output }],
     })
   }
 

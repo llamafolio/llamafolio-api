@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   exchangeRate: {
@@ -52,12 +52,12 @@ export async function getWombatLpBalances(ctx: BalancesContext, pools: Contract[
     const fmtUnderlying = {
       ...underlying,
       decimals: 18,
-      amount: BigNumber.from(userBalanceRes.output).mul(exchangeRateRes.output).div(utils.parseEther('1.0')),
+      amount: (userBalanceRes.output * exchangeRateRes.output) / parseEther('1.0'),
     }
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(userBalanceRes.output),
+      amount: userBalanceRes.output,
       underlyings: [fmtUnderlying],
       rewards: undefined,
       category: 'lp',

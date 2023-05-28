@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 const abi = {
   firstPeriodStartTimestamp: {
@@ -58,7 +57,7 @@ export async function getStakeBalances(
     },
   })
 
-  const formattedBalance = BigNumber.from(formattedBalanceRes)
+  const formattedBalance = formattedBalanceRes
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -94,7 +93,7 @@ export async function getLockedBalances(ctx: BalancesContext, contracts: Contrac
         return
       }
 
-      const amountLocked = BigNumber.from(balancesLockedRes[i].output)
+      const amountLocked = balancesLockedRes[i].output
 
       const balance: Balance = {
         chain: ctx.chain,

@@ -1,7 +1,6 @@
 import '../environment'
 
 import { chains as tokensByChain } from '@llamafolio/tokens'
-import { BigNumber } from 'ethers'
 
 import type { BalancesContext } from '../src/lib/adapter'
 import type { Chain } from '../src/lib/chains'
@@ -34,7 +33,7 @@ async function main() {
   }
 
   const chain = process.argv[2] as Chain
-  const address = process.argv[3].toLowerCase()
+  const address = process.argv[3].toLowerCase() as `0x${string}`
 
   const ctx: BalancesContext = { chain, adapterId: '', address }
 
@@ -47,10 +46,7 @@ async function main() {
 
     const balances = await multicall({
       ctx,
-      calls: tokens.map((token) => ({
-        target: token.address,
-        params: [ctx.address],
-      })),
+      calls: tokens.map((token) => ({ target: token.address, params: [ctx.address] } as const)),
       abi: abi.balanceOf,
     })
 
@@ -60,7 +56,7 @@ async function main() {
         continue
       }
       const token = tokens[tokenIdx]
-      token.amount = BigNumber.from(balances[tokenIdx].output || '0')
+      token.amount = balances[tokenIdx].output || 0n
     }
 
     const hrend = process.hrtime(hrstart)

@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   xBOOForBOO: {
@@ -30,8 +29,8 @@ export async function getStakexBOOBalances(ctx: BalancesContext, contract: Contr
 
   balances.push({
     ...contract,
-    amount: BigNumber.from(balanceOf),
-    underlyings: [{ ...BOO, amount: BigNumber.from(xBOOForBOORes) }],
+    amount: balanceOf,
+    underlyings: [{ ...BOO, amount: xBOOForBOORes }],
     rewards: undefined,
     category: 'stake',
   })

@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getSingleStakeBalance } from '@lib/stake'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   withdrawableRewards: {
@@ -29,6 +28,6 @@ export async function getLinkStakesBalances(ctx: BalancesContext, staker: Contra
 
   return {
     ...balance,
-    rewards: [{ ...LINK, amount: BigNumber.from(earned[0]) }],
+    rewards: [{ ...LINK, amount: earned[0] }],
   }
 }

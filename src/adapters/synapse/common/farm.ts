@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   userInfo: {
@@ -38,7 +37,7 @@ const abi = {
 } as const
 
 type getSynapseBalancesParams = Balance & {
-  totalSupply: BigNumber
+  totalSupply: bigint
   pool: `0x${string}`
 }
 
@@ -79,10 +78,10 @@ export async function getSynapseBalances(
     balances.push({
       ...pool,
       pool: pool.pool,
-      amount: BigNumber.from(amount),
+      amount: amount,
       underlyings: underlyings,
-      rewards: [{ ...rewards, amount: BigNumber.from(pendingSynapseRes.output) }],
-      totalSupply: BigNumber.from(totalSupplyRes.output),
+      rewards: [{ ...rewards, amount: pendingSynapseRes.output }],
+      totalSupply: totalSupplyRes.output,
       category: 'farm',
     })
   }
@@ -108,9 +107,7 @@ async function getUnderlyingsBalances(ctx: BalancesContext, balances: getSynapse
       const underlyingsBalance = underlyingsBalancesRes[underlyingIdx]
 
       if (underlyingsBalance.success) {
-        ;(underlying as Balance).amount = BigNumber.from(underlyingsBalance.output)
-          .mul(balance.amount)
-          .div(balance.totalSupply)
+        ;(underlying as Balance).amount = (underlyingsBalance.output * balance.amount) / balance.totalSupply
       }
     })
   }

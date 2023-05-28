@@ -7,7 +7,6 @@ import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
 import type { Token } from '@lib/token'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-import { BigNumber } from 'ethers'
 
 export interface ITransaction {
   chain: string
@@ -144,7 +143,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
           const priceInfo = prices.coins[key]
           if (priceInfo && priceInfo.decimals) {
             transaction.price = priceInfo.price
-            transaction.valueUSD = mulPrice(BigNumber.from(transaction.value), priceInfo.decimals, priceInfo.price)
+            transaction.valueUSD = mulPrice(transaction.value, priceInfo.decimals, priceInfo.price)
           }
         }
       }
@@ -157,7 +156,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
             const priceInfo = prices.coins[key]
             if (priceInfo && priceInfo.decimals) {
               transfer.price = priceInfo.price
-              transfer.valueUSD = mulPrice(BigNumber.from(transfer.value), priceInfo.decimals, priceInfo.price)
+              transfer.valueUSD = mulPrice(transfer.value, priceInfo.decimals, priceInfo.price)
             }
           }
         }

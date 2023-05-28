@@ -1,7 +1,5 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getUserLocks: {
@@ -40,8 +38,8 @@ export async function getTrustLockBalances(ctx: BalancesContext, locker: Contrac
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(userLocksBalancesRes[lockIdx].amount),
-      claimable: now > unlockAt ? BigNumber.from(userLocksBalancesRes[lockIdx].amount) : BN_ZERO,
+      amount: userLocksBalancesRes[lockIdx].amount,
+      claimable: now > unlockAt ? userLocksBalancesRes[lockIdx].amount : 0n,
       unlockAt,
       underlyings: undefined,
       rewards: undefined,

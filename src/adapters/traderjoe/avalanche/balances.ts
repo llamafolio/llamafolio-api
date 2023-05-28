@@ -1,7 +1,6 @@
 import type { BalancesContext } from '@lib/adapter'
 import type { Balance, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 interface Token extends Contract {
   name: string
@@ -153,9 +152,9 @@ export async function getStakeBalance(ctx: BalancesContext) {
   const [veJOEBalance] = veJOEbalanceOfRes
   const [rJOEBalance] = rJOEbalanceOfRes
 
-  const sJOEbalanceOf = BigNumber.from(sJOEbalanceOfRes[0])
-  const veJOEbalanceOf = BigNumber.from(veJOEBalance)
-  const rJOEbalanceOf = BigNumber.from(rJOEBalance)
+  const sJOEbalanceOf = sJOEbalanceOfRes[0]
+  const veJOEbalanceOf = veJOEBalance
+  const rJOEbalanceOf = rJOEBalance
 
   const stakeAmount = [sJOEbalanceOf, veJOEbalanceOf, rJOEbalanceOf]
 
@@ -182,9 +181,9 @@ export async function getStakeBalance(ctx: BalancesContext) {
     }),
   ])
 
-  const sJOErewards = BigNumber.from(sJOErewardsRes)
-  const veJOErewards = BigNumber.from(veJOErewardsRes)
-  const rJOErewards = BigNumber.from(rJOErewardsRes)
+  const sJOErewards = sJOErewardsRes
+  const veJOErewards = veJOErewardsRes
+  const rJOErewards = rJOErewardsRes
 
   const rewardsAmount = [sJOErewards, veJOErewards, rJOErewards]
 

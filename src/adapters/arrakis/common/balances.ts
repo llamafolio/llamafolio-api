@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 export async function getLpBalances(ctx: BalancesContext, contracts: Contract[]) {
   const balances: Balance[] = []
@@ -67,12 +66,10 @@ export async function getLpBalances(ctx: BalancesContext, contracts: Contract[])
 
     const [amount0Current, amount1Current] = underlyingBalances.output
 
-    ;(nonZeroBalances[i].underlyings![0] as Balance).amount = BigNumber.from(nonZeroBalances[i].amount)
-      .mul(amount0Current)
-      .div(totalSupply.output)
-    ;(nonZeroBalances[i].underlyings![1] as Balance).amount = BigNumber.from(nonZeroBalances[i].amount)
-      .mul(amount1Current)
-      .div(totalSupply.output)
+    ;(nonZeroBalances[i].underlyings![0] as Balance).amount =
+      (nonZeroBalances[i].amount * amount0Current) / totalSupply.output
+    ;(nonZeroBalances[i].underlyings![1] as Balance).amount =
+      (nonZeroBalances[i].amount * amount1Current) / totalSupply.output
 
     nonZeroBalances[i].category = 'lp'
     balances.push(nonZeroBalances[i])

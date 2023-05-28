@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getSingleStakeBalance } from '@lib/stake'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getClaimableReward: {
@@ -27,8 +26,5 @@ export async function getAsymetrixBalances(ctx: BalancesContext, staker: Contrac
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getClaimableReward }),
   ])
 
-  return {
-    ...balance,
-    rewards: [{ ...ASX, amount: BigNumber.from(pendingReward) }],
-  }
+  return { ...balance, rewards: [{ ...ASX, amount: pendingReward }] }
 }

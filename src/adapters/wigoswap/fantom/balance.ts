@@ -4,7 +4,7 @@ import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
 import type { Token } from '@lib/token'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   getPricePerFullShare: {
@@ -44,7 +44,7 @@ export async function getWigoBalances(ctx: BalancesContext, pool: Contract): Pro
 
   return {
     ...pool,
-    amount: BigNumber.from(shares).mul(pricePerFullShare).div(utils.parseEther('1.0')),
+    amount: (shares * pricePerFullShare) / parseEther('1.0'),
     underlyings: [wigo],
     rewards: undefined,
     category: 'farm',

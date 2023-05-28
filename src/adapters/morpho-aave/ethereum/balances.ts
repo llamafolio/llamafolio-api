@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapt
 import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber, ethers } from 'ethers'
+import { ethers } from 'ethers'
 
 const abi = {
   getAllMarkets: {
@@ -117,7 +117,7 @@ export async function getLendBorrowBalances(
       balances.push({
         ...market,
         decimals: underlyings.decimals,
-        amount: BigNumber.from(totalBalance),
+        amount: totalBalance,
         underlyings: [underlyings],
         rewards: undefined,
         category: 'lend',
@@ -132,7 +132,7 @@ export async function getLendBorrowBalances(
         address: market.address,
         decimals: underlyings.decimals,
         symbol: market.symbol,
-        amount: BigNumber.from(totalBalance),
+        amount: totalBalance,
         underlyings: [underlyings],
         rewards: undefined,
         category: 'borrow',

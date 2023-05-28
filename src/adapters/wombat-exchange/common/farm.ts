@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   getAssetPid: {
@@ -111,14 +111,14 @@ export async function getWombatFarmBalances(
     const fmtUnderlying = {
       ...underlying,
       decimals: 18,
-      amount: BigNumber.from(amount).mul(exchangeRateRes.output).div(utils.parseEther('1.0')),
+      amount: (amount * exchangeRateRes.output) / parseEther('1.0'),
     }
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(amount),
+      amount: amount,
       underlyings: [fmtUnderlying],
-      rewards: [{ ...WOM, amount: BigNumber.from(pendingRewards) }],
+      rewards: [{ ...WOM, amount: pendingRewards }],
       category: 'farm',
     })
   }

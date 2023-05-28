@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers/lib/ethers'
 
 import type { ProviderBalancesParams } from '../providers/interface'
 import { curveBalancesProvider } from './providers/curve'
@@ -51,15 +49,14 @@ export async function getFraxBalances(ctx: BalancesContext, pools: Contract[]): 
     rewards.forEach((reward, idx) => {
       const earnedRes = earnedsRes[poolIdx]
 
-      ;(reward as Balance).amount =
-        earnedRes.success && earnedRes.output.length > 0 ? BigNumber.from(earnedRes.output[idx]) : BN_ZERO
+      ;(reward as Balance).amount = earnedRes.success && earnedRes.output.length > 0 ? earnedRes.output[idx] : 0n
     })
 
     const balanceOf = balancesOfsRes[poolIdx]
 
     balances.push({
       ...pool,
-      amount: balanceOf.success ? BigNumber.from(balanceOf.output) : BN_ZERO,
+      amount: balanceOf.success ? balanceOf.output : 0n,
       rewards: rewards as Balance[],
       underlyings: pool.underlyings as Contract[],
       category: 'farm',

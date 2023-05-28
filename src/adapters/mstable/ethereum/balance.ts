@@ -5,7 +5,7 @@ import { abi as erc20Abi } from '@lib/erc20'
 import { getSingleLockerBalance } from '@lib/lock'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   exchangeRate: {
@@ -118,7 +118,7 @@ export async function getmStableBalances(ctx: BalancesContext, pools: Contract[]
 
   const balances: Balance[] = mapSuccessFilter(userBalanceOfRes, (res, idx) => ({
     ...pools[idx],
-    amount: BigNumber.from(res.output),
+    amount: res.output,
     underlyings: pools[idx].underlyings as Contract[],
     rewards: undefined,
     category: 'lp',
@@ -137,14 +137,14 @@ export async function getmStableFarmingBalances(ctx: BalancesContext, farmer: Co
 
   const fmtUnderlyings = {
     ...(farmer.underlyings?.[0] as Contract),
-    amount: BigNumber.from(userBalance).mul(exchangeRate).div(utils.parseEther('1.0')),
+    amount: (userBalance * exchangeRate) / parseEther('1.0'),
   }
 
   return {
     ...farmer,
-    amount: BigNumber.from(userBalance),
+    amount: userBalance,
     underlyings: [fmtUnderlyings],
-    rewards: [{ ...(farmer.rewards?.[0] as Contract), amount: BigNumber.from(amount) }],
+    rewards: [{ ...(farmer.rewards?.[0] as Contract), amount }],
     category: 'farm',
   }
 }
@@ -157,9 +157,9 @@ export async function getstkMTABalance(ctx: BalancesContext, staker: Contract): 
 
   return {
     ...staker,
-    amount: BigNumber.from(userBalance),
+    amount: userBalance,
     underlyings: staker.underlyings as Contract[],
-    rewards: [{ ...(staker.rewards?.[0] as Contract), amount: BigNumber.from(pendingReward) }],
+    rewards: [{ ...(staker.rewards?.[0] as Contract), amount: pendingReward }],
     category: 'stake',
   }
 }
@@ -179,16 +179,16 @@ export async function getstkBPTBalance(ctx: BalancesContext, staker: Contract): 
   const [_tokens, balances, _lastChangeBlock] = poolTokens
 
   underlyings.forEach((underlying, idx) => {
-    const underlyingAmount = BigNumber.from(balances[idx]).mul(userBalanceOf).div(totalSuppliesRes)
+    const underlyingAmount = (balances[idx] * userBalanceOf) / totalSuppliesRes
 
     underlying.amount = underlyingAmount
   })
 
   return {
     ...staker,
-    amount: BigNumber.from(userBalanceOf),
+    amount: userBalanceOf,
     underlyings,
-    rewards: [{ ...(staker.rewards?.[0] as Contract), amount: BigNumber.from(pendingReward) }],
+    rewards: [{ ...(staker.rewards?.[0] as Contract), amount: pendingReward }],
     category: 'stake',
   }
 }
@@ -200,7 +200,7 @@ export async function getmStableLockerBalance(ctx: BalancesContext, locker: Cont
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.stakeEarned }),
   ])
 
-  userBalanceRes.rewards = [{ ...(locker.rewards?.[0] as Contract), amount: BigNumber.from(userRewardRes) }]
+  userBalanceRes.rewards = [{ ...(locker.rewards?.[0] as Contract), amount: userRewardRes }]
 
   return {
     ...userBalanceRes,
@@ -242,7 +242,7 @@ const getmStableUnderlyings = async (ctx: BalancesContext, balances: Balance[]):
     const poolBalance = singleUnderlyingsPoolBalances[idx]
     const fmtUnderlyings = {
       ...poolBalance.underlyings?.[0],
-      amount: poolBalance.amount.mul(res.output).div(utils.parseEther('1.0')),
+      amount: (poolBalance.amount * res.output) / parseEther('1.0'),
     }
 
     return {
@@ -268,7 +268,7 @@ const getmStableUnderlyings = async (ctx: BalancesContext, balances: Balance[]):
 
     const fmtUnderlyings = underlyings.map((underlying, idx) => ({
       ...underlying,
-      amount: poolBalance.amount.mul(data[idx].vaultBalance).div(totalSupplyRes.output),
+      amount: (poolBalance.amount * data[idx].vaultBalance) / totalSupplyRes.output,
     }))
 
     multiplePoolBalances.push({

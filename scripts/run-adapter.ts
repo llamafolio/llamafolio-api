@@ -1,8 +1,6 @@
 import path from 'node:path'
 import url from 'node:url'
 
-import { BigNumber } from 'ethers'
-
 import pool from '../src/db/pool'
 import type { Adapter, Balance, BalancesContext, PricedBalance } from '../src/lib/adapter'
 import { groupBy } from '../src/lib/array'
@@ -23,14 +21,6 @@ interface CategoryBalances {
   totalUSD: number
   balances: PricedBalance[]
 }
-
-Object.defineProperties(BigNumber.prototype, {
-  toJSON: {
-    value: function (this: BigNumber) {
-      return this.toString()
-    },
-  },
-})
 
 Object.defineProperties(BigInt.prototype, {
   toJSON: {
@@ -92,9 +82,9 @@ function printBalances({ balances }) {
           address: balance.address,
           category: balance.category,
           symbol: balance.symbol,
-          balance: millify(balance.amount.div(decimals.toString()).toNumber()),
+          balance: millify(balance.amount / decimals.toString().toNumber()),
           balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-          claimable: balance.claimable ? millify(balance.claimable.div(decimals.toString()).toNumber()) : undefined,
+          claimable: balance.claimable ? millify(balance.claimable / decimals.toString().toNumber()) : undefined,
           stable: balance.stable,
           type: balance.type,
           reward: '',
@@ -106,7 +96,7 @@ function printBalances({ balances }) {
             .map((reward) => {
               const decimals = reward.decimals ? 10 ** reward.decimals : 1
 
-              return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
+              return `${millify(reward.amount / decimals.toString().toNumber())} ${reward.symbol}`
             })
             .join(' + ')
         }
@@ -116,7 +106,7 @@ function printBalances({ balances }) {
             .map((underlying) => {
               const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
 
-              return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
+              return `${millify(underlying.amount / decimals.toString().toNumber())} ${underlying.symbol}`
             })
             .join(' + ')
         }
@@ -150,7 +140,7 @@ async function main() {
 
   const adapterId = process.argv[2]
   const chain = process.argv[3] as Chain
-  const address = process.argv[4].toLowerCase()
+  const address = process.argv[4].toLowerCase() as `0x${string}`
 
   const ctx: BalancesContext = { address, chain, adapterId }
 

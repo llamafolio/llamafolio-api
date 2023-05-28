@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BigNumber } from 'ethers'
 
 const abi = {
   wsHECTosHEC: {
@@ -22,14 +21,12 @@ const HEC: Contract = {
 }
 
 export async function getsStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const balanceOfRes = await call({
+  const amount = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
-
-  const amount = BigNumber.from(balanceOfRes)
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -52,14 +49,12 @@ export async function getWsStakeBalances(ctx: BalancesContext, contract: Contrac
     abi: erc20Abi.balanceOf,
   })
 
-  const formattedBalanceOfRes = await call({
+  const amount = await call({
     ctx,
     target: contract.address,
     params: [balanceOf],
     abi: abi.wsHECTosHEC,
   })
-
-  const amount = BigNumber.from(formattedBalanceOfRes)
 
   const balance: Balance = {
     chain: ctx.chain,

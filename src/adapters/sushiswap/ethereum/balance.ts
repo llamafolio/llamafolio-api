@@ -3,12 +3,10 @@ import { mapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20Details } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   poolLength: {
@@ -224,10 +222,10 @@ export async function getBalancesFromMasterchefV2(
       ...pool,
       underlyings: pool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(amount),
+      amount: amount,
       rewards: [
-        { ...rewardToken, amount: BigNumber.from(pendingSushiRes.output) },
-        { ...reward, amount: pendingTokenRes.success ? BigNumber.from(pendingTokenRes.output) : BN_ZERO },
+        { ...rewardToken, amount: pendingSushiRes.output },
+        { ...reward, amount: pendingTokenRes.success ? pendingTokenRes.output : 0n },
       ],
     })
   }

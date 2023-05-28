@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getUserSnapshot: {
@@ -21,13 +20,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
 
   const userSnapshotsRes = await multicall({
     ctx,
-    calls: pairs.map(
-      (pair) =>
-        ({
-          target: pair.address,
-          params: [ctx.address],
-        } as const),
-    ),
+    calls: pairs.map((pair) => ({ target: pair.address, params: [ctx.address] } as const)),
     abi: abi.getUserSnapshot,
   })
 
@@ -36,11 +29,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
     const userSnapshotRes = userSnapshotsRes[pairIdx]
 
     if (userSnapshotRes.success) {
-      const [_userAssetShares, _userBorrowShares, _userCollateralBalance] = userSnapshotRes.output
-
-      const userAssetShares = BigNumber.from(_userAssetShares)
-      const userBorrowShares = BigNumber.from(_userBorrowShares)
-      const userCollateralBalance = BigNumber.from(_userCollateralBalance)
+      const [userAssetShares, userBorrowShares, userCollateralBalance] = userSnapshotRes.output
 
       const asset: Balance = {
         chain: ctx.chain,

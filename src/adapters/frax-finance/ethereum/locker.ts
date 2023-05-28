@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getSingleLockerBalances } from '@lib/lock'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -39,7 +38,7 @@ export async function getFraxLockerBalances(ctx: BalancesContext, lockers: Contr
       balances.push({
         ...lockedBalance,
         underlyings: [{ ...underlying, amount: lockedBalance.amount }],
-        rewards: [{ ...reward, amount: BigNumber.from(incentiveEarnedRes.output) }],
+        rewards: [{ ...reward, amount: incentiveEarnedRes.output }],
       })
     })
     .filter(isNotNullish)

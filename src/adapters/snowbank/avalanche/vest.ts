@@ -1,8 +1,6 @@
 import type { BalancesContext, Contract, VestBalance } from '@lib/adapter'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   bondInfo: {
@@ -50,8 +48,8 @@ export async function getSBVesterBalances(ctx: BalancesContext, vesters: Contrac
 
     balances.push({
       ...vester,
-      amount: BigNumber.from(payout),
-      claimable: now > unlockAt ? BigNumber.from(payout) : BN_ZERO,
+      amount: payout,
+      claimable: now > unlockAt ? payout : 0n,
       unlockAt,
       decimals: 9,
       underlyings: [SB],

@@ -2,11 +2,10 @@ import type { Balance, BalancesContext, BaseContext, Contract, RewardBalance } f
 import { keyBy, mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, sumBN } from '@lib/math'
+import { sumBI } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   UNDERLYING_ASSET_ADDRESS: {
@@ -178,8 +177,8 @@ export async function getMultiFeeDistributionBalances(
   const [_totalEarned, earningsData] = earnedBalances
 
   // Locker
-  const locked = sumBN((lockData || []).map((lockData: any) => lockData.amount))
-  const expiredLocked = BigNumber.from(totalLocked).sub(locked)
+  const locked = sumBI((lockData || []).map((lockData) => lockData.amount))
+  const expiredLocked = totalLocked - locked
 
   balances.push({
     chain: ctx.chain,
@@ -204,9 +203,9 @@ export async function getMultiFeeDistributionBalances(
       decimals: contract.decimals,
       underlyings: undefined,
       rewards: undefined,
-      amount: BigNumber.from(amount),
+      amount,
       unlockAt: Number(unlockTime),
-      claimable: BN_ZERO,
+      claimable: 0n,
       category: 'lock',
     })
   }
@@ -223,7 +222,7 @@ export async function getMultiFeeDistributionBalances(
       decimals: stakingToken.decimals,
       underlyings: undefined,
       rewards: undefined,
-      amount: BigNumber.from(amount),
+      amount,
       unlockAt: Number(unlockTime),
       category: 'vest',
     })
@@ -237,7 +236,7 @@ export async function getMultiFeeDistributionBalances(
     decimals: contract.decimals,
     underlyings: undefined,
     rewards: undefined,
-    amount: BigNumber.from(unlockableBalance),
+    amount: unlockableBalance,
     category: 'stake',
   })
 
@@ -256,7 +255,7 @@ export async function getMultiFeeDistributionBalances(
     const rewardBalance: RewardBalance = {
       chain: ctx.chain,
       address: rewardData.token,
-      amount: BigNumber.from(rewardData.amount),
+      amount: rewardData.amount,
       underlyings: token.underlyings as Contract[],
       decimals: token.decimals,
       symbol: token.symbol,

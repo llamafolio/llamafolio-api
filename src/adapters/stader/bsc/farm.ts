@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getUserRequestStatus: {
@@ -31,7 +30,7 @@ export async function getStaderFarmBalances(ctx: BalancesContext, contract: Cont
   return {
     ...contract,
     address: contract.token!,
-    amount: BigNumber.from(_amount),
+    amount: _amount,
     underlyings: undefined,
     rewards: undefined,
     category: 'farm',

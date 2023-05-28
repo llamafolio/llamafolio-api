@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   barterInfo: {
@@ -52,7 +51,7 @@ export async function getVestingBalances(ctx: BalancesContext, vesters: Contract
       ...vester,
       decimals: USV.decimals,
       symbol: USV.symbol,
-      amount: BigNumber.from(payout),
+      amount: payout,
       unlockAt,
       underlyings: [USV],
       rewards: undefined,

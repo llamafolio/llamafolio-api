@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   mim: {
@@ -57,31 +56,17 @@ export async function getMStakeBalance(ctx: BalancesContext, contract: Contract)
   const underlying = contract.underlyings?.[0]
   const reward = contract.rewards?.[0]
 
-  const [[amount], pendingRewardsRes] = await Promise.all([
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.userInfo,
-    }),
-
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.pendingReward,
-    }),
+  const [[amount], pendingRewards] = await Promise.all([
+    call({ ctx, target: contract.address, params: [ctx.address], abi: abi.userInfo }),
+    call({ ctx, target: contract.address, params: [ctx.address], abi: abi.pendingReward }),
   ])
-
-  const balanceOf = BigNumber.from(amount)
-  const pendingRewards = BigNumber.from(pendingRewardsRes)
 
   if (contract) {
     const balance: Balance = {
       ...contract,
       rewards: undefined,
-      amount: balanceOf,
-      underlyings: [{ ...(underlying as Balance), amount: balanceOf }],
+      amount,
+      underlyings: [{ ...(underlying as Balance), amount }],
       category: 'stake',
     }
 

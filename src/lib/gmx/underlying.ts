@@ -29,9 +29,8 @@ export const get_xLP_UnderlyingsBalances = async (
 
     const fmtUnderlyings: Contract[] = underlyings.map((underlying, idx) => {
       const underlyingsBalancesOfRes = underlyingsBalancesOfsRes[idx]
-      const underlyingsAmount = balance.amount
-        .mul(underlyingsBalancesOfRes.success ? underlyingsBalancesOfRes.output : 0)
-        .div(totalSupply)
+      const underlyingsAmount =
+        (balance.amount * (underlyingsBalancesOfRes.success ? underlyingsBalancesOfRes.output : 0)) / totalSupply
       return { ...(underlying as Contract), amount: underlyingsAmount }
     })
 

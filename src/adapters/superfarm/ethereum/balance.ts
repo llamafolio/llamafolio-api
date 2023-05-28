@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getPendingTokens: {
@@ -58,9 +57,9 @@ export async function getSuperFarmBalances(ctx: BalancesContext, pools: Contract
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(amount),
+      amount: amount,
       underlyings,
-      rewards: [{ ...reward, amount: BigNumber.from(pendingRewardRes.output) }],
+      rewards: [{ ...reward, amount: pendingRewardRes.output }],
       category: 'farm',
     })
   }

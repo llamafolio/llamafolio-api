@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   pricePerShare: {
@@ -34,7 +34,7 @@ export async function getMetronomeBalances(ctx: BalancesContext, markets: Contra
     const { underlyings } = market
     const balanceOfRes = balanceOfsRes[marketIdx]
     const pricePerShareRes = pricePerSharesRes[marketIdx]
-    const pricePerShare = pricePerShareRes.success ? pricePerShareRes.output : utils.parseEther('1.0')
+    const pricePerShare = pricePerShareRes.success ? pricePerShareRes.output : parseEther('1.0')
 
     if (!balanceOfRes.success || !pricePerShare) {
       continue
@@ -42,7 +42,7 @@ export async function getMetronomeBalances(ctx: BalancesContext, markets: Contra
 
     balances.push({
       ...(market as Balance),
-      amount: BigNumber.from(balanceOfRes.output).mul(pricePerShare).div(utils.parseEther('1.0')),
+      amount: (balanceOfRes.output * pricePerShare) / parseEther('1.0'),
       underlyings: underlyings as Contract[],
       rewards: undefined,
     })

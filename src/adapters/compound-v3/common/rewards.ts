@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getRewardOwed: {
@@ -60,7 +59,7 @@ export async function getRewardBalances(
       decimals: COMP.decimals,
       symbol: COMP.symbol,
       address: COMP.address,
-      amount: BigNumber.from(pendingCompRewardRes.output.owed),
+      amount: pendingCompRewardRes.output.owed,
       category: 'reward',
     })
   }

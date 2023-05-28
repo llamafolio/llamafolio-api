@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 import { getCvxCliffRatio } from './utils'
 
@@ -38,19 +37,15 @@ const cvxCRV: Token = {
 }
 
 export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contract): Promise<Balance> {
-  const [balanceOfBI, crvEarnedBI, cvxTotalSupplyBI] = await Promise.all([
+  const [balanceOf, crvEarned, cvxTotalSupply] = await Promise.all([
     call({ ctx, target: cvxCrv.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: cvxCrv.address, params: [ctx.address], abi: abi.earned }),
     call({ ctx, target: CVX.address, abi: erc20Abi.totalSupply }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfBI || '0')
-  const crvEarned = BigNumber.from(crvEarnedBI || '0')
-  const cvxTotalSupply = BigNumber.from(cvxTotalSupplyBI || '0')
-
   const rewards: Balance[] = []
 
-  if (crvEarned.gt(0)) {
+  if (crvEarned > 0n) {
     const cvxEarned = getCvxCliffRatio(cvxTotalSupply, crvEarned)
     rewards.push({ ...CRV, amount: crvEarned } as Balance, { ...CVX, amount: cvxEarned } as Balance)
   }
@@ -67,13 +62,10 @@ export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contra
 }
 
 export async function getCVXStakeBalance(ctx: BalancesContext, cvxRewardPool: Contract): Promise<Balance> {
-  const [balanceOfBI, earnedBI] = await Promise.all([
+  const [balanceOf, earned] = await Promise.all([
     call({ ctx, target: cvxRewardPool.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: cvxRewardPool.address, params: [ctx.address], abi: abi.earned }),
   ])
-
-  const balanceOf = BigNumber.from(balanceOfBI)
-  const earned = BigNumber.from(earnedBI)
 
   return {
     chain: ctx.chain,

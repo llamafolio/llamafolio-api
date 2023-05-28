@@ -1,11 +1,9 @@
 import type { Balance, BalancesContext, BaseBalance, Contract } from '@lib/adapter'
 import { multicallBalances } from '@lib/balance'
 import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 export interface GetPoolsBalancesParams {
   getPoolAddress: (contract: Contract) => `0x${string}`
@@ -67,7 +65,7 @@ export async function getPoolsUnderlyingBalances(
     }
 
     const poolAmount = pools[poolIdx].amount
-    const poolTotalSupply = BigNumber.from(totalSupplyRes.output)
+    const poolTotalSupply = totalSupplyRes.output
 
     const poolBalance: Balance = {
       ...pools[poolIdx],
@@ -78,9 +76,9 @@ export async function getPoolsUnderlyingBalances(
     for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
       const underlyingBalanceRes = underlyingsBalanceOfRes[balanceOfIdx]
       // fallback to 0 in case of failure, better than not showing anything at all
-      const underlyingBalance = underlyingBalanceRes.success ? BigNumber.from(underlyingBalanceRes.output) : BN_ZERO
+      const underlyingBalance: bigint = underlyingBalanceRes.success ? underlyingBalanceRes.output : 0n
 
-      const underlyingAmount = underlyingBalance.mul(poolAmount).div(poolTotalSupply)
+      const underlyingAmount = (underlyingBalance * poolAmount) / poolTotalSupply
 
       poolBalance.underlyings!.push({ ...underlyings[underlyingIdx], amount: underlyingAmount })
 
@@ -137,8 +135,8 @@ export async function getStakingPoolsBalances(
       continue
     }
 
-    const totalSupply = BigNumber.from(totalSupplyRes.output)
-    const amount = BigNumber.from(stakingTokenBalanceRes.output)
+    const totalSupply = totalSupplyRes.output
+    const amount = stakingTokenBalanceRes.output
     const underlyings = poolsBalances[poolIdx].underlyings
     if (!underlyings) {
       continue
@@ -151,9 +149,7 @@ export async function getStakingPoolsBalances(
       // adjust amounts with staking token ratio
       underlyings: underlyings.map((underlying) => ({
         ...underlying,
-        amount: BigNumber.from((underlying as BaseBalance).amount)
-          .mul(amount)
-          .div(totalSupply),
+        amount: ((underlying as BaseBalance).amount * amount) / totalSupply,
       })),
     }
 

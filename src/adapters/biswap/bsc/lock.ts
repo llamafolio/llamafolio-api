@@ -1,8 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getUserInfo: {
@@ -45,9 +43,9 @@ export async function getBiswapLockerBalances(ctx: BalancesContext, locker: Cont
 
   return {
     ...locker,
-    amount: BigNumber.from(userInfo[0].amount),
+    amount: userInfo[0].amount,
     underlyings: [BSW],
-    claimable: now > unlockAt ? BigNumber.from(userInfo[0].amount) : BN_ZERO,
+    claimable: now > unlockAt ? userInfo[0].amount : 0n,
     unlockAt,
     rewards: undefined,
     category: 'lock',

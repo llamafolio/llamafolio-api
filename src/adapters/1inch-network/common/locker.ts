@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   depositors: {
@@ -26,7 +25,7 @@ export async function getInchLockerBalances(ctx: BalancesContext, locker: Contra
 
   return {
     ...locker,
-    amount: BigNumber.from(amount),
+    amount,
     underlyings: locker.underlyings as Contract[],
     unlockAt: unlockTime,
     rewards: undefined,

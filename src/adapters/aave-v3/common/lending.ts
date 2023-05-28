@@ -3,7 +3,7 @@ import { call } from '@lib/call'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber, ethers } from 'ethers'
+import { ethers } from 'ethers'
 
 const abi = {
   getReservesList: {
@@ -32,6 +32,53 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  getUserAccountData: {
+    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
+    name: 'getUserAccountData',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'totalCollateralBase',
+        type: 'uint256',
+      },
+      { internalType: 'uint256', name: 'totalDebtBase', type: 'uint256' },
+      {
+        internalType: 'uint256',
+        name: 'availableBorrowsBase',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'currentLiquidationThreshold',
+        type: 'uint256',
+      },
+      { internalType: 'uint256', name: 'ltv', type: 'uint256' },
+      { internalType: 'uint256', name: 'healthFactor', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getAllUserRewards: {
+    inputs: [
+      { internalType: 'address[]', name: 'assets', type: 'address[]' },
+      { internalType: 'address', name: 'user', type: 'address' },
+    ],
+    name: 'getAllUserRewards',
+    outputs: [
+      {
+        internalType: 'address[]',
+        name: 'rewardsList',
+        type: 'address[]',
+      },
+      {
+        internalType: 'uint256[]',
+        name: 'unclaimedAmounts',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 export async function getLendingPoolContracts(
@@ -49,13 +96,7 @@ export async function getLendingPoolContracts(
 
   const reserveTokensAddressesRes = await multicall({
     ctx,
-    calls: reservesList.map(
-      (address) =>
-        ({
-          target: poolDataProvider.address,
-          params: [address],
-        } as const),
-    ),
+    calls: reservesList.map((address) => ({ target: poolDataProvider.address, params: [address] } as const)),
     abi: abi.getReserveTokensAddresses,
   })
 
@@ -100,8 +141,8 @@ export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Co
 
   // use the same amount for underlyings
   for (const balance of balances) {
-    if (balance.amount.gt(0) && balance.underlyings) {
-      ;(balance.underlyings[0] as BaseBalance).amount = BigNumber.from(balance.amount)
+    if (balance.amount > 0n && balance.underlyings) {
+      ;(balance.underlyings[0] as BaseBalance).amount = balance.amount
     }
   }
 
@@ -120,35 +161,14 @@ export async function getLendingRewardsBalances(
     ctx,
     target: incentiveController.address,
     params: [assets, ctx.address],
-    abi: {
-      inputs: [
-        { internalType: 'address[]', name: 'assets', type: 'address[]' },
-        { internalType: 'address', name: 'user', type: 'address' },
-      ],
-      name: 'getAllUserRewards',
-      outputs: [
-        {
-          internalType: 'address[]',
-          name: 'rewardsList',
-          type: 'address[]',
-        },
-        {
-          internalType: 'uint256[]',
-          name: 'unclaimedAmounts',
-          type: 'uint256[]',
-        },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.getAllUserRewards,
   })
 
   const rewardsTokens = await getERC20Details(ctx, rewardsLists)
-  const rewardsBalances = BigNumber.from(unclaimedAmounts[0])
 
   rewards.push({
     ...rewardsTokens[0],
-    amount: rewardsBalances,
+    amount: unclaimedAmounts[0],
     category: 'reward',
   })
 
@@ -163,37 +183,7 @@ export async function getLendingPoolHealthFactor(ctx: BalancesContext, lendingPo
     _currentLiquidationThreshold,
     _ltv,
     healthFactor,
-  ] = await call({
-    ctx,
-    target: lendingPool.address,
-    params: [ctx.address],
-    abi: {
-      inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
-      name: 'getUserAccountData',
-      outputs: [
-        {
-          internalType: 'uint256',
-          name: 'totalCollateralBase',
-          type: 'uint256',
-        },
-        { internalType: 'uint256', name: 'totalDebtBase', type: 'uint256' },
-        {
-          internalType: 'uint256',
-          name: 'availableBorrowsBase',
-          type: 'uint256',
-        },
-        {
-          internalType: 'uint256',
-          name: 'currentLiquidationThreshold',
-          type: 'uint256',
-        },
-        { internalType: 'uint256', name: 'ltv', type: 'uint256' },
-        { internalType: 'uint256', name: 'healthFactor', type: 'uint256' },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
-  })
+  ] = await call({ ctx, target: lendingPool.address, params: [ctx.address], abi: abi.getUserAccountData })
 
   // no borrowed balance
   if (ethers.constants.MaxUint256.eq(healthFactor)) {

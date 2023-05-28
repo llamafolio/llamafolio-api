@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   pendingReward: {
@@ -66,9 +65,9 @@ export async function getOnyxFarmBalances(
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output[0]),
+      amount: balanceOfRes.output[0],
       underlyings: undefined,
-      rewards: [{ ...Onyx, amount: BigNumber.from(pendingRewardRes.output) }],
+      rewards: [{ ...Onyx, amount: pendingRewardRes.output }],
       category: 'farm',
     })
   }

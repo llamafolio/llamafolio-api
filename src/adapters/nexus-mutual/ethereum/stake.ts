@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const NXM: Token = {
   chain: 'ethereum',
@@ -52,8 +51,8 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     }),
   ])
 
-  const stakeBalances = BigNumber.from(getStakeBalances)
-  const rewardsBalances = BigNumber.from(getRewardsBalances)
+  const stakeBalances = getStakeBalances
+  const rewardsBalances = getRewardsBalances
 
   balances.push({
     chain: NXM.chain,

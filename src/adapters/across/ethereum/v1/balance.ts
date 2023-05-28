@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 export async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -41,12 +40,12 @@ export async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[
 
     const fmtUnderlyings = {
       ...underlying,
-      amount: BigNumber.from(userBalanceOfRes.output).mul(underlyingsBalanceRes.output).div(totalSupplyRes.output),
+      amount: (userBalanceOfRes.output * underlyingsBalanceRes.output) / totalSupplyRes.output,
     }
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(userBalanceOfRes.output),
+      amount: userBalanceOfRes.output,
       underlyings: [fmtUnderlyings],
       rewards: undefined,
       category: 'lp',

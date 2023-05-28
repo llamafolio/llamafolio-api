@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getUserVirtueStake: {
@@ -44,9 +43,9 @@ export async function getVirtueStakeBalances(ctx: BalancesContext, staker: Contr
   return {
     ...staker,
     address: staker.token!,
-    amount: BigNumber.from(userBalance),
+    amount: userBalance,
     underlyings: undefined,
-    rewards: [{ ...WETH, amount: BigNumber.from(userPendingReward).add(userExtraReward) }],
+    rewards: [{ ...WETH, amount: userPendingReward + userExtraReward }],
     category: 'stake',
   }
 }

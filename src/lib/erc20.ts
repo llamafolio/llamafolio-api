@@ -5,7 +5,6 @@ import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { getToken } from '@llamafolio/tokens'
-import { BigNumber } from 'ethers'
 
 export const abi = {
   balanceOf: {
@@ -114,7 +113,7 @@ export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): 
     })
 
     for (let tokenIdx = 0; tokenIdx < tokens.length; tokenIdx++) {
-      balances.push({ ...tokens[tokenIdx], amount: BigNumber.from(multiBalances[tokenIdx]) } as Balance)
+      balances.push({ ...tokens[tokenIdx], amount: multiBalances[tokenIdx] } as Balance)
     }
   } else {
     const multiBalances = await multicall({
@@ -126,7 +125,7 @@ export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): 
     for (let tokenIdx = 0; tokenIdx < tokens.length; tokenIdx++) {
       const balance = multiBalances[tokenIdx]
       if (balance.success && balance.output != null) {
-        balances.push({ ...tokens[tokenIdx], amount: BigNumber.from(balance.output) } as Balance)
+        balances.push({ ...tokens[tokenIdx], amount: balance.output } as Balance)
       }
     }
   }

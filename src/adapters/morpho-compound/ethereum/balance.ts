@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getCurrentSupplyBalanceInOf: {
@@ -63,7 +62,7 @@ export async function getMorphoMarketsBalances(
         ...market,
         symbol: `c${underlying.symbol}`,
         decimals: underlying.decimals,
-        amount: BigNumber.from(totalBalance),
+        amount: totalBalance,
         underlyings: [underlying],
         rewards: undefined,
         category: 'lend',
@@ -76,7 +75,7 @@ export async function getMorphoMarketsBalances(
         ...market,
         symbol: `c${underlying.symbol}`,
         decimals: underlying.decimals,
-        amount: BigNumber.from(totalBalance),
+        amount: totalBalance,
         underlyings: [underlying],
         rewards: undefined,
         category: 'borrow',

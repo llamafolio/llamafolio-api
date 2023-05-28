@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapt
 import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getNumMarkets: {
@@ -98,7 +97,7 @@ export async function getDepositBalances(
       ...staker,
       decimals: market.decimals,
       symbol: market.symbol,
-      amount: BigNumber.from(balancesOfRes.output.value),
+      amount: balancesOfRes.output.value,
       underlyings: [market],
       rewards: undefined,
       category: 'stake',

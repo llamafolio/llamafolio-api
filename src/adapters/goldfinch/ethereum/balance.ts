@@ -5,7 +5,7 @@ import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { getSingleStakeBalance } from '@lib/stake'
 import type { Token } from '@lib/token'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   sharePrice: {
@@ -82,7 +82,7 @@ export async function getGoldFinchStakeBalances(ctx: BalancesContext, staker: Co
 
   return {
     ...balance,
-    amount: balance.amount.mul(rate).div(utils.parseEther('1.0')),
+    amount: (balance.amount * rate) / parseEther('1.0'),
   }
 }
 
@@ -128,13 +128,13 @@ export async function getGoldFinchNFTStakeBalances(ctx: BalancesContext, staker:
       continue
     }
 
-    const underlyingsAmount = BigNumber.from(tokenBalanceRes.output).mul(rate).div(utils.parseEther('1.0'))
+    const underlyingsAmount = (tokenBalanceRes.output * rate) / parseEther('1.0')
 
     balances.push({
       ...staker,
-      amount: BigNumber.from(tokenBalanceRes.output),
+      amount: tokenBalanceRes.output,
       underlyings: [{ ...USDC, decimals: 18, amount: underlyingsAmount }],
-      rewards: [{ ...GFI, amount: BigNumber.from(tokenPendingRewardRes.output) }],
+      rewards: [{ ...GFI, amount: tokenPendingRewardRes.output }],
       category: 'stake',
     })
   }
@@ -152,9 +152,9 @@ export async function getGFIFarmBalances(ctx: BalancesContext, farmer: Contract)
 
   return {
     ...farmer,
-    amount: BigNumber.from(eligibleAmount),
+    amount: eligibleAmount,
     underlyings: [GFI],
-    rewards: [{ ...GFI, amount: BigNumber.from(pendingReward) }],
+    rewards: [{ ...GFI, amount: pendingReward }],
     category: 'farm',
   }
 }

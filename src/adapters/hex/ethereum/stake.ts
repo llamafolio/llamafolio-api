@@ -1,9 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
-import { sumBN } from '@lib/math'
+import { sumBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 import { getRewardsBalances } from './reward'
 
@@ -65,10 +64,10 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     }
   })
 
-  const amount = sumBN(stakesAndIndexes.map((balance) => BigNumber.from(balance.stake)))
+  const amount = sumBI(stakesAndIndexes.map((balance) => balance.stake))
 
   const rewards = await getRewardsBalances(ctx, contract, stakesAndIndexes)
-  const totalRewards = sumBN(rewards)
+  const totalRewards = sumBI(rewards)
 
   balances.push({
     chain: ctx.chain,

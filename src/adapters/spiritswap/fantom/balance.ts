@@ -6,7 +6,6 @@ import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   tokens: {
@@ -97,7 +96,7 @@ export async function getGaugesBalances(
 
     gaugesBalances.push({
       ...gaugesContract,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: gaugesContract.underlyings as Contract[],
       rewards: undefined,
       category: 'farm',

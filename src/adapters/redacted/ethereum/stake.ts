@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getSingleStakeBalance } from '@lib/stake'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   xBTRFLYValue: {
@@ -33,7 +32,7 @@ export async function getwxBTRFLYStakeBalances(ctx: BalancesContext, staker: Con
 
   return {
     ...staker,
-    amount: BigNumber.from(fmtBalances),
+    amount: fmtBalances,
     underlyings: [BTRFLY],
     rewards: undefined,
     category: 'stake',

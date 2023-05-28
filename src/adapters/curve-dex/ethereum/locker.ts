@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getSingleLockerBalance } from '@lib/lock'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   claim: {
@@ -43,5 +42,5 @@ export async function getLockerBalances(
     }),
   ])
 
-  return { ...lockedBalance, rewards: [{ ...triCrv, amount: BigNumber.from(claimableBalance) }] }
+  return { ...lockedBalance, rewards: [{ ...triCrv, amount: claimableBalance }] }
 }

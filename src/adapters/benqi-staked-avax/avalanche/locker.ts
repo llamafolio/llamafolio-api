@@ -1,8 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getUnlockRequestCount: {
@@ -95,8 +93,8 @@ export async function getBenqiLockerBalances(ctx: BalancesContext, locker: Contr
   return {
     ...locker,
     rewards: undefined,
-    amount: BigNumber.from(fmtLockerBalancesRes),
-    claimable: now > unlockAt ? BigNumber.from(fmtLockerBalancesRes) : BN_ZERO,
+    amount: fmtLockerBalancesRes,
+    claimable: now > unlockAt ? fmtLockerBalancesRes : 0n,
     unlockAt,
     underlyings: [{ ...WAVAX }],
     category: 'lock',

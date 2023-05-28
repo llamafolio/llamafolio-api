@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   wMEMOToMEMO: {
@@ -49,7 +48,7 @@ export async function getTIMEStakeBalances(ctx: BalancesContext, contract: Contr
 
   const formattedBalanceOfRes = await call({ ctx, target: contract.address, params: [balanceOf], abi: abi.wMEMOToMEMO })
 
-  const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes)
+  const formattedBalanceOf = formattedBalanceOfRes
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -74,7 +73,7 @@ export async function getwMEMOStakeBalances(ctx: BalancesContext, contract: Cont
     abi: erc20Abi.balanceOf,
   })
 
-  const balanceOf = BigNumber.from(balanceOfRes)
+  const balanceOf = balanceOfRes
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -103,7 +102,7 @@ export async function getwMEMOStakeBalances(ctx: BalancesContext, contract: Cont
         continue
       }
 
-      balance.rewards?.push({ ...(reward as Contract), amount: BigNumber.from(rewardBalanceOfRes.output) })
+      balance.rewards?.push({ ...(reward as Contract), amount: rewardBalanceOfRes.output })
 
       rewardsIdx++
     }

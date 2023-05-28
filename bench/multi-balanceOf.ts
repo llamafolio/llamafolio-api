@@ -1,7 +1,6 @@
 import '../environment'
 
 import { chains as tokensByChain } from '@llamafolio/tokens'
-import { BigNumber } from 'ethers'
 
 import type { BalancesContext } from '../src/lib/adapter'
 import { sliceIntoChunks } from '../src/lib/array'
@@ -98,7 +97,7 @@ async function main() {
 
       for (let tokenIdx = 0; tokenIdx < slices[sliceIdx].length; tokenIdx++) {
         const token = tokens[callIdx]
-        token.amount = BigNumber.from(balancesSlice.output[tokenIdx] || '0')
+        token.amount = balancesSlice.output[tokenIdx] || 0n
         callIdx++
       }
     }

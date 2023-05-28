@@ -1,8 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_TEN } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   lastPricePerShare: {
@@ -41,9 +39,7 @@ export async function getBabylonBalances(ctx: BalancesContext, contracts: Contra
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(balanceOfRes.output)
-        .mul(pricePerShareRes.output)
-        .div(BN_TEN.pow(contract.decimals || 0)),
+      amount: (balanceOfRes.output * pricePerShareRes.output) / 10n ** BigInt(contract.decimals || 0),
       underlyings: contract.underlyings as Contract[],
       rewards: undefined,
       category: 'stake',

@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getFnfts: {
@@ -86,10 +85,10 @@ export async function getHECLockerBalances(ctx: BalancesContext, lockers: Contra
       const balance: Balance = {
         ...locker,
         address: locker.lpToken ? locker.lpToken : locker.address,
-        amount: BigNumber.from(amount),
+        amount,
         underlyings,
         unlockAt: Number(secs + startTime),
-        rewards: [{ ...HEC, amount: BigNumber.from(pendingRewardRes.output) }],
+        rewards: [{ ...HEC, amount: pendingRewardRes.output }],
         category: 'lock',
       }
 

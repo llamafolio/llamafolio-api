@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getMarketsBalances } from '@lib/compound/v2/lending'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   compAccrued: {
@@ -43,7 +42,7 @@ export async function getInverseLendingBalances(
     }
   }
 
-  rewards.push({ ...INV, amount: BigNumber.from(marketsRewardsRes), category: 'reward' })
+  rewards.push({ ...INV, amount: marketsRewardsRes, category: 'reward' })
 
   return [...marketsBalancesRes, ...rewards]
 }

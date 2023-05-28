@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_TEN } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   pricePerShare: {
@@ -40,13 +38,15 @@ export async function getFarmBalances(ctx: BalancesContext, gauges: Contract[]):
       continue
     }
 
-    const amount = BigNumber.from(balanceOf.output)
+    const amount = balanceOf.output
 
     if (underlying && underlying.decimals) {
       const balance: Balance = {
         ...gauge,
         decimals: underlying.decimals,
-        underlyings: [{ ...underlying, amount: amount.mul(pricePerShare.output).div(BN_TEN.pow(underlying.decimals)) }],
+        underlyings: [
+          { ...underlying, amount: (amount * pricePerShare.output) / 10n ** BigInt(underlying.decimals || 0) },
+        ],
         amount: amount,
         rewards: undefined,
         category: 'farm',

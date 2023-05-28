@@ -2,7 +2,6 @@ import type { BaseContext, Contract } from '@lib/adapter'
 import { flatMapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
-import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { ETH_ADDR } from '@lib/token'
@@ -199,7 +198,7 @@ const getExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise<Con
       extraRewardsCallIdx++
     }
 
-    if (isZero(baseRewardPool.rewarder.length)) {
+    if (baseRewardPool.rewarder.length === 0n) {
       commonRewardsPools.push(baseRewardPool)
       continue
     }

@@ -5,13 +5,12 @@ import { strToBuf } from '@lib/buf'
 import type { Category } from '@lib/category'
 import type { Chain } from '@lib/chains'
 import { sleep } from '@lib/promise'
-import { BigNumber } from 'ethers'
 import type { PoolClient } from 'pg'
 import format from 'pg-format'
 
 export interface Balance {
   groupId: string
-  amount: string
+  amount: bigint
   price?: string
   balanceUSD?: number
   rewardUSD?: number
@@ -44,14 +43,6 @@ export interface BalanceStorable {
   category: Category
   data?: any
 }
-
-Object.defineProperties(BigNumber.prototype, {
-  toJSON: {
-    value: function (this: BigNumber) {
-      return this.toString()
-    },
-  },
-})
 
 Object.defineProperties(BigInt.prototype, {
   toJSON: {

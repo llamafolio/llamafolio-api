@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   totalLiquidity: {
@@ -45,7 +44,7 @@ export async function getStargateLPBalances(ctx: BalancesContext, pools: Contrac
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output).mul(totalLiquidity.output).div(totalSupply.output),
+      amount: (balanceOfRes.output * totalLiquidity.output) / totalSupply.output,
       underlyings,
       rewards: undefined,
       category: 'lp',

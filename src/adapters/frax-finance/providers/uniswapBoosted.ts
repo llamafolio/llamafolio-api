@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 import type { ProviderBalancesParams } from './interface'
 import { uniswapBalancesProvider } from './uniswap'
@@ -40,8 +39,8 @@ export const uniswapBoostedBalancesProvider = async (
       continue
     }
 
-    pool.amount = BigNumber.from(balanceOfRes.output)
-    ;(pool.rewards?.[0] as Balance).amount = BigNumber.from(earnedFXSRes.output)
+    pool.amount = balanceOfRes.output
+    ;(pool.rewards?.[0] as Balance).amount = earnedFXSRes.output
   }
 
   return uniswapBalancesProvider(ctx, pools as ProviderBalancesParams[])

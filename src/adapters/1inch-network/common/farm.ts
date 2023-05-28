@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -112,7 +110,7 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
 
     const balance: Balance = {
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: [],
       rewards: [],
       category: 'farm',
@@ -126,8 +124,8 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
       const underlyingAddress = underlying.address === ADDRESS_ZERO ? ADDRESS[ctx.chain] : underlying.address
 
       const underlyingBalance = getUnderlyingsBalanceRes.success
-        ? BigNumber.from(getUnderlyingsBalanceRes.output).mul(balanceOfRes.output).div(totalSupplyRes.output)
-        : BN_ZERO
+        ? (getUnderlyingsBalanceRes.output * balanceOfRes.output) / totalSupplyRes.output
+        : 0n
 
       balance.underlyings!.push({
         ...underlying,
@@ -144,19 +142,16 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
       balance.rewards!.push({
         ...underlying,
         address: underlyingAddress,
-        amount: BigNumber.from(earnedOfRes.output),
+        amount: earnedOfRes.output,
       })
     })
 
     // But some old pools still use an unique reward: INCH
 
     if (balance.rewards!.length < 1) {
-      const singleRewardBalance = singleRewardEarnedRes.success ? BigNumber.from(singleRewardEarnedRes.output) : BN_ZERO
+      const singleRewardBalance = singleRewardEarnedRes.success ? singleRewardEarnedRes.output : 0n
 
-      balance.rewards?.push({
-        ...Inch,
-        amount: singleRewardBalance,
-      })
+      balance.rewards?.push({ ...Inch, amount: singleRewardBalance })
     }
 
     balances.push(balance)

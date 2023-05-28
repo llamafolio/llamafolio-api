@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   totalBalance: {
@@ -23,7 +22,7 @@ export async function getGroVestingBalances(ctx: BalancesContext, vester: Contra
   const balances: Balance[] = []
   const token = vester.underlyings?.[0] as Contract
 
-  const [balancesOfRes, claimableBalancesRes] = await Promise.all([
+  const [balancesOf, claimableBalances] = await Promise.all([
     call({ ctx, target: vester.address, params: [ctx.address], abi: abi.totalBalance }),
     call({ ctx, target: vester.address, params: [ctx.address], abi: abi.vestedBalance }),
   ])
@@ -31,8 +30,8 @@ export async function getGroVestingBalances(ctx: BalancesContext, vester: Contra
   balances.push({
     ...token,
     address: vester.address,
-    amount: BigNumber.from(balancesOfRes),
-    claimable: BigNumber.from(claimableBalancesRes),
+    amount: balancesOf,
+    claimable: claimableBalances,
     underlyings: [token],
     rewards: undefined,
     category: 'vest',

@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   userStake: {
@@ -21,13 +20,13 @@ const api3Token: Token = {
 }
 
 export async function getApi3StakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const userStakeRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.userStake })
+  const userStake = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.userStake })
 
   return {
     ...staker,
     symbol: api3Token.symbol,
     decimals: api3Token.decimals,
-    amount: BigNumber.from(userStakeRes),
+    amount: userStake,
     underlyings: [api3Token],
     rewards: undefined,
     category: 'stake',

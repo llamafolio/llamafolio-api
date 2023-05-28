@@ -1,17 +1,17 @@
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
-export const getCvxCliffRatio = (cvxTotalSupply: BigNumber, crvAmount: BigNumber): BigNumber => {
-  const CLIFFSIZE = BigNumber.from(1e5).mul(utils.parseEther('1.0'))
-  const MAXSUPPLY = BigNumber.from(1e8).mul(utils.parseEther('1.0'))
-  const CLIFFCOUNT = BigNumber.from(1e3)
+export const getCvxCliffRatio = (cvxTotalSupply: bigint, crvAmount: bigint) => {
+  const CLIFFSIZE = 10n ** 5n * parseEther('1.0')
+  const MAXSUPPLY = 10n ** 8n * parseEther('1.0')
+  const CLIFFCOUNT = 10n ** 3n
 
-  const currentCliff = cvxTotalSupply.div(CLIFFSIZE)
+  const currentCliff = cvxTotalSupply / CLIFFSIZE
 
-  if (currentCliff.lt(MAXSUPPLY)) {
-    const remainingCliff = CLIFFCOUNT.sub(currentCliff)
+  if (currentCliff < MAXSUPPLY) {
+    const remainingCliff = CLIFFCOUNT - currentCliff
 
-    return crvAmount.mul(remainingCliff).div(CLIFFCOUNT)
+    return (crvAmount * remainingCliff) / CLIFFCOUNT
   }
 
-  return BigNumber.from(0)
+  return 0n
 }

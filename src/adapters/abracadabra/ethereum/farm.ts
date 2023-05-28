@@ -4,7 +4,6 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   poolLength: {
@@ -94,9 +93,9 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], c
     if (pool.provider === 'sushi') {
       sushiPools.push({
         ...pool,
-        amount: BigNumber.from(amount),
+        amount,
         underlyings,
-        rewards: [{ ...SPELL, amount: BigNumber.from(poolReward.output) }],
+        rewards: [{ ...SPELL, amount: poolReward.output }],
         category: 'farm',
       })
     }
@@ -104,9 +103,9 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], c
     if (pool.provider === 'curve') {
       curvePools.push({
         ...pool,
-        amount: BigNumber.from(amount),
+        amount,
         underlyings,
-        rewards: [{ ...SPELL, amount: BigNumber.from(poolReward.output) }],
+        rewards: [{ ...SPELL, amount: poolReward.output }],
         category: 'farm',
       })
     }

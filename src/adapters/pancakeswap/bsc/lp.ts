@@ -7,7 +7,6 @@ import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const pancakeStableSwapInfos: Contract = {
   chain: 'bsc',
@@ -298,14 +297,14 @@ const getPancakeUnderlyingsMasterChefPoolsBalances = async (
       chain: ctx.chain,
       address: underlyings[0],
       decimals: 18,
-      amount: BigNumber.from(underlyingsBalanceInStablePool[0]),
+      amount: underlyingsBalanceInStablePool[0],
     }
 
     const underlying1: Contract = {
       chain: ctx.chain,
       address: underlyings[1],
       decimals: 18,
-      amount: BigNumber.from(underlyingsBalanceInStablePool[1]),
+      amount: underlyingsBalanceInStablePool[1],
     }
 
     underlyiedPoolsBalances.push({
@@ -369,8 +368,8 @@ export async function getPancakeMasterChefPoolsBalances(
       underlyings: masterchefPool.underlyings as Contract[],
       stablePool: masterchefPool.stablePool,
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output[0]),
-      rewards: [{ ...rewardToken, amount: BigNumber.from(pendingRewardRes.output) }],
+      amount: poolBalanceRes.output[0],
+      rewards: [{ ...rewardToken, amount: pendingRewardRes.output }],
     })
   }
 

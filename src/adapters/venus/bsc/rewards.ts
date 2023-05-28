@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getXVSBalanceMetadataExt: {
@@ -52,7 +51,7 @@ export async function getRewardsBalances(
     abi: abi.getXVSBalanceMetadataExt,
   })
 
-  const XVSAllocatedRewards = BigNumber.from(XVSAllocatedRewardsRes.allocated)
+  const XVSAllocatedRewards = XVSAllocatedRewardsRes.allocated
 
   rewards.push({
     chain: ctx.chain,

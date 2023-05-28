@@ -2,7 +2,6 @@ import { getLendingPoolBalances as getAaveLendingPoolBalances } from '@lib/aave/
 import type { BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   allPendingRewards: {
@@ -25,7 +24,7 @@ export async function getLendingPoolBalances(
     call({ ctx, target: chefIncentivesController.address, params: [ctx.address], abi: abi.allPendingRewards }),
   ])
 
-  balances.push({ ...rewardToken, amount: BigNumber.from(pendingRewards), category: 'reward' })
+  balances.push({ ...rewardToken, amount: pendingRewards, category: 'reward' })
 
   return balances
 }

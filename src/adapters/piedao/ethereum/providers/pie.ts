@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   calcTokensForAmount: {
@@ -45,7 +44,7 @@ export const pieProvider = async (ctx: BalancesContext, pools: Balance[]): Promi
     const [_tokens, amounts] = tokensBalanceRes.output
 
     const fmtUnderlyings = amounts.map((res, idx) => {
-      const amount = BigNumber.from(res).mul(pool.amount).div(totalSupplyRes.output)
+      const amount = (res * pool.amount) / totalSupplyRes.output
       // AutoResolve underlyings to get Decimals and Symbol does not work for DeFi++
       const decimals = underlyings[idx].decimals == 0 ? 18 : underlyings[idx].decimals
       const symbol = underlyings[idx].symbol === 'NULL' ? 'DEFI++' : underlyings[idx].symbol

@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getPricePerFullShare: {
@@ -97,8 +95,8 @@ interface RegistryParams {
 }
 
 export type fmtProviderBalancesParams = Balance & {
-  amount: BigNumber
-  totalSupply: BigNumber
+  amount: bigint
+  totalSupply: bigint
   lpToken: `0x${string}`
   strategy: string
 }
@@ -135,8 +133,8 @@ export const fmtSolidlyProvider = async (
 
     const [_dec0, _dec1, r0, r1] = underlyingBalanceRes.output
 
-    ;(pool.underlyings![0] as Balance).amount = BigNumber.from(r0).mul(amount).div(totalSupply)
-    ;(pool.underlyings![1] as Balance).amount = BigNumber.from(r1).mul(pool.amount).div(totalSupply)
+    ;(pool.underlyings![0] as Balance).amount = (r0 * amount) / totalSupply
+    ;(pool.underlyings![1] as Balance).amount = (r1 * pool.amount) / totalSupply
   }
 
   return pools
@@ -181,10 +179,10 @@ export const fmtBalancerProvider = async (
 
       const underlyingsBalance =
         underlyingBalanceOfRes.success && underlyingBalanceOfRes.output != undefined
-          ? BigNumber.from(underlyingBalanceOfRes.output[0])
-          : BN_ZERO
+          ? underlyingBalanceOfRes.output[0]
+          : 0n
 
-      ;(underlying as Balance).amount = underlyingsBalance.mul(amount).div(totalSupply)
+      ;(underlying as Balance).amount = (underlyingsBalance * amount) / totalSupply
 
       balanceOfIdx++
     }
@@ -225,10 +223,10 @@ export const fmtSushiProvider = async (
 
       const underlyingsBalance =
         underlyingBalanceOfRes.success && underlyingBalanceOfRes.output != undefined
-          ? BigNumber.from(underlyingBalanceOfRes.output)
-          : BN_ZERO
+          ? underlyingBalanceOfRes.output
+          : 0n
 
-      ;(underlying as Balance).amount = underlyingsBalance.mul(amount).div(totalSupply)
+      ;(underlying as Balance).amount = (underlyingsBalance * amount) / totalSupply
 
       balanceOfIdx++
     }
@@ -276,7 +274,7 @@ export const fmtCurveProvider = async (
       underlyings.forEach((underlying, underlyingIdx) => {
         const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
 
-        ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(amount).div(totalSupply) || BN_ZERO
+        ;(underlying as Balance).amount = (underlyingBalance * amount) / totalSupply
       })
     }
   }

@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   depositInfo: {
@@ -28,7 +27,7 @@ export async function getEtherBalances(ctx: BalancesContext, staker: Contract): 
 
   return {
     ...staker,
-    amount: BigNumber.from(etherBalance),
+    amount: etherBalance,
     underlyings: undefined,
     rewards: undefined,
     category: 'stake',

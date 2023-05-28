@@ -1,9 +1,7 @@
 import type { BalancesContext, Contract, VestBalance } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   VEST_DURATION: {
@@ -62,9 +60,9 @@ export async function getStargateVesterBalances(ctx: BalancesContext, vester: Co
 
   return {
     ...vester,
-    amount: BigNumber.from(balancesOfRes).mul(CONVERTER),
+    amount: balancesOfRes * CONVERTER,
     unlockAt: end,
-    claimable: end < now ? BigNumber.from(balancesOfRes) : BN_ZERO,
+    claimable: end < now ? balancesOfRes : 0n,
     underlyings: [STG],
     rewards: undefined,
     category: 'vest',

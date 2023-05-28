@@ -1,11 +1,10 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
-import { sumBN } from '@lib/math'
+import { sumBI } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -60,9 +59,9 @@ export async function getETokenStakes(ctx: BalancesContext, stakers: Contract[])
 
     balances.push({
       ...token,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: [token.underlyings?.[0] as Contract],
-      rewards: [{ ...EUL, amount: BigNumber.from(earnedRewardRes.output) }],
+      rewards: [{ ...EUL, amount: earnedRewardRes.output }],
       category: 'stake',
     })
   }
@@ -79,7 +78,7 @@ export async function getEULStakes(ctx: BalancesContext, staker: Contract, token
   }
 
   const balancesOfRes = await multicall({ ctx, calls, abi: abi.staked })
-  const eulBalanceOf = sumBN(mapSuccessFilter(balancesOfRes, (res) => BigNumber.from(res.output)))
+  const eulBalanceOf = sumBI(mapSuccessFilter(balancesOfRes, (res) => res.output))
 
   return {
     ...EUL,

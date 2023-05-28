@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   staked: {
@@ -62,7 +61,7 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], m
     const claimable = claimables[i]
 
     if (staked.success) {
-      const amount = BigNumber.from(staked.output).mul(pool.poolValue).div(pool.totalSupply)
+      const amount = (staked.output * pool.poolValue) / pool.totalSupply
 
       const balance: Balance = {
         ...(pool as Balance),
@@ -73,7 +72,7 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], m
       }
 
       if (claimable.success) {
-        balance.rewards?.push({ ...TRU, amount: BigNumber.from(claimable.output) })
+        balance.rewards?.push({ ...TRU, amount: claimable.output })
       }
 
       balances.push(balance)

@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -50,9 +49,9 @@ export async function getLONFarmBalances(ctx: BalancesContext, farmers: Contract
     balances.push({
       ...farmer,
       address: farmer.token,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: farmer.underlyings as Contract[],
-      rewards: [{ ...LON, amount: BigNumber.from(earnedRes.output) }],
+      rewards: [{ ...LON, amount: earnedRes.output }],
       category: 'farm',
     })
   }

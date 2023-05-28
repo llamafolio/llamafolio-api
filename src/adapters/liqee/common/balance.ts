@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getERC20BalanceOf } from '@lib/erc20'
-import { BN_TEN } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 const abi = {
   borrowBalanceCurrent: {
@@ -49,13 +47,13 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
     }),
   ])
 
-  const exchangeRateCurrentBycTokenAddress: { [key: string]: BigNumber } = {}
+  const exchangeRateCurrentBycTokenAddress: { [key: string]: bigint } = {}
   for (const res of cTokensExchangeRateCurrentRes) {
     if (!res.success) {
       continue
     }
 
-    exchangeRateCurrentBycTokenAddress[res.input.target] = BigNumber.from(res.output)
+    exchangeRateCurrentBycTokenAddress[res.input.target] = res.output
   }
 
   const cTokensSupplyBalances = cTokensBalances
@@ -67,11 +65,11 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
         return
       }
 
-      const amount = bal.amount.mul(exchangeRateCurrentBycTokenAddress[bal.address])
+      const amount = bal.amount * exchangeRateCurrentBycTokenAddress[bal.address]
 
       return {
         ...bal,
-        amount: BigNumber.from(amount).div(BN_TEN.pow(bal.decimals)),
+        amount: amount / 10n ** BigInt(bal.decimals || 0),
         decimals: bal.decimals,
         underlyings: [underlying],
         category: 'lend',
@@ -88,7 +86,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
       }
 
       // add amount
-      const amount = BigNumber.from(res.output)
+      const amount = res.output
 
       return {
         ...cToken,

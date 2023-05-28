@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -74,18 +73,18 @@ export async function getLyraFarmBalances(ctx: BalancesContext, contracts: Contr
       ...contract,
       decimals: 18,
       symbol: `${underlyings[0].symbol} + ${underlyings[1].symbol}`,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: [
         {
           ...underlyings[0],
-          amount: BigNumber.from(balanceOfRes.output).mul(amount0Current).div(totalSupplyRes.output),
+          amount: (balanceOfRes.output * amount0Current) / totalSupplyRes.output,
         },
         {
           ...underlyings[1],
-          amount: BigNumber.from(balanceOfRes.output).mul(amount1Current).div(totalSupplyRes.output),
+          amount: (balanceOfRes.output * amount1Current) / totalSupplyRes.output,
         },
       ],
-      rewards: [{ ...Lyra, amount: BigNumber.from(earnedRes.output) }],
+      rewards: [{ ...Lyra, amount: earnedRes.output }],
       category: 'farm',
     })
   }

@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   priceE18: {
@@ -41,7 +41,7 @@ export async function getFlamincomeFarmBalances(ctx: BalancesContext, farmers: C
 
     balances.push({
       ...farmer,
-      amount: BigNumber.from(balanceOfRes.output).mul(exchangeRateRes.output).div(utils.parseEther('1.0')),
+      amount: (balanceOfRes.output * exchangeRateRes.output) / parseEther('1.0'),
       underlyings: [underlying],
       rewards: undefined,
       category: 'farm',
