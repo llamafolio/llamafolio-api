@@ -1,11 +1,10 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   poolInfo: {
@@ -66,7 +65,7 @@ export async function getPopsicleFarmContracts(ctx: BaseContext, contract: Contr
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLength).map((_, idx) => ({ target: contract.address, params: [BigInt(idx)] } as const)),
+    calls: rangeBI(0n, poolLengthRes).map((idx) => ({ target: contract.address, params: [idx] } as const)),
     abi: abi.poolInfo,
   })
 
@@ -118,9 +117,9 @@ export async function getPopsicleFarmBalances(ctx: BalancesContext, contracts: C
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(amount),
+      amount: amount,
       underlyings,
-      rewards: [{ ...reward, amount: BigNumber.from(pendingIceRes.output) }],
+      rewards: [{ ...reward, amount: pendingIceRes.output }],
       category: 'farm',
     })
   }

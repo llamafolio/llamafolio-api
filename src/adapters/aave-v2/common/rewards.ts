@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 export async function getLendingRewardsBalances(
   ctx: BalancesContext,
@@ -30,14 +29,12 @@ export async function getLendingRewardsBalances(
     },
   })
 
-  const userRewards = BigNumber.from(userRewardsRes)
-
   rewards.push({
     chain: rewardToken.chain,
     address: rewardToken.address,
     decimals: rewardToken.decimals,
     symbol: rewardToken.symbol,
-    amount: userRewards,
+    amount: userRewardsRes,
     category: 'reward',
   })
 

@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   creditManagers: {
@@ -110,7 +109,7 @@ export async function getLeverageFarming(ctx: BalancesContext, pools: Contract[]
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(borrowedAmountWithInterest),
+      amount: borrowedAmountWithInterest,
       underlyings,
       rewards: undefined,
       category: 'borrow',
@@ -118,7 +117,7 @@ export async function getLeverageFarming(ctx: BalancesContext, pools: Contract[]
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(total),
+      amount: total,
       underlyings,
       rewards: undefined,
       category: 'lend',

@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const gamma: Token = {
   chain: 'ethereum',
@@ -20,7 +19,7 @@ export async function getxGammaBalances(ctx: BalancesContext, staker: Contract):
 
   return {
     ...staker,
-    amount: BigNumber.from(userBalance).mul(assetBalance).div(totalSupply),
+    amount: (userBalance * assetBalance) / totalSupply,
     underlyings: [gamma],
     rewards: undefined,
     category: 'stake',

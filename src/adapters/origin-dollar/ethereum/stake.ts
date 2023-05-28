@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   convertToAssets: {
@@ -38,7 +37,7 @@ export async function getOriginDollarStakerBalances(ctx: BalancesContext, staker
 
   return {
     ...staker,
-    amount: BigNumber.from(convertRateRes),
+    amount: convertRateRes,
     underlyings: [OUSD],
     rewards: undefined,
     category: 'stake',

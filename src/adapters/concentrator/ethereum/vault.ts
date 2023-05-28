@@ -2,7 +2,6 @@ import { getUnderlyingsPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   userInfo: {
@@ -73,8 +72,8 @@ export async function getFarmBalances(ctx: BalancesContext, vault: Contract, poo
       balances.push({
         ...pool,
         underlyings: pool.underlyings as Balance[],
-        amount: BigNumber.from(userInfoBalance.output[0]),
-        rewards: [{ ...rewards[0], amount: BigNumber.from(pendingReward.output) }],
+        amount: userInfoBalance.output[0],
+        rewards: [{ ...rewards[0], amount: pendingReward.output }],
       })
     }
   }

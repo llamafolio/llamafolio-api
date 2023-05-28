@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
@@ -42,7 +42,7 @@ export async function getOnyxPoolsContracts(ctx: BaseContext, lendingPool: Contr
 
   const poolsInfos = await multicall({
     ctx,
-    calls: range(0, poolLength).map((_, idx) => ({ target: lendingPool.address, params: [BigInt(idx)] } as const)),
+    calls: rangeBI(0n, poolLengthBI).map((idx) => ({ target: lendingPool.address, params: [idx] } as const)),
     abi: abi.poolInfo,
   })
 

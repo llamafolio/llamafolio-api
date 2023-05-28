@@ -25,7 +25,7 @@ export async function getLpCurveBalances(
     } else {
       balances.push({
         ...lpBalance,
-        underlyings: [{ ...underlyings[1], amount: underlyings[1].amount.add(underlyings[0].amount) }],
+        underlyings: [{ ...underlyings[1], amount: underlyings[1].amount + underlyings[0].amount }],
       })
     }
   }

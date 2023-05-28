@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -48,23 +48,15 @@ const abi = {
 export async function getPoolsContracts(ctx: BaseContext, fairLaunch: Contract) {
   const contracts: Contract[] = []
 
-  const poolsLengthBI = await call({
+  const poolsLength = await call({
     ctx,
     target: fairLaunch.address,
     abi: abi.poolLength,
   })
 
-  const poolsLength = Number(poolsLengthBI)
-
   const poolsInfoRes = await multicall({
     ctx,
-    calls: range(0, poolsLength).map(
-      (i) =>
-        ({
-          target: fairLaunch.address,
-          params: [BigInt(i)],
-        } as const),
-    ),
+    calls: rangeBI(0n, poolsLength).map((i) => ({ target: fairLaunch.address, params: [i] } as const)),
     abi: abi.poolInfo,
   })
 

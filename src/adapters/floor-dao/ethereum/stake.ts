@@ -2,7 +2,6 @@ import type { Balance, Contract } from '@lib/adapter'
 import type { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi } from '@lib/erc20'
-import { BigNumber } from 'ethers/lib/ethers'
 
 const FLOOR: Contract = {
   name: 'Floor',
@@ -15,14 +14,12 @@ const FLOOR: Contract = {
 export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const balanceOf = await call({
+  const amount = await call({
     ctx,
     target: contract.address,
     params: [ctx.address],
     abi: abi.balanceOf,
   })
-
-  const amount = BigNumber.from(balanceOf)
 
   balances.push({
     chain: ctx.chain,
@@ -47,7 +44,7 @@ export async function getFormattedStakeBalances(ctx: BalancesContext, contract: 
     abi: abi.balanceOf,
   })
 
-  const formattedBalanceOfBI = await call({
+  const formattedBalance = await call({
     ctx,
     target: contract.address,
     params: [balanceOf],
@@ -60,15 +57,13 @@ export async function getFormattedStakeBalances(ctx: BalancesContext, contract: 
     },
   })
 
-  const formattedBalanceOf = BigNumber.from(formattedBalanceOfBI)
-
   balances.push({
     chain: ctx.chain,
     address: contract.address,
     symbol: contract.symbol,
     decimals: 9,
-    amount: formattedBalanceOf,
-    underlyings: [{ ...FLOOR, amount: formattedBalanceOf }],
+    amount: formattedBalance,
+    underlyings: [{ ...FLOOR, amount: formattedBalance }],
     category: 'stake',
   })
 

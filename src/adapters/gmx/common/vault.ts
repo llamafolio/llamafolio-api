@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -25,19 +25,15 @@ const abi = {
 } as const
 
 export async function getVaultTokens(ctx: BaseContext, vault: Contract) {
-  const allWhitelistedTokensLengthRes = await call({
+  const allWhitelistedTokensLength = await call({
     ctx,
     abi: abi.allWhitelistedTokensLength,
     target: vault.address,
   })
 
-  const allWhitelistedTokensLength = Number(allWhitelistedTokensLengthRes)
-
   const allWhitelistedTokensRes = await multicall({
     ctx,
-    calls: range(0, allWhitelistedTokensLength).map(
-      (idx) => ({ target: vault.address, params: [BigInt(idx)] } as const),
-    ),
+    calls: rangeBI(0n, allWhitelistedTokensLength).map((idx) => ({ target: vault.address, params: [idx] } as const)),
     abi: abi.allWhitelistedTokens,
   })
 

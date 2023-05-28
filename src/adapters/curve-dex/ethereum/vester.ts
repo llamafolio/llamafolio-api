@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   initial_locked: {
@@ -69,8 +68,8 @@ export async function getVesterBalances(ctx: BalancesContext, vesters: Contract[
       ...vester,
       decimals: CRV.decimals,
       symbol: CRV.symbol,
-      amount: BigNumber.from(initialBalanceRes.output).sub(claimedBalanceRes.output),
-      claimable: BigNumber.from(balanceOfRes.output),
+      amount: initialBalanceRes.output - claimedBalanceRes.output,
+      claimable: balanceOfRes.output,
       unlockAt: Number(endTimeRes.output),
       underlyings: [CRV],
       rewards: undefined,

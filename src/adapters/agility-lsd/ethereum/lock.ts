@@ -1,10 +1,8 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
-import { range } from '@lib/array'
+import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getUserRedeem: {
@@ -51,12 +49,8 @@ export async function getAgilityLockerBalances(ctx: BalancesContext, locker: Con
 
   const getUserRedeemsRes = await multicall({
     ctx,
-    calls: range(0, Number(userRedeemsLengthsRes)).map(
-      (_, idx) =>
-        ({
-          target: locker.address,
-          params: [ctx.address, BigInt(idx)],
-        } as const),
+    calls: rangeBI(0n, userRedeemsLengthsRes).map(
+      (idx) => ({ target: locker.address, params: [ctx.address, idx] } as const),
     ),
     abi: abi.getUserRedeem,
   })
@@ -74,9 +68,9 @@ export async function getAgilityLockerBalances(ctx: BalancesContext, locker: Con
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(ESAGIAmount),
-      claimable: now > unlockAt ? BigNumber.from(agiAmount) : BN_ZERO,
-      underlyings: [{ ...AGI, amount: BigNumber.from(agiAmount) }],
+      amount: ESAGIAmount,
+      claimable: now > unlockAt ? agiAmount : 0n,
+      underlyings: [{ ...AGI, amount: agiAmount }],
       rewards: undefined,
       unlockAt,
       category: 'lock',

@@ -3,7 +3,6 @@ import type { BalancesContext } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getPooledAvaxByShares: {
@@ -40,7 +39,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
   const balance: Balance = {
     ...contract,
     rewards: undefined,
-    amount: BigNumber.from(fmtBalanceOf),
+    amount: fmtBalanceOf,
     underlyings: [{ ...WAVAX }],
   }
 

@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_TEN } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 import { getBalancerProviderBalances } from './providers/balancerProvider'
 import { getGroProviderBalances } from './providers/groProvider'
@@ -81,9 +79,9 @@ export async function getGroBalances(
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(amount),
+      amount: amount,
       underlyings,
-      rewards: [{ ...reward, amount: BigNumber.from(claimableBalanceRes.output) }],
+      rewards: [{ ...reward, amount: claimableBalanceRes.output }],
       category: 'farm',
     })
   }
@@ -144,7 +142,7 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]):
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output).mul(pricePerShareRes.output).div(BN_TEN.pow(pool.decimals!)),
+      amount: (balanceOfRes.output * pricePerShareRes.output) / 10n ** BigInt(pool.decimals || 0),
       underlyings: pool.underlyings as Contract[],
       rewards: undefined,
       category: 'farm',

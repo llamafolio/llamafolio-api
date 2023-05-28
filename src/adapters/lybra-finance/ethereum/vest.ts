@@ -1,7 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -40,9 +38,9 @@ export async function getLybraVestBalance(ctx: BalancesContext, vester: Contract
   return {
     ...vester,
     address: vester.address!,
-    amount: BigNumber.from(userBalance).add(userAutoCompoundEarned),
+    amount: userBalance + userAutoCompoundEarned,
     underlyings: undefined,
-    claimable: now > unlockAt ? BigNumber.from(userBalance) : BN_ZERO,
+    claimable: now > unlockAt ? userBalance : 0n,
     unlockAt,
     rewards: undefined,
     category: 'vest',

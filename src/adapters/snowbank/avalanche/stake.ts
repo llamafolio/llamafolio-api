@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getSingleStakeBalance } from '@lib/stake'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   wsSBtosSB: {
@@ -33,7 +32,7 @@ export async function getwsSBStakeBalances(ctx: BalancesContext, staker: Contrac
 
   return {
     ...staker,
-    amount: BigNumber.from(fmtBalances),
+    amount: fmtBalances,
     decimals: 9,
     underlyings: [SB],
     rewards: undefined,

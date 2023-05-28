@@ -1,11 +1,10 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   exchangeRate: {
@@ -126,7 +125,7 @@ export async function getConicBalances(
     const balanceOfRes = balancesOfRes[poolIdx]
     const claimableRewardRes = claimableRewardsRes[poolIdx]
     const exchangeRateRes = exchangeRatesRes[poolIdx]
-    const exchangeRate = exchangeRateRes.success ? exchangeRateRes.output : utils.parseEther('1.0')
+    const exchangeRate = exchangeRateRes.success ? exchangeRateRes.output : parseEther('1.0')
 
     if (!underlying || !rewards || !balanceOfRes.success || !claimableRewardRes.success) {
       continue
@@ -135,15 +134,15 @@ export async function getConicBalances(
     balances.push({
       ...contract,
       category: 'stake',
-      amount: BigNumber.from(balanceOfRes.output).mul(exchangeRate).div(utils.parseEther('1.0')),
+      amount: (balanceOfRes.output * exchangeRate) / parseEther('1.0'),
       underlyings: [underlying],
       rewards: [
         // cnc
-        { ...rewards[0], amount: BigNumber.from(claimableRewardRes.output[0]) },
+        { ...rewards[0], amount: claimableRewardRes.output[0] },
         // crv
-        { ...rewards[1], amount: BigNumber.from(claimableRewardRes.output[1]) },
+        { ...rewards[1], amount: claimableRewardRes.output[1] },
         // cvx
-        { ...rewards[2], amount: BigNumber.from(claimableRewardRes.output[2]) },
+        { ...rewards[2], amount: claimableRewardRes.output[2] },
       ],
     })
   }
@@ -178,7 +177,7 @@ export async function getCNCLockerBalances(ctx: BalancesContext, lockers: Contra
       ...locker,
       symbol: CNC.symbol,
       decimals: CNC.decimals,
-      amount: BigNumber.from(amount),
+      amount,
       unlockAt: Number(unlockTime),
       underlyings: [CNC],
       rewards: undefined,
@@ -203,7 +202,7 @@ export async function getConicFarmBalances(ctx: BalancesContext, contract: Contr
 
   underlyings.forEach((underlying, underlyingIdx) => {
     const underlyingBalance = underlyingsBalances[underlyingIdx]
-    ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(balanceOf).div(totalSupplies) || BN_ZERO
+    ;(underlying as Balance).amount = (underlyingBalance * balanceOf) / totalSupplies
   })
 
   return {
@@ -211,9 +210,9 @@ export async function getConicFarmBalances(ctx: BalancesContext, contract: Contr
     address: contract.lpToken,
     symbol,
     decimals,
-    amount: BigNumber.from(balanceOf),
+    amount: balanceOf,
     underlyings,
-    rewards: [{ ...CNC, amount: BigNumber.from(claimableRewards) }],
+    rewards: [{ ...CNC, amount: claimableRewards }],
     category: 'farm',
   }
 }

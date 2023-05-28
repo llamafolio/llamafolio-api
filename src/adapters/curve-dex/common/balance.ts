@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   get_underlying_balances: {
@@ -85,7 +83,7 @@ const abi = {
 type PoolBalance = Balance & {
   pool?: string
   lpToken?: string
-  totalSupply?: BigNumber
+  totalSupply?: bigint
 }
 
 export async function getPoolsBalances(
@@ -115,7 +113,7 @@ export async function getPoolsBalances(
 
     poolBalances.push({
       ...pool,
-      amount: BigNumber.from(poolBalanceOfRes.output),
+      amount: poolBalanceOfRes.output,
       underlyings: pool.underlyings,
       rewards: pool.rewards,
     })
@@ -124,7 +122,7 @@ export async function getPoolsBalances(
   }
 
   // There is no need to look for underlyings balances if pool balances is null
-  const nonZeroPoolBalances = poolBalances.filter((res) => res.amount.gt(0))
+  const nonZeroPoolBalances = poolBalances.filter((res) => res.amount > 0n)
 
   return getUnderlyingsPoolsBalances(ctx, nonZeroPoolBalances, registry, underlyingsAbi)
 }
@@ -176,7 +174,7 @@ export const getUnderlyingsPoolsBalances = async (
       continue
     }
 
-    const totalSupply = BigNumber.from(totalSupplyRes.output)
+    const totalSupply = totalSupplyRes.output
 
     const poolBalance: PoolBalance = {
       ...pools[poolIdx],
@@ -192,8 +190,8 @@ export const getUnderlyingsPoolsBalances = async (
 
       const underlyingsBalance =
         underlyingBalanceOfRes.success && underlyingBalanceOfRes.output[underlyingIdx] != undefined
-          ? BigNumber.from(underlyingBalanceOfRes.output[underlyingIdx])
-          : BN_ZERO
+          ? underlyingBalanceOfRes.output[underlyingIdx]
+          : 0n
 
       const underlyingsDecimals =
         underlyingDecimalsRes.success && underlyingDecimalsRes.output[underlyingIdx] != undefined
@@ -203,7 +201,7 @@ export const getUnderlyingsPoolsBalances = async (
       poolBalance.underlyings?.push({
         ...underlyings[underlyingIdx],
         decimals: underlyingsDecimals,
-        amount: underlyingsBalance.mul(poolBalance.amount).div(poolBalance.totalSupply!),
+        amount: (underlyingsBalance * poolBalance.amount) / poolBalance.totalSupply!,
       })
     }
 
@@ -244,7 +242,7 @@ export async function getGaugesBalances(
     }
 
     // rewards[0] is the common rewards for all pools: CRV
-    rewards[0].amount = BigNumber.from(claimableReward.output)
+    rewards[0].amount = claimableReward.output
 
     if (rewards.length != 2) {
       uniqueRewards.push(gaugeBalance)
@@ -268,7 +266,7 @@ export async function getGaugesBalances(
       continue
     }
 
-    rewards[1].amount = BigNumber.from(extraRewardRes.output)
+    rewards[1].amount = extraRewardRes.output
   }
 
   return [...uniqueRewards, ...nonUniqueRewards]

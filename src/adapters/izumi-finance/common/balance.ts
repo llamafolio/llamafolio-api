@@ -1,10 +1,8 @@
 import { getTokenIdsBalances } from '@adapters/uniswap-v3/common/pools'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getTokenIds: {
@@ -74,7 +72,7 @@ export async function getIzumiBalances(
 
   balances.forEach((balance, balanceIdx) => {
     const iziRewardRes = iziRewardsRes[balanceIdx]
-    const rewardsAmount = iziRewardRes.success ? BigNumber.from(iziRewardRes.output[0]) : BN_ZERO
+    const rewardsAmount = iziRewardRes.success ? iziRewardRes.output[0] : 0n
 
     balance.rewards?.push({ ...IZI, amount: rewardsAmount })
     balance.category = 'farm'

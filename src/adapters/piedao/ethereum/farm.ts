@@ -6,7 +6,6 @@ import { groupBy } from '@lib/array'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getStakeTotalDeposited: {
@@ -66,9 +65,9 @@ export async function getPieDaoFarmBalances(
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(userBalanceRes.output),
+      amount: userBalanceRes.output,
       underlyings,
-      rewards: [{ ...DOUGH, amount: BigNumber.from(userPendingRewardRes.output) }],
+      rewards: [{ ...DOUGH, amount: userPendingRewardRes.output }],
       category: 'farm',
     })
   }

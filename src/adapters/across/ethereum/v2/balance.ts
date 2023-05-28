@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   pooledTokens: {
@@ -109,14 +108,12 @@ export async function getAcrossV2LPBalances(
 
     const fmtUnderlyings = {
       ...underlying,
-      amount: BigNumber.from(userBalanceOfRes.output)
-        .mul(BigNumber.from(liquidReserves).add(utilizedReserves))
-        .div(totalSupplyRes.output),
+      amount: (userBalanceOfRes.output * (liquidReserves + utilizedReserves)) / totalSupplyRes.output,
     }
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(userBalanceOfRes.output),
+      amount: userBalanceOfRes.output,
       underlyings: [fmtUnderlyings],
       rewards: undefined,
       category: 'lp',
@@ -154,9 +151,9 @@ export async function getAcrossV2FarmBalances(
 
     balances.push({
       ...underlying,
-      amount: BigNumber.from(userBalanceOfRes.output.cumulativeBalance),
+      amount: userBalanceOfRes.output.cumulativeBalance,
       underlyings: undefined,
-      rewards: [{ ...ACX, amount: BigNumber.from(userPendingRewardRes.output) }],
+      rewards: [{ ...ACX, amount: userPendingRewardRes.output }],
       category: 'farm',
     })
   }

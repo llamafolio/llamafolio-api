@@ -1,10 +1,9 @@
 import type { Balance, BalancesContext, Contract, StakeBalance } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, sumBN } from '@lib/math'
+import { sumBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   tokenOfOwnerByIndex: {
@@ -58,28 +57,14 @@ export async function getEverriseBalances(ctx: BalancesContext, nftStaker: Contr
   }
 
   const [balanceOfLength, pendingReward] = await Promise.all([
-    call({
-      ctx,
-      target: nftStaker.address,
-      params: [ctx.address],
-      abi: erc20Abi.balanceOf,
-    }),
-    call({
-      ctx,
-      target: nftStaker.address,
-      params: [ctx.address],
-      abi: abi.getTotalRewards,
-    }),
+    call({ ctx, target: nftStaker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: nftStaker.address, params: [ctx.address], abi: abi.getTotalRewards }),
   ])
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, Number(balanceOfLength)).map(
-      (_, idx) =>
-        ({
-          target: nftStaker.address,
-          params: [ctx.address, BigInt(idx)],
-        } as const),
+    calls: rangeBI(0n, balanceOfLength).map(
+      (idx) => ({ target: nftStaker.address, params: [ctx.address, idx] } as const),
     ),
     abi: abi.tokenOfOwnerByIndex,
   })
@@ -92,17 +77,15 @@ export async function getEverriseBalances(ctx: BalancesContext, nftStaker: Contr
     abi: abi.getNftData,
   })
 
-  const totalStaking = sumBN(mapSuccessFilter(nftDatasRes, (res) => BigNumber.from(res.output.initialTokenAmount)))
+  const totalStaking = sumBI(mapSuccessFilter(nftDatasRes, (res) => res.output.initialTokenAmount))
 
   const balances: StakeBalance[] = mapSuccessFilter(nftDatasRes, (res) => {
     // Attach pro-rata rewards balances
-    const rewardBalance = totalStaking
-      ? BigNumber.from(pendingReward).mul(res.output.initialTokenAmount).div(totalStaking)
-      : BN_ZERO
+    const rewardBalance = totalStaking ? (pendingReward * res.output.initialTokenAmount) / totalStaking : 0n
 
     return {
       ...nftStaker,
-      amount: BigNumber.from(res.output.initialTokenAmount),
+      amount: res.output.initialTokenAmount,
       underlyings: [RISE],
       rewards: [{ ...RISE, amount: rewardBalance }],
       category: 'stake',

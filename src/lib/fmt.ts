@@ -32,3 +32,7 @@ export function millify(amount: number): string {
 
   return amount.toFixed(2)
 }
+
+export function millifyBI(amount: bigint): string {
+  return millify(Number(amount))
+}

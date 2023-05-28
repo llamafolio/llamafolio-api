@@ -2,7 +2,6 @@ import type { BalancesContext, Contract } from '@lib/adapter'
 import type { Balance } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   calculateSharesValueInLOOKS: {
@@ -69,8 +68,8 @@ export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Co
     address: LOOKS.address,
     decimals: LOOKS.decimals,
     symbol: LOOKS.symbols,
-    amount: BigNumber.from(stakeBalanceOfRes),
-    rewards: [{ ...WETH, amount: BigNumber.from(rewardsBalanceOfRes) }],
+    amount: stakeBalanceOfRes,
+    rewards: [{ ...WETH, amount: rewardsBalanceOfRes }],
     category: 'stake',
   }
 }
@@ -88,7 +87,7 @@ export const getCompounderBalances = async (ctx: BalancesContext, compounder: Co
     address: LOOKS.address,
     decimals: LOOKS.decimals,
     symbol: LOOKS.symbols,
-    amount: BigNumber.from(sharesValue),
+    amount: sharesValue,
     yieldKey: compounder.address,
     category: 'farm',
   }
@@ -104,9 +103,9 @@ export const getFarmBalances = async (ctx: BalancesContext, farmer: Contract): P
   const balance: Balance = {
     ...farmer,
     address: farmer.token as `0x${string}`,
-    amount: BigNumber.from(amount),
+    amount: amount,
     underlyings: farmer.underlyings as Contract[],
-    rewards: [{ ...LOOKS, amount: BigNumber.from(earnedOfRes) }],
+    rewards: [{ ...LOOKS, amount: earnedOfRes }],
     category: 'farm',
   }
 

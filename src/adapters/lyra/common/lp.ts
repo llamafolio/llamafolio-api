@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   getTokenPrice: {
@@ -41,7 +41,7 @@ export async function getLpLyraBalances(ctx: BalancesContext, contracts: Contrac
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(balancesOfRes.output).mul(multiplierTokenRes.output).div(utils.parseEther('1.0')),
+      amount: (balancesOfRes.output * multiplierTokenRes.output) / parseEther('1.0'),
       underlyings,
       rewards: undefined,
       category: 'lp',

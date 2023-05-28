@@ -6,7 +6,6 @@ import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   poolLength: {
@@ -218,7 +217,7 @@ export async function getMasterChefPoolsBalances(
     masterchefPools.push(...(await getMasterChefLpToken(ctx, pairs, masterchef)))
   }
 
-  const pendingReward = JSON.parse(
+  const pendingReward: typeof abi.pendingReward = JSON.parse(
     JSON.stringify(abi.pendingReward).replace(
       'pending',
 
@@ -249,8 +248,8 @@ export async function getMasterChefPoolsBalances(
       ...masterchefPool,
       underlyings: masterchefPool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output[0]),
-      rewards: [{ ...rewardToken, amount: BigNumber.from(pendingRewardRes.output) }],
+      amount: poolBalanceRes.output[0],
+      rewards: [{ ...rewardToken, amount: pendingRewardRes.output }],
     })
   }
 

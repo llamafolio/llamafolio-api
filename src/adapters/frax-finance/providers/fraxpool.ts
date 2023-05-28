@@ -1,6 +1,6 @@
 import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { utils } from 'ethers'
+import { parseEther } from 'viem'
 
 import type { ProviderBalancesParams } from './interface'
 
@@ -40,7 +40,7 @@ export const fraxpoolBalancesProvider = async (
       continue
     }
 
-    pool.amount = pool.amount.mul(fmtBalanceOfRes.output).div(utils.parseEther('1.0'))
+    pool.amount = (pool.amount * fmtBalanceOfRes.output) / parseEther('1.0')
   }
 
   return pools

@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   calWithdrawAndEarned: {
@@ -94,35 +93,20 @@ export async function getFarmingBalances(ctx: BalancesContext, contract: Contrac
   const balances: Balance[] = []
 
   const [calWithdrawAndEarned, getTorAndDaiAndUsdc] = await Promise.all([
-    call({
-      ctx,
-      target: contract.address,
-      params: [ctx.address],
-      abi: abi.calWithdrawAndEarned,
-    }),
-    call({
-      ctx,
-      target: Helper.address,
-      abi: abi.getTorAndDaiAndUsdc,
-    }),
+    call({ ctx, target: contract.address, params: [ctx.address], abi: abi.calWithdrawAndEarned }),
+    call({ ctx, target: Helper.address, abi: abi.getTorAndDaiAndUsdc }),
   ])
 
-  const [_torWithdrawAmount, _daiWithdrawAmount, _usdcWithdrawAmount, _earnedRewardAmount] = calWithdrawAndEarned
-  const [torAmount, daiAmount, usdcAmount] = getTorAndDaiAndUsdc
+  const [amount, _daiWithdrawAmount, _usdcWithdrawAmount, rewardsBalanceOf] = calWithdrawAndEarned
+  const [TORAmount, DAIAmount, USDCAmount] = getTorAndDaiAndUsdc
 
-  const amount = BigNumber.from(_torWithdrawAmount)
-  const rewardsBalanceOf = BigNumber.from(_earnedRewardAmount)
-
-  const TORAmount = BigNumber.from(torAmount)
-  const DAIAmount = BigNumber.from(daiAmount)
-  const USDCAmount = BigNumber.from(usdcAmount)
   const underlyingAmounts = [TORAmount, DAIAmount, USDCAmount]
 
-  const totalToken = TORAmount.add(DAIAmount).add(USDCAmount)
+  const totalToken = TORAmount + DAIAmount + USDCAmount
 
   const underlyings = Curve_fiFactoryUSDMetapool.underlyings?.map((token, i) => ({
     ...(token as Contract),
-    amount: amount.mul(underlyingAmounts[i]).div(totalToken),
+    amount: (amount * underlyingAmounts[i]) / totalToken,
   }))
 
   balances.push({

@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getUserOverview: {
@@ -26,8 +25,8 @@ export async function getWombatLockBalance(ctx: BalancesContext, locker: Contrac
 
   return {
     ...locker,
-    amount: BigNumber.from(veWomBalance),
-    underlyings: [{ ...(locker.underlyings?.[0] as Contract), amount: BigNumber.from(womLocked) }],
+    amount: veWomBalance,
+    underlyings: [{ ...(locker.underlyings?.[0] as Contract), amount: womLocked }],
     rewards: undefined,
     category: 'lock',
   }

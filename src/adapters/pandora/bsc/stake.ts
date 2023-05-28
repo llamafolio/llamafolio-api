@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   userInfo: {
@@ -58,9 +57,9 @@ export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]
 
     balances.push({
       ...token,
-      amount: BigNumber.from(userInfoRes.output[0]),
+      amount: userInfoRes.output[0],
       underlyings: undefined,
-      rewards: [{ ...PAN, amount: BigNumber.from(pendingReward.output) }],
+      rewards: [{ ...PAN, amount: pendingReward.output }],
       category: 'stake',
     })
   }

@@ -1,8 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { flatMapSuccess, keyBy, range } from '@lib/array'
+import { flatMapSuccess, keyBy, rangeBI } from '@lib/array'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   poolLength: {
@@ -84,9 +83,7 @@ export async function getStargateFarmBalances(
   const poolsInfosRes = await multicall({
     ctx,
     calls: flatMapSuccess(poolsLengthRes, (poolsLength) =>
-      range(0, Number(poolsLength.output)).map(
-        (_, idx) => ({ target: poolsLength.input.target, params: [BigInt(idx)] } as const),
-      ),
+      rangeBI(0n, poolsLength.output).map((idx) => ({ target: poolsLength.input.target, params: [idx] } as const)),
     ),
     abi: abi.poolInfos,
   })
@@ -131,14 +128,12 @@ export async function getStargateFarmBalances(
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(amount),
+      amount: amount,
       underlyings,
       rewards: [
         {
           ...reward,
-          amount: pendingRewardRes.success
-            ? BigNumber.from(pendingRewardRes.output)
-            : BigNumber.from(pendingEmissionTokenRes.output),
+          amount: (pendingRewardRes.success ? pendingRewardRes.output : pendingEmissionTokenRes.output) || 0n,
         },
       ],
       category: 'farm',

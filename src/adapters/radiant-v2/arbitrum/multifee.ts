@@ -2,10 +2,9 @@ import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapt
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, sumBN } from '@lib/math'
+import { sumBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   UNDERLYING_ASSET_ADDRESS: {
@@ -178,17 +177,17 @@ export async function getMultiFeeDistributionBalances(
   })
   const [_tokens, amts] = pendingRewards
 
-  const underlyingBalances = (underlyings: Contract[], vaultBalances: any, amount: BigNumber, supply: BigNumber) => {
+  const underlyingBalances = (underlyings: Contract[], vaultBalances: any, amount: bigint, supply: bigint) => {
     return underlyings.map((underlying: Contract, index: number) => ({
       ...underlying,
-      amount: BigNumber.from(vaultBalances.balances[index]).mul(amount).div(supply),
+      amount: (vaultBalances.balances[index] * amount) / supply,
       underlyings: undefined,
     }))
   }
 
   // Locker
-  const sumLocked = sumBN((lockData || []).map((lockData: any) => lockData.amount))
-  const expiredLocked = BigNumber.from(total).sub(sumLocked)
+  const sumLocked = sumBI((lockData || []).map((lockData) => lockData.amount))
+  const expiredLocked = total - sumLocked
 
   balances.push({
     chain: ctx.chain,
@@ -211,11 +210,11 @@ export async function getMultiFeeDistributionBalances(
       address: contract.address,
       symbol: contract.symbol,
       decimals: contract.decimals,
-      underlyings: underlyingBalances(underlyings, vaultBalances, BigNumber.from(amount), BigNumber.from(totalSupply)),
+      underlyings: underlyingBalances(underlyings, vaultBalances, amount, totalSupply),
       rewards: undefined,
-      amount: BigNumber.from(amount),
+      amount,
       unlockAt: Number(unlockTime),
-      claimable: BN_ZERO,
+      claimable: 0n,
       category: 'lock',
     })
   }
@@ -232,7 +231,7 @@ export async function getMultiFeeDistributionBalances(
       decimals: radiantToken.decimals,
       underlyings: undefined,
       rewards: undefined,
-      amount: BigNumber.from(amount),
+      amount,
       unlockAt: Number(unlockTime),
       category: 'vest',
     })
@@ -249,7 +248,7 @@ export async function getMultiFeeDistributionBalances(
       decimals: reward.decimals,
       underlyings: undefined,
       rewards: undefined,
-      amount: BigNumber.from(pendingReward),
+      amount: pendingReward,
       category: 'reward',
     })
   }

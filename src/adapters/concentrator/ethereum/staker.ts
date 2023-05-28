@@ -2,7 +2,6 @@ import { getUnderlyingsPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BigNumber } from 'ethers'
 
 const abi = {
   convertToAssets: {
@@ -33,8 +32,8 @@ export async function getStakeBalances(ctx: BalancesContext, staker: Contract): 
   if (underlyings.length < 2) {
     return {
       ...staker,
-      amount: BigNumber.from(balanceOf),
-      underlyings: [{ ...underlyings[0], amount: BigNumber.from(underlyingsBalances) }],
+      amount: balanceOf,
+      underlyings: [{ ...underlyings[0], amount: underlyingsBalances }],
       rewards: undefined,
       category: 'stake',
     }
@@ -42,7 +41,7 @@ export async function getStakeBalances(ctx: BalancesContext, staker: Contract): 
 
   return {
     ...staker,
-    amount: BigNumber.from(underlyingsBalances),
+    amount: underlyingsBalances,
     underlyings,
     rewards: undefined,
     category: 'stake',
@@ -64,7 +63,7 @@ export async function getOldStaleInPools(ctx: BalancesContext, staker: Contract)
 
   const balance: Balance = {
     ...staker,
-    amount: BigNumber.from(balanceOf),
+    amount: balanceOf,
     underlyings,
     rewards: undefined,
     category: 'stake',

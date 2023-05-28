@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   Troves: {
@@ -55,7 +55,7 @@ const priceFeed: Contract = {
   chain: 'ethereum',
   address: '0x4c517D4e2C851CA76d7eC94B805269Df0f2201De',
 }
-const MCR = utils.parseEther('1.1')
+const MCR = parseEther('1.1')
 
 export async function getLendBalances(ctx: BalancesContext, troveManager: Contract) {
   const balances: Balance[] = []
@@ -75,7 +75,7 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
     symbol: 'ETH',
     decimals: 18,
     address: '0x0000000000000000000000000000000000000000',
-    amount: BigNumber.from(coll),
+    amount: coll,
   })
 
   balances.push({
@@ -84,7 +84,7 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
     symbol: 'LUSD',
     decimals: 18,
     address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
-    amount: BigNumber.from(debt),
+    amount: debt,
   })
 
   return balances
@@ -95,13 +95,13 @@ export const getHealthFactor = async (ctx: BalancesContext, balances: Balance[])
 
   const lendAmounts = balances
     .filter((balance) => balance.category === 'lend')
-    .map((balance) => balance.amount.mul(priceFeedRes).div(utils.parseEther('1.0')))
+    .map((balance) => (balance.amount * priceFeedRes) / parseEther('1.0'))
 
   const borrowAmounts = balances
     .filter((balance) => balance.category === 'borrow')
-    .map((balance) => balance.amount.mul(MCR).div(utils.parseEther('1.0')))
+    .map((balance) => (balance.amount * MCR) / parseEther('1.0'))
 
-  const healthFactor = Number(lendAmounts[0].mul(1e3).div(borrowAmounts[0])) / 1e3
+  const healthFactor = Number((lendAmounts[0] * 1000n) / borrowAmounts[0]) / 1000
 
   return healthFactor
 }

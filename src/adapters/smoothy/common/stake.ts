@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { getSingleStakeBalance } from '@lib/stake'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getBalance: {
@@ -39,7 +38,7 @@ const getSmoothyUnderlyingsBalances = async (ctx: BalancesContext, staker: Balan
   const fmtUnderlyings = mapSuccessFilter(tokensBalancesRes, (res, idx) => ({
     ...underlyings[idx],
     decimals: 18,
-    amount: BigNumber.from(res.output).mul(staker.amount).div(totalSupply),
+    amount: (res.output * staker.amount) / totalSupply,
   }))
 
   return {

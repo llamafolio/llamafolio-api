@@ -1,6 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   token: {
@@ -57,8 +56,8 @@ export async function getPoolsContracts(ctx: BaseContext) {
 }
 
 export interface PoolSupply extends Contract {
-  poolValue: BigNumber
-  totalSupply: BigNumber
+  poolValue: bigint
+  totalSupply: bigint
 }
 
 export async function getPoolsSupplies(ctx: BaseContext, pools: Contract[]) {
@@ -82,8 +81,8 @@ export async function getPoolsSupplies(ctx: BaseContext, pools: Contract[]) {
 
     poolsSupplies.push({
       ...pool,
-      poolValue: BigNumber.from(poolValue.output),
-      totalSupply: BigNumber.from(totalSupply.output),
+      poolValue: poolValue.output,
+      totalSupply: totalSupply.output,
     })
   }
 

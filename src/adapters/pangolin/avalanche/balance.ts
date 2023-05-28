@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -33,9 +32,9 @@ export async function getPangolinStakeBalances(ctx: BalancesContext, staker: Con
     ...staker,
     decimals: pangolin.decimals,
     symbol: pangolin.symbol,
-    amount: BigNumber.from(userBalanceOfRes),
+    amount: userBalanceOfRes,
     underlyings: [pangolin],
-    rewards: [{ ...pangolin, amount: BigNumber.from(userEarnedRes) }],
+    rewards: [{ ...pangolin, amount: userEarnedRes }],
     category: 'stake',
   })
 

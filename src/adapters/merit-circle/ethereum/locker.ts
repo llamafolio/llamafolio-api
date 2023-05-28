@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getDepositsOf: {
@@ -47,7 +46,7 @@ export async function getLockerBalances(ctx: BalancesContext, lockers: Contract[
       const balance: Balance = {
         ...locker,
         address: locker.lpToken ? locker.lpToken : locker.address,
-        amount: BigNumber.from(lockerBalanceInfo.amount),
+        amount: lockerBalanceInfo.amount,
         unlockAt: lockerBalanceInfo.end,
         underlyings,
         rewards: undefined,

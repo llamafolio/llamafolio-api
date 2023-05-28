@@ -1,11 +1,10 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -73,7 +72,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.getUserSlotLength }),
   ])
 
-  const userTotalDeposit = BigNumber.from(userTotalDepositRes)
+  const userTotalDeposit = userTotalDepositRes
   const rewarderAddress = rewarderAddressRes
 
   const rewards = await lockedRewardsBalances(ctx, rewarderAddress)
@@ -91,8 +90,8 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
 
   const extraUserLockedBySlotsRes = await multicall({
     ctx,
-    calls: range(0, Number(userExtraLockedSlots)).map(
-      (i) => ({ target: contract.address, params: [ctx.address, BigInt(i)] } as const),
+    calls: rangeBI(0n, userExtraLockedSlots).map(
+      (i) => ({ target: contract.address, params: [ctx.address, i] } as const),
     ),
     abi: abi.getUserNthSlot,
   })
@@ -112,8 +111,8 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
       address: contract.address,
       decimals: contract.decimals,
       symbol: contract.symbol,
-      amount: BigNumber.from(extraUserLockedBySlot.amount),
-      underlyings: [{ ...VTX, amount: BigNumber.from(extraUserLockedBySlot.amount) }],
+      amount: extraUserLockedBySlot.amount,
+      underlyings: [{ ...VTX, amount: extraUserLockedBySlot.amount }],
       unlockAt: Number(extraUserLockedBySlot.endTime),
       category: 'lock',
     })
@@ -126,7 +125,7 @@ const lockedRewardsBalances = async (ctx: BalancesContext, rewarder: `0x${string
   const pendingRewardsTokensRes = await multicall({
     ctx,
     // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts checked, 7 seems to be the maximum number of extra tokens used.
-    calls: range(0, 7).map((i) => ({ target: rewarder, params: [BigInt(i)] } as const)),
+    calls: rangeBI(0n, 7n).map((i) => ({ target: rewarder, params: [i] } as const)),
     abi: abi.rewardTokens,
   })
 
@@ -141,6 +140,6 @@ const lockedRewardsBalances = async (ctx: BalancesContext, rewarder: `0x${string
 
   return mapSuccessFilter(pendingRewardsBalancesRes, (pendingRewardRes, idx) => ({
     ...rewardsTokens[idx],
-    amount: BigNumber.from(pendingRewardRes.output),
+    amount: pendingRewardRes.output,
   }))
 }

@@ -1,6 +1,6 @@
 import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { BN_ZERO, mulPrice, sum } from '@lib/math'
+import { mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
@@ -69,7 +69,7 @@ export async function getTokenPrice(token: Token) {
 
 export async function getPricedBalances(balances: Balance[]): Promise<(Balance | PricedBalance)[]> {
   // Filter empty balances
-  balances = balances.filter((balance) => balance.amount.gt(0) || balance.claimable?.gt(0))
+  balances = balances.filter((balance) => balance.amount > 0n || (balance.claimable && balance.claimable > 0n))
 
   const priced: BaseBalance[] = balances.slice()
 
@@ -77,7 +77,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
   for (const balance of balances) {
     if (balance.rewards) {
       for (const reward of balance.rewards) {
-        if (reward.amount?.gt(0) || reward.claimable?.gt(0)) {
+        if ((reward.amount && reward.amount > 0n) || (reward.claimable && reward.claimable > 0n)) {
           priced.push(reward)
         }
       }
@@ -88,8 +88,9 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
   for (const balance of balances) {
     if (balance.underlyings) {
       for (const underlying of balance.underlyings) {
-        if (underlying.amount?.gt(0)) {
-          priced.push(underlying)
+        const _underlying = underlying as BaseBalance
+        if (_underlying.amount && _underlying.amount > 0n) {
+          priced.push(_underlying)
         }
       }
     }
@@ -129,7 +130,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
       ...balance,
       priceTimestamp: price.timestamp ? new Date(price.timestamp * 1000) : undefined,
       balanceUSD: mulPrice(balance.amount, Number(decimals), price.price),
-      claimableUSD: balance.claimable ? mulPrice(balance.claimable || BN_ZERO, decimals, price.price) : undefined,
+      claimableUSD: balance.claimable ? mulPrice(balance.claimable || 0n, decimals, price.price) : undefined,
     }
   }
 

@@ -3,7 +3,6 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   pendingAtlantis: {
@@ -56,7 +55,7 @@ export async function getAtlantisFarmBalances(
     if (balancesOfRes.success && pendingRewardRes.success && underlyings) {
       const lpToken = staker.lpToken
       const symbol = lpToken ? lpToken.symbol : underlyings[0].symbol
-      const amount = BigNumber.from(balancesOfRes.output[0])
+      const amount = balancesOfRes.output[0]
 
       const balance: Balance = {
         ...staker,
@@ -65,7 +64,7 @@ export async function getAtlantisFarmBalances(
         amount,
         decimals: 18,
         underlyings,
-        rewards: [{ ...atl, amount: BigNumber.from(pendingRewardRes.output) }],
+        rewards: [{ ...atl, amount: pendingRewardRes.output }],
         category: 'farm',
       }
 

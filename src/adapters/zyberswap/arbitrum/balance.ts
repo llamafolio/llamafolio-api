@@ -6,7 +6,6 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import type { Pair } from '@lib/uniswap/v2/factory'
-import { BigNumber } from 'ethers'
 
 const abi = {
   pendingTokens: {
@@ -83,7 +82,7 @@ export async function getZyberFarmBalances(
     const pendingRewardRes = pendingRewardsRes[idx]
     if (pendingRewardRes.success) {
       const [_addresses, _symbols, _decimals, amounts] = pendingRewardRes.output
-      pair.rewards = [{ ...zyber, amount: BigNumber.from(amounts[0]) }]
+      pair.rewards = [{ ...zyber, amount: amounts[0] }]
     }
   })
 
@@ -113,17 +112,17 @@ export async function getZyberFarm3poolsBalances(
 
   underlyings = underlyings.map((underlying, idx) => ({
     ...(underlying as Contract),
-    amount: BigNumber.from(amount).mul(underlyingsBalancesRes[idx]).div(totalSupplyRes),
+    amount: (amount * underlyingsBalancesRes[idx]) / totalSupplyRes,
   }))
 
   rewards = rewards.map((reward, idx) => ({
     ...(reward as Balance),
-    amount: BigNumber.from(pendRewardAmounts[idx]),
+    amount: pendRewardAmounts[idx],
   }))
 
   return {
     ...pool,
-    amount: BigNumber.from(amount),
+    amount: amount,
     underlyings,
     rewards: rewards as Balance[],
     category: 'farm',

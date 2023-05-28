@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const Spool: Token = {
   chain: 'ethereum',
@@ -44,8 +43,8 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     }),
   ])
 
-  const amount = BigNumber.from(getBalances)
-  const earned = BigNumber.from(getEarned)
+  const amount = getBalances
+  const earned = getEarned
 
   balances.push({
     chain: ctx.chain,

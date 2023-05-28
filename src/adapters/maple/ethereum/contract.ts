@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccess, range } from '@lib/array'
+import { mapSuccess, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -61,13 +61,7 @@ export async function getFarmContracts(ctx: BaseContext, contract: Contract): Pr
 
   const getPoolsAddresses = await multicall({
     ctx,
-    calls: range(0, Number(getPoolsNumber)).map(
-      (_, idx) =>
-        ({
-          target: contract.address,
-          params: [BigInt(idx)],
-        } as const),
-    ),
+    calls: rangeBI(0n, getPoolsNumber).map((idx) => ({ target: contract.address, params: [idx] } as const)),
     abi: abi.pools,
   })
 

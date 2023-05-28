@@ -1,11 +1,9 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 import type { ILVContract } from './contract'
 
@@ -83,7 +81,7 @@ export async function getILVBalances(ctx: BalancesContext, pools: ILVContract[])
     const underlyings = pool.underlyings as Contract[]
     const pendingRewardsRes = pendingsRewardsRes[poolIdx]
 
-    const pendingRewards = pendingRewardsRes.success ? BigNumber.from(pendingRewardsRes.output[0]) : BN_ZERO
+    const pendingRewards = pendingRewardsRes.success ? pendingRewardsRes.output[0] : 0n
 
     if (!underlyings || !balanceOfRes.success || !stakerBalanceOfRes.success) {
       return
@@ -92,7 +90,7 @@ export async function getILVBalances(ctx: BalancesContext, pools: ILVContract[])
     const balance: Balance = {
       ...pool,
       address: pool.token,
-      amount: BigNumber.from(balanceOfRes.output).add(stakerBalanceOfRes.output),
+      amount: balanceOfRes.output + stakerBalanceOfRes.output,
       underlyings,
       rewards: [{ ...ILV, amount: pendingRewards }],
       category: 'farm',

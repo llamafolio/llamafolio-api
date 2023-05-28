@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   underlyingBalance: {
@@ -34,7 +33,7 @@ export async function getRookStakeBalances(
   const balances: Balance[] = mapSuccessFilter(userBalancesRes, (res) => ({
     chain: ctx.chain,
     address: res.input.params[0],
-    amount: BigNumber.from(res.output),
+    amount: res.output,
     underlyings: undefined,
     rewards: undefined,
     category: 'stake',

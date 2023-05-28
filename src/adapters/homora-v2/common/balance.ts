@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getERC20BalanceOf } from '@lib/erc20'
-import { BN_TEN, isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
@@ -34,14 +33,14 @@ export async function getHomoraBalances(ctx: BalancesContext, contracts: Contrac
     const tokensBalance = tokensBalances[balanceIdx]
     const exchangeRatesOf = exchangeRatesOfs[balanceIdx]
 
-    if (isZero(tokensBalance.amount) || !exchangeRatesOf.success) {
+    if (tokensBalance.amount === 0n || !exchangeRatesOf.success) {
       continue
     }
 
     balances.push({
       ...tokensBalance,
       decimals: tokensBalance.underlyings?.[0].decimals,
-      amount: tokensBalance.amount.mul(exchangeRatesOf.output).div(BN_TEN.pow(18)),
+      amount: (tokensBalance.amount * exchangeRatesOf.output) / 10n ** 18n,
       category: 'farm',
     })
   }

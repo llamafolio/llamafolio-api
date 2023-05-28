@@ -1,12 +1,11 @@
 import { getUnderlyingAmounts } from '@adapters/uniswap-v3/common/pools'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { flatMapSuccess, keyBy, mapSuccess, range } from '@lib/array'
+import { flatMapSuccess, keyBy, mapSuccess, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 const abi = {
   tokenOfOwnerByIndex: {
@@ -108,13 +107,7 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
 
   const tokensOfOwnerByIndexRes = await multicall({
     ctx,
-    calls: range(0, balancesLength).map(
-      (idx) =>
-        ({
-          target: contract.address,
-          params: [ctx.address, BigInt(idx)],
-        } as const),
-    ),
+    calls: rangeBI(0n, balanceOf).map((idx) => ({ target: contract.address, params: [ctx.address, idx] } as const)),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -122,11 +115,7 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
     ctx,
     calls: mapSuccess(
       tokensOfOwnerByIndexRes,
-      (tokenIds) =>
-        ({
-          target: contract.address,
-          params: [tokenIds.output],
-        } as const),
+      (tokenIds) => ({ target: contract.address, params: [tokenIds.output] } as const),
     ),
     abi: abi.liquidities,
   })
@@ -145,10 +134,7 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
         poolId,
       ] = liquidity.output
 
-      return {
-        target: contract.address,
-        params: [poolId],
-      } as const
+      return { target: contract.address, params: [poolId] } as const
     }),
     abi: abi.poolMetas,
   })
@@ -207,7 +193,7 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
       address,
       symbol: `${tokenX.symbol}/${tokenY.symbol}`,
       category: 'lp' as Category,
-      amount: BigNumber.from('1'),
+      amount: 1n,
       underlyings: [
         { ...tokenX, amount: underlyingAmounts[0] },
         { ...tokenY, amount: underlyingAmounts[1] },

@@ -1,8 +1,6 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   currentCycle: {
@@ -67,9 +65,9 @@ export async function getTokemakLockerBalances(ctx: BalancesContext, locker: Con
 
   return {
     ...locker,
-    amount: BigNumber.from(amount),
+    amount: amount,
     underlyings: [TOKE],
-    claimable: lockerDate < now ? BigNumber.from(amount) : BN_ZERO,
+    claimable: lockerDate < now ? amount : 0n,
     rewards: undefined,
     unlockAt: Number(lockerDate),
     category: 'lock',

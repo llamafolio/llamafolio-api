@@ -2,11 +2,9 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { get_xLP_UnderlyingsBalances } from '@lib/gmx/underlying'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   stakedBalance: {
@@ -85,7 +83,7 @@ export async function getMorphexMLPBalances(ctx: BalancesContext, contract: Cont
 
   const balance: Balance = {
     ...contract,
-    amount: BigNumber.from(stakedBalance),
+    amount: stakedBalance,
     underlyings: contract.underlyings as Contract[],
     rewards: undefined,
     category: 'farm',
@@ -120,12 +118,12 @@ export async function getMorphexYieldBalances(ctx: BalancesContext, farmers: Con
 
     balances.push({
       ...farmer,
-      amount: BigNumber.from(balancesOfRes.output),
+      amount: balancesOfRes.output,
       underlyings: [
-        { ...underlyings[0], amount: BigNumber.from(balancesOfRes.output) },
-        { ...underlyings[1], amount: BigNumber.from(underlyingRes.output) },
+        { ...underlyings[0], amount: balancesOfRes.output },
+        { ...underlyings[1], amount: underlyingRes.output },
       ],
-      rewards: [{ ...MPX, amount: BigNumber.from(claimableRes.output) }],
+      rewards: [{ ...MPX, amount: claimableRes.output }],
       category: 'farm',
     })
   }
@@ -142,11 +140,11 @@ export async function getMorphexStakeMLPBalances(ctx: BalancesContext, contract:
 
   const balance: Balance = {
     ...contract,
-    amount: BigNumber.from(stakedBalance),
+    amount: stakedBalance,
     underlyings: contract.underlyings as Contract[],
     rewards: [
-      { ...WFTM, amount: BigNumber.from(claimableNativeToken) },
-      { ...esToken, amount: BigNumber.from(claimableEsToken) },
+      { ...WFTM, amount: claimableNativeToken },
+      { ...esToken, amount: claimableEsToken },
     ],
     category: 'stake',
   }
@@ -177,17 +175,17 @@ export async function getMorphexStakeMPXBalances(
 
   underlyings.forEach((underlying, underlyingIdx) => {
     ;(underlying as Balance).amount = underlyingsBalancesRes[underlyingIdx].success
-      ? BigNumber.from(underlyingsBalancesRes[underlyingIdx].output)
-      : BN_ZERO
+      ? underlyingsBalancesRes[underlyingIdx].output
+      : 0n
   })
 
   return {
     ...contract,
-    amount: BigNumber.from(stakedBalance),
+    amount: stakedBalance,
     underlyings,
     rewards: [
-      { ...WFTM, amount: BigNumber.from(claimableNativeToken) },
-      { ...esToken, amount: BigNumber.from(claimableEsToken) },
+      { ...WFTM, amount: claimableNativeToken },
+      { ...esToken, amount: claimableEsToken },
     ],
     category: 'stake',
   }

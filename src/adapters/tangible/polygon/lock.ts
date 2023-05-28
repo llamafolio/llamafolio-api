@@ -1,11 +1,9 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
-import { mapSuccess, range } from '@lib/array'
+import { mapSuccess, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   tokenOfOwnerByIndex: {
@@ -64,7 +62,7 @@ export async function getTangibleLockerBalances(ctx: BalancesContext, locker: Co
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, balanceOf).map((idx) => ({ target: locker.address, params: [ctx.address, BigInt(idx)] } as const)),
+    calls: rangeBI(0n, balanceOfsRes).map((idx) => ({ target: locker.address, params: [ctx.address, idx] } as const)),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -103,11 +101,11 @@ export async function getTangibleLockerBalances(ctx: BalancesContext, locker: Co
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(lockedAmount),
+      amount: lockedAmount,
       unlockAt,
-      claimable: now > unlockAt ? BigNumber.from(lockedAmount) : BN_ZERO,
+      claimable: now > unlockAt ? lockedAmount : 0n,
       underlyings: [TNGBL],
-      rewards: [{ ...TNGBL, amount: BigNumber.from(free) }],
+      rewards: [{ ...TNGBL, amount: free }],
       category: 'lock',
     })
   }

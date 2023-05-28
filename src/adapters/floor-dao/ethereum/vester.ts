@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   indexesFor: {
@@ -56,20 +54,20 @@ export async function getVesterBalances(ctx: BalancesContext, vester: Contract):
     abi: abi.pendingFor,
   })
 
-  const aggregatedVestingBalances = balancesOfRes.reduce((acc: BigNumber, current) => {
+  const aggregatedVestingBalances = balancesOfRes.reduce((acc, current) => {
     if (!current.success) {
-      return acc.add(BN_ZERO)
+      return acc
     }
 
     const [payout] = current.output
 
-    return acc.add(payout)
-  }, BN_ZERO)
+    return acc + payout
+  }, 0n)
 
   return {
     ...vester,
     decimals: 18,
-    amount: BigNumber.from(aggregatedVestingBalances),
+    amount: aggregatedVestingBalances,
     symbol: gFLOOR.symbol,
     underlyings: [FLOOR],
     rewards: undefined,

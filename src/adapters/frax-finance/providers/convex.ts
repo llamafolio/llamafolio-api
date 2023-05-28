@@ -3,11 +3,10 @@ import { mapSuccess } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 import type { ProviderBalancesParams } from './interface'
 
@@ -165,7 +164,7 @@ export const convexBalancesProvider = async (
   for (const pool of pools) {
     if (pool.provider === 'curve') {
       const pricePerShare = await call({ ctx, target: pool.lpToken, abi: abi.getPricePerFullShare })
-      pool.amount = pool.amount.mul(pricePerShare).div(utils.parseEther('1.0'))
+      pool.amount = (pool.amount * pricePerShare) / parseEther('1.0')
     }
   }
 
@@ -194,8 +193,7 @@ export const convexBalancesProvider = async (
 
     underlyings.forEach((underlying, underlyingIdx) => {
       const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
-      ;(underlying as Balance).amount =
-        BigNumber.from(underlyingBalance).mul(amount).div(totalSupplyRes.output) || BN_ZERO
+      ;(underlying as Balance).amount = (underlyingBalance * amount) / totalSupplyRes.output
     })
   }
 

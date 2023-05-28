@@ -2,11 +2,9 @@ import { getPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 import { getCvxCliffRatio } from './utils'
 
@@ -72,10 +70,10 @@ export async function getConvexGaugesBalances(
     }
 
     // rewards[0] is the common reward for all pools: CRV
-    rewards[0].amount = BigNumber.from(claimableReward.output || BN_ZERO)
+    rewards[0].amount = claimableReward.output || 0n
 
     // rewards[1] is the common reward for all pools: CVX
-    rewards[1].amount = getCvxCliffRatio(BigNumber.from(cvxTotalSupply), rewards[0].amount)
+    rewards[1].amount = getCvxCliffRatio(cvxTotalSupply, rewards[0].amount)
 
     if (rewards.length < 3) {
       commonRewardsPools.push(gaugeBalance)
@@ -108,14 +106,14 @@ export async function getConvexGaugesBalances(
         continue
       }
 
-      reward.amount = BigNumber.from(extraRewardRes.output)
+      reward.amount = extraRewardRes.output
 
       extraRewardsCallIdx++
     }
 
     // CVX can sometimes appears as common and extra rewards
     if (rewards[1].address === rewards[2].address) {
-      rewards[1].amount = rewards[1].amount.add(rewards[2].amount)
+      rewards[1].amount = rewards[1].amount + rewards[2].amount
       rewards.splice(2, 1)
     }
   }

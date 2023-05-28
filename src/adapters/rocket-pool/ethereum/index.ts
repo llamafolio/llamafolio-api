@@ -1,10 +1,8 @@
 import type { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { BN_TEN } from '@lib/math'
 import { getSingleStakeBalance } from '@lib/stake'
 import type { Token } from '@lib/token'
 import { ETH } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getNodeRPLStake: {
@@ -62,7 +60,7 @@ async function getMiniPoolManagerBalance(ctx: BalancesContext, miniPoolManager: 
 
   // 16 ETH required (not 32)
   // See: https://rocketpool.net/#stake-run-node
-  balance.amount = balance.amount.mul(BigNumber.from('16').mul(BN_TEN.pow(18)))
+  balance.amount = balance.amount * 16n * 10n ** 18n
 
   return balance
 }

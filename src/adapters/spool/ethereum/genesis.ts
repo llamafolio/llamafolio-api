@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, BaseBalance, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -70,9 +69,9 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]) 
       address: pool.address,
       symbol: underlying.symbol,
       decimals: underlying.decimals,
-      amount: BigNumber.from(instantDeposit),
-      underlyings: [{ ...underlying, amount: BigNumber.from(instantDeposit) }],
-      rewards: [{ ...Spool, amount: BigNumber.from(earnedRes.output) }],
+      amount: instantDeposit,
+      underlyings: [{ ...underlying, amount: instantDeposit }],
+      rewards: [{ ...Spool, amount: earnedRes.output }],
       category: 'farm',
     })
   }

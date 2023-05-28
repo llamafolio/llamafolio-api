@@ -1,11 +1,10 @@
 import type { Balance, BalancesContext, Contract, LockBalance } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
-import { mapSuccess, range } from './array'
+import { mapSuccess, rangeBI } from './array'
 import { abi as erc20Abi } from './erc20'
-import { BN_ZERO, isZero, sumBN } from './math'
+import { sumBI } from './math'
 import { multicall } from './multicall'
 
 const abi = {
@@ -79,11 +78,11 @@ const abi = {
   },
 } as const
 
-function getLockerAbi(methodName?: string): any {
+function getLockerAbi(methodName?: string): typeof abi.locks {
   return JSON.parse(JSON.stringify(abi.locks).replace(abi.locks.name, methodName ? `${methodName}` : abi.locks.name))
 }
 
-function getNFTLockerAbi(methodName?: string): any {
+function getNFTLockerAbi(methodName?: string): typeof abi.nftLocked {
   return JSON.parse(
     JSON.stringify(abi.nftLocked).replace(abi.nftLocked.name, methodName ? `${methodName}` : abi.nftLocked.name),
   )
@@ -97,16 +96,19 @@ export async function getSingleLockerBalance(
 ): Promise<LockBalance> {
   const genericLocker = getLockerAbi(methodName)
 
-  const [amount, end] = await call({ ctx, target: locker.address, params: [ctx.address], abi: genericLocker })
+  const [amount, end] = (await call({ ctx, target: locker.address, params: [ctx.address], abi: genericLocker })) as [
+    bigint,
+    bigint,
+  ]
 
   const now = Date.now() / 1000
   const unlockAt = Number(end)
 
   return {
     ...locker,
-    amount: BigNumber.from(amount),
+    amount,
     underlyings: [underlying],
-    claimable: now > unlockAt ? BigNumber.from(amount) : BN_ZERO,
+    claimable: now > unlockAt ? amount : 0n,
     unlockAt,
     rewards: undefined,
     category: 'lock',
@@ -123,7 +125,7 @@ export async function getSingleLockerBalances(
 
   const lockBalancesRes = await multicall({
     ctx,
-    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] })),
+    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] } as const)),
     abi: genericLocker,
   })
 
@@ -138,14 +140,14 @@ export async function getSingleLockerBalances(
       continue
     }
 
-    const [amount, end] = lockBalanceRes.output
+    const [amount, end] = lockBalanceRes.output as [bigint, bigint]
     const unlockAt = Number(end)
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(amount),
+      amount,
       underlyings: underlyings,
-      claimable: now > unlockAt ? BigNumber.from(amount) : BN_ZERO,
+      claimable: now > unlockAt ? amount : 0n,
       unlockAt,
       rewards: undefined,
       category: 'lock',
@@ -167,11 +169,10 @@ export async function getMultipleLockerBalances(
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.lockedBalances }),
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.claimableRewards }),
   ])
-  const [total, _unlockable, _locked, lockData] = lockedBalances
+  const [totalLocked, _unlockable, _locked, lockData] = lockedBalances
 
-  const locked = sumBN((lockData || []).map((lockData: any) => lockData.amount))
-  const totalLocked = BigNumber.from(total)
-  const expiredLocked = totalLocked.sub(locked)
+  const locked = sumBI((lockData || []).map((lockData) => lockData.amount))
+  const expiredLocked = totalLocked - locked
 
   const claimableBalance: Balance = {
     ...locker,
@@ -182,11 +183,11 @@ export async function getMultipleLockerBalances(
     category: 'lock',
   }
 
-  if (rewards && !isZero(totalLocked)) {
+  if (rewards && totalLocked !== 0n) {
     rewards.map((reward, idx: number) => {
       claimableBalance.rewards?.push({
         ...reward,
-        amount: BigNumber.from(claimableBalance.amount).mul(earnedRes[idx].amount).div(totalLocked),
+        amount: (claimableBalance.amount * earnedRes[idx].amount) / totalLocked,
       })
     })
   }
@@ -197,19 +198,19 @@ export async function getMultipleLockerBalances(
 
     const balance: Balance = {
       ...locker,
-      amount: BigNumber.from(amount),
-      claimable: BN_ZERO,
+      amount,
+      claimable: 0n,
       underlyings: [underlying],
       unlockAt: unlockTime,
       rewards: [],
       category: 'lock',
     }
 
-    if (rewards && !isZero(totalLocked)) {
+    if (rewards && totalLocked !== 0n) {
       rewards.map((reward, idx: number) => {
         balance.rewards?.push({
           ...reward,
-          amount: BigNumber.from(balance.amount).mul(earnedRes[idx].amount).div(totalLocked),
+          amount: (balance.amount * earnedRes[idx].amount) / totalLocked,
         })
       })
     }
@@ -238,15 +239,16 @@ export async function getNFTLockerBalances(
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, Number(balanceOfsRes)).map(
-      (idx) => ({ target: locker.address, params: [ctx.address, BigInt(idx)] } as const),
-    ),
+    calls: rangeBI(0n, balanceOfsRes).map((idx) => ({ target: locker.address, params: [ctx.address, idx] } as const)),
     abi: abi.tokenOfOwnerByIndex,
   })
 
   const lockedsRes = await multicall({
     ctx,
-    calls: mapSuccess(tokenOfOwnerByIndexesRes, (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] })),
+    calls: mapSuccess(
+      tokenOfOwnerByIndexesRes,
+      (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] } as const),
+    ),
     abi: genericLocker,
   })
 
@@ -258,14 +260,14 @@ export async function getNFTLockerBalances(
     }
 
     const now = Date.now() / 1000
-    const [amount, end] = lockedRes.output
+    const [amount, end] = lockedRes.output as [bigint, bigint]
     const unlockAt = Number(end)
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(amount),
+      amount,
       unlockAt,
-      claimable: now > unlockAt ? BigNumber.from(amount) : BN_ZERO,
+      claimable: now > unlockAt ? amount : 0n,
       underlyings: [underlying],
       rewards: undefined,
       category: 'lock',

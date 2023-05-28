@@ -10,7 +10,6 @@ import type {
 import type { Category } from '@lib/category'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20BalanceOf } from '@lib/erc20'
-import { BN_TEN, BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
@@ -121,7 +120,7 @@ export function sanitizeBalances(balances: Balance[]) {
   const sanitizedBalances: Balance[] = []
 
   for (const balance of balances) {
-    if (!balance.amount) {
+    if (balance.amount == null) {
       console.error(`Missing balance amount`, balance)
       continue
     }
@@ -138,18 +137,15 @@ export function sanitizeBalances(balances: Balance[]) {
             ...underlying,
             amount:
               deltaMantissa > 0
-                ? balance.amount.div(BN_TEN.pow(deltaMantissaAbs))
-                : balance.amount.mul(BN_TEN.pow(deltaMantissaAbs)),
+                ? balance.amount / 10n ** BigInt(deltaMantissaAbs)
+                : balance.amount * 10n ** BigInt(deltaMantissaAbs),
           }))
         }
       }
     }
 
     if (balance.rewards) {
-      sanitizedBalance.rewards = balance.rewards.map((reward) => ({
-        ...reward,
-        amount: reward.amount || BN_ZERO,
-      }))
+      sanitizedBalance.rewards = balance.rewards.map((reward) => ({ ...reward, amount: reward.amount || 0n }))
     }
 
     sanitizedBalances.push(sanitizedBalance)

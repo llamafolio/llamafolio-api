@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 import type { cdpid } from './cdpid'
 
@@ -73,8 +73,8 @@ const abi = {
 } as const
 
 const DECIMALS = {
-  wad: utils.parseEther('1.0'), // 10 ** 18,
-  ray: utils.parseEther('1000000000'), //  10 ** 27
+  wad: parseEther('1.0'), // 10 ** 18,
+  ray: parseEther('1000000000'), //  10 ** 27
 }
 
 const DAI: Token = {
@@ -89,16 +89,16 @@ interface UrnHandlerParams {
   address: `0x${string}`
   urnAddress: `0x${string}`
   proxy: `0x${string}`
-  id: string
+  id: bigint
   asset: Contract
 }
 
 export type BalanceWithExtraProps = Balance & {
   proxy: string
   urnAddress?: string
-  id?: string
-  mat?: BigNumber
-  spot?: BigNumber
+  id?: bigint
+  mat?: bigint
+  spot?: bigint
 }
 
 export async function getProxiesBalances(
@@ -151,7 +151,7 @@ export async function getProxiesBalances(
             symbol,
             address: gem,
             decimals: dec,
-            mat: BigNumber.from(ilkMat),
+            mat: ilkMat,
           },
         })
       }
@@ -188,12 +188,12 @@ const getUrnsBalances = async (ctx: BalancesContext, vat: Contract, urnHandlers:
       const [ink, art] = urnRes.output
       const [_Art, _rate, spot] = ilkRes.output
 
-      const userSupply = BigNumber.from(ink)
-      const userBorrow = BigNumber.from(art)
-      const urnSpot = BigNumber.from(spot)
-      const rate = BigNumber.from(_rate)
+      const userSupply = ink
+      const userBorrow = art
+      const urnSpot = spot
+      const rate = _rate
 
-      const userBorrowFormatted = userBorrow.mul(rate).div(DECIMALS.ray)
+      const userBorrowFormatted = (userBorrow * rate) / DECIMALS.ray
 
       const lend: BalanceWithExtraProps = {
         chain: ctx.chain,
@@ -252,17 +252,12 @@ export function getHealthFactor(balancesGroup: BalanceWithExtraProps[]) {
    * (Vat.urn.art * Vat.ilk.rate) = balance.amount (borrow)
    */
 
-  if (lend.mat && lend.spot && borrow.amount.gt(0)) {
-    const PRECISION_FACTOR = 1000
+  if (lend.mat && lend.spot && borrow.amount > 0n) {
+    const PRECISION_FACTOR = 1000n
 
-    const collateralizationRatio = lend.amount
-      .mul(PRECISION_FACTOR)
-      .mul(lend.mat)
-      .div(DECIMALS.ray)
-      .mul(lend.spot)
-      .div(DECIMALS.ray)
-      .div(borrow.amount)
+    const collateralizationRatio =
+      (((lend.amount * PRECISION_FACTOR * lend.mat) / DECIMALS.ray) * lend.spot) / DECIMALS.ray / borrow.amount
 
-    return +collateralizationRatio / PRECISION_FACTOR
+    return Number(collateralizationRatio) / Number(PRECISION_FACTOR)
   }
 }

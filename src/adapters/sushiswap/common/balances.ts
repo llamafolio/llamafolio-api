@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const xSushi: Token = {
   chain: 'ethereum',
@@ -16,7 +15,7 @@ export async function getXSushiStakeBalance(ctx: BalancesContext, xSushi: Contra
 
   const balance: Balance = {
     ...xSushi,
-    amount: BigNumber.from(balanceOf),
+    amount: balanceOf,
     underlyings: undefined,
     rewards: undefined,
     category: 'stake',
@@ -32,8 +31,8 @@ export async function getMeowshiYieldBalance(ctx: BalancesContext, meowshi: Cont
 
   const balance: Balance = {
     ...meowshi,
-    amount: BigNumber.from(balanceOf),
-    underlyings: [{ ...xSushi, amount: BigNumber.from(balanceOf).div(meowConverter) }],
+    amount: balanceOf,
+    underlyings: [{ ...xSushi, amount: balanceOf / meowConverter }],
     rewards: undefined,
     category: 'farm',
   }

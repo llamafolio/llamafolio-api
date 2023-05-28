@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   balanceOfVotingToken: {
@@ -38,7 +37,7 @@ export async function getFantohmLockerBalances(ctx: BalancesContext, lockers: Co
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(balancesOfRes.output),
+      amount: balancesOfRes.output,
       decimals: 9,
       underlyings: [FHM],
       rewards: undefined,

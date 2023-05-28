@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { groupBy, range } from '@lib/array'
+import { groupBy, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -44,7 +44,7 @@ export async function getGroContracts(ctx: BaseContext, masterchef: Contract): P
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLength).map((idx) => ({ target: masterchef.address, params: [BigInt(idx)] } as const)),
+    calls: rangeBI(0n, poolLengthBI).map((idx) => ({ target: masterchef.address, params: [idx] } as const)),
     abi: abi.poolInfo,
   })
 

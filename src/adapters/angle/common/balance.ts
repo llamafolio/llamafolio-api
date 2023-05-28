@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_TEN, isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   claimable_reward: {
@@ -56,7 +54,7 @@ export async function getStablePoolBalancesFromAPI(
   const datas = await response.json()
 
   const balances = Object.values(datas)
-    .filter((data: any) => data && data.capitalGains && !isZero(data.capitalGains.lastStakedPosition))
+    .filter((data: any) => data && data.capitalGains && data.capitalGains.lastStakedPosition !== 0n)
     .map((data: any) => ({ address: data.sanTokenAddress.toLowerCase(), amount: data.capitalGains.lastStakedPosition }))
 
   for (const balance of balances) {
@@ -65,7 +63,7 @@ export async function getStablePoolBalancesFromAPI(
       continue
     }
 
-    const amount = BigNumber.from(parseInt(balance.amount)).mul(BN_TEN.pow(position.decimals))
+    const amount = BigInt(balance.amount) * 10n ** BigInt(position.decimals || 0)
     position.amount = amount
 
     const [underlying] = position.underlyings || []
@@ -110,7 +108,7 @@ const getAnglePoolsRewards = async (ctx: BalancesContext, pools: Balance[]): Pro
       continue
     }
 
-    balances.push({ ...pool, rewards: [{ ...reward, amount: BigNumber.from(claimableOfRes.output) }] })
+    balances.push({ ...pool, rewards: [{ ...reward, amount: claimableOfRes.output }] })
   }
 
   return balances
@@ -148,18 +146,18 @@ export async function getAnglePoolsBalances(ctx: BalancesContext, pools: Contrac
       swapBalances.push({
         ...pool,
         address: pool.lpToken,
-        amount: BigNumber.from(balancesOfRes.output),
+        amount: balancesOfRes.output,
         underlyings: pool.underlyings as Contract[],
-        rewards: [{ ...reward, amount: BigNumber.from(claimablesOfRes.output) }],
+        rewards: [{ ...reward, amount: claimablesOfRes.output }],
         category: 'farm',
       })
     } else {
       gelatoBalances.push({
         ...pool,
         address: pool.lpToken,
-        amount: BigNumber.from(balancesOfRes.output),
+        amount: balancesOfRes.output,
         underlyings: pool.underlyings as Contract[],
-        rewards: [{ ...reward, amount: BigNumber.from(claimablesOfRes.output) }],
+        rewards: [{ ...reward, amount: claimablesOfRes.output }],
         category: 'farm',
       })
     }
@@ -190,8 +188,8 @@ export async function getAnglePoolsBalances(ctx: BalancesContext, pools: Contrac
 
     const [amount0Current, amount1Current] = underlyingBalanceRes.output
 
-    ;(underlyings[0] as Balance).amount = amount.mul(amount0Current).div(supplyRes.output)
-    ;(underlyings[1] as Balance).amount = amount.mul(amount1Current).div(supplyRes.output)
+    ;(underlyings[0] as Balance).amount = (amount * amount0Current) / supplyRes.output
+    ;(underlyings[1] as Balance).amount = (amount * amount1Current) / supplyRes.output
   }
 
   return [...swapBalancesWithUnderlyings, ...gelatoBalances]

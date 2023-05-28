@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   pendingPayoutFor: {
@@ -30,7 +29,7 @@ export async function getVestBalances(ctx: BalancesContext, contracts: Contract[
     abi: abi.pendingPayoutFor,
   })
 
-  const vestingBalanceOf = vestingBalanceOfRes.filter((res) => res.success).map((res) => BigNumber.from(res.output))
+  const vestingBalanceOf = vestingBalanceOfRes.filter((res) => res.success).map((res) => res.output)
 
   for (let i = 0; i < contracts.length; i++) {
     const contract = contracts[i]

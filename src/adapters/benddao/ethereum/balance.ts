@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getRewardsBalance: {
@@ -39,9 +38,9 @@ export async function getBendBalances(ctx: BalancesContext, contract: Contract):
 
   return {
     ...contract,
-    amount: BigNumber.from(balanceOfRes),
+    amount: balanceOfRes,
     underlyings: [weth],
-    rewards: [{ ...bend, amount: BigNumber.from(rewardsOfRes) }],
+    rewards: [{ ...bend, amount: rewardsOfRes }],
     category: 'farm',
   }
 }

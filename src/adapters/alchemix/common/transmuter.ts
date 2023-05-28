@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getCdpTotalDebt: {
@@ -53,13 +52,13 @@ export async function getTransmutationBalances(
 
     const lend: Balance = {
       ...transmuter.lender,
-      amount: BigNumber.from(lendBalanceRes.output),
+      amount: lendBalanceRes.output,
       category: 'lend',
     }
 
     const borrow: Balance = {
       ...transmuter.borrower,
-      amount: BigNumber.from(borrowBalanceRes.output),
+      amount: borrowBalanceRes.output,
       category: 'borrow',
     }
     balances.push(lend, borrow)

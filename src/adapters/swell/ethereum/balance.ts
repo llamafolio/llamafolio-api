@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   getRate: {
@@ -33,8 +33,8 @@ export async function getSwellBalances(ctx: BalancesContext, contract: Contract)
 
   return {
     ...contract,
-    amount: BigNumber.from(balanceOf),
-    underlyings: [{ ...WETH, amount: BigNumber.from(balanceOf).mul(rate).div(utils.parseEther('1.0')) }],
+    amount: balanceOf,
+    underlyings: [{ ...WETH, amount: (balanceOf * rate) / parseEther('1.0') }],
     rewards: undefined,
     category: 'farm',
   }

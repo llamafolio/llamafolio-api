@@ -4,7 +4,6 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import type { Pair } from '@lib/uniswap/v2/factory'
-import { BigNumber } from 'ethers'
 
 const abi = {
   pendingWETH: {
@@ -71,7 +70,7 @@ export const getArxMasterChefPoolsBalances = async (
     const extraRewardRes = extraRewardsRes[idx]
 
     if (extraRewardRes.success) {
-      poolBalance.rewards?.push({ ...WETH, amount: BigNumber.from(extraRewardRes.output) })
+      poolBalance.rewards?.push({ ...WETH, amount: extraRewardRes.output })
     }
 
     return poolBalance
@@ -105,9 +104,9 @@ export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[
 
     balances.push({
       ...staker,
-      amount: BigNumber.from(amount),
+      amount,
       underlyings: [ARX],
-      rewards: [{ ...reward, amount: BigNumber.from(pendingRewardRes.output) }],
+      rewards: [{ ...reward, amount: pendingRewardRes.output }],
       category: 'stake',
     })
   }

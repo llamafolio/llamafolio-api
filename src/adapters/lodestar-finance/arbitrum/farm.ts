@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   userInfo: {
@@ -41,9 +40,9 @@ export async function getFarmBalances(ctx: BalancesContext, farmer: Contract): P
   const balance: Balance = {
     ...farmer,
     address: farmer.token as `0x${string}`,
-    amount: BigNumber.from(amount),
+    amount,
     underlyings: farmer.underlyings as Contract[],
-    rewards: [{ ...LODE, amount: BigNumber.from(pendingReward) }],
+    rewards: [{ ...LODE, amount: pendingReward }],
     category: 'farm',
   }
 

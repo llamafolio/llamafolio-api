@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getTotalRewardsBalance: {
@@ -34,7 +32,7 @@ export async function getLyraStakeBalances(ctx: BalancesContext, stakers: Contra
     const reward = staker.rewards?.[0] as Contract
     const balanceOfRes = balanceOfsRes[idx]
     const totalRewardRes = totalRewardsRes[idx]
-    const rewardAmount = totalRewardRes.success ? BigNumber.from(totalRewardRes.output) : BN_ZERO
+    const rewardAmount = totalRewardRes.success ? totalRewardRes.output : 0n
 
     if (!balanceOfRes.success) {
       continue
@@ -42,7 +40,7 @@ export async function getLyraStakeBalances(ctx: BalancesContext, stakers: Contra
 
     balances.push({
       ...staker,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       decimals: underlyings[0].decimals,
       underlyings,
       rewards: [{ ...reward, amount: rewardAmount }],

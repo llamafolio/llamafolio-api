@@ -1,12 +1,10 @@
 import type { Balance, BalancesContext, Contract, FarmBalance } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -67,9 +65,9 @@ export async function getHorizonFarmBalances(ctx: BalancesContext, farmers: Cont
     balances.push({
       ...farmer,
       address: farmer.token!,
-      amount: BigNumber.from(userBalanceRes.output),
+      amount: userBalanceRes.output,
       underlyings,
-      rewards: [{ ...HZN, amount: BigNumber.from(pendingRewardRes.output) }],
+      rewards: [{ ...HZN, amount: pendingRewardRes.output }],
       category: 'farm',
     })
   }
@@ -104,8 +102,7 @@ const getUnderlyingsCurveBalance = async (ctx: BalancesContext, crvBalance: Hori
 
   underlyings.forEach((underlying, underlyingIdx) => {
     const underlyingBalance = underlyingsBalances[underlyingIdx]
-    ;(underlying as Balance).amount =
-      BigNumber.from(underlyingBalance).mul(crvBalance.amount).div(totalSupplyRes) || BN_ZERO
+    ;(underlying as Balance).amount = (underlyingBalance * crvBalance.amount) / totalSupplyRes
   })
 
   return crvBalance

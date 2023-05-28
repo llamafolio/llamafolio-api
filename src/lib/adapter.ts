@@ -1,6 +1,5 @@
 import type { Category } from '@lib/category'
 import type { Chain } from '@lib/chains'
-import type { BigNumber } from 'ethers'
 
 export interface BaseContext {
   chain: Chain
@@ -46,8 +45,8 @@ export interface Contract extends BaseContract {
 }
 
 export interface BaseBalance extends BaseContract {
-  amount: BigNumber
-  claimable?: BigNumber
+  amount: bigint
+  claimable?: bigint
 }
 
 export interface BasePricedBalance extends BaseBalance {
@@ -198,10 +197,10 @@ export interface AdapterTest {
 }
 
 export interface BalancesTest {
-  amount?: BigNumber
+  amount?: bigint
   symbol?: string
   decimals?: string
   category: Category
-  underlying?: { symbol?: string; decimals?: string; amount: BigNumber }[]
-  rewards?: { symbol?: string; decimals?: string; amount: BigNumber }[]
+  underlying?: { symbol?: string; decimals?: string; amount: bigint }[]
+  rewards?: { symbol?: string; decimals?: string; amount: bigint }[]
 }

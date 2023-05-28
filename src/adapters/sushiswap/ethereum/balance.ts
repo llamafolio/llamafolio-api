@@ -1,14 +1,12 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { mapSuccess, range } from '@lib/array'
+import { mapSuccess, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20Details } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   poolLength: {
@@ -103,9 +101,9 @@ export async function getContractsFromMasterchefV2(
 
   const poolLengthRes = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
 
-  const calls: Call<typeof abi.lpToken>[] = range(0, Number(poolLengthRes)).map((idx) => ({
+  const calls: Call<typeof abi.lpToken>[] = rangeBI(0n, poolLengthRes).map((idx) => ({
     target: masterchef.address,
-    params: [BigInt(idx)],
+    params: [idx],
   }))
 
   const [poolInfosRes, rewardersRes] = await Promise.all([
@@ -224,10 +222,10 @@ export async function getBalancesFromMasterchefV2(
       ...pool,
       underlyings: pool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(amount),
+      amount: amount,
       rewards: [
-        { ...rewardToken, amount: BigNumber.from(pendingSushiRes.output) },
-        { ...reward, amount: pendingTokenRes.success ? BigNumber.from(pendingTokenRes.output) : BN_ZERO },
+        { ...rewardToken, amount: pendingSushiRes.output },
+        { ...reward, amount: pendingTokenRes.success ? pendingTokenRes.output : 0n },
       ],
     })
   }

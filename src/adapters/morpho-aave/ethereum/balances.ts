@@ -1,8 +1,8 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { MAX_UINT_256 } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber, ethers } from 'ethers'
 
 const abi = {
   getAllMarkets: {
@@ -117,7 +117,7 @@ export async function getLendBorrowBalances(
       balances.push({
         ...market,
         decimals: underlyings.decimals,
-        amount: BigNumber.from(totalBalance),
+        amount: totalBalance,
         underlyings: [underlyings],
         rewards: undefined,
         category: 'lend',
@@ -132,7 +132,7 @@ export async function getLendBorrowBalances(
         address: market.address,
         decimals: underlyings.decimals,
         symbol: market.symbol,
-        amount: BigNumber.from(totalBalance),
+        amount: totalBalance,
         underlyings: [underlyings],
         rewards: undefined,
         category: 'borrow',
@@ -151,7 +151,7 @@ export async function getUserHealthFactor(ctx: BalancesContext, morphoLens: Cont
     abi: abi.getUserHealthFactor,
   })
 
-  if (ethers.constants.MaxUint256.eq(userHealthFactorRes)) {
+  if (userHealthFactorRes === MAX_UINT_256) {
     return
   }
 

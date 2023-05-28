@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, BaseContract, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 import { getAccruedBLUSD } from './chickenBondManager'
 
@@ -64,16 +62,10 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
     abi: abi.balanceOf,
   })
 
-  const bondsLength = Number(balanceOfRes)
-
   const tokenOfOwnerByIndexRes = await multicall({
     ctx,
-    calls: range(0, bondsLength).map(
-      (bondIdx) =>
-        ({
-          target: bondNFT.address,
-          params: [ctx.address, BigInt(bondIdx)],
-        } as const),
+    calls: rangeBI(0n, balanceOfRes).map(
+      (bondIdx) => ({ target: bondNFT.address, params: [ctx.address, bondIdx] } as const),
     ),
     abi: abi.tokenOfOwnerByIndex,
   })
@@ -82,13 +74,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
 
   const bondStatusRes = await multicall({
     ctx,
-    calls: tokenIDs.map(
-      (tokenID) =>
-        ({
-          target: bondNFT.address,
-          params: [tokenID],
-        } as const),
-    ),
+    calls: tokenIDs.map((tokenID) => ({ target: bondNFT.address, params: [tokenID] } as const)),
     abi: abi.getBondStatus,
   })
 
@@ -99,13 +85,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
   const [bondAmountsRes, accruedBLUSDRes] = await Promise.all([
     multicall({
       ctx,
-      calls: activeTokenIDs.map(
-        (tokenID) =>
-          ({
-            target: bondNFT.address,
-            params: [tokenID],
-          } as const),
-      ),
+      calls: activeTokenIDs.map((tokenID) => ({ target: bondNFT.address, params: [tokenID] } as const)),
       abi: abi.getBondAmount,
     }),
     getAccruedBLUSD(ctx, activeTokenIDs),
@@ -118,15 +98,15 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
     const balance: Balance = {
       ...LUSD,
       category: 'stake',
-      amount: BN_ZERO,
+      amount: 0n,
     }
 
     if (bondAmountRes.success) {
-      balance.amount = BigNumber.from(bondAmountRes.output)
+      balance.amount = bondAmountRes.output
     }
 
     if (bLUSDRes.success) {
-      balance.rewards = [{ ...bLUSD, amount: BigNumber.from(bLUSDRes.output) }]
+      balance.rewards = [{ ...bLUSD, amount: bLUSDRes.output }]
     }
 
     balances.push(balance)

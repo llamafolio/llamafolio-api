@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract, FarmBalance } from '@lib/adapt
 import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 import { convexProvider, curveProvider, llamaProvider } from './provider'
 
@@ -31,7 +30,7 @@ export async function getLlamaBalances(ctx: BalancesContext, pools: Contract[]):
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: pool.underlyings as Contract[],
       rewards: undefined,
       category: 'farm',

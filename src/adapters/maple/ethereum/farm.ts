@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   balanceOfAssets: {
@@ -31,7 +30,7 @@ export async function getMapleFarmBalances(ctx: BalancesContext, farmers: Contra
 
     balances.push({
       ...farmer,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: farmer.underlyings as Contract[],
       rewards: undefined,
       category: 'farm',

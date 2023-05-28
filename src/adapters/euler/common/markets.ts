@@ -1,7 +1,8 @@
 import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { ethers, utils } from 'ethers'
+import { MAX_UINT_256 } from '@lib/math'
 import { gql, request } from 'graphql-request'
+import { formatUnits } from 'viem'
 
 const abi = {
   getAccountStatus: {
@@ -72,11 +73,11 @@ export async function getHealthFactor(ctx: BalancesContext, lensContract: Contra
     abi: abi.getAccountStatus,
   })
 
-  if (ethers.constants.MaxUint256.eq(healthScore)) {
+  if (healthScore === MAX_UINT_256) {
     return
   }
 
-  const healthFactor = parseFloat(utils.formatUnits(healthScore, 18))
+  const healthFactor = parseFloat(formatUnits(healthScore, 18))
 
   return healthFactor
 }

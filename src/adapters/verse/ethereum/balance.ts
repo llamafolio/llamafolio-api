@@ -4,7 +4,6 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -49,9 +48,9 @@ export async function getVerseBalances(ctx: BalancesContext, farmers: Contract[]
     balances.push({
       ...farmer,
       address: farmer.lpToken,
-      amount: BigNumber.from(balancesOfRes.output),
+      amount: balancesOfRes.output,
       underlyings,
-      rewards: [{ ...VERSE, amount: BigNumber.from(earnedRes.output) }],
+      rewards: [{ ...VERSE, amount: earnedRes.output }],
       category: 'farm',
     })
   }

@@ -4,11 +4,9 @@ import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20BalanceOf } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { ETH_ADDR } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   poolCollections: {
@@ -192,12 +190,12 @@ export async function getStakeBalances(ctx: BalancesContext, standardRewards: Co
     const balance: Balance = {
       ...programs[programIdx],
       category: 'stake',
-      amount: stakeRes.success ? BigNumber.from(stakeRes.output) : BN_ZERO,
+      amount: stakeRes.success ? stakeRes.output : 0n,
       rewards: [
         {
           ...(programs[programIdx].rewards?.[0] as BaseBalance),
           // TODO: providerRewards.stakedAmount
-          amount: rewardsRes.success ? BigNumber.from(rewardsRes.output.pendingRewards) : BN_ZERO,
+          amount: rewardsRes.success ? rewardsRes.output.pendingRewards : 0n,
         },
       ],
     }

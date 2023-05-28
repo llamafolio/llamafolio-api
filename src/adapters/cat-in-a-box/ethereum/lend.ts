@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { keyBy } from '@lib/array'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   debt: {
@@ -42,7 +41,7 @@ export async function getCatMarketsBalances(
 
   const lendBalance: Balance = {
     ...tokenByCategories.lend,
-    amount: BigNumber.from(deposited),
+    amount: deposited,
     underlyings: undefined,
     rewards: undefined,
     category: 'lend',
@@ -50,7 +49,7 @@ export async function getCatMarketsBalances(
 
   const borrowBalance: Balance = {
     ...tokenByCategories.borrow,
-    amount: BigNumber.from(debt),
+    amount: debt,
     underlyings: [WETH],
     rewards: undefined,
     category: 'borrow',

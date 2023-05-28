@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abiTRU = {
   claimable: {
@@ -68,8 +67,8 @@ export async function getTRUStakeBalances(ctx: BalancesContext, stkTRU: Contract
     }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes)
-  const claimable = BigNumber.from(claimableRes)
+  const balanceOf = balanceOfRes
+  const claimable = claimableRes
 
   balances.push({
     chain: ctx.chain,
@@ -109,16 +108,16 @@ export async function getTUSDStakeBalances(ctx: BalancesContext, TUSD: Contract)
     }),
   ])
 
-  const balanceOf = BigNumber.from(balanceOfRes)
-  const poolValue = BigNumber.from(poolValueRes)
-  const totalSupply = BigNumber.from(totalSupplyRes)
+  const balanceOf = balanceOfRes
+  const poolValue = poolValueRes
+  const totalSupply = totalSupplyRes
 
   balances.push({
     chain: ctx.chain,
     address: TUSD.address,
     decimals: TUSD.decimals,
     symbol: TUSD.symbol,
-    amount: balanceOf.mul(poolValue).div(totalSupply),
+    amount: (balanceOf * poolValue) / totalSupply,
     underlyings: [TrueUSD],
     category: 'stake',
   })

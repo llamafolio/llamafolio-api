@@ -3,7 +3,7 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const Bella: Token = {
   chain: 'ethereum',
@@ -87,9 +87,9 @@ async function getBellaFarmBalances(
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(userBalanceOfRes.output).mul(getPricePerFullShareRes.output).div(utils.parseEther('1.0')),
+      amount: (userBalanceOfRes.output * getPricePerFullShareRes.output) / parseEther('1.0'),
       underlyings,
-      rewards: [{ ...Bella, amount: BigNumber.from(earnedRes.output) }],
+      rewards: [{ ...Bella, amount: earnedRes.output }],
       category: 'farm',
     })
   }
@@ -121,7 +121,7 @@ async function getBellaYieldBalances(ctx: BalancesContext, contracts: Contract[]
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(balanceOfRes.output).mul(getPricePerFullShareRes.output).div(utils.parseEther('1.0')),
+      amount: (balanceOfRes.output * getPricePerFullShareRes.output) / parseEther('1.0'),
       underlyings,
       rewards: undefined,
       category: 'farm',

@@ -5,7 +5,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   stakeOf: {
@@ -45,17 +44,8 @@ export async function getApolloStakeBalances(ctx: BalancesContext, staker: Contr
   }
 
   const [balanceOf, totalSupply, underlyingsBalancesRes] = await Promise.all([
-    call({
-      ctx,
-      target: staker.address,
-      params: [ctx.address],
-      abi: abi.stakeOf,
-    }),
-    call({
-      ctx,
-      target: staker.address,
-      abi: abi.totalStaked,
-    }),
+    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.stakeOf }),
+    call({ ctx, target: staker.address, abi: abi.totalStaked }),
     multicall({
       ctx,
       calls: underlyings.map((underlying) => ({ target: underlying.address, params: [staker.address] } as const)),
@@ -66,13 +56,13 @@ export async function getApolloStakeBalances(ctx: BalancesContext, staker: Contr
   const fmtUnderlyings = mapSuccessFilter(underlyingsBalancesRes, (res, idx) => {
     return {
       ...underlyings[idx],
-      amount: BigNumber.from(BigNumber.from(res.output).mul(balanceOf).div(totalSupply)),
+      amount: (res.output * balanceOf) / totalSupply,
     }
   })
 
   return {
     ...staker,
-    amount: BigNumber.from(balanceOf),
+    amount: balanceOf,
     underlyings: fmtUnderlyings,
     rewards: undefined,
     category: 'stake',
@@ -102,9 +92,9 @@ export async function getApolloFarmBalances(ctx: BalancesContext, farmers: Contr
     balances.push({
       ...farmer,
       address: farmer.token as `0x${string}`,
-      amount: BigNumber.from(userBalanceOfRes.output),
+      amount: userBalanceOfRes.output,
       underlyings,
-      rewards: [{ ...reward, amount: BigNumber.from(userPendingRewardRes.output) }],
+      rewards: [{ ...reward, amount: userPendingRewardRes.output }],
       category: 'farm',
     })
   }

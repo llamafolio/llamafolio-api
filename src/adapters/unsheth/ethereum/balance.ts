@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   lockedLiquidityOf: {
@@ -47,13 +45,13 @@ export async function getUnstEthFarmBalances(ctx: BalancesContext, pools: Contra
     }
 
     rewards.forEach((reward, idx) => {
-      reward.amount = earned.success && earned.output.length > 0 ? BigNumber.from(earned.output[idx]) : BN_ZERO
+      reward.amount = earned.success && earned.output.length > 0 ? earned.output[idx] : 0n
     })
 
     const balance: Balance = {
       ...pool,
       address: pool.token,
-      amount: balanceOf.success ? BigNumber.from(balanceOf.output) : BN_ZERO,
+      amount: balanceOf.success ? balanceOf.output : 0n,
       rewards,
       underlyings,
       category: 'farm',

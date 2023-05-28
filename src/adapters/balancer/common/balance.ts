@@ -4,7 +4,6 @@ import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getPoolTokens: {
@@ -28,8 +27,8 @@ const abi = {
 } as const
 
 export type getBalancerPoolsBalancesParams = Balance & {
-  totalSupply: BigNumber
-  actualSupply?: BigNumber
+  totalSupply: bigint
+  actualSupply?: bigint
 }
 
 export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Contract[], vault: Contract) {
@@ -74,12 +73,12 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
 
     const balance: getBalancerPoolsBalancesParams = {
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings,
       rewards: undefined,
-      totalSupply: BigNumber.from(totalSupplyRes.output),
+      totalSupply: totalSupplyRes.output,
       // actualSupply is only available for stablepools abi
-      actualSupply: actualSupplyRes.output ? BigNumber.from(actualSupplyRes.output) : undefined,
+      actualSupply: actualSupplyRes.output ? actualSupplyRes.output : undefined,
       category: 'farm',
     }
 
@@ -90,10 +89,9 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
       const [_tokens, balances] = poolTokenBalanceRes.output
       const underlyingsBalanceOf = balances[underlyingIdx]
 
-      const underlyingAmount = balance.amount
-        .mul(underlyingsBalanceOf)
-        // actualSupply allows to specify amount of stablePool's underlyings
-        .div(balance.actualSupply ? balance.actualSupply : balance.totalSupply)
+      // actualSupply allows to specify amount of stablePool's underlyings
+      const underlyingAmount =
+        (balance.amount * underlyingsBalanceOf) / (balance.actualSupply ? balance.actualSupply : balance.totalSupply)
 
       balance.underlyings![underlyingIdx] = { ...underlying, amount: underlyingAmount }
 
@@ -161,10 +159,10 @@ export async function getLpBalancerPoolsBalances(ctx: BalancesContext, pools: Co
 
     const balance: getBalancerPoolsBalancesParams = {
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings,
       rewards: undefined,
-      totalSupply: BigNumber.from(totalSupplyRes.output),
+      totalSupply: totalSupplyRes.output,
       category: 'lp',
     }
 
@@ -175,7 +173,7 @@ export async function getLpBalancerPoolsBalances(ctx: BalancesContext, pools: Co
       const underlying = balance.underlyings![underlyingIdx]
       const underlyingsBalanceOf = underlyingsBalances[underlyingIdx]
 
-      const underlyingAmount = balance.amount.mul(underlyingsBalanceOf).div(balance.totalSupply)
+      const underlyingAmount = (balance.amount * underlyingsBalanceOf) / balance.totalSupply
 
       balance.underlyings![underlyingIdx] = { ...underlying, amount: underlyingAmount }
 
@@ -212,17 +210,16 @@ const unwrappedUnderlyingsInPools = async (ctx: BalancesContext, balance: Contra
     return
   }
 
-  balance.totalSupply = BigNumber.from(totalSupplyRes)
-  balance.actualSupply = actualSupplyRes && BigNumber.from(actualSupplyRes)
+  balance.totalSupply = totalSupplyRes
+  balance.actualSupply = actualSupplyRes && actualSupplyRes
 
   for (let underlyingIdx = 0; underlyingIdx < balance.underlyings.length; underlyingIdx++) {
     const underlying = balance.underlyings[underlyingIdx] as `0x${string}`
 
     const poolTokenBalanceRes = balances[underlyingIdx]
 
-    const underlyingAmount = balance.amount
-      .mul(poolTokenBalanceRes)
-      .div(balance.actualSupply ? balance.actualSupply : balance.totalSupply)
+    const underlyingAmount =
+      (balance.amount * poolTokenBalanceRes) / (balance.actualSupply ? balance.actualSupply : balance.totalSupply)
 
     if (underlying !== balance.address) {
       unwrappedUnderlyings.push({

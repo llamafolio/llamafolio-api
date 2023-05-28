@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   stakes: {
@@ -33,7 +32,7 @@ export async function getStakeBalances(ctx: BalancesContext, lqtyStaking: Contra
     call({ ctx, target: lqtyStaking.address, params: [ctx.address], abi: abi.getPendingLUSDGain }),
   ])
 
-  const amount = BigNumber.from(LQTYBalanceRes)
+  const amount = LQTYBalanceRes
 
   const balance: Balance = {
     chain: ctx.chain,
@@ -58,7 +57,7 @@ export async function getStakeBalances(ctx: BalancesContext, lqtyStaking: Contra
         symbol: 'LUSD',
         decimals: 18,
         address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0',
-        amount: BigNumber.from(LUSDBalanceRes),
+        amount: LUSDBalanceRes,
         stable: true,
       },
       {
@@ -66,7 +65,7 @@ export async function getStakeBalances(ctx: BalancesContext, lqtyStaking: Contra
         symbol: 'ETH',
         decimals: 18,
         address: '0x0000000000000000000000000000000000000000',
-        amount: BigNumber.from(ETHBalanceRes),
+        amount: ETHBalanceRes,
       },
     ],
   }

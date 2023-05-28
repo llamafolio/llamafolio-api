@@ -2,11 +2,9 @@ import type { Balance, BalancesContext, Contract, RewardBalance } from '@lib/ada
 import { keyBy } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   claimableRewards: {
@@ -162,8 +160,8 @@ export async function getUWUMultiFeeDistributionBalances(
       decimals: contract.decimals,
       underlyings: underlyingsFromToken as Contract[],
       rewards: undefined,
-      amount: BigNumber.from(amount),
-      claimable: unlockTime < Date.now() ? BigNumber.from(unlockable) : BN_ZERO,
+      amount: amount,
+      claimable: unlockTime < Date.now() ? unlockable : 0n,
       unlockAt: Number(unlockTime),
       category: 'lock',
     })
@@ -183,7 +181,7 @@ export async function getUWUMultiFeeDistributionBalances(
       decimals: UwU.decimals,
       underlyings: undefined,
       rewards: undefined,
-      amount: BigNumber.from(amount),
+      amount: amount,
       unlockAt: Number(unlockTime),
       category: 'vest',
     })
@@ -205,7 +203,7 @@ export async function getUWUMultiFeeDistributionBalances(
     const rewardBalance: RewardBalance = {
       chain: ctx.chain,
       address: rewardData.token,
-      amount: BigNumber.from(rewardData.amount),
+      amount: rewardData.amount,
       underlyings: token.underlyings as Contract[],
       decimals: token.decimals,
       symbol: token.symbol,

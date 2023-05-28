@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   collateral: {
@@ -106,8 +105,8 @@ export async function getMarketsBalances(ctx: BalancesContext, markets: Contract
         ...market,
         decimals: underlying.decimals,
         symbol: underlying.symbol,
-        amount: BigNumber.from(lendingBalanceRes.output),
-        underlyings: [{ ...underlying, amount: BigNumber.from(lendingBalanceRes.output) }],
+        amount: lendingBalanceRes.output,
+        underlyings: [{ ...underlying, amount: lendingBalanceRes.output }],
         rewards: undefined,
         category: 'lend',
       }
@@ -118,7 +117,7 @@ export async function getMarketsBalances(ctx: BalancesContext, markets: Contract
     if (borrowingBalanceRes.success) {
       const balance: Balance = {
         ...MIM,
-        amount: BigNumber.from(borrowingBalanceRes.output),
+        amount: borrowingBalanceRes.output,
         underlyings: undefined,
         rewards: undefined,
         category: 'borrow',

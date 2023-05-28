@@ -1,11 +1,9 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
-import { mapSuccess, range } from '@lib/array'
+import { mapSuccess, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   locked: {
@@ -41,19 +39,17 @@ export async function getGyroLocker(ctx: BalancesContext, locker: Contract): Pro
   const balances: LockBalance[] = []
   const now = Date.now() / 1000
 
-  const balancesOfsRes = await call({
+  const balancesOfsBI = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
-  const balancesOf = Number(balancesOfsRes)
+  const balancesOf = Number(balancesOfsBI)
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, balancesOf).map(
-      (_, idx) => ({ target: locker.address, params: [ctx.address, BigInt(idx)] } as const),
-    ),
+    calls: rangeBI(0n, balancesOfsBI).map((idx) => ({ target: locker.address, params: [ctx.address, idx] } as const)),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -79,8 +75,8 @@ export async function getGyroLocker(ctx: BalancesContext, locker: Contract): Pro
       ...locker,
       underlyings: [GYRO],
       decimals: 9,
-      amount: BigNumber.from(amount),
-      claimable: now > end ? BigNumber.from(amount) : BN_ZERO,
+      amount,
+      claimable: now > end ? amount : 0n,
       rewards: undefined,
       unlockAt: Number(end),
       category: 'lock',

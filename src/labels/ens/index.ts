@@ -1,7 +1,7 @@
-import { ethers } from 'ethers'
+import { providers } from '@lib/providers'
 
 export function fetchENSName(address: string) {
-  const provider = ethers.getDefaultProvider()
+  const provider = providers.ethereum
 
   return provider.lookupAddress(address)
 }

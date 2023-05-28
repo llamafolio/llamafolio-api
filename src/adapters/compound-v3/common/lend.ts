@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   borrowBalanceOf: {
@@ -159,7 +158,7 @@ export async function getLendBorrowBalances(
       decimals: asset.decimals,
       symbol: asset.symbol,
       address: asset.address,
-      amount: BigNumber.from(userCollateralBalanceRes.output[0]),
+      amount: userCollateralBalanceRes.output[0],
       collateralFactor: asset.collateralFactor,
       category: 'lend',
     }
@@ -181,7 +180,7 @@ export async function getLendBorrowBalances(
       decimals: underlying.decimals,
       symbol: underlying.symbol,
       address: underlying.address,
-      amount: BigNumber.from(userBorrowBalanceRes.output),
+      amount: userBorrowBalanceRes.output,
       category: 'borrow',
     })
   }

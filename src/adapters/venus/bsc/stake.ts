@@ -1,7 +1,6 @@
 import type { BalancesContext, Contract, StakeBalance } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   userInfo: {
@@ -70,11 +69,13 @@ export async function getVAIStakeBalance(ctx: BalancesContext, staker: Contract)
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.pendingXVS }),
   ])
 
+  const [amount] = stakeBalance
+
   return {
     ...staker,
-    amount: BigNumber.from(stakeBalance),
+    amount,
     underlyings: undefined,
-    rewards: [{ ...XVS, amount: BigNumber.from(pendingXVS) }],
+    rewards: [{ ...XVS, amount: pendingXVS }],
     category: 'stake',
   }
 }
@@ -85,11 +86,13 @@ export async function getXVSStakeBalance(ctx: BalancesContext, staker: Contract)
     call({ ctx, target: staker.address, params: [XVS.address, 0n, ctx.address], abi: abi.pendingReward }),
   ])
 
+  const [amount] = stakeBalance
+
   return {
     ...staker,
-    amount: BigNumber.from(stakeBalance),
+    amount,
     underlyings: undefined,
-    rewards: [{ ...XVS, amount: BigNumber.from(pendingXVS) }],
+    rewards: [{ ...XVS, amount: pendingXVS }],
     category: 'stake',
   }
 }

@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccess } from '@lib/array'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-import { BigNumber } from 'ethers'
 
 const abi = {
   userStacked: {
@@ -65,7 +63,7 @@ export async function getTimeWarpStakeBalances(ctx: BalancesContext, stakers: Co
     const rewards = staker.rewards?.[0] as Contract
     const userBalance = userBalances[stakeIdx]
     const _userRewards = userRewards[stakeIdx]
-    const userReward = _userRewards.success ? BigNumber.from(_userRewards.output[0]) : BN_ZERO
+    const userReward = _userRewards.success ? _userRewards.output[0] : 0n
 
     if (!userBalance.success || !staker.token) {
       continue
@@ -74,7 +72,7 @@ export async function getTimeWarpStakeBalances(ctx: BalancesContext, stakers: Co
     const balance: Balance = {
       ...staker,
       address: staker.token,
-      amount: BigNumber.from(userBalance.output),
+      amount: userBalance.output,
       underlyings,
       rewards: [{ ...rewards, amount: userReward }],
       category: 'stake',

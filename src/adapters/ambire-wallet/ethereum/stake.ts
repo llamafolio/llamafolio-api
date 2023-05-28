@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 export async function getADXStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -48,7 +47,7 @@ export async function getADXStakeBalances(ctx: BalancesContext, stakers: Contrac
 
     balances.push({
       ...staker,
-      amount: BigNumber.from(userBalanceOfRes.output).mul(assetBalanceOfRes.output).div(totalSupplyRes.output),
+      amount: (userBalanceOfRes.output * assetBalanceOfRes.output) / totalSupplyRes.output,
       underlyings: [underlying],
       rewards: undefined,
       category: 'farm',

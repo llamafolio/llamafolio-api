@@ -24,11 +24,11 @@ const abi = {
 
 export type Registry = 'stableSwap' | 'stableFactory' | 'cryptoSwap' | 'cryptoFactory'
 
-export const Registries: { [key in Registry]: number } = {
-  stableSwap: 0,
-  stableFactory: 3,
-  cryptoSwap: 5,
-  cryptoFactory: 6,
+export const Registries: { [key in Registry]: bigint } = {
+  stableSwap: 0n,
+  stableFactory: 3n,
+  cryptoSwap: 5n,
+  cryptoFactory: 6n,
 }
 
 export const getRegistries = async (ctx: BaseContext, registries: Registry[]) => {
@@ -50,7 +50,11 @@ export const getRegistries = async (ctx: BaseContext, registries: Registry[]) =>
   }
 
   for (let i = 0; i < registries.length; i++) {
-    res[registries[i]] = registriesAddressRes[i].output
+    const registryAddress = registriesAddressRes[i]
+    const registry = registries[i]
+    if (registryAddress.success) {
+      res[registry] = registryAddress.output
+    }
   }
 
   return res

@@ -1,10 +1,9 @@
 import type { Balance, BalancesContext, BaseContext, BaseContract, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, range, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   addressToPoolInfo: {
@@ -146,7 +145,7 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: range(0, Number(poolsLength)).map((i) => ({ target: masterChef.address, params: [BigInt(i)] } as const)),
+    calls: rangeBI(0n, poolsLength).map((i) => ({ target: masterChef.address, params: [i] } as const)),
     abi: abi.registeredToken,
   })
 
@@ -178,7 +177,7 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
       ctx,
       calls: poolInfos.flatMap((res) => {
         const [_lpToken, _allocPoint, _lastRewardTimestamp, _accVTXPerShare, rewarder] = res.output
-        return range(0, rewardsLength).map((idx) => ({ target: rewarder, params: [BigInt(idx)] } as const))
+        return rangeBI(0n, BigInt(rewardsLength)).map((idx) => ({ target: rewarder, params: [idx] } as const))
       }),
       abi: abi.rewardTokens,
     }),
@@ -259,7 +258,7 @@ export async function getFarmBalances(
       address: pool.address,
       symbol: pool.symbol,
       decimals: pool.decimals,
-      amount: BigNumber.from(userDepositBalanceRes.output),
+      amount: userDepositBalanceRes.output,
       underlyings: pool.underlyings,
       category: 'farm',
       rewarder: pool.rewarder,
@@ -269,14 +268,14 @@ export async function getFarmBalances(
     const rewards: Balance[] = []
     if (pendingBaseRewardRes.success) {
       const [pendingVTX] = pendingBaseRewardRes.output
-      rewards.push({ ...VTX, amount: BigNumber.from(pendingVTX) })
+      rewards.push({ ...VTX, amount: pendingVTX })
     }
 
     // extra reward
     if (pool.rewards) {
       for (const reward of pool.rewards) {
         if (pendingRewardsRes[rewardIdx].success) {
-          rewards.push({ ...reward, amount: BigNumber.from(pendingRewardsRes[rewardIdx].output) })
+          rewards.push({ ...reward, amount: pendingRewardsRes[rewardIdx].output })
         }
         rewardIdx++
       }
@@ -285,7 +284,7 @@ export async function getFarmBalances(
     balance.rewards = rewards
 
     // resolve LP underlyings
-    if (balance.amount.gt(0)) {
+    if (balance.amount > 0n) {
       if (balance.symbol === 'JLP') {
         const underlyings = await getPoolsUnderlyings(ctx, balance)
         balance.underlyings = [...underlyings]
@@ -313,17 +312,17 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
   ])
   const [_reserve0, _reserve1] = underlyingsTokensReservesRes
 
-  const totalPoolSupply = BigNumber.from(totalPoolSupplyRes)
+  const totalPoolSupply = totalPoolSupplyRes
 
   const underlyings = await getERC20Details(ctx, [underlyingToken0AddressesRes, underlyingsTokens1AddressesRes])
 
   const underlyings0 = {
     ...underlyings[0],
-    amount: contract.amount.mul(_reserve0).div(totalPoolSupply),
+    amount: (contract.amount * _reserve0) / totalPoolSupply,
   }
   const underlyings1 = {
     ...underlyings[1],
-    amount: contract.amount.mul(_reserve1).div(totalPoolSupply),
+    amount: (contract.amount * _reserve1) / totalPoolSupply,
   }
 
   return [underlyings0, underlyings1]

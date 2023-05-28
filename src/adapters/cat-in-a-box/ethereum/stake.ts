@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   convertToAssets: {
@@ -47,7 +46,7 @@ export async function getCatStakeEscrowBalance(ctx: BalancesContext, staker: Con
 
   const balance: Balance = {
     ...staker,
-    amount: BigNumber.from(balanceOf),
+    amount: balanceOf,
     underlyings: [boxETH],
     rewards: undefined,
     category: 'stake',
@@ -64,9 +63,9 @@ export async function getCatStakeBalance(ctx: BalancesContext, staker: Contract)
 
   const balance: Balance = {
     ...staker,
-    amount: BigNumber.from(deposited),
+    amount: deposited,
     underlyings: [boxETH],
-    rewards: [{ ...boxETH, amount: BigNumber.from(earned) }],
+    rewards: [{ ...boxETH, amount: earned }],
     category: 'stake',
   }
 
@@ -83,6 +82,6 @@ const ftmCatBalances = async (ctx: BalancesContext, balance: Balance): Promise<B
 
   return {
     ...balance,
-    amount: BigNumber.from(ftmBalances),
+    amount: ftmBalances,
   }
 }

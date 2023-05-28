@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getBakcStakes: {
@@ -161,11 +160,11 @@ export async function getApeStakeBalances(ctx: BalancesContext, staker: Contract
       address: staker.address,
       symbol: symbol[Number(poolId)],
       decimals: 18,
-      amount: BigNumber.from(deposited),
+      amount: deposited,
       poolId: poolId.toString(),
       tokenId: tokenId.toString(),
       underlyings: [apeCoin],
-      rewards: [{ ...apeCoin, amount: BigNumber.from(unclaimed) }],
+      rewards: [{ ...apeCoin, amount: unclaimed }],
       category: 'stake',
     })
   }

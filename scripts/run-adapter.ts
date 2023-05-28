@@ -1,36 +1,20 @@
 import path from 'node:path'
 import url from 'node:url'
 
-import { BigNumber } from 'ethers'
-
 import pool from '../src/db/pool'
-import type { Adapter, Balance, BalancesContext, PricedBalance } from '../src/lib/adapter'
+import type { Adapter, Balance, BalancesContext } from '../src/lib/adapter'
 import { groupBy } from '../src/lib/array'
 import { sanitizeBalances } from '../src/lib/balance'
 import type { Chain } from '../src/lib/chains'
-import { millify } from '../src/lib/fmt'
 import { getPricedBalances } from '../src/lib/price'
 import { resolveContractsTokens } from '../src/lib/token'
+import { printBalances } from './utils/balances'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 type ExtendedBalance = Balance & {
   groupIdx: number
 }
-
-interface CategoryBalances {
-  title: string
-  totalUSD: number
-  balances: PricedBalance[]
-}
-
-Object.defineProperties(BigNumber.prototype, {
-  toJSON: {
-    value: function (this: BigNumber) {
-      return this.toString()
-    },
-  },
-})
 
 Object.defineProperties(BigInt.prototype, {
   toJSON: {
@@ -39,97 +23,6 @@ Object.defineProperties(BigInt.prototype, {
     },
   },
 })
-
-function printBalances({ balances }) {
-  // group by category
-  const balancesByCategory = groupBy(balances, 'category')
-
-  const categoriesBalances: CategoryBalances[] = []
-  for (const category in balancesByCategory) {
-    const cat: CategoryBalances = {
-      title: category,
-      totalUSD: 0,
-      balances: [],
-    }
-
-    for (const balance of balancesByCategory[category]) {
-      cat.totalUSD += balance.balanceUSD || 0
-      cat.balances.push(balance)
-    }
-
-    // sort by balanceUSD
-    cat.balances.sort((a, b) => {
-      if (a.balanceUSD != null && b.balanceUSD == null) {
-        return -1
-      }
-      if (a.balanceUSD == null && b.balanceUSD != null) {
-        return 1
-      }
-      return b.balanceUSD - a.balanceUSD
-    })
-
-    categoriesBalances.push(cat)
-  }
-
-  // sort categories by total balances
-  categoriesBalances.sort((a, b) => b.totalUSD - a.totalUSD)
-
-  for (const categoryBalances of categoriesBalances) {
-    console.log(
-      `Category: ${categoryBalances.title}, totalUSD: ${millify(categoryBalances.totalUSD)} (${
-        categoryBalances.totalUSD
-      })`,
-    )
-
-    const data: any[] = []
-
-    for (const balance of categoryBalances.balances) {
-      try {
-        const decimals = balance.decimals ? 10 ** balance.decimals : 1
-
-        const d = {
-          chain: balance.chain,
-          address: balance.address,
-          category: balance.category,
-          symbol: balance.symbol,
-          balance: millify(balance.amount.div(decimals.toString()).toNumber()),
-          balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-          claimable: balance.claimable ? millify(balance.claimable.div(decimals.toString()).toNumber()) : undefined,
-          stable: balance.stable,
-          type: balance.type,
-          reward: '',
-          underlying: '',
-        }
-
-        if (balance.rewards) {
-          d.reward = balance.rewards
-            .map((reward) => {
-              const decimals = reward.decimals ? 10 ** reward.decimals : 1
-
-              return `${millify(reward.amount.div(decimals.toString()).toNumber())} ${reward.symbol}`
-            })
-            .join(' + ')
-        }
-
-        if (balance.underlyings) {
-          d.underlying = balance.underlyings
-            .map((underlying) => {
-              const decimals = underlying.decimals ? 10 ** underlying.decimals : 1
-
-              return `${millify(underlying.amount.div(decimals.toString()).toNumber())} ${underlying.symbol}`
-            })
-            .join(' + ')
-        }
-
-        data.push(d)
-      } catch (error) {
-        console.log('Failed to format balance', { balance, error })
-      }
-    }
-
-    console.table(data)
-  }
-}
 
 function help() {
   console.log('npm run adapter {chain} {address}')
@@ -150,7 +43,7 @@ async function main() {
 
   const adapterId = process.argv[2]
   const chain = process.argv[3] as Chain
-  const address = process.argv[4].toLowerCase()
+  const address = process.argv[4].toLowerCase() as `0x${string}`
 
   const ctx: BalancesContext = { address, chain, adapterId }
 

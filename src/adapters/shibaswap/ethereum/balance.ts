@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const bone: Token = {
   chain: 'ethereum',
@@ -42,7 +41,7 @@ export async function getStakerBalances(ctx: BalancesContext, contract: Contract
     {
       ...contract,
       category: 'stake',
-      amount: BigNumber.from(balanceOfRes),
+      amount: balanceOfRes,
       underlyings: [underlyings],
       rewards: undefined,
     },
@@ -57,5 +56,5 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
     abi: abi.unclaimedTokensByUser,
   })
 
-  return [{ ...bone, category: 'lock', amount: BigNumber.from(lockerBalancesOfRes) }]
+  return [{ ...bone, category: 'lock', amount: lockerBalancesOfRes }]
 }

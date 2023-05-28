@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getUnderlyingByCToken: {
@@ -39,8 +38,8 @@ export async function getTProtocolBalances(ctx: BalancesContext, contract: Contr
   return {
     ...contract,
     decimals: 18,
-    amount: BigNumber.from(userBalanceOf),
-    underlyings: [{ ...USDC, amount: BigNumber.from(fmtBalance) }],
+    amount: userBalanceOf,
+    underlyings: [{ ...USDC, amount: fmtBalance }],
     rewards: undefined,
     category: 'stake',
   }

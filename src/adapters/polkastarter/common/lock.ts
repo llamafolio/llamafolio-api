@@ -1,7 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getUnlockTime: {
@@ -39,8 +37,8 @@ export async function getPolkaLockedBalance(ctx: BalancesContext, locker: Contra
   return {
     ...locker,
     address: locker.token!,
-    amount: BigNumber.from(userBalance),
-    claimable: now > unlockAt ? BigNumber.from(userBalance) : BN_ZERO,
+    amount: userBalance,
+    claimable: now > unlockAt ? userBalance : 0n,
     unlockAt,
     underlyings: undefined,
     rewards: undefined,

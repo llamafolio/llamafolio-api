@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getCurrencyBalance: {
@@ -92,7 +90,7 @@ export async function getDepositBalances(ctx: BalancesContext, contracts: Contra
 
     balances.push({
       ...contract,
-      amount: BigNumber.from(getCurrencyBalanceOf.output),
+      amount: getCurrencyBalanceOf.output,
       symbol: underlying.symbol,
       decimals: 18,
       underlyings: [underlying],
@@ -144,7 +142,7 @@ export async function getStakeBalances(ctx: BalancesContext, contracts: Contract
 
     const balance: Balance = {
       ...contract,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       symbol: CAP.symbol,
       decimals: 18,
       underlyings: [CAP],
@@ -154,7 +152,7 @@ export async function getStakeBalances(ctx: BalancesContext, contracts: Contract
 
     if (rewards) {
       rewards.forEach((token, idx) => {
-        const rewardsAmount = pendingRewardRes.success ? BigNumber.from(pendingRewardRes.output[idx]) : BN_ZERO
+        const rewardsAmount = pendingRewardRes.success ? pendingRewardRes.output[idx] : 0n
         const reward = { ...token, amount: rewardsAmount }
         balance.rewards!.push(reward)
       })
@@ -180,7 +178,7 @@ export async function getYieldBalances(ctx: BalancesContext, contract: Contract)
     ...contract,
     decimals: underlying.decimals,
     symbol: underlying.symbol,
-    amount: BigNumber.from(userBalances),
+    amount: userBalances,
     underlyings: [underlying],
     rewards: undefined,
     category: 'farm',
@@ -200,7 +198,7 @@ export async function getDepositV2Balances(ctx: BalancesContext, contract: Contr
     address: contract.address,
     decimals: WETH.decimals,
     symbol: WETH.symbol,
-    amount: BigNumber.from(balanceOfsRes[0]),
+    amount: balanceOfsRes[0],
     underlyings: [WETH],
     rewards: undefined,
     category: 'stake',
@@ -211,7 +209,7 @@ export async function getDepositV2Balances(ctx: BalancesContext, contract: Contr
     address: contract.address,
     decimals: USDC.decimals,
     symbol: USDC.symbol,
-    amount: BigNumber.from(balanceOfsRes[1]),
+    amount: balanceOfsRes[1],
     underlyings: [USDC],
     rewards: undefined,
     category: 'stake',

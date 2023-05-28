@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getWsqueeth: {
@@ -28,7 +27,7 @@ export async function getOpynStakeBalance(ctx: BalancesContext, staker: Contract
 
   return {
     ...staker,
-    amount: BigNumber.from(amount),
+    amount: amount,
     underlyings: [oSQTH],
     rewards: undefined,
     category: 'stake',

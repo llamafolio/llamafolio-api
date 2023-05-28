@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   userInfo: {
@@ -102,14 +101,14 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], c
 
     const balance: Balance = {
       ...pool,
-      amount: BigNumber.from(amount),
+      amount: amount,
       underlyings: pool.underlyings as Contract[],
-      rewards: [{ ...rewards[0], amount: BigNumber.from(pendingPtp) }],
+      rewards: [{ ...rewards[0], amount: pendingPtp }],
       category: 'farm',
     }
 
     if (rewards.length > 1) {
-      balance.rewards?.push({ ...rewards[1], amount: BigNumber.from(pendingBonusTokens[0]) })
+      balance.rewards?.push({ ...rewards[1], amount: pendingBonusTokens[0] })
     }
 
     balances.push(balance)
@@ -129,7 +128,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
 
   return {
     ...contract,
-    amount: BigNumber.from(ptpLocked),
+    amount: ptpLocked,
     underlyings: [PTP],
     unlockAt: Number(unlockTime),
     rewards: undefined,
@@ -146,9 +145,9 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
 
   return {
     ...contract,
-    amount: BigNumber.from(stakeBalancesRes),
+    amount: stakeBalancesRes,
     underlyings: [PTP],
-    rewards: [{ ...contract, amount: BigNumber.from(amount) }],
+    rewards: [{ ...contract, amount: amount }],
     category: 'stake',
   }
 }

@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getBalanceForAddition: {
@@ -46,11 +44,7 @@ export async function getLpInchBalances(ctx: BalancesContext, pools: Contract[])
       ctx,
       calls: pools.flatMap((pool) =>
         pool.underlyings!.map(
-          (underlying) =>
-            ({
-              target: pool.address,
-              params: [(underlying as Contract).address],
-            } as const),
+          (underlying) => ({ target: pool.address, params: [(underlying as Contract).address] } as const),
         ),
       ),
       abi: abi.getBalanceForAddition,
@@ -68,7 +62,7 @@ export async function getLpInchBalances(ctx: BalancesContext, pools: Contract[])
 
     const balance: Balance = {
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output),
+      amount: balanceOfRes.output,
       underlyings: [],
       rewards: undefined,
       category: 'lp',
@@ -82,8 +76,8 @@ export async function getLpInchBalances(ctx: BalancesContext, pools: Contract[])
 
       const underlyingBalance =
         getUnderlyingsBalanceRes.success && balanceOfRes.success && totalSupplyRes.success
-          ? BigNumber.from(getUnderlyingsBalanceRes.output).mul(balanceOfRes.output).div(totalSupplyRes.output)
-          : BN_ZERO
+          ? (getUnderlyingsBalanceRes.output * balanceOfRes.output) / totalSupplyRes.output
+          : 0n
 
       balance.underlyings!.push({
         ...underlying,

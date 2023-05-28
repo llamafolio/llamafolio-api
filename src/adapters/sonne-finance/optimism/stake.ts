@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getClaimable: {
@@ -32,9 +31,9 @@ export async function getSonneStakeBalances(ctx: BalancesContext, staker: Contra
 
   return {
     ...staker,
-    amount: BigNumber.from(balanceOfRes),
+    amount: balanceOfRes,
     underlyings: [SONNE],
-    rewards: [{ ...SONNE, amount: BigNumber.from(claimableRewardRes) }],
+    rewards: [{ ...SONNE, amount: claimableRewardRes }],
     category: 'stake',
   }
 }

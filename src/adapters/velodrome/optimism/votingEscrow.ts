@@ -1,10 +1,9 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   locked: {
@@ -30,16 +29,12 @@ const abi = {
 } as const
 
 export async function getVotingEscrowBalances(ctx: BalancesContext, votingEscrow: Contract, velo: Contract) {
-  const balanceOfRes = await call({ ctx, target: votingEscrow.address, abi: erc20Abi.balanceOf, params: [ctx.address] })
-
-  const balancesLength = Number(balanceOfRes)
+  const balanceOf = await call({ ctx, target: votingEscrow.address, abi: erc20Abi.balanceOf, params: [ctx.address] })
 
   // token IDS
   const tokensOfOwnerByIndexRes = await multicall({
     ctx,
-    calls: range(0, balancesLength).map(
-      (idx) => ({ target: votingEscrow.address, params: [ctx.address, BigInt(idx)] } as const),
-    ),
+    calls: rangeBI(0n, balanceOf).map((idx) => ({ target: votingEscrow.address, params: [ctx.address, idx] } as const)),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -65,7 +60,7 @@ export async function getTokenIdsBalances(
     return {
       ...velo,
       category: 'lock' as Category,
-      amount: BigNumber.from(amount),
+      amount: amount,
       unlockAt: end,
     }
   })

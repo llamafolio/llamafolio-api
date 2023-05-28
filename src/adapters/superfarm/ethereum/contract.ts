@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { flatMapSuccess, range } from '@lib/array'
+import { flatMapSuccess, rangeBI } from '@lib/array'
 import { multicall } from '@lib/multicall'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 
@@ -54,16 +54,14 @@ export async function getSuperfarmContracts(ctx: BaseContext, contracts: Contrac
     multicall({
       ctx,
       calls: flatMapSuccess(poolLengthRes, (poolLength) =>
-        range(0, Number(poolLength.output)).map(
-          (_, idx) => ({ target: poolLength.input.target, params: [BigInt(idx)] } as const),
-        ),
+        rangeBI(0n, poolLength.output).map((idx) => ({ target: poolLength.input.target, params: [idx] } as const)),
       ),
       abi: abi.poolTokens,
     }),
     multicall({
       ctx,
       calls: flatMapSuccess(poolLengthRes, (poolLength) =>
-        range(0, Number(poolLength.output)).map((_) => ({ target: poolLength.input.target })),
+        rangeBI(0n, poolLength.output).map((_) => ({ target: poolLength.input.target })),
       ),
       abi: abi.token,
     }),

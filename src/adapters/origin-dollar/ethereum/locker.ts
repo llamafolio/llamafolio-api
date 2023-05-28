@@ -1,10 +1,9 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
-import { BN_ZERO, sumBN } from '@lib/math'
+import { sumBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   lockups: {
@@ -44,13 +43,13 @@ export async function getOriginDollarLockerBalances(ctx: BalancesContext, locker
     multicall({
       ctx,
       // There is no logic function to know in advance number of positions taken by users, as far i could checked, 10 seems to be the maximum positions length found
-      calls: range(0, 10).map((_, i) => ({ target: locker.address, params: [ctx.address, BigInt(i)] } as const)),
+      calls: rangeBI(0n, 10n).map((i) => ({ target: locker.address, params: [ctx.address, i] } as const)),
       abi: abi.lockups,
     }),
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.previewRewards }),
   ])
 
-  const totalLocked = sumBN(mapSuccessFilter(lockupsRes, (lockup) => BigNumber.from(lockup.output[0])))
+  const totalLocked = sumBI(mapSuccessFilter(lockupsRes, (lockup) => lockup.output[0]))
 
   for (let lockUpIdx = 0; lockUpIdx < lockupsRes.length; lockUpIdx++) {
     const lockupRes = lockupsRes[lockUpIdx]
@@ -63,12 +62,12 @@ export async function getOriginDollarLockerBalances(ctx: BalancesContext, locker
 
     const now = Date.now() / 1000
     const unlockAt = Number(end)
-    const rewardsAmount = totalLocked && BigNumber.from(rewardRes).mul(amount).div(totalLocked)
+    const rewardsAmount = totalLocked && (rewardRes * amount) / totalLocked
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(amount),
-      claimable: now > unlockAt ? BigNumber.from(amount) : BN_ZERO,
+      amount: amount,
+      claimable: now > unlockAt ? amount : 0n,
       unlockAt,
       underlyings: [OGV],
       rewards: [{ ...OGV, amount: rewardsAmount }],

@@ -1,16 +1,11 @@
-import { BigNumber, utils } from 'ethers'
+import { formatUnits, parseUnits } from 'viem'
 
-export const BN_ZERO = BigNumber.from('0')
-export const BN_TEN = BigNumber.from('10')
+export const MAX_UINT_256 = BigInt('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
 
-export function isZero<T extends BigNumber | string | number>(num: T) {
-  return num.toString() === '0'
-}
-
-export function sumBN(nums: BigNumber[]) {
-  let res = BigNumber.from('0')
+export function sumBI(nums: bigint[]) {
+  let res = 0n
   for (const num of nums) {
-    res = res.add(num)
+    res += num
   }
   return res
 }
@@ -23,15 +18,13 @@ export function sum(nums: number[]) {
   return res
 }
 
-export function mulPrice(amountBN: BigNumber, decimals: number, price: number) {
+export function mulPrice(amount: bigint, decimals: number, price: number) {
   try {
-    const priceBN = utils.parseUnits(price.toFixed(decimals), decimals)
+    const priceBI = parseUnits(price.toFixed(decimals || 0) as `${number}`, decimals)
 
-    const mulBN = BigNumber.from(amountBN).mul(priceBN)
-
-    return parseFloat(utils.formatUnits(mulBN, 2 * decimals))
+    return parseFloat(formatUnits(amount * priceBI, 2 * decimals))
   } catch (err) {
-    console.error(`Failed to mulPrice ${amountBN.toString()}, ${decimals}, ${price}`, err)
+    console.error(`Failed to mulPrice ${amount}, ${decimals}, ${price}`, err)
     return 0
   }
 }

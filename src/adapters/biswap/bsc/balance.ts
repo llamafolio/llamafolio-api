@@ -3,7 +3,7 @@ import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber, utils } from 'ethers'
+import { parseEther } from 'viem'
 
 const abi = {
   userInfo: {
@@ -71,9 +71,9 @@ export async function getUniqueUnderlyingsMasterchefBalances(ctx: BalancesContex
     address: BSW.address,
     decimals: BSW.decimals,
     symbol: 'BSW-LP',
-    amount: BigNumber.from(amount),
+    amount,
     underlyings: [BSW],
-    rewards: [{ ...BSW, amount: BigNumber.from(pendingRewards) }],
+    rewards: [{ ...BSW, amount: pendingRewards }],
     category: 'farm',
   })
 
@@ -98,10 +98,10 @@ export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]
 
   for (let stakerIdx = 0; stakerIdx < stakers.length; stakerIdx++) {
     const staker = stakers[stakerIdx]
-    const amount = BigNumber.from(balanceOfRes[stakerIdx].output?.[0] || 0)
-    const multiplier = BigNumber.from(getMultiplierRewards[stakerIdx].output || 0)
+    const amount = balanceOfRes[stakerIdx].output?.[0] || 0n
+    const multiplier = getMultiplierRewards[stakerIdx].output || 0n
 
-    const autoCompoundBalances = amount.mul(multiplier).div(utils.parseEther('1.0'))
+    const autoCompoundBalances = (amount * multiplier) / parseEther('1.0')
 
     balances.push({
       chain: ctx.chain,

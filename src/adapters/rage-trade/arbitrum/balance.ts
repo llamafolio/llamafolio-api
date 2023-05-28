@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   convertToAssets: {
@@ -48,8 +47,8 @@ export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[
 
     balances.push({
       ...staker,
-      amount: BigNumber.from(balanceOfAssetRes.input.params[0]),
-      underlyings: [{ ...underlying, amount: BigNumber.from(balanceOfAssetRes.output) }],
+      amount: balanceOfAssetRes.input.params[0],
+      underlyings: [{ ...underlying, amount: balanceOfAssetRes.output }],
       rewards: undefined,
       category: 'stake',
     })
@@ -70,7 +69,7 @@ export async function getPoolStakingBalances(ctx: BalancesContext, contract: Con
 
   const balance: Balance = {
     ...contract,
-    amount: BigNumber.from(balanceOfAssetsRes),
+    amount: balanceOfAssetsRes,
     underlyings: contract.underlyings as Contract[],
     rewards: undefined,
     category: 'stake',

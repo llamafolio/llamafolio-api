@@ -1,8 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getTokenBalance: {
@@ -46,8 +44,8 @@ export const saddleBalancesProvider = async (
     underlyings.forEach((underlying: Contract, underlyingIdx: number) => {
       const underlyingsBalance = underlyingsBalancesRes[underlyingIdx]
 
-      const underlyingBalance = underlyingsBalance.success ? underlyingsBalance.output : BN_ZERO
-      ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(amount).div(poolSupplyRes.output)
+      const underlyingBalance = underlyingsBalance.success ? underlyingsBalance.output : 0n
+      ;(underlying as Balance).amount = (underlyingBalance * amount) / poolSupplyRes.output
     })
   }
 

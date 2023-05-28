@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { flatMapSuccess, range } from '@lib/array'
+import { flatMapSuccess, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -83,9 +83,7 @@ export async function getLensContracts(ctx: BaseContext, lens: Contract) {
   const rewardsRes = await multicall({
     ctx,
     calls: flatMapSuccess(rewardsListLengthsRes, (res, gaugeIdx) =>
-      range(0, Number(res.output)).map(
-        (rewardIdx) => ({ target: gauges[gaugeIdx].address, params: [BigInt(rewardIdx)] } as const),
-      ),
+      rangeBI(0n, res.output).map((rewardIdx) => ({ target: gauges[gaugeIdx].address, params: [rewardIdx] } as const)),
     ),
     abi: abi.rewards,
   })

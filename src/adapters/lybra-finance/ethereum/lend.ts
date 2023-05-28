@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   depositedEther: {
@@ -30,7 +29,7 @@ export async function getLybraLendingBalances(ctx: BalancesContext, lendingPool:
   const lendingBalance: LendBalance = {
     ...lendingPool,
     decimals: 18,
-    amount: BigNumber.from(userLendingBalance),
+    amount: userLendingBalance,
     underlyings: undefined,
     rewards: undefined,
     category: 'lend',
@@ -40,7 +39,7 @@ export async function getLybraLendingBalances(ctx: BalancesContext, lendingPool:
     chain: ctx.chain,
     address: lendingPool.address,
     decimals: 18,
-    amount: BigNumber.from(userBorrowBalance),
+    amount: userBorrowBalance,
     underlyings: undefined,
     rewards: undefined,
     category: 'borrow',

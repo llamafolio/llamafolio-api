@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   lockedBalance: {
@@ -35,9 +34,9 @@ export async function getTornadoStakeBalances(ctx: BalancesContext, staker: Cont
 
   return {
     ...staker,
-    amount: BigNumber.from(userBalance),
+    amount: userBalance,
     underlyings: undefined,
-    rewards: [{ ...TORN, amount: BigNumber.from(pendingReward) }],
+    rewards: [{ ...TORN, amount: pendingReward }],
     category: 'stake',
   }
 }

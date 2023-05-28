@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   getClaimableReward: {
@@ -134,7 +133,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
   const underlying = contract.underlyings?.[0] as Contract
   const rewards = contract.rewards as Contract[]
 
-  const balance = BigNumber.from(stakeBalancesRes).mul(vault.balance).div(vault.shares)
+  const balance = (stakeBalancesRes * vault.balance) / vault.shares
 
   return {
     ...contract,
@@ -143,8 +142,8 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     amount: balance,
     underlyings: [underlying],
     rewards: [
-      { ...rewards[0], amount: BigNumber.from(usdcRewardsRes) },
-      { ...rewards[1], amount: BigNumber.from(opRewardsRes) },
+      { ...rewards[0], amount: usdcRewardsRes },
+      { ...rewards[1], amount: opRewardsRes },
     ],
     category: 'stake',
   }
@@ -209,11 +208,11 @@ type GetPositionsParams = Balance & {
   id?: string
   positionId?: string
   side?: string
-  entryPrice: BigNumber
-  margin: BigNumber
-  marketPrice: BigNumber
-  leverage: BigNumber
-  funding: BigNumber
+  entryPrice: bigint
+  margin: bigint
+  marketPrice: bigint
+  leverage: bigint
+  funding: bigint
 }
 
 const getPositions = async (
@@ -262,16 +261,16 @@ const getPositions = async (
 
     const { price: entryPrice, oraclePrice: marketPrice, margin, leverage, funding } = positionDataRes.output[0]
 
-    const formatValue = (value: BigNumber, decimals: number) => value.div(Math.pow(10, decimals))
+    const formatValue = (value: bigint, decimals: number) => value / 10n ** BigInt(decimals || 0)
 
     positionsDatas.push({
       ...positionId,
-      amount: formatValue(BigNumber.from(margin).mul(leverage), positionId.decimals),
-      margin: BigNumber.from(margin),
-      entryPrice: BigNumber.from(entryPrice),
-      marketPrice: BigNumber.from(marketPrice),
-      leverage: BigNumber.from(leverage),
-      funding: BigNumber.from(funding),
+      amount: formatValue(margin * leverage, positionId.decimals),
+      margin: margin,
+      entryPrice: entryPrice,
+      marketPrice: marketPrice,
+      leverage: leverage,
+      funding: funding,
       underlyings: [USDC],
       rewards: undefined,
       category: 'perpetual',

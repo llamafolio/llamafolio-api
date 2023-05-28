@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
@@ -40,17 +40,11 @@ export async function getConvexAltChainsPools(
   booster: Contract,
   curvePools: Contract[],
 ): Promise<Contract[]> {
-  const poolLengthBI = await call({ ctx, target: booster.address, abi: abi.poolLength })
+  const poolLength = await call({ ctx, target: booster.address, abi: abi.poolLength })
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, Number(poolLengthBI)).map(
-      (i) =>
-        ({
-          target: booster.address,
-          params: [BigInt(i)],
-        } as const),
-    ),
+    calls: rangeBI(0n, poolLength).map((i) => ({ target: booster.address, params: [i] } as const)),
     abi: abi.poolInfo,
   })
 

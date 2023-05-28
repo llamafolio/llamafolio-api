@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { BigNumber } from 'ethers'
 
 const abi = {
   get_decimals: {
@@ -80,12 +78,12 @@ export async function getConvexAltChainsBalances(ctx: BalancesContext, pools: Co
 
     const fmtRewards = rewards.map((reward, rewardIdx) => ({
       ...reward,
-      amount: BigNumber.from(pendingRewardOfRes.output[rewardIdx].amount),
+      amount: pendingRewardOfRes.output[rewardIdx].amount,
     }))
 
     poolBalances.push({
       ...pool,
-      amount: BigNumber.from(poolBalanceOfRes.output),
+      amount: poolBalanceOfRes.output,
       underlyings,
       rewards: fmtRewards,
       category: 'stake',
@@ -123,8 +121,7 @@ const getConvexUnderlyingsBalances = async (ctx: BalancesContext, pools: Contrac
 
     underlyings.forEach((underlying: Contract, underlyingIdx: number) => {
       const underlyingBalance = uBalancesRes.output[underlyingIdx]
-      ;(underlying as Balance).amount =
-        BigNumber.from(underlyingBalance).mul(pool.amount).div(totalSupplyRes.output) || BN_ZERO
+      ;(underlying as Balance).amount = (underlyingBalance * pool.amount) / totalSupplyRes.output
     })
 
     balances.push({ ...pool, amount: pool.amount, underlyings, rewards: pool.rewards as Balance[], category: 'stake' })

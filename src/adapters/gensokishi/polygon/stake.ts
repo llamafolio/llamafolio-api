@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { BigNumber } from 'ethers'
 
 const abi = {
   earned: {
@@ -36,9 +35,9 @@ export async function getGensokishiStakeBalances(ctx: BalancesContext, staker: C
 
   return {
     ...staker,
-    amount: BigNumber.from(userBalance),
+    amount: userBalance,
     underlyings: [MV],
-    rewards: [{ ...ROND, amount: BigNumber.from(earned) }],
+    rewards: [{ ...ROND, amount: earned }],
     category: 'stake',
   }
 }
