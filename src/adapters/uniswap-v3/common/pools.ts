@@ -5,7 +5,6 @@ import type { Category } from '@lib/category'
 import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
-import JSBI from 'jsbi'
 
 const abi = {
   feeGrowthGlobal0X128: {
@@ -229,12 +228,7 @@ export async function getTokenIdsBalances(
 
       const [sqrtPriceX96, tick] = slot0Res.output
 
-      const underlyingAmounts = getUnderlyingAmounts(
-        Number(liquidity),
-        Number(sqrtPriceX96),
-        Number(tickLower),
-        Number(tickUpper),
-      )
+      const underlyingAmounts = getUnderlyingAmounts(liquidity, sqrtPriceX96, tickLower, tickUpper)
 
       const balance: Balance = {
         standard: 'erc721',
@@ -242,7 +236,7 @@ export async function getTokenIdsBalances(
         address: pool,
         symbol: `${token0.symbol}/${token1.symbol}`,
         category: 'lp' as Category,
-        amount: '1',
+        amount: 1n,
         underlyings: [
           { ...token0, amount: underlyingAmounts[0] },
           { ...token1, amount: underlyingAmounts[1] },
@@ -275,18 +269,18 @@ export async function getTokenIdsBalances(
         ] = tickUpperRes.output
 
         const rewardAmounts = getRewardAmounts(
-          feeGrowthGlobal0X128Res.output.toString(),
-          feeGrowthGlobal1X128Res.output.toString(),
-          tickLowerFeeGrowthOutside0X128.toString(),
-          tickUpperFeeGrowthOutside0X128.toString(),
-          feeGrowthInside0LastX128.toString(),
-          tickLowerFeeGrowthOutside1X128.toString(),
-          tickUpperFeeGrowthOutside1X128.toString(),
-          feeGrowthInside1LastX128.toString(),
-          Number(liquidity),
-          Number(tickLower),
-          Number(tickUpper),
-          Number(tick),
+          feeGrowthGlobal0X128Res.output,
+          feeGrowthGlobal1X128Res.output,
+          tickLowerFeeGrowthOutside0X128,
+          tickUpperFeeGrowthOutside0X128,
+          feeGrowthInside0LastX128,
+          tickLowerFeeGrowthOutside1X128,
+          tickUpperFeeGrowthOutside1X128,
+          feeGrowthInside1LastX128,
+          liquidity,
+          tickLower,
+          tickUpper,
+          tick,
         )
 
         balance.rewards = [
@@ -300,125 +294,89 @@ export async function getTokenIdsBalances(
     .filter(isNotNullish)
 }
 
-// TODO: migrate to ethers v6 and replace JSBI and BigNUmber with native BigInt
-
 // Note: https://uniswap.org/blog/uniswap-v3-math-primer
-// Note: ethereum.stackexchange.com/questions/139809/how-to-get-a-virtual-and-real-reserves-from-uniswap-v3-pair
+// Note: https://ethereum.stackexchange.com/questions/139809/how-to-get-a-virtual-and-real-reserves-from-uniswap-v3-pair
 // Note: https://ethereum.stackexchange.com/questions/101955/trying-to-make-sense-of-uniswap-v3-fees-feegrowthinside0lastx128-feegrowthglob
 
-const ZERO = JSBI.BigInt(0)
-const Q128 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(128))
-const Q256 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(256))
-const Q96 = JSBI.exponentiate(JSBI.BigInt(2), JSBI.BigInt(96))
+const Q128 = 2n ** 128n
+const Q256 = 2n ** 256n
+const Q96 = 2n ** 96n
 
-export function getTickAtSqrtRatio(sqrtPriceX96: number) {
-  // @ts-ignore
-  const tick = Math.floor(Math.log((sqrtPriceX96 / Q96) ** 2) / Math.log(1.0001))
-  return tick
+export function getTickAtSqrtRatio(sqrtPriceX96: bigint) {
+  return Math.floor(Math.log(Number((sqrtPriceX96 / Q96) ** 2n)) / Math.log(1.0001))
 }
 
-export function getUnderlyingAmounts(liquidity: number, sqrtPriceX96: number, tickLow: number, tickHigh: number) {
+export function getUnderlyingAmounts(liquidity: bigint, sqrtPriceX96: bigint, tickLow: number, tickHigh: number) {
   const sqrtRatioA = Math.sqrt(1.0001 ** tickLow)
   const sqrtRatioB = Math.sqrt(1.0001 ** tickHigh)
 
   const currentTick = getTickAtSqrtRatio(sqrtPriceX96)
-  // @ts-ignore
-  const sqrtPrice = sqrtPriceX96 / Q96
+  const sqrtPrice = Number(sqrtPriceX96 / Q96)
 
   let amount0 = 0
   let amount1 = 0
   if (currentTick <= tickLow) {
-    amount0 = Math.floor(liquidity * ((sqrtRatioB - sqrtRatioA) / (sqrtRatioA * sqrtRatioB)))
+    amount0 = Math.floor(Number(liquidity) * ((sqrtRatioB - sqrtRatioA) / (sqrtRatioA * sqrtRatioB)))
   } else if (currentTick > tickHigh) {
-    amount1 = Math.floor(liquidity * (sqrtRatioB - sqrtRatioA))
+    amount1 = Math.floor(Number(liquidity) * (sqrtRatioB - sqrtRatioA))
   } else if (currentTick >= tickLow && currentTick < tickHigh) {
-    amount0 = Math.floor(liquidity * ((sqrtRatioB - sqrtPrice) / (sqrtPrice * sqrtRatioB)))
-    amount1 = Math.floor(liquidity * (sqrtPrice - sqrtRatioA))
+    amount0 = Math.floor(Number(liquidity) * ((sqrtRatioB - sqrtPrice) / (sqrtPrice * sqrtRatioB)))
+    amount1 = Math.floor(Number(liquidity) * (sqrtPrice - sqrtRatioA))
   }
 
-  return [
-    // Note: convert exponent to fullwide string to please BigNumber
-    amount0.toLocaleString('fullwide', { useGrouping: false }),
-    amount1.toLocaleString('fullwide', { useGrouping: false }),
-  ]
+  return [BigInt(amount0), BigInt(amount1)]
 }
 
-function toBigNumber(num: string | JSBI): JSBI {
-  if (typeof num !== 'bigint') {
-    return JSBI.BigInt(num)
+function subIn256(x: bigint, y: bigint) {
+  const difference = x - y
+
+  if (difference < 0n) {
+    return Q256 + difference
   }
 
-  return num
-}
-
-function subIn256(x: JSBI, y: JSBI) {
-  const difference = JSBI.subtract(x, y)
-
-  if (JSBI.lessThan(difference, ZERO)) {
-    return JSBI + (Q256, difference)
-  } else {
-    return difference
-  }
+  return difference
 }
 
 function getRewardAmounts(
-  feeGrowthGlobal0: string,
-  feeGrowthGlobal1: string,
-  feeGrowth0Low: string,
-  feeGrowth0Hi: string,
-  feeGrowthInside0: string,
-  feeGrowth1Low: string,
-  feeGrowth1Hi: string,
-  feeGrowthInside1: string,
-  liquidity: number,
+  feeGrowthGlobal0: bigint,
+  feeGrowthGlobal1: bigint,
+  feeGrowth0Low: bigint,
+  feeGrowth0Hi: bigint,
+  feeGrowthInside0: bigint,
+  feeGrowth1Low: bigint,
+  feeGrowth1Hi: bigint,
+  feeGrowthInside1: bigint,
+  liquidity: bigint,
   tickLower: number,
   tickUpper: number,
   tickCurrent: number,
 ) {
-  const feeGrowthGlobal_0 = toBigNumber(feeGrowthGlobal0)
-  const feeGrowthGlobal_1 = toBigNumber(feeGrowthGlobal1)
-
-  const tickLowerFeeGrowthOutside_0 = toBigNumber(feeGrowth0Low)
-  const tickLowerFeeGrowthOutside_1 = toBigNumber(feeGrowth1Low)
-
-  const tickUpperFeeGrowthOutside_0 = toBigNumber(feeGrowth0Hi)
-  const tickUpperFeeGrowthOutside_1 = toBigNumber(feeGrowth1Hi)
-
-  let tickLowerFeeGrowthBelow_0 = ZERO
-  let tickLowerFeeGrowthBelow_1 = ZERO
-  let tickUpperFeeGrowthAbove_0 = ZERO
-  let tickUpperFeeGrowthAbove_1 = ZERO
+  let tickLowerFeeGrowthBelow_0 = 0n
+  let tickLowerFeeGrowthBelow_1 = 0n
+  let tickUpperFeeGrowthAbove_0 = 0n
+  let tickUpperFeeGrowthAbove_1 = 0n
 
   if (tickCurrent >= tickUpper) {
-    tickUpperFeeGrowthAbove_0 = subIn256(feeGrowthGlobal_0, tickUpperFeeGrowthOutside_0)
-    tickUpperFeeGrowthAbove_1 = subIn256(feeGrowthGlobal_1, tickUpperFeeGrowthOutside_1)
+    tickUpperFeeGrowthAbove_0 = subIn256(feeGrowthGlobal0, feeGrowth0Hi)
+    tickUpperFeeGrowthAbove_1 = subIn256(feeGrowthGlobal1, feeGrowth1Hi)
   } else {
-    tickUpperFeeGrowthAbove_0 = tickUpperFeeGrowthOutside_0
-    tickUpperFeeGrowthAbove_1 = tickUpperFeeGrowthOutside_1
+    tickUpperFeeGrowthAbove_0 = feeGrowth0Hi
+    tickUpperFeeGrowthAbove_1 = feeGrowth1Hi
   }
 
   if (tickCurrent >= tickLower) {
-    tickLowerFeeGrowthBelow_0 = tickLowerFeeGrowthOutside_0
-    tickLowerFeeGrowthBelow_1 = tickLowerFeeGrowthOutside_1
+    tickLowerFeeGrowthBelow_0 = feeGrowth0Low
+    tickLowerFeeGrowthBelow_1 = feeGrowth1Low
   } else {
-    tickLowerFeeGrowthBelow_0 = subIn256(feeGrowthGlobal_0, tickLowerFeeGrowthOutside_0)
-    tickLowerFeeGrowthBelow_1 = subIn256(feeGrowthGlobal_1, tickLowerFeeGrowthOutside_1)
+    tickLowerFeeGrowthBelow_0 = subIn256(feeGrowthGlobal0, feeGrowth0Low)
+    tickLowerFeeGrowthBelow_1 = subIn256(feeGrowthGlobal1, feeGrowth1Low)
   }
 
-  const fr_t1_0 = subIn256(subIn256(feeGrowthGlobal_0, tickLowerFeeGrowthBelow_0), tickUpperFeeGrowthAbove_0)
-  const fr_t1_1 = subIn256(subIn256(feeGrowthGlobal_1, tickLowerFeeGrowthBelow_1), tickUpperFeeGrowthAbove_1)
+  const fr_t1_0 = subIn256(subIn256(feeGrowthGlobal0, tickLowerFeeGrowthBelow_0), tickUpperFeeGrowthAbove_0)
+  const fr_t1_1 = subIn256(subIn256(feeGrowthGlobal1, tickLowerFeeGrowthBelow_1), tickUpperFeeGrowthAbove_1)
 
-  const feeGrowthInsideLast_0 = toBigNumber(feeGrowthInside0)
-  const feeGrowthInsideLast_1 = toBigNumber(feeGrowthInside1)
+  const uncollectedFees_0 = (liquidity * subIn256(fr_t1_0, feeGrowthInside0)) / Q128
+  const uncollectedFees_1 = (liquidity * subIn256(fr_t1_1, feeGrowthInside1)) / Q128
 
-  // @ts-ignore
-  const uncollectedFees_0 = Math.floor((liquidity * subIn256(fr_t1_0, feeGrowthInsideLast_0)) / Q128)
-  // @ts-ignore
-  const uncollectedFees_1 = Math.floor((liquidity * subIn256(fr_t1_1, feeGrowthInsideLast_1)) / Q128)
-
-  return [
-    // Note: convert exponent to fullwide string to please BigNumber
-    uncollectedFees_0.toLocaleString('fullwide', { useGrouping: false }),
-    uncollectedFees_1.toLocaleString('fullwide', { useGrouping: false }),
-  ]
+  return [uncollectedFees_0, uncollectedFees_1]
 }

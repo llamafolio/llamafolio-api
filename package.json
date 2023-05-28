@@ -43,7 +43,6 @@
     "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
     "graphql-request": "^6.0.0",
-    "jsbi": "^4.3.0",
     "lodash": "^4.17.21",
     "pg": "^8.10.0",
     "pg-format": "^1.0.4",
