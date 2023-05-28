@@ -143,7 +143,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
           const priceInfo = prices.coins[key]
           if (priceInfo && priceInfo.decimals) {
             transaction.price = priceInfo.price
-            transaction.valueUSD = mulPrice(transaction.value, priceInfo.decimals, priceInfo.price)
+            transaction.valueUSD = mulPrice(BigInt(transaction.value), priceInfo.decimals, priceInfo.price)
           }
         }
       }
@@ -156,7 +156,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
             const priceInfo = prices.coins[key]
             if (priceInfo && priceInfo.decimals) {
               transfer.price = priceInfo.price
-              transfer.valueUSD = mulPrice(transfer.value, priceInfo.decimals, priceInfo.price)
+              transfer.valueUSD = mulPrice(BigInt(transfer.value), priceInfo.decimals, priceInfo.price)
             }
           }
         }
