@@ -15,6 +15,14 @@ import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
+Object.defineProperties(BigInt.prototype, {
+  toJSON: {
+    value: function (this: bigint) {
+      return this.toString()
+    },
+  },
+})
+
 function formatBalance(balance: any): FormattedBalance {
   return {
     address: balance.address,
