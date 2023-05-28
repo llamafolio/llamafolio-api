@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import type { Call } from '@lib/multicall'
@@ -143,18 +143,16 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
   const poolContracts: Contract[] = []
   const pools: Contract[] = []
 
-  const poolsCountBI = await call({
+  const poolsCount = await call({
     ctx,
     target: registry.address,
     abi: abiPools.pool_count,
   })
 
-  const poolsCounts = Number(poolsCountBI)
-
   // lists of pools
-  const poolsCalls: Call<typeof abiPools.pool_list>[] = range(0, poolsCounts).map((i) => ({
+  const poolsCalls: Call<typeof abiPools.pool_list>[] = rangeBI(0n, poolsCount).map((i) => ({
     target: registry.address,
-    params: [BigInt(i)],
+    params: [i],
   }))
 
   const poolsLists = await multicall({ ctx, calls: poolsCalls, abi: abiPools.pool_list })

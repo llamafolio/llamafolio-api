@@ -10,6 +10,15 @@ export function range(start: number, end: number, step = 1) {
   return nums
 }
 
+export function rangeBI(start: bigint, end: bigint, step = 1n) {
+  const nums: bigint[] = []
+
+  for (let i = start; i < end; i += step) {
+    nums.push(i)
+  }
+  return nums
+}
+
 export function sliceIntoChunks<T>(arr: T[], chunkSize: number) {
   const res: T[][] = []
   for (let i = 0; i < arr.length; i += chunkSize) {

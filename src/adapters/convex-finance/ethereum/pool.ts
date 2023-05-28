@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { flatMapSuccess, range } from '@lib/array'
+import { flatMapSuccess, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
@@ -99,7 +99,7 @@ export async function getPoolsContracts(ctx: BaseContext, contract: Contract): P
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLength).map((i) => ({ target: contract.address, params: [BigInt(i)] } as const)),
+    calls: rangeBI(0n, poolLengthBI).map((i) => ({ target: contract.address, params: [i] } as const)),
     abi: abi.poolInfo,
   })
 
@@ -176,7 +176,7 @@ const getExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise<Con
   const extraRewardsRes = await multicall({
     ctx,
     calls: flatMapSuccess(extraRewardsLengthsRes, (res) =>
-      range(0, Number(res.output)).map((idx) => ({ target: res.input.target, params: [BigInt(idx)] } as const)),
+      rangeBI(0n, res.output).map((idx) => ({ target: res.input.target, params: [idx] } as const)),
     ),
     abi: abi.extraRewards,
   })

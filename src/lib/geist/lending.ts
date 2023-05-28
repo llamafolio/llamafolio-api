@@ -3,7 +3,7 @@ import {
   getLendingPoolContracts as getAaveLendingPoolContracts,
 } from '@lib/aave/v2/lending'
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { keyBy, range } from '@lib/array'
+import { keyBy, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
@@ -60,8 +60,8 @@ export async function getLendingPoolContracts(
 
   const registeredTokensRes = await multicall({
     ctx,
-    calls: range(0, Number(lmRewardsCount)).map(
-      (_, idx) => ({ target: chefIncentivesController.address, params: [BigInt(idx)] } as const),
+    calls: rangeBI(0n, lmRewardsCount).map(
+      (idx) => ({ target: chefIncentivesController.address, params: [idx] } as const),
     ),
     abi: abi.registeredTokens,
   })

@@ -1,5 +1,7 @@
 import { formatUnits, parseUnits } from 'viem'
 
+export const MAX_UINT_256 = BigInt('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff')
+
 export function sumBI(nums: bigint[]) {
   let res = 0n
   for (const num of nums) {
@@ -18,7 +20,7 @@ export function sum(nums: number[]) {
 
 export function mulPrice(amount: bigint, decimals: number, price: number) {
   try {
-    const priceBI = parseUnits(`${price}`, decimals)
+    const priceBI = parseUnits(price.toFixed(decimals || 0) as `${number}`, decimals)
 
     return parseFloat(formatUnits(amount * priceBI, 2 * decimals))
   } catch (err) {

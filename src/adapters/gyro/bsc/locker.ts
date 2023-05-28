@@ -1,5 +1,5 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
-import { mapSuccess, range } from '@lib/array'
+import { mapSuccess, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -39,19 +39,17 @@ export async function getGyroLocker(ctx: BalancesContext, locker: Contract): Pro
   const balances: LockBalance[] = []
   const now = Date.now() / 1000
 
-  const balancesOfsRes = await call({
+  const balancesOfsBI = await call({
     ctx,
     target: locker.address,
     params: [ctx.address],
     abi: erc20Abi.balanceOf,
   })
-  const balancesOf = Number(balancesOfsRes)
+  const balancesOf = Number(balancesOfsBI)
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, balancesOf).map(
-      (_, idx) => ({ target: locker.address, params: [ctx.address, BigInt(idx)] } as const),
-    ),
+    calls: rangeBI(0n, balancesOfsBI).map((idx) => ({ target: locker.address, params: [ctx.address, idx] } as const)),
     abi: abi.tokenOfOwnerByIndex,
   })
 

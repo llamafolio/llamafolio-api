@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -41,9 +41,7 @@ export async function getRailgunBalances(ctx: BalancesContext, staker: Contract)
 
   const userStakesRes = await multicall({
     ctx,
-    calls: range(0, Number(userStakeLength)).map(
-      (_, idx) => ({ target: staker.address, params: [ctx.address, BigInt(idx)] } as const),
-    ),
+    calls: rangeBI(0n, userStakeLength).map((idx) => ({ target: staker.address, params: [ctx.address, idx] } as const)),
     abi: abi.stakes,
   })
 

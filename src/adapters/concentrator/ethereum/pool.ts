@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
@@ -132,13 +132,7 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 
     const poolInfosRes = await multicall({
       ctx,
-      calls: range(0, poolsCount).map(
-        (i) =>
-          ({
-            target: contract.address,
-            params: [BigInt(i)],
-          } as const),
-      ),
+      calls: rangeBI(0n, poolsCountBI).map((i) => ({ target: contract.address, params: [i] } as const)),
       abi: abi.poolInfo,
     })
 
@@ -164,13 +158,7 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 
     const poolsAddressesRes = await multicall({
       ctx,
-      calls: pools.map(
-        ({ address }) =>
-          ({
-            target: metaRegistry.address,
-            params: [address],
-          } as const),
-      ),
+      calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] } as const)),
       abi: abi.getPoolFromLPToken,
     })
 
@@ -186,13 +174,7 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 
     const underlyingsRes = await multicall({
       ctx,
-      calls: pools.map(
-        ({ pool }) =>
-          ({
-            target: metaRegistry.address,
-            params: [pool],
-          } as const),
-      ),
+      calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] } as const)),
       abi: abi.getUnderlyingsCoins,
     })
 
@@ -204,11 +186,11 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
       }
 
       pool.underlyings = underlyingRes.output
-        .map((address: string) => address.toLowerCase())
+        .map((address) => address.toLowerCase())
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address: string) => address !== ADDRESS_ZERO)
+        .filter((address) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
+        .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
     }
   }
 
@@ -223,13 +205,7 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolsCount).map(
-      (i) =>
-        ({
-          target: contract.address,
-          params: [BigInt(i)],
-        } as const),
-    ),
+    calls: rangeBI(0n, poolsCountBI).map((i) => ({ target: contract.address, params: [i] } as const)),
     abi: abi.poolInfoOld,
   })
 
@@ -252,13 +228,7 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: pools.map(
-      ({ address }) =>
-        ({
-          target: metaRegistry.address,
-          params: [address],
-        } as const),
-    ),
+    calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] } as const)),
     abi: abi.getPoolFromLPToken,
   })
 
@@ -274,13 +244,7 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
 
   const underlyingsRes = await multicall({
     ctx,
-    calls: pools.map(
-      ({ pool }) =>
-        ({
-          target: metaRegistry.address,
-          params: [pool],
-        } as const),
-    ),
+    calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] } as const)),
     abi: abi.getUnderlyingsCoins,
   })
 
@@ -292,11 +256,11 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
     }
 
     pool.underlyings = underlyingRes.output
-      .map((address: string) => address.toLowerCase())
+      .map((address) => address.toLowerCase())
       // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-      .filter((address: string) => address !== ADDRESS_ZERO)
+      .filter((address) => address !== ADDRESS_ZERO)
       // replace ETH alias
-      .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
+      .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
   }
 
   return pools

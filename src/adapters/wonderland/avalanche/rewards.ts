@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -34,17 +34,15 @@ const wMEMO: Contract = {
 }
 
 export async function getRewardsMEMOFarmTokens(ctx: BaseContext, wMEMOFarm: Contract): Promise<Contract> {
-  const rewardTokenLengthRes = await call({
+  const rewardTokenLength = await call({
     ctx,
     target: wMEMOFarm.address,
     abi: abiWonderland.rewardTokenLength,
   })
 
-  const rewardTokenLength = Number(rewardTokenLengthRes)
-
   const rewardTokensRes = await multicall({
     ctx,
-    calls: range(0, rewardTokenLength).map((i) => ({ target: wMEMOFarm.address, params: [BigInt(i)] } as const)),
+    calls: rangeBI(0n, rewardTokenLength).map((i) => ({ target: wMEMOFarm.address, params: [i] } as const)),
     abi: abiWonderland.rewardTokens,
   })
 

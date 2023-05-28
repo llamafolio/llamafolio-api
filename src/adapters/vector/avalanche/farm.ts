@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, BaseContext, BaseContract, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, range, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -145,7 +145,7 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: range(0, Number(poolsLength)).map((i) => ({ target: masterChef.address, params: [BigInt(i)] } as const)),
+    calls: rangeBI(0n, poolsLength).map((i) => ({ target: masterChef.address, params: [i] } as const)),
     abi: abi.registeredToken,
   })
 
@@ -177,7 +177,7 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
       ctx,
       calls: poolInfos.flatMap((res) => {
         const [_lpToken, _allocPoint, _lastRewardTimestamp, _accVTXPerShare, rewarder] = res.output
-        return range(0, rewardsLength).map((idx) => ({ target: rewarder, params: [BigInt(idx)] } as const))
+        return rangeBI(0n, BigInt(rewardsLength)).map((idx) => ({ target: rewarder, params: [idx] } as const))
       }),
       abi: abi.rewardTokens,
     }),
@@ -284,7 +284,7 @@ export async function getFarmBalances(
     balance.rewards = rewards
 
     // resolve LP underlyings
-    if (balance.amount.gt(0)) {
+    if (balance.amount > 0n) {
       if (balance.symbol === 'JLP') {
         const underlyings = await getPoolsUnderlyings(ctx, balance)
         balance.underlyings = [...underlyings]

@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, Contract, StakeBalance } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { sumBI } from '@lib/math'
@@ -63,8 +63,8 @@ export async function getEverriseBalances(ctx: BalancesContext, nftStaker: Contr
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, Number(balanceOfLength)).map(
-      (_, idx) => ({ target: nftStaker.address, params: [ctx.address, BigInt(idx)] } as const),
+    calls: rangeBI(0n, balanceOfLength).map(
+      (idx) => ({ target: nftStaker.address, params: [ctx.address, idx] } as const),
     ),
     abi: abi.tokenOfOwnerByIndex,
   })

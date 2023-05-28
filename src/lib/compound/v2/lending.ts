@@ -204,7 +204,7 @@ export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promis
   // TODO: batch getPricedBalances into 1 call for all balances
   return
 
-  const nonZerobalances = balances.filter((balance) => balance.amount.gt(0))
+  const nonZerobalances = balances.filter((balance) => balance.amount > 0n)
 
   const nonZeroSupplyBalances = nonZerobalances.filter((supply) => supply.category === 'lend')
   const nonZeroBorrowBalances = nonZerobalances.filter((borrow) => borrow.category === 'borrow')

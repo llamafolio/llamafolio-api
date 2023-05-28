@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import type { Call } from '@lib/multicall'
@@ -65,26 +65,16 @@ export async function getPairsContracts({
   limit = 100,
   allPairsLengthABI = abi.allPairsLength,
 }: getPairsContractsParams) {
-  const allPairsLengthRes = await call({
-    ctx,
-    abi: allPairsLengthABI,
-    target: factoryAddress,
-  })
+  const allPairsLengthRes = await call({ ctx, abi: allPairsLengthABI, target: factoryAddress })
 
   const allPairsLength = Number(allPairsLengthRes)
   const end = Math.min(offset + limit, allPairsLength)
 
-  const pids = range(offset, end)
+  const pids = rangeBI(BigInt(offset), BigInt(end))
 
   const allPairsRes = await multicall({
     ctx,
-    calls: pids.map(
-      (idx) =>
-        ({
-          target: factoryAddress,
-          params: [BigInt(idx)],
-        } as const),
-    ),
+    calls: pids.map((idx) => ({ target: factoryAddress, params: [idx] } as const)),
     abi: abi.allPairs,
   })
 

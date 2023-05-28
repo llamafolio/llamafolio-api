@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { keyBy } from '@lib/array'
-import { mapSuccessFilter, range } from '@lib/array'
+import { keyBy, rangeBI } from '@lib/array'
+import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
@@ -116,9 +116,7 @@ const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterch
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, Number(poolLengthRes)).map(
-      (_, idx) => ({ target: masterchef.address, params: [BigInt(idx)] } as const),
-    ),
+    calls: rangeBI(0n, poolLengthRes).map((idx) => ({ target: masterchef.address, params: [idx] } as const)),
     abi: abi.campaignInfo,
   })
 

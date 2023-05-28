@@ -93,7 +93,7 @@ async function getUnderlyingsBalances(ctx: BalancesContext, balances: getSynapse
   for (const balance of balances) {
     const { pool, underlyings, amount } = balance
 
-    if (!underlyings || !amount.gt(0)) {
+    if (!underlyings || amount <= 0n) {
       continue
     }
 

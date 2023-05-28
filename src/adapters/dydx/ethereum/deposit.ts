@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -57,9 +57,7 @@ export async function getDepositMarkets(ctx: BaseContext, staker: Contract): Pro
 
   const marketsAddressesRes = await multicall({
     ctx,
-    calls: range(0, Number(marketsLength)).map(
-      (idx: number) => ({ target: staker.address, params: [BigInt(idx)] } as const),
-    ),
+    calls: rangeBI(0n, marketsLength).map((idx) => ({ target: staker.address, params: [idx] } as const)),
     abi: abi.getMarketTokenAddress,
   })
 

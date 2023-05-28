@@ -1,6 +1,6 @@
 import type { BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { ethers } from 'ethers'
+import { MAX_UINT_256 } from '@lib/math'
 
 const abi = {
   getUserHealthFactor: {
@@ -29,7 +29,7 @@ export async function getUserHealthFactor(
     abi: abi.getUserHealthFactor,
   })
 
-  if (ethers.constants.MaxUint256.eq(userHealthFactorRes)) {
+  if (userHealthFactorRes === MAX_UINT_256) {
     return
   }
 

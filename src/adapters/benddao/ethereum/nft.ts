@@ -3,10 +3,10 @@ import { mapSuccess } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
+import { MAX_UINT_256 } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { ethers } from 'ethers'
 
 const abi = {
   getBNFTAssetList: {
@@ -254,7 +254,7 @@ const getNFTLendBorrowBalances = async (
       })
 
       for (const nftBorrowBalance of nftBorrowBalances) {
-        if (!ethers.constants.MaxUint256.eq(healthFactor)) {
+        if (healthFactor !== MAX_UINT_256) {
           nftBorrowBalance.healthfactor = Number(healthFactor) / Math.pow(10, 18)
         }
       }

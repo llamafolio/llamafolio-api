@@ -1,5 +1,5 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
-import { range } from '@lib/array'
+import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -50,8 +50,8 @@ export async function getGainsLockerBalances(ctx: BalancesContext, locker: Contr
 
   const tokenOfOwnerByIndexes = await multicall({
     ctx,
-    calls: range(0, Number(nftBalanceOf)).map(
-      (index) => ({ target: locker.address, params: [ctx.address, BigInt(index)] } as const),
+    calls: rangeBI(0n, nftBalanceOf).map(
+      (index) => ({ target: locker.address, params: [ctx.address, index] } as const),
     ),
     abi: abi.tokenOfOwnerByIndex,
   })

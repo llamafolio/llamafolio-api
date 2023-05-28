@@ -1,9 +1,10 @@
 import type { Balance, BalancesContext, BaseBalance, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
+import { MAX_UINT_256 } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { ethers } from 'ethers'
+import { formatUnits } from 'viem'
 
 const abi = {
   getReservesList: {
@@ -186,11 +187,11 @@ export async function getLendingPoolHealthFactor(ctx: BalancesContext, lendingPo
   ] = await call({ ctx, target: lendingPool.address, params: [ctx.address], abi: abi.getUserAccountData })
 
   // no borrowed balance
-  if (ethers.constants.MaxUint256.eq(healthFactor)) {
+  if (healthFactor === MAX_UINT_256) {
     return
   }
 
-  const healthFactorFloat = parseFloat(ethers.utils.formatUnits(healthFactor, 18))
+  const healthFactorFloat = parseFloat(formatUnits(healthFactor, 18))
 
   // TODO: return other metadata like LTV, available borrow etc
   return healthFactorFloat

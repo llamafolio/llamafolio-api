@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -62,9 +62,7 @@ export async function getFarmLPContracts(ctx: BaseContext, gaugeController: Cont
 
   const gaugesAddressesRes = await multicall({
     ctx,
-    calls: range(0, Number(gaugesLength)).map(
-      (i) => ({ target: gaugeController.address, params: [BigInt(i)] } as const),
-    ),
+    calls: rangeBI(0n, gaugesLength).map((i) => ({ target: gaugeController.address, params: [i] } as const)),
     abi: abi.gauges,
   })
 

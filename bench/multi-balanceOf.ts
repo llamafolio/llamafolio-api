@@ -106,7 +106,7 @@ async function main() {
 
     console.table(
       tokens
-        .filter((token) => token.amount && token.amount.gt(0))
+        .filter((token) => token.amount && token.amount > 0n)
         .map((token) => ({
           address: token.address,
           symbol: token.symbol,

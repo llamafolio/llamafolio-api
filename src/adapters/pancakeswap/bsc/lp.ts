@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
@@ -171,9 +171,9 @@ const getPancakeStablePairs = async (ctx: BaseContext, factory: Contract) => {
   }
 
   for (const masterchefStablePool of masterchefStablePools) {
-    const calls: Call<typeof abi.coins>[] = range(0, 2).map((i) => ({
+    const calls: Call<typeof abi.coins>[] = rangeBI(0n, 2n).map((i) => ({
       target: masterchefStablePool.address,
-      params: [BigInt(i)],
+      params: [i],
     }))
 
     const coinsRes = await multicall({ ctx, calls, abi: abi.coins })

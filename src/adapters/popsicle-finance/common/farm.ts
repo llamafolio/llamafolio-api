@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
@@ -65,7 +65,7 @@ export async function getPopsicleFarmContracts(ctx: BaseContext, contract: Contr
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLength).map((_, idx) => ({ target: contract.address, params: [BigInt(idx)] } as const)),
+    calls: rangeBI(0n, poolLengthRes).map((idx) => ({ target: contract.address, params: [idx] } as const)),
     abi: abi.poolInfo,
   })
 

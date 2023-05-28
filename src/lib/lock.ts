@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, Contract, LockBalance } from '@lib/adapt
 import { call } from '@lib/call'
 import type { Token } from '@lib/token'
 
-import { mapSuccess, range } from './array'
+import { mapSuccess, rangeBI } from './array'
 import { abi as erc20Abi } from './erc20'
 import { sumBI } from './math'
 import { multicall } from './multicall'
@@ -239,9 +239,7 @@ export async function getNFTLockerBalances(
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, Number(balanceOfsRes)).map(
-      (idx) => ({ target: locker.address, params: [ctx.address, BigInt(idx)] } as const),
-    ),
+    calls: rangeBI(0n, balanceOfsRes).map((idx) => ({ target: locker.address, params: [ctx.address, idx] } as const)),
     abi: abi.tokenOfOwnerByIndex,
   })
 

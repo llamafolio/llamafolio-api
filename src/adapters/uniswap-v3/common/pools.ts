@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { flatMapSuccess, keyBy, mapSuccess, mapSuccessFilter, range } from '@lib/array'
+import { flatMapSuccess, keyBy, mapSuccess, mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
@@ -105,13 +105,11 @@ export async function getPoolsBalances(ctx: BalancesContext, nonFungiblePosition
     abi: erc20Abi.balanceOf,
   })
 
-  const balancesLength = Number(balanceOf)
-
   // token IDs
   const tokensOfOwnerByIndexRes = await multicall({
     ctx,
-    calls: range(0, balancesLength).map(
-      (idx) => ({ target: nonFungiblePositionManager.address, params: [ctx.address, BigInt(idx)] } as const),
+    calls: rangeBI(0n, balanceOf).map(
+      (idx) => ({ target: nonFungiblePositionManager.address, params: [ctx.address, idx] } as const),
     ),
     abi: abi.tokenOfOwnerByIndex,
   })

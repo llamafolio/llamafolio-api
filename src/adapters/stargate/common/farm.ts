@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { flatMapSuccess, keyBy, range } from '@lib/array'
+import { flatMapSuccess, keyBy, rangeBI } from '@lib/array'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 
@@ -83,9 +83,7 @@ export async function getStargateFarmBalances(
   const poolsInfosRes = await multicall({
     ctx,
     calls: flatMapSuccess(poolsLengthRes, (poolsLength) =>
-      range(0, Number(poolsLength.output)).map(
-        (_, idx) => ({ target: poolsLength.input.target, params: [BigInt(idx)] } as const),
-      ),
+      rangeBI(0n, poolsLength.output).map((idx) => ({ target: poolsLength.input.target, params: [idx] } as const)),
     ),
     abi: abi.poolInfos,
   })

@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, BaseContract, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -62,16 +62,10 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
     abi: abi.balanceOf,
   })
 
-  const bondsLength = Number(balanceOfRes)
-
   const tokenOfOwnerByIndexRes = await multicall({
     ctx,
-    calls: range(0, bondsLength).map(
-      (bondIdx) =>
-        ({
-          target: bondNFT.address,
-          params: [ctx.address, BigInt(bondIdx)],
-        } as const),
+    calls: rangeBI(0n, balanceOfRes).map(
+      (bondIdx) => ({ target: bondNFT.address, params: [ctx.address, bondIdx] } as const),
     ),
     abi: abi.tokenOfOwnerByIndex,
   })
@@ -80,13 +74,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
 
   const bondStatusRes = await multicall({
     ctx,
-    calls: tokenIDs.map(
-      (tokenID) =>
-        ({
-          target: bondNFT.address,
-          params: [tokenID],
-        } as const),
-    ),
+    calls: tokenIDs.map((tokenID) => ({ target: bondNFT.address, params: [tokenID] } as const)),
     abi: abi.getBondStatus,
   })
 
@@ -97,13 +85,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
   const [bondAmountsRes, accruedBLUSDRes] = await Promise.all([
     multicall({
       ctx,
-      calls: activeTokenIDs.map(
-        (tokenID) =>
-          ({
-            target: bondNFT.address,
-            params: [tokenID],
-          } as const),
-      ),
+      calls: activeTokenIDs.map((tokenID) => ({ target: bondNFT.address, params: [tokenID] } as const)),
       abi: abi.getBondAmount,
     }),
     getAccruedBLUSD(ctx, activeTokenIDs),

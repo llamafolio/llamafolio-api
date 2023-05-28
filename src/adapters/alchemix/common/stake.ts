@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
@@ -63,12 +63,11 @@ export interface getStakerContractsParams extends Contract {
 export async function getStakerContracts(ctx: BaseContext, staker: Contract): Promise<getStakerContractsParams[]> {
   const contracts: getStakerContractsParams[] = []
 
-  const poolLengthBI = await call({ ctx, target: staker.address, abi: abi.poolCount })
-  const poolLength = Number(poolLengthBI)
+  const poolLength = await call({ ctx, target: staker.address, abi: abi.poolCount })
 
   const poolTokensRes = await multicall({
     ctx,
-    calls: range(0, poolLength).map((idx) => ({ target: staker.address, params: [BigInt(idx)] } as const)),
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: staker.address, params: [idx] } as const)),
     abi: abi.getPoolToken,
   })
 

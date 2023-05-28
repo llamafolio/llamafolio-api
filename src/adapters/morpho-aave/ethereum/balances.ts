@@ -1,8 +1,8 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { MAX_UINT_256 } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { ethers } from 'ethers'
 
 const abi = {
   getAllMarkets: {
@@ -151,7 +151,7 @@ export async function getUserHealthFactor(ctx: BalancesContext, morphoLens: Cont
     abi: abi.getUserHealthFactor,
   })
 
-  if (ethers.constants.MaxUint256.eq(userHealthFactorRes)) {
+  if (userHealthFactorRes === MAX_UINT_256) {
     return
   }
 

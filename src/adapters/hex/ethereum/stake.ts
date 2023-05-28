@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { sumBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
@@ -41,13 +41,11 @@ const abi = {
 export async function getStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const stakeCountRes = await call({ ctx, target: contract.address, params: [ctx.address], abi: abi.stakeCount })
+  const stakeCount = await call({ ctx, target: contract.address, params: [ctx.address], abi: abi.stakeCount })
 
   const findStakesAndIndexesRes = await multicall({
     ctx,
-    calls: range(0, Number(stakeCountRes)).map(
-      (i) => ({ target: contract.address, params: [ctx.address, BigInt(i)] } as const),
-    ),
+    calls: rangeBI(0n, stakeCount).map((i) => ({ target: contract.address, params: [ctx.address, i] } as const)),
     abi: abi.stakeLists,
   })
 

@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
@@ -67,7 +67,7 @@ interface BondParams extends Contract {
 export async function getBondsContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const bondDetailsRes = await multicall({
     ctx,
-    calls: range(0, 25).map((i) => ({ target: contract.address, params: [BigInt(i)] } as const)),
+    calls: rangeBI(0n, 25n).map((i) => ({ target: contract.address, params: [i] } as const)),
     abi: abi.bondDetails,
   })
 

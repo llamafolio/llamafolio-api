@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { mapSuccess, range } from '@lib/array'
+import { mapSuccess, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20Details } from '@lib/erc20'
@@ -101,9 +101,9 @@ export async function getContractsFromMasterchefV2(
 
   const poolLengthRes = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
 
-  const calls: Call<typeof abi.lpToken>[] = range(0, Number(poolLengthRes)).map((idx) => ({
+  const calls: Call<typeof abi.lpToken>[] = rangeBI(0n, poolLengthRes).map((idx) => ({
     target: masterchef.address,
-    params: [BigInt(idx)],
+    params: [idx],
   }))
 
   const [poolInfosRes, rewardersRes] = await Promise.all([
