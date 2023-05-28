@@ -1,12 +1,11 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber, ethers } from 'ethers'
 
 const abi = {
@@ -120,13 +119,13 @@ export async function getNftContracts(ctx: BaseContext, registry: Contract): Pro
 
   const nftsProxies = await multicall({
     ctx,
-    calls: nftsAddresses.map((nft) => ({ target: registry.address, params: [nft] })),
+    calls: nftsAddresses.map((nft) => ({ target: registry.address, params: [nft] } as const)),
     abi: abi.bNftProxys,
   })
 
   const symbolRes = await multicall({
     ctx,
-    calls: nftsProxies.map((proxy) => ({ target: isSuccess(proxy) ? proxy.output : null })),
+    calls: mapSuccess(nftsProxies, (proxyRes) => ({ target: proxyRes.output })),
     abi: erc20Abi.symbol,
   })
 
@@ -135,7 +134,7 @@ export async function getNftContracts(ctx: BaseContext, registry: Contract): Pro
     const nftsProxy = nftsProxies[nftIdx]
     const symbol = symbolRes[nftIdx]
 
-    if (!isSuccess(symbol)) {
+    if (!symbol.success) {
       continue
     }
 
@@ -170,13 +169,16 @@ export async function getNftBalances(
   const nftContractDetails: Contract[] = []
 
   // Get number of nft contracts owned by the user
-  const balancesOfCalls: Call[] = nfts.map((nft) => ({ target: nft.proxy, params: [ctx.address] }))
+  const balancesOfCalls: Call<typeof erc20Abi.balanceOf>[] = nfts.map((nft) => ({
+    target: nft.proxy,
+    params: [ctx.address],
+  }))
   const balancesOfResults = await multicall({ ctx, calls: balancesOfCalls, abi: erc20Abi.balanceOf })
 
   // Get token ids owned by the user for each nft contract
-  const tokenOfOwnerCalls: Call[] = []
+  const tokenOfOwnerCalls: Call<typeof abi.tokenOfOwnerByIndex>[] = []
   balancesOfResults.forEach((res, idx) => {
-    if (isSuccess(res) && !isZero(res.output)) {
+    if (res.success && res.output !== 0n) {
       const nftContract = nfts[idx]
 
       for (let i = 0; i < res.output; i++) {
@@ -191,7 +193,7 @@ export async function getNftBalances(
   // Get token URIs for each token id
   const nftURIs = await multicall({
     ctx,
-    calls: nftsOwnedIdxRes.map((res) => (isSuccess(res) ? { target: res.input.target, params: [res.output] } : null)),
+    calls: mapSuccess(nftsOwnedIdxRes, (res) => ({ target: res.input.target, params: [res.output] } as const)),
     abi: abi.tokenURI,
   })
 
@@ -199,7 +201,7 @@ export async function getNftBalances(
     const nftOwnedIdxRes = nftsOwnedIdxRes[idx]
     const nftURI = nftURIs[idx]
 
-    if (isSuccess(nftOwnedIdxRes) && isSuccess(nftURI)) {
+    if (nftOwnedIdxRes.success && nftURI.success) {
       nftContractDetails.push({
         ...balance,
         symbol: balance.symbol,
@@ -221,16 +223,22 @@ const getNFTLendBorrowBalances = async (
   const nftLendBalances: Balance[] = []
   const nftBorrowBalances: NFTBorrowBalance[] = []
 
-  const calls: Call[] = nfts.map((nft) => ({ target: lendPool.address, params: [nft.address, nft.nftId] }))
+  const calls: Call<typeof abi.getNftDebtData>[] = nfts.map((nft) => ({
+    target: lendPool.address,
+    params: [nft.address, nft.nftId],
+  }))
   const debtBalancesOfsRes = await multicall({ ctx, calls, abi: abi.getNftDebtData })
 
   nfts.forEach((nft, idx) => {
     const debtBalancesOfRes = debtBalancesOfsRes[idx]
 
-    if (isSuccess(debtBalancesOfRes)) {
+    if (debtBalancesOfRes.success) {
+      const [_loanId, _reserveAsset, totalCollateral, totalDebt, _availableBorrows, healthFactor] =
+        debtBalancesOfRes.output
+
       nftLendBalances.push({
         ...nft,
-        amount: BigNumber.from(debtBalancesOfRes.output.totalCollateral),
+        amount: BigNumber.from(totalCollateral),
         underlyings: [weth],
         rewards: undefined,
         category: 'lend',
@@ -238,7 +246,7 @@ const getNFTLendBorrowBalances = async (
 
       nftBorrowBalances.push({
         ...nft,
-        amount: BigNumber.from(debtBalancesOfRes.output.totalDebt),
+        amount: BigNumber.from(totalDebt),
         underlyings: [weth],
         rewards: undefined,
         healthfactor: undefined,
@@ -246,8 +254,8 @@ const getNFTLendBorrowBalances = async (
       })
 
       for (const nftBorrowBalance of nftBorrowBalances) {
-        if (!ethers.constants.MaxUint256.eq(debtBalancesOfRes.output.healthFactor)) {
-          nftBorrowBalance.healthfactor = debtBalancesOfRes.output.healthFactor / Math.pow(10, 18)
+        if (!ethers.constants.MaxUint256.eq(healthFactor)) {
+          nftBorrowBalance.healthfactor = Number(healthFactor) / Math.pow(10, 18)
         }
       }
     }
@@ -267,14 +275,14 @@ const apeStakingBalances = async (
   const stakedProxiesRes = await multicall({
     ctx,
     calls: lendNFTBalances.map((nft) =>
-      nft.nftId ? { target: apeStaker.address, params: [nft.address, nft.nftId] } : null,
+      nft.nftId ? ({ target: apeStaker.address, params: [nft.address, BigInt(nft.nftId)] } as const) : null,
     ),
     abi: abi.getStakedProxies,
   })
 
-  const calls: Call[] = stakedProxiesRes.map((proxy) => ({
+  const calls: Call<typeof abi.totalStaked>[] = stakedProxiesRes.map((proxy) => ({
     target: apeStaker.address,
-    params: isSuccess(proxy) && proxy.output.length >= 1 ? [proxy.output[0], ctx.address] : [ADDRESS_ZERO, ctx.address],
+    params: proxy.success && proxy.output.length >= 1 ? [proxy.output[0], ctx.address] : [ADDRESS_ZERO, ctx.address],
   }))
 
   const [totalStakedBalancesRes, claimablesRes] = await Promise.all([
@@ -286,7 +294,7 @@ const apeStakingBalances = async (
     const totalStakedBalanceRes = totalStakedBalancesRes[nftIdx]
     const claimableRes = claimablesRes[nftIdx]
 
-    if (!isSuccess(totalStakedBalanceRes) || !isSuccess(claimableRes)) {
+    if (!totalStakedBalanceRes.success || !claimableRes.success) {
       continue
     }
 

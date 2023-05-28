@@ -41,14 +41,16 @@ export async function getPieDaoLockerBalances(ctx: BalancesContext, locker: Cont
 
   const locksOfRes = await multicall({
     ctx,
-    calls: range(0, Number(getLocksOfLength)).map((_, idx) => ({ target: locker.address, params: [ctx.address, idx] })),
+    calls: range(0, Number(getLocksOfLength)).map(
+      (_, idx) => ({ target: locker.address, params: [ctx.address, BigInt(idx)] } as const),
+    ),
     abi: abi.locksOf,
   })
 
   const test: LockBalance[] = mapSuccessFilter(locksOfRes, (res) => {
-    const { lockedAt, lockDuration, amount } = res.output
+    const [amount, lockedAt, lockDuration] = res.output
 
-    const unlockAt = parseInt(lockedAt) + parseInt(lockDuration)
+    const unlockAt = Number(lockedAt + lockDuration)
     const isClaimable = now > unlockAt
 
     return {

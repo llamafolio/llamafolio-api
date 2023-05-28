@@ -6,6 +6,27 @@ import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 
+const abi = {
+  borrowBalanceCurrent: {
+    constant: false,
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'borrowBalanceCurrent',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  exchangeRateCurrent: {
+    constant: false,
+    inputs: [],
+    name: 'exchangeRateCurrent',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+} as const
+
 export async function getMarketsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const cTokenByAddress: { [key: string]: Contract } = {}
   for (const contract of contracts) {
@@ -17,36 +38,14 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
 
     multicall({
       ctx,
-      calls: contracts.map((token) => ({
-        target: token.address,
-        params: [ctx.address],
-      })),
-      abi: {
-        constant: false,
-        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-        name: 'borrowBalanceCurrent',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        payable: false,
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
+      calls: contracts.map((token) => ({ target: token.address, params: [ctx.address] } as const)),
+      abi: abi.borrowBalanceCurrent,
     }),
 
     multicall({
       ctx,
-      calls: contracts.map((token) => ({
-        target: token.address,
-        params: [],
-      })),
-      abi: {
-        constant: false,
-        inputs: [],
-        name: 'exchangeRateCurrent',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        payable: false,
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
+      calls: contracts.map((token) => ({ target: token.address })),
+      abi: abi.exchangeRateCurrent,
     }),
   ])
 

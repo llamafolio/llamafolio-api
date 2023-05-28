@@ -5,7 +5,7 @@ import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
@@ -73,7 +73,10 @@ export async function getSmarDexFarmBalances(
   const poolsBalances: Balance[] = []
   const masterchefPools: Contract[] = await getMasterChefPoolsInfos(ctx, pairs, masterchef)
 
-  const calls: Call[] = masterchefPools.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] }))
+  const calls: Call<typeof abi.userInfo>[] = masterchefPools.map((pool) => ({
+    target: masterchef.address,
+    params: [pool.pid, ctx.address],
+  }))
 
   const [poolsBalancesRes, pendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
@@ -85,15 +88,17 @@ export async function getSmarDexFarmBalances(
     const poolBalanceRes = poolsBalancesRes[userIdx]
     const pendingRewardRes = pendingRewardsRes[userIdx]
 
-    if (!isSuccess(poolBalanceRes) || !isSuccess(pendingRewardRes)) {
+    if (!poolBalanceRes.success || !pendingRewardRes.success) {
       continue
     }
+
+    const [amount] = poolBalanceRes.output
 
     poolsBalances.push({
       ...masterchefPool,
       underlyings: masterchefPool.underlyings as Contract[],
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output.amount),
+      amount: BigNumber.from(amount),
       rewards: [{ ...SDEX, amount: BigNumber.from(pendingRewardRes.output) }],
     })
   }
@@ -112,16 +117,21 @@ const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterch
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, Number(poolLengthRes)).map((_, idx) => ({ target: masterchef.address, params: [idx] })),
+    calls: range(0, Number(poolLengthRes)).map(
+      (_, idx) => ({ target: masterchef.address, params: [BigInt(idx)] } as const),
+    ),
     abi: abi.campaignInfo,
   })
 
-  const pools: Contract[] = mapSuccessFilter(poolInfosRes, (res) => ({
-    chain: ctx.chain,
-    address: res.output.stakingToken,
-    lpToken: res.output.stakingToken,
-    pid: res.input.params[0],
-  }))
+  const pools: Contract[] = mapSuccessFilter(poolInfosRes, (res) => {
+    const [stakingToken] = res.output
+    return {
+      chain: ctx.chain,
+      address: stakingToken,
+      lpToken: stakingToken,
+      pid: res.input.params[0],
+    }
+  })
 
   const masterchefPools: Contract[] = pools
     .map((pool: Contract) => {

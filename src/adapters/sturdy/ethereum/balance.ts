@@ -1,10 +1,8 @@
 import { getLendingPoolBalances } from '@lib/aave/v2/lending'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
-import type { Call } from '@lib/multicall'
+import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -15,7 +13,7 @@ const abi = {
     inputs: [{ name: '_pool', type: 'address' }],
     outputs: [{ name: '', type: 'uint256[8]' }],
   },
-}
+} as const
 
 const metaRegistry: Contract = {
   chain: 'ethereum',
@@ -42,11 +40,13 @@ export async function getSturdyBalances(ctx: BalancesContext, pools: Contract[])
 }
 
 const underlyingsBalances = async (ctx: BalancesContext, pools: Balance[]): Promise<Balance[]> => {
-  const calls: Call[] = pools.map((pool: Contract) => ({ target: metaRegistry.address, params: [pool.poolAddress] }))
-
   const [totalSuppliesRes, underlyingsBalancesInPoolsRes] = await Promise.all([
     multicall({ ctx, calls: pools.map((pool: Contract) => ({ target: pool.lpToken })), abi: erc20Abi.totalSupply }),
-    multicall({ ctx, calls, abi: abi.get_underlying_balances }),
+    multicall({
+      ctx,
+      calls: pools.map((pool: Contract) => ({ target: metaRegistry.address, params: [pool.poolAddress] } as const)),
+      abi: abi.get_underlying_balances,
+    }),
   ])
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
@@ -55,12 +55,7 @@ const underlyingsBalances = async (ctx: BalancesContext, pools: Balance[]): Prom
     const totalSupplyRes = totalSuppliesRes[poolIdx]
     const underlyingsBalanceRes = underlyingsBalancesInPoolsRes[poolIdx]
 
-    if (
-      !underlyings ||
-      !isSuccess(underlyingsBalanceRes) ||
-      !isSuccess(totalSupplyRes) ||
-      isZero(totalSupplyRes.output)
-    ) {
+    if (!underlyings || !underlyingsBalanceRes.success || !totalSupplyRes.success || totalSupplyRes.output === 0n) {
       continue
     }
 

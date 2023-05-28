@@ -1,7 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   getPools: {
@@ -35,7 +34,7 @@ export async function getTokemakContracts(ctx: BaseContext, manager: Contract): 
     const getPoolsAddress = getPoolsAddresses[poolIdx]
     const underlyingsAddress = underlyingsAddresses[poolIdx]
 
-    if (!isSuccess(underlyingsAddress)) {
+    if (!underlyingsAddress.success) {
       continue
     }
 

@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -20,7 +19,7 @@ const abi = {
 export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof erc20Abi.balanceOf>[] = []
   for (const staker of stakers) {
     calls.push({ target: staker.address, params: [ctx.address] })
   }
@@ -28,10 +27,13 @@ export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[
 
   const balanceOfAssetsRes = await multicall({
     ctx,
-    calls: stakers.map((staker, idx) => ({
-      target: staker.address,
-      params: [isSuccess(balanceOfsRes[idx]) ? balanceOfsRes[idx].output : '0'],
-    })),
+    calls: stakers.map((staker, idx) => {
+      const balanceOfRes = balanceOfsRes[idx]
+      return {
+        target: staker.address,
+        params: [balanceOfRes.success ? balanceOfRes.output : 0n],
+      } as const
+    }),
     abi: abi.convertToAssets,
   })
 
@@ -40,7 +42,7 @@ export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[
     const underlying = staker.underlyings?.[0] as Contract
     const balanceOfAssetRes = balanceOfAssetsRes[idx]
 
-    if (!isSuccess(balanceOfAssetRes)) {
+    if (!balanceOfAssetRes.success) {
       continue
     }
 

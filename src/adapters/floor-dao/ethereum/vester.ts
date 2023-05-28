@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -53,12 +52,17 @@ export async function getVesterBalances(ctx: BalancesContext, vester: Contract):
 
   const balancesOfRes = await multicall({
     ctx,
-    calls: userIndexesRes.map((index) => ({ target: vester.address, params: [ctx.address, index.toString()] })),
+    calls: userIndexesRes.map((index) => ({ target: vester.address, params: [ctx.address, BigInt(index)] } as const)),
     abi: abi.pendingFor,
   })
 
   const aggregatedVestingBalances = balancesOfRes.reduce((acc: BigNumber, current) => {
-    const payout = isSuccess(current) ? BigNumber.from(current.output.payout_) : BN_ZERO
+    if (!current.success) {
+      return acc.add(BN_ZERO)
+    }
+
+    const [payout] = current.output
+
     return acc.add(payout)
   }, BN_ZERO)
 

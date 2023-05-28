@@ -30,7 +30,7 @@ const getSmoothyUnderlyingsBalances = async (ctx: BalancesContext, staker: Balan
   const [tokensBalancesRes, totalSupply] = await Promise.all([
     multicall({
       ctx,
-      calls: underlyings.map((_, idx) => ({ target: staker.address, params: [idx] })),
+      calls: underlyings.map((_, idx) => ({ target: staker.address, params: [BigInt(idx)] } as const)),
       abi: abi.getBalance,
     }),
     call({ ctx, target: staker.address, abi: erc20Abi.totalSupply }),

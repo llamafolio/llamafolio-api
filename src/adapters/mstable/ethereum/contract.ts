@@ -1,7 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   getBassets: {
@@ -41,12 +40,12 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getmStableLPContracts(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: pool.address }))
+  const calls: Call<typeof abi.underlying>[] = pools.map((pool) => ({ target: pool.address }))
 
   const [underlyingsAssetsRes, underlyingsTokensRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.underlying }),
@@ -58,11 +57,12 @@ export async function getmStableLPContracts(ctx: BaseContext, pools: Contract[])
     const underlyingAssetRes = underlyingsAssetsRes[poolIdx]
     const underlyingTokenRes = underlyingsTokensRes[poolIdx]
 
-    const underlyings: string[] = isSuccess(underlyingAssetRes)
-      ? [underlyingAssetRes.output]
-      : underlyingTokenRes.output.personal.map((res: any) => res.addr)
-
-    contracts.push({ ...pool, underlyings })
+    if (underlyingAssetRes.success) {
+      contracts.push({ ...pool, underlyings: [underlyingAssetRes.output] })
+    } else if (underlyingTokenRes.success) {
+      const [personal] = underlyingTokenRes.output
+      contracts.push({ ...pool, underlyings: personal.map((res) => res.addr) })
+    }
   }
 
   return contracts

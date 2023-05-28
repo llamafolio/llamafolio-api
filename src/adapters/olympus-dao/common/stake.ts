@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
 
 const abiOlympus = {
@@ -28,7 +27,7 @@ const OHM: Contract = {
 export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]) {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.balanceOf>[] = []
   for (const staker of stakers) {
     calls.push({ target: staker.address, params: [ctx.address] })
   }
@@ -39,7 +38,7 @@ export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]
     const staker = stakers[idx]
     const balanceOfRes = balancesOfRes[idx]
 
-    if (!isSuccess(balanceOfRes)) {
+    if (!balanceOfRes.success) {
       continue
     }
 

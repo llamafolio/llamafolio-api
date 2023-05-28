@@ -12,7 +12,6 @@ export async function getLpBalances(ctx: BalancesContext, contracts: Contract[])
   const nonZeroBalances = balancesRaw.filter((balance) => balance.amount.gt(0))
 
   const calls = nonZeroBalances.map((balance) => ({
-    params: [],
     target: balance.address,
   }))
 
@@ -60,16 +59,20 @@ export async function getLpBalances(ctx: BalancesContext, contracts: Contract[])
   ])
 
   for (let i = 0; i < calls.length; i++) {
-    if (!underlyingBalancesRes[i].success || !totalSupplyRes[i].success) {
+    const underlyingBalances = underlyingBalancesRes[i]
+    const totalSupply = totalSupplyRes[i]
+    if (!underlyingBalances.success || !totalSupply.success) {
       continue
     }
 
+    const [amount0Current, amount1Current] = underlyingBalances.output
+
     ;(nonZeroBalances[i].underlyings![0] as Balance).amount = BigNumber.from(nonZeroBalances[i].amount)
-      .mul(underlyingBalancesRes[i].output.amount0Current)
-      .div(totalSupplyRes[i].output)
+      .mul(amount0Current)
+      .div(totalSupply.output)
     ;(nonZeroBalances[i].underlyings![1] as Balance).amount = BigNumber.from(nonZeroBalances[i].amount)
-      .mul(underlyingBalancesRes[i].output.amount1Current)
-      .div(totalSupplyRes[i].output)
+      .mul(amount1Current)
+      .div(totalSupply.output)
 
     nonZeroBalances[i].category = 'lp'
     balances.push(nonZeroBalances[i])

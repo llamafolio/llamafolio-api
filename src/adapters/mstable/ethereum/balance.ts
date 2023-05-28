@@ -3,10 +3,8 @@ import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { getSingleLockerBalance } from '@lib/lock'
-import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 const abi = {
@@ -114,7 +112,7 @@ const abi = {
 export async function getmStableBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const userBalanceOfRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
     abi: erc20Abi.balanceOf,
   })
 
@@ -132,7 +130,7 @@ export async function getmStableBalances(ctx: BalancesContext, pools: Contract[]
 export async function getmStableFarmingBalances(ctx: BalancesContext, farmer: Contract): Promise<Balance> {
   const [userBalance, exchangeRate, unclaimedRewards] = await Promise.all([
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.rawBalanceOf }),
-    call({ ctx, target: farmer.token as string, abi: abi.exchangeRate }),
+    call({ ctx, target: farmer.token!, abi: abi.exchangeRate }),
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.unclaimedRewards }),
   ])
   const [amount, _first, _last] = unclaimedRewards
@@ -262,20 +260,15 @@ const getmStableUnderlyings = async (ctx: BalancesContext, balances: Balance[]):
     const multipleUnderlyingBalance = multipleUnderlyingsBalances[poolIdx]
     const totalSupplyRes = totalSuppliesRes[poolIdx]
 
-    if (
-      !underlyings ||
-      !isSuccess(multipleUnderlyingBalance) ||
-      !isSuccess(totalSupplyRes) ||
-      isZero(totalSupplyRes.output)
-    ) {
+    if (!underlyings || !multipleUnderlyingBalance.success || !totalSupplyRes.success || totalSupplyRes.output === 0n) {
       continue
     }
 
+    const [_personal, data] = multipleUnderlyingBalance.output
+
     const fmtUnderlyings = underlyings.map((underlying, idx) => ({
       ...underlying,
-      amount: poolBalance.amount
-        .mul(multipleUnderlyingBalance.output.data[idx].vaultBalance)
-        .div(totalSupplyRes.output),
+      amount: poolBalance.amount.mul(data[idx].vaultBalance).div(totalSupplyRes.output),
     }))
 
     multiplePoolBalances.push({

@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -17,12 +15,15 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getCharmStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
+  const calls: Call<typeof erc20Abi.balanceOf>[] = stakers.map((staker) => ({
+    target: staker.address,
+    params: [ctx.address],
+  }))
 
   const [balanceOfsRes, totalAmountsRes, totalSuppliesRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
@@ -39,10 +40,10 @@ export async function getCharmStakeBalances(ctx: BalancesContext, stakers: Contr
 
     if (
       !underlyings ||
-      !isSuccess(balanceOfRes) ||
-      !isSuccess(totalAmountRes) ||
-      !isSuccess(totalSupplyRes) ||
-      isZero(totalSupplyRes.output)
+      !balanceOfRes.success ||
+      !totalAmountRes.success ||
+      !totalSupplyRes.success ||
+      totalSupplyRes.output === 0n
     ) {
       continue
     }

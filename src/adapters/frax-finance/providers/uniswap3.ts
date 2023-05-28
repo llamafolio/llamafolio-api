@@ -1,9 +1,8 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -42,14 +41,14 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 import type { ProviderBalancesParams } from './interface'
 
 export const uniswap3Provider = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
   const res: Contract[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: pool.lpToken }))
+  const calls: Call<typeof abi.uni_token0>[] = pools.map((pool) => ({ target: pool.lpToken }))
 
   const [token0sRes, token1sRes, lpTokensRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.uni_token0 }),
@@ -62,7 +61,7 @@ export const uniswap3Provider = async (ctx: BaseContext, pools: Contract[]): Pro
     const token1Res = token1sRes[idx]
     const lpTokenRes = lpTokensRes[idx]
 
-    if (!isSuccess(token0Res) || !isSuccess(token1Res) || !isSuccess(lpTokenRes)) {
+    if (!token0Res.success || !token1Res.success || !lpTokenRes.success) {
       return
     }
 
@@ -76,9 +75,9 @@ export const uniswap3BalancesProvider = async (
   ctx: BalancesContext,
   pools: ProviderBalancesParams[],
 ): Promise<ProviderBalancesParams[]> => {
-  const underlyingsCalls: Call[] = []
-  const suppliesCalls: Call[] = []
-  const rewardsCalls: Call[] = []
+  const underlyingsCalls: Call<typeof erc20Abi.balanceOf>[] = []
+  const suppliesCalls: Call<typeof abi.liquidity>[] = []
+  const rewardsCalls: Call<typeof abi.earned>[] = []
 
   for (const pool of pools) {
     const { underlyings, lpToken } = pool
@@ -88,9 +87,13 @@ export const uniswap3BalancesProvider = async (
       continue
     }
 
-    underlyingsCalls.push(...underlyings.map((underlying) => ({ target: underlying.address, params: [lpToken] })))
+    underlyingsCalls.push(
+      ...underlyings.map((underlying) => ({ target: underlying.address, params: [lpToken] } as const)),
+    )
     suppliesCalls.push({ target: lpToken })
-    rewardsCalls.push({ target: pool.stakeAddress, params: [ctx.address] })
+    if (pool.stakeAddress) {
+      rewardsCalls.push({ target: pool.stakeAddress, params: [ctx.address] } as const)
+    }
   }
 
   const [underlyingsBalancesRes, totalSuppliesRes, earnedsFXSRes] = await Promise.all([
@@ -105,16 +108,18 @@ export const uniswap3BalancesProvider = async (
     const totalSupplyRes = totalSuppliesRes[poolIdx]
     const earnedFXSRes = earnedsFXSRes[poolIdx]
 
-    if (!underlyings || !amount || !totalSupplyRes || isZero(totalSupplyRes.output) || !isSuccess(earnedFXSRes)) {
+    if (!underlyings || !amount || !totalSupplyRes || totalSupplyRes.output === 0n || !earnedFXSRes.success) {
       continue
     }
 
     underlyings.forEach((underlying, underlyingIdx) => {
       const underlyingsBalanceRes = underlyingsBalancesRes[underlyingIdx]
 
-      const underlyingsBalance = isSuccess(underlyingsBalanceRes)
-        ? BigNumber.from(underlyingsBalanceRes.output)
-        : BN_ZERO
+      const underlyingsBalance = underlyingsBalanceRes.success ? BigNumber.from(underlyingsBalanceRes.output) : BN_ZERO
+
+      if (!totalSupplyRes.success || totalSupplyRes.output === 0n) {
+        return
+      }
 
       ;(underlying as Balance).amount = underlyingsBalance.mul(amount).div(totalSupplyRes.output)
       ;(pool.rewards?.[0] as Balance).amount = BigNumber.from(earnedFXSRes.output)

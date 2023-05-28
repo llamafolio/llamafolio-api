@@ -1,8 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -16,7 +14,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getPopsicleYieldBalances(ctx: BalancesContext, pairs: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -24,7 +22,7 @@ export async function getPopsicleYieldBalances(ctx: BalancesContext, pairs: Cont
   const [balancesOfsRes, tokensAmounts, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pairs.map((pair) => ({ target: pair.address, params: [ctx.address] })),
+      calls: pairs.map((pair) => ({ target: pair.address, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
@@ -48,10 +46,10 @@ export async function getPopsicleYieldBalances(ctx: BalancesContext, pairs: Cont
 
     if (
       !underlyings ||
-      !isSuccess(balancesOfRes) ||
-      !isSuccess(tokensAmount) ||
-      !isSuccess(totalSupplyRes) ||
-      isZero(totalSupplyRes.output)
+      !balancesOfRes.success ||
+      !tokensAmount.success ||
+      !totalSupplyRes.success ||
+      totalSupplyRes.output === 0n
     ) {
       continue
     }

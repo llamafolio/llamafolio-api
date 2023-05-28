@@ -37,7 +37,7 @@ export const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 /**
  * Retrieves pairs balances (with underlyings) of Uniswap V2 like Pair.
@@ -57,29 +57,34 @@ export async function getUnderlyingBalances(ctx: BalancesContext, balances: Bala
   // filter empty balances
   balances = balances.filter((balance) => balance.amount?.gt(0) && balance.underlyings?.[0] && balance.underlyings?.[1])
 
-  const [token0sBalanceOfRes, token1sBalanceOfRes, totalSupplyRes] = await Promise.all([
+  const [token0sBalanceOfRes, token1sBalanceOfRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: balances.map((bToken) => ({
-        params: [bToken.address],
-        target: bToken.underlyings![0].address,
-      })),
+      calls: balances.map(
+        (bToken) =>
+          ({
+            params: [bToken.address],
+            target: bToken.underlyings![0].address,
+          } as const),
+      ),
       abi: abi.balanceOf,
     }),
 
     multicall({
       ctx,
-      calls: balances.map((bToken) => ({
-        params: [bToken.address],
-        target: bToken.underlyings![1].address,
-      })),
+      calls: balances.map(
+        (bToken) =>
+          ({
+            params: [bToken.address],
+            target: bToken.underlyings![1].address,
+          } as const),
+      ),
       abi: abi.balanceOf,
     }),
 
     multicall({
       ctx,
       calls: balances.map((token) => ({
-        params: [],
         target: token.address,
       })),
       abi: abi.totalSupply,
@@ -87,24 +92,24 @@ export async function getUnderlyingBalances(ctx: BalancesContext, balances: Bala
   ])
 
   for (let i = 0; i < balances.length; i++) {
-    if (!token0sBalanceOfRes[i].success) {
-      console.error('Failed to get balanceOf of token0', token0sBalanceOfRes[i])
-      continue
-    }
-    if (!token1sBalanceOfRes[i].success) {
-      console.error('Failed to get balanceOf of token1', token1sBalanceOfRes[i])
-      continue
-    }
-    if (!totalSupplyRes[i].success) {
-      console.error('Failed to get totalSupply of token', totalSupplyRes[i])
+    const token0BalanceRes = token0sBalanceOfRes[i]
+    const token1BalanceRes = token1sBalanceOfRes[i]
+    const totalSupplyRes = totalSuppliesRes[i]
+
+    if (
+      !token0BalanceRes.success ||
+      !token1BalanceRes.success ||
+      !totalSupplyRes.success ||
+      totalSupplyRes.output === 0n
+    ) {
       continue
     }
 
-    const totalSupply = BigNumber.from(totalSupplyRes[i].output)
+    const totalSupply = BigNumber.from(totalSupplyRes.output)
 
-    const balance0 = BigNumber.from(token0sBalanceOfRes[i].output).mul(balances[i].amount).div(totalSupply)
+    const balance0 = BigNumber.from(token0BalanceRes.output).mul(balances[i].amount).div(totalSupply)
 
-    const balance1 = BigNumber.from(token1sBalanceOfRes[i].output).mul(balances[i].amount).div(totalSupply)
+    const balance1 = BigNumber.from(token1BalanceRes.output).mul(balances[i].amount).div(totalSupply)
 
     balances[i].underlyings = [
       {

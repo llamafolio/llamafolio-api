@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -43,20 +42,24 @@ export async function getRailgunBalances(ctx: BalancesContext, staker: Contract)
 
   const userStakesRes = await multicall({
     ctx,
-    calls: range(0, Number(userStakeLength)).map((_, idx) => ({ target: staker.address, params: [ctx.address, idx] })),
+    calls: range(0, Number(userStakeLength)).map(
+      (_, idx) => ({ target: staker.address, params: [ctx.address, BigInt(idx)] } as const),
+    ),
     abi: abi.stakes,
   })
 
   for (let resIdx = 0; resIdx < userStakesRes.length; resIdx++) {
     const userStakeRes = userStakesRes[resIdx]
 
-    if (!isSuccess(userStakeRes)) {
+    if (!userStakeRes.success) {
       continue
     }
 
+    const [_delegate, amount] = userStakeRes.output
+
     balances.push({
       ...staker,
-      amount: BigNumber.from(userStakeRes.output.amount),
+      amount: BigNumber.from(amount),
       underlyings: undefined,
       rewards: undefined,
       category: 'stake',

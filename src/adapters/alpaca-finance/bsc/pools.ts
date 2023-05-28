@@ -1,8 +1,7 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolLength: {
@@ -59,20 +58,22 @@ export async function getPoolsContracts(ctx: BaseContext, fairLaunch: Contract) 
 
   const poolsInfoRes = await multicall({
     ctx,
-    calls: range(0, poolsLength).map((i) => ({
-      target: fairLaunch.address,
-      params: [i],
-    })),
+    calls: range(0, poolsLength).map(
+      (i) =>
+        ({
+          target: fairLaunch.address,
+          params: [BigInt(i)],
+        } as const),
+    ),
     abi: abi.poolInfo,
   })
 
-  const poolsAddresses = poolsInfoRes.filter(isSuccess).map((res) => res.output.stakeToken)
+  const poolsAddresses = mapSuccessFilter(poolsInfoRes, (res) => res.output[0])
 
   const underlyingsAddressesRes = await multicall({
     ctx,
-    calls: poolsAddresses.map((token: string) => ({
+    calls: poolsAddresses.map((token) => ({
       target: token,
-      params: [],
     })),
     abi: abi.token,
   })
@@ -84,7 +85,7 @@ export async function getPoolsContracts(ctx: BaseContext, fairLaunch: Contract) 
       chain: ctx.chain,
       address: poolsAddresses[poolIdx],
       pid: poolIdx,
-      underlyings: isSuccess(underlyingRes) ? [underlyingRes.output] : undefined,
+      underlyings: underlyingRes.success ? [underlyingRes.output] : undefined,
     })
   }
 

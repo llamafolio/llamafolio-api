@@ -1,9 +1,9 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { range } from '@lib/array'
 import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -67,20 +67,16 @@ export async function getStakerContracts(ctx: BaseContext, staker: Contract): Pr
   const poolLengthBI = await call({ ctx, target: staker.address, abi: abi.poolCount })
   const poolLength = Number(poolLengthBI)
 
-  const tokensCalls: Call[] = []
-  const rewardsCalls: Call[] = []
-
-  for (let idx = 0; idx < poolLength; idx++) {
-    tokensCalls.push({ target: staker.address, params: [idx] })
-    rewardsCalls.push({ target: staker.address, params: [] })
-  }
-
-  const poolTokensRes = await multicall({ ctx, calls: tokensCalls, abi: abi.getPoolToken })
+  const poolTokensRes = await multicall({
+    ctx,
+    calls: range(0, poolLength).map((idx) => ({ target: staker.address, params: [BigInt(idx)] } as const)),
+    abi: abi.getPoolToken,
+  })
 
   for (let idx = 0; idx < poolLength; idx++) {
     const poolTokenRes = poolTokensRes[idx]
 
-    if (!isSuccess(poolTokenRes)) {
+    if (!poolTokenRes.success) {
       continue
     }
 
@@ -100,10 +96,10 @@ export async function getStakerBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.getStakeTotalDeposited>[] = []
   for (let idx = 0; idx < contracts.length; idx++) {
     const contract = contracts[idx]
-    calls.push({ target: staker.address, params: [ctx.address, contract.pid] })
+    calls.push({ target: staker.address, params: [ctx.address, BigInt(contract.pid)] })
   }
 
   const [balancesRes, rewardsBalancesRes] = await Promise.all([
@@ -116,7 +112,7 @@ export async function getStakerBalances(
     const balanceRes = balancesRes[idx]
     const rewardsBalanceRes = rewardsBalancesRes[idx]
 
-    if (!isSuccess(balanceRes) || !isSuccess(rewardsBalanceRes)) {
+    if (!balanceRes.success || !rewardsBalanceRes.success) {
       continue
     }
 

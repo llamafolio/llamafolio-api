@@ -3,7 +3,6 @@ import { groupBy } from '@lib/array'
 import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
 
 import type { ProviderBalancesParams } from '../providers/interface'
@@ -28,12 +27,15 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getFraxBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: pool.stakeAddress, params: [ctx.address] }))
+  const calls: Call<typeof abi.lockedLiquidityOf>[] = pools.map((pool) => ({
+    target: pool.stakeAddress,
+    params: [ctx.address],
+  }))
 
   const [balancesOfsRes, earnedsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.lockedLiquidityOf }),
@@ -47,15 +49,17 @@ export async function getFraxBalances(ctx: BalancesContext, pools: Contract[]): 
     }
 
     rewards.forEach((reward, idx) => {
+      const earnedRes = earnedsRes[poolIdx]
+
       ;(reward as Balance).amount =
-        isSuccess(earnedsRes[poolIdx]) && earnedsRes[poolIdx].output.length > 0
-          ? BigNumber.from(earnedsRes[poolIdx].output[idx])
-          : BN_ZERO
+        earnedRes.success && earnedRes.output.length > 0 ? BigNumber.from(earnedRes.output[idx]) : BN_ZERO
     })
+
+    const balanceOf = balancesOfsRes[poolIdx]
 
     balances.push({
       ...pool,
-      amount: isSuccess(balancesOfsRes[poolIdx]) ? BigNumber.from(balancesOfsRes[poolIdx].output) : BN_ZERO,
+      amount: balanceOf.success ? BigNumber.from(balanceOf.output) : BN_ZERO,
       rewards: rewards as Balance[],
       underlyings: pool.underlyings as Contract[],
       category: 'farm',

@@ -3,7 +3,6 @@ import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_TEN } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 import { getBalancerProviderBalances } from './providers/balancerProvider'
@@ -41,7 +40,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getGroBalances(
   ctx: BalancesContext,
@@ -53,12 +52,16 @@ export async function getGroBalances(
   const [userInfosBalancesRes, claimableBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: masterchef.address, params: [contract.pid, ctx.address] })),
+      calls: contracts.map(
+        (contract) => ({ target: masterchef.address, params: [BigInt(contract.pid), ctx.address] } as const),
+      ),
       abi: abi.userInfo,
     }),
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: masterchef.address, params: [contract.pid, ctx.address] })),
+      calls: contracts.map(
+        (contract) => ({ target: masterchef.address, params: [BigInt(contract.pid), ctx.address] } as const),
+      ),
       abi: abi.claimable,
     }),
   ])
@@ -70,13 +73,15 @@ export async function getGroBalances(
     const userInfosBalanceRes = userInfosBalancesRes[poolIdx]
     const claimableBalanceRes = claimableBalancesRes[poolIdx]
 
-    if (!isSuccess(userInfosBalanceRes) || !isSuccess(claimableBalanceRes)) {
+    if (!userInfosBalanceRes.success || !claimableBalanceRes.success) {
       continue
     }
 
+    const [amount, _rewardDebt] = userInfosBalanceRes.output
+
     balances.push({
       ...contract,
-      amount: BigNumber.from(userInfosBalanceRes.output.amount),
+      amount: BigNumber.from(amount),
       underlyings,
       rewards: [{ ...reward, amount: BigNumber.from(claimableBalanceRes.output) }],
       category: 'farm',
@@ -122,7 +127,7 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]):
   const [balancesOfRes, pricePerSharesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.getPricePerShare }),
@@ -133,7 +138,7 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]):
     const balanceOfRes = balancesOfRes[poolIdx]
     const pricePerShareRes = pricePerSharesRes[poolIdx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(pricePerShareRes)) {
+    if (!balanceOfRes.success || !pricePerShareRes.success) {
       continue
     }
 

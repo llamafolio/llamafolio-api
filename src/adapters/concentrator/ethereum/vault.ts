@@ -1,9 +1,7 @@
 import { getUnderlyingsPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -41,7 +39,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const metaRegistry: Contract = {
   chain: 'ethereum',
@@ -51,9 +49,9 @@ const metaRegistry: Contract = {
 export async function getFarmBalances(ctx: BalancesContext, vault: Contract, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.userInfo>[] = []
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    calls.push({ target: vault.address, params: [poolIdx, ctx.address] })
+    calls.push({ target: vault.address, params: [BigInt(poolIdx), ctx.address] })
   }
 
   const [userInfosBalancesRes, pendingRewardRes] = await Promise.all([
@@ -67,15 +65,15 @@ export async function getFarmBalances(ctx: BalancesContext, vault: Contract, poo
     const userInfoBalance = userInfosBalancesRes[poolIdx]
     const pendingReward = pendingRewardRes[poolIdx]
 
-    if (!rewards || !isSuccess(userInfoBalance) || isZero(userInfoBalance.output.shares)) {
+    if (!rewards || !userInfoBalance.success || userInfoBalance.output[0] === 0n) {
       continue
     }
 
-    if (pool.pid == userInfoBalance.input.params[0]) {
+    if (pool.pid == userInfoBalance.input.params?.[0]) {
       balances.push({
         ...pool,
         underlyings: pool.underlyings as Balance[],
-        amount: BigNumber.from(userInfoBalance.output.shares),
+        amount: BigNumber.from(userInfoBalance.output[0]),
         rewards: [{ ...rewards[0], amount: BigNumber.from(pendingReward.output) }],
       })
     }

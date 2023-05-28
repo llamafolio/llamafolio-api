@@ -1,11 +1,10 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -52,14 +51,17 @@ export async function getGyroLocker(ctx: BalancesContext, locker: Contract): Pro
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: range(0, balancesOf).map((_, idx) => ({ target: locker.address, params: [ctx.address, idx] })),
+    calls: range(0, balancesOf).map(
+      (_, idx) => ({ target: locker.address, params: [ctx.address, BigInt(idx)] } as const),
+    ),
     abi: abi.tokenOfOwnerByIndex,
   })
 
   const lockedInfosResByIndexes = await multicall({
     ctx,
-    calls: tokenOfOwnerByIndexesRes.map((tokenIdx) =>
-      isSuccess(tokenIdx) ? { target: locker.address, params: [tokenIdx.output] } : null,
+    calls: mapSuccess(
+      tokenOfOwnerByIndexesRes,
+      (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] } as const),
     ),
     abi: abi.locked,
   })
@@ -67,18 +69,20 @@ export async function getGyroLocker(ctx: BalancesContext, locker: Contract): Pro
   for (let balanceIdx = 0; balanceIdx < balancesOf; balanceIdx++) {
     const lockedInfosResByIndex = lockedInfosResByIndexes[balanceIdx]
 
-    if (!isSuccess(lockedInfosResByIndex)) {
+    if (!lockedInfosResByIndex.success) {
       continue
     }
+
+    const [amount, end] = lockedInfosResByIndex.output
 
     balances.push({
       ...locker,
       underlyings: [GYRO],
       decimals: 9,
-      amount: BigNumber.from(lockedInfosResByIndex.output.amount),
-      claimable: now > lockedInfosResByIndex.output.end ? BigNumber.from(lockedInfosResByIndex.output.amount) : BN_ZERO,
+      amount: BigNumber.from(amount),
+      claimable: now > end ? BigNumber.from(amount) : BN_ZERO,
       rewards: undefined,
-      unlockAt: lockedInfosResByIndex.output.end,
+      unlockAt: Number(end),
       category: 'lock',
     })
   }

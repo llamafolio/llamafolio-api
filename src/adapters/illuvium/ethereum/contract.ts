@@ -1,7 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 
 import type { IPools } from '.'
 
@@ -13,7 +12,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const ILV: Token = {
   chain: 'ethereum',
@@ -23,7 +22,7 @@ const ILV: Token = {
 }
 
 export interface ILVContract extends Contract {
-  token: string
+  token: `0x${string}`
 }
 
 export async function getILVContracts(ctx: BaseContext, pools: IPools[]): Promise<Contract[]> {
@@ -38,7 +37,7 @@ export async function getILVContracts(ctx: BaseContext, pools: IPools[]): Promis
   pools.forEach(async (pool, poolIdx) => {
     const poolTokenRes = poolTokensRes[poolIdx]
 
-    if (!isSuccess(poolTokenRes)) {
+    if (!poolTokenRes.success) {
       return
     }
 

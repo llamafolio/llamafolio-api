@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -59,7 +58,7 @@ export async function getApolloStakeBalances(ctx: BalancesContext, staker: Contr
     }),
     multicall({
       ctx,
-      calls: underlyings.map((underlying) => ({ target: underlying.address, params: [staker.address] })),
+      calls: underlyings.map((underlying) => ({ target: underlying.address, params: [staker.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
   ])
@@ -82,7 +81,7 @@ export async function getApolloStakeBalances(ctx: BalancesContext, staker: Contr
 
 export async function getApolloFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
-  const calls: Call[] = farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.staked>[] = farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }))
 
   const [userBalanceOfsRes, userPendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.staked }),
@@ -96,7 +95,7 @@ export async function getApolloFarmBalances(ctx: BalancesContext, farmers: Contr
     const userBalanceOfRes = userBalanceOfsRes[farmerIdx]
     const userPendingRewardRes = userPendingRewardsRes[farmerIdx]
 
-    if (!isSuccess(userBalanceOfRes) || !isSuccess(userPendingRewardRes)) {
+    if (!userBalanceOfRes.success || !userPendingRewardRes.success) {
       continue
     }
 

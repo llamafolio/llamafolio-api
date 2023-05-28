@@ -40,21 +40,9 @@ const abi = {
 
 export async function getBondNFTContract(ctx: BaseContext) {
   const [bondNFTRes, lusdTokenRes, bLUSDTokenRes] = await Promise.all([
-    call({
-      ctx,
-      target: chickenBondManager.address,
-      abi: abi.bondNFT,
-    }),
-    call({
-      ctx,
-      target: chickenBondManager.address,
-      abi: abi.lusdToken,
-    }),
-    call({
-      ctx,
-      target: chickenBondManager.address,
-      abi: abi.bLUSDToken,
-    }),
+    call({ ctx, target: chickenBondManager.address, abi: abi.bondNFT }),
+    call({ ctx, target: chickenBondManager.address, abi: abi.lusdToken }),
+    call({ ctx, target: chickenBondManager.address, abi: abi.bLUSDToken }),
   ])
 
   const contract: Contract = {
@@ -67,13 +55,10 @@ export async function getBondNFTContract(ctx: BaseContext) {
   return contract
 }
 
-export function getAccruedBLUSD(ctx: BalancesContext, tokenIDs: number[]) {
+export function getAccruedBLUSD(ctx: BalancesContext, tokenIDs: bigint[]) {
   return multicall({
     ctx,
-    calls: tokenIDs.map((tokenID) => ({
-      target: chickenBondManager.address,
-      params: [tokenID],
-    })),
+    calls: tokenIDs.map((tokenID) => ({ target: chickenBondManager.address, params: [tokenID] } as const)),
     abi: abi.calcAccruedBLUSD,
   })
 }

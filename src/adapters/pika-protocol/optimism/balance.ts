@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { isZero } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -167,23 +165,23 @@ const getProducts = async (ctx: BalancesContext, contract: Contract): Promise<Co
   const products: Contract[] = []
   const PRODUCTS_COUNT = 25
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.getProduct>[] = []
   for (let idx = 1; idx < PRODUCTS_COUNT + 1; idx++) {
-    calls.push({ target: contract.address, params: [idx] })
+    calls.push({ target: contract.address, params: [BigInt(idx)] })
   }
 
   const productsAddressesRes = await multicall({ ctx, calls, abi: abi.getProduct })
 
-  const productsInfosCalls: Call[] = []
+  const productsInfosCalls: Call<typeof abi.decimals>[] = []
   for (let productIdx = 0; productIdx < productsAddressesRes.length; productIdx++) {
     const productAddressRes = productsAddressesRes[productIdx]
 
-    if (!isSuccess(productAddressRes)) {
+    if (!productAddressRes.success) {
       continue
     }
 
     products.push({ chain: ctx.chain, address: productAddressRes.output[0], id: productIdx + 1 })
-    productsInfosCalls.push({ target: productAddressRes.output[0], params: [] })
+    productsInfosCalls.push({ target: productAddressRes.output[0] })
   }
 
   const [productsInfosDecimalsRes, productsInfosDescriptionsRes] = await Promise.all([
@@ -196,7 +194,7 @@ const getProducts = async (ctx: BalancesContext, contract: Contract): Promise<Co
     const productsInfosDecimalRes = productsInfosDecimalsRes[productIdx]
     const productsInfosDescriptionRes = productsInfosDescriptionsRes[productIdx]
 
-    if (!isSuccess(productsInfosDecimalRes) || !isSuccess(productsInfosDescriptionRes)) {
+    if (!productsInfosDecimalRes.success || !productsInfosDescriptionRes.success) {
       continue
     }
 
@@ -227,23 +225,22 @@ const getPositions = async (
   const positionsIds: Contract[] = []
   const positionsDatas: GetPositionsParams[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.getPositionId>[] = []
   for (const product of products) {
     calls.push({ target: contract.address, params: [ctx.address, product.id, long] })
   }
 
   const positionsIdsRes = await multicall({ ctx, calls, abi: abi.getPositionId })
 
-  const positionsdatasCalls: Call[] = []
+  const positionsdatasCalls: Call<typeof abi.getPositions>[] = []
   for (let productIdx = 0; productIdx < products.length; productIdx++) {
     const product = products[productIdx]
     const positionIdRes = positionsIdsRes[productIdx]
 
-    if (!isSuccess(positionIdRes)) {
+    if (!positionIdRes.success) {
       continue
     }
 
-    // @ts-ignore
     positionsdatasCalls.push({ target: contract.address, params: [[positionIdRes.output]] })
 
     positionsIds.push({
@@ -259,15 +256,13 @@ const getPositions = async (
     const positionId = positionsIds[positionIdx]
     const positionDataRes = positionsDatasRes[positionIdx]
 
-    if (!isSuccess(positionDataRes) || isZero(positionDataRes.output[0].margin) || !positionId.decimals) {
+    if (!positionDataRes.success || positionDataRes.output[0].margin === 0n || !positionId.decimals) {
       continue
     }
 
     const { price: entryPrice, oraclePrice: marketPrice, margin, leverage, funding } = positionDataRes.output[0]
 
-    const formatValue = (value: BigNumber, decimals: number): BigNumber => {
-      return value.div(Math.pow(10, decimals))
-    }
+    const formatValue = (value: BigNumber, decimals: number) => value.div(Math.pow(10, decimals))
 
     positionsDatas.push({
       ...positionId,

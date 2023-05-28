@@ -2,7 +2,6 @@ import type { BaseContext, Contract } from '@lib/adapter'
 import { flatMapSuccess, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolsInfo: {
@@ -84,10 +83,9 @@ export async function getLensContracts(ctx: BaseContext, lens: Contract) {
   const rewardsRes = await multicall({
     ctx,
     calls: flatMapSuccess(rewardsListLengthsRes, (res, gaugeIdx) =>
-      range(0, parseInt(res.output)).map((rewardIdx) => ({
-        target: gauges[gaugeIdx].address,
-        params: [rewardIdx],
-      })),
+      range(0, Number(res.output)).map(
+        (rewardIdx) => ({ target: gauges[gaugeIdx].address, params: [BigInt(rewardIdx)] } as const),
+      ),
     ),
     abi: abi.rewards,
   })
@@ -95,15 +93,15 @@ export async function getLensContracts(ctx: BaseContext, lens: Contract) {
   let rewardCallIdx = 0
   for (let gaugeIdx = 0; gaugeIdx < gauges.length; gaugeIdx++) {
     const rewardsListLengthRes = rewardsListLengthsRes[gaugeIdx]
-    if (!isSuccess(rewardsListLengthRes)) {
+    if (!rewardsListLengthRes.success) {
       continue
     }
 
-    const rewardsLength = parseInt(rewardsListLengthRes.output)
+    const rewardsLength = Number(rewardsListLengthRes.output)
 
     for (let rewardIdx = 0; rewardIdx < rewardsLength; rewardIdx++) {
       const rewardRes = rewardsRes[rewardCallIdx]
-      if (isSuccess(rewardRes)) {
+      if (rewardRes.success) {
         gauges[gaugeIdx].rewards!.push(rewardRes.output)
       }
 

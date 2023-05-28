@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -15,17 +14,20 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contract[], FRAX: Contract) => {
   const balances: Balance[] = []
 
   const userSnapshotsRes = await multicall({
     ctx,
-    calls: pairs.map((pair) => ({
-      target: pair.address,
-      params: [ctx.address],
-    })),
+    calls: pairs.map(
+      (pair) =>
+        ({
+          target: pair.address,
+          params: [ctx.address],
+        } as const),
+    ),
     abi: abi.getUserSnapshot,
   })
 
@@ -33,10 +35,12 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
     const pair = pairs[pairIdx]
     const userSnapshotRes = userSnapshotsRes[pairIdx]
 
-    if (isSuccess(userSnapshotRes)) {
-      const userAssetShares = BigNumber.from(userSnapshotRes.output._userAssetShares)
-      const userBorrowShares = BigNumber.from(userSnapshotRes.output._userBorrowShares)
-      const userCollateralBalance = BigNumber.from(userSnapshotRes.output._userCollateralBalance)
+    if (userSnapshotRes.success) {
+      const [_userAssetShares, _userBorrowShares, _userCollateralBalance] = userSnapshotRes.output
+
+      const userAssetShares = BigNumber.from(_userAssetShares)
+      const userBorrowShares = BigNumber.from(_userBorrowShares)
+      const userCollateralBalance = BigNumber.from(_userCollateralBalance)
 
       const asset: Balance = {
         chain: ctx.chain,

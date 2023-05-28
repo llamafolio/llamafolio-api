@@ -20,17 +20,18 @@ export const get_xLP_UnderlyingsBalances = async (
       call({ ctx, target: balance.address, abi: erc20Abi.totalSupply }),
       multicall({
         ctx,
-        calls: underlyings.map((underlying) => ({
-          target: (underlying as Contract).address,
-          params: [vault.address],
-        })),
+        calls: underlyings.map(
+          (underlying) => ({ target: (underlying as Contract).address, params: [vault.address] } as const),
+        ),
         abi: erc20Abi.balanceOf,
       }),
     ])
 
     const fmtUnderlyings: Contract[] = underlyings.map((underlying, idx) => {
       const underlyingsBalancesOfRes = underlyingsBalancesOfsRes[idx]
-      const underlyingsAmount = balance.amount.mul(underlyingsBalancesOfRes.output).div(totalSupply)
+      const underlyingsAmount = balance.amount
+        .mul(underlyingsBalancesOfRes.success ? underlyingsBalancesOfRes.output : 0)
+        .div(totalSupply)
       return { ...(underlying as Contract), amount: underlyingsAmount }
     })
 

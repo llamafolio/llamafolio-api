@@ -7,7 +7,6 @@ import { keyBy, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -62,15 +61,14 @@ export async function getLendingPoolContracts(
 
   const registeredTokensRes = await multicall({
     ctx,
-    calls: range(0, Number(lmRewardsCount)).map((_, idx) => ({
-      target: chefIncentivesController.address,
-      params: [idx],
-    })),
+    calls: range(0, Number(lmRewardsCount)).map(
+      (_, idx) => ({ target: chefIncentivesController.address, params: [BigInt(idx)] } as const),
+    ),
     abi: abi.registeredTokens,
   })
 
   for (const registeredTokenRes of registeredTokensRes) {
-    if (!isSuccess(registeredTokenRes)) {
+    if (!registeredTokenRes.success) {
       continue
     }
     const contract = aaveLendingPoolContractsByAddress[registeredTokenRes.output]
@@ -109,7 +107,7 @@ export async function getLendingPoolBalances(
   for (let rewardIdx = 0; rewardIdx < claimableRewards.length; rewardIdx++) {
     const claimableReward = claimableRewards[rewardIdx]
 
-    if (!isSuccess(claimableReward)) {
+    if (!claimableReward.success) {
       continue
     }
 

@@ -2,7 +2,6 @@ import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { getStakingPoolsBalances } from '@lib/pools'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 import type { GaugeContract } from './pair'
@@ -44,7 +43,9 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: GaugeContr
     ctx,
     calls: stakingBalances.flatMap(
       (balance) =>
-        balance.rewards?.map((reward) => ({ target: balance.address, params: [reward.address, ctx.address] })) ?? [],
+        balance.rewards?.map(
+          (reward) => ({ target: balance.address, params: [reward.address, ctx.address] } as const),
+        ) ?? [],
     ),
     abi: abi.earned,
   })
@@ -59,7 +60,7 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: GaugeContr
     for (const reward of rewards) {
       const rewardRes = rewardsRes[rewardIdx]
 
-      if (isSuccess(rewardRes)) {
+      if (rewardRes.success) {
         reward.amount = BigNumber.from(rewardRes.output)
       }
 

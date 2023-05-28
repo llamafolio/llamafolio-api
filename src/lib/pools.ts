@@ -1,15 +1,14 @@
-import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseBalance, Contract } from '@lib/adapter'
 import { multicallBalances } from '@lib/balance'
 import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 export interface GetPoolsBalancesParams {
-  getPoolAddress: (contract: Contract) => string
+  getPoolAddress: (contract: Contract) => `0x${string}`
 }
 
 /**
@@ -31,7 +30,7 @@ export async function getPoolsUnderlyingBalances(
   const res: Balance[] = []
   const { getPoolAddress } = params
 
-  const balanceOfCalls: Call[] = []
+  const balanceOfCalls: Call<typeof erc20Abi.balanceOf>[] = []
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const underlyings = pools[poolIdx].underlyings
@@ -48,20 +47,8 @@ export async function getPoolsUnderlyingBalances(
   }
 
   const [totalSuppliesRes, underlyingsBalanceOfRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: pools.map((token) => ({
-        params: [],
-        target: token.address,
-      })),
-      abi: erc20Abi.totalSupply,
-    }),
-
-    multicallBalances({
-      ctx,
-      calls: balanceOfCalls,
-      abi: erc20Abi.balanceOf,
-    }),
+    multicall({ ctx, calls: pools.map((token) => ({ target: token.address })), abi: erc20Abi.totalSupply }),
+    multicallBalances({ ctx, calls: balanceOfCalls, abi: erc20Abi.balanceOf }),
   ])
 
   let balanceOfIdx = 0
@@ -73,7 +60,7 @@ export async function getPoolsUnderlyingBalances(
 
     const totalSupplyRes = totalSuppliesRes[poolIdx]
 
-    if (!isSuccess(totalSupplyRes) || isZero(totalSupplyRes.output)) {
+    if (!totalSupplyRes.success || totalSupplyRes.output === 0n) {
       // next pool
       balanceOfIdx += underlyings.length
       continue
@@ -91,7 +78,7 @@ export async function getPoolsUnderlyingBalances(
     for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
       const underlyingBalanceRes = underlyingsBalanceOfRes[balanceOfIdx]
       // fallback to 0 in case of failure, better than not showing anything at all
-      const underlyingBalance = isSuccess(underlyingBalanceRes) ? BigNumber.from(underlyingBalanceRes.output) : BN_ZERO
+      const underlyingBalance = underlyingBalanceRes.success ? BigNumber.from(underlyingBalanceRes.output) : BN_ZERO
 
       const underlyingAmount = underlyingBalance.mul(poolAmount).div(poolTotalSupply)
 
@@ -107,7 +94,7 @@ export async function getPoolsUnderlyingBalances(
 }
 
 export interface GetStakingPoolsBalancesParams extends GetPoolsBalancesParams {
-  getLPTokenAddress: (contract: Contract) => string
+  getLPTokenAddress: (contract: Contract) => `0x${string}`
 }
 
 /**
@@ -128,10 +115,7 @@ export async function getStakingPoolsBalances(
   const [totalSuppliesRes, stakingTokenBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: poolsBalances.map((pool) => ({
-        params: [],
-        target: getLPTokenAddress(pool),
-      })),
+      calls: poolsBalances.map((pool) => ({ target: getLPTokenAddress(pool) })),
       abi: erc20Abi.totalSupply,
     }),
 
@@ -149,7 +133,7 @@ export async function getStakingPoolsBalances(
     const totalSupplyRes = totalSuppliesRes[poolIdx]
     const stakingTokenBalanceRes = stakingTokenBalancesRes[poolIdx]
 
-    if (!isSuccess(totalSupplyRes) || isZero(totalSupplyRes.output) || !isSuccess(stakingTokenBalanceRes)) {
+    if (!totalSupplyRes.success || totalSupplyRes.output === 0n || !stakingTokenBalanceRes.success) {
       continue
     }
 
@@ -167,7 +151,9 @@ export async function getStakingPoolsBalances(
       // adjust amounts with staking token ratio
       underlyings: underlyings.map((underlying) => ({
         ...underlying,
-        amount: BigNumber.from(underlying.amount).mul(amount).div(totalSupply),
+        amount: BigNumber.from((underlying as BaseBalance).amount)
+          .mul(amount)
+          .div(totalSupply),
       })),
     }
 

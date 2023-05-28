@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { BigNumber } from 'ethers'
 
@@ -17,7 +16,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export const arrakisBalancesProvider = async (
   ctx: BalancesContext,
@@ -34,16 +33,20 @@ export const arrakisBalancesProvider = async (
     const totalSupplyRes = totalSuppliesRes[poolIdx]
     const underlyingsBalanceRes = underlyingsBalancesRes[poolIdx]
 
-    if (!underlyings || !amount || !underlyingsBalanceRes || !totalSupplyRes || isZero(totalSupplyRes.output)) {
+    if (
+      !underlyings ||
+      !amount ||
+      !underlyingsBalanceRes.success ||
+      !totalSupplyRes.success ||
+      totalSupplyRes.output === 0n
+    ) {
       continue
     }
 
-    ;(underlyings[0] as Balance).amount = BigNumber.from(underlyingsBalanceRes.output.amount0Current)
-      .mul(amount)
-      .div(totalSupplyRes.output)
-    ;(underlyings[1] as Balance).amount = BigNumber.from(underlyingsBalanceRes.output.amount1Current)
-      .mul(amount)
-      .div(totalSupplyRes.output)
+    const [amount0Current, amount1Current] = underlyingsBalanceRes.output
+
+    ;(underlyings[0] as Balance).amount = BigNumber.from(amount0Current).mul(amount).div(totalSupplyRes.output)
+    ;(underlyings[1] as Balance).amount = BigNumber.from(amount1Current).mul(amount).div(totalSupplyRes.output)
   }
 
   return pools

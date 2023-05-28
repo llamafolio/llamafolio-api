@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -28,7 +27,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getAtlantisFarmBalances(
   ctx: BalancesContext,
@@ -38,7 +37,10 @@ export async function getAtlantisFarmBalances(
   const balances: Balance[] = []
   const lpBalances: Balance[] = []
 
-  const calls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.userInfo>[] = stakers.map((staker) => ({
+    target: staker.address,
+    params: [ctx.address],
+  }))
 
   const [balancesOfsRes, pendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
@@ -51,10 +53,10 @@ export async function getAtlantisFarmBalances(
     const balancesOfRes = balancesOfsRes[idx]
     const pendingRewardRes = pendingRewardsRes[idx]
 
-    if (isSuccess(balancesOfRes) && isSuccess(pendingRewardRes) && underlyings) {
+    if (balancesOfRes.success && pendingRewardRes.success && underlyings) {
       const lpToken = staker.lpToken
       const symbol = lpToken ? lpToken.symbol : underlyings[0].symbol
-      const amount = BigNumber.from(balancesOfRes.output.amount)
+      const amount = BigNumber.from(balancesOfRes.output[0])
 
       const balance: Balance = {
         ...staker,

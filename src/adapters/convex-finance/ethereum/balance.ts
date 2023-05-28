@@ -6,7 +6,6 @@ import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 import { getCvxCliffRatio } from './utils'
@@ -51,7 +50,7 @@ export async function getConvexGaugesBalances(
 
   const gaugesBalancesRes = await getPoolsBalances(ctx, pools, registry, true)
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.earned>[] = []
   for (const gaugeBalance of gaugesBalancesRes) {
     gaugeBalance.category = 'stake'
     calls.push({ target: (gaugeBalance as Contract).crvRewards, params: [ctx.address] })
@@ -62,13 +61,15 @@ export async function getConvexGaugesBalances(
     call({ ctx, target: CVX.address, abi: erc20Abi.totalSupply }),
   ])
 
-  const extraRewardsCalls: Call[] = []
+  const extraRewardsCalls: Call<typeof abi.earned>[] = []
   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
     const gaugeBalance = gaugesBalancesRes[gaugeIdx]
     const claimableReward = claimableRewards[gaugeIdx]
     const rewards = gaugeBalance.rewards as Contract[]
 
-    if (!rewards || !isSuccess(claimableReward)) continue
+    if (!rewards || !claimableReward.success) {
+      continue
+    }
 
     // rewards[0] is the common reward for all pools: CRV
     rewards[0].amount = BigNumber.from(claimableReward.output || BN_ZERO)
@@ -95,13 +96,17 @@ export async function getConvexGaugesBalances(
   for (let poolIdx = 0; poolIdx < extraRewardsPools.length; poolIdx++) {
     const extraRewardsPool = extraRewardsPools[poolIdx]
     const rewards = extraRewardsPool.rewards as Contract[]
-    if (!rewards) continue
+    if (!rewards) {
+      continue
+    }
 
     for (let extraRewardIdx = 2; extraRewardIdx < rewards.length; extraRewardIdx++) {
       const reward = rewards[extraRewardIdx]
       const extraRewardRes = extraRewardsRes[extraRewardsCallIdx]
 
-      if (!isSuccess(extraRewardRes)) continue
+      if (!extraRewardRes.success) {
+        continue
+      }
 
       reward.amount = BigNumber.from(extraRewardRes.output)
 

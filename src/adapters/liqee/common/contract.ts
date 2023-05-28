@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import type { GetMarketsContractsProps } from '@lib/compound/v2/lending'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   getAlliTokens: {
@@ -47,8 +46,11 @@ export async function getMarketsContracts(
 
   const cTokensRes = await call({ ctx, target: comptrollerAddress, abi: abi.getAlliTokens })
 
-  const calls: Call[] = cTokensRes.map((cToken) => ({ target: comptrollerAddress, params: [cToken] }))
-  const underlyingsCalls: Call[] = cTokensRes.map((cToken) => ({ target: cToken }))
+  const calls: Call<typeof abi.markets>[] = cTokensRes.map((cToken) => ({
+    target: comptrollerAddress,
+    params: [cToken],
+  }))
+  const underlyingsCalls: Call<typeof abi.underlying>[] = cTokensRes.map((cToken) => ({ target: cToken }))
 
   const [marketsRes, underlyingTokensAddressesRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.markets }),
@@ -60,14 +62,16 @@ export async function getMarketsContracts(
     const underlying = underlyingAddressByMarketAddress[cToken.toLowerCase()] || underlyingTokensAddressesRes[i].output
     const marketRes = marketsRes[i]
 
-    if (!isSuccess(marketRes)) {
+    if (!marketRes.success) {
       continue
     }
+
+    const [collateralFactorMantissa] = marketRes.output
 
     contracts.push({
       chain: ctx.chain,
       address: cToken,
-      collateralFactor: marketRes.output.collateralFactorMantissa,
+      collateralFactor: collateralFactorMantissa,
       underlyings: [underlying],
     })
   }

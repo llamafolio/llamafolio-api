@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -32,7 +32,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getMorphoMarketsBalances(
   ctx: BalancesContext,
@@ -42,7 +42,7 @@ export async function getMorphoMarketsBalances(
   const balances: Balance[] = []
   const markets: Contract[] = comptroller.markets as Contract[]
 
-  const calls = markets.map((market) => ({
+  const calls: Call<typeof abi.getCurrentSupplyBalanceInOf>[] = markets.map((market) => ({
     target: morphoLens.address,
     params: [market.address, ctx.address],
   }))
@@ -57,29 +57,31 @@ export async function getMorphoMarketsBalances(
     const lendBalanceRes = lendBalancesRes[idx]
     const borrowBalanceRes = borrowBalancesRes[idx]
 
-    if (!isSuccess(lendBalanceRes) || !isSuccess(borrowBalanceRes)) {
-      return
+    if (lendBalanceRes.success) {
+      const [_balanceOnPool, _balanceInP2P, totalBalance] = lendBalanceRes.output
+      balances.push({
+        ...market,
+        symbol: `c${underlying.symbol}`,
+        decimals: underlying.decimals,
+        amount: BigNumber.from(totalBalance),
+        underlyings: [underlying],
+        rewards: undefined,
+        category: 'lend',
+      })
     }
 
-    balances.push({
-      ...market,
-      symbol: `c${underlying.symbol}`,
-      decimals: underlying.decimals,
-      amount: BigNumber.from(lendBalanceRes.output.totalBalance),
-      underlyings: [underlying],
-      rewards: undefined,
-      category: 'lend',
-    })
-
-    balances.push({
-      ...market,
-      symbol: `c${underlying.symbol}`,
-      decimals: underlying.decimals,
-      amount: BigNumber.from(borrowBalanceRes.output.totalBalance),
-      underlyings: [underlying],
-      rewards: undefined,
-      category: 'borrow',
-    })
+    if (borrowBalanceRes.success) {
+      const [_balanceOnPool, _balanceInP2P, totalBalance] = borrowBalanceRes.output
+      balances.push({
+        ...market,
+        symbol: `c${underlying.symbol}`,
+        decimals: underlying.decimals,
+        amount: BigNumber.from(totalBalance),
+        underlyings: [underlying],
+        rewards: undefined,
+        category: 'borrow',
+      })
+    }
   })
 
   return balances

@@ -21,14 +21,20 @@ const locker: Contract = {
   symbol: 'veAngle',
 }
 
-const poolsAddresses: Record<string, string[]> = {
-  swap: ['0xBa625B318483516F7483DD2c4706aC92d44dBB2B', '0xd6282C5aEAaD4d776B932451C44b8EB453E44244'],
-  gelato: ['0xEB7547a8a734b6fdDBB8Ce0C314a9E6485100a3C', '0x3785Ce82be62a342052b9E5431e9D3a839cfB581'],
-}
+const swapPools: `0x${string}`[] = [
+  '0xBa625B318483516F7483DD2c4706aC92d44dBB2B',
+  '0xd6282C5aEAaD4d776B932451C44b8EB453E44244',
+]
+
+const gelatoPools: `0x${string}`[] = [
+  '0xEB7547a8a734b6fdDBB8Ce0C314a9E6485100a3C',
+  '0x3785Ce82be62a342052b9E5431e9D3a839cfB581',
+]
+
 export const getContracts = async (ctx: BaseContext) => {
   const [stablePools, pools] = await Promise.all([
     getStablePoolContractsFromAPI(ctx, 1),
-    getAnglePoolsContract(ctx, poolsAddresses),
+    getAnglePoolsContract(ctx, swapPools, gelatoPools),
   ])
 
   return {

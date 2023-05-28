@@ -2,7 +2,6 @@ import type { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolLength: {
@@ -41,9 +40,9 @@ export async function getSynapseContracts(ctx: BaseContext, miniChef: Contract):
   const poolLengthRes = await call({ ctx, target: miniChef.address, abi: abi.poolLength })
   const poolLength = Number(poolLengthRes)
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.lpToken>[] = []
   for (let idx = 0; idx < poolLength; idx++) {
-    calls.push({ target: miniChef.address, params: [idx] })
+    calls.push({ target: miniChef.address, params: [BigInt(idx)] })
   }
 
   const [lpTokensRes, rewardersRes] = await Promise.all([
@@ -56,7 +55,7 @@ export async function getSynapseContracts(ctx: BaseContext, miniChef: Contract):
     const rewarderRes = rewardersRes[poolIdx]
     const rewards = miniChef.rewards?.[0] as Contract
 
-    if (!isSuccess(lpTokenRes) || !isSuccess(rewarderRes)) {
+    if (!lpTokenRes.success || !rewarderRes.success) {
       continue
     }
 
@@ -77,11 +76,14 @@ export async function getSynapseContracts(ctx: BaseContext, miniChef: Contract):
 async function getUnderlyingsFromSynapsePool(ctx: BaseContext, contracts: Contract[]): Promise<Contract[]> {
   for (const contract of contracts) {
     const pool = contract.pool
-    const calls = Array.from({ length: 4 }, (_, i) => ({ target: pool, params: [i] }))
-    const underlyingsTokensRes = await multicall({ ctx, calls, abi: abi.getToken })
+    const underlyingsTokensRes = await multicall({
+      ctx,
+      calls: Array.from({ length: 4 }, (_, i) => ({ target: pool, params: [i] } as const)),
+      abi: abi.getToken,
+    })
 
     underlyingsTokensRes.map((underlyingsTokenRes) => {
-      if (isSuccess(underlyingsTokenRes)) {
+      if (underlyingsTokenRes.success) {
         contract.underlyings?.push(underlyingsTokenRes.output)
       }
     })

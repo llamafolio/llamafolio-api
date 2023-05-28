@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -35,7 +34,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const HEC: Token = {
   chain: 'fantom',
@@ -50,15 +49,15 @@ export async function getHECLockerBalances(ctx: BalancesContext, lockers: Contra
 
   const fnftsIdxRes = await multicall({
     ctx,
-    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] })),
+    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] } as const)),
     abi: abi.getFnfts,
   })
 
   const pendingRewardsRes = await multicall({
     ctx,
     calls: fnftsIdxRes.flatMap((fnftIdxRes) =>
-      isSuccess(fnftIdxRes)
-        ? fnftIdxRes.output.map((fnft: any) => ({ target: fnftIdxRes.input.target, params: [fnft.id] }))
+      fnftIdxRes.success
+        ? fnftIdxRes.output.map((fnft: any) => ({ target: fnftIdxRes.input.target, params: [fnft.id] } as const))
         : null,
     ),
     abi: abi.pendingReward,
@@ -70,7 +69,7 @@ export async function getHECLockerBalances(ctx: BalancesContext, lockers: Contra
     const fnftIdxRes = fnftsIdxRes[lockerIdx]
     const pendingRewards = pendingRewardsRes.filter((res: any) => res.input.target === locker.address)
 
-    if (!underlyings || !isSuccess(fnftIdxRes)) {
+    if (!underlyings || !fnftIdxRes.success) {
       continue
     }
 
@@ -80,7 +79,7 @@ export async function getHECLockerBalances(ctx: BalancesContext, lockers: Contra
       const { amount, secs, startTime } = fnftInfos
       const pendingRewardRes = pendingRewards.find((res: any) => res.input.params[0] === fnftInfos.id)
 
-      if (!pendingRewardRes || !isSuccess(pendingRewardRes)) {
+      if (!pendingRewardRes || !pendingRewardRes.success) {
         continue
       }
 
@@ -89,7 +88,7 @@ export async function getHECLockerBalances(ctx: BalancesContext, lockers: Contra
         address: locker.lpToken ? locker.lpToken : locker.address,
         amount: BigNumber.from(amount),
         underlyings,
-        unlockAt: parseInt(secs) + parseInt(startTime),
+        unlockAt: Number(secs + startTime),
         rewards: [{ ...HEC, amount: BigNumber.from(pendingRewardRes.output) }],
         category: 'lock',
       }

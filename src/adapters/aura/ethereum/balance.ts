@@ -5,7 +5,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers/lib/ethers'
 
 const abi = {
@@ -105,7 +104,7 @@ export async function getAuraPoolsBalances(
   const balanceWithRewards: Balance[] = []
   const balances: Balance[] = await getBalancerPoolsBalances(ctx, pools, vault)
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.earned>[] = []
   for (const balance of balances) {
     calls.push({ target: (balance as Contract).gauge, params: [ctx.address] })
   }
@@ -116,7 +115,7 @@ export async function getAuraPoolsBalances(
     const balance = balances[idx]
     const earnedRes = earnedsRes[idx]
 
-    if (!isSuccess(earnedRes)) {
+    if (!earnedRes.success) {
       continue
     }
 

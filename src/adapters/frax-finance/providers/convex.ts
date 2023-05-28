@@ -1,12 +1,12 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 import type { ProviderBalancesParams } from './interface'
@@ -93,28 +93,40 @@ export const convexProvider = async (ctx: BaseContext, pools: Contract[]): Promi
 
   const curveLpTokensRes = await multicall({
     ctx,
-    calls: poolIdsRes.map((poolId) => ({
-      target: convexBooster.address,
-      params: [isSuccess(poolId) ? poolId.output : null],
-    })),
+    calls: mapSuccess(
+      poolIdsRes,
+      (poolId) =>
+        ({
+          target: convexBooster.address,
+          params: [poolId.output],
+        } as const),
+    ),
     abi: abi.poolInfo,
   })
 
   const curvePoolsRes = await multicall({
     ctx,
-    calls: curveLpTokensRes.map((lpToken) => ({
-      target: metaRegistry.address,
-      params: [isSuccess(lpToken) ? lpToken.output.lptoken : null],
-    })),
+    calls: mapSuccess(
+      curveLpTokensRes,
+      (lpToken) =>
+        ({
+          target: metaRegistry.address,
+          params: [lpToken.output[0]],
+        } as const),
+    ),
     abi: abi.get_pool_from_lp_token,
   })
 
   const underlyingsRes = await multicall({
     ctx,
-    calls: curvePoolsRes.map((poolAddress) => ({
-      target: metaRegistry.address,
-      params: [isSuccess(poolAddress) ? poolAddress.output : null],
-    })),
+    calls: mapSuccess(
+      curvePoolsRes,
+      (poolAddress) =>
+        ({
+          target: metaRegistry.address,
+          params: [poolAddress.output],
+        } as const),
+    ),
     abi: abi.get_underlying_coins,
   })
 
@@ -124,17 +136,22 @@ export const convexProvider = async (ctx: BaseContext, pools: Contract[]): Promi
     const curvePoolRes = curvePoolsRes[idx]
     const underlyingRes = underlyingsRes[idx]
 
+    if (!poolIdRes.success || !curveLpToken.success || !curvePoolRes.success || !underlyingRes.success) {
+      return
+    }
+    const [lpToken] = curveLpToken.output
+
     res.push({
       ...pool,
       poolId: poolIdRes.output,
-      curveLpToken: curveLpToken.output.lptoken,
+      curveLpToken: lpToken,
       curvePool: curvePoolRes.output,
       underlyings: underlyingRes.output
-        .map((address: string) => address.toLowerCase())
+        .map((address) => address.toLowerCase())
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address: string) => address !== ADDRESS_ZERO)
+        .filter((address) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
+        .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
     })
   })
 
@@ -152,8 +169,13 @@ export const convexBalancesProvider = async (
     }
   }
 
-  const underlyingsCalls: Call[] = pools.map((pool) => ({ target: metaRegistry.address, params: [pool.curvePool!] }))
-  const suppliesCalls: Call[] = pools.map((pool: Contract) => ({ target: pool.curveLpToken }))
+  const underlyingsCalls: Call<typeof abi.get_underlying_balances>[] = pools.map((pool) => ({
+    target: metaRegistry.address,
+    params: [pool.curvePool!],
+  }))
+  const suppliesCalls: Call<typeof erc20Abi.totalSupply>[] = pools.map((pool: Contract) => ({
+    target: pool.curveLpToken,
+  }))
 
   const [underlyingsBalancesRes, totalSuppliesRes] = await Promise.all([
     multicall({ ctx, calls: underlyingsCalls, abi: abi.get_underlying_balances }),
@@ -166,12 +188,7 @@ export const convexBalancesProvider = async (
     const underlyingsBalanceRes = underlyingsBalancesRes[poolIdx]
     const totalSupplyRes = totalSuppliesRes[poolIdx]
 
-    if (
-      !underlyings ||
-      !isSuccess(underlyingsBalanceRes) ||
-      !isSuccess(totalSupplyRes) ||
-      isZero(totalSupplyRes.output)
-    ) {
+    if (!underlyings || !underlyingsBalanceRes.success || !totalSupplyRes.success || totalSupplyRes.output === 0n) {
       continue
     }
 

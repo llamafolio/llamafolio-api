@@ -1,8 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { isZero } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 export async function getADXStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
@@ -11,22 +9,25 @@ export async function getADXStakeBalances(ctx: BalancesContext, stakers: Contrac
   const [userBalancesOfsRes, assetsBalanceOfsRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] })),
+      calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: stakers.map((staker) => ({
-        target: (staker.underlyings?.[0] as Contract).address,
-        params: [staker.address],
-      })),
+      calls: stakers.map(
+        (staker) =>
+          ({
+            target: (staker.underlyings?.[0] as Contract).address,
+            params: [staker.address],
+          } as const),
+      ),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
       calls: stakers.map((staker) => ({ target: staker.address })),
       abi: erc20Abi.totalSupply,
-    }),
+    } as const),
   ])
 
   for (let stakerIdx = 0; stakerIdx < stakers.length; stakerIdx++) {
@@ -37,10 +38,10 @@ export async function getADXStakeBalances(ctx: BalancesContext, stakers: Contrac
     const totalSupplyRes = totalSuppliesRes[stakerIdx]
 
     if (
-      !isSuccess(userBalanceOfRes) ||
-      !isSuccess(assetBalanceOfRes) ||
-      !isSuccess(totalSupplyRes) ||
-      isZero(totalSupplyRes.output)
+      !userBalanceOfRes.success ||
+      !assetBalanceOfRes.success ||
+      !totalSupplyRes.success ||
+      totalSupplyRes.output === 0n
     ) {
       continue
     }

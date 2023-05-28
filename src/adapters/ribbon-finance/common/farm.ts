@@ -1,8 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_TEN } from '@lib/math'
+import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -13,20 +13,17 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getFarmBalances(ctx: BalancesContext, gauges: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const gaugeCalls = gauges.map((gauge) => ({
+  const gaugeCalls: Call<typeof erc20Abi.balanceOf>[] = gauges.map((gauge) => ({
     target: gauge.address,
     params: [ctx.address],
   }))
 
-  const lpCalls = gauges.map((gauge) => ({
-    target: gauge.lpToken,
-    params: [],
-  }))
+  const lpCalls: Call<typeof abi.pricePerShare>[] = gauges.map((gauge) => ({ target: gauge.lpToken }))
 
   const [balancesOfRes, pricePerSharesRes] = await Promise.all([
     multicall({ ctx, calls: gaugeCalls, abi: erc20Abi.balanceOf }),
@@ -39,7 +36,7 @@ export async function getFarmBalances(ctx: BalancesContext, gauges: Contract[]):
     const balanceOf = balancesOfRes[gaugeIdx]
     const underlying = gauge.underlyings?.[0] as Contract
 
-    if (!isSuccess(pricePerShare) || !isSuccess(balanceOf)) {
+    if (!pricePerShare.success || !balanceOf.success) {
       continue
     }
 

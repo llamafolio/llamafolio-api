@@ -3,7 +3,7 @@ import { getCegaBalances } from '@adapters/cega/ethereum/farm'
 import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-const vaultAddresses: string[] = [
+const vaultAddresses: `0x${string}`[] = [
   '0x80ec1c0da9bfbb8229a1332d40615c5ba2abbea8',
   '0xcf81b51aecf6d88df12ed492b7b7f95bbc24b8af',
   '0xab8631417271dbb928169f060880e289877ff158',

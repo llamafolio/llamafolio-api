@@ -5,10 +5,10 @@ import { BigNumber } from 'ethers'
 
 interface stakeAndIndexParams {
   stakeId: number
-  stake: string
-  share: string
-  stakedDays: string
-  lockedDays: string
+  stake: bigint
+  share: bigint
+  stakedDays: number
+  lockedDays: number
 }
 
 interface decodedDataParams {

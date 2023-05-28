@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -46,19 +45,9 @@ const wMEMO: Contract = {
 }
 
 export async function getTIMEStakeBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const balanceOf = await call({
-    ctx,
-    target: contract.address,
-    params: [ctx.address],
-    abi: erc20Abi.balanceOf,
-  })
+  const balanceOf = await call({ ctx, target: contract.address, params: [ctx.address], abi: erc20Abi.balanceOf })
 
-  const formattedBalanceOfRes = await call({
-    ctx,
-    target: contract.address,
-    params: [balanceOf],
-    abi: abi.wMEMOToMEMO,
-  })
+  const formattedBalanceOfRes = await call({ ctx, target: contract.address, params: [balanceOf], abi: abi.wMEMOToMEMO })
 
   const formattedBalanceOf = BigNumber.from(formattedBalanceOfRes)
 
@@ -99,14 +88,9 @@ export async function getwMEMOStakeBalances(ctx: BalancesContext, contract: Cont
   }
 
   if (rewards) {
-    const calls = rewards.map((token: any) => ({
-      target: contract.address,
-      params: [ctx.address, token.address],
-    }))
-
     const rewardsBalanceOfRes = await multicall({
       ctx,
-      calls,
+      calls: rewards.map((token: any) => ({ target: contract.address, params: [ctx.address, token.address] } as const)),
       abi: abi.earned,
     })
 
@@ -115,7 +99,7 @@ export async function getwMEMOStakeBalances(ctx: BalancesContext, contract: Cont
       const rewardBalanceOfRes = rewardsBalanceOfRes[balanceIdx]
       const reward = rewards[rewardsIdx]
 
-      if (!isSuccess(rewardBalanceOfRes)) {
+      if (!rewardBalanceOfRes.success) {
         continue
       }
 

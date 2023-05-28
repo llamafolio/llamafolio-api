@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -33,7 +33,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const TRU: Token = {
   chain: 'ethereum',
@@ -45,7 +45,7 @@ const TRU: Token = {
 export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], multifarm: Contract) {
   const balances: Balance[] = []
 
-  const calls = pools.map((pool) => ({
+  const calls: Call<typeof abi.staked>[] = pools.map((pool) => ({
     target: multifarm.address,
     params: [pool.address, ctx.address],
   }))
@@ -61,7 +61,7 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], m
     const underlying = pool.underlyings?.[0]
     const claimable = claimables[i]
 
-    if (isSuccess(staked)) {
+    if (staked.success) {
       const amount = BigNumber.from(staked.output).mul(pool.poolValue).div(pool.totalSupply)
 
       const balance: Balance = {
@@ -72,7 +72,7 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], m
         category: 'farm',
       }
 
-      if (isSuccess(claimable)) {
+      if (claimable.success) {
         balance.rewards?.push({ ...TRU, amount: BigNumber.from(claimable.output) })
       }
 

@@ -1,7 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   getSets: {
@@ -33,7 +32,7 @@ export async function getSetProtocolPools(ctx: BaseContext, controller: Contract
 
   for (let idx = 0; idx < setsContractsRes.length; idx++) {
     const underlyingsRes = setsUnderlyingsRes[idx]
-    if (!isSuccess(underlyingsRes)) {
+    if (!underlyingsRes.success) {
       continue
     }
 

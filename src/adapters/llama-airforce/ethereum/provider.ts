@@ -1,8 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 import type { LlamaBalancesParams } from './balance'
@@ -36,19 +36,19 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export const convexProvider = async (ctx: BalancesContext, pools: LlamaBalancesParams[]): Promise<Balance[]> => {
   const fmtBalancesOfsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
     abi: abi.balanceOfUnderlying,
   })
 
   return pools
     .map((pool, poolIdx) => {
       const fmtBalancesOfRes = fmtBalancesOfsRes[poolIdx]
-      if (!isSuccess(fmtBalancesOfRes)) {
+      if (!fmtBalancesOfRes.success) {
         return null
       }
 
@@ -60,14 +60,14 @@ export const convexProvider = async (ctx: BalancesContext, pools: LlamaBalancesP
 export const llamaProvider = async (ctx: BalancesContext, pools: LlamaBalancesParams[]): Promise<Balance[]> => {
   const fmtBalancesOfsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [pool.amount.toString()] })),
+    calls: pools.map((pool) => ({ target: pool.address, params: [BigInt(pool.amount.toString())] } as const)),
     abi: abi.convertToAssets,
   })
 
   return pools
     .map((pool, poolIdx) => {
       const fmtBalancesOfRes = fmtBalancesOfsRes[poolIdx]
-      if (!isSuccess(fmtBalancesOfRes)) {
+      if (!fmtBalancesOfRes.success) {
         return null
       }
 
@@ -82,17 +82,19 @@ export const curveProvider = async (ctx: BalancesContext, pools: LlamaBalancesPa
   const [fmtBalancesOfsRes, totalUnderlyingsSupplies, underlyingsBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
       abi: abi.balanceOfUnderlying,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.lpToken })),
+      calls: pools.map((pool) => (pool.lpToken ? { target: pool.lpToken } : null)),
       abi: erc20Abi.totalSupply,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.pool!] })),
+      calls: pools.map((pool) =>
+        pool.pool ? ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.pool] } as const) : null,
+      ),
       abi: abi.get_underlying_balances,
     }),
   ])
@@ -106,10 +108,10 @@ export const curveProvider = async (ctx: BalancesContext, pools: LlamaBalancesPa
 
     if (
       !underlyings ||
-      !isSuccess(fmtBalancesOfRes) ||
-      !isSuccess(underlyingsBalanceRes) ||
-      !isSuccess(totalUnderlyingsSupply) ||
-      isZero(totalUnderlyingsSupply.output)
+      !fmtBalancesOfRes.success ||
+      !underlyingsBalanceRes.success ||
+      !totalUnderlyingsSupply.success ||
+      totalUnderlyingsSupply.output === 0n
     ) {
       continue
     }

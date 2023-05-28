@@ -5,7 +5,6 @@ import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { BigNumber } from 'ethers'
 
@@ -73,7 +72,7 @@ export async function getZyberFarmBalances(
     lpTokenAbi,
   )
 
-  const calls: Call[] = pairBalances.map((pair) => ({
+  const calls: Call<typeof abi.pendingTokens>[] = pairBalances.map((pair) => ({
     target: masterchef.address,
     params: [(pair as Contract).pid, ctx.address],
   }))
@@ -82,8 +81,9 @@ export async function getZyberFarmBalances(
 
   pairBalances.forEach((pair, idx) => {
     const pendingRewardRes = pendingRewardsRes[idx]
-    if (isSuccess(pendingRewardRes)) {
-      pair.rewards = [{ ...zyber, amount: BigNumber.from(pendingRewardRes.output.amounts[0]) }]
+    if (pendingRewardRes.success) {
+      const [_addresses, _symbols, _decimals, amounts] = pendingRewardRes.output
+      pair.rewards = [{ ...zyber, amount: BigNumber.from(amounts[0]) }]
     }
   })
 

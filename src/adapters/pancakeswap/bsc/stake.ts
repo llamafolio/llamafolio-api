@@ -67,7 +67,10 @@ const cake: Token = {
 export async function getStakersBalances(ctx: BalancesContext, stakers: Contract[]) {
   const balances: Balance[] = []
 
-  const calls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.userInfo>[] = stakers.map((staker) => ({
+    target: staker.address,
+    params: [ctx.address],
+  }))
 
   const [userBalanceOfRes, pendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
@@ -76,7 +79,7 @@ export async function getStakersBalances(ctx: BalancesContext, stakers: Contract
 
   for (let stakerIdx = 0; stakerIdx < stakers.length; stakerIdx++) {
     const staker = stakers[stakerIdx]
-    const amount = BigNumber.from(userBalanceOfRes[stakerIdx].output?.amount || '0')
+    const amount = BigNumber.from(userBalanceOfRes[stakerIdx].output?.[0] || '0')
     const rewardsAmount = BigNumber.from(pendingRewardsRes[stakerIdx].output || '0')
 
     balances.push({

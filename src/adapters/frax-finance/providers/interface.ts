@@ -2,11 +2,11 @@ import type { Balance } from '@lib/adapter'
 import type { BigNumber } from 'ethers'
 
 export type ProviderBalancesParams = Balance & {
-  stakeAddress?: string
+  stakeAddress?: `0x${string}`
   amount: BigNumber
   totalSupply: BigNumber
-  lpToken: string
+  lpToken: `0x{string}`
   provider: string
-  curvePool?: string
-  uniPoolAddress?: string
+  curvePool?: `0x${string}`
+  uniPoolAddress?: `0x${string}`
 }

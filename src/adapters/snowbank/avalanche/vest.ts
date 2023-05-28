@@ -2,7 +2,6 @@ import type { BalancesContext, Contract, VestBalance } from '@lib/adapter'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -18,7 +17,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const SB: Token = {
   chain: 'avalanche',
@@ -33,7 +32,7 @@ export async function getSBVesterBalances(ctx: BalancesContext, vesters: Contrac
 
   const bondInfosRes = await multicall({
     ctx,
-    calls: vesters.map((vester) => ({ target: vester.address, params: [ctx.address] })),
+    calls: vesters.map((vester) => ({ target: vester.address, params: [ctx.address] } as const)),
     abi: abi.bondInfo,
   })
 
@@ -41,16 +40,18 @@ export async function getSBVesterBalances(ctx: BalancesContext, vesters: Contrac
     const vester = vesters[vesterIdx]
     const bondInfoRes = bondInfosRes[vesterIdx]
 
-    if (!isSuccess(bondInfoRes)) {
+    if (!bondInfoRes.success) {
       continue
     }
 
-    const unlockAt = bondInfoRes.output.lastTime
+    const [payout, _pricePaid, lastTime, _vesting] = bondInfoRes.output
+
+    const unlockAt = Number(lastTime)
 
     balances.push({
       ...vester,
-      amount: BigNumber.from(bondInfoRes.output.payout),
-      claimable: now > unlockAt ? BigNumber.from(bondInfoRes.output.payout) : BN_ZERO,
+      amount: BigNumber.from(payout),
+      claimable: now > unlockAt ? BigNumber.from(payout) : BN_ZERO,
       unlockAt,
       decimals: 9,
       underlyings: [SB],

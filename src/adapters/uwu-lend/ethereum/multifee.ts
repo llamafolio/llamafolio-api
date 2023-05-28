@@ -3,10 +3,8 @@ import { keyBy } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
-import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -137,14 +135,16 @@ export async function getUWUMultiFeeDistributionBalances(
 
   const tokenByAddress = keyBy(tokens, 'address', { lowercase: true })
 
-  const calls: Call[] = rewards.map((token) => ({ target: contract.address, params: token.address }))
-
   const [claimableRewards, lockedBalances, earnedBalances, totalSupplyRes, rewardRatesRes] = await Promise.all([
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.claimableRewards }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.lockedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.earnedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, abi: erc20Abi.totalSupply }),
-    multicall({ ctx, calls, abi: abi.rewardData }),
+    multicall({
+      ctx,
+      calls: rewards.map((token) => ({ target: contract.address, params: [token.address] } as const)),
+      abi: abi.rewardData,
+    }),
   ])
   const [_lockedTotal, unlockable, _locked, lockData] = lockedBalances
   const [_earnedTotal, earningsData] = earnedBalances
@@ -191,12 +191,14 @@ export async function getUWUMultiFeeDistributionBalances(
 
   for (let claimableIdx = 0; claimableIdx < rewards.length; claimableIdx++) {
     const rewardData = claimableRewards[claimableIdx]
-    const rewardRate = rewardRatesRes[claimableIdx]
+    const rewardRateRes = rewardRatesRes[claimableIdx]
     const token = tokenByAddress[rewardData.token.toLowerCase()]
 
-    if (!token || !rewardData || !isSuccess(rewardRate)) {
+    if (!token || !rewardData || !rewardRateRes.success) {
       continue
     }
+
+    const [_periodFinish, rewardRate] = rewardRateRes.output
 
     // let apy =  (604800 * (rData.rewardRate / decimal) * assetPrice * 365 / 7  /(geistPrice * totalSupply /1e18));
 
@@ -209,7 +211,7 @@ export async function getUWUMultiFeeDistributionBalances(
       symbol: token.symbol,
       category: 'reward',
       rates: {
-        rate: rewardRate.output.rewardRate,
+        rate: rewardRate,
         period: 604800,
         token: rewardData.token,
         decimals: token.decimals,

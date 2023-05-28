@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { range } from '@lib/array'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -67,7 +66,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 type BalanceWithExtraProps = Balance & {
   collateralFactor: string
@@ -85,8 +84,10 @@ export async function getAssetsContracts(ctx: BaseContext, compounders: Contract
   const assetsInfoRes = await multicall({
     ctx,
     calls: numberOfAssets.flatMap((numberOfAsset) =>
-      isSuccess(numberOfAsset)
-        ? range(0, numberOfAsset.output).map((_, idx) => ({ target: numberOfAsset.input.target, params: [idx] }))
+      numberOfAsset.success
+        ? range(0, numberOfAsset.output).map(
+            (_, idx) => ({ target: numberOfAsset.input.target, params: [idx] } as const),
+          )
         : null,
     ),
     abi: abi.getAssetInfo,
@@ -96,7 +97,7 @@ export async function getAssetsContracts(ctx: BaseContext, compounders: Contract
     for (let i = 0; i < assetsInfoRes.length; i++) {
       const assetInfoRes = assetsInfoRes[i]
 
-      if (!isSuccess(assetInfoRes)) {
+      if (!assetInfoRes.success) {
         continue
       }
 
@@ -122,19 +123,25 @@ export async function getLendBorrowBalances(
   const [userCollateralBalancesRes, userBorrowBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: assets.map((asset) => ({
-        target: asset.compounder,
-        params: [ctx.address, asset.address],
-      })),
+      calls: assets.map(
+        (asset) =>
+          ({
+            target: asset.compounder,
+            params: [ctx.address, asset.address],
+          } as const),
+      ),
       abi: abi.userCollateral,
     }),
 
     multicall({
       ctx,
-      calls: compounders.map((contract) => ({
-        target: contract.address,
-        params: [ctx.address],
-      })),
+      calls: compounders.map(
+        (contract) =>
+          ({
+            target: contract.address,
+            params: [ctx.address],
+          } as const),
+      ),
       abi: abi.borrowBalanceOf,
     }),
   ])
@@ -143,7 +150,7 @@ export async function getLendBorrowBalances(
     const asset = assets[supplyIdx]
     const userCollateralBalanceRes = userCollateralBalancesRes[supplyIdx]
 
-    if (!isSuccess(userCollateralBalanceRes)) {
+    if (!userCollateralBalanceRes.success) {
       continue
     }
 
@@ -152,7 +159,7 @@ export async function getLendBorrowBalances(
       decimals: asset.decimals,
       symbol: asset.symbol,
       address: asset.address,
-      amount: BigNumber.from(userCollateralBalanceRes.output.balance),
+      amount: BigNumber.from(userCollateralBalanceRes.output[0]),
       collateralFactor: asset.collateralFactor,
       category: 'lend',
     }
@@ -165,7 +172,7 @@ export async function getLendBorrowBalances(
     const underlying = compounder.underlyings?.[0] as Contract
     const userBorrowBalanceRes = userBorrowBalancesRes[borrowIdx]
 
-    if (!underlying || !isSuccess(userBorrowBalanceRes)) {
+    if (!underlying || !userBorrowBalanceRes.success) {
       continue
     }
 

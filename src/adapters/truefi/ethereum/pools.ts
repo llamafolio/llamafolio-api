@@ -1,6 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -25,9 +24,9 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
-const pools = [
+const pools: `0x${string}`[] = [
   '0x1ed460d149d48fa7d91703bf4890f97220c09437', // BUSD
   '0xa991356d261fbaf194463af6df8f0464f8f1c742', // USDC
   '0x6002b1dcb26e7b1aa797a17551c6f487923299d7', // USDT
@@ -38,17 +37,12 @@ const pools = [
 export async function getPoolsContracts(ctx: BaseContext) {
   const contracts: Contract[] = []
 
-  const calls = pools.map((pool) => ({
-    target: pool,
-    params: [],
-  }))
-
-  const tokensRes = await multicall({ ctx, calls, abi: abi.token })
+  const tokensRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool })), abi: abi.token })
 
   for (let i = 0; i < pools.length; i++) {
     const tokenRes = tokensRes[i]
 
-    if (!isSuccess(tokenRes)) {
+    if (!tokenRes.success) {
       continue
     }
 
@@ -70,10 +64,7 @@ export interface PoolSupply extends Contract {
 export async function getPoolsSupplies(ctx: BaseContext, pools: Contract[]) {
   const poolsSupplies: PoolSupply[] = []
 
-  const calls = pools.map((pool) => ({
-    target: pool.address,
-    params: [],
-  }))
+  const calls = pools.map((pool) => ({ target: pool.address }))
 
   const [poolValues, totalSupplies] = await Promise.all([
     multicall({ ctx, calls, abi: abi.poolValue }),
@@ -85,7 +76,7 @@ export async function getPoolsSupplies(ctx: BaseContext, pools: Contract[]) {
     const totalSupply = totalSupplies[i]
     const pool = pools[i]
 
-    if (!isSuccess(poolValue) || !isSuccess(totalSupply)) {
+    if (!poolValue.success || !totalSupply.success) {
       continue
     }
 

@@ -1,9 +1,26 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi } from '@lib/erc20'
+import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
+
+const abi = {
+  firstPeriodStartTimestamp: {
+    inputs: [],
+    name: 'firstPeriodStartTimestamp',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  periodDuration: {
+    inputs: [],
+    name: 'periodDuration',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+} as const
 
 const TEMPLE: Contract = {
   name: 'Temple',
@@ -25,7 +42,7 @@ export async function getStakeBalances(
     ctx,
     target: contract.address,
     params: [ctx.address],
-    abi: abi.balanceOf,
+    abi: erc20Abi.balanceOf,
   })
 
   const formattedBalanceRes = await call({
@@ -59,44 +76,16 @@ export async function getStakeBalances(
 }
 
 export async function getLockedBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
-  const calls = contracts.map((contract) => ({
-    target: contract.address,
-    params: [],
-  }))
+  const calls = contracts.map((contract) => ({ target: contract.address }))
 
   const [balancesLockedRes, periodStartTimestampRes, periodDurationRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({
-        target: contract.address,
-        params: [ctx.address],
-      })),
-      abi: abi.balanceOf,
+      calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] } as const)),
+      abi: erc20Abi.balanceOf,
     }),
-
-    multicall({
-      ctx,
-      calls,
-      abi: {
-        inputs: [],
-        name: 'firstPeriodStartTimestamp',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    multicall({
-      ctx,
-      calls,
-      abi: {
-        inputs: [],
-        name: 'periodDuration',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+    multicall({ ctx, calls, abi: abi.firstPeriodStartTimestamp }),
+    multicall({ ctx, calls, abi: abi.periodDuration }),
   ])
 
   return contracts
@@ -117,11 +106,12 @@ export async function getLockedBalances(ctx: BalancesContext, contracts: Contrac
         category: 'lock',
       }
 
+      const periodStartTimestamp = periodStartTimestampRes[i]
+      const periodDuration = periodDurationRes[i]
+
       // end lock
-      if (periodStartTimestampRes[i].success && periodDurationRes[i].success) {
-        balance.lock = {
-          end: parseInt(periodStartTimestampRes[i].output) + parseInt(periodDurationRes[i].output),
-        }
+      if (periodStartTimestamp.success && periodDuration.success) {
+        balance.unlockAt = Number(periodDuration.output + periodDuration.output)
       }
 
       return balance

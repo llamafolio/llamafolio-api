@@ -83,8 +83,13 @@ export async function getUniqueUnderlyingsMasterchefBalances(ctx: BalancesContex
 export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]) {
   const balances: Balance[] = []
 
-  const balanceOfCalls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
-  const pendingRewardsCalls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [] }))
+  const balanceOfCalls: Call<typeof abi.userStakeInfo>[] = stakers.map((staker) => ({
+    target: staker.address,
+    params: [ctx.address],
+  }))
+  const pendingRewardsCalls: Call<typeof abi.getPricePerFullShare>[] = stakers.map((staker) => ({
+    target: staker.address,
+  }))
 
   const [balanceOfRes, getMultiplierRewards] = await Promise.all([
     multicall({ ctx, calls: balanceOfCalls, abi: abi.userStakeInfo }),
@@ -93,7 +98,7 @@ export async function getStakeBalances(ctx: BalancesContext, stakers: Contract[]
 
   for (let stakerIdx = 0; stakerIdx < stakers.length; stakerIdx++) {
     const staker = stakers[stakerIdx]
-    const amount = BigNumber.from(balanceOfRes[stakerIdx].output?.shares || 0)
+    const amount = BigNumber.from(balanceOfRes[stakerIdx].output?.[0] || 0)
     const multiplier = BigNumber.from(getMultiplierRewards[stakerIdx].output || 0)
 
     const autoCompoundBalances = amount.mul(multiplier).div(utils.parseEther('1.0'))

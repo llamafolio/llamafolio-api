@@ -11,7 +11,6 @@ import type { Category } from '@lib/category'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { BN_TEN, BN_ZERO } from '@lib/math'
-import type { Call, MultiCallOptions, MultiCallResult } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
@@ -58,11 +57,11 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
   return coinsBalances.concat(tokensBalances)
 }
 
-export async function multicallBalances(params: MultiCallOptions) {
+export async function multicallBalances(params: any) {
   const chain = params.ctx.chain
   const coinsCallsAddresses: string[] = []
-  const tokensCalls: Call[] = []
-  const res: MultiCallResult[] = []
+  const tokensCalls = []
+  const res = []
 
   for (const call of params.calls) {
     if (call.target === ADDRESS_ZERO) {
@@ -185,6 +184,7 @@ export async function resolveBalances<C extends GetContractsHandler>(
           const balances = await resolver(ctx, contracts[contractKey]!)
           return balances
         } catch (error) {
+          // Catch execution errors in adapters getBalances
           console.error(`[${ctx.adapterId}][${ctx.chain}] resolver ${contractKey} failed`, error)
           return null
         }

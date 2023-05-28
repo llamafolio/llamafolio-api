@@ -1,10 +1,10 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO, sumBN } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -141,7 +141,7 @@ export async function getMultiFeeDistributionContracts(
     ...stakingToken,
     address: multiFeeDistribution.address,
     token: stakingToken.address,
-    rewards: underlyingsTokensRes.filter(isSuccess).map((token) => token.output),
+    rewards: mapSuccessFilter(underlyingsTokensRes, (token) => token.output),
   }
 }
 
@@ -164,7 +164,7 @@ export async function getMultiFeeDistributionBalances(
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.lockedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.earnedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, abi: abi.rewardConverter }),
-    call({ ctx, target: contract.token as string, abi: erc20Abi.totalSupply }),
+    call({ ctx, target: contract.token!, abi: erc20Abi.totalSupply }),
     call({ ctx, target: contract.vault, params: [contract.poolId], abi: abi.getPoolTokens }),
   ])
   const [total, _unlockable, _locked, _lockedWithMultiplier, lockData] = lockedBalances

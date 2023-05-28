@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import { getERC20BalanceOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber, ethers } from 'ethers'
 
 const abi = {
@@ -125,16 +124,15 @@ export async function getLendingPoolContracts(ctx: BaseContext, lendingPool: Con
 
   const reservesDataRes = await multicall({
     ctx,
-    calls: reservesList.map((reserveTokenAddress) => ({
-      target: lendingPool.address,
-      params: [reserveTokenAddress],
-    })),
+    calls: reservesList.map(
+      (reserveTokenAddress) => ({ target: lendingPool.address, params: [reserveTokenAddress] } as const),
+    ),
     abi: abi.getReserveData,
   })
 
   for (let i = 0; i < reservesDataRes.length; i++) {
     const reserveDataRes = reservesDataRes[i]
-    if (!isSuccess(reserveDataRes)) {
+    if (!reserveDataRes.success) {
       continue
     }
 

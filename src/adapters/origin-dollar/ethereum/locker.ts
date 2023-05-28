@@ -1,10 +1,9 @@
 import type { BalancesContext, Contract, LockBalance } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
 import { BN_ZERO, sumBN } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -45,29 +44,31 @@ export async function getOriginDollarLockerBalances(ctx: BalancesContext, locker
     multicall({
       ctx,
       // There is no logic function to know in advance number of positions taken by users, as far i could checked, 10 seems to be the maximum positions length found
-      calls: range(0, 10).map((_, i) => ({ target: locker.address, params: [ctx.address, i] })),
+      calls: range(0, 10).map((_, i) => ({ target: locker.address, params: [ctx.address, BigInt(i)] } as const)),
       abi: abi.lockups,
     }),
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.previewRewards }),
   ])
 
-  const totalLocked = sumBN(lockupsRes.filter(isSuccess).map((lockup) => lockup.output.amount))
+  const totalLocked = sumBN(mapSuccessFilter(lockupsRes, (lockup) => BigNumber.from(lockup.output[0])))
 
   for (let lockUpIdx = 0; lockUpIdx < lockupsRes.length; lockUpIdx++) {
     const lockupRes = lockupsRes[lockUpIdx]
 
-    if (!isSuccess(lockupRes)) {
+    if (!lockupRes.success) {
       continue
     }
 
+    const [amount, end, _points] = lockupRes.output
+
     const now = Date.now() / 1000
-    const unlockAt = lockupRes.output.end
-    const rewardsAmount = totalLocked && BigNumber.from(rewardRes).mul(lockupRes.output.amount).div(totalLocked)
+    const unlockAt = Number(end)
+    const rewardsAmount = totalLocked && BigNumber.from(rewardRes).mul(amount).div(totalLocked)
 
     balances.push({
       ...locker,
-      amount: BigNumber.from(lockupRes.output.amount),
-      claimable: now > unlockAt ? BigNumber.from(lockupRes.output.amount) : BN_ZERO,
+      amount: BigNumber.from(amount),
+      claimable: now > unlockAt ? BigNumber.from(amount) : BN_ZERO,
       unlockAt,
       underlyings: [OGV],
       rewards: [{ ...OGV, amount: rewardsAmount }],

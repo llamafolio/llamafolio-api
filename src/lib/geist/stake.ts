@@ -1,12 +1,11 @@
 import type { Balance, BalancesContext, BaseContext, Contract, RewardBalance } from '@lib/adapter'
-import { keyBy } from '@lib/array'
+import { keyBy, mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO, sumBN } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -131,8 +130,8 @@ export async function getMultiFeeDistributionContracts(
     ...stakingToken,
     address: multiFeeDistribution.address,
     token: stakingToken.address,
-    underlyings: underlyingsTokensRes.filter(isSuccess).map((token) => token.output),
-    rewards: underlyingsTokensRes.filter(isSuccess).map((token) => token.input.target),
+    underlyings: mapSuccessFilter(underlyingsTokensRes, (token) => token.output),
+    rewards: mapSuccessFilter(underlyingsTokensRes, (token) => token.input.target),
   }
 }
 
@@ -161,7 +160,10 @@ export async function getMultiFeeDistributionBalances(
 
   const tokenByAddress = keyBy(tokens, 'address', { lowercase: true })
 
-  const calls: Call[] = rewards.map((token) => ({ target: contract.address, params: token.address }))
+  const calls: Call<typeof abi.rewardData>[] = rewards.map((token) => ({
+    target: contract.address,
+    params: [token.address],
+  }))
 
   const [claimableRewards, lockedBalances, earnedBalances, unlockableBalance, totalSupplyRes, rewardRatesRes] =
     await Promise.all([
@@ -241,13 +243,14 @@ export async function getMultiFeeDistributionBalances(
 
   for (let claimableIdx = 0; claimableIdx < rewards.length; claimableIdx++) {
     const rewardData = claimableRewards[claimableIdx]
-    const rewardRate = rewardRatesRes[claimableIdx]
+    const rewardRateRes = rewardRatesRes[claimableIdx]
     const token = tokenByAddress[rewardData.token.toLowerCase()]
 
-    if (!token || !rewardData || !isSuccess(rewardRate)) {
+    if (!token || !rewardData || !rewardRateRes.success) {
       continue
     }
 
+    const [_periodFinish, rewardRate] = rewardRateRes.output
     // let apy =  (604800 * (rData.rewardRate / decimal) * assetPrice * 365 / 7  /(geistPrice * totalSupply /1e18));
 
     const rewardBalance: RewardBalance = {
@@ -259,7 +262,7 @@ export async function getMultiFeeDistributionBalances(
       symbol: token.symbol,
       category: 'reward',
       rates: {
-        rate: rewardRate.output.rewardRate,
+        rate: rewardRate,
         period: 604800,
         token: rewardData.token,
         decimals: token.decimals,

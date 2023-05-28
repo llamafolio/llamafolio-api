@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -18,7 +17,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const USV: Token = {
   chain: 'polygon',
@@ -32,7 +31,7 @@ export async function getVestingBalances(ctx: BalancesContext, vesters: Contract
 
   const pendingPayoutBalancesRes = await multicall({
     ctx,
-    calls: vesters.map((vester) => ({ target: vester.address, params: [ctx.address] })),
+    calls: vesters.map((vester) => ({ target: vester.address, params: [ctx.address] } as const)),
     abi: abi.barterInfo,
   })
 
@@ -40,16 +39,20 @@ export async function getVestingBalances(ctx: BalancesContext, vesters: Contract
     const vester = vesters[vesterIdx]
     const pendingPayoutBalanceRes = pendingPayoutBalancesRes[vesterIdx]
     const provider = providers[ctx.chain]
-    const unlockAt = (await provider.getBlock(parseInt(pendingPayoutBalanceRes.output.lastBlock))).timestamp
 
-    if (!isSuccess(pendingPayoutBalanceRes)) {
+    if (!pendingPayoutBalanceRes.success) {
       continue
     }
+
+    const [payout, _vesting, lastBlock] = pendingPayoutBalanceRes.output
+
+    const unlockAt = Number((await provider.getBlock({ blockNumber: lastBlock })).timestamp)
+
     balances.push({
       ...vester,
       decimals: USV.decimals,
       symbol: USV.symbol,
-      amount: BigNumber.from(pendingPayoutBalanceRes.output.payout),
+      amount: BigNumber.from(payout),
       unlockAt,
       underlyings: [USV],
       rewards: undefined,

@@ -9,7 +9,7 @@ export interface BaseContext {
 }
 
 export interface BalancesContext extends BaseContext {
-  address: `0x${string}`
+  readonly address: `0x${string}`
 }
 
 export type ContractStandard = 'erc20' | 'erc721'
@@ -22,7 +22,7 @@ export interface BaseContract {
   name?: string
   displayName?: string
   chain: Chain
-  address: `0x${string}`
+  readonly address: `0x${string}`
   // if specified, used to retrieve token details: symbol / decimals
   token?: `0x${string}`
   symbol?: string
@@ -34,14 +34,14 @@ export interface BaseContract {
 }
 
 export interface RawContract extends BaseContract {
-  rewards?: string[]
-  underlyings?: string[]
+  rewards?: `0x${string}`[]
+  underlyings?: `0x${string}`[]
   [key: string | number]: any
 }
 
 export interface Contract extends BaseContract {
-  rewards?: BaseContract[] | string[]
-  underlyings?: BaseContract[] | string[]
+  rewards?: BaseContract[] | `0x${string}`[]
+  underlyings?: BaseContract[] | `0x${string}`[]
   [key: string | number]: any
 }
 

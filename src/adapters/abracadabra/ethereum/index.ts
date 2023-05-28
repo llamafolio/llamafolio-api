@@ -72,7 +72,7 @@ const abracadabraFarm: Contract = {
   address: '0xf43480afe9863da4acbd4419a47d9cc7d25a647f',
 }
 
-const cauldrons = [
+const cauldrons: `0x${string}`[] = [
   //  Active v2
   '0x7b7473a76D6ae86CE19f7352A1E89F6C9dc39020', // ALCX
   '0xc1879bf24917ebE531FbAA20b0D05Da027B592ce', // AGLD

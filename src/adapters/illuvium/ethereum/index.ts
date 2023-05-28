@@ -5,7 +5,7 @@ import { getILVBalances } from './balance'
 import { getILVContracts } from './contract'
 
 export interface IPools {
-  address: string
+  address: `0x${string}`
   provider: string
   staker: string
 }

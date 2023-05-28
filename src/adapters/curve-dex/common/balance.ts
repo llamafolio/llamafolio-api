@@ -1,9 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -81,7 +80,7 @@ const abi = {
     outputs: [{ name: '', type: 'uint256[8]' }],
     gas: 41626,
   },
-}
+} as const
 
 type PoolBalance = Balance & {
   pool?: string
@@ -97,7 +96,7 @@ export async function getPoolsBalances(
 ): Promise<Balance[]> {
   const poolBalances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof erc20Abi.balanceOf>[] = []
   for (const pool of pools) {
     calls.push({ target: pool.address, params: [ctx.address] })
   }
@@ -106,10 +105,10 @@ export async function getPoolsBalances(
 
   let poolIdx = 0
   for (let balanceIdx = 0; balanceIdx < pools.length; balanceIdx++) {
-    const pool = pools[poolIdx]
+    const pool = pools[poolIdx] as Balance
     const poolBalanceOfRes = poolsBalancesOfRes[balanceIdx]
 
-    if (!isSuccess(poolBalanceOfRes)) {
+    if (!poolBalanceOfRes.success) {
       poolIdx++
       continue
     }
@@ -117,8 +116,8 @@ export async function getPoolsBalances(
     poolBalances.push({
       ...pool,
       amount: BigNumber.from(poolBalanceOfRes.output),
-      underlyings: (pool as Balance).underlyings,
-      rewards: (pool as Balance).rewards,
+      underlyings: pool.underlyings,
+      rewards: pool.rewards,
     })
 
     poolIdx++
@@ -138,14 +137,14 @@ export const getUnderlyingsPoolsBalances = async (
 ): Promise<Balance[]> => {
   const underlyingsBalancesInPools: Balance[] = []
 
-  const calls: Call[] = []
-  const suppliesCalls: Call[] = []
+  const calls: Call<any>[] = []
+  const suppliesCalls: Call<typeof erc20Abi.totalSupply>[] = []
   let optionAbiBalances = {}
   let optionAbiDecimals = {}
 
   for (const pool of pools as Contract[]) {
     calls.push({ target: registry ? registry.address : pool.registry, params: [pool.pool] })
-    suppliesCalls.push({ target: pool.lpToken, params: [] })
+    suppliesCalls.push({ target: pool.lpToken })
 
     if (underlyingsAbi !== true) {
       optionAbiBalances = abi.get_balances
@@ -171,7 +170,7 @@ export const getUnderlyingsPoolsBalances = async (
 
     const totalSupplyRes = totalSuppliesRes[poolIdx]
 
-    if (!isSuccess(totalSupplyRes) || isZero(totalSupplyRes.output)) {
+    if (!totalSupplyRes.success || totalSupplyRes.output === 0n) {
       // next pool
       balanceOfIdx += underlyings.length
       continue
@@ -192,13 +191,13 @@ export const getUnderlyingsPoolsBalances = async (
       const underlyingDecimalsRes = underlyingsDecimalsRes[balanceOfIdx]
 
       const underlyingsBalance =
-        isSuccess(underlyingBalanceOfRes) && underlyingBalanceOfRes.output[underlyingIdx] != undefined
+        underlyingBalanceOfRes.success && underlyingBalanceOfRes.output[underlyingIdx] != undefined
           ? BigNumber.from(underlyingBalanceOfRes.output[underlyingIdx])
           : BN_ZERO
 
       const underlyingsDecimals =
-        isSuccess(underlyingDecimalsRes) && underlyingDecimalsRes.output[underlyingIdx] != undefined
-          ? underlyingDecimalsRes.output[underlyingIdx]
+        underlyingDecimalsRes.success && underlyingDecimalsRes.output[underlyingIdx] != undefined
+          ? Number(underlyingDecimalsRes.output[underlyingIdx])
           : 18
 
       poolBalance.underlyings?.push({
@@ -226,7 +225,7 @@ export async function getGaugesBalances(
 
   const gaugesBalancesRes = await getPoolsBalances(ctx, gauges, registry, underlyingsAbi)
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.claimable_reward>[] = []
   for (const gaugesBalance of gaugesBalancesRes) {
     gaugesBalance.category = 'farm'
     calls.push({ target: gaugesBalance.address, params: [ctx.address] })
@@ -234,13 +233,13 @@ export async function getGaugesBalances(
 
   const claimableRewards = await multicall({ ctx, calls, abi: abi.claimable_reward })
 
-  const extraRewardsCalls: Call[] = []
+  const extraRewardsCalls: Call<typeof abi.claimable_extra_reward>[] = []
   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
     const gaugeBalance = gaugesBalancesRes[gaugeIdx]
     const rewards = gaugeBalance.rewards as Contract[]
     const claimableReward = claimableRewards[gaugeIdx]
 
-    if (!rewards || !isSuccess(claimableReward)) {
+    if (!rewards || !claimableReward.success) {
       continue
     }
 
@@ -265,7 +264,7 @@ export async function getGaugesBalances(
     const rewards = nonUniqueRewards[idx].rewards
     const extraRewardRes = extraRewardsRes[idx]
 
-    if (!rewards || !isSuccess(extraRewardRes)) {
+    if (!rewards || !extraRewardRes.success) {
       continue
     }
 

@@ -1,9 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import { BN_ZERO, isZero } from '@lib/math'
+import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -54,11 +53,14 @@ const abi = {
     stateMutability: 'nonpayable',
     type: 'function',
   },
-}
+} as const
 
 export async function getConvexAltChainsBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const poolBalances: Balance[] = []
-  const calls: Call[] = pools.map((pool) => ({ target: pool.crvRewards, params: [ctx.address] }))
+  const calls: Call<typeof erc20Abi.balanceOf>[] = pools.map((pool) => ({
+    target: pool.crvRewards,
+    params: [ctx.address],
+  }))
 
   const [poolBalancesOfRes, pendingRewardsOfRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
@@ -72,11 +74,11 @@ export async function getConvexAltChainsBalances(ctx: BalancesContext, pools: Co
     const underlyings = pool.underlyings as Contract[]
     const rewards = pool.rewards as Balance[]
 
-    if (!underlyings || !rewards || !isSuccess(pendingRewardOfRes) || !isSuccess(poolBalanceOfRes)) {
+    if (!underlyings || !rewards || !pendingRewardOfRes.success || !poolBalanceOfRes.success) {
       continue
     }
 
-    const fmtRewards = rewards.map((reward: Contract, rewardIdx: number) => ({
+    const fmtRewards = rewards.map((reward, rewardIdx) => ({
       ...reward,
       amount: BigNumber.from(pendingRewardOfRes.output[rewardIdx].amount),
     }))
@@ -96,8 +98,8 @@ export async function getConvexAltChainsBalances(ctx: BalancesContext, pools: Co
 const getConvexUnderlyingsBalances = async (ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> => {
   const balances: Balance[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: pool.registry, params: [pool.pool] }))
-  const suppliesCalls: Call[] = pools.map((pool) => ({ target: pool.lpToken }))
+  const calls: Call<typeof abi.get_balances>[] = pools.map((pool) => ({ target: pool.registry, params: [pool.pool] }))
+  const suppliesCalls: Call<typeof erc20Abi.totalSupply>[] = pools.map((pool) => ({ target: pool.lpToken }))
 
   const [totalSuppliesRes, balanceOfsRes, underlyingsBalancesRes, decimalsRes, underlyingsDecimalsRes] =
     await Promise.all([
@@ -112,10 +114,10 @@ const getConvexUnderlyingsBalances = async (ctx: BalancesContext, pools: Contrac
     const pool = pools[poolIdx]
     const underlyings = pool.underlyings as Contract[]
     const totalSupplyRes = totalSuppliesRes[poolIdx]
-    const uDecimalsRes = isSuccess(decimalsRes[poolIdx]) ? decimalsRes[poolIdx] : underlyingsDecimalsRes[poolIdx]
-    const uBalancesRes = isSuccess(balanceOfsRes[poolIdx]) ? balanceOfsRes[poolIdx] : underlyingsBalancesRes[poolIdx]
+    const uDecimalsRes = decimalsRes[poolIdx].success ? decimalsRes[poolIdx] : underlyingsDecimalsRes[poolIdx]
+    const uBalancesRes = balanceOfsRes[poolIdx].success ? balanceOfsRes[poolIdx] : underlyingsBalancesRes[poolIdx]
 
-    if (!uDecimalsRes || !uBalancesRes || !isSuccess(totalSupplyRes) || isZero(totalSupplyRes.output)) {
+    if (!uDecimalsRes.success || !totalSupplyRes.success || !uBalancesRes.success || totalSupplyRes.output === 0n) {
       continue
     }
 

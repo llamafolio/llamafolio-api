@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -52,23 +51,26 @@ export async function getAgilityLockerBalances(ctx: BalancesContext, locker: Con
 
   const getUserRedeemsRes = await multicall({
     ctx,
-    calls: range(0, Number(userRedeemsLengthsRes)).map((_, idx) => ({
-      target: locker.address,
-      params: [ctx.address, idx],
-    })),
+    calls: range(0, Number(userRedeemsLengthsRes)).map(
+      (_, idx) =>
+        ({
+          target: locker.address,
+          params: [ctx.address, BigInt(idx)],
+        } as const),
+    ),
     abi: abi.getUserRedeem,
   })
 
   for (let resIdx = 0; resIdx < getUserRedeemsRes.length; resIdx++) {
     const getUserRedeemRes = getUserRedeemsRes[resIdx]
 
-    if (!isSuccess(getUserRedeemRes)) {
+    if (!getUserRedeemRes.success) {
       continue
     }
 
-    const { agiAmount, ESAGIAmount, endTime } = getUserRedeemRes.output
+    const [agiAmount, ESAGIAmount, endTime] = getUserRedeemRes.output
     const now = Date.now() / 1000
-    const unlockAt = endTime
+    const unlockAt = Number(endTime)
 
     balances.push({
       ...locker,

@@ -1,8 +1,7 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   allWhitelistedTokensLength: {
@@ -34,14 +33,13 @@ export async function getVaultTokens(ctx: BaseContext, vault: Contract) {
 
   const allWhitelistedTokensLength = Number(allWhitelistedTokensLengthRes)
 
-  const allWhitelistedTokensRes = await multicall<string, [number], string>({
+  const allWhitelistedTokensRes = await multicall({
     ctx,
-    calls: range(0, allWhitelistedTokensLength).map((idx) => ({
-      target: vault.address,
-      params: [idx],
-    })),
+    calls: range(0, allWhitelistedTokensLength).map(
+      (idx) => ({ target: vault.address, params: [BigInt(idx)] } as const),
+    ),
     abi: abi.allWhitelistedTokens,
   })
 
-  return allWhitelistedTokensRes.filter(isSuccess).map((res) => res.output)
+  return mapSuccessFilter(allWhitelistedTokensRes, (res) => res.output)
 }

@@ -1,8 +1,7 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   n_gauges: {
@@ -63,28 +62,24 @@ export async function getFarmLPContracts(ctx: BaseContext, gaugeController: Cont
 
   const gaugesAddressesRes = await multicall({
     ctx,
-    calls: range(0, Number(gaugesLength)).map((i) => ({
-      target: gaugeController.address,
-      params: [i],
-    })),
+    calls: range(0, Number(gaugesLength)).map(
+      (i) => ({ target: gaugeController.address, params: [BigInt(i)] } as const),
+    ),
     abi: abi.gauges,
   })
 
-  const gaugesAddresses = gaugesAddressesRes.filter(isSuccess).map((res) => res.output)
+  const gaugesAddresses = mapSuccessFilter(gaugesAddressesRes, (res) => res.output)
 
   const lpTokenFromGaugeRes = await multicall({
     ctx,
-    calls: gaugesAddresses.map((address) => ({
-      target: address,
-      params: [],
-    })),
+    calls: gaugesAddresses.map((address) => ({ target: address })),
     abi: abi.lp_token,
   })
 
   for (let idx = 0; idx < lpTokenFromGaugeRes.length; idx++) {
     const lpTokenFromGauge = lpTokenFromGaugeRes[idx]
 
-    if (!isSuccess(lpTokenFromGauge)) {
+    if (!lpTokenFromGauge.success) {
       continue
     }
 
@@ -101,10 +96,7 @@ export async function getFarmLPContracts(ctx: BaseContext, gaugeController: Cont
 
   const underlyingsRes = await multicall({
     ctx,
-    calls: contracts.map((contract) => ({
-      target: contract.lpToken,
-      params: [],
-    })),
+    calls: contracts.map((contract) => ({ target: contract.lpToken })),
     abi: abi.vaultParams,
   })
 
@@ -112,12 +104,13 @@ export async function getFarmLPContracts(ctx: BaseContext, gaugeController: Cont
     const underlyings = underlyingsRes[idx]
     const contract = contracts[idx]
 
-    if (!isSuccess(underlyings)) {
+    if (!underlyings.success) {
       const vaultParamsOptions = await call({ ctx, target: contract.lpToken, abi: abi.vaultParamsOptions })
       const [_decimals, underlying, _minimumSupply, _cap] = vaultParamsOptions
       contract.underlyings = [underlying]
     } else {
-      contract.underlyings = [underlyings.output.asset]
+      const [_isPut, _decimals, asset] = underlyings.output
+      contract.underlyings = [asset]
     }
   }
 

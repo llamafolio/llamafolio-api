@@ -3,7 +3,6 @@ import { range } from '@lib/array'
 import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
@@ -67,20 +66,22 @@ export async function getPopsicleFarmContracts(ctx: BaseContext, contract: Contr
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, poolLength).map((_, idx) => ({ target: contract.address, params: [idx] })),
+    calls: range(0, poolLength).map((_, idx) => ({ target: contract.address, params: [BigInt(idx)] } as const)),
     abi: abi.poolInfo,
   })
 
   for (let poolIdx = 0; poolIdx < poolLength; poolIdx++) {
     const poolInfoRes = poolInfosRes[poolIdx]
 
-    if (!isSuccess(poolInfoRes)) {
+    if (!poolInfoRes.success) {
       continue
     }
 
+    const [stakingToken] = poolInfoRes.output
+
     contracts.push({
       ...contract,
-      address: poolInfoRes.output.stakingToken,
+      address: stakingToken,
       comptroller: contract.address,
       pid: poolIdx,
     })
@@ -92,7 +93,7 @@ export async function getPopsicleFarmContracts(ctx: BaseContext, contract: Contr
 export async function getPopsicleFarmBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = contracts.map((contract) => ({
+  const calls: Call<typeof abi.userInfo>[] = contracts.map((contract) => ({
     target: contract.comptroller,
     params: [contract.pid, ctx.address],
   }))
@@ -109,13 +110,15 @@ export async function getPopsicleFarmBalances(ctx: BalancesContext, contracts: C
     const userInfoRes = userInfosRes[contractIdx]
     const pendingIceRes = pendingsIceRes[contractIdx]
 
-    if (!isSuccess(userInfoRes) || !isSuccess(pendingIceRes)) {
+    if (!userInfoRes.success || !pendingIceRes.success) {
       continue
     }
 
+    const [amount] = userInfoRes.output
+
     balances.push({
       ...contract,
-      amount: BigNumber.from(userInfoRes.output.amount),
+      amount: BigNumber.from(amount),
       underlyings,
       rewards: [{ ...reward, amount: BigNumber.from(pendingIceRes.output) }],
       category: 'farm',

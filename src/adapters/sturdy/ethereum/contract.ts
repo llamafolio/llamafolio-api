@@ -1,9 +1,9 @@
 import { getLendingPoolContracts } from '@lib/aave/v2/lending'
 import type { BaseContext, Contract } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   get_pool_from_lp_token: {
@@ -20,10 +20,10 @@ const abi = {
     inputs: [{ name: '_pool', type: 'address' }],
     outputs: [{ name: '', type: 'address[8]' }],
   },
-}
+} as const
 
 interface AddressMap {
-  [key: string]: string
+  [key: string]: `0x${string}`
 }
 
 // Unknown `sTokens` -> Known `curveToken`
@@ -78,32 +78,31 @@ const unwrapLpTokens = async (ctx: BaseContext, pools: Contract[]): Promise<Cont
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: metaRegistry.address, params: [pool.underlyings?.[0] as string] })),
+    calls: pools.map(
+      (pool) => ({ target: metaRegistry.address, params: [pool.underlyings?.[0] as `0x${string}`] } as const),
+    ),
     abi: abi.get_pool_from_lp_token,
   })
 
   const underlyingsTokensRes = await multicall({
     ctx,
-    calls: poolsAddressesRes.map((res) => ({
-      target: metaRegistry.address,
-      params: [isSuccess(res) ? res.output : null],
-    })),
+    calls: mapSuccess(poolsAddressesRes, (res) => ({ target: metaRegistry.address, params: [res.output] } as const)),
     abi: abi.get_underlying_coins,
   })
 
   pools.forEach((pool, idx) => {
     const underlyingsTokenRes = underlyingsTokensRes[idx]
-    if (!isSuccess(underlyingsTokenRes)) {
+    if (!underlyingsTokenRes.success) {
       nonCrvUnderlyingsContracts.push({ ...pool })
       return
     }
 
     const fmtUnderlyings = underlyingsTokenRes.output
-      .map((address: string) => address.toLowerCase())
+      .map((address) => address.toLowerCase())
       // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-      .filter((address: string) => address !== ADDRESS_ZERO)
+      .filter((address) => address !== ADDRESS_ZERO)
       // replace ETH alias
-      .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
+      .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
 
     crvUnderlyingsContracts.push({
       ...pool,

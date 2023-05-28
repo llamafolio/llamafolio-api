@@ -151,9 +151,9 @@ export interface Token0Class {
 }
 
 export interface GaugeContract extends Contract {
-  token: string
-  bribeAddress?: string
-  feesAddress?: string
+  token: `0x${string}`
+  bribeAddress?: `0x${string}`
+  feesAddress?: `0x${string}`
 }
 
 export async function getPairsContracts(ctx: BaseContext) {

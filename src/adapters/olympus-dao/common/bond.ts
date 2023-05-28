@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccessFilter, range } from '@lib/array'
+import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 import { BigNumber } from 'ethers'
 
@@ -58,29 +58,29 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 interface BondParams extends Contract {
-  bondWithToken: string
-  bondAddress: string
+  bondWithToken: `0x${string}`
+  bondAddress: `0x${string}`
 }
 
 export async function getBondsContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const bondDetailsRes = await multicall({
     ctx,
-    calls: range(0, 25).map((i) => ({
-      target: contract.address,
-      params: [i],
-    })),
+    calls: range(0, 25).map((i) => ({ target: contract.address, params: [BigInt(i)] } as const)),
     abi: abi.bondDetails,
   })
 
-  const bondContracts: BondParams[] = bondDetailsRes.filter(isSuccess).map((res) => ({
-    chain: ctx.chain,
-    address: res.output._principleToken,
-    bondWithToken: res.output._payoutToken,
-    bondAddress: res.output._bondAddress,
-  }))
+  const bondContracts: BondParams[] = mapSuccessFilter(bondDetailsRes, (res) => {
+    const [_payoutToken, _principleToken, _treasuryAddress, _bondAddress] = res.output
+    return {
+      chain: ctx.chain,
+      address: _principleToken,
+      bondWithToken: _payoutToken,
+      bondAddress: _bondAddress,
+    }
+  })
 
   return await getPairsDetails(ctx, bondContracts)
 }
@@ -88,34 +88,32 @@ export async function getBondsContracts(ctx: BaseContext, contract: Contract): P
 export async function getBondsBalances(ctx: BalancesContext, contracts: Contract[]) {
   const balances: Balance[] = []
 
-  const calls = contracts.map((contract) => ({
+  const calls: Call<typeof abi.getReserves>[] = contracts.map((contract) => ({
     target: contract.address,
-    params: [],
   }))
 
   const [pendingPayoutForRes, underlyingsTokensReservesRes, totalPoolSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({
-        target: contract.bondAddress,
-        params: [ctx.address],
-      })),
+      calls: contracts.map((contract) => ({ target: contract.bondAddress, params: [ctx.address] } as const)),
       abi: abi.pendingPayoutFor,
     }),
     multicall({ ctx, calls, abi: abi.getReserves }),
     multicall({ ctx, calls, abi: abi.totalSupply }),
   ])
 
-  const pendingPayoutFor = pendingPayoutForRes.filter(isSuccess).map((res) => BigNumber.from(res.output))
-  const totalPoolSupplies = totalPoolSuppliesRes.filter(isSuccess).map((res) => BigNumber.from(res.output))
+  const pendingPayoutFor = mapSuccessFilter(pendingPayoutForRes, (res) => BigNumber.from(res.output))
+  const totalPoolSupplies = mapSuccessFilter(totalPoolSuppliesRes, (res) => BigNumber.from(res.output))
 
-  const underlyingsTokensReserves0 = underlyingsTokensReservesRes
-    .filter(isSuccess)
-    .map((res) => BigNumber.from(res.output._reserve0))
+  const underlyingsTokensReserves0 = mapSuccessFilter(underlyingsTokensReservesRes, (res) => {
+    const [reserve0] = res.output
+    return BigNumber.from(reserve0)
+  })
 
-  const underlyingsTokensReserves1 = underlyingsTokensReservesRes
-    .filter(isSuccess)
-    .map((res) => BigNumber.from(res.output._reserve1))
+  const underlyingsTokensReserves1 = mapSuccessFilter(underlyingsTokensReservesRes, (res) => {
+    const [_reserve0, reserve1] = res.output
+    return BigNumber.from(reserve1)
+  })
 
   for (let i = 0; i < underlyingsTokensReserves0.length; i++) {
     const contract = contracts[i]

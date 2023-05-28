@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { keyBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 const abi = {
@@ -25,7 +24,7 @@ const abi = {
     stateMutability: 'nonpayable',
     type: 'function',
   },
-}
+} as const
 
 const pools: Contract[] = [
   {
@@ -120,12 +119,12 @@ export async function getIronFarmBalances(ctx: BalancesContext, markets: Contrac
   const [balanceOfsRes, earnedOfsRes, exchangeRatesCurrentsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.staker, params: [ctx.address] })),
+      calls: contracts.map((contract) => ({ target: contract.staker, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.staker, params: [IB.address, ctx.address] })),
+      calls: contracts.map((contract) => ({ target: contract.staker, params: [IB.address, ctx.address] } as const)),
       abi: abi.earned,
     }),
     multicall({
@@ -142,7 +141,7 @@ export async function getIronFarmBalances(ctx: BalancesContext, markets: Contrac
     const earnedOfRes = earnedOfsRes[marketIdx]
     const exchangeRatesCurrentRes = exchangeRatesCurrentsRes[marketIdx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(earnedOfRes) || !isSuccess(exchangeRatesCurrentRes)) {
+    if (!balanceOfRes.success || !earnedOfRes.success || !exchangeRatesCurrentRes.success) {
       continue
     }
 

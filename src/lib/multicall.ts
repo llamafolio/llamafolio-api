@@ -3,101 +3,77 @@ import '@lib/providers'
 import type { BaseContext } from '@lib/adapter'
 import { providers } from '@lib/providers'
 import { isNotNullish } from '@lib/type'
-import { BigNumber } from 'ethers'
-import { getAddress } from 'viem'
+import type { Abi } from 'abitype'
+import type { DecodeFunctionResultParameters, DecodeFunctionResultReturnType } from 'viem'
 
-export type CallParams = string | number | (string | number)[] | undefined
-
-export function formatValue(value: any): any {
-  if (value == null) {
-    return value
-  }
-
-  if (Array.isArray(value)) {
-    return value.map(formatValue)
-  }
-
-  if (typeof value === 'bigint' || typeof value === 'number' || BigNumber.isBigNumber(value)) {
-    return value.toString()
-  }
-
-  return value
+export interface Call<TAbi extends Abi[number] | readonly unknown[]> {
+  target: `0x${string}`
+  params?: DecodeFunctionResultParameters<TAbi[]>['args']
 }
 
-/**
- * Map viem outputs to ethers outputs for backwards compatibility
- * @param abi
- * @param output
- */
-export function formatOutput(abi: any, output: any) {
-  const out = formatValue(output)
-
-  // add name getters
-  if (Array.isArray(output)) {
-    for (let outIdx = 0; outIdx < abi.outputs.length; outIdx++) {
-      out[abi.outputs[outIdx].name] = out[outIdx]
+export type MultiCallResult<TAbi extends Abi[number] | readonly unknown[]> =
+  | {
+      success: true
+      input: { target: `0x${string}`; params?: DecodeFunctionResultParameters<TAbi[]>['args'] }
+      output: DecodeFunctionResultReturnType<TAbi[]>
     }
-  }
+  | {
+      success: false
+      input: { target: `0x${string}`; params?: DecodeFunctionResultParameters<TAbi[]>['args'] }
+      output: null
+    }
 
-  return out
-}
-
-export interface MultiCallOptions {
+export async function multicall<
+  TAbi extends Abi[number] | readonly unknown[],
+  Call extends { target: `0x${string}`; params?: DecodeFunctionResultParameters<TAbi[]>['args'] },
+>(options: {
   ctx: BaseContext
-  abi: any
+  abi: DecodeFunctionResultParameters<TAbi[]>['abi'][number]
   calls: (Call | null)[]
-  target?: `0x${string}`
-  chunkSize?: number
-}
-
-export interface Call {
-  target?: `0x${string}`
-  params?: CallParams
-}
-
-export interface MultiCallResult<T = string, P = any[], O = any | null> {
-  success: boolean
-  input: {
-    target: T
-    params: P
-  }
-  output: O
-}
-
-export async function multicall<T = `0x${string}`, P = any[], O = any>(params: MultiCallOptions) {
-  const results: MultiCallResult<T, P, O>[] = []
-  if (!params.calls?.length) {
-    return results
-  }
-
+}): Promise<
+  (
+    | {
+        success: true
+        input: Call
+        output: DecodeFunctionResultReturnType<TAbi[]>
+      }
+    | {
+        success: false
+        input: Call
+        output: null
+      }
+  )[]
+> {
   // Allow nullish input calls but don't pass them to the underlying multicall function.
   // Nullish calls results are automatically unsuccessful.
   // This allows us to "chain" multicall responses while preserving input indices
-  const calls = params.calls.filter(isNotNullish)
+  const calls = options.calls.filter(isNotNullish)
 
-  const multicallRes = await providers[params.ctx.chain].multicall({
+  const multicallRes = await providers[options.ctx.chain].multicall({
+    // @ts-ignore
     contracts: calls.map((call) => ({
-      address: getAddress((call.target || params.target)!),
-      abi: [params.abi],
-      functionName: params.abi.name,
-      args: call.params || [],
+      address: call.target,
+      abi: [options.abi],
+      // @ts-ignore
+      functionName: options.abi.name,
+      args: call.params,
     })),
   })
 
   // Build output by adding back nullish input calls
   let callIdx = 0
-  for (let paramCallIdx = 0; paramCallIdx < params.calls.length; paramCallIdx++) {
-    if (isNotNullish(params.calls[callIdx])) {
-      results.push({
-        input: params.calls[callIdx],
-        success: multicallRes[callIdx].status === 'success',
-        output: formatOutput(params.abi, multicallRes[callIdx].result),
-      } as MultiCallResult<T, P, O>)
-      callIdx++
-    } else {
-      results.push({ input: params.calls[paramCallIdx], success: false, output: null } as MultiCallResult<T, P, O>)
+  // @ts-ignore
+  return options.calls.map((input, idx) => {
+    if (input == null) {
+      return { input: options.calls[idx], success: false, output: null }
     }
-  }
 
-  return results
+    const response = multicallRes[callIdx++]
+
+    return {
+      input: options.calls[idx],
+      success: response.status === 'success',
+      output: response.result,
+    }
+  })
 }

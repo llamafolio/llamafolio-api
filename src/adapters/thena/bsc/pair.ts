@@ -7,7 +7,7 @@ export interface PairsResponse {
 }
 
 export interface Pair {
-  address: string
+  address: `0x${string}`
   symbol: string
   totalSupply: number
   tvl: number
@@ -24,9 +24,9 @@ export interface Gauge {
   projectedApr: number
   voteApr: number
   totalSupply: number
-  address: string
-  fee: string
-  bribe: string
+  address: `0x${string}`
+  fee: `0x${string}`
+  bribe: `0x${string}`
   weight: number
   weightPercent: number
   bribesInUsd: number
@@ -46,7 +46,7 @@ export interface Bribe {
 }
 
 export interface Token {
-  address: string
+  address: `0x${string}`
   symbol: string
   decimals: number
   reserve: number
@@ -60,9 +60,9 @@ export interface Meta {
 }
 
 export interface GaugeContract extends Contract {
-  token: string
-  bribeAddress?: string
-  feesAddress?: string
+  token: `0x${string}`
+  bribeAddress?: `0x${string}`
+  feesAddress?: `0x${string}`
 }
 
 export async function getPairsContracts(ctx: BaseContext) {

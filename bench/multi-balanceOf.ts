@@ -44,7 +44,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 function help() {
   console.log('npm run multi-balanceOf {chain} {address}')
@@ -61,7 +61,7 @@ async function main() {
   }
 
   const chain = process.argv[2] as Chain
-  const address = process.argv[3].toLowerCase()
+  const address = process.argv[3].toLowerCase() as `0x${string}`
 
   const ctx: BalancesContext = { chain, adapterId: '', address }
 
@@ -69,8 +69,8 @@ async function main() {
     const hrstart = process.hrtime()
 
     const batchSize = 1000
-    const tokens = tokensByChain[chain] as any[]
-    const slices: any[][] = sliceIntoChunks(tokens, batchSize)
+    const tokens = tokensByChain[chain]
+    const slices = sliceIntoChunks(tokens, batchSize)
 
     let errorsCount = 0
 
@@ -86,7 +86,8 @@ async function main() {
 
     let callIdx = 0
     for (let sliceIdx = 0; sliceIdx < slices.length; sliceIdx++) {
-      if (!balances[sliceIdx].success || balances[sliceIdx].output == null) {
+      const balancesSlice = balances[sliceIdx]
+      if (!balancesSlice.success) {
         console.error(
           `Could not get balanceOf for tokens ${ctx.chain}:`,
           slices[sliceIdx].map((token) => token.address),
@@ -97,7 +98,7 @@ async function main() {
 
       for (let tokenIdx = 0; tokenIdx < slices[sliceIdx].length; tokenIdx++) {
         const token = tokens[callIdx]
-        token.amount = BigNumber.from(balances[sliceIdx].output[tokenIdx] || '0')
+        token.amount = BigNumber.from(balancesSlice.output[tokenIdx] || '0')
         callIdx++
       }
     }

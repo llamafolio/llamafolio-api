@@ -5,10 +5,28 @@ import { BN_TEN, sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { getPricedBalances } from '@lib/price'
 import type { Token } from '@lib/token'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
+  borrowBalanceCurrent: {
+    constant: false,
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'borrowBalanceCurrent',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  exchangeRateCurrent: {
+    constant: false,
+    inputs: [],
+    name: 'exchangeRateCurrent',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
   getAllMarkets: {
     constant: true,
     inputs: [],
@@ -74,15 +92,14 @@ export async function getMarketsContracts(
     multicall({
       ctx,
       abi: abi.markets,
-      calls: cTokensAddresses.map((cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] })),
+      calls: cTokensAddresses.map(
+        (cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] } as const),
+      ),
     }),
 
     multicall({
       ctx,
-      calls: cTokensAddresses.map((address) => ({
-        target: address,
-        params: [],
-      })),
+      calls: cTokensAddresses.map((address) => ({ target: address })),
       abi: abi.underlying,
     }),
   ])
@@ -92,14 +109,16 @@ export async function getMarketsContracts(
     const underlying = underlyingAddressByMarketAddress[cToken.toLowerCase()] || underlyingTokensAddressesRes[i].output
     const marketRes = marketsRes[i]
 
-    if (!isSuccess(marketRes)) {
+    if (!marketRes.success) {
       continue
     }
+
+    const [_isListed, collateralFactorMantissa] = marketRes.output
 
     contracts.push({
       chain: ctx.chain,
       address: cToken,
-      collateralFactor: marketRes.output.collateralFactorMantissa,
+      collateralFactor: collateralFactorMantissa,
       underlyings: [underlying],
     })
   }
@@ -118,36 +137,14 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
 
     multicall({
       ctx,
-      calls: contracts.map((token) => ({
-        target: token.address,
-        params: [ctx.address],
-      })),
-      abi: {
-        constant: false,
-        inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-        name: 'borrowBalanceCurrent',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        payable: false,
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
+      calls: contracts.map((token) => ({ target: token.address, params: [ctx.address] } as const)),
+      abi: abi.borrowBalanceCurrent,
     }),
 
     multicall({
       ctx,
-      calls: contracts.map((token) => ({
-        target: token.address,
-        params: [],
-      })),
-      abi: {
-        constant: false,
-        inputs: [],
-        name: 'exchangeRateCurrent',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        payable: false,
-        stateMutability: 'nonpayable',
-        type: 'function',
-      },
+      calls: contracts.map((token) => ({ target: token.address })),
+      abi: abi.exchangeRateCurrent,
     }),
   ])
 
@@ -174,7 +171,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
       return {
         ...bal,
         amount: BigNumber.from(amount).div(BN_TEN.pow(underlying.decimals)),
-        underlyings: [{ ...underlying, amount: BigNumber.from(amount).div(BN_TEN.pow(bal.decimals)) }],
+        underlyings: [{ ...underlying, amount: BigNumber.from(amount).div(BN_TEN.pow(bal.decimals || 0)) }],
         category: 'lend',
       }
     })

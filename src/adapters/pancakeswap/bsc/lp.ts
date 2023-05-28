@@ -1,10 +1,10 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
@@ -139,28 +139,28 @@ const getPancakeStablePairs = async (ctx: BaseContext, factory: Contract) => {
 
   const poolLength = Number(poolLengthRes)
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.swapPairContract>[] = []
   for (let idx = 0; idx < poolLength; idx++) {
-    calls.push({ target: factory.address, params: [idx] })
+    calls.push({ target: factory.address, params: [BigInt(idx)] })
   }
 
   const poolInfosRes = await multicall({ ctx, calls, abi: abi.swapPairContract })
 
-  const lpTokenCalls: Call[] = []
+  const lpTokenCalls: Call<typeof abi.token>[] = []
   for (let idx = 0; idx < poolInfosRes.length; idx++) {
     const poolInfoRes = poolInfosRes[idx]
-    if (!isSuccess(poolInfoRes)) {
+    if (!poolInfoRes.success) {
       continue
     }
 
-    lpTokenCalls.push({ target: poolInfoRes.output, params: [] })
+    lpTokenCalls.push({ target: poolInfoRes.output })
   }
 
   const lpTokensRes = await multicall({ ctx, calls: lpTokenCalls, abi: abi.token })
 
   for (let poolIdx = 0; poolIdx < lpTokensRes.length; poolIdx++) {
     const lpTokenRes = lpTokensRes[poolIdx]
-    if (!isSuccess(lpTokenRes)) {
+    if (!lpTokenRes.success) {
       continue
     }
 
@@ -172,11 +172,14 @@ const getPancakeStablePairs = async (ctx: BaseContext, factory: Contract) => {
   }
 
   for (const masterchefStablePool of masterchefStablePools) {
-    const calls = range(0, 2).map((i) => ({ target: masterchefStablePool.address, params: i }))
+    const calls: Call<typeof abi.coins>[] = range(0, 2).map((i) => ({
+      target: masterchefStablePool.address,
+      params: [BigInt(i)],
+    }))
 
     const coinsRes = await multicall({ ctx, calls, abi: abi.coins })
 
-    const coins = coinsRes.filter(isSuccess).map((res) => res.output)
+    const coins = mapSuccessFilter(coinsRes, (res) => res.output)
 
     res.push({
       ...masterchefStablePool,
@@ -205,16 +208,16 @@ const getMasterChefLpToken = async (
 
   const poolLength = Number(poolLengthRes)
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.lpToken>[] = []
   for (let idx = 0; idx < poolLength; idx++) {
-    calls.push({ target: masterchef.address, params: [idx] })
+    calls.push({ target: masterchef.address, params: [BigInt(idx)] })
   }
 
   const poolInfosRes = await multicall({ ctx, calls, abi: abi.lpToken })
 
   for (let poolIdx = 0; poolIdx < poolInfosRes.length; poolIdx++) {
     const poolInfoRes = poolInfosRes[poolIdx]
-    if (!isSuccess(poolInfoRes)) {
+    if (!poolInfoRes.success) {
       continue
     }
 
@@ -222,7 +225,7 @@ const getMasterChefLpToken = async (
       chain: ctx.chain,
       address: poolInfoRes.output,
       lpToken: poolInfoRes.output,
-      pid: poolInfoRes.input.params[0],
+      pid: poolInfoRes.input.params![0],
     })
   }
 
@@ -272,7 +275,7 @@ const getPancakeUnderlyingsMasterChefPoolsBalances = async (
 ) => {
   const underlyiedPoolsBalances: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.calc_coins_amount>[] = []
   for (const masterchefPoolsBalance of masterchefPoolsBalances) {
     calls.push({
       target: pancakewapInfos.address,
@@ -281,7 +284,7 @@ const getPancakeUnderlyingsMasterChefPoolsBalances = async (
   }
 
   const underlyingsBalanceInStablePoolsRes = await multicall({ ctx, calls, abi: abi.calc_coins_amount })
-  const underlyingsBalanceInStablePools = underlyingsBalanceInStablePoolsRes.filter(isSuccess).map((res) => res.output)
+  const underlyingsBalanceInStablePools = mapSuccessFilter(underlyingsBalanceInStablePoolsRes, (res) => res.output)
 
   for (let idx = 0; idx < masterchefPoolsBalances.length; idx++) {
     const masterchefPoolBalances = masterchefPoolsBalances[idx]
@@ -341,7 +344,7 @@ export async function getPancakeMasterChefPoolsBalances(
     ),
   )
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.userInfo>[] = []
   for (let poolIdx = 0; poolIdx < masterchefPools.length; poolIdx++) {
     calls.push({ target: masterchef.address, params: [masterchefPools[poolIdx].pid, ctx.address] })
   }
@@ -356,7 +359,7 @@ export async function getPancakeMasterChefPoolsBalances(
     const poolBalanceRes = poolsBalancesRes[userIdx]
     const pendingRewardRes = pendingRewardsRes[userIdx]
 
-    if (!isSuccess(poolBalanceRes) || !isSuccess(pendingRewardRes)) {
+    if (!poolBalanceRes.success || !pendingRewardRes.success) {
       continue
     }
 
@@ -366,7 +369,7 @@ export async function getPancakeMasterChefPoolsBalances(
       underlyings: masterchefPool.underlyings as Contract[],
       stablePool: masterchefPool.stablePool,
       category: 'farm',
-      amount: BigNumber.from(poolBalanceRes.output.amount),
+      amount: BigNumber.from(poolBalanceRes.output[0]),
       rewards: [{ ...rewardToken, amount: BigNumber.from(pendingRewardRes.output) }],
     })
   }

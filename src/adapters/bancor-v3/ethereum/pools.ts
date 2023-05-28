@@ -1,4 +1,5 @@
-import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseBalance, BaseContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { ADDRESS_ZERO } from '@lib/contract'
@@ -7,7 +8,6 @@ import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { ETH_ADDR } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -119,17 +119,20 @@ export async function getPoolsContracts(ctx: BaseContext): Promise<Contract[]> {
     ctx,
     calls: collectionsPoolsRes.flatMap((poolsRes, poolCollectionIdx) =>
       poolsRes.success
-        ? poolsRes.output.map((pool: string) => ({
-            target: poolCollections[poolCollectionIdx],
-            // replace ETH alias
-            params: [pool === ETH_ADDR ? ADDRESS_ZERO : pool],
-          }))
+        ? poolsRes.output.map(
+            (pool) =>
+              ({
+                target: poolCollections[poolCollectionIdx],
+                // replace ETH alias
+                params: [pool === ETH_ADDR ? ADDRESS_ZERO : pool],
+              } as const),
+          )
         : [],
     ),
     abi: abi.poolToken,
   })
 
-  return poolsTokens.filter(isSuccess).map((res) => ({
+  return mapSuccessFilter(poolsTokens, (res) => ({
     chain: ctx.chain,
     address: res.output,
     underlyings: [res.input.params[0]],
@@ -168,12 +171,16 @@ export async function getStakeBalances(ctx: BalancesContext, standardRewards: Co
   const [providerStakesRes, providerRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: programs.map((program) => ({ target: standardRewards.address, params: [ctx.address, program.id] })),
+      calls: programs.map(
+        (program) => ({ target: standardRewards.address, params: [ctx.address, BigInt(program.id)] } as const),
+      ),
       abi: abi.providerStake,
     }),
     multicall({
       ctx,
-      calls: programs.map((program) => ({ target: standardRewards.address, params: [ctx.address, program.id] })),
+      calls: programs.map(
+        (program) => ({ target: standardRewards.address, params: [ctx.address, BigInt(program.id)] } as const),
+      ),
       abi: abi.providerRewards,
     }),
   ])
@@ -188,7 +195,7 @@ export async function getStakeBalances(ctx: BalancesContext, standardRewards: Co
       amount: stakeRes.success ? BigNumber.from(stakeRes.output) : BN_ZERO,
       rewards: [
         {
-          ...programs[programIdx].rewards?.[0],
+          ...(programs[programIdx].rewards?.[0] as BaseBalance),
           // TODO: providerRewards.stakedAmount
           amount: rewardsRes.success ? BigNumber.from(rewardsRes.output.pendingRewards) : BN_ZERO,
         },

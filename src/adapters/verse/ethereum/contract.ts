@@ -1,6 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 
 const abi = {
@@ -11,7 +10,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getVerseContracts(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
   const contracts: Contract[] = []
@@ -26,7 +25,7 @@ export async function getVerseContracts(ctx: BaseContext, pools: Contract[]): Pr
     const pool = pools[poolIdx]
     const tokenRes = tokensRes[poolIdx]
 
-    if (!isSuccess(tokenRes)) {
+    if (!tokenRes.success) {
       continue
     }
 

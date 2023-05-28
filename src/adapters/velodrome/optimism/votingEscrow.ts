@@ -37,10 +37,9 @@ export async function getVotingEscrowBalances(ctx: BalancesContext, votingEscrow
   // token IDS
   const tokensOfOwnerByIndexRes = await multicall({
     ctx,
-    calls: range(0, balancesLength).map((idx) => ({
-      target: votingEscrow.address,
-      params: [ctx.address, idx],
-    })),
+    calls: range(0, balancesLength).map(
+      (idx) => ({ target: votingEscrow.address, params: [ctx.address, BigInt(idx)] } as const),
+    ),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -53,20 +52,23 @@ export async function getTokenIdsBalances(
   ctx: BalancesContext,
   votingEscrow: Contract,
   velo: Contract,
-  tokenIds: number[],
+  tokenIds: bigint[],
 ) {
   const lockedRes = await multicall({
     ctx,
-    calls: tokenIds.map((tokenId) => ({ target: votingEscrow.address, params: [tokenId] })),
+    calls: tokenIds.map((tokenId) => ({ target: votingEscrow.address, params: [tokenId] } as const)),
     abi: abi.locked,
   })
 
-  const balances: Balance[] = mapSuccessFilter(lockedRes, (res) => ({
-    ...velo,
-    category: 'lock' as Category,
-    amount: BigNumber.from(res.output.amount),
-    unlockAt: res.output.end,
-  }))
+  const balances: Balance[] = mapSuccessFilter(lockedRes, (res) => {
+    const [amount, end] = res.output
+    return {
+      ...velo,
+      category: 'lock' as Category,
+      amount: BigNumber.from(amount),
+      unlockAt: end,
+    }
+  })
 
   // TODO: get bribes
 

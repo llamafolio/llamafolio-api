@@ -3,6 +3,20 @@ import { call } from '@lib/call'
 import { ethers, utils } from 'ethers'
 import { gql, request } from 'graphql-request'
 
+const abi = {
+  getAccountStatus: {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'getAccountStatus',
+    outputs: [
+      { internalType: 'uint256', name: 'collateralValue', type: 'uint256' },
+      { internalType: 'uint256', name: 'liabilityValue', type: 'uint256' },
+      { internalType: 'uint256', name: 'healthScore', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+} as const
+
 const THE_GRAPH_URL = 'https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet'
 
 const marketsQuery = gql`
@@ -55,17 +69,7 @@ export async function getHealthFactor(ctx: BalancesContext, lensContract: Contra
     ctx,
     target: lensContract.address,
     params: [ctx.address],
-    abi: {
-      inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-      name: 'getAccountStatus',
-      outputs: [
-        { internalType: 'uint256', name: 'collateralValue', type: 'uint256' },
-        { internalType: 'uint256', name: 'liabilityValue', type: 'uint256' },
-        { internalType: 'uint256', name: 'healthScore', type: 'uint256' },
-      ],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.getAccountStatus,
   })
 
   if (ethers.constants.MaxUint256.eq(healthScore)) {

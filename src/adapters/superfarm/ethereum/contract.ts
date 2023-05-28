@@ -1,8 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
-import type { Call } from '@lib/multicall'
+import { flatMapSuccess, range } from '@lib/array'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 
 const abi = {
@@ -41,28 +39,31 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getSuperfarmContracts(ctx: BaseContext, contracts: Contract[]): Promise<Contract[]> {
   const pools: Contract[] = []
-  const calls: Call[] = contracts.map((contract) => ({ target: contract.address }))
 
-  const poolLengthRes = await multicall({ ctx, calls, abi: abi.getPoolCount })
+  const poolLengthRes = await multicall({
+    ctx,
+    calls: contracts.map((contract) => ({ target: contract.address })),
+    abi: abi.getPoolCount,
+  })
 
   const [poolsTokensRes, pendingTokensRes] = await Promise.all([
     multicall({
       ctx,
-      calls: poolLengthRes.flatMap((poolLength) =>
-        isSuccess(poolLength)
-          ? range(0, poolLength.output).map((_, idx) => ({ target: poolLength.input.target, params: [idx] }))
-          : null,
+      calls: flatMapSuccess(poolLengthRes, (poolLength) =>
+        range(0, Number(poolLength.output)).map(
+          (_, idx) => ({ target: poolLength.input.target, params: [BigInt(idx)] } as const),
+        ),
       ),
       abi: abi.poolTokens,
     }),
     multicall({
       ctx,
-      calls: poolLengthRes.flatMap((poolLength) =>
-        isSuccess(poolLength) ? range(0, poolLength.output).map((_) => ({ target: poolLength.input.target })) : null,
+      calls: flatMapSuccess(poolLengthRes, (poolLength) =>
+        range(0, Number(poolLength.output)).map((_) => ({ target: poolLength.input.target })),
       ),
       abi: abi.token,
     }),
@@ -72,7 +73,7 @@ export async function getSuperfarmContracts(ctx: BaseContext, contracts: Contrac
     const poolsTokenRes = poolsTokensRes[idx]
     const pendingTokenRes = pendingTokensRes[idx]
 
-    if (!isSuccess(poolsTokenRes) || !isSuccess(pendingTokenRes)) {
+    if (!poolsTokenRes.success || !pendingTokenRes.success) {
       continue
     }
 

@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -53,23 +52,32 @@ export async function getGainsLockerBalances(ctx: BalancesContext, locker: Contr
 
   const tokenOfOwnerByIndexes = await multicall({
     ctx,
-    calls: range(0, Number(nftBalanceOf)).map((index) => ({ target: locker.address, params: [ctx.address, index] })),
+    calls: range(0, Number(nftBalanceOf)).map(
+      (index) => ({ target: locker.address, params: [ctx.address, BigInt(index)] } as const),
+    ),
     abi: abi.tokenOfOwnerByIndex,
   })
 
   const tokensDepositInfos = await multicall({
     ctx,
     calls: tokenOfOwnerByIndexes.map((tokenIndex) =>
-      isSuccess(tokenIndex) ? { target: locker.token, params: [tokenIndex.output] } : null,
+      locker.token && tokenIndex.success
+        ? ({ target: locker.token, params: [BigInt(tokenIndex.output)] } as const)
+        : null,
     ),
     abi: abi.lockedDeposits,
   })
 
   const fmtBalances = await multicall({
     ctx,
-    calls: tokensDepositInfos.map((token) =>
-      isSuccess(token) ? { target: locker.token, params: [token.output.shares] } : null,
-    ),
+    calls: tokensDepositInfos.map((token) => {
+      if (!token.success || !locker.token) {
+        return null
+      }
+      const [_owner, shares] = token.output
+
+      return { target: locker.token, params: [shares] } as const
+    }),
     abi: abi.convertToAssets,
   })
 
@@ -80,11 +88,13 @@ export async function getGainsLockerBalances(ctx: BalancesContext, locker: Contr
     const tokensDepositInfo = tokensDepositInfos[balanceIdx]
     const underlying = locker.underlyings?.[0] as Contract
 
-    if (!underlying || !isSuccess(fmtBalance) || !isSuccess(tokensDepositInfo)) {
+    if (!underlying || !fmtBalance.success || !tokensDepositInfo.success) {
       continue
     }
 
-    const unlockAt = parseInt(tokensDepositInfo.output.atTimestamp) + parseInt(tokensDepositInfo.output.lockDuration)
+    const [_owner, _shares, _assetsDeposited, _assetsDiscount, atTimestamp, lockDuration] = tokensDepositInfo.output
+
+    const unlockAt = Number(atTimestamp + lockDuration)
 
     balances.push({
       ...locker,

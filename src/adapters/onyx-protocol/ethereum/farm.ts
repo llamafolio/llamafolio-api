@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -30,7 +29,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const Onyx: Token = {
   chain: 'ethereum',
@@ -46,7 +45,10 @@ export async function getOnyxFarmBalances(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: lendingPool.address, params: [pool.pid, ctx.address] }))
+  const calls: Call<typeof abi.userInfo>[] = pools.map((pool) => ({
+    target: lendingPool.address,
+    params: [pool.pid, ctx.address],
+  }))
 
   const [balanceOfsRes, pendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
@@ -58,13 +60,13 @@ export async function getOnyxFarmBalances(
     const balanceOfRes = balanceOfsRes[poolIdx]
     const pendingRewardRes = pendingRewardsRes[poolIdx]
 
-    if (!isSuccess(balanceOfRes) || !isSuccess(pendingRewardRes)) {
+    if (!balanceOfRes.success || !pendingRewardRes.success) {
       continue
     }
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(balanceOfRes.output.amount),
+      amount: BigNumber.from(balanceOfRes.output[0]),
       underlyings: undefined,
       rewards: [{ ...Onyx, amount: BigNumber.from(pendingRewardRes.output) }],
       category: 'farm',

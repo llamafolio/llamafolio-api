@@ -4,7 +4,7 @@ import { resolveBalances } from '@lib/balance'
 import { getHomoraBalances } from '../common/balance'
 import { getPoolsContract } from '../common/contract'
 
-const pools = [
+const pools: `0x${string}`[] = [
   '0x14bC6Cf95a8BEFD4B07e0f824c60bC1401fE9D23', // WETH
   '0xbCb8b7Ce255aD6268924407342b78c065Df5986d', // DAI
   '0x080a165204Af7665dc980BD093125125A2Bca375', // USDC

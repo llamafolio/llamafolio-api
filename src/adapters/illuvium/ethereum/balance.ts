@@ -4,7 +4,6 @@ import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -50,7 +49,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const ILV: Token = {
   chain: 'ethereum',
@@ -63,10 +62,16 @@ export async function getILVBalances(ctx: BalancesContext, pools: ILVContract[])
   const singleUnderlyingsBalances: Balance[] = []
   const multipleUnderlyingsBalances: Balance[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: pool.address, params: [ctx.address] }))
-  const stakersCalls: Call[] = pools.map((pool) => ({ target: pool.staker, params: [ctx.address] }))
+  const calls: Call<typeof erc20Abi.balanceOf>[] = pools.map((pool) => ({
+    target: pool.address,
+    params: [ctx.address],
+  }))
+  const stakersCalls: Call<typeof erc20Abi.balanceOf>[] = pools.map((pool) => ({
+    target: pool.staker,
+    params: [ctx.address],
+  }))
 
-  const [balancesOfRes, stakerBalancesOfRes, pendingRewardsRes] = await Promise.all([
+  const [balancesOfRes, stakerBalancesOfRes, pendingsRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
     multicall({ ctx, calls: stakersCalls, abi: erc20Abi.balanceOf }),
     multicall({ ctx, calls, abi: abi.pendingRewards }),
@@ -76,12 +81,11 @@ export async function getILVBalances(ctx: BalancesContext, pools: ILVContract[])
     const balanceOfRes = balancesOfRes[poolIdx]
     const stakerBalanceOfRes = stakerBalancesOfRes[poolIdx]
     const underlyings = pool.underlyings as Contract[]
+    const pendingRewardsRes = pendingsRewardsRes[poolIdx]
 
-    const pendingRewards = isSuccess(pendingRewardsRes[poolIdx])
-      ? BigNumber.from(pendingRewardsRes[poolIdx].output.pendingYield)
-      : BN_ZERO
+    const pendingRewards = pendingRewardsRes.success ? BigNumber.from(pendingRewardsRes.output[0]) : BN_ZERO
 
-    if (!underlyings || !isSuccess(balanceOfRes) || !isSuccess(stakerBalanceOfRes)) {
+    if (!underlyings || !balanceOfRes.success || !stakerBalanceOfRes.success) {
       return
     }
 

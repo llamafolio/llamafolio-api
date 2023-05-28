@@ -1,9 +1,9 @@
 import type { Balance, BalancesContext } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -47,12 +47,12 @@ const abi = {
     outputs: [{ name: '', type: 'uint256[2]' }],
     gas: 4677,
   },
-}
+} as const
 
 export type ProviderBalancesParams = Balance & {
   amount: BigNumber
   totalSupply: BigNumber
-  lpToken: string
+  lpToken: `0x${string}`
   strategy: string
 }
 
@@ -74,7 +74,7 @@ export const sushiProvider = async (
   ctx: BalancesContext,
   pools: ProviderBalancesParams[],
 ): Promise<ProviderBalancesParams[]> => {
-  const calls: Call[] = []
+  const calls: Call<typeof erc20Abi.balanceOf>[] = []
 
   for (const pool of pools) {
     const { underlyings, lpToken } = pool
@@ -101,7 +101,7 @@ export const sushiProvider = async (
       const underlyingBalanceOfRes = underlyingsBalancesRes[balanceOfIdx]
 
       const underlyingsBalance =
-        isSuccess(underlyingBalanceOfRes) && underlyingBalanceOfRes.output != undefined
+        underlyingBalanceOfRes.success && underlyingBalanceOfRes.output != undefined
           ? BigNumber.from(underlyingBalanceOfRes.output)
           : BN_ZERO
 
@@ -126,24 +126,32 @@ export const auraProvider = async (
     abi: abi.getPoolId,
   })
 
-  const calls: Call[] = poolIdsRes.map((pool) => ({
-    target: AURA_VAULT_ADDRESS,
-    params: [isSuccess(pool) ? pool.output : null],
-  }))
-
-  const underlyingsBalancesRes = await multicall({ ctx, calls, abi: abi.getPoolTokens })
+  const underlyingsBalancesRes = await multicall({
+    ctx,
+    calls: mapSuccess(
+      poolIdsRes,
+      (pool) =>
+        ({
+          target: AURA_VAULT_ADDRESS,
+          params: [pool.output],
+        } as const),
+    ),
+    abi: abi.getPoolTokens,
+  })
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
     const { underlyings, amount, totalSupply } = pool
     const underlyingsBalanceRes = underlyingsBalancesRes[poolIdx]
 
-    if (!underlyings || !isSuccess(underlyingsBalanceRes)) {
+    if (!underlyings || !underlyingsBalanceRes.success) {
       continue
     }
 
+    const [_tokens, balances] = underlyingsBalanceRes.output
+
     underlyings.forEach((underlying, underlyingIdx) => {
-      const underlyingBalance = underlyingsBalanceRes.output.balances[underlyingIdx]
+      const underlyingBalance = balances[underlyingIdx]
       ;(underlying as Balance).amount = BigNumber.from(underlyingBalance).mul(amount).div(totalSupply) || BN_ZERO
     })
   }
@@ -161,23 +169,29 @@ export const convexProvider = async (
   if (ctx.chain === 'ethereum') {
     const poolAddressesRes = await multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.lpToken] })),
+      calls: pools.map((pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.lpToken] } as const)),
       abi: abi.get_pool_from_lp_token,
     })
 
-    const calls: Call[] = poolAddressesRes.map((pool) => ({
-      target: CURVE_REGISTRY_ADDRESS,
-      params: [isSuccess(pool) ? pool.output : null],
-    }))
-
-    const underlyingsBalancesRes = await multicall({ ctx, calls, abi: abi.get_underlying_balances })
+    const underlyingsBalancesRes = await multicall({
+      ctx,
+      calls: mapSuccess(
+        poolAddressesRes,
+        (pool) =>
+          ({
+            target: CURVE_REGISTRY_ADDRESS,
+            params: [pool.output],
+          } as const),
+      ),
+      abi: abi.get_underlying_balances,
+    })
 
     for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
       const pool = pools[poolIdx]
       const { underlyings, amount, totalSupply } = pool
       const underlyingsBalanceRes = underlyingsBalancesRes[poolIdx]
 
-      if (!underlyings || !isSuccess(underlyingsBalanceRes)) {
+      if (!underlyings || !underlyingsBalanceRes.success) {
         continue
       }
 
@@ -212,7 +226,7 @@ export const curveAltChains = async (
     const { underlyings, amount, totalSupply } = pool
     const underlyingsBalanceRes = underlyingsBalancesRes[poolIdx]
 
-    if (!underlyings || !isSuccess(underlyingsBalanceRes)) {
+    if (!underlyings || !underlyingsBalanceRes.success) {
       continue
     }
 

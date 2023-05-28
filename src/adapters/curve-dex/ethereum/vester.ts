@@ -3,7 +3,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -31,7 +30,7 @@ const abi = {
     type: 'function',
     gas: 1661,
   },
-}
+} as const
 
 const CRV: Token = {
   chain: 'ethereum',
@@ -43,7 +42,10 @@ const CRV: Token = {
 export async function getVesterBalances(ctx: BalancesContext, vesters: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = vesters.map((vester) => ({ target: vester.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.initial_locked>[] = vesters.map((vester) => ({
+    target: vester.address,
+    params: [ctx.address],
+  }))
 
   const [initialBalancesRes, claimedBalancesRes, balanceOfsRes, endTimesRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.initial_locked }),
@@ -59,12 +61,7 @@ export async function getVesterBalances(ctx: BalancesContext, vesters: Contract[
     const balanceOfRes = balanceOfsRes[vesterIdx]
     const endTimeRes = endTimesRes[vesterIdx]
 
-    if (
-      !isSuccess(initialBalanceRes) ||
-      !isSuccess(claimedBalanceRes) ||
-      !isSuccess(balanceOfRes) ||
-      !isSuccess(endTimeRes)
-    ) {
+    if (!initialBalanceRes.success || !claimedBalanceRes.success || !balanceOfRes.success || !endTimeRes.success) {
       continue
     }
 
@@ -74,7 +71,7 @@ export async function getVesterBalances(ctx: BalancesContext, vesters: Contract[
       symbol: CRV.symbol,
       amount: BigNumber.from(initialBalanceRes.output).sub(claimedBalanceRes.output),
       claimable: BigNumber.from(balanceOfRes.output),
-      unlockAt: endTimeRes.output,
+      unlockAt: Number(endTimeRes.output),
       underlyings: [CRV],
       rewards: undefined,
       category: 'vest',

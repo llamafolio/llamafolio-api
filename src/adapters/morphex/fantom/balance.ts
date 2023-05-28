@@ -6,7 +6,6 @@ import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -97,7 +96,10 @@ export async function getMorphexMLPBalances(ctx: BalancesContext, contract: Cont
 
 export async function getMorphexYieldBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
-  const calls: Call[] = farmers.map((farmer: Contract) => ({ target: farmer.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.claimable>[] = farmers.map((farmer: Contract) => ({
+    target: farmer.address,
+    params: [ctx.address],
+  }))
 
   const [balancesOfsRes, claimablesRes, underlyingsRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
@@ -112,7 +114,7 @@ export async function getMorphexYieldBalances(ctx: BalancesContext, farmers: Con
     const claimableRes = claimablesRes[farmerIdx]
     const underlyingRes = underlyingsRes[farmerIdx]
 
-    if (!underlyings || !isSuccess(balancesOfRes) || !isSuccess(claimableRes) || !isSuccess(underlyingRes)) {
+    if (!underlyings || !balancesOfRes.success || !claimableRes.success || !underlyingRes.success) {
       continue
     }
 
@@ -166,16 +168,15 @@ export async function getMorphexStakeMPXBalances(
     call({ ctx, target: contract.address, abi: erc20Abi.totalSupply }),
     multicall({
       ctx,
-      calls: underlyings.map((underlying) => ({
-        target: contract.address,
-        params: [ctx.address, underlying.address],
-      })),
+      calls: underlyings.map(
+        (underlying) => ({ target: contract.address, params: [ctx.address, underlying.address] } as const),
+      ),
       abi: abi.depositBalances,
     }),
   ])
 
   underlyings.forEach((underlying, underlyingIdx) => {
-    ;(underlying as Balance).amount = isSuccess(underlyingsBalancesRes[underlyingIdx])
+    ;(underlying as Balance).amount = underlyingsBalancesRes[underlyingIdx].success
       ? BigNumber.from(underlyingsBalancesRes[underlyingIdx].output)
       : BN_ZERO
   })

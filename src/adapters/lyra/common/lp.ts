@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 const abi = {
@@ -12,7 +11,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getLpLyraBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -20,7 +19,7 @@ export async function getLpLyraBalances(ctx: BalancesContext, contracts: Contrac
   const [balancesOfsRes, multiplierTokensRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.staker, params: [ctx.address] })),
+      calls: contracts.map((contract) => ({ target: contract.staker, params: [ctx.address] } as const)),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
@@ -36,7 +35,7 @@ export async function getLpLyraBalances(ctx: BalancesContext, contracts: Contrac
     const multiplierTokenRes = multiplierTokensRes[idx]
     const underlyings = contract.underlyings as Contract[]
 
-    if (!isSuccess(balancesOfRes) || !isSuccess(multiplierTokenRes)) {
+    if (!balancesOfRes.success || !multiplierTokenRes.success) {
       continue
     }
 

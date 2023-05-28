@@ -2,7 +2,6 @@ import type { BaseContext, Contract } from '@lib/adapter'
 import { mapSuccess } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   getDepositTokens: {
@@ -93,12 +92,12 @@ export async function getMetronomeContracts(ctx: BaseContext, contract: Contract
   for (let depositIdx = 0; depositIdx < depositTokensRes.length; depositIdx++) {
     const depositTokenRes = depositTokensRes[depositIdx]
     const token = tokens[depositIdx]
-    const underlying = isSuccess(underlyings[depositIdx])
+    const underlying = underlyings[depositIdx].success
       ? underlyings[depositIdx].output
       : underlyings[depositIdx].input.target
     const collateralFactor = collateralFactors[depositIdx]
 
-    if (!isSuccess(token) || !isSuccess(collateralFactor) || !underlying) {
+    if (!token.success || !collateralFactor.success || !underlying) {
       continue
     }
 
@@ -116,7 +115,7 @@ export async function getMetronomeContracts(ctx: BaseContext, contract: Contract
     const debtTokenRes = debtTokensRes[debtIdx]
     const syntheticToken = syntheticTokens[debtIdx]
 
-    if (!isSuccess(syntheticToken)) {
+    if (!syntheticToken.success) {
       continue
     }
 

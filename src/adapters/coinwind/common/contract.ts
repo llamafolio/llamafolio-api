@@ -54,13 +54,15 @@ export async function getCoinWindContracts(ctx: BaseContext, masterchef: Contrac
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: range(0, Number(poolLengthBI)).map((_, idx) => ({ target: masterchef.address, params: [idx] })),
+    calls: range(0, Number(poolLengthBI)).map(
+      (_, idx) => ({ target: masterchef.address, params: [BigInt(idx)] } as const),
+    ),
     abi: abi.poolInfo,
   })
 
   const contracts: Contract[] = mapSuccessFilter(poolInfosRes, (res, idx: number) => ({
     chain: ctx.chain,
-    address: res.output.token,
+    address: res.output[0],
     pid: idx,
   }))
 

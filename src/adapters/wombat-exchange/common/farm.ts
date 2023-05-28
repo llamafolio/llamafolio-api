@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 const abi = {
@@ -49,7 +48,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getWombatFarmBalances(
   ctx: BalancesContext,
@@ -61,11 +60,11 @@ export async function getWombatFarmBalances(
 
   const getAssetsPidRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.address] })),
+    calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.address] } as const)),
     abi: abi.getAssetPid,
   })
 
-  const poolsWithIds: Contract[] = mapSuccessFilter(getAssetsPidRes, (res, idx: number) => ({
+  const poolsWithIds = mapSuccessFilter(getAssetsPidRes, (res, idx: number) => ({
     ...pools[idx],
     pid: res.output,
   }))
@@ -73,20 +72,24 @@ export async function getWombatFarmBalances(
   const [userInfosRes, pendingRewardsRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: poolsWithIds.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] })),
+      calls: poolsWithIds.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] } as const)),
       abi: abi.userInfo,
     }),
     multicall({
       ctx,
-      calls: poolsWithIds.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] })),
+      calls: poolsWithIds.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] } as const)),
       abi: abi.pendingTokens,
     }),
     multicall({
       ctx,
-      calls: poolsWithIds.map((pool) => ({
-        target: pool.provider,
-        params: [(pool.underlyings![0] as Contract).address],
-      })),
+      calls: poolsWithIds.map((pool) =>
+        pool.provider
+          ? {
+              target: pool.provider,
+              params: [(pool.underlyings![0] as Contract).address],
+            }
+          : null,
+      ),
       abi: abi.exchangeRate,
     }),
   ])
@@ -98,21 +101,24 @@ export async function getWombatFarmBalances(
     const pendingRewardRes = pendingRewardsRes[poolIdx]
     const exchangeRateRes = exchangeRatesRes[poolIdx]
 
-    if (!underlying || !isSuccess(userInfoRes) || !isSuccess(pendingRewardRes) || !isSuccess(exchangeRateRes)) {
+    if (!underlying || !userInfoRes.success || !pendingRewardRes.success || !exchangeRateRes.success) {
       continue
     }
+
+    const [amount] = userInfoRes.output
+    const [pendingRewards] = pendingRewardRes.output
 
     const fmtUnderlying = {
       ...underlying,
       decimals: 18,
-      amount: BigNumber.from(userInfoRes.output.amount).mul(exchangeRateRes.output).div(utils.parseEther('1.0')),
+      amount: BigNumber.from(amount).mul(exchangeRateRes.output).div(utils.parseEther('1.0')),
     }
 
     balances.push({
       ...pool,
-      amount: BigNumber.from(userInfoRes.output.amount),
+      amount: BigNumber.from(amount),
       underlyings: [fmtUnderlying],
-      rewards: [{ ...WOM, amount: BigNumber.from(pendingRewardRes.output.pendingRewards) }],
+      rewards: [{ ...WOM, amount: BigNumber.from(pendingRewards) }],
       category: 'farm',
     })
   }

@@ -11,7 +11,7 @@ const abi = {
     inputs: [{ name: '_pool', type: 'address' }],
     outputs: [{ name: '', type: 'address[8]' }],
   },
-}
+} as const
 
 const metaRegistry: Contract = {
   chain: 'ethereum',
@@ -23,25 +23,32 @@ export const curveProvider = async (ctx: BaseContext, pools: Contract[]): Promis
 
   const underlyingsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({
-      target: metaRegistry.address,
-      params: [pool.curvePool],
-    })),
+    calls: pools.map(
+      (pool) =>
+        ({
+          target: metaRegistry.address,
+          params: [pool.curvePool],
+        } as const),
+    ),
     abi: abi.get_underlying_coins,
   })
 
   pools.forEach((pool, idx) => {
     const underlyingRes = underlyingsRes[idx]
 
+    if (!underlyingRes.success) {
+      return
+    }
+
     res.push({
       ...pool,
       curveLpToken: pool.curvePool,
       underlyings: underlyingRes.output
-        .map((address: string) => address.toLowerCase())
+        .map((address) => address.toLowerCase())
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address: string) => address !== ADDRESS_ZERO)
+        .filter((address) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address: string) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
+        .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
     })
   })
 

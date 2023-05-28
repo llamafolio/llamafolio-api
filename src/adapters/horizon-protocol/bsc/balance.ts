@@ -5,7 +5,6 @@ import { BN_ZERO } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { BigNumber } from 'ethers'
 
@@ -45,7 +44,10 @@ interface HorizonBalanceParams extends FarmBalance {
 export async function getHorizonFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }))
+  const calls: Call<typeof erc20Abi.balanceOf>[] = farmers.map((farmer) => ({
+    target: farmer.address,
+    params: [ctx.address],
+  }))
 
   const [userBalancesRes, pendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
@@ -58,7 +60,7 @@ export async function getHorizonFarmBalances(ctx: BalancesContext, farmers: Cont
     const userBalanceRes = userBalancesRes[farmerIdx]
     const pendingRewardRes = pendingRewardsRes[farmerIdx]
 
-    if (!isSuccess(userBalanceRes) || !isSuccess(pendingRewardRes)) {
+    if (!userBalanceRes.success || !pendingRewardRes.success) {
       continue
     }
 

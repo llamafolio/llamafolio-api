@@ -1,9 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter } from '@lib/array'
+import { mapSuccess, mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -14,7 +13,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const USDC: Token = {
   chain: 'ethereum',
@@ -26,14 +25,19 @@ const USDC: Token = {
 export async function getCegaBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const userBalancesRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
     abi: erc20Abi.balanceOf,
   })
 
   const fmtBalancesRes = await multicall({
     ctx,
-    calls: userBalancesRes.map((userBalance) =>
-      isSuccess(userBalance) ? { target: userBalance.input.target, params: [userBalance.output] } : null,
+    calls: mapSuccess(
+      userBalancesRes,
+      (userBalanceRes) =>
+        ({
+          target: userBalanceRes.input.target,
+          params: [userBalanceRes.output],
+        } as const),
     ),
     abi: abi.convertToAssets,
   })

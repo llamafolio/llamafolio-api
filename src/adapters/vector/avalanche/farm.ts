@@ -1,10 +1,9 @@
-import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { range } from '@lib/array'
+import type { Balance, BalancesContext, BaseContext, BaseContract, Contract } from '@lib/adapter'
+import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
 import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -87,14 +86,46 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  token0: {
+    inputs: [],
+    name: 'token0',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  token1: {
+    inputs: [],
+    name: 'token1',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getReserves: {
+    inputs: [],
+    name: 'getReserves',
+    outputs: [
+      { internalType: 'uint112', name: '_reserve0', type: 'uint112' },
+      { internalType: 'uint112', name: '_reserve1', type: 'uint112' },
+      { internalType: 'uint32', name: '_blockTimestampLast', type: 'uint32' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  totalSupply: {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 interface FarmContract extends Contract {
-  rewarder: string
+  rewarder: `0x${string}`
 }
 
 type FarmBalance = Balance & {
-  rewarder: string
+  rewarder: `0x${string}`
 }
 
 const VTX: Token = {
@@ -115,25 +146,19 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: range(0, Number(poolsLength)).map((i) => ({
-      target: masterChef.address,
-      params: [i],
-    })),
+    calls: range(0, Number(poolsLength)).map((i) => ({ target: masterChef.address, params: [BigInt(i)] } as const)),
     abi: abi.registeredToken,
   })
 
-  const poolsAddresses = poolsAddressesRes.filter(isSuccess).map((res) => res.output)
+  const poolsAddresses = mapSuccessFilter(poolsAddressesRes, (res) => res.output)
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: poolsAddresses.map((pool) => ({
-      target: masterChef.address,
-      params: [pool],
-    })),
+    calls: poolsAddresses.map((pool) => ({ target: masterChef.address, params: [pool] } as const)),
     abi: abi.addressToPoolInfo,
   })
 
-  const poolInfos = poolInfosRes.filter(isSuccess)
+  const poolInfos = mapSuccessFilter(poolInfosRes, (res) => res)
 
   // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts checked, 7 seems to be the maximum number of extra tokens used.
   // However, this process forced us to encounter many multicall failures on contracts that do not have as many tokens
@@ -142,21 +167,19 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
   const [depositTokensRes, rewardTokensRes] = await Promise.all([
     multicall({
       ctx,
-      calls: poolInfos.map((res) => ({
-        target: res.output.helper,
-        params: [],
-      })),
+      calls: poolInfos.map((res) => {
+        const [_lpToken, _allocPoint, _lastRewardTimestamp, _accVTXPerShare, _rewarder, helper] = res.output
+        return { target: helper }
+      }),
       abi: abi.depositToken,
     }),
 
     multicall({
       ctx,
-      calls: poolInfos.flatMap((res) =>
-        range(0, rewardsLength).map((idx) => ({
-          target: res.output.rewarder,
-          params: [idx],
-        })),
-      ),
+      calls: poolInfos.flatMap((res) => {
+        const [_lpToken, _allocPoint, _lastRewardTimestamp, _accVTXPerShare, rewarder] = res.output
+        return range(0, rewardsLength).map((idx) => ({ target: rewarder, params: [BigInt(idx)] } as const))
+      }),
       abi: abi.rewardTokens,
     }),
   ])
@@ -164,20 +187,21 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
   for (let poolIdx = 0; poolIdx < poolInfos.length; poolIdx++) {
     const poolInfoRes = poolInfos[poolIdx]
     const depositTokenRes = depositTokensRes[poolIdx]
+    const [_lpToken, _allocPoint, _lastRewardTimestamp, _accVTXPerShare, rewarder] = poolInfoRes.output
 
-    if (!depositTokenRes) {
+    if (!depositTokenRes.success) {
       continue
     }
 
     contracts.push({
       chain: ctx.chain,
-      address: poolInfoRes.input.params[0],
-      rewarder: poolInfoRes.output.rewarder,
+      address: poolInfoRes.input.params![0],
+      rewarder: rewarder,
       underlyings: [depositTokenRes.output],
-      rewards: range(poolIdx * rewardsLength, (poolIdx + 1) * rewardsLength)
-        .map((rewardIdx) => rewardTokensRes[rewardIdx])
-        .filter(isSuccess)
-        .map((res) => res.output),
+      rewards: mapSuccessFilter(
+        range(poolIdx * rewardsLength, (poolIdx + 1) * rewardsLength).map((rewardIdx) => rewardTokensRes[rewardIdx]),
+        (res) => res.output,
+      ),
     })
   }
 
@@ -194,19 +218,15 @@ export async function getFarmBalances(
   const [userDepositBalancesRes, pendingBaseRewardsRes, pendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({
-        target: masterChef.address,
-        params: [pool.address, ctx.address],
-      })),
+      calls: pools.map((pool) => ({ target: masterChef.address, params: [pool.address, ctx.address] } as const)),
       abi: abi.depositInfo,
     }),
 
     multicall({
       ctx,
-      calls: pools.map((pool) => ({
-        target: masterChef.address,
-        params: [pool.address, ctx.address, pool.address],
-      })),
+      calls: pools.map(
+        (pool) => ({ target: masterChef.address, params: [pool.address, ctx.address, pool.address] } as const),
+      ),
       abi: abi.pendingTokens,
     }),
 
@@ -214,10 +234,10 @@ export async function getFarmBalances(
       ctx,
       calls: pools.flatMap(
         (pool) =>
-          pool.rewards?.map((rewardToken) => ({
-            target: pool.rewarder,
-            params: [ctx.address, rewardToken.address],
-          })) ?? [],
+          pool.rewards?.map(
+            (rewardToken) =>
+              ({ target: pool.rewarder, params: [ctx.address, (rewardToken as BaseContract).address] } as const),
+          ) ?? [],
       ),
       abi: abi.earned,
     }),
@@ -229,7 +249,7 @@ export async function getFarmBalances(
     const userDepositBalanceRes = userDepositBalancesRes[poolIdx]
     const pendingBaseRewardRes = pendingBaseRewardsRes[poolIdx]
 
-    if (!isSuccess(userDepositBalanceRes)) {
+    if (!userDepositBalanceRes.success) {
       rewardIdx += pool.rewards?.length ?? 0
       continue
     }
@@ -247,14 +267,15 @@ export async function getFarmBalances(
 
     // base reward
     const rewards: Balance[] = []
-    if (isSuccess(pendingBaseRewardRes)) {
-      rewards.push({ ...VTX, amount: BigNumber.from(pendingBaseRewardRes.output.pendingVTX) })
+    if (pendingBaseRewardRes.success) {
+      const [pendingVTX] = pendingBaseRewardRes.output
+      rewards.push({ ...VTX, amount: BigNumber.from(pendingVTX) })
     }
 
     // extra reward
     if (pool.rewards) {
       for (const reward of pool.rewards) {
-        if (isSuccess(pendingRewardsRes[rewardIdx])) {
+        if (pendingRewardsRes[rewardIdx].success) {
           rewards.push({ ...reward, amount: BigNumber.from(pendingRewardsRes[rewardIdx].output) })
         }
         rewardIdx++
@@ -285,57 +306,10 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
     underlyingsTokensReservesRes,
     totalPoolSupplyRes,
   ] = await Promise.all([
-    call({
-      ctx,
-      target: contract.address,
-      abi: {
-        inputs: [],
-        name: 'token0',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    call({
-      ctx,
-      target: contract.address,
-      abi: {
-        inputs: [],
-        name: 'token1',
-        outputs: [{ internalType: 'address', name: '', type: 'address' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    call({
-      ctx,
-      target: contract.address,
-      abi: {
-        inputs: [],
-        name: 'getReserves',
-        outputs: [
-          { internalType: 'uint112', name: '_reserve0', type: 'uint112' },
-          { internalType: 'uint112', name: '_reserve1', type: 'uint112' },
-          { internalType: 'uint32', name: '_blockTimestampLast', type: 'uint32' },
-        ],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
-
-    call({
-      ctx,
-      target: contract.address,
-      abi: {
-        inputs: [],
-        name: 'totalSupply',
-        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-        stateMutability: 'view',
-        type: 'function',
-      },
-    }),
+    call({ ctx, target: contract.address, abi: abi.token0 }),
+    call({ ctx, target: contract.address, abi: abi.token1 }),
+    call({ ctx, target: contract.address, abi: abi.getReserves }),
+    call({ ctx, target: contract.address, abi: abi.totalSupply }),
   ])
   const [_reserve0, _reserve1] = underlyingsTokensReservesRes
 

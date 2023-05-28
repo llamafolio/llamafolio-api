@@ -3,7 +3,6 @@ import { ADDRESS_ZERO } from '@lib/contract'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
-import { isSuccess } from '@lib/type'
 
 import type { Registry } from './registries'
 
@@ -160,18 +159,18 @@ const abi = {
     outputs: [{ name: '', type: 'address[8]' }],
     gas: 21345,
   },
-}
+} as const
 
 export interface PoolContract extends Contract {
-  lpToken: string
-  pool: string
+  lpToken: `0x${string}`
+  pool: `0x${string}`
   registry: string
   registryId: Registry
 }
 
-export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Record<Registry, string>>) {
+export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Record<Registry, `0x${string}`>>) {
   const poolContracts: PoolContract[] = []
-  let calls: Call[] = []
+  const poolListCalls: Call<typeof abi.pool_list>[] = []
 
   const registriesIds = Object.keys(registries) as Registry[]
   const registriesAddresses = Object.values(registries)
@@ -182,29 +181,25 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
     abi: abi.pool_count,
   })
 
-  const poolsCounts = poolsCountRes.map((res) => (res.success ? parseInt(res.output) : 0))
+  const poolsCounts = poolsCountRes.map((res) => (res.success ? Number(res.output) : 0))
 
   for (let registryIdx = 0; registryIdx < registriesAddresses.length; registryIdx++) {
     for (let poolIdx = 0; poolIdx < poolsCounts[registryIdx]; poolIdx++) {
-      calls.push({ target: registriesAddresses[registryIdx], params: [poolIdx] })
+      poolListCalls.push({ target: registriesAddresses[registryIdx], params: [BigInt(poolIdx)] })
     }
   }
 
-  const poolsListRes = await multicall<string, [number], string>({
-    ctx,
-    calls,
-    abi: abi.pool_list,
-  })
+  const poolsListRes = await multicall({ ctx, calls: poolListCalls, abi: abi.pool_list })
 
   // lists of pools per registry
-  const registriesPools: string[][] = registriesAddresses.map(() => [])
+  const registriesPools: `0x${string}`[][] = registriesAddresses.map(() => [])
 
   let callIdx = 0
   for (let registryIdx = 0; registryIdx < registriesAddresses.length; registryIdx++) {
     for (let poolIdx = 0; poolIdx < poolsCounts[registryIdx]; poolIdx++) {
       const poolListRes = poolsListRes[callIdx]
 
-      if (isSuccess(poolListRes)) {
+      if (poolListRes.success) {
         registriesPools[registryIdx].push(poolListRes.output)
       }
 
@@ -212,7 +207,7 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
     }
   }
 
-  calls = []
+  const calls: Call<typeof abi.get_lp_token>[] = []
 
   for (let registryIdx = 0; registryIdx < registriesPools.length; registryIdx++) {
     for (let poolIdx = 0; poolIdx < registriesPools[registryIdx].length; poolIdx++) {
@@ -221,16 +216,15 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
   }
 
   const [lpTokensRes, poolNamesRes, ...registriesCoins] = await Promise.all([
-    multicall<string, [string], string>({ ctx, calls, abi: abi.get_lp_token }),
-    multicall<string, [string], string>({ ctx, calls, abi: abi.get_pool_name }),
+    multicall({ ctx, calls, abi: abi.get_lp_token }),
+    multicall({ ctx, calls, abi: abi.get_pool_name }),
 
     ...registriesIds.map((registryId, registryIdx) =>
-      multicall<string, [string], string[]>({
+      multicall({
         ctx,
-        calls: registriesPools[registryIdx].map((pool) => ({
-          target: registriesAddresses[registryIdx],
-          params: [pool],
-        })),
+        calls: registriesPools[registryIdx].map(
+          (pool) => ({ target: registriesAddresses[registryIdx], params: [pool] } as const),
+        ),
         // Registries get_coins implementations are different
         abi: abi.get_coins[registryId],
       }),
@@ -245,18 +239,18 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
       const lpTokenRes = lpTokensRes[callIdx]
       const nameRes = poolNamesRes[callIdx]
       const coinsRes = registryCoins[poolIdx]
-      const pool = lpTokenRes.input.params[0]
+      const pool = lpTokenRes.input.params![0]
       const registryId = registriesIds[registryIdx]
-      let lpToken: string | undefined = undefined
+      let lpToken: `0x${string}` | undefined = undefined
 
       // Factory LP tokens are the same as the pool
       if (registryId === 'stableFactory' || registryId === 'cryptoFactory') {
         lpToken = pool
-      } else if (isSuccess(lpTokenRes)) {
+      } else if (lpTokenRes.success) {
         lpToken = lpTokenRes.output
       }
 
-      if (lpToken && isSuccess(coinsRes)) {
+      if (lpToken && coinsRes.success) {
         const contract: PoolContract = {
           chain: ctx.chain,
           name: nameRes.success ? nameRes.output : undefined,

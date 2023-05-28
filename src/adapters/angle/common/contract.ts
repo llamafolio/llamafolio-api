@@ -1,6 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   staking_token: {
@@ -29,7 +29,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const API_URL = 'https://api.angle.money/v1/pools'
 
@@ -48,15 +48,16 @@ export async function getStablePoolContractsFromAPI(ctx: BaseContext, chainId: n
 
 export async function getAnglePoolsContract(
   ctx: BaseContext,
-  poolsAddresses: Record<string, string[]>,
+  swapPools: `0x${string}`[],
+  gelatoPools: `0x${string}`[],
 ): Promise<Contract[]> {
   const contracts: Contract[] = []
   const pools: Contract[] = []
 
-  for (const poolsAddress of poolsAddresses.swap) {
+  for (const poolsAddress of swapPools) {
     pools.push({ chain: ctx.chain, address: poolsAddress, type: 'swap' })
   }
-  for (const poolsAddress of poolsAddresses.gelato) {
+  for (const poolsAddress of gelatoPools) {
     pools.push({ chain: ctx.chain, address: poolsAddress, type: 'gelato' })
   }
 
@@ -66,7 +67,7 @@ export async function getAnglePoolsContract(
     abi: abi.staking_token,
   })
 
-  const calls = lpTokensRes.map((res) => (isSuccess(res) ? { target: res.output } : null))
+  const calls = mapSuccess(lpTokensRes, (res) => ({ target: res.output }))
 
   const [underlyingsTokens0Res, underlyingsTokens1Res] = await Promise.all([
     multicall({ ctx, calls, abi: abi.token0 }),
@@ -79,7 +80,7 @@ export async function getAnglePoolsContract(
     const underlyingsToken0Res = underlyingsTokens0Res[poolIdx]
     const underlyingsToken1Res = underlyingsTokens1Res[poolIdx]
 
-    if (!isSuccess(lpTokenRes) || !isSuccess(underlyingsToken0Res) || !isSuccess(underlyingsToken1Res)) {
+    if (!lpTokenRes.success || !underlyingsToken0Res.success || !underlyingsToken1Res.success) {
       continue
     }
 

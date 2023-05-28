@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber, utils } from 'ethers'
 
 const abi = {
@@ -20,7 +19,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 export async function getWombatLpBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
@@ -28,12 +27,14 @@ export async function getWombatLpBalances(ctx: BalancesContext, pools: Contract[
   const [userBalancesRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] })),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
       abi: abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.provider, params: [(pool.underlyings![0] as Contract).address] })),
+      calls: pools.map(
+        (pool) => ({ target: pool.provider, params: [(pool.underlyings![0] as Contract).address] } as const),
+      ),
       abi: abi.exchangeRate,
     }),
   ])
@@ -44,7 +45,7 @@ export async function getWombatLpBalances(ctx: BalancesContext, pools: Contract[
     const userBalanceRes = userBalancesRes[poolIdx]
     const exchangeRateRes = exchangeRatesRes[poolIdx]
 
-    if (!underlying || !isSuccess(userBalanceRes) || !isSuccess(exchangeRateRes)) {
+    if (!underlying || !userBalanceRes.success || !exchangeRateRes.success) {
       continue
     }
 

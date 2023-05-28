@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 
 const abi = {
@@ -23,7 +22,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const PILLS: Token = {
   chain: 'fantom',
@@ -42,7 +41,10 @@ const WFTM: Token = {
 export async function getMorpheusStakersBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
+  const calls: Call<typeof abi.userInfo>[] = stakers.map((staker) => ({
+    target: staker.address,
+    params: [ctx.address],
+  }))
 
   const [userBalancesRes, pendingRewardsRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userInfo }),
@@ -54,14 +56,14 @@ export async function getMorpheusStakersBalances(ctx: BalancesContext, stakers: 
     const userBalanceRes = userBalancesRes[stakeIdx]
     const pendingRewardRes = pendingRewardsRes[stakeIdx]
 
-    if (!isSuccess(userBalanceRes) || !isSuccess(pendingRewardRes)) {
+    if (!userBalanceRes.success || !pendingRewardRes.success) {
       continue
     }
 
     balances.push({
       ...staker,
       decimals: 18,
-      amount: BigNumber.from(userBalanceRes.output.amount),
+      amount: BigNumber.from(userBalanceRes.output[0]),
       underlyings: [PILLS],
       rewards: [{ ...WFTM, amount: BigNumber.from(pendingRewardRes.output) }],
       category: 'stake',

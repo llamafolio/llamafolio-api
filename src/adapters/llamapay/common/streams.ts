@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 import { BigNumber } from 'ethers'
 import { gql, request } from 'graphql-request'
 
@@ -21,7 +20,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const endpoints: Partial<Record<Chain, string>> = {
   arbitrum: 'https://api.thegraph.com/subgraphs/name/nemusonaneko/llamapay-arbitrum',
@@ -70,26 +69,31 @@ export async function getPayeeStreams(ctx: BalancesContext) {
 
   const withdrawablesRes = await multicall({
     ctx,
-    calls: streams.map((stream: any) => ({
-      target: stream.contract.address,
-      params: [stream.payer.id, ctx.address, stream.amountPerSec],
-    })),
+    calls: streams.map(
+      (stream: any) =>
+        ({
+          target: stream.contract.address,
+          params: [stream.payer.id, ctx.address, stream.amountPerSec],
+        } as const),
+    ),
     abi: abi.withdrawable,
   })
 
   for (let streamIdx = 0; streamIdx < streams.length; streamIdx++) {
     const stream = streams[streamIdx]
     const withdrawableRes = withdrawablesRes[streamIdx]
-    if (!isSuccess(withdrawableRes)) {
+    if (!withdrawableRes.success) {
       continue
     }
+
+    const [withdrawableAmount] = withdrawableRes.output
 
     balances.push({
       chain: ctx.chain,
       address: stream.token.address,
       symbol: stream.token.symbol,
       decimals: stream.token.decimals,
-      amount: BigNumber.from(withdrawableRes.output.withdrawableAmount),
+      amount: BigNumber.from(withdrawableAmount),
       category: 'reward',
     })
   }

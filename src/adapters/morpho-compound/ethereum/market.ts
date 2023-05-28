@@ -1,8 +1,9 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isNotNullish, isSuccess } from '@lib/type'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   getAllMarkets: {
@@ -35,20 +36,26 @@ export async function getMorphoMarketsContracts(ctx: BaseContext, morphoLens: Co
 
   const marketsDetailsRes = await multicall({
     ctx,
-    calls: cTokensAddressesRes.map((cToken: string) => ({ target: morphoLens.address, params: [cToken] })),
+    calls: cTokensAddressesRes.map((cToken) => ({ target: morphoLens.address, params: [cToken] } as const)),
     abi: abi.getMarketConfiguration,
   })
 
   const [decimalsRes, symbolsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: marketsDetailsRes.map((market) => (isSuccess(market) ? { target: market.output.underlying } : null)),
+      calls: mapSuccess(marketsDetailsRes, (market) => {
+        const [underlying] = market.output
+        return { target: underlying } as const
+      }),
       abi: erc20Abi.decimals,
     }),
 
     multicall({
       ctx,
-      calls: marketsDetailsRes.map((market) => (isSuccess(market) ? { target: market.output.underlying } : null)),
+      calls: mapSuccess(marketsDetailsRes, (market) => {
+        const [underlying] = market.output
+        return { target: underlying } as const
+      }),
       abi: erc20Abi.symbol,
     }),
   ])
@@ -59,18 +66,29 @@ export async function getMorphoMarketsContracts(ctx: BaseContext, morphoLens: Co
       const decimalRes = decimalsRes[idx]
       const symbolRes = symbolsRes[idx]
 
-      if (!isSuccess(marketsDetailRes) || !isSuccess(decimalRes) || !isSuccess(symbolRes)) {
+      if (!marketsDetailRes.success || !decimalRes.success || !symbolRes.success) {
         return null
       }
+
+      const [
+        underlying,
+        _isCreated,
+        _p2pDisabled,
+        _isPaused,
+        _isPartiallyPaused,
+        _reserveFactor,
+        _p2pIndexCursor,
+        collateralFactor,
+      ] = marketsDetailRes.output
 
       return {
         chain: ctx.chain,
         address: cToken,
-        collateralFactor: marketsDetailRes.output.collateralFactor,
+        collateralFactor,
         underlyings: [
           {
             chain: ctx.chain,
-            address: marketsDetailRes.output.underlying,
+            address: underlying,
             decimals: decimalRes.output,
             symbol: symbolRes.output,
           },

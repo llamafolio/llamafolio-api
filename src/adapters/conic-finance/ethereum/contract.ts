@@ -1,8 +1,8 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import { mapSuccess } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   underlying: {
@@ -26,16 +26,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
+} as const
 
 const CNC = '0x9aE380F0272E2162340a5bB646c354271c0F5cFC'
 const CRV = '0xD533a949740bb3306d119CC777fa900bA034cd52'
 const CVX = '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B'
 
-export async function getlpTokensContracts(ctx: BaseContext, pools: string[]): Promise<Contract[]> {
+export async function getlpTokensContracts(ctx: BaseContext, pools: `0x${string}`[]): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const calls: Call[] = pools.map((pool) => ({ target: pool }))
+  const calls: Call<typeof abi.lpToken>[] = pools.map((pool) => ({ target: pool }))
 
   const [lpTokensRes, underlyingsRes, rewardManagersRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.lpToken }),
@@ -43,15 +43,17 @@ export async function getlpTokensContracts(ctx: BaseContext, pools: string[]): P
     multicall({ ctx, calls, abi: abi.rewardManager }),
   ])
 
+  const lpTokenDetailsCalls = mapSuccess(lpTokensRes, (lpTokenRes) => ({ target: lpTokenRes.output }))
+
   const [symbolsRes, decimalsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: lpTokensRes.map((token) => (isSuccess(token) ? { target: token.output } : null)),
+      calls: lpTokenDetailsCalls,
       abi: erc20Abi.symbol,
     }),
     multicall({
       ctx,
-      calls: lpTokensRes.map((token) => (isSuccess(token) ? { target: token.output } : null)),
+      calls: lpTokenDetailsCalls,
       abi: erc20Abi.decimals,
     }),
   ])
@@ -65,11 +67,11 @@ export async function getlpTokensContracts(ctx: BaseContext, pools: string[]): P
     const decimalRes = decimalsRes[poolIdx]
 
     if (
-      !isSuccess(lpTokenRes) ||
-      !isSuccess(underlyingRes) ||
-      !isSuccess(rewardManagerRes) ||
-      !isSuccess(symbolRes) ||
-      !isSuccess(decimalRes)
+      !lpTokenRes.success ||
+      !underlyingRes.success ||
+      !rewardManagerRes.success ||
+      !symbolRes.success ||
+      !decimalRes.success
     ) {
       continue
     }
