@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { BigNumber } from 'ethers'
 
 const abi = {
   userInfos: {
@@ -21,7 +20,7 @@ export async function getMagpieStaker(ctx: BalancesContext, staker: Contract): P
   return {
     ...staker,
     address: staker.token!,
-    amount: BigNumber.from(deposited),
+    amount: deposited,
     underlyings: undefined,
     rewards: undefined,
     category: 'stake',

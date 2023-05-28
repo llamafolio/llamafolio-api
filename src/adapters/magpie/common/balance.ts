@@ -1,8 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
-import { BigNumber } from 'ethers'
 
 const abi = {
   stakingInfo: {
@@ -104,12 +102,16 @@ export async function getMagpieBalances(
   const [userBalancesRes, pendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.staker, ctx.address] })),
+      calls: pools.map((pool) =>
+        pool.staker ? ({ target: masterchef.address, params: [pool.staker, ctx.address] } as const) : null,
+      ),
       abi: abi.stakingInfo,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.staker, ctx.address] })),
+      calls: pools.map((pool) =>
+        pool.staker ? ({ target: masterchef.address, params: [pool.staker, ctx.address] } as const) : null,
+      ),
       abi: abi.allPendingTokens,
     }),
   ])
@@ -121,7 +123,7 @@ export async function getMagpieBalances(
     const userBalanceRes = userBalancesRes[poolIdx]
     const pendingRewardRes = pendingRewardsRes[poolIdx]
 
-    if (!underlyings || !rewards || !isSuccess(userBalanceRes) || !isSuccess(pendingRewardRes)) {
+    if (!underlyings || !rewards || !userBalanceRes.success || !pendingRewardRes.success) {
       continue
     }
 
@@ -129,18 +131,21 @@ export async function getMagpieBalances(
       // prevent duplicate MGP rewards
       .slice(1)
       .map((reward, rewardIdx) => {
-        const mgpReward = { ...(rewards[0] as Contract), amount: BigNumber.from(pendingRewardRes.output.pendingMGP) }
+        const [pendingMGP, _bonusTokenAddresses, _bonusTokenSymbols, pendingBonusRewards] = pendingRewardRes.output
+        const mgpReward = { ...(rewards[0] as Contract), amount: pendingMGP }
         const bonusReward = {
           ...(reward as Contract),
-          amount: BigNumber.from(pendingRewardRes.output.pendingBonusRewards[rewardIdx]),
+          amount: pendingBonusRewards[rewardIdx],
         }
         return [mgpReward, bonusReward]
       })
       .flat()
 
+    const [stakedAmount] = userBalanceRes.output
+
     balances.push({
       ...pool,
-      amount: BigNumber.from(userBalanceRes.output.stakedAmount),
+      amount: stakedAmount,
       underlyings,
       rewards: fmtRewards,
       category: 'farm',
@@ -152,44 +157,25 @@ export async function getMagpieBalances(
 
 export async function getMGPBalance(ctx: BalancesContext, MGP: Contract): Promise<Balance> {
   const [userBalance, pendingRewards, totalStaked, totalSupply] = await Promise.all([
-    call({
-      ctx,
-      target: MGP.staker,
-      params: [ctx.address],
-      abi: abi.balanceOf,
-    }),
-    call({
-      ctx,
-      target: MGP.staker,
-      params: [ctx.address],
-      abi: abi.allEarned,
-    }),
-    call({
-      ctx,
-      target: MGP.staker,
-      abi: abi.totalStaked,
-    }),
-    call({
-      ctx,
-      target: (MGP.underlyings?.[0] as Contract).address,
-      params: [MGP.address],
-      abi: abi.balanceOf,
-    }),
+    call({ ctx, target: MGP.staker, params: [ctx.address], abi: abi.balanceOf }),
+    call({ ctx, target: MGP.staker, params: [ctx.address], abi: abi.allEarned }),
+    call({ ctx, target: MGP.staker, abi: abi.totalStaked }),
+    call({ ctx, target: (MGP.underlyings?.[0] as Contract).address, params: [MGP.address], abi: abi.balanceOf }),
   ])
 
   const fmtRewards = MGP.rewards?.map((reward, idx) => {
-    const rewardBalance = BigNumber.from(pendingRewards[idx])
+    const rewardBalance = pendingRewards[idx]
     return { ...(reward as Contract), amount: rewardBalance }
   })
 
   const fmtUnderlying = {
     ...(MGP.underlyings?.[0] as Contract),
-    amount: BigNumber.from(userBalance).mul(totalStaked).div(totalSupply),
+    amount: (userBalance * totalStaked) / totalSupply,
   }
 
   return {
     ...MGP,
-    amount: BigNumber.from(userBalance),
+    amount: userBalance,
     underlyings: [fmtUnderlying],
     rewards: fmtRewards,
     category: 'farm',

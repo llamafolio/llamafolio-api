@@ -1,8 +1,7 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapSuccess, mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
 
 const abi = {
   poolLength: {
@@ -72,20 +71,21 @@ export async function getMagpieContracts(ctx: BaseContext, masterchef: Contract)
 
   const registeredTokensRes = await multicall({
     ctx,
-    calls: range(0, Number(poolLength)).map((_, idx) => ({ target: masterchef.address, params: [idx] })),
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterchef.address, params: [idx] } as const)),
     abi: abi.registeredToken,
   })
 
   const tokenInfosRes = await multicall({
     ctx,
-    calls: registeredTokensRes.map((token) =>
-      isSuccess(token) ? { target: masterchef.address, params: [token.output] } : null,
+    calls: mapSuccess(
+      registeredTokensRes,
+      (token) => ({ target: masterchef.address, params: [token.output] } as const),
     ),
     abi: abi.tokenToPoolInfo,
   })
 
   const contracts: Contract[] = mapSuccessFilter(tokenInfosRes, (res) => {
-    const { stakingToken, rewarder, helper } = res.output
+    const [stakingToken, _allocPoint, _lastRewardTimestamp, _accMGPPerShare, rewarder, helper] = res.output
 
     return {
       chain: ctx.chain,
@@ -114,12 +114,14 @@ const getUnderlyingsAndRewardsTokens = async (ctx: BaseContext, pools: Contract[
     const depositTokenRes = depositTokensRes[poolIdx]
     const lpTokenRes = lpTokensRes[poolIdx]
 
-    if (!isSuccess(bonusRewardsTokenRes) || !isSuccess(depositTokenRes) || !isSuccess(lpTokenRes)) {
+    if (!bonusRewardsTokenRes.success || !depositTokenRes.success || !lpTokenRes.success) {
       continue
     }
 
+    const [bonusTokenAddresses] = bonusRewardsTokenRes.output
+
     // MGP can also appears as an extraRewards
-    const noDuplicateRewards = bonusRewardsTokenRes.output.bonusTokenAddresses.filter(
+    const noDuplicateRewards = bonusTokenAddresses.filter(
       (res: string) => res.toLowerCase() !== (pool.rewards?.[0] as string).toLowerCase(),
     )
 
@@ -129,7 +131,7 @@ const getUnderlyingsAndRewardsTokens = async (ctx: BaseContext, pools: Contract[
       staker: pool.address,
       underlyings: depositTokenRes ? [depositTokenRes.output] : [pool.address],
       lpToken: lpTokenRes.output,
-      rewards: [pool.rewards, noDuplicateRewards].flat(),
+      rewards: [...(pool.rewards as `0x${string}`[]), ...noDuplicateRewards],
     })
   }
 
