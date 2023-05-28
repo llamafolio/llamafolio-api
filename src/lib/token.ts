@@ -107,7 +107,7 @@ export async function resolveContractsTokens(
     chains.map((chain) => selectChainTokens(client, chain as Chain, [...(chainsAddresses[chain as Chain] || [])])),
   )
 
-  const chainsTokens: Partial<Record<Chain, Record<string, Token>>> = {}
+  const chainsTokens: Partial<Record<Chain, Record<`0x${string}`, Token>>> = {}
 
   for (let index = 0; index < chains.length; index++) {
     const chain = chains[index] as Chain

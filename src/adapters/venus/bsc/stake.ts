@@ -69,9 +69,11 @@ export async function getVAIStakeBalance(ctx: BalancesContext, staker: Contract)
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.pendingXVS }),
   ])
 
+  const [amount] = stakeBalance
+
   return {
     ...staker,
-    amount: stakeBalance,
+    amount,
     underlyings: undefined,
     rewards: [{ ...XVS, amount: pendingXVS }],
     category: 'stake',
@@ -84,9 +86,11 @@ export async function getXVSStakeBalance(ctx: BalancesContext, staker: Contract)
     call({ ctx, target: staker.address, params: [XVS.address, 0n, ctx.address], abi: abi.pendingReward }),
   ])
 
+  const [amount] = stakeBalance
+
   return {
     ...staker,
-    amount: stakeBalance,
+    amount,
     underlyings: undefined,
     rewards: [{ ...XVS, amount: pendingXVS }],
     category: 'stake',

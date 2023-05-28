@@ -98,7 +98,7 @@ export type fmtProviderBalancesParams = Balance & {
   amount: bigint
   totalSupply: bigint
   lpToken: `0x${string}`
-  strategy: string
+  strategy: `0x${string}`
 }
 
 export const fmtNoProvider = async (
