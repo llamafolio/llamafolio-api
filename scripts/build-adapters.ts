@@ -107,6 +107,7 @@ function getAdapters() {
   const adapters: string[] = []
 
   fs.readdirSync(src).forEach(function (child) {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
     if (fs.existsSync(path.join(src, child, 'index.ts'))) {
       adapters.push(child)
     }

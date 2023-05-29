@@ -187,33 +187,28 @@ export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Co
 }
 
 export async function getLendingPoolHealthFactor(ctx: BalancesContext, lendingPool: Contract) {
-  try {
-    const userAccountDataRes = await call({
-      ctx,
-      target: lendingPool.address,
-      params: [ctx.address],
-      abi: abi.getUserAccountData,
-    })
-    const [
-      _totalCollateralBase,
-      _totalDebtBase,
-      _availableBorrowsBase,
-      _currentLiquidationThreshold,
-      _ltv,
-      healthFactorBI,
-    ] = userAccountDataRes
+  const userAccountDataRes = await call({
+    ctx,
+    target: lendingPool.address,
+    params: [ctx.address],
+    abi: abi.getUserAccountData,
+  })
+  const [
+    _totalCollateralBase,
+    _totalDebtBase,
+    _availableBorrowsBase,
+    _currentLiquidationThreshold,
+    _ltv,
+    healthFactorBI,
+  ] = userAccountDataRes
 
-    // no borrowed balance
-    if (healthFactorBI === MAX_UINT_256) {
-      return
-    }
-
-    const healthFactor = parseFloat(formatUnits(healthFactorBI, 18))
-
-    // TODO: return other metadata like LTV, available borrow etc
-    return healthFactor
-  } catch (error) {
-    console.log('Failed to get aave-v2 lending pool health factor', error)
+  // no borrowed balance
+  if (healthFactorBI === MAX_UINT_256) {
     return
   }
+
+  const healthFactor = parseFloat(formatUnits(healthFactorBI, 18))
+
+  // TODO: return other metadata like LTV, available borrow etc
+  return healthFactor
 }

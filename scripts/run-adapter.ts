@@ -16,16 +16,8 @@ type ExtendedBalance = Balance & {
   groupIdx: number
 }
 
-Object.defineProperties(BigInt.prototype, {
-  toJSON: {
-    value: function (this: bigint) {
-      return this.toString()
-    },
-  },
-})
-
 function help() {
-  console.log('npm run adapter {chain} {address}')
+  console.log('pnpm run adapter {adapter} {chain} {address}')
 }
 
 async function main() {

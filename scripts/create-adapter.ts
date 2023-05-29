@@ -50,7 +50,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
 `
 
 function help() {
-  console.log('npm run create-adapter {adapter}')
+  console.log('pnpm run create-adapter {adapter}')
 }
 
 async function main() {
@@ -65,6 +65,7 @@ async function main() {
   const slug = process.argv[2]
   const dst = path.join(__dirname, '..', 'src', 'adapters', slug)
 
+  // eslint-disable-next-line security/detect-non-literal-fs-filename
   const exists = fs.existsSync(dst)
 
   if (exists) {

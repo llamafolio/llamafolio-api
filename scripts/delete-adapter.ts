@@ -3,7 +3,7 @@ import { deleteContractsByAdapterId } from '../src/db/contracts'
 import pool from '../src/db/pool'
 
 function help() {
-  console.log('npm run delete-adapter {adapter}')
+  console.log('pnpm run delete-adapter {adapter}')
 }
 
 async function main() {

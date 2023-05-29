@@ -13,7 +13,7 @@ import { resolveContractsTokens } from '../src/lib/token'
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 function help() {
-  console.log('npm run revalidate-contracts {adapter} ?{chain}')
+  console.log('pnpm run revalidate-contracts {adapter} ?{chain}')
 }
 
 /**

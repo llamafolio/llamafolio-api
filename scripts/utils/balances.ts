@@ -2,6 +2,14 @@ import type { PricedBalance } from '../../src/lib/adapter'
 import { groupBy } from '../../src/lib/array'
 import { millify, millifyBI } from '../../src/lib/fmt'
 
+Object.defineProperties(BigInt.prototype, {
+  toJSON: {
+    value: function (this: bigint) {
+      return this.toString()
+    },
+  },
+})
+
 export interface CategoryBalances {
   title: string
   totalUSD: number

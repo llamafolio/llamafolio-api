@@ -18,7 +18,7 @@ type ExtendedBalance = Balance & {
 }
 
 function help() {
-  console.log('npm run adapter-balances {adapter} {chain} {address}')
+  console.log('pnpm run adapter-balances {adapter} {chain} {address}')
 }
 
 async function main() {

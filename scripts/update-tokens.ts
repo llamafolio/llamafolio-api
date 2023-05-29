@@ -6,7 +6,7 @@ import { insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/toke
 import { getERC20Details } from '../src/lib/erc20'
 
 function help() {
-  console.log('npm run update-tokens')
+  console.log('pnpm run update-tokens')
 }
 
 async function main() {
