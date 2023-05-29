@@ -53,14 +53,14 @@ const resolveTokenAddress = (contract: Contract) => contract.token?.toLowerCase(
 
 async function processContract(chain: Chain, contract: RawContract | Contract) {
   const tokenAddresses = new Set<string>()
-  tokenAddresses + resolveTokenAddress(contract)
+  tokenAddresses.add(resolveTokenAddress(contract))
 
   for (const underlying of contract.underlyings || []) {
-    if (typeof underlying === 'string') tokenAddresses + underlying.toLowerCase()
+    if (typeof underlying === 'string') tokenAddresses.add(underlying.toLowerCase())
   }
 
   for (const reward of contract.rewards || []) {
-    if (typeof reward === 'string') tokenAddresses + reward.toLowerCase()
+    if (typeof reward === 'string') tokenAddresses.add(reward.toLowerCase())
   }
 
   return { chain, tokenAddresses }
@@ -75,7 +75,7 @@ async function processContracts(contracts: Array<RawContract | Contract>) {
       chainsAddresses[chain] = new Set<string>()
     }
     for (const address of tokenAddresses) {
-      chainsAddresses[chain] + address
+      chainsAddresses[chain]?.add(address)
     }
   }
   return chainsAddresses
