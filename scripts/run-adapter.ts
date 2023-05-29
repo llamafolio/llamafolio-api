@@ -72,11 +72,13 @@ async function main() {
     for (let groupIdx = 0; groupIdx < groupsLen; groupIdx++) {
       const balances = balancesByGroupIdx[groupIdx]
       if (balances?.length > 0) {
-        console.log('\nGroup:')
         const { healthFactor } = balancesConfigRes?.groups?.[groupIdx] || {}
-        console.log('Metadata:')
-        console.table({ healthFactor })
-        printBalances({ balances })
+        if (healthFactor != null) {
+          console.log('\nGroup:')
+          console.log('Metadata:')
+          console.table({ healthFactor })
+        }
+        printBalances(balances)
       }
     }
 

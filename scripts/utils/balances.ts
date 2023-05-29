@@ -41,7 +41,7 @@ export function printBalances(balances: PricedBalance[]) {
       if (a.balanceUSD == null && b.balanceUSD != null) {
         return 1
       }
-      return b.balanceUSD - a.balanceUSD
+      return b.balanceUSD! - a.balanceUSD!
     })
 
     categoriesBalances.push(cat)
@@ -70,18 +70,17 @@ export function printBalances(balances: PricedBalance[]) {
           symbol: balance.symbol,
           balance: millifyBI(balance.amount / decimals),
           balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-          claimable: balance.claimable ? millifyBI(balance.claimable / decimals) : undefined,
           stable: balance.stable,
-          type: balance.type,
-          reward: '',
-          underlying: '',
+        }
+
+        if (balance.claimable) {
+          d.claimable = balance.claimable ? millifyBI(balance.claimable / decimals) : undefined
         }
 
         if (balance.rewards) {
           d.reward = balance.rewards
             .map((reward) => {
               const decimals = reward.decimals ? 10n ** BigInt(reward.decimals) : 1n
-
               return `${millifyBI(reward.amount / decimals)} ${reward.symbol}`
             })
             .join(' + ')
@@ -91,7 +90,6 @@ export function printBalances(balances: PricedBalance[]) {
           d.underlying = balance.underlyings
             .map((underlying) => {
               const decimals = underlying.decimals ? 10n ** BigInt(underlying.decimals) : 1n
-
               return `${millify(Number(underlying.amount / decimals))} ${underlying.symbol}`
             })
             .join(' + ')
