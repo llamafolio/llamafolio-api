@@ -2,6 +2,7 @@ import type { BaseContext, Contract } from '@lib/adapter'
 import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
+import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 
@@ -185,12 +186,15 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
         continue
       }
 
-      pool.underlyings = underlyingRes.output
-        .map((address) => address.toLowerCase())
-        // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address) => address !== ADDRESS_ZERO)
-        // replace ETH alias
-        .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
+      pool.underlyings = await getERC20Details(
+        ctx,
+        underlyingRes.output
+          .map((address) => address.toLowerCase())
+          // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
+          .filter((address) => address !== ADDRESS_ZERO)
+          // replace ETH alias
+          .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)) as `0x${string}`[],
+      )
     }
   }
 
@@ -255,12 +259,15 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
       continue
     }
 
-    pool.underlyings = underlyingRes.output
-      .map((address) => address.toLowerCase())
-      // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-      .filter((address) => address !== ADDRESS_ZERO)
-      // replace ETH alias
-      .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
+    pool.underlyings = await getERC20Details(
+      ctx,
+      underlyingRes.output
+        .map((address) => address.toLowerCase())
+        // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
+        .filter((address) => address !== ADDRESS_ZERO)
+        // replace ETH alias
+        .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)) as `0x${string}`[],
+    )
   }
 
   return pools
