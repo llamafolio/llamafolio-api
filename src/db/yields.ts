@@ -62,11 +62,12 @@ export async function fetchYields() {
 
   const yields: YieldOldResponse = await yieldsRes.json()
 
-  return yields.data.map(({ project, ...data }) => ({
+  return yields.data.map(({ project, underlyingTokens, ...data }) => ({
     ...data,
     chain: data.chain.toLowerCase() as Chain,
     address: extractAddress(data.pool_old),
     adapterId: project,
+    underlyings: underlyingTokens?.map((token) => token.toLowerCase()) || null,
   }))
 }
 
@@ -83,6 +84,7 @@ export interface Yield {
   apyPct1D?: number
   apyPct7D?: number
   apyPct30D?: number
+  underlyings?: string[]
 }
 
 export interface YieldStorage {
@@ -98,6 +100,7 @@ export interface YieldStorage {
   apy_pct_1d: number | null
   apy_pct_7d: number | null
   apy_pct_30d: number | null
+  underlyings: string[] | null
 }
 
 export interface YieldStorable {
@@ -113,6 +116,7 @@ export interface YieldStorable {
   apyPct1D: number | null
   apyPct7D: number | null
   apyPct30D: number | null
+  underlyings: string[] | null
 }
 
 export function toStorage(yields: Yield[]) {
@@ -132,6 +136,7 @@ export function toStorage(yields: Yield[]) {
       apy_pct_1d: _yield.apyPct1D ?? null,
       apy_pct_7d: _yield.apyPct7D ?? null,
       apy_pct_30d: _yield.apyPct30D ?? null,
+      underlyings: _yield.underlyings ?? [],
     }
 
     yieldsStorage.push(yieldStorage)
@@ -157,6 +162,7 @@ export function fromStorage(yieldsStorage: YieldStorage[]) {
       apyPct1D: yieldStorage.apy_pct_1d ?? undefined,
       apyPct7D: yieldStorage.apy_pct_7d ?? undefined,
       apyPct30D: yieldStorage.apy_mean_30d,
+      underlyings: yieldStorage.underlyings ?? undefined,
     }
 
     yields.push(_yield)
@@ -179,6 +185,7 @@ export function toRow(_yield: YieldStorable) {
     _yield.apyPct1D,
     _yield.apyPct7D,
     _yield.apyPct30D,
+    `{ ${_yield.underlyings} }`,
   ]
 }
 
@@ -209,7 +216,8 @@ export async function insertYields(client: PoolClient, yields: YieldStorable[]) 
             il_risk,
             apy_pct_1d,
             apy_pct_7d,
-            apy_pct_30d
+            apy_pct_30d,
+            underlyings
           ) VALUES %L;`,
           chunk,
         ),
