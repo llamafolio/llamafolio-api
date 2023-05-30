@@ -120,6 +120,7 @@ import pikaProtocol from '@adapters/pika-protocol'
 import platypusFinance from '@adapters/platypus-finance'
 import polkastarter from '@adapters/polkastarter'
 import popsicleFinance from '@adapters/popsicle-finance'
+import pstakeFinance from '@adapters/pstake-finance'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
 import radiantV2 from '@adapters/radiant-v2'
@@ -314,6 +315,7 @@ export const adapters: Adapter[] = [
   platypusFinance,
   polkastarter,
   popsicleFinance,
+  pstakeFinance,
   quickswapDex,
   radiantV1,
   radiantV2,
