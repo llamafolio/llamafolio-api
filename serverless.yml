@@ -35,18 +35,7 @@ provider:
           Action:
             - 'lambda:InvokeFunction'
           Resource: '*'
-        - Effect: 'Allow'
-          Action:
-            - dynamodb:DescribeTable
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:GetItem
-            - dynamodb:PutItem
-            - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
-            - dynamodb:BatchGetItem
-          Resource:
-            - 'Fn::GetAtt': [DynamoTable, Arn]
+
   environment:
     PGHOST: ${env:PGHOST}
     PGUSER: ${env:PGUSER}
@@ -54,7 +43,6 @@ provider:
     PGPASSWORD: ${env:PGPASSWORD}
     PGPORT: ${env:PGPORT}
     STAGE: ${self:custom.stage}
-    DDB_TABLE_NAME: ${self:custom.tableName}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     LLAMANODES_API_KEY: ${env:LLAMANODES_API_KEY}
     ARBITRUM_RPC: ${env:ARBITRUM_RPC}
@@ -251,10 +239,6 @@ custom:
   prune:
     automatic: true
     number: 5 # Number of versions to keep
-  tableName: ${self:custom.stage}-llamafolio-table
-
-resources:
-  - ${file(resources/dynamodb.yml)}
 
 plugins:
   - serverless-esbuild

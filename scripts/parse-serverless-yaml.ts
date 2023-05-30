@@ -90,7 +90,6 @@ interface Serverless {
       PGPASSWORD: string
       PGPORT: string
       stage: string
-      tableName: string
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: number
       LLAMANODES_API_KEY: string
       ARBITRUM_RPC: string
@@ -131,7 +130,6 @@ interface Serverless {
       automatic: boolean
       number: number
     }
-    tableName: string
   }
   resources: Array<string>
   plugins: Array<string>
