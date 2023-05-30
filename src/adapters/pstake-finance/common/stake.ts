@@ -55,7 +55,7 @@ export async function getpStakeETHBalance(ctx: BalancesContext, staker: Contract
     call({ ctx, target: staker.address, abi: abi.pricePerShare }),
   ])
 
-  const fmtUnderlyings = [{ ...underlying, amount: (exchangeRate * userBalance) / BigInt(Math.pow(10, 18)) }]
+  const fmtUnderlyings = [{ ...underlying, amount: (exchangeRate * userBalance) / 10n ** 18n }]
 
   return {
     ...staker,
