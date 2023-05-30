@@ -1,8 +1,9 @@
-import type { Balance, BalancesContext, BaseContract, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContract } from '@lib/adapter'
 import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
+import type { ChickenBondManager } from './chickenBondManager'
 import { getAccruedBLUSD } from './chickenBondManager'
 
 const BondStatus = {
@@ -46,9 +47,9 @@ const abi = {
   },
 } as const
 
-export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Contract) {
-  const LUSD = bondNFT.underlyings?.[0] as BaseContract
-  const bLUSD = bondNFT.rewards?.[0] as BaseContract
+export async function getActiveBondsBalances(ctx: BalancesContext, chickenBondManager: ChickenBondManager) {
+  const LUSD = chickenBondManager.underlyings?.[0] as BaseContract
+  const bLUSD = chickenBondManager.rewards?.[0] as BaseContract
   if (!LUSD || !bLUSD) {
     return []
   }
@@ -57,7 +58,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
 
   const balanceOfRes = await call({
     ctx,
-    target: bondNFT.address,
+    target: chickenBondManager.bondNFT,
     params: [ctx.address],
     abi: abi.balanceOf,
   })
@@ -65,7 +66,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
   const tokenOfOwnerByIndexRes = await multicall({
     ctx,
     calls: rangeBI(0n, balanceOfRes).map(
-      (bondIdx) => ({ target: bondNFT.address, params: [ctx.address, bondIdx] } as const),
+      (bondIdx) => ({ target: chickenBondManager.bondNFT, params: [ctx.address, bondIdx] } as const),
     ),
     abi: abi.tokenOfOwnerByIndex,
   })
@@ -74,7 +75,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
 
   const bondStatusRes = await multicall({
     ctx,
-    calls: tokenIDs.map((tokenID) => ({ target: bondNFT.address, params: [tokenID] } as const)),
+    calls: tokenIDs.map((tokenID) => ({ target: chickenBondManager.bondNFT, params: [tokenID] } as const)),
     abi: abi.getBondStatus,
   })
 
@@ -85,7 +86,7 @@ export async function getActiveBondsBalances(ctx: BalancesContext, bondNFT: Cont
   const [bondAmountsRes, accruedBLUSDRes] = await Promise.all([
     multicall({
       ctx,
-      calls: activeTokenIDs.map((tokenID) => ({ target: bondNFT.address, params: [tokenID] } as const)),
+      calls: activeTokenIDs.map((tokenID) => ({ target: chickenBondManager.bondNFT, params: [tokenID] } as const)),
       abi: abi.getBondAmount,
     }),
     getAccruedBLUSD(ctx, activeTokenIDs),
