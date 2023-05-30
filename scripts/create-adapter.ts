@@ -1,3 +1,4 @@
+/* eslint-disable security/detect-non-literal-fs-filename */
 import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
@@ -8,7 +9,7 @@ const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 import { fetchProtocolsLite } from '../src/lib/protocols'
 
 const adapterTemplate = (slug: string, chains: string[]) => `
-import { Adapter } from '@lib/adapter';
+import type { Adapter } from '@lib/adapter';
 
 ${chains.map((chain) => `import * as ${chain} from './${chain}'`).join(';')}
 
@@ -22,7 +23,7 @@ export default adapter;
 `
 
 const chainTemplate = `
-import { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 export const getContracts = async (ctx: BaseContext) => {
