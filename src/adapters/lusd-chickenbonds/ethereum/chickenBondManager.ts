@@ -38,18 +38,23 @@ const abi = {
   },
 } as const
 
-export async function getBondNFTContract(ctx: BaseContext) {
-  const [bondNFTRes, lusdTokenRes, bLUSDTokenRes] = await Promise.all([
+export interface ChickenBondManager extends Contract {
+  bondNFT: `0x${string}`
+}
+
+export async function getChickenBondManagerContract(ctx: BaseContext) {
+  const [bondNFT, lusdToken, bLUSDToken] = await Promise.all([
     call({ ctx, target: chickenBondManager.address, abi: abi.bondNFT }),
     call({ ctx, target: chickenBondManager.address, abi: abi.lusdToken }),
     call({ ctx, target: chickenBondManager.address, abi: abi.bLUSDToken }),
   ])
 
-  const contract: Contract = {
+  const contract: ChickenBondManager = {
     chain: 'ethereum',
-    address: bondNFTRes,
-    underlyings: [lusdTokenRes],
-    rewards: [bLUSDTokenRes],
+    address: chickenBondManager.address,
+    bondNFT,
+    underlyings: [lusdToken],
+    rewards: [bLUSDToken],
   }
 
   return contract
