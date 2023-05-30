@@ -106,9 +106,10 @@ export const getContracts = async (ctx: BaseContext) => {
 
   const filterPools = (vaultName: string) => (pool: Contract) => pool.vaultName === vaultName
 
-  const concentratorIFOPools = pools.filter(filterPools('ConcentratorIFO'))
-  const aladdinConvexPools = pools.filter(filterPools('AladdinConvexVault'))
-  const aladdinFXSConvexPools = pools.filter(filterPools('AladdinFXSConvexVault'))
+  concentratorIFOVault.pools = pools.filter(filterPools('ConcentratorIFO'))
+  aladdinConvexVault.pools = pools.filter(filterPools('AladdinConvexVault'))
+  aladdinFXSConvexVault.pools = pools.filter(filterPools('AladdinFXSConvexVault'))
+  concentratorAladdinETHVault.pools = concentratorAladdinETHPools
 
   return {
     contracts: {
@@ -119,27 +120,17 @@ export const getContracts = async (ctx: BaseContext) => {
       aCRV,
       stakers: [aFXS, afrxETH],
       abcCVX,
-      concentratorIFOPools,
-      aladdinConvexPools,
-      aladdinFXSConvexPools,
-      concentratorAladdinETHPools,
       veCTR,
-    },
-    props: {
-      concentratorIFOPools,
-      aladdinConvexPools,
-      aladdinFXSConvexPools,
-      concentratorAladdinETHPools,
     },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts, props) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    concentratorIFOVault: (...args) => getFarmBalances(...args, props.concentratorIFOPools),
-    aladdinConvexVault: (...args) => getFarmBalances(...args, props.aladdinConvexPools),
-    aladdinFXSConvexVault: (...args) => getFarmBalances(...args, props.aladdinFXSConvexPools),
-    concentratorAladdinETHVault: (...args) => getFarmBalances(...args, props.concentratorAladdinETHPools),
+    concentratorIFOVault: getFarmBalances,
+    aladdinConvexVault: getFarmBalances,
+    aladdinFXSConvexVault: getFarmBalances,
+    concentratorAladdinETHVault: getFarmBalances,
     aCRV: getStakeBalances,
     abcCVX: getOldStaleInPools,
     stakers: getStakeInPools,

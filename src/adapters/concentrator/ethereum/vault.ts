@@ -45,8 +45,9 @@ const metaRegistry: Contract = {
   address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
 }
 
-export async function getFarmBalances(ctx: BalancesContext, vault: Contract, pools: Contract[]): Promise<Balance[]> {
+export async function getFarmBalances(ctx: BalancesContext, vault: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
+  const pools = vault.pools
 
   const calls: Call<typeof abi.userInfo>[] = []
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
