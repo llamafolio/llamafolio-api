@@ -149,15 +149,6 @@ export async function selectAdaptersProps(client: PoolClient, adapters: [string,
   return fromPartialStorage(adaptersRes.rows)
 }
 
-export async function selectDefinedAdaptersContractsProps(client: PoolClient) {
-  const adaptersRes = await client.query(
-    `select id, chain, contracts_props from adapters where contracts_props is not null;`,
-    [],
-  )
-
-  return fromPartialStorage(adaptersRes.rows) as Pick<Adapter, 'id' | 'chain' | 'contractsProps'>[]
-}
-
 export async function selectLatestCreatedAdapters(client: PoolClient, limit = 5) {
   // select x last added protocols (no matter which chain) and collect
   // all of their chains we support

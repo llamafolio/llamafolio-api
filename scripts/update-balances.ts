@@ -2,14 +2,13 @@ import { sum } from '@lib/math'
 import { v4 as uuidv4 } from 'uuid'
 
 import { adapterById } from '../src/adapters'
-import { selectDefinedAdaptersContractsProps } from '../src/db/adapters'
 import type { Balance as BalanceStore } from '../src/db/balances'
 import { updateBalances } from '../src/db/balances'
 import type { BalancesGroup } from '../src/db/balances-groups'
 import { getAllContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import type { Balance, BalancesConfig, BalancesContext } from '../src/lib/adapter'
-import { groupBy, groupBy2, keyBy2 } from '../src/lib/array'
+import { groupBy, groupBy2 } from '../src/lib/array'
 import { fmtBalanceBreakdown, sanitizeBalances } from '../src/lib/balance'
 import type { Chain } from '../src/lib/chains'
 import { getPricedBalances } from '../src/lib/price'
@@ -51,22 +50,9 @@ async function main() {
   try {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
-    const [contracts, adaptersContractsProps] = await Promise.all([
-      getAllContractsInteractions(client, address),
-      selectDefinedAdaptersContractsProps(client),
-    ])
+    const contracts = await getAllContractsInteractions(client, address)
 
     const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
-    const adaptersContractsPropsByIdChain = keyBy2(adaptersContractsProps, 'id', 'chain')
-    // add adapters with contracts_props, even if there was no user interaction with any of the contracts
-    for (const adapter of adaptersContractsProps) {
-      if (!contractsByAdapterIdChain[adapter.id]) {
-        contractsByAdapterIdChain[adapter.id] = {}
-      }
-      if (!contractsByAdapterIdChain[adapter.id][adapter.chain]) {
-        contractsByAdapterIdChain[adapter.id][adapter.chain] = []
-      }
-    }
 
     const adapterIds = Object.keys(contractsByAdapterIdChain)
     // list of all [adapterId, chain]
@@ -94,11 +80,10 @@ async function main() {
           const hrstart = process.hrtime()
 
           const contracts = groupContracts(contractsByAdapterIdChain[adapterId][chain]) || []
-          const props = adaptersContractsPropsByIdChain[adapterId]?.[chain]?.contractsProps || {}
 
           const ctx: BalancesContext = { address, chain, adapterId }
 
-          const balancesConfig = await handler.getBalances(ctx, contracts, props)
+          const balancesConfig = await handler.getBalances(ctx, contracts)
 
           const hrend = process.hrtime(hrstart)
 

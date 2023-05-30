@@ -1,5 +1,4 @@
 import { adapterById } from '@adapters/index'
-import { selectDefinedAdaptersContractsProps } from '@db/adapters'
 import type { Balance as BalanceStore } from '@db/balances'
 import { updateBalances } from '@db/balances'
 import type { BalancesGroup } from '@db/balances-groups'
@@ -7,7 +6,7 @@ import { getAllContractsInteractions, groupContracts } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { Balance, BalancesConfig, BalancesContext, PricedBalance } from '@lib/adapter'
-import { groupBy, groupBy2, keyBy2 } from '@lib/array'
+import { groupBy, groupBy2 } from '@lib/array'
 import { fmtBalanceBreakdown, sanitizeBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
@@ -53,22 +52,9 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   try {
     // Fetch all protocols (with their associated contracts) that the user interacted with
     // and all unique tokens he received
-    const [contracts, adaptersContractsProps] = await Promise.all([
-      getAllContractsInteractions(client, address),
-      selectDefinedAdaptersContractsProps(client),
-    ])
+    const contracts = await getAllContractsInteractions(client, address)
 
     const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
-    const adaptersContractsPropsByIdChain = keyBy2(adaptersContractsProps, 'id', 'chain')
-    // add adapters with contracts_props, even if there was no user interaction with any of the contracts
-    for (const adapter of adaptersContractsProps) {
-      if (!contractsByAdapterIdChain[adapter.id]) {
-        contractsByAdapterIdChain[adapter.id] = {}
-      }
-      if (!contractsByAdapterIdChain[adapter.id][adapter.chain]) {
-        contractsByAdapterIdChain[adapter.id][adapter.chain] = []
-      }
-    }
 
     const adapterIds = Object.keys(contractsByAdapterIdChain)
     // list of all [adapterId, chain]
@@ -96,11 +82,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
           const hrstart = process.hrtime()
 
           const contracts = groupContracts(contractsByAdapterIdChain[adapterId][chain]) || []
-          const props = adaptersContractsPropsByIdChain[adapterId]?.[chain]?.contractsProps || {}
 
           const ctx: BalancesContext = { address, chain, adapterId }
 
-          const balancesConfig = await handler.getBalances(ctx, contracts, props)
+          const balancesConfig = await handler.getBalances(ctx, contracts)
 
           const hrend = process.hrtime(hrstart)
 

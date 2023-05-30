@@ -171,7 +171,6 @@ export type GetBalancesHandler<C extends GetContractsHandler> = (
   ctx: BalancesContext,
   // each key can be undefined as the account may not have interacted with these contracts
   contracts: ExcludeRawContract<Partial<Awaited<ReturnType<C>>['contracts']>>,
-  props: Awaited<ReturnType<C>>['props'],
 ) => BalancesConfig | Promise<BalancesConfig>
 
 export interface AdapterHandler {
