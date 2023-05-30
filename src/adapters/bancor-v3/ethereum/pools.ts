@@ -1,4 +1,4 @@
-import type { Balance, BalancesContext, BaseBalance, BaseContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseBalance, BaseContext, BaseContract, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import type { Category } from '@lib/category'
@@ -95,11 +95,11 @@ const abi = {
   },
 } as const
 
-const bancorNetwork = '0xeEF417e1D5CC832e619ae18D2F140De2999dD4fB'
-const standardRewards = '0xb0B958398ABB0b5DB4ce4d7598Fb868f5A00f372'
+const bancorNetwork = '0xeef417e1d5cc832e619ae18d2f140de2999dd4fb'
+const standardRewards = '0xb0b958398abb0b5db4ce4d7598fb868f5a00f372'
 
-export interface Program extends Contract {
-  id: number
+export interface StandardRewardsContract extends Contract {
+  ids: number[]
 }
 
 export async function getPoolsContracts(ctx: BaseContext): Promise<Contract[]> {
@@ -143,7 +143,7 @@ export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[]) 
   return balances.map((balance) => ({ ...balance, category: 'lp' as Category }))
 }
 
-export async function getProgramsContracts(ctx: BaseContext): Promise<Program[]> {
+export async function getStandardRewardsContract(ctx: BaseContext) {
   const programIds = await call({ ctx, target: standardRewards, abi: abi.programIds })
 
   const programsRes = await call({
@@ -153,47 +153,53 @@ export async function getProgramsContracts(ctx: BaseContext): Promise<Program[]>
     abi: abi.programs,
   })
 
-  return programsRes.map((programData) => ({
-    id: Number(programData.id),
+  const res: StandardRewardsContract = {
     chain: ctx.chain,
-    address: programData.poolToken,
+    address: standardRewards,
     // replace ETH alias
-    underlyings: [programData.pool === ETH_ADDR ? ADDRESS_ZERO : programData.pool],
-    rewards: [programData.rewardsToken],
-  }))
+    underlyings: programsRes.map((programData) =>
+      programData.pool.toLowerCase() === ETH_ADDR ? ADDRESS_ZERO : programData.pool,
+    ),
+    rewards: programsRes.map((programData) => programData.rewardsToken),
+    ids: programsRes.map((programData) => Number(programData.id)),
+  }
+
+  return res
 }
 
-export async function getStakeBalances(ctx: BalancesContext, standardRewards: Contract, programs: Program[]) {
+export async function getStakeBalances(ctx: BalancesContext, standardRewards: StandardRewardsContract) {
   const balances: Balance[] = []
 
   const [providerStakesRes, providerRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: programs.map(
-        (program) => ({ target: standardRewards.address, params: [ctx.address, BigInt(program.id)] } as const),
+      calls: standardRewards.ids.map(
+        (id) => ({ target: standardRewards.address, params: [ctx.address, BigInt(id)] } as const),
       ),
       abi: abi.providerStake,
     }),
     multicall({
       ctx,
-      calls: programs.map(
-        (program) => ({ target: standardRewards.address, params: [ctx.address, BigInt(program.id)] } as const),
+      calls: standardRewards.ids.map(
+        (id) => ({ target: standardRewards.address, params: [ctx.address, BigInt(id)] } as const),
       ),
       abi: abi.providerRewards,
     }),
   ])
 
-  for (let programIdx = 0; programIdx < programs.length; programIdx++) {
-    const stakeRes = providerStakesRes[programIdx]
-    const rewardsRes = providerRewardsRes[programIdx]
+  for (let idx = 0; idx < standardRewards.ids.length; idx++) {
+    const stakeRes = providerStakesRes[idx]
+    const rewardsRes = providerRewardsRes[idx]
+
+    const underlyingProgram = standardRewards.underlyings?.[idx] as BaseContract
 
     const balance: Balance = {
-      ...programs[programIdx],
+      ...underlyingProgram,
       category: 'stake',
       amount: stakeRes.success ? stakeRes.output : 0n,
       rewards: [
         {
-          ...(programs[programIdx].rewards?.[0] as BaseBalance),
+          ...(standardRewards.rewards?.[idx] as BaseBalance),
           // TODO: providerRewards.stakedAmount
           amount: rewardsRes.success ? rewardsRes.output.pendingRewards : 0n,
         },

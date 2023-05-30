@@ -1,26 +1,20 @@
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getPoolsBalances, getPoolsContracts, getProgramsContracts, getStakeBalances } from './pools'
-
-const standardRewards: Contract = {
-  chain: 'ethereum',
-  address: '0xb0B958398ABB0b5DB4ce4d7598Fb868f5A00f372',
-}
+import { getPoolsBalances, getPoolsContracts, getStakeBalances, getStandardRewardsContract } from './pools'
 
 export const getContracts = async (ctx: BaseContext) => {
-  const [pools, programs] = await Promise.all([getPoolsContracts(ctx), getProgramsContracts(ctx)])
+  const [pools, standardRewards] = await Promise.all([getPoolsContracts(ctx), getStandardRewardsContract(ctx)])
 
   return {
     contracts: { pools, standardRewards },
-    props: { programs },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts, { programs }) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: getPoolsBalances,
-    standardRewards: (ctx, standardRewards) => getStakeBalances(ctx, standardRewards, programs),
+    standardRewards: getStakeBalances,
   })
 
   return {
