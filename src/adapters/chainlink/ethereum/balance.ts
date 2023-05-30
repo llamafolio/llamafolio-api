@@ -26,10 +26,10 @@ const link: Token = {
   symbol: 'LINK',
 }
 
-export async function getChainlinkStakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
+export async function getChainlinkStakerBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
   const [balanceOf, rewardsOf] = await Promise.all([
-    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getStake }),
-    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getBaseReward }),
+    call({ ctx, target: staker.staker, params: [ctx.address], abi: abi.getStake }),
+    call({ ctx, target: staker.staker, params: [ctx.address], abi: abi.getBaseReward }),
   ])
 
   return {
