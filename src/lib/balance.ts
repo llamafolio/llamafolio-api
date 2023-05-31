@@ -307,7 +307,7 @@ export function fmtBalanceBreakdown(balance: PricedBalance): PricedBalance & Bal
   }
 }
 
-export const BALANCE_UPDATE_THRESHOLD = 5 * 60 * 1000
+export const BALANCE_UPDATE_THRESHOLD_SEC = 5 * 60
 
 /**
  * At the moment, balances are considered "stale" if they haven't been updated in the last x minutes.
@@ -317,7 +317,7 @@ export const BALANCE_UPDATE_THRESHOLD = 5 * 60 * 1000
 export function areBalancesStale(lastUpdateTimestamp: number) {
   const now = new Date().getTime()
 
-  return now - lastUpdateTimestamp > BALANCE_UPDATE_THRESHOLD
+  return now - lastUpdateTimestamp > BALANCE_UPDATE_THRESHOLD_SEC * 1000
 }
 
 type ExtendedBalance = (Balance | PricedBalance) & {

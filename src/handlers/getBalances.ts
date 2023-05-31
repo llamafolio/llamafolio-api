@@ -3,7 +3,7 @@ import { selectAreBalancesStaleByFromAddress } from '@db/balances-groups'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { ContractStandard } from '@lib/adapter'
-import { areBalancesStale, BALANCE_UPDATE_THRESHOLD, updateBalances } from '@lib/balance'
+import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC, updateBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Category } from '@lib/category'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -187,7 +187,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       groups: formatBalancesGroups(balancesGroups),
     }
 
-    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD })
+    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
