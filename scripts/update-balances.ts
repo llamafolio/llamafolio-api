@@ -1,5 +1,5 @@
 import pool from '../src/db/pool'
-import { updateBalances } from '../src/lib/balance'
+import { updateBalances } from '../src/handlers/updateBalances'
 
 function help() {
   console.log('pnpm update-balances {address}')
