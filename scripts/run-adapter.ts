@@ -47,12 +47,9 @@ async function main() {
   try {
     const contractsRes = await adapter[chain]?.getContracts(ctx, {})
 
-    const [contracts, props] = await Promise.all([
-      resolveContractsTokens(client, contractsRes?.contracts || {}, true),
-      resolveContractsTokens(client, contractsRes?.props || {}, true),
-    ])
+    const contracts = await resolveContractsTokens(client, contractsRes?.contracts || {}, true)
 
-    const balancesConfigRes = await adapter[chain]?.getBalances(ctx, contracts, props)
+    const balancesConfigRes = await adapter[chain]?.getBalances(ctx, contracts)
 
     // flatten balances and fetch their prices
     const balances: ExtendedBalance[] =

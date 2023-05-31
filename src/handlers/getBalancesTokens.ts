@@ -83,7 +83,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
             console.log(`[${walletAdapter.id}][${chain}] getBalances ${tokensByChain[chain].length} contracts`)
 
-            const balancesConfig = await handler.getBalances(ctx, contracts, {})
+            const balancesConfig = await handler.getBalances(ctx, contracts)
 
             const hrend = process.hrtime(hrstart)
 
