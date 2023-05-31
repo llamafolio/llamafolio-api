@@ -69,9 +69,9 @@ export async function getFarmBalances(ctx: BalancesContext, pools: Contract[], c
   const sushiPools: Balance[] = []
   const curvePools: Balance[] = []
 
-  const calls: Call<typeof abi.userInfo>[] = pools.map((_, idx) => ({
+  const calls: Call<typeof abi.userInfo>[] = pools.map((pool) => ({
     target: contract.address,
-    params: [BigInt(idx), ctx.address],
+    params: [pool.pid, ctx.address],
   }))
 
   const [poolBalances, poolRewards] = await Promise.all([
