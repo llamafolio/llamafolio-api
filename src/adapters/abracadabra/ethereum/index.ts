@@ -48,6 +48,7 @@ const abracadabra_MIM3LP3CRV: Contract = {
   decimals: 18,
   gauge: '0xd8b712d29381748dB89c36BCa0138d7c75866ddF',
   pool: '0x5a6A4D54456819380173272A5E8E9B9904BdF41B',
+  lpToken: '0x5a6A4D54456819380173272A5E8E9B9904BdF41B',
   symbol: 'MIM-3LP3CRV-f',
   provider: 'curve',
   underlyings: [
