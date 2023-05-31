@@ -1,11 +1,11 @@
 import { selectBalancesWithGroupsAndYieldsByFromAddress } from '@db/balances'
+import { selectAreBalancesStaleByFromAddress } from '@db/balances-groups'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { ContractStandard } from '@lib/adapter'
-import { areBalancesStale } from '@lib/balance'
+import { areBalancesStale, BALANCE_UPDATE_THRESHOLD, updateBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Category } from '@lib/category'
-import { invokeLambda } from '@lib/lambda'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface BaseFormattedBalance {
@@ -149,7 +149,7 @@ export interface BalancesResponse {
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
-  const address = event.pathParameters?.address
+  const address = event.pathParameters?.address as `0x${string}`
   if (!address) {
     return badRequest('Missing address parameter')
   }
@@ -161,6 +161,15 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const client = await pool.connect()
 
   try {
+    const shouldUpdate = Boolean(event.queryStringParameters?.update)
+
+    if (shouldUpdate) {
+      const isStale = await selectAreBalancesStaleByFromAddress(client, address)
+      if (isStale) {
+        await updateBalances(client, address)
+      }
+    }
+
     const balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
 
     const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
@@ -172,17 +181,13 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       status = 'stale'
     }
 
-    if (status !== 'success') {
-      await invokeLambda('updateBalances', { address }, 'Event')
-    }
-
     const balancesResponse: BalancesResponse = {
       status,
       updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
       groups: formatBalancesGroups(balancesGroups),
     }
 
-    return success(balancesResponse, { maxAge: 20 })
+    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')

@@ -78,6 +78,7 @@ functions:
           method: get
           path: /balances/{address}
     timeout: 15
+    memorySize: 1024
 
   getBalancesTokens:
     handler: src/handlers/getBalancesTokens.handler
@@ -221,12 +222,6 @@ functions:
     handler: src/handlers/updateYields.handler
     description: Update yields
     timeout: 300
-
-  updateBalances:
-    handler: src/handlers/updateBalances.handler
-    description: Update balances
-    timeout: 300
-    memorySize: 2000
 
 custom:
   stage: ${opt:stage, self:provider.stage}
