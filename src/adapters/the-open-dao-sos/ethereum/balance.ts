@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getERC20BalanceOf } from '@lib/erc20'
 import type { Token } from '@lib/token'
 
-const FROM_veSOS_TO_SOS = 21669 // 2.1669 * 1e4 to prevent underflow
+const FROM_veSOS_TO_SOS = 21669n // 2.1669 * 1e4 to prevent underflow
 
 export async function getOpenDaoBalances(ctx: BalancesContext, staker: Contract): Promise<Balance[]> {
   const balances = await getERC20BalanceOf(ctx, [staker] as Token[])
@@ -14,7 +14,7 @@ export async function getOpenDaoBalances(ctx: BalancesContext, staker: Contract)
       continue
     }
 
-    underlying.amount = (balance.amount * FROM_veSOS_TO_SOS) / 1e4 // 21669 -> 2.1669
+    underlying.amount = (balance.amount * FROM_veSOS_TO_SOS) / 10n ** 4n // 21669 -> 2.1669
     balance.category = 'stake'
   }
 
