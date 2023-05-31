@@ -110,6 +110,11 @@ export async function selectAreBalancesStaleByFromAddress(client: PoolClient, fr
     [fromAddress.toLowerCase()],
   )
 
+  // balances have never been updated
+  if (balancesRes.rows.length === 0) {
+    return true
+  }
+
   return balancesRes.rows[0].is_stale
 }
 
