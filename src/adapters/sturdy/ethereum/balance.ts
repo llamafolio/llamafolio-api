@@ -59,7 +59,7 @@ const underlyingsBalances = async (ctx: BalancesContext, pools: Balance[]): Prom
 
     underlyings.forEach((underlying, underlyingIdx) => {
       const underlyingBalance = underlyingsBalanceRes.output[underlyingIdx]
-      ;(underlying as Balance).amount = (underlyingBalance * amount) / totalSupplyRes.output || 0n
+      ;(underlying as Balance).amount = (underlyingBalance * amount) / totalSupplyRes.output
     })
   }
 

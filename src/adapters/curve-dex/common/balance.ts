@@ -135,22 +135,14 @@ export const getUnderlyingsPoolsBalances = async (
 ): Promise<Balance[]> => {
   const underlyingsBalancesInPools: Balance[] = []
 
-  const calls: Call<any>[] = []
   const suppliesCalls: Call<typeof erc20Abi.totalSupply>[] = []
-  let optionAbiBalances = {}
-  let optionAbiDecimals = {}
+  const optionAbiBalances = underlyingsAbi ? abi.get_underlying_balances : abi.get_balances
+  const optionAbiDecimals = underlyingsAbi ? abi.get_underlying_decimals : abi.get_decimals
+  const calls: Call<any>[] = []
 
   for (const pool of pools as Contract[]) {
     calls.push({ target: registry ? registry.address : pool.registry, params: [pool.pool] })
     suppliesCalls.push({ target: pool.lpToken })
-
-    if (underlyingsAbi !== true) {
-      optionAbiBalances = abi.get_balances
-      optionAbiDecimals = abi.get_decimals
-    } else {
-      optionAbiBalances = abi.get_underlying_balances
-      optionAbiDecimals = abi.get_underlying_decimals
-    }
   }
 
   const [totalSuppliesRes, underlyingsBalanceOfRes, underlyingsDecimalsRes] = await Promise.all([
@@ -201,7 +193,7 @@ export const getUnderlyingsPoolsBalances = async (
       poolBalance.underlyings?.push({
         ...underlyings[underlyingIdx],
         decimals: underlyingsDecimals,
-        amount: (underlyingsBalance * poolBalance.amount) / poolBalance.totalSupply!,
+        amount: (underlyingsBalance * poolBalance.amount) / totalSupply,
       })
     }
 
