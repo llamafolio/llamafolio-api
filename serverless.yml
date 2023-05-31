@@ -226,6 +226,7 @@ functions:
     handler: src/handlers/updateBalances.handler
     description: Update balances
     timeout: 300
+    memorySize: 512
 
 custom:
   stage: ${opt:stage, self:provider.stage}
