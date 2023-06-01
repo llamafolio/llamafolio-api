@@ -1,5 +1,5 @@
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
-import { isNotNullish } from '@lib/type'
+import type { Token } from '@lib/token'
 
 import { getHealthFactor, getProxiesBalances } from './balances'
 import { getCdpidFromProxiesAddresses } from './cdpid'
@@ -48,21 +48,22 @@ const Vat: Contract = {
   address: '0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B',
 }
 
+const DAI: Token = {
+  chain: 'ethereum',
+  address: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
+  decimals: 18,
+  symbol: 'DAI',
+}
+
 export const getContracts = () => {
   return {
-    contracts: { MakerProxyRegistry, InstadAppProxyRegistry },
-    props: { MakerProxyRegistry, InstadAppProxyRegistry },
+    contracts: { MakerProxyRegistry, InstadAppProxyRegistry, DAI },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, _contracts, props) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx) => {
   const proxies = (
-    await Promise.all(
-      [
-        props.MakerProxyRegistry ? getMakerContracts(ctx, MakerProxyRegistry) : null,
-        props.InstadAppProxyRegistry ? getInstaDappContracts(ctx, InstadAppProxyRegistry) : null,
-      ].filter(isNotNullish),
-    )
+    await Promise.all([getMakerContracts(ctx, MakerProxyRegistry), getInstaDappContracts(ctx, InstadAppProxyRegistry)])
   ).flat()
 
   const cdpid = await getCdpidFromProxiesAddresses(ctx, getCdps, cdpManager, proxies)
