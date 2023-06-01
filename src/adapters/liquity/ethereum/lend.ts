@@ -101,7 +101,14 @@ export const getHealthFactor = async (ctx: BalancesContext, balances: Balance[])
     .filter((balance) => balance.category === 'borrow')
     .map((balance) => (balance.amount * MCR) / parseEther('1.0'))
 
-  const healthFactor = Number((lendAmounts[0] * 1000n) / borrowAmounts[0]) / 1000
+  const lendAmount = Number(lendAmounts[0])
+  const borrowAmount = Number(borrowAmounts[0])
+
+  if (!borrowAmounts || borrowAmount === 0) {
+    return
+  }
+
+  const healthFactor = Number((lendAmount * 1000) / borrowAmount) / 1000
 
   return healthFactor
 }
