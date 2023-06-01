@@ -83,7 +83,7 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
     category: 'borrow',
     symbol: 'LUSD',
     decimals: 18,
-    address: '0x5f98805A4E8be255a32880FDeC7F6728C6568bA0',
+    address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0',
     amount: debt,
   })
 
@@ -93,22 +93,19 @@ export async function getLendBalances(ctx: BalancesContext, troveManager: Contra
 export const getHealthFactor = async (ctx: BalancesContext, balances: Balance[]): Promise<number | undefined> => {
   const priceFeedRes = await call({ ctx, target: priceFeed.address, abi: abi.Price })
 
-  const lendAmounts = balances
-    .filter((balance) => balance.category === 'lend')
-    .map((balance) => (balance.amount * priceFeedRes) / parseEther('1.0'))
+  const lendBalance = balances.find(
+    (balance) => balance.category === 'lend' && balance.address === '0x0000000000000000000000000000000000000000',
+  )
+  const borrowBalance = balances.find(
+    (balance) => balance.category === 'borrow' && balance.address === '0x5f98805a4e8be255a32880fdec7f6728c6568ba0',
+  )
 
-  const borrowAmounts = balances
-    .filter((balance) => balance.category === 'borrow')
-    .map((balance) => (balance.amount * MCR) / parseEther('1.0'))
+  const lendAmount = ((lendBalance?.amount || 0n) * priceFeedRes) / parseEther('1.0')
+  const borrowAmount = ((borrowBalance?.amount || 0n) * MCR) / parseEther('1.0')
 
-  const lendAmount = Number(lendAmounts[0])
-  const borrowAmount = Number(borrowAmounts[0])
-
-  if (!borrowAmounts || borrowAmount === 0) {
+  if (borrowAmount === 0n) {
     return
   }
 
-  const healthFactor = Number((lendAmount * 1000) / borrowAmount) / 1000
-
-  return healthFactor
+  return Number(lendAmount) / Number(borrowAmount)
 }
