@@ -57,9 +57,11 @@ export const getContracts = () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  console.log(contracts)
+
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     stabilityPool: getFarmBalance,
-    troveManager: getLendBalances,
+    borrowerOperations: (...args) => getLendBalances(...args, borrowerOperations),
     lqtyStaking: getStakeBalances,
   })
 

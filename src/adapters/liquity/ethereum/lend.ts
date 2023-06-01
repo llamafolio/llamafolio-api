@@ -57,7 +57,7 @@ const priceFeed: Contract = {
 }
 const MCR = parseEther('1.1')
 
-export async function getLendBalances(ctx: BalancesContext, troveManager: Contract) {
+export async function getLendBalances(ctx: BalancesContext, borrowerOperations: Contract, troveManager: Contract) {
   const balances: Balance[] = []
 
   const troveDetailsRes = await call({
