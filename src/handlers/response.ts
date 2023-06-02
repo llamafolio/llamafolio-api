@@ -63,8 +63,9 @@ export function badRequest(message: string) {
   })
 }
 
-export function notFound(message?: string) {
+export function notFound(message?: string, options?: Partial<ResponseOptions>) {
   return response({
+    ...options,
     statusCode: 404,
     body: { message },
   })

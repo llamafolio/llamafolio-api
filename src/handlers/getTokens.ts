@@ -1,7 +1,6 @@
-import { badRequest, success } from '@handlers/response'
+import { badRequest, notFound, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
-import type { Token } from '@lib/token'
 import { getToken } from '@llamafolio/tokens'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -21,7 +20,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  const token = getToken(chain, address?.toLowerCase()) as Token
+  const token = getToken(chain, address?.toLowerCase())
+
+  if (!token) {
+    return notFound('Token not found', { maxAge: 60 * 60 })
+  }
 
   return success(token, { maxAge: 60 * 60 })
 }
