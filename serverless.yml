@@ -179,7 +179,7 @@ functions:
     events:
       - httpApi:
           method: get
-          path: /tokens/{address}
+          path: /tokens/{chain}/{address}
 
   getTokenHolders:
     handler: src/handlers/getTokenHolders.handler

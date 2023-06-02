@@ -1,46 +1,27 @@
-import { success } from '@handlers/response'
+import { badRequest, success } from '@handlers/response'
+import { isHex } from '@lib/buf'
+import type { Chain } from '@lib/chains'
 import type { Token } from '@lib/token'
 import { getToken } from '@llamafolio/tokens'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
-/**
- * Get tokens of given addresses
- * Tokens are comma separated and should be prefixed by their chain: `{chain}:{address}`
- * Or only the name of the chain to get the native coin. Ex: `arbitrum,avalanche,ethereum`
- * (Chain 'ethereum' is used by default if no chain is specified)
- */
 export const handler: APIGatewayProxyHandler = async (event) => {
-  const chainAddresses = event.pathParameters?.address?.split(',') ?? []
-  const data: { [key: string]: Token } = {}
+  const chain = event.pathParameters?.chain as Chain
+  const address = event.pathParameters?.address as `0x${string}`
 
-  for (const chainAddress of chainAddresses) {
-    const split = chainAddress.split(':')
-    let chain = 'ethereum'
-    let address: string | undefined
-
-    // chain or address
-    if (split.length === 1) {
-      if (split[0].startsWith('0x')) {
-        address = split[0]
-      } else {
-        chain = split[0]
-      }
-    } else {
-      chain = split[0]
-      address = split[1]
-    }
-
-    const token = getToken(chain, address?.toLowerCase()) as Token
-
-    if (token) {
-      data[chainAddress] = token
-    }
+  if (!chain) {
+    return badRequest('Missing chain parameter')
   }
 
-  return success(
-    {
-      data,
-    },
-    { maxAge: 10 * 60 },
-  )
+  if (!address) {
+    return badRequest('Missing address parameter')
+  }
+
+  if (!isHex(address)) {
+    return badRequest('Invalid address parameter, expected hex')
+  }
+
+  const token = getToken(chain, address?.toLowerCase()) as Token
+
+  return success(token, { maxAge: 60 * 60 })
 }
