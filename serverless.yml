@@ -179,6 +179,14 @@ functions:
     events:
       - httpApi:
           method: get
+          path: /tokens/{address}
+
+  getToken:
+    handler: src/handlers/getToken.handler
+    description: Get token
+    events:
+      - httpApi:
+          method: get
           path: /tokens/{chain}/{address}
 
   getTokenHolders:
