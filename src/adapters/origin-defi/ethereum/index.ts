@@ -1,4 +1,4 @@
-import { getOriginStakeBalance } from '@adapters/origin/ethereum/stake'
+import { getOriginStakeBalance } from '@adapters/origin-defi/ethereum/stake'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalance } from '@lib/stake'
