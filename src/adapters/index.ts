@@ -48,6 +48,7 @@ import creth2 from '@adapters/creth2'
 import curveDex from '@adapters/curve-dex'
 import definix from '@adapters/definix'
 import dydx from '@adapters/dydx'
+import ellipsisFinance from '@adapters/ellipsis-finance'
 import equalizerExchange from '@adapters/equalizer-exchange'
 import etherFi from '@adapters/ether.fi'
 import euler from '@adapters/euler'
@@ -251,6 +252,7 @@ export const adapters: Adapter[] = [
   curveDex,
   definix,
   dydx,
+  ellipsisFinance,
   equalizerExchange,
   etherFi,
   euler,
