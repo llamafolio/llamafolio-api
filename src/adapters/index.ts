@@ -43,6 +43,7 @@ import concentrator from '@adapters/concentrator'
 import conicFinance from '@adapters/conic-finance'
 import convexFinance from '@adapters/convex-finance'
 import curveDex from '@adapters/curve-dex'
+import definix from '@adapters/definix'
 import dydx from '@adapters/dydx'
 import equalizerExchange from '@adapters/equalizer-exchange'
 import etherFi from '@adapters/ether.fi'
@@ -240,6 +241,7 @@ export const adapters: Adapter[] = [
   conicFinance,
   convexFinance,
   curveDex,
+  definix,
   dydx,
   equalizerExchange,
   etherFi,
