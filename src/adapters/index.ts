@@ -44,6 +44,7 @@ import conicFinance from '@adapters/conic-finance'
 import convexFinance from '@adapters/convex-finance'
 import curveDex from '@adapters/curve-dex'
 import dydx from '@adapters/dydx'
+import ellipsisFinance from '@adapters/ellipsis-finance'
 import equalizerExchange from '@adapters/equalizer-exchange'
 import etherFi from '@adapters/ether.fi'
 import euler from '@adapters/euler'
@@ -241,6 +242,7 @@ export const adapters: Adapter[] = [
   convexFinance,
   curveDex,
   dydx,
+  ellipsisFinance,
   equalizerExchange,
   etherFi,
   euler,
