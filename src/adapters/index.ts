@@ -153,6 +153,7 @@ import spookyswap from '@adapters/spookyswap'
 import spool from '@adapters/spool'
 import stader from '@adapters/stader'
 import stakeLink from '@adapters/stake.link'
+import stakehound from '@adapters/stakehound'
 import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
 import strike from '@adapters/strike'
@@ -353,6 +354,7 @@ export const adapters: Adapter[] = [
   spool,
   stader,
   stakeLink,
+  stakehound,
   stakewise,
   stargate,
   strike,
