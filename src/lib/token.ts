@@ -11,6 +11,7 @@ export const ETH_ADDR = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 export interface Token {
   chain: Chain
   address: `0x${string}`
+  name?: string
   symbol: string
   decimals: number
   native?: boolean
