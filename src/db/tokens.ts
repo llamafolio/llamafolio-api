@@ -11,6 +11,7 @@ export interface ERC20Token {
   decimals: number
   coingeckoId?: string
   cmcId?: string | null
+  stable?: boolean | null
 }
 
 export interface ERC20TokenStorage {
@@ -21,6 +22,7 @@ export interface ERC20TokenStorage {
   decimals: number
   coingecko_id: string | null
   cmc_id: string | null
+  stable: boolean | null
 }
 
 export interface ERC20TokenStorable {
@@ -31,6 +33,7 @@ export interface ERC20TokenStorable {
   decimals: number
   coingeckoId?: string | null
   cmcId?: string | null
+  stable?: boolean | null
 }
 
 export function fromERC20Storage(tokensStorage: ERC20TokenStorage[]) {
@@ -45,6 +48,7 @@ export function fromERC20Storage(tokensStorage: ERC20TokenStorage[]) {
       decimals: tokenStorage.decimals,
       coingeckoId: tokenStorage.coingecko_id || undefined,
       cmcId: tokenStorage.cmc_id,
+      stable: tokenStorage.stable,
     }
 
     tokens.push(token)
@@ -62,6 +66,7 @@ export function toRow(token: ERC20TokenStorable) {
     token.decimals,
     token.coingeckoId,
     token.cmcId,
+    token.stable,
   ]
 }
 
@@ -69,7 +74,7 @@ export function toERC20Storage(tokens: ERC20Token[]) {
   const tokensStorable: ERC20TokenStorable[] = []
 
   for (const token of tokens) {
-    const { address, chain, name, symbol, decimals, coingeckoId, cmcId } = token
+    const { address, chain, name, symbol, decimals, coingeckoId, cmcId, stable } = token
 
     const tokenStorable: ERC20TokenStorable = {
       address,
@@ -79,6 +84,7 @@ export function toERC20Storage(tokens: ERC20Token[]) {
       decimals,
       coingeckoId,
       cmcId,
+      stable,
     }
 
     tokensStorable.push(tokenStorable)
@@ -133,10 +139,11 @@ export function insertERC20Tokens(client: PoolClient, tokens: ERC20Token[]) {
             symbol,
             decimals,
             coingecko_id,
-            cmc_id
+            cmc_id,
+            stable
           ) VALUES %L ON CONFLICT (address, chain) DO
             UPDATE SET
-              (coingecko_id, cmc_id) = (EXCLUDED.coingecko_id, EXCLUDED.cmc_id);`,
+              (coingecko_id, cmc_id, stable) = (EXCLUDED.coingecko_id, EXCLUDED.cmc_id, EXCLUDED.stable);`,
           chunk,
         ),
         [],

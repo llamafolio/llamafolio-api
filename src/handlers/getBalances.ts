@@ -57,7 +57,7 @@ function unwrapUnderlyings(balance: FormattedBalance) {
       address: underlying.address,
       symbol: underlying.symbol,
       decimals: underlying.decimals,
-      stable: underlying.stable,
+      stable: underlying.stable || balance.stable,
       price: underlying.price,
       amount: underlying.amount,
       underlyings: undefined,
@@ -85,6 +85,9 @@ function formatBaseBalance(balance: any) {
 }
 
 export function formatBalance(balance: any): FormattedBalance {
+  const underlyings = balance.data?.underlyings?.map(formatBaseBalance)
+  const rewards = balance.data?.rewards?.map(formatBaseBalance)
+
   const formattedBalance: FormattedBalance = {
     standard: balance.data?.standard,
     name: balance.data?.name || undefined,
@@ -92,7 +95,7 @@ export function formatBalance(balance: any): FormattedBalance {
     symbol: balance.data?.symbol,
     decimals: balance.data?.decimals != null ? parseInt(balance.data.decimals) : balance.data?.decimals,
     category: balance.category as Category,
-    stable: balance.data?.stable,
+    stable: balance.data?.stable || underlyings?.every((underlying: any) => underlying.stable),
     price: balance.price,
     amount: balance.amount,
     balanceUSD: balance.balanceUSD,
@@ -110,8 +113,8 @@ export function formatBalance(balance: any): FormattedBalance {
     marketPrice: balance.data?.marketPrice,
     leverage: balance.data?.leverage,
     funding: balance.data?.funding,
-    underlyings: balance.data?.underlyings?.map(formatBaseBalance),
-    rewards: balance.data?.rewards?.map(formatBaseBalance),
+    underlyings,
+    rewards,
   }
 
   return unwrapUnderlyings(formattedBalance)
