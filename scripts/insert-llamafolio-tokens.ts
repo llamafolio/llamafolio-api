@@ -22,6 +22,7 @@ async function main() {
           decimals: token.decimals,
           coingeckoId: token.coingeckoId || undefined,
           cmcId: undefined,
+          stable: token.stable,
         })
       }
     }

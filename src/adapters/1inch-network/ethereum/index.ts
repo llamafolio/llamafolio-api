@@ -7,7 +7,7 @@ import { getInchLockerBalances } from '../common/locker'
 import { getLpInchBalances } from '../common/lp'
 import { getInchStakingBalances } from '../common/stake'
 
-const farmingPoolsAddresses: string[] = [
+const farmingPoolsAddresses: `0x${string}`[] = [
   '0x598032ba8e7acb625ea6854b4696e25afa2ec9f0',
   '0x98484d4259a70b73af58180521f2eb71a3f00ae6',
   '0x2ede375d73d81dbd19ef58a75ba359dd28d25de8',
