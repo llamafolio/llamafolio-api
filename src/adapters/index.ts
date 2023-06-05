@@ -29,6 +29,7 @@ import bellaProtocol from '@adapters/bella-protocol'
 import benddao from '@adapters/benddao'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
+import binanceStakedEth from '@adapters/binance-staked-eth'
 import biswap from '@adapters/biswap'
 import blur from '@adapters/blur'
 import capFinance from '@adapters/cap-finance'
@@ -228,6 +229,7 @@ export const adapters: Adapter[] = [
   benddao,
   benqiLending,
   benqiStakedAvax,
+  binanceStakedEth,
   biswap,
   blur,
   capFinance,
