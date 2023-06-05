@@ -111,6 +111,7 @@ import multichain from '@adapters/multichain'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
 import nf3Ape from '@adapters/nf3-ape'
+import nodedao from '@adapters/nodedao'
 import olympusDao from '@adapters/olympus-dao'
 import onyxProtocol from '@adapters/onyx-protocol'
 import opynSqueeth from '@adapters/opyn-squeeth'
@@ -315,6 +316,7 @@ export const adapters: Adapter[] = [
   nemesisDao,
   nexusMutual,
   nf3Ape,
+  nodedao,
   olympusDao,
   onyxProtocol,
   opynSqueeth,
