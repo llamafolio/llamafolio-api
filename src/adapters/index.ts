@@ -44,6 +44,7 @@ import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
 import conicFinance from '@adapters/conic-finance'
 import convexFinance from '@adapters/convex-finance'
+import creth2 from '@adapters/creth2'
 import curveDex from '@adapters/curve-dex'
 import definix from '@adapters/definix'
 import dydx from '@adapters/dydx'
@@ -245,6 +246,7 @@ export const adapters: Adapter[] = [
   concentrator,
   conicFinance,
   convexFinance,
+  creth2,
   curveDex,
   definix,
   dydx,
