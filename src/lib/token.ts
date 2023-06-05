@@ -234,9 +234,11 @@ export async function resolveContractsTokens(
       }
     }
 
-    await insertERC20Tokens(client, missingTokens)
+    if (missingTokens.length > 0) {
+      await insertERC20Tokens(client, missingTokens)
 
-    console.log(`Inserted ${missingTokens.length} tokens`)
+      console.log(`Inserted ${missingTokens.length} tokens`)
+    }
   }
 
   return response
