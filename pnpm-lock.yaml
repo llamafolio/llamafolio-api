@@ -5,8 +5,8 @@ dependencies:
     specifier: ^3.329.0
     version: 3.329.0
   '@llamafolio/tokens':
-    specifier: ^0.1.65
-    version: 0.1.65
+    specifier: ^0.1.66
+    version: 0.1.66
   dotenv:
     specifier: ^16.0.3
     version: 16.0.3
@@ -1857,8 +1857,8 @@ packages:
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
     dev: true
 
-  /@llamafolio/tokens@0.1.65:
-    resolution: {integrity: sha512-Ope5+mHx1edOcK1v03FNbmAGpJDn5G1ea7MUXatuXD7gMCQc0YQi3PqqIzMMsrIhYa1kEkTKL5Ghdzwp4Diaug==}
+  /@llamafolio/tokens@0.1.66:
+    resolution: {integrity: sha512-c393o3jwjcvgcGcqok4z2YIHhyGPX/2A9QgoTqomJMIAzn9MMoBSmp6fBbrlksCXmOKs3gwKb7kWenkiBsXVZA==}
     engines: {node: '>=18', npm: '------>PLEASE USE PNPM<------', pnpm: '>=8.0.0', yarn: '------>PLEASE USE PNPM<------'}
     dev: false
 
