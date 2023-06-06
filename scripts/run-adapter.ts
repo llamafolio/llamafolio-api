@@ -1,7 +1,6 @@
 import path from 'node:path'
 import url from 'node:url'
 
-import pool from '../src/db/pool'
 import type { Adapter, Balance, BalancesContext } from '../src/lib/adapter'
 import { groupBy } from '../src/lib/array'
 import { sanitizeBalances } from '../src/lib/balance'
@@ -42,14 +41,12 @@ async function main() {
   const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
 
-  const client = await pool.connect()
-
   try {
     const contractsRes = await adapter[chain]?.getContracts(ctx, {})
 
     const [contracts, props] = await Promise.all([
-      resolveContractsTokens(client, contractsRes?.contracts || {}, true),
-      resolveContractsTokens(client, contractsRes?.props || {}, true),
+      resolveContractsTokens({ contractsMap: contractsRes?.contracts || {} }),
+      resolveContractsTokens({ contractsMap: contractsRes?.props || {} }),
     ])
 
     const balancesConfigRes = await adapter[chain]?.getBalances(ctx, contracts, props)
@@ -86,8 +83,6 @@ async function main() {
     console.log(`Completed in ${endTime - startTime}ms`)
   } catch (error) {
     console.log('Failed to run adapter', error)
-  } finally {
-    client.release(true)
   }
 }
 
