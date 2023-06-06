@@ -166,7 +166,6 @@ export async function updateBalances(client: PoolClient, address: `0x${string}`)
         debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
         timestamp: now,
         healthFactor: balanceConfig.groups[groupIdx].healthFactor,
-        balances: groupBalances,
       }
 
       balancesGroupsStore.push(balancesGroup)
@@ -174,7 +173,5 @@ export async function updateBalances(client: PoolClient, address: `0x${string}`)
   }
 
   // Update balances
-  await updateDBBalances(client, address, balancesGroupsStore, balancesStore)
-
-  return balancesGroupsStore
+  return updateDBBalances(client, address, balancesGroupsStore, balancesStore)
 }

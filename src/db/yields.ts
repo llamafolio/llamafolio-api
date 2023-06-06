@@ -189,28 +189,6 @@ export function toRow(_yield: YieldStorable) {
   ]
 }
 
-export async function selectYieldsIn(client: PoolClient, values: [Chain, string, string][]) {
-  const res = await client.query(
-    format(
-      `
-  select
-    y.chain,
-    y.adapter_id,
-    y.address,
-    y.apy,
-    y.apy_base,
-    y.apy_reward,
-    y.apy_mean_30d,
-    y.il_risk
-  from yields y
-  where (y.chain, y.adapter_id, y.address) in (%L);`,
-      values,
-    ),
-  )
-
-  return fromStorage(res.rows)
-}
-
 export async function deleteAllYields(client: PoolClient) {
   return client.query('DELETE FROM yields WHERE true;', [])
 }
