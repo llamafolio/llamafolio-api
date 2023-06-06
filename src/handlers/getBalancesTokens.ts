@@ -49,7 +49,7 @@ export interface BalancesErc20Response {
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
-  const address = event.pathParameters?.address
+  const address = event.pathParameters?.address as `0x${string}` | undefined
   if (!address) {
     return badRequest('Missing address parameter')
   }
@@ -83,7 +83,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
             console.log(`[${walletAdapter.id}][${chain}] getBalances ${tokensByChain[chain].length} contracts`)
 
-            const balancesConfig = await handler.getBalances(ctx, contracts, {})
+            const balancesConfig = await handler.getBalances(ctx, contracts)
 
             const hrend = process.hrtime(hrstart)
 
