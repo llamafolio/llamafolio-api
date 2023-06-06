@@ -1,15 +1,21 @@
 import { selectBalancesWithGroupsAndYieldsByFromAddress } from '@db/balances'
-import { selectAreBalancesStaleByFromAddress } from '@db/balances-groups'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
-import { updateBalances } from '@handlers/updateBalances'
 import type { ContractStandard } from '@lib/adapter'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Category } from '@lib/category'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
-export interface BaseFormattedBalance {
+export interface Yield {
+  apy?: number
+  apyBase?: number
+  apyReward?: number
+  apyMean30d?: number
+  ilRisk?: boolean
+}
+
+export interface BaseFormattedBalance extends Yield {
   standard?: ContractStandard
   name?: string
   address: string
@@ -22,11 +28,6 @@ export interface BaseFormattedBalance {
   balanceUSD?: number
   rewardUSD?: number
   debtUSD?: number
-  apy?: number
-  apyBase?: number
-  apyReward?: number
-  apyMean30d?: number
-  ilRisk?: boolean
   unlockAt?: number
   underlyings?: FormattedBalance[]
   rewards?: FormattedBalance[]
@@ -132,7 +133,7 @@ export function formatBalancesGroups(balancesGroups: any[]) {
   }))
 }
 
-interface GroupResponse {
+export interface GroupResponse {
   protocol: string
   chain: string
   balanceUSD: number
@@ -142,10 +143,10 @@ interface GroupResponse {
   balances: FormattedBalance[]
 }
 
-export type TStatus = 'empty' | 'stale' | 'success'
+export type Status = 'empty' | 'stale' | 'success'
 
 export interface BalancesResponse {
-  status: TStatus
+  status: Status
   updatedAt?: number
   groups: GroupResponse[]
 }
@@ -162,23 +163,16 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
+  console.log('Get balances', address)
+
   const client = await pool.connect()
 
   try {
-    const shouldUpdate = Boolean(event.queryStringParameters?.update)
-
-    if (shouldUpdate) {
-      const isStale = await selectAreBalancesStaleByFromAddress(client, address)
-      if (isStale) {
-        await updateBalances(client, address)
-      }
-    }
-
     const balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
 
     const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
 
-    let status: TStatus = 'success'
+    let status: Status = 'success'
     if (updatedAt === undefined) {
       status = 'empty'
     } else if (areBalancesStale(updatedAt)) {
