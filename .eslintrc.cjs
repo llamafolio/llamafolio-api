@@ -47,6 +47,7 @@ module.exports = {
         },
       },
     ],
+    '@typescript-eslint/ban-types': ['off'],
     '@typescript-eslint/no-var-requires': ['off', { allow: ['*.mjs'] }],
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],

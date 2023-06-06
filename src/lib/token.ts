@@ -3,8 +3,10 @@ import { insertERC20Tokens, selectChainTokens } from '@db/tokens'
 import type { BaseContract, Contract, RawContract } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { getERC20Details } from '@lib/erc20'
+import type { Pretty } from '@lib/type'
 import { isNotNullish } from '@lib/type'
 import type { PoolClient } from 'pg'
+import type { Address } from 'viem'
 
 export const ETH_ADDR = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
@@ -52,7 +54,7 @@ const resolveTokenAddress = (contract: Contract) => contract.token?.toLowerCase(
  * and then maps the resolved token data back to the original contracts. It also provides an option to store missing tokens in the database.
  */
 
-async function processContract(chain: Chain, contract: RawContract | Contract) {
+async function processContract(chain: Chain, contract: Pretty<RawContract> | Pretty<Contract>) {
   const tokenAddresses = new Set<string>()
   tokenAddresses.add(resolveTokenAddress(contract))
 
@@ -67,7 +69,7 @@ async function processContract(chain: Chain, contract: RawContract | Contract) {
   return { chain, tokenAddresses }
 }
 
-async function processContracts(contracts: Array<RawContract | Contract>) {
+async function processContracts(contracts: Array<Pretty<RawContract> | Pretty<Contract>>) {
   const chainsAddresses: Partial<Record<Chain, Set<string>>> = {}
 
   for (const contract of contracts) {
@@ -82,14 +84,45 @@ async function processContracts(contracts: Array<RawContract | Contract>) {
   return chainsAddresses
 }
 
-export async function resolveContractsTokens(
-  client: PoolClient,
+interface TokenSearchResponse {
+  address: Address
+  name: string
+  symbol: string
+  decimals: number
+  coingeckoId: string
+  wallet: '0' | '1'
+  stable: '0' | '1'
+  native: boolean | null
+}
+
+export async function getTokensByAddresses(chain: Chain, addresses: string[]) {
+  const url = `https://token-search-production.up.railway.app/${chain}`
+  const response = await fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(addresses),
+    headers: { 'Content-Type': 'application/json' },
+  })
+  if (!response.ok) throw new Error(`Failed to fetch tokens from ${url}`)
+  const { success, data } = (await response.json()) as {
+    success: boolean
+    data: Array<Pretty<TokenSearchResponse>> | string
+  }
+  if (!success) throw new Error(`Failed to fetch tokens from ${url}`)
+  return data
+}
+
+export async function resolveContractsTokens({
+  client,
+  contractsMap,
+  storeMissingTokens = false,
+}: {
+  client?: PoolClient
   contractsMap: {
     [key: string]: RawContract | RawContract[] | Contract | Contract[] | undefined
-  },
-  storeMissingTokens = false,
-) {
-  const contractsArray: (RawContract | Contract)[] = []
+  }
+  storeMissingTokens: boolean
+}) {
+  const contractsArray: (Pretty<RawContract> | Pretty<Contract>)[] = []
 
   for (const contracts of Object.values(contractsMap)) {
     if (Array.isArray(contracts)) {
@@ -105,7 +138,9 @@ export async function resolveContractsTokens(
 
   // get tokens info from DB
   const chainsTokensResponse = await Promise.all(
-    chains.map((chain) => selectChainTokens(client, chain as Chain, [...(chainsAddresses[chain as Chain] || [])])),
+    chains.map((chain) =>
+      selectChainTokens({ client, chain: chain as Chain, tokens: [...(chainsAddresses[chain as Chain] || [])] }),
+    ),
   )
 
   const chainsTokens: Partial<Record<Chain, Record<`0x${string}`, Token>>> = {}
@@ -207,6 +242,7 @@ export async function resolveContractsTokens(
         rewardTokens?.length === contracts.rewards?.length
       ) {
         responseContracts = {
+          //@ts-expect-error
           ...chainsTokens[contracts.chain]?.[resolveTokenAddress(contracts)],
           ...contracts,
           underlyings: underlyingTokens,
@@ -236,7 +272,7 @@ export async function resolveContractsTokens(
     }
 
     if (missingTokens.length > 0) {
-      await insertERC20Tokens(client, missingTokens)
+      await insertERC20Tokens({ client, tokens: missingTokens })
 
       console.log(`Inserted ${missingTokens.length} tokens`)
     }

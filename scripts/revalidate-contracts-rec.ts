@@ -64,8 +64,14 @@ async function main() {
       }
 
       const [contracts, props] = await Promise.all([
-        resolveContractsTokens(client, config.contracts || {}, true),
-        config.props ? resolveContractsTokens(client, config.props, true) : undefined,
+        resolveContractsTokens({ client, contractsMap: config.contracts || {}, storeMissingTokens: true }),
+        config.props
+          ? resolveContractsTokens({
+              client,
+              contractsMap: config.props || {},
+              storeMissingTokens: true,
+            })
+          : undefined,
       ])
 
       let expire_at: Date | undefined = undefined

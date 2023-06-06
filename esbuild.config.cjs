@@ -18,7 +18,7 @@ module.exports = (_) => ({
   target: 'node18',
   platform: 'node',
   minify: isProduction,
-  external: ['pg-native', 'pg-format'],
+  external: ['pg-native', 'pg-format', 'bun:sqlite'],
   drop: isProduction ? ['console', 'debugger'] : [],
   metafile: !isProduction,
   plugins: [

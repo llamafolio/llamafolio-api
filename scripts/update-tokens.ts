@@ -66,7 +66,7 @@ async function main() {
 
       console.log(tokens)
 
-      await insertERC20Tokens(client, tokens)
+      await insertERC20Tokens({ client, tokens })
 
       console.log(`Inserted ${tokens.length} tokens`)
 

@@ -211,14 +211,14 @@ export async function getAllContractsInteractions(client: PoolClient, address: s
 }
 
 export async function getContracts(client: PoolClient, address: string, chain?: Chain) {
-  const chainQuery = `
+  const chainQuery = /*sql*/ `
     select c.*, ci.name, ci.abi, ac.adapter_id from contracts c
     left join contracts_information ci on ci.contract = c.contract and ci.chain = c.chain
     left join adapters_contracts ac on ac.address = c.contract and ac.chain = c.chain
     where c.contract = $1 and c.chain = $2;
   `
 
-  const noChainQuery = `
+  const noChainQuery = /*sql*/ `
     select c.*, ci.name, ci.abi, ac.adapter_id from contracts c
     left join contracts_information ci on ci.contract = c.contract and ci.chain = c.chain
     left join adapters_contracts ac on ac.address = c.contract and ac.chain = c.chain

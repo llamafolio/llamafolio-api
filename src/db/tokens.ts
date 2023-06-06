@@ -1,7 +1,11 @@
+import fs from 'node:fs'
+
+import environment from '@environment'
 import { sliceIntoChunks } from '@lib/array'
 import type { Chain } from '@lib/chains'
 import type { PoolClient } from 'pg'
 import format from 'pg-format'
+import { getChainTokens } from 'scripts/erc20-sqlite'
 
 export interface ERC20Token {
   address: string
@@ -93,12 +97,23 @@ export function toERC20Storage(tokens: ERC20Token[]) {
   return tokensStorable
 }
 
-export async function selectChainTokens(client: PoolClient, chain: Chain, tokens: string[]) {
+export async function selectChainTokens({
+  client,
+  tokens,
+  chain,
+}: {
+  client?: PoolClient
+  tokens: string[]
+  chain: Chain
+}) {
+  if (environment.OUTSIDE_CONTRIBUTOR === 'true') {
+    return fromERC20Storage(getChainTokens(chain, tokens.join(', ')) as any[])
+  }
+  if (!client) throw new Error('No client')
   const tokensRes = await client.query(
     format(`select * from erc20_tokens where chain = %L and address in (%L);`, chain, tokens),
     [],
   )
-
   return fromERC20Storage(tokensRes.rows)
 }
 
@@ -121,10 +136,19 @@ export async function selectUndecodedChainAddresses(client: PoolClient, limit?: 
   return tokensRes.rows.map(({ chain, token }) => [chain, token])
 }
 
-export function insertERC20Tokens(client: PoolClient, tokens: ERC20Token[]) {
+export function insertERC20Tokens({ client, tokens }: { client?: PoolClient; tokens: ERC20Token[] }) {
   const values = toERC20Storage(tokens).map(toRow)
 
   if (values.length === 0) {
+    return
+  }
+
+  if (!client) {
+    console.log(
+      'missing_erc20s.json has been created. Please make a pull request to add the tokens  in missing_erc20s.json at https://github.com/llamafolio/llamafolio-tokens:\n',
+    )
+    console.log(JSON.stringify(tokens, undefined, 2))
+    fs.writeFileSync('missing_erc20s.json', JSON.stringify(tokens, undefined, 2))
     return
   }
 
@@ -132,7 +156,7 @@ export function insertERC20Tokens(client: PoolClient, tokens: ERC20Token[]) {
     sliceIntoChunks(values, 200).map((chunk) =>
       client.query(
         format(
-          `INSERT INTO erc20_tokens (
+          /*sql*/ `INSERT INTO erc20_tokens (
             address,
             chain,
             name,

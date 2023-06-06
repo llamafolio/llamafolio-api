@@ -1,5 +1,8 @@
+#!/usr/bin/env node
 import path from 'node:path'
 import url from 'node:url'
+
+import environment from '@environment'
 
 import pool from '../src/db/pool'
 import type { Adapter, Balance, BalancesContext } from '../src/lib/adapter'
@@ -30,29 +33,29 @@ async function main() {
     console.error('Missing arguments')
     return help()
   }
-
-  const startTime = Date.now()
-
   const adapterId = process.argv[2]
   const chain = process.argv[3] as Chain
   const address = process.argv[4].toLowerCase() as `0x${string}`
 
   const ctx: BalancesContext = { address, chain, adapterId }
 
-  const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
-  const adapter = module.default as Adapter
-
-  const client = await pool.connect()
+  const startTime = Date.now()
+  // const client = await pool.connect()
+  const client = environment.OUTSIDE_CONTRIBUTOR === 'false' ? await pool.connect() : undefined
 
   try {
+    const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
+    const adapter = module.default as Adapter
+
     const contractsRes = await adapter[chain]?.getContracts(ctx, {})
 
     const [contracts, props] = await Promise.all([
-      resolveContractsTokens(client, contractsRes?.contracts || {}, true),
-      resolveContractsTokens(client, contractsRes?.props || {}, true),
+      resolveContractsTokens({ client, contractsMap: contractsRes?.contracts || {}, storeMissingTokens: true }),
+      resolveContractsTokens({ client, contractsMap: contractsRes?.props || {}, storeMissingTokens: true }),
     ])
 
-    const balancesConfigRes = await adapter[chain]?.getBalances(ctx, contracts, props)
+    //@ts-expect-error
+    const balancesConfigRes = await adapter[chain].getBalances(ctx, contracts, props)
 
     // flatten balances and fetch their prices
     const balances: ExtendedBalance[] =
@@ -66,6 +69,7 @@ async function main() {
 
     console.log(`Found ${pricedBalances.length} non zero balances`)
 
+    //@ts-expect-error
     const balancesByGroupIdx = groupBy(pricedBalances, 'groupIdx')
 
     const groupsLen = balancesConfigRes?.groups.length || 0
@@ -78,6 +82,7 @@ async function main() {
           console.log('Metadata:')
           console.table({ healthFactor })
         }
+        //@ts-expect-error
         printBalances(balances)
       }
     }
@@ -87,7 +92,7 @@ async function main() {
   } catch (error) {
     console.log('Failed to run adapter', error)
   } finally {
-    client.release(true)
+    if (client) client.release(true)
   }
 }
 

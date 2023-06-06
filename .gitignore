@@ -59,3 +59,7 @@ docs/swagger/*.html
 
 _
 swagger.json
+erc20s.json
+erc20s.csv
+erc20.sqlite
+missing_erc20s.json

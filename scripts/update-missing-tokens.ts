@@ -66,7 +66,7 @@ async function main() {
           })
         }
 
-        await insertERC20Tokens(client, tokens)
+        await insertERC20Tokens({ client, tokens })
 
         const hrend = process.hrtime(hrstart)
 
