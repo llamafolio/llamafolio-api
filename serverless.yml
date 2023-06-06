@@ -77,7 +77,7 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}
-    timeout: 15
+    timeout: 29
     memorySize: 1024
 
   getBalancesTokens:

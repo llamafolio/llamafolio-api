@@ -1,15 +1,26 @@
 import { selectBalancesWithGroupsAndYieldsByFromAddress } from '@db/balances'
 import { selectAreBalancesStaleByFromAddress } from '@db/balances-groups'
 import pool from '@db/pool'
+import { selectYieldsIn } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
 import { updateBalances } from '@handlers/updateBalances'
 import type { ContractStandard } from '@lib/adapter'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Category } from '@lib/category'
+import type { Chain } from '@lib/chains'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
+import type { PoolClient } from 'pg'
 
-export interface BaseFormattedBalance {
+interface Yield {
+  apy?: number
+  apyBase?: number
+  apyReward?: number
+  apyMean30d?: number
+  ilRisk?: boolean
+}
+
+export interface BaseFormattedBalance extends Yield {
   standard?: ContractStandard
   name?: string
   address: string
@@ -22,11 +33,6 @@ export interface BaseFormattedBalance {
   balanceUSD?: number
   rewardUSD?: number
   debtUSD?: number
-  apy?: number
-  apyBase?: number
-  apyReward?: number
-  apyMean30d?: number
-  ilRisk?: boolean
   unlockAt?: number
   underlyings?: FormattedBalance[]
   rewards?: FormattedBalance[]
@@ -132,6 +138,42 @@ export function formatBalancesGroups(balancesGroups: any[]) {
   }))
 }
 
+async function withYields(client: PoolClient, balancesGroups: any[]) {
+  // [chain, adapterId, poolAddress]
+  const yieldsValues: [Chain, string, string][] = []
+
+  for (const balanceGroup of balancesGroups) {
+    for (const balance of balanceGroup.balances) {
+      yieldsValues.push([balanceGroup.chain, balanceGroup.adapterId, balance.address])
+    }
+  }
+
+  // fetch yields
+  const yields = await selectYieldsIn(client, yieldsValues)
+
+  // collect yields by [chain, adapterId, address] and attach them to balances
+  const yieldsByKey: { [key: string]: Yield } = {}
+
+  for (const y of yields) {
+    yieldsByKey[`${y.chain}-${y.adapterId}-${y.address}`] = y
+  }
+
+  for (const balanceGroup of balancesGroups) {
+    for (const balance of balanceGroup.balances) {
+      const yieldKey = `${balanceGroup.chain}-${balanceGroup.adapterId}-${balance.address}`
+      if (yieldsByKey[yieldKey]) {
+        balance.apy = yieldsByKey[yieldKey].apy
+        balance.apyBase = yieldsByKey[yieldKey].apyBase
+        balance.apyReward = yieldsByKey[yieldKey].apyReward
+        balance.apyMean30d = yieldsByKey[yieldKey].apyMean30d
+        balance.ilRisk = yieldsByKey[yieldKey].ilRisk
+      }
+    }
+  }
+
+  return balancesGroups
+}
+
 interface GroupResponse {
   protocol: string
   chain: string
@@ -162,19 +204,26 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
+  console.log('Get balances', address)
+
   const client = await pool.connect()
 
   try {
+    let balancesGroups = []
+
     const shouldUpdate = Boolean(event.queryStringParameters?.update)
 
     if (shouldUpdate) {
       const isStale = await selectAreBalancesStaleByFromAddress(client, address)
       if (isStale) {
-        await updateBalances(client, address)
-      }
-    }
+        console.log('Update balances')
 
-    const balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
+        balancesGroups = await updateBalances(client, address)
+        balancesGroups = await withYields(client, balancesGroups)
+      }
+    } else {
+      balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
+    }
 
     const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
 
