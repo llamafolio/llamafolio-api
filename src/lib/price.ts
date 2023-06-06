@@ -1,12 +1,13 @@
 import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
+import type { Chain } from '@lib/chains'
 import { mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
 // Defillama prices API requires a prefix to know where the token comes from.
 // It can be a chain or a market provider like coingecko
-export function getTokenKey(token: Token) {
+export function getTokenKey(token: { chain: Chain; address: string; coingeckoId?: string }) {
   if (token.coingeckoId) {
     return `coingecko:${token.coingeckoId}`
   }
@@ -107,7 +108,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
   }
 
   function getPricedBalance(balance: BaseBalance): PricedBalance {
-    const key = getTokenKey(balance as Token)
+    const key = getTokenKey(balance)
     if (!key) {
       console.log('Failed to get price token key for balance', balance)
       return balance

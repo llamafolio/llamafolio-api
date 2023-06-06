@@ -2,6 +2,7 @@ import { selectHistory, selectHistoryAggregate } from '@db/history'
 import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
+import type { Chain } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
@@ -10,22 +11,22 @@ import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface ITransaction {
   chain: string
-  block_number: string
+  blockNumber: string
   timestamp: number
   hash: string
-  from_address: string
-  to_address: string
-  gas_used: string
-  gas_price: string
-  input_function_name: string | undefined
+  fromAddress: string
+  toAddress: string
+  gasUsed: string
+  gasPrice: string
+  inputFunctionName: string | undefined
   success: boolean
-  adapter_id?: string | null
-  token_transfers: {
+  adapterId?: string | null
+  tokenTransfers: {
     symbol?: string
     decimals?: number
-    token_address: string
-    from_address: string
-    to_address: string
+    tokenAddress: string
+    fromAddress: string
+    toAddress: string
     value: string
     price?: number
     valueUSD?: number
@@ -82,24 +83,24 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const transactionsData: ITransaction[] = transactions.map((tx: any) => ({
       chain: tx.chain,
-      block_number: tx.block_number,
+      blockNumber: tx.block_number,
       timestamp: parseInt(tx.timestamp),
       hash: tx.hash,
-      from_address: tx.from_address,
-      to_address: tx.to_address,
-      gas_used: tx.gas,
-      gas_price: tx.gas_price,
-      input_function_name: tx.method_name?.name,
+      fromAddress: tx.from_address,
+      toAddress: tx.to_address,
+      gasUsed: tx.gas,
+      gasPrice: tx.gas_price,
+      inputFunctionName: tx.method_name?.name,
       success: tx.receipt?.status === '1',
-      adapter_id: tx.adapters_contracts?.[0]?.adapter_id,
+      adapterId: tx.adapters_contracts?.[0]?.adapter_id,
       value: tx.value,
-      token_transfers: tx.erc20_transfers_aggregate?.nodes.map((token_transfer: any) => ({
+      tokenTransfers: tx.erc20_transfers_aggregate?.nodes.map((token_transfer: any) => ({
         name: token_transfer?.token_details?.name,
         symbol: token_transfer?.token_details?.symbol,
         decimals: token_transfer?.token_details?.decimals,
-        token_address: token_transfer?.token,
-        from_address: token_transfer?.from_address,
-        to_address: token_transfer?.to_address,
+        tokenAddress: token_transfer?.token,
+        fromAddress: token_transfer?.from_address,
+        toAddress: token_transfer?.to_address,
         value: token_transfer?.value,
       })),
     }))
@@ -110,21 +111,19 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const tokensByChain: { [chain: string]: string[] } = {}
 
     for (const transaction of transactionsData) {
-      // gas transfer
-      if (transaction.value !== '0') {
-        if (!tokensByChain[transaction.chain]) {
-          tokensByChain[transaction.chain] = []
-        }
-        tokensByChain[transaction.chain].push(ADDRESS_ZERO)
+      // gas price
+      if (!tokensByChain[transaction.chain]) {
+        tokensByChain[transaction.chain] = []
       }
+      tokensByChain[transaction.chain].push(ADDRESS_ZERO)
 
       // token transfers
-      if (transaction.token_transfers) {
-        for (const transfer of transaction.token_transfers) {
+      if (transaction.tokenTransfers) {
+        for (const transfer of transaction.tokenTransfers) {
           if (!tokensByChain[transaction.chain]) {
             tokensByChain[transaction.chain] = []
           }
-          tokensByChain[transaction.chain].push(transfer.token_address)
+          tokensByChain[transaction.chain].push(transfer.tokenAddress)
         }
       }
     }
@@ -136,22 +135,26 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const prices = await getTokenPrices(tokens)
 
     for (const transaction of transactionsData) {
-      // gas transfer
-      if (transaction.value !== '0') {
-        const key = getTokenKey({ chain: transaction.chain, address: ADDRESS_ZERO } as Token)
-        if (key) {
-          const priceInfo = prices.coins[key]
-          if (priceInfo && priceInfo.decimals) {
-            transaction.price = priceInfo.price
-            transaction.valueUSD = mulPrice(BigInt(transaction.value), priceInfo.decimals, priceInfo.price)
-          }
+      const chain = transaction.chain as Chain
+
+      // gas cost
+      const gasKey = getTokenKey({ chain, address: ADDRESS_ZERO })
+      if (gasKey) {
+        const priceInfo = prices.coins[gasKey]
+        if (priceInfo) {
+          transaction.price = priceInfo.price
         }
       }
 
+      // gas transfer
+      if (transaction.value !== '0' && transaction.price) {
+        transaction.valueUSD = mulPrice(BigInt(transaction.value), 18, transaction.price)
+      }
+
       // token transfers
-      if (transaction.token_transfers) {
-        for (const transfer of transaction.token_transfers) {
-          const key = getTokenKey({ chain: transaction.chain, address: transfer.token_address } as Token)
+      if (transaction.tokenTransfers) {
+        for (const transfer of transaction.tokenTransfers) {
+          const key = getTokenKey({ chain, address: transfer.tokenAddress })
           if (key) {
             const priceInfo = prices.coins[key]
             if (priceInfo && priceInfo.decimals) {
