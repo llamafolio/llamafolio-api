@@ -47,8 +47,10 @@ async function main() {
         const contractsRes = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
 
         const [contracts, props] = await Promise.all([
-          resolveContractsTokens(client, contractsRes?.contracts || {}, true),
-          contractsRes?.props ? resolveContractsTokens(client, contractsRes?.props, true) : undefined,
+          resolveContractsTokens({ client, contractsMap: contractsRes?.contracts || {}, storeMissingTokens: true }),
+          contractsRes?.props
+            ? resolveContractsTokens({ client, contractsMap: contractsRes?.props, storeMissingTokens: true })
+            : undefined,
         ])
 
         return {
