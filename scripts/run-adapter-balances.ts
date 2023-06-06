@@ -1,7 +1,6 @@
 import path from 'node:path'
 import url from 'node:url'
 
-import { selectAdapterProps } from '../src/db/adapters'
 import { getContractsInteractions, groupContracts } from '../src/db/contracts'
 import pool from '../src/db/pool'
 import type { Adapter, Balance, BalancesContext } from '../src/lib/adapter'
@@ -46,18 +45,11 @@ async function main() {
   const client = await pool.connect()
 
   try {
-    const [contracts, adapterProps] = await Promise.all([
-      getContractsInteractions(client, address, adapterId, chain),
-      selectAdapterProps(client, adapter.id, chain),
-    ])
+    const contracts = await getContractsInteractions(client, address, adapterId, chain)
 
     console.log(`Interacted with ${contracts.length} contracts`)
 
-    const balancesConfigRes = await adapter[chain]?.getBalances(
-      ctx,
-      groupContracts(contracts) || [],
-      adapterProps?.contractsProps || {},
-    )
+    const balancesConfigRes = await adapter[chain]?.getBalances(ctx, groupContracts(contracts) || [])
 
     // flatten balances and fetch their prices
     const balances: ExtendedBalance[] =
