@@ -254,7 +254,8 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
         const contract: PoolContract = {
           chain: ctx.chain,
           name: nameRes.success ? nameRes.output : undefined,
-          address: pool,
+          // We must define address as lpToken address since user interact only with lpToken, or we cant catch interaction in index.
+          address: lpToken,
           lpToken,
           pool,
           registry: registriesAddresses[registryIdx],
