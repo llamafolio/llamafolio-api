@@ -131,6 +131,11 @@ export interface PricedBalance extends BasePricedBalance {
   type?: string
 }
 
+export type WithPrice<T extends BaseBalance> = T & {
+  rewards?: WithPrice<BaseBalance>
+  underlyings?: WithPrice<BaseBalance>
+}
+
 export interface BalancesGroup {
   balances: Balance[]
   // Metadata

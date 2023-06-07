@@ -1,6 +1,10 @@
-import type { PricedBalance } from '../../src/lib/adapter'
-import { groupBy } from '../../src/lib/array'
-import { millify, millifyBI } from '../../src/lib/fmt'
+import { groupBy } from '@lib/array'
+import { fmtBalanceBreakdown, sanitizeBalances } from '@lib/balance'
+import { millify, millifyBI } from '@lib/fmt'
+import { sum } from '@lib/math'
+import { getPricedBalances } from '@lib/price'
+
+import type { Balance, BalancesConfig, PricedBalance } from '@/lib/adapter'
 
 export interface CategoryBalances {
   title: string
@@ -62,7 +66,7 @@ export function printBalances(balances: PricedBalance[]) {
           symbol: balance.symbol,
           balance: millifyBI(balance.amount / decimals),
           balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-          stable: balance.stable,
+          stable: balance.stable || balance.underlyings?.every((underlying) => underlying.stable),
         }
 
         if (balance.claimable) {
@@ -101,5 +105,46 @@ export function printBalances(balances: PricedBalance[]) {
     }
 
     console.table(data)
+  }
+}
+
+type ExtendedBalance = Balance & {
+  groupIdx: number
+}
+
+export async function printBalancesConfig(balancesConfig: BalancesConfig) {
+  // flatten balances and fetch their prices
+  const balances: ExtendedBalance[] = balancesConfig.groups.flatMap((group, groupIdx) =>
+    group.balances.map((balance) => ({ ...balance, groupIdx })),
+  )
+
+  const sanitizedBalances = sanitizeBalances(balances)
+
+  const pricedBalances = (await getPricedBalances(sanitizedBalances)) as (PricedBalance & { groupIdx: number })[]
+
+  console.log(`Found ${pricedBalances.length} non zero balances`)
+
+  const balancesByGroupIdx = groupBy(pricedBalances, 'groupIdx')
+
+  for (let groupIdx = 0; groupIdx < balancesConfig.groups.length; groupIdx++) {
+    const { healthFactor } = balancesConfig.groups[groupIdx]
+    const balances = balancesByGroupIdx[groupIdx]
+    const balanceBreakdowns = balances.map(fmtBalanceBreakdown)
+    const balance = sum(balanceBreakdowns.map((balance) => balance.balanceUSD || 0))
+    const reward = sum(balanceBreakdowns.map((balance) => balance.rewardUSD || 0))
+    const debt = sum(balanceBreakdowns.map((balance) => balance.debtUSD || 0))
+    const netWorth = balance - debt + reward
+
+    console.log(`\nGroup ${groupIdx}:`)
+    console.table([
+      {
+        'net worth': millify(netWorth),
+        balance: millify(balance),
+        reward: millify(reward),
+        debt: millify(debt),
+        'health factor': healthFactor,
+      },
+    ])
+    printBalances(balances)
   }
 }
