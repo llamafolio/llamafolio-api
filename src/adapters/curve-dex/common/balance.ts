@@ -240,12 +240,12 @@ export const getUnderlyingsPoolsBalances = async (
   return underlyingsBalancesInPools
 }
 
-export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]) {
+export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[], registry?: Contract) {
   const uniqueRewards: Balance[] = []
   const nonUniqueRewards: Balance[] = []
 
   const [gaugesBalancesRes, claimableRewards] = await Promise.all([
-    getPoolsBalances(ctx, gauges),
+    getPoolsBalances(ctx, gauges, registry),
     multicall({
       ctx,
       calls: gauges.map((gauge) => ({ target: gauge.address, params: [ctx.address] } as const)),

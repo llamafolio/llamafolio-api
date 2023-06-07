@@ -53,7 +53,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (...args) => getLpCurveBalances(...args, metaRegistry),
-    gauges: (...args) => getGaugesBalances(...args, metaRegistry, true),
+    gauges: (...args) => getGaugesBalances(...args, metaRegistry),
     locker: (...args) => getLockerBalances(...args, feeDistributor),
     vesters: getVesterBalances,
   })

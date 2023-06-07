@@ -199,6 +199,7 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
       // registry responses seem wrong for these addresses since it returns 1e24 number with only 8 decimals or 6 decimals underlyings
       lpTokenRes.output === '0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2' || // compound-gauge
       lpTokenRes.output === '0x5282a4eF67D9C33135340fB3289cc1711c13638C' || // ib3CRV-gauge
+      lpTokenRes.output === '0x3F1B0278A9ee595635B61817630cC19DE792f506' || // ibAUD/sAUD-gauge
       !coinRes.success ||
       !underlyingRes.success
     ) {

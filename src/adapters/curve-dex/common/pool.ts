@@ -221,7 +221,11 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
     getFmtPoolsContracts(ctx, registriesAddresses[2], registriesIds[2]),
   ])
 
-  const allPools = [...stablePools, ...stableFactoryPools, ...cryptoSwapPools]
+  // Polygon is the only one to uses cryptoFactory
+  const cryptoFactoryPools =
+    ctx.chain === 'polygon' ? await getFmtPoolsContracts(ctx, registriesAddresses[3], registriesIds[3]) : []
+
+  const allPools = [...stablePools, ...stableFactoryPools, ...cryptoSwapPools, ...cryptoFactoryPools]
 
   // Check if pools use MetaStablePool and merge underlyings if a match is found
   return Promise.all(
@@ -291,7 +295,7 @@ export async function getFmtPoolsContracts(ctx: BaseContext, registry: `0x${stri
     let lpToken: `0x${string}` | undefined = undefined
 
     // Factory LP tokens are the same as the pool
-    if (registryId === 'stableFactory' || registryId === 'cryptoFactory') {
+    if (registryId !== 'stableSwap') {
       lpToken = pool
     } else if (lpTokenRes.success) {
       lpToken = lpTokenRes.output

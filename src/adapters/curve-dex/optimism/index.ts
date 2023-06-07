@@ -20,11 +20,7 @@ const xChainGaugesFactory: Contract = {
 
 export const getContracts = async (ctx: BaseContext) => {
   const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap'])
-  const pools = await getPoolsContracts(ctx, [
-    registries.stableSwap!,
-    registries.stableFactory!,
-    registries.cryptoSwap!,
-  ])
+  const pools = await getPoolsContracts(ctx, registries)
   const gauges = await getGaugesContracts(ctx, pools, xChainGaugesFactory, CRV)
 
   return {
