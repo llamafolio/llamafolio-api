@@ -228,62 +228,56 @@ export const getUnderlyingsPoolsBalances = async (
   return underlyingsBalancesInPools
 }
 
-// export async function getGaugesBalances(
-//   ctx: BalancesContext,
-//   gauges: Contract[],
-//   registry?: Contract,
-//   underlyingsAbi?: boolean,
-// ) {
-//   const uniqueRewards: Balance[] = []
-//   const nonUniqueRewards: Balance[] = []
+export async function getAvaxGaugesBalances(ctx: BalancesContext, gauges: Contract[]) {
+  const uniqueRewards: Balance[] = []
+  const nonUniqueRewards: Balance[] = []
 
-//   const gaugesBalancesRes = await getAvaxPoolsBalances(ctx, gauges /*, registry*/)
+  const [gaugesBalancesRes, claimableRewards] = await Promise.all([
+    getAvaxPoolsBalances(ctx, gauges),
+    multicall({
+      ctx,
+      calls: gauges.map((gauge) => ({ target: gauge.address, params: [ctx.address] } as const)),
+      abi: abi.claimable_reward,
+    }),
+  ])
 
-//   const calls: Call<typeof abi.claimable_reward>[] = []
-//   for (const gaugesBalance of gaugesBalancesRes) {
-//     gaugesBalance.category = 'farm'
-//     calls.push({ target: gaugesBalance.address, params: [ctx.address] })
-//   }
+  const extraRewardsCalls: Call<typeof abi.claimable_extra_reward>[] = []
+  for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
+    const gaugeBalance = gaugesBalancesRes[gaugeIdx]
+    const rewards = gaugeBalance.rewards as Contract[]
+    const claimableReward = claimableRewards[gaugeIdx]
 
-//   const claimableRewards = await multicall({ ctx, calls, abi: abi.claimable_reward })
+    if (!rewards || !claimableReward.success) {
+      continue
+    }
 
-//   const extraRewardsCalls: Call<typeof abi.claimable_extra_reward>[] = []
-//   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
-//     const gaugeBalance = gaugesBalancesRes[gaugeIdx]
-//     const rewards = gaugeBalance.rewards as Contract[]
-//     const claimableReward = claimableRewards[gaugeIdx]
+    // rewards[0] is the common reward for all pools: CRV
+    rewards[0].amount = claimableReward.output
 
-//     if (!rewards || !claimableReward.success) {
-//       continue
-//     }
+    if (rewards.length != 2) {
+      uniqueRewards.push({ ...gaugeBalance, category: 'farm' })
+      continue
+    }
 
-//     // rewards[0] is the common rewards for all pools: CRV
-//     rewards[0].amount = claimableReward.output
+    for (let rewardIdx = 1; rewardIdx < rewards.length; rewardIdx++) {
+      const reward = rewards[rewardIdx]
+      extraRewardsCalls.push({ target: (gaugeBalance as Contract).gauge, params: [ctx.address, reward.address] })
+      nonUniqueRewards.push(gaugeBalance)
+    }
+  }
 
-//     if (rewards.length != 2) {
-//       uniqueRewards.push(gaugeBalance)
-//       continue
-//     }
+  const extraRewardsRes = await multicall({ ctx, calls: extraRewardsCalls, abi: abi.claimable_extra_reward })
 
-//     for (let rewardIdx = 1; rewardIdx < rewards.length; rewardIdx++) {
-//       const reward = rewards[rewardIdx]
-//       extraRewardsCalls.push({ target: (gaugeBalance as Contract).gauge, params: [ctx.address, reward.address] })
-//       nonUniqueRewards.push(gaugeBalance)
-//     }
-//   }
+  for (let idx = 0; idx < nonUniqueRewards.length; idx++) {
+    const rewards = nonUniqueRewards[idx].rewards
+    const extraRewardRes = extraRewardsRes[idx]
 
-//   const extraRewardsRes = await multicall({ ctx, calls: extraRewardsCalls, abi: abi.claimable_extra_reward })
+    if (!rewards || !extraRewardRes.success) {
+      continue
+    }
 
-//   for (let idx = 0; idx < nonUniqueRewards.length; idx++) {
-//     const rewards = nonUniqueRewards[idx].rewards
-//     const extraRewardRes = extraRewardsRes[idx]
+    rewards[1].amount = extraRewardRes.output
+  }
 
-//     if (!rewards || !extraRewardRes.success) {
-//       continue
-//     }
-
-//     rewards[1].amount = extraRewardRes.output
-//   }
-
-//   return [...uniqueRewards, ...nonUniqueRewards]
-// }
+  return [...uniqueRewards, ...nonUniqueRewards]
+}
