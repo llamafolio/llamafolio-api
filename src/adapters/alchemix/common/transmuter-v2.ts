@@ -1,7 +1,6 @@
-import { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { Call, multicall } from '@lib/multicall'
-import { isSuccess } from '@lib/type'
-import { BigNumber } from 'ethers'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Call } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 
 const abi = {
   accounts: {
@@ -21,11 +20,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-}
-
-interface getTransmutationBalancesParams extends Balance {
-  reactiveToken: string
-}
+} as const
 
 export async function getTransmutationBalances(
   ctx: BalancesContext,
@@ -34,7 +29,7 @@ export async function getTransmutationBalances(
 ): Promise<Balance[]> {
   const synthetics: Balance[] = []
 
-  const calls: Call[] = []
+  const calls: Call<typeof abi.accounts>[] = []
   for (let idx = 0; idx < transmuters.length; idx++) {
     const transmuter = transmuters[idx]
     calls.push({ target: transmuter.address, params: [ctx.address] })
@@ -56,30 +51,36 @@ export async function getTransmutationBalances(
     const accountRes = accountsRes[idx]
     const totalValueRes = totalValuesRes[idx]
 
-    if (!isSuccess(accountRes) || !accountRes.output.depositedTokens[0]) {
+    if (!accountRes.success) {
       continue
     }
 
-    const synthetic: getTransmutationBalancesParams = {
+    const [debt, depositedTokens] = accountRes.output
+    const reactiveToken = depositedTokens[0].toLowerCase()
+
+    if (!reactiveToken) {
+      continue
+    }
+
+    const synthetic: Balance = {
       ...(borrow as Contract),
-      amount: BigNumber.from(accountRes.output.debt),
-      reactiveToken: accountRes.output.depositedTokens[0].toLowerCase(),
+      amount: debt,
       underlyings: undefined,
       rewards: undefined,
       category: 'borrow',
     }
 
-    const reactiveDetails = reactivesDetailsByAddress[synthetic.reactiveToken.toLowerCase()]
+    const reactiveDetails = reactivesDetailsByAddress[reactiveToken.toLowerCase()]
     const underlyings = reactiveDetails.underlyings?.[0] as Contract
 
-    if (!isSuccess(totalValueRes) || !underlyings) {
+    if (!totalValueRes.success || !underlyings) {
       continue
     }
 
     const reactive: Balance = {
       ...reactiveDetails,
       symbol: underlyings.symbol,
-      amount: BigNumber.from(totalValueRes.output),
+      amount: totalValueRes.output,
       underlyings: undefined,
       rewards: undefined,
       category: 'lend',
@@ -87,5 +88,6 @@ export async function getTransmutationBalances(
 
     synthetics.push(synthetic, reactive)
   }
+
   return synthetics
 }

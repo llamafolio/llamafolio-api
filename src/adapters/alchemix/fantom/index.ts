@@ -1,8 +1,7 @@
-import { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getTransmutationBalances as getTransmutationBalancesV2 } from '@adapters/alchemix/common/transmuter-v2'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { Token } from '@lib/token'
-
-import { getTransmutationBalances } from '../common/transmuter'
+import type { Token } from '@lib/token'
 
 const DAI: Token = {
   chain: 'fantom',
@@ -74,22 +73,22 @@ const alUSDtransmuter: Contract = {
   underlyings: [alUSD],
 }
 
-const reactives = [daiTransmuter, usdcTransmuter, usdtTransmuter, ydaiTransmuter, yusdcTransmuter, yusdtTransmuter]
+const reactivesV2 = [daiTransmuter, usdcTransmuter, usdtTransmuter, ydaiTransmuter, yusdcTransmuter, yusdtTransmuter]
 
-const transmuters = [alUSDtransmuter]
+const transmutersV2 = [alUSDtransmuter]
 
 export const getContracts = () => {
   return {
-    contracts: { transmuters, reactives },
+    contracts: { transmutersV2, reactivesV2 },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    transmuters: (...args) => getTransmutationBalances(...args, reactives),
+    transmutersV2: (...args) => getTransmutationBalancesV2(...args, reactivesV2),
   })
 
   return {
-    balances,
+    groups: [{ balances }],
   }
 }
