@@ -97,27 +97,6 @@ export function toStorage(balancesGroups: BalancesGroup[]) {
   return balanceGroupsStorable
 }
 
-export async function selectAreBalancesStaleByFromAddress(client: PoolClient, fromAddress: string) {
-  const balancesRes = await client.query(
-    `
-    select
-      timestamp < now() - interval '5 minutes' as is_stale
-    from balances_groups
-    where from_address = $1
-    order by timestamp desc
-    limit 1;
-  `,
-    [fromAddress.toLowerCase()],
-  )
-
-  // balances have never been updated
-  if (balancesRes.rows.length === 0) {
-    return true
-  }
-
-  return balancesRes.rows[0].is_stale
-}
-
 export async function selectLastBalancesGroupsByFromAddress(client: PoolClient, fromAddress: string) {
   const balancesRes = await client.query(
     `

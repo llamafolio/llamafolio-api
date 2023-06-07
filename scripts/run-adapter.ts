@@ -1,20 +1,12 @@
 import path from 'node:path'
 import url from 'node:url'
 
-import pool from '../src/db/pool'
-import type { Adapter, Balance, BalancesContext } from '../src/lib/adapter'
-import { groupBy } from '../src/lib/array'
-import { sanitizeBalances } from '../src/lib/balance'
-import type { Chain } from '../src/lib/chains'
-import { getPricedBalances } from '../src/lib/price'
-import { resolveContractsTokens } from '../src/lib/token'
-import { printBalances } from './utils/balances'
+import type { Adapter, BalancesContext } from '@lib/adapter'
+import type { Chain } from '@lib/chains'
+import { resolveContractsTokens } from '@lib/token'
+import { printBalancesConfig } from 'scripts/utils/balances'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
-
-type ExtendedBalance = Balance & {
-  groupIdx: number
-}
 
 function help() {
   console.log('pnpm run adapter {adapter} {chain} {address}')
@@ -39,55 +31,31 @@ async function main() {
 
   const ctx: BalancesContext = { address, chain, adapterId }
 
-  const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
-  const adapter = module.default as Adapter
-
-  const client = await pool.connect()
-
   try {
-    const contractsRes = await adapter[chain]?.getContracts(ctx, {})
+    const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
+    const adapter = module.default as Adapter
 
-    const [contracts, props] = await Promise.all([
-      resolveContractsTokens(client, contractsRes?.contracts || {}, true),
-      resolveContractsTokens(client, contractsRes?.props || {}, true),
-    ])
-
-    const balancesConfigRes = await adapter[chain]?.getBalances(ctx, contracts, props)
-
-    // flatten balances and fetch their prices
-    const balances: ExtendedBalance[] =
-      balancesConfigRes?.groups?.flatMap((group, groupIdx) =>
-        (group.balances || []).map((balance) => ({ ...balance, groupIdx })),
-      ) || []
-
-    const sanitizedBalances = sanitizeBalances(balances)
-
-    const pricedBalances = await getPricedBalances(sanitizedBalances)
-
-    console.log(`Found ${pricedBalances.length} non zero balances`)
-
-    const balancesByGroupIdx = groupBy(pricedBalances, 'groupIdx')
-
-    const groupsLen = balancesConfigRes?.groups.length || 0
-    for (let groupIdx = 0; groupIdx < groupsLen; groupIdx++) {
-      const balances = balancesByGroupIdx[groupIdx]
-      if (balances?.length > 0) {
-        const { healthFactor } = balancesConfigRes?.groups?.[groupIdx] || {}
-        if (healthFactor != null) {
-          console.log('\nGroup:')
-          console.log('Metadata:')
-          console.table({ healthFactor })
-        }
-        printBalances(balances)
-      }
+    const chainAdapter = adapter[chain]
+    if (!chainAdapter) {
+      return console.error(
+        `Chain ${chain} not supported for adapter ${adapterId}. \nMaybe you forgot to add this chain to src/adapters/${adapterId}/index.ts ?`,
+      )
     }
+
+    const contractsRes = await chainAdapter.getContracts(ctx, {})
+
+    // resolve tokens symbol/decimals from addresses
+    const contracts = await resolveContractsTokens({ contractsMap: contractsRes?.contracts || {} })
+
+    const balancesConfig = await chainAdapter.getBalances(ctx, contracts)
+
+    // fetch prices, sanitize empty balances and print
+    await printBalancesConfig(balancesConfig)
 
     const endTime = Date.now()
     console.log(`Completed in ${endTime - startTime}ms`)
   } catch (error) {
     console.log('Failed to run adapter', error)
-  } finally {
-    client.release(true)
   }
 }
 

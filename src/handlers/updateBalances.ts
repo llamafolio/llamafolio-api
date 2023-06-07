@@ -1,16 +1,16 @@
 import { adapterById } from '@adapters/index'
-import { selectDefinedAdaptersContractsProps } from '@db/adapters'
 import type { Balance as BalanceStore } from '@db/balances'
 import { updateBalances as updateDBBalances } from '@db/balances'
 import type { BalancesGroup } from '@db/balances-groups'
 import { getAllContractsInteractions, groupContracts } from '@db/contracts'
 import type { Balance, BalancesConfig, BalancesContext, PricedBalance } from '@lib/adapter'
-import { groupBy, groupBy2, keyBy2 } from '@lib/array'
+import { groupBy, groupBy2 } from '@lib/array'
 import { fmtBalanceBreakdown, sanitizeBalances } from '@lib/balance'
 import type { Chain } from '@lib/chains'
 import { sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
+import type { PoolClient } from 'pg'
 import { v4 as uuidv4 } from 'uuid'
 
 type ExtendedBalance = (Balance | PricedBalance) & {
@@ -37,22 +37,9 @@ interface ExtendedBalancesConfig extends BalancesConfig {
 export async function updateBalances(client: PoolClient, address: `0x${string}`) {
   // Fetch all protocols (with their associated contracts) that the user interacted with
   // and all unique tokens he received
-  const [contracts, adaptersContractsProps] = await Promise.all([
-    getAllContractsInteractions(client, address),
-    selectDefinedAdaptersContractsProps(client),
-  ])
+  const contracts = await getAllContractsInteractions(client, address)
 
   const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
-  const adaptersContractsPropsByIdChain = keyBy2(adaptersContractsProps, 'id', 'chain')
-  // add adapters with contracts_props, even if there was no user interaction with any of the contracts
-  for (const adapter of adaptersContractsProps) {
-    if (!contractsByAdapterIdChain[adapter.id]) {
-      contractsByAdapterIdChain[adapter.id] = {}
-    }
-    if (!contractsByAdapterIdChain[adapter.id][adapter.chain]) {
-      contractsByAdapterIdChain[adapter.id][adapter.chain] = []
-    }
-  }
 
   const adapterIds = Object.keys(contractsByAdapterIdChain)
   // list of all [adapterId, chain]
@@ -80,11 +67,10 @@ export async function updateBalances(client: PoolClient, address: `0x${string}`)
         const hrstart = process.hrtime()
 
         const contracts = groupContracts(contractsByAdapterIdChain[adapterId][chain]) || []
-        const props = adaptersContractsPropsByIdChain[adapterId]?.[chain]?.contractsProps || {}
 
         const ctx: BalancesContext = { address, chain, adapterId }
 
-        const balancesConfig = await handler.getBalances(ctx, contracts, props)
+        const balancesConfig = await handler.getBalances(ctx, contracts)
 
         const hrend = process.hrtime(hrstart)
 
@@ -170,7 +156,7 @@ export async function updateBalances(client: PoolClient, address: `0x${string}`)
         balancesStore.push(balance)
       }
 
-      const balancesGroup: BalancesGroup = {
+      const balancesGroup: BalancesGroup & { balances: any[] } = {
         id,
         fromAddress: address,
         adapterId: balanceConfig.adapterId,

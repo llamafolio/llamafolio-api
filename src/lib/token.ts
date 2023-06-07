@@ -82,13 +82,17 @@ async function processContracts(contracts: Array<RawContract | Contract>) {
   return chainsAddresses
 }
 
-export async function resolveContractsTokens(
-  client: PoolClient,
+export async function resolveContractsTokens({
+  client,
+  contractsMap,
+  storeMissingTokens = false,
+}: {
+  client?: PoolClient
   contractsMap: {
     [key: string]: RawContract | RawContract[] | Contract | Contract[] | undefined
-  },
-  storeMissingTokens = false,
-) {
+  }
+  storeMissingTokens?: boolean
+}) {
   const contractsArray: (RawContract | Contract)[] = []
 
   for (const contracts of Object.values(contractsMap)) {
@@ -103,20 +107,22 @@ export async function resolveContractsTokens(
 
   const chains = Object.keys(chainsAddresses)
 
-  // get tokens info from DB
-  const chainsTokensResponse = await Promise.all(
-    chains.map((chain) => selectChainTokens(client, chain as Chain, [...(chainsAddresses[chain as Chain] || [])])),
-  )
-
   const chainsTokens: Partial<Record<Chain, Record<`0x${string}`, Token>>> = {}
 
-  for (let index = 0; index < chains.length; index++) {
-    const chain = chains[index] as Chain
-    for (const token of chainsTokensResponse[index]) {
-      if (!chainsTokens[chain]) {
-        chainsTokens[chain] = {}
+  // get tokens info from DB
+  if (client) {
+    const chainsTokensResponse = await Promise.all(
+      chains.map((chain) => selectChainTokens(client, chain as Chain, [...(chainsAddresses[chain as Chain] || [])])),
+    )
+
+    for (let index = 0; index < chains.length; index++) {
+      const chain = chains[index] as Chain
+      for (const token of chainsTokensResponse[index]) {
+        if (!chainsTokens[chain]) {
+          chainsTokens[chain] = {}
+        }
+        chainsTokens[chain]![token.address.toLowerCase()] = { ...token, chain }
       }
-      chainsTokens[chain]![token.address.toLowerCase()] = { ...token, chain }
     }
   }
 
@@ -218,7 +224,7 @@ export async function resolveContractsTokens(
     response[key] = responseContracts
   }
 
-  if (storeMissingTokens) {
+  if (client && storeMissingTokens) {
     const missingTokens: ERC20Token[] = []
 
     for (let chainIndex = 0; chainIndex < missingTokensChains.length; chainIndex++) {

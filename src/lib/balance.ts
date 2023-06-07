@@ -116,8 +116,8 @@ export async function multicallBalances(params: any) {
   return res
 }
 
-export function sanitizeBalances(balances: Balance[]) {
-  const sanitizedBalances: Balance[] = []
+export function sanitizeBalances<T extends Balance>(balances: T[]) {
+  const sanitizedBalances: T[] = []
 
   for (const balance of balances) {
     if (balance.amount == null) {

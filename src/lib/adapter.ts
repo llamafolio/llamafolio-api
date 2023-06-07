@@ -131,6 +131,11 @@ export interface PricedBalance extends BasePricedBalance {
   type?: string
 }
 
+export type WithPrice<T extends BaseBalance> = T & {
+  rewards?: WithPrice<BaseBalance>
+  underlyings?: WithPrice<BaseBalance>
+}
+
 export interface BalancesGroup {
   balances: Balance[]
   // Metadata
@@ -145,9 +150,8 @@ export interface ContractsMap {
   [key: string]: Contract | Contract[] | RawContract | RawContract[]
 }
 
-export interface ContractsConfig<C extends ContractsMap, P extends ContractsMap> {
+export interface ContractsConfig<C extends ContractsMap> {
   contracts: C
-  props?: P
   revalidate?: number
   revalidateProps?: { [key: string]: any }
 }
@@ -162,16 +166,15 @@ export type ExcludeRawContract<T> = {
 /**
  * Pass previous `revalidateProps` passed to `getContracts` handler to know where the previous revalidate process ended.
  */
-export type GetContractsHandler<C extends ContractsMap = ContractsMap, P extends ContractsMap = ContractsMap> = (
+export type GetContractsHandler<C extends ContractsMap = ContractsMap> = (
   ctx: BaseContext,
   revalidateProps: { [key: string]: any },
-) => ContractsConfig<C, P> | Promise<ContractsConfig<C, P>>
+) => ContractsConfig<C> | Promise<ContractsConfig<C>>
 
 export type GetBalancesHandler<C extends GetContractsHandler> = (
   ctx: BalancesContext,
   // each key can be undefined as the account may not have interacted with these contracts
   contracts: ExcludeRawContract<Partial<Awaited<ReturnType<C>>['contracts']>>,
-  props: Awaited<ReturnType<C>>['props'],
 ) => BalancesConfig | Promise<BalancesConfig>
 
 export interface AdapterHandler {
