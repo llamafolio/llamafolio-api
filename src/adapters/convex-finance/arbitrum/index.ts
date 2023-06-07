@@ -1,6 +1,6 @@
 import { getConvexAltChainsBalances } from '@adapters/convex-finance/common/balance'
 import { getConvexAltChainsPools } from '@adapters/convex-finance/common/pool'
-import { getPoolsContracts } from '@adapters/curve-dex/common/pools'
+import { getPoolsContracts } from '@adapters/curve-dex/common/pool'
 import { getRegistries } from '@adapters/curve-dex/common/registries'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'

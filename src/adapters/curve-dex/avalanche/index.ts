@@ -1,11 +1,10 @@
-import { getAvaxGaugesBalances, getAvaxPoolsBalances } from '@adapters/curve-dex/avalanche/balance'
-import { getAvaxGaugesContracts } from '@adapters/curve-dex/avalanche/gauge'
-import { getAvaxPoolsContracts } from '@adapters/curve-dex/avalanche/pool'
+import { getGaugesBalances, getPoolsBalances } from '@adapters/curve-dex/common/balance'
+import { getGaugesContracts } from '@adapters/curve-dex/common/gauge'
+import { getPoolsContracts } from '@adapters/curve-dex/common/pool'
+import { getRegistries } from '@adapters/curve-dex/common/registries'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import type { Token } from '@lib/token'
-
-import { getRegistries } from '../common/registries'
 
 const CRV: Token = {
   chain: 'avalanche',
@@ -21,12 +20,8 @@ const xChainGaugesFactory: Contract = {
 
 export const getContracts = async (ctx: BaseContext) => {
   const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap'])
-  const pools = await getAvaxPoolsContracts(ctx, [
-    registries.stableSwap!,
-    registries.stableFactory!,
-    registries.cryptoSwap!,
-  ])
-  const gauges = await getAvaxGaugesContracts(ctx, pools, xChainGaugesFactory, CRV)
+  const pools = await getPoolsContracts(ctx, registries)
+  const gauges = await getGaugesContracts(ctx, pools, xChainGaugesFactory, CRV)
 
   return {
     contracts: {
@@ -38,8 +33,8 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: getAvaxPoolsBalances,
-    gauges: getAvaxGaugesBalances,
+    pools: getPoolsBalances,
+    gauges: getGaugesBalances,
   })
 
   return {

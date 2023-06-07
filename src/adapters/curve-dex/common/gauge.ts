@@ -23,7 +23,7 @@ const abi = {
   },
 } as const
 
-export async function getAvaxGaugesContracts(ctx: BaseContext, pools: Contract[], gaugeFactory: Contract, CRV: Token) {
+export async function getGaugesContracts(ctx: BaseContext, pools: Contract[], gaugeFactory: Contract, CRV: Token) {
   const gaugesAddressesRes = await multicall({
     ctx,
     calls: pools.map((pool) => ({ target: gaugeFactory.address, params: [pool.lpToken] } as const)),

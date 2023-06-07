@@ -1,3 +1,4 @@
+import type { Registry } from '@adapters/curve-dex/common/registries'
 import type { BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter, range } from '@lib/array'
 import { call } from '@lib/call'
@@ -6,8 +7,6 @@ import { getERC20Details } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
-
-import type { Registry } from '../common/registries'
 
 const abi = {
   pool_count: {
@@ -209,14 +208,17 @@ export interface PoolContract extends Contract {
   lpToken?: `0x${string}`
   pool: `0x${string}`
   registry: string
-  registryId?: Registry
+  registryId?: string
 }
 
-export async function getAvaxPoolsContracts(ctx: BaseContext, registries: `0x${string}`[]) {
+export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Record<Registry, `0x${string}`>>) {
+  const registriesIds = Object.keys(registries) as Registry[]
+  const registriesAddresses = Object.values(registries)
+
   const [stablePools, stableFactoryPools, cryptoSwapPools] = await Promise.all([
-    getFmtPoolsContracts(ctx, registries[0], 'stableSwap'),
-    getFmtPoolsContracts(ctx, registries[1], 'stableFactory'),
-    getFmtPoolsContracts(ctx, registries[2], 'cryptoSwap'),
+    getFmtPoolsContracts(ctx, registriesAddresses[0], registriesIds[0]),
+    getFmtPoolsContracts(ctx, registriesAddresses[1], registriesIds[1]),
+    getFmtPoolsContracts(ctx, registriesAddresses[2], registriesIds[2]),
   ])
 
   const allPools = [...stablePools, ...stableFactoryPools, ...cryptoSwapPools]
@@ -316,6 +318,7 @@ export async function getFmtPoolsContracts(ctx: BaseContext, registry: `0x${stri
         address: lpToken,
         lpToken,
         pool,
+        registryId,
         registry,
         underlyings: fmtUnderlyings,
         category: 'lp',

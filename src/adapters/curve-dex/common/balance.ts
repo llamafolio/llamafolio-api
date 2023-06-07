@@ -1,7 +1,10 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
+import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   get_underlying_balances: {
@@ -84,71 +87,66 @@ type PoolBalance = Balance & {
   pool?: string
   lpToken?: string
   totalSupply?: bigint
+  registry?: `0x${string}`
+  registryId?: string
+  stablePool?: Contract
+}
+
+const stableRegistry: { [key: string]: `0x${string}` } = {
+  arbitrum: '0x445FE580eF8d70FF569aB36e80c647af338db351',
+  avalanche: '0x8474DdbE98F5aA3179B3B3F5942D724aFcdec9f6',
+  fantom: '0x0f854EA9F38ceA4B1c2FC79047E9D0134419D5d6',
+  optimism: '0xC5cfaDA84E902aD92DD40194f0883ad49639b023',
+  polygon: '0x094d12e5b541784701FD8d65F11fc0598FBC6332',
 }
 
 export async function getPoolsBalances(
   ctx: BalancesContext,
   pools: Contract[],
   registry?: Contract,
-  underlyingsAbi?: boolean,
 ): Promise<Balance[]> {
-  const poolBalances: Balance[] = []
+  const poolsBalancesOfRes = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    abi: erc20Abi.balanceOf,
+  })
 
-  const calls: Call<typeof erc20Abi.balanceOf>[] = []
-  for (const pool of pools) {
-    calls.push({ target: pool.address, params: [ctx.address] })
-  }
+  const poolBalances: Balance[] = mapSuccessFilter(poolsBalancesOfRes, (res, idx) => {
+    const pool = pools[idx]
+    const { underlyings } = pool
 
-  const poolsBalancesOfRes = await multicall({ ctx, calls, abi: erc20Abi.balanceOf })
-
-  let poolIdx = 0
-  for (let balanceIdx = 0; balanceIdx < pools.length; balanceIdx++) {
-    const pool = pools[poolIdx] as Balance
-    const poolBalanceOfRes = poolsBalancesOfRes[balanceIdx]
-
-    if (!poolBalanceOfRes.success) {
-      poolIdx++
-      continue
+    if (!underlyings) {
+      return null
     }
 
-    poolBalances.push({
+    return {
       ...pool,
-      amount: poolBalanceOfRes.output,
-      underlyings: pool.underlyings,
-      rewards: pool.rewards,
-    })
+      amount: res.output,
+    }
+  }).filter(isNotNullish) as Balance[]
 
-    poolIdx++
-  }
-
-  // There is no need to look for underlyings balances if pool balances is null
-  const nonZeroPoolBalances = poolBalances.filter((res) => res.amount > 0n)
-
-  return getUnderlyingsPoolsBalances(ctx, nonZeroPoolBalances, registry, underlyingsAbi)
+  return getUnderlyingsPoolsBalances(ctx, poolBalances, registry)
 }
 
 export const getUnderlyingsPoolsBalances = async (
   ctx: BalancesContext,
   pools: PoolBalance[],
   registry?: Contract,
-  underlyingsAbi?: boolean,
 ): Promise<Balance[]> => {
   const underlyingsBalancesInPools: Balance[] = []
 
   const suppliesCalls: Call<typeof erc20Abi.totalSupply>[] = []
-  const optionAbiBalances = underlyingsAbi ? abi.get_underlying_balances : abi.get_balances
-  const optionAbiDecimals = underlyingsAbi ? abi.get_underlying_decimals : abi.get_decimals
-  const calls: Call<any>[] = []
+  const calls: Call<typeof abi.get_underlying_balances>[] = []
 
   for (const pool of pools as Contract[]) {
     calls.push({ target: registry ? registry.address : pool.registry, params: [pool.pool] })
     suppliesCalls.push({ target: pool.lpToken })
   }
 
-  const [totalSuppliesRes, underlyingsBalanceOfRes, underlyingsDecimalsRes] = await Promise.all([
+  const [totalSuppliesRes, get_underlying_balancesBalanceOfRes, get_balancesBalanceOfRes] = await Promise.all([
     multicall({ ctx, calls: suppliesCalls, abi: erc20Abi.totalSupply }),
-    multicall({ ctx, calls, abi: optionAbiBalances }),
-    multicall({ ctx, calls, abi: optionAbiDecimals }),
+    multicall({ ctx, calls, abi: abi.get_underlying_balances }),
+    multicall({ ctx, calls, abi: abi.get_balances }),
   ])
 
   let balanceOfIdx = 0
@@ -170,6 +168,8 @@ export const getUnderlyingsPoolsBalances = async (
 
     const poolBalance: PoolBalance = {
       ...pools[poolIdx],
+      registry: pools[poolIdx].registry,
+      registryId: pools[poolIdx].registryId,
       category: 'lp',
       underlyings: [],
       decimals: 18,
@@ -177,24 +177,60 @@ export const getUnderlyingsPoolsBalances = async (
     }
 
     for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
-      const underlyingBalanceOfRes = underlyingsBalanceOfRes[balanceOfIdx]
-      const underlyingDecimalsRes = underlyingsDecimalsRes[balanceOfIdx]
+      const underlyingBalanceOfRes = get_underlying_balancesBalanceOfRes[balanceOfIdx].success
+        ? get_underlying_balancesBalanceOfRes[balanceOfIdx]
+        : get_balancesBalanceOfRes[balanceOfIdx]
 
       const underlyingsBalance =
-        underlyingBalanceOfRes.success && underlyingBalanceOfRes.output[underlyingIdx] != undefined
+        underlyingBalanceOfRes && underlyingBalanceOfRes.output?.filter(isNotNullish) != undefined
           ? underlyingBalanceOfRes.output[underlyingIdx]
           : 0n
 
-      const underlyingsDecimals =
-        underlyingDecimalsRes.success && underlyingDecimalsRes.output[underlyingIdx] != undefined
-          ? Number(underlyingDecimalsRes.output[underlyingIdx])
-          : 18
-
       poolBalance.underlyings?.push({
         ...underlyings[underlyingIdx],
-        decimals: underlyingsDecimals,
+        // on Avalanche & Fantom & Polygon, stablePool uses fixed decimals as 18 even if token are USDC or USDT
+        decimals:
+          (ctx.chain === 'avalanche' && poolBalance.registryId === 'stableSwap') ||
+          (ctx.chain === 'fantom' && poolBalance.registryId === 'stableSwap') ||
+          (ctx.chain === 'polygon' && poolBalance.registryId === 'stableSwap')
+            ? 18
+            : underlyings[underlyingIdx].decimals,
         amount: (underlyingsBalance * poolBalance.amount) / totalSupply,
       })
+    }
+
+    // Logic to unwrap and format amounts of underlyings of the  metapools used as underlyings in the Curve's variable pools
+    if (poolBalance.stablePool) {
+      const stableUnderlyings = poolBalance.stablePool?.underlyings
+      if (!stableUnderlyings) {
+        continue
+      }
+
+      const [stablePoolSupply, get_underlying_balancesBalanceOfRes] = await Promise.all([
+        call({
+          ctx,
+          target: poolBalance.stablePool.address,
+          abi: erc20Abi.totalSupply,
+        }),
+        call({
+          ctx,
+          target: stableRegistry[ctx.chain],
+          params: [poolBalance.stablePool.pool],
+          abi: abi.get_underlying_balances,
+        }),
+      ])
+
+      const fmtStableUnderlyings = stableUnderlyings.map((underlying: any, idx) => {
+        return {
+          ...underlying,
+          decimals: 18,
+          amount:
+            ((poolBalance.underlyings![0] as Balance).amount * get_underlying_balancesBalanceOfRes[idx]) /
+            stablePoolSupply,
+        }
+      })
+
+      poolBalance.underlyings = [...fmtStableUnderlyings, ...poolBalance.underlyings!.slice(1)]
     }
 
     underlyingsBalancesInPools.push(poolBalance)
@@ -204,24 +240,18 @@ export const getUnderlyingsPoolsBalances = async (
   return underlyingsBalancesInPools
 }
 
-export async function getGaugesBalances(
-  ctx: BalancesContext,
-  gauges: Contract[],
-  registry?: Contract,
-  underlyingsAbi?: boolean,
-) {
+export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]) {
   const uniqueRewards: Balance[] = []
   const nonUniqueRewards: Balance[] = []
 
-  const gaugesBalancesRes = await getPoolsBalances(ctx, gauges, registry, underlyingsAbi)
-
-  const calls: Call<typeof abi.claimable_reward>[] = []
-  for (const gaugesBalance of gaugesBalancesRes) {
-    gaugesBalance.category = 'farm'
-    calls.push({ target: gaugesBalance.address, params: [ctx.address] })
-  }
-
-  const claimableRewards = await multicall({ ctx, calls, abi: abi.claimable_reward })
+  const [gaugesBalancesRes, claimableRewards] = await Promise.all([
+    getPoolsBalances(ctx, gauges),
+    multicall({
+      ctx,
+      calls: gauges.map((gauge) => ({ target: gauge.address, params: [ctx.address] } as const)),
+      abi: abi.claimable_reward,
+    }),
+  ])
 
   const extraRewardsCalls: Call<typeof abi.claimable_extra_reward>[] = []
   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
@@ -233,18 +263,18 @@ export async function getGaugesBalances(
       continue
     }
 
-    // rewards[0] is the common rewards for all pools: CRV
+    // rewards[0] is the common reward for all pools: CRV
     rewards[0].amount = claimableReward.output
 
     if (rewards.length != 2) {
-      uniqueRewards.push(gaugeBalance)
+      uniqueRewards.push({ ...gaugeBalance, category: 'farm' })
       continue
     }
 
     for (let rewardIdx = 1; rewardIdx < rewards.length; rewardIdx++) {
       const reward = rewards[rewardIdx]
       extraRewardsCalls.push({ target: (gaugeBalance as Contract).gauge, params: [ctx.address, reward.address] })
-      nonUniqueRewards.push(gaugeBalance)
+      nonUniqueRewards.push({ ...gaugeBalance, category: 'farm' })
     }
   }
 
