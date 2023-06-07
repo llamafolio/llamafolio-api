@@ -6,7 +6,6 @@ import abracadabra from '@adapters/abracadabra'
 import across from '@adapters/across'
 import agilityLsd from '@adapters/agility-lsd'
 import alchemix from '@adapters/alchemix'
-import alchemixV2 from '@adapters/alchemix-v2'
 import alpacaFinance from '@adapters/alpaca-finance'
 import ambireWallet from '@adapters/ambire-wallet'
 import angle from '@adapters/angle'
@@ -212,7 +211,6 @@ export const adapters: Adapter[] = [
   across,
   agilityLsd,
   alchemix,
-  alchemixV2,
   alpacaFinance,
   ambireWallet,
   angle,
