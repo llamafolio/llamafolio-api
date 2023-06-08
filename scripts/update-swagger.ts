@@ -46,11 +46,11 @@ function cleanSwaggerJSON(jsonData: any) {
   }
   const jsonSwagger = {
     openapi,
-    info: { title: 'Llamafolio API', version },
+    info: { title: 'LlamaFolio API', version },
     servers: [
       {
         url: 'https://api.llamafolio.com',
-        description: 'Llamafolio API (production)',
+        description: 'LlamaFolio API (production)',
         variables: { basePath: { default: '' } },
       },
     ],
