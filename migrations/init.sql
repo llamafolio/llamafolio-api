@@ -14,7 +14,7 @@ CREATE INDEX IF NOT EXISTS adapters_id_chain_idx ON adapters (id, chain);
 -- Balances groups
 CREATE TABLE IF NOT EXISTS balances_groups (
     id uuid primary key,
-    from_address bytea not null,
+    from_address text not null,
     adapter_id varchar not null,
     chain varchar not null,
     balance_usd numeric not null,
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS balances (
     balance_usd numeric,
     debt_usd numeric,
     reward_usd numeric,
-    address bytea,
+    address text,
     data jsonb,
     category varchar not null,
     unique (group_id, address)
@@ -40,25 +40,19 @@ CREATE TABLE IF NOT EXISTS balances (
 
 CREATE INDEX IF NOT EXISTS balances_group_id_idx ON balances (group_id);
 
-CREATE TABLE IF NOT EXISTS contracts (
+CREATE TABLE IF NOT EXISTS adapters_contracts (
     type varchar,
     standard varchar,
     category varchar,
     name varchar,
     display_name varchar,
     chain varchar,
-    address bytea,
+    address text,
     adapter_id varchar,
-    stable boolean,
-    underlyings bytea [],
-    rewards bytea [],
     data jsonb
 );
 
-ALTER TABLE
-    ONLY contracts
-ADD
-    CONSTRAINT contracts_key UNIQUE (adapter_id, chain, address, category);
+ALTER TABLE ONLY adapters_contracts ADD CONSTRAINT adapters_contracts_key UNIQUE (adapter_id, chain, address, category);
 
 -- Protocols
 CREATE TABLE protocols (
