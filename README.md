@@ -17,23 +17,11 @@
 
 - [pnpm v8+](https://pnpm.io/installation)
 - [Node.js LTS (v18+)](https://nodejs.org/en/download/)
-- `.env`: Create a `.env` from `.env.example` and fill in the values
 
 ```sh
 npm install --global pnpm
 # if already installed, update to latest
 pnpm add --global pnpm@latest
-```
-
-- To run any TypeScript file, you can use [`tsx`](https://github.com/esbuild-kit/tsx) (TypeScript Execute):
-
-```sh
-# Any of these should work
-pnpx tsx path/to/file.ts
-pnpm tsx path/to/file.ts
-pnpm dlx tsx path/to/file.ts
-npx tsx path/to/file.ts
-node_modules/.bin/tsx path/to/file.ts
 ```
 
 ## Adapters
@@ -42,22 +30,16 @@ An adapter specifies how to resolve the balances of an address for your protocol
 
 To learn more about adapters, check our [docs](https://docs.llamafolio.com).
 
-## Command Line Testing
-
 To test your adapter, run the command below which will output most details an adapter can find:
 
 ```bash
 pnpm run adapter wallet ethereum 0x0000000000000000000000000000000000000000
 ```
 
-## API
-
-### Local development
-
-You can run the API locally using:
+Find your protocol in `/src/adapters` and try with any address:
 
 ```bash
-pnpm run dev
+pnpm run adapter {adapter_id} {chain} {address}
 ```
 
 ## Contributing and listing your protocol
