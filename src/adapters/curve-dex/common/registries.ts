@@ -4,23 +4,13 @@ import { multicall } from '@lib/multicall'
 const abi = {
   get_address: {
     name: 'get_address',
-    outputs: [
-      {
-        type: 'address',
-        name: '',
-      },
-    ],
-    inputs: [
-      {
-        type: 'uint256',
-        name: '_id',
-      },
-    ],
+    outputs: [{ type: 'address', name: '' }],
+    inputs: [{ type: 'uint256', name: '_id' }],
     stateMutability: 'view',
     type: 'function',
     gas: 1308,
   },
-}
+} as const
 
 export type Registry = 'stableSwap' | 'stableFactory' | 'cryptoSwap' | 'cryptoFactory'
 
@@ -36,11 +26,14 @@ export const getRegistries = async (ctx: BaseContext, registries: Registry[]) =>
 
   const registriesAddressRes = await multicall({
     ctx,
-    calls: registries.map((id) => ({
-      params: [Registries[id]],
-      // Immutable address provider (same address on all chains)
-      target: '0x0000000022d53366457f9d5e68ec105046fc4383',
-    })),
+    calls: registries.map(
+      (id) =>
+        ({
+          params: [Registries[id]],
+          // Immutable address provider (same address on all chains)
+          target: '0x0000000022d53366457f9d5e68ec105046fc4383',
+        } as const),
+    ),
     abi: abi.get_address,
   })
 

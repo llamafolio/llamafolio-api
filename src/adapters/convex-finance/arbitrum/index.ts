@@ -13,7 +13,7 @@ const booster: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap', 'cryptoFactory'])
+  const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap'])
   const pools = await getPoolsContracts(ctx, registries)
   const cvxPools = await getConvexAltChainsPools(ctx, booster, pools)
 

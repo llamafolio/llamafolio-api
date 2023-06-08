@@ -78,8 +78,8 @@ const abi = {
     type: 'function',
     name: 'get_balances',
     inputs: [{ name: '_pool', type: 'address' }],
-    outputs: [{ name: '', type: 'uint256[8]' }],
-    gas: 41626,
+    outputs: [{ name: '', type: 'uint256[4]' }],
+    gas: 20435,
   },
 } as const
 
@@ -143,7 +143,7 @@ export const getUnderlyingsPoolsBalances = async (
     suppliesCalls.push({ target: pool.lpToken })
   }
 
-  const [totalSuppliesRes, get_underlying_balancesBalanceOfRes, get_balancesBalanceOfRes] = await Promise.all([
+  const [totalSuppliesRes, get_underlying_balancesOfRes, get_balancesOfRes] = await Promise.all([
     multicall({ ctx, calls: suppliesCalls, abi: erc20Abi.totalSupply }),
     multicall({ ctx, calls, abi: abi.get_underlying_balances }),
     multicall({ ctx, calls, abi: abi.get_balances }),
@@ -177,9 +177,9 @@ export const getUnderlyingsPoolsBalances = async (
     }
 
     for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
-      const underlyingBalanceOfRes = get_underlying_balancesBalanceOfRes[balanceOfIdx].success
-        ? get_underlying_balancesBalanceOfRes[balanceOfIdx]
-        : get_balancesBalanceOfRes[balanceOfIdx]
+      const underlyingBalanceOfRes = get_underlying_balancesOfRes[balanceOfIdx].success
+        ? get_underlying_balancesOfRes[balanceOfIdx]
+        : get_balancesOfRes[balanceOfIdx]
 
       const underlyingsBalance =
         underlyingBalanceOfRes && underlyingBalanceOfRes.output?.filter(isNotNullish) != undefined
@@ -188,7 +188,7 @@ export const getUnderlyingsPoolsBalances = async (
 
       poolBalance.underlyings?.push({
         ...underlyings[underlyingIdx],
-        // on Avalanche & Fantom & Polygon, stablePool uses fixed decimals as 18 even if token are USDC or USDT
+        // on Avalanche & Fantom & Polygon, stablePool uses fixed decimals as 18 even if tokens are USDC or USDT
         decimals:
           (ctx.chain === 'avalanche' && poolBalance.registryId === 'stableSwap') ||
           (ctx.chain === 'fantom' && poolBalance.registryId === 'stableSwap') ||
@@ -199,7 +199,7 @@ export const getUnderlyingsPoolsBalances = async (
       })
     }
 
-    // Logic to unwrap and format amounts of underlyings of the  metapools used as underlyings in the Curve's variable pools
+    // Logic to unwrap and format amount of underlyings of the  metapools used as underlyings in the Curve's variable pools
     if (poolBalance.stablePool) {
       const stableUnderlyings = poolBalance.stablePool?.underlyings
       if (!stableUnderlyings) {
@@ -229,10 +229,8 @@ export const getUnderlyingsPoolsBalances = async (
             stablePoolSupply,
         }
       })
-
       poolBalance.underlyings = [...fmtStableUnderlyings, ...poolBalance.underlyings!.slice(1)]
     }
-
     underlyingsBalancesInPools.push(poolBalance)
     balanceOfIdx++
   }
