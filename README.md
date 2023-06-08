@@ -1,5 +1,18 @@
 # Llamafolio API
 
+> Open source, permissionless, privacy conscious portfolio tracker by [Llama Corp](https://llama-corp.com/).
+
+![](./docs/bg-image.png)
+
+<br>
+<h5 align="center">
+  <a href="https://beta.llamafolio.com">Website</a> ⁃
+  <a href="https://docs.llamafolio.com/">Docs</a> ⁃
+  <a href="https://discord.llamafolio.com">Discord</a> ⁃
+  <a href="https://twitter.com/LlamaFolio">Twitter</a>
+</h5>
+<br>
+
 ## Prerequisites
 
 - [pnpm v8+](https://pnpm.io/installation)
