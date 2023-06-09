@@ -55,11 +55,22 @@ const abi = {
   },
 } as const
 
-const cake: Token = {
+const cake_bsc: Token = {
   chain: 'bsc',
   address: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
   symbol: 'CAKE',
   decimals: 18,
+}
+const cake_eth: Token = {
+  chain: 'ethereum',
+  address: '0x152649eA73beAb28c5b49B26eb48f7EAD6d4c898',
+  symbol: 'CAKE',
+  decimals: 18,
+}
+
+const CAKE: { [key: string]: Token } = {
+  ethereum: cake_eth,
+  bsc: cake_bsc,
 }
 
 export async function getStakersBalances(ctx: BalancesContext, stakers: Contract[]) {
@@ -77,14 +88,14 @@ export async function getStakersBalances(ctx: BalancesContext, stakers: Contract
 
   for (let stakerIdx = 0; stakerIdx < stakers.length; stakerIdx++) {
     const staker = stakers[stakerIdx]
-    const amount = userBalanceOfRes[stakerIdx].output?.[0] || '0'
-    const rewardsAmount = pendingRewardsRes[stakerIdx].output || '0'
+    const amount = userBalanceOfRes[stakerIdx].output?.[0] || 0n
+    const rewardsAmount = pendingRewardsRes[stakerIdx].output || 0n
 
     balances.push({
       ...staker,
-      decimals: cake.decimals,
-      symbol: cake.symbol,
-      underlyings: [cake],
+      decimals: CAKE[ctx.chain].decimals,
+      symbol: CAKE[ctx.chain].symbol,
+      underlyings: [CAKE[ctx.chain]],
       amount,
       rewards: [{ ...(staker.rewards?.[0] as Contract), amount: rewardsAmount }],
       category: 'stake',
@@ -115,11 +126,11 @@ export async function getStakerCake(ctx: BalancesContext, staker: Contract) {
   balance.push({
     ...staker,
     amount: balanceOf,
-    decimals: cake.decimals,
-    symbol: cake.symbol,
-    underlyings: [cake],
+    decimals: CAKE[ctx.chain].decimals,
+    symbol: CAKE[ctx.chain].symbol,
+    underlyings: [CAKE[ctx.chain]],
     // Rewards set as 0n until we find the way to get auto-compound formula
-    rewards: [{ ...cake, amount: 0n }],
+    rewards: [{ ...CAKE[ctx.chain], amount: 0n }],
     category: 'stake',
   })
 
