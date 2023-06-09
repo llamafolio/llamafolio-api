@@ -63,7 +63,17 @@ export async function getConvexAltChainsPools(
     }
   })
 
-  const fmtCvxPools = pools
+  const fmtPools: [{ [key: string]: Contract[] }] = pools.reduce((acc: any, pool) => {
+    const { address, crvRewards, ...rest } = pool
+    if (address in acc) {
+      acc[address].crvRewards.push(crvRewards)
+    } else {
+      acc[address] = { ...rest, crvRewards: [crvRewards] }
+    }
+    return acc
+  }, {})
+
+  const fmtCvxPools = Object.values(fmtPools)
     .map((pool) => {
       const fmtCurvePool = curvePools.find((curvePool) => curvePool.lpToken === pool.lpToken)
       return fmtCurvePool ? { ...pool, ...fmtCurvePool } : null

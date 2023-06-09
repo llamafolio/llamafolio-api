@@ -46,7 +46,7 @@ export async function getConvexGaugesBalances(
 
   pools = pools.map((pool) => ({ ...pool, address: pool.crvRewards }))
 
-  const gaugesBalancesRes = await getPoolsBalances(ctx, pools, registry, true)
+  const gaugesBalancesRes = await getPoolsBalances(ctx, pools, registry)
 
   const calls: Call<typeof abi.earned>[] = []
   for (const gaugeBalance of gaugesBalancesRes) {

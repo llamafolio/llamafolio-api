@@ -128,7 +128,7 @@ export async function printBalancesConfig(balancesConfig: BalancesConfig) {
 
   for (let groupIdx = 0; groupIdx < balancesConfig.groups.length; groupIdx++) {
     const { healthFactor } = balancesConfig.groups[groupIdx]
-    const balances = balancesByGroupIdx[groupIdx]
+    const balances = balancesByGroupIdx[groupIdx] || []
     const balanceBreakdowns = balances.map(fmtBalanceBreakdown)
     const balance = sum(balanceBreakdowns.map((balance) => balance.balanceUSD || 0))
     const reward = sum(balanceBreakdowns.map((balance) => balance.rewardUSD || 0))
