@@ -1,5 +1,5 @@
-import { getStakersBalances } from '@adapters/pancakeswap/legacy/common/stake'
-import { getPancakeFarmBalances } from '@adapters/pancakeswap/legacy/ethereum/farm'
+import { getStakersBalances } from '@adapters/pancakeswap/common/stake'
+import { getPancakeFarmBalances } from '@adapters/pancakeswap/ethereum/farm'
 import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import type { Pair } from '@lib/uniswap/v2/factory'
@@ -62,13 +62,13 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
-function getSpookyswapPairsBalances(ctx: BalancesContext, pairs: Pair[], masterchef: Contract) {
+function getPancakePairsBalances(ctx: BalancesContext, pairs: Pair[], masterchef: Contract) {
   return Promise.all([getPairsBalances(ctx, pairs), getPancakeFarmBalances(ctx, pairs, masterchef)])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getSpookyswapPairsBalances(...args, masterChef),
+    pairs: (...args) => getPancakePairsBalances(...args, masterChef),
     stakers: getStakersBalances,
   })
 

@@ -4,13 +4,9 @@ import * as bsc from './bsc'
 import * as ethereum from './ethereum'
 
 const adapter: Adapter = {
-  id: 'pancakeswap',
+  id: 'pancakeswap-amm-v3',
   bsc,
   ethereum,
 }
-/**
- *  TODO: Cake rewards autocompound on staking section
- *  docs: https://docs.pancakeswap.finance/products/syrup-pool/new-cake-pool
- */
 
 export default adapter
