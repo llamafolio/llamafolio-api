@@ -14,7 +14,7 @@ export async function getLpCurveBalances(
   for (const lpBalance of lpBalances) {
     const underlyings = lpBalance.underlyings as Contract[]
 
-    if (!underlyings) {
+    if (!underlyings || underlyings.length < 2) {
       continue
     }
 
