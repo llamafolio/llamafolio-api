@@ -100,5 +100,5 @@ export async function getConvexAltChainsBalances(ctx: BalancesContext, pools: Co
     })
   }
 
-  return getUnderlyingsPoolsBalances(ctx, poolBalances)
+  return (await getUnderlyingsPoolsBalances(ctx, poolBalances)).map((res) => ({ ...res, category: 'stake' }))
 }
