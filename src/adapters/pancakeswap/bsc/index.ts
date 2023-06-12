@@ -5,8 +5,8 @@ import type { Pair } from '@lib/uniswap/v2/factory'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
+import { getStakerCake, getStakersBalances } from '../common/stake'
 import { getPancakeMasterChefPoolsBalances } from './lp'
-import { getStakerCake, getStakersBalances } from './stake'
 
 const cake: Token = {
   chain: 'bsc',
@@ -121,7 +121,7 @@ const pancakeStableFactory: Contract = {
 
 export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
-  const limit = 100
+  const limit = 1000
 
   const { pairs, allPairsLength } = await getPairsContracts({
     ctx,

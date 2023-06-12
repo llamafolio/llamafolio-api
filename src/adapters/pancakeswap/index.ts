@@ -1,10 +1,12 @@
 import type { Adapter } from '@lib/adapter'
 
 import * as bsc from './bsc'
+import * as ethereum from './ethereum'
 
 const adapter: Adapter = {
   id: 'pancakeswap',
   bsc,
+  ethereum,
 }
 /**
  *  TODO: Cake rewards autocompound on staking section
