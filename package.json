@@ -39,7 +39,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.329.0",
-    "@llamafolio/tokens": "^0.1.66",
+    "@llamafolio/tokens": "^0.1.67",
     "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
     "graphql-request": "^6.0.0",
