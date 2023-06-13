@@ -144,11 +144,7 @@ export async function getBalancesOf(
     } as Balance
 
     for (let tokenIdx = 0; tokenIdx < tokens.length; tokenIdx++) {
-      erc20.push({
-        ...tokens[tokenIdx],
-        amount: multiBalances[tokenIdx],
-        category: 'wallet',
-      })
+      erc20.push({ ...tokens[tokenIdx], amount: multiBalances[tokenIdx] } as Balance)
     }
 
     return { coin: nativeTokenBalance, erc20 }
