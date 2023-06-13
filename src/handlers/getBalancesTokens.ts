@@ -45,7 +45,6 @@ export interface BalancesErc20Response {
   updatedAt: string
   chains: BalancesErc20ChainResponse[]
 }
-
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
@@ -105,6 +104,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     // Ungroup balances to make only 1 call to the price API
     const balances = walletBalances.flat().filter(isNotNullish)
+    // console.log(JSON.stringify(balances, undefined, 2))
 
     const sanitizedBalances = sanitizeBalances(balances)
 
