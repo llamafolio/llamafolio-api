@@ -37,7 +37,6 @@ export async function getLybraVestBalance(ctx: BalancesContext, vester: Contract
 
   return {
     ...vester,
-    address: vester.address!,
     amount: userBalance + userAutoCompoundEarned,
     underlyings: undefined,
     claimable: now > unlockAt ? userBalance : 0n,
