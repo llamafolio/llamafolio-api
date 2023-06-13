@@ -43,7 +43,7 @@ export const abi = {
  * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
  */
 export async function getPairsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
-  const [, ...balances] = await getBalancesOf(ctx, contracts as Token[])
+  const { erc20: balances } = await getBalancesOf(ctx, contracts as Token[])
 
   return getUnderlyingBalances(ctx, balances)
 }

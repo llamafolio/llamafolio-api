@@ -15,7 +15,7 @@ export interface GetPoolsBalancesParams {
  * @param params
  */
 export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[], params: GetPoolsBalancesParams) {
-  const [, ...poolsBalances] = await getBalancesOf(ctx, pools as Token[])
+  const { erc20: poolsBalances } = await getBalancesOf(ctx, pools as Token[])
 
   return getPoolsUnderlyingBalances(ctx, poolsBalances, params)
 }

@@ -32,8 +32,8 @@ const getChainHandlers = (chain: Chain) => {
 
   //@ts-expect-error
   const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-    //@ts-expect-error
-    const balances = await getBalancesOf(ctx, contracts.erc20 as Token[])
+    const { coin, erc20 } = await getBalancesOf(ctx, contracts.erc20 as unknown as Token[])
+    const balances = [coin, ...erc20]
     return {
       groups: [{ balances }],
     }

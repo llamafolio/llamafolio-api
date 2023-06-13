@@ -102,15 +102,35 @@ const multiCoinContracts = {
   // aurora: '0xc9bA77C9b27481B6789840A7C3128D4f691f8296',
 } satisfies { [key in Chain]: `0x${string}` }
 
+const networkToken = {
+  arbitrum: ADDRESS_ZERO,
+  avalanche: ADDRESS_ZERO,
+  bsc: ADDRESS_ZERO,
+  celo: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+  ethereum: ADDRESS_ZERO,
+  fantom: ADDRESS_ZERO,
+  harmony: ADDRESS_ZERO,
+  polygon: ADDRESS_ZERO,
+  moonbeam: ADDRESS_ZERO,
+  optimism: ADDRESS_ZERO,
+  gnosis: ADDRESS_ZERO,
+} satisfies { [key in Chain]: `0x${string}` }
+
 export interface GetERC20BalanceOfParams {
   getContractAddress: (contract: any) => string
 }
 
 /**
- * @description Returns array of balances, first item is always balance of native chain token
+ * @description Returns an object with the native chain token balance and an array of ERC20 token balances
  */
-export async function getBalancesOf(ctx: BalancesContext, tokens: Token[]): Promise<Balance[]> {
-  const balances: Balance[] = []
+export async function getBalancesOf(
+  ctx: BalancesContext,
+  tokens: Token[],
+): Promise<{
+  coin: Balance
+  erc20: Balance[]
+}> {
+  const erc20: Balance[] = []
 
   try {
     const multiBalances = await call({
@@ -121,22 +141,24 @@ export async function getBalancesOf(ctx: BalancesContext, tokens: Token[]): Prom
     })
 
     // first token is native chain token (e.g. ETH, AVAX, etc.)
-    const nativeToken = getToken(ctx.chain, ADDRESS_ZERO)
-    balances.push({
-      ...nativeToken,
+    const nativeTokenBalance = {
       amount: multiBalances.concat().shift(),
-    } as Balance)
+      ...getToken(ctx.chain, networkToken[ctx.chain]),
+    } as Balance
 
     for (let tokenIdx = 0; tokenIdx < tokens.length; tokenIdx++) {
-      // @ts-expect-error
-      balances.push({ ...tokens[tokenIdx], amount: multiBalances[tokenIdx] })
+      erc20.push({
+        ...tokens[tokenIdx],
+        amount: multiBalances[tokenIdx],
+        category: 'wallet',
+      })
     }
 
-    return balances
+    return { coin: nativeTokenBalance, erc20 }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : `Encoutered an error: ` + error
     console.trace(`[getBalancesOf][${ctx.chain}] ${errorMessage}]`)
-    return balances
+    throw new Error(errorMessage)
   }
 }
 

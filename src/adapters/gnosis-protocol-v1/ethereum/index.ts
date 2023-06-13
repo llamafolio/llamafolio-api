@@ -20,8 +20,8 @@ export const getContracts = () => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     lockerGnosis: async (ctx, lockerGnosis) => {
-      const [, ..._balances] = await getBalancesOf(ctx, [lockerGnosis] as Token[])
-      return _balances
+      const { erc20 } = await getBalancesOf(ctx, [lockerGnosis] as Token[])
+      return erc20
     },
   })
 

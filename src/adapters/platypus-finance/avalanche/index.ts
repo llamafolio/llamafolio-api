@@ -36,9 +36,9 @@ export const getContracts = async (ctx: BaseContext) => {
 
 const getPlatypusPoolBalances = async (ctx: BalancesContext, pools: Contract[], contract: Contract) => {
   const [lpRes, farmRes] = await Promise.all([
-    (await getBalancesOf(ctx, pools as Token[]))
-      .slice(1)
-      .map((res) => ({ ...res, category: 'lp', rewards: undefined })),
+    (
+      await getBalancesOf(ctx, pools as Token[])
+    )['erc20'].map((res) => ({ ...res, category: 'lp', rewards: undefined })),
     getFarmBalances(ctx, pools, contract),
   ])
 

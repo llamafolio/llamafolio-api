@@ -37,7 +37,7 @@ export const getContracts = () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const [, ...balances] = await resolveBalances<typeof getContracts>(ctx, contracts, {
+  const { erc20: balances } = await resolveBalances<typeof getContracts>(ctx, contracts, {
     stake: getBalancesOf,
   })
 

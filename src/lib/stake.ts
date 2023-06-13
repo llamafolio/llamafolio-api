@@ -12,13 +12,12 @@ export async function getSingleStakeBalance(ctx: BalancesContext, contract: Cont
     params: [ctx.address],
     ...options,
   })
-
   const balance: Balance = { ...(contract as Balance), amount, category: 'stake' }
 
   return balance
 }
 
 export async function getSingleStakeBalances(ctx: BalancesContext, contracts: Contract[]) {
-  const [, ...balances] = await getBalancesOf(ctx, contracts as Token[])
+  const { erc20: balances } = await getBalancesOf(ctx, contracts as Token[])
   return balances.map((bal) => ({ ...bal, category: 'stake' as Category }))
 }
