@@ -231,9 +231,9 @@ export async function getMultiFeeDistributionBalances(
   // Staker
   balances.push({
     chain: ctx.chain,
-    address: contract.address,
-    symbol: contract.symbol,
-    decimals: contract.decimals,
+    address: stakingToken.address,
+    symbol: stakingToken.symbol,
+    decimals: stakingToken.decimals,
     underlyings: undefined,
     rewards: undefined,
     amount: unlockableBalance,
