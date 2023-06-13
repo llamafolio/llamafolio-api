@@ -106,7 +106,7 @@ const networkToken = {
   arbitrum: ADDRESS_ZERO,
   avalanche: ADDRESS_ZERO,
   bsc: ADDRESS_ZERO,
-  celo: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+  celo: '0x471ece3750da237f93b8e339c536989b8978a438',
   ethereum: ADDRESS_ZERO,
   fantom: ADDRESS_ZERO,
   harmony: ADDRESS_ZERO,
@@ -133,7 +133,7 @@ export async function getBalancesOf(
   const erc20: Balance[] = []
 
   try {
-    const multiBalances = await call({
+    const [nativeBalance, ...multiBalances] = await call({
       ctx,
       target: multiCoinContracts[ctx.chain],
       abi: abi.balancesOf,
@@ -142,7 +142,7 @@ export async function getBalancesOf(
 
     // first token is native chain token (e.g. ETH, AVAX, etc.)
     const nativeTokenBalance = {
-      amount: multiBalances.concat().shift(),
+      amount: nativeBalance,
       ...getToken(ctx.chain, networkToken[ctx.chain]),
     } as Balance
 
