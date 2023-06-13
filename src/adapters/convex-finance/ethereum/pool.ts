@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { flatMapSuccess, rangeBI } from '@lib/array'
+import { flatMapSuccess, mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
@@ -67,6 +67,13 @@ const abi = {
     inputs: [],
     name: 'rewardToken',
     outputs: [{ internalType: 'contract IERC20', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  token: {
+    inputs: [],
+    name: 'token',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -212,17 +219,27 @@ const getExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise<Con
     abi: abi.rewardToken,
   })
 
+  const tokensRes = await multicall({
+    ctx,
+    calls: mapSuccessFilter(extraRewardsTokensRes, (res) => ({ target: res.output })),
+    abi: abi.token,
+  })
+
   let extraRewardsTokensIdx = 0
   for (let poolIdx = 0; poolIdx < extraRewardsPools.length; poolIdx++) {
     const pool = extraRewardsPools[poolIdx]
 
     for (let extraRewardIdx = 0; extraRewardIdx < pool.rewarder.length; extraRewardIdx++) {
       const extraRewardsTokens = extraRewardsTokensRes[extraRewardsTokensIdx]
-      if (!extraRewardsTokens.success) {
-        continue
-      }
+      const tokenRes = tokensRes[extraRewardsTokensIdx]
 
-      pool.rewards?.push(extraRewardsTokens.output)
+      const rewards: any = tokenRes.success
+        ? tokenRes.output
+        : extraRewardsTokens.success
+        ? extraRewardsTokens.output
+        : undefined
+
+      pool.rewards?.push(rewards)
       extraRewardsTokensIdx++
     }
   }
