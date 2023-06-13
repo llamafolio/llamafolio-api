@@ -1,7 +1,6 @@
 import type { Adapter, GetBalancesHandler } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { chains } from '@lib/chains'
-import { ADDRESS_ZERO } from '@lib/contract'
 import { getBalancesOf } from '@lib/erc20'
 import type { Token } from '@lib/token'
 import { chains as tokensByChain } from '@llamafolio/tokens'
@@ -12,8 +11,9 @@ const getChainHandlers = (chain: Chain) => {
     const erc20: Token[] = []
 
     for (const token of tokensByChain[chain]) {
-      if (token.address === ADDRESS_ZERO) {
-        //@ts-expect-error
+      // @ts-ignore
+      if (token.native) {
+        // @ts-expect-error
         coin = { ...token, chain, category: 'wallet' }
         continue
       }
@@ -30,7 +30,7 @@ const getChainHandlers = (chain: Chain) => {
     }
   }
 
-  //@ts-expect-error
+  // @ts-expect-error
   const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
     const { coin, erc20 } = await getBalancesOf(ctx, contracts.erc20 as unknown as Token[])
     const balances = [coin, ...erc20]
