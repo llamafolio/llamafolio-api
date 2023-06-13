@@ -116,10 +116,6 @@ const networkToken = {
   gnosis: ADDRESS_ZERO,
 } satisfies { [key in Chain]: `0x${string}` }
 
-export interface GetERC20BalanceOfParams {
-  getContractAddress: (contract: any) => string
-}
-
 /**
  * @description Returns an object with the native chain token balance and an array of ERC20 token balances
  */
@@ -141,9 +137,10 @@ export async function getBalancesOf(
     })
 
     // first token is native chain token (e.g. ETH, AVAX, etc.)
-    const nativeTokenBalance = {
+    const nativeTokenBalance: Balance = {
       amount: nativeBalance,
       ...getToken(ctx.chain, networkToken[ctx.chain]),
+      category: 'wallet',
     } as Balance
 
     for (let tokenIdx = 0; tokenIdx < tokens.length; tokenIdx++) {
