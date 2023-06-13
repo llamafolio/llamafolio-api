@@ -40,11 +40,13 @@ export async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[
 
     const fmtUnderlyings = {
       ...underlying,
+      decimals: 18,
       amount: (userBalanceOfRes.output * underlyingsBalanceRes.output) / totalSupplyRes.output,
     }
 
     balances.push({
       ...pool,
+      decimals: 18,
       amount: userBalanceOfRes.output,
       underlyings: [fmtUnderlyings],
       rewards: undefined,

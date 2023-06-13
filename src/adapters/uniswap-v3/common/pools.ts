@@ -203,7 +203,8 @@ export async function getTokenIdsBalances(
     .map((slot0Res, idx) => {
       const pool = poolsRes[idx].output
       const positionRes = positionsRes[idx]
-      if (!pool || !positionRes.success) {
+      // Uniswap rewarder address doesnt need to be display on llamafolio 'Claim Rewards/Uniswap-LP.org'
+      if (!pool || pool === '0x6e5db687c2f089fb68232B08B3b669659C7c836C' || !positionRes.success) {
         return null
       }
 
@@ -287,6 +288,11 @@ export async function getTokenIdsBalances(
           { ...token0, amount: rewardAmounts[0] },
           { ...token1, amount: rewardAmounts[1] },
         ]
+      }
+
+      const underlyings = balance.underlyings as Balance[]
+      if (!underlyings || underlyings[0].amount === 0n || underlyings[1].amount === 0n) {
+        return null
       }
 
       return balance
