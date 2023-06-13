@@ -252,36 +252,42 @@ export async function updateBalances(
   const maxTries = 5
   let tries = 0
 
-  // Do the transaction in a loop (with exponential backoff) to prevent Cockroach contention errors
-  // See: https://www.cockroachlabs.com/docs/stable/transaction-retry-error-reference.html
-  while (tries <= maxTries) {
-    await client.query('BEGIN')
+  try {
+    // Do the transaction in a loop (with exponential backoff) to prevent Cockroach contention errors
+    // See: https://www.cockroachlabs.com/docs/stable/transaction-retry-error-reference.html
+    while (tries <= maxTries) {
+      await client.query('BEGIN')
 
-    tries++
+      tries++
 
-    try {
-      // Delete old balances
-      await deleteBalancesGroupsCascadeByFromAddress(client, address)
+      try {
+        // Delete old balances
+        await deleteBalancesGroupsCascadeByFromAddress(client, address)
 
-      // Insert balances groups
-      await insertBalancesGroups(client, balancesGroups)
+        // Insert balances groups
+        await insertBalancesGroups(client, balancesGroups)
 
-      // Insert new balances
-      await insertBalances(client, balances)
+        // Insert new balances
+        await insertBalances(client, balances)
 
-      await client.query('COMMIT')
+        await client.query('COMMIT')
 
-      return
-    } catch (err: any) {
-      await client.query('ROLLBACK')
+        return
+      } catch (err: any) {
+        await client.query('ROLLBACK')
 
-      console.error('Failed to insert balances: code', err.code)
-      if (err.code !== '40001' || tries == maxTries) {
-        throw err
-      } else {
-        console.error('Failed to insert balances, transaction contention retry', tries)
-        await sleep(tries * backoffIntervalMs)
+        console.error('Failed to insert balances: code', err.code)
+        if (err.code !== '40001' || tries == maxTries) {
+          throw err
+        } else {
+          console.error('Failed to insert balances, transaction contention retry', tries)
+          await sleep(tries * backoffIntervalMs)
+        }
       }
     }
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : `Encoutered an error: ` + error
+    console.trace(`updateBalances failed: ${errorMessage}`)
+    return
   }
 }

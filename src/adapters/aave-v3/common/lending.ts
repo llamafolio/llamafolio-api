@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, BaseBalance, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { getERC20BalanceOf, getERC20Details } from '@lib/erc20'
+import { getBalancesOf, getERC20Details } from '@lib/erc20'
 import { MAX_UINT_256 } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
@@ -138,7 +138,7 @@ export async function getLendingPoolContracts(
 }
 
 export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
-  const balances: Balance[] = await getERC20BalanceOf(ctx, contracts as Token[])
+  const [, ...balances]: Balance[] = await getBalancesOf(ctx, contracts as Token[])
 
   // use the same amount for underlyings
   for (const balance of balances) {

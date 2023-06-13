@@ -108,56 +108,36 @@ export interface GetERC20BalanceOfParams {
 
 /**
  * @description Returns array of balances, first item is always balance of native chain token
- * @returns {Promise<Balance[]>}
  */
 export async function getBalancesOf(ctx: BalancesContext, tokens: Token[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const multiBalances = await call({
-    ctx,
-    target: multiCoinContracts[ctx.chain],
-    abi: abi.balancesOf,
-    params: [ctx.address, tokens.map((token) => token.address)],
-  })
+  try {
+    const multiBalances = await call({
+      ctx,
+      target: multiCoinContracts[ctx.chain],
+      abi: abi.balancesOf,
+      params: [ctx.address, tokens.map((token) => token.address)],
+    })
 
-  // first token is native chain token (e.g. ETH, AVAX, etc.)
-  const nativeToken = getToken(ctx.chain, ADDRESS_ZERO)
-  balances.push({
-    ...nativeToken,
-    // @ts-expect-error
-    amount: multiBalances.shift(),
-  } as Balance)
+    // first token is native chain token (e.g. ETH, AVAX, etc.)
+    const nativeToken = getToken(ctx.chain, ADDRESS_ZERO)
+    balances.push({
+      ...nativeToken,
+      amount: multiBalances.concat().shift(),
+    } as Balance)
 
-  for (let tokenIdx = 0; tokenIdx < tokens.length; tokenIdx++) {
-    balances.push({ ...tokens[tokenIdx], amount: multiBalances[tokenIdx] } as Balance)
+    for (let tokenIdx = 0; tokenIdx < tokens.length; tokenIdx++) {
+      // @ts-expect-error
+      balances.push({ ...tokens[tokenIdx], amount: multiBalances[tokenIdx] })
+    }
+
+    return balances
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : `Encoutered an error: ` + error
+    console.trace(`[getBalancesOf][${ctx.chain}] ${errorMessage}]`)
+    return balances
   }
-
-  return balances
-}
-
-export async function getERC20BalanceOf(ctx: BalancesContext, tokens: Token[]): Promise<Balance[]> {
-  const balances: Balance[] = []
-
-  const multiBalances = await call({
-    ctx,
-    target: multiCoinContracts[ctx.chain],
-    abi: abi.balancesOf,
-    params: [ctx.address, tokens.map((token) => token.address)],
-  })
-
-  // first token is native chain token (e.g. ETH, AVAX, etc.)
-  const nativeToken = getToken(ctx.chain, ADDRESS_ZERO)
-  balances.push({
-    ...nativeToken,
-    // @ts-expect-error
-    amount: multiBalances.shift(),
-  } as Balance)
-
-  for (let tokenIdx = 0; tokenIdx < tokens.length; tokenIdx++) {
-    balances.push({ ...tokens[tokenIdx], amount: multiBalances[tokenIdx] } as Balance)
-  }
-
-  return balances
 }
 
 export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${string}`[]): Promise<Token[]> {

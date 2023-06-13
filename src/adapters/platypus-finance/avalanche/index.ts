@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getERC20BalanceOf } from '@lib/erc20'
+import { getBalancesOf } from '@lib/erc20'
 import type { Token } from '@lib/token'
 
 import { getFarmBalances, getLockerBalances, getStakeBalances } from './balance'
@@ -36,7 +36,9 @@ export const getContracts = async (ctx: BaseContext) => {
 
 const getPlatypusPoolBalances = async (ctx: BalancesContext, pools: Contract[], contract: Contract) => {
   const [lpRes, farmRes] = await Promise.all([
-    (await getERC20BalanceOf(ctx, pools as Token[])).map((res) => ({ ...res, category: 'lp', rewards: undefined })),
+    (await getBalancesOf(ctx, pools as Token[]))
+      .slice(1)
+      .map((res) => ({ ...res, category: 'lp', rewards: undefined })),
     getFarmBalances(ctx, pools, contract),
   ])
 

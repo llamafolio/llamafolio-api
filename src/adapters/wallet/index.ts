@@ -1,11 +1,10 @@
-import type { Adapter, BalancesContext, GetBalancesHandler } from '@lib/adapter'
-import { resolveBalances } from '@lib/balance'
+import type { Adapter, GetBalancesHandler } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { chains } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getBalancesOf } from '@lib/erc20'
 import type { Token } from '@lib/token'
-import { chains as tokensByChain, getToken } from '@llamafolio/tokens'
+import { chains as tokensByChain } from '@llamafolio/tokens'
 
 const getChainHandlers = (chain: Chain) => {
   const getContracts = () => {

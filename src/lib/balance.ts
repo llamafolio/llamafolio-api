@@ -1,7 +1,6 @@
 import type {
   Balance,
   BalancesContext,
-  BaseBalance,
   BaseContract,
   ExcludeRawContract,
   GetContractsHandler,

@@ -8,12 +8,10 @@
   // git
   "git.autofetch": true,
   "git.enableCommitSigning": true,
-  "git.inputValidationSubjectLength": 72,
   // eslint
   "eslint.enable": true,
   "eslint.format.enable": true,
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact", "json", "markdown"],
-  "eslint.packageManager": "pnpm",
+  "eslint.validate": ["javascript", "typescript", "json", "markdown"],
   "npm.packageManager": "pnpm",
   // typescript
   "typescript.tsdk": "node_modules/typescript/lib",
@@ -36,6 +34,5 @@
   },
   "files.associations": {
     ".markdownlint.json": "jsonc"
-  },
-  "cmake.configureOnOpen": false
+  }
 }

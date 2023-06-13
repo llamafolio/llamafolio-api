@@ -1,6 +1,6 @@
 import type { GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getERC20BalanceOf } from '@lib/erc20'
+import { getBalancesOf } from '@lib/erc20'
 import type { Token } from '@lib/token'
 
 const CRETH2: Token = {
@@ -19,7 +19,10 @@ export const getContracts = async () => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    CRETH2: (ctx, CRETH2) => getERC20BalanceOf(ctx, [CRETH2]),
+    CRETH2: async (ctx, CRETH2) => {
+      const [, ..._balances] = await getBalancesOf(ctx, [CRETH2])
+      return _balances
+    },
   })
 
   return {

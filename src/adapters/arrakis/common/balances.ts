@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { getERC20BalanceOf } from '@lib/erc20'
+import { getBalancesOf } from '@lib/erc20'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
@@ -28,7 +28,7 @@ const abi = {
 export async function getLpBalances(ctx: BalancesContext, contracts: Contract[]) {
   const balances: Balance[] = []
 
-  const balancesRaw = await getERC20BalanceOf(ctx, contracts as Token[])
+  const [, ...balancesRaw] = await getBalancesOf(ctx, contracts as Token[])
 
   const nonZeroBalances = balancesRaw.filter((balance) => balance.amount > 0n)
 

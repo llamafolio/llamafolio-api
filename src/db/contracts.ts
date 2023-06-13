@@ -120,7 +120,7 @@ export function insertAdaptersContracts(
 export async function getContractsInteractions(client: PoolClient, address: string, adapterId: string, chain?: Chain) {
   if (chain) {
     const res = await client.query(
-      /*sql*/`
+      /*sql*/ `
       with interactions as (
         (
           select t.chain, t.to_address as address from transactions t
