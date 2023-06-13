@@ -3,7 +3,7 @@ import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { ADDRESS_ZERO } from '@lib/contract'
-import { getERC20BalanceOf } from '@lib/erc20'
+import { getBalancesOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { ETH_ADDR } from '@lib/token'
@@ -138,7 +138,7 @@ export async function getPoolsContracts(ctx: BaseContext): Promise<Contract[]> {
 }
 
 export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[]) {
-  const balances = await getERC20BalanceOf(ctx, pools as Token[])
+  const { erc20: balances } = await getBalancesOf(ctx, pools as Token[])
 
   return balances.map((balance) => ({ ...balance, category: 'lp' as Category }))
 }

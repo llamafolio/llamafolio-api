@@ -1,4 +1,6 @@
 import environment from '@environment'
+import { ADDRESS_ZERO } from '@lib/contract'
+import type { Address } from 'viem'
 
 import { isNotNullish } from './type'
 
@@ -23,15 +25,17 @@ export interface IChainInfo {
   name: string
   rpcWssUrl?: string
   rpcUrls: string[]
+  gasToken: Address
 }
 
 // Currently supported chains
-export const chains: IChainInfo[] = [
+export const chains = [
   {
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
     rpcUrls: [ARBITRUM_RPC, 'https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'].filter(isNotNullish),
+    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'avalanche',
@@ -42,6 +46,7 @@ export const chains: IChainInfo[] = [
       'https://api.avax.network/ext/bc/C/rpc',
       'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc',
     ],
+    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'bsc',
@@ -54,12 +59,14 @@ export const chains: IChainInfo[] = [
       'https://bsc-dataseed2.defibit.io/',
       'https://bsc-dataseed2.ninicoin.io/',
     ],
+    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'celo',
     chainId: 42220,
     name: 'Celo',
     rpcUrls: [`https://forno.celo.org`],
+    gasToken: '0x471EcE3750Da237f93B8E339c536989b8978a438',
   },
   {
     id: 'ethereum',
@@ -71,18 +78,21 @@ export const chains: IChainInfo[] = [
       'https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79',
       'https://cloudflare-eth.com/',
     ].filter(isNotNullish),
+    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'fantom',
     chainId: 250,
     name: 'Fantom',
     rpcUrls: ['https://rpc.ftm.tools/', 'https://rpc.ankr.com/fantom', 'https://rpcapi.fantom.network'],
+    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'harmony',
     chainId: 1666600000,
     name: 'Harmony',
     rpcUrls: [`https://api.harmony.one`, 'https://harmony-0-rpc.gateway.pokt.network', 'https://api.s0.t.hmny.io'],
+    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'polygon',
@@ -94,26 +104,30 @@ export const chains: IChainInfo[] = [
       'https://polygon-rpc.com/',
       'https://rpc-mainnet.maticvigil.com/',
     ].filter(isNotNullish),
+    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'moonbeam',
     chainId: 1284,
     name: 'Moonbeam',
     rpcUrls: ['https://rpc.api.moonbeam.network', 'https://rpc.ankr.com/moonbeam'],
+    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
     rpcUrls: [OPTIMISM_RPC, 'https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism'].filter(isNotNullish),
+    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'gnosis',
     chainId: 100,
     name: 'Gnosis Chain',
     rpcUrls: ['https://rpc.gnosischain.com', 'https://xdai-archive.blockscout.com'],
+    gasToken: ADDRESS_ZERO,
   },
-]
+] satisfies IChainInfo[]
 
 export const chainById: { [key: string]: IChainInfo } = {}
 

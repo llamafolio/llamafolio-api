@@ -1,12 +1,16 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@aws-sdk/client-lambda':
     specifier: ^3.329.0
     version: 3.329.0
   '@llamafolio/tokens':
-    specifier: ^0.1.69
-    version: 0.1.69
+    specifier: ^0.1.70
+    version: 0.1.70
   dotenv:
     specifier: ^16.0.3
     version: 16.0.3
@@ -29,8 +33,8 @@ dependencies:
     specifier: ^9.0.0
     version: 9.0.0
   viem:
-    specifier: ^1.0.0
-    version: 1.0.0(typescript@5.0.4)(zod@3.21.4)
+    specifier: ^1.0.6
+    version: 1.0.6(typescript@5.0.4)(zod@3.21.4)
   zod:
     specifier: ^3.21.4
     version: 3.21.4
@@ -1857,8 +1861,8 @@ packages:
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
     dev: true
 
-  /@llamafolio/tokens@0.1.69:
-    resolution: {integrity: sha512-2ETFd3f26e5m3GeypN7gLsHKmq2aJb7pqTjrWUTIbVujlKkZTln+3KHtJu7DJ+6WTCN4Q2HDLPPoi0s2ObNntw==}
+  /@llamafolio/tokens@0.1.70:
+    resolution: {integrity: sha512-Kxcl1lI1ObRJ2iuldiD2AdMHhQPTW8r6oOAqxpJLzLJ6P8UHoE7QXeB0piOut0B+yCo6+AJcG38XxwYyxAPMjw==}
     engines: {node: '>=18', npm: '------>PLEASE USE PNPM<------', pnpm: '>=8.0.0', yarn: '------>PLEASE USE PNPM<------'}
     dev: false
 
@@ -7091,8 +7095,8 @@ packages:
       - supports-color
     dev: true
 
-  /viem@1.0.0(typescript@5.0.4)(zod@3.21.4):
-    resolution: {integrity: sha512-JqdO5TYSuv+/cV9xOmHUKB6qXeyLHtl3gcYYHnfFstfdzivfBttmKtwHiZPdffvcr5DqKsYFT5LLrFnfz5vfLQ==}
+  /viem@1.0.6(typescript@5.0.4)(zod@3.21.4):
+    resolution: {integrity: sha512-NOVDREj8bWHajuP5Nw6edd0v3auuGWvLHGScmo9OOt1l7g3f1xMQxPA6JlhNmWXzoHjzzxt/5SorBn2DQ6N6Sg==}
     dependencies:
       '@adraffy/ens-normalize': 1.9.0
       '@noble/curves': 1.0.0

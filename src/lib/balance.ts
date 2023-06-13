@@ -1,7 +1,6 @@
 import type {
   Balance,
   BalancesContext,
-  BaseBalance,
   BaseContract,
   ExcludeRawContract,
   GetContractsHandler,
@@ -9,7 +8,7 @@ import type {
 } from '@lib/adapter'
 import type { Category } from '@lib/category'
 import { ADDRESS_ZERO } from '@lib/contract'
-import { getERC20BalanceOf } from '@lib/erc20'
+import { getBalancesOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
@@ -33,27 +32,15 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
     tokensByChain[token.chain]?.push(token as Token)
   }
 
-  const coinsBalances = (
-    await Promise.all(
-      coins.map(async (token) => {
-        try {
-          const provider = providers[token.chain]
-          const balance = await provider.getBalance(ctx.address)
-          ;(token as BaseBalance).amount = balance
-          return token
-        } catch (err) {
-          console.error(`Failed to get coin balance for chain ${token.chain}`, err)
-          return null
-        }
-      }),
-    )
-  ).filter(isNotNullish)
-
   const tokensBalances: Token[] = (
-    await Promise.all(Object.keys(tokensByChain).map((chain) => getERC20BalanceOf(ctx, tokensByChain[chain])))
+    await Promise.all(
+      Object.keys(tokensByChain).map(
+        async (chain) => (await getBalancesOf(ctx, coins.concat(tokensByChain[chain] as Token[])))['erc20'],
+      ),
+    )
   ).flat() as Token[]
-
-  return coinsBalances.concat(tokensBalances)
+  console.log({ tokensBalances })
+  return tokensBalances
 }
 
 export async function multicallBalances(params: any) {
@@ -76,6 +63,7 @@ export async function multicallBalances(params: any) {
   const coinsBalancesRes = await Promise.all(
     coinsCallsAddresses.map(async (address) => {
       try {
+        // @ts-expect-error
         const provider = providers[chain]
         const balance = await provider.getBalance(address)
         return balance

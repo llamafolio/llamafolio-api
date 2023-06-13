@@ -108,6 +108,7 @@ export function formatBalance(balance: any): FormattedBalance {
     apyMean30d: balance.apyMean30d,
     ilRisk: balance.ilRisk,
     unlockAt: balance.data?.unlockAt,
+    //@ts-expect-error
     side: balance.data?.side,
     margin: balance.data?.margin,
     entryPrice: balance.data?.entryPrice,

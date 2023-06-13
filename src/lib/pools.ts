@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, BaseBalance, Contract } from '@lib/adapter'
 import { multicallBalances } from '@lib/balance'
-import { abi as erc20Abi, getERC20BalanceOf } from '@lib/erc20'
+import { abi as erc20Abi, getBalancesOf } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
@@ -15,7 +15,7 @@ export interface GetPoolsBalancesParams {
  * @param params
  */
 export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[], params: GetPoolsBalancesParams) {
-  const poolsBalances = await getERC20BalanceOf(ctx, pools as Token[])
+  const { erc20: poolsBalances } = await getBalancesOf(ctx, pools as Token[])
 
   return getPoolsUnderlyingBalances(ctx, poolsBalances, params)
 }

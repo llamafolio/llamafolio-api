@@ -39,7 +39,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.329.0",
-    "@llamafolio/tokens": "^0.1.69",
+    "@llamafolio/tokens": "^0.1.70",
     "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
     "graphql-request": "^6.0.0",
@@ -47,7 +47,7 @@
     "pg": "^8.10.0",
     "pg-format": "^1.0.4",
     "uuid": "^9.0.0",
-    "viem": "^1.0.0",
+    "viem": "^1.0.6",
     "zod": "^3.21.4"
   },
   "devDependencies": {
