@@ -59,6 +59,14 @@ const vsCodeLaunchTemplate = (adapters: string[], chains: string[]) =>
         runtimeExecutable: 'npm',
         runtimeArgs: ['run', 'revalidate-contracts', '${input:adapter}', '${input:chain}'],
       },
+      {
+        type: 'node',
+        request: 'launch',
+        name: 'Run revalidate contracts recursive',
+        skipFiles: ['<node_internals>/**'],
+        runtimeExecutable: 'npm',
+        runtimeArgs: ['run', 'revalidate-contracts-rec', '${input:adapter}', '${input:chain}'],
+      },
     ],
     inputs: [
       {
