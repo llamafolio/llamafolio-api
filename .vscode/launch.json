@@ -36,7 +36,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Run revalidate contracts rec",
+      "name": "Run revalidate contracts recursive",
       "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "revalidate-contracts-rec", "${input:adapter}", "${input:chain}"]
