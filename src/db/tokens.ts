@@ -80,7 +80,7 @@ export function toERC20Storage(tokens: ERC20Token[]) {
       address,
       chain,
       name,
-      symbol,
+      symbol: symbol.replaceAll('\x00', ''),
       decimals,
       coingeckoId,
       cmcId,
@@ -143,7 +143,10 @@ export function insertERC20Tokens(client: PoolClient, tokens: ERC20Token[]) {
             stable
           ) VALUES %L ON CONFLICT (address, chain) DO
             UPDATE SET
-              (coingecko_id, cmc_id, stable) = (EXCLUDED.coingecko_id, EXCLUDED.cmc_id, EXCLUDED.stable);`,
+              coingecko_id = EXCLUDED.coingecko_id,
+              cmc_id = EXCLUDED.cmc_id,
+              stable = EXCLUDED.stable;
+          `,
           chunk,
         ),
         [],

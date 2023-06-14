@@ -46,18 +46,13 @@ async function main() {
 
         const contractsRes = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
 
-        const [contracts, props] = await Promise.all([
-          resolveContractsTokens({ client, contractsMap: contractsRes?.contracts || {}, storeMissingTokens: true }),
-          contractsRes?.props
-            ? resolveContractsTokens({ client, contractsMap: contractsRes?.props, storeMissingTokens: true })
-            : undefined,
-        ])
+        const contracts = await resolveContractsTokens({
+          client,
+          contractsMap: contractsRes?.contracts || {},
+          storeMissingTokens: true,
+        })
 
-        return {
-          ...contractsRes,
-          contracts,
-          props,
-        }
+        return { ...contractsRes, contracts }
       }),
     )
 
@@ -75,7 +70,6 @@ async function main() {
         chain: adapterChains[i],
         contractsExpireAt: expire_at,
         contractsRevalidateProps: config.revalidateProps,
-        contractsProps: config.props,
         createdAt: now,
       }
     })

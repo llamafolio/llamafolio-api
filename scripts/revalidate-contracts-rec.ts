@@ -63,12 +63,11 @@ async function main() {
         break
       }
 
-      const [contracts, props] = await Promise.all([
-        resolveContractsTokens({ client, contractsMap: config.contracts || {}, storeMissingTokens: true }),
-        config.props
-          ? resolveContractsTokens({ client, contractsMap: config.props, storeMissingTokens: true })
-          : undefined,
-      ])
+      const contracts = await resolveContractsTokens({
+        client,
+        contractsMap: config.contracts || {},
+        storeMissingTokens: true,
+      })
 
       let expire_at: Date | undefined = undefined
       if (config.revalidate) {
@@ -81,7 +80,6 @@ async function main() {
         chain,
         contractsExpireAt: expire_at,
         contractsRevalidateProps: config.revalidateProps,
-        contractsProps: props,
         createdAt: new Date(),
       }
 
