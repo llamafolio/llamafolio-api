@@ -1,16 +1,12 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@aws-sdk/client-lambda':
     specifier: ^3.329.0
     version: 3.329.0
   '@llamafolio/tokens':
-    specifier: ^0.1.70
-    version: 0.1.70
+    specifier: ^0.1.71
+    version: 0.1.71
   dotenv:
     specifier: ^16.0.3
     version: 16.0.3
@@ -1861,8 +1857,8 @@ packages:
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
     dev: true
 
-  /@llamafolio/tokens@0.1.70:
-    resolution: {integrity: sha512-Kxcl1lI1ObRJ2iuldiD2AdMHhQPTW8r6oOAqxpJLzLJ6P8UHoE7QXeB0piOut0B+yCo6+AJcG38XxwYyxAPMjw==}
+  /@llamafolio/tokens@0.1.71:
+    resolution: {integrity: sha512-1qpTtjnkUs9OX86w+j0WUWPtPiSSvompef6WEzpHLvM2pOYmujaAiDBd75TiLQZy/uVjuXjpWYUe6MpB18WHZg==}
     engines: {node: '>=18', npm: '------>PLEASE USE PNPM<------', pnpm: '>=8.0.0', yarn: '------>PLEASE USE PNPM<------'}
     dev: false
 
@@ -7562,3 +7558,7 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
