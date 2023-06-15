@@ -1,12 +1,13 @@
 import { badRequest, notFound, success } from '@handlers/response'
+import type { BaseContext } from '@lib/adapter'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
-import { getToken } from '@llamafolio/tokens'
+import { getERC20Details } from '@lib/erc20'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   const chain = event.pathParameters?.chain as Chain
-  const address = event.pathParameters?.address as `0x${string}`
+  const address = event.pathParameters?.address?.toLowerCase() as `0x${string}`
 
   if (!chain) {
     return badRequest('Missing chain parameter')
@@ -20,7 +21,9 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  const token = getToken(chain, address?.toLowerCase())
+  const ctx: BaseContext = { chain, adapterId: '' }
+
+  const [token] = await getERC20Details(ctx, [address])
 
   if (!token) {
     return notFound('Token not found', { maxAge: 60 * 60 })
