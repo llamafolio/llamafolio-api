@@ -81,6 +81,8 @@ export async function getSherlockBalances(ctx: BalancesContext, staker: Contract
   const balances: Balance[] = []
 
   // There is no way to know in advance the number of sherlock's nft issued, currently there seems to be 685, so iterating through 1000 seems to be wise for now
+  // TODO: revisit once we support ERC721 interactions
+
   const COUNT = 1000n
 
   const nftListsRes = await multicall({
