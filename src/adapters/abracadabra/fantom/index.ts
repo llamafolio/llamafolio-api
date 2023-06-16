@@ -24,6 +24,8 @@ const MIM: Contract = {
 }
 
 const cauldrons: `0x${string}`[] = [
+  '0x37cf490255082ee50845ea4ff783eb9b6d1622ce',
+  '0xa668762fb20bcd7148db1bdb402ec06eb6dad569',
   '0x7208d9F9398D7b02C5C22c334c2a7A3A98c0A45d',
   '0x4fdfFa59bf8dda3F4d5b38F260EAb8BFaC6d7bC1',
   '0x8E45Af6743422e488aFAcDad842cE75A09eaEd34',
