@@ -99,6 +99,10 @@ const cauldrons: `0x${string}`[] = [
   '0x53375adD9D2dFE19398eD65BAaEFfe622760A9A6', // yvstETH_Concentrated
   //  Active v4
   '0x207763511da879a900973A5E092382117C3c1588', // CRV
+  '0x7d8df3e4d06b0e19960c19ee673c0823beb90815', // CRVv2
+  '0x1062eb452f8c7a94276437ec1f4aaca9b1495b72', // StargateUSDT
+  '0x7259e152103756e1616A77Ae982353c3751A6a90', // yCRV
+  '0x692887E8877C6Dd31593cda44c382DB5b289B684', // magicAPE
   //  Deprecated V1 but there is still residual liquidity
   '0x551a7CfF4de931F32893c928bBc3D25bF1Fc5147', // yvUSDTv2
   '0x6cbAFEE1FaB76cA5B5e144c43B3B50d42b7C8c8f', // yvUSDCv2
