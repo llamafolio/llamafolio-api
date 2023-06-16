@@ -142,6 +142,7 @@ import scream from '@adapters/scream'
 import sentiment from '@adapters/sentiment'
 import setProtocol from '@adapters/set-protocol'
 import sharedstake from '@adapters/sharedstake'
+import sherlock from '@adapters/sherlock'
 import shibaswap from '@adapters/shibaswap'
 import sideshift from '@adapters/sideshift'
 import smardex from '@adapters/smardex'
@@ -348,6 +349,7 @@ export const adapters: Adapter[] = [
   sentiment,
   setProtocol,
   sharedstake,
+  sherlock,
   shibaswap,
   sideshift,
   smardex,
