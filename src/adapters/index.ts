@@ -70,6 +70,7 @@ import gmx from '@adapters/gmx'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
 import goldfinch from '@adapters/goldfinch'
 import granaryFinance from '@adapters/granary-finance'
+import gravitaProtocol from '@adapters/gravita-protocol'
 import gro from '@adapters/gro'
 import gyro from '@adapters/gyro'
 import hectorNetwork from '@adapters/hector-network'
@@ -276,6 +277,7 @@ export const adapters: Adapter[] = [
   gnosisProtocolV1,
   goldfinch,
   granaryFinance,
+  gravitaProtocol,
   gro,
   gyro,
   hectorNetwork,
