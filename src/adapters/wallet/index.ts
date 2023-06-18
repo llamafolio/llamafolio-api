@@ -20,7 +20,6 @@ const getChainHandlers = (chain: Chain) => {
       // llamafolio-tokens registers all tokens to help get metadata but some are protocol specific (ex: stETH, aTokens).
       // wallet flag indicates wallet-only tokens
       if (token.wallet) {
-        //@ts-expect-error
         erc20.push({ ...token, chain, category: 'wallet' } as Token)
       }
     }

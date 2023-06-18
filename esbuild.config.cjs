@@ -1,9 +1,21 @@
-/**
- * No need to import/require dotenv because serverless.yml has `useDotenv: true`
- */
-const AnalyzerPlugin = require('esbuild-analyzer')
+// @ts-check
+
+/* No need to import/require dotenv because serverless.yml has `useDotenv: true` */
 
 const isProduction = process.env.NODE_ENV === 'production'
+
+/** @type {Array<import('esbuild').Plugin>} */
+const plugins = []
+
+if (!isProduction) {
+  // @ts-expect-error - esbuild-analyzer doesn't come with types
+  const AnalyzerPlugin = require('esbuild-analyzer')
+  plugins.push(
+    AnalyzerPlugin({
+      outfile: './.esbuild/esbuild-analyzer.html',
+    }),
+  )
+}
 
 /**
  * @param {import('serverless').Options} _
@@ -21,9 +33,5 @@ module.exports = (_) => ({
   external: ['pg-native', 'pg-format'],
   drop: isProduction ? ['console', 'debugger'] : [],
   metafile: !isProduction,
-  plugins: [
-    AnalyzerPlugin({
-      outfile: './.esbuild/esbuild-analyzer.html',
-    }),
-  ],
+  plugins,
 })

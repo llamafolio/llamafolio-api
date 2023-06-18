@@ -86,3 +86,4 @@ jobs:
           SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
           # enables verbose logging
           ACTIONS_STEP_DEBUG: true
+          NODE_ENV: 'production'
