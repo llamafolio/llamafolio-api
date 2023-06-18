@@ -19,6 +19,20 @@ export declare type Chain =
   | 'optimism'
   | 'polygon'
 
+export const chainsNames = [
+  'arbitrum',
+  'avalanche',
+  'bsc',
+  'celo',
+  'ethereum',
+  'fantom',
+  'gnosis',
+  'harmony',
+  'moonbeam',
+  'optimism',
+  'polygon',
+] as const
+
 export interface IChainInfo {
   id: Chain
   chainId: number
@@ -75,8 +89,8 @@ export const chains = [
     rpcWssUrl: LLAMANODES_API_KEY ? `wss://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}` : undefined,
     rpcUrls: [
       LLAMANODES_API_KEY ? `https://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}` : undefined,
+      'https://rpc.ankr.com/eth',
       'https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79',
-      'https://cloudflare-eth.com/',
     ].filter(isNotNullish),
     gasToken: ADDRESS_ZERO,
   },
@@ -117,7 +131,14 @@ export const chains = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcUrls: [OPTIMISM_RPC, 'https://mainnet.optimism.io/', 'https://rpc.ankr.com/optimism'].filter(isNotNullish),
+    rpcUrls: [
+      OPTIMISM_RPC,
+      'https://optimism.publicnode.com',
+      'https://rpc.ankr.com/optimism',
+      'https://optimism-mainnet.public.blastapi.io',
+      'https://1rpc.io/op',
+      'https://mainnet.optimism.io',
+    ].filter(isNotNullish),
     gasToken: ADDRESS_ZERO,
   },
   {

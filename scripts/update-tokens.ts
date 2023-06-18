@@ -1,5 +1,9 @@
 import '../environment'
 
+import type { Chain } from '@lib/chains'
+import { chainsNames } from '@lib/chains'
+import type { Address } from 'viem'
+
 import pool from '../src/db/pool'
 import type { ERC20Token } from '../src/db/tokens'
 import { insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/tokens'
@@ -31,16 +35,21 @@ async function main() {
         return
       }
 
-      const tokensByChain: { [chain: string]: string[] } = {}
+      const tokensByChain = {} as { [chain in Chain]: Address[] }
 
-      for (const [chain, address] of chainsAddresses) {
+      for (const item of chainsAddresses) {
+        const [chain, address] = item as [Chain, Address]
+        if (!chainsNames.includes(chain)) {
+          console.error(`Unknown chain ${chain}`)
+          continue
+        }
         if (!tokensByChain[chain]) {
           tokensByChain[chain] = []
         }
         tokensByChain[chain].push(address)
       }
 
-      const chains = Object.keys(tokensByChain)
+      const chains = Object.keys(tokensByChain) as Chain[]
 
       const chainsTokens = await Promise.all(
         chains.map((chain) => getERC20Details({ chain, adapterId: '' }, tokensByChain[chain])),
