@@ -190,6 +190,7 @@ export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${st
     found[address] = {
       chain: ctx.chain,
       address,
+      //@ts-ignore
       symbol: symbolRes.output,
       decimals: Number(decimalsRes.output),
     }
