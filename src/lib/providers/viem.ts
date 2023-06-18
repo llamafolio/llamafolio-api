@@ -63,13 +63,23 @@ export function evmClient(
     },
   },
 ) {
+  const transport =
+    protocol === 'ws' && chain.rpcWssUrl
+      ? webSocket(chain.rpcWssUrl)
+      : fallback(
+          chain.rpcUrls.map((rpcURL) =>
+            http(rpcURL, {
+              batch: true,
+              timeout: 60_000,
+              retryDelay: 1_00,
+            }),
+          ),
+          { rank: true },
+        )
   return createPublicClient({
     name: 'llamafolio',
     chain: viemChainById[chain.id],
-    transport:
-      protocol === 'ws' && chain.rpcWssUrl
-        ? webSocket(chain.rpcWssUrl)
-        : fallback(chain.rpcUrls.map((rpcURL) => http(rpcURL, { timeout: 60_000, retryDelay: 1_00 }))),
+    transport,
     ...options,
   })
 }

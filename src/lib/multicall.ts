@@ -6,6 +6,9 @@ import { isNotNullish } from '@lib/type'
 import type { Abi } from 'abitype'
 import type { DecodeFunctionResultParameters, DecodeFunctionResultReturnType } from 'viem'
 
+/** @see https://github.com/mds1/multicall */
+const MULTICALL_V3_ADDRESS = '0xcA11bde05977b3631167028862bE2a173976CA11'
+
 export interface Call<TAbi extends Abi[number] | readonly unknown[]> {
   target: `0x${string}`
   params?: DecodeFunctionResultParameters<TAbi[]>['args']
@@ -50,6 +53,7 @@ export async function multicall<
   const calls = options.calls.filter(isNotNullish)
 
   const multicallRes = await providers[options.ctx.chain].multicall({
+    multicallAddress: MULTICALL_V3_ADDRESS,
     // @ts-ignore
     contracts: calls.map((call) => ({
       address: call.target,
