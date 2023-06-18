@@ -39,7 +39,6 @@ async function main() {
 
       for (const item of chainsAddresses) {
         const [chain, address] = item as [Chain, Address]
-        console.log({ chain })
         if (!chainsNames.includes(chain)) {
           console.error(`Unknown chain ${chain}`)
           continue
