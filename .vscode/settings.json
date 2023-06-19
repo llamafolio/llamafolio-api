@@ -2,7 +2,8 @@
   "search.exclude": {
     "**/node_modules": true,
     "pnpm-lock.yaml": true,
-    ".esbuild": true
+    ".esbuild": true,
+    ".eslintignore": true
   },
   "window.title": "🦙 ${rootName} ${separator} ${activeEditorMedium} 🦙",
   // git
@@ -36,6 +37,6 @@
     ".markdownlint.json": "jsonc"
   },
   "[typescript]": {
-    "editor.defaultFormatter": "dbaeumer.vscode-eslint"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }

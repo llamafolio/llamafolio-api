@@ -15,12 +15,7 @@ export default defineConfig({
       // disable experimental node warnings
       NODE_NO_WARNINGS: '1',
     },
-    deps: {
-      registerNodeLoader: true,
-      experimentalOptimizer: {
-        enabled: true,
-      },
-    },
+    deps: { registerNodeLoader: true },
     reporters: process.env.GITHUB_ACTIONS ? ['default', new GithubActionsReporter()] : [],
     coverage: {
       provider: 'istanbul',

@@ -150,7 +150,7 @@ export async function getBalancesOf(
     return { coin: nativeTokenBalance, erc20 }
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : `Encoutered an error: ` + error
-    console.trace(`[getBalancesOf][${ctx.chain}] ${errorMessage}]`)
+    console.error(`[getBalancesOf][${ctx.chain}] ${errorMessage}]`)
     throw new Error(errorMessage)
   }
 }
