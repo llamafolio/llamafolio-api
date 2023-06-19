@@ -27,6 +27,7 @@ const cauldrons: `0x${string}`[] = [
   //  v2
   '0xC89958B03A55B5de2221aCB25B58B89A000215E6', // WETH
   '0x5698135CA439f21a57bDdbe8b582C62f090406D5', // GLP Self-Repaying
+  '0x726413d7402fF180609d0EBc79506df8633701B1', // magic GLP
 ]
 
 export const getContracts = async (ctx: BaseContext) => {

@@ -70,6 +70,7 @@ import gmx from '@adapters/gmx'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
 import goldfinch from '@adapters/goldfinch'
 import granaryFinance from '@adapters/granary-finance'
+import gravitaProtocol from '@adapters/gravita-protocol'
 import gro from '@adapters/gro'
 import gyro from '@adapters/gyro'
 import hectorNetwork from '@adapters/hector-network'
@@ -142,6 +143,7 @@ import scream from '@adapters/scream'
 import sentiment from '@adapters/sentiment'
 import setProtocol from '@adapters/set-protocol'
 import sharedstake from '@adapters/sharedstake'
+import sherlock from '@adapters/sherlock'
 import shibaswap from '@adapters/shibaswap'
 import sideshift from '@adapters/sideshift'
 import smardex from '@adapters/smardex'
@@ -276,6 +278,7 @@ export const adapters: Adapter[] = [
   gnosisProtocolV1,
   goldfinch,
   granaryFinance,
+  gravitaProtocol,
   gro,
   gyro,
   hectorNetwork,
@@ -348,6 +351,7 @@ export const adapters: Adapter[] = [
   sentiment,
   setProtocol,
   sharedstake,
+  sherlock,
   shibaswap,
   sideshift,
   smardex,
