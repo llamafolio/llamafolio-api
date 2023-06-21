@@ -1,33 +1,7 @@
-import type { Chain, IChainInfo } from '@lib/chains'
+import type { IChainInfo } from '@lib/chains'
 import { createPublicClient, fallback, http, webSocket } from 'viem'
-import type { Chain as _Chain } from 'viem/chains'
-import {
-  arbitrum,
-  avalanche,
-  bsc,
-  celo,
-  fantom,
-  gnosis,
-  harmonyOne as harmony,
-  mainnet as ethereum,
-  moonbeam,
-  optimism,
-  polygon,
-} from 'viem/chains'
 
-const viemChainById: { [key in Chain]: _Chain } = {
-  arbitrum,
-  avalanche,
-  bsc,
-  celo,
-  ethereum,
-  fantom,
-  gnosis,
-  harmony,
-  moonbeam,
-  optimism,
-  polygon,
-} as const
+import { viemChainById } from './chains'
 
 export type Protocol = 'http' | 'ws'
 
