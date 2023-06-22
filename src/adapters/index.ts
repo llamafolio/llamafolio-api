@@ -26,6 +26,7 @@ import balancer from '@adapters/balancer'
 import bancorV3 from '@adapters/bancor-v3'
 import beefy from '@adapters/beefy'
 import bellaProtocol from '@adapters/bella-protocol'
+import beltFinance from '@adapters/belt-finance'
 import benddao from '@adapters/benddao'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
@@ -234,6 +235,7 @@ export const adapters: Adapter[] = [
   bancorV3,
   beefy,
   bellaProtocol,
+  beltFinance,
   benddao,
   benqiLending,
   benqiStakedAvax,
