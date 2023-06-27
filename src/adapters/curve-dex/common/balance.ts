@@ -100,6 +100,22 @@ const stableRegistry: { [key: string]: `0x${string}` } = {
   polygon: '0x094d12e5b541784701FD8d65F11fc0598FBC6332',
 }
 
+const blacklist = [
+  { chain: 'avalanche', registryId: 'stableSwap' },
+  { chain: 'fantom', registryId: 'stableSwap' },
+  { chain: 'polygon', registryId: 'stableSwap' },
+  { chain: 'ethereum', address: '0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8' },
+  { chain: 'ethereum', address: '0x3b3ac5386837dc563660fb6a0937dfaa5924333b' },
+  { chain: 'ethereum', address: '0x05ca5c01629a8e5845f12ea3a03ff7331932233a' },
+  { chain: 'ethereum', address: '0xf5194c3325202f456c95c1cf0ca36f8475c1949f' },
+]
+
+function isInBlacklist(item: any) {
+  return blacklist.some((blacklistedItem) =>
+    Object.entries(blacklistedItem).every(([key, value]) => item[key] === value),
+  )
+}
+
 export async function getPoolsBalances(
   ctx: BalancesContext,
   pools: Contract[],
@@ -190,9 +206,8 @@ export const getUnderlyingsPoolsBalances = async (
         ...underlyings[underlyingIdx],
         // on Avalanche & Fantom & Polygon, stablePool uses fixed decimals as 18 even if tokens are USDC or USDT
         decimals:
-          (ctx.chain === 'avalanche' && poolBalance.registryId === 'stableSwap') ||
-          (ctx.chain === 'fantom' && poolBalance.registryId === 'stableSwap') ||
-          (ctx.chain === 'polygon' && poolBalance.registryId === 'stableSwap')
+          isInBlacklist({ chain: ctx.chain, registryId: poolBalance.registryId }) ||
+          isInBlacklist({ chain: ctx.chain, address: poolBalance.address })
             ? 18
             : underlyings[underlyingIdx].decimals,
         amount: (underlyingsBalance * poolBalance.amount) / totalSupply,
