@@ -183,8 +183,6 @@ export const getUnderlyingsPoolsBalances = async (
 
     const totalSupply = totalSupplyRes.output
 
-    console.log(totalSupply)
-
     const poolBalance: PoolBalance = {
       ...pools[poolIdx],
       registry: pools[poolIdx].registry,
