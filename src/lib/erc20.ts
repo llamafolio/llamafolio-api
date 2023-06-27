@@ -365,7 +365,7 @@ export async function userBalances({
   const balancesResults = await Promise.allSettled(
     chunks.map(async (chunk, _index) => {
       const { success, result } = await balancesOf({ client, chain, address: walletAddress, tokens: chunk })
-      sleep(250)
+      sleep(50)
       return { success, result }
     }),
   )
