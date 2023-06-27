@@ -135,10 +135,11 @@ export async function getPoolsBalances(
       return null
     }
 
-    return {
-      ...pool,
-      amount: res.output,
-    }
+    if (res.output > 0n)
+      return {
+        ...pool,
+        amount: res.output,
+      }
   }).filter(isNotNullish) as Balance[]
 
   return getUnderlyingsPoolsBalances(ctx, poolBalances, registry)
@@ -182,6 +183,8 @@ export const getUnderlyingsPoolsBalances = async (
 
     const totalSupply = totalSupplyRes.output
 
+    console.log(totalSupply)
+
     const poolBalance: PoolBalance = {
       ...pools[poolIdx],
       registry: pools[poolIdx].registry,
@@ -193,9 +196,10 @@ export const getUnderlyingsPoolsBalances = async (
     }
 
     for (let underlyingIdx = 0; underlyingIdx < underlyings.length; underlyingIdx++) {
-      const underlyingBalanceOfRes = get_underlying_balancesOfRes[balanceOfIdx].success
-        ? get_underlying_balancesOfRes[balanceOfIdx]
-        : get_balancesOfRes[balanceOfIdx]
+      const underlyingBalanceOfRes =
+        get_underlying_balancesOfRes[balanceOfIdx] && get_underlying_balancesOfRes[balanceOfIdx].success
+          ? get_underlying_balancesOfRes[balanceOfIdx]
+          : get_balancesOfRes[balanceOfIdx]
 
       const underlyingsBalance =
         underlyingBalanceOfRes && underlyingBalanceOfRes.output?.filter(isNotNullish) != undefined
