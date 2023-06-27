@@ -1,7 +1,6 @@
 import { getCRVUSDBalances } from '@adapters/crvusd/ethereum/balance'
 import { getCRVUSDContracts } from '@adapters/crvusd/ethereum/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
-import { resolveBalances } from '@lib/balance'
 import type { Token } from '@lib/token'
 
 const crvUSD: Token = {
@@ -25,11 +24,9 @@ export const getContracts = async (ctx: BaseContext) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: getCRVUSDBalances,
-  })
+  const groups = await getCRVUSDBalances(ctx, contracts.pools || [])
 
   return {
-    groups: [{ balances }],
+    groups,
   }
 }

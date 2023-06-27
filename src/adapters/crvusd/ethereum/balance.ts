@@ -1,4 +1,4 @@
-import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
+import type { BalancesContext, BalancesGroup, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
@@ -8,18 +8,15 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
     name: 'user_state',
-    inputs: [
-      {
-        name: 'user',
-        type: 'address',
-      },
-    ],
-    outputs: [
-      {
-        name: '',
-        type: 'uint256[4]',
-      },
-    ],
+    inputs: [{ name: 'user', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256[4]' }],
+  },
+  health: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'health',
+    inputs: [{ name: 'user', type: 'address' }],
+    outputs: [{ name: '', type: 'int256' }],
   },
 } as const
 
@@ -30,16 +27,26 @@ const crvUSD: Token = {
   decimals: 18,
 }
 
-export async function getCRVUSDBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
-  const userBalances = await multicall({
-    ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
-    abi: abi.user_state,
-  })
+export async function getCRVUSDBalances(ctx: BalancesContext, pools: Contract[]): Promise<BalancesGroup[]> {
+  const [userBalances, healthsRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      abi: abi.user_state,
+    }),
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      abi: abi.health,
+    }),
+  ])
 
-  const balances: Balance[][] = mapSuccessFilter(userBalances, (res, idx) => {
+  const groups: BalancesGroup[] = mapSuccessFilter(userBalances, (res, idx) => {
+    const pool = pools[idx]
+    const underlyings = pool.underlyings as Contract[]
+    const healthFactor =
+      healthsRes[idx].success && healthsRes[idx].output !== null ? 1 + Number(healthsRes[idx].output) / 1e18 : undefined
     const [collateralToken, collateralTokenCRVUSD, debt, _] = res.output
-    const underlyings = pools[idx].underlyings as Contract[]
 
     const lend: LendBalance = {
       ...pools[idx],
@@ -65,8 +72,8 @@ export async function getCRVUSDBalances(ctx: BalancesContext, pools: Contract[])
       category: 'borrow',
     }
 
-    return [lend, lendCRVUSD, borrow]
+    return { healthFactor, balances: [lend, lendCRVUSD, borrow] }
   })
 
-  return balances.flat()
+  return groups
 }
