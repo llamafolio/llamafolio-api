@@ -11,6 +11,7 @@ export const environmentSchema = z.object({
   PGPASSWORD: z.string().optional(),
   PGPORT: z.string().optional(),
   LLAMANODES_API_KEY: z.string().optional(),
+  ANKR_API_KEY: z.string().optional().default(''),
   ARBITRUM_RPC: z.string().optional(),
   OPTIMISM_RPC: z.string().optional(),
   IS_OFFLINE: z.literal('true').or(z.literal('false')).optional(),

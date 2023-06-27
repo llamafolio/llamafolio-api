@@ -1,7 +1,7 @@
 import type { Adapter, GetBalancesHandler } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { chains } from '@lib/chains'
-import { getBalancesOf } from '@lib/erc20'
+import { userBalancesWithRetry } from '@lib/erc20'
 import type { Token } from '@lib/token'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 
@@ -29,9 +29,14 @@ const getChainHandlers = (chain: Chain) => {
     }
   }
 
-  // @ts-expect-error
-  const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-    const { coin, erc20 } = await getBalancesOf(ctx, contracts.erc20 as unknown as Token[])
+  // @ts-ignore TODO: fix this
+  const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, _contracts) => {
+    const [coin, ...erc20] = await userBalancesWithRetry({
+      chain: ctx.chain,
+      address: ctx.address,
+      //@ts-ignore TODO: fix this
+      tokens: tokensByChain[ctx.chain],
+    })
     const balances = [coin, ...erc20]
     return {
       groups: [{ balances }],

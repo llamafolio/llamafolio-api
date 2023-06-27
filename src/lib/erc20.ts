@@ -1,13 +1,17 @@
 import type { Balance, BalancesContext, BaseContext } from '@lib/adapter'
+import { sliceIntoChunks } from '@lib/array'
 import { call } from '@lib/call'
-import type { Chain } from '@lib/chains'
-import { ADDRESS_ZERO } from '@lib/contract'
+import { type Chain, gasToken } from '@lib/chains'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
+import { sleep } from '@lib/promise'
+import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 import { getToken } from '@llamafolio/tokens'
-
+import type { Address, PublicClient } from 'viem'
+import { getAddress } from 'viem'
+import { readContract } from 'viem/contract'
 export const abi = {
   balanceOf: {
     constant: true,
@@ -85,6 +89,161 @@ export const abi = {
   },
 } as const
 
+export const BALANCES_OF_ABI = <const>[
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'address[]',
+        name: 'tokens',
+        type: 'address[]',
+      },
+    ],
+    name: 'balancesOf',
+    outputs: [
+      {
+        internalType: 'uint256[]',
+        name: '',
+        type: 'uint256[]',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+]
+export const ERC20_ABI = <const>[
+  {
+    inputs: [
+      { internalType: 'string', name: 'name_', type: 'string' },
+      { internalType: 'string', name: 'symbol_', type: 'string' },
+      { internalType: 'uint8', name: 'decimals_', type: 'uint8' },
+      { internalType: 'uint256', name: 'initialBalance_', type: 'uint256' },
+      { internalType: 'address payable', name: 'feeReceiver_', type: 'address' },
+    ],
+    stateMutability: 'payable',
+    type: 'constructor',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'spender', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+    ],
+    name: 'Approval',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
+      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
+      { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
+    ],
+    name: 'Transfer',
+    type: 'event',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'owner', type: 'address' },
+      { internalType: 'address', name: 'spender', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'spender', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'spender', type: 'address' },
+      { internalType: 'uint256', name: 'subtractedValue', type: 'uint256' },
+    ],
+    name: 'decreaseAllowance',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'spender', type: 'address' },
+      { internalType: 'uint256', name: 'addedValue', type: 'uint256' },
+    ],
+    name: 'increaseAllowance',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'name',
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'symbol',
+    outputs: [{ internalType: 'string', name: '', type: 'string' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'recipient', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
+    name: 'transfer',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'sender', type: 'address' },
+      { internalType: 'address', name: 'recipient', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
+    name: 'transferFrom',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+]
 /** @see: https://github.com/o-az/evm-balances/tree/main */
 const multiCoinContracts = {
   ethereum: '0x13675852Ac733AEd5679985778BE5c18E64E97FA',
@@ -102,20 +261,170 @@ const multiCoinContracts = {
   // aurora: '0xc9bA77C9b27481B6789840A7C3128D4f691f8296',
 } satisfies { [key in Chain]: `0x${string}` }
 
-const networkToken = {
-  arbitrum: ADDRESS_ZERO,
-  avalanche: ADDRESS_ZERO,
-  bsc: ADDRESS_ZERO,
-  celo: '0x471ece3750da237f93b8e339c536989b8978a438',
-  ethereum: ADDRESS_ZERO,
-  fantom: ADDRESS_ZERO,
-  harmony: ADDRESS_ZERO,
-  polygon: ADDRESS_ZERO,
-  moonbeam: ADDRESS_ZERO,
-  optimism: ADDRESS_ZERO,
-  gnosis: ADDRESS_ZERO,
-} satisfies { [key in Chain]: `0x${string}` }
+export async function balanceOf({
+  client,
+  address: walletAddress,
+  token,
+}: {
+  client: PublicClient
+  chain: Chain
+  address: Address
+  token: Token
+}): Promise<Balance | boolean> {
+  try {
+    const result = await readContract(client, {
+      abi: ERC20_ABI,
+      address: getAddress(token.address),
+      functionName: 'balanceOf',
+      args: [getAddress(walletAddress)],
+    })
+    if (result !== 0n) return { ...token, amount: result, category: 'wallet' }
+    return false
+  } catch {
+    return false
+  }
+}
 
+export async function balancesOf({
+  address,
+  tokens,
+  chain,
+  client,
+}: {
+  address: Address
+  tokens: Array<Token>
+  chain: Chain
+  client: PublicClient
+}): Promise<
+  | {
+      success: true
+      result: Array<Balance>
+    }
+  | {
+      success: false
+      result: Array<Token>
+    }
+> {
+  try {
+    const balances = [] as Array<Balance>
+    const [nativeResult, ...results] = await readContract(client, {
+      abi: BALANCES_OF_ABI,
+      address: multiCoinContracts[chain],
+      functionName: 'balancesOf',
+      args: [address, tokens.map((token) => token.address)],
+    })
+
+    for (const [index, balance] of results.entries()) {
+      if (!balance || balance == 0n) continue
+      const token = tokens[index]
+      if (!token) continue
+      const tokenBalance = {
+        ...token,
+        amount: balance,
+      }
+      balances.push(tokenBalance as Balance)
+    }
+    if (!nativeResult || typeof nativeResult !== 'bigint') return { success: true, result: balances }
+    const nativeToken = gasToken[chain]
+    // @ts-ignore TODO: fix this
+    nativeToken['amount'] = nativeResult
+    return {
+      success: true,
+      // @ts-ignore TODO: fix this
+      result: [nativeToken, ...balances],
+    }
+  } catch {
+    return {
+      success: false,
+      result: tokens,
+    }
+  }
+}
+
+export async function userBalances({
+  client,
+  chain,
+  address: walletAddress,
+  tokens,
+  chunkSize,
+}: {
+  client: PublicClient
+  chain: Chain
+  address: Address
+  tokens: Array<Token>
+  chunkSize: number
+}): Promise<{
+  result: Array<Balance>
+  rejected: Array<Token>
+}> {
+  const chunks = sliceIntoChunks(
+    tokens.map(({ address, ...token }) => ({ address: getAddress(address), ...token })),
+    chunkSize,
+  ) as Array<Array<Token>>
+
+  const balancesResults = await Promise.allSettled(
+    chunks.map(async (chunk, _index) => {
+      const { success, result } = await balancesOf({ client, chain, address: walletAddress, tokens: chunk })
+      sleep(250)
+      return { success, result }
+    }),
+  )
+
+  const balances = [] as Array<Balance>
+  const natives = [] as Array<Balance>
+  const rejected = [] as Array<Token>
+  for (const [index, balancesResult] of balancesResults.entries()) {
+    if (balancesResult.status === 'rejected') {
+      console.log('rejected', index)
+    }
+
+    if (balancesResult.status === 'fulfilled') {
+      const {
+        success,
+        result: [nativeBalance, ...tokensBalances],
+      } = balancesResult.value
+      if (success === true) {
+        // @ts-ignore TODO: fix this
+        balances.push(...tokensBalances)
+        // @ts-ignore TODO: fix this
+        if (nativeBalance) natives.push(nativeBalance)
+      } else {
+        // @ts-ignore TODO: fix this
+        rejected.push(...tokensBalances)
+        // @ts-ignore TODO: fix this
+        if (nativeBalance) natives.push(nativeBalance)
+      }
+    }
+  }
+
+  return {
+    result: [...natives.slice(0, 1), ...balances],
+    rejected,
+  }
+}
+
+export async function userBalancesWithRetry({
+  address,
+  chain,
+  tokens,
+}: {
+  address: Address
+  chain: Chain
+  tokens: Array<Token>
+}) {
+  const client = providers[chain]
+  const { rejected, result } = await userBalances({
+    client,
+    chain,
+    address,
+    tokens,
+    chunkSize: 500,
+  })
+
+  const retry = await Promise.all(rejected.map(async (token) => await balanceOf({ client, chain, address, token })))
+  const successfulRetry = retry.filter((token) => typeof token !== 'boolean' && token.amount !== 0n) as Array<Balance>
+  return [...result, ...successfulRetry]
+}
 /**
  * @description Returns an object with the native chain token balance and an array of ERC20 token balances
  */
@@ -139,7 +448,7 @@ export async function getBalancesOf(
     // first token is native chain token (e.g. ETH, AVAX, etc.)
     const nativeTokenBalance: Balance = {
       amount: nativeBalance,
-      ...getToken(ctx.chain, networkToken[ctx.chain]),
+      ...gasToken[ctx.chain],
       category: 'wallet',
     } as Balance
 

@@ -1,6 +1,6 @@
 import environment from '@environment'
 import { ADDRESS_ZERO } from '@lib/contract'
-import type { Address } from 'viem'
+import type { Token } from '@lib/token'
 
 import { isNotNullish } from './type'
 
@@ -33,13 +33,99 @@ export const chainsNames = [
   'polygon',
 ] as const
 
+export const gasToken = {
+  ethereum: {
+    address: '0x0000000000000000000000000000000000000000',
+    decimals: 18,
+    symbol: 'ETH',
+    name: 'Ether',
+    coingeckoId: 'ethereum',
+    chain: 'ethereum',
+  },
+  arbitrum: {
+    address: '0x0000000000000000000000000000000000001010',
+    decimals: 18,
+    symbol: 'ETH',
+    name: 'Arbitrum Ether',
+    coingeckoId: 'ethereum',
+    chain: 'arbitrum',
+  },
+  avalanche: {
+    address: '0x0100000000000000000000000000000000000001',
+    decimals: 18,
+    symbol: 'AVAX',
+    name: 'Avalanche',
+    coingeckoId: 'avalanche-2',
+    chain: 'avalanche',
+  },
+  bsc: {
+    address: '0x0100000000000000000000000000000000000001',
+    decimals: 18,
+    symbol: 'BNB',
+    name: 'Binance Coin',
+    coingeckoId: 'binancecoin',
+    chain: 'bsc',
+  },
+  celo: {
+    name: 'Celo',
+    symbol: 'CELO',
+    decimals: 18,
+    address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+    chain: 'celo',
+  },
+  fantom: {
+    address: '0x0100000000000000000000000000000000000001',
+    decimals: 18,
+    symbol: 'FTM',
+    name: 'Fantom',
+    coingeckoId: 'fantom',
+    chain: 'fantom',
+  },
+  gnosis: {
+    address: '0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d',
+    name: 'xDai',
+    symbol: 'xDAI',
+    decimals: 18,
+    chain: 'gnosis',
+  },
+  harmony: {
+    address: ADDRESS_ZERO,
+    name: 'Harmony',
+    symbol: 'ONE',
+    decimals: 18,
+    chain: 'harmony',
+  },
+  moonbeam: {
+    address: '0x0000000000000000000000000000000000000802',
+    name: 'GLMR',
+    symbol: 'GLMR',
+    decimals: 18,
+    chain: 'moonbeam',
+  },
+  optimism: {
+    address: '0x0000000000000000000000000000000000001010',
+    decimals: 18,
+    symbol: 'ETH',
+    name: 'Optimism Ether',
+    chain: 'optimism',
+  },
+  polygon: {
+    address: '0x0000000000000000000000000000000000001010',
+    name: 'Polygon',
+    symbol: 'MATIC',
+    decimals: 18,
+    chain: 'polygon',
+  },
+} satisfies {
+  [key in Chain]: Token
+}
+
 export interface IChainInfo {
   id: Chain
   chainId: number
   name: string
   rpcWssUrl?: string
   rpcUrls: string[]
-  gasToken: Address
 }
 
 // Currently supported chains
@@ -49,7 +135,6 @@ export const chains = [
     chainId: 42161,
     name: 'Arbitrum',
     rpcUrls: [ARBITRUM_RPC, 'https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'].filter(isNotNullish),
-    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'avalanche',
@@ -60,7 +145,6 @@ export const chains = [
       'https://api.avax.network/ext/bc/C/rpc',
       'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc',
     ],
-    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'bsc',
@@ -73,14 +157,12 @@ export const chains = [
       'https://bsc-dataseed2.defibit.io/',
       'https://bsc-dataseed2.ninicoin.io/',
     ],
-    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'celo',
     chainId: 42220,
     name: 'Celo',
     rpcUrls: [`https://forno.celo.org`],
-    gasToken: '0x471EcE3750Da237f93B8E339c536989b8978a438',
   },
   {
     id: 'ethereum',
@@ -92,21 +174,18 @@ export const chains = [
       'https://rpc.ankr.com/eth',
       'https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79',
     ].filter(isNotNullish),
-    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'fantom',
     chainId: 250,
     name: 'Fantom',
     rpcUrls: ['https://rpc.ftm.tools/', 'https://rpc.ankr.com/fantom', 'https://rpcapi.fantom.network'],
-    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'harmony',
     chainId: 1666600000,
     name: 'Harmony',
     rpcUrls: [`https://api.harmony.one`, 'https://harmony-0-rpc.gateway.pokt.network', 'https://api.s0.t.hmny.io'],
-    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'polygon',
@@ -118,14 +197,12 @@ export const chains = [
       'https://polygon-rpc.com/',
       'https://rpc-mainnet.maticvigil.com/',
     ].filter(isNotNullish),
-    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'moonbeam',
     chainId: 1284,
     name: 'Moonbeam',
     rpcUrls: ['https://rpc.api.moonbeam.network', 'https://rpc.ankr.com/moonbeam'],
-    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'optimism',
@@ -139,14 +216,12 @@ export const chains = [
       'https://1rpc.io/op',
       'https://mainnet.optimism.io',
     ].filter(isNotNullish),
-    gasToken: ADDRESS_ZERO,
   },
   {
     id: 'gnosis',
     chainId: 100,
     name: 'Gnosis Chain',
     rpcUrls: ['https://rpc.gnosischain.com', 'https://xdai-archive.blockscout.com'],
-    gasToken: ADDRESS_ZERO,
   },
 ] satisfies IChainInfo[]
 
