@@ -1,6 +1,19 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 
+const abi = {
+  getRewardsBalance: {
+    inputs: [
+      { internalType: 'address[]', name: 'assets', type: 'address[]' },
+      { internalType: 'address', name: 'user', type: 'address' },
+    ],
+    name: 'getRewardsBalance',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+} as const
+
 export async function getLendingRewardsBalances(
   ctx: BalancesContext,
   incentiveController: Contract,
@@ -17,16 +30,7 @@ export async function getLendingRewardsBalances(
     ctx,
     target: incentiveController.address,
     params: [assetsAddressesList, ctx.address],
-    abi: {
-      inputs: [
-        { internalType: 'address[]', name: 'assets', type: 'address[]' },
-        { internalType: 'address', name: 'user', type: 'address' },
-      ],
-      name: 'getRewardsBalance',
-      outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-      stateMutability: 'view',
-      type: 'function',
-    },
+    abi: abi.getRewardsBalance,
   })
 
   rewards.push({
