@@ -9,7 +9,7 @@ dependencies:
     specifier: ^3.354.0
     version: 3.354.0
   '@llamafolio/tokens':
-    specifier: ^0.1.76
+    specifier: ^0.1.72
     version: 0.1.76
   dotenv:
     specifier: ^16.3.1
