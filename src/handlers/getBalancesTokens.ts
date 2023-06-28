@@ -1,23 +1,22 @@
 // Get balances of all ERC20 tokens owned by an address.
-// Uses the "wallet" adapter internally to narrow down the list of contracts to llamafolio-tokens ("allow list")
 
-import walletAdapter from '@adapters/wallet'
-import { getContractsInteractions, groupContracts } from '@db/contracts'
-import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
-import type { BalancesContext, PricedBalance } from '@lib/adapter'
-import { groupBy } from '@lib/array'
-import { isBalanceUSDGtZero, sanitizeBalances, sortBalances, sumBalances } from '@lib/balance'
+import { sortBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
-import { chainById } from '@lib/chains'
-import { getPricedBalances } from '@lib/price'
+import { chainById, chainsNames } from '@lib/chains'
+import { userBalancesWithRetry } from '@lib/erc20'
+import { getTokenPrices_v2 } from '@lib/price'
+import { isFulfilled } from '@lib/promise'
 import { isNotNullish } from '@lib/type'
+import { chains as tokensPerChain } from '@llamafolio/tokens'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
+import type { Address } from 'viem'
 
 function formatBalance(balance: any): FormattedBalance {
   return {
     address: balance.address,
+    name: balance.name,
     symbol: balance.symbol,
     decimals: balance.decimals,
     price: balance.price,
@@ -28,6 +27,7 @@ function formatBalance(balance: any): FormattedBalance {
 
 export interface FormattedBalance {
   address: string
+  name?: string
   symbol?: string
   decimals?: number
   price?: number
@@ -45,6 +45,47 @@ export interface BalancesErc20Response {
   updatedAt: string
   chains: BalancesErc20ChainResponse[]
 }
+
+// extracted so it can be used in tests
+export async function balancesHandler({ address }: { address: Address }) {
+  const promiseResult = await Promise.allSettled(
+    chainsNames.map((chain) =>
+      userBalancesWithRetry({
+        address,
+        chain,
+        //@ts-ignore
+        tokens: tokensPerChain[chain],
+      }),
+    ),
+  )
+
+  const fulfilledResults = (
+    promiseResult.filter((result) => isFulfilled(result)) as PromiseFulfilledResult<
+      Awaited<ReturnType<typeof userBalancesWithRetry>>
+    >[]
+  ).map((result) => result.value)
+
+  const withPrice = await Promise.all(
+    fulfilledResults.map(async ({ chain, result }) => ({
+      chain,
+      result: await getTokenPrices_v2(result),
+    })),
+  )
+
+  const now = new Date()
+
+  const balancesResponse = {
+    updatedAt: now.toISOString(),
+    chains: withPrice.map(({ chain, result }) => ({
+      id: chain as Chain,
+      chainId: chainById[chain].chainId,
+      balances: result.filter(isNotNullish).sort(sortBalances).map(formatBalance),
+    })),
+  }
+
+  return balancesResponse
+}
+
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
@@ -56,97 +97,14 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  console.log(`Get balances tokens`, address)
-
-  const client = await pool.connect()
-
   try {
-    const tokens = await getContractsInteractions(client, address, 'wallet')
-
-    const tokensByChain = groupBy(tokens, 'chain')
-
-    const chains = Object.keys(tokensByChain)
-
-    const chainsBalances = await Promise.all(
-      chains
-        .filter((chain) => walletAdapter[chain as Chain])
-        .map(async (chain) => {
-          const handler = walletAdapter[chain as Chain]!
-
-          try {
-            const hrstart = process.hrtime()
-
-            const contracts = groupContracts(tokensByChain[chain]) || []
-
-            const ctx: BalancesContext = { address, chain: chain as Chain, adapterId: walletAdapter.id }
-
-            console.log(`[${walletAdapter.id}][${chain}] getBalances ${tokensByChain[chain].length} contracts`)
-
-            const balancesConfig = await handler.getBalances(ctx, contracts)
-
-            const hrend = process.hrtime(hrstart)
-
-            console.log(
-              `[${walletAdapter.id}][${chain}] found ${balancesConfig.groups[0].balances.length} balances in %ds %dms`,
-              hrend[0],
-              hrend[1] / 1000000,
-            )
-
-            return balancesConfig.groups[0].balances
-          } catch (error) {
-            console.error(`[${walletAdapter.id}][${chain}]: Failed to getBalances`, error)
-            return
-          }
-        }),
-    )
-
-    const walletBalances = chainsBalances.filter(isNotNullish)
-
-    // Ungroup balances to make only 1 call to the price API
-    const balances = walletBalances.flat().filter(isNotNullish)
-    // console.log(JSON.stringify(balances, undefined, 2))
-
-    const sanitizedBalances = sanitizeBalances(balances)
-
-    const hrstart = process.hrtime()
-
-    const pricedBalances = await getPricedBalances(sanitizedBalances)
-
-    const nonZeroPricedBalances = pricedBalances.filter(isBalanceUSDGtZero)
-
-    const hrend = process.hrtime(hrstart)
-
-    console.log(
-      `getPricedBalances ${sanitizedBalances.length} balances, found ${nonZeroPricedBalances.length} balances in %ds %dms`,
-      hrend[0],
-      hrend[1] / 1000000,
-    )
-
-    const pricedBalancesByChain = groupBy(nonZeroPricedBalances, 'chain')
-
-    const now = new Date()
-
-    const balancesResponse: BalancesErc20Response = {
-      updatedAt: now.toISOString(),
-      chains: Object.keys(pricedBalancesByChain)
-        .map((chain) => {
-          const chainInfo = chainById[chain]
-          const balances = pricedBalancesByChain[chain] as PricedBalance[]
-
-          return {
-            id: chain as Chain,
-            chainId: chainInfo.chainId,
-            balances: balances.sort(sortBalances).map(formatBalance),
-          }
-        })
-        .sort((a, b) => sumBalances(b.balances) - sumBalances(a.balances)),
-    }
+    const balancesResponse = await balancesHandler({ address })
 
     return success(balancesResponse, { maxAge: 20 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
   } finally {
-    client.release(true)
+    console.log('Balances request took', context.getRemainingTimeInMillis() / 1000, 'seconds')
   }
 }

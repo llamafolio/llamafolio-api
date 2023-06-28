@@ -1,16 +1,13 @@
-import { userBalancesWithRetry } from '@lib/erc20'
-import type { Token } from '@lib/token'
-import { chains as tokensByChain } from '@llamafolio/tokens'
+import 'dotenv/config'
+
+import environment from '@environment'
+import { balancesHandler } from '@handlers/getBalancesTokens'
+
+const STAGE = environment.STAGE as Exclude<typeof environment.STAGE, undefined>
 
 main().catch(console.error)
 
 async function main() {
-  const chain = 'ethereum'
-  const balances = await userBalancesWithRetry({
-    chain,
-    address: '0xbDfA4f4492dD7b7Cf211209C4791AF8d52BF5c50',
-    tokens: tokensByChain[chain] as unknown as Token[],
-  })
-
-  console.log(balances, balances.length)
+  const balances = await balancesHandler({ address: '0xbDfA4f4492dD7b7Cf211209C4791AF8d52BF5c50' })
+  console.log(balances)
 }

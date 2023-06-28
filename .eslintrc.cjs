@@ -57,7 +57,7 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-namespace': ['error', { allowDeclarations: true }],
     '@typescript-eslint/no-unused-vars': [
-      'error',
+      'warn',
       {
         argsIgnorePattern: '^_',
         varsIgnorePattern: '^_',
@@ -71,7 +71,7 @@ module.exports = {
       },
     ],
     'simple-import-sort/exports': 'error',
-    'simple-import-sort/imports': 'error',
-    'unused-imports/no-unused-imports-ts': 'error',
+    'simple-import-sort/imports': ['warn'],
+    'unused-imports/no-unused-imports-ts': ['warn'],
   },
 }

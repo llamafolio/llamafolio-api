@@ -4,6 +4,7 @@ import type { Chain } from '@lib/chains'
 import { mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
+import { formatUnits } from 'viem'
 
 // Defillama prices API requires a prefix to know where the token comes from.
 // It can be a chain or a market provider like coingecko
@@ -55,6 +56,40 @@ export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
   const keys = new Set(tokens.map(getTokenKey).filter(isNotNullish))
 
   return fetchTokenPrices(Array.from(keys))
+}
+
+export async function getTokenPrices_v2(tokens: Token[]) {
+  const priceIds = [] as [index: number, token: Token][]
+  const noPriceIds = [] as Token[]
+  tokens.forEach((token, index) => {
+    if (token.priceId) {
+      priceIds.push([index, token])
+    } else {
+      noPriceIds.push({
+        ...token,
+        amount: Number.parseFloat(formatUnits(token.amount, token.decimals)),
+      })
+    }
+  })
+
+  const prices = await fetchTokenPrices(Array.from(priceIds.map(([, token]) => token.priceId)))
+
+  // return array of tokens with price
+  const result = [] as Token[]
+  priceIds.forEach(([index, token]) => {
+    const price = prices.coins[getTokenKey(token)]?.price
+    if (price) {
+      result[index] = {
+        ...token,
+        price,
+        balanceUSD: mulPrice(token.amount, token.decimals, price),
+        amount: Number.parseFloat(formatUnits(token.amount, token.decimals)),
+      }
+    }
+  })
+  result.push(...noPriceIds)
+
+  return result
 }
 
 export async function getTokenPrice(token: Token) {

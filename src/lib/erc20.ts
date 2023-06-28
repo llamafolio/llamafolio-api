@@ -4,6 +4,7 @@ import { call } from '@lib/call'
 import { type Chain, gasToken } from '@lib/chains'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
+import { getTokenKey } from '@lib/price'
 import { sleep } from '@lib/promise'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
@@ -12,6 +13,7 @@ import { getToken } from '@llamafolio/tokens'
 import type { Address, PublicClient } from 'viem'
 import { getAddress } from 'viem'
 import { readContract } from 'viem/contract'
+
 export const abi = {
   balanceOf: {
     constant: true,
@@ -115,6 +117,7 @@ export const BALANCES_OF_ABI = <const>[
     type: 'function',
   },
 ]
+
 export const ERC20_ABI = <const>[
   {
     inputs: [
@@ -244,6 +247,7 @@ export const ERC20_ABI = <const>[
     type: 'function',
   },
 ]
+
 /** @see: https://github.com/o-az/evm-balances/tree/main */
 const multiCoinContracts = {
   ethereum: '0x13675852Ac733AEd5679985778BE5c18E64E97FA',
@@ -261,6 +265,10 @@ const multiCoinContracts = {
   // aurora: '0xc9bA77C9b27481B6789840A7C3128D4f691f8296',
 } satisfies { [key in Chain]: `0x${string}` }
 
+/**
+ * Get ERC20 token balance of a a given wallet address
+ * returns undefined if it fails
+ */
 export async function balanceOf({
   client,
   address: walletAddress,
@@ -270,7 +278,7 @@ export async function balanceOf({
   chain: Chain
   address: Address
   token: Token
-}): Promise<Balance | boolean> {
+}): Promise<Balance | undefined> {
   try {
     const result = await readContract(client, {
       abi: ERC20_ABI,
@@ -278,10 +286,11 @@ export async function balanceOf({
       functionName: 'balanceOf',
       args: [getAddress(walletAddress)],
     })
-    if (result !== 0n) return { ...token, amount: result, category: 'wallet' }
-    return false
+    if (!result || result === 0n) return undefined
+    // @ts-ignore TODO: fix type
+    return { ...token, amount: result }
   } catch {
-    return false
+    return undefined
   }
 }
 
@@ -306,13 +315,14 @@ export async function balancesOf({
     }
 > {
   try {
-    const balances = [] as Array<Balance>
     const [nativeResult, ...results] = await readContract(client, {
       abi: BALANCES_OF_ABI,
       address: multiCoinContracts[chain],
       functionName: 'balancesOf',
-      args: [address, tokens.map((token) => token.address)],
+      args: [address, tokens.map((token) => getAddress(token.address))],
     })
+
+    const balances = [] as Array<Balance>
 
     for (const [index, balance] of results.entries()) {
       if (!balance || balance == 0n) continue
@@ -322,18 +332,19 @@ export async function balancesOf({
         ...token,
         amount: balance,
       }
+      //@ts-ignore TODO: fix this
       balances.push(tokenBalance as Balance)
     }
     if (!nativeResult || typeof nativeResult !== 'bigint') return { success: true, result: balances }
-    const nativeToken = gasToken[chain]
+    const nativeToken = { ...gasToken[chain], amount: nativeResult }
     // @ts-ignore TODO: fix this
-    nativeToken['amount'] = nativeResult
+
     return {
       success: true,
       // @ts-ignore TODO: fix this
       result: [nativeToken, ...balances],
     }
-  } catch {
+  } catch (error) {
     return {
       success: false,
       result: tokens,
@@ -358,14 +369,17 @@ export async function userBalances({
   rejected: Array<Token>
 }> {
   const chunks = sliceIntoChunks(
-    tokens.map(({ address, ...token }) => ({ address: getAddress(address), ...token })),
+    tokens.map((token) => ({
+      ...token,
+      priceId: getTokenKey(token),
+    })),
     chunkSize,
   ) as Array<Array<Token>>
 
   const balancesResults = await Promise.allSettled(
     chunks.map(async (chunk, _index) => {
       const { success, result } = await balancesOf({ client, chain, address: walletAddress, tokens: chunk })
-      sleep(50)
+      sleep(1)
       return { success, result }
     }),
   )
@@ -375,25 +389,24 @@ export async function userBalances({
   const rejected = [] as Array<Token>
   for (const [index, balancesResult] of balancesResults.entries()) {
     if (balancesResult.status === 'rejected') {
-      console.log('rejected', index)
+      rejected.push(...chunks[index])
+      continue
     }
 
+    if (balancesResult.status === 'fulfilled' && balancesResult.value.success === false) {
+      rejected.push(...chunks[index])
+      continue
+    }
     if (balancesResult.status === 'fulfilled') {
       const {
         success,
         result: [nativeBalance, ...tokensBalances],
       } = balancesResult.value
-      if (success === true) {
-        // @ts-ignore TODO: fix this
-        balances.push(...tokensBalances)
-        // @ts-ignore TODO: fix this
-        if (nativeBalance) natives.push(nativeBalance)
-      } else {
-        // @ts-ignore TODO: fix this
-        rejected.push(...tokensBalances)
-        // @ts-ignore TODO: fix this
-        if (nativeBalance) natives.push(nativeBalance)
-      }
+      if (!success) continue
+      // @ts-ignore TODO: fix this
+      balances.push(...tokensBalances)
+      // @ts-ignore TODO: fix this
+      if (nativeBalance) natives.push(nativeBalance)
     }
   }
 
@@ -411,7 +424,10 @@ export async function userBalancesWithRetry({
   address: Address
   chain: Chain
   tokens: Array<Token>
-}) {
+}): Promise<{
+  chain: Chain
+  result: Array<Balance>
+}> {
   const client = providers[chain]
   const { rejected, result } = await userBalances({
     client,
@@ -421,10 +437,29 @@ export async function userBalancesWithRetry({
     chunkSize: 500,
   })
 
-  const retry = await Promise.all(rejected.map(async (token) => await balanceOf({ client, chain, address, token })))
-  const successfulRetry = retry.filter((token) => typeof token !== 'boolean' && token.amount !== 0n) as Array<Balance>
-  return [...result, ...successfulRetry]
+  const retry = await Promise.all([
+    ...rejected.map(async (token) => await balanceOf({ client, chain, address, token })),
+  ])
+  const successfulRetryResult = retry.filter((token) => !!token && !['0', 0n].includes(token.amount)) as Array<Balance>
+  if (result.length === 0) {
+    return {
+      chain,
+      result: [
+        {
+          ...gasToken[chain],
+          priceId: getTokenKey(gasToken[chain]),
+          amount: await client.getBalance({ address }),
+        },
+        ...successfulRetryResult,
+      ],
+    }
+  }
+  return {
+    chain,
+    result: [...result, ...successfulRetryResult],
+  }
 }
+
 /**
  * @description Returns an object with the native chain token balance and an array of ERC20 token balances
  */

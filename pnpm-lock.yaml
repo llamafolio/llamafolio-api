@@ -1,11 +1,15 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@aws-sdk/client-lambda':
     specifier: ^3.354.0
     version: 3.354.0
   '@llamafolio/tokens':
-    specifier: ^0.1.72
+    specifier: ^0.1.76
     version: 0.1.76
   dotenv:
     specifier: ^16.3.1
@@ -7389,7 +7393,3 @@ packages:
 
   /zod@3.21.4:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
