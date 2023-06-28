@@ -6,7 +6,7 @@ import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
 import { chainById, chainsNames } from '@lib/chains'
 import { userBalancesWithRetry } from '@lib/erc20'
-import { getTokenPrices_v2 } from '@lib/price'
+import { tokensBalancesWithPrices } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
 import { isNotNullish } from '@lib/type'
 import { chains as tokensPerChain } from '@llamafolio/tokens'
@@ -68,7 +68,7 @@ export async function balancesHandler({ address }: { address: Address }) {
   const withPrice = await Promise.all(
     fulfilledResults.map(async ({ chain, result }) => ({
       chain,
-      result: await getTokenPrices_v2(result),
+      result: await tokensBalancesWithPrices(result),
     })),
   )
 

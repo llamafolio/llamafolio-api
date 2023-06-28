@@ -67,10 +67,11 @@ export const gasToken = {
     chain: 'bsc',
   },
   celo: {
+    address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
     name: 'Celo',
     symbol: 'CELO',
     decimals: 18,
-    address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
+    coingeckoId: 'celo',
     chain: 'celo',
   },
   fantom: {
@@ -86,6 +87,7 @@ export const gasToken = {
     name: 'xDai',
     symbol: 'xDAI',
     decimals: 18,
+    coingeckoId: 'xdai',
     chain: 'gnosis',
   },
   harmony: {
@@ -93,6 +95,7 @@ export const gasToken = {
     name: 'Harmony',
     symbol: 'ONE',
     decimals: 18,
+    coingeckoId: 'harmony',
     chain: 'harmony',
   },
   moonbeam: {
@@ -100,6 +103,7 @@ export const gasToken = {
     name: 'GLMR',
     symbol: 'GLMR',
     decimals: 18,
+    coingeckoId: 'moonbeam',
     chain: 'moonbeam',
   },
   optimism: {
@@ -107,6 +111,7 @@ export const gasToken = {
     decimals: 18,
     symbol: 'ETH',
     name: 'Optimism Ether',
+    coingeckoId: 'ethereum',
     chain: 'optimism',
   },
   polygon: {
@@ -114,6 +119,7 @@ export const gasToken = {
     name: 'Polygon',
     symbol: 'MATIC',
     decimals: 18,
+    coingeckoId: 'matic-network',
     chain: 'polygon',
   },
 } satisfies {

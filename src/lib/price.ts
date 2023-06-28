@@ -58,16 +58,19 @@ export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
   return fetchTokenPrices(Array.from(keys))
 }
 
-export async function getTokenPrices_v2(tokens: Token[]) {
+export async function tokensBalancesWithPrices(tokens: Token[]) {
   const priceIds = [] as [index: number, token: Token][]
   const noPriceIds = [] as Token[]
+  const seen = new Set<string>()
   tokens.forEach((token, index) => {
+    if (seen.has(token.address.toLowerCase())) return
+    seen.add(token.address.toLowerCase())
     if (token.priceId) {
       priceIds.push([index, token])
     } else {
       noPriceIds.push({
         ...token,
-        amount: Number.parseFloat(formatUnits(token.amount, token.decimals)),
+        amount: formatUnits(token.amount, token.decimals),
       })
     }
   })
@@ -76,6 +79,7 @@ export async function getTokenPrices_v2(tokens: Token[]) {
 
   // return array of tokens with price
   const result = [] as Token[]
+
   priceIds.forEach(([index, token]) => {
     const price = prices.coins[getTokenKey(token)]?.price
     if (price) {
@@ -83,7 +87,7 @@ export async function getTokenPrices_v2(tokens: Token[]) {
         ...token,
         price,
         balanceUSD: mulPrice(token.amount, token.decimals, price),
-        amount: Number.parseFloat(formatUnits(token.amount, token.decimals)),
+        amount: formatUnits(token.amount, token.decimals),
       }
     }
   })

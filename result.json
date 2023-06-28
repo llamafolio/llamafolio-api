@@ -1,0 +1,2369 @@
+{
+  "updatedAt": "2023-06-28T04:42:43.168Z",
+  "chains": [
+    {
+      "id": "arbitrum",
+      "chainId": 42161,
+      "balances": [
+        {
+          "address": "0x0000000000000000000000000000000000001010",
+          "name": "Arbitrum Ether",
+          "symbol": "ETH",
+          "decimals": 18,
+          "price": 1868.53,
+          "amount": "8.560814725889087469",
+          "balanceUSD": 15996.139139765537
+        },
+        {
+          "address": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+          "name": "USD Coin",
+          "symbol": "USDC",
+          "decimals": 6,
+          "price": 1.001,
+          "amount": "2617.4686",
+          "balanceUSD": 2620.0860686
+        },
+        {
+          "address": "0x3789be915951e0f0a676588c99e7357d3fdb586b",
+          "name": "Party Dice",
+          "symbol": "dice",
+          "decimals": 18,
+          "price": 0.204679,
+          "amount": "6677.4191519318",
+          "balanceUSD": 1366.7274745982488
+        },
+        {
+          "address": "0x810cf1757b51963102e0b4fe9fdfcdf749dea98a",
+          "name": "Sanctum Coin",
+          "symbol": "sancta",
+          "decimals": 18,
+          "price": 0.00288141,
+          "amount": "180000",
+          "balanceUSD": 518.6538
+        },
+        {
+          "address": "0x4e352cf164e64adcbad318c3a1e222e9eba4ce42",
+          "name": "MUX Protocol",
+          "symbol": "MCB",
+          "decimals": 18,
+          "price": 13.57,
+          "amount": "31.14497769206414287",
+          "balanceUSD": 422.63734728131044
+        },
+        {
+          "address": "0xe4dddfe67e7164b0fe14e218d80dc4c08edc01cb",
+          "name": "Kyber Network Crystal",
+          "symbol": "KNC",
+          "decimals": 18,
+          "price": 0.549098,
+          "amount": "317.101812407870338594",
+          "balanceUSD": 174.11997098953677
+        },
+        {
+          "address": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+          "name": "GMX",
+          "symbol": "GMX",
+          "decimals": 18,
+          "price": 53.6,
+          "amount": "2.740537702299337767",
+          "balanceUSD": 146.89282084324452
+        },
+        {
+          "address": "0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55",
+          "name": "Dopex",
+          "symbol": "DPX",
+          "decimals": 18,
+          "price": 121.31,
+          "amount": "1.133159996401625448",
+          "balanceUSD": 137.4636391634812
+        },
+        {
+          "address": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+          "name": "WETH",
+          "symbol": "WETH",
+          "decimals": 18,
+          "price": 1868.49,
+          "amount": "0.038512674211136008",
+          "balanceUSD": 71.96054663676551
+        },
+        {
+          "address": "0xc5102fe9359fd9a28f877a67e36b0f050d81a3cc",
+          "name": "Hop Protocol",
+          "symbol": "HOP",
+          "decimals": 18,
+          "price": 0.063035,
+          "amount": "775.590753262385149063",
+          "balanceUSD": 48.88936313189444
+        },
+        {
+          "address": "0xf236ea74b515ef96a9898f5a4ed4aa591f253ce1",
+          "name": "Plutus DPX",
+          "symbol": "plsdpx",
+          "decimals": 18,
+          "price": 107.79,
+          "amount": "0.038130022042434472",
+          "balanceUSD": 4.110035075954012
+        },
+        {
+          "address": "0xd4d42f0b6def4ce0383636770ef773390d85c61a",
+          "name": "Sushi",
+          "symbol": "SUSHI",
+          "decimals": 18,
+          "price": 0.668056,
+          "amount": "0.981725014254395228",
+          "balanceUSD": 0.6558472861227342
+        },
+        {
+          "address": "0xe7f6c3c1f0018e4c08acc52965e5cbff99e34a44",
+          "name": "plsJONES",
+          "symbol": "plsjones",
+          "decimals": 18,
+          "price": 39.93,
+          "amount": "0.00642093219388164",
+          "balanceUSD": 0.2563878225016939
+        },
+        {
+          "address": "0xed3fb761414da74b74f33e5c5a1f78104b188dfc",
+          "name": "ArbiNYAN",
+          "symbol": "NYAN",
+          "decimals": 18,
+          "price": 0.0018019,
+          "amount": "118.064048042831312107",
+          "balanceUSD": 0.21273960816837775
+        },
+        {
+          "address": "0x10393c20975cf177a3513071bc110f7962cd67da",
+          "name": "Jones DAO",
+          "symbol": "JONES",
+          "decimals": 18,
+          "price": 1.45,
+          "amount": "0.000000000000010094",
+          "balanceUSD": 1.46363e-14
+        },
+        {
+          "address": "0x031d35296154279dc1984dcd93e392b1f946737b",
+          "name": "Cap",
+          "symbol": "CAP",
+          "decimals": 18,
+          "price": 114.68,
+          "amount": "0.000000000000000057",
+          "balanceUSD": 6.53676e-15
+        },
+        {
+          "address": "0xd74f5255d557944cf7dd0e45ff521520002d5748",
+          "name": "Sperax USD",
+          "symbol": "USDS",
+          "decimals": 18,
+          "price": 0.9962,
+          "amount": "0.000000000000000001",
+          "balanceUSD": 9.962e-19
+        },
+        {
+          "address": "0xfa42da1bd08341537a44a4ca9d236d1c00a98b40",
+          "name": "Carbon Finance",
+          "symbol": "CARBON",
+          "decimals": 18,
+          "amount": "9807.7644256538880031"
+        },
+        {
+          "address": "0x1addd80e6039594ee970e5872d247bf0414c8903",
+          "name": "GLP",
+          "symbol": "glp",
+          "decimals": 18,
+          "amount": "3913000.656634732791847726"
+        }
+      ]
+    },
+    {
+      "id": "avalanche",
+      "chainId": 43114,
+      "balances": [
+        {
+          "address": "0x3709e8615e02c15b096f8a9b460ccb8ca8194e86",
+          "name": "Vee",
+          "symbol": "VEE",
+          "decimals": 18,
+          "price": 0.00007461,
+          "amount": "70402",
+          "balanceUSD": 5.25269322
+        },
+        {
+          "address": "0x1db749847c4abb991d8b6032102383e6bfd9b1c7",
+          "name": "Dogeon Token",
+          "symbol": "DON",
+          "decimals": 18,
+          "price": 0.0001509,
+          "amount": "31889",
+          "balanceUSD": 4.8120501
+        },
+        {
+          "address": "0x440abbf18c54b2782a4917b80a1746d3a2c2cce1",
+          "name": "SHIBAVAX",
+          "symbol": "SHIBX",
+          "decimals": 18,
+          "price": 0.00003105,
+          "amount": "103660.302667212587371214",
+          "balanceUSD": 3.218652397816951
+        },
+        {
+          "address": "0x8ae8be25c23833e0a01aa200403e826f611f9cd2",
+          "name": "CRAFT",
+          "symbol": "CRAFT",
+          "decimals": 18,
+          "price": 0.00282835,
+          "amount": "637",
+          "balanceUSD": 1.80165895
+        },
+        {
+          "address": "0x5817d4f0b62a59b17f75207da1848c2ce75e7af4",
+          "name": "Vector",
+          "symbol": "VTX",
+          "decimals": 18,
+          "price": 0.053644,
+          "amount": "16.796283269730249004",
+          "balanceUSD": 0.9010198197214094
+        },
+        {
+          "address": "0x6afd5a1ea4b793cc1526d6dc7e99a608b356ef7b",
+          "name": "STORM Token",
+          "symbol": "STORM",
+          "decimals": 18,
+          "price": 0.00321043,
+          "amount": "94.713708433398690427",
+          "balanceUSD": 0.3040717309658362
+        },
+        {
+          "address": "0x8d88e48465f30acfb8dac0b3e35c9d6d7d36abaf",
+          "name": "Canary",
+          "symbol": "CNR",
+          "decimals": 18,
+          "price": 0.00022168,
+          "amount": "1000",
+          "balanceUSD": 0.22168
+        },
+        {
+          "address": "0xb54f16fb19478766a268f172c9480f8da1a7c9c3",
+          "name": "Time",
+          "symbol": "TIME",
+          "decimals": 9,
+          "price": 12.66,
+          "amount": "0.0128365",
+          "balanceUSD": 0.16251009
+        },
+        {
+          "address": "0x961c8c0b1aad0c0b10a51fef6a867e3091bcef17",
+          "name": "DeFiYieldProtocol",
+          "symbol": "DYP",
+          "decimals": 18,
+          "price": 0.146224,
+          "amount": "1",
+          "balanceUSD": 0.146224
+        },
+        {
+          "address": "0x00ee200df31b869a321b10400da10b561f3ee60d",
+          "name": "Arable Protocol",
+          "symbol": "ACRE",
+          "decimals": 18,
+          "price": 0.00026352,
+          "amount": "130.242011695284683072",
+          "balanceUSD": 0.03432137492194142
+        },
+        {
+          "address": "0xce1bffbd5374dac86a2893119683f4911a2f7814",
+          "name": "Spell Token",
+          "symbol": "SPELL",
+          "decimals": 18,
+          "price": 0.00047358,
+          "amount": "0.598448679145251651",
+          "balanceUSD": 0.0002834133254696083
+        },
+        {
+          "address": "0xab592d197acc575d16c3346f4eb70c703f308d1e",
+          "name": "Chikn feed",
+          "symbol": "FEED",
+          "decimals": 18,
+          "price": 0.00025693,
+          "amount": "1.0494333795829576",
+          "balanceUSD": 0.00026963091821624927
+        },
+        {
+          "address": "0xb97ef9ef8734c71904d8002f8b6bc66dd9c48a6e",
+          "name": "USDC",
+          "symbol": "USDC",
+          "decimals": 6,
+          "price": 1.001,
+          "amount": "0.000078",
+          "balanceUSD": 0.000078078
+        },
+        {
+          "address": "0x214db107654ff987ad859f34125307783fc8e387",
+          "name": "FXS",
+          "symbol": "FXS",
+          "decimals": 18,
+          "price": 5.58,
+          "amount": "0.000004343704640672",
+          "balanceUSD": 0.00002423787189494976
+        },
+        {
+          "address": "0x1f1e7c893855525b303f99bdf5c3c05be09ca251",
+          "name": "Synapse",
+          "symbol": "SYN",
+          "decimals": 18,
+          "price": 0.699977,
+          "amount": "0.000004981146490814",
+          "balanceUSD": 0.0000034866879772005112
+        },
+        {
+          "address": "0x90842eb834cfd2a1db0b1512b254a18e4d396215",
+          "name": "Good Bridging",
+          "symbol": "GB",
+          "decimals": 9,
+          "price": 0.00250611,
+          "amount": "0.000276924",
+          "balanceUSD": 6.9400200564e-7
+        },
+        {
+          "address": "0x7761e2338b35bceb6bda6ce477ef012bde7ae611",
+          "name": "Chikn Egg",
+          "symbol": "EGG",
+          "decimals": 18,
+          "price": 0.02261782,
+          "amount": "0.000000615615155306",
+          "balanceUSD": 1.3923872771983153e-8
+        },
+        {
+          "address": "0x4bfc90322dd638f81f034517359bd447f8e0235a",
+          "name": "New Order",
+          "symbol": "NEWO",
+          "decimals": 18,
+          "price": 0.01712521,
+          "amount": "0.000000009571646755",
+          "balanceUSD": 1.6391646072519352e-10
+        },
+        {
+          "address": "0x0100000000000000000000000000000000000001",
+          "name": "Avalanche",
+          "symbol": "AVAX",
+          "decimals": 18,
+          "amount": "224.519274746101573202"
+        },
+        {
+          "address": "0xdd453dbd253fa4e5e745047d93667ce9da93bbcf",
+          "name": "Zabu Token",
+          "symbol": "ZABU",
+          "decimals": 18,
+          "amount": "85258.882393414687659121"
+        },
+        {
+          "address": "0x191c10aa4af7c30e871e70c95db0e4eb77237530",
+          "name": "Aave LINK",
+          "symbol": "ALINK",
+          "decimals": 18,
+          "amount": "435.259209394640212335"
+        },
+        {
+          "address": "0x625e7708f30ca75bfd92586e17077590c60eb4cd",
+          "name": "Aave USDC",
+          "symbol": "AUSDC",
+          "decimals": 6,
+          "amount": "0.006417"
+        },
+        {
+          "address": "0x42f33f70be8a9c062b68ee64e7ff34dd2ed2f5d8",
+          "name": "Cross Chain Capital",
+          "symbol": "CCC",
+          "decimals": 9,
+          "amount": "5172522494.249364183"
+        },
+        {
+          "address": "0xdc42728b0ea910349ed3c6e1c9dc06b5fb591f98",
+          "name": "Frax",
+          "symbol": "FRAX",
+          "decimals": 18,
+          "amount": "0.00002768284"
+        },
+        {
+          "address": "0xd67de0e0a0fd7b15dc8348bb9be742f3c5850454",
+          "name": "Frax Share",
+          "symbol": "FXS",
+          "decimals": 18,
+          "amount": "0.00942456"
+        },
+        {
+          "address": "0x9e295b5b976a184b14ad8cd72413ad846c299660",
+          "name": "GLP",
+          "symbol": "glp",
+          "decimals": 18,
+          "amount": "451068.38965692939099853"
+        },
+        {
+          "address": "0x01c5e2a4af2bd9f62c7d55c6105b8a64e6905be5",
+          "name": "Hatter",
+          "symbol": "HATTER",
+          "decimals": 9,
+          "amount": "780951555934.667585091"
+        },
+        {
+          "address": "0x136acd46c134e8269052c62a67042d6bdedde3c9",
+          "name": "MEMOries",
+          "symbol": "MEMO",
+          "decimals": 9,
+          "amount": "0.000000011"
+        },
+        {
+          "address": "0xde9e52f1838951e4d2bb6c59723b003c353979b6",
+          "name": "Snowdog",
+          "symbol": "SDOG",
+          "decimals": 9,
+          "amount": "125.123940723"
+        }
+      ]
+    },
+    {
+      "id": "bsc",
+      "chainId": 56,
+      "balances": [
+        {
+          "address": "0x1610bc33319e9398de5f57b33a5b184c806ad217",
+          "name": "Venus DOT",
+          "symbol": "VDOT",
+          "decimals": 8,
+          "price": 0.112076,
+          "amount": "405157.75521673",
+          "balanceUSD": 45408.46057367023
+        },
+        {
+          "address": "0x650b940a1033b8a1b1873f78730fcfc73ec11f1f",
+          "name": "Venus LINK",
+          "symbol": "VLINK",
+          "decimals": 8,
+          "price": 0.124009,
+          "amount": "345138.88977164",
+          "balanceUSD": 42800.328581691305
+        },
+        {
+          "address": "0xf91d58b5ae142dacc749f58a49fcbac340cb0343",
+          "name": "Venus FIL",
+          "symbol": "VFIL",
+          "decimals": 8,
+          "price": 0.082888,
+          "amount": "222918.34106095",
+          "balanceUSD": 18477.255453860023
+        },
+        {
+          "address": "0xb248a295732e0225acd3337607cc01068e3b9c10",
+          "name": "Venus XRP",
+          "symbol": "VXRP",
+          "decimals": 8,
+          "price": 0.0097849,
+          "amount": "1771539.35533387",
+          "balanceUSD": 17334.335438006383
+        },
+        {
+          "address": "0xec3422ef92b2fb59e84c8b02ba73f1fe84ed8d71",
+          "name": "Venus DOGE",
+          "symbol": "VDOGE",
+          "decimals": 8,
+          "price": 0.00131957,
+          "amount": "4779191.5171659",
+          "balanceUSD": 6306.477750306607
+        },
+        {
+          "address": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+          "name": "Binance Pegged BUSD",
+          "symbol": "BUSD",
+          "decimals": 18,
+          "price": 0.999728,
+          "amount": "3269.135017985303690707",
+          "balanceUSD": 3268.2458132604115
+        },
+        {
+          "address": "0x2b3f34e9d4b127797ce6244ea341a83733ddd6e4",
+          "name": "FLOKI",
+          "symbol": "FLOKI",
+          "decimals": 9,
+          "price": 0.00002548,
+          "amount": "102859487.554556695",
+          "balanceUSD": 2620.8597428901044
+        },
+        {
+          "address": "0x55d398326f99059ff775485246999027b3197955",
+          "name": "Binance Pegged USDT",
+          "symbol": "USDT",
+          "decimals": 18,
+          "price": 1.001,
+          "amount": "844.341856553820708753",
+          "balanceUSD": 845.1861984103745
+        },
+        {
+          "address": "0xaee4164c1ee46ed0bbc34790f1a3d1fc87796668",
+          "name": "Poly-Peg Mdex",
+          "symbol": "HMDX",
+          "decimals": 18,
+          "price": 0.061926,
+          "amount": "5755.70671214",
+          "balanceUSD": 356.42789385598167
+        },
+        {
+          "address": "0x1da87b114f35e1dc91f72bf57fc07a768ad40bb0",
+          "name": "Equalizer",
+          "symbol": "EQZ",
+          "decimals": 18,
+          "price": 0.02008079,
+          "amount": "4119.867275623446879415",
+          "balanceUSD": 82.73018958966657
+        },
+        {
+          "address": "0xfa40d8fc324bcdd6bbae0e086de886c571c225d4",
+          "name": "Wizardia Coin",
+          "symbol": "WZRD",
+          "decimals": 18,
+          "price": 0.00218629,
+          "amount": "28528.125",
+          "balanceUSD": 62.37075440625
+        },
+        {
+          "address": "0x076ddce096c93dcf5d51fe346062bf0ba9523493",
+          "name": "Paralink Network",
+          "symbol": "PARA",
+          "decimals": 18,
+          "price": 0.00075954,
+          "amount": "74619.117455243182942356",
+          "balanceUSD": 56.67620447195541
+        },
+        {
+          "address": "0x13a637026df26f846d55acc52775377717345c06",
+          "name": "SpaceY 2025",
+          "symbol": "SPAY",
+          "decimals": 18,
+          "price": 0.04110182,
+          "amount": "1160",
+          "balanceUSD": 47.6781112
+        },
+        {
+          "address": "0x5492ef6aeeba1a3896357359ef039a8b11621b45",
+          "name": "Chumbi Valley",
+          "symbol": "CHMB",
+          "decimals": 18,
+          "price": 0.00010952,
+          "amount": "382061.4",
+          "balanceUSD": 41.843364528
+        },
+        {
+          "address": "0xd7730681b1dc8f6f969166b29d8a5ea8568616a3",
+          "name": "Nafter",
+          "symbol": "NAFT",
+          "decimals": 18,
+          "price": 0.00044718,
+          "amount": "27536.821942231783573026",
+          "balanceUSD": 12.313916036127209
+        },
+        {
+          "address": "0xdf0121a3ba5c10816ea2943c722650c4a4b0dbe6",
+          "name": "Octopus Protocol",
+          "symbol": "OPS",
+          "decimals": 18,
+          "price": 0.00071606,
+          "amount": "11214",
+          "balanceUSD": 8.02989684
+        },
+        {
+          "address": "0xf7b6d7e3434cb9441982f9534e6998c43eef144a",
+          "name": "Asva Finance",
+          "symbol": "ASVA",
+          "decimals": 18,
+          "price": 0.00719926,
+          "amount": "877.31",
+          "balanceUSD": 6.3159827906
+        },
+        {
+          "address": "0xc7d8d35eba58a0935ff2d5a33df105dd9f071731",
+          "name": "Hedget",
+          "symbol": "HGET",
+          "decimals": 6,
+          "price": 0.182192,
+          "amount": "11.137031",
+          "balanceUSD": 2.029077951952
+        },
+        {
+          "address": "0x4c97c901b5147f8c1c7ce3c5cf3eb83b44f244fe",
+          "name": "Mound Token",
+          "symbol": "MND",
+          "decimals": 18,
+          "price": 0.0273625,
+          "amount": "36.455395356439984591",
+          "balanceUSD": 0.9975107554405891
+        },
+        {
+          "address": "0xbb0fa2fbe9b37444f5d1dbd22e0e5bdd2afbbe85",
+          "name": "USD Mars",
+          "symbol": "USDM",
+          "decimals": 18,
+          "price": 0.817059,
+          "amount": "1",
+          "balanceUSD": 0.817059
+        },
+        {
+          "address": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+          "name": "WBNB Token",
+          "symbol": "WBNB",
+          "decimals": 18,
+          "price": 235.42,
+          "amount": "0.002081161212594791",
+          "balanceUSD": 0.4899469726690657
+        },
+        {
+          "address": "0x9000cac49c3841926baac5b2e13c87d43e51b6a4",
+          "name": "Portuma",
+          "symbol": "POR",
+          "decimals": 18,
+          "price": 0.00016978,
+          "amount": "2066.445823038017684214",
+          "balanceUSD": 0.35084117183539465
+        },
+        {
+          "address": "0x51e7b598c9155b9dccb04eb42519f6eec9c841e9",
+          "name": "Bitlocus",
+          "symbol": "BTL",
+          "decimals": 6,
+          "price": 0.00044998,
+          "amount": "278.29279",
+          "balanceUSD": 0.1252317555
+        },
+        {
+          "address": "0xfe19f0b51438fd612f6fd59c1dbb3ea319f433ba",
+          "name": "Magic Internet Money",
+          "symbol": "MIM",
+          "decimals": 18,
+          "price": 0.998521,
+          "amount": "0.1",
+          "balanceUSD": 0.0998521
+        },
+        {
+          "address": "0x26734add0650719ea29087fe5cc0aab81b4f237d",
+          "name": "STEMX",
+          "symbol": "STEMX",
+          "decimals": 18,
+          "price": 0.00661174,
+          "amount": "7",
+          "balanceUSD": 0.04628218
+        },
+        {
+          "address": "0x9c65ab58d8d978db963e63f2bfb7121627e3a739",
+          "name": "MDX Token",
+          "symbol": "MDX",
+          "decimals": 18,
+          "price": 0.062773,
+          "amount": "0.404317265946390399",
+          "balanceUSD": 0.025380207735252763
+        },
+        {
+          "address": "0xae20bc46300bab5d85612c6bc6ea87ea0f186035",
+          "name": "CrossFi",
+          "symbol": "CRFI",
+          "decimals": 18,
+          "price": 0.00666026,
+          "amount": "3.1302",
+          "balanceUSD": 0.020847945852
+        },
+        {
+          "address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+          "name": "Binance Pegged USD Coin",
+          "symbol": "USDC",
+          "decimals": 18,
+          "price": 1.001,
+          "amount": "0.018044",
+          "balanceUSD": 0.018062044
+        },
+        {
+          "address": "0x4c882ec256823ee773b25b414d36f92ef58a7c0c",
+          "name": "pStake Finance",
+          "symbol": "PSTAKE",
+          "decimals": 18,
+          "price": 0.03895105,
+          "amount": "0.293421882619131325",
+          "balanceUSD": 0.011429090420991916
+        },
+        {
+          "address": "0xf4c8e32eadec4bfe97e0f595add0f4450a863a11",
+          "name": "Thena",
+          "symbol": "THE",
+          "decimals": 18,
+          "price": 0.254641,
+          "amount": "0.0169532816660107",
+          "balanceUSD": 0.0043170005967146305
+        },
+        {
+          "address": "0x922722e9ef614ec9a3e94b78496e92abfbb5a624",
+          "name": "ILCAPO",
+          "symbol": "capo",
+          "decimals": 18,
+          "price": 0.00221624,
+          "amount": "1",
+          "balanceUSD": 0.00221624
+        },
+        {
+          "address": "0xf4914e6d97a75f014acfcf4072f11be5cffc4ca6",
+          "name": "DEXShare",
+          "symbol": "DEXShare",
+          "decimals": 18,
+          "price": 0.077385,
+          "amount": "0.02",
+          "balanceUSD": 0.0015477
+        },
+        {
+          "address": "0x147e07976e1ae78287c33aafaab87760d32e50a5",
+          "name": "dexIRA",
+          "symbol": "DEX",
+          "decimals": 9,
+          "price": 0.0000063,
+          "amount": "185.03976321",
+          "balanceUSD": 0.001165750508223
+        },
+        {
+          "address": "0x7e2afe446a30fa67600a5174df7f4002b8e15b03",
+          "name": "Ormeus Coin",
+          "symbol": "ORME",
+          "decimals": 18,
+          "price": 0.00089892,
+          "amount": "1",
+          "balanceUSD": 0.00089892
+        },
+        {
+          "address": "0x7859b01bbf675d67da8cd128a50d155cd881b576",
+          "name": "Mars Ecosystem Token",
+          "symbol": "XMS",
+          "decimals": 18,
+          "price": 0.00068345,
+          "amount": "1",
+          "balanceUSD": 0.00068345
+        },
+        {
+          "address": "0xf508fcd89b8bd15579dc79a6827cb4686a3592c8",
+          "name": "Venus ETH",
+          "symbol": "VETH",
+          "decimals": 8,
+          "price": 38.24,
+          "amount": "0.00000667",
+          "balanceUSD": 0.0002550608
+        },
+        {
+          "address": "0x5d2f9a9df1ba3c8c00303d0b4c431897ebc6626a",
+          "name": "Ormeus Cash",
+          "symbol": "OMC",
+          "decimals": 18,
+          "price": 0.00020006,
+          "amount": "1",
+          "balanceUSD": 0.00020006
+        },
+        {
+          "address": "0x1b239abe619e74232c827fbe5e49a4c072bd869d",
+          "name": "Gyro",
+          "symbol": "GYRO",
+          "decimals": 9,
+          "price": 1.99,
+          "amount": "0.000089316",
+          "balanceUSD": 0.00017773884
+        },
+        {
+          "address": "0x55e8b37a3c43b049dedf56c77f462db095108651",
+          "name": "ok.lets.go.",
+          "symbol": "OKLG",
+          "decimals": 9,
+          "price": 3.3856e-8,
+          "amount": "1021.935517576",
+          "balanceUSD": 0.000034745807597584
+        },
+        {
+          "address": "0xede2f059545e8cde832d8da3985caacf795b8765",
+          "name": "Ormeus Ecosystem",
+          "symbol": "ECO",
+          "decimals": 18,
+          "price": 0.00000756,
+          "amount": "1",
+          "balanceUSD": 0.00000756
+        },
+        {
+          "address": "0x5ca42204cdaa70d5c773946e69de942b85ca6706",
+          "name": "Position Token",
+          "symbol": "POSI",
+          "decimals": 18,
+          "price": 0.02583567,
+          "amount": "0.0001",
+          "balanceUSD": 0.0000025835670000000003
+        },
+        {
+          "address": "0x9d70a3ee3079a6fa2bb16591414678b7ad91f0b5",
+          "name": "MemePad",
+          "symbol": "MEPAD",
+          "decimals": 18,
+          "price": 0.00156892,
+          "amount": "0.0000785153212722",
+          "balanceUSD": 1.2318425785038003e-7
+        },
+        {
+          "address": "0x5ac52ee5b2a633895292ff6d8a89bb9190451587",
+          "name": "BSCEX",
+          "symbol": "BSCX",
+          "decimals": 18,
+          "price": 1.55,
+          "amount": "0.0000000017291214",
+          "balanceUSD": 2.68013817e-9
+        },
+        {
+          "address": "0x83d8ea5a4650b68cd2b57846783d86df940f7458",
+          "name": "Hudi",
+          "symbol": "HUDI",
+          "decimals": 18,
+          "price": 0.231968,
+          "amount": "0.000000000000000001",
+          "balanceUSD": 2.31968e-19
+        },
+        {
+          "address": "0x136bfcdec5db31b565052451ad806014ab9f2b38",
+          "name": "Candylad",
+          "symbol": "CANDYLAD",
+          "decimals": 9,
+          "price": 1e-18,
+          "amount": "888888888888887.934451712",
+          "balanceUSD": 0
+        },
+        {
+          "address": "0x7c63f96feafacd84e75a594c00fac3693386fbf0",
+          "name": "Australian Shepherd Token",
+          "symbol": "ASS",
+          "decimals": 9,
+          "price": 4.2429e-10,
+          "amount": "229692434933.138006202",
+          "balanceUSD": 0
+        },
+        {
+          "address": "0x0100000000000000000000000000000000000001",
+          "name": "Binance Coin",
+          "symbol": "BNB",
+          "decimals": 18,
+          "amount": "1.776975730310021054"
+        },
+        {
+          "address": "0xcf64701d4567172a1de9177c319945589ed81b13",
+          "name": "Antis Inu",
+          "symbol": "ANTIS",
+          "decimals": 9,
+          "amount": "1"
+        },
+        {
+          "address": "0x1dbea177ced3dfaedc37223916ed6d7b05bf3247",
+          "name": "Apidai Network",
+          "symbol": "APIDAI",
+          "decimals": 18,
+          "amount": "300"
+        },
+        {
+          "address": "0x83b325dba77d55644619a4ff29d42ee4487bcf31",
+          "name": "Fluity",
+          "symbol": "FLTY",
+          "decimals": 18,
+          "amount": "35962.846018821908313409"
+        },
+        {
+          "address": "0xd9d0e3dd09c78930de4ac83856bd0af6d3dd2022",
+          "name": "Germany Rabbit Token",
+          "symbol": "germany",
+          "decimals": 18,
+          "amount": "0.000000000000000001"
+        },
+        {
+          "address": "0x44c098782990966ec3ad27a7fa43947358eeb2c3",
+          "name": "Jumbo",
+          "symbol": "JUB",
+          "decimals": 9,
+          "amount": "0.01"
+        },
+        {
+          "address": "0x9130990dd16ed8be8be63e46cad305c2c339dac9",
+          "name": "Medacoin",
+          "symbol": "MEDA",
+          "decimals": 9,
+          "amount": "950"
+        },
+        {
+          "address": "0xda360309c59cb8c434b28a91b823344a96444278",
+          "name": "Merlin",
+          "symbol": "MERL",
+          "decimals": 18,
+          "amount": "0.005"
+        },
+        {
+          "address": "0xd22202d23fe7de9e3dbe11a2a88f42f4cb9507cf",
+          "name": "Minereum BSC",
+          "symbol": "MNEB",
+          "decimals": 8,
+          "amount": "150000"
+        },
+        {
+          "address": "0x82afb954fdeebd2370d575ac59ae4f119654be14",
+          "name": "MetaSportsToken",
+          "symbol": "mst",
+          "decimals": 18,
+          "amount": "2"
+        },
+        {
+          "address": "0x8460b5a15b41e3fca7df1ed98a5017bbf518f3a9",
+          "name": "Ozagold",
+          "symbol": "OZG",
+          "decimals": 18,
+          "amount": "1"
+        },
+        {
+          "address": "0x07728696ee70a28c9c032926577af1d524df30f9",
+          "name": "PlaceWar Governance Token",
+          "symbol": "PLACE",
+          "decimals": 18,
+          "amount": "9012"
+        },
+        {
+          "address": "0xcbccf14b051947bdcd1e20b77015208a1ad5ea25",
+          "name": "Promise Token",
+          "symbol": "PROMISE",
+          "decimals": 9,
+          "amount": "6.079775874"
+        },
+        {
+          "address": "0x6452d525532658b23484eb1897af8b9325ca67b9",
+          "name": "Rover Inu",
+          "symbol": "ROVER",
+          "decimals": 9,
+          "amount": "49446.571970156"
+        },
+        {
+          "address": "0x00aa85e010204068b7cc2235800b2d8036bdbf2e",
+          "name": "Simple Cool Automatic Money",
+          "symbol": "SCAM",
+          "decimals": 10,
+          "amount": "1084427.6839172411"
+        },
+        {
+          "address": "0x07dbef0f356623168e6279788507bd98dd9d6304",
+          "name": "SDAO",
+          "symbol": "sdao",
+          "decimals": 18,
+          "amount": "0.01745321"
+        },
+        {
+          "address": "0x11fe673b2ffb233c94ee7294b7e59417933ee4a2",
+          "name": "SafeDot",
+          "symbol": "SDOT",
+          "decimals": 9,
+          "amount": "38139.35839539"
+        },
+        {
+          "address": "0x954be3e377661a2b01841e487ca294c4204dbb79",
+          "name": "Shiba Moon",
+          "symbol": "SHIBM",
+          "decimals": 9,
+          "amount": "26501.014484948"
+        },
+        {
+          "address": "0x119f095a45df2a77337042bcc4f2e52fa6e7e881",
+          "name": "SuperMinesweeper",
+          "symbol": "SM",
+          "decimals": 18,
+          "amount": "50"
+        },
+        {
+          "address": "0x179960442ece8de9f390011b7f7c9b56c74e4d0a",
+          "name": "Xeta Reality",
+          "symbol": "XETA",
+          "decimals": 9,
+          "amount": "1"
+        },
+        {
+          "address": "0x5cd50aae14e14b3fdf3ff13c7a40e8cf5ae8b0a5",
+          "name": "zSeedToken",
+          "symbol": "zSEED",
+          "decimals": 18,
+          "amount": "0.000000008132163482"
+        },
+        {
+          "address": "0x1cff458b364d0d328d4c9d59d10be7d22d01953d",
+          "name": "Autostake",
+          "symbol": "AUTO",
+          "decimals": 18,
+          "amount": "1"
+        },
+        {
+          "address": "0x8c282ea9eacd1b95d44a3a18dcdd1d0472868998",
+          "name": "Ancient Kingdom",
+          "symbol": "DOM",
+          "decimals": 8,
+          "amount": "176120"
+        }
+      ]
+    },
+    {
+      "id": "celo",
+      "chainId": 42220,
+      "balances": [
+        {
+          "address": "0x471EcE3750Da237f93B8E339c536989b8978a438",
+          "name": "Celo",
+          "symbol": "CELO",
+          "decimals": 18,
+          "amount": "8.2047851646"
+        }
+      ]
+    },
+    {
+      "id": "ethereum",
+      "chainId": 1,
+      "balances": [
+        {
+          "address": "0xa06bc25b5805d5f8d82847d191cb4af5a3e873e0",
+          "name": "Aave LINK",
+          "symbol": "aLINK",
+          "decimals": 18,
+          "price": 6.09,
+          "amount": "217864.072331471208225645",
+          "balanceUSD": 1326792.2004986596
+        },
+        {
+          "address": "0xcc12abe4ff81c9378d670de1b57f8e0dd228d77a",
+          "name": "Aave REN",
+          "symbol": "aREN",
+          "decimals": 18,
+          "price": 0.062309,
+          "amount": "606271.689350304931364829",
+          "balanceUSD": 37776.18269172815
+        },
+        {
+          "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+          "name": "Tether USD",
+          "symbol": "USDT",
+          "decimals": 6,
+          "price": 1.001,
+          "amount": "33952.060985",
+          "balanceUSD": 33986.013045985
+        },
+        {
+          "address": "0x35f6b052c598d933d69a4eec4d04c73a191fe6c2",
+          "name": "Aave SNX",
+          "symbol": "aSNX",
+          "decimals": 18,
+          "price": 2.08,
+          "amount": "12043.274815209782608903",
+          "balanceUSD": 25050.011615636347
+        },
+        {
+          "address": "0xcb84d72e61e383767c4dfeb2d8ff7f4fb89abc6e",
+          "name": "Vega",
+          "symbol": "VEGA",
+          "decimals": 18,
+          "price": 1.37,
+          "amount": "15235.210568407922827577",
+          "balanceUSD": 20872.238478718857
+        },
+        {
+          "address": "0xb3319f5d18bc0d84dd1b4825dcde5d5f7266d407",
+          "name": "c0x",
+          "symbol": "CZRX",
+          "decimals": 8,
+          "price": 0.00431559,
+          "amount": "3963537.87109255",
+          "balanceUSD": 17105.004401108297
+        },
+        {
+          "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+          "name": "USD Coin",
+          "symbol": "USDC",
+          "decimals": 6,
+          "price": 1.001,
+          "amount": "16709.825565",
+          "balanceUSD": 16726.535390565
+        },
+        {
+          "address": "0x6468e79a80c0eab0f9a2b574c8d5bc374af59414",
+          "name": "E-RADIX",
+          "symbol": "eXRD",
+          "decimals": 18,
+          "price": 0.08284,
+          "amount": "149615.76923076922",
+          "balanceUSD": 12394.170323076922
+        },
+        {
+          "address": "0x9534ad65fb398e27ac8f4251dae1780b989d136e",
+          "name": "Vulcan Forged",
+          "symbol": "PYR",
+          "decimals": 18,
+          "price": 3.26,
+          "amount": "3030.242615562365814423",
+          "balanceUSD": 9878.590926733312
+        },
+        {
+          "address": "0x43f11c02439e2736800433b4594994bd43cd066d",
+          "name": "FLOKI",
+          "symbol": "FLOKI",
+          "decimals": 9,
+          "price": 0.00002548,
+          "amount": "200000000",
+          "balanceUSD": 5096
+        },
+        {
+          "address": "0x6f40d4a6237c257fff2db00fa0510deeecd303eb",
+          "name": "Instadapp",
+          "symbol": "INST",
+          "decimals": 18,
+          "price": 1.33,
+          "amount": "2569.875826199455754242",
+          "balanceUSD": 3417.9348488452765
+        },
+        {
+          "address": "0xaa6e8127831c9de45ae56bb1b0d4d4da6e5665bd",
+          "name": "ETH 2x Flexible Leverage Index",
+          "symbol": "ETH2x-FLI",
+          "decimals": 18,
+          "price": 12.44,
+          "amount": "214.178349240375725706",
+          "balanceUSD": 2664.3786645502737
+        },
+        {
+          "address": "0x72b886d09c117654ab7da13a14d603001de0b777",
+          "name": "XDEFI",
+          "symbol": "XDEFI",
+          "decimals": 18,
+          "price": 0.0490243,
+          "amount": "53633.394338465629007226",
+          "balanceUSD": 2629.3396140672407
+        },
+        {
+          "address": "0x095cf7f3e82a1dcadbf0fbc59023f419883ea296",
+          "name": "Pocket Arena",
+          "symbol": "POC",
+          "decimals": 18,
+          "price": 0.04280627,
+          "amount": "31964.28571",
+          "balanceUSD": 1368.2718444594018
+        },
+        {
+          "address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+          "name": "Wrapped stETH",
+          "symbol": "WSTETH",
+          "decimals": 18,
+          "price": 2110.93,
+          "amount": "0.278280654874641389",
+          "balanceUSD": 587.4309827945267
+        },
+        {
+          "address": "0x549020a9cb845220d66d3e9c6d9f9ef61c981102",
+          "name": "Sidus",
+          "symbol": "SIDUS",
+          "decimals": 18,
+          "price": 0.00100873,
+          "amount": "232515",
+          "balanceUSD": 234.54485595
+        },
+        {
+          "address": "0xc2544a32872a91f4a553b404c6950e89de901fdb",
+          "name": "Frax Price Index Share",
+          "symbol": "FPIS",
+          "decimals": 18,
+          "price": 1.98,
+          "amount": "116.406132467926726372",
+          "balanceUSD": 230.48414228649492
+        },
+        {
+          "address": "0x6911f552842236bd9e8ea8ddbb3fb414e2c5fa9d",
+          "name": "Synapse Network",
+          "symbol": "SNP",
+          "decimals": 18,
+          "price": 0.0096341,
+          "amount": "17666",
+          "balanceUSD": 170.1960106
+        },
+        {
+          "address": "0x836a808d4828586a69364065a1e064609f5078c7",
+          "name": "pETH",
+          "symbol": "PETH",
+          "decimals": 18,
+          "price": 1953.55,
+          "amount": "0.084452756573366569",
+          "balanceUSD": 164.98268260390026
+        },
+        {
+          "address": "0x0fd67b4ceb9b607ef206904ec73459c4880132c9",
+          "name": "ShoeFy",
+          "symbol": "SHOE",
+          "decimals": 18,
+          "price": 0.00418971,
+          "amount": "30000",
+          "balanceUSD": 125.6913
+        },
+        {
+          "address": "0xe84d9e32dc8ce819b8d6c83e50edafd46c6354db",
+          "name": "Koi Network",
+          "symbol": "koi",
+          "decimals": 18,
+          "price": 0.00054697,
+          "amount": "163340",
+          "balanceUSD": 89.3420798
+        },
+        {
+          "address": "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+          "name": "Curve.fi DAI/USDC/USDT",
+          "symbol": "3Crv",
+          "decimals": 18,
+          "price": 1.026,
+          "amount": "83.707761667399309247",
+          "balanceUSD": 85.88416347075169
+        },
+        {
+          "address": "0x000000007a58f5f58e697e51ab0357bc9e260a04",
+          "name": "Concave",
+          "symbol": "cnv",
+          "decimals": 18,
+          "price": 4.21,
+          "amount": "20",
+          "balanceUSD": 84.2
+        },
+        {
+          "address": "0x777e2ae845272a2f540ebf6a3d03734a5a8f618e",
+          "name": "Ryoshis Vision",
+          "symbol": "RYOSHI",
+          "decimals": 18,
+          "price": 3.495e-9,
+          "amount": "23092352709.299897885971757248",
+          "balanceUSD": 80.70777271900315
+        },
+        {
+          "address": "0x34be5b8c30ee4fde069dc878989686abe9884470",
+          "name": "SENATE",
+          "symbol": "SENATE",
+          "decimals": 18,
+          "price": 0.03147058,
+          "amount": "2325",
+          "balanceUSD": 73.16909849999999
+        },
+        {
+          "address": "0xdb25f211ab05b1c97d595516f45794528a807ad8",
+          "name": "STASIS EURS Token",
+          "symbol": "EURS",
+          "decimals": 2,
+          "price": 1.094,
+          "amount": "60.36",
+          "balanceUSD": 65.7924
+        },
+        {
+          "address": "0xcdf7028ceab81fa0c6971208e83fa7872994bee5",
+          "name": "Threshold Network Token",
+          "symbol": "T",
+          "decimals": 18,
+          "price": 0.02276579,
+          "amount": "2791.754976249880510464",
+          "balanceUSD": 63.55650752075977
+        },
+        {
+          "address": "0xf951e335afb289353dc249e82926178eac7ded78",
+          "name": "Swell Ethereum",
+          "symbol": "SWETH",
+          "decimals": 18,
+          "price": 1913,
+          "amount": "0.032196205882144714",
+          "balanceUSD": 61.59134185254284
+        },
+        {
+          "address": "0x41d5d79431a913c4ae7d69a668ecdfe5ff9dfb68",
+          "name": "Inverse Finance",
+          "symbol": "INV",
+          "decimals": 18,
+          "price": 39.82,
+          "amount": "1.06537388206042432",
+          "balanceUSD": 42.423187983646095
+        },
+        {
+          "address": "0x16c52ceece2ed57dad87319d91b5e3637d50afa4",
+          "name": "TCAP Token",
+          "symbol": "TCAP",
+          "decimals": 18,
+          "price": 118.45,
+          "amount": "0.319510087649358213",
+          "balanceUSD": 37.845969882066484
+        },
+        {
+          "address": "0x661ab0ed68000491d98c796146bcf28c20d7c559",
+          "name": "Shadows Network",
+          "symbol": "DOWS",
+          "decimals": 18,
+          "price": 0.00488271,
+          "amount": "7031.25",
+          "balanceUSD": 34.3315546875
+        },
+        {
+          "address": "0xae78736cd615f374d3085123a210448e74fc6393",
+          "name": "Rocket Pool ETH",
+          "symbol": "rETH",
+          "decimals": 18,
+          "price": 2009.98,
+          "amount": "0.015882548864628778",
+          "balanceUSD": 31.92360556692655
+        },
+        {
+          "address": "0xba3335588d9403515223f109edc4eb7269a9ab5d",
+          "name": "Gearbox",
+          "symbol": "GEAR",
+          "decimals": 18,
+          "price": 0.00497324,
+          "amount": "5912.396179134449642029",
+          "balanceUSD": 29.40376517391861
+        },
+        {
+          "address": "0x3f68e7b44e9bcb486c2feadb7a2289d9cdfc9088",
+          "name": "SportsIcon",
+          "symbol": "$ICONS",
+          "decimals": 18,
+          "price": 0.02096447,
+          "amount": "1339.285714",
+          "balanceUSD": 28.077415172581578
+        },
+        {
+          "address": "0x15f74458ae0bfdaa1a96ca1aa779d715cc1eefe4",
+          "name": "Grai",
+          "symbol": "grai",
+          "decimals": 18,
+          "price": 0.985061,
+          "amount": "27.578779967046748282",
+          "balanceUSD": 27.166780573119034
+        },
+        {
+          "address": "0xe60779cc1b2c1d0580611c526a8df0e3f870ec48",
+          "name": "unshETHing_Token",
+          "symbol": "USH",
+          "decimals": 18,
+          "price": 0.152465,
+          "amount": "169.672257336579702292",
+          "balanceUSD": 25.86908071482162
+        },
+        {
+          "address": "0xdbdb4d16eda451d0503b854cf79d55697f90c8df",
+          "name": "ALCX",
+          "symbol": "ALCX",
+          "decimals": 18,
+          "price": 14.71,
+          "amount": "1.732793630819646208",
+          "balanceUSD": 25.489394309356996
+        },
+        {
+          "address": "0xaaca86b876ca011844b5798eca7a67591a9743c8",
+          "name": "BIOS",
+          "symbol": "BIOS",
+          "decimals": 18,
+          "price": 0.02327279,
+          "amount": "1025.782164239691585252",
+          "balanceUSD": 23.872812894095855
+        },
+        {
+          "address": "0x5f98805a4e8be255a32880fdec7f6728c6568ba0",
+          "name": "Liquity USD",
+          "symbol": "LUSD",
+          "decimals": 18,
+          "price": 1.002,
+          "amount": "22.707515258379452534",
+          "balanceUSD": 22.752930288896213
+        },
+        {
+          "address": "0xb57420fad6731b004309d5a0ec7c6c906adb8df7",
+          "name": "DotOracle",
+          "symbol": "DTO",
+          "decimals": 18,
+          "price": 0.00632164,
+          "amount": "3576",
+          "balanceUSD": 22.60618464
+        },
+        {
+          "address": "0x9ad37205d608b8b219e6a2573f922094cec5c200",
+          "name": "Izumi Finance",
+          "symbol": "iZi",
+          "decimals": 18,
+          "price": 0.02209894,
+          "amount": "1000",
+          "balanceUSD": 22.098940000000002
+        },
+        {
+          "address": "0xc770eefad204b5180df6a14ee197d99d808ee52d",
+          "name": "ShapeShift FOX Token",
+          "symbol": "FOX",
+          "decimals": 18,
+          "price": 0.02122929,
+          "amount": "760",
+          "balanceUSD": 16.134260400000002
+        },
+        {
+          "address": "0xfeef77d3f69374f66429c91d732a244f074bdf74",
+          "name": "Convex FXS",
+          "symbol": "CVXFXS",
+          "decimals": 18,
+          "price": 5.52,
+          "amount": "2.850559624616226525",
+          "balanceUSD": 15.735089127881569
+        },
+        {
+          "address": "0x2b95a1dcc3d405535f9ed33c219ab38e8d7e0884",
+          "name": "Aladdin cvxCRV",
+          "symbol": "aCRV",
+          "decimals": 18,
+          "price": 0.548892,
+          "amount": "16.898282869561829543",
+          "balanceUSD": 9.275332280839532
+        },
+        {
+          "address": "0x767fe9edc9e0df98e07454847909b5e959d7ca0e",
+          "name": "ILV",
+          "symbol": "ILV",
+          "decimals": 18,
+          "price": 45.64,
+          "amount": "0.189960039345914028",
+          "balanceUSD": 8.669776195747517
+        },
+        {
+          "address": "0xb30f5d11b94efbbfdeaa4de38edffceec0be6513",
+          "name": "Play It Forward DAO",
+          "symbol": "PIF",
+          "decimals": 18,
+          "price": 0.00304058,
+          "amount": "1297.5",
+          "balanceUSD": 3.94515255
+        },
+        {
+          "address": "0xf4f618eff5ef36cde2fca4fbd86554c62fb1382b",
+          "name": "Astra Guild Ventures",
+          "symbol": "AGV",
+          "decimals": 18,
+          "price": 0.00038973,
+          "amount": "9212",
+          "balanceUSD": 3.59019276
+        },
+        {
+          "address": "0xcfeaead4947f0705a14ec42ac3d44129e1ef3ed5",
+          "name": "Notional",
+          "symbol": "NOTE",
+          "decimals": 8,
+          "price": 0.153627,
+          "amount": "19.59353853",
+          "balanceUSD": 3.01009654374831
+        },
+        {
+          "address": "0xa2cd3d43c775978a96bdbf12d733d5a1ed94fb18",
+          "name": "Chain",
+          "symbol": "XCN",
+          "decimals": 18,
+          "price": 0.00117343,
+          "amount": "1639.344262295",
+          "balanceUSD": 1.9236557377048218
+        },
+        {
+          "address": "0xdef1ca1fb7fbcdc777520aa7f396b4e015f497ab",
+          "name": "CoW Protocol Token",
+          "symbol": "COW",
+          "decimals": 18,
+          "price": 0.073249,
+          "amount": "24.455618795557846157",
+          "balanceUSD": 1.7913496211558166
+        },
+        {
+          "address": "0x4c2e59d098df7b6cbae0848d66de2f8a4889b9c3",
+          "name": "FODL",
+          "symbol": "FODL",
+          "decimals": 18,
+          "price": 0.00250917,
+          "amount": "515.809928057924692971",
+          "balanceUSD": 1.2942547971851028
+        },
+        {
+          "address": "0x01ba67aac7f75f647d94220cc98fb30fcc5105bf",
+          "name": "Lyra Token",
+          "symbol": "LYRA",
+          "decimals": 18,
+          "price": 0.080567,
+          "amount": "4.499833504651112736",
+          "balanceUSD": 0.3625380859692262
+        },
+        {
+          "address": "0x6f222e04f6c53cc688ffb0abe7206aac66a8ff98",
+          "name": "Roko Network",
+          "symbol": "roko",
+          "decimals": 18,
+          "price": 0.00001441,
+          "amount": "10000",
+          "balanceUSD": 0.1441
+        },
+        {
+          "address": "0xd5a14081a34d256711b02bbef17e567da48e80b5",
+          "name": "Wrapped USDR",
+          "symbol": "wusdr",
+          "decimals": 9,
+          "price": 1.061,
+          "amount": "0.048178379",
+          "balanceUSD": 0.051117260119
+        },
+        {
+          "address": "0x383518188c0c6d7730d91b2c03a03c837814a899",
+          "name": "Olympus",
+          "symbol": "OHM",
+          "decimals": 9,
+          "price": 61.49,
+          "amount": "0.000723843",
+          "balanceUSD": 0.04450910607
+        },
+        {
+          "address": "0xbc6da0fe9ad5f3b0d58160288917aa56653660e9",
+          "name": "Alchemix USD",
+          "symbol": "alUSD",
+          "decimals": 18,
+          "price": 0.996002,
+          "amount": "0.009074647737068027",
+          "balanceUSD": 0.009038367295415229
+        },
+        {
+          "address": "0x0d02755a5700414b26ff040e1de35d337df56218",
+          "name": "Bend Token",
+          "symbol": "BEND",
+          "decimals": 18,
+          "price": 0.00451767,
+          "amount": "1",
+          "balanceUSD": 0.00451767
+        },
+        {
+          "address": "0x2a2550e0a75acec6d811ae3930732f7f3ad67588",
+          "name": "PathDAO",
+          "symbol": "PATH",
+          "decimals": 18,
+          "price": 0.00552717,
+          "amount": "0.669997072669384348",
+          "balanceUSD": 0.003703187720146041
+        },
+        {
+          "address": "0x667102bd3413bfeaa3dffb48fa8288819e480a88",
+          "name": "Tokenize Xchange",
+          "symbol": "TKX",
+          "decimals": 8,
+          "price": 5.78,
+          "amount": "0.00024949",
+          "balanceUSD": 0.0014420522
+        },
+        {
+          "address": "0x10010078a54396f62c96df8532dc2b4847d47ed3",
+          "name": "Hundred Finance",
+          "symbol": "HND",
+          "decimals": 18,
+          "price": 0.01400616,
+          "amount": "0.005569671106688154",
+          "balanceUSD": 0.00007800970466765136
+        },
+        {
+          "address": "0x43a96962254855f16b925556f9e97be436a43448",
+          "name": "Hord",
+          "symbol": "HORD",
+          "decimals": 18,
+          "price": 0.01768812,
+          "amount": "0.000051946242046306",
+          "balanceUSD": 9.188313628641062e-7
+        },
+        {
+          "address": "0x69570f3e84f51ea70b7b68055c8d667e77735a25",
+          "name": "Betswap.gg",
+          "symbol": "BSGG",
+          "decimals": 18,
+          "price": 0.00106493,
+          "amount": "0.000093139219173144",
+          "balanceUSD": 9.918674867405625e-8
+        },
+        {
+          "address": "0x9e32b13ce7f2e80a01932b42553652e053d6ed8e",
+          "name": "Metis",
+          "symbol": "Metis",
+          "decimals": 18,
+          "price": 20.68,
+          "amount": "0.000000004479030347",
+          "balanceUSD": 9.262634757596e-8
+        },
+        {
+          "address": "0x979aca85ba37c675e78322ed5d97fa980b9bdf00",
+          "name": "Fusion",
+          "symbol": "FSN",
+          "decimals": 18,
+          "price": 0.248425,
+          "amount": "0.00000000976183536",
+          "balanceUSD": 2.4250839493080002e-9
+        },
+        {
+          "address": "0xac3e018457b222d93114458476f3e3416abbe38f",
+          "name": "Staked Frax Ether",
+          "symbol": "SFRXETH",
+          "decimals": 18,
+          "price": 1953.42,
+          "amount": "0.000000000000006489",
+          "balanceUSD": 1.267574238e-11
+        },
+        {
+          "address": "0x470ebf5f030ed85fc1ed4c2d36b9dd02e77cf1b7",
+          "name": "Temple",
+          "symbol": "TEMPLE",
+          "decimals": 18,
+          "price": 1.023,
+          "amount": "0.000000000007818698",
+          "balanceUSD": 7.998528054e-12
+        },
+        {
+          "address": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+          "name": "Lido Staked Ether",
+          "symbol": "stETH",
+          "decimals": 18,
+          "price": 1867.4,
+          "amount": "0.000000000000002923",
+          "balanceUSD": 5.4584102000000005e-12
+        },
+        {
+          "address": "0x97de57ec338ab5d51557da3434828c5dbfada371",
+          "name": "eUSD",
+          "symbol": "EUSD",
+          "decimals": 18,
+          "price": 1.012,
+          "amount": "0.000000000000000001",
+          "balanceUSD": 1.012e-18
+        },
+        {
+          "address": "0xb6c4267c4877bb0d6b1685cfd85b0fbe82f105ec",
+          "name": "Relevant",
+          "symbol": "REL",
+          "decimals": 18,
+          "price": 0.01523505,
+          "amount": "0.000000000000000001",
+          "balanceUSD": 1.523505e-20
+        },
+        {
+          "address": "0xa1817b6d8d890f3943b61648992730373b71f156",
+          "name": "Mongoose",
+          "symbol": "MONGOOSE",
+          "decimals": 9,
+          "price": 1.4e-17,
+          "amount": "6512490767275151024.479486305",
+          "balanceUSD": 0
+        },
+        {
+          "address": "0x0000000000000000000000000000000000000000",
+          "name": "Ether",
+          "symbol": "ETH",
+          "decimals": 18,
+          "amount": "34.42524048249996928"
+        },
+        {
+          "address": "0xc13f4f0f865bac08f62654b57e38669ebc4747a3",
+          "name": "Creds",
+          "symbol": "$CREDS",
+          "decimals": 18,
+          "amount": "900"
+        },
+        {
+          "address": "0x73c69d24ad28e2d43d03cbf35f79fe26ebde1011",
+          "name": "Archimedes",
+          "symbol": "arch",
+          "decimals": 18,
+          "amount": "20.481232550757106147"
+        },
+        {
+          "address": "0xfba34c7da885885c597b8eeab61fdc0eee7acf3c",
+          "name": "DeFi Holdings",
+          "symbol": "DHOLD",
+          "decimals": 18,
+          "amount": "10000"
+        },
+        {
+          "address": "0x54b8e638aa2c7a6040f2820f8118237a7bfa0c0d",
+          "name": "GhostBlade Inu",
+          "symbol": "GHOSTBLADE",
+          "decimals": 9,
+          "amount": "8475047077.707511936"
+        },
+        {
+          "address": "0xc4e15973e6ff2a35cc804c2cf9d2a1b817a8b40f",
+          "name": "Interest Bearing Bitcoin",
+          "symbol": "IBBTC",
+          "decimals": 18,
+          "amount": "0.000007538758513738"
+        },
+        {
+          "address": "0x0e69d0a2bbb30abcb7e5cfea0e4fde19c00a8d47",
+          "name": "Carlive Chain",
+          "symbol": "iov",
+          "decimals": 8,
+          "amount": "10"
+        },
+        {
+          "address": "0x981dc247745800bd2ca28a4bf147f0385eaa0bc0",
+          "name": "NutsDAO",
+          "symbol": "nuts",
+          "decimals": 18,
+          "amount": "8.8888"
+        },
+        {
+          "address": "0xd6cb2adf47655b1babddc214d79257348cbc39a7",
+          "name": "Oracle Top 5 Index",
+          "symbol": "ORCL5",
+          "decimals": 18,
+          "amount": "0.000014919467525269"
+        },
+        {
+          "address": "0x4da27a545c0c5b758a6ba100e3a049001de870f5",
+          "name": "",
+          "symbol": "stkAAVE",
+          "decimals": 18,
+          "amount": "26.846526748918337087"
+        },
+        {
+          "address": "0x619beb58998ed2278e08620f97007e1116d5d25b",
+          "name": "",
+          "symbol": "variableDebtUSDC",
+          "decimals": 6,
+          "amount": "567311.501138"
+        },
+        {
+          "address": "0xba4cfe5741b357fa371b506e5db0774abfecf8fc",
+          "name": "vVSP",
+          "symbol": "VVSP",
+          "decimals": 18,
+          "amount": "809.810225073526959006"
+        },
+        {
+          "address": "0x403d512ab96103562dcafe4635545e8ee2753f6e",
+          "name": "Wild Credit",
+          "symbol": "WILD",
+          "decimals": 18,
+          "amount": "60752.157674129684369128"
+        },
+        {
+          "address": "0x9257fb8fab616867cee67c3289547403617b1938",
+          "name": "Beverage Token",
+          "symbol": "DRINK",
+          "decimals": 18,
+          "amount": "111172.566765137136866787"
+        },
+        {
+          "address": "0xd3deff001ef67e39212f4973b617c2e684fa436c",
+          "name": "484 Fund",
+          "symbol": "ERROR",
+          "decimals": 18,
+          "amount": "2.601360983539705944"
+        },
+        {
+          "address": "0x0fe20e0fa9c78278702b05c333cc000034bb69e2",
+          "name": "ETH Max Yield Index",
+          "symbol": "ETHMAXY",
+          "decimals": 18,
+          "amount": "0.024785627678665334"
+        },
+        {
+          "address": "0xbc17729fdf562723f0267f79ff25ade441056d87",
+          "name": "KSM Starter",
+          "symbol": "KST",
+          "decimals": 18,
+          "amount": "10740"
+        },
+        {
+          "address": "0xbd31ea8212119f94a611fa969881cba3ea06fa3d",
+          "name": "LUNA (Wormhole)",
+          "symbol": "LUNA",
+          "decimals": 6,
+          "amount": "43.420435"
+        },
+        {
+          "address": "0x8807e69dc04155af64172cd6f0b4738f8068d0d4",
+          "name": "Meta Network",
+          "symbol": "META",
+          "decimals": 18,
+          "amount": "7.072"
+        },
+        {
+          "address": "0xa9598333b99d14d90bc81cad8af82c4c70625e75",
+          "name": "Metis",
+          "symbol": "MTS",
+          "decimals": 18,
+          "amount": "100"
+        },
+        {
+          "address": "0x68bb81b3f67f7aab5fd1390ecb0b8e1a806f2465",
+          "name": "NFT Platform Index",
+          "symbol": "NFTP",
+          "decimals": 18,
+          "amount": "0.00001055491834387"
+        }
+      ]
+    },
+    {
+      "id": "fantom",
+      "chainId": 250,
+      "balances": [
+        {
+          "address": "0x04068da6c83afcfa0e13ba15a6696662335d5b75",
+          "name": "USD Coin",
+          "symbol": "USDC",
+          "decimals": 6,
+          "price": 1.001,
+          "amount": "32.047191",
+          "balanceUSD": 32.079238191
+        },
+        {
+          "address": "0xe0654c8e6fd4d733349ac7e09f6f23da256bf475",
+          "name": "Scream",
+          "symbol": "SCREAM",
+          "decimals": 18,
+          "price": 0.708354,
+          "amount": "0.598978111735703472",
+          "balanceUSD": 0.42428854136043254
+        },
+        {
+          "address": "0xddc0385169797937066bbd8ef409b5b3c0dfeb52",
+          "name": "Wrapped MEMO",
+          "symbol": "wMEMO",
+          "decimals": 18,
+          "price": 30534,
+          "amount": "0.00000947660063769",
+          "balanceUSD": 0.28935852387122646
+        },
+        {
+          "address": "0x00a35fd824c717879bf370e70ac6868b95870dfb",
+          "name": "IronBank",
+          "symbol": "IB",
+          "decimals": 18,
+          "price": 1.22,
+          "amount": "0.081133290281613647",
+          "balanceUSD": 0.09898261414356865
+        },
+        {
+          "address": "0x412a13c109ac30f0db80ad3bd1defd5d0a6c0ac6",
+          "name": "Stader",
+          "symbol": "SD(Wormhole)",
+          "decimals": 18,
+          "price": 0.810925,
+          "amount": "0.030472332164021379",
+          "balanceUSD": 0.024710775960109038
+        },
+        {
+          "address": "0xf24bcf4d1e507740041c9cfd2dddb29585adce1e",
+          "name": "BeethovenxToken",
+          "symbol": "BEETS",
+          "decimals": 18,
+          "price": 0.0231646,
+          "amount": "0.338456983738687225",
+          "balanceUSD": 0.007840220645513193
+        },
+        {
+          "address": "0xc3f069d7439baf6d4d6e9478d9cc77778e62d147",
+          "name": "Fantom Libero Financial Freedom",
+          "symbol": "FLIBERO",
+          "decimals": 18,
+          "price": 0.00000392,
+          "amount": "151.962698825110433216",
+          "balanceUSD": 0.0005956937793944329
+        },
+        {
+          "address": "0x468003b688943977e6130f4f68f23aad939a1040",
+          "name": "Spell Token",
+          "symbol": "SPELL",
+          "decimals": 18,
+          "price": 0.00047358,
+          "amount": "0.803",
+          "balanceUSD": 0.00038028474
+        },
+        {
+          "address": "0x7d016eec9c25232b01f23ef992d98ca97fc2af5a",
+          "name": "Frax Share",
+          "symbol": "FXS",
+          "decimals": 18,
+          "price": 5.58,
+          "amount": "0.000023725731486616",
+          "balanceUSD": 0.00013238958169531728
+        },
+        {
+          "address": "0xa23c4e69e5eaf4500f2f9301717f12b578b948fb",
+          "name": "Protofi",
+          "symbol": "PROTO",
+          "decimals": 18,
+          "price": 0.00002957,
+          "amount": "4.398445300418523632",
+          "balanceUSD": 0.00013006202753337574
+        },
+        {
+          "address": "0xdc301622e621166bd8e82f2ca0a26c13ad0be355",
+          "name": "FRAX",
+          "symbol": "FRAX",
+          "decimals": 18,
+          "price": 1.002,
+          "amount": "0.000083873758443651",
+          "balanceUSD": 0.00008404150596053831
+        },
+        {
+          "address": "0xf16e81dce15b08f326220742020379b855b87df9",
+          "name": "IceToken",
+          "symbol": "ICE",
+          "decimals": 18,
+          "price": 1.17,
+          "amount": "0.000000000000057454",
+          "balanceUSD": 6.722117999999999e-14
+        },
+        {
+          "address": "0xb66b5d38e183de42f21e92abcaf3c712dd5d6286",
+          "name": "Morpheus Swap",
+          "symbol": "PILLS",
+          "decimals": 18,
+          "price": 0.074469,
+          "amount": "0.000000000000008208",
+          "balanceUSD": 6.112415519999999e-16
+        },
+        {
+          "address": "0x10b620b2dbac4faa7d7ffd71da486f5d44cd86f9",
+          "name": "Liquid Driver",
+          "symbol": "LQDR",
+          "decimals": 18,
+          "price": 0.564507,
+          "amount": "0.000000000000000281",
+          "balanceUSD": 1.5862646699999999e-16
+        },
+        {
+          "address": "0x5cc61a78f164885776aa610fb0fe1257df78e59b",
+          "name": "SpiritSwap Token",
+          "symbol": "SPIRIT",
+          "decimals": 18,
+          "price": 0.00288037,
+          "amount": "0.000000000000004212",
+          "balanceUSD": 1.213211844e-17
+        },
+        {
+          "address": "0x0100000000000000000000000000000000000001",
+          "name": "Fantom",
+          "symbol": "FTM",
+          "decimals": 18,
+          "amount": "117.53009170531998325"
+        },
+        {
+          "address": "0x02a2b736f9150d36c0919f3acee8ba2a92fbbb40",
+          "name": "agEUR",
+          "symbol": "agEUR",
+          "decimals": 18,
+          "amount": "0.006255227410711123"
+        },
+        {
+          "address": "0x25c130b2624cf12a4ea30143ef50c5d68cefa22f",
+          "name": "Geist ETH",
+          "symbol": "GETH",
+          "decimals": 18,
+          "amount": "0.00063416931411566"
+        },
+        {
+          "address": "0x940f41f0ec9ba1a34cf001cc03347ac092f5f6b5",
+          "name": "Geist fUSDT",
+          "symbol": "GFUSDT",
+          "decimals": 6,
+          "amount": "0.169317"
+        },
+        {
+          "address": "0x66eed5ff1701e6ed8470dc391f05e27b1d0657eb",
+          "name": "MPX",
+          "symbol": "mpx",
+          "decimals": 18,
+          "amount": "68.49204619721779"
+        },
+        {
+          "address": "0x5717f11ac1c3ae83e0eb455222e488009951f0c3",
+          "name": "Pallas Finance",
+          "symbol": "PALLAS",
+          "decimals": 18,
+          "amount": "2006.804346058025204151"
+        },
+        {
+          "address": "0x79360af49edd44f3000303ae212671ac94bb8ba7",
+          "name": "Radial Finance",
+          "symbol": "rdl",
+          "decimals": 18,
+          "amount": "8414.953940955184130411"
+        }
+      ]
+    },
+    {
+      "id": "gnosis",
+      "chainId": 100,
+      "balances": [
+        {
+          "address": "0x9c58bacc331c9aa871afd802db6379a98e80cedb",
+          "name": "Gnosis on xDai",
+          "symbol": "GNO",
+          "decimals": 18,
+          "price": 115.08,
+          "amount": "1.661813615499934631",
+          "balanceUSD": 191.2415108717325
+        },
+        {
+          "address": "0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d",
+          "name": "xDai",
+          "symbol": "xDAI",
+          "decimals": 18,
+          "price": 1.037,
+          "amount": "1.665001235797840703",
+          "balanceUSD": 1.7266062815223606
+        },
+        {
+          "address": "0xd3226b12e6188133b19ac0419f34b0ed5b10f069",
+          "name": "EsportsRef",
+          "symbol": "ESR",
+          "decimals": 18,
+          "price": 0.00627963,
+          "amount": "10",
+          "balanceUSD": 0.0627963
+        },
+        {
+          "address": "0x712b3d230f3c1c19db860d80619288b1f0bdd0bd",
+          "name": "Curve DAO Token on xDai",
+          "symbol": "CRV",
+          "decimals": 18,
+          "amount": "19.627007840883971606"
+        }
+      ]
+    },
+    {
+      "id": "harmony",
+      "chainId": 1666600000,
+      "balances": [
+        {
+          "address": "0x6983d1e6def3690c4d616b13597a09e6193ea013",
+          "name": "Ether",
+          "symbol": "ETH",
+          "decimals": 18,
+          "price": 1868.49,
+          "amount": "0.235077856682242157",
+          "balanceUSD": 439.24062443220265
+        },
+        {
+          "address": "0x0000000000000000000000000000000000000000",
+          "name": "Harmony",
+          "symbol": "ONE",
+          "decimals": 18,
+          "price": 0.01296572,
+          "amount": "49.993655323",
+          "balanceUSD": 0.6482037366945276
+        }
+      ]
+    },
+    {
+      "id": "moonbeam",
+      "chainId": 1284,
+      "balances": [
+        {
+          "address": "0xcd3b51d98478d53f4515a306be565c6eebef1d58",
+          "name": "BeamSwap",
+          "symbol": "GLINT",
+          "decimals": 18,
+          "price": 0.00080048,
+          "amount": "464502.06",
+          "balanceUSD": 371.8246089888
+        },
+        {
+          "address": "0x0000000000000000000000000000000000000802",
+          "name": "GLMR",
+          "symbol": "GLMR",
+          "decimals": 18,
+          "price": 0.261053,
+          "amount": "268.899769491303842419",
+          "balanceUSD": 70.19709152501333
+        },
+        {
+          "address": "0x0e358838ce72d5e61e0018a2ffac4bec5f4c88d2",
+          "name": "StellaSwap",
+          "symbol": "STELLA",
+          "decimals": 18,
+          "price": 0.03347174,
+          "amount": "0.1",
+          "balanceUSD": 0.003347174
+        }
+      ]
+    },
+    {
+      "id": "optimism",
+      "chainId": 10,
+      "balances": [
+        {
+          "address": "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+          "name": "Synthetix Network",
+          "symbol": "SNX",
+          "decimals": 18,
+          "price": 2.08,
+          "amount": "15240.864832118285067753",
+          "balanceUSD": 31700.998850806034
+        },
+        {
+          "address": "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+          "name": "Synthetix USD",
+          "symbol": "sUSD",
+          "decimals": 18,
+          "price": 0.999313,
+          "amount": "5000",
+          "balanceUSD": 4996.565
+        },
+        {
+          "address": "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+          "name": "USD Coin",
+          "symbol": "USDC",
+          "decimals": 6,
+          "price": 1.001,
+          "amount": "943.364977",
+          "balanceUSD": 944.308341977
+        },
+        {
+          "address": "0x0000000000000000000000000000000000001010",
+          "name": "Optimism Ether",
+          "symbol": "ETH",
+          "decimals": 18,
+          "price": 1868.53,
+          "amount": "0.377781593999024309",
+          "balanceUSD": 705.8962418349969
+        },
+        {
+          "address": "0x00a35fd824c717879bf370e70ac6868b95870dfb",
+          "name": "Iron Bank",
+          "symbol": "IB",
+          "decimals": 18,
+          "price": 1.22,
+          "amount": "8.118851237419982766",
+          "balanceUSD": 9.904998509652378
+        },
+        {
+          "address": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+          "name": "Dai",
+          "symbol": "DAI",
+          "decimals": 18,
+          "price": 1.002,
+          "amount": "0.000003228184310414",
+          "balanceUSD": 0.000003234640679034828
+        },
+        {
+          "address": "0x9a601c5bb360811d96a23689066af316a30c3027",
+          "name": "Pika Protocol",
+          "symbol": "pika",
+          "decimals": 18,
+          "price": 0.353273,
+          "amount": "0.000003798207195573",
+          "balanceUSD": 0.0000013418040506016605
+        }
+      ]
+    },
+    {
+      "id": "polygon",
+      "chainId": 137,
+      "balances": [
+        {
+          "address": "0x72928d5436ff65e57f72d5566dcd3baedc649a88",
+          "name": "humanDAO",
+          "symbol": "HDAO",
+          "decimals": 18,
+          "price": 0.00987024,
+          "amount": "133927.270300807239559817",
+          "balanceUSD": 1321.8943004138398
+        },
+        {
+          "address": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+          "name": "USD Coin",
+          "symbol": "USDC",
+          "decimals": 6,
+          "price": 1.001,
+          "amount": "1287.023075",
+          "balanceUSD": 1288.310098075
+        },
+        {
+          "address": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+          "name": "Wrapped Matic",
+          "symbol": "WMATIC",
+          "decimals": 18,
+          "price": 0.642047,
+          "amount": "250.049940451078664703",
+          "balanceUSD": 160.54381411679373
+        },
+        {
+          "address": "0x9f95e17b2668afe01f8fbd157068b0a4405cc08d",
+          "name": "Bullieverse",
+          "symbol": "BULL",
+          "decimals": 18,
+          "price": 0.00121725,
+          "amount": "60412.5",
+          "balanceUSD": 73.537115625
+        },
+        {
+          "address": "0xc79ae93d9c215eaa8c8da5c77e465bac7de28891",
+          "name": "pax.world",
+          "symbol": "paxw",
+          "decimals": 18,
+          "price": 0.00329209,
+          "amount": "14445.277",
+          "balanceUSD": 47.55515195893
+        },
+        {
+          "address": "0xb988bd378a0754957d5d9471c96e0f8051645a26",
+          "name": "iNFTspace",
+          "symbol": "ins",
+          "decimals": 18,
+          "price": 0.00008321,
+          "amount": "500000",
+          "balanceUSD": 41.605
+        },
+        {
+          "address": "0xf28164a485b0b2c90639e47b0f377b4a438a16b1",
+          "name": "Dragon's Quick",
+          "symbol": "DQUICK",
+          "decimals": 18,
+          "price": 90.47,
+          "amount": "0.131380970615071044",
+          "balanceUSD": 11.886036411545478
+        },
+        {
+          "address": "0x5a3064cbdccf428ae907796cf6ad5a664cd7f3d8",
+          "name": "PYQ",
+          "symbol": "PYQ",
+          "decimals": 18,
+          "price": 0.00012426,
+          "amount": "1416.712215131914382809",
+          "balanceUSD": 0.17604065985229167
+        },
+        {
+          "address": "0xfdc26cda2d2440d0e83cd1dee8e8be48405806dc",
+          "name": "BTU Protocol",
+          "symbol": "BTU",
+          "decimals": 18,
+          "price": 0.101252,
+          "amount": "1",
+          "balanceUSD": 0.101252
+        },
+        {
+          "address": "0xf239e69ce434c7fb408b05a0da416b14917d934e",
+          "name": "PolyShield",
+          "symbol": "SHI3LD",
+          "decimals": 18,
+          "price": 0.00043269,
+          "amount": "192.351340061340999332",
+          "balanceUSD": 0.08322850133114164
+        },
+        {
+          "address": "0x5647fe4281f8f6f01e84bce775ad4b828a7b8927",
+          "name": "Million",
+          "symbol": "MM",
+          "decimals": 18,
+          "price": 1.9,
+          "amount": "0.001",
+          "balanceUSD": 0.0019
+        },
+        {
+          "address": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+          "name": "Tether USD",
+          "symbol": "USDT",
+          "decimals": 6,
+          "price": 1.001,
+          "amount": "0.000129",
+          "balanceUSD": 0.000129129
+        },
+        {
+          "address": "0xd0258a3fd00f38aa8090dfee343f10a9d4d30d3f",
+          "name": "VOXEL",
+          "symbol": "VOXEL",
+          "decimals": 18,
+          "price": 0.138619,
+          "amount": "0.000264399999999999",
+          "balanceUSD": 0.00003665086359999986
+        },
+        {
+          "address": "0x8f18dc399594b451eda8c5da02d0563c0b2d0f16",
+          "name": "moonwolf.io",
+          "symbol": "WOLF",
+          "decimals": 9,
+          "price": 1.13162e-7,
+          "amount": "106.104466112",
+          "balanceUSD": 0.000011989804670656
+        },
+        {
+          "address": "0xaaa5b9e6c589642f98a1cda99b9d024b8407285a",
+          "name": "IRON Titanium Token",
+          "symbol": "TITAN",
+          "decimals": 18,
+          "price": 3.2007e-8,
+          "amount": "13.006",
+          "balanceUSD": 4.16283042e-7
+        },
+        {
+          "address": "0xf8f9efc0db77d8881500bb06ff5d6abc3070e695",
+          "name": "Synapse",
+          "symbol": "SYN",
+          "decimals": 18,
+          "price": 0.699977,
+          "amount": "0.000000210492511321",
+          "balanceUSD": 1.4733991659693962e-7
+        },
+        {
+          "address": "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+          "name": "Dai Stablecoin",
+          "symbol": "DAI",
+          "decimals": 18,
+          "price": 1.002,
+          "amount": "0.000000000000000001",
+          "balanceUSD": 1.002e-18
+        },
+        {
+          "address": "0x0000000000000000000000000000000000001010",
+          "name": "Polygon",
+          "symbol": "MATIC",
+          "decimals": 18,
+          "amount": "91.347160772399896757"
+        },
+        {
+          "address": "0xacd7b3d9c10e97d0efa418903c0c7669e702e4c0",
+          "name": "Eleven Finance",
+          "symbol": "ELE",
+          "decimals": 18,
+          "amount": "351.570020160821172837"
+        },
+        {
+          "address": "0x92a9c92c215092720c731c96d4ff508c831a714f",
+          "name": "Rail Polygon",
+          "symbol": "railpoly",
+          "decimals": 18,
+          "amount": "500000"
+        },
+        {
+          "address": "0x2a1f0ad3cab040e28845734d932f3ff0a24b14f4",
+          "name": "The Realm Defenders",
+          "symbol": "TRD",
+          "decimals": 18,
+          "amount": "56250"
+        },
+        {
+          "address": "0xbe9512e2754cb938dd69bbb96c8a09cb28a02d6d",
+          "name": "GemBites",
+          "symbol": "GBTS",
+          "decimals": 18,
+          "amount": "27.190281148964218276"
+        },
+        {
+          "address": "0x0b91b07beb67333225a5ba0259d55aee10e3a578",
+          "name": "Minereum",
+          "symbol": "MNE",
+          "decimals": 8,
+          "amount": "300000"
+        },
+        {
+          "address": "0xc8bcb58caef1be972c0b638b1dd8b0748fdc8a44",
+          "name": "Pear",
+          "symbol": "PEAR",
+          "decimals": 18,
+          "amount": "1138.229260318762887049"
+        }
+      ]
+    }
+  ]
+}
+[
+  19, 29, 69, 1, 91,
+  22,  4,  2, 3,  7,
+  24
+]
