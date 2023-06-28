@@ -35,6 +35,7 @@ export async function getLendingRewardsBalances(
     decimals: rewardToken.decimals,
     symbol: rewardToken.symbol,
     amount: userRewardsRes,
+    underlyings: rewardToken.underlyings as Contract[],
     category: 'reward',
   })
 
