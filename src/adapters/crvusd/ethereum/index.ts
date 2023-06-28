@@ -1,13 +1,13 @@
 import { getCRVUSDBalances } from '@adapters/crvusd/ethereum/balance'
 import { getCRVUSDContracts } from '@adapters/crvusd/ethereum/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
-import type { Token } from '@lib/token'
 
-const crvUSD: Token = {
+const crvUSD: Contract = {
   chain: 'ethereum',
   address: '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E',
   symbol: 'crvUSD',
   decimals: 18,
+  stable: true,
 }
 
 const factory: Contract = {
