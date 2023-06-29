@@ -2,7 +2,6 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getBalancesOf } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import type { Token } from '@lib/token'
 
 const abi = {
   exchangeRateCurrent: {
@@ -24,8 +23,8 @@ export async function getHomoraBalances(ctx: BalancesContext, contracts: Contrac
     calls.push({ target: contract.cToken })
   }
 
-  const [{ erc20: tokensBalances }, exchangeRatesOfs] = await Promise.all([
-    getBalancesOf(ctx, contracts as Token[]),
+  const [tokensBalances, exchangeRatesOfs] = await Promise.all([
+    getBalancesOf(ctx, contracts),
     multicall({ ctx, calls, abi: abi.exchangeRateCurrent }),
   ])
 

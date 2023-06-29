@@ -1,27 +1,32 @@
-import type { Adapter, GetBalancesHandler } from '@lib/adapter'
+import type { Adapter, BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 import type { Chain } from '@lib/chains'
-import { chains } from '@lib/chains'
+import { chainById, chains } from '@lib/chains'
 import { getBalancesOf } from '@lib/erc20'
+import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 
+async function getCoinBalance(ctx: BalancesContext, token?: Token) {
+  if (!token) {
+    return null
+  }
+
+  const provider = providers[ctx.chain]
+  const amount = await provider.getBalance({
+    address: ctx.address,
+    blockNumber: ctx.blockHeight ? BigInt(ctx.blockHeight) : undefined,
+  })
+  return { ...token, amount }
+}
+
 const getChainHandlers = (chain: Chain) => {
   const getContracts = () => {
-    let coin: Token | undefined
-    const erc20: Token[] = []
+    const coin: Contract = { ...chainById[chain].nativeCurrency, chain, category: 'wallet' }
+    const erc20: Contract[] = []
 
     for (const token of tokensByChain[chain]) {
-      // @ts-ignore
-      if (token.native) {
-        // @ts-expect-error
-        coin = { ...token, chain, category: 'wallet' }
-        continue
-      }
-      // llamafolio-tokens registers all tokens to help get metadata but some are protocol specific (ex: stETH, aTokens).
-      // wallet flag indicates wallet-only tokens
-      if (token.wallet) {
-        erc20.push({ ...token, chain, category: 'wallet' } as Token)
-      }
+      erc20.push({ ...token, chain, category: 'wallet' } as Contract)
     }
 
     return {
@@ -29,10 +34,13 @@ const getChainHandlers = (chain: Chain) => {
     }
   }
 
-  // @ts-expect-error
   const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-    const { coin, erc20 } = await getBalancesOf(ctx, contracts.erc20 as unknown as Token[])
-    const balances = [coin, ...erc20]
+    const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+      // @ts-expect-error
+      coin: getCoinBalance,
+      erc20: getBalancesOf,
+    })
+
     return {
       groups: [{ balances }],
     }
@@ -49,7 +57,6 @@ const adapter: Adapter = {
 }
 
 for (const chain of chains) {
-  //@ts-expect-error
   adapter[chain.id] = getChainHandlers(chain.id)
 }
 

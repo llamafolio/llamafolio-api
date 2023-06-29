@@ -138,7 +138,7 @@ export async function getPoolsContracts(ctx: BaseContext): Promise<Contract[]> {
 }
 
 export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[]) {
-  const { erc20: balances } = await getBalancesOf(ctx, pools as Token[])
+  const balances = await getBalancesOf(ctx, pools as Token[])
 
   return balances.map((balance) => ({ ...balance, category: 'lp' as Category }))
 }

@@ -3,7 +3,6 @@ import { call } from '@lib/call'
 import { getBalancesOf } from '@lib/erc20'
 import { MAX_UINT_256 } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import type { Token } from '@lib/token'
 import { formatUnits } from 'viem'
 
 const abi = {
@@ -171,7 +170,7 @@ export async function getLendingPoolContracts(ctx: BaseContext, lendingPool: Con
 
 export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Contract[]) {
   try {
-    const { erc20: balances } = await getBalancesOf(ctx, contracts as Token[])
+    const balances = await getBalancesOf(ctx, contracts)
 
     // use the same amount for underlyings
     for (const balance of balances) {
