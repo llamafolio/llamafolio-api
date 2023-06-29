@@ -1,7 +1,6 @@
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getBalancesOf } from '@lib/erc20'
-import type { Token } from '@lib/token'
 
 const lockerGnosis: Contract = {
   chain: 'ethereum',
@@ -19,10 +18,7 @@ export const getContracts = () => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    lockerGnosis: async (ctx, lockerGnosis) => {
-      const { erc20 } = await getBalancesOf(ctx, [lockerGnosis] as Token[])
-      return erc20
-    },
+    lockerGnosis: (ctx, lockerGnosis) => getBalancesOf(ctx, [lockerGnosis]),
   })
 
   return {

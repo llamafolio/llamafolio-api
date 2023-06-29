@@ -1,20 +1,13 @@
 import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import type { Chain } from '@lib/chains'
+import { type Chain, toDefiLlamaChain } from '@lib/chains'
 import { mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
-// Defillama prices API requires a prefix to know where the token comes from.
-// It can be a chain or a market provider like coingecko
-export function getTokenKey(token: { chain: Chain; address: string; coingeckoId?: string }) {
-  if (token.coingeckoId) {
-    return `coingecko:${token.coingeckoId}`
-  }
-
-  if (token.chain && token.address) {
-    return `${token.chain}:${token.address.toLowerCase()}`
-  }
+// Defillama prices API requires a prefix to know where the token comes from
+export function getTokenKey(token: { chain: Chain; address: string }) {
+  return `${toDefiLlamaChain[token.chain] || token.chain}:${token.address.toLowerCase()}`
 }
 
 interface CoinResponse {

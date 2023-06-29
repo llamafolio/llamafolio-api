@@ -3,7 +3,6 @@ import { multicallBalances } from '@lib/balance'
 import { abi as erc20Abi, getBalancesOf } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import type { Token } from '@lib/token'
 
 export interface GetPoolsBalancesParams {
   getPoolAddress: (contract: Contract) => `0x${string}`
@@ -15,7 +14,7 @@ export interface GetPoolsBalancesParams {
  * @param params
  */
 export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[], params: GetPoolsBalancesParams) {
-  const { erc20: poolsBalances } = await getBalancesOf(ctx, pools as Token[])
+  const poolsBalances = await getBalancesOf(ctx, pools)
 
   return getPoolsUnderlyingBalances(ctx, poolsBalances, params)
 }

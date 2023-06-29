@@ -101,10 +101,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: BalancesContext, contracts) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      markets: async (ctx, contracts) => {
-        const { erc20 } = await getBalancesOf(ctx, contracts as Token[])
-        return erc20
-      },
+      markets: getBalancesOf,
       stakers: getETokenStakes,
       EULStaker: (...args) => getEULStakes(...args, [USDC, USDT, WETH]),
     }),

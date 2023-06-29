@@ -28,7 +28,7 @@ const abi = {
 export async function getLpBalances(ctx: BalancesContext, contracts: Contract[]) {
   const balances: Balance[] = []
 
-  const { erc20: balancesRaw } = await getBalancesOf(ctx, contracts as Token[])
+  const balancesRaw = await getBalancesOf(ctx, contracts as Token[])
 
   const nonZeroBalances = balancesRaw.filter((balance) => balance.amount > 0n)
 
