@@ -130,6 +130,7 @@ import perennial from '@adapters/perennial'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
 import platypusFinance from '@adapters/platypus-finance'
+import pods from '@adapters/pods'
 import polkastarter from '@adapters/polkastarter'
 import popsicleFinance from '@adapters/popsicle-finance'
 import pstakeFinance from '@adapters/pstake-finance'
@@ -341,6 +342,7 @@ export const adapters: Adapter[] = [
   piedao,
   pikaProtocol,
   platypusFinance,
+  pods,
   polkastarter,
   popsicleFinance,
   pstakeFinance,
