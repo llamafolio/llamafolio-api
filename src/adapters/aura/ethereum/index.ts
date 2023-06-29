@@ -57,7 +57,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (...args) => getAuraPoolsBalances(...args, vaultBAL),
     auraStaker: getAuraBalStakerBalances,
-    auraLocker: (...args) => getMultipleLockerBalances(...args, AURA, [auraBal]),
+    auraLocker: (...args) => getMultipleLockerBalances(...args, AURA, [auraBal], false),
   })
 
   return {
