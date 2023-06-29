@@ -9,6 +9,7 @@ import alchemix from '@adapters/alchemix'
 import alpacaFinance from '@adapters/alpaca-finance'
 import ambireWallet from '@adapters/ambire-wallet'
 import angle from '@adapters/angle'
+import ankr from '@adapters/ankr'
 import annex from '@adapters/annex'
 import apeswapAmm from '@adapters/apeswap-amm'
 import apeswapLending from '@adapters/apeswap-lending'
@@ -219,6 +220,7 @@ export const adapters: Adapter[] = [
   alpacaFinance,
   ambireWallet,
   angle,
+  ankr,
   annex,
   apeswapAmm,
   apeswapLending,
