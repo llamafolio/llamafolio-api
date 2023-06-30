@@ -5,15 +5,13 @@ import { mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
-// Defillama prices API requires a prefix to know where the token comes from.
-// It can be a chain or a market provider like coingecko
-export function getTokenKey(token: { chain: Chain; address: string }): string {
-  if (!token.chain || !token.address) {
-    console.error('[getTokenKey]: Invalid token', token)
-    throw new Error('Invalid token')
+// Defillama prices API requires a prefix to know where the token comes from
+export function getTokenKey(contract: { chain: Chain; address: string; token?: string }) {
+  if (!contract.token && !contract.address) {
+    console.error(`getTokenKey missing address`, contract)
+    return
   }
-
-  return `${toDefiLlamaChain[token.chain]}:${token.address.toLowerCase()}`
+  return `${toDefiLlamaChain[contract.chain] || contract.chain}:${(contract.token || contract.address).toLowerCase()}`
 }
 
 interface CoinResponse {
