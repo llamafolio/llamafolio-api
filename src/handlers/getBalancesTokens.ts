@@ -10,7 +10,15 @@ import { getPricedBalances } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
 import { chains as tokensPerChain } from '@llamafolio/tokens'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-import { type Address, formatUnits } from 'viem'
+import type { Address } from 'viem'
+
+Object.defineProperties(BigInt.prototype, {
+  toJSON: {
+    value: function (this: bigint) {
+      return this.toString()
+    },
+  },
+})
 
 function formatBalance(balance: any): FormattedBalance {
   return {
@@ -19,7 +27,7 @@ function formatBalance(balance: any): FormattedBalance {
     symbol: balance.symbol,
     decimals: balance.decimals,
     price: balance.price,
-    amount: formatUnits(balance.amount, balance.decimals),
+    amount: balance.amount,
     balanceUSD: balance.balanceUSD,
   }
 }
