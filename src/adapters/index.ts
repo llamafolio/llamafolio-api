@@ -138,6 +138,7 @@ import pstakeFinance from '@adapters/pstake-finance'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
 import radiantV2 from '@adapters/radiant-v2'
+import raft from '@adapters/raft'
 import rageTrade from '@adapters/rage-trade'
 import railgun from '@adapters/railgun'
 import redacted from '@adapters/redacted'
@@ -352,6 +353,7 @@ export const adapters: Adapter[] = [
   quickswapDex,
   radiantV1,
   radiantV2,
+  raft,
   rageTrade,
   railgun,
   redacted,
