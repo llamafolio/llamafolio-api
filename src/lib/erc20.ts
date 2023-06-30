@@ -1,9 +1,8 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { type Chain, gasToken } from '@lib/chains'
+import { type Chain, chainById } from '@lib/chains'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
-import { getTokenKey } from '@lib/price'
 import { sleep } from '@lib/promise'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
@@ -287,7 +286,7 @@ export async function balanceOf({
     })
     if (!result || result === 0n) return undefined
     // @ts-ignore TODO: fix type
-    return { ...token, amount: result, priceId: getTokenKey(token), chain }
+    return { ...token, amount: result, chain }
   } catch {
     return undefined
   }
@@ -331,13 +330,12 @@ export async function balancesOf({
         ...token,
         chain,
         amount: balance,
-        priceId: getTokenKey(token),
       } as unknown as Balance)
     }
     if (!nativeResult || typeof nativeResult !== 'bigint') return { success: true, result: balances }
     return {
       success: true,
-      result: [{ ...gasToken[chain], amount: nativeResult }, ...balances],
+      result: [{ ...chainById[chain].nativeCurrency, amount: nativeResult, chain }, ...balances],
     }
   } catch (error) {
     return {
@@ -429,18 +427,19 @@ export async function userBalancesWithRetry({
     chunkSize: 750,
   })
 
-  const retry = await Promise.all(rejected.map(async (token) => await balanceOf({ client, chain, address, token })))
+  const retry = await Promise.all(rejected.map((token) => balanceOf({ client, chain, address, token })))
   const filteredRetry = retry.filter((token) => !!token && ![0n, '0'].includes(token.amount)) as Array<Balance>
   if (result.length === 0) {
     return {
       chain,
       result: [
         {
-          ...gasToken[chain],
+          ...chainById[chain].nativeCurrency,
+          chain,
           amount: await client.getBalance({ address }),
         },
         ...filteredRetry,
-      ]
+      ],
     }
   }
   return {

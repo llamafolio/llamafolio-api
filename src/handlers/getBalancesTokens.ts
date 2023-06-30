@@ -6,11 +6,11 @@ import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
 import { chainById, chainsNames } from '@lib/chains'
 import { userBalancesWithRetry } from '@lib/erc20'
-import { tokensBalancesWithPrices } from '@lib/price'
+import { getPricedBalances } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
 import { chains as tokensPerChain } from '@llamafolio/tokens'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-import type { Address } from 'viem'
+import { type Address, formatUnits } from 'viem'
 
 function formatBalance(balance: any): FormattedBalance {
   return {
@@ -19,7 +19,7 @@ function formatBalance(balance: any): FormattedBalance {
     symbol: balance.symbol,
     decimals: balance.decimals,
     price: balance.price,
-    amount: balance.amount,
+    amount: formatUnits(balance.amount, balance.decimals),
     balanceUSD: balance.balanceUSD,
   }
 }
@@ -64,7 +64,7 @@ export async function balancesHandler({ address }: { address: Address }) {
     >[]
   ).flatMap((item) => item.value.result)
 
-  const withPrice = await tokensBalancesWithPrices(fulfilledResults)
+  const withPrice = await getPricedBalances(fulfilledResults)
 
   const chainsBalances = chainsNames.reduce((acc, chain) => {
     acc[chain] = []

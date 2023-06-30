@@ -1,6 +1,6 @@
 import environment from '@environment'
 import { ADDRESS_ZERO } from '@lib/contract'
-import type { Token } from '@lib/token'
+import type { Address } from 'viem'
 
 import { isNotNullish } from './type'
 
@@ -32,99 +32,6 @@ export const chainsNames = [
   'optimism',
   'polygon',
 ] as const
-
-export const gasToken = {
-  ethereum: {
-    address: '0x0000000000000000000000000000000000000000',
-    name: 'Ether',
-    symbol: 'ETH',
-    decimals: 18,
-    chain: 'ethereum',
-    priceId: 'coingecko:ethereum',
-  },
-  arbitrum: {
-    address: '0x0000000000000000000000000000000000001010',
-    name: 'Arbitrum Ether',
-    symbol: 'ETH',
-    decimals: 18,
-    chain: 'arbitrum',
-    priceId: 'coingecko:ethereum',
-  },
-  avalanche: {
-    address: '0x0100000000000000000000000000000000000001',
-    name: 'Avalanche',
-    symbol: 'AVAX',
-    decimals: 18,
-    chain: 'avalanche',
-    priceId: 'coingecko:avalanche-2',
-  },
-  bsc: {
-    address: '0x0100000000000000000000000000000000000001',
-    name: 'Binance Coin',
-    symbol: 'BNB',
-    decimals: 18,
-    chain: 'bsc',
-    priceId: 'coingecko:binancecoin',
-  },
-  celo: {
-    address: '0x471EcE3750Da237f93B8E339c536989b8978a438',
-    name: 'Celo',
-    symbol: 'CELO',
-    decimals: 18,
-    chain: 'celo',
-    priceId: 'coingecko:celo',
-  },
-  fantom: {
-    address: '0x0100000000000000000000000000000000000001',
-    decimals: 18,
-    symbol: 'FTM',
-    name: 'Fantom',
-    chain: 'fantom',
-    priceId: 'coingecko:fantom',
-  },
-  gnosis: {
-    address: '0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d',
-    name: 'xDai',
-    symbol: 'xDAI',
-    decimals: 18,
-    chain: 'gnosis',
-    priceId: 'coingecko:xdai',
-  },
-  harmony: {
-    address: ADDRESS_ZERO,
-    name: 'Harmony',
-    symbol: 'ONE',
-    decimals: 18,
-    chain: 'harmony',
-    priceId: 'coingecko:harmony',
-  },
-  moonbeam: {
-    address: '0x0000000000000000000000000000000000000802',
-    name: 'GLMR',
-    symbol: 'GLMR',
-    decimals: 18,
-    chain: 'moonbeam',
-    priceId: 'coingecko:moonbeam',
-  },
-  optimism: {
-    address: '0x0000000000000000000000000000000000001010',
-    decimals: 18,
-    symbol: 'ETH',
-    name: 'Optimism Ether',
-    chain: 'optimism',
-    priceId: 'coingecko:ethereum',
-  },
-  polygon: {
-    address: '0x0000000000000000000000000000000000001010',
-    name: 'Polygon',
-    symbol: 'MATIC',
-    decimals: 18,
-    chain: 'polygon',
-    priceId: 'coingecko:matic-network',
-  },
-} satisfies {
-  [key in Chain]: Token & { priceId: string }
-}
 
 export interface IChainInfo {
   id: Chain
@@ -294,6 +201,12 @@ export const chains = [
       'https://1rpc.io/op',
       'https://mainnet.optimism.io',
     ].filter(isNotNullish),
+    nativeCurrency: {
+      address: ADDRESS_ZERO,
+      decimals: 18,
+      name: 'Ether',
+      symbol: 'ETH',
+    },
   },
   {
     id: 'gnosis',

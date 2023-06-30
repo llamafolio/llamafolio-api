@@ -4,7 +4,6 @@ import { type Chain, toDefiLlamaChain } from '@lib/chains'
 import { mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import { formatUnits } from 'viem'
 
 // Defillama prices API requires a prefix to know where the token comes from.
 // It can be a chain or a market provider like coingecko
@@ -14,7 +13,7 @@ export function getTokenKey(token: { chain: Chain; address: string }): string {
     throw new Error('Invalid token')
   }
 
-  return `${token.chain === 'avalanche' ? 'avax' : token.chain}:${token.address.toLowerCase()}`
+  return `${toDefiLlamaChain[token.chain]}:${token.address.toLowerCase()}`
 }
 
 interface CoinResponse {
@@ -54,47 +53,6 @@ export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
   const keys = new Set(tokens.map(getTokenKey).filter(isNotNullish))
 
   return fetchTokenPrices(Array.from(keys))
-}
-
-export async function tokensBalancesWithPrices(tokens: Balance[]) {
-  // max 150 tokens per call to Defillama price API
-  const chunks = sliceIntoChunks(
-    tokens.map((token) => token.priceId),
-    125,
-  )
-
-  const priceResults = await Promise.all(chunks.map(fetchTokenPrices))
-  const prices = priceResults.flatMap((result) => Object.entries(result.coins))
-
-  const balancesWithPrices: Balance[] = []
-
-  for (let index = 0; index < tokens.length; index++) {
-    const token = tokens[index]
-    const priceObject = prices.find(
-      ([priceId, coin]) =>
-        priceId.toLowerCase() === token.priceId.toLowerCase() ||
-        coin.symbol.toLowerCase() === token.symbol?.toLowerCase(),
-    )
-    if (!priceObject) {
-      console.warn(`Token not found for price ${getTokenKey(token)}\n`, token)
-      continue
-    }
-
-    const [, { price }] = priceObject
-    const amount = Number.parseFloat(formatUnits(token.amount, token.decimals as number)).toFixed(6)
-    balancesWithPrices.push({
-      chain: token.chain,
-      address: token.address,
-      name: token.name,
-      symbol: token.symbol,
-      decimals: token.decimals,
-      price: Number.parseFloat(price.toFixed(4)),
-      amount,
-      balanceUSD: (amount * price).toFixed(6),
-    })
-  }
-
-  return balancesWithPrices
 }
 
 export async function getTokenPrice(token: Token) {
@@ -156,7 +114,9 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
 
     const price = prices[key]
     if (price === undefined) {
-      console.log(`Failed to get price on Defillama API for ${key}`)
+      console.log(
+        `Failed to get price on Defillama API for ${key} - token name: ${balance.name} - token symbol: ${balance.symbol} - token chain: ${balance.chain}`,
+      )
       return balance
     }
 
