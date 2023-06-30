@@ -51,6 +51,7 @@ import crvusd from '@adapters/crvusd'
 import curveDex from '@adapters/curve-dex'
 import definix from '@adapters/definix'
 import dydx from '@adapters/dydx'
+import elephantMoney from '@adapters/elephant-money'
 import ellipsisFinance from '@adapters/ellipsis-finance'
 import equalizerExchange from '@adapters/equalizer-exchange'
 import etherFi from '@adapters/ether.fi'
@@ -130,6 +131,7 @@ import perennial from '@adapters/perennial'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
 import platypusFinance from '@adapters/platypus-finance'
+import pods from '@adapters/pods'
 import polkastarter from '@adapters/polkastarter'
 import popsicleFinance from '@adapters/popsicle-finance'
 import pstakeFinance from '@adapters/pstake-finance'
@@ -156,6 +158,7 @@ import solidlizard from '@adapters/solidlizard'
 import solidlyV2 from '@adapters/solidly-v2'
 import sommelier from '@adapters/sommelier'
 import sonneFinance from '@adapters/sonne-finance'
+import spark from '@adapters/spark'
 import spartacus from '@adapters/spartacus'
 import spiritswap from '@adapters/spiritswap'
 import spookyswap from '@adapters/spookyswap'
@@ -262,6 +265,7 @@ export const adapters: Adapter[] = [
   curveDex,
   definix,
   dydx,
+  elephantMoney,
   ellipsisFinance,
   equalizerExchange,
   etherFi,
@@ -341,6 +345,7 @@ export const adapters: Adapter[] = [
   piedao,
   pikaProtocol,
   platypusFinance,
+  pods,
   polkastarter,
   popsicleFinance,
   pstakeFinance,
@@ -367,6 +372,7 @@ export const adapters: Adapter[] = [
   solidlyV2,
   sommelier,
   sonneFinance,
+  spark,
   spartacus,
   spiritswap,
   spookyswap,
