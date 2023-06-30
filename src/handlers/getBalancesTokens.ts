@@ -12,14 +12,6 @@ import { chains as tokensPerChain } from '@llamafolio/tokens'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 import type { Address } from 'viem'
 
-Object.defineProperties(BigInt.prototype, {
-  toJSON: {
-    value: function (this: bigint) {
-      return this.toString()
-    },
-  },
-})
-
 function formatBalance(balance: any): FormattedBalance {
   return {
     address: balance.address,
@@ -27,7 +19,7 @@ function formatBalance(balance: any): FormattedBalance {
     symbol: balance.symbol,
     decimals: balance.decimals,
     price: balance.price,
-    amount: balance.amount,
+    amount: balance.amount.toString(),
     balanceUSD: balance.balanceUSD,
   }
 }
