@@ -11,6 +11,9 @@ main()
 
 async function main() {
   const balances = await balancesHandler({ address: '0xbDfA4f4492dD7b7Cf211209C4791AF8d52BF5c50' })
-  console.log(JSON.stringify(balances, undefined, 2))
-  console.log(balances.chains.map((b) => b.balances.length))
+  // balances.chains
+  console.log(balances)
+  // console.log(JSON.stringify(balances, undefined, 2))
+  // console.log(balances.chains.map((b) => b.balances.length))
+  // console.log(sum(balances.chains.map((b) => b.balances.length)))
 }

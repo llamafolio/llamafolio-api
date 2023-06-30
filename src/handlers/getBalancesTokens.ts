@@ -8,7 +8,6 @@ import { chainById, chainsNames } from '@lib/chains'
 import { userBalancesWithRetry } from '@lib/erc20'
 import { tokensBalancesWithPrices } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
-import { isNotNullish } from '@lib/type'
 import { chains as tokensPerChain } from '@llamafolio/tokens'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 import type { Address } from 'viem'
@@ -63,25 +62,29 @@ export async function balancesHandler({ address }: { address: Address }) {
     promiseResult.filter((result) => isFulfilled(result)) as PromiseFulfilledResult<
       Awaited<ReturnType<typeof userBalancesWithRetry>>
     >[]
-  ).map((result) => result.value)
+  ).flatMap((item) => item.value.result)
 
-  const withPrice = await Promise.all(
-    fulfilledResults.map(async ({ chain, result }) => ({
-      chain,
-      result: await tokensBalancesWithPrices(result),
-    })),
-  )
+  const withPrice = await tokensBalancesWithPrices(fulfilledResults)
 
-  const now = new Date()
+  const chainsBalances = chainsNames.reduce((acc, chain) => {
+    acc[chain] = []
+    return acc
+  }, {} as Record<Chain, FormattedBalance[]>)
+  for (let index = 0; index < withPrice.length; index++) {
+    const balance = withPrice[index]
+    chainsBalances[balance.chain].push(formatBalance(balance))
+  }
 
   const balancesResponse = {
-    updatedAt: now.toISOString(),
-    chains: withPrice.map(({ chain, result }) => ({
-      id: chain as Chain,
-      chainId: chainById[chain].chainId,
-      balances: result.filter(isNotNullish).sort(sortBalances).map(formatBalance),
-    })),
-  }
+    updatedAt: new Date().toISOString(),
+    chains: Object.entries(chainsBalances)
+      .filter(([, balances]) => balances.length > 0)
+      .map(([chain, balances]) => ({
+        id: chain as Chain,
+        chainId: chainById[chain].chainId,
+        balances: balances.sort(sortBalances),
+      })),
+  } as BalancesErc20Response
 
   return balancesResponse
 }

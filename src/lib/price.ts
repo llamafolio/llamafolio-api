@@ -8,14 +8,13 @@ import { formatUnits } from 'viem'
 
 // Defillama prices API requires a prefix to know where the token comes from.
 // It can be a chain or a market provider like coingecko
-export function getTokenKey(token: { chain: Chain; address: string; coingeckoId?: string }) {
-  if (token.coingeckoId) {
-    return `coingecko:${token.coingeckoId}`
+export function getTokenKey(token: { chain: Chain; address: string }): string {
+  if (!token.chain || !token.address) {
+    console.error('[getTokenKey]: Invalid token', token)
+    throw new Error('Invalid token')
   }
 
-  if (token.chain && token.address) {
-    return `${token.chain}:${token.address.toLowerCase()}`
-  }
+  return `${token.chain === 'avalanche' ? 'avax' : token.chain}:${token.address.toLowerCase()}`
 }
 
 interface CoinResponse {
@@ -34,7 +33,6 @@ interface PricesResponse {
 export async function fetchTokenPrices(keys: string[]): Promise<PricesResponse> {
   try {
     const coinsParam = keys.join(',')
-
     const pricesRes = await fetch(`https://coins.llama.fi/prices/current/${coinsParam}`, {
       method: 'GET',
     })
@@ -58,42 +56,45 @@ export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
   return fetchTokenPrices(Array.from(keys))
 }
 
-export async function tokensBalancesWithPrices(tokens: Token[]) {
-  const priceIds = [] as [index: number, token: Token][]
-  const noPriceIds = [] as Token[]
-  const seen = new Set<string>()
-  tokens.forEach((token, index) => {
-    if (seen.has(token.address.toLowerCase())) return
-    seen.add(token.address.toLowerCase())
-    if (token.priceId) {
-      priceIds.push([index, token])
-    } else {
-      noPriceIds.push({
-        ...token,
-        amount: formatUnits(token.amount, token.decimals),
-      })
+export async function tokensBalancesWithPrices(tokens: Balance[]) {
+  // max 150 tokens per call to Defillama price API
+  const chunks = sliceIntoChunks(
+    tokens.map((token) => token.priceId),
+    125,
+  )
+
+  const priceResults = await Promise.all(chunks.map(fetchTokenPrices))
+  const prices = priceResults.flatMap((result) => Object.entries(result.coins))
+
+  const balancesWithPrices: Balance[] = []
+
+  for (let index = 0; index < tokens.length; index++) {
+    const token = tokens[index]
+    const priceObject = prices.find(
+      ([priceId, coin]) =>
+        priceId.toLowerCase() === token.priceId.toLowerCase() ||
+        coin.symbol.toLowerCase() === token.symbol?.toLowerCase(),
+    )
+    if (!priceObject) {
+      console.warn(`Token not found for price ${getTokenKey(token)}\n`, token)
+      continue
     }
-  })
 
-  const prices = await fetchTokenPrices(Array.from(priceIds.map(([, token]) => token.priceId)))
+    const [, { price }] = priceObject
+    const amount = Number.parseFloat(formatUnits(token.amount, token.decimals as number)).toFixed(6)
+    balancesWithPrices.push({
+      chain: token.chain,
+      address: token.address,
+      name: token.name,
+      symbol: token.symbol,
+      decimals: token.decimals,
+      price: Number.parseFloat(price.toFixed(4)),
+      amount,
+      balanceUSD: (amount * price).toFixed(6),
+    })
+  }
 
-  // return array of tokens with price
-  const result = [] as Token[]
-
-  priceIds.forEach(([index, token]) => {
-    const price = prices.coins[getTokenKey(token)]?.price
-    if (price) {
-      result[index] = {
-        ...token,
-        price,
-        balanceUSD: mulPrice(token.amount, token.decimals, price),
-        amount: formatUnits(token.amount, token.decimals),
-      }
-    }
-  })
-  result.push(...noPriceIds)
-
-  return result
+  return balancesWithPrices
 }
 
 export async function getTokenPrice(token: Token) {

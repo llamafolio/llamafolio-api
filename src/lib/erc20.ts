@@ -288,7 +288,7 @@ export async function balanceOf({
     })
     if (!result || result === 0n) return undefined
     // @ts-ignore TODO: fix type
-    return { ...token, amount: result }
+    return { ...token, amount: result, priceId: getTokenKey(token), chain }
   } catch {
     return undefined
   }
@@ -328,21 +328,17 @@ export async function balancesOf({
       if (!balance || balance == 0n) continue
       const token = tokens[index]
       if (!token) continue
-      const tokenBalance = {
+      balances.push({
         ...token,
+        chain,
         amount: balance,
-      }
-      //@ts-ignore TODO: fix this
-      balances.push(tokenBalance as Balance)
+        priceId: getTokenKey(token),
+      } as unknown as Balance)
     }
     if (!nativeResult || typeof nativeResult !== 'bigint') return { success: true, result: balances }
-    const nativeToken = { ...gasToken[chain], amount: nativeResult }
-    // @ts-ignore TODO: fix this
-
     return {
       success: true,
-      // @ts-ignore TODO: fix this
-      result: [nativeToken, ...balances],
+      result: [{ ...gasToken[chain], amount: nativeResult }, ...balances],
     }
   } catch (error) {
     return {
@@ -369,15 +365,12 @@ export async function userBalances({
   rejected: Array<Token>
 }> {
   const chunks = sliceIntoChunks(
-    tokens.map((token) => ({
-      ...token,
-      priceId: getTokenKey(token),
-    })),
+    tokens.map((item) => ({ ...item, chain })),
     chunkSize,
   ) as Array<Array<Token>>
 
   const balancesResults = await Promise.allSettled(
-    chunks.map(async (chunk, _index) => {
+    chunks.map(async (chunk) => {
       const { success, result } = await balancesOf({ client, chain, address: walletAddress, tokens: chunk })
       sleep(1)
       return { success, result }
@@ -434,29 +427,28 @@ export async function userBalancesWithRetry({
     chain,
     address,
     tokens,
-    chunkSize: 500,
+    chunkSize: 750,
   })
 
-  const retry = await Promise.all([
-    ...rejected.map(async (token) => await balanceOf({ client, chain, address, token })),
-  ])
-  const successfulRetryResult = retry.filter((token) => !!token && !['0', 0n].includes(token.amount)) as Array<Balance>
+  const retry = await Promise.all(rejected.map(async (token) => await balanceOf({ client, chain, address, token })))
+
   if (result.length === 0) {
     return {
       chain,
       result: [
         {
           ...gasToken[chain],
-          priceId: getTokenKey(gasToken[chain]),
           amount: await client.getBalance({ address }),
         },
-        ...successfulRetryResult,
-      ],
+        ...retry,
+      ].filter((token) => !!token && [0n, '0'].indexOf(token.amount) === -1) as Array<Balance>,
     }
   }
   return {
     chain,
-    result: [...result, ...successfulRetryResult],
+    result: [...result, ...retry].filter(
+      (token) => !!token && [0n, '0'].indexOf(token.amount) === -1,
+    ) as Array<Balance>,
   }
 }
 
