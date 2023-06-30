@@ -454,7 +454,9 @@ export async function userBalancesWithRetry({
 export async function getBalancesOf<T extends Contract>(ctx: BalancesContext, contracts: T[]): Promise<Balance[]> {
   const balancesOf = await multicall({
     ctx,
-    calls: contracts.map((token) => ({ target: token.address, params: [ctx.address] } as const)),
+    calls: contracts.map(
+      (contract) => ({ target: contract.token || contract.address, params: [ctx.address] } as const),
+    ),
     abi: abi.balanceOf,
   })
 
