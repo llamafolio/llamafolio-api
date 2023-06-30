@@ -208,18 +208,6 @@ export const chains = [
       symbol: 'ETH',
     },
   },
-  {
-    id: 'gnosis',
-    chainId: 100,
-    name: 'Gnosis Chain',
-    rpcUrls: ['https://rpc.gnosischain.com', 'https://xdai-archive.blockscout.com'],
-    nativeCurrency: {
-      address: ADDRESS_ZERO,
-      decimals: 18,
-      name: 'Ether',
-      symbol: 'ETH',
-    },
-  },
 ] satisfies IChainInfo[]
 
 export const chainById: { [key: string]: IChainInfo } = {}
