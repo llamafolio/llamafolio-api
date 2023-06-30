@@ -14,14 +14,15 @@ const lendingPool: Contract = {
 const vester: Contract = {
   chain: 'ethereum',
   address: '0x850f078a8469b1c7cdfd6635aaf02fd370382eb7',
-  token: '0xF1182229B71E79E504b1d2bF076C15a277311e05',
+  token: '0xf1182229b71e79e504b1d2bf076c15a277311e05',
+  underlyings: ['0xf1182229b71e79e504b1d2bf076c15a277311e05'],
 }
 
 const staker: Contract = {
   chain: 'ethereum',
   address: '0x571042b7138ee957a96a6820fce79c48fe2da816',
-  token: '0xF1182229B71E79E504b1d2bF076C15a277311e05',
-  underlyings: ['0xF1182229B71E79E504b1d2bF076C15a277311e05'],
+  token: '0xf1182229b71e79e504b1d2bf076c15a277311e05',
+  underlyings: ['0xf1182229b71e79e504b1d2bf076c15a277311e05'],
 }
 
 const crvFarmer: Contract = {
@@ -38,7 +39,7 @@ const uniFarmer: Contract = {
   chain: 'ethereum',
   address: '0x04394c8e17aced699a90ae9448a184b3fc6b6042',
   token: '0x061883CD8a060eF5B8d83cDe362C3Fdbd8162EeE',
-  underlyings: ['0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', '0xF1182229B71E79E504b1d2bF076C15a277311e05'],
+  underlyings: ['0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', '0xf1182229b71e79e504b1d2bf076c15a277311e05'],
   provider: 'swap',
 }
 
