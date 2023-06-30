@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import type { Token } from '@lib/token'
 
 const abi = {
   lockedBalance: {
@@ -19,24 +18,15 @@ const abi = {
   },
 } as const
 
-const TORN: Token = {
-  chain: 'ethereum',
-  address: '0x77777FeDdddFfC19Ff86DB637967013e6C6A116C',
-  decimals: 18,
-  symbol: 'TORN',
-}
+export async function getTornadoStakeBalances(ctx: BalancesContext, staker: Contract) {
+  const userBalance = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.lockedBalance })
+  // TODO: get staking rewards
 
-export async function getTornadoStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [userBalance, pendingReward] = await Promise.all([
-    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.lockedBalance }),
-    call({ ctx, target: staker.rewarder, params: [ctx.address], abi: abi.checkReward }),
-  ])
-
-  return {
+  const balance = {
     ...staker,
     amount: userBalance,
-    underlyings: undefined,
-    rewards: [{ ...TORN, amount: pendingReward }],
     category: 'stake',
-  }
+  } as Balance
+
+  return balance
 }

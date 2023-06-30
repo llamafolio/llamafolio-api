@@ -37,24 +37,77 @@ const abi = {
     type: 'function',
   },
   lockedBalances: {
-    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
-    name: 'lockedBalances',
-    outputs: [
-      { internalType: 'uint256', name: 'total', type: 'uint256' },
-      { internalType: 'uint256', name: 'unlockable', type: 'uint256' },
-      { internalType: 'uint256', name: 'locked', type: 'uint256' },
-      {
-        components: [
-          { internalType: 'uint112', name: 'amount', type: 'uint112' },
-          { internalType: 'uint32', name: 'unlockTime', type: 'uint32' },
-        ],
-        internalType: 'struct AuraLocker.LockedBalance[]',
-        name: 'lockData',
-        type: 'tuple[]',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
+    noBoost: {
+      inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+      name: 'lockedBalances',
+      outputs: [
+        { internalType: 'uint256', name: 'total', type: 'uint256' },
+        { internalType: 'uint256', name: 'unlockable', type: 'uint256' },
+        { internalType: 'uint256', name: 'locked', type: 'uint256' },
+        {
+          components: [
+            { internalType: 'uint112', name: 'amount', type: 'uint112' },
+            { internalType: 'uint32', name: 'unlockTime', type: 'uint32' },
+          ],
+          internalType: 'struct AuraLocker.LockedBalance[]',
+          name: 'lockData',
+          type: 'tuple[]',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
+    boost: {
+      inputs: [
+        {
+          internalType: 'address',
+          name: '_user',
+          type: 'address',
+        },
+      ],
+      name: 'lockedBalances',
+      outputs: [
+        {
+          internalType: 'uint256',
+          name: 'total',
+          type: 'uint256',
+        },
+        {
+          internalType: 'uint256',
+          name: 'unlockable',
+          type: 'uint256',
+        },
+        {
+          internalType: 'uint256',
+          name: 'locked',
+          type: 'uint256',
+        },
+        {
+          components: [
+            {
+              internalType: 'uint112',
+              name: 'amount',
+              type: 'uint112',
+            },
+            {
+              internalType: 'uint112',
+              name: 'boosted',
+              type: 'uint112',
+            },
+            {
+              internalType: 'uint32',
+              name: 'unlockTime',
+              type: 'uint32',
+            },
+          ],
+          internalType: 'struct CvxLockerV2.LockedBalance[]',
+          name: 'lockData',
+          type: 'tuple[]',
+        },
+      ],
+      stateMutability: 'view',
+      type: 'function',
+    },
   },
   tokenOfOwnerByIndex: {
     inputs: [
@@ -162,16 +215,20 @@ export async function getMultipleLockerBalances(
   locker: Contract,
   underlying: Token | Contract,
   rewards?: Token[],
+  boost?: boolean,
 ): Promise<LockBalance[]> {
   const balances: LockBalance[] = []
 
+  const lockedAbi = boost ? abi.lockedBalances.boost : abi.lockedBalances.noBoost
+
   const [lockedBalances, earnedRes] = await Promise.all([
-    call({ ctx, target: locker.address, params: [ctx.address], abi: abi.lockedBalances }),
+    call({ ctx, target: locker.address, params: [ctx.address], abi: lockedAbi }),
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.claimableRewards }),
   ])
   const [totalLocked, _unlockable, _locked, lockData] = lockedBalances
 
   const locked = sumBI((lockData || []).map((lockData) => lockData.amount))
+
   const expiredLocked = totalLocked - locked
 
   const claimableBalance: Balance = {

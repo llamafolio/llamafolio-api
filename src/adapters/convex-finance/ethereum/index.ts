@@ -94,7 +94,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     pools: (...args) => getConvexGaugesBalances(...args, metaRegistry),
     cvxRewardPool: getCVXStakeBalance,
     cvxCRVStaker: getCvxCrvStakeBalance,
-    locker: (...args) => getMultipleLockerBalances(...args, CVX, [cvxCRV, cvxFXS, FXS]),
+    locker: (...args) => getMultipleLockerBalances(...args, CVX, [cvxCRV, cvxFXS, FXS], true),
   })
 
   return {

@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getBalancesOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import type { Token } from '@lib/token'
 
 export const abi = {
   balanceOf: {
@@ -43,7 +42,7 @@ export const abi = {
  * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
  */
 export async function getPairsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
-  const { erc20: balances } = await getBalancesOf(ctx, contracts as Token[])
+  const balances = await getBalancesOf(ctx, contracts)
 
   return getUnderlyingBalances(ctx, balances)
 }

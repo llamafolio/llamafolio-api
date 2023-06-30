@@ -1,4 +1,4 @@
-import type { Balance, BalancesContext, BaseContext } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
 import { call } from '@lib/call'
 import { type Chain, gasToken } from '@lib/chains'
@@ -453,42 +453,23 @@ export async function userBalancesWithRetry({
 }
 
 /**
- * @description Returns an object with the native chain token balance and an array of ERC20 token balances
+ * @description Returns given contracts with their ERC20 token balances
  */
-export async function getBalancesOf(
-  ctx: BalancesContext,
-  tokens: Token[],
-): Promise<{
-  coin: Balance
-  erc20: Balance[]
-}> {
-  const erc20: Balance[] = []
+export async function getBalancesOf<T extends Contract>(ctx: BalancesContext, contracts: T[]): Promise<Balance[]> {
+  const balancesOf = await multicall({
+    ctx,
+    calls: contracts.map((token) => ({ target: token.address, params: [ctx.address] } as const)),
+    abi: abi.balanceOf,
+  })
 
-  try {
-    const [nativeBalance, ...multiBalances] = await call({
-      ctx,
-      target: multiCoinContracts[ctx.chain],
-      abi: abi.balancesOf,
-      params: [ctx.address, tokens.map((token) => token.address)],
-    })
-
-    // first token is native chain token (e.g. ETH, AVAX, etc.)
-    const nativeTokenBalance: Balance = {
-      amount: nativeBalance,
-      ...gasToken[ctx.chain],
-      category: 'wallet',
-    } as Balance
-
-    for (let tokenIdx = 0; tokenIdx < tokens.length; tokenIdx++) {
-      erc20.push({ ...tokens[tokenIdx], amount: multiBalances[tokenIdx] } as Balance)
-    }
-
-    return { coin: nativeTokenBalance, erc20 }
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : `Encoutered an error: ` + error
-    console.error(`[getBalancesOf][${ctx.chain}] ${errorMessage}]`)
-    throw new Error(errorMessage)
+  for (let contractIdx = 0; contractIdx < contracts.length; contractIdx++) {
+    const balanceOfRes = balancesOf[contractIdx]
+    // @ts-expect-error
+    ;(contracts[contractIdx] as Balance).amount = balanceOfRes.success ? balanceOfRes.output : 0n
   }
+
+  // @ts-expect-error
+  return contracts as Balance[]
 }
 
 export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${string}`[]): Promise<Token[]> {

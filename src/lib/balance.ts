@@ -34,9 +34,7 @@ export async function getBalances(ctx: BalancesContext, contracts: BaseContract[
 
   const tokensBalances: Token[] = (
     await Promise.all(
-      Object.keys(tokensByChain).map(
-        async (chain) => (await getBalancesOf(ctx, coins.concat(tokensByChain[chain] as Token[])))['erc20'],
-      ),
+      Object.keys(tokensByChain).map(async (chain) => await getBalancesOf(ctx, coins.concat(tokensByChain[chain]))),
     )
   ).flat() as Token[]
   console.log({ tokensBalances })

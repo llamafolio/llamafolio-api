@@ -4,7 +4,6 @@ import { getBalancesOf } from '@lib/erc20'
 import { sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { getPricedBalances } from '@lib/price'
-import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
 const abi = {
@@ -131,23 +130,21 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
     cTokenByAddress[contract.address] = contract
   }
 
-  const [{ erc20: cTokensBalances }, cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all(
-    [
-      getBalancesOf(ctx, contracts as Token[]),
+  const [cTokensBalances, cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all([
+    getBalancesOf(ctx, contracts),
 
-      multicall({
-        ctx,
-        calls: contracts.map((token) => ({ target: token.address, params: [ctx.address] } as const)),
-        abi: abi.borrowBalanceCurrent,
-      }),
+    multicall({
+      ctx,
+      calls: contracts.map((token) => ({ target: token.address, params: [ctx.address] } as const)),
+      abi: abi.borrowBalanceCurrent,
+    }),
 
-      multicall({
-        ctx,
-        calls: contracts.map((token) => ({ target: token.address })),
-        abi: abi.exchangeRateCurrent,
-      }),
-    ],
-  )
+    multicall({
+      ctx,
+      calls: contracts.map((token) => ({ target: token.address })),
+      abi: abi.exchangeRateCurrent,
+    }),
+  ])
 
   const exchangeRateCurrentBycTokenAddress: { [key: string]: bigint } = {}
   for (const res of cTokensExchangeRateCurrentRes) {

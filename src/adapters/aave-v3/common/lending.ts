@@ -138,7 +138,7 @@ export async function getLendingPoolContracts(
 }
 
 export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
-  const { erc20: balances } = await getBalancesOf(ctx, contracts as Token[])
+  const balances = await getBalancesOf(ctx, contracts as Token[])
 
   // use the same amount for underlyings
   for (const balance of balances) {

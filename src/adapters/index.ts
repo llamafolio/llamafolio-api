@@ -9,6 +9,7 @@ import alchemix from '@adapters/alchemix'
 import alpacaFinance from '@adapters/alpaca-finance'
 import ambireWallet from '@adapters/ambire-wallet'
 import angle from '@adapters/angle'
+import ankr from '@adapters/ankr'
 import annex from '@adapters/annex'
 import apeswapAmm from '@adapters/apeswap-amm'
 import apeswapLending from '@adapters/apeswap-lending'
@@ -26,6 +27,7 @@ import balancer from '@adapters/balancer'
 import bancorV3 from '@adapters/bancor-v3'
 import beefy from '@adapters/beefy'
 import bellaProtocol from '@adapters/bella-protocol'
+import beltFinance from '@adapters/belt-finance'
 import benddao from '@adapters/benddao'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
@@ -59,6 +61,7 @@ import flamincome from '@adapters/flamincome'
 import floorDao from '@adapters/floor-dao'
 import fluxFinance from '@adapters/flux-finance'
 import fortressLoans from '@adapters/fortress-loans'
+import fractionalArt from '@adapters/fractional-art'
 import fraxFinance from '@adapters/frax-finance'
 import fraxlend from '@adapters/fraxlend'
 import gainsNetwork from '@adapters/gains-network'
@@ -217,6 +220,7 @@ export const adapters: Adapter[] = [
   alpacaFinance,
   ambireWallet,
   angle,
+  ankr,
   annex,
   apeswapAmm,
   apeswapLending,
@@ -234,6 +238,7 @@ export const adapters: Adapter[] = [
   bancorV3,
   beefy,
   bellaProtocol,
+  beltFinance,
   benddao,
   benqiLending,
   benqiStakedAvax,
@@ -267,6 +272,7 @@ export const adapters: Adapter[] = [
   floorDao,
   fluxFinance,
   fortressLoans,
+  fractionalArt,
   fraxFinance,
   fraxlend,
   gainsNetwork,
