@@ -48,7 +48,6 @@ export function evmClient(
               retryDelay: 1_00,
             }),
           ),
-          { rank: true },
         )
   return createPublicClient({
     name: 'llamafolio',

@@ -33,7 +33,7 @@ export async function getStaderFarmBalances(ctx: BalancesContext, contract: Cont
   return {
     ...contract,
     address: contract.token!,
-    amount: userBalance[0].amount,
+    amount: userBalance[0]?.amount || 0n,
     underlyings: undefined,
     rewards: undefined,
     category: 'farm',

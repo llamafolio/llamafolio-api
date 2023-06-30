@@ -6,8 +6,12 @@ import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
 // Defillama prices API requires a prefix to know where the token comes from
-export function getTokenKey(token: { chain: Chain; address: string }) {
-  return `${toDefiLlamaChain[token.chain] || token.chain}:${token.address.toLowerCase()}`
+export function getTokenKey(contract: { chain: Chain; address: string; token?: string }) {
+  if (!contract.token && !contract.address) {
+    console.error(`getTokenKey missing address`, contract)
+    return
+  }
+  return `${toDefiLlamaChain[contract.chain] || contract.chain}:${(contract.token || contract.address).toLowerCase()}`
 }
 
 interface CoinResponse {
