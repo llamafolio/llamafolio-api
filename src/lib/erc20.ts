@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { call } from '@lib/call'
 import { type Chain, gasToken } from '@lib/chains'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
@@ -431,7 +430,7 @@ export async function userBalancesWithRetry({
   })
 
   const retry = await Promise.all(rejected.map(async (token) => await balanceOf({ client, chain, address, token })))
-
+  const filteredRetry = retry.filter((token) => !!token && ![0n, '0'].includes(token.amount)) as Array<Balance>
   if (result.length === 0) {
     return {
       chain,
@@ -440,15 +439,13 @@ export async function userBalancesWithRetry({
           ...gasToken[chain],
           amount: await client.getBalance({ address }),
         },
-        ...retry,
-      ].filter((token) => !!token && [0n, '0'].indexOf(token.amount) === -1) as Array<Balance>,
+        ...filteredRetry,
+      ]
     }
   }
   return {
     chain,
-    result: [...result, ...retry].filter(
-      (token) => !!token && [0n, '0'].indexOf(token.amount) === -1,
-    ) as Array<Balance>,
+    result: [...result, ...filteredRetry],
   }
 }
 
