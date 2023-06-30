@@ -4,10 +4,14 @@ import { resolveBalances } from '@lib/balance'
 import { getCNCLockerBalances, getConicBalances, getConicFarmBalances } from './balance'
 import { getlpTokensContracts } from './contract'
 
-const stakers: string[] = [
+const stakers: `0x${string}`[] = [
   '0x07b577f10d4e00f3018542d08a87f255a49175a5', // USDC
   '0xabb735648a076d570aff2a61d8d141099823eae9', // DAI
   '0x40293380f5292bb13905608b35a936c332f07f94', // FRAX
+  '0x369cbc5c6f139b1132d3b91b87241b37fc5b971f', // crvUSD
+  '0x5f2e1ac047e6a8526f8640a7ed8ab53a0b3f4acf', // CNC
+  '0x3f41480dd3b32f1cc579125f9570dccd07e07667', // CNC
+  '0xf432110e5206356cd6448da16b05394a89b44cef', // USDT
 ]
 
 const CNCLockerV1: Contract = {
