@@ -29,6 +29,7 @@ const abi = {
 export type getBalancerPoolsBalancesParams = Balance & {
   totalSupply: bigint
   actualSupply?: bigint
+  lpToken?: `0x${string}`
 }
 
 export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Contract[], vault: Contract) {
@@ -86,6 +87,11 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
 
     for (let underlyingIdx = 0; underlyingIdx < balance.underlyings!.length; underlyingIdx++) {
       const underlying = balance.underlyings![underlyingIdx]
+
+      if (underlying.address.toLowerCase() === balance.lpToken?.toLowerCase()) {
+        continue
+      }
+
       const [_tokens, balances] = poolTokenBalanceRes.output
       const underlyingsBalanceOf = balances[underlyingIdx]
 
