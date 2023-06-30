@@ -162,7 +162,7 @@ export const getAuraMintAmount = async (
     // e.g. (new) reduction = (500 - 250) * 2.5 + 700 = 1325;
     // e.g. (new) reduction = (500 - 400) * 2.5 + 700 = 950;
 
-    const reduction = absBigInt(totalCliffs - (cliff * 5n * 2n + 700n))
+    const reduction = ((totalCliffs - cliff) * 5n) / 2n + 700n
     // e.g. (new) amount = 1e19 * 1700 / 500 =  34e18;
     // e.g. (new) amount = 1e19 * 1325 / 500 =  26.5e18;
     // e.g. (new) amount = 1e19 * 950 / 500  =  19e17;
@@ -189,8 +189,4 @@ export const getAuraMintAmount = async (
   }
 
   return balancesWithExtraRewards
-}
-
-function absBigInt(num: bigint): bigint {
-  return num < 0 ? -num : num
 }
