@@ -51,6 +51,7 @@ import crvusd from '@adapters/crvusd'
 import curveDex from '@adapters/curve-dex'
 import definix from '@adapters/definix'
 import dydx from '@adapters/dydx'
+import elephantMoney from '@adapters/elephant-money'
 import ellipsisFinance from '@adapters/ellipsis-finance'
 import equalizerExchange from '@adapters/equalizer-exchange'
 import etherFi from '@adapters/ether.fi'
@@ -264,6 +265,7 @@ export const adapters: Adapter[] = [
   curveDex,
   definix,
   dydx,
+  elephantMoney,
   ellipsisFinance,
   equalizerExchange,
   etherFi,
