@@ -1,16 +1,15 @@
 // Get balances of all ERC20 tokens owned by an address.
 
 import { badRequest, serverError, success } from '@handlers/response'
-import { sortBalances } from '@lib/balance'
-import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
 import { chainById, chainsNames } from '@lib/chains'
-import { userBalancesWithRetry } from '@lib/erc20'
+import { userBalances } from '@lib/erc20'
 import { getPricedBalances } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
-import { chains as tokensPerChain } from '@llamafolio/tokens'
+import { chains as tokensByChain } from '@llamafolio/tokens'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 import type { Address } from 'viem'
+import { isAddress } from 'viem'
 
 function formatBalance(balance: any): FormattedBalance {
   return {
@@ -26,12 +25,12 @@ function formatBalance(balance: any): FormattedBalance {
 
 export interface FormattedBalance {
   address: string
-  name?: string
-  symbol?: string
-  decimals?: number
-  price?: number
-  amount?: string
-  balanceUSD?: number
+  name: string
+  symbol: string
+  decimals: number
+  price: number
+  amount: string
+  balanceUSD: number
 }
 
 export interface BalancesErc20ChainResponse {
@@ -46,57 +45,53 @@ export interface BalancesErc20Response {
 }
 
 // extracted so it can be used in tests
-export async function balancesHandler({ address }: { address: Address }) {
+export async function balancesHandler({ address }: { address: Address }): Promise<BalancesErc20Response> {
   const promiseResult = await Promise.allSettled(
     chainsNames.map((chain) =>
-      userBalancesWithRetry({
-        address,
+      userBalances({
         chain,
-        //@ts-ignore
-        tokens: tokensPerChain[chain],
+        walletAddress: address,
+        tokens: tokensByChain[chain],
       }),
     ),
   )
 
   const fulfilledResults = (
     promiseResult.filter((result) => isFulfilled(result)) as PromiseFulfilledResult<
-      Awaited<ReturnType<typeof userBalancesWithRetry>>
+      Awaited<ReturnType<typeof userBalances>>
     >[]
-  ).flatMap((item) => item.value.result)
+  ).flatMap((item) => item.value)
 
+  //@ts-expect-error
   const withPrice = await getPricedBalances(fulfilledResults)
 
-  const chainsBalances = chainsNames.reduce((acc, chain) => {
-    acc[chain] = []
-    return acc
-  }, {} as Record<Chain, FormattedBalance[]>)
-  for (let index = 0; index < withPrice.length; index++) {
-    const balance = withPrice[index]
-    chainsBalances[balance.chain].push(formatBalance(balance))
+  const chainsBalances = chainsNames.reduce((accumulator, chain) => {
+    accumulator[chain] = {
+      id: chain as Chain,
+      chainId: chainById[chain].chainId,
+      balances: [],
+    }
+    return accumulator
+  }, {} as Record<Chain, BalancesErc20ChainResponse>)
+
+  for (const [, balance] of withPrice.entries()) {
+    chainsBalances[balance.chain].balances.push(formatBalance(balance))
   }
 
-  const balancesResponse = {
+  return {
     updatedAt: new Date().toISOString(),
-    chains: Object.entries(chainsBalances)
-      .filter(([, balances]) => balances.length > 0)
-      .map(([chain, balances]) => ({
-        id: chain as Chain,
-        chainId: chainById[chain].chainId,
-        balances: balances.sort(sortBalances),
-      })),
-  } as BalancesErc20Response
-
-  return balancesResponse
+    chains: Object.values(chainsBalances).filter((chain) => chain.balances.length > 0),
+  }
 }
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
-  const address = event.pathParameters?.address as `0x${string}` | undefined
+  const address = event.pathParameters?.address
   if (!address) {
     return badRequest('Missing address parameter')
   }
-  if (!isHex(address)) {
+  if (!isAddress(address)) {
     return badRequest('Invalid address parameter, expected hex')
   }
 

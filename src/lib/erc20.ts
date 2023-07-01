@@ -5,8 +5,8 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { sleep } from '@lib/promise'
 import { providers } from '@lib/providers'
-import type { Token } from '@lib/token'
-import { isNotNullish } from '@lib/type'
+import { isNotFalsy, isNotNullish } from '@lib/type'
+import type { Token } from '@llamafolio/tokens'
 import { getToken } from '@llamafolio/tokens'
 import type { Address, PublicClient } from 'viem'
 import { getAddress } from 'viem'
@@ -263,20 +263,27 @@ const multiCoinContracts = {
   // aurora: '0xc9bA77C9b27481B6789840A7C3128D4f691f8296',
 } satisfies { [key in Chain]: `0x${string}` }
 
-/**
- * Get ERC20 token balance of a a given wallet address
- * returns undefined if it fails
- */
+export interface TokenBalance {
+  chain: Chain
+  address: Address
+  name: string
+  symbol: string
+  decimals: number
+  amount: bigint
+}
+
+/* The basic ERC20 `balanceOf` function. Returns `undefined` if the balance is 0. */
 export async function balanceOf({
   client,
-  address: walletAddress,
+  chain,
+  walletAddress,
   token,
 }: {
   client: PublicClient
   chain: Chain
-  address: Address
+  walletAddress: Address
   token: Token
-}): Promise<Balance | undefined> {
+}): Promise<TokenBalance> {
   try {
     const result = await readContract(client, {
       abi: ERC20_ABI,
@@ -284,28 +291,33 @@ export async function balanceOf({
       functionName: 'balanceOf',
       args: [getAddress(walletAddress)],
     })
-    if (!result || result === 0n) return undefined
-    // @ts-ignore TODO: fix type
     return { ...token, amount: result, chain }
-  } catch {
-    return undefined
+  } catch (error) {
+    const errorMessage = error instanceof Error ? error.message : JSON.stringify(error)
+    console.error(`[balanceOf()] ${errorMessage}`)
+    throw errorMessage
   }
 }
 
+/**
+ * Checks if the token is supported by the multi-coin contract. Balances of 0 are not returned.
+ * On success, returns token balances array.
+ * On failure, returns the token that failed.
+ */
 export async function balancesOf({
-  address,
-  tokens,
-  chain,
   client,
+  chain,
+  walletAddress,
+  tokens,
 }: {
-  address: Address
-  tokens: Array<Token>
-  chain: Chain
   client: PublicClient
+  chain: Chain
+  walletAddress: Address
+  tokens: Array<Token>
 }): Promise<
   | {
       success: true
-      result: Array<Balance>
+      result: Array<TokenBalance>
     }
   | {
       success: false
@@ -317,135 +329,80 @@ export async function balancesOf({
       abi: BALANCES_OF_ABI,
       address: multiCoinContracts[chain],
       functionName: 'balancesOf',
-      args: [address, tokens.map((token) => getAddress(token.address))],
+      args: [getAddress(walletAddress), tokens.map((token) => token.address)],
     })
 
-    const balances = [] as Array<Balance>
+    const balances: Array<TokenBalance> = []
 
     for (const [index, balance] of results.entries()) {
       if (!balance || balance == 0n) continue
       const token = tokens[index]
       if (!token) continue
-      balances.push({
-        ...token,
-        chain,
-        amount: balance,
-      } as unknown as Balance)
+      balances.push(Object.assign({}, token, { amount: balance, chain }))
     }
-    if (!nativeResult || typeof nativeResult !== 'bigint') return { success: true, result: balances }
+    if (typeof nativeResult !== 'bigint') return { success: true, result: balances }
     return {
       success: true,
-      result: [{ ...chainById[chain].nativeCurrency, amount: nativeResult, chain }, ...balances],
+      result: [Object.assign({}, chainById[chain].nativeCurrency, { amount: nativeResult, chain }), ...balances],
     }
   } catch (error) {
-    return {
-      success: false,
-      result: tokens,
-    }
+    return { success: false, result: tokens }
   }
 }
 
 export async function userBalances({
-  client,
   chain,
-  address: walletAddress,
+  walletAddress,
   tokens,
-  chunkSize,
+  chunkSize = 750,
 }: {
-  client: PublicClient
   chain: Chain
-  address: Address
+  walletAddress: Address
   tokens: Array<Token>
-  chunkSize: number
-}): Promise<{
-  result: Array<Balance>
-  rejected: Array<Token>
-}> {
+  chunkSize?: number
+}): Promise<Array<TokenBalance>> {
   const chunks = sliceIntoChunks(
-    tokens.map((item) => ({ ...item, chain })),
+    tokens.map((item) => Object.assign({}, item, { address: getAddress(item.address), chain })),
     chunkSize,
-  ) as Array<Array<Token>>
+  )
+  const client = providers[chain]
 
   const balancesResults = await Promise.allSettled(
     chunks.map(async (chunk) => {
-      const { success, result } = await balancesOf({ client, chain, address: walletAddress, tokens: chunk })
+      const result = await balancesOf({ client, chain, walletAddress, tokens: chunk })
       sleep(1)
-      return { success, result }
+      return result
     }),
   )
 
-  const balances = [] as Array<Balance>
-  const natives = [] as Array<Balance>
-  const rejected = [] as Array<Token>
+  const balances: Array<TokenBalance> = []
+  const natives: Array<TokenBalance> = []
+  const rejected: Array<Token> = []
   for (const [index, balancesResult] of balancesResults.entries()) {
-    if (balancesResult.status === 'rejected') {
+    if (balancesResult.status !== 'fulfilled' || balancesResult.value.success != true) {
       rejected.push(...chunks[index])
       continue
     }
 
-    if (balancesResult.status === 'fulfilled' && balancesResult.value.success === false) {
-      rejected.push(...chunks[index])
-      continue
-    }
-    if (balancesResult.status === 'fulfilled') {
-      const {
-        success,
-        result: [nativeBalance, ...tokensBalances],
-      } = balancesResult.value
-      if (!success) continue
-      // @ts-ignore TODO: fix this
-      balances.push(...tokensBalances)
-      // @ts-ignore TODO: fix this
-      if (nativeBalance) natives.push(nativeBalance)
-    }
+    const [nativeBalance, ...tokensBalances] = balancesResult.value.result
+    balances.push(...tokensBalances)
+    if (nativeBalance) natives.push(nativeBalance)
   }
 
-  return {
-    result: [...natives.slice(0, 1), ...balances],
-    rejected,
-  }
-}
+  const retry = await Promise.all(rejected.map((token) => balanceOf({ client, chain, walletAddress, token })))
+  const filteredRetry = retry.filter((token) => isNotFalsy(token.amount))
 
-export async function userBalancesWithRetry({
-  address,
-  chain,
-  tokens,
-}: {
-  address: Address
-  chain: Chain
-  tokens: Array<Token>
-}): Promise<{
-  chain: Chain
-  result: Array<Balance>
-}> {
-  const client = providers[chain]
-  const { rejected, result } = await userBalances({
-    client,
-    chain,
-    address,
-    tokens,
-    chunkSize: 750,
-  })
-
-  const retry = await Promise.all(rejected.map((token) => balanceOf({ client, chain, address, token })))
-  const filteredRetry = retry.filter((token) => !!token && ![0n, '0'].includes(token.amount)) as Array<Balance>
-  if (result.length === 0) {
-    return {
-      chain,
-      result: [
-        {
-          ...chainById[chain].nativeCurrency,
-          chain,
-          amount: await client.getBalance({ address }),
-        },
-        ...filteredRetry,
-      ],
-    }
+  if (natives.length === 0) {
+    return [
+      Object.assign({}, chainById[chain].nativeCurrency, {
+        chain,
+        amount: await client.getBalance({ address: walletAddress }),
+      }),
+      ...balances,
+      ...filteredRetry,
+    ]
   }
-  return {
-    chain,
-    result: [...result, ...filteredRetry],
-  }
+  return [natives[0], ...balances, ...filteredRetry]
 }
 
 /**
@@ -462,11 +419,10 @@ export async function getBalancesOf<T extends Contract>(ctx: BalancesContext, co
 
   for (let contractIdx = 0; contractIdx < contracts.length; contractIdx++) {
     const balanceOfRes = balancesOf[contractIdx]
-    // @ts-expect-error
+
     ;(contracts[contractIdx] as Balance).amount = balanceOfRes.success ? balanceOfRes.output : 0n
   }
 
-  // @ts-expect-error
   return contracts as Balance[]
 }
 
@@ -505,7 +461,6 @@ export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${st
     found[address] = {
       chain: ctx.chain,
       address,
-      //@ts-ignore
       symbol: symbolRes.output,
       decimals: Number(decimalsRes.output),
     }
