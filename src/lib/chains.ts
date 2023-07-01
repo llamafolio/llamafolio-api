@@ -1,23 +1,9 @@
 import environment from '@environment'
 import { ADDRESS_ZERO } from '@lib/contract'
+import { isNotFalsy, isNotNullish } from '@lib/type'
 import type { Address } from 'viem'
 
-import { isNotNullish } from './type'
-
 const { ARBITRUM_RPC, LLAMANODES_API_KEY, OPTIMISM_RPC } = environment
-
-export declare type Chain =
-  | 'arbitrum'
-  | 'avalanche'
-  | 'bsc'
-  | 'celo'
-  | 'ethereum'
-  | 'fantom'
-  | 'gnosis'
-  | 'harmony'
-  | 'moonbeam'
-  | 'optimism'
-  | 'polygon'
 
 export const chainsNames = [
   'arbitrum',
@@ -32,6 +18,8 @@ export const chainsNames = [
   'optimism',
   'polygon',
 ] as const
+
+export type Chain = (typeof chainsNames)[number]
 
 export interface IChainInfo {
   id: Chain
@@ -53,7 +41,7 @@ export const chains = [
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
-    rpcUrls: [ARBITRUM_RPC, 'https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'].filter(isNotNullish),
+    rpcUrls: [ARBITRUM_RPC, 'https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'].filter(isNotFalsy),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -200,7 +188,7 @@ export const chains = [
       'https://optimism-mainnet.public.blastapi.io',
       'https://1rpc.io/op',
       'https://mainnet.optimism.io',
-    ].filter(isNotNullish),
+    ].filter(isNotFalsy),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
