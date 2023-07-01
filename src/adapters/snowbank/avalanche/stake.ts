@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getSingleStakeBalance } from '@lib/stake'
-import type { Token } from '@lib/token'
 
 const abi = {
   wsSBtosSB: {
@@ -13,29 +12,23 @@ const abi = {
   },
 } as const
 
-const SB: Token = {
-  chain: 'avalanche',
-  address: '0x7d1232b90d3f809a54eeaeebc639c62df8a8942f',
-  decimals: 9,
-  symbol: 'SB',
-}
-
-export async function getwsSBStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
+export async function getwsSBStakeBalances(ctx: BalancesContext, staker: Contract) {
   const balance = await getSingleStakeBalance(ctx, staker)
 
   const fmtBalances = await call({
     ctx,
     target: staker.address,
-    params: [BigInt(balance.amount.toString())],
+    params: [balance.amount],
     abi: abi.wsSBtosSB,
   })
 
-  return {
+  const res = {
     ...staker,
     amount: fmtBalances,
     decimals: 9,
-    underlyings: [SB],
     rewards: undefined,
     category: 'stake',
-  }
+  } as Balance
+
+  return res
 }

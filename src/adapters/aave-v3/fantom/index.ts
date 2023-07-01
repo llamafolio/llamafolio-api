@@ -27,10 +27,14 @@ const incentiveController: Contract = {
   address: '0x929EC64c34a17401F460460D4B9390518E5B473e',
   name: 'Incentive Controller',
   displayName: 'Aave: Incentives V3',
+  pools: [],
+  rewards: [],
 }
 
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getLendingPoolContracts(ctx, lendingPool, poolDataProvider)
+
+  incentiveController.pools = pools
 
   return {
     contracts: {
@@ -44,7 +48,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
       pools: getLendingPoolBalances,
-      incentiveController: (...args) => getLendingRewardsBalances(...args, contracts.pools || []),
+      incentiveController: getLendingRewardsBalances,
     }),
     getLendingPoolHealthFactor(ctx, lendingPool),
   ])

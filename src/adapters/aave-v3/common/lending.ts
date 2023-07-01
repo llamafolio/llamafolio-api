@@ -1,7 +1,9 @@
 import type { Balance, BalancesContext, BaseBalance, BaseContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
-import { getBalancesOf, getERC20Details } from '@lib/erc20'
+import { getBalancesOf } from '@lib/erc20'
 import { MAX_UINT_256 } from '@lib/math'
+import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { formatUnits } from 'viem'
@@ -80,6 +82,35 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  getUserRewards: {
+    inputs: [
+      {
+        internalType: 'address[]',
+        name: 'assets',
+        type: 'address[]',
+      },
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'reward',
+        type: 'address',
+      },
+    ],
+    name: 'getUserRewards',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 export async function getLendingPoolContracts(
@@ -153,25 +184,44 @@ export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Co
 export async function getLendingRewardsBalances(
   ctx: BalancesContext,
   incentiveController: Contract,
-  contracts: Contract[],
 ): Promise<Balance[]> {
   const rewards: Balance[] = []
-  const assets: any = contracts.map((contract: Contract) => contract.address)
+  const assets: `0x${string}`[] = incentiveController.pools.map((pool: Contract) => pool.address)
 
-  const [rewardsLists, unclaimedAmounts] = await call({
-    ctx,
-    target: incentiveController.address,
-    params: [assets, ctx.address],
-    abi: abi.getAllUserRewards,
-  })
+  const rewardsList = incentiveController.rewards as Contract[] | undefined
+  if (!rewardsList || rewardsList.length === 0) {
+    return []
+  }
 
-  const rewardsTokens = await getERC20Details(ctx, rewardsLists)
+  const pendingRewardsRes = await Promise.all(
+    rewardsList.map(async (reward) => {
+      const calls: Call<typeof abi.getUserRewards>[] = assets.map((asset) => ({
+        target: incentiveController.address,
+        params: [[asset], ctx.address, reward.address],
+      }))
 
-  rewards.push({
-    ...rewardsTokens[0],
-    amount: unclaimedAmounts[0],
-    category: 'reward',
-  })
+      return multicall({
+        ctx,
+        calls,
+        abi: abi.getUserRewards,
+      })
+    }),
+  )
+
+  const totalRewardsList = pendingRewardsRes.map((res) => mapSuccessFilter(res, (result) => result.output))
+
+  for (let i = 0; i < rewardsList.length; i++) {
+    const reward = rewardsList[i]
+    const totalRewards = totalRewardsList[i].reduce((acc, curr) => acc + curr, 0n)
+
+    rewards.push({
+      ...reward,
+      amount: totalRewards,
+      underlyings: undefined,
+      rewards: undefined,
+      category: 'reward',
+    })
+  }
 
   return rewards
 }
