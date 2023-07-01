@@ -1,6 +1,6 @@
 import environment from '@environment'
 import { ADDRESS_ZERO } from '@lib/contract'
-import type { Address } from 'viem'
+import type { Address, HttpTransportConfig } from 'viem'
 
 import { isNotNullish } from './type'
 
@@ -45,6 +45,8 @@ export interface IChainInfo {
     name: string
     symbol: string
   }
+  // adjust transport config based on RPC endpoints
+  httpTransportConfig?: HttpTransportConfig
 }
 
 // Currently supported chains
@@ -59,6 +61,9 @@ export const chains = [
       decimals: 18,
       name: 'Ether',
       symbol: 'ETH',
+    },
+    httpTransportConfig: {
+      batch: { batchSize: 1_000, wait: 10 },
     },
   },
   {
@@ -75,6 +80,9 @@ export const chains = [
       decimals: 18,
       name: 'Avalanche',
       symbol: 'AVAX',
+    },
+    httpTransportConfig: {
+      batch: { batchSize: 1_000, wait: 10 },
     },
   },
   {
@@ -94,6 +102,9 @@ export const chains = [
       name: 'Binance Coin',
       symbol: 'BNB',
     },
+    httpTransportConfig: {
+      batch: { batchSize: 100, wait: 10 },
+    },
   },
   {
     id: 'celo',
@@ -105,6 +116,9 @@ export const chains = [
       decimals: 18,
       name: 'Celo',
       symbol: 'CELO',
+    },
+    httpTransportConfig: {
+      batch: { batchSize: 1_000, wait: 10 },
     },
   },
   {
@@ -123,6 +137,9 @@ export const chains = [
       name: 'Ether',
       symbol: 'ETH',
     },
+    httpTransportConfig: {
+      batch: { batchSize: 1_000, wait: 10 },
+    },
   },
   {
     id: 'fantom',
@@ -134,6 +151,9 @@ export const chains = [
       decimals: 18,
       name: 'Fantom',
       symbol: 'FTM',
+    },
+    httpTransportConfig: {
+      batch: { batchSize: 1_000, wait: 10 },
     },
   },
   {
@@ -147,6 +167,9 @@ export const chains = [
       name: 'xDai',
       symbol: 'xDAI',
     },
+    httpTransportConfig: {
+      batch: { batchSize: 1_000, wait: 10 },
+    },
   },
   {
     id: 'harmony',
@@ -158,6 +181,9 @@ export const chains = [
       decimals: 18,
       name: 'One',
       symbol: 'ONE',
+    },
+    httpTransportConfig: {
+      batch: { batchSize: 1_000, wait: 10 },
     },
   },
   {
@@ -176,6 +202,9 @@ export const chains = [
       name: 'Matic',
       symbol: 'MATIC',
     },
+    httpTransportConfig: {
+      batch: { batchSize: 1_000, wait: 10 },
+    },
   },
   {
     id: 'moonbeam',
@@ -187,6 +216,9 @@ export const chains = [
       decimals: 18,
       name: 'Glimmer',
       symbol: 'GLMR',
+    },
+    httpTransportConfig: {
+      batch: { batchSize: 1_000, wait: 10 },
     },
   },
   {
@@ -206,6 +238,9 @@ export const chains = [
       decimals: 18,
       name: 'Ether',
       symbol: 'ETH',
+    },
+    httpTransportConfig: {
+      batch: { batchSize: 1_000, wait: 10 },
     },
   },
 ] satisfies IChainInfo[]

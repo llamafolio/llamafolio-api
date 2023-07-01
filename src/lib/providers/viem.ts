@@ -1,4 +1,5 @@
 import type { IChainInfo } from '@lib/chains'
+import type { HttpTransportConfig } from 'viem'
 import { createPublicClient, fallback, http, webSocket } from 'viem'
 
 import { viemChainById } from './chains'
@@ -25,9 +26,11 @@ export function evmClient(
   {
     protocol,
     options,
+    httpTransportConfig,
   }: {
     protocol: Protocol
     options: Pick<Parameters<typeof createPublicClient>[0], 'batch' | 'key' | 'pollingInterval'>
+    httpTransportConfig?: HttpTransportConfig
   } = {
     protocol: 'http',
     options: {
@@ -43,8 +46,8 @@ export function evmClient(
       : fallback(
           chain.rpcUrls.map((rpcURL) =>
             http(rpcURL, {
-              batch: true,
-              timeout: 60_000,
+              ...httpTransportConfig,
+              timeout: 10_000,
               retryDelay: 1_00,
             }),
           ),
