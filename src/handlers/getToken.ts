@@ -78,7 +78,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     )
 
     const symbol = adaptersContracts.find((contract) => contract.symbol != null)?.symbol
-    let decimals = adaptersContracts.find((contract) => contract.decimals != null)?.decimals
+    const decimals = adaptersContracts.find((contract) => contract.decimals != null)?.decimals
 
     const contractsUnderlyings = adaptersContracts.map((contract) => contract.underlyings)
 
@@ -104,20 +104,27 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         : undefined,
     ])
 
-    decimals = decimals || _decimals
+    const contract: BaseContract = {
+      chain,
+      address,
+      symbol: symbol || _symbol,
+      decimals: decimals || _decimals,
+    }
 
     const underlyings = underlyingsBalances?.map((balanceOfRes, idx) => ({
       ...formatBaseContract(contractsUnderlyings[0]![idx]),
       amount: balanceOfRes.output,
     }))
-    const pricedUnderlyings = await getPricedBalances(underlyings as Balance[])
+    const pricedUnderlyings = await getPricedBalances([contract, ...(underlyings || [])] as Balance[])
     const pricedUnderlyingByAddress = keyBy(pricedUnderlyings, 'address')
-
     // return underlyings even if we fail to find their price (more info to display)
     const maybePricedUnderlyings = underlyings?.map(
       (underlying) => pricedUnderlyingByAddress[underlying.address] || underlying,
     )
 
+    const contractPrice = (pricedUnderlyingByAddress[contract.address] as PricedBalance)?.price
+
+    // value of LP token = total pool value / LP token total supply
     const totalPoolValue =
       pricedUnderlyings &&
       pricedUnderlyings.length > 1 &&
@@ -125,17 +132,15 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         ? sum(underlyings.map((pricedUnderlying) => (pricedUnderlying as PricedBalance).balanceUSD || 0))
         : undefined
 
+    const lpTokenPrice =
+      totalSupply != null && totalSupply > 0n && totalPoolValue && decimals
+        ? totalPoolValue / Number(totalSupply / 10n ** BigInt(decimals))
+        : undefined
+
     const token = {
-      chain,
-      address,
-      symbol: symbol || _symbol,
-      decimals,
+      ...contract,
       totalSupply,
-      // value of LP token = total pool value / LP token total supply
-      price:
-        totalSupply != null && totalSupply > 0n && totalPoolValue && decimals
-          ? totalPoolValue / Number(totalSupply / 10n ** BigInt(decimals))
-          : undefined,
+      price: contractPrice || lpTokenPrice,
       underlyings: maybePricedUnderlyings,
     }
 
