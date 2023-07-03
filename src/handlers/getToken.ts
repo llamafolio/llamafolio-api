@@ -128,8 +128,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     const totalPoolValue =
       pricedUnderlyings &&
       pricedUnderlyings.length > 1 &&
-      underlyings?.every((pricedUnderlying) => (pricedUnderlying as PricedBalance).balanceUSD)
-        ? sum(underlyings.map((pricedUnderlying) => (pricedUnderlying as PricedBalance).balanceUSD || 0))
+      pricedUnderlyings?.every((pricedUnderlying) => (pricedUnderlying as PricedBalance).balanceUSD)
+        ? sum(pricedUnderlyings.map((pricedUnderlying) => (pricedUnderlying as PricedBalance).balanceUSD || 0))
         : undefined
 
     const lpTokenPrice =
