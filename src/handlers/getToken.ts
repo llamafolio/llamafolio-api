@@ -1,7 +1,7 @@
 import { selectAdaptersContractsByAddress } from '@db/contracts'
 import pool from '@db/pool'
 import { badRequest, notFound, serverError, success } from '@handlers/response'
-import type { Balance, BaseContext, BaseContract, PricedBalance } from '@lib/adapter'
+import type { Balance, BaseContext, BaseContract, Contract, PricedBalance } from '@lib/adapter'
 import { isHex } from '@lib/buf'
 import { call } from '@lib/call'
 import type { Chain } from '@lib/chains'
@@ -20,32 +20,6 @@ function formatBaseContract(contract: any) {
     decimals: contract.decimals,
     symbol: contract.symbol,
   }
-}
-
-/**
- * Underlyings match if they have the same addresses (order can vary)
- * @param underlyingsList
- */
-function getIsMatchUnderlyings(underlyingsList: (BaseContract[] | undefined)[]) {
-  if (underlyingsList.length === 0) {
-    return false
-  }
-
-  const keys = new Set<string>()
-  for (const underlyings of underlyingsList) {
-    if (!underlyings) {
-      return false
-    }
-
-    const key = underlyings
-      .map((contract) => contract.address)
-      .sort()
-      .join('_')
-
-    keys.add(key)
-  }
-
-  return keys.size === underlyingsList.length
 }
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
@@ -71,49 +45,42 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const ctx: BaseContext = { chain, adapterId: '' }
 
   try {
-    // - the same token may be used in multiple protocols.
-    // - token key can also be used to retrieve token details, ignore it
-    const adaptersContracts = (await selectAdaptersContractsByAddress(client, address, chain)).filter(
-      (contract) => !contract.token || contract.token?.toLowerCase() === address,
-    )
+    const adaptersContracts = await selectAdaptersContractsByAddress(client, address, chain)
 
-    const symbol = adaptersContracts.find((contract) => contract.symbol != null)?.symbol
-    const decimals = adaptersContracts.find((contract) => contract.decimals != null)?.decimals
+    const symbol = adaptersContracts[0]?.symbol
+    const decimals = adaptersContracts[0]?.decimals
+    const category = adaptersContracts[0]?.category
+    const adapterId = adaptersContracts[0]?.adapterId
 
-    const contractsUnderlyings = adaptersContracts.map((contract) => contract.underlyings)
-
-    // @ts-expect-error
-    const isMatchUnderlyings = getIsMatchUnderlyings(contractsUnderlyings)
+    const contractsUnderlyings = adaptersContracts[0]?.underlyings
 
     const [_symbol, _decimals, totalSupply, underlyingsBalances] = await Promise.all([
       !symbol ? call({ ctx, target: address, abi: erc20Abi.symbol }).catch(() => undefined) : undefined,
       !decimals ? call({ ctx, target: address, abi: erc20Abi.decimals }).catch(() => undefined) : undefined,
       call({ ctx, target: address, abi: erc20Abi.totalSupply }).catch(() => undefined),
-      isMatchUnderlyings
+      contractsUnderlyings
         ? multicall({
             ctx,
-            calls: contractsUnderlyings[0]!.map(
-              (underlying) =>
-                ({
-                  target: (underlying as unknown as BaseContract).address,
-                  params: [address],
-                } as const),
+            calls: contractsUnderlyings.map(
+              (underlying) => ({ target: (underlying as BaseContract).address, params: [address] } as const),
             ),
             abi: erc20Abi.balanceOf,
           })
         : undefined,
     ])
 
-    const contract: BaseContract = {
+    const contract: Contract = {
       chain,
       address,
+      category: category || 'wallet',
       symbol: symbol || _symbol,
       decimals: decimals || _decimals,
+      adapterId,
     }
 
-    const underlyings = underlyingsBalances?.map((balanceOfRes, idx) => ({
-      ...formatBaseContract(contractsUnderlyings[0]![idx]),
-      amount: balanceOfRes.output,
+    const underlyings = contractsUnderlyings?.map((underlying, idx) => ({
+      ...formatBaseContract(underlying),
+      amount: underlyingsBalances?.[idx].output || undefined,
     }))
     const pricedUnderlyings = await getPricedBalances([contract, ...(underlyings || [])] as Balance[])
     const pricedUnderlyingByAddress = keyBy(pricedUnderlyings, 'address')
