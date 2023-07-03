@@ -45,7 +45,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const ctx: BaseContext = { chain, adapterId: '' }
 
   try {
-    const adaptersContracts = await selectAdaptersContractsByAddress(client, address, chain)
+    // `token` key can also be used to retrieve token details, ignore it
+    const adaptersContracts = (await selectAdaptersContractsByAddress(client, address, chain)).filter(
+      (contract) => !contract.token || contract.token?.toLowerCase() === address,
+    )
 
     const symbol = adaptersContracts[0]?.symbol
     const decimals = adaptersContracts[0]?.decimals
