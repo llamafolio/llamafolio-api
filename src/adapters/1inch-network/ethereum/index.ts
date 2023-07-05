@@ -1,11 +1,19 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import type { Token } from '@lib/token'
 
 import { getInchFarmingPools, getInchPools } from '../common/contract'
 import { getInchBalances } from '../common/farm'
 import { getInchLockerBalances } from '../common/locker'
 import { getLpInchBalances } from '../common/lp'
 import { getInchStakingBalances } from '../common/stake'
+
+const Inch: Token = {
+  chain: 'ethereum',
+  address: '0x111111111117dC0aa78b770fA6A738034120C302',
+  decimals: 18,
+  symbol: '1INCH',
+}
 
 const farmingPoolsAddresses: `0x${string}`[] = [
   '0x598032ba8e7acb625ea6854b4696e25afa2ec9f0',
@@ -30,6 +38,21 @@ const farmingPoolsAddresses: `0x${string}`[] = [
   '0x8b1af1298f5c0ca8a6b4e66626a4bdae0f7521e5',
 ]
 
+const rewarders: Contract[] = [
+  { chain: 'ethereum', address: '0x1583c1dbe20625d0b752d472e845fba96d096829', token: Inch.address },
+  { chain: 'ethereum', address: '0x5237b096435c517ad4f809e284019882b6979b25', token: Inch.address },
+  { chain: 'ethereum', address: '0x7e78a8337194c06314300d030d41eb31ed299c39', token: Inch.address },
+  { chain: 'ethereum', address: '0xf46bc16a148f84be8636a8599843a3beae6a2651', token: Inch.address },
+  { chain: 'ethereum', address: '0xf72909833633700cf8b7b1fb1b8264968c4790b0', token: Inch.address },
+  { chain: 'ethereum', address: '0x145fbce7e461b29cc10e967680164947e77f2643', token: Inch.address },
+  { chain: 'ethereum', address: '0xb0061982ce4e2225f2d59c2b821e3bf76026bea9', token: Inch.address },
+  { chain: 'ethereum', address: '0x9b458c86bcc2cab2a96e22444631f0f88c388732', token: Inch.address },
+  { chain: 'ethereum', address: '0xee281a9dc81f60ae53165c5a47e384cef7ae647e', token: Inch.address },
+  { chain: 'ethereum', address: '0xe4ab4860548e29b9bdcd444efbab2e506acd3121', token: Inch.address },
+  { chain: 'ethereum', address: '0xe7efe00c7217223df790caa50528eb02e9c9d723', token: Inch.address },
+  { chain: 'ethereum', address: '0xc5396220aa03df822003ce4bf871f9c9a2baefb8', token: Inch.address },
+]
+
 const poolDeployer: Contract = {
   chain: 'ethereum',
   address: '0xbaf9a5d4b0052359326a6cdab54babaa3a3a9643',
@@ -40,7 +63,7 @@ const staker: Contract = {
   address: '0xa0446d8804611944f1b527ecd37d7dcbe442caba',
   decimals: 18,
   symbol: 'st1INCH',
-  underlyings: ['0x111111111117dC0aa78b770fA6A738034120C302'],
+  underlyings: [Inch.address],
 }
 
 const locker: Contract = {
@@ -48,7 +71,7 @@ const locker: Contract = {
   address: '0x9a0c8ff858d273f57072d714bca7411d717501d7',
   decimals: 18,
   symbol: 'st1INCH',
-  underlyings: ['0x111111111117dC0aa78b770fA6A738034120C302'],
+  underlyings: [Inch.address],
 }
 
 export const getContracts = async (ctx: BaseContext) => {
@@ -67,7 +90,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     pools: getLpInchBalances,
     farmingPools: getInchBalances,
     staker: getInchStakingBalances,
-    locker: getInchLockerBalances,
+    locker: (...args) => getInchLockerBalances(...args, rewarders),
   })
 
   return {
