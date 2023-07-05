@@ -14,6 +14,25 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  extraEarned: {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'earned',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
   getPoolTokens: {
     inputs: [{ internalType: 'bytes32', name: 'poolId', type: 'bytes32' }],
     name: 'getPoolTokens',
@@ -100,7 +119,8 @@ export async function getAuraPoolsBalances(
   pools: Contract[],
   vault: Contract,
 ): Promise<Balance[]> {
-  const balanceWithRewards: Balance[] = []
+  const balanceWithStandardRewards: Balance[] = []
+  const balanceWithExtraRewards: Balance[] = []
   const balances: Balance[] = await getBalancerPoolsBalances(ctx, pools, vault)
 
   const calls: Call<typeof abi.earned>[] = []
@@ -112,26 +132,30 @@ export async function getAuraPoolsBalances(
 
   for (let idx = 0; idx < balances.length; idx++) {
     const balance = balances[idx]
+    const rewards = balance.rewards
     const earnedRes = earnedsRes[idx]
 
-    if (!earnedRes.success) {
+    if (!rewards || !earnedRes.success) {
       continue
     }
 
-    balanceWithRewards.push({
+    const poolBalance: Balance = {
       ...balance,
-      rewards: [{ ...BAL, amount: earnedRes.output }],
+      rewards: [{ ...rewards[0], amount: earnedRes.output }, ...rewards.slice(1)],
       category: 'farm',
-    })
+    }
+
+    if (poolBalance.rewards && poolBalance.rewards.length > 1) {
+      balanceWithExtraRewards.push(poolBalance)
+    } else {
+      balanceWithStandardRewards.push(poolBalance)
+    }
   }
 
-  return getAuraMintAmount(ctx, balanceWithRewards, auraRewards)
-}
+  const balanceWithExtraRewardsBalances = await getExtraRewardsBalances(ctx, balanceWithExtraRewards)
 
-/**
- *  Explanation: to getExtraAuraRewards
- *  https://docs.aura.finance/developers/how-to-___/see-reward-tokens-yield-on-aura-pools
- */
+  return getAuraMintAmount(ctx, [...balanceWithStandardRewards, ...balanceWithExtraRewardsBalances], auraRewards)
+}
 
 export const getAuraMintAmount = async (
   ctx: BalancesContext,
@@ -189,4 +213,19 @@ export const getAuraMintAmount = async (
   }
 
   return balancesWithExtraRewards
+}
+
+const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: Balance[]): Promise<Balance[]> => {
+  const extraRewardsBalancesRes = await multicall({
+    ctx,
+    calls: poolBalance.map((pool: Contract) => ({ target: pool.rewarder, params: [ctx.address] } as const)),
+    abi: abi.extraEarned,
+  })
+
+  poolBalance.forEach((pool, idx) => {
+    const extraRewardsBalances = extraRewardsBalancesRes[idx].success ? extraRewardsBalancesRes[idx].output : 0n
+    pool.rewards = [pool.rewards![0], { ...pool.rewards![1], amount: extraRewardsBalances! }]
+  })
+
+  return poolBalance
 }
