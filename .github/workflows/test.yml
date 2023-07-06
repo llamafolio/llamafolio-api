@@ -136,7 +136,9 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
+          API_URL: ${{ secrets.API_URL }}
         run: |
+          export API_URL=${{ env.API_URL }}
           /bin/bash ./test/routes.sh
 
   test-on-push-and-cron:
@@ -183,6 +185,7 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-          AWS_DEFAULT_OUTPUT: json
+          API_URL: ${{ secrets.API_URL }}
         run: |
+          export API_URL=${{ env.API_URL }}
           /bin/bash ./test/routes.sh
