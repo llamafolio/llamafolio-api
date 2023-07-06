@@ -153,6 +153,7 @@ import sharedstake from '@adapters/sharedstake'
 import sherlock from '@adapters/sherlock'
 import shibaswap from '@adapters/shibaswap'
 import sideshift from '@adapters/sideshift'
+import siloFinance from '@adapters/silo-finance'
 import smardex from '@adapters/smardex'
 import smoothy from '@adapters/smoothy'
 import snowbank from '@adapters/snowbank'
@@ -369,6 +370,7 @@ export const adapters: Adapter[] = [
   sherlock,
   shibaswap,
   sideshift,
+  siloFinance,
   smardex,
   smoothy,
   snowbank,
