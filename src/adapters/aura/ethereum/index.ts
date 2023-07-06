@@ -3,8 +3,8 @@ import { resolveBalances } from '@lib/balance'
 import { getMultipleLockerBalances } from '@lib/lock'
 import type { Token } from '@lib/token'
 
-import { getAuraBalStakerBalances, getAuraPoolsBalances } from './balance'
-import { getAuraPools } from './pool'
+import { getAuraBalStakerBalances, getAuraPoolsBalances } from '../common/balance'
+import { getAuraPools } from '../common/pool'
 
 const auraBal: Token = {
   chain: 'ethereum',
