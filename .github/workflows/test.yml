@@ -126,9 +126,6 @@ jobs:
           pnpm install --frozen-lockfile
 
       - name: 'Test'
-        run: |
-          #
-          /bin/bash ./scripts/test.sh
         env:
           DEBUG: '*'
           NODE_ENV: 'development'
@@ -139,7 +136,8 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
-          TEST_TIMEOUT: ${{ github.event.inputs.test-timeout || 20000 }}
+        run: |
+          /bin/bash ./test/routes.sh
 
   test-on-push-and-cron:
     # if scheduled or push to master or manual (and STAGE is 'dev' or 'prod')
@@ -186,6 +184,5 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           AWS_DEFAULT_OUTPUT: json
-          TEST_TIMEOUT: ${{ github.event.inputs.test-timeout || 20000 }}
         run: |
-          node_modules/.bin/vitest --run
+          /bin/bash ./test/routes.sh
