@@ -1,5 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import type { Token } from '@lib/token'
 
 const abi = {
   earned: {
@@ -25,6 +26,13 @@ const abi = {
   },
 } as const
 
+const LBR: Token = {
+  chain: 'ethereum',
+  address: '0xf1182229b71e79e504b1d2bf076c15a277311e05',
+  decimals: 18,
+  symbol: 'LBR',
+}
+
 export async function getLybraVestBalance(ctx: BalancesContext, vester: Contract): Promise<Balance> {
   const [userBalance, userAutoCompoundEarned, userLockTime] = await Promise.all([
     call({ ctx, target: vester.address, params: [ctx.address], abi: abi.getClaimAbleLBR }),
@@ -38,7 +46,7 @@ export async function getLybraVestBalance(ctx: BalancesContext, vester: Contract
   return {
     ...vester,
     amount: userBalance + userAutoCompoundEarned,
-    underlyings: undefined,
+    underlyings: [LBR],
     claimable: now > unlockAt ? userBalance : 0n,
     unlockAt,
     rewards: undefined,

@@ -85,6 +85,7 @@ import horizonProtocol from '@adapters/horizon-protocol'
 import hundredFinance from '@adapters/hundred-finance'
 import illuvium from '@adapters/illuvium'
 import inverseFinance from '@adapters/inverse-finance'
+import ipor from '@adapters/ipor'
 import ironBank from '@adapters/iron-bank'
 import izumiFinance from '@adapters/izumi-finance'
 import keep3rNetwork from '@adapters/keep3r-network'
@@ -300,6 +301,7 @@ export const adapters: Adapter[] = [
   hundredFinance,
   illuvium,
   inverseFinance,
+  ipor,
   ironBank,
   izumiFinance,
   keep3rNetwork,
