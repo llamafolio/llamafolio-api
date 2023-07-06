@@ -5,6 +5,7 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { parseEther } from 'viem'
 
 const abi = {
   earned: {
@@ -72,6 +73,19 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  mintRate: {
+    inputs: [],
+    name: 'mintRate',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 const BAL: Token = {
@@ -81,13 +95,6 @@ const BAL: Token = {
   symbol: 'BAL',
 }
 
-const AURA: Token = {
-  chain: 'ethereum',
-  address: '0xc0c293ce456ff0ed870add98a0828dd4d2903dbf',
-  decimals: 18,
-  symbol: 'AURA',
-}
-
 const auraBal: Token = {
   chain: 'ethereum',
   address: '0x616e8BfA43F920657B3497DBf40D6b1A02D4608d',
@@ -95,9 +102,20 @@ const auraBal: Token = {
   symbol: 'auraBAL',
 }
 
-const auraRewards: Contract = {
-  chain: 'ethereum',
-  address: '0xC0c293ce456fF0ED870ADd98a0828Dd4d2903DBF',
+const Aura: { [key: string]: Contract } = {
+  ethereum: {
+    chain: 'ethereum',
+    address: '0xc0c293ce456ff0ed870add98a0828dd4d2903dbf',
+    decimals: 18,
+    symbol: 'AURA',
+  },
+  arbitrum: {
+    chain: 'ethereum',
+    address: '0x1509706a6c66CA549ff0cB464de88231DDBe213B',
+    decimals: 18,
+    symbol: 'AURA',
+    l2Coordinator: '0xec1c780a275438916e7ceb174d80878f29580606',
+  },
 }
 
 export async function getAuraBalStakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
@@ -154,21 +172,29 @@ export async function getAuraPoolsBalances(
 
   const balanceWithExtraRewardsBalances = await getExtraRewardsBalances(ctx, balanceWithExtraRewards)
 
-  return getAuraMintAmount(ctx, [...balanceWithStandardRewards, ...balanceWithExtraRewardsBalances], auraRewards)
+  if (ctx.chain !== 'ethereum') {
+    return getAuraMintAmountOnArbitrum(
+      ctx,
+      [...balanceWithStandardRewards, ...balanceWithExtraRewardsBalances],
+      Aura[ctx.chain],
+    )
+  }
+
+  return getAuraMintAmount(ctx, [...balanceWithStandardRewards, ...balanceWithExtraRewardsBalances], Aura[ctx.chain])
 }
 
 export const getAuraMintAmount = async (
   ctx: BalancesContext,
   balances: Balance[],
-  auraRewards: Contract,
+  Aura: Contract,
 ): Promise<Balance[]> => {
   const balancesWithExtraRewards: Balance[] = []
 
   const [reductionPerCliff, maxSupply, totalSupply, totalCliffs] = await Promise.all([
-    call({ ctx, target: auraRewards.address, abi: abi.reductionPerCliff }),
-    call({ ctx, target: auraRewards.address, abi: abi.EMISSIONS_MAX_SUPPLY }),
-    call({ ctx, target: auraRewards.address, abi: abi.totalSupply }),
-    call({ ctx, target: auraRewards.address, abi: abi.totalCliffs }),
+    call({ ctx, target: Aura.address, abi: abi.reductionPerCliff }),
+    call({ ctx, target: Aura.address, abi: abi.EMISSIONS_MAX_SUPPLY }),
+    call({ ctx, target: Aura.address, abi: abi.totalSupply }),
+    call({ ctx, target: Aura.address, abi: abi.totalCliffs }),
   ])
 
   const minterMinted = 0n
@@ -206,13 +232,26 @@ export const getAuraMintAmount = async (
         amount = amtTillMax
       }
 
-      balance.rewards?.push({ ...AURA, amount })
+      balance.rewards?.push({ ...Aura, amount })
 
       balancesWithExtraRewards.push({ ...balance })
     }
   }
 
   return balancesWithExtraRewards
+}
+
+const getAuraMintAmountOnArbitrum = async (
+  ctx: BalancesContext,
+  balances: Balance[],
+  Aura: Contract,
+): Promise<Balance[]> => {
+  const mintRate = await call({ ctx, target: Aura.l2Coordinator, abi: abi.mintRate })
+
+  return balances.map((balance) => ({
+    ...balance,
+    rewards: [...balance.rewards!, { ...Aura, amount: (balance.rewards![0].amount * mintRate) / parseEther('1.0') }],
+  }))
 }
 
 const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: Balance[]): Promise<Balance[]> => {
