@@ -13,7 +13,8 @@ for (const chain of chains) {
       pollingInterval: 4_000,
       batch: { multicall: { batchSize: 1_024, wait: 16 } },
     },
-    httpTransportConfig: chain.httpTransportConfig,
+    // rpcUrls: chain.rpcUrls,
+    // rpcWssUrl: chain.rpcWssUrl,
   })
   providers[chain.id] = provider
 }

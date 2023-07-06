@@ -1,6 +1,5 @@
 import type { IChainInfo } from '@lib/chains'
-import type { HttpTransportConfig } from 'viem'
-import { createPublicClient, fallback, http, webSocket } from 'viem'
+import { createPublicClient, fallback } from 'viem'
 
 import { viemChainById } from './chains'
 
@@ -26,11 +25,9 @@ export function evmClient(
   {
     protocol,
     options,
-    httpTransportConfig,
   }: {
     protocol: Protocol
     options: Pick<Parameters<typeof createPublicClient>[0], 'batch' | 'key' | 'pollingInterval'>
-    httpTransportConfig?: HttpTransportConfig
   } = {
     protocol: 'http',
     options: {
@@ -40,18 +37,7 @@ export function evmClient(
     },
   },
 ) {
-  const transport =
-    protocol === 'ws' && chain.rpcWssUrl
-      ? webSocket(chain.rpcWssUrl)
-      : fallback(
-          chain.rpcUrls.map((rpcURL) =>
-            http(rpcURL, {
-              ...httpTransportConfig,
-              timeout: 10_000,
-              retryDelay: 1_00,
-            }),
-          ),
-        )
+  const transport = protocol === 'ws' && chain.rpcWssUrl ? fallback(chain.rpcWssUrl) : fallback(chain.rpcUrls)
   return createPublicClient({
     name: 'llamafolio',
     chain: viemChainById[chain.id],
