@@ -94,7 +94,7 @@
   "simple-git-hooks": {
     "pre-commit": "pnpm install && pnpm lint && pnpm format && pnpm build"
   },
-  "packageManager": ">=pnpm@8.0.0",
+  "packageManager": "pnpm@8.0.0",
   "engines": {
     "node": ">=18",
     "pnpm": ">=8.0.0",
