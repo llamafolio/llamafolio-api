@@ -2,6 +2,8 @@
 
 set -eoux pipefail
 
+# This script is used to check against lambda endpoints to ensure they are working as expected.
+
 curl --request GET \
   --url $API_URL/adapters
 
