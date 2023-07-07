@@ -10,11 +10,6 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
   workflow_dispatch:
-    inputs:
-      test-timeout:
-        description: 'Test timeout in ms'
-        required: false
-        default: '20000'
 
 defaults:
   run:
@@ -25,8 +20,8 @@ env:
   ACTIONS_RUNNER_DEBUG: true
 
 jobs:
-  lint-typecheck-build:
-    name: 'Lint, Typecheck, Build'
+  lint-build-test:
+    name: 'Lint, Build, Test'
     strategy:
       matrix:
         node-version: ['lts/*']
