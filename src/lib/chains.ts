@@ -1,5 +1,6 @@
 import environment from '@environment'
 import { ADDRESS_ZERO } from '@lib/contract'
+import { isNotNullish } from '@lib/type'
 import type { Address, HttpTransport, WebSocketTransport } from 'viem'
 import { http, webSocket } from 'viem'
 
