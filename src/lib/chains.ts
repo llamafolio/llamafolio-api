@@ -1,6 +1,6 @@
 import environment from '@environment'
 import { ADDRESS_ZERO } from '@lib/contract'
-import { isNotNullish } from '@lib/type'
+import { isNotFalsy } from '@lib/type'
 import type { Address, HttpTransport, WebSocketTransport } from 'viem'
 import { http, webSocket } from 'viem'
 
@@ -47,7 +47,7 @@ export const chains = [
       http('https://rpc.ankr.com/arbitrum', { batch: { wait: 0, batchSize: 5_000 } }),
       ARBITRUM_RPC ? http(ARBITRUM_RPC, { batch: { batchSize: 1_000, wait: 10 } }) : undefined,
       http('https://arb1.arbitrum.io/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
-    ].filter(isNotNullish),
+    ].filter(isNotFalsy),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -110,7 +110,7 @@ export const chains = [
     chainId: 1,
     name: 'Ethereum',
     rpcWssUrl: [LLAMANODES_API_KEY ? webSocket(`wss://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`) : undefined].filter(
-      isNotNullish,
+      isNotFalsy,
     ),
     rpcUrls: [
       LLAMANODES_API_KEY
@@ -121,7 +121,7 @@ export const chains = [
         batch: { wait: 10, batchSize: 1_000 },
       }),
       http('https://cloudflare-eth.com', { batch: { batchSize: 1_000, wait: 10 } }),
-    ].filter(isNotNullish),
+    ].filter(isNotFalsy),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -184,7 +184,7 @@ export const chains = [
     name: 'Polygon',
     rpcWssUrl: [
       LLAMANODES_API_KEY ? webSocket(`wss://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`) : undefined,
-    ].filter(isNotNullish),
+    ].filter(isNotFalsy),
     rpcUrls: [
       LLAMANODES_API_KEY
         ? http(`https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
@@ -193,7 +193,7 @@ export const chains = [
 
       http('https://polygon-rpc.com/', { batch: { batchSize: 1_000, wait: 10 } }),
       http('https://rpc-mainnet.maticvigil.com/', { batch: { batchSize: 1_000, wait: 10 } }),
-    ].filter(isNotNullish),
+    ].filter(isNotFalsy),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -228,7 +228,7 @@ export const chains = [
       http('https://optimism-mainnet.public.blastapi.io', { batch: { batchSize: 1_000, wait: 10 } }),
       http('https://1rpc.io/op', { batch: { batchSize: 1_000, wait: 10 } }),
       http('https://mainnet.optimism.io', { batch: { batchSize: 1_000, wait: 10 } }),
-    ].filter(isNotNullish),
+    ].filter(isNotFalsy),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
