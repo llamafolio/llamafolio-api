@@ -1,29 +1,12 @@
-name: 'Test'
+name: 'Test [Cron]'
 
 # Runs:
 # - daily at 00:00 UTC
-# - on manual trigger through GitHub Actions UI
-# - on push to 'master'
-# - on pull request
 on:
   schedule:
     # cron syntax: https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
     # every day at 00:00 UTC
     - cron: '0 0 * * *'
-  push:
-    branches: ['master']
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-  workflow_dispatch:
-    inputs:
-      stage:
-        description: 'Stage to test against'
-        required: true
-        default: 'dev'
-      test-timeout:
-        description: 'Test timeout in ms'
-        required: false
-        default: '20000'
 
 defaults:
   run:
@@ -31,26 +14,14 @@ defaults:
 
 env:
   CI: true
-  GITHUB_ACTIONS: true
   ACTIONS_RUNNER_DEBUG: true
-  PGHOST: ${{ secrets.PGHOST }}
-  PGUSER: ${{ secrets.PGUSER }}
-  PGPORT: ${{ secrets.PGPORT }}
-  PGDATABASE: ${{ secrets.PGDATABASE }}
-  PGPASSWORD: ${{ secrets.PGPASSWORD }}
-  ARBITRUM_RPC: ${{ secrets.ARBITRUM_RPC }}
-  OPTIMISM_RPC: ${{ secrets.OPTIMISM_RPC }}
-  LLAMANODES_API_KEY: ${{ secrets.LLAMANODES_API_KEY }}
-  SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
 
 jobs:
-  lint-typecheck-build:
-    name: 'Lint, Typecheck, Build'
+  test:
+    name: 'Test [PR/CRON]'
+    timeout-minutes: 10
     strategy:
-      fail-fast: false
       matrix:
-        node-version: ['lts/*']
-        pnpm-version: ['latest']
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
@@ -58,133 +29,9 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: 'Setup pnpm [${{ matrix.pnpm-version }}]'
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: ${{ matrix.pnpm-version }}
-
-      - name: 'Setup Node.js [${{ matrix.node-version }}]'
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-
-      - name: 'Install Dependencies'
-        run: pnpm install --frozen-lockfile
-
-      - name: 'Lint'
-        run: |
-          node_modules/.bin/eslint --fix . --ext js,cjs,mjs,ts,d.ts,json,md
-
-      - name: 'Format'
-        run: |
-          node_modules/.bin/prettier --write '**/*.{md,json,js,cjs,mjs,ts,d.ts,sh}' --ignore-path='./.eslintignore' --ignore-unknown
-
-      # we will have to skip till we resolve existing type errors
-      - name: 'Typecheck'
-        run: |
-          echo "pnpm typecheck"
-
-      - name: 'Build'
-        run: pnpm build
-
-  test-on-pr:
-    # if pull request or manual (and STAGE is 'local')
-    if: github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && github.event.inputs.stage == 'local')
-    needs: [lint-typecheck-build]
-    name: 'Test [PR]'
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: ['lts/*']
-        pnpm-version: ['latest']
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-    env:
-      # must be set to 'local' to test against pr changes
-      STAGE: 'local'
-    steps:
-      - name: 'Checkout'
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: 'Setup pnpm [${{ matrix.pnpm-version }}]'
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: ${{ matrix.pnpm-version }}
-
-      - name: 'Setup Node.js [${{ matrix.node-version }}]'
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-
-      - name: 'Install Dependencies'
-        run: |
-          pnpm install --frozen-lockfile
 
       - name: 'Test'
         env:
-          DEBUG: '*'
-          NODE_ENV: 'development'
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
-          AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
-          AWS_DEFAULT_OUTPUT: json
-          API_URL: ${{ secrets.API_URL }}
-        run: |
-          export API_URL=${{ env.API_URL }}
-          /bin/bash ./test/routes.sh
-
-  test-on-push-and-cron:
-    # if scheduled or push to master or manual (and STAGE is 'dev' or 'prod')
-    if: github.event_name == 'schedule' || (github.event_name == 'push' && github.ref == 'refs/heads/master') || (github.event_name == 'workflow_dispatch' && (github.event.inputs.stage == 'dev' || github.event.inputs.stage == 'prod'))
-    needs: [lint-typecheck-build]
-    name: 'Test [Push, Cron]'
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: ['lts/*']
-        pnpm-version: ['latest']
-        os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
-    env:
-      STAGE: ${{ github.event.inputs.stage || 'dev' }}
-    steps:
-      - name: 'Checkout'
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: 'Setup pnpm [${{ matrix.pnpm-version }}]'
-        uses: pnpm/action-setup@v2.2.4
-        with:
-          version: ${{ matrix.pnpm-version }}
-
-      - name: 'Setup Node.js [${{ matrix.node-version }}]'
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-
-      - name: 'Install Dependencies'
-        run: pnpm install --frozen-lockfile
-
-      - name: 'Test'
-        env:
-          DEBUG: '*'
-          NODE_ENV: 'development'
-          AWS_REGION: ${{ secrets.AWS_REGION }}
-          AWS_GATEWAY_API_ID_DEV: ${{ secrets.AWS_GATEWAY_API_ID_DEV }}
-          AWS_GATEWAY_API_ID_PROD: ${{ secrets.AWS_GATEWAY_API_ID_PROD }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}
           API_URL: ${{ secrets.API_URL }}
         run: |
           export API_URL=${{ env.API_URL }}
