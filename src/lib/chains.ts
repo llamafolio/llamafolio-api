@@ -1,7 +1,7 @@
 import environment from '@environment'
 import { ADDRESS_ZERO } from '@lib/contract'
-import { isNotFalsy, isNotNullish } from '@lib/type'
-import type { Address } from 'viem'
+import type { Address, HttpTransport, WebSocketTransport } from 'viem'
+import { http, webSocket } from 'viem'
 
 const { ARBITRUM_RPC, LLAMANODES_API_KEY, OPTIMISM_RPC } = environment
 
@@ -25,14 +25,15 @@ export interface IChainInfo {
   id: Chain
   chainId: number
   name: string
-  rpcWssUrl?: string
-  rpcUrls: string[]
   nativeCurrency: {
     address: Address
     decimals: number
     name: string
     symbol: string
   }
+  // adjust transport config based on RPC endpoints
+  rpcWssUrl?: WebSocketTransport[]
+  rpcUrls: HttpTransport[]
 }
 
 // Currently supported chains
@@ -41,7 +42,11 @@ export const chains = [
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
-    rpcUrls: [ARBITRUM_RPC, 'https://arb1.arbitrum.io/rpc', 'https://rpc.ankr.com/arbitrum'].filter(isNotFalsy),
+    rpcUrls: [
+      http('https://rpc.ankr.com/arbitrum', { batch: { wait: 0, batchSize: 5_000 } }),
+      ARBITRUM_RPC ? http(ARBITRUM_RPC, { batch: { batchSize: 1_000, wait: 10 } }) : undefined,
+      http('https://arb1.arbitrum.io/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
+    ].filter(isNotNullish),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -54,9 +59,10 @@ export const chains = [
     chainId: 43114,
     name: 'Avalanche',
     rpcUrls: [
-      'https://avalanche.public-rpc.com',
-      'https://api.avax.network/ext/bc/C/rpc',
-      'https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc',
+      http('https://rpc.ankr.com/avalanche', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://avalanche.public-rpc.com', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://api.avax.network/ext/bc/C/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
     ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
@@ -70,11 +76,11 @@ export const chains = [
     chainId: 56,
     name: 'BNB Chain',
     rpcUrls: [
-      'https://bsc-dataseed.binance.org/',
-      'https://bsc-dataseed1.defibit.io/',
-      'https://bsc-dataseed1.ninicoin.io/',
-      'https://bsc-dataseed2.defibit.io/',
-      'https://bsc-dataseed2.ninicoin.io/',
+      http('https://rpc.ankr.com/bsc', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://bsc-dataseed.binance.org/', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://bsc-dataseed1.ninicoin.io/', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://bsc-dataseed2.defibit.io/', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://bsc-dataseed2.ninicoin.io/', { batch: { batchSize: 1_000, wait: 10 } }),
     ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
@@ -87,7 +93,10 @@ export const chains = [
     id: 'celo',
     chainId: 42220,
     name: 'Celo',
-    rpcUrls: [`https://forno.celo.org`],
+    rpcUrls: [
+      http('https://rpc.ankr.com/celo', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://forno.celo.org', { batch: { batchSize: 1_000, wait: 10 } }),
+    ],
     nativeCurrency: {
       address: '0x471ece3750da237f93b8e339c536989b8978a438',
       decimals: 18,
@@ -99,11 +108,18 @@ export const chains = [
     id: 'ethereum',
     chainId: 1,
     name: 'Ethereum',
-    rpcWssUrl: LLAMANODES_API_KEY ? `wss://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}` : undefined,
+    rpcWssUrl: [LLAMANODES_API_KEY ? webSocket(`wss://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`) : undefined].filter(
+      isNotNullish,
+    ),
     rpcUrls: [
-      LLAMANODES_API_KEY ? `https://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}` : undefined,
-      'https://rpc.ankr.com/eth',
-      'https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79',
+      LLAMANODES_API_KEY
+        ? http(`https://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
+        : undefined,
+      http('https://rpc.ankr.com/eth', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79', {
+        batch: { wait: 10, batchSize: 1_000 },
+      }),
+      http('https://cloudflare-eth.com', { batch: { batchSize: 1_000, wait: 10 } }),
     ].filter(isNotNullish),
     nativeCurrency: {
       address: ADDRESS_ZERO,
@@ -116,7 +132,11 @@ export const chains = [
     id: 'fantom',
     chainId: 250,
     name: 'Fantom',
-    rpcUrls: ['https://rpc.ftm.tools/', 'https://rpc.ankr.com/fantom', 'https://rpcapi.fantom.network'],
+    rpcUrls: [
+      http('https://rpc.ankr.com/fantom', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://rpc.ftm.tools/', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://rpcapi.fantom.network', { batch: { batchSize: 1_000, wait: 10 } }),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -128,7 +148,11 @@ export const chains = [
     id: 'gnosis',
     chainId: 100,
     name: 'Gnosis Chain',
-    rpcUrls: ['https://rpc.gnosischain.com', 'https://xdai-archive.blockscout.com'],
+    rpcUrls: [
+      http('https://rpc.ankr.com/gnosis', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://rpc.gnosischain.com', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://xdai-archive.blockscout.com', { batch: { batchSize: 1_000, wait: 10 } }),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -140,7 +164,12 @@ export const chains = [
     id: 'harmony',
     chainId: 1666600000,
     name: 'Harmony',
-    rpcUrls: [`https://api.harmony.one`, 'https://harmony-0-rpc.gateway.pokt.network', 'https://api.s0.t.hmny.io'],
+    rpcUrls: [
+      http('https://rpc.ankr.com/harmony', { batch: { wait: 0, batchSize: 5_000 } }),
+      http(`https://api.harmony.one`, { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://harmony-0-rpc.gateway.pokt.network', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://api.s0.t.hmny.io', { batch: { batchSize: 1_000, wait: 10 } }),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -152,11 +181,17 @@ export const chains = [
     id: 'polygon',
     chainId: 137,
     name: 'Polygon',
-    rpcWssUrl: LLAMANODES_API_KEY ? `wss://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}` : undefined,
+    rpcWssUrl: [
+      LLAMANODES_API_KEY ? webSocket(`wss://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`) : undefined,
+    ].filter(isNotNullish),
     rpcUrls: [
-      LLAMANODES_API_KEY ? `https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}` : undefined,
-      'https://polygon-rpc.com/',
-      'https://rpc-mainnet.maticvigil.com/',
+      LLAMANODES_API_KEY
+        ? http(`https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
+        : undefined,
+      http('https://rpc.ankr.com/polygon', { batch: { wait: 0, batchSize: 5_000 } }),
+
+      http('https://polygon-rpc.com/', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://rpc-mainnet.maticvigil.com/', { batch: { batchSize: 1_000, wait: 10 } }),
     ].filter(isNotNullish),
     nativeCurrency: {
       address: ADDRESS_ZERO,
@@ -169,7 +204,11 @@ export const chains = [
     id: 'moonbeam',
     chainId: 1284,
     name: 'Moonbeam',
-    rpcUrls: ['https://rpc.api.moonbeam.network', 'https://rpc.ankr.com/moonbeam'],
+    rpcUrls: [
+      http('https://rpc.ankr.com/moonbeam', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://rpc.api.moonbeam.network', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://rpc.ankr.com/moonbeam', { batch: { batchSize: 1_000, wait: 10 } }),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -182,13 +221,13 @@ export const chains = [
     chainId: 10,
     name: 'Optimism',
     rpcUrls: [
-      OPTIMISM_RPC,
-      'https://optimism.publicnode.com',
-      'https://rpc.ankr.com/optimism',
-      'https://optimism-mainnet.public.blastapi.io',
-      'https://1rpc.io/op',
-      'https://mainnet.optimism.io',
-    ].filter(isNotFalsy),
+      http('https://rpc.ankr.com/optimism', { batch: { wait: 0, batchSize: 5_000 } }),
+      OPTIMISM_RPC ? http(OPTIMISM_RPC, { batch: { batchSize: 1_000, wait: 10 } }) : undefined,
+      http('https://optimism.publicnode.com', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://optimism-mainnet.public.blastapi.io', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://1rpc.io/op', { batch: { batchSize: 1_000, wait: 10 } }),
+      http('https://mainnet.optimism.io', { batch: { batchSize: 1_000, wait: 10 } }),
+    ].filter(isNotNullish),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
