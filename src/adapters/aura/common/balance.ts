@@ -5,12 +5,32 @@ import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { parseEther } from 'viem'
 
 const abi = {
   earned: {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
     name: 'earned',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  extraEarned: {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'earned',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
@@ -53,6 +73,19 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  mintRate: {
+    inputs: [],
+    name: 'mintRate',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 const BAL: Token = {
@@ -62,13 +95,6 @@ const BAL: Token = {
   symbol: 'BAL',
 }
 
-const AURA: Token = {
-  chain: 'ethereum',
-  address: '0xc0c293ce456ff0ed870add98a0828dd4d2903dbf',
-  decimals: 18,
-  symbol: 'AURA',
-}
-
 const auraBal: Token = {
   chain: 'ethereum',
   address: '0x616e8BfA43F920657B3497DBf40D6b1A02D4608d',
@@ -76,9 +102,20 @@ const auraBal: Token = {
   symbol: 'auraBAL',
 }
 
-const auraRewards: Contract = {
-  chain: 'ethereum',
-  address: '0xC0c293ce456fF0ED870ADd98a0828Dd4d2903DBF',
+const Aura: { [key: string]: Contract } = {
+  ethereum: {
+    chain: 'ethereum',
+    address: '0xc0c293ce456ff0ed870add98a0828dd4d2903dbf',
+    decimals: 18,
+    symbol: 'AURA',
+  },
+  arbitrum: {
+    chain: 'ethereum',
+    address: '0x1509706a6c66CA549ff0cB464de88231DDBe213B',
+    decimals: 18,
+    symbol: 'AURA',
+    l2Coordinator: '0xec1c780a275438916e7ceb174d80878f29580606',
+  },
 }
 
 export async function getAuraBalStakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
@@ -100,7 +137,8 @@ export async function getAuraPoolsBalances(
   pools: Contract[],
   vault: Contract,
 ): Promise<Balance[]> {
-  const balanceWithRewards: Balance[] = []
+  const balanceWithStandardRewards: Balance[] = []
+  const balanceWithExtraRewards: Balance[] = []
   const balances: Balance[] = await getBalancerPoolsBalances(ctx, pools, vault)
 
   const calls: Call<typeof abi.earned>[] = []
@@ -112,39 +150,51 @@ export async function getAuraPoolsBalances(
 
   for (let idx = 0; idx < balances.length; idx++) {
     const balance = balances[idx]
+    const rewards = balance.rewards
     const earnedRes = earnedsRes[idx]
 
-    if (!earnedRes.success) {
+    if (!rewards || !earnedRes.success) {
       continue
     }
 
-    balanceWithRewards.push({
+    const poolBalance: Balance = {
       ...balance,
-      rewards: [{ ...BAL, amount: earnedRes.output }],
+      rewards: [{ ...rewards[0], amount: earnedRes.output }, ...rewards.slice(1)],
       category: 'farm',
-    })
+    }
+
+    if (poolBalance.rewards && poolBalance.rewards.length > 1) {
+      balanceWithExtraRewards.push(poolBalance)
+    } else {
+      balanceWithStandardRewards.push(poolBalance)
+    }
   }
 
-  return getAuraMintAmount(ctx, balanceWithRewards, auraRewards)
-}
+  const balanceWithExtraRewardsBalances = await getExtraRewardsBalances(ctx, balanceWithExtraRewards)
 
-/**
- *  Explanation: to getExtraAuraRewards
- *  https://docs.aura.finance/developers/how-to-___/see-reward-tokens-yield-on-aura-pools
- */
+  if (ctx.chain !== 'ethereum') {
+    return getAuraMintAmountOnArbitrum(
+      ctx,
+      [...balanceWithStandardRewards, ...balanceWithExtraRewardsBalances],
+      Aura[ctx.chain],
+    )
+  }
+
+  return getAuraMintAmount(ctx, [...balanceWithStandardRewards, ...balanceWithExtraRewardsBalances], Aura[ctx.chain])
+}
 
 export const getAuraMintAmount = async (
   ctx: BalancesContext,
   balances: Balance[],
-  auraRewards: Contract,
+  Aura: Contract,
 ): Promise<Balance[]> => {
   const balancesWithExtraRewards: Balance[] = []
 
   const [reductionPerCliff, maxSupply, totalSupply, totalCliffs] = await Promise.all([
-    call({ ctx, target: auraRewards.address, abi: abi.reductionPerCliff }),
-    call({ ctx, target: auraRewards.address, abi: abi.EMISSIONS_MAX_SUPPLY }),
-    call({ ctx, target: auraRewards.address, abi: abi.totalSupply }),
-    call({ ctx, target: auraRewards.address, abi: abi.totalCliffs }),
+    call({ ctx, target: Aura.address, abi: abi.reductionPerCliff }),
+    call({ ctx, target: Aura.address, abi: abi.EMISSIONS_MAX_SUPPLY }),
+    call({ ctx, target: Aura.address, abi: abi.totalSupply }),
+    call({ ctx, target: Aura.address, abi: abi.totalCliffs }),
   ])
 
   const minterMinted = 0n
@@ -182,11 +232,39 @@ export const getAuraMintAmount = async (
         amount = amtTillMax
       }
 
-      balance.rewards?.push({ ...AURA, amount })
+      balance.rewards?.push({ ...Aura, amount })
 
       balancesWithExtraRewards.push({ ...balance })
     }
   }
 
   return balancesWithExtraRewards
+}
+
+const getAuraMintAmountOnArbitrum = async (
+  ctx: BalancesContext,
+  balances: Balance[],
+  Aura: Contract,
+): Promise<Balance[]> => {
+  const mintRate = await call({ ctx, target: Aura.l2Coordinator, abi: abi.mintRate })
+
+  return balances.map((balance) => ({
+    ...balance,
+    rewards: [...balance.rewards!, { ...Aura, amount: (balance.rewards![0].amount * mintRate) / parseEther('1.0') }],
+  }))
+}
+
+const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: Balance[]): Promise<Balance[]> => {
+  const extraRewardsBalancesRes = await multicall({
+    ctx,
+    calls: poolBalance.map((pool: Contract) => ({ target: pool.rewarder, params: [ctx.address] } as const)),
+    abi: abi.extraEarned,
+  })
+
+  poolBalance.forEach((pool, idx) => {
+    const extraRewardsBalances = extraRewardsBalancesRes[idx].success ? extraRewardsBalancesRes[idx].output : 0n
+    pool.rewards = [pool.rewards![0], { ...pool.rewards![1], amount: extraRewardsBalances! }]
+  })
+
+  return poolBalance
 }

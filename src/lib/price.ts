@@ -1,6 +1,6 @@
 import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { type Chain, toDefiLlamaChain } from '@lib/chains'
+import { toDefiLlamaChain, type Chain } from '@lib/chains'
 import { mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -67,7 +67,12 @@ export async function getTokenPrice(token: Token) {
 
 export async function getPricedBalances(balances: Balance[]): Promise<(Balance | PricedBalance)[]> {
   // Filter empty balances
-  balances = balances.filter((balance) => balance.amount > 0n || (balance.claimable && balance.claimable > 0n))
+  balances = balances.filter(
+    (balance) =>
+      balance.amount > 0n ||
+      (balance.claimable && balance.claimable > 0n) ||
+      (balance.rewards && balance.rewards.some((reward) => reward.amount > 0n)),
+  )
 
   const priced: BaseBalance[] = balances.slice()
 

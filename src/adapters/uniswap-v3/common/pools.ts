@@ -291,7 +291,7 @@ export async function getTokenIdsBalances(
       }
 
       const underlyings = balance.underlyings as Balance[]
-      if (!underlyings || underlyings[0].amount === 0n || underlyings[1].amount === 0n) {
+      if (!underlyings || (underlyings[0].amount === 0n && underlyings[1].amount === 0n)) {
         return null
       }
 
