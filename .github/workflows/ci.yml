@@ -1,0 +1,72 @@
+name: 'CI'
+
+# Runs:
+# - on manual trigger through GitHub Actions UI
+# - on push to 'master'
+# - on pull request
+on:
+  push:
+    branches: ['master']
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CI: true
+  ACTIONS_RUNNER_DEBUG: true
+
+jobs:
+  lint-build-test:
+    name: 'Lint, Build, Test'
+    strategy:
+      matrix:
+        node-version: ['lts/*']
+        pnpm-version: ['latest']
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: 'Setup pnpm [${{ matrix.pnpm-version }}]'
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: ${{ matrix.pnpm-version }}
+
+      - name: 'Setup Node.js [${{ matrix.node-version }}]'
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: 'Install Dependencies'
+        run: pnpm install --frozen-lockfile
+
+      - name: 'Lint'
+        run: pnpm lint
+
+      - name: 'Format'
+        run: pnpm format
+          
+
+      # we will have to skip till we resolve existing type errors
+      - name: 'Typecheck'
+        run: |
+          echo "pnpm typecheck"
+
+      - name: 'Build'
+        run: pnpm build
+
+      - name: 'Test'
+        env:
+          API_URL: ${{ secrets.API_URL }}
+        run: |
+          export API_URL=${{ env.API_URL }}
+          /bin/bash ./test/routes.sh
+

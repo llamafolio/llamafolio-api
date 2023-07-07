@@ -57,6 +57,7 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
   for (let idx = 0; idx < pools.length; idx++) {
     const pool = pools[idx]
     const underlyings = pool.underlyings as Contract[]
+    const rewards = pool.rewards as Balance[]
     const balanceOfRes = balanceOfsRes[idx]
     const totalSupplyRes = totalSuppliesRes[idx]
     const actualSupplyRes = actualSuppliesRes[idx]
@@ -76,7 +77,7 @@ export async function getBalancerPoolsBalances(ctx: BalancesContext, pools: Cont
       ...pool,
       amount: balanceOfRes.output,
       underlyings,
-      rewards: undefined,
+      rewards,
       totalSupply: totalSupplyRes.output,
       // actualSupply is only available for stablepools abi
       actualSupply: actualSupplyRes.output ? actualSupplyRes.output : undefined,
