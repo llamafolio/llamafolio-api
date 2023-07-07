@@ -6,7 +6,7 @@ import { getAllContractsInteractions, groupContracts } from '@db/contracts'
 import type { Balance, BalancesConfig, BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
 import { fmtBalanceBreakdown, sanitizeBalances } from '@lib/balance'
-import type { Chain } from '@lib/chains'
+import { type Chain, chains } from '@lib/chains'
 import { sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
@@ -40,6 +40,16 @@ export async function updateBalances(client: PoolClient, address: `0x${string}`)
   const contracts = await getAllContractsInteractions(client, address)
 
   const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
+
+  // add wallet adapter on each chain (in case there's no interaction at all)
+  for (const chain of chains) {
+    if (!contractsByAdapterIdChain.wallet) {
+      contractsByAdapterIdChain.wallet = {}
+    }
+    if (!contractsByAdapterIdChain.wallet[chain.id]) {
+      contractsByAdapterIdChain.wallet[chain.id] = []
+    }
+  }
 
   const adapterIds = Object.keys(contractsByAdapterIdChain)
   // list of all [adapterId, chain]
