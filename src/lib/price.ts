@@ -1,6 +1,6 @@
 import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { toDefiLlamaChain, type Chain } from '@lib/chains'
+import { type Chain, toDefiLlamaChain } from '@lib/chains'
 import { mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -30,7 +30,6 @@ interface PricesResponse {
 export async function fetchTokenPrices(keys: string[]): Promise<PricesResponse> {
   try {
     const coinsParam = keys.join(',')
-
     const pricesRes = await fetch(`https://coins.llama.fi/prices/current/${coinsParam}`, {
       method: 'GET',
     })
@@ -118,7 +117,9 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
 
     const price = prices[key]
     if (price === undefined) {
-      console.log(`Failed to get price on Defillama API for ${key}`)
+      console.log(
+        `Failed to get price on Defillama API for ${key} - token name: ${balance.name} - token symbol: ${balance.symbol} - token chain: ${balance.chain}`,
+      )
       return balance
     }
 

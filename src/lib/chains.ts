@@ -1,24 +1,10 @@
 import environment from '@environment'
 import { ADDRESS_ZERO } from '@lib/contract'
+import { isNotNullish } from '@lib/type'
 import type { Address, HttpTransport, WebSocketTransport } from 'viem'
 import { http, webSocket } from 'viem'
 
-import { isNotNullish } from './type'
-
 const { ARBITRUM_RPC, LLAMANODES_API_KEY, OPTIMISM_RPC } = environment
-
-export declare type Chain =
-  | 'arbitrum'
-  | 'avalanche'
-  | 'bsc'
-  | 'celo'
-  | 'ethereum'
-  | 'fantom'
-  | 'gnosis'
-  | 'harmony'
-  | 'moonbeam'
-  | 'optimism'
-  | 'polygon'
 
 export const chainsNames = [
   'arbitrum',
@@ -33,6 +19,8 @@ export const chainsNames = [
   'optimism',
   'polygon',
 ] as const
+
+export type Chain = (typeof chainsNames)[number]
 
 export interface IChainInfo {
   id: Chain
