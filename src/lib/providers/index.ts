@@ -6,6 +6,15 @@ import type { PublicClient } from 'viem'
 export const providers: { [chain in Chain]: PublicClient } = Object.assign({})
 
 for (const chain of chains) {
-  const provider = evmClient(chain)
+  const provider = evmClient(chain, {
+    protocol: 'http',
+    options: {
+      // default
+      pollingInterval: 4_000,
+      batch: { multicall: { batchSize: 1_024, wait: 16 } },
+    },
+    // rpcUrls: chain.rpcUrls,
+    // rpcWssUrl: chain.rpcWssUrl,
+  })
   providers[chain.id] = provider
 }
