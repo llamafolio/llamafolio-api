@@ -8,7 +8,7 @@ import {
   getStakeDaoContractsFromAPIs,
   getStakeDaoOldContractsFromApi,
 } from '@adapters/stakedao/common/pool'
-import { getStakeDaoStakingBalances } from '@adapters/stakedao/common/stake'
+import { getStakeDaoStakingBalances, getStakeDaoXSDTBalance } from '@adapters/stakedao/common/stake'
 import { getStakeDaoVestBalances } from '@adapters/stakedao/common/vest'
 import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { groupBy } from '@lib/array'
@@ -23,6 +23,13 @@ const SDT: Token = {
   address: '0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F',
   decimals: 18,
   symbol: 'SDT',
+}
+
+const xSDT: Contract = {
+  chain: 'ethereum',
+  address: '0xac14864ce5a98af3248ffbf549441b04421247d3',
+  decimals: 18,
+  symbol: 'xSDT',
 }
 
 const locker: Contract = {
@@ -62,6 +69,7 @@ export const getContracts = async (ctx: BaseContext) => {
       pools: [...curve, ...angle, ...detailedBalancer, ...oldPools],
       locker,
       vesters,
+      xSDT,
     },
   }
 }
@@ -82,6 +90,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     pools: getStakeDaoBalances,
     locker: (...args) => getSingleLockerBalance(...args, SDT, 'locked'),
     vesters: getStakeDaoVestBalances,
+    xSDT: getStakeDaoXSDTBalance,
   })
 
   return {
