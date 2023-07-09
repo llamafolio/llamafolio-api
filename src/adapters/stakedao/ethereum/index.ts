@@ -8,7 +8,8 @@ import {
   getStakeDaoContractsFromAPIs,
   getStakeDaoOldContractsFromApi,
 } from '@adapters/stakedao/common/pool'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getStakeDaoStakingBalances } from '@adapters/stakedao/common/stake'
+import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { resolveBalances } from '@lib/balance'
 
@@ -29,19 +30,25 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: {
-      curve,
-      angle,
-      detailedBalancer,
-      oldPools,
+      pools: [...curve, ...angle, ...detailedBalancer, ...oldPools],
     },
   }
 }
 
+const getStakeDaoBalances = async (ctx: BalancesContext, pools: Contract[]) => {
+  const sortedPools = groupBy(pools, 'provider')
+
+  return Promise.all([
+    getStakeDaoStakingBalances(ctx, pools),
+    getStakeDaoCurveBalances(ctx, sortedPools['curve']),
+    getStakeDaoBalBalances(ctx, sortedPools['balancer']),
+    getStakeDaoOldBalances(ctx, sortedPools['oldPool']),
+  ])
+}
+
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    curve: getStakeDaoCurveBalances,
-    detailedBalancer: getStakeDaoBalBalances,
-    oldPools: getStakeDaoOldBalances,
+    pools: getStakeDaoBalances,
   })
 
   return {

@@ -23,6 +23,7 @@ export async function getStakeDaoContractsFromAPIs(ctx: BaseContext, urls: strin
       name,
       address: infos.sdtLiquidityGauge,
       token: token.address,
+      sdToken: infos.vault,
       decimals: tokenReceipt.decimals,
       symbol: tokenReceipt.symbol,
       underlyings,
@@ -48,11 +49,13 @@ export async function getStakeDaoOldContractsFromApi(ctx: BaseContext): Promise<
       name,
       address: infos.gauge,
       token: token.address,
+      sdToken: tokenReceipt.address,
       decimals: tokenReceipt.decimals,
       symbol: tokenReceipt.symbol,
       underlyings: [infos.token],
       rewards,
       infos,
+      provider: 'oldPool',
     }
   })
 }
