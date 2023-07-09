@@ -9,11 +9,40 @@ import {
   getStakeDaoOldContractsFromApi,
 } from '@adapters/stakedao/common/pool'
 import { getStakeDaoStakingBalances } from '@adapters/stakedao/common/stake'
+import { getStakeDaoVestBalances } from '@adapters/stakedao/common/vest'
 import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { resolveBalances } from '@lib/balance'
+import { getSingleLockerBalance } from '@lib/lock'
+import type { Token } from '@lib/token'
 
 const url = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2'
+
+const SDT: Token = {
+  chain: 'ethereum',
+  address: '0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F',
+  decimals: 18,
+  symbol: 'SDT',
+}
+
+const locker: Contract = {
+  chain: 'ethereum',
+  address: '0x0c30476f66034e11782938df8e4384970b6c9e8a',
+  underlyings: ['0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F'],
+}
+
+const vesters: Contract[] = [
+  {
+    chain: 'ethereum',
+    address: '0xc78fa2af0ca7990bb5ff32c9a728125be58cf247',
+    token: '0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F',
+  },
+  {
+    chain: 'ethereum',
+    address: '0x5d7f9570c8af43c8e5657b1fc3c11944e4182827',
+    token: '0x73968b9a57c6E53d41345FD57a6E6ae27d6CDB2F',
+  },
+]
 
 const gaugeInfos: Contract = {
   chain: 'ethereum',
@@ -31,6 +60,8 @@ export const getContracts = async (ctx: BaseContext) => {
   return {
     contracts: {
       pools: [...curve, ...angle, ...detailedBalancer, ...oldPools],
+      locker,
+      vesters,
     },
   }
 }
@@ -49,6 +80,8 @@ const getStakeDaoBalances = async (ctx: BalancesContext, pools: Contract[]) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: getStakeDaoBalances,
+    locker: (...args) => getSingleLockerBalance(...args, SDT, 'locked'),
+    vesters: getStakeDaoVestBalances,
   })
 
   return {
