@@ -49,6 +49,16 @@ module.exports = {
     ],
     '@typescript-eslint/no-var-requires': ['off', { allow: ['*.mjs'] }],
     '@typescript-eslint/ban-ts-comment': 'off',
+    '@typescript-eslint/ban-types': [
+      'warn',
+      {
+        types: {
+          '{}': false,
+          Number: false,
+          String: false,
+        },
+      },
+    ],
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports' }],
     '@typescript-eslint/no-import-type-side-effects': ['error'],
