@@ -169,6 +169,7 @@ import spool from '@adapters/spool'
 import stader from '@adapters/stader'
 import stafi from '@adapters/stafi'
 import stakeLink from '@adapters/stake.link'
+import stakedao from '@adapters/stakedao'
 import stakehound from '@adapters/stakehound'
 import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
@@ -386,6 +387,7 @@ export const adapters: Adapter[] = [
   stader,
   stafi,
   stakeLink,
+  stakedao,
   stakehound,
   stakewise,
   stargate,
