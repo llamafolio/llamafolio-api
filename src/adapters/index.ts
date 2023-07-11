@@ -128,6 +128,7 @@ import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
 import paraswap from '@adapters/paraswap'
+import pearlfi from '@adapters/pearlfi'
 import perennial from '@adapters/perennial'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
@@ -346,6 +347,7 @@ export const adapters: Adapter[] = [
   pandora,
   pangolin,
   paraswap,
+  pearlfi,
   perennial,
   piedao,
   pikaProtocol,
