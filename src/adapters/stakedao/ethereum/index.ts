@@ -79,9 +79,9 @@ const getStakeDaoBalances = async (ctx: BalancesContext, pools: Contract[]) => {
 
   return Promise.all([
     getStakeDaoStakingBalances(ctx, pools),
-    getStakeDaoCurveBalances(ctx, sortedPools['curve']),
-    getStakeDaoBalBalances(ctx, sortedPools['balancer']),
-    getStakeDaoOldBalances(ctx, sortedPools['oldPool']),
+    getStakeDaoCurveBalances(ctx, sortedPools['curve'] || []),
+    getStakeDaoBalBalances(ctx, sortedPools['balancer'] || []),
+    getStakeDaoOldBalances(ctx, sortedPools['oldPool'] || []),
   ])
 }
 
