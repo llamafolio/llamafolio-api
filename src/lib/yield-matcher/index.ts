@@ -97,18 +97,19 @@ function matcher({
 
       // matched by pool_old
       if (balance.address.toLowerCase() === pool_old.toLowerCase()) {
-        matches.push({ ...balanceRest, ...yieldPoolRest })
+        matches.push({ ...yieldPoolRest, ...balanceRest })
         continue
       }
 
       if (!underlyings || !yieldTokens || yieldTokens.length !== underlyings.length) continue
 
+      // check that all underlyings are in yieldTokens
       const matchedByTokens = yieldTokens.filter((token) =>
-        underlyings.some((underlying) => underlying.address === token.address),
+        underlyings.some((underlying) => underlying.address.toLowerCase() === token.address.toLowerCase()),
       )
 
       if (matchedByTokens.length === underlyings.length) {
-        matches.push({ ...balanceRest, ...yieldPoolRest, tokens: matchedByTokens })
+        matches.push({ ...yieldPoolRest, tokens: matchedByTokens, ...balanceRest })
       }
     }
   }
