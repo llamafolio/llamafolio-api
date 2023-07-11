@@ -9,7 +9,6 @@ import type { Token } from '@llamafolio/tokens'
 import { type Address, isAddress } from 'viem'
 
 import type { YieldBalanceGroup, YieldBalancesJSON, YieldPoolResponse } from './types'
-
 /**
  * Parse Yield Pools:
  * 1. consume JSON.data from https://yields.llama.fi/poolsOld
@@ -36,14 +35,14 @@ const testAddresses = [
   '0xbDfA4f4492dD7b7Cf211209C4791AF8d52BF5c50',
 ] as const
 
-matcher(testAddresses[0])
+defiLamaYieldMatcher(testAddresses[0])
   .then((result) => console.log(JSON.stringify(result, undefined, 2)))
   .catch((error) => {
     console.error(error)
     process.exit(1)
   })
 
-export async function matcher(address: Address) {
+async function defiLamaYieldMatcher(address: Address) {
   const yieldPools = await parseYieldsPools()
   const balances = await parseBalances(address)
 
@@ -51,22 +50,73 @@ export async function matcher(address: Address) {
    * This stores matches between yield pools and balances
    * A match here means yield pool & balance are for the same chain and protocol
    */
-  const matches: Array<{
+  const chainProtocolMatches: Array<{
     key: string
     result: {
-      yield: MapValueType<typeof yieldPools>
+      yields: MapValueType<typeof yieldPools>
       balance: MapValueType<typeof balances>
     }
   }> = []
 
   for (const [key, value] of balances.entries()) {
     const match = yieldPools.get(key)
-    if (match) matches.push({ key, result: { yield: match, balance: value } })
+    if (match) chainProtocolMatches.push({ key, result: { yields: match, balance: value } })
   }
+
+  const matches = [] as any[]
+  for (const chainProtocolMatch of chainProtocolMatches) {
+    const match = matcher({
+      balances: chainProtocolMatch.result.balance.balances,
+      yields: chainProtocolMatch.result.yields,
+    })
+    if (match && match.length > 0) matches.push(match)
+  }
+
   return matches
 }
 
-export async function parseYieldsPools() {
+/** takes project and protocol level matches and match each balance to a yield pool */
+function matcher({
+  balances,
+  yields,
+}: {
+  balances: Omit<YieldBalanceGroup, 'chain' | 'protocol'>['balances']
+  yields: ({
+    pool: string
+    tokens: Token[] | null
+  } & Record<string, any>)[]
+}) {
+  if (balances.length === 0) return null
+
+  const matches = [] as any[]
+  for (const balance of balances) {
+    const { underlyings, ...balanceRest } = balance
+
+    for (const yieldPool of yields) {
+      const { tokens: yieldTokens, pool_old, ...yieldPoolRest } = yieldPool
+
+      // matched by pool_old
+      if (balance.address.toLowerCase() === pool_old.toLowerCase()) {
+        matches.push({ ...balanceRest, ...yieldPoolRest })
+        continue
+      }
+
+      if (!underlyings || !yieldTokens || yieldTokens.length !== underlyings.length) continue
+
+      const matchedByTokens = yieldTokens.filter((token) =>
+        underlyings.some((underlying) => underlying.address === token.address),
+      )
+
+      if (matchedByTokens.length === underlyings.length) {
+        matches.push({ ...balanceRest, ...yieldPoolRest, tokens: matchedByTokens })
+      }
+    }
+  }
+
+  return matches
+}
+
+async function parseYieldsPools() {
   const response = await fetch('https://yields.llama.fi/poolsOld')
   const json: YieldPoolResponse = await response.json()
 
@@ -99,7 +149,7 @@ export async function parseYieldsPools() {
   return yieldPools
 }
 
-export async function parseBalances(address: Address) {
+async function parseBalances(address: Address) {
   invariant(isAddress(address), `Invalid address: ${address}`)
 
   const url = `${environment.API_URL ?? 'http://localhost:3000'}/balances/${address}`

@@ -54,7 +54,7 @@ export interface YieldBalanceGroup {
   rewardUSD: number
   balances: Array<{
     standard: string | null
-    name: string
+    name?: string
     address: string
     symbol: string
     decimals: number
@@ -62,5 +62,23 @@ export interface YieldBalanceGroup {
     price?: number
     amount: string
     balanceUSD?: number
+    underlyings: Array<{
+      name?: string
+      address: string
+      symbol: string
+      decimals: string
+      stable: boolean | null
+      price: number
+      amount: string
+      balanceUSD: number
+    }>
+    rewards?: Array<{
+      address: string
+      symbol: string
+      decimals: number
+      amount: string
+      balanceUSD: number
+      price: number
+    }>
   }>
 }
