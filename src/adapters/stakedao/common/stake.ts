@@ -69,18 +69,22 @@ async function getFormattedCurveBalances(
   }))
 }
 
-export async function getStakeDaoXSDTBalance(ctx: BalancesContext, pool: Contract): Promise<Balance> {
+export async function getStakeDaoXSDTBalance(ctx: BalancesContext, pool: Contract): Promise<Balance | undefined> {
   const [userBalance, totalSupply, balanceOf] = await Promise.all([
     getSingleStakeBalance(ctx, pool),
     call({ ctx, target: pool.address, abi: erc20Abi.totalSupply }),
     call({ ctx, target: SDT.address, params: [pool.address], abi: erc20Abi.balanceOf }),
   ])
 
-  return {
-    ...userBalance,
-    amount: balanceOf,
-    underlyings: [{ ...SDT, amount: (balanceOf * userBalance.amount) / totalSupply }],
-    rewards: undefined,
-    category: 'stake',
+  if (userBalance.amount === 0n) {
+    return
+  } else {
+    return {
+      ...userBalance,
+      amount: balanceOf,
+      underlyings: [{ ...SDT, amount: (balanceOf * userBalance.amount) / totalSupply }],
+      rewards: undefined,
+      category: 'stake',
+    }
   }
 }
