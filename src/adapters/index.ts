@@ -128,6 +128,7 @@ import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
 import paraswap from '@adapters/paraswap'
+import pearlfi from '@adapters/pearlfi'
 import perennial from '@adapters/perennial'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
@@ -169,6 +170,7 @@ import spool from '@adapters/spool'
 import stader from '@adapters/stader'
 import stafi from '@adapters/stafi'
 import stakeLink from '@adapters/stake.link'
+import stakedao from '@adapters/stakedao'
 import stakehound from '@adapters/stakehound'
 import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
@@ -345,6 +347,7 @@ export const adapters: Adapter[] = [
   pandora,
   pangolin,
   paraswap,
+  pearlfi,
   perennial,
   piedao,
   pikaProtocol,
@@ -386,6 +389,7 @@ export const adapters: Adapter[] = [
   stader,
   stafi,
   stakeLink,
+  stakedao,
   stakehound,
   stakewise,
   stargate,
