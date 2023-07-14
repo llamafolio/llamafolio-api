@@ -20,12 +20,17 @@ export function fromStorage(contractsStorage: ContractStorage[]) {
   for (const contractStorage of contractsStorage) {
     const contract = {
       ...contractStorage.data,
+      decimals: contractStorage.data?.decimals ? parseInt(contractStorage.data.decimals) : undefined,
       standard: contractStorage.standard,
       name: contractStorage.name,
       chain: contractStorage.chain,
       address: contractStorage.address,
       category: contractStorage.category,
       adapterId: contractStorage.adapter_id,
+      underlyings: contractStorage.data?.underlyings?.map((underlying: any) => ({
+        ...underlying,
+        decimals: parseInt(underlying.decimals),
+      })),
     }
 
     contracts.push(contract)
@@ -72,6 +77,23 @@ export function toStorage(contracts: Contract[], adapterId: string) {
 export async function selectContractsByAdapterId(client: PoolClient, adapterId: string) {
   const adaptersContractsRes = await client.query('select * from adapters_contracts where adapter_id = $1;', [
     adapterId,
+  ])
+
+  return fromStorage(adaptersContractsRes.rows)
+}
+
+export async function selectAdaptersContractsByAddress(client: PoolClient, address: string, chain?: Chain) {
+  if (chain) {
+    const adaptersContractsRes = await client.query(
+      'select * from adapters_contracts where address = $1 and chain = $2;',
+      [address.toLowerCase(), chain],
+    )
+
+    return fromStorage(adaptersContractsRes.rows)
+  }
+
+  const adaptersContractsRes = await client.query('select * from adapters_contracts where address = $1;', [
+    address.toLowerCase(),
   ])
 
   return fromStorage(adaptersContractsRes.rows)
