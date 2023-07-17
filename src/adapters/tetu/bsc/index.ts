@@ -1,22 +1,25 @@
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { getTetuVaultBalances } from '@adapters/tetu/common/farm'
+import { getTetuVaults } from '@adapters/tetu/common/vault'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
+const factory: Contract = {
+  chain: 'bsc',
+  address: '0x8A571137DA0d66c2528DA3A83F097fbA10D28540',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
+  const vaults = await getTetuVaults(ctx, factory)
+
   return {
-    // Contracts grouped by keys. They will be passed to getBalances, filtered by user interaction
-    contracts: {},
-    // Optional revalidate time (in seconds).
-    // Contracts returned by the adapter are cached by default and can be updated by interval with this parameter.
-    // This is mostly used for Factory contracts, where the number of contracts deployed increases over time
-    // revalidate: 60 * 60,
+    contracts: { vaults },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  // Any method to check the contracts retrieved above (based on user interaction).
-  // This function will be run each time a user queries his balances.
-  // As static contracts info is filled in getContracts, this should ideally only fetch the current amount of each contract (+ underlyings and rewards)
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {})
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    vaults: getTetuVaultBalances,
+  })
 
   return {
     groups: [{ balances }],

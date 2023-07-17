@@ -26,12 +26,38 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  vaultReserve0: {
+    inputs: [],
+    name: 'vaultReserve0',
+    outputs: [
+      {
+        internalType: 'uint112',
+        name: '',
+        type: 'uint112',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  vaultReserve1: {
+    inputs: [],
+    name: 'vaultReserve1',
+    outputs: [
+      {
+        internalType: 'uint112',
+        name: '',
+        type: 'uint112',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 export async function getTetuLpBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [balancesRes, reservesRes, totalSuppliesRes] = await Promise.all([
+  const [userBalancesRes, reserve0sRes, reserve1sRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
       calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
@@ -40,7 +66,12 @@ export async function getTetuLpBalances(ctx: BalancesContext, pools: Contract[])
     multicall({
       ctx,
       calls: pools.map((pool) => ({ target: pool.address } as const)),
-      abi: abi.getReserves,
+      abi: abi.vaultReserve0,
+    }),
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: pool.address } as const)),
+      abi: abi.vaultReserve1,
     }),
     multicall({
       ctx,
@@ -52,28 +83,28 @@ export async function getTetuLpBalances(ctx: BalancesContext, pools: Contract[])
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
     const pool = pools[poolIdx]
     const underlyings = pool.underlyings as Contract[]
-    const balanceRes = balancesRes[poolIdx]
-    const reserveRes = reservesRes[poolIdx]
+    const userBalanceRes = userBalancesRes[poolIdx]
+    const reserve0Res = reserve0sRes[poolIdx]
+    const reserve1Res = reserve1sRes[poolIdx]
     const totalSupplyRes = totalSuppliesRes[poolIdx]
 
     if (
-      !balanceRes.success ||
-      !reserveRes.success ||
-      !totalSupplyRes.success ||
       !underlyings ||
+      !userBalanceRes.success ||
+      !reserve0Res.success ||
+      !reserve1Res.success ||
+      !totalSupplyRes.success ||
       totalSupplyRes.output === 0n
     ) {
       continue
     }
 
-    const [reserve0, reserve1] = reserveRes.output
-
-    underlyings[0].amount = (reserve0 * balanceRes.output) / totalSupplyRes.output
-    underlyings[1].amount = (reserve1 * balanceRes.output) / totalSupplyRes.output
+    underlyings[0] = { ...underlyings[0], amount: (reserve0Res.output * userBalanceRes.output) / totalSupplyRes.output }
+    underlyings[1] = { ...underlyings[1], amount: (reserve1Res.output * userBalanceRes.output) / totalSupplyRes.output }
 
     balances.push({
       ...pool,
-      amount: balanceRes.output,
+      amount: userBalanceRes.output,
       underlyings: [underlyings[0], underlyings[1]],
       rewards: undefined,
       category: 'lp',
