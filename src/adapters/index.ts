@@ -58,6 +58,7 @@ import etherFi from '@adapters/ether.fi'
 import euler from '@adapters/euler'
 import everrise from '@adapters/everrise'
 import exactly from '@adapters/exactly'
+import extraFinance from '@adapters/extra-finance'
 import fantohm from '@adapters/fantohm'
 import flamincome from '@adapters/flamincome'
 import floorDao from '@adapters/floor-dao'
@@ -279,6 +280,7 @@ export const adapters: Adapter[] = [
   euler,
   everrise,
   exactly,
+  extraFinance,
   fantohm,
   flamincome,
   floorDao,
