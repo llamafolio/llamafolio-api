@@ -184,6 +184,7 @@ import synapse from '@adapters/synapse'
 import synthetix from '@adapters/synthetix'
 import tangible from '@adapters/tangible'
 import templedao from '@adapters/templedao'
+import tetu from '@adapters/tetu'
 import theIdols from '@adapters/the-idols'
 import theOpenDaoSos from '@adapters/the-open-dao-sos'
 import thena from '@adapters/thena'
@@ -403,6 +404,7 @@ export const adapters: Adapter[] = [
   synthetix,
   tangible,
   templedao,
+  tetu,
   theIdols,
   theOpenDaoSos,
   thena,
