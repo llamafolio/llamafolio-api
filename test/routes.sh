@@ -8,6 +8,9 @@ curl --request GET \
   --url $API_URL/adapters
 
 curl --request GET \
+  --url $API_URL/nfts/0xbDfA4f4492dD7b7Cf211209C4791AF8d52BF5c50
+
+curl --request GET \
   --url $API_URL/balances/0xbDfA4f4492dD7b7Cf211209C4791AF8d52BF5c50
 
 curl --request GET \

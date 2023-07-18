@@ -14,6 +14,7 @@ export const environmentSchema = z.object({
   ANKR_API_KEY: z.string().optional().default(''),
   ARBITRUM_RPC: z.string().optional(),
   OPTIMISM_RPC: z.string().optional(),
+  NFT_PORT_API_KEY: z.string().optional(),
   IS_OFFLINE: z.literal('true').or(z.literal('false')).optional(),
   API_URL: z.string().optional(),
   AWS_GATEWAY_API_ID_DEV: z.string().optional(),
