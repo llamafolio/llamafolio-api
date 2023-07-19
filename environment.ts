@@ -14,12 +14,19 @@ export const environmentSchema = z.object({
   ANKR_API_KEY: z.string().optional().default(''),
   ARBITRUM_RPC: z.string().optional(),
   OPTIMISM_RPC: z.string().optional(),
-  NFT_PORT_API_KEY: z.string().optional(),
   IS_OFFLINE: z.literal('true').or(z.literal('false')).optional(),
   API_URL: z.string().optional(),
   AWS_GATEWAY_API_ID_DEV: z.string().optional(),
   AWS_GATEWAY_API_ID_PROD: z.string().optional(),
   SENTRY_DSN: z.string().optional(),
+  //
+  R2_BUCKET_URL: z.string().optional(),
+  NFTPORT_API_KEY: z.string().optional(),
+  OPENSEA_API_KEY: z.string().optional(),
+  ALCHEMY_API_KEY: z.string().optional(),
+  NFTSCAN_API_KEY: z.string().optional(),
+  INFURA_API_KEY: z.string().optional(),
+  INFURA_API_KEY_SECRET: z.string().optional(),
 })
 
 export type Environment = z.infer<typeof environmentSchema>

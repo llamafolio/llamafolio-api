@@ -1,16 +1,19 @@
+import { environment } from '@environment'
 import { raise } from '@lib/error'
+import { fetcher } from '@lib/fetcher'
 
-export async function nftCollections() {
-  const response = await fetch('https://nft.llama.fi/collections')
-  if (!response.ok) {
-    raise(`${response.status} - Failed to fetch from Defillama: ${response.statusText}`)
-  }
-  const data = (await response.json()) as NFTCollection[]
-  return data
+const R2_NFT_BUCKET_URL = environment.R2_BUCKET_URL ?? raise('Missing R2_BUCKET_URL')
+
+// defillamaCollections().then(console.log)
+
+export async function defillamaCollections() {
+  return fetcher<DefillamaCollectioons>(`${R2_NFT_BUCKET_URL}/llamafolio/nft/collections.json`)
 }
 
-interface NFTCollection {
-  contractAddress: string
+type DefillamaCollectioons = Array<DefillamaNFTCollection>
+
+interface DefillamaNFTCollection {
+  collectionId: string
   name: string
   symbol: string
   image: string

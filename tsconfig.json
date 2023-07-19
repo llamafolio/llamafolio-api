@@ -16,7 +16,7 @@
     "noErrorTruncation": true,
     "noUnusedLocals": false,
     "types": ["node"],
-    "noUnusedParameters": true,
+    "noUnusedParameters": false,
     "lib": ["ESNext", "DOM"],
     "baseUrl": ".",
     "outDir": "./.esbuild",

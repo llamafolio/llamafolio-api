@@ -1,60 +1,39 @@
+import type { Chain } from '@lib/chains'
 import { raise } from '@lib/error'
+import { fetcher } from '@lib/fetcher'
 import type { Address } from 'viem'
 import { getAddress } from 'viem'
 
-import type { WalletNFTs } from './types'
+const SEQUENCE_BASE_URL = (chain: Chain) => `https://${sequenceChains[chain]}-indexer.sequence.app/rpc/Indexer`
 
-export const sequenceSupportedChains = [
-  'ethereum',
-  'polygon',
-  'arbitrum',
-  'optimism',
-  'avalanche',
-  'gnosis',
-  'bsc',
-] as const
+export const sequenceChains: {
+  [chain: string]: string
+} = {
+  ethereum: 'mainnet',
+  polygon: 'polygon',
+  arbitrum: 'arbitrum',
+  optimism: 'optimism',
+  avalanche: 'avalanche',
+  gnosis: 'gnosis',
+  bsc: 'bsc',
+}
 
-export async function fetchUserNFTsFromSequence({
-  address,
-  chain,
-}: {
-  address: Address
-  chain: 'ethereum' | 'polygon' | 'arbitrum' | 'optimism' | 'avalanche' | 'gnosis' | 'bsc'
-}): Promise<WalletNFTs> {
-  const _chain = chain === 'ethereum' ? 'mainnet' : chain
-  const url = `https://${_chain}-indexer.sequence.app/rpc/Indexer/GetTokenBalances`
+// fetchUserNFTsFromSequence({ address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045' }).then(console.log)
+
+export async function fetchUserNFTsFromSequence({ address, chain = 'ethereum' }: { address: Address; chain?: Chain }) {
   const walletAddress = getAddress(address) ?? raise('Invalid address')
-  const response = await fetch(url, {
+  const url = `${SEQUENCE_BASE_URL(chain)}/GetTokenBalances`
+  const response = await fetcher<SequenceAccountNftsResponse | SequenceError>(url, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
     body: JSON.stringify({
       accountAddress: walletAddress,
       includeMetadata: true,
     }),
   })
-  if (!response.ok) {
-    raise(`${response.status} - Failed to fetch from Sequence: ${response.statusText}`)
+  if ('error' in response) {
+    raise(`[sequence] error for url ${url}: ${response.error}`)
   }
-  const data = (await response.json()) as SequenceResponse & SequenceError
-  if (Object.hasOwn(data, 'error')) {
-    raise(`Sequence response: ${JSON.stringify(data, undefined, 2)}`)
-  }
-  return {
-    address,
-    nfts: data.balances.map((nft) => ({
-      contractAddress: nft.contractAddress,
-      tokenId: nft.tokenID,
-      name: nft.tokenMetadata?.name || nft.contractInfo.name,
-      description: nft.tokenMetadata?.description ?? '',
-      imageURL: nft.tokenMetadata?.image || nft.contractInfo.logoURI || nft.contractInfo.extensions.ogImage,
-      chain,
-      contractType: nft.contractInfo.type,
-      count: Number(nft.balance),
-    })),
-  }
+  return response
 }
 
 interface SequenceError {
@@ -64,7 +43,7 @@ interface SequenceError {
   error: string
 }
 
-interface SequenceResponse {
+interface SequenceAccountNftsResponse {
   page: {
     pageSize: number
     more: boolean
