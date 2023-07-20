@@ -39,5 +39,4 @@ jobs:
         run: |
           export CLOUDFLARE_R2_PUBLIC_URL=${{ env.CLOUDFLARE_R2_PUBLIC_URL }}
           export API_URL=${{ env.API_URL }}
-          export CLOUDFLARE_R2_PUBLIC_URL=${{ env.CLOUDFLARE_R2_PUBLIC_URL }}
           /bin/bash ./test/routes.sh
