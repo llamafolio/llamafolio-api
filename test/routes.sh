@@ -54,3 +54,6 @@ curl --request GET \
 
 curl --request GET \
   --url $API_URL/holders/0x6b175474e89094c44da98b954eedeac495271d0f
+
+curl --request GET \
+  --url $CLOUDFLARE_R2_PUBLIC_URL/nft/llama_nft_collections.json
