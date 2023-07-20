@@ -39,14 +39,17 @@ jobs:
       - name: '[Download] DefiLlama NFT Collections'
         run: |
           curl --request GET \
+            --silent \
+            --show-error \
+            --fail \
             --url 'https://nft.llama.fi/collections' \
             --header 'Accept: application/json' \
             --header 'Content-Type: application/json' \
-            --output /tmp/${{ github.run_id }}/llama_nft_collections.json
+            --output "/${{ runner.temp }}/llama_nft_collections.json"
 
       - name: '[Upload] Cloudflare R2'
         run: |
-          FILE_PATH="/tmp/${{ github.run_id }}/llama_nft_collections.json" \
+          FILE_PATH="/${{ runner.temp }}/llama_nft_collections.json" \
             UPLOAD_PATH="nft/llama_nft_collections.json" \
             CLOUDFLARE_S3_URL="${{ env.CLOUDFLARE_S3_URL }}/llamafolio" \
             CLOUDFLARE_AWS_ACCESS_KEY_ID="${{ secrets.CLOUDFLARE_AWS_ACCESS_KEY_ID }}" \
