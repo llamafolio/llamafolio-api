@@ -53,7 +53,6 @@ jobs:
 
       - name: 'Format'
         run: pnpm format
-          
 
       # we will have to skip till we resolve existing type errors
       - name: 'Typecheck'
@@ -66,7 +65,8 @@ jobs:
       - name: 'Test'
         env:
           API_URL: ${{ secrets.API_URL }}
+          CLOUDFLARE_R2_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_PUBLIC_URL }}
         run: |
+          export CLOUDFLARE_R2_PUBLIC_URL=${{ env.CLOUDFLARE_R2_PUBLIC_URL }}
           export API_URL=${{ env.API_URL }}
           /bin/bash ./test/routes.sh
-

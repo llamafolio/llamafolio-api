@@ -19,6 +19,7 @@ export const environmentSchema = z.object({
   AWS_GATEWAY_API_ID_DEV: z.string().optional(),
   AWS_GATEWAY_API_ID_PROD: z.string().optional(),
   SENTRY_DSN: z.string().optional(),
+  CLOUDFLARE_R2_PUBLIC_URL: z.string().optional(),
 })
 
 export type Environment = z.infer<typeof environmentSchema>
