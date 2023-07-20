@@ -1,0 +1,56 @@
+name: Refresh R2
+
+on:
+  schedule:
+    #        ┌───── minute (0 - 59)
+    #        │  ┌───── hour (0 - 23)
+    #        │  │  ┌───── day of the month (1 - 31)
+    #        │  │  │ ┌───── month (1 - 12)
+    #        │  │  │ │ ┌───── day of the week (0 - 6) (Sunday to Saturday)
+    #        │  │  │ │ │
+    #        │  │  │ │ │
+    #        │  │  │ │ │
+    #        *  *  * * *
+    - cron: '0 */2 * * *'
+  repository_dispatch: # REST API
+    types:
+      - 'refresh-r2'
+  workflow_dispatch: # Manual through GitHub UI
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  ACTIONS_RUNNER_DEBUG: true
+  CLOUDFLARE_S3_URL: 'https://${{ secrets.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com'
+
+jobs:
+  refresh-nft-collections:
+    name: 'DefiLlama NFT Collections'
+    runs-on: [ubuntu-latest]
+    timeout-minutes: 5
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: '[Download] DefiLlama NFT Collections'
+        run: |
+          curl --request GET \
+            --url 'https://nft.llama.fi/collections' \
+            --header 'Accept: application/json' \
+            --header 'Content-Type: application/json' \
+            --output /tmp/${{ github.run_id }}/llama_nft_collections.json
+
+      - name: '[Upload] Cloudflare R2'
+        run: |
+          FILE_PATH="/tmp/${{ github.run_id }}/llama_nft_collections.json" \
+            UPLOAD_PATH="nft/llama_nft_collections.json" \
+            CLOUDFLARE_S3_URL="${{ env.CLOUDFLARE_S3_URL }}/llamafolio" \
+            CLOUDFLARE_AWS_ACCESS_KEY_ID="${{ secrets.CLOUDFLARE_AWS_ACCESS_KEY_ID }}" \
+            CLOUDFLARE_AWS_SECRET_ACCESS_KEY="${{ secrets.CLOUDFLARE_AWS_SECRET_ACCESS_KEY }}" \
+            /bin/bash ${{ github.workspace }}/scripts/r2/upload.sh
+
+# TODO: Add job to refresh NFT prices R2 object
