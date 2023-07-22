@@ -27,6 +27,7 @@ export const environmentSchema = z.object({
   NFTSCAN_API_KEY: z.string().optional(),
   INFURA_API_KEY: z.string().optional(),
   INFURA_API_KEY_SECRET: z.string().optional(),
+  CLOUDFLARE_R2_PUBLIC_URL: z.string().optional(),
 })
 
 export type Environment = z.infer<typeof environmentSchema>
