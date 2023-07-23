@@ -1,21 +1,3 @@
-/**
- * All NFT fetchers should have this interface as a base for returned data
- */
+export const NFT_ERC_TYPES = ['erc721', 'erc1155'] as const
 
-import type { Address } from 'viem'
-
-export interface WalletNFTs {
-  address: Address
-  nfts: NFT[]
-}
-
-export interface NFT {
-  contractAddress: string
-  tokenId: string
-  name: string
-  description: string
-  imageURL: string
-  chain: string
-  contractType: 'ERC721' | 'ERC1155' | String
-  count: number
-}
+export type NFT_ERC_TYPE = (typeof NFT_ERC_TYPES)[number]

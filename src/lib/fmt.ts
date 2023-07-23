@@ -46,16 +46,9 @@ export function millifyBI(amount: bigint): string {
 export function parseStringJSON(jsonString: string) {
   try {
     if (!isNotFalsy(jsonString)) return jsonString
-    return JSON.parse(
-      jsonString
-        .replaceAll('\n', '')
-        .replaceAll('\\n', '')
-        .replaceAll('\r', '')
-        .replaceAll('\t', '')
-        .replaceAll('\\', ''),
-    )
+    return JSON.parse(jsonString.replaceAll(/[\n\\\n\r\t\\\\]/g, ''))
   } catch (error) {
-    console.error('Failed to parse JSON', { string: jsonString, error })
+    console.error('Failed to parse JSON', { string: jsonString })
     return jsonString
   }
 }

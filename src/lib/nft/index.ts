@@ -14,6 +14,7 @@ import { fetchUserNFTs as fetchUserNFTsFromInfura } from './infura'
 import { fetchUserNFTs as fetchUserNFTsFromNftPort } from './nft-port'
 import {
   batchFetchMetadata as batchFetchMetadataFromNftScan,
+  fetchUserNFTCollections as fetchUserNFTCollectionsFromNftScan,
   fetchUserNFTs as fetchUserNFTsFromNftScan,
 } from './nft-scan'
 import {
@@ -40,6 +41,7 @@ export const fetchNFTMetadataFrom = {
 
 export const fetchUserNFTCollectionsFrom = {
   reservoir: fetchUserNFTCollectionsFromReservoir,
+  nftScan: fetchUserNFTCollectionsFromNftScan,
 }
 
 export const fetchUserNFTActivityFrom = {

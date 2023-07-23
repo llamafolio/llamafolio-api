@@ -6,6 +6,7 @@ import { type Address, getAddress } from 'viem'
 
 const NFTSCAN_BASE_URL = `https://restapi.nftscan.com/api/v2`
 const NFTSCAN_API_KEY = environment.NFTSCAN_API_KEY ?? raise('Missing NFTSCAN_API_KEY')
+const AUTH_HEADER = { 'X-API-KEY': NFTSCAN_API_KEY }
 
 export const nftScanRequestChain: {
   [chain: string]: string
@@ -48,7 +49,7 @@ export async function fetchUserNFTs({ address, ercType }: { address: Address; er
   const url = `${NFTSCAN_BASE_URL}/assets/chain/${walletAddress}?${queryParameters}`
   const data = await fetcher<NftScanAccountNftsResponse | NftScanError>(url, {
     method: 'GET',
-    headers: { 'X-API-KEY': NFTSCAN_API_KEY },
+    headers: AUTH_HEADER,
   })
   if (data.code !== 200) {
     raise(`[NftScan] error for url ${url}:\n${JSON.stringify(data, undefined, 2)}`)
@@ -67,11 +68,43 @@ export async function batchFetchMetadata({
   const url = `${NFTSCAN_BASE_URL}/assets/batch`
   const response = await fetcher<NftScanMetadataResponse>(url, {
     method: 'POST',
-    headers: { 'X-API-KEY': NFTSCAN_API_KEY },
+    headers: AUTH_HEADER,
     body: JSON.stringify({
       contract_address_with_token_id_list: tokens,
       show_attributes,
     }),
+  })
+  if (response.code !== 200) {
+    raise(`[NftScan] error for url ${url}:\n${JSON.stringify(response, undefined, 2)}`)
+  }
+  return response
+}
+
+// fetchUserNFTCollections({
+//   address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+// }).then(console.log)
+
+export async function fetchUserNFTCollections({
+  address,
+  erc_type = 'erc721',
+  limit = 100,
+  offset = 0,
+}: {
+  address: string
+  erc_type?: 'erc721' | 'erc1155'
+  limit?: number
+  offset?: number
+}) {
+  const walletAddress = getAddress(address) ?? raise(`Invalid address: ${address}`)
+  const queryParameters = urlSearchParams({
+    erc_type,
+    limit,
+    offset,
+  })
+  const url = `${NFTSCAN_BASE_URL}/collections/own/${walletAddress}?${queryParameters}`
+  const response = await fetcher<NftScanResponse<Array<UserNFTCollection>>>(url, {
+    method: 'GET',
+    headers: AUTH_HEADER,
   })
   if (response.code !== 200) {
     raise(`[NftScan] error for url ${url}:\n${JSON.stringify(response, undefined, 2)}`)
@@ -88,7 +121,7 @@ export async function nftScanAccountStatistics({ address }: { address: Address }
   const url = `${NFTSCAN_BASE_URL}/statistics/overview/${walletAddress}`
   const response = await fetcher<NftScanAccountStatisticsResponse | NftScanError>(url, {
     method: 'GET',
-    headers: { 'X-API-KEY': NFTSCAN_API_KEY },
+    headers: AUTH_HEADER,
   })
   if (response.code !== 200) {
     raise(`[NftScan] error for url ${url}:\n${JSON.stringify(response, undefined, 2)}`)
@@ -96,17 +129,48 @@ export async function nftScanAccountStatistics({ address }: { address: Address }
   return response.data
 }
 
-interface NftScanError {
-  code: number
-  msg: string
-  data?: unknown
-}
-
-interface NftScanMetadataResponse {
+interface NftScanResponse<T> {
   code: number
   msg: string | null
-  data: Array<NftScanMetadata>
+  data: T
 }
+
+interface NftScanError extends NftScanResponse<unknown> {}
+
+export interface UserNFTCollection {
+  contract_address: Address
+  name: string
+  symbol: string
+  description?: string
+  website?: string
+  email?: string | null
+  twitter?: string
+  discord?: string
+  telegram?: string | null
+  github?: string | null
+  instagram?: string
+  medium?: string
+  logo_url?: string
+  banner_url?: string
+  featured_url?: string
+  large_image_url?: string
+  attributes: Array<any>
+  erc_type: 'erc721' | 'erc1155'
+  deploy_block_number: number
+  owner?: Address
+  verified: boolean
+  opensea_verified: boolean
+  royalty: number
+  items_total: number
+  amounts_total: number
+  owners_total: number
+  opensea_floor_price?: number
+  floor_price?: number
+  collections_with_same_name: any
+  price_symbol: string
+}
+
+interface NftScanMetadataResponse extends NftScanResponse<Array<NftScanMetadata>> {}
 
 export interface NftScanMetadata {
   contract_address: string
@@ -168,11 +232,7 @@ export interface NftScanAccountStatisticsResponse {
   }
 }
 
-interface NftScanAccountNftsResponse {
-  code: number
-  msg: string | null
-  data: Array<NftScanChainCollectionAssets>
-}
+interface NftScanAccountNftsResponse extends NftScanResponse<Array<NftScanChainCollectionAssets>> {}
 
 interface NftScanChainCollectionAssets {
   chain: string

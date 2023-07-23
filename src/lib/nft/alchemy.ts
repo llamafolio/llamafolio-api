@@ -16,7 +16,7 @@ const alchemyChain: {
 export const ALCHEMY_BASE_URL = (chain: Chain) => `https://${alchemyChain[chain]}.g.alchemy.com`
 
 /** groups Alchemy NFTs by collection contract address */
-export function groupAlchemyNFTs(nfts: Array<AlchemyNFT>) {
+export function groupAlchemyNFTs(nfts: Array<AlchemyNFTWithMetadata>) {
   return nfts.reduce((accumulator, item) => {
     const {
       contract: { address: key },
@@ -33,14 +33,14 @@ export function groupAlchemyNFTs(nfts: Array<AlchemyNFT>) {
     accumulator[key].balance += Number(item.balance)
     accumulator[key].nfts.push(nft)
     return accumulator
-  }, {} as Record<string, AlchemyNFT['contract'] & { balance: number; nfts: Array<Omit<AlchemyNFT, 'contract'>> }>)
+  }, {} as Record<string, AlchemyNFTWithMetadata['contract'] & { balance: number; nfts: Array<Omit<AlchemyNFTWithMetadata, 'contract'>> }>)
 }
 
 // https://docs.alchemy.com/reference/getnftsforowner-v3
-export async function fetchUserNFTs({
+export async function fetchUserNFTs<T extends boolean = false>({
   address,
   chain = 'ethereum',
-  withMetadata = true,
+  withMetadata,
   excludeFilters = ['SPAM'],
   spamConfidenceLevel = 'MEDIUM',
   contractAddresses,
@@ -50,7 +50,7 @@ export async function fetchUserNFTs({
 }: {
   address: Address
   chain?: Chain
-  withMetadata?: boolean
+  withMetadata?: T
   contractAddresses?: Array<Address>
   excludeFilters?: Array<'SPAM' | 'AIRDROPS'>
   spamConfidenceLevel?: 'LOW' | 'MEDIUM' | 'HIGH' | 'VERY_HIGH'
@@ -62,7 +62,7 @@ export async function fetchUserNFTs({
   const walletAddress = getAddress(address) ?? raise(`Invalid address: ${address}`)
   const queryParameters = urlSearchParams({
     owner: walletAddress,
-    withMetadata,
+    withMetadata: Boolean(withMetadata),
     spamConfidenceLevel,
     tokenUriTimeoutInMs,
     pageSize,
@@ -70,9 +70,9 @@ export async function fetchUserNFTs({
   })
   excludeFilters.forEach((filter) => queryParameters.append('excludeFilters[]', filter))
   contractAddresses?.forEach((address) => queryParameters.append('contractAddresses[]', address))
-
   const url = `${ALCHEMY_BASE_URL(chain)}/nft/v3/${API_KEY}/getNFTsForOwner?${queryParameters}`
-  const data = await fetcher<AlchemyAccountNftsResponse | AlchemyError>(url)
+  type NFT = T extends true ? AlchemyNFTWithMetadata : AlchemyNFT
+  const data = await fetcher<AlchemyUserNFTs<NFT> | AlchemyError>(url)
 
   if ('error' in data) {
     raise(`[alchemy] error for url ${url}: ${JSON.stringify(data, undefined, 2)}`)
@@ -150,8 +150,8 @@ export async function alchemyComputeNftAttributesRarity({
   return data
 }
 
-interface AlchemyAccountNftsResponse {
-  ownedNfts: Array<AlchemyNFT>
+interface AlchemyUserNFTs<T> {
+  ownedNfts: Array<T>
   totalCount: number
   validAt: {
     blockNumber: number
@@ -168,6 +168,12 @@ interface AlchemyError {
 }
 
 export interface AlchemyNFT {
+  contractAddress: Address
+  tokenId: string
+  balance: string
+}
+
+export interface AlchemyNFTWithMetadata {
   contract: AlchemyNftMetadata['contract']
   tokenId: string
   tokenType: string
