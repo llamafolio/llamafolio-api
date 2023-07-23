@@ -39,8 +39,6 @@ curl --head \
   --fail \
   --url $API_URL/contracts/0x0d8775f648430679a709e98d2b0cb6250d2887ef
 
- 
-
 curl --head \
   --request GET \
   --silent \

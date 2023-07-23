@@ -106,7 +106,7 @@ export const handler: APIGatewayProxyHandler = async (event, _) => {
         walletAddress: address,
         quantity: nftsResponse.items.length,
         minimumValueUSD,
-        collections: Object.values(result),
+        data: Object.values(result),
       },
       { maxAge: 30 * 60 },
     )
