@@ -62,6 +62,17 @@ provider:
       maxAge: 31536000
 
 functions:
+
+  getNFTs:
+    handler: src/handlers/getNFTs.handler
+    description: Get address nfts
+    events:
+      - httpApi:
+          method: get
+          path: /nfts/{address}
+    timeout: 29
+    memorySize: 1024
+
   getAdapters:
     handler: src/handlers/getAdapters.handler
     description: Get adapters
