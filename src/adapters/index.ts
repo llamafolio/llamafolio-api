@@ -58,6 +58,7 @@ import etherFi from '@adapters/ether.fi'
 import euler from '@adapters/euler'
 import everrise from '@adapters/everrise'
 import exactly from '@adapters/exactly'
+import extraFinance from '@adapters/extra-finance'
 import fantohm from '@adapters/fantohm'
 import flamincome from '@adapters/flamincome'
 import floorDao from '@adapters/floor-dao'
@@ -211,6 +212,7 @@ import wepiggy from '@adapters/wepiggy'
 import wigoswap from '@adapters/wigoswap'
 import wombatExchange from '@adapters/wombat-exchange'
 import wonderland from '@adapters/wonderland'
+import woofi from '@adapters/woofi'
 import x2y2 from '@adapters/x2y2'
 import yearnFinance from '@adapters/yearn-finance'
 import yoshiExchange from '@adapters/yoshi-exchange'
@@ -278,6 +280,7 @@ export const adapters: Adapter[] = [
   euler,
   everrise,
   exactly,
+  extraFinance,
   fantohm,
   flamincome,
   floorDao,
@@ -431,6 +434,7 @@ export const adapters: Adapter[] = [
   wigoswap,
   wombatExchange,
   wonderland,
+  woofi,
   x2y2,
   yearnFinance,
   yoshiExchange,
