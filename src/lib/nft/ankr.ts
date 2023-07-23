@@ -18,7 +18,7 @@ const ankrChain: {
   polygon: 'polygon',
 }
 
-export async function fetchUserNFTsFromAnkr({
+export async function fetchUserNFTs({
   address,
   chain = ['ethereum', 'arbitrum', 'avalanche', 'bsc', 'fantom', 'optimism', 'polygon'],
   pageSize = 50,

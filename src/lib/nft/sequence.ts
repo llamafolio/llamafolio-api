@@ -18,9 +18,9 @@ export const sequenceChains: {
   bsc: 'bsc',
 }
 
-// fetchUserNFTsFromSequence({ address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045' }).then(console.log)
+// fetchUserNFTs({ address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045' }).then(console.log)
 
-export async function fetchUserNFTsFromSequence({ address, chain = 'ethereum' }: { address: Address; chain?: Chain }) {
+export async function fetchUserNFTs({ address, chain = 'ethereum' }: { address: Address; chain?: Chain }) {
   const walletAddress = getAddress(address) ?? raise('Invalid address')
   const url = `${SEQUENCE_BASE_URL(chain)}/GetTokenBalances`
   const response = await fetcher<SequenceAccountNftsResponse | SequenceError>(url, {

@@ -4,17 +4,15 @@ import { fetcher, urlSearchParams } from '@lib/fetcher'
 import type { Address } from 'viem'
 import { getAddress } from 'viem'
 
-export { fetchUserNFTsFromNftPort, nftPortListings }
-
 const NFTPORT_BASE_URL = 'https://api.nftport.xyz/v0'
 const NFTPORT_API_KEY = environment.NFTPORT_API_KEY ?? raise('Missing NFTPORT_API_KEY')
 
-// fetchUserNFTsFromNftPort({
+// fetchUserNFTs({
 //   address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
 // }).then(console.log)
 
 // https://docs.nftport.xyz/reference/retrieve-nfts-owned-by-account
-async function fetchUserNFTsFromNftPort({
+export async function fetchUserNFTs({
   address,
   chain = 'ethereum',
   pageSize = 50,
@@ -51,7 +49,7 @@ async function fetchUserNFTsFromNftPort({
 // nftPortListings().then(console.log)
 
 // https://docs.nftport.xyz/reference/retrieve-all-nfts
-async function nftPortListings(
+export async function nftPortListings(
   {
     chain,
     pageSize,

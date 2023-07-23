@@ -2,17 +2,18 @@ import { environment } from '@environment'
 import { raise } from '@lib/error'
 import { fetcher } from '@lib/fetcher'
 
-const R2_NFT_BUCKET_URL = environment.R2_BUCKET_URL ?? raise('Missing R2_BUCKET_URL')
+const CLOUDFLARE_R2_PUBLIC_URL = environment.CLOUDFLARE_R2_PUBLIC_URL ?? raise('Missing CLOUDFLARE_R2_PUBLIC_URL')
 
-// defillamaCollections().then(console.log)
+// defillamaCollections().then(_ => {
+//   console.log(JSON.stringify(_, undefined, 2))
+//   console.log(_.length)
+// })
 
 export async function defillamaCollections() {
-  return fetcher<DefillamaCollectioons>(`${R2_NFT_BUCKET_URL}/llamafolio/nft/collections.json`)
+  return fetcher<Array<DefillamaNFTCollection>>(`${CLOUDFLARE_R2_PUBLIC_URL}/nft/llama_nft_collections.json`)
 }
 
-type DefillamaCollectioons = Array<DefillamaNFTCollection>
-
-interface DefillamaNFTCollection {
+export interface DefillamaNFTCollection {
   collectionId: string
   name: string
   symbol: string

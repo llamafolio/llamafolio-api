@@ -4,7 +4,7 @@ import { raise } from '@lib/error'
 import { fetcher, urlSearchParams } from '@lib/fetcher'
 import { type Address, getAddress } from 'viem'
 
-export const alchemyChain: {
+const alchemyChain: {
   [chain: string]: string
 } = {
   ethereum: 'eth-mainnet',
@@ -18,15 +18,26 @@ export const ALCHEMY_BASE_URL = (chain: Chain) => `https://${alchemyChain[chain]
 /** groups Alchemy NFTs by collection contract address */
 export function groupAlchemyNFTs(nfts: Array<AlchemyNFT>) {
   return nfts.reduce((accumulator, item) => {
-    const key = item.contract.address
-    if (!accumulator[key]) accumulator[key] = []
-    accumulator[key].push(item)
+    const {
+      contract: { address: key },
+      ...nft
+    } = item
+
+    if (!accumulator[key]) {
+      accumulator[key] = {
+        ...item.contract,
+        balance: Number(item.balance),
+        nfts: [],
+      }
+    }
+    accumulator[key].balance += Number(item.balance)
+    accumulator[key].nfts.push(nft)
     return accumulator
-  }, {} as Record<string, (typeof nfts)[0][]>)
+  }, {} as Record<string, AlchemyNFT['contract'] & { balance: number; nfts: Array<Omit<AlchemyNFT, 'contract'>> }>)
 }
 
 // https://docs.alchemy.com/reference/getnftsforowner-v3
-export async function fetchUserNFTsFromAlchemy({
+export async function fetchUserNFTs({
   address,
   chain = 'ethereum',
   withMetadata = true,
@@ -70,6 +81,75 @@ export async function fetchUserNFTsFromAlchemy({
   return data
 }
 
+/**
+ * This is automatically included in the response of `fetchUserNFTsFromAlchemy`
+ * https://docs.alchemy.com/reference/getnftmetadatabatch-v3
+ */
+export async function batchFetchMetadata({
+  chain = 'ethereum',
+  tokens,
+  tokenUriTimeoutInMs,
+  refreshCache = false,
+}: {
+  chain?: Chain
+  tokens: Array<{
+    contractAddress?: string
+    tokenId: string
+    tokenType?: 'ERC721' | 'ERC1155'
+  }>
+  tokenUriTimeoutInMs?: number
+  refreshCache?: boolean
+}) {
+  const API_KEY = environment.ALCHEMY_API_KEY ?? raise('Missing ALCHEMY_API_KEY')
+  const url = `${ALCHEMY_BASE_URL(chain)}/nft/v3/${API_KEY}/getNFTMetadataBatch`
+  const data = await fetcher<AlchemyNftMetadata[] | AlchemyError>(url, {
+    method: 'POST',
+    body: JSON.stringify({ tokens, tokenUriTimeoutInMs, refreshCache }),
+  })
+  return data
+}
+
+/**
+ * This is automatically included in the response of `fetchUserNFTsFromAlchemy`
+ * https://docs.alchemy.com/reference/getcontractmetadatabatch-v3
+ */
+export async function alchemyGetContractMetadataBatch({
+  chain = 'ethereum',
+  contractAddresses,
+}: {
+  chain?: Chain
+  contractAddresses: Array<string>
+}) {
+  const API_KEY = environment.ALCHEMY_API_KEY ?? raise('Missing ALCHEMY_API_KEY')
+  const url = `${ALCHEMY_BASE_URL(chain)}/nft/v3/${API_KEY}/getContractMetadataBatch`
+  const addresses = contractAddresses.map(getAddress) ?? raise('Invalid address')
+  const data = await fetcher<AlchemyContractMetadata[] | AlchemyError>(url, {
+    method: 'POST',
+    body: JSON.stringify({ contractAddresses: addresses }),
+  })
+  return data
+}
+
+// https://docs.alchemy.com/reference/computerarity-v3
+export async function alchemyComputeNftAttributesRarity({
+  chain = 'ethereum',
+  contractAddress,
+  tokenId,
+}: {
+  chain?: Chain
+  contractAddress: string
+  tokenId: string
+}) {
+  const API_KEY = environment.ALCHEMY_API_KEY ?? raise('Missing ALCHEMY_API_KEY')
+  const queryParameters = urlSearchParams({
+    contractAddress,
+    tokenId,
+  })
+  const url = `${ALCHEMY_BASE_URL(chain)}/nft/v3/${API_KEY}/computeRarity?${queryParameters}`
+  const data = await fetcher<AlchemyNftRarity | AlchemyError>(url)
+  return data
+}
+
 interface AlchemyAccountNftsResponse {
   ownedNfts: Array<AlchemyNFT>
   totalCount: number
@@ -87,51 +167,100 @@ interface AlchemyError {
   }
 }
 
-interface AlchemyNFT {
-  contract: {
-    address: string
-    name: string
-    symbol: string
-    totalSupply?: string
-    tokenType: string
-    contractDeployer: string
-    deployedBlockNumber: number
-    openSeaMetadata: {
-      floorPrice: any
-      collectionName: string
-      safelistRequestStatus: string
-      imageUrl: string
-      description: string
-      externalUrl: string
-      twitterUsername: any
-      discordUrl: any
-      lastIngestedAt: string
-    }
-    isSpam: boolean
-    spamClassifications: Array<string>
-  }
+export interface AlchemyNFT {
+  contract: AlchemyNftMetadata['contract']
   tokenId: string
   tokenType: string
-  name: any
-  description: any
+  name: string
+  description: string
   image: {
-    cachedUrl: any
-    thumbnailUrl: any
-    pngUrl: any
-    contentType: any
-    size: any
-    originalUrl: any
+    cachedUrl: string
+    thumbnailUrl: string
+    pngUrl: string
+    contentType: string
+    size: number
+    originalUrl: string
   }
   raw: {
-    tokenUri?: string
-    metadata: Record<string, any>
-    error: string
+    tokenUri: string
+    metadata: {
+      name: string
+      description: string
+      image: string
+      external_url: string
+      attributes: Array<{
+        value: string
+        trait_type: string
+      }>
+    }
+    error: any
   }
-  tokenUri?: string
+  tokenUri: string
   timeLastUpdated: string
   balance: string
-  acquiredAt: {
-    blockTimestamp: any
-    blockNumber: any
+}
+
+export interface AlchemyNftMetadata {
+  contract: AlchemyContractMetadata & {
+    isSpam: string
+    classifications: Array<string>
   }
+  name: string
+  description: string
+  image: {
+    cachedUrl: string
+    thumbnailUrl: string
+    pngUrl: string
+    contentType: string
+    size: number
+    originalUrl: string
+  }
+  raw: {
+    tokenUri: string
+    metadata: {
+      image: string
+      name: string
+      description: string
+      attributes: Array<{
+        value: string
+        trait_type: string
+      }>
+    }
+    error: string
+  }
+  tokenUri: string
+  timeLastUpdated: string
+  acquiredAt: {
+    blockTimestamp: string
+    blockNumber: string
+  }
+}
+
+export interface AlchemyContractMetadata {
+  address: string
+  name: string
+  symbol: string
+  totalSupply: string
+  tokenType: string
+  contractDeployer: string
+  deployedBlockNumber: number
+  openSeaMetadata: {
+    floorPrice: number | null
+    collectionName: string
+    safelistRequestStatus: string
+    imageUrl: string
+    description: string
+    externalUrl: string
+    twitterUsername: string
+    discordUrl: string
+    lastIngestedAt: string
+  }
+}
+
+export interface AlchemyNftRarity {
+  rarities: Array<{
+    trait_type: string
+    value: string
+    prevalence: number
+  }>
 }

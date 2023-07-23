@@ -1,66 +1,112 @@
 import { serverError, success } from '@handlers/response'
-import type { Chain } from '@lib/chains'
+import { groupBy, sliceIntoChunks } from '@lib/array'
 import { raise } from '@lib/error'
-import { paginatedFetch } from '@lib/fetcher'
-import { defillamaCollections, fetchUserNFTsFromAlchemy } from '@lib/nft'
-import { BLACKLISTED_TRASH } from '@lib/nft/blacklist'
+import { sum } from '@lib/math'
+import { fetchNFTMetadataFrom, fetchUserNFTCollectionsFrom, fetchUserNFTsFrom } from '@lib/nft'
+import type { UserNFTCollection } from '@lib/nft/reservoir'
+import { isNotFalsy } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-import type { Address } from 'viem'
 import { getAddress, isAddress } from 'viem'
+
+export function parseStringJSON(jsonString: string) {
+  try {
+    if (!isNotFalsy(jsonString)) return jsonString
+    return JSON.parse(
+      jsonString
+        .replaceAll('\n', '')
+        .replaceAll('\\n', '')
+        .replaceAll('\r', '')
+        .replaceAll('\t', '')
+        .replaceAll('\\', ''),
+    )
+  } catch (error) {
+    console.error('Failed to parse JSON', { string: jsonString, error })
+    return jsonString
+  }
+}
+
+/**
+ * Get NFTs from Center,
+ * batch get NFT details from NFTScan,
+ */
 
 export const handler: APIGatewayProxyHandler = async (event, _) => {
   try {
     const address = getAddress(event.pathParameters?.address ?? raise('Missing wallet address from URL address'))
     if (!isAddress(address)) raise(`Invalid wallet address: ${address}`)
 
-    const response = {} as any // WIP
+    const nftsResponse = await fetchUserNFTsFrom.center({ address })
 
-    const results = await paginatedFetch({
-      fn: fetchUserNFTsFromAlchemy,
-      initialParams: { address },
-      iterations: 3,
-    })
-
-    const [{ totalCount: totalNftCount }] = results
-
-    response['quantity'] = totalNftCount
-    const allNFTs = results.flatMap((result) =>
-      result.ownedNfts.filter((item) => !BLACKLISTED_TRASH.includes(item.contract.address.toLowerCase())),
+    const chunks = sliceIntoChunks(nftsResponse.items, 50)
+    const metadataResponse = await Promise.all(
+      chunks.map((chunk) =>
+        fetchNFTMetadataFrom.nftScan({
+          tokens: chunk.map((nft) => ({ contract_address: nft.address, token_id: nft.tokenID })),
+        }),
+      ),
     )
 
-    const collectionsData = await defillamaCollections()
+    const flattenedMetadata = metadataResponse.flatMap(({ data }) =>
+      data.map((metadata) => ({
+        ...metadata,
+        metadata_json: parseStringJSON(metadata.metadata_json),
+      })),
+    )
 
-    const groupedByCollection: {
-      [collectionId: string]: { nfts: any[] }
+    const mergedNFTs = nftsResponse.items.map((nft, index) => ({ ...nft, ...flattenedMetadata[index] }))
+    const nftsGroupedByContract = groupBy(mergedNFTs, 'address')
+
+    const collections = await fetchUserNFTCollectionsFrom.reservoir({ user: address, limit: 100 })
+
+    const collectionsGroupedByAddress = collections.collections.reduce((accumulator, { collection, ownership }) => {
+      accumulator[collection.id] = { collection, ownership }
+      return accumulator
+    }, {} as Record<string, UserNFTCollection>)
+
+    const result: {
+      [collectionId: string]: {
+        collection?: UserNFTCollection['collection']
+        minimumValueUSD?: number | null
+        quantity: number
+        nfts: Awaited<ReturnType<(typeof fetchNFTMetadataFrom)['nftScan']>>['data']
+      }
     } = {}
+    const collectionless: Awaited<ReturnType<(typeof fetchNFTMetadataFrom)['nftScan']>>['data'] = []
 
-    for (const nft of allNFTs) {
-      const collection = collectionsData.find(
-        (collection) => collection.collectionId.toLowerCase() === nft.contract.address.toLowerCase(),
-      )
-
-      if (!collection || !collection.collectionId) {
-        if (!groupedByCollection['']) groupedByCollection[''] = { nfts: [] }
-        groupedByCollection[''].nfts.push(nft)
+    for (const [address, nfts] of Object.entries(nftsGroupedByContract)) {
+      const collectionInfo = collectionsGroupedByAddress[address]
+      const collection = collectionInfo?.collection ?? null
+      const ownership = collectionInfo?.ownership ?? null
+      if (!collection) {
+        collectionless.push(...nfts)
         continue
       }
 
-      if (!groupedByCollection[collection.collectionId]) {
-        groupedByCollection[collection.collectionId] = {
-          ...collection,
-          nfts: [],
-        }
-      }
+      const minimumValueUSD = collection?.floorAskPrice?.amount?.usd
+        ? Number(ownership?.tokenCount) * collection?.floorAskPrice?.amount?.usd
+        : null
 
-      groupedByCollection[collection.collectionId].nfts.push(nft)
+      result[collection.id] = {
+        collection,
+        quantity: Number(ownership?.tokenCount) ?? nfts.length,
+        minimumValueUSD,
+        nfts,
+      }
     }
+
+    result['unknown'] = {
+      quantity: collectionless.length,
+      nfts: collectionless,
+    }
+
+    const minimumValueUSD = sum(Object.values(result).map((collection) => collection.minimumValueUSD ?? 0))
 
     return success(
       {
         walletAddress: address,
-        totalValue: 0, // TODO
-        quantity: totalNftCount,
-        collections: groupedByCollection,
+        quantity: nftsResponse.items.length,
+        minimumValueUSD,
+        collections: Object.values(result),
       },
       { maxAge: 30 * 60 },
     )
@@ -68,33 +114,4 @@ export const handler: APIGatewayProxyHandler = async (event, _) => {
     console.error('Failed to fetch user NFTs', { error })
     return serverError('Failed to fetch user NFTs')
   }
-}
-
-interface NftResponse {
-  walletAddress: Address
-  totalValue: number
-  quantity: number
-  nfts: Array<{
-    network: Chain
-    address: Address
-    tokenId: string
-    name: string
-    description: string
-    media: Array<string>
-    estimatedValue: number
-    rarity: number
-    traits: Array<[['name', string], ['value', string]]>
-    history: Record<string, any>
-    quantity: number
-    collection: {
-      chain: Chain
-      address: Address
-      name: string
-      description: string
-      type: 'ERC721' | 'ERC1155'
-      media: Array<string>
-      symbol: string
-      links: Array<[['name', string], ['url', string]]>
-    }
-  }>
 }

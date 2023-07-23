@@ -4,8 +4,6 @@ import { raise } from '@lib/error'
 import { fetcher, urlSearchParams } from '@lib/fetcher'
 import { type Address, getAddress } from 'viem'
 
-export { fetchUserNFTsFromNftScan, nftScanAccountStatistics }
-
 const NFTSCAN_BASE_URL = `https://restapi.nftscan.com/api/v2`
 const NFTSCAN_API_KEY = environment.NFTSCAN_API_KEY ?? raise('Missing NFTSCAN_API_KEY')
 
@@ -37,28 +35,11 @@ export const nftScanResponseChain: {
   glmr: 'moonbeam',
 }
 
-// nftScanAccountStatistics({
+// fetchUserNFTs({
 //   address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
 // }).then(console.log)
 
-async function nftScanAccountStatistics({ address }: { address: Address }) {
-  const walletAddress = getAddress(address) ?? raise(`Invalid address: ${address}`)
-  const url = `${NFTSCAN_BASE_URL}/statistics/overview/${walletAddress}`
-  const response = await fetcher<NftScanAccountStatisticsResponse | NftScanError>(url, {
-    method: 'GET',
-    headers: { 'X-API-KEY': NFTSCAN_API_KEY },
-  })
-  if (response.code !== 200) {
-    raise(`[NftScan] error for url ${url}:\n${JSON.stringify(response, undefined, 2)}`)
-  }
-  return response.data
-}
-
-// fetchUserNFTsFromNftScan({
-//   address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
-// }).then(console.log)
-
-async function fetchUserNFTsFromNftScan({ address, ercType }: { address: Address; ercType?: 'erc721' | 'erc1155' }) {
+export async function fetchUserNFTs({ address, ercType }: { address: Address; ercType?: 'erc721' | 'erc1155' }) {
   const walletAddress = getAddress(address) ?? raise(`Invalid address: ${address}`)
   const queryParameters = urlSearchParams({
     erc_type: ercType,
@@ -76,10 +57,92 @@ async function fetchUserNFTsFromNftScan({ address, ercType }: { address: Address
   return data
 }
 
+export async function batchFetchMetadata({
+  tokens,
+  show_attributes = true,
+}: {
+  tokens: Array<{ contract_address: string; token_id: string }>
+  show_attributes?: boolean
+}) {
+  const url = `${NFTSCAN_BASE_URL}/assets/batch`
+  const response = await fetcher<NftScanMetadataResponse>(url, {
+    method: 'POST',
+    headers: { 'X-API-KEY': NFTSCAN_API_KEY },
+    body: JSON.stringify({
+      contract_address_with_token_id_list: tokens,
+      show_attributes,
+    }),
+  })
+  if (response.code !== 200) {
+    raise(`[NftScan] error for url ${url}:\n${JSON.stringify(response, undefined, 2)}`)
+  }
+  return response
+}
+
+// nftScanAccountStatistics({
+//   address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
+// }).then(console.log)
+
+export async function nftScanAccountStatistics({ address }: { address: Address }) {
+  const walletAddress = getAddress(address) ?? raise(`Invalid address: ${address}`)
+  const url = `${NFTSCAN_BASE_URL}/statistics/overview/${walletAddress}`
+  const response = await fetcher<NftScanAccountStatisticsResponse | NftScanError>(url, {
+    method: 'GET',
+    headers: { 'X-API-KEY': NFTSCAN_API_KEY },
+  })
+  if (response.code !== 200) {
+    raise(`[NftScan] error for url ${url}:\n${JSON.stringify(response, undefined, 2)}`)
+  }
+  return response.data
+}
+
 interface NftScanError {
   code: number
   msg: string
   data?: unknown
+}
+
+interface NftScanMetadataResponse {
+  code: number
+  msg: string | null
+  data: Array<NftScanMetadata>
+}
+
+interface NftScanMetadata {
+  contract_address: string
+  contract_name: string
+  contract_token_id: string
+  token_id: string
+  erc_type: string
+  amount: string
+  minter: string
+  owner: string
+  own_timestamp: number
+  mint_timestamp: number
+  mint_transaction_hash: string
+  mint_price: number
+  token_uri: string
+  metadata_json: string
+  name: string
+  content_type: string
+  content_uri: string
+  description: string
+  image_uri: string
+  external_link: string
+  latest_trade_price: any
+  latest_trade_symbol: any
+  latest_trade_token: any
+  latest_trade_timestamp: any
+  nftscan_id: string
+  nftscan_uri: string
+  small_nftscan_uri: string
+  attributes: Array<{
+    attribute_name: string
+    attribute_value: string
+    percentage: string
+  }>
+  rarity_score: number
+  rarity_rank: number
 }
 
 export interface NftScanAccountStatisticsResponse {
