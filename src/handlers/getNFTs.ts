@@ -3,7 +3,8 @@ import { groupBy, sliceIntoChunks } from '@lib/array'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { paginatedFetch } from '@lib/fetcher'
 import { parseStringJSON } from '@lib/fmt'
-import { fetchNFTMetadataFrom, fetchUserNFTCollectionsFrom, fetchUserNFTsFrom } from '@lib/nft'
+import type { DefillamaNFTCollection } from '@lib/nft'
+import { defillamaCollections, fetchNFTMetadataFrom, fetchUserNFTCollectionsFrom, fetchUserNFTsFrom } from '@lib/nft'
 import type { NftScanMetadata as NFTMetadata, UserNFTCollection } from '@lib/nft/nft-scan'
 import { fetchTokenPrices } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
@@ -13,16 +14,18 @@ import { isAddress } from 'viem'
 
 import type { Chain } from '@/lib/chains'
 
+interface UserNFTItem {
+  collection?: UserNFTCollection & DefillamaNFTCollection
+  minimumValueUSD?: number | null
+  quantity: number
+  nfts: Array<NFTMetadata>
+}
+
 interface UserNFTsResponse {
   walletAddress: Address
   quantity: number
   minimumValueUSD?: number | null
-  data: Array<{
-    collection?: UserNFTCollection
-    minimumValueUSD?: number | null
-    quantity: number
-    nfts: Array<NFTMetadata>
-  }>
+  data: Array<UserNFTItem>
 }
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
@@ -153,17 +156,18 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
   }, {} as Record<string, UserNFTCollection>)
 
   const result: {
-    [collectionId: string]: {
-      collection?: UserNFTCollection
-      minimumValueUSD?: number | null
-      quantity: number
-      nfts: Array<NFTMetadata>
-    }
+    [collectionId: string]: UserNFTItem
   } = {}
 
   const collectionless: Array<NFTMetadata> = []
 
   const nftsGroupedByContract = groupBy(mergedNFTs, 'contract_address')
+
+  const collectionsMarketData = await defillamaCollections()
+  const collectionsMarketDataGroupedByAddress = collectionsMarketData.reduce((accumulator, collection) => {
+    accumulator[collection.collectionId] = collection
+    return accumulator
+  }, {} as Record<string, DefillamaNFTCollection>)
 
   for (const [address, nfts] of Object.entries(nftsGroupedByContract)) {
     const collection = collectionsGroupedByAddress[address]
@@ -172,10 +176,13 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
       continue
     }
 
-    const minimumValueUSD = collection?.floor_price ? Number(collection?.floor_price) * ethPrice * nfts.length : null
+    const collectionMarketData = collectionsMarketDataGroupedByAddress[address]
+
+    const floorPrice = collection?.floor_price ?? collectionMarketData?.floorPrice
+    const minimumValueUSD = floorPrice ? floorPrice * ethPrice * nfts.length : undefined
 
     result[collection.contract_address] = {
-      collection,
+      collection: { ...collection, ...collectionMarketData },
       quantity: nfts.length,
       minimumValueUSD,
       nfts,
