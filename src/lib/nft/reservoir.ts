@@ -8,10 +8,6 @@ const RESERVOIR_BASE_URL = `https://api.reservoir.tools`
 const RESERVOIR_API_KEY = environment.RESERVOIR_API_KEY ?? raise('Missing RESERVOIR_API_KEY')
 const AUTH_HEADER = { 'X-API-KEY': RESERVOIR_API_KEY }
 
-// fetchUsersNFTActivity({
-//   users: ['0xbDfA4f4492dD7b7Cf211209C4791AF8d52BF5c50'],
-// }).then(console.log)
-
 // https://docs.reservoir.tools/reference/getusersactivityv6
 export async function fetchUsersNFTActivity<T extends boolean>({
   users,
@@ -55,12 +51,8 @@ export async function fetchUsersNFTActivity<T extends boolean>({
   return response
 }
 
-// fetchUserNFTCollections({
-//   user: '0xbDfA4f4492dD7b7Cf211209C4791AF8d52BF5c50',
-//   limit:3
-// }).then(console.log)
-
 // https://docs.reservoir.tools/reference/getusersusercollectionsv3
+
 export async function fetchUserNFTCollections({
   user,
   includeTopBid = true,

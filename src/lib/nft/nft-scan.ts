@@ -36,10 +36,6 @@ export const nftScanResponseChain: {
   glmr: 'moonbeam',
 }
 
-// fetchUserNFTs({
-//   address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
-// }).then(console.log)
-
 export async function fetchUserNFTs({ address, ercType }: { address: Address; ercType?: 'erc721' | 'erc1155' }) {
   const walletAddress = getAddress(address) ?? raise(`Invalid address: ${address}`)
   const queryParameters = urlSearchParams({
@@ -80,10 +76,6 @@ export async function batchFetchMetadata({
   return response
 }
 
-// fetchUserNFTCollections({
-//   address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
-// }).then(console.log)
-
 export async function fetchUserNFTCollections({
   address,
   erc_type = 'erc721',
@@ -111,10 +103,6 @@ export async function fetchUserNFTCollections({
   }
   return response
 }
-
-// nftScanAccountStatistics({
-//   address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
-// }).then(console.log)
 
 export async function nftScanAccountStatistics({ address }: { address: Address }) {
   const walletAddress = getAddress(address) ?? raise(`Invalid address: ${address}`)

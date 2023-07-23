@@ -7,10 +7,6 @@ import { getAddress } from 'viem'
 const NFTPORT_BASE_URL = 'https://api.nftport.xyz/v0'
 const NFTPORT_API_KEY = environment.NFTPORT_API_KEY ?? raise('Missing NFTPORT_API_KEY')
 
-// fetchUserNFTs({
-//   address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
-// }).then(console.log)
-
 // https://docs.nftport.xyz/reference/retrieve-nfts-owned-by-account
 export async function fetchUserNFTs({
   address,
@@ -45,8 +41,6 @@ export async function fetchUserNFTs({
   }
   return response
 }
-
-// nftPortListings().then(console.log)
 
 // https://docs.nftport.xyz/reference/retrieve-all-nfts
 export async function nftPortListings(

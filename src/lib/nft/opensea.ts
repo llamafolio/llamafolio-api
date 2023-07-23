@@ -5,8 +5,6 @@ import { fetcher } from '@lib/fetcher'
 const OPENSEA_BASE_URL = 'https://api.opensea.io/v2'
 const OPENSEA_API_KEY = environment.OPENSEA_API_KEY ?? raise('Missing OPENSEA_API_KEY')
 
-// openSeaListings().then(console.log)
-
 export async function openSeaListings() {
   const response = await fetcher<OpenSeaListings>(`${OPENSEA_BASE_URL}/orders/ethereu/seaport/listing`, {
     headers: { 'X-API-KEY': OPENSEA_API_KEY },

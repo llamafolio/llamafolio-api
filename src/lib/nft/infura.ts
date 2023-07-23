@@ -10,10 +10,6 @@ import { getAddress } from 'viem'
 
 const INFURA_BASE_URL = `https://nft.api.infura.io`
 
-// fetchUserNFTs({
-//   address: '0xd8da6bf26964af9d7eed9e03e53415d37aa96045',
-// }).then(console.log)
-
 export async function fetchUserNFTs({ address, chain = 'ethereum' }: { address: Address; chain?: Chain }) {
   const walletAddress = getAddress(address) ?? raise('Invalid address')
 

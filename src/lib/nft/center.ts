@@ -23,10 +23,6 @@ type CenterChain = (typeof centerChains)[number]
 const CENTER_BASE_URL = (chain: CenterChain) => `https://api.center.dev/v2/${chain}-mainnet`
 const CENTER_API_KEY = environment.CENTER_API_KEY ?? raise('Missing CENTER_API_KEY')
 
-// fetchUserNFTs({
-//   address: '0x9FB7E6090096C3A0a6b085C8e33d99e5610234fa',
-// }).then(console.log)
-
 // https://docs.center.dev/reference/listnftsownedbyaddress-v2
 export async function fetchUserNFTs({
   chain = 'ethereum',
