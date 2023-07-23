@@ -1,3 +1,5 @@
+import { isNotFalsy } from '@lib/type'
+
 export function boolean(val: any): boolean {
   switch (val) {
     case 0:
@@ -35,4 +37,25 @@ export function millify(amount: number): string {
 
 export function millifyBI(amount: bigint): string {
   return millify(Number(amount))
+}
+
+/**
+ * parse stringified JSON, removing newlines and tabs
+ * if it fails to parse, return the original string
+ */
+export function parseStringJSON(jsonString: string) {
+  try {
+    if (!isNotFalsy(jsonString)) return jsonString
+    return JSON.parse(
+      jsonString
+        .replaceAll('\n', '')
+        .replaceAll('\\n', '')
+        .replaceAll('\r', '')
+        .replaceAll('\t', '')
+        .replaceAll('\\', ''),
+    )
+  } catch (error) {
+    console.error('Failed to parse JSON', { string: jsonString, error })
+    return jsonString
+  }
 }

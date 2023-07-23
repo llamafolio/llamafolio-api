@@ -108,7 +108,7 @@ interface NftScanMetadataResponse {
   data: Array<NftScanMetadata>
 }
 
-interface NftScanMetadata {
+export interface NftScanMetadata {
   contract_address: string
   contract_name: string
   contract_token_id: string
