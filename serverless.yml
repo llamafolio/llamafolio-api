@@ -269,11 +269,6 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   esbuild:
     config: './esbuild.config.cjs'
-    watch:
-      pattern: ['src/**/*.ts']
-      ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules', 'test']
-    # for debugging
-    # keepOutputDirectory: true
   prune:
     automatic: true
     number: 5 # Number of versions to keep
