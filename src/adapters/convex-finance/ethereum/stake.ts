@@ -15,6 +15,13 @@ const abi = {
   },
 } as const
 
+const threeCrv: Token = {
+  chain: 'ethereum',
+  address: '0x7091dbb7fcbA54569eF1387Ac89Eb2a5C9F6d2EA',
+  decimals: 18,
+  symbol: '3CRV',
+}
+
 const CRV: Token = {
   chain: 'ethereum',
   address: '0xD533a949740bb3306d119CC777fa900bA034cd52',
@@ -37,17 +44,22 @@ const cvxCRV: Token = {
 }
 
 export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contract): Promise<Balance> {
-  const [balanceOf, crvEarned, cvxTotalSupply] = await Promise.all([
+  const [balanceOf, crvEarned, cvxTotalSupply, pending3CRVEarned] = await Promise.all([
     call({ ctx, target: cvxCrv.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: cvxCrv.address, params: [ctx.address], abi: abi.earned }),
     call({ ctx, target: CVX.address, abi: erc20Abi.totalSupply }),
+    call({ ctx, target: cvxCrv.rewarder, params: [ctx.address], abi: abi.earned }),
   ])
 
   const rewards: Balance[] = []
 
   if (crvEarned > 0n) {
     const cvxEarned = getCvxCliffRatio(cvxTotalSupply, crvEarned)
-    rewards.push({ ...CRV, amount: crvEarned } as Balance, { ...CVX, amount: cvxEarned } as Balance)
+
+    rewards.push({ ...CRV, amount: crvEarned } as Balance, { ...CVX, amount: cvxEarned } as Balance, {
+      ...(threeCrv as Balance),
+      amount: pending3CRVEarned,
+    })
   }
 
   return {
@@ -62,7 +74,7 @@ export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contra
 }
 
 export async function getCVXStakeBalance(ctx: BalancesContext, cvxRewardPool: Contract): Promise<Balance> {
-  const [balanceOf, earned] = await Promise.all([
+  const [balanceOf, pendingCRVEarned] = await Promise.all([
     call({ ctx, target: cvxRewardPool.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: cvxRewardPool.address, params: [ctx.address], abi: abi.earned }),
   ])
@@ -73,7 +85,7 @@ export async function getCVXStakeBalance(ctx: BalancesContext, cvxRewardPool: Co
     symbol: CVX.symbol,
     decimals: CVX.decimals,
     amount: balanceOf,
-    rewards: [{ ...CRV, amount: earned }],
+    rewards: [{ ...CRV, amount: pendingCRVEarned }],
     category: 'stake',
   }
 }
