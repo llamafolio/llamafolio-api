@@ -115,6 +115,7 @@ import metronome from '@adapters/metronome'
 import morpheusSwap from '@adapters/morpheus-swap'
 import morphex from '@adapters/morphex'
 import morphoAave from '@adapters/morpho-aave'
+import morphoAavev3 from '@adapters/morpho-aavev3'
 import morphoCompound from '@adapters/morpho-compound'
 import mstable from '@adapters/mstable'
 import multichain from '@adapters/multichain'
@@ -339,6 +340,7 @@ export const adapters: Adapter[] = [
   morpheusSwap,
   morphex,
   morphoAave,
+  morphoAavev3,
   morphoCompound,
   mstable,
   multichain,
