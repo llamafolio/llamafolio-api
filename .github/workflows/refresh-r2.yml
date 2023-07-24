@@ -11,7 +11,7 @@ on:
     #        │  │  │ │ │
     #        │  │  │ │ │
     #        *  *  * * *
-    - cron: '0 */2 * * *'
+    - cron: '0 */2 * * *' # Every 2 hours
   repository_dispatch: # REST API
     types:
       - 'refresh-r2'
@@ -29,14 +29,14 @@ jobs:
   refresh-nft-collections:
     name: 'DefiLlama NFT Collections'
     runs-on: [ubuntu-latest]
-    timeout-minutes: 5
+    timeout-minutes: 4
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: '[Download] DefiLlama NFT Collections'
+      - name: '[Download] nft.llama.fi/collections'
         run: |
           curl --request GET \
             --silent \
@@ -56,4 +56,32 @@ jobs:
             CLOUDFLARE_AWS_SECRET_ACCESS_KEY="${{ secrets.CLOUDFLARE_AWS_SECRET_ACCESS_KEY }}" \
             /bin/bash ${{ github.workspace }}/scripts/r2/upload.sh
 
-# TODO: Add job to refresh NFT prices R2 object
+  refresh-yield-pools:
+    name: 'DefiLlama Yield Pools'
+    runs-on: [ubuntu-latest]
+    timeout-minutes: 4
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: '[Download] yields.llama.fi/poolsOld'
+        run: |
+          curl --request GET \
+            --silent \
+            --show-error \
+            --fail \
+            --url 'https://yields.llama.fi/poolsOld' \
+            --header 'Accept: application/json' \
+            --header 'Content-Type: application/json' \
+            --output "/${{ runner.temp }}/llama_yields_pools_old.json"
+
+      - name: '[Upload] Cloudflare R2'
+        run: |
+          FILE_PATH="/${{ runner.temp }}/llama_yields_pools_old.json" \
+            UPLOAD_PATH="yield/llama_yields_pools_old.json" \
+            CLOUDFLARE_S3_URL="${{ env.CLOUDFLARE_S3_URL }}/llamafolio" \
+            CLOUDFLARE_AWS_ACCESS_KEY_ID="${{ secrets.CLOUDFLARE_AWS_ACCESS_KEY_ID }}" \
+            CLOUDFLARE_AWS_SECRET_ACCESS_KEY="${{ secrets.CLOUDFLARE_AWS_SECRET_ACCESS_KEY }}" \
+            /bin/bash ${{ github.workspace }}/scripts/r2/upload.sh

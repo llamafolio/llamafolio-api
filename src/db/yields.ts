@@ -1,5 +1,7 @@
+import { environment } from '@environment'
 import { sliceIntoChunks } from '@lib/array'
 import type { Chain } from '@lib/chains'
+import { raise } from '@lib/error'
 import type { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -55,7 +57,11 @@ function extractAddress(str: string) {
 }
 
 export async function fetchYields() {
-  const yieldsRes = await fetch('https://yields.llama.fi/poolsOld')
+  const url = environment.OUTSIDE_CONTRIBUTOR
+    ? 'https://yields.llama.fi/poolsOld'
+    : `${environment.CLOUDFLARE_R2_PUBLIC_URL}/yield/llama_yields_pools_old.json` ??
+      raise('missing CLOUDFLARE_R2_PUBLIC_URL')
+  const yieldsRes = await fetch(url)
   if (!yieldsRes.ok) {
     throw new Error('failed to fetch yields')
   }
