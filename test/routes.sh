@@ -121,4 +121,4 @@ curl --head \
   --silent \
   --show-error \
   --fail \
-  --url $CLOUDFLARE_R2_PUBLIC_URL/nft/llama_nft_collections.json
+  --url $API_URL/nfts/0xb53F052f717A340147F71Fdd9659C2C008b35A52

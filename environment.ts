@@ -15,13 +15,12 @@ export const environmentSchema = z.object({
   ARBITRUM_RPC: z.string().optional(),
   OPTIMISM_RPC: z.string().optional(),
   IS_OFFLINE: z.literal('true').or(z.literal('false')).optional(),
+  OUTSIDE_CONTRIBUTOR: z.union([z.literal('true'), z.literal('false')]).default('false'),
   API_URL: z.string().optional(),
   AWS_GATEWAY_API_ID_DEV: z.string().optional(),
   AWS_GATEWAY_API_ID_PROD: z.string().optional(),
   SENTRY_DSN: z.string().optional(),
-  //
   CLOUDFLARE_R2_PUBLIC_URL: z.string().optional(),
-
   NFTPORT_API_KEY: z.string().optional(),
   OPENSEA_API_KEY: z.string().optional(),
   ALCHEMY_API_KEY: z.string().optional(),
@@ -30,6 +29,8 @@ export const environmentSchema = z.object({
   INFURA_API_KEY_SECRET: z.string().optional(),
   CENTER_API_KEY: z.string().optional(),
   RESERVOIR_API_KEY: z.string().optional(),
+  QUICKNODE_API_KEY: z.string().optional(),
+  QUICKNODE_HTTP_URL: z.string().optional(),
 })
 
 export type Environment = z.infer<typeof environmentSchema>
