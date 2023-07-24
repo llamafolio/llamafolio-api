@@ -51,6 +51,7 @@ import crvusd from '@adapters/crvusd'
 import curveDex from '@adapters/curve-dex'
 import definix from '@adapters/definix'
 import dydx from '@adapters/dydx'
+import eigenlayer from '@adapters/eigenlayer'
 import elephantMoney from '@adapters/elephant-money'
 import ellipsisFinance from '@adapters/ellipsis-finance'
 import equalizerExchange from '@adapters/equalizer-exchange'
@@ -274,6 +275,7 @@ export const adapters: Adapter[] = [
   curveDex,
   definix,
   dydx,
+  eigenlayer,
   elephantMoney,
   ellipsisFinance,
   equalizerExchange,
