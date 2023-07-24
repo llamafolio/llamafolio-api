@@ -44,7 +44,7 @@ export async function getGroContracts(ctx: BaseContext, masterchef: Contract): P
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLengthBI).map((idx) => ({ target: masterchef.address, params: [idx] } as const)),
+    calls: rangeBI(0n, poolLengthBI).map((idx) => ({ target: masterchef.address, params: [idx] }) as const),
     abi: abi.poolInfo,
   })
 

@@ -34,7 +34,7 @@ export async function getVotingEscrowBalances(ctx: BalancesContext, votingEscrow
   // token IDS
   const tokensOfOwnerByIndexRes = await multicall({
     ctx,
-    calls: rangeBI(0n, balanceOf).map((idx) => ({ target: votingEscrow.address, params: [ctx.address, idx] } as const)),
+    calls: rangeBI(0n, balanceOf).map((idx) => ({ target: votingEscrow.address, params: [ctx.address, idx] }) as const),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -51,7 +51,7 @@ export async function getTokenIdsBalances(
 ) {
   const lockedRes = await multicall({
     ctx,
-    calls: tokenIds.map((tokenId) => ({ target: votingEscrow.address, params: [tokenId] } as const)),
+    calls: tokenIds.map((tokenId) => ({ target: votingEscrow.address, params: [tokenId] }) as const),
     abi: abi.locked,
   })
 

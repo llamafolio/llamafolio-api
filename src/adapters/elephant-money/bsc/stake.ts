@@ -119,12 +119,12 @@ export async function getElephantStakeBalances(ctx: BalancesContext, stakers: Co
   const [userBalancesRes, userRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] } as const)),
+      calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }) as const),
       abi: abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] } as const)),
+      calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }) as const),
       abi: abi.dividendsOf,
     }),
   ])

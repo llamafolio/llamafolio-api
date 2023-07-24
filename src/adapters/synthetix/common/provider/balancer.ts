@@ -33,7 +33,7 @@ export async function getBalancerProvider(
   const underlyingsBalancesRes = await multicall({
     ctx,
     calls: pools.flatMap((pool) =>
-      pool.underlyings!.map((underlying) => ({ target: pool.address, params: [underlying.address] } as const)),
+      pool.underlyings!.map((underlying) => ({ target: pool.address, params: [underlying.address] }) as const),
     ),
     abi: abi.getBalance,
   })

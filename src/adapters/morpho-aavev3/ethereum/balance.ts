@@ -53,12 +53,12 @@ export async function getLendBorrowBalancesAaveV3(
   const [lendBalancesRes, borrowBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: markets.map((market) => ({ target: comptroller.address, params: [market.address, ctx.address] } as const)),
+      calls: markets.map((market) => ({ target: comptroller.address, params: [market.address, ctx.address] }) as const),
       abi: abi.collateralBalance,
     }),
     multicall({
       ctx,
-      calls: markets.map((market) => ({ target: comptroller.address, params: [market.address, ctx.address] } as const)),
+      calls: markets.map((market) => ({ target: comptroller.address, params: [market.address, ctx.address] }) as const),
       abi: abi.borrowBalance,
     }),
   ])

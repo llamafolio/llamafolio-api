@@ -50,7 +50,7 @@ export async function getBalancerProvider(ctx: BaseContext, contracts: Contract[
 
   const getPoolTokensRes = await multicall({
     ctx,
-    calls: mapSuccess(poolIdsRes, (poolId) => ({ target: BALANCER_VAULT, params: [poolId.output] } as const)),
+    calls: mapSuccess(poolIdsRes, (poolId) => ({ target: BALANCER_VAULT, params: [poolId.output] }) as const),
     abi: abi.getPoolTokens,
   })
 
@@ -79,7 +79,7 @@ export async function getBalancerProviderBalances(ctx: BalancesContext, contract
     multicall({
       ctx,
       calls: contracts.map(
-        (contract) => ({ target: BALANCER_VAULT, params: [(contract as Contract).poolId] } as const),
+        (contract) => ({ target: BALANCER_VAULT, params: [(contract as Contract).poolId] }) as const,
       ),
       abi: abi.getPoolTokens,
     }),

@@ -16,7 +16,7 @@ export async function getMapleFarmBalances(ctx: BalancesContext, farmers: Contra
 
   const balanceOfsRes = await multicall({
     ctx,
-    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] } as const)),
+    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
     abi: abi.balanceOfAssets,
   })
 

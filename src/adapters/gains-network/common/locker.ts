@@ -51,7 +51,7 @@ export async function getGainsLockerBalances(ctx: BalancesContext, locker: Contr
   const tokenOfOwnerByIndexes = await multicall({
     ctx,
     calls: rangeBI(0n, nftBalanceOf).map(
-      (index) => ({ target: locker.address, params: [ctx.address, index] } as const),
+      (index) => ({ target: locker.address, params: [ctx.address, index] }) as const,
     ),
     abi: abi.tokenOfOwnerByIndex,
   })

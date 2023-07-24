@@ -99,7 +99,7 @@ async function getUnderlyingsBalances(ctx: BalancesContext, balances: getSynapse
 
     const underlyingsBalancesRes = await multicall({
       ctx,
-      calls: underlyings.map((_, i) => ({ target: pool, params: [i] } as const)),
+      calls: underlyings.map((_, i) => ({ target: pool, params: [i] }) as const),
       abi: abi.getTokenBalance,
     })
 

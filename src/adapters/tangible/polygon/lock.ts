@@ -62,7 +62,7 @@ export async function getTangibleLockerBalances(ctx: BalancesContext, locker: Co
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: rangeBI(0n, balanceOfsRes).map((idx) => ({ target: locker.address, params: [ctx.address, idx] } as const)),
+    calls: rangeBI(0n, balanceOfsRes).map((idx) => ({ target: locker.address, params: [ctx.address, idx] }) as const),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -71,7 +71,7 @@ export async function getTangibleLockerBalances(ctx: BalancesContext, locker: Co
       ctx,
       calls: mapSuccess(
         tokenOfOwnerByIndexesRes,
-        (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] } as const),
+        (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] }) as const,
       ),
       abi: abi.locks,
     }),
@@ -79,7 +79,7 @@ export async function getTangibleLockerBalances(ctx: BalancesContext, locker: Co
       ctx,
       calls: mapSuccess(
         tokenOfOwnerByIndexesRes,
-        (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] } as const),
+        (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] }) as const,
       ),
       abi: abi.claimableIncome,
     }),

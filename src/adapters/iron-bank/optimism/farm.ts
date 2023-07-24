@@ -119,12 +119,12 @@ export async function getIronFarmBalances(ctx: BalancesContext, markets: Contrac
   const [balanceOfsRes, earnedOfsRes, exchangeRatesCurrentsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.staker, params: [ctx.address] } as const)),
+      calls: contracts.map((contract) => ({ target: contract.staker, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.staker, params: [IB.address, ctx.address] } as const)),
+      calls: contracts.map((contract) => ({ target: contract.staker, params: [IB.address, ctx.address] }) as const),
       abi: abi.earned,
     }),
     multicall({

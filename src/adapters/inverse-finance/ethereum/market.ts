@@ -145,8 +145,8 @@ export async function getInverseMarketsContracts(ctx: BaseContext, markets: Cont
   const contracts: Contract[] = []
 
   const [collateralTokensRes, oraclesRes] = await Promise.all([
-    multicall({ ctx, calls: markets.map((market) => ({ target: market.address } as const)), abi: abi.collateral }),
-    multicall({ ctx, calls: markets.map((market) => ({ target: market.address } as const)), abi: abi.oracle }),
+    multicall({ ctx, calls: markets.map((market) => ({ target: market.address }) as const), abi: abi.collateral }),
+    multicall({ ctx, calls: markets.map((market) => ({ target: market.address }) as const), abi: abi.oracle }),
   ])
 
   for (let marketIdx = 0; marketIdx < markets.length; marketIdx++) {
@@ -175,19 +175,19 @@ export async function getInverseMarketsBalances(ctx: BalancesContext, markets: C
   const [userDebtsRes, escrowsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: markets.map((market) => ({ target: market.address, params: [ctx.address] } as const)),
+      calls: markets.map((market) => ({ target: market.address, params: [ctx.address] }) as const),
       abi: abi.debts,
     }),
     multicall({
       ctx,
-      calls: markets.map((market) => ({ target: market.address, params: [ctx.address] } as const)),
+      calls: markets.map((market) => ({ target: market.address, params: [ctx.address] }) as const),
       abi: abi.escrows,
     }),
   ])
 
   const escrowsBalancesRes = await multicall({
     ctx,
-    calls: mapSuccessFilter(escrowsRes, (res) => ({ target: res.output } as const)),
+    calls: mapSuccessFilter(escrowsRes, (res) => ({ target: res.output }) as const),
     abi: abi.balance,
   })
 

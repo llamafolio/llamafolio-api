@@ -21,7 +21,7 @@ export async function getPopsicleYieldBalances(ctx: BalancesContext, pairs: Cont
   const [balancesOfsRes, tokensAmounts, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pairs.map((pair) => ({ target: pair.address, params: [ctx.address] } as const)),
+      calls: pairs.map((pair) => ({ target: pair.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({

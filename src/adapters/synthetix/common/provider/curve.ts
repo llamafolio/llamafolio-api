@@ -28,13 +28,13 @@ export async function getCurveProvider(
 
   const poolAddressesRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.address] } as const)),
+    calls: pools.map((pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.address] }) as const),
     abi: abi.get_pool_from_lp_token,
   })
 
   const underlyingsBalancesRes = await multicall({
     ctx,
-    calls: mapSuccess(poolAddressesRes, (pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.output] } as const)),
+    calls: mapSuccess(poolAddressesRes, (pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.output] }) as const),
     abi: abi.get_underlying_balances,
   })
 

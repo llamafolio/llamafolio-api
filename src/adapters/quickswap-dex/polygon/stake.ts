@@ -16,7 +16,7 @@ export async function getQuickswapBalances(ctx: BalancesContext, stakers: Contra
 
   const balancesOfsRes = await multicall({
     ctx,
-    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] } as const)),
+    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }) as const),
     abi: abi.QUICKBalance,
   })
 

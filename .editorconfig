@@ -9,13 +9,8 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.json]
-max_line_length = 120
-
-
-[*.md]
+[*.md,*.sh]
 max_line_length = 80
-
 
 [*ignore]
 insert_final_newline = false

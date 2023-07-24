@@ -41,7 +41,7 @@ export async function getRailgunBalances(ctx: BalancesContext, staker: Contract)
 
   const userStakesRes = await multicall({
     ctx,
-    calls: rangeBI(0n, userStakeLength).map((idx) => ({ target: staker.address, params: [ctx.address, idx] } as const)),
+    calls: rangeBI(0n, userStakeLength).map((idx) => ({ target: staker.address, params: [ctx.address, idx] }) as const),
     abi: abi.stakes,
   })
 

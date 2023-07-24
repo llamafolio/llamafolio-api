@@ -67,7 +67,7 @@ interface BondParams extends Contract {
 export async function getBondsContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const bondDetailsRes = await multicall({
     ctx,
-    calls: rangeBI(0n, 25n).map((i) => ({ target: contract.address, params: [i] } as const)),
+    calls: rangeBI(0n, 25n).map((i) => ({ target: contract.address, params: [i] }) as const),
     abi: abi.bondDetails,
   })
 
@@ -94,7 +94,7 @@ export async function getBondsBalances(ctx: BalancesContext, contracts: Contract
   const [pendingPayoutForRes, underlyingsTokensReservesRes, totalPoolSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.bondAddress, params: [ctx.address] } as const)),
+      calls: contracts.map((contract) => ({ target: contract.bondAddress, params: [ctx.address] }) as const),
       abi: abi.pendingPayoutFor,
     }),
     multicall({ ctx, calls, abi: abi.getReserves }),

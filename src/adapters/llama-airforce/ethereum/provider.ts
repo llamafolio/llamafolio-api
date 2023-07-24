@@ -39,7 +39,7 @@ const abi = {
 export const convexProvider = async (ctx: BalancesContext, pools: LlamaBalancesParams[]): Promise<Balance[]> => {
   const fmtBalancesOfsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: abi.balanceOfUnderlying,
   })
 
@@ -58,7 +58,7 @@ export const convexProvider = async (ctx: BalancesContext, pools: LlamaBalancesP
 export const llamaProvider = async (ctx: BalancesContext, pools: LlamaBalancesParams[]): Promise<Balance[]> => {
   const fmtBalancesOfsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [BigInt(pool.amount.toString())] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [BigInt(pool.amount.toString())] }) as const),
     abi: abi.convertToAssets,
   })
 
@@ -80,7 +80,7 @@ export const curveProvider = async (ctx: BalancesContext, pools: LlamaBalancesPa
   const [fmtBalancesOfsRes, totalUnderlyingsSupplies, underlyingsBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: abi.balanceOfUnderlying,
     }),
     multicall({

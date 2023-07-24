@@ -54,7 +54,7 @@ export async function getIzumiBalances(
 ): Promise<Balance[]> {
   const tokenIdsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: abi.getTokenIds,
   })
 
@@ -65,7 +65,7 @@ export async function getIzumiBalances(
   const iziRewardsRes = await multicall({
     ctx,
     calls: pools.flatMap((pool) =>
-      tokenIds.map((token) => ({ target: pool.address, params: [BigInt(token)] } as const)),
+      tokenIds.map((token) => ({ target: pool.address, params: [BigInt(token)] }) as const),
     ),
     abi: abi.pendingReward,
   })

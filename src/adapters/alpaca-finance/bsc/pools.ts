@@ -56,7 +56,7 @@ export async function getPoolsContracts(ctx: BaseContext, fairLaunch: Contract) 
 
   const poolsInfoRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolsLength).map((i) => ({ target: fairLaunch.address, params: [i] } as const)),
+    calls: rangeBI(0n, poolsLength).map((i) => ({ target: fairLaunch.address, params: [i] }) as const),
     abi: abi.poolInfo,
   })
 

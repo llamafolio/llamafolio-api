@@ -85,7 +85,7 @@ export async function getAssetsContracts(ctx: BaseContext, compounders: Contract
     calls: numberOfAssets.flatMap((numberOfAsset) =>
       numberOfAsset.success
         ? range(0, numberOfAsset.output).map(
-            (_, idx) => ({ target: numberOfAsset.input.target, params: [idx] } as const),
+            (_, idx) => ({ target: numberOfAsset.input.target, params: [idx] }) as const,
           )
         : null,
     ),
@@ -127,7 +127,7 @@ export async function getLendBorrowBalances(
           ({
             target: asset.compounder,
             params: [ctx.address, asset.address],
-          } as const),
+          }) as const,
       ),
       abi: abi.userCollateral,
     }),
@@ -139,7 +139,7 @@ export async function getLendBorrowBalances(
           ({
             target: contract.address,
             params: [ctx.address],
-          } as const),
+          }) as const,
       ),
       abi: abi.borrowBalanceOf,
     }),

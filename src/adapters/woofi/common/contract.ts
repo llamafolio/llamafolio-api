@@ -49,17 +49,17 @@ const getWoofiUnderlyings = async (ctx: BaseContext, pools: Contract[]) => {
   const [underlyingsRes, masterChefsRes, pidsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address } as const)),
+      calls: pools.map((pool) => ({ target: pool.address }) as const),
       abi: abi.want,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address } as const)),
+      calls: pools.map((pool) => ({ target: pool.address }) as const),
       abi: abi.masterChef,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address } as const)),
+      calls: pools.map((pool) => ({ target: pool.address }) as const),
       abi: abi.pid,
     }),
   ])

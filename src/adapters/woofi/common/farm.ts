@@ -96,10 +96,10 @@ export async function getWoofiYieldBalances(ctx: BalancesContext, pools: Contrac
   const [userBalancesRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
-    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address } as const)), abi: abi.getPricePerFullShare }),
+    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address }) as const), abi: abi.getPricePerFullShare }),
   ])
 
   for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
@@ -130,15 +130,15 @@ export async function getWoofiFarmBalances(ctx: BalancesContext, pools: Contract
   const [userBalancesRes, pendingRewardsRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: fmtPools.map((pool) => ({ target: pool.masterchef, params: [pool.pid, ctx.address] } as const)),
+      calls: fmtPools.map((pool) => ({ target: pool.masterchef, params: [pool.pid, ctx.address] }) as const),
       abi: abi.userInfo,
     }),
     multicall({
       ctx,
-      calls: fmtPools.map((pool) => ({ target: pool.masterchef, params: [pool.pid, ctx.address] } as const)),
+      calls: fmtPools.map((pool) => ({ target: pool.masterchef, params: [pool.pid, ctx.address] }) as const),
       abi: abi.pendingXWoo,
     }),
-    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address } as const)), abi: abi.getPricePerFullShare }),
+    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address }) as const), abi: abi.getPricePerFullShare }),
   ])
 
   return fmtPools

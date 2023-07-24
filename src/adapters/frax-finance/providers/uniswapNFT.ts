@@ -78,7 +78,7 @@ export const uniswapNFTBalancesProvider = async (
 ): Promise<ProviderBalancesParams[]> => {
   const lockedNFTsOfRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: abi.lockedNFTsOf,
   })
 

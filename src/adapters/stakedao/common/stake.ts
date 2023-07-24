@@ -30,7 +30,7 @@ export async function getStakeDaoStakingBalances(ctx: BalancesContext, pools: Co
 
   const userBalancesRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.sdToken, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.sdToken, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 

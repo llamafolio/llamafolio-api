@@ -49,7 +49,7 @@ export async function getGyroLocker(ctx: BalancesContext, locker: Contract): Pro
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: rangeBI(0n, balancesOfsBI).map((idx) => ({ target: locker.address, params: [ctx.address, idx] } as const)),
+    calls: rangeBI(0n, balancesOfsBI).map((idx) => ({ target: locker.address, params: [ctx.address, idx] }) as const),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -57,7 +57,7 @@ export async function getGyroLocker(ctx: BalancesContext, locker: Contract): Pro
     ctx,
     calls: mapSuccess(
       tokenOfOwnerByIndexesRes,
-      (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] } as const),
+      (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] }) as const,
     ),
     abi: abi.locked,
   })

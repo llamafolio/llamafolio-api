@@ -84,19 +84,19 @@ export async function getTetuVaultBalances(ctx: BalancesContext, vaults: Contrac
   const [userBalancesRes, exchangeRatesRes, pendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: vaults.map((vault) => ({ target: vault.address, params: [ctx.address] } as const)),
+      calls: vaults.map((vault) => ({ target: vault.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: vaults.map((vault) => ({ target: vault.address } as const)),
+      calls: vaults.map((vault) => ({ target: vault.address }) as const),
       abi: abi.getPricePerFullShare,
     }),
     multicall({
       ctx,
       calls: vaults.flatMap((vault) =>
         vault.rewards!.map(
-          (reward: any) => ({ target: vault.address, params: [reward.address, ctx.address] } as const),
+          (reward: any) => ({ target: vault.address, params: [reward.address, ctx.address] }) as const,
         ),
       ),
       abi: abi.earned,
@@ -149,7 +149,7 @@ export async function getTetuVaultBalances(ctx: BalancesContext, vaults: Contrac
 
   const underlyingsExchangeRatesRes = await multicall({
     ctx,
-    calls: deepUnderlyingsBalances.map((underlying) => ({ target: underlying.token! } as const)),
+    calls: deepUnderlyingsBalances.map((underlying) => ({ target: underlying.token! }) as const),
     abi: abi.getPricePerFullShare,
   })
 
@@ -177,12 +177,12 @@ const getUnderlyingsBalancer = async (ctx: BalancesContext, pools: TetuBalancePa
   const [underlyingstokensBalancesRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: balancerPools.map((pool) => ({ target: pool.vault!, params: [pool.poolId!] } as const)),
+      calls: balancerPools.map((pool) => ({ target: pool.vault!, params: [pool.poolId!] }) as const),
       abi: abi.getPoolTokens,
     }),
     multicall({
       ctx,
-      calls: balancerPools.map((pool) => ({ target: pool.underlyings![0].address } as const)),
+      calls: balancerPools.map((pool) => ({ target: pool.underlyings![0].address }) as const),
       abi: erc20Abi.totalSupply,
     }),
   ])

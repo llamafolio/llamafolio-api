@@ -31,7 +31,7 @@ export async function getRedactedVesterBalances(ctx: BalancesContext, vesters: C
 
   const bondInfosRes = await multicall({
     ctx,
-    calls: vesters.map((vester) => ({ target: vester.address, params: [ctx.address] } as const)),
+    calls: vesters.map((vester) => ({ target: vester.address, params: [ctx.address] }) as const),
     abi: abi.bondInfo,
   })
 

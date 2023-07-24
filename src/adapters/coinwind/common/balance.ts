@@ -34,7 +34,7 @@ export async function getCoinwindBalances(
 ): Promise<Balance[]> {
   const userInfosRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] }) as const),
     abi: abi.userInfo,
   })
 

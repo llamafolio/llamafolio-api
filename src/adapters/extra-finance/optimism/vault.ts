@@ -201,7 +201,7 @@ export async function getExtraVaults(ctx: BaseContext, factory: Contract): Promi
 
   const vaultsRes = await multicall({
     ctx,
-    calls: rangeBI(1n, LIMIT).map((idx) => ({ target: factory.address, params: [idx] } as const)),
+    calls: rangeBI(1n, LIMIT).map((idx) => ({ target: factory.address, params: [idx] }) as const),
     abi: abi.getVault,
   })
 

@@ -80,14 +80,14 @@ const unwrapLpTokens = async (ctx: BaseContext, pools: Contract[]): Promise<Cont
   const poolsAddressesRes = await multicall({
     ctx,
     calls: pools.map(
-      (pool) => ({ target: metaRegistry.address, params: [pool.underlyings?.[0] as `0x${string}`] } as const),
+      (pool) => ({ target: metaRegistry.address, params: [pool.underlyings?.[0] as `0x${string}`] }) as const,
     ),
     abi: abi.get_pool_from_lp_token,
   })
 
   const underlyingsTokensRes = await multicall({
     ctx,
-    calls: mapSuccess(poolsAddressesRes, (res) => ({ target: metaRegistry.address, params: [res.output] } as const)),
+    calls: mapSuccess(poolsAddressesRes, (res) => ({ target: metaRegistry.address, params: [res.output] }) as const),
     abi: abi.get_underlying_coins,
   })
 

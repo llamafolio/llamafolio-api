@@ -65,7 +65,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         ? multicall({
             ctx,
             calls: contractsUnderlyings.map(
-              (underlying) => ({ target: (underlying as BaseContract).address, params: [address] } as const),
+              (underlying) => ({ target: (underlying as BaseContract).address, params: [address] }) as const,
             ),
             abi: erc20Abi.balanceOf,
           })

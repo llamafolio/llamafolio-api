@@ -65,7 +65,7 @@ export async function getPopsicleFarmContracts(ctx: BaseContext, contract: Contr
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLengthRes).map((idx) => ({ target: contract.address, params: [idx] } as const)),
+    calls: rangeBI(0n, poolLengthRes).map((idx) => ({ target: contract.address, params: [idx] }) as const),
     abi: abi.poolInfo,
   })
 

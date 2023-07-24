@@ -74,7 +74,7 @@ export async function getPairsContracts({
 
   const allPairsRes = await multicall({
     ctx,
-    calls: pids.map((idx) => ({ target: factoryAddress, params: [idx] } as const)),
+    calls: pids.map((idx) => ({ target: factoryAddress, params: [idx] }) as const),
     abi: abi.allPairs,
   })
 

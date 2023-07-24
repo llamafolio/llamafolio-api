@@ -73,7 +73,7 @@ export async function getPayeeStreams(ctx: BalancesContext) {
         ({
           target: stream.contract.address,
           params: [stream.payer.id, ctx.address, stream.amountPerSec],
-        } as const),
+        }) as const,
     ),
     abi: abi.withdrawable,
   })

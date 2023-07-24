@@ -257,7 +257,7 @@ const getAuraMintAmountOnArbitrum = async (
 const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: Balance[]): Promise<Balance[]> => {
   const extraRewardsBalancesRes = await multicall({
     ctx,
-    calls: poolBalance.map((pool: Contract) => ({ target: pool.rewarder, params: [ctx.address] } as const)),
+    calls: poolBalance.map((pool: Contract) => ({ target: pool.rewarder, params: [ctx.address] }) as const),
     abi: abi.extraEarned,
   })
 

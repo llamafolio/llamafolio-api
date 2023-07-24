@@ -87,7 +87,7 @@ export async function getSherlockBalances(ctx: BalancesContext, staker: Contract
 
   const nftListsRes = await multicall({
     ctx,
-    calls: rangeBI(0n, COUNT).map((idx) => ({ target: staker.address, params: [idx] } as const)),
+    calls: rangeBI(0n, COUNT).map((idx) => ({ target: staker.address, params: [idx] }) as const),
     abi: abi.ownerOf,
   })
 
@@ -101,12 +101,12 @@ export async function getSherlockBalances(ctx: BalancesContext, staker: Contract
   const [nftsBalanceOfsRes, nftsPendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: nftsOwnedByUser.map((nft) => ({ target: staker.address, params: [BigInt(nft.nftId)] } as const)),
+      calls: nftsOwnedByUser.map((nft) => ({ target: staker.address, params: [BigInt(nft.nftId)] }) as const),
       abi: abi.tokenBalanceOf,
     }),
     multicall({
       ctx,
-      calls: nftsOwnedByUser.map((nft) => ({ target: staker.address, params: [BigInt(nft.nftId)] } as const)),
+      calls: nftsOwnedByUser.map((nft) => ({ target: staker.address, params: [BigInt(nft.nftId)] }) as const),
       abi: abi.sherRewards,
     }),
   ])

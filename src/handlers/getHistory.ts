@@ -129,7 +129,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     }
 
     const tokens = Object.keys(tokensByChain).flatMap((chain) =>
-      tokensByChain[chain].map((address) => ({ chain, address } as Token)),
+      tokensByChain[chain].map((address) => ({ chain, address }) as Token),
     )
 
     const prices = await getTokenPrices(tokens)

@@ -33,14 +33,14 @@ export async function getEllipsisLpBalances(ctx: BalancesContext, pools: Contrac
   const [userBalancesOfsRes, totalSuppliesRes, tokenBalancesOfRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: abi.balanceOf,
     }),
-    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address } as const)), abi: abi.totalSupply }),
+    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address }) as const), abi: abi.totalSupply }),
     multicall({
       ctx,
       calls: pools.flatMap((pool) =>
-        range(0, pool.tokens.length).map((_, idx) => ({ target: pool.pool, params: [BigInt(idx)] } as const)),
+        range(0, pool.tokens.length).map((_, idx) => ({ target: pool.pool, params: [BigInt(idx)] }) as const),
       ),
       abi: abi.balances,
     }),

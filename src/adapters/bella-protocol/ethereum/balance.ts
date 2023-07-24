@@ -103,7 +103,7 @@ async function getBellaYieldBalances(ctx: BalancesContext, contracts: Contract[]
   const [balanceOfsRes, getPricePerFullSharesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] } as const)),
+      calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: contracts.map((contract) => ({ target: contract.address })), abi: abi.converter }),

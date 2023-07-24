@@ -31,12 +31,12 @@ export async function getCRVUSDBalances(ctx: BalancesContext, pools: Contract[])
   const [userBalances, healthsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: abi.user_state,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: abi.health,
     }),
   ])

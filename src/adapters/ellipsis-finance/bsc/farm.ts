@@ -63,19 +63,19 @@ export async function getEllipsisFarmingBalances(
   const [userBalancesRes, userPendingsRewardsRes, totalSuppliesRes, tokenBalancesOfRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.lpToken, ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.lpToken, ctx.address] }) as const),
       abi: abi.userInfo,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: masterchef.address, params: [ctx.address, [pool.lpToken]] } as const)),
+      calls: pools.map((pool) => ({ target: masterchef.address, params: [ctx.address, [pool.lpToken]] }) as const),
       abi: abi.claimableReward,
     }),
-    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address } as const)), abi: abi.totalSupply }),
+    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address }) as const), abi: abi.totalSupply }),
     multicall({
       ctx,
       calls: pools.flatMap((pool) =>
-        range(0, pool.tokens.length).map((_, idx) => ({ target: pool.pool, params: [BigInt(idx)] } as const)),
+        range(0, pool.tokens.length).map((_, idx) => ({ target: pool.pool, params: [BigInt(idx)] }) as const),
       ),
       abi: abi.balances,
     }),

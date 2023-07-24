@@ -77,13 +77,13 @@ export async function getTetuVaults(ctx: BaseContext, factory: Contract): Promis
   const vaultsRes = await call({ ctx, target: factory.address, abi: abi.vaults })
 
   const [rewardTokensRes, underlyingsTokensRes] = await Promise.all([
-    multicall({ ctx, calls: (vaultsRes || []).map((vault) => ({ target: vault } as const)), abi: abi.rewardTokens }),
-    multicall({ ctx, calls: (vaultsRes || []).map((vault) => ({ target: vault } as const)), abi: abi.underlying }),
+    multicall({ ctx, calls: (vaultsRes || []).map((vault) => ({ target: vault }) as const), abi: abi.rewardTokens }),
+    multicall({ ctx, calls: (vaultsRes || []).map((vault) => ({ target: vault }) as const), abi: abi.underlying }),
   ])
 
   const underlyingsTokensFromUnderlyings = await multicall({
     ctx,
-    calls: mapSuccessFilter(underlyingsTokensRes, (res) => ({ target: res.output } as const)),
+    calls: mapSuccessFilter(underlyingsTokensRes, (res) => ({ target: res.output }) as const),
     abi: abi.underlying,
   })
 
@@ -117,12 +117,12 @@ export async function getBalancerUnderlyings(ctx: BaseContext, pools: Contract[]
   const [vaultBalancerRes, poolIdsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.underlyings![0] as `0x${string}` } as const)),
+      calls: pools.map((pool) => ({ target: pool.underlyings![0] as `0x${string}` }) as const),
       abi: abi.getVault,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.underlyings![0] as `0x${string}` } as const)),
+      calls: pools.map((pool) => ({ target: pool.underlyings![0] as `0x${string}` }) as const),
       abi: abi.getPoolId,
     }),
   ])
@@ -140,7 +140,7 @@ export async function getBalancerUnderlyings(ctx: BaseContext, pools: Contract[]
 
   const balancerTokensRes = await multicall({
     ctx,
-    calls: balancerPools.map((pool) => ({ target: pool.vault, params: [pool.poolId] } as const)),
+    calls: balancerPools.map((pool) => ({ target: pool.vault, params: [pool.poolId] }) as const),
     abi: abi.getPoolTokens,
   })
 

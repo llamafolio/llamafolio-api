@@ -37,7 +37,7 @@ export async function getCdpidFromProxiesAddresses(
   // Maker uses cdpid to map an id with user's addresses
   const cdpidAddressesRes = await multicall({
     ctx,
-    calls: proxies.map((proxy) => ({ target: cdps.address, params: [manager.address, proxy.address] } as const)),
+    calls: proxies.map((proxy) => ({ target: cdps.address, params: [manager.address, proxy.address] }) as const),
     abi: abi.getCdpsAsc,
   })
 

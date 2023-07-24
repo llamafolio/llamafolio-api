@@ -25,12 +25,12 @@ export async function getIporLpBalances(ctx: BalancesContext, assets: Contract[]
   const [userBalancesRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: assets.map((asset) => ({ target: asset.token!, params: [ctx.address] } as const)),
+      calls: assets.map((asset) => ({ target: asset.token!, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: assets.map((asset) => ({ target: asset.address } as const)),
+      calls: assets.map((asset) => ({ target: asset.address }) as const),
       abi: abi.calculateExchangeRate,
     }),
   ])

@@ -91,7 +91,7 @@ export async function getLockerBalances(ctx: BalancesContext, contract: Contract
   const extraUserLockedBySlotsRes = await multicall({
     ctx,
     calls: rangeBI(0n, userExtraLockedSlots).map(
-      (i) => ({ target: contract.address, params: [ctx.address, i] } as const),
+      (i) => ({ target: contract.address, params: [ctx.address, i] }) as const,
     ),
     abi: abi.getUserNthSlot,
   })
@@ -125,7 +125,7 @@ const lockedRewardsBalances = async (ctx: BalancesContext, rewarder: `0x${string
   const pendingRewardsTokensRes = await multicall({
     ctx,
     // There is no logic in the contracts to know the number of tokens in advance. Among all the contracts checked, 7 seems to be the maximum number of extra tokens used.
-    calls: rangeBI(0n, 7n).map((i) => ({ target: rewarder, params: [i] } as const)),
+    calls: rangeBI(0n, 7n).map((i) => ({ target: rewarder, params: [i] }) as const),
     abi: abi.rewardTokens,
   })
 
@@ -134,7 +134,7 @@ const lockedRewardsBalances = async (ctx: BalancesContext, rewarder: `0x${string
 
   const pendingRewardsBalancesRes = await multicall({
     ctx,
-    calls: pendingRewardsTokens.map((token) => ({ target: rewarder, params: [ctx.address, token] } as const)),
+    calls: pendingRewardsTokens.map((token) => ({ target: rewarder, params: [ctx.address, token] }) as const),
     abi: abi.earned,
   })
 

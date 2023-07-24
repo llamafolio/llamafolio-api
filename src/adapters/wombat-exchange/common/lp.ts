@@ -27,13 +27,13 @@ export async function getWombatLpBalances(ctx: BalancesContext, pools: Contract[
   const [userBalancesRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: abi.balanceOf,
     }),
     multicall({
       ctx,
       calls: pools.map(
-        (pool) => ({ target: pool.provider, params: [(pool.underlyings![0] as Contract).address] } as const),
+        (pool) => ({ target: pool.provider, params: [(pool.underlyings![0] as Contract).address] }) as const,
       ),
       abi: abi.exchangeRate,
     }),

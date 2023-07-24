@@ -57,7 +57,7 @@ assets.forEach((asset) => {
 export async function getEtherBalances(ctx: BalancesContext, staker: Contract): Promise<Balance[]> {
   const userEthBalances = await multicall({
     ctx,
-    calls: assets.map((asset) => ({ target: staker.address, params: [ctx.address, asset.address] } as const)),
+    calls: assets.map((asset) => ({ target: staker.address, params: [ctx.address, asset.address] }) as const),
     abi: abi.userToErc20Balance,
   })
 

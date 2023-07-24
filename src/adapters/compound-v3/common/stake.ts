@@ -7,7 +7,7 @@ export async function getStakeBalances(ctx: BalancesContext, contracts: Contract
 
   const balanceOfsRes = await multicall({
     ctx,
-    calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] } as const)),
+    calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] }) as const),
     abi: abi.balanceOf,
   })
 

@@ -101,19 +101,19 @@ export async function getGoldFinchNFTStakeBalances(ctx: BalancesContext, staker:
 
   const tokenIdsRes = await multicall({
     ctx,
-    calls: rangeBI(0n, nftLength).map((idx) => ({ target: staker.address, params: [ctx.address, idx] } as const)),
+    calls: rangeBI(0n, nftLength).map((idx) => ({ target: staker.address, params: [ctx.address, idx] }) as const),
     abi: abi.tokenOfOwnerByIndex,
   })
 
   const [tokenBalancesRes, tokenPendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: mapSuccess(tokenIdsRes, (tokenId) => ({ target: staker.address, params: [tokenId.output] } as const)),
+      calls: mapSuccess(tokenIdsRes, (tokenId) => ({ target: staker.address, params: [tokenId.output] }) as const),
       abi: abi.stakedBalanceOf,
     }),
     multicall({
       ctx,
-      calls: mapSuccess(tokenIdsRes, (tokenId) => ({ target: staker.address, params: [tokenId.output] } as const)),
+      calls: mapSuccess(tokenIdsRes, (tokenId) => ({ target: staker.address, params: [tokenId.output] }) as const),
       abi: abi.optimisticClaimable,
     }),
   ])

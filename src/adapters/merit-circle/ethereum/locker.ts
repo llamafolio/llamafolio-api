@@ -29,7 +29,7 @@ export async function getLockerBalances(ctx: BalancesContext, lockers: Contract[
 
   const lockerBalancesInfosRes = await multicall({
     ctx,
-    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] } as const)),
+    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] }) as const),
     abi: abi.getDepositsOf,
   })
 

@@ -64,7 +64,7 @@ const lendingPool: Contract = {
 export async function getExtraPoolsBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const userBalancesRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: lendingPool.address, params: [[pool.pid], ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: lendingPool.address, params: [[pool.pid], ctx.address] }) as const),
     abi: abi.getPositionStatus,
   })
 

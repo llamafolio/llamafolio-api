@@ -21,7 +21,7 @@ export const pieProvider = async (ctx: BalancesContext, pools: Balance[]): Promi
   const [tokensBalancesRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [BigInt(pool.amount.toString())] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [BigInt(pool.amount.toString())] }) as const),
       abi: abi.calcTokensForAmount,
     }),
     multicall({

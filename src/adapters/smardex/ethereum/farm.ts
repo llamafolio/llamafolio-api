@@ -116,7 +116,7 @@ const getMasterChefPoolsInfos = async (ctx: BaseContext, pairs: Pair[], masterch
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLengthRes).map((idx) => ({ target: masterchef.address, params: [idx] } as const)),
+    calls: rangeBI(0n, poolLengthRes).map((idx) => ({ target: masterchef.address, params: [idx] }) as const),
     abi: abi.campaignInfo,
   })
 

@@ -91,7 +91,7 @@ export async function getMarketsContracts(
       ctx,
       abi: abi.markets,
       calls: cTokensAddresses.map(
-        (cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] } as const),
+        (cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] }) as const,
       ),
     }),
 
@@ -135,7 +135,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
 
     multicall({
       ctx,
-      calls: contracts.map((token) => ({ target: token.address, params: [ctx.address] } as const)),
+      calls: contracts.map((token) => ({ target: token.address, params: [ctx.address] }) as const),
       abi: abi.borrowBalanceCurrent,
     }),
 

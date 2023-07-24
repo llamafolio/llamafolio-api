@@ -57,7 +57,7 @@ export async function getFractionalVaults(ctx: BaseContext, factory: Contract): 
 
   const vaultsRes = await multicall({
     ctx,
-    calls: rangeBI(0n, vaultCount).map((idx) => ({ target: factory.address, params: [idx] } as const)),
+    calls: rangeBI(0n, vaultCount).map((idx) => ({ target: factory.address, params: [idx] }) as const),
     abi: abi.vaults,
   })
 
@@ -72,7 +72,7 @@ export async function getFractionalVaults(ctx: BaseContext, factory: Contract): 
 export async function getFractionalVaultsBalances(ctx: BalancesContext, vaults: Contract[]): Promise<Balance[]> {
   const userPricesRes = await multicall({
     ctx,
-    calls: vaults.map((vault) => ({ target: vault.address, params: [ctx.address] } as const)),
+    calls: vaults.map((vault) => ({ target: vault.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 

@@ -22,13 +22,13 @@ const abi = {
 export async function getEigenlayerBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const userBalances = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: abi.shares,
   })
 
   const fmtBalances = await multicall({
     ctx,
-    calls: mapSuccessFilter(userBalances, (res) => ({ target: res.input.target, params: [res.output] } as const)),
+    calls: mapSuccessFilter(userBalances, (res) => ({ target: res.input.target, params: [res.output] }) as const),
     abi: abi.sharesToUnderlying,
   })
 

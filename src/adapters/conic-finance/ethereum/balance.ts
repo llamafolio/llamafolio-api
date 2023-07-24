@@ -102,13 +102,13 @@ export async function getConicBalances(
     multicall({
       ctx,
       calls: contracts.map(
-        (contract) => ({ target: staker.address, params: [contract.address, ctx.address] } as const),
+        (contract) => ({ target: staker.address, params: [contract.address, ctx.address] }) as const,
       ),
       abi: abi.getUserBalanceForPool,
     }),
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.rewarder, params: [ctx.address] } as const)),
+      calls: contracts.map((contract) => ({ target: contract.rewarder, params: [ctx.address] }) as const),
       abi: abi.claimableRewards,
     }),
     multicall({

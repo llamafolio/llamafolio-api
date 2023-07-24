@@ -17,23 +17,29 @@ export const ALCHEMY_BASE_URL = (chain: Chain) => `https://${alchemyChain[chain]
 
 /** groups Alchemy NFTs by collection contract address */
 export function groupAlchemyNFTs(nfts: Array<AlchemyNFTWithMetadata>) {
-  return nfts.reduce((accumulator, item) => {
-    const {
-      contract: { address: key },
-      ...nft
-    } = item
+  return nfts.reduce(
+    (accumulator, item) => {
+      const {
+        contract: { address: key },
+        ...nft
+      } = item
 
-    if (!accumulator[key]) {
-      accumulator[key] = {
-        ...item.contract,
-        balance: Number(item.balance),
-        nfts: [],
+      if (!accumulator[key]) {
+        accumulator[key] = {
+          ...item.contract,
+          balance: Number(item.balance),
+          nfts: [],
+        }
       }
-    }
-    accumulator[key].balance += Number(item.balance)
-    accumulator[key].nfts.push(nft)
-    return accumulator
-  }, {} as Record<string, AlchemyNFTWithMetadata['contract'] & { balance: number; nfts: Array<Omit<AlchemyNFTWithMetadata, 'contract'>> }>)
+      accumulator[key].balance += Number(item.balance)
+      accumulator[key].nfts.push(nft)
+      return accumulator
+    },
+    {} as Record<
+      string,
+      AlchemyNFTWithMetadata['contract'] & { balance: number; nfts: Array<Omit<AlchemyNFTWithMetadata, 'contract'>> }
+    >,
+  )
 }
 
 // https://docs.alchemy.com/reference/getnftsforowner-v3

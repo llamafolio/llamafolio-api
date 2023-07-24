@@ -98,7 +98,7 @@ export const convexProvider = async (ctx: BaseContext, pools: Contract[]): Promi
         ({
           target: convexBooster.address,
           params: [poolId.output],
-        } as const),
+        }) as const,
     ),
     abi: abi.poolInfo,
   })
@@ -111,7 +111,7 @@ export const convexProvider = async (ctx: BaseContext, pools: Contract[]): Promi
         ({
           target: metaRegistry.address,
           params: [lpToken.output[0]],
-        } as const),
+        }) as const,
     ),
     abi: abi.get_pool_from_lp_token,
   })
@@ -124,7 +124,7 @@ export const convexProvider = async (ctx: BaseContext, pools: Contract[]): Promi
         ({
           target: metaRegistry.address,
           params: [poolAddress.output],
-        } as const),
+        }) as const,
     ),
     abi: abi.get_underlying_coins,
   })

@@ -60,7 +60,7 @@ export async function getElephantFarmBalances(ctx: BalancesContext, farmer: Cont
 
   const userBalancesRes = await multicall({
     ctx,
-    calls: tokens.map((token) => ({ target: farmer.address, params: [token.address, ctx.address] } as const)),
+    calls: tokens.map((token) => ({ target: farmer.address, params: [token.address, ctx.address] }) as const),
     abi: abi.users,
   })
 
