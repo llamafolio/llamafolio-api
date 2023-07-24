@@ -58,10 +58,3 @@ export async function getMarketsContracts(ctx: BaseContext, lens: Contract): Pro
 
   return contracts
 }
-
-export async function getMarketsContractsMorphoAaveV3(ctx: BaseContext, comptroller: Contract): Promise<Contract[]> {
-  return ((await call({ ctx, target: comptroller.address, abi: abi.marketsCreated })) || []).map((market) => ({
-    chain: ctx.chain,
-    address: market,
-  }))
-}
