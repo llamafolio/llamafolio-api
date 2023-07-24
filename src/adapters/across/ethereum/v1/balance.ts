@@ -8,14 +8,14 @@ export async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[
   const [userBalancesOfsRes, totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: erc20Abi.totalSupply }),
     multicall({
       ctx,
       calls: pools.map(
-        (pool) => ({ target: (pool.underlyings![0] as Contract).address, params: [pool.address] } as const),
+        (pool) => ({ target: (pool.underlyings![0] as Contract).address, params: [pool.address] }) as const,
       ),
       abi: erc20Abi.balanceOf,
     }),

@@ -54,7 +54,7 @@ export async function getSuperfarmContracts(ctx: BaseContext, contracts: Contrac
     multicall({
       ctx,
       calls: flatMapSuccess(poolLengthRes, (poolLength) =>
-        rangeBI(0n, poolLength.output).map((idx) => ({ target: poolLength.input.target, params: [idx] } as const)),
+        rangeBI(0n, poolLength.output).map((idx) => ({ target: poolLength.input.target, params: [idx] }) as const),
       ),
       abi: abi.poolTokens,
     }),

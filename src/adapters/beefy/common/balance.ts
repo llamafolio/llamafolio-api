@@ -23,7 +23,7 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]):
   const [balanceOfsRes, rateOfsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.getPricePerFullShare }),

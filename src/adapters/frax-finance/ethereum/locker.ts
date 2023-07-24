@@ -20,7 +20,7 @@ export async function getFraxLockerBalances(ctx: BalancesContext, lockers: Contr
     getSingleLockerBalances(ctx, lockers, 'locked'),
     multicall({
       ctx,
-      calls: lockers.map((locker) => ({ target: locker.rewarder, params: [ctx.address] } as const)),
+      calls: lockers.map((locker) => ({ target: locker.rewarder, params: [ctx.address] }) as const),
       abi: abi.earned,
     }),
   ])

@@ -32,7 +32,7 @@ const abi = {
 export async function getInchRewardBalances(ctx: BalancesContext, rewarders: Contract[]): Promise<Balance[]> {
   const userRewardsBalances = await multicall({
     ctx,
-    calls: rewarders.map((rewarder) => ({ target: rewarder.address, params: [rewarder.token!, ctx.address] } as const)),
+    calls: rewarders.map((rewarder) => ({ target: rewarder.address, params: [rewarder.token!, ctx.address] }) as const),
     abi: abi.farmed,
   })
 

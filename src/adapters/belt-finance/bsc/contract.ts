@@ -85,7 +85,7 @@ export async function getBeltContracts(ctx: BaseContext, masterchef: Contract, l
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLength).map((index) => ({ target: masterchef.address, params: [index] } as const)),
+    calls: rangeBI(0n, poolLength).map((index) => ({ target: masterchef.address, params: [index] }) as const),
     abi: abi.poolInfo,
   })
 

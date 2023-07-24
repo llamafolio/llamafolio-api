@@ -69,12 +69,12 @@ export async function getFarmBeltBalances(ctx: BalancesContext, pools: Contract[
   const [userBalancesRes, pendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: splitPidPools.map((pool) => ({ target: masterChef.address, params: [pool.pid, ctx.address] } as const)),
+      calls: splitPidPools.map((pool) => ({ target: masterChef.address, params: [pool.pid, ctx.address] }) as const),
       abi: abi.userInfo,
     }),
     multicall({
       ctx,
-      calls: splitPidPools.map((pool) => ({ target: masterChef.address, params: [pool.pid, ctx.address] } as const)),
+      calls: splitPidPools.map((pool) => ({ target: masterChef.address, params: [pool.pid, ctx.address] }) as const),
       abi: abi.pendingBELT,
     }),
   ])

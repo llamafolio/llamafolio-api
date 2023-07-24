@@ -28,7 +28,7 @@ export const curveProvider = async (ctx: BaseContext, pools: Contract[]): Promis
         ({
           target: metaRegistry.address,
           params: [pool.curvePool],
-        } as const),
+        }) as const,
     ),
     abi: abi.get_underlying_coins,
   })

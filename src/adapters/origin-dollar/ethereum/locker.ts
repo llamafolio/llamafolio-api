@@ -43,7 +43,7 @@ export async function getOriginDollarLockerBalances(ctx: BalancesContext, locker
     multicall({
       ctx,
       // There is no logic function to know in advance number of positions taken by users, as far i could checked, 10 seems to be the maximum positions length found
-      calls: rangeBI(0n, 10n).map((i) => ({ target: locker.address, params: [ctx.address, i] } as const)),
+      calls: rangeBI(0n, 10n).map((i) => ({ target: locker.address, params: [ctx.address, i] }) as const),
       abi: abi.lockups,
     }),
     call({ ctx, target: locker.address, params: [ctx.address], abi: abi.previewRewards }),

@@ -83,7 +83,7 @@ export async function getStargateFarmBalances(
   const poolsInfosRes = await multicall({
     ctx,
     calls: flatMapSuccess(poolsLengthRes, (poolsLength) =>
-      rangeBI(0n, poolsLength.output).map((idx) => ({ target: poolsLength.input.target, params: [idx] } as const)),
+      rangeBI(0n, poolsLength.output).map((idx) => ({ target: poolsLength.input.target, params: [idx] }) as const),
     ),
     abi: abi.poolInfos,
   })

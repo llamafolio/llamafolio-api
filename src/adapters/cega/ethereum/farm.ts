@@ -24,7 +24,7 @@ const USDC: Token = {
 export async function getCegaBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const userBalancesRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 
@@ -32,7 +32,7 @@ export async function getCegaBalances(ctx: BalancesContext, pools: Contract[]): 
     ctx,
     calls: mapSuccess(
       userBalancesRes,
-      (userBalanceRes) => ({ target: userBalanceRes.input.target, params: [userBalanceRes.output] } as const),
+      (userBalanceRes) => ({ target: userBalanceRes.input.target, params: [userBalanceRes.output] }) as const,
     ),
     abi: abi.convertToAssets,
   })

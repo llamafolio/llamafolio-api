@@ -37,7 +37,7 @@ const OP: Token = {
 export async function getExactlyBalances(ctx: BalancesContext, pools: Contract[]) {
   const userInfos = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: abi.accountSnapshot,
   })
 

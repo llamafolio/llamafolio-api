@@ -52,7 +52,7 @@ export async function getVaults(ctx: BaseContext, factoryArrakis: Contract) {
         ({
           target: factoryArrakis.address,
           params: [deployer],
-        } as const),
+        }) as const,
     ),
     abi: abi.getPools,
   })

@@ -60,22 +60,22 @@ export async function getTetuLpBalances(ctx: BalancesContext, pools: Contract[])
   const [userBalancesRes, reserve0sRes, reserve1sRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address } as const)),
+      calls: pools.map((pool) => ({ target: pool.address }) as const),
       abi: abi.vaultReserve0,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address } as const)),
+      calls: pools.map((pool) => ({ target: pool.address }) as const),
       abi: abi.vaultReserve1,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address } as const)),
+      calls: pools.map((pool) => ({ target: pool.address }) as const),
       abi: erc20Abi.totalSupply,
     }),
   ])

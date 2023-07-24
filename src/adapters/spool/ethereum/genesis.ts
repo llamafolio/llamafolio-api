@@ -41,13 +41,13 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]) 
   const [getDeposit, getEarned] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: abi.users,
     }),
 
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [Spool.address, ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [Spool.address, ctx.address] }) as const),
       abi: abi.earned,
     }),
   ])

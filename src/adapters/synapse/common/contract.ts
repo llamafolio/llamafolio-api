@@ -78,7 +78,7 @@ async function getUnderlyingsFromSynapsePool(ctx: BaseContext, contracts: Contra
     const pool = contract.pool
     const underlyingsTokensRes = await multicall({
       ctx,
-      calls: Array.from({ length: 4 }, (_, i) => ({ target: pool, params: [i] } as const)),
+      calls: Array.from({ length: 4 }, (_, i) => ({ target: pool, params: [i] }) as const),
       abi: abi.getToken,
     })
 

@@ -80,7 +80,7 @@ export async function getLockedBalances(ctx: BalancesContext, contracts: Contrac
   const [balancesLockedRes, periodStartTimestampRes, periodDurationRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] } as const)),
+      calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls, abi: abi.firstPeriodStartTimestamp }),

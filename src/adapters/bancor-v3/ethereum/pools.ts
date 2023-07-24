@@ -123,7 +123,7 @@ export async function getPoolsContracts(ctx: BaseContext): Promise<Contract[]> {
                 target: poolCollections[poolCollectionIdx],
                 // replace ETH alias
                 params: [pool === ETH_ADDR ? ADDRESS_ZERO : pool],
-              } as const),
+              }) as const,
           )
         : [],
     ),
@@ -174,14 +174,14 @@ export async function getStakeBalances(ctx: BalancesContext, standardRewards: St
     multicall({
       ctx,
       calls: standardRewards.ids.map(
-        (id) => ({ target: standardRewards.address, params: [ctx.address, BigInt(id)] } as const),
+        (id) => ({ target: standardRewards.address, params: [ctx.address, BigInt(id)] }) as const,
       ),
       abi: abi.providerStake,
     }),
     multicall({
       ctx,
       calls: standardRewards.ids.map(
-        (id) => ({ target: standardRewards.address, params: [ctx.address, BigInt(id)] } as const),
+        (id) => ({ target: standardRewards.address, params: [ctx.address, BigInt(id)] }) as const,
       ),
       abi: abi.providerRewards,
     }),

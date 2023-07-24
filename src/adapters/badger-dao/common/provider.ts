@@ -126,7 +126,7 @@ export const auraProvider = async (
 
   const underlyingsBalancesRes = await multicall({
     ctx,
-    calls: mapSuccess(poolIdsRes, (pool) => ({ target: AURA_VAULT_ADDRESS, params: [pool.output] } as const)),
+    calls: mapSuccess(poolIdsRes, (pool) => ({ target: AURA_VAULT_ADDRESS, params: [pool.output] }) as const),
     abi: abi.getPoolTokens,
   })
 
@@ -160,7 +160,7 @@ export const convexProvider = async (
   if (ctx.chain === 'ethereum') {
     const poolAddressesRes = await multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.lpToken] } as const)),
+      calls: pools.map((pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.lpToken] }) as const),
       abi: abi.get_pool_from_lp_token,
     })
 
@@ -168,7 +168,7 @@ export const convexProvider = async (
       ctx,
       calls: mapSuccess(
         poolAddressesRes,
-        (pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.output] } as const),
+        (pool) => ({ target: CURVE_REGISTRY_ADDRESS, params: [pool.output] }) as const,
       ),
       abi: abi.get_underlying_balances,
     })

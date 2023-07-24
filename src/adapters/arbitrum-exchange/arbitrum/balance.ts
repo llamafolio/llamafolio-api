@@ -61,7 +61,7 @@ export const getArxMasterChefPoolsBalances = async (
     getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
     multicall({
       ctx,
-      calls: pairs.map((pair) => ({ target: masterchef.address, params: [BigInt(pair.pid), ctx.address] } as const)),
+      calls: pairs.map((pair) => ({ target: masterchef.address, params: [BigInt(pair.pid), ctx.address] }) as const),
       abi: abi.pendingWETH,
     }),
   ])

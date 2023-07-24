@@ -245,7 +245,7 @@ export async function getFmtPoolsContracts(ctx: BaseContext, registry: `0x${stri
 
   const poolsListRes = await multicall({
     ctx,
-    calls: range(0, Number(poolsCountRes)).map((_, idx) => ({ target: registry, params: [BigInt(idx)] } as const)),
+    calls: range(0, Number(poolsCountRes)).map((_, idx) => ({ target: registry, params: [BigInt(idx)] }) as const),
     abi: abi.pool_list,
   })
 
@@ -314,7 +314,7 @@ const processUnderlyings = async (ctx: BaseContext, pools: PoolContract[]): Prom
   const underlyingsTokensRes = await multicall({
     ctx,
     calls: poolsWithoutUnderlyings.flatMap((pool) =>
-      range(0, 4).map((_, idx) => ({ target: pool.address, params: [BigInt(idx)] } as const)),
+      range(0, 4).map((_, idx) => ({ target: pool.address, params: [BigInt(idx)] }) as const),
     ),
     abi: abi.coins,
   })

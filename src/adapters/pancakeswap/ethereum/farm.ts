@@ -120,7 +120,7 @@ export async function getPancakeFarmBalances(
 
   const userBalancesRes = await multicall({
     ctx,
-    calls: masterchefPools.map((pool) => ({ target: pool.masterchef, params: [pool.pid, ctx.address] } as const)),
+    calls: masterchefPools.map((pool) => ({ target: pool.masterchef, params: [pool.pid, ctx.address] }) as const),
     abi: abi.userInfo,
   })
 

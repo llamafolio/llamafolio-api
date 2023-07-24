@@ -107,7 +107,7 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
 
   const tokensOfOwnerByIndexRes = await multicall({
     ctx,
-    calls: rangeBI(0n, balanceOf).map((idx) => ({ target: contract.address, params: [ctx.address, idx] } as const)),
+    calls: rangeBI(0n, balanceOf).map((idx) => ({ target: contract.address, params: [ctx.address, idx] }) as const),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -115,7 +115,7 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
     ctx,
     calls: mapSuccess(
       tokensOfOwnerByIndexRes,
-      (tokenIds) => ({ target: contract.address, params: [tokenIds.output] } as const),
+      (tokenIds) => ({ target: contract.address, params: [tokenIds.output] }) as const,
     ),
     abi: abi.liquidities,
   })
@@ -141,7 +141,7 @@ export async function getIzumiBSCBalances(ctx: BalancesContext, contract: Contra
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: mapSuccess(poolsInfosRes, (infos) => ({ target: factory.address, params: infos.output } as const)),
+    calls: mapSuccess(poolsInfosRes, (infos) => ({ target: factory.address, params: infos.output }) as const),
     abi: abi.pool,
   })
 

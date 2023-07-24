@@ -110,7 +110,7 @@ export async function getStakeBalancerPoolBalances(
 
   const underlyingsBalancesRes = await multicall({
     ctx,
-    calls: underlyingsTokens.map((token) => ({ target: token.address, params: [bPoolRes] } as const)),
+    calls: underlyingsTokens.map((token) => ({ target: token.address, params: [bPoolRes] }) as const),
     abi: erc20Abi.balanceOf,
   })
 

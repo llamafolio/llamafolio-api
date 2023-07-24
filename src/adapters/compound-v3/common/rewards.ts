@@ -42,7 +42,7 @@ export async function getRewardBalances(
   const pendingCompRewardsRes = await multicall({
     ctx,
     calls: compounders.map(
-      (contract) => ({ target: rewarder.address, params: [contract.address, ctx.address] } as const),
+      (contract) => ({ target: rewarder.address, params: [contract.address, ctx.address] }) as const,
     ),
     abi: abi.getRewardOwed,
   })

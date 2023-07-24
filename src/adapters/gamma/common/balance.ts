@@ -45,7 +45,7 @@ export async function getGammaFarmBalances(ctx: BalancesContext, pools: Contract
 
   const balancesOfsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 
@@ -132,7 +132,7 @@ export async function getGammaMasterchefBalances(
 
   const poolsBalancesRes = await multicall({
     ctx,
-    calls: masterchefPools.map((pool) => ({ target: pool.provider, params: [BigInt(pool.pid), ctx.address] } as const)),
+    calls: masterchefPools.map((pool) => ({ target: pool.provider, params: [BigInt(pool.pid), ctx.address] }) as const),
     abi: abi.userInfo,
   })
 

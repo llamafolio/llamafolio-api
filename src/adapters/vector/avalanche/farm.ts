@@ -145,7 +145,7 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolsLength).map((i) => ({ target: masterChef.address, params: [i] } as const)),
+    calls: rangeBI(0n, poolsLength).map((i) => ({ target: masterChef.address, params: [i] }) as const),
     abi: abi.registeredToken,
   })
 
@@ -153,7 +153,7 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: poolsAddresses.map((pool) => ({ target: masterChef.address, params: [pool] } as const)),
+    calls: poolsAddresses.map((pool) => ({ target: masterChef.address, params: [pool] }) as const),
     abi: abi.addressToPoolInfo,
   })
 
@@ -177,7 +177,7 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
       ctx,
       calls: poolInfos.flatMap((res) => {
         const [_lpToken, _allocPoint, _lastRewardTimestamp, _accVTXPerShare, rewarder] = res.output
-        return rangeBI(0n, BigInt(rewardsLength)).map((idx) => ({ target: rewarder, params: [idx] } as const))
+        return rangeBI(0n, BigInt(rewardsLength)).map((idx) => ({ target: rewarder, params: [idx] }) as const)
       }),
       abi: abi.rewardTokens,
     }),
@@ -217,14 +217,14 @@ export async function getFarmBalances(
   const [userDepositBalancesRes, pendingBaseRewardsRes, pendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: masterChef.address, params: [pool.address, ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: masterChef.address, params: [pool.address, ctx.address] }) as const),
       abi: abi.depositInfo,
     }),
 
     multicall({
       ctx,
       calls: pools.map(
-        (pool) => ({ target: masterChef.address, params: [pool.address, ctx.address, pool.address] } as const),
+        (pool) => ({ target: masterChef.address, params: [pool.address, ctx.address, pool.address] }) as const,
       ),
       abi: abi.pendingTokens,
     }),
@@ -235,7 +235,7 @@ export async function getFarmBalances(
         (pool) =>
           pool.rewards?.map(
             (rewardToken) =>
-              ({ target: pool.rewarder, params: [ctx.address, (rewardToken as BaseContract).address] } as const),
+              ({ target: pool.rewarder, params: [ctx.address, (rewardToken as BaseContract).address] }) as const,
           ) ?? [],
       ),
       abi: abi.earned,

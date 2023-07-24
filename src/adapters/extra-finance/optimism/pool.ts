@@ -143,7 +143,7 @@ export async function getExtraPools(ctx: BaseContext, lendingPool: Contract): Pr
   const poolsInfosRes = await multicall({
     ctx,
     // The first address is a test address
-    calls: rangeBI(1n, poolsLength).map((idx) => ({ target: lendingPool.address, params: [idx] } as const)),
+    calls: rangeBI(1n, poolsLength).map((idx) => ({ target: lendingPool.address, params: [idx] }) as const),
     abi: abi.reserves,
   })
 

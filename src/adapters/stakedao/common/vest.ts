@@ -23,12 +23,12 @@ export async function getStakeDaoVestBalances(ctx: BalancesContext, vesters: Con
   const [userBalancesRes, unlockAtsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: vesters.map((vester) => ({ target: vester.address, params: [ctx.address] } as const)),
+      calls: vesters.map((vester) => ({ target: vester.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: vesters.map((vester) => ({ target: vester.address } as const)),
+      calls: vesters.map((vester) => ({ target: vester.address }) as const),
       abi: abi.end_time,
     }),
   ])

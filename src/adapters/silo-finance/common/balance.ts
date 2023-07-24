@@ -57,7 +57,7 @@ export async function getSiloBalances(
 
   const userBalances = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 
@@ -77,7 +77,7 @@ const getSiloRewards = async (ctx: BalancesContext, pools: Balance[], incentive:
 
   const userRewardsBalancesRes = await multicall({
     ctx,
-    calls: nonEmptyPools.map((pool) => ({ target: incentive.address, params: [[pool.address], ctx.address] } as const)),
+    calls: nonEmptyPools.map((pool) => ({ target: incentive.address, params: [[pool.address], ctx.address] }) as const),
     abi: abi.getRewardsBalance,
   })
 

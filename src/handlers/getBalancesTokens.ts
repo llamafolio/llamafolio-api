@@ -65,14 +65,17 @@ export async function balancesHandler({ address }: { address: Address }): Promis
   //@ts-expect-error
   const withPrice = await getPricedBalances(fulfilledResults)
 
-  const chainsBalances = chainsNames.reduce((accumulator, chain) => {
-    accumulator[chain] = {
-      id: chain as Chain,
-      chainId: chainById[chain].chainId,
-      balances: [],
-    }
-    return accumulator
-  }, {} as Record<Chain, BalancesErc20ChainResponse>)
+  const chainsBalances = chainsNames.reduce(
+    (accumulator, chain) => {
+      accumulator[chain] = {
+        id: chain as Chain,
+        chainId: chainById[chain].chainId,
+        balances: [],
+      }
+      return accumulator
+    },
+    {} as Record<Chain, BalancesErc20ChainResponse>,
+  )
 
   for (const [, balance] of withPrice.entries()) {
     chainsBalances[balance.chain].balances.push(formatBalance(balance))

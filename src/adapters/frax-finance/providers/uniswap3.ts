@@ -86,7 +86,7 @@ export const uniswap3BalancesProvider = async (
     }
 
     underlyingsCalls.push(
-      ...underlyings.map((underlying) => ({ target: underlying.address, params: [lpToken] } as const)),
+      ...underlyings.map((underlying) => ({ target: underlying.address, params: [lpToken] }) as const),
     )
     suppliesCalls.push({ target: lpToken })
     if (pool.stakeAddress) {

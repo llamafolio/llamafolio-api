@@ -106,7 +106,7 @@ export async function getPoolsContracts(ctx: BaseContext, contract: Contract): P
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLengthBI).map((i) => ({ target: contract.address, params: [i] } as const)),
+    calls: rangeBI(0n, poolLengthBI).map((i) => ({ target: contract.address, params: [i] }) as const),
     abi: abi.poolInfo,
   })
 
@@ -130,7 +130,7 @@ export async function getPoolsContracts(ctx: BaseContext, contract: Contract): P
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] } as const)),
+    calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] }) as const),
     abi: abi.getPoolFromLPToken,
   })
 
@@ -146,7 +146,7 @@ export async function getPoolsContracts(ctx: BaseContext, contract: Contract): P
 
   const underlyingsRes = await multicall({
     ctx,
-    calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] } as const)),
+    calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] }) as const),
     abi: abi.getUnderlyingsCoins,
   })
 
@@ -183,7 +183,7 @@ const getExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise<Con
   const extraRewardsRes = await multicall({
     ctx,
     calls: flatMapSuccess(extraRewardsLengthsRes, (res) =>
-      rangeBI(0n, res.output).map((idx) => ({ target: res.input.target, params: [idx] } as const)),
+      rangeBI(0n, res.output).map((idx) => ({ target: res.input.target, params: [idx] }) as const),
     ),
     abi: abi.extraRewards,
   })

@@ -72,7 +72,7 @@ const abi = {
 export async function getSiloPools(ctx: BaseContext, vaults: `0x${string}`[]): Promise<Contract[]> {
   const assetsWithStatesRes = await multicall({
     ctx,
-    calls: vaults.map((vault) => ({ target: vault } as const)),
+    calls: vaults.map((vault) => ({ target: vault }) as const),
     abi: abi.getAssetsWithState,
   })
 

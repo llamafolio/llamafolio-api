@@ -83,7 +83,7 @@ export async function getStakeDaoCurveBalances(ctx: BalancesContext, pools: Cont
   const pendingRewardsRes = await multicall({
     ctx,
     calls: poolsBalances.flatMap((pool) =>
-      pool.rewards!.map((reward: any) => ({ target: pool.address, params: [ctx.address, reward.address] } as const)),
+      pool.rewards!.map((reward: any) => ({ target: pool.address, params: [ctx.address, reward.address] }) as const),
     ),
     abi: abi.claimable_reward,
   })
@@ -110,17 +110,17 @@ export async function getStakeDaoBalBalances(ctx: BalancesContext, pools: Contra
   const [userBalances, totalSuppliesRes, poolTokensRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.token! } as const)),
+      calls: pools.map((pool) => ({ target: pool.token! }) as const),
       abi: erc20Abi.totalSupply,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: vault.address, params: [pool.infos.poolId] } as const)),
+      calls: pools.map((pool) => ({ target: vault.address, params: [pool.infos.poolId] }) as const),
       abi: abi.getPoolTokens,
     }),
   ])
@@ -215,13 +215,13 @@ export async function getStakeDaoOldBalances(ctx: BalancesContext, pools: Contra
   const [balancesOfsRes, pendingsRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
       calls: pools.flatMap((pool) =>
-        pool.rewards!.map((reward: any) => ({ target: pool.address, params: [ctx.address, reward.address] } as const)),
+        pool.rewards!.map((reward: any) => ({ target: pool.address, params: [ctx.address, reward.address] }) as const),
       ),
       abi: abi.claimable_reward,
     }),

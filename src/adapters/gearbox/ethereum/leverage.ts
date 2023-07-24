@@ -51,7 +51,7 @@ export async function getLeverageFarming(ctx: BalancesContext, pools: Contract[]
 
   const creditManagersRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.pool, params: [1n] } as const)),
+    calls: pools.map((pool) => ({ target: pool.pool, params: [1n] }) as const),
     abi: abi.creditManagers,
   })
 

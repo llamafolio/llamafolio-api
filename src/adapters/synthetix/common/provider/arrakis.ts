@@ -29,7 +29,7 @@ export async function getArrakisProvider(
 ): Promise<ProviderBalancesParams[]> {
   const underlyingBalancesRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.token! } as const)),
+    calls: pools.map((pool) => ({ target: pool.token! }) as const),
     abi: abi.getUnderlyingBalances,
   })
 

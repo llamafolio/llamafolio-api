@@ -70,7 +70,7 @@ export async function getAcrossV2LPBalances(
   const [userBalancesOfsRes, totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
@@ -81,7 +81,7 @@ export async function getAcrossV2LPBalances(
     multicall({
       ctx,
       calls: pools.map(
-        (pool) => ({ target: manager.address, params: [(pool.underlyings![0] as Contract).address] } as const),
+        (pool) => ({ target: manager.address, params: [(pool.underlyings![0] as Contract).address] }) as const,
       ),
       abi: abi.pooledTokens,
     }),

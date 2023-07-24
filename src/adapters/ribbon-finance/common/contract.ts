@@ -62,7 +62,7 @@ export async function getFarmLPContracts(ctx: BaseContext, gaugeController: Cont
 
   const gaugesAddressesRes = await multicall({
     ctx,
-    calls: rangeBI(0n, gaugesLength).map((i) => ({ target: gaugeController.address, params: [i] } as const)),
+    calls: rangeBI(0n, gaugesLength).map((i) => ({ target: gaugeController.address, params: [i] }) as const),
     abi: abi.gauges,
   })
 

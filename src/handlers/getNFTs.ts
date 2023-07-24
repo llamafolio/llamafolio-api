@@ -51,10 +51,13 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
 async function tokensPrice(ids: Array<`${Chain}:${Address}`>) {
   const result = await fetchTokenPrices(ids)
-  return Object.entries(result.coins).reduce((_, [key, { price }]) => {
-    const [, address] = key.split(':')
-    return { address, price } as { address: Address; price: number }
-  }, {} as { address: Address; price: number })
+  return Object.entries(result.coins).reduce(
+    (_, [key, { price }]) => {
+      const [, address] = key.split(':')
+      return { address, price } as { address: Address; price: number }
+    },
+    {} as { address: Address; price: number },
+  )
 }
 
 // TODO: add rate limit checker
@@ -150,10 +153,13 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
     >[]
   ).flatMap((item) => item.value.data)
 
-  const collectionsGroupedByAddress = collections.reduce((accumulator, collection) => {
-    accumulator[collection.contract_address] = collection
-    return accumulator
-  }, {} as Record<string, UserNFTCollection>)
+  const collectionsGroupedByAddress = collections.reduce(
+    (accumulator, collection) => {
+      accumulator[collection.contract_address] = collection
+      return accumulator
+    },
+    {} as Record<string, UserNFTCollection>,
+  )
 
   const result: {
     [collectionId: string]: UserNFTItem
@@ -164,10 +170,13 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
   const nftsGroupedByContract = groupBy(mergedNFTs, 'contract_address')
 
   const collectionsMarketData = await defillamaCollections()
-  const collectionsMarketDataGroupedByAddress = collectionsMarketData.reduce((accumulator, collection) => {
-    accumulator[collection.collectionId] = collection
-    return accumulator
-  }, {} as Record<string, DefillamaNFTCollection>)
+  const collectionsMarketDataGroupedByAddress = collectionsMarketData.reduce(
+    (accumulator, collection) => {
+      accumulator[collection.collectionId] = collection
+      return accumulator
+    },
+    {} as Record<string, DefillamaNFTCollection>,
+  )
 
   for (const [address, nfts] of Object.entries(nftsGroupedByContract)) {
     const collection = collectionsGroupedByAddress[address]

@@ -48,7 +48,7 @@ export async function getApolloStakeBalances(ctx: BalancesContext, staker: Contr
     call({ ctx, target: staker.address, abi: abi.totalStaked }),
     multicall({
       ctx,
-      calls: underlyings.map((underlying) => ({ target: underlying.address, params: [staker.address] } as const)),
+      calls: underlyings.map((underlying) => ({ target: underlying.address, params: [staker.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
   ])

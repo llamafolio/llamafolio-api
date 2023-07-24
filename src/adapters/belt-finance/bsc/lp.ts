@@ -19,7 +19,7 @@ export async function getBeltLpBalances(ctx: BalancesContext, lps: Contract[]) {
 
   const userBalancesRes = await multicall({
     ctx,
-    calls: lps.map((lp) => ({ target: lp.address, params: [ctx.address] } as const)),
+    calls: lps.map((lp) => ({ target: lp.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 
@@ -45,13 +45,13 @@ export const getFourBeltUnderlyingsBalances = async (ctx: BalancesContext, poolB
     multicall({
       ctx,
       calls: poolBalances.flatMap((poolBalance: Contract) =>
-        range(0, 4).map((idx) => ({ target: poolBalance.pool, params: [idx] } as const)),
+        range(0, 4).map((idx) => ({ target: poolBalance.pool, params: [idx] }) as const),
       ),
       abi: abi.balances,
     }),
     multicall({
       ctx,
-      calls: poolBalances.map((poolBalance: Contract) => ({ target: poolBalance.address } as const)),
+      calls: poolBalances.map((poolBalance: Contract) => ({ target: poolBalance.address }) as const),
       abi: erc20Abi.totalSupply,
     }),
   ])

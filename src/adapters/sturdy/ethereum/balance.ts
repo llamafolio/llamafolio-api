@@ -42,7 +42,7 @@ const underlyingsBalances = async (ctx: BalancesContext, pools: Balance[]): Prom
     multicall({ ctx, calls: pools.map((pool: Contract) => ({ target: pool.lpToken })), abi: erc20Abi.totalSupply }),
     multicall({
       ctx,
-      calls: pools.map((pool: Contract) => ({ target: metaRegistry.address, params: [pool.poolAddress] } as const)),
+      calls: pools.map((pool: Contract) => ({ target: metaRegistry.address, params: [pool.poolAddress] }) as const),
       abi: abi.get_underlying_balances,
     }),
   ])

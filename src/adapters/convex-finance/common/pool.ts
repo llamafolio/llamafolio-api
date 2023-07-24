@@ -44,7 +44,7 @@ export async function getConvexAltChainsPools(
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLength).map((i) => ({ target: booster.address, params: [i] } as const)),
+    calls: rangeBI(0n, poolLength).map((i) => ({ target: booster.address, params: [i] }) as const),
     abi: abi.poolInfo,
   })
 

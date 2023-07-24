@@ -52,7 +52,7 @@ export const stakedaoProvider = async (ctx: BaseContext, pools: Contract[]): Pro
         ({
           target: metaRegistry.address,
           params: [lpToken.output],
-        } as const),
+        }) as const,
     ),
     abi: abi.get_pool_from_lp_token,
   })
@@ -65,7 +65,7 @@ export const stakedaoProvider = async (ctx: BaseContext, pools: Contract[]): Pro
         ({
           target: metaRegistry.address,
           params: [poolAddress.output],
-        } as const),
+        }) as const,
     ),
     abi: abi.get_underlying_coins,
   })

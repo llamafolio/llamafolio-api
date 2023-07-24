@@ -52,7 +52,7 @@ export async function getTimeWarpStakeBalances(ctx: BalancesContext, stakers: Co
     ctx,
     calls: mapSuccess(
       userLastRewardsIdxRes,
-      (reward) => ({ target: reward.input.target, params: [ctx.address, reward.output] } as const),
+      (reward) => ({ target: reward.input.target, params: [ctx.address, reward.output] }) as const,
     ),
     abi: abi.getReward,
   })

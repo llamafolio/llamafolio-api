@@ -40,7 +40,7 @@ export async function getPieDaoLockerBalances(ctx: BalancesContext, locker: Cont
   const locksOfRes = await multicall({
     ctx,
     calls: rangeBI(0n, getLocksOfLength).map(
-      (idx) => ({ target: locker.address, params: [ctx.address, idx] } as const),
+      (idx) => ({ target: locker.address, params: [ctx.address, idx] }) as const,
     ),
     abi: abi.locksOf,
   })

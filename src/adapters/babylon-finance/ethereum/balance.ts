@@ -18,7 +18,7 @@ export async function getBabylonBalances(ctx: BalancesContext, contracts: Contra
   const [balancesOfRes, pricePerSharesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] } as const)),
+      calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({

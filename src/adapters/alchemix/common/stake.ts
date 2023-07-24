@@ -67,7 +67,7 @@ export async function getStakerContracts(ctx: BaseContext, staker: Contract): Pr
 
   const poolTokensRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLength).map((idx) => ({ target: staker.address, params: [idx] } as const)),
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: staker.address, params: [idx] }) as const),
     abi: abi.getPoolToken,
   })
 

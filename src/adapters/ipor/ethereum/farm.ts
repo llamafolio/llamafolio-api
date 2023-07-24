@@ -84,17 +84,17 @@ export async function getIporFarmBalances(
   const [userBalancesRes, userPendingRewardsRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: assets.map((asset) => ({ target: farmer.address, params: [ctx.address, asset.token!] } as const)),
+      calls: assets.map((asset) => ({ target: farmer.address, params: [ctx.address, asset.token!] }) as const),
       abi: abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: assets.map((asset) => ({ target: farmer.address, params: [ctx.address, asset.token!] } as const)),
+      calls: assets.map((asset) => ({ target: farmer.address, params: [ctx.address, asset.token!] }) as const),
       abi: abi.calculateAccountRewards,
     }),
     multicall({
       ctx,
-      calls: assets.map((asset) => ({ target: asset.address } as const)),
+      calls: assets.map((asset) => ({ target: asset.address }) as const),
       abi: abi.calculateExchangeRate,
     }),
   ])

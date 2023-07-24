@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 const plugins = []
 
 if (!isProduction) {
-  // @ts-expect-error - esbuild-analyzer doesn't come with types
+  // @ts-ignore - esbuild-analyzer doesn't come with types
   const AnalyzerPlugin = require('esbuild-analyzer')
   plugins.push(
     AnalyzerPlugin({

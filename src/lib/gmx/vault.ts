@@ -33,7 +33,7 @@ export async function getVaultTokens(ctx: BaseContext, vault: Contract) {
 
   const allWhitelistedTokensRes = await multicall({
     ctx,
-    calls: rangeBI(0n, allWhitelistedTokensLength).map((idx) => ({ target: vault.address, params: [idx] } as const)),
+    calls: rangeBI(0n, allWhitelistedTokensLength).map((idx) => ({ target: vault.address, params: [idx] }) as const),
     abi: abi.allWhitelistedTokens,
   })
 

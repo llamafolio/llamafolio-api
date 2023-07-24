@@ -60,7 +60,7 @@ export async function getWombatFarmBalances(
 
   const getAssetsPidRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.address] } as const)),
+    calls: pools.map((pool) => ({ target: masterchef.address, params: [pool.address] }) as const),
     abi: abi.getAssetPid,
   })
 
@@ -72,12 +72,12 @@ export async function getWombatFarmBalances(
   const [userInfosRes, pendingRewardsRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: poolsWithIds.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] } as const)),
+      calls: poolsWithIds.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] }) as const),
       abi: abi.userInfo,
     }),
     multicall({
       ctx,
-      calls: poolsWithIds.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] } as const)),
+      calls: poolsWithIds.map((pool) => ({ target: masterchef.address, params: [pool.pid, ctx.address] }) as const),
       abi: abi.pendingTokens,
     }),
     multicall({
