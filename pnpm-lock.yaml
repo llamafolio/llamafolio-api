@@ -79,9 +79,6 @@ devDependencies:
   abitype:
     specifier: ^0.9.5
     version: 0.9.5(typescript@5.1.6)(zod@3.21.4)
-  esbuild:
-    specifier: ^0.18.16
-    version: 0.18.16
   esbuild-analyzer:
     specifier: ^0.2.0
     version: 0.2.0
@@ -129,7 +126,7 @@ devDependencies:
     version: 3.33.0
   serverless-esbuild:
     specifier: ^1.46.0
-    version: 1.46.0(esbuild@0.18.16)
+    version: 1.46.0(esbuild@0.17.19)
   serverless-offline:
     specifier: ^12.0.4
     version: 12.0.4(serverless@3.33.0)
@@ -6174,7 +6171,7 @@ packages:
       lru-cache: 6.0.0
     dev: true
 
-  /serverless-esbuild@1.46.0(esbuild@0.18.16):
+  /serverless-esbuild@1.46.0(esbuild@0.17.19):
     resolution: {integrity: sha512-fMB6PaxUFI/YBPvO9R8G4GXEpYIkXr0Dmsq+Qswj3umHm3otiR9AiKclA65B93pfqVrDfioOx9pQX76+8cuRIw==}
     engines: {node: '>=14.18.0'}
     peerDependencies:
@@ -6190,7 +6187,7 @@ packages:
       archiver: 5.3.1
       bestzip: 2.2.1
       chokidar: 3.5.3
-      esbuild: 0.18.16
+      esbuild: 0.17.19
       execa: 5.1.1
       fp-ts: 2.16.0
       fs-extra: 11.1.1
