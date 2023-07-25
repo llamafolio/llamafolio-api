@@ -1,7 +1,7 @@
 import environment from '@environment'
 import type { Chain } from '@lib/chains'
 import { chainsNames } from '@lib/chains'
-import { invariant } from '@lib/error'
+import { raise } from '@lib/error'
 import { retrieveToken } from '@lib/token'
 import type { MapValueType } from '@lib/type'
 import { isNotFalsy } from '@lib/type'
@@ -26,23 +26,11 @@ import type { YieldBalanceGroup, YieldBalancesJSON, YieldPoolResponse } from './
  * 3. if match found, add to matches array: `matches.push({ key, result: { yield, balance } })`
  * 4. return matches array
  *
- * Next Steps: TBD
+ * Next: run it through `matcher` function
  *
  */
 
-const testAddresses = [
-  //
-  '0xbDfA4f4492dD7b7Cf211209C4791AF8d52BF5c50',
-] as const
-
-defiLamaYieldMatcher(testAddresses[0])
-  .then((result) => console.log(JSON.stringify(result, undefined, 2)))
-  .catch((error) => {
-    console.error(error)
-    process.exit(1)
-  })
-
-async function defiLamaYieldMatcher(address: Address) {
+export async function defiLamaYieldMatcher({ address }: { address: Address }) {
   const yieldPools = await parseYieldsPools()
   const balances = await parseBalances(address)
 
@@ -118,7 +106,11 @@ function matcher({
 }
 
 async function parseYieldsPools() {
-  const response = await fetch('https://yields.llama.fi/poolsOld')
+  const url = environment.OUTSIDE_CONTRIBUTOR
+    ? 'https://yields.llama.fi/poolsOld'
+    : `${environment.CLOUDFLARE_R2_PUBLIC_URL}/yield/llama_yields_pools_old.json` ??
+      raise('missing CLOUDFLARE_R2_PUBLIC_URL')
+  const response = await fetch(url)
   const json: YieldPoolResponse = await response.json()
 
   const yieldPools = new Map<
@@ -151,11 +143,11 @@ async function parseYieldsPools() {
 }
 
 async function parseBalances(address: Address) {
-  invariant(isAddress(address), `Invalid address: ${address}`)
+  if (!isAddress(address)) raise(`Invalid address: ${address}`)
 
   const url = `${environment.API_URL ?? 'http://localhost:3000'}/balances/${address}`
   const response = await fetch(url)
-  invariant(response.ok, `Failed to fetch balances for ${address} - ${response.status} (${response.statusText})`)
+  if (!response.ok) raise(`Failed to fetch balances for ${address} - ${response.status} (${response.statusText})`)
 
   const balances = new Map<`${Chain}-${string}`, Omit<YieldBalanceGroup, 'chain' | 'protocol'>>()
 
