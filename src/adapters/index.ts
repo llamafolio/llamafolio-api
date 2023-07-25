@@ -63,6 +63,7 @@ import extraFinance from '@adapters/extra-finance'
 import fantohm from '@adapters/fantohm'
 import flamincome from '@adapters/flamincome'
 import floorDao from '@adapters/floor-dao'
+import florenceFinance from '@adapters/florence-finance'
 import fluxFinance from '@adapters/flux-finance'
 import fortressLoans from '@adapters/fortress-loans'
 import fractionalArt from '@adapters/fractional-art'
@@ -288,6 +289,7 @@ export const adapters: Adapter[] = [
   fantohm,
   flamincome,
   floorDao,
+  florenceFinance,
   fluxFinance,
   fortressLoans,
   fractionalArt,
