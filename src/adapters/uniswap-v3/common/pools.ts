@@ -108,7 +108,7 @@ export async function getPoolsBalances(ctx: BalancesContext, nonFungiblePosition
   const tokensOfOwnerByIndexRes = await multicall({
     ctx,
     calls: rangeBI(0n, balanceOf).map(
-      (idx) => ({ target: nonFungiblePositionManager.address, params: [ctx.address, idx] } as const),
+      (idx) => ({ target: nonFungiblePositionManager.address, params: [ctx.address, idx] }) as const,
     ),
     abi: abi.tokenOfOwnerByIndex,
   })
@@ -127,7 +127,7 @@ export async function getTokenIdsBalances(
   // positions
   const positionsRes = await multicall({
     ctx,
-    calls: tokenIds.map((tokenId) => ({ target: nonFungiblePositionManager.address, params: [tokenId] } as const)),
+    calls: tokenIds.map((tokenId) => ({ target: nonFungiblePositionManager.address, params: [tokenId] }) as const),
     abi: abi.positions,
   })
 

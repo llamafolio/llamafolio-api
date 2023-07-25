@@ -61,7 +61,7 @@ export async function getLendingPoolContracts(
   const registeredTokensRes = await multicall({
     ctx,
     calls: rangeBI(0n, lmRewardsCount).map(
-      (idx) => ({ target: chefIncentivesController.address, params: [idx] } as const),
+      (idx) => ({ target: chefIncentivesController.address, params: [idx] }) as const,
     ),
     abi: abi.registeredTokens,
   })

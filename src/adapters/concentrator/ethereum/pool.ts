@@ -133,7 +133,7 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 
     const poolInfosRes = await multicall({
       ctx,
-      calls: rangeBI(0n, poolsCountBI).map((i) => ({ target: contract.address, params: [i] } as const)),
+      calls: rangeBI(0n, poolsCountBI).map((i) => ({ target: contract.address, params: [i] }) as const),
       abi: abi.poolInfo,
     })
 
@@ -159,7 +159,7 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 
     const poolsAddressesRes = await multicall({
       ctx,
-      calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] } as const)),
+      calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] }) as const),
       abi: abi.getPoolFromLPToken,
     })
 
@@ -175,7 +175,7 @@ export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[])
 
     const underlyingsRes = await multicall({
       ctx,
-      calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] } as const)),
+      calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] }) as const),
       abi: abi.getUnderlyingsCoins,
     })
 
@@ -209,7 +209,7 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolsCountBI).map((i) => ({ target: contract.address, params: [i] } as const)),
+    calls: rangeBI(0n, poolsCountBI).map((i) => ({ target: contract.address, params: [i] }) as const),
     abi: abi.poolInfoOld,
   })
 
@@ -232,7 +232,7 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
 
   const poolsAddressesRes = await multicall({
     ctx,
-    calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] } as const)),
+    calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] }) as const),
     abi: abi.getPoolFromLPToken,
   })
 
@@ -248,7 +248,7 @@ export async function getOldContracts(ctx: BaseContext, contract: Contract): Pro
 
   const underlyingsRes = await multicall({
     ctx,
-    calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] } as const)),
+    calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] }) as const),
     abi: abi.getUnderlyingsCoins,
   })
 

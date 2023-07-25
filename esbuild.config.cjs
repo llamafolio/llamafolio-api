@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 const plugins = []
 
 if (!isProduction) {
-  // @ts-expect-error - esbuild-analyzer doesn't come with types
+  // @ts-ignore - esbuild-analyzer doesn't come with types
   const AnalyzerPlugin = require('esbuild-analyzer')
   plugins.push(
     AnalyzerPlugin({
@@ -19,7 +19,7 @@ if (!isProduction) {
 
 /**
  * @param {import('serverless').Options} _
- * @returns {import('esbuild').BuildOptions & { packager: string, concurrency: number }}
+ * @returns {import('esbuild').BuildOptions & { packager: string, concurrency: number; watch: import('esbuild').WatchOptions; keepOutputDirectory?: boolean; }}
  */
 module.exports = (_) => ({
   packager: 'pnpm',
@@ -34,4 +34,8 @@ module.exports = (_) => ({
   drop: isProduction ? ['console', 'debugger'] : [],
   metafile: !isProduction,
   plugins,
+  watch: {
+    pattern: ['src/**/*.ts'],
+    ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules', 'test'],
+  },
 })

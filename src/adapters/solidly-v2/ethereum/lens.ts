@@ -83,7 +83,7 @@ export async function getLensContracts(ctx: BaseContext, lens: Contract) {
   const rewardsRes = await multicall({
     ctx,
     calls: flatMapSuccess(rewardsListLengthsRes, (res, gaugeIdx) =>
-      rangeBI(0n, res.output).map((rewardIdx) => ({ target: gauges[gaugeIdx].address, params: [rewardIdx] } as const)),
+      rangeBI(0n, res.output).map((rewardIdx) => ({ target: gauges[gaugeIdx].address, params: [rewardIdx] }) as const),
     ),
     abi: abi.rewards,
   })

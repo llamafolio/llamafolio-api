@@ -71,7 +71,7 @@ export async function getMagpieContracts(ctx: BaseContext, masterchef: Contract)
 
   const registeredTokensRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterchef.address, params: [idx] } as const)),
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterchef.address, params: [idx] }) as const),
     abi: abi.registeredToken,
   })
 
@@ -79,7 +79,7 @@ export async function getMagpieContracts(ctx: BaseContext, masterchef: Contract)
     ctx,
     calls: mapSuccess(
       registeredTokensRes,
-      (token) => ({ target: masterchef.address, params: [token.output] } as const),
+      (token) => ({ target: masterchef.address, params: [token.output] }) as const,
     ),
     abi: abi.tokenToPoolInfo,
   })

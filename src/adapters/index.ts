@@ -51,12 +51,15 @@ import crvusd from '@adapters/crvusd'
 import curveDex from '@adapters/curve-dex'
 import definix from '@adapters/definix'
 import dydx from '@adapters/dydx'
+import eigenlayer from '@adapters/eigenlayer'
 import elephantMoney from '@adapters/elephant-money'
 import ellipsisFinance from '@adapters/ellipsis-finance'
 import equalizerExchange from '@adapters/equalizer-exchange'
 import etherFi from '@adapters/ether.fi'
 import euler from '@adapters/euler'
 import everrise from '@adapters/everrise'
+import exactly from '@adapters/exactly'
+import extraFinance from '@adapters/extra-finance'
 import fantohm from '@adapters/fantohm'
 import flamincome from '@adapters/flamincome'
 import floorDao from '@adapters/floor-dao'
@@ -112,6 +115,7 @@ import metronome from '@adapters/metronome'
 import morpheusSwap from '@adapters/morpheus-swap'
 import morphex from '@adapters/morphex'
 import morphoAave from '@adapters/morpho-aave'
+import morphoAavev3 from '@adapters/morpho-aavev3'
 import morphoCompound from '@adapters/morpho-compound'
 import mstable from '@adapters/mstable'
 import multichain from '@adapters/multichain'
@@ -184,6 +188,7 @@ import synapse from '@adapters/synapse'
 import synthetix from '@adapters/synthetix'
 import tangible from '@adapters/tangible'
 import templedao from '@adapters/templedao'
+import tetu from '@adapters/tetu'
 import theIdols from '@adapters/the-idols'
 import theOpenDaoSos from '@adapters/the-open-dao-sos'
 import thena from '@adapters/thena'
@@ -210,6 +215,7 @@ import wepiggy from '@adapters/wepiggy'
 import wigoswap from '@adapters/wigoswap'
 import wombatExchange from '@adapters/wombat-exchange'
 import wonderland from '@adapters/wonderland'
+import woofi from '@adapters/woofi'
 import x2y2 from '@adapters/x2y2'
 import yearnFinance from '@adapters/yearn-finance'
 import yoshiExchange from '@adapters/yoshi-exchange'
@@ -270,12 +276,15 @@ export const adapters: Adapter[] = [
   curveDex,
   definix,
   dydx,
+  eigenlayer,
   elephantMoney,
   ellipsisFinance,
   equalizerExchange,
   etherFi,
   euler,
   everrise,
+  exactly,
+  extraFinance,
   fantohm,
   flamincome,
   floorDao,
@@ -331,6 +340,7 @@ export const adapters: Adapter[] = [
   morpheusSwap,
   morphex,
   morphoAave,
+  morphoAavev3,
   morphoCompound,
   mstable,
   multichain,
@@ -403,6 +413,7 @@ export const adapters: Adapter[] = [
   synthetix,
   tangible,
   templedao,
+  tetu,
   theIdols,
   theOpenDaoSos,
   thena,
@@ -429,6 +440,7 @@ export const adapters: Adapter[] = [
   wigoswap,
   wombatExchange,
   wonderland,
+  woofi,
   x2y2,
   yearnFinance,
   yoshiExchange,

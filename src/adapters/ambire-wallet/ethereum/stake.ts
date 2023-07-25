@@ -8,7 +8,7 @@ export async function getADXStakeBalances(ctx: BalancesContext, stakers: Contrac
   const [userBalancesOfsRes, assetsBalanceOfsRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] } as const)),
+      calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
@@ -18,7 +18,7 @@ export async function getADXStakeBalances(ctx: BalancesContext, stakers: Contrac
           ({
             target: (staker.underlyings?.[0] as Contract).address,
             params: [staker.address],
-          } as const),
+          }) as const,
       ),
       abi: erc20Abi.balanceOf,
     }),

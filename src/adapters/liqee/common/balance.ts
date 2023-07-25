@@ -35,7 +35,7 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
 
     multicall({
       ctx,
-      calls: contracts.map((token) => ({ target: token.address, params: [ctx.address] } as const)),
+      calls: contracts.map((token) => ({ target: token.address, params: [ctx.address] }) as const),
       abi: abi.borrowBalanceCurrent,
     }),
 

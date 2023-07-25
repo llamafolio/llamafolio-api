@@ -19,7 +19,7 @@ export async function getMetronomeBalances(ctx: BalancesContext, markets: Contra
   const [balanceOfsRes, pricePerSharesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: markets.map((market) => ({ target: market.address, params: [ctx.address] } as const)),
+      calls: markets.map((market) => ({ target: market.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({

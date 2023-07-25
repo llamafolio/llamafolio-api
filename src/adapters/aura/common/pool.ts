@@ -234,7 +234,7 @@ const getAuraExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise
 
   const extraRewardsLengthRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.gauge } as const)),
+    calls: pools.map((pool) => ({ target: pool.gauge }) as const),
     abi: abi.extraRewardsLength,
   })
 
@@ -242,7 +242,7 @@ const getAuraExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise
     ctx,
     calls: mapSuccessFilter(
       extraRewardsLengthRes,
-      (res) => ({ target: res.input.target, params: [res.output - 1n] } as const),
+      (res) => ({ target: res.input.target, params: [res.output - 1n] }) as const,
     ),
     abi: abi.extraRewards,
   })
@@ -260,13 +260,13 @@ const getAuraExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise
 
   const stashRewardsRes = await multicall({
     ctx,
-    calls: extraRewardsPools.map((pool) => ({ target: pool.rewarder } as const)),
+    calls: extraRewardsPools.map((pool) => ({ target: pool.rewarder }) as const),
     abi: abi.rewardToken,
   })
 
   const baseTokensRes = await multicall({
     ctx,
-    calls: mapSuccessFilter(stashRewardsRes, (res) => ({ target: res.output } as const)),
+    calls: mapSuccessFilter(stashRewardsRes, (res) => ({ target: res.output }) as const),
     abi: abi.baseToken,
   })
 

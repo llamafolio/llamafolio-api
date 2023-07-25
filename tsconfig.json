@@ -16,8 +16,8 @@
     "noErrorTruncation": true,
     "noUnusedLocals": false,
     "types": ["node"],
-    "noUnusedParameters": true,
-    "lib": ["ESNext", "DOM"],
+    "noUnusedParameters": false,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "baseUrl": ".",
     "outDir": "./.esbuild",
     "paths": {

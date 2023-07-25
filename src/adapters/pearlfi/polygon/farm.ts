@@ -64,8 +64,8 @@ export async function getPearlFarmContracts(ctx: BaseContext, farmers: `0x${stri
   const pools: Contract[] = []
 
   const [tokensRes, rewardsTokensRes] = await Promise.all([
-    multicall({ ctx, calls: farmers.map((farmer) => ({ target: farmer } as const)), abi: abi.token }),
-    multicall({ ctx, calls: farmers.map((farmer) => ({ target: farmer } as const)), abi: abi.rewardToken }),
+    multicall({ ctx, calls: farmers.map((farmer) => ({ target: farmer }) as const), abi: abi.token }),
+    multicall({ ctx, calls: farmers.map((farmer) => ({ target: farmer }) as const), abi: abi.rewardToken }),
   ])
 
   for (let farmerIdx = 0; farmerIdx < farmers.length; farmerIdx++) {
@@ -95,12 +95,12 @@ export async function getPearlFarmBalances(ctx: BalancesContext, pools: Contract
   const [userBalancesRes, pendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.farmer, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.farmer, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.farmer, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.farmer, params: [ctx.address] }) as const),
       abi: abi.earned,
     }),
   ])

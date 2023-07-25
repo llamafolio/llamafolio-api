@@ -7,6 +7,13 @@ import { getConvexGaugesBalances } from './balance'
 import { getPoolsContracts } from './pool'
 import { getCvxCrvStakeBalance, getCVXStakeBalance } from './stake'
 
+const threeCrv: Token = {
+  chain: 'ethereum',
+  address: '0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490',
+  decimals: 18,
+  symbol: '3CRV',
+}
+
 const cvxCRV: Token = {
   chain: 'ethereum',
   address: '0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7',
@@ -73,7 +80,8 @@ const cvxCRVStaker: Contract = {
   chain: 'ethereum',
   address: '0x3fe65692bfcd0e6cf84cb1e7d24108e434a7587e',
   underlyings: [cvxCRV],
-  rewards: [CRV, CVX],
+  rewards: [CRV, CVX, threeCrv],
+  rewarder: '0x7091dbb7fcbA54569eF1387Ac89Eb2a5C9F6d2EA',
 }
 
 export const getContracts = async (ctx: BaseContext) => {

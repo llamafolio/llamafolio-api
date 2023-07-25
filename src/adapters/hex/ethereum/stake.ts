@@ -45,7 +45,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
 
   const findStakesAndIndexesRes = await multicall({
     ctx,
-    calls: rangeBI(0n, stakeCount).map((i) => ({ target: contract.address, params: [ctx.address, i] } as const)),
+    calls: rangeBI(0n, stakeCount).map((i) => ({ target: contract.address, params: [ctx.address, i] }) as const),
     abi: abi.stakeLists,
   })
 

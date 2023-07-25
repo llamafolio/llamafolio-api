@@ -50,7 +50,7 @@ export async function getVesterBalances(ctx: BalancesContext, vester: Contract):
 
   const balancesOfRes = await multicall({
     ctx,
-    calls: userIndexesRes.map((index) => ({ target: vester.address, params: [ctx.address, BigInt(index)] } as const)),
+    calls: userIndexesRes.map((index) => ({ target: vester.address, params: [ctx.address, BigInt(index)] }) as const),
     abi: abi.pendingFor,
   })
 

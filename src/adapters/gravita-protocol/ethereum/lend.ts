@@ -82,7 +82,7 @@ export async function getGravitaLendBalances(
           ({
             target: vessel.address,
             params: [token.address, ctx.address],
-          } as const),
+          }) as const,
       ),
       abi: abi.getVesselColl,
     }),
@@ -93,7 +93,7 @@ export async function getGravitaLendBalances(
           ({
             target: vessel.address,
             params: [token.address, ctx.address],
-          } as const),
+          }) as const,
       ),
       abi: abi.getVesselDebt,
     }),

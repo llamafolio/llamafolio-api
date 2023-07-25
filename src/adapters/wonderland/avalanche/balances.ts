@@ -89,7 +89,7 @@ export async function getwMEMOStakeBalances(ctx: BalancesContext, contract: Cont
   if (rewards) {
     const rewardsBalanceOfRes = await multicall({
       ctx,
-      calls: rewards.map((token: any) => ({ target: contract.address, params: [ctx.address, token.address] } as const)),
+      calls: rewards.map((token: any) => ({ target: contract.address, params: [ctx.address, token.address] }) as const),
       abi: abi.earned,
     })
 

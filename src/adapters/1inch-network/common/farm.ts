@@ -62,19 +62,19 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
     await Promise.all([
       multicall({
         ctx,
-        calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+        calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
         abi: erc20Abi.balanceOf,
       }),
       multicall({
         ctx,
         calls: pools.flatMap((pool) =>
-          pool.underlyings!.map((_, idx) => ({ target: pool.address, params: [BigInt(idx), ctx.address] } as const)),
+          pool.underlyings!.map((_, idx) => ({ target: pool.address, params: [BigInt(idx), ctx.address] }) as const),
         ),
         abi: abi.earned,
       }),
       multicall({
         ctx,
-        calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+        calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
         abi: abi.singleEarned,
       }),
       multicall({
@@ -85,7 +85,7 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
               ({
                 target: pool.lpToken,
                 params: [(underlying as Contract).address],
-              } as const),
+              }) as const,
           ),
         ),
         abi: abi.getBalanceForAddition,

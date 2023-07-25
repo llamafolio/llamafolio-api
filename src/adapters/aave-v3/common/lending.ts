@@ -128,7 +128,7 @@ export async function getLendingPoolContracts(
 
   const reserveTokensAddressesRes = await multicall({
     ctx,
-    calls: reservesList.map((address) => ({ target: poolDataProvider.address, params: [address] } as const)),
+    calls: reservesList.map((address) => ({ target: poolDataProvider.address, params: [address] }) as const),
     abi: abi.getReserveTokensAddresses,
   })
 

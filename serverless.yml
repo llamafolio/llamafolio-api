@@ -48,6 +48,17 @@ provider:
     ARBITRUM_RPC: ${env:ARBITRUM_RPC}
     OPTIMISM_RPC: ${env:OPTIMISM_RPC}
     SENTRY_DSN: ${env:SENTRY_DSN}
+    CLOUDFLARE_R2_PUBLIC_URL: ${env:CLOUDFLARE_R2_PUBLIC_URL}
+    #
+    ANKR_API_KEY: ${env:ANKR_API_KEY}
+    NFTPORT_API_KEY: ${env:NFTPORT_API_KEY}
+    OPENSEA_API_KEY: ${env:OPENSEA_API_KEY}
+    NFTSCAN_API_KEY: ${env:NFTSCAN_API_KEY}
+    ALCHEMY_API_KEY: ${env:ALCHEMY_API_KEY}
+    CENTER_API_KEY: ${env:CENTER_API_KEY}
+    QUICKNODE_API_KEY: ${env:QUICKNODE_API_KEY}
+    QUICKNODE_HTTP_URL: ${env:QUICKNODE_HTTP_URL}
+    RESERVOIR_API_KEY: ${env:RESERVOIR_API_KEY}
 
   httpApi:
     metrics: true
@@ -62,6 +73,17 @@ provider:
       maxAge: 31536000
 
 functions:
+
+  getNFTs:
+    handler: src/handlers/getNFTs.handler
+    description: Get address nfts
+    events:
+      - httpApi:
+          method: get
+          path: /nfts/{address}
+    timeout: 29
+    memorySize: 1024
+
   getAdapters:
     handler: src/handlers/getAdapters.handler
     description: Get adapters
@@ -247,11 +269,6 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   esbuild:
     config: './esbuild.config.cjs'
-    watch:
-      pattern: ['src/**/*.ts']
-      ignore: ['.serverless/**/*', '.build', 'dist', 'node_modules', 'test']
-    # for debugging
-    # keepOutputDirectory: true
   prune:
     automatic: true
     number: 5 # Number of versions to keep

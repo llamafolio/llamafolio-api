@@ -178,7 +178,7 @@ export async function getSingleLockerBalances(
 
   const lockBalancesRes = await multicall({
     ctx,
-    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] } as const)),
+    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] }) as const),
     abi: genericLocker,
   })
 
@@ -296,7 +296,7 @@ export async function getNFTLockerBalances(
 
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
-    calls: rangeBI(0n, balanceOfsRes).map((idx) => ({ target: locker.address, params: [ctx.address, idx] } as const)),
+    calls: rangeBI(0n, balanceOfsRes).map((idx) => ({ target: locker.address, params: [ctx.address, idx] }) as const),
     abi: abi.tokenOfOwnerByIndex,
   })
 
@@ -304,7 +304,7 @@ export async function getNFTLockerBalances(
     ctx,
     calls: mapSuccess(
       tokenOfOwnerByIndexesRes,
-      (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] } as const),
+      (tokenIdx) => ({ target: locker.address, params: [tokenIdx.output] }) as const,
     ),
     abi: genericLocker,
   })

@@ -63,7 +63,7 @@ export async function getChickenBondManagerContract(ctx: BaseContext) {
 export function getAccruedBLUSD(ctx: BalancesContext, tokenIDs: bigint[]) {
   return multicall({
     ctx,
-    calls: tokenIDs.map((tokenID) => ({ target: chickenBondManager.address, params: [tokenID] } as const)),
+    calls: tokenIDs.map((tokenID) => ({ target: chickenBondManager.address, params: [tokenID] }) as const),
     abi: abi.calcAccruedBLUSD,
   })
 }

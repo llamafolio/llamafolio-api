@@ -48,7 +48,7 @@ export async function getStaderFarmBalances(ctx: BalancesContext, contract: Cont
   const userRequestStatus = await multicall({
     ctx,
     calls: rangeBI(0n, BigInt(userRequest.length)).map(
-      (idx) => ({ target: contract.address, params: [ctx.address, idx] } as const),
+      (idx) => ({ target: contract.address, params: [ctx.address, idx] }) as const,
     ),
     abi: abi.getUserRequestStatus,
   })

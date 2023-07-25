@@ -18,7 +18,7 @@ export async function getStargateLPBalances(ctx: BalancesContext, pools: Contrac
   const [balancesOfsRes, totalLiquidities, totalSupplies] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.totalLiquidity }),

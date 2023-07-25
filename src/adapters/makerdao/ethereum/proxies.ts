@@ -77,7 +77,7 @@ export async function getInstaDappContracts(ctx: BalancesContext, instaList: Con
 
   const getInstadAppAddressesProxiesFromId = await multicall({
     ctx,
-    calls: ids.map((id) => ({ target: instaList.address, params: [id] } as const)),
+    calls: ids.map((id) => ({ target: instaList.address, params: [id] }) as const),
     abi: abi.accountAddr,
   })
 

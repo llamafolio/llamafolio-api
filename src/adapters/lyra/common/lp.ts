@@ -19,7 +19,7 @@ export async function getLpLyraBalances(ctx: BalancesContext, contracts: Contrac
   const [balancesOfsRes, multiplierTokensRes] = await Promise.all([
     multicall({
       ctx,
-      calls: contracts.map((contract) => ({ target: contract.staker, params: [ctx.address] } as const)),
+      calls: contracts.map((contract) => ({ target: contract.staker, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({

@@ -51,14 +51,14 @@ export async function getGroBalances(
     multicall({
       ctx,
       calls: contracts.map(
-        (contract) => ({ target: masterchef.address, params: [BigInt(contract.pid), ctx.address] } as const),
+        (contract) => ({ target: masterchef.address, params: [BigInt(contract.pid), ctx.address] }) as const,
       ),
       abi: abi.userInfo,
     }),
     multicall({
       ctx,
       calls: contracts.map(
-        (contract) => ({ target: masterchef.address, params: [BigInt(contract.pid), ctx.address] } as const),
+        (contract) => ({ target: masterchef.address, params: [BigInt(contract.pid), ctx.address] }) as const,
       ),
       abi: abi.claimable,
     }),
@@ -125,7 +125,7 @@ export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]):
   const [balancesOfRes, pricePerSharesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.getPricePerShare }),

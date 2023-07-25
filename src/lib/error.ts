@@ -1,12 +1,8 @@
-/** Error handling utilities */
-export function raise(error: unknown): never {
-  throw typeof error === 'string' ? new Error(error) : error
-}
+/**
+ * Error utilities
+ */
 
-export function invariant(condition: unknown, message?: string): asserts condition {
-  if (!condition) {
-    const error = new Error(message ?? 'Invariant violation')
-    Error.captureStackTrace?.(error, invariant)
-    throw error
-  }
+export function raise(error: unknown): never {
+  console.error('raise', error)
+  throw new Error(typeof error === 'string' ? error : JSON.stringify(error, undefined, 2))
 }

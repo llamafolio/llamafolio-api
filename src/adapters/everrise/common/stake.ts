@@ -64,7 +64,7 @@ export async function getEverriseBalances(ctx: BalancesContext, nftStaker: Contr
   const tokenOfOwnerByIndexesRes = await multicall({
     ctx,
     calls: rangeBI(0n, balanceOfLength).map(
-      (idx) => ({ target: nftStaker.address, params: [ctx.address, idx] } as const),
+      (idx) => ({ target: nftStaker.address, params: [ctx.address, idx] }) as const,
     ),
     abi: abi.tokenOfOwnerByIndex,
   })

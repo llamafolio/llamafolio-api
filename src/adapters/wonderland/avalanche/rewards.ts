@@ -42,7 +42,7 @@ export async function getRewardsMEMOFarmTokens(ctx: BaseContext, wMEMOFarm: Cont
 
   const rewardTokensRes = await multicall({
     ctx,
-    calls: rangeBI(0n, rewardTokenLength).map((i) => ({ target: wMEMOFarm.address, params: [i] } as const)),
+    calls: rangeBI(0n, rewardTokenLength).map((i) => ({ target: wMEMOFarm.address, params: [i] }) as const),
     abi: abiWonderland.rewardTokens,
   })
 

@@ -140,7 +140,7 @@ export async function getUWUMultiFeeDistributionBalances(
     call({ ctx, target: params.multiFeeDistribution.address, abi: erc20Abi.totalSupply }),
     multicall({
       ctx,
-      calls: rewards.map((token) => ({ target: contract.address, params: [token.address] } as const)),
+      calls: rewards.map((token) => ({ target: contract.address, params: [token.address] }) as const),
       abi: abi.rewardData,
     }),
   ])

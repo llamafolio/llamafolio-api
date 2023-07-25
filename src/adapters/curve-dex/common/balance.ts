@@ -123,7 +123,7 @@ export async function getPoolsBalances(
 ): Promise<Balance[]> {
   const poolsBalancesOfRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 
@@ -263,7 +263,7 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]
     getPoolsBalances(ctx, gauges, registry),
     multicall({
       ctx,
-      calls: gauges.map((gauge) => ({ target: gauge.address, params: [ctx.address] } as const)),
+      calls: gauges.map((gauge) => ({ target: gauge.address, params: [ctx.address] }) as const),
       abi: abi.claimable_reward,
     }),
   ])

@@ -22,7 +22,7 @@ export const saddleBalancesProvider = async (
     multicall({
       ctx,
       calls: pools.flatMap((pool) =>
-        pool.underlyings!.map((_, idx) => ({ target: (pool as Contract).swapper, params: [idx] } as const)),
+        pool.underlyings!.map((_, idx) => ({ target: (pool as Contract).swapper, params: [idx] }) as const),
       ),
       abi: abi.getTokenBalance,
     }),

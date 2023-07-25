@@ -37,7 +37,7 @@ const abi = {
 export async function getSommelierStakeBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const userBalanceOfsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 
@@ -45,7 +45,7 @@ export async function getSommelierStakeBalances(ctx: BalancesContext, pools: Con
     ctx,
     calls: mapSuccess(
       userBalanceOfsRes,
-      (balance) => ({ target: balance.input.target, params: [balance.output] } as const),
+      (balance) => ({ target: balance.input.target, params: [balance.output] }) as const,
     ),
     abi: abi.convertToAssets,
   })
@@ -64,7 +64,7 @@ export async function getSommelierStakeBalances(ctx: BalancesContext, pools: Con
 export async function getSommelierFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
   const userBalancesRes = await multicall({
     ctx,
-    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] } as const)),
+    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
     abi: abi.getUserStakes,
   })
 

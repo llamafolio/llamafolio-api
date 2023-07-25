@@ -50,7 +50,7 @@ export async function getAgilityLockerBalances(ctx: BalancesContext, locker: Con
   const getUserRedeemsRes = await multicall({
     ctx,
     calls: rangeBI(0n, userRedeemsLengthsRes).map(
-      (idx) => ({ target: locker.address, params: [ctx.address, idx] } as const),
+      (idx) => ({ target: locker.address, params: [ctx.address, idx] }) as const,
     ),
     abi: abi.getUserRedeem,
   })

@@ -167,7 +167,7 @@ export async function getMorphexStakeMPXBalances(
     multicall({
       ctx,
       calls: underlyings.map(
-        (underlying) => ({ target: contract.address, params: [ctx.address, underlying.address] } as const),
+        (underlying) => ({ target: contract.address, params: [ctx.address, underlying.address] }) as const,
       ),
       abi: abi.depositBalances,
     }),

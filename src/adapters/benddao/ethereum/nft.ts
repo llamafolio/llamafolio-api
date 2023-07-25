@@ -119,7 +119,7 @@ export async function getNftContracts(ctx: BaseContext, registry: Contract): Pro
 
   const nftsProxies = await multicall({
     ctx,
-    calls: nftsAddresses.map((nft) => ({ target: registry.address, params: [nft] } as const)),
+    calls: nftsAddresses.map((nft) => ({ target: registry.address, params: [nft] }) as const),
     abi: abi.bNftProxys,
   })
 
@@ -193,7 +193,7 @@ export async function getNftBalances(
   // Get token URIs for each token id
   const nftURIs = await multicall({
     ctx,
-    calls: mapSuccess(nftsOwnedIdxRes, (res) => ({ target: res.input.target, params: [res.output] } as const)),
+    calls: mapSuccess(nftsOwnedIdxRes, (res) => ({ target: res.input.target, params: [res.output] }) as const),
     abi: abi.tokenURI,
   })
 

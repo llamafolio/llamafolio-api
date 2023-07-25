@@ -48,7 +48,7 @@ export async function getHECLockerBalances(ctx: BalancesContext, lockers: Contra
 
   const fnftsIdxRes = await multicall({
     ctx,
-    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] } as const)),
+    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] }) as const),
     abi: abi.getFnfts,
   })
 
@@ -56,7 +56,7 @@ export async function getHECLockerBalances(ctx: BalancesContext, lockers: Contra
     ctx,
     calls: fnftsIdxRes.flatMap((fnftIdxRes) =>
       fnftIdxRes.success
-        ? fnftIdxRes.output.map((fnft: any) => ({ target: fnftIdxRes.input.target, params: [fnft.id] } as const))
+        ? fnftIdxRes.output.map((fnft: any) => ({ target: fnftIdxRes.input.target, params: [fnft.id] }) as const)
         : null,
     ),
     abi: abi.pendingReward,

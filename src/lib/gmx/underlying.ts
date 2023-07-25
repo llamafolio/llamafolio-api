@@ -21,7 +21,7 @@ export const get_xLP_UnderlyingsBalances = async (
       multicall({
         ctx,
         calls: underlyings.map(
-          (underlying) => ({ target: (underlying as Contract).address, params: [vault.address] } as const),
+          (underlying) => ({ target: (underlying as Contract).address, params: [vault.address] }) as const,
         ),
         abi: erc20Abi.balanceOf,
       }),

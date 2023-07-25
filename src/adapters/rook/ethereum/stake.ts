@@ -25,7 +25,7 @@ export async function getRookStakeBalances(
   const userBalancesRes = await multicall({
     ctx,
     calls: stakers.flatMap((staker) =>
-      tokenLists.map((underlying) => ({ target: staker.address, params: [underlying.address, ctx.address] } as const)),
+      tokenLists.map((underlying) => ({ target: staker.address, params: [underlying.address, ctx.address] }) as const),
     ),
     abi: abi.underlyingBalance,
   })

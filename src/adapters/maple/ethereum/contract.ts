@@ -61,7 +61,7 @@ export async function getFarmContracts(ctx: BaseContext, contract: Contract): Pr
 
   const getPoolsAddresses = await multicall({
     ctx,
-    calls: rangeBI(0n, getPoolsNumber).map((idx) => ({ target: contract.address, params: [idx] } as const)),
+    calls: rangeBI(0n, getPoolsNumber).map((idx) => ({ target: contract.address, params: [idx] }) as const),
     abi: abi.pools,
   })
 

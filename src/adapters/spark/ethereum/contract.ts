@@ -159,7 +159,7 @@ export async function getLendingPoolContracts(ctx: BaseContext, lendingPool: Con
   const reservesDataRes = await multicall({
     ctx,
     calls: reservesList.map(
-      (reserveTokenAddress) => ({ target: lendingPool.address, params: [reserveTokenAddress] } as const),
+      (reserveTokenAddress) => ({ target: lendingPool.address, params: [reserveTokenAddress] }) as const,
     ),
     abi: abi.getReserveData,
   })

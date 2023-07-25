@@ -57,7 +57,7 @@ export async function getDepositMarkets(ctx: BaseContext, staker: Contract): Pro
 
   const marketsAddressesRes = await multicall({
     ctx,
-    calls: rangeBI(0n, marketsLength).map((idx) => ({ target: staker.address, params: [idx] } as const)),
+    calls: rangeBI(0n, marketsLength).map((idx) => ({ target: staker.address, params: [idx] }) as const),
     abi: abi.getMarketTokenAddress,
   })
 
@@ -78,7 +78,7 @@ export async function getDepositBalances(
   const balancesOfsRes = await multicall({
     ctx,
     calls: markets.map(
-      (market) => ({ target: staker.address, params: [{ owner: ctx.address, number: 0n }, market.pid] } as const),
+      (market) => ({ target: staker.address, params: [{ owner: ctx.address, number: 0n }, market.pid] }) as const,
     ),
     abi: abi.getAccountWei,
   })

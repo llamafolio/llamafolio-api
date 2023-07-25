@@ -25,7 +25,7 @@ export async function getWombatPoolsContracts(ctx: BaseContext, pools: Contract[
   const addressOfAssetsRes = await multicall({
     ctx,
     calls: flatMapSuccess(tokensRes, (token) =>
-      token.output.map((tokenAddress) => ({ target: token.input.target, params: [tokenAddress] } as const)),
+      token.output.map((tokenAddress) => ({ target: token.input.target, params: [tokenAddress] }) as const),
     ),
     abi: abi.addressOfAsset,
   })

@@ -25,7 +25,7 @@ export async function getVestBalances(ctx: BalancesContext, contracts: Contract[
 
   const vestingBalanceOfRes = await multicall({
     ctx,
-    calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] } as const)),
+    calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] }) as const),
     abi: abi.pendingPayoutFor,
   })
 

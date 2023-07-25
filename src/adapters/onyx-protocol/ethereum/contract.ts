@@ -42,7 +42,7 @@ export async function getOnyxPoolsContracts(ctx: BaseContext, lendingPool: Contr
 
   const poolsInfos = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLengthBI).map((idx) => ({ target: lendingPool.address, params: [idx] } as const)),
+    calls: rangeBI(0n, poolLengthBI).map((idx) => ({ target: lendingPool.address, params: [idx] }) as const),
     abi: abi.poolInfo,
   })
 

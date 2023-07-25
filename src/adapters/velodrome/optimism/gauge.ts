@@ -43,7 +43,7 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: GaugeContr
     calls: stakingBalances.flatMap(
       (balance) =>
         balance.rewards?.map(
-          (reward) => ({ target: balance.address, params: [reward.address, ctx.address] } as const),
+          (reward) => ({ target: balance.address, params: [reward.address, ctx.address] }) as const,
         ) ?? [],
     ),
     abi: abi.earned,

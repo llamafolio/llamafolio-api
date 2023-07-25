@@ -36,7 +36,7 @@ export async function getLpInchBalances(ctx: BalancesContext, pools: Contract[])
   const [balanceOfsRes, totalSuppliesRes, getUnderlyingsBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: erc20Abi.totalSupply }),
@@ -44,7 +44,7 @@ export async function getLpInchBalances(ctx: BalancesContext, pools: Contract[])
       ctx,
       calls: pools.flatMap((pool) =>
         pool.underlyings!.map(
-          (underlying) => ({ target: pool.address, params: [(underlying as Contract).address] } as const),
+          (underlying) => ({ target: pool.address, params: [(underlying as Contract).address] }) as const,
         ),
       ),
       abi: abi.getBalanceForAddition,

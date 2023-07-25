@@ -19,7 +19,7 @@ export async function getFlamincomeFarmBalances(ctx: BalancesContext, farmers: C
   const [balancesOfsRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] } as const)),
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({

@@ -36,7 +36,7 @@ export async function getMorphoMarketsContracts(ctx: BaseContext, morphoLens: Co
 
   const marketsDetailsRes = await multicall({
     ctx,
-    calls: cTokensAddressesRes.map((cToken) => ({ target: morphoLens.address, params: [cToken] } as const)),
+    calls: cTokensAddressesRes.map((cToken) => ({ target: morphoLens.address, params: [cToken] }) as const),
     abi: abi.getMarketConfiguration,
   })
 

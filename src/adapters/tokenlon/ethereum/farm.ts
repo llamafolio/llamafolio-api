@@ -27,12 +27,12 @@ export async function getLONFarmBalances(ctx: BalancesContext, farmers: Contract
   const [balanceOfsRes, earnedsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] } as const)),
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] } as const)),
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
       abi: abi.earned,
     }),
   ])

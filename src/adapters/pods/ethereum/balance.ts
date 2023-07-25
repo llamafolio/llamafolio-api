@@ -28,13 +28,13 @@ const abi = {
 export async function getPodsFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
   const userBalancesRes = await multicall({
     ctx,
-    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] } as const)),
+    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 
   const userAssetsBalancesRes = await multicall({
     ctx,
-    calls: mapSuccessFilter(userBalancesRes, (res) => ({ target: res.input.target, params: [res.output] } as const)),
+    calls: mapSuccessFilter(userBalancesRes, (res) => ({ target: res.input.target, params: [res.output] }) as const),
     abi: abi.convertToAssets,
   })
 

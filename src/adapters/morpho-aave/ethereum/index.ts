@@ -1,7 +1,8 @@
+import { getMarketsContracts } from '@adapters/morpho-aave/ethereum/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getLendBorrowBalances, getMarketsContracts, getUserHealthFactor } from './balances'
+import { getLendBorrowBalances, getUserHealthFactor } from './balances'
 
 const lens: Contract = {
   chain: 'ethereum',

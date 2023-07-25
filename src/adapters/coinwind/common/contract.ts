@@ -54,7 +54,7 @@ export async function getCoinWindContracts(ctx: BaseContext, masterchef: Contrac
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterchef.address, params: [idx] } as const)),
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterchef.address, params: [idx] }) as const),
     abi: abi.poolInfo,
   })
 

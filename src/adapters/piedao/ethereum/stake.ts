@@ -15,7 +15,7 @@ const abi = {
 export async function getPieDaoStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const userBalances = await multicall({
     ctx,
-    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] } as const)),
+    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }) as const),
     abi: abi.ethBalanceOf,
   })
 

@@ -35,7 +35,7 @@ export async function getAnnexContracts(ctx: BaseContext, masterchefs: Contract[
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: poolLength.map((pool, idx) => ({ target: pool.input.target, params: [BigInt(idx)] } as const)),
+    calls: poolLength.map((pool, idx) => ({ target: pool.input.target, params: [BigInt(idx)] }) as const),
     abi: abi.getPoolInfo,
   })
 

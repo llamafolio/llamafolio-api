@@ -65,7 +65,7 @@ export async function getMapleStakeBalances(ctx: BalancesContext, stakers: Contr
       ctx,
       calls: stakers.flatMap((staker) =>
         staker.underlyings!.map(
-          (underlying) => ({ target: staker.lpToken, params: [(underlying as Contract).address] } as const),
+          (underlying) => ({ target: staker.lpToken, params: [(underlying as Contract).address] }) as const,
         ),
       ),
       abi: abi.getBalance,

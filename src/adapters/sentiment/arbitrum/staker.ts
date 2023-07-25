@@ -16,7 +16,7 @@ const abi = {
 export async function getSentimentStakerBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const userBalancesRes = await multicall({
     ctx,
-    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] } as const)),
+    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 
@@ -24,7 +24,7 @@ export async function getSentimentStakerBalances(ctx: BalancesContext, stakers: 
     ctx,
     calls: mapSuccess(
       userBalancesRes,
-      (balance) => ({ target: balance.input.target, params: [balance.output] } as const),
+      (balance) => ({ target: balance.input.target, params: [balance.output] }) as const,
     ),
     abi: abi.convertToAssets,
   })

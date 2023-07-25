@@ -112,7 +112,7 @@ const abi = {
 export async function getmStableBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const userBalanceOfRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] } as const)),
+    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 

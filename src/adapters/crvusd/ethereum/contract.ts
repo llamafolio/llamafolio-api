@@ -72,12 +72,12 @@ export async function getCRVUSDContracts(ctx: BaseContext, factory: Contract): P
   const [collateralsRes, controllersRes] = await Promise.all([
     multicall({
       ctx,
-      calls: rangeBI(0n, collateralLength).map((idx) => ({ target: factory.address, params: [idx] } as const)),
+      calls: rangeBI(0n, collateralLength).map((idx) => ({ target: factory.address, params: [idx] }) as const),
       abi: abi.collaterals,
     }),
     multicall({
       ctx,
-      calls: rangeBI(0n, collateralLength).map((idx) => ({ target: factory.address, params: [idx] } as const)),
+      calls: rangeBI(0n, collateralLength).map((idx) => ({ target: factory.address, params: [idx] }) as const),
       abi: abi.controllers,
     }),
   ])
