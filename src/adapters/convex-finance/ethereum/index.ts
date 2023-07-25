@@ -9,7 +9,7 @@ import { getCvxCrvStakeBalance, getCVXStakeBalance } from './stake'
 
 const threeCrv: Token = {
   chain: 'ethereum',
-  address: '0x7091dbb7fcbA54569eF1387Ac89Eb2a5C9F6d2EA',
+  address: '0x6c3F90f043a72FA612cbac8115EE7e52BDe6E490',
   decimals: 18,
   symbol: '3CRV',
 }
