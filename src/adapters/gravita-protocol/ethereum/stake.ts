@@ -11,7 +11,10 @@ const abi = {
     type: 'function',
   },
   getDepositorGains: {
-    inputs: [{ internalType: 'address', name: '_depositor', type: 'address' }],
+    inputs: [
+      { internalType: 'address', name: '_depositor', type: 'address' },
+      { internalType: 'address[]', name: '_assets', type: 'address[]' },
+    ],
     name: 'getDepositorGains',
     outputs: [
       { internalType: 'address[]', name: '', type: 'address[]' },
@@ -30,9 +33,16 @@ const GRAI: Token = {
 }
 
 export async function getGravitaStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
+  const rewardsAddresses: `0x${string}`[] = staker.rewards!.map((reward) => (reward as Contract).address)
+
   const [userDeposit, userPendingRewards] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.deposits }),
-    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getDepositorGains }),
+    call({
+      ctx,
+      target: staker.address,
+      params: [ctx.address, rewardsAddresses],
+      abi: abi.getDepositorGains,
+    }),
   ])
 
   const fmtRewards = staker.rewards?.map((reward, idx) => {
