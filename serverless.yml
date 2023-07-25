@@ -122,16 +122,6 @@ functions:
     timeout: 29
     memorySize: 1024
 
-  getBalancesYields:
-    handler: src/handlers/getBalancesYields.handler
-    description: Get address yields
-    events:
-      - httpApi:
-          method: get
-          path: /balances/{address}/yields
-    timeout: 29
-    memorySize: 1024
-
   getContracts:
     handler: src/handlers/getContracts.getContract
     description: Get contracts

@@ -160,11 +160,6 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
         debtUSD: balance.debt_usd != null ? parseFloat(balance.debt_usd) : undefined,
         category: balance.category,
         data: balance.data,
-        apy: balance.apy != null ? parseFloat(balance.apy) : undefined,
-        apyBase: balance.apy_base != null ? parseFloat(balance.apy_base) : undefined,
-        apyReward: balance.apy_reward != null ? parseFloat(balance.apy_reward) : undefined,
-        apyMean30d: balance.apy_mean_30d != null ? parseFloat(balance.apy_mean_30d) : undefined,
-        ilRisk: balance.il_risk ?? undefined,
       })),
     })
   }
@@ -175,7 +170,7 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
 export async function selectBalancesHolders(client: PoolClient, contractAddress: string, chain: Chain, limit: number) {
   const res = await client.query(
     format(
-      `
+      /*sql*/ `
       select bg.from_address as address, b.amount from balances b
       inner join balances_groups bg on b.group_id = bg.id
       where (

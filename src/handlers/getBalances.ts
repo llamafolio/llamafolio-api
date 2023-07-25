@@ -5,6 +5,7 @@ import type { ContractStandard } from '@lib/adapter'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Category } from '@lib/category'
+import { defiLamaYieldMatcher, parseBalances, parseYieldsPools } from '@lib/yield-matcher'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface Yield {
@@ -180,13 +181,21 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       status = 'stale'
     }
 
-    const balancesResponse: BalancesResponse = {
-      status,
-      updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
-      groups: formatBalancesGroups(balancesGroups),
-    }
+    const groups = formatBalancesGroups(balancesGroups)
 
-    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC })
+    const yieldPools = await parseYieldsPools()
+    const balances = parseBalances(groups)
+
+    const yieldMatched = await defiLamaYieldMatcher({ yieldPools, balances })
+
+    return success(
+      {
+        status,
+        updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
+        balances: yieldMatched,
+      },
+      { maxAge: BALANCE_UPDATE_THRESHOLD_SEC },
+    )
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')

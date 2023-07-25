@@ -40,12 +40,6 @@ export interface YieldPoolResponse {
   }[]
 }
 
-export interface YieldBalancesJSON {
-  status: string
-  updatedAt: number
-  groups: Array<YieldBalanceGroup>
-}
-
 export interface YieldBalanceGroup {
   chain: string
   protocol: string

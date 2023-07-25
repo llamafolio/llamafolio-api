@@ -6,9 +6,8 @@ import { retrieveToken } from '@lib/token'
 import type { MapValueType } from '@lib/type'
 import { isNotFalsy } from '@lib/type'
 import type { Token } from '@llamafolio/tokens'
-import { type Address, isAddress } from 'viem'
 
-import type { YieldBalanceGroup, YieldBalancesJSON, YieldPoolResponse } from './types'
+import type { YieldBalanceGroup, YieldPoolResponse } from './types'
 /**
  * Parse Yield Pools:
  * 1. consume JSON.data from https://yields.llama.fi/poolsOld
@@ -30,10 +29,13 @@ import type { YieldBalanceGroup, YieldBalancesJSON, YieldPoolResponse } from './
  *
  */
 
-export async function defiLamaYieldMatcher({ address }: { address: Address }) {
-  const yieldPools = await parseYieldsPools()
-  const balances = await parseBalances(address)
-
+export async function defiLamaYieldMatcher({
+  yieldPools,
+  balances,
+}: {
+  yieldPools: YieldPoolsMap
+  balances: BalanceMap
+}) {
   /**
    * This stores matches between yield pools and balances
    * A match here means yield pool & balance are for the same chain and protocol
@@ -105,7 +107,14 @@ function matcher({
   return matches
 }
 
-async function parseYieldsPools() {
+export type YieldPoolsMap = Map<
+  `${Chain}-${string}`,
+  ({
+    pool: string
+    tokens: Token[] | null
+  } & Record<string, any>)[]
+>
+export async function parseYieldsPools() {
   const url = environment.OUTSIDE_CONTRIBUTOR
     ? 'https://yields.llama.fi/poolsOld'
     : `${environment.CLOUDFLARE_R2_PUBLIC_URL}/yield/llama_yields_pools_old.json` ??
@@ -113,13 +122,7 @@ async function parseYieldsPools() {
   const response = await fetch(url)
   const json: YieldPoolResponse = await response.json()
 
-  const yieldPools = new Map<
-    `${Chain}-${string}`,
-    ({
-      pool: string
-      tokens: Token[] | null
-    } & Record<string, any>)[]
-  >()
+  const yieldPools: YieldPoolsMap = new Map()
 
   for (const pool of json.data) {
     const chain = pool.chain.toLowerCase() as Chain
@@ -142,20 +145,14 @@ async function parseYieldsPools() {
   return yieldPools
 }
 
-async function parseBalances(address: Address) {
-  if (!isAddress(address)) raise(`Invalid address: ${address}`)
+export type BalanceMap = Map<`${Chain}-${string}`, Omit<YieldBalanceGroup, 'chain' | 'protocol'>>
 
-  const url = `${environment.API_URL ?? 'http://localhost:3000'}/balances/${address}`
-  const response = await fetch(url)
-  if (!response.ok) raise(`Failed to fetch balances for ${address} - ${response.status} (${response.statusText})`)
+export function parseBalances(yieldBalanceGroups: Array<YieldBalanceGroup>) {
+  const balances: BalanceMap = new Map()
 
-  const balances = new Map<`${Chain}-${string}`, Omit<YieldBalanceGroup, 'chain' | 'protocol'>>()
+  if (yieldBalanceGroups.length === 0) return balances
 
-  const yieldBalancesJSON: YieldBalancesJSON = await response.json()
-
-  if (yieldBalancesJSON.groups.length === 0) return balances
-
-  for (const yieldBalance of yieldBalancesJSON['groups']) {
+  for (const yieldBalance of yieldBalanceGroups) {
     const chain = yieldBalance.chain.toLowerCase() as Chain
     if (!chainsNames.includes(chain)) continue
     const key: `${Chain}-${string}` = [chain, yieldBalance.protocol].join('-') as `${Chain}-${string}`
