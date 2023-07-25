@@ -60,7 +60,7 @@ export async function defiLamaYieldMatcher({ address }: { address: Address }) {
     if (match && match.length > 0) matches.push(match)
   }
 
-  return matches
+  return matches.flat()
 }
 
 /** takes project and protocol level matches and match each balance to a yield pool */
