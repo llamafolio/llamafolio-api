@@ -49,6 +49,7 @@ import convexFinance from '@adapters/convex-finance'
 import creth2 from '@adapters/creth2'
 import crvusd from '@adapters/crvusd'
 import curveDex from '@adapters/curve-dex'
+import cvaultFinance from '@adapters/cvault-finance'
 import definix from '@adapters/definix'
 import dydx from '@adapters/dydx'
 import eigenlayer from '@adapters/eigenlayer'
@@ -274,6 +275,7 @@ export const adapters: Adapter[] = [
   creth2,
   crvusd,
   curveDex,
+  cvaultFinance,
   definix,
   dydx,
   eigenlayer,
