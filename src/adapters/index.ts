@@ -150,6 +150,7 @@ import raft from '@adapters/raft'
 import rageTrade from '@adapters/rage-trade'
 import railgun from '@adapters/railgun'
 import redacted from '@adapters/redacted'
+import reserve from '@adapters/reserve'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import rook from '@adapters/rook'
@@ -377,6 +378,7 @@ export const adapters: Adapter[] = [
   rageTrade,
   railgun,
   redacted,
+  reserve,
   ribbonFinance,
   rocketPool,
   rook,
