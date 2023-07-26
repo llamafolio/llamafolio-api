@@ -1,7 +1,10 @@
 import { getLendingPoolBalances } from '@adapters/radiant-v2/arbitrum/lendingPool'
 import { getMultiFeeDistributionContracts } from '@adapters/radiant-v2/arbitrum/multifee'
 import { getMultiFeeDistributionBalancesBSC } from '@adapters/radiant-v2/bsc/multifee'
-import { getLendingPoolContracts as getAaveLendingPoolContracts } from '@lib/aave/v2/lending'
+import {
+  getLendingPoolContracts as getAaveLendingPoolContracts,
+  getLendingPoolHealthFactor,
+} from '@lib/aave/v2/lending'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import type { Token } from '@lib/token'
@@ -52,17 +55,20 @@ export const getContracts = async (ctx: BaseContext) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getLendingPoolBalances(...args, chefIncentivesControllerContract, radiantToken),
-    fmtMultifeeDistributionContract: (...args) =>
-      getMultiFeeDistributionBalancesBSC(...args, {
-        multiFeeDistribution: multiFeeDistributionContract,
-        lendingPool: lendingPoolContract,
-        stakingToken: WBNB_RDNT,
-      }),
-  })
+  const [balances, healthFactor] = await Promise.all([
+    resolveBalances<typeof getContracts>(ctx, contracts, {
+      pools: (...args) => getLendingPoolBalances(...args, chefIncentivesControllerContract, radiantToken),
+      fmtMultifeeDistributionContract: (...args) =>
+        getMultiFeeDistributionBalancesBSC(...args, {
+          multiFeeDistribution: multiFeeDistributionContract,
+          lendingPool: lendingPoolContract,
+          stakingToken: WBNB_RDNT,
+        }),
+    }),
+    getLendingPoolHealthFactor(ctx, lendingPoolContract),
+  ])
 
   return {
-    groups: [{ balances }],
+    groups: [{ balances, healthFactor }],
   }
 }
