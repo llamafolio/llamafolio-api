@@ -98,6 +98,7 @@ import klimaDao from '@adapters/klima-dao'
 import leonicornswap from '@adapters/leonicornswap'
 import lido from '@adapters/lido'
 import lifeDao from '@adapters/life-dao'
+import linearFinance from '@adapters/linear-finance'
 import liqee from '@adapters/liqee'
 import liquity from '@adapters/liquity'
 import llamaAirforce from '@adapters/llama-airforce'
@@ -326,6 +327,7 @@ export const adapters: Adapter[] = [
   leonicornswap,
   lido,
   lifeDao,
+  linearFinance,
   liqee,
   liquity,
   llamaAirforce,
