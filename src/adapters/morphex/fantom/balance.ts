@@ -161,8 +161,6 @@ export async function getMorphexStakeMPXBalances(
     return
   }
 
-  console.log(contract)
-
   const [stakedBalance, claimableEsToken, claimableNativeToken, underlyingsBalancesRes] = await Promise.all([
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.stakedAmounts }),
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.claimable }),
