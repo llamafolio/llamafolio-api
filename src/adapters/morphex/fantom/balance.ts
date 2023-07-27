@@ -160,10 +160,13 @@ export async function getMorphexStakeMPXBalances(
   if (!underlyings) {
     return
   }
+
+  console.log(contract)
+
   const [stakedBalance, claimableEsToken, claimableNativeToken, underlyingsBalancesRes] = await Promise.all([
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.stakedAmounts }),
     call({ ctx, target: contract.address, params: [ctx.address], abi: abi.claimable }),
-    call({ ctx, target: contract.address, abi: erc20Abi.totalSupply }),
+    call({ ctx, target: contract.rewarder, params: [ctx.address], abi: abi.claimable }),
     multicall({
       ctx,
       calls: underlyings.map(
@@ -173,8 +176,8 @@ export async function getMorphexStakeMPXBalances(
     }),
   ])
 
-  underlyings.forEach((underlying, underlyingIdx) => {
-    ;(underlying as Balance).amount = underlyingsBalancesRes[underlyingIdx].success
+  underlyings.forEach((underlying: Contract, underlyingIdx) => {
+    underlying.amount = underlyingsBalancesRes[underlyingIdx].success
       ? underlyingsBalancesRes[underlyingIdx].output
       : 0n
   })
