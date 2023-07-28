@@ -34,12 +34,15 @@ const incentiveController: Contract = {
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getLendingPoolContracts(ctx, lendingPool, poolDataProvider)
 
+  lendingPool.pools = pools
   incentiveController.pools = pools
 
   return {
     contracts: {
       pools,
       incentiveController,
+      lendingPool,
+      poolDataProvider,
     },
   }
 }
@@ -47,7 +50,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      pools: getLendingPoolBalances,
+      lendingPool: getLendingPoolBalances,
       incentiveController: getLendingRewardsBalances,
     }),
     getLendingPoolHealthFactor(ctx, lendingPool),

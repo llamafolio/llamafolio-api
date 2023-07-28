@@ -1,11 +1,12 @@
 import type { Balance, BalancesContext, BaseBalance, BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
-import { getBalancesOf } from '@lib/erc20'
+import { getBalancesOf, getERC20Details } from '@lib/erc20'
 import { MAX_UINT_256 } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 import { formatUnits } from 'viem'
 
 const abi = {
@@ -165,10 +166,34 @@ export async function getLendingPoolContracts(
     )
   }
 
+  const underlyingsAddresses = contracts.map((contract) => contract.underlyings?.[0] as `0x${string}`)
+  const contractAddresses = contracts.map((contract) => contract.address)
+
+  const [resolveUnderlyings, resolveContracts] = await Promise.all([
+    getERC20Details(ctx, underlyingsAddresses),
+    getERC20Details(ctx, contractAddresses),
+  ])
+
   return contracts
+    .map((contract, index) => {
+      const resolveUnderlying = resolveUnderlyings[index] as Contract
+      const resolveContract = resolveContracts[index] as Contract
+
+      if (!resolveUnderlying || !resolveContract) {
+        return null
+      }
+
+      return {
+        ...resolveContract,
+        underlyings: [resolveUnderlying],
+        category: contract.category,
+      }
+    })
+    .filter(isNotNullish)
 }
 
-export async function getLendingPoolBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
+export async function getLendingPoolBalances(ctx: BalancesContext, lendingPool: Contract): Promise<Balance[]> {
+  const contracts: Contract[] = lendingPool.pools
   const balances = await getBalancesOf(ctx, contracts as Token[])
 
   // use the same amount for underlyings
