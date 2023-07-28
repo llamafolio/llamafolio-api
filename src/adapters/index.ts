@@ -49,6 +49,7 @@ import convexFinance from '@adapters/convex-finance'
 import creth2 from '@adapters/creth2'
 import crvusd from '@adapters/crvusd'
 import curveDex from '@adapters/curve-dex'
+import cvaultFinance from '@adapters/cvault-finance'
 import definix from '@adapters/definix'
 import dydx from '@adapters/dydx'
 import eigenlayer from '@adapters/eigenlayer'
@@ -97,6 +98,7 @@ import klimaDao from '@adapters/klima-dao'
 import leonicornswap from '@adapters/leonicornswap'
 import lido from '@adapters/lido'
 import lifeDao from '@adapters/life-dao'
+import linearFinance from '@adapters/linear-finance'
 import liqee from '@adapters/liqee'
 import liquity from '@adapters/liquity'
 import llamaAirforce from '@adapters/llama-airforce'
@@ -149,6 +151,7 @@ import raft from '@adapters/raft'
 import rageTrade from '@adapters/rage-trade'
 import railgun from '@adapters/railgun'
 import redacted from '@adapters/redacted'
+import reserve from '@adapters/reserve'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import rook from '@adapters/rook'
@@ -275,6 +278,7 @@ export const adapters: Adapter[] = [
   creth2,
   crvusd,
   curveDex,
+  cvaultFinance,
   definix,
   dydx,
   eigenlayer,
@@ -323,6 +327,7 @@ export const adapters: Adapter[] = [
   leonicornswap,
   lido,
   lifeDao,
+  linearFinance,
   liqee,
   liquity,
   llamaAirforce,
@@ -375,6 +380,7 @@ export const adapters: Adapter[] = [
   rageTrade,
   railgun,
   redacted,
+  reserve,
   ribbonFinance,
   rocketPool,
   rook,
