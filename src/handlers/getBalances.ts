@@ -5,59 +5,8 @@ import type { ContractStandard } from '@lib/adapter'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Category } from '@lib/category'
-import { defiLamaYieldMatcher, parseBalances, parseYieldsPools } from '@lib/yield-matcher'
+import { aggregateYields } from '@lib/yields'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
-  const address = event.pathParameters?.address as `0x${string}`
-  if (!address) {
-    return badRequest('Missing address parameter')
-  }
-
-  if (!isHex(address)) {
-    return badRequest('Invalid address parameter, expected hex')
-  }
-
-  console.log('Get balances', address)
-
-  const client = await pool.connect()
-
-  try {
-    const balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
-
-    const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
-
-    let status: Status = 'success'
-    if (updatedAt === undefined) {
-      status = 'empty'
-    } else if (areBalancesStale(updatedAt)) {
-      status = 'stale'
-    }
-
-    const groups = formatBalancesGroups(balancesGroups)
-
-    const yieldPools = await parseYieldsPools()
-    const balances = parseBalances(groups)
-
-    const yieldMatched = await defiLamaYieldMatcher({ yieldPools, balances })
-
-    return success(
-      {
-        status,
-        updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
-        balances: yieldMatched,
-      },
-      { maxAge: BALANCE_UPDATE_THRESHOLD_SEC },
-    )
-  } catch (error) {
-    console.error('Failed to retrieve balances', { error, address })
-    return serverError('Failed to retrieve balances')
-  } finally {
-    client.release(true)
-  }
-}
 
 export interface Yield {
   apy?: number
@@ -202,4 +151,51 @@ export interface BalancesResponse {
   status: Status
   updatedAt?: number
   groups: GroupResponse[]
+}
+
+export const handler: APIGatewayProxyHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false
+
+  const address = event.pathParameters?.address as `0x${string}`
+  if (!address) {
+    return badRequest('Missing address parameter')
+  }
+
+  if (!isHex(address)) {
+    return badRequest('Invalid address parameter, expected hex')
+  }
+
+  console.log('Get balances', address)
+
+  const client = await pool.connect()
+
+  try {
+    const balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
+
+    const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
+
+    let status: Status = 'success'
+    if (updatedAt === undefined) {
+      status = 'empty'
+    } else if (areBalancesStale(updatedAt)) {
+      status = 'stale'
+    }
+
+    const formattedBalancesGroups = formatBalancesGroups(balancesGroups)
+
+    await aggregateYields(formattedBalancesGroups)
+
+    const balancesResponse: BalancesResponse = {
+      status,
+      updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
+      groups: formattedBalancesGroups,
+    }
+
+    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC })
+  } catch (error) {
+    console.error('Failed to retrieve balances', { error, address })
+    return serverError('Failed to retrieve balances')
+  } finally {
+    client.release(true)
+  }
 }

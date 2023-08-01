@@ -8,7 +8,9 @@ const { ARBITRUM_RPC, LLAMANODES_API_KEY, OPTIMISM_RPC } = environment
 
 export const chainsNames = [
   'arbitrum',
+  'arbitrum-nova',
   'avalanche',
+  'bittorrent',
   'bsc',
   'celo',
   'ethereum',
@@ -244,7 +246,7 @@ for (const chain of chains) {
   chainById[chain.id] = chain
 }
 
-export const toDefiLlamaChain: { [key: string]: string } = {
+export const toDefiLlamaChain: { [key in Chain]: string } = {
   arbitrum: 'arbitrum',
   'arbitrum-nova': 'arbitrum nova',
   avalanche: 'avax',
@@ -254,7 +256,23 @@ export const toDefiLlamaChain: { [key: string]: string } = {
   ethereum: 'ethereum',
   fantom: 'fantom',
   gnosis: 'xdai',
+  harmony: 'harmony',
   moonbeam: 'moonbeam',
   optimism: 'optimism',
   polygon: 'polygon',
+}
+
+export const fromDefiLlamaChain: { [key: string]: Chain } = {
+  Arbitrum: 'arbitrum',
+  'Arbitrum Nova': 'arbitrum-nova',
+  Avalanche: 'avalanche',
+  Bittorrent: 'bittorrent',
+  BSC: 'bsc',
+  Celo: 'celo',
+  Ethereum: 'ethereum',
+  Fantom: 'fantom',
+  Gnosis: 'gnosis',
+  Moonbeam: 'moonbeam',
+  Optimism: 'optimism',
+  Polygon: 'polygon',
 }

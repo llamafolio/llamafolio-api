@@ -6,6 +6,7 @@ import { badRequest, serverError, success } from '@handlers/response'
 import { updateBalances } from '@handlers/updateBalances'
 import { BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/buf'
+import { aggregateYields } from '@lib/yields'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
@@ -31,10 +32,14 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
     const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
 
+    const formattedBalancesGroups = formatBalancesGroups(balancesGroups)
+
+    await aggregateYields(formattedBalancesGroups)
+
     const balancesResponse: BalancesResponse = {
       status: 'success',
       updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
-      groups: formatBalancesGroups(balancesGroups),
+      groups: formattedBalancesGroups,
     }
 
     return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC })
