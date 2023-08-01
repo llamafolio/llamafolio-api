@@ -34,47 +34,10 @@ export interface YieldPool {
   volumeUsd1d: any | null
   volumeUsd7d: any | null
   apyBaseInception: any | null
-  pool_old: Address | `${Address}-${Chain}`
+  pool_old: string
 }
 
 export interface YieldPoolResponse {
   status: string
   data: YieldPool[]
-}
-
-export interface YieldBalanceGroup {
-  chain: string
-  protocol: string
-  balanceUSD?: number
-  debtUSD?: number
-  rewardUSD: number
-  balances: Array<{
-    standard: string | null
-    name?: string
-    address: string
-    symbol: string
-    decimals: number
-    category: string
-    price?: number
-    amount: string
-    balanceUSD?: number
-    underlyings: Array<{
-      name?: string
-      address: string
-      symbol: string
-      decimals: string
-      stable: boolean | null
-      price: number
-      amount: string
-      balanceUSD: number
-    }>
-    rewards?: Array<{
-      address: string
-      symbol: string
-      decimals: number
-      amount: string
-      balanceUSD: number
-      price: number
-    }>
-  }>
 }

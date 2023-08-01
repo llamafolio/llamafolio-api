@@ -38,7 +38,7 @@ export function aggregateBalanceYield({ balance, yieldPools }: { balance: Balanc
   const yieldPoolsByKey: { [key: string]: YieldPool } = {}
 
   for (const yieldPool of yieldPools) {
-    yieldPoolsByKey[`pool_old#${yieldPool.pool_old.toLowerCase()}`] = yieldPool
+    yieldPoolsByKey[`pool_old#${extractAddress(yieldPool.pool_old).toLowerCase()}`] = yieldPool
 
     if (yieldPool.underlyingTokens && yieldPool.underlyingTokens.length > 0) {
       const underlyingTokensKey = yieldPool.underlyingTokens
@@ -103,4 +103,19 @@ export async function parseYieldsPools() {
   }
 
   return yieldPoolsByChainProtocol
+}
+
+/**
+ * Extract address from string containing metadata. Ex:
+ * "0xd7d069493685a581d27824fc46eda46b7efc0063-binance" -> "0xd7d069493685a581d27824fc46eda46b7efc0063"
+ * "TXJgMdjVX5dKiQaUi9QobwNxtSQaFqccvd" -> "TXJgMdjVX5dKiQaUi9QobwNxtSQaFqccvd"
+ * "ankr-ankrETH" -> "ankr-ankrETH"
+ * @param str
+ */
+export function extractAddress(str: string) {
+  if (str.startsWith('0x')) {
+    return str.split('-')[0]
+  }
+
+  return str
 }
