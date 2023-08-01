@@ -15,7 +15,6 @@ export const environmentSchema = z.object({
   ARBITRUM_RPC: z.string().optional(),
   OPTIMISM_RPC: z.string().optional(),
   IS_OFFLINE: z.literal('true').or(z.literal('false')).optional(),
-  OUTSIDE_CONTRIBUTOR: z.union([z.literal('true'), z.literal('false')]).default('false'),
   API_URL: z.string().optional(),
   AWS_GATEWAY_API_ID_DEV: z.string().optional(),
   AWS_GATEWAY_API_ID_PROD: z.string().optional(),

@@ -5,6 +5,7 @@ import type { ContractStandard } from '@lib/adapter'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Category } from '@lib/category'
+import { aggregateYields } from '@lib/yields'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface Yield {
@@ -180,10 +181,14 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       status = 'stale'
     }
 
+    const formattedBalancesGroups = formatBalancesGroups(balancesGroups)
+
+    await aggregateYields(formattedBalancesGroups)
+
     const balancesResponse: BalancesResponse = {
       status,
       updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
-      groups: formatBalancesGroups(balancesGroups),
+      groups: formattedBalancesGroups,
     }
 
     return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC })

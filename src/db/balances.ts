@@ -112,7 +112,7 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
   const balancesGroups: any[] = []
 
   const queryRes = await client.query(
-    `
+    /*sql*/ `
     select
       bg.id as group_id,
       bg.adapter_id,
@@ -130,15 +130,9 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
       b.debt_usd,
       b.address,
       b.category,
-      b.data,
-      y.apy,
-      y.apy_base,
-      y.apy_reward,
-      y.apy_mean_30d,
-      y.il_risk
+      b.data
     from balances_groups bg
     inner join balances b on b.group_id = bg.id
-    left join yields y on y.chain = bg.chain and y.address = b.address and y.adapter_id = bg.adapter_id
     where bg.from_address = $1;
   `,
     [fromAddress.toLowerCase()],
@@ -166,11 +160,6 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
         debtUSD: balance.debt_usd != null ? parseFloat(balance.debt_usd) : undefined,
         category: balance.category,
         data: balance.data,
-        apy: balance.apy != null ? parseFloat(balance.apy) : undefined,
-        apyBase: balance.apy_base != null ? parseFloat(balance.apy_base) : undefined,
-        apyReward: balance.apy_reward != null ? parseFloat(balance.apy_reward) : undefined,
-        apyMean30d: balance.apy_mean_30d != null ? parseFloat(balance.apy_mean_30d) : undefined,
-        ilRisk: balance.il_risk ?? undefined,
       })),
     })
   }
@@ -181,7 +170,7 @@ export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: Poo
 export async function selectBalancesHolders(client: PoolClient, contractAddress: string, chain: Chain, limit: number) {
   const res = await client.query(
     format(
-      `
+      /*sql*/ `
       select bg.from_address as address, b.amount from balances b
       inner join balances_groups bg on b.group_id = bg.id
       where (

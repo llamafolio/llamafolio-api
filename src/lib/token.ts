@@ -1,9 +1,11 @@
 import type { ERC20Token } from '@db/tokens'
 import { insertERC20Tokens, selectChainTokens } from '@db/tokens'
 import type { BaseContract, Contract, RawContract } from '@lib/adapter'
-import type { Chain } from '@lib/chains'
+import { type Chain, chainById } from '@lib/chains'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20Details } from '@lib/erc20'
 import { isNotNullish } from '@lib/type'
+import { getToken } from '@llamafolio/tokens'
 import type { PoolClient } from 'pg'
 
 export const ETH_ADDR = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
@@ -36,6 +38,12 @@ export const WETH: Token = {
 }
 
 const resolveTokenAddress = (contract: Contract) => contract.token?.toLowerCase() ?? contract.address.toLowerCase()
+
+export function retrieveToken(chain: Chain, address: string) {
+  address = address.toLowerCase() === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' ? ADDRESS_ZERO : address
+  if (address === ADDRESS_ZERO) return chainById[chain].nativeCurrency
+  return getToken(chain, address)
+}
 
 /**
  * 1. Collect token addresses from the `contractsMap` object for each chain and store them in the `chainsAddresses` object.
