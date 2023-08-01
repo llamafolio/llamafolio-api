@@ -8,6 +8,7 @@ import { isNotFalsy } from '@lib/type'
 import type { Token } from '@llamafolio/tokens'
 
 import type { YieldBalanceGroup, YieldPoolResponse } from './types'
+
 /**
  * Parse Yield Pools:
  * 1. consume JSON.data from https://yields.llama.fi/poolsOld
@@ -61,7 +62,6 @@ export async function defiLamaYieldMatcher({
     })
     if (match && match.length > 0) matches.push(match)
   }
-
   return matches.flat()
 }
 
@@ -77,29 +77,38 @@ function matcher({
   } & Record<string, any>)[]
 }) {
   if (balances.length === 0) return null
-
   const matches = [] as any[]
+
   for (const balance of balances) {
-    const { underlyings, ...balanceRest } = balance
-
     for (const yieldPool of yields) {
-      const { tokens: yieldTokens, pool_old, ...yieldPoolRest } = yieldPool
-
-      // matched by pool_old
-      if (balance.address.toLowerCase() === pool_old.toLowerCase()) {
-        matches.push({ ...yieldPoolRest, ...balanceRest })
+      // MATCH: by pool_old
+      if (balance.address.toLowerCase() === yieldPool.pool_old.toLowerCase()) {
+        matches.push({ ...yieldPool, ...balance })
         continue
       }
 
-      if (!underlyings || !yieldTokens || yieldTokens.length !== underlyings.length) continue
+      // MATCH: by tokens if only one token in yieldPool
+      if (yieldPool.tokens && yieldPool.tokens.length === 1) {
+        const [yieldPoolToken] = yieldPool.tokens
+        const match = yieldPoolToken.address.toLowerCase() === balance.address.toLowerCase()
+        if (match) {
+          matches.push({ ...yieldPool, ...balance })
+          continue
+        }
+      }
 
-      // check that all underlyings are in yieldTokens
-      const matchedByTokens = yieldTokens.filter((token) =>
-        underlyings.some((underlying) => underlying.address.toLowerCase() === token.address.toLowerCase()),
-      )
-
-      if (matchedByTokens.length === underlyings.length) {
-        matches.push({ ...yieldPoolRest, tokens: matchedByTokens, ...balanceRest })
+      // MATCH: by tokens if more than one token in yieldPool
+      if (yieldPool.tokens && yieldPool.tokens.length && balance?.underlyings && balance.underlyings.length) {
+        const matchedByTokens = yieldPool.tokens.filter((token) => {
+          const underlying = balance.underlyings.find(
+            (underlying) => underlying.address.toLowerCase() === token.address.toLowerCase(),
+          )
+          return !!underlying
+        })
+        if (matchedByTokens?.length === balance?.underlyings?.length) {
+          matches.push({ ...yieldPool, tokens: matchedByTokens, ...balance })
+          continue
+        }
       }
     }
   }
@@ -130,7 +139,6 @@ export async function parseYieldsPools() {
     const key: `${Chain}-${string}` = [chain, pool.project].join('-') as `${Chain}-${string}`
 
     if (!yieldPools.has(key)) yieldPools.set(key, [])
-
     const { underlyingTokens, pool: poolId, ...poolData } = pool
 
     yieldPools.get(key)?.push({
@@ -141,7 +149,6 @@ export async function parseYieldsPools() {
       ...poolData,
     })
   }
-
   return yieldPools
 }
 
@@ -150,7 +157,7 @@ export type BalanceMap = Map<`${Chain}-${string}`, Omit<YieldBalanceGroup, 'chai
 export function parseBalances(yieldBalanceGroups: Array<YieldBalanceGroup>) {
   const balances: BalanceMap = new Map()
 
-  if (yieldBalanceGroups.length === 0) return balances
+  if (yieldBalanceGroups?.length === 0) return balances
 
   for (const yieldBalance of yieldBalanceGroups) {
     const chain = yieldBalance.chain.toLowerCase() as Chain
