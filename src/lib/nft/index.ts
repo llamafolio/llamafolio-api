@@ -18,6 +18,11 @@ import {
   fetchUserNFTs as fetchUserNFTsFromNftScan,
 } from './nft-scan'
 import {
+  batchFetchMetadataFromQuickNode,
+  batchFetchNFTTradingHistoryFromQuickNode,
+  fetchUserNFTsFromQuickNode,
+} from './quick-node'
+import {
   fetchUserNFTCollections as fetchUserNFTCollectionsFromReservoir,
   fetchUsersNFTActivity as fetchUsersNFTActivityFromReservoir,
 } from './reservoir'
@@ -31,12 +36,14 @@ export const fetchUserNFTsFrom = {
   nftScan: fetchUserNFTsFromNftScan,
   sequence: fetchUserNFTsFromSequence,
   center: fetchUserNFTsFromCenter,
+  quickNode: fetchUserNFTsFromQuickNode,
 }
 
 export const fetchNFTMetadataFrom = {
   center: batchFetchMetadataFromCenter,
   alchemy: batchFetchMetadataFromAlchemy,
   nftScan: batchFetchMetadataFromNftScan,
+  quickNode: batchFetchMetadataFromQuickNode,
 }
 
 export const fetchUserNFTCollectionsFrom = {
@@ -46,4 +53,8 @@ export const fetchUserNFTCollectionsFrom = {
 
 export const fetchUserNFTActivityFrom = {
   reservoir: fetchUsersNFTActivityFromReservoir,
+}
+
+export const fetchNFTTradingHistoryFrom = {
+  quickNode: batchFetchNFTTradingHistoryFromQuickNode,
 }

@@ -4,7 +4,13 @@ import { ADDRESS_ZERO } from '@lib/contract'
 import { paginatedFetch } from '@lib/fetcher'
 import { parseStringJSON } from '@lib/fmt'
 import type { DefillamaNFTCollection } from '@lib/nft'
-import { defillamaCollections, fetchNFTMetadataFrom, fetchUserNFTCollectionsFrom, fetchUserNFTsFrom } from '@lib/nft'
+import {
+  defillamaCollections,
+  fetchNFTMetadataFrom,
+  fetchNFTTradingHistoryFrom,
+  fetchUserNFTCollectionsFrom,
+  fetchUserNFTsFrom,
+} from '@lib/nft'
 import type { NftScanMetadata as NFTMetadata, UserNFTCollection } from '@lib/nft/nft-scan'
 import { fetchTokenPrices } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
@@ -40,7 +46,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     }
     const response = await nftsHandler({ address })
 
-    return success(response, { maxAge: 30 * 60 })
+    return success(response, { maxAge: 1800 })
   } catch (error) {
     console.error('Failed to fetch user NFTs', { error })
     return serverError('Failed to fetch user NFTs')
@@ -63,11 +69,17 @@ async function tokensPrice(ids: Array<`${Chain}:${Address}`>) {
 // TODO: add rate limit checker
 const rateLimitReached = true
 
-export async function getUserNFTTokens(address: Address) {
+export async function getUserNFTs(address: Address) {
   if (rateLimitReached) {
     const userNFTsResponse = await paginatedFetch({
       fn: fetchUserNFTsFrom.alchemy<false>,
-      initialParams: { address, spamConfidenceLevel: 'LOW', withMetadata: false, pageSize: 100 },
+      initialParams: {
+        address,
+        pageSize: 100,
+        chain: 'ethereum',
+        withMetadata: false,
+        spamConfidenceLevel: 'LOW',
+      },
       iterations: 10,
       pageKeyProp: 'pageKey',
     })
@@ -93,13 +105,17 @@ export async function getUserNFTTokens(address: Address) {
     .sort((a, b) => a.id.localeCompare(b.id))
 }
 
-export async function nftsHandler({ address }: { address: Address }): Promise<UserNFTsResponse> {
-  const { price: ethPrice } = await tokensPrice([`ethereum:${ADDRESS_ZERO}`])
-
-  const userNFTs = await getUserNFTTokens(address)
-
-  const chunks = sliceIntoChunks(userNFTs, 50)
-
+export async function getNFTsMetadata({
+  nfts,
+  maxBatchSize = 50,
+}: {
+  nfts: Array<{
+    address: string
+    tokenID: string
+  }>
+  maxBatchSize?: number
+}) {
+  const chunks = sliceIntoChunks(nfts, maxBatchSize)
   const metadataPromiseResult = await Promise.allSettled(
     chunks.map((chunk) =>
       fetchNFTMetadataFrom.nftScan({
@@ -122,9 +138,29 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
     }))
     .sort((a, b) => a.id.localeCompare(b.id))
 
+  return flattenedMetadata
+}
+
+export async function nftsHandler({ address }: { address: Address }): Promise<UserNFTsResponse> {
+  const { price: ethPrice } = await tokensPrice([`ethereum:${ADDRESS_ZERO}`])
+
+  const userNFTs = await getUserNFTs(address)
+
+  const nftsMetadata = await getNFTsMetadata({
+    nfts: userNFTs.map((nft) => ({ address: nft.address, tokenID: nft.tokenID })),
+  })
+
+  const nftsTradeHistory = await fetchNFTTradingHistoryFrom.quickNode(
+    nftsMetadata.map((nft) => ({ contractAddress: nft.contract_address, tokenId: nft.token_id, chain: 'ethereum' })),
+  )
+
   const mergedNFTs = userNFTs.map((nft, index) => {
-    const metadata = flattenedMetadata[index]
-    return { ...nft, ...metadata }
+    const metadata = nftsMetadata[index]
+    const tradeHistory = nftsTradeHistory[
+      `_${metadata?.contract_address?.toLowerCase()}_${metadata?.token_id?.toLowerCase()}`
+    ]?.nft?.tokenEvents?.edges?.map(({ node }) => node)
+
+    return { ...nft, ...metadata, history: tradeHistory ?? [] }
   })
 
   const { erc1155, erc721 } = mergedNFTs.reduce(

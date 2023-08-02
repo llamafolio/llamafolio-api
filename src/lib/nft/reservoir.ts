@@ -8,7 +8,11 @@ const RESERVOIR_BASE_URL = `https://api.reservoir.tools`
 const RESERVOIR_API_KEY = environment.RESERVOIR_API_KEY ?? raise('Missing RESERVOIR_API_KEY')
 const AUTH_HEADER = { 'X-API-KEY': RESERVOIR_API_KEY }
 
-// https://docs.reservoir.tools/reference/getusersactivityv6
+/**
+ * if `includeMetadata` is true, the response will return 20 items max, if false, 1000 items max
+ * better set to false and use a separate API to fetch metadata
+ * https://docs.reservoir.tools/reference/getusersactivityv6
+ */
 export async function fetchUsersNFTActivity<T extends boolean>({
   users,
   collection,
