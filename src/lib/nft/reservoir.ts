@@ -55,8 +55,25 @@ export async function fetchUsersNFTActivity<T extends boolean>({
   return response
 }
 
-// https://docs.reservoir.tools/reference/getusersusercollectionsv3
+/* https://docs.reservoir.tools/reference/getapikeyskeyratelimits */
+export async function getCurrentApiRateLimit() {
+  const response = await fetcher<{ rateLimits: Array<ReservoirRateLimit> } | ReservoirErrorResponse>(
+    `${RESERVOIR_BASE_URL}/api-keys/${RESERVOIR_API_KEY}/rate-limits`,
+    { headers: AUTH_HEADER },
+  )
+  if ('error' in response) {
+    raise(
+      `[Reservoir] error for url ${RESERVOIR_BASE_URL}/api-keys/${RESERVOIR_API_KEY}/rate-limits:\n${JSON.stringify(
+        response,
+        undefined,
+        2,
+      )}`,
+    )
+  }
+  return response
+}
 
+// https://docs.reservoir.tools/reference/getusersusercollectionsv3
 export async function fetchUserNFTCollections({
   user,
   includeTopBid = true,
@@ -101,6 +118,14 @@ export interface UserNFTCollection {
     onSaleCount: string
     liquidCount: string
   }
+}
+
+export interface ReservoirRateLimit {
+  route: string
+  method: string
+  allowedRequests?: number
+  perSeconds?: number
+  payload: Array<any>
 }
 
 export interface NFTCollection {

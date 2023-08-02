@@ -231,7 +231,7 @@ export async function batchFetchNFTTradingHistoryFromQuickNode<
       (item) => /* graphql */ `
       _${item.contractAddress.toLowerCase()}_${item.tokenId.toLowerCase()}: ${item.chain ?? 'ethereum'} {
         nft(contractAddress: "${item.contractAddress}", tokenId: "${item.tokenId}") {
-          tokenEvents {
+          QuickNodeTokenEvents {
             totalCount
             edges {
               node {
@@ -294,7 +294,7 @@ export async function batchFetchNFTTradingHistoryFromQuickNode<
   }`
 
   const response = await fetcher<{
-    data: Record<`_${T['contractAddress']}_${T['tokenId']}`, { nft: { tokenEvents: TokenEvent } }>
+    data: Record<`_${T['contractAddress']}_${T['tokenId']}`, { nft: { QuickNodeTokenEvents: QuickNodeTokenEvents } }>
   }>(QUICKNODE_BASE_URL, {
     method: 'POST',
     headers: AUTH_HEADER,
@@ -373,29 +373,31 @@ interface QuickNodeUserNFTs {
   }
 }
 
-interface TokenEvent {
+interface QuickNodeTokenEvents {
   totalCount: number
   edges: Array<{
-    node: {
-      type: string
-      transactionHash: string
-      fromAddress: string
-      toAddress: string
-      timestamp: string
-      blockNumber: number
-      transferIndex: number
-      sentTokenQuantity?: number
-      sentTokenId?: number
-      receivedTokenQuantity?: string
-      receivedTokenId: any
-      receivedTokenContractAddress?: string
-      marketplace?: string
-      contractERCStandard?: string
-      contractAddress?: string
-      tokenQuantity?: number
-      tokenId?: number
-    }
+    node: QuickNodeTokenEvent
   }>
+}
+
+export interface QuickNodeTokenEvent {
+  type: string
+  transactionHash: string
+  fromAddress: string
+  toAddress: string
+  timestamp: string
+  blockNumber: number
+  transferIndex: number
+  sentTokenQuantity?: number
+  sentTokenId?: number
+  receivedTokenQuantity?: string
+  receivedTokenId: any
+  receivedTokenContractAddress?: string
+  marketplace?: string
+  contractERCStandard?: string
+  contractAddress?: string
+  tokenQuantity?: number
+  tokenId?: number
 }
 
 interface QuickNodeNFT {

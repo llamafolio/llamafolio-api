@@ -172,7 +172,7 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
 
   const collections = (
     collectionsPromiseResult.filter((result) => isFulfilled(result)) as PromiseFulfilledResult<
-      Awaited<ReturnType<typeof fetchUserNFTCollectionsFrom.nftScan>>
+      AwaitedReturnType<typeof fetchUserNFTCollectionsFrom.nftScan>
     >[]
   ).flatMap((item) => item.value.data)
 

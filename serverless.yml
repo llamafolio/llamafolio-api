@@ -90,7 +90,10 @@ functions:
     events:
       - httpApi:
           method: post
-          path: /nfts-history/{address}
+          path: /nfts/history/{address?}
+      - httpApi:
+          method: get
+          path: /nfts/history/{address}
     timeout: 29
     memorySize: 1024
 
