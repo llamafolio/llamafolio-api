@@ -4,16 +4,11 @@ import { ADDRESS_ZERO } from '@lib/contract'
 import { paginatedFetch } from '@lib/fetcher'
 import { parseStringJSON } from '@lib/fmt'
 import type { DefillamaNFTCollection } from '@lib/nft'
-import {
-  defillamaCollections,
-  fetchNFTMetadataFrom,
-  fetchNFTTradingHistoryFrom,
-  fetchUserNFTCollectionsFrom,
-  fetchUserNFTsFrom,
-} from '@lib/nft'
+import { defillamaCollections, fetchNFTMetadataFrom, fetchUserNFTCollectionsFrom, fetchUserNFTsFrom } from '@lib/nft'
 import type { NftScanMetadata as NFTMetadata, UserNFTCollection } from '@lib/nft/nft-scan'
 import { fetchTokenPrices } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
+import type { AwaitedReturnType } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 import type { Address } from 'viem'
 import { isAddress } from 'viem'
@@ -35,7 +30,6 @@ interface UserNFTsResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
   try {
     const address = event.pathParameters?.address
     if (!address) {
@@ -46,7 +40,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     }
     const response = await nftsHandler({ address })
 
-    return success(response, { maxAge: 1800 })
+    return success(response, { maxAge: 30 * 60 })
   } catch (error) {
     console.error('Failed to fetch user NFTs', { error })
     return serverError('Failed to fetch user NFTs')
@@ -126,7 +120,7 @@ export async function getNFTsMetadata({
   )
   const metadataFulfilledResults = (
     metadataPromiseResult.filter((result) => isFulfilled(result)) as PromiseFulfilledResult<
-      Awaited<ReturnType<typeof fetchNFTMetadataFrom.nftScan>>
+      AwaitedReturnType<typeof fetchNFTMetadataFrom.nftScan>
     >[]
   ).flatMap((item) => item.value.data)
 
@@ -150,17 +144,10 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
     nfts: userNFTs.map((nft) => ({ address: nft.address, tokenID: nft.tokenID })),
   })
 
-  const nftsTradeHistory = await fetchNFTTradingHistoryFrom.quickNode(
-    nftsMetadata.map((nft) => ({ contractAddress: nft.contract_address, tokenId: nft.token_id, chain: 'ethereum' })),
-  )
-
   const mergedNFTs = userNFTs.map((nft, index) => {
     const metadata = nftsMetadata[index]
-    const tradeHistory = nftsTradeHistory[
-      `_${metadata?.contract_address?.toLowerCase()}_${metadata?.token_id?.toLowerCase()}`
-    ]?.nft?.tokenEvents?.edges?.map(({ node }) => node)
 
-    return { ...nft, ...metadata, history: tradeHistory ?? [] }
+    return { ...nft, ...metadata }
   })
 
   const { erc1155, erc721 } = mergedNFTs.reduce(

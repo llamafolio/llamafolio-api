@@ -26,5 +26,5 @@
     }
   },
   "include": ["src", "scripts", "test", "*.js", "*.cjs", "*.mjs", "*.ts"],
-  "exclude": [".esbuild", "node_modules", "coverage", "dist"]
+  "exclude": [".esbuild", "node_modules", "coverage", "dist", "_"]
 }

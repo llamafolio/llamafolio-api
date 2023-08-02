@@ -1,11 +1,23 @@
+import environment from '@environment'
 import type { Chain } from '@lib/chains'
 import { raise } from '@lib/error'
 import { fetcher } from '@lib/fetcher'
 import { getAddress, isHex } from 'viem'
 
 const QUICKNODE_BASE_URL = 'https://api.quicknode.com/graphql'
+const QUICKNODE_API_KEY = environment.QUICKNODE_API_KEY ?? raise('QUICKNODE_API_KEY is not set')
+const AUTH_HEADER = { 'X-API-KEY': QUICKNODE_API_KEY }
 
 export type QuickNodeChain = Extract<Chain, 'ethereum' | 'polygon'>
+
+interface QuickNodeResponse<T> {
+  data: {
+    [chain in QuickNodeChain]: T | null
+  }
+  code?: number
+  message?: string
+  name?: string
+}
 
 /**
  * GraphQL Playgorund
@@ -112,6 +124,7 @@ export async function fetchUserNFTsFromQuickNode({
 
   const response = await fetcher<QuickNodeResponse<QuickNodeUserNFTs>>(QUICKNODE_BASE_URL, {
     method: 'POST',
+    headers: AUTH_HEADER,
     body: JSON.stringify({
       query: /* graphql */ `
         ${WalletNFTsFragment}
@@ -136,6 +149,9 @@ export async function fetchUserNFTsFromQuickNode({
       },
     }),
   })
+  if (Object.hasOwn(response, 'error')) {
+    raise(response)
+  }
   return response.data
 }
 
@@ -189,20 +205,16 @@ export async function batchFetchMetadataFromQuickNode<
 
   const response = await fetcher<QuickNodeResponse<{ nft: QuickNodeNFT }>>(QUICKNODE_BASE_URL, {
     method: 'POST',
+    headers: AUTH_HEADER,
     body: JSON.stringify({
       query,
     }),
   })
+  if (Object.hasOwn(response, 'error')) {
+    raise(response)
+  }
   return response.data
 }
-
-// batchFetchNFTTradingHistoryFromQuickNode([
-//   {
-//     chain: 'ethereum',
-//     contractAddress: '0x57f1887a8bf19b14fc0df6fd9b2acc9af147ea85',
-//     tokenId: '7584185289723993195313796573155465997226240911118312831760400397049224254842',
-//   },
-// ] as const).then((_) => console.log(JSON.stringify(_, undefined, 2)))
 
 export async function batchFetchNFTTradingHistoryFromQuickNode<
   T extends {
@@ -285,15 +297,14 @@ export async function batchFetchNFTTradingHistoryFromQuickNode<
     data: Record<`_${T['contractAddress']}_${T['tokenId']}`, { nft: { tokenEvents: TokenEvent } }>
   }>(QUICKNODE_BASE_URL, {
     method: 'POST',
+    headers: AUTH_HEADER,
     body: JSON.stringify({ query }),
   })
-  return response.data
-}
 
-interface QuickNodeResponse<T> {
-  data: {
-    [chain in QuickNodeChain]: T | null
+  if (Object.hasOwn(response, 'error')) {
+    raise(response)
   }
+  return response.data
 }
 
 interface QuickNodeUserNFTs {
