@@ -6,11 +6,12 @@ import { http, webSocket } from 'viem'
 
 const { ARBITRUM_RPC, LLAMANODES_API_KEY, OPTIMISM_RPC } = environment
 
+/**
+ * Supported chains
+ */
 export const chainsNames = [
   'arbitrum',
-  'arbitrum-nova',
   'avalanche',
-  'bittorrent',
   'bsc',
   'celo',
   'ethereum',
