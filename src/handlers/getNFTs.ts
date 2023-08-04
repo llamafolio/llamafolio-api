@@ -8,6 +8,7 @@ import { defillamaCollections, fetchNFTMetadataFrom, fetchUserNFTCollectionsFrom
 import type { NftScanMetadata as NFTMetadata, UserNFTCollection } from '@lib/nft/nft-scan'
 import { fetchTokenPrices } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
+import type { AwaitedReturnType } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 import type { Address } from 'viem'
 import { isAddress } from 'viem'
@@ -29,7 +30,6 @@ interface UserNFTsResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
   try {
     const address = event.pathParameters?.address
     if (!address) {
@@ -63,11 +63,17 @@ async function tokensPrice(ids: Array<`${Chain}:${Address}`>) {
 // TODO: add rate limit checker
 const rateLimitReached = true
 
-export async function getUserNFTTokens(address: Address) {
+export async function getUserNFTs(address: Address) {
   if (rateLimitReached) {
     const userNFTsResponse = await paginatedFetch({
       fn: fetchUserNFTsFrom.alchemy<false>,
-      initialParams: { address, spamConfidenceLevel: 'LOW', withMetadata: false, pageSize: 100 },
+      initialParams: {
+        address,
+        pageSize: 100,
+        chain: 'ethereum',
+        withMetadata: false,
+        spamConfidenceLevel: 'LOW',
+      },
       iterations: 10,
       pageKeyProp: 'pageKey',
     })
@@ -93,13 +99,17 @@ export async function getUserNFTTokens(address: Address) {
     .sort((a, b) => a.id.localeCompare(b.id))
 }
 
-export async function nftsHandler({ address }: { address: Address }): Promise<UserNFTsResponse> {
-  const { price: ethPrice } = await tokensPrice([`ethereum:${ADDRESS_ZERO}`])
-
-  const userNFTs = await getUserNFTTokens(address)
-
-  const chunks = sliceIntoChunks(userNFTs, 50)
-
+export async function getNFTsMetadata({
+  nfts,
+  maxBatchSize = 50,
+}: {
+  nfts: Array<{
+    address: string
+    tokenID: string
+  }>
+  maxBatchSize?: number
+}) {
+  const chunks = sliceIntoChunks(nfts, maxBatchSize)
   const metadataPromiseResult = await Promise.allSettled(
     chunks.map((chunk) =>
       fetchNFTMetadataFrom.nftScan({
@@ -110,7 +120,7 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
   )
   const metadataFulfilledResults = (
     metadataPromiseResult.filter((result) => isFulfilled(result)) as PromiseFulfilledResult<
-      Awaited<ReturnType<typeof fetchNFTMetadataFrom.nftScan>>
+      AwaitedReturnType<typeof fetchNFTMetadataFrom.nftScan>
     >[]
   ).flatMap((item) => item.value.data)
 
@@ -122,8 +132,21 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
     }))
     .sort((a, b) => a.id.localeCompare(b.id))
 
+  return flattenedMetadata
+}
+
+export async function nftsHandler({ address }: { address: Address }): Promise<UserNFTsResponse> {
+  const { price: ethPrice } = await tokensPrice([`ethereum:${ADDRESS_ZERO}`])
+
+  const userNFTs = await getUserNFTs(address)
+
+  const nftsMetadata = await getNFTsMetadata({
+    nfts: userNFTs.map((nft) => ({ address: nft.address, tokenID: nft.tokenID })),
+  })
+
   const mergedNFTs = userNFTs.map((nft, index) => {
-    const metadata = flattenedMetadata[index]
+    const metadata = nftsMetadata[index]
+
     return { ...nft, ...metadata }
   })
 
@@ -149,7 +172,7 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
 
   const collections = (
     collectionsPromiseResult.filter((result) => isFulfilled(result)) as PromiseFulfilledResult<
-      Awaited<ReturnType<typeof fetchUserNFTCollectionsFrom.nftScan>>
+      AwaitedReturnType<typeof fetchUserNFTCollectionsFrom.nftScan>
     >[]
   ).flatMap((item) => item.value.data)
 

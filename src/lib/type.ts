@@ -1,3 +1,7 @@
+export type AwaitedReturnType<T extends (...args: any) => any> = Awaited<ReturnType<T>>
+
+export type Json = string | number | boolean | null | { [key: string]: Json | undefined } | Json[]
+
 export function isNotNullish<T>(param: T | undefined | null): param is T {
   return param != null
 }

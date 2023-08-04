@@ -3,7 +3,8 @@
     "**/node_modules": true,
     "pnpm-lock.yaml": true,
     ".esbuild": true,
-    ".eslintignore": true
+    ".eslintignore": true,
+    "_": true
   },
   "window.title": "🦙 ${rootName} ${separator} ${activeEditorMedium} 🦙",
   // git

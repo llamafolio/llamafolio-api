@@ -84,6 +84,19 @@ functions:
     timeout: 29
     memorySize: 1024
 
+  getNFTsHistory:
+    handler: src/handlers/getNFTsHistory.handler
+    description: Get nfts activity history
+    events:
+      - httpApi:
+          method: post
+          path: /nfts/history/{address?}
+      - httpApi:
+          method: get
+          path: /nfts/history/{address}
+    timeout: 29
+    memorySize: 1024
+
   getAdapters:
     handler: src/handlers/getAdapters.handler
     description: Get adapters

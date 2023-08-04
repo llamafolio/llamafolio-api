@@ -34,6 +34,47 @@ export async function fetchUserNFTs({ address, chain = 'ethereum' }: { address: 
   return response
 }
 
+export async function fetchWalletTransactionHistory({
+  accountAddresses,
+  contractAddresses,
+  transactionHashes,
+  fromBlock,
+  toBlock,
+  includeMetadata = false,
+}: {
+  accountAddresses: Array<Address>
+  contractAddresses?: Array<Address>
+  transactionHashes?: string
+  fromBlock?: number
+  toBlock?: number
+  includeMetadata?: boolean
+}) {
+  const walletAddresses =
+    accountAddresses.map(getAddress) ??
+    raise(`One or more invalud addresses: ${JSON.stringify(accountAddresses, undefined, 2)}`)
+  const contractAddressesArray = contractAddresses
+    ? contractAddresses.map(getAddress) ??
+      raise(`One or more invalud addresses: ${JSON.stringify(contractAddresses, undefined, 2)}`)
+    : undefined
+  const url = `${SEQUENCE_BASE_URL('ethereum')}/GetTransactionHistory`
+
+  const response = await fetcher<SequenceError>(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      filter: {
+        accountAddresses: walletAddresses,
+        contractAddresses: contractAddressesArray,
+        includeMetadata,
+      },
+    }),
+  })
+  if ('error' in response) {
+    raise(`[sequence] error for url ${url}: ${response.error}`)
+  }
+  return response
+}
+
 interface SequenceError {
   status: number
   code: string
