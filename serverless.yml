@@ -88,9 +88,6 @@ functions:
     description: Get nfts activity history
     events:
       - httpApi:
-          method: post
-          path: /nfts/history/{address?}
-      - httpApi:
           method: get
           path: /nfts/history/{address}
     timeout: 29
