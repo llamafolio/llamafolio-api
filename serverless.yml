@@ -73,7 +73,6 @@ provider:
       maxAge: 31536000
 
 functions:
-
   getNFTs:
     handler: src/handlers/getNFTs.handler
     description: Get address nfts
@@ -82,7 +81,7 @@ functions:
           method: get
           path: /nfts/{address}
     timeout: 29
-    memorySize: 1024
+    memorySize: 512
 
   getNFTsHistory:
     handler: src/handlers/getNFTsHistory.handler
@@ -95,7 +94,7 @@ functions:
           method: get
           path: /nfts/history/{address}
     timeout: 29
-    memorySize: 1024
+    memorySize: 512
 
   getAdapters:
     handler: src/handlers/getAdapters.handler
@@ -113,7 +112,7 @@ functions:
           method: get
           path: /balances/{address}
     timeout: 10
-    memorySize: 1024
+    memorySize: 512
 
   getLatestBalances:
     handler: src/handlers/getLatestBalances.handler
@@ -123,7 +122,7 @@ functions:
           method: get
           path: /balances/{address}/latest
     timeout: 29
-    memorySize: 1024
+    memorySize: 512
 
   getBalancesTokens:
     handler: src/handlers/getBalancesTokens.handler
@@ -133,7 +132,7 @@ functions:
           method: get
           path: /balances/{address}/tokens
     timeout: 29
-    memorySize: 1024
+    memorySize: 512
 
   getContracts:
     handler: src/handlers/getContracts.getContract
