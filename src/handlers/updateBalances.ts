@@ -5,7 +5,7 @@ import type { BalancesGroup } from '@db/balances-groups'
 import { getAllContractsInteractions, groupContracts } from '@db/contracts'
 import type { Balance, BalancesConfig, BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
-import { fmtBalanceBreakdown, sanitizeBalances } from '@lib/balance'
+import { fmtBalanceBreakdown, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
 import { type Chain, chains } from '@lib/chains'
 import { sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
@@ -128,16 +128,18 @@ export async function updateBalances(client: PoolClient, address: `0x${string}`)
 
   const pricedBalances = await getPricedBalances(sanitizedBalances)
 
+  const sanitizedPricedBalances = sanitizePricedBalances(pricedBalances)
+
   const hrend = process.hrtime(hrstart)
 
   console.log(
-    `getPricedBalances ${sanitizedBalances.length} balances, found ${pricedBalances.length} balances in %ds %dms`,
+    `getPricedBalances ${sanitizedBalances.length} balances, found ${balances.length} balances, ${sanitizedPricedBalances.length} sanitized in %ds %dms`,
     hrend[0],
     hrend[1] / 1000000,
   )
 
   // Group balances back by adapter/chain
-  const pricedBalancesByAdapterIdChain = groupBy2(pricedBalances, 'adapterId', 'chain')
+  const pricedBalancesByAdapterIdChain = groupBy2(sanitizedPricedBalances, 'adapterId', 'chain')
 
   const now = new Date()
 

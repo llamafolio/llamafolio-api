@@ -14,6 +14,13 @@ import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
+/**
+ * Min and Max range for a balance unit (in USD).
+ * Balances that don't fit in this range are discarded in the update balance process
+ */
+export const MIN_BALANCE_USD = 0.00001
+export const MAX_BALANCE_USD = 10_000_000_000
+
 export async function getBalances(ctx: BalancesContext, contracts: BaseContract[]) {
   const coins: Token[] = []
   const tokensByChain: { [key: string]: Token[] } = {}
@@ -138,6 +145,13 @@ export function sanitizeBalances<T extends Balance>(balances: T[]) {
   }
 
   return sanitizedBalances
+}
+
+export function sanitizePricedBalances<T extends PricedBalance>(balances: T[]) {
+  return balances.filter(
+    (balance) =>
+      balance.balanceUSD != null && balance.balanceUSD >= MIN_BALANCE_USD && balance.balanceUSD <= MAX_BALANCE_USD,
+  )
 }
 
 export async function resolveBalances<C extends GetContractsHandler>(
