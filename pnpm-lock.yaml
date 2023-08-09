@@ -7,6 +7,9 @@ dependencies:
   '@aws-sdk/client-s3':
     specifier: ^3.374.0
     version: 3.374.0
+  '@clickhouse/client':
+    specifier: ^0.2.0
+    version: 0.2.0
   '@llamafolio/tokens':
     specifier: ^0.1.85
     version: 0.1.85
@@ -757,6 +760,17 @@ packages:
     engines: {node: '>=14.0.0'}
     dependencies:
       tslib: 2.6.0
+    dev: false
+
+  /@clickhouse/client-common@0.2.0:
+    resolution: {integrity: sha512-mRfKRJ4MgBP9urA4IQYYSvXvNufrl6XNvzJiQfmSXr1j7KyqE8hTC+NRIwPpzs4drdvaEAciHRsd1g56+gFuww==}
+    dev: false
+
+  /@clickhouse/client@0.2.0:
+    resolution: {integrity: sha512-lJ3fZvJUE8opIuGvaMPT7Ot65HjZ56eaA+2EjvSeNPDXHMxSf1IXhErW6EFkJQHImNKpOlhELDJH6bwPpWsAJQ==}
+    engines: {node: '>=16'}
+    dependencies:
+      '@clickhouse/client-common': 0.2.0
     dev: false
 
   /@esbuild-kit/cjs-loader@2.4.2:

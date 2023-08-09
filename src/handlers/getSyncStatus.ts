@@ -1,3 +1,4 @@
+import { clickhouseClient } from '@db/clickhouse'
 import pool from '@db/pool'
 import { serverError, success } from '@handlers/response'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -18,6 +19,35 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
     }))
 
     return success(chainsIndexedState, { maxAge: 10 })
+  } catch (e) {
+    console.error('Failed to retrieve sync status', e)
+    return serverError('Failed to retrieve sync status')
+  } finally {
+    client.release(true)
+  }
+}
+
+export const handlerV1: APIGatewayProxyHandler = async (_event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false
+
+  const client = await pool.connect()
+
+  try {
+    const lastSyncedBlocksQueryRes = await clickhouseClient.query({
+      query: `select chain, count() as count, max(number) as max from evm_indexer.blocks group by chain;`,
+    })
+
+    const lastSyncedBlocksRes = (await lastSyncedBlocksQueryRes.json()) as {
+      data: [{ chain: string; count: string; max: string }]
+    }
+
+    const response = lastSyncedBlocksRes.data.map((row) => ({
+      chain: parseInt(row.chain),
+      max_block_number: parseInt(row.max),
+      count_blocks: parseInt(row.count),
+    }))
+
+    return success(response, { maxAge: 10 })
   } catch (e) {
     console.error('Failed to retrieve sync status', e)
     return serverError('Failed to retrieve sync status')
