@@ -49,7 +49,9 @@
       "description": "What chain?",
       "options": [
         "arbitrum",
+        "arbitrum-nova",
         "avalanche",
+        "base",
         "bsc",
         "celo",
         "ethereum",
