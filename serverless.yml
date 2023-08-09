@@ -42,6 +42,9 @@ provider:
     PGDATABASE: ${env:PGDATABASE}
     PGPASSWORD: ${env:PGPASSWORD}
     PGPORT: ${env:PGPORT}
+    CLICKHOUSE_HOST: ${env:CLICKHOUSE_HOST}
+    CLICKHOUSE_USER: ${env:CLICKHOUSE_USER}
+    CLICKHOUSE_PASSWORD: ${env:CLICKHOUSE_PASSWORD}
     STAGE: ${self:custom.stage}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
     LLAMANODES_API_KEY: ${env:LLAMANODES_API_KEY}
@@ -215,6 +218,14 @@ functions:
       - httpApi:
           method: get
           path: /sync_status
+
+  getSyncStatusV1:
+    handler: src/handlers/getSyncStatus.handlerV1
+    description: Get sync status
+    events:
+      - httpApi:
+          method: get
+          path: /v1/sync_status
 
   getTokens:
     handler: src/handlers/getTokens.handler

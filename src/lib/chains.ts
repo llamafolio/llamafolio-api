@@ -59,6 +59,18 @@ export const chains = [
     },
   },
   {
+    id: 'arbitrum-nova',
+    chainId: 42170,
+    name: 'Arbitrum Nova',
+    rpcUrls: [http('https://nova.arbitrum.io/rpc', { batch: { wait: 0, batchSize: 5_000 } })],
+    nativeCurrency: {
+      address: ADDRESS_ZERO,
+      decimals: 18,
+      name: 'Ether',
+      symbol: 'ETH',
+    },
+  },
+  {
     id: 'avalanche',
     chainId: 43114,
     name: 'Avalanche',
@@ -73,6 +85,18 @@ export const chains = [
       decimals: 18,
       name: 'Avalanche',
       symbol: 'AVAX',
+    },
+  },
+  {
+    id: 'base',
+    chainId: 8453,
+    name: 'Base',
+    rpcUrls: [http('https://mainnet.base.org', { batch: { wait: 0, batchSize: 5_000 } })],
+    nativeCurrency: {
+      address: ADDRESS_ZERO,
+      decimals: 18,
+      name: 'Ether',
+      symbol: 'ETH',
     },
   },
   {
@@ -245,6 +269,12 @@ export const chainById: { [key: string]: IChainInfo } = {}
 
 for (const chain of chains) {
   chainById[chain.id] = chain
+}
+
+export const chainByChainId: { [key: number]: IChainInfo } = {}
+
+for (const chain of chains) {
+  chainByChainId[chain.chainId] = chain
 }
 
 export const toDefiLlamaChain: { [key in Chain]: string } = {
