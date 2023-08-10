@@ -6,18 +6,30 @@ import type { DefillamaNFTCollection } from '@lib/nft'
 import { defillamaCollections, fetchNFTMetadataFrom, fetchUserNFTsFrom } from '@lib/nft'
 import { fetchTokenPrices } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
-import type { AwaitedReturnType } from '@lib/type'
+import type { AwaitedReturnType, Json } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 import type { Address } from 'viem'
 import { isAddress } from 'viem'
 
 import type { Chain } from '@/lib/chains'
 
+interface NFT {
+  tokenId: string
+  address: Address
+  quantity: number
+  name?: string
+  image?: string
+  description?: string
+  externalUrl?: string
+  attributes?: Array<Json>
+  metadata?: Json
+}
+
 interface UserNFTItem {
   collection?: DefillamaNFTCollection
   minimumValueUSD?: number | null
   quantity: number
-  nfts: Array<any>
+  nfts: Array<NFT>
 }
 
 interface UserNFTsResponse {
@@ -76,22 +88,22 @@ export async function getUserNFTs(address: Address) {
       pageKeyProp: 'pageKey',
     })
     const userNFTs = userNFTsResponse.flatMap((response) => response.ownedNfts)
+
     return userNFTs
       .map((nft) => ({
         id: `${nft.contractAddress}:${nft.tokenId}`.toLowerCase(),
         address: nft.contractAddress,
-        tokenID: nft.tokenId,
+        tokenId: nft.tokenId,
         quantity: Number(nft.balance),
       }))
       .sort((a, b) => a.id.localeCompare(b.id))
   }
-
   const userNFTsResponse = await fetchUserNFTsFrom.center({ address })
   return userNFTsResponse.items
     .map((nft) => ({
       id: `${nft.address}:${nft.tokenID}`.toLowerCase(),
       address: nft.address,
-      tokenID: nft.tokenID,
+      tokenId: nft.tokenID,
       quantity: nft.quantity,
     }))
     .sort((a, b) => a.id.localeCompare(b.id))
@@ -103,16 +115,18 @@ export async function getNFTsMetadata({
 }: {
   nfts: Array<{
     address: string
-    tokenID: string
+    tokenId: string
   }>
   maxBatchSize?: number
-}) {
+}): Promise<{
+  [key: string]: any
+}> {
   const chunks = sliceIntoChunks(nfts, maxBatchSize)
 
   const metadataPromiseResult = await Promise.allSettled(
     chunks.map((chunk) =>
       fetchNFTMetadataFrom.quickNode(
-        chunk.map((nft) => ({ contractAddress: nft.address, tokenId: nft.tokenID, chain: 'ethereum' })),
+        chunk.map((nft) => ({ contractAddress: nft.address, tokenId: nft.tokenId, chain: 'ethereum' })),
       ),
     ),
   )
@@ -123,13 +137,10 @@ export async function getNFTsMetadata({
     >[]
   ).flatMap((item) => Object.values(item.value))
 
-  const flattenedMetadata = metadataFulfilledResults
-    .map(({ nft: metadata }) => ({
-      ...metadata,
-      id: `${metadata?.contractAddress}:${metadata?.tokenId}`.toLowerCase(),
-    }))
-    .sort((a, b) => a.id.localeCompare(b.id))
-  return flattenedMetadata
+  return metadataFulfilledResults.reduce((accumulator, { nft: metadata }) => {
+    const id = `${metadata?.contractAddress}:${metadata?.tokenId}`.toLowerCase()
+    return { ...accumulator, [id]: metadata }
+  }, {})
 }
 
 export async function nftsHandler({ address }: { address: Address }): Promise<UserNFTsResponse> {
@@ -138,22 +149,19 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
   const userNFTs = await getUserNFTs(address)
 
   const nftsMetadata = await getNFTsMetadata({
-    nfts: userNFTs.map((nft) => ({ address: nft.address, tokenID: nft.tokenID })),
+    nfts: userNFTs.map((nft) => ({ address: nft.address, tokenId: nft.tokenId })),
   })
 
   const mergedNFTs = userNFTs.map((nft, index) => {
-    const metadata = nftsMetadata[index]
-
-    return { ...nft, ...metadata }
+    const { metadata, ...rest } = nftsMetadata[nft.id] || {}
+    return { ...nft, ...metadata, ...rest }
   })
 
   const result: {
     [collectionId: string]: UserNFTItem
   } = {}
 
-  const collectionless: Array<any> = []
-
-  const nftsGroupedByContract = groupBy(mergedNFTs, 'contractAddress' as any)
+  const nftsGroupedByContract = groupBy(mergedNFTs, 'address')
 
   const collectionsMarketData = await defillamaCollections()
   const collectionsMarketDataGroupedByAddress = collectionsMarketData.reduce(
@@ -165,18 +173,25 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
   )
 
   for (const [address, nfts] of Object.entries(nftsGroupedByContract)) {
+    if (!address || address == 'undefined') continue
     const collection = collectionsMarketDataGroupedByAddress[address]
 
     if (!collection) {
       console.log(`Collection not found for ${address}`)
-      collectionless.push(...nfts)
+      result[address] = {
+        collection: {
+          collectionId: address,
+        },
+        quantity: nfts.length,
+        nfts,
+      }
       continue
     }
 
     const collectionMarketData = collectionsMarketDataGroupedByAddress[address]
 
     const floorPrice = collectionMarketData?.floorPrice
-    const minimumValueUSD = floorPrice ? floorPrice * ethPrice * nfts.length : undefined
+    const minimumValueUSD = floorPrice ? floorPrice * ethPrice : undefined
 
     result[collection.collectionId] = {
       collection: { ...collection, ...collectionMarketData },
@@ -184,12 +199,6 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
       minimumValueUSD,
       nfts,
     }
-  }
-
-  result['unknown'] = {
-    collection: undefined,
-    quantity: collectionless.length,
-    nfts: collectionless,
   }
 
   const minimumValueUSD = Object.values(result).reduce(
