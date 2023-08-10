@@ -187,13 +187,11 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
       continue
     }
 
-    const collectionMarketData = collectionsMarketDataGroupedByAddress[address]
+    const floorPrice = collection.floorPrice
+    const minimumValueUSD = floorPrice ? floorPrice * nfts.length * ethPrice : undefined
 
-    const floorPrice = collectionMarketData?.floorPrice
-    const minimumValueUSD = floorPrice ? floorPrice * ethPrice : undefined
-
-    result[collection.collectionId] = {
-      collection: { ...collection, ...collectionMarketData },
+    result[collection.collectionId || address] = {
+      collection,
       quantity: nfts.length,
       minimumValueUSD,
       nfts,
