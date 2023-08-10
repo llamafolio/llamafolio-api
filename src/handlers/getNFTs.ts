@@ -152,7 +152,7 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
     nfts: userNFTs.map((nft) => ({ address: nft.address, tokenId: nft.tokenId })),
   })
 
-  const mergedNFTs = userNFTs.map((nft, index) => {
+  const mergedNFTs = userNFTs.map((nft) => {
     const { metadata, ...rest } = nftsMetadata[nft.id] || {}
     return { ...nft, ...metadata, ...rest }
   })
@@ -161,7 +161,7 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
     [collectionId: string]: UserNFTItem
   } = {}
 
-  const nftsGroupedByContract = groupBy(mergedNFTs, 'address')
+  const nftsGroupedByContract = groupBy(mergedNFTs, 'contractAddress')
 
   const collectionsMarketData = await defillamaCollections()
   const collectionsMarketDataGroupedByAddress = collectionsMarketData.reduce(
@@ -175,7 +175,6 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
   for (const [address, nfts] of Object.entries(nftsGroupedByContract)) {
     if (!address || address == 'undefined') continue
     const collection = collectionsMarketDataGroupedByAddress[address]
-
     if (!collection) {
       console.log(`Collection not found for ${address}`)
       result[address] = {
