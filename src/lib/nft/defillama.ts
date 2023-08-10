@@ -10,12 +10,12 @@ export async function defillamaCollections() {
 
 export interface DefillamaNFTCollection {
   collectionId: string
-  name: string
-  symbol: string
-  image: string
-  totalSupply: number
-  onSaleCount: number
-  floorPrice: number
-  floorPricePctChange1Day: number
-  floorPricePctChange7Day: number
+  name?: string | null
+  symbol?: string | null
+  image?: string | null
+  totalSupply?: number | null
+  onSaleCount?: number | null
+  floorPrice?: number | null
+  floorPricePctChange1Day?: number | null
+  floorPricePctChange7Day?: number | null
 }
