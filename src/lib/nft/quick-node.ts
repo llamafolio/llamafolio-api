@@ -151,6 +151,7 @@ export async function fetchUserNFTsFromQuickNode({
     }`
   const response = await fetcher<QuickNodeResponse<QuickNodeUserNFTs>>(QUICKNODE_BASE_URL, {
     method: 'POST',
+    headers: AUTH_HEADER,
     body: JSON.stringify({
       query,
       variables: {
@@ -229,6 +230,7 @@ export async function batchFetchMetadataFromQuickNode<
     }
   }>(QUICKNODE_BASE_URL, {
     method: 'POST',
+    headers: AUTH_HEADER,
     body: JSON.stringify({
       query,
     }),
