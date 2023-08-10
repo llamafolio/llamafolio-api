@@ -109,50 +109,65 @@ export const WalletNFTsFragment = /* graphql */ `
         }
       }
     }
-    pageInfo { hasNextPage }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
   }
 `
 
 export async function fetchUserNFTsFromQuickNode({
   address,
-  chains = ['ethereum'],
+  chain = 'ethereum',
+  limit = 100,
+  pageKey = null,
 }: {
   address: string
-  chains?: Array<QuickNodeChain>
+  chain?: QuickNodeChain
+  limit?: number
+  pageKey: string | null
 }) {
   const walletAddress = getAddress(address) ?? raise(`Invalid address ${address}`)
 
+  const query = /* graphql */ `
+    ${WalletNFTsFragment}
+    query WalletNFTsQuery(
+      $address: String!
+      $orderBy: WalletNFTsOrderBy = DATE_ACQUIRED
+      $first: Int = 100
+      $after: String
+    ) {
+      ${chain} {
+        walletByAddress(address: $address) {
+          address
+          ensName
+          walletNFTs(orderBy: $orderBy, first: $first, after: $after) {
+            ...WalletNFTsFragment
+          }
+        }
+      }
+    }`
   const response = await fetcher<QuickNodeResponse<QuickNodeUserNFTs>>(QUICKNODE_BASE_URL, {
     method: 'POST',
-    headers: AUTH_HEADER,
     body: JSON.stringify({
-      query: /* graphql */ `
-        ${WalletNFTsFragment}
-        query WalletNFTsQuery($address: String!, $orderBy: WalletNFTsOrderBy = DATE_ACQUIRED) {
-          ${chains.map(
-            (chain) => /* graphql */ `
-            ${chain} {
-              walletByAddress(address: $address) {
-                address
-                ensName
-                walletNFTs(orderBy: $orderBy) {
-                  ...WalletNFTsFragment
-                }
-              }
-            }
-          `,
-          )}
-        }`,
+      query,
       variables: {
         operationName: 'WalletNFTsQuery',
         address: walletAddress,
+        first: limit,
+        after: pageKey,
       },
     }),
   })
   if (Object.hasOwn(response, 'error')) {
     raise(response)
   }
-  return response.data
+  return {
+    nfts: response.data[chain]?.walletByAddress?.walletNFTs,
+    pageKey: response.data[chain]?.walletByAddress?.walletNFTs?.pageInfo?.endCursor,
+  }
 }
 
 export async function batchFetchMetadataFromQuickNode<
@@ -172,6 +187,7 @@ export async function batchFetchMetadataFromQuickNode<
             nft(tokenId: "${item.tokenId}", contractAddress: "${item.contractAddress}") {
               name
               metadata
+              tokenId
               description
               externalUrl
               animationUrl
@@ -180,6 +196,7 @@ export async function batchFetchMetadataFromQuickNode<
               ... on ERC1155NFT {
                 name
                 metadata
+                tokenId
                 externalUrl
                 description
                 animationUrl
@@ -189,6 +206,7 @@ export async function batchFetchMetadataFromQuickNode<
               ... on ERC721NFT {
                 name
                 metadata
+                tokenId
                 externalUrl
                 description
                 contractAddress
@@ -203,9 +221,14 @@ export async function batchFetchMetadataFromQuickNode<
       )}
     }`
 
-  const response = await fetcher<QuickNodeResponse<{ nft: QuickNodeNFT }>>(QUICKNODE_BASE_URL, {
+  const response = await fetcher<{
+    data: {
+      [key in `${T['contractAddress']}_${T['tokenId']}`]: {
+        nft: QuickNodeNFT
+      }
+    }
+  }>(QUICKNODE_BASE_URL, {
     method: 'POST',
-    headers: AUTH_HEADER,
     body: JSON.stringify({
       query,
     }),
@@ -368,6 +391,9 @@ interface QuickNodeUserNFTs {
       }>
       pageInfo: {
         hasNextPage: boolean
+        hasPreviousPage: boolean
+        startCursor: string
+        endCursor: string
       }
     }
   }
@@ -402,6 +428,7 @@ export interface QuickNodeTokenEvent {
 
 interface QuickNodeNFT {
   name: string | null
+  tokenId: string
   metadata: {
     image: string
     attributes: Array<{

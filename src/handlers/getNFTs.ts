@@ -2,10 +2,8 @@ import { badRequest, serverError, success } from '@handlers/response'
 import { groupBy, sliceIntoChunks } from '@lib/array'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { paginatedFetch } from '@lib/fetcher'
-import { parseStringJSON } from '@lib/fmt'
 import type { DefillamaNFTCollection } from '@lib/nft'
-import { defillamaCollections, fetchNFTMetadataFrom, fetchUserNFTCollectionsFrom, fetchUserNFTsFrom } from '@lib/nft'
-import type { NftScanMetadata as NFTMetadata, UserNFTCollection } from '@lib/nft/nft-scan'
+import { defillamaCollections, fetchNFTMetadataFrom, fetchUserNFTsFrom } from '@lib/nft'
 import { fetchTokenPrices } from '@lib/price'
 import { isFulfilled } from '@lib/promise'
 import type { AwaitedReturnType } from '@lib/type'
@@ -16,10 +14,10 @@ import { isAddress } from 'viem'
 import type { Chain } from '@/lib/chains'
 
 interface UserNFTItem {
-  collection?: UserNFTCollection & DefillamaNFTCollection
+  collection?: DefillamaNFTCollection
   minimumValueUSD?: number | null
   quantity: number
-  nfts: Array<NFTMetadata>
+  nfts: Array<any>
 }
 
 interface UserNFTsResponse {
@@ -110,28 +108,27 @@ export async function getNFTsMetadata({
   maxBatchSize?: number
 }) {
   const chunks = sliceIntoChunks(nfts, maxBatchSize)
+
   const metadataPromiseResult = await Promise.allSettled(
     chunks.map((chunk) =>
-      fetchNFTMetadataFrom.nftScan({
-        tokens: chunk.map((nft) => ({ contract_address: nft.address, token_id: nft.tokenID })),
-        show_attributes: true,
-      }),
+      fetchNFTMetadataFrom.quickNode(
+        chunk.map((nft) => ({ contractAddress: nft.address, tokenId: nft.tokenID, chain: 'ethereum' })),
+      ),
     ),
   )
+
   const metadataFulfilledResults = (
     metadataPromiseResult.filter((result) => isFulfilled(result)) as PromiseFulfilledResult<
-      AwaitedReturnType<typeof fetchNFTMetadataFrom.nftScan>
+      AwaitedReturnType<typeof fetchNFTMetadataFrom.quickNode>
     >[]
-  ).flatMap((item) => item.value.data)
+  ).flatMap((item) => Object.values(item.value))
 
   const flattenedMetadata = metadataFulfilledResults
-    .map((metadata) => ({
+    .map(({ nft: metadata }) => ({
       ...metadata,
-      metadata_json: parseStringJSON(metadata.metadata_json),
-      id: `${metadata.erc_type}:${metadata.contract_address}:${metadata.token_id}`.toLowerCase(),
+      id: `${metadata?.contractAddress}:${metadata?.tokenId}`.toLowerCase(),
     }))
     .sort((a, b) => a.id.localeCompare(b.id))
-
   return flattenedMetadata
 }
 
@@ -150,47 +147,13 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
     return { ...nft, ...metadata }
   })
 
-  const { erc1155, erc721 } = mergedNFTs.reduce(
-    (accumulator, item) => {
-      item.erc_type === 'erc1155' ? accumulator.erc1155.push(item) : accumulator.erc721.push(item)
-      return accumulator
-    },
-    { erc721: [], erc1155: [] } as { erc721: Array<(typeof mergedNFTs)[0]>; erc1155: Array<(typeof mergedNFTs)[0]> },
-  )
-
-  const erc721ChunksCount = Math.ceil(erc721.length / 100)
-  const erc1155ChunksCount = Math.ceil(erc1155.length / 100)
-
-  const collectionsPromiseResult = await Promise.allSettled([
-    ...Array.from({ length: erc721ChunksCount }, (_, index) =>
-      fetchUserNFTCollectionsFrom.nftScan({ address, erc_type: 'erc721', limit: 100, offset: index * 100 }),
-    ),
-    ...Array.from({ length: erc1155ChunksCount }, (_, index) =>
-      fetchUserNFTCollectionsFrom.nftScan({ address, erc_type: 'erc1155', limit: 100, offset: index * 100 }),
-    ),
-  ])
-
-  const collections = (
-    collectionsPromiseResult.filter((result) => isFulfilled(result)) as PromiseFulfilledResult<
-      AwaitedReturnType<typeof fetchUserNFTCollectionsFrom.nftScan>
-    >[]
-  ).flatMap((item) => item.value.data)
-
-  const collectionsGroupedByAddress = collections.reduce(
-    (accumulator, collection) => {
-      accumulator[collection.contract_address] = collection
-      return accumulator
-    },
-    {} as Record<string, UserNFTCollection>,
-  )
-
   const result: {
     [collectionId: string]: UserNFTItem
   } = {}
 
-  const collectionless: Array<NFTMetadata> = []
+  const collectionless: Array<any> = []
 
-  const nftsGroupedByContract = groupBy(mergedNFTs, 'contract_address')
+  const nftsGroupedByContract = groupBy(mergedNFTs, 'contractAddress' as any)
 
   const collectionsMarketData = await defillamaCollections()
   const collectionsMarketDataGroupedByAddress = collectionsMarketData.reduce(
@@ -202,18 +165,20 @@ export async function nftsHandler({ address }: { address: Address }): Promise<Us
   )
 
   for (const [address, nfts] of Object.entries(nftsGroupedByContract)) {
-    const collection = collectionsGroupedByAddress[address]
+    const collection = collectionsMarketDataGroupedByAddress[address]
+
     if (!collection) {
+      console.log(`Collection not found for ${address}`)
       collectionless.push(...nfts)
       continue
     }
 
     const collectionMarketData = collectionsMarketDataGroupedByAddress[address]
 
-    const floorPrice = collection?.floor_price ?? collectionMarketData?.floorPrice
+    const floorPrice = collectionMarketData?.floorPrice
     const minimumValueUSD = floorPrice ? floorPrice * ethPrice * nfts.length : undefined
 
-    result[collection.contract_address] = {
+    result[collection.collectionId] = {
       collection: { ...collection, ...collectionMarketData },
       quantity: nfts.length,
       minimumValueUSD,
