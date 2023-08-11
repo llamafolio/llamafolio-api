@@ -78,6 +78,14 @@ export async function balancesHandler({ address }: { address: Address }): Promis
   )
 
   for (const [, balance] of withPrice.entries()) {
+    if (
+      // filter out tokens w/ balance < 0.1 USD except for native tokens, never filter out native tokens
+      balance.address.toLowerCase() !== chainById[balance.chain].nativeCurrency.address.toLowerCase() &&
+      // @ts-expect-error
+      balance.balanceUSD < 0.1
+    ) {
+      continue
+    }
     chainsBalances[balance.chain].balances.push(formatBalance(balance))
   }
 
