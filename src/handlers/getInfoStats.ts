@@ -1,4 +1,5 @@
-import { countAdapters } from '@db/adapters'
+import { countAdapters, countAdaptersV1 } from '@db/adapters'
+import { connect } from '@db/clickhouse'
 import pool from '@db/pool'
 import { serverError, success } from '@handlers/response'
 import { chains } from '@lib/chains'
@@ -32,5 +33,31 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
     return serverError('Failed to get info stats')
   } finally {
     client.release(true)
+  }
+}
+
+/**
+ * Get stats on supported protocols, chains and tokens
+ */
+export const handlerV1: APIGatewayProxyHandler = async (_event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false
+
+  try {
+    const client = connect()
+    const adaptersCount = await countAdaptersV1(client)
+
+    return success(
+      {
+        data: {
+          protocols: adaptersCount,
+          chains: chains.length,
+          tokens: sum(Object.values(tokensByChain).map((tokens) => tokens.length)),
+        },
+      },
+      { maxAge: 30 * 60 },
+    )
+  } catch (error) {
+    console.error('Failed to info stats', { error })
+    return serverError('Failed to get info stats')
   }
 }

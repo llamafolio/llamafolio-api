@@ -1,4 +1,4 @@
-import { clickhouseClient } from '@db/clickhouse'
+import { connect } from '@db/clickhouse'
 import pool from '@db/pool'
 import { serverError, success } from '@handlers/response'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -27,12 +27,10 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
   }
 }
 
-export const handlerV1: APIGatewayProxyHandler = async (_event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
-  const client = await pool.connect()
-
+export const handlerV1: APIGatewayProxyHandler = async () => {
   try {
+    const clickhouseClient = connect()
+
     const lastSyncedBlocksQueryRes = await clickhouseClient.query({
       query: `select chain, count() as count, max(number) as max from evm_indexer.blocks group by chain;`,
     })
@@ -51,7 +49,5 @@ export const handlerV1: APIGatewayProxyHandler = async (_event, context) => {
   } catch (e) {
     console.error('Failed to retrieve sync status', e)
     return serverError('Failed to retrieve sync status')
-  } finally {
-    client.release(true)
   }
 }

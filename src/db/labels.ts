@@ -1,3 +1,4 @@
+import type { ClickHouseClient } from '@clickhouse/client'
 import { bufToStr, strToBuf } from '@lib/buf'
 import type { PoolClient } from 'pg'
 import format from 'pg-format'
@@ -44,4 +45,19 @@ export async function selectLabelsByAddresses(client: PoolClient, addresses: str
   const labelsRes = await client.query(format(`select * from labels where address in %L;`, [addresses.map(strToBuf)]))
 
   return fromStorage(labelsRes.rows)
+}
+
+export async function selectLabelsByAddressesV1(client: ClickHouseClient, addresses: string[]) {
+  const queryRes = await client.query({
+    query: 'select * from labels where address in {addresses: Array(String)};',
+    query_params: {
+      addresses,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: LabelStorage[]
+  }
+
+  return res.data
 }

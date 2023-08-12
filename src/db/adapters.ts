@@ -1,5 +1,8 @@
+import type { ClickHouseClient } from '@clickhouse/client'
 import { sliceIntoChunks } from '@lib/array'
-import type { Chain } from '@lib/chains'
+import { type Chain, chainByChainId } from '@lib/chains'
+import { fromDateTime } from '@lib/fmt'
+import { isNotFalsy } from '@lib/type'
 import type { PoolClient } from 'pg'
 import format from 'pg-format'
 
@@ -106,6 +109,18 @@ export async function countAdapters(client: PoolClient) {
   return parseInt(res.rows[0].count)
 }
 
+export async function countAdaptersV1(client: ClickHouseClient) {
+  const queryRes = await client.query({
+    query: 'select count() as count from lf.adapters;',
+  })
+
+  const res = (await queryRes.json()) as {
+    data: [{ count: string }]
+  }
+
+  return parseInt(res.data[0].count)
+}
+
 export async function selectAdapter(client: PoolClient, chain: Chain, adapterId: string) {
   const adaptersRes = await client.query(`select * from adapters where id = $1 and chain = $2;`, [adapterId, chain])
 
@@ -116,6 +131,18 @@ export async function selectDistinctAdaptersIds(client: PoolClient) {
   const adaptersRes = await client.query(`select distinct(id) from adapters;`, [])
 
   return fromStorage(adaptersRes.rows)
+}
+
+export async function selectDistinctAdaptersIdsV1(client: ClickHouseClient) {
+  const queryRes = await client.query({
+    query: 'SELECT id FROM lf.adapters GROUP BY id;',
+  })
+
+  const res = (await queryRes.json()) as {
+    data: { id: string }[]
+  }
+
+  return res.data
 }
 
 export async function selectAdaptersContractsExpired(client: PoolClient) {
@@ -153,6 +180,28 @@ export async function selectLatestCreatedAdapters(client: PoolClient, limit = 5)
     id: row.id as string,
     chains: row.chains as Chain[],
     createdAt: new Date(row.created_at),
+  }))
+}
+
+export async function selectLatestCreatedAdaptersV1(client: ClickHouseClient, limit = 5) {
+  // select last added protocols (no matter which chain) and collect
+  // all of their chains we support
+  const queryRes = await client.query({
+    query: `select id, groupArray(chain) as chains, created_at from lf.adapters group by (id, created_at) order by created_at desc limit {limit: UInt8};`,
+    query_params: {
+      limit,
+      limitDouble: limit * 2,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: { id: string; chains: number[]; created_at: string }[]
+  }
+
+  return res.data.map((row) => ({
+    id: row.id,
+    chains: row.chains.map((chainId) => chainByChainId[chainId]?.id).filter(isNotFalsy),
+    createdAt: fromDateTime(row.created_at),
   }))
 }
 
@@ -207,8 +256,4 @@ export function upsertAdapters(client: PoolClient, adapters: Adapter[]) {
 
 export function deleteAdapterById(client: PoolClient, adapterId: string) {
   return client.query('DELETE FROM adapters WHERE id = $1;', [adapterId])
-}
-
-export function deleteAdapter(client: PoolClient, adapterId: string, chain: Chain) {
-  return client.query('DELETE FROM adapters WHERE id = $1 AND chain = $2;', [adapterId, chain])
 }

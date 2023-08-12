@@ -1,3 +1,4 @@
+import type { ClickHouseClient } from '@clickhouse/client'
 import { sliceIntoChunks } from '@lib/array'
 import type { IProtocol } from '@lib/protocols'
 import type { PoolClient } from 'pg'
@@ -121,4 +122,29 @@ export async function insertProtocols(client: PoolClient, protocols: IProtocol[]
       ),
     ),
   )
+}
+
+export async function selectProtocolsV1(client: ClickHouseClient) {
+  const queryRes = await client.query({
+    query: 'select * from lf.protocols;',
+  })
+
+  const res = (await queryRes.json()) as {
+    data: IProtocol[]
+  }
+
+  return res.data
+}
+
+export async function updateProtocolsV1(client: ClickHouseClient, protocols: IProtocol[]) {
+  await client.insert({
+    table: 'lf.protocols',
+    values: protocols,
+    format: 'JSONEachRow',
+  })
+
+  // merge duplicates
+  await client.query({
+    query: 'OPTIMIZE TABLE lf.protocols FINAL DEDUPLICATE BY "slug";',
+  })
 }
