@@ -11,6 +11,8 @@ import type { APIGatewayProxyHandler } from 'aws-lambda'
 import type { Address } from 'viem'
 import { isAddress } from 'viem'
 
+export const MIN_BALANCE_USD = 0.001
+
 function formatBalance(balance: any): FormattedBalance {
   return {
     address: balance.address,
@@ -82,7 +84,7 @@ export async function balancesHandler({ address }: { address: Address }): Promis
       // filter out tokens w/ balance < 0.1 USD except for native tokens, never filter out native tokens
       balance.address.toLowerCase() !== chainById[balance.chain].nativeCurrency.address.toLowerCase() &&
       // @ts-expect-error
-      balance.balanceUSD < 0.1
+      balance.balanceUSD < MIN_BALANCE_USD
     ) {
       continue
     }
