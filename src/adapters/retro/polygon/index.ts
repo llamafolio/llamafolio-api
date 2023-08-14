@@ -1,4 +1,4 @@
-import { getPoolsBalances } from '@adapters/uniswap-v3/common/pools'
+import { getRetroBalances } from '@adapters/retro/polygon/balance'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -21,11 +21,8 @@ export const getContracts = async () => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    nonFungiblePositionManager: (ctx, nonFungiblePositionManager) =>
-      getPoolsBalances(ctx, nonFungiblePositionManager, factory),
+    nonFungiblePositionManager: (...args) => getRetroBalances(...args, factory),
   })
-
-  console.log(balances[10].underlyings)
 
   return {
     groups: [{ balances }],
