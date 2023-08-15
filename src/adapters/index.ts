@@ -57,6 +57,7 @@ import elephantMoney from '@adapters/elephant-money'
 import ellipsisFinance from '@adapters/ellipsis-finance'
 import equalizerExchange from '@adapters/equalizer-exchange'
 import etherFi from '@adapters/ether.fi'
+import ethosReserve from '@adapters/ethos-reserve'
 import euler from '@adapters/euler'
 import everrise from '@adapters/everrise'
 import exactly from '@adapters/exactly'
@@ -288,6 +289,7 @@ export const adapters: Adapter[] = [
   ellipsisFinance,
   equalizerExchange,
   etherFi,
+  ethosReserve,
   euler,
   everrise,
   exactly,
