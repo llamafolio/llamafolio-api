@@ -41,6 +41,7 @@ import chainlink from '@adapters/chainlink'
 import charmFinance from '@adapters/charm-finance'
 import coinbaseWrappedStakedEth from '@adapters/coinbase-wrapped-staked-eth'
 import coinwind from '@adapters/coinwind'
+import colony from '@adapters/colony'
 import compound from '@adapters/compound'
 import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
@@ -272,6 +273,7 @@ export const adapters: Adapter[] = [
   charmFinance,
   coinbaseWrappedStakedEth,
   coinwind,
+  colony,
   compound,
   compoundV3,
   concentrator,
