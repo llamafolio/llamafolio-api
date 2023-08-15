@@ -2,7 +2,6 @@ import { getRetroBalances } from '@adapters/retro/polygon/balance'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-// https://docs.uniswap.org/contracts/v3/reference/deployments
 export const factory: Contract = {
   chain: 'ethereum',
   address: '0x91e1b99072f238352f59e58de875691e20dc19c1',
