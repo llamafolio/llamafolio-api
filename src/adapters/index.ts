@@ -194,6 +194,7 @@ import superfarm from '@adapters/superfarm'
 import sushiswap from '@adapters/sushiswap'
 import swell from '@adapters/swell'
 import synapse from '@adapters/synapse'
+import synclubStakedBnb from '@adapters/synclub-staked-bnb'
 import synthetix from '@adapters/synthetix'
 import tangible from '@adapters/tangible'
 import templedao from '@adapters/templedao'
@@ -428,6 +429,7 @@ export const adapters: Adapter[] = [
   sushiswap,
   swell,
   synapse,
+  synclubStakedBnb,
   synthetix,
   tangible,
   templedao,
