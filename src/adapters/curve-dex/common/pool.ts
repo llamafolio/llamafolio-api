@@ -279,9 +279,6 @@ export async function getFmtPoolsContracts(ctx: BaseContext, registry: `0x${stri
           .map((address) => ((address as `0x${string}`) === ETH_ADDR ? ADDRESS_ZERO : address))
       : []
 
-    // Replace avToken -> Token since we need to use common known token to get price
-    const fmtUnderlyings: any[] = await getUnderlyings(ctx, underlyings)
-
     poolContracts.push({
       chain: ctx.chain,
       // We must define address as lpToken address since user interact only with lpToken, or we cant catch interaction in index.
@@ -290,7 +287,7 @@ export async function getFmtPoolsContracts(ctx: BaseContext, registry: `0x${stri
       pool,
       registryId,
       registry,
-      underlyings: fmtUnderlyings,
+      underlyings: underlyings as any,
       category: 'lp',
     })
   }
@@ -342,16 +339,4 @@ const processUnderlyings = async (ctx: BaseContext, pools: PoolContract[]): Prom
   }
 
   return poolWithUnderlyings
-}
-
-const getUnderlyings = async (ctx: BaseContext, tokens: `0x${string}`[] | string[]) => {
-  const underlyingsTokensRes = await multicall({
-    ctx,
-    calls: tokens.map((token) => ({ target: token as `0x${string}` })),
-    abi: abi.UNDERLYING_ASSET_ADDRESS,
-  })
-
-  return tokens.map((token, idx) => {
-    return underlyingsTokensRes[idx].success ? underlyingsTokensRes[idx].output : token
-  })
 }

@@ -108,6 +108,7 @@ const blacklist = [
   { chain: 'ethereum', address: '0x3b3ac5386837dc563660fb6a0937dfaa5924333b' },
   { chain: 'ethereum', address: '0x05ca5c01629a8e5845f12ea3a03ff7331932233a' },
   { chain: 'ethereum', address: '0xf5194c3325202f456c95c1cf0ca36f8475c1949f' },
+  { chain: 'ethereum', address: '0x64E3C23bfc40722d3B649844055F1D51c1ac041d' },
 ]
 
 function isInBlacklist(item: any) {
@@ -116,11 +117,7 @@ function isInBlacklist(item: any) {
   )
 }
 
-export async function getPoolsBalances(
-  ctx: BalancesContext,
-  pools: Contract[],
-  registry?: Contract,
-): Promise<Balance[]> {
+export async function getPoolsBalances(ctx: BalancesContext, pools: Contract[], registry?: Contract) {
   const poolsBalancesOfRes = await multicall({
     ctx,
     calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
@@ -131,18 +128,19 @@ export async function getPoolsBalances(
     const pool = pools[idx]
     const { underlyings } = pool
 
-    if (!underlyings) {
+    if (!underlyings || res.output === 0n) {
       return null
     }
 
-    if (res.output > 0n)
-      return {
-        ...pool,
-        amount: res.output,
-      }
+    return {
+      ...pool,
+      amount: res.output,
+    }
   }).filter(isNotNullish) as Balance[]
 
-  return getUnderlyingsPoolsBalances(ctx, poolBalances, registry)
+  if (poolBalances.length > 0) {
+    return getUnderlyingsPoolsBalances(ctx, poolBalances, registry)
+  }
 }
 
 export const getUnderlyingsPoolsBalances = async (
@@ -267,6 +265,10 @@ export async function getGaugesBalances(ctx: BalancesContext, gauges: Contract[]
       abi: abi.claimable_reward,
     }),
   ])
+
+  if (!gaugesBalancesRes) {
+    return
+  }
 
   const extraRewardsCalls: Call<typeof abi.claimable_extra_reward>[] = []
   for (let gaugeIdx = 0; gaugeIdx < gaugesBalancesRes.length; gaugeIdx++) {
