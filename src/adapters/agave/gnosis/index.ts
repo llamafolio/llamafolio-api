@@ -1,5 +1,5 @@
 import { getAgaveStakeBalance } from '@adapters/agave/gnosis/stake'
-import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/aave/v2/lending'
+import { getLendingPoolBalances, getLendingPoolContracts, getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -23,12 +23,15 @@ export const getContracts = async (ctx: BaseContext) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    staker: getAgaveStakeBalance,
-    pools: getLendingPoolBalances,
-  })
+  const [balances, healthFactor] = await Promise.all([
+    resolveBalances<typeof getContracts>(ctx, contracts, {
+      pools: getLendingPoolBalances,
+      staker: getAgaveStakeBalance,
+    }),
+    getLendingPoolHealthFactor(ctx, lendingPool),
+  ])
 
   return {
-    groups: [{ balances }],
+    groups: [{ balances, healthFactor }],
   }
 }
