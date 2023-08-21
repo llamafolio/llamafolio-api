@@ -21,9 +21,7 @@ export const chainsNames = [
   'moonbeam',
   'optimism',
   'polygon',
-  'arbitrum-nova',
   'base',
-  'bittorrent',
 ] as const
 
 export type Chain = (typeof chainsNames)[number]
@@ -287,9 +285,7 @@ for (const chain of chains) {
 
 export const toDefiLlamaChain: { [key in Chain]: string } = {
   arbitrum: 'arbitrum',
-  'arbitrum-nova': 'arbitrum nova',
   avalanche: 'avax',
-  bittorrent: 'bittorrent',
   bsc: 'bsc',
   celo: 'celo',
   ethereum: 'ethereum',
@@ -304,9 +300,7 @@ export const toDefiLlamaChain: { [key in Chain]: string } = {
 
 export const fromDefiLlamaChain: { [key: string]: Chain } = {
   Arbitrum: 'arbitrum',
-  'Arbitrum Nova': 'arbitrum-nova',
   Avalanche: 'avalanche',
-  Bittorrent: 'bittorrent',
   BSC: 'bsc',
   Celo: 'celo',
   Ethereum: 'ethereum',
