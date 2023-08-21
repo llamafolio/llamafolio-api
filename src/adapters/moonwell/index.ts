@@ -1,7 +1,7 @@
 import type { Adapter } from '@lib/adapter'
 
-import * as moonbeam from './moonbeam'
 import * as base from './base'
+import * as moonbeam from './moonbeam'
 
 const adapter: Adapter = {
   id: 'moonwell',
