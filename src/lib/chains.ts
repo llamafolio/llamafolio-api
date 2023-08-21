@@ -21,6 +21,9 @@ export const chainsNames = [
   'moonbeam',
   'optimism',
   'polygon',
+  'arbitrum-nova',
+  'base',
+  'bittorrent',
 ] as const
 
 export type Chain = (typeof chainsNames)[number]
@@ -91,7 +94,12 @@ export const chains = [
     id: 'base',
     chainId: 8453,
     name: 'Base',
-    rpcUrls: [http('https://mainnet.base.org', { batch: { wait: 0, batchSize: 5_000 } })],
+    rpcUrls: [
+      http('https://base-mainnet.public.blastapi.io', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://mainnet.base.org', { batch: { wait: 0, batchSize: 1_000 } }),
+      http('https://1rpc.io/base', { batch: { wait: 0, batchSize: 1_000 } }),
+      http('https://base.blockpi.network/v1/rpc/public', { batch: { wait: 0, batchSize: 1_000 } }),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -291,6 +299,7 @@ export const toDefiLlamaChain: { [key in Chain]: string } = {
   moonbeam: 'moonbeam',
   optimism: 'optimism',
   polygon: 'polygon',
+  base: 'base',
 }
 
 export const fromDefiLlamaChain: { [key: string]: Chain } = {
@@ -306,4 +315,5 @@ export const fromDefiLlamaChain: { [key: string]: Chain } = {
   Moonbeam: 'moonbeam',
   Optimism: 'optimism',
   Polygon: 'polygon',
+  base: 'base',
 }

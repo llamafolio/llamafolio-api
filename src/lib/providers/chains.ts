@@ -3,11 +3,12 @@ import type { Chain as _Chain } from 'viem/chains'
 import {
   arbitrum,
   avalanche,
+  base,
   bsc,
   celo,
+  mainnet as ethereum,
   fantom,
   harmonyOne as harmony,
-  mainnet as ethereum,
   moonbeam,
   optimism,
   polygon,
@@ -61,4 +62,5 @@ export const viemChainById: { [key in Chain]: _Chain } = {
   moonbeam,
   optimism,
   polygon,
+  base,
 } as const

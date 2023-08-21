@@ -5,29 +5,42 @@ import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalances } from '@lib/stake'
 import type { Token } from '@lib/token'
 
-const USDC: Token = {
-  chain: 'polygon',
-  address: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+const USDbC: Token = {
+  chain: 'base',
+  address: '0xd9aaec86b65d86f6a7b5b1b0c42ffa531710b6ca',
   decimals: 6,
-  symbol: 'USDC',
+  symbol: 'USDbC',
 }
 
-const cUSDCv3: Contract = {
-  chain: 'polygon',
-  address: '0xF25212E676D1F7F89Cd72fFEe66158f541246445',
-  underlyings: [USDC],
+const WETH: Token = {
+  chain: 'base',
+  address: '0x4200000000000000000000000000000000000006',
+  decimals: 18,
+  symbol: 'WETH',
+}
+
+const cUSDbCv3: Contract = {
+  chain: 'base',
+  address: '0x9c4ec768c28520B50860ea7a15bd7213a9fF58bf',
+  underlyings: [USDbC],
+}
+
+const cWETHv3: Contract = {
+  chain: 'base',
+  address: '0x46e6b214b524310239732D51387075E0e70970bf',
+  underlyings: [WETH],
 }
 
 const rewarder: Contract = {
-  chain: 'polygon',
-  address: '0x45939657d1CA34A8FA39A924B71D28Fe8431e581',
+  chain: 'base',
+  address: '0x123964802e6ABabBE1Bc9547D72Ef1B69B00A6b1',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const assets = await getAssetsContracts(ctx, [cUSDCv3])
+  const assets = await getAssetsContracts(ctx, [cUSDbCv3, cWETHv3])
 
   return {
-    contracts: { compounders: [cUSDCv3], assets, rewarder },
+    contracts: { compounders: [cUSDbCv3, cWETHv3], assets, rewarder },
   }
 }
 
@@ -37,7 +50,7 @@ const compoundBalances = async (ctx: BalancesContext, compounders: Contract[], r
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    assets: (...args) => getCompLendBalances(...args, [cUSDCv3]),
+    assets: (...args) => getCompLendBalances(...args, [cUSDbCv3, cWETHv3]),
     compounders: (...args) => compoundBalances(...args, rewarder),
   })
 
