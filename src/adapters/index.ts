@@ -158,6 +158,7 @@ import railgun from '@adapters/railgun'
 import redacted from '@adapters/redacted'
 import reflexer from '@adapters/reflexer'
 import reserve from '@adapters/reserve'
+import retro from '@adapters/retro'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import rook from '@adapters/rook'
@@ -395,6 +396,7 @@ export const adapters: Adapter[] = [
   redacted,
   reflexer,
   reserve,
+  retro,
   ribbonFinance,
   rocketPool,
   rook,
