@@ -1,12 +1,9 @@
+import { getAssetsContracts } from '@adapters/compound-v3/common/asset'
+import { getCompLendBalances, getCompRewardBalances } from '@adapters/compound-v3/common/balance'
 import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import type { BalanceWithExtraProps } from '@lib/compound/v2/lending'
-import { getHealthFactor } from '@lib/compound/v2/lending'
+import { getSingleStakeBalances } from '@lib/stake'
 import type { Token } from '@lib/token'
-
-import { getAssetsContracts, getLendBorrowBalances } from '../common/lend'
-import { getRewardBalances } from '../common/rewards'
-import { getStakeBalances } from '../common/stake'
 
 const USDC: Token = {
   chain: 'ethereum',
@@ -22,44 +19,42 @@ const WETH: Token = {
   symbol: 'WETH',
 }
 
-const CompoundUSDCv3: Contract = {
+const cUSDCv3: Contract = {
   chain: 'ethereum',
   address: '0xc3d688B66703497DAA19211EEdff47f25384cdc3',
   underlyings: [USDC],
 }
 
-const CompoundWETHv3: Contract = {
+const cWETHv3: Contract = {
   chain: 'ethereum',
   address: '0xa17581a9e3356d9a858b789d68b4d866e593ae94',
   underlyings: [WETH],
 }
 
-const CompoundRewards: Contract = {
+const rewarder: Contract = {
   chain: 'ethereum',
   address: '0x1B0e765F6224C21223AeA2af16c1C46E38885a40',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const assets = await getAssetsContracts(ctx, [CompoundUSDCv3, CompoundWETHv3])
+  const assets = await getAssetsContracts(ctx, [cUSDCv3, cWETHv3])
 
   return {
-    contracts: { compounders: [CompoundUSDCv3, CompoundWETHv3], assets, CompoundRewards },
+    contracts: { compounders: [cUSDCv3, cWETHv3], assets, rewarder },
   }
 }
 
 const compoundBalances = async (ctx: BalancesContext, compounders: Contract[], rewarder: Contract) => {
-  return Promise.all([getStakeBalances(ctx, compounders), getRewardBalances(ctx, rewarder, compounders)])
+  return Promise.all([getSingleStakeBalances(ctx, compounders), getCompRewardBalances(ctx, rewarder, compounders)])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    assets: (...args) => getLendBorrowBalances(...args, [CompoundUSDCv3, CompoundWETHv3]),
-    compounders: (...args) => compoundBalances(...args, CompoundRewards),
+    assets: (...args) => getCompLendBalances(...args, [cUSDCv3, cWETHv3]),
+    compounders: (...args) => compoundBalances(...args, rewarder),
   })
 
-  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
-
   return {
-    groups: [{ balances, healthFactor }],
+    groups: [{ balances }],
   }
 }

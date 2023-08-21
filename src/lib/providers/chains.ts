@@ -3,6 +3,7 @@ import type { Chain as _Chain } from 'viem/chains'
 import {
   arbitrum,
   avalanche,
+  base,
   bsc,
   celo,
   fantom,
@@ -61,4 +62,5 @@ export const viemChainById: { [key in Chain]: _Chain } = {
   moonbeam,
   optimism,
   polygon,
+  base,
 } as const
