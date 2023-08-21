@@ -62,6 +62,8 @@ const abi = {
   },
 } as const
 
+const cTOKENS_DECIMALS = 8
+
 export interface GetMarketsContractsProps {
   comptrollerAddress: `0x${string}`
   /**
@@ -164,7 +166,8 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
         return
       }
 
-      const amount = (bal.amount * exchangeRateCurrentBycTokenAddress[bal.address]) / 10n ** 10n
+      const amount =
+        (bal.amount * exchangeRateCurrentBycTokenAddress[bal.address]) / 10n ** BigInt(cTOKENS_DECIMALS + 2) // cTokens are always 8 decimals and its a percentage so 10 ** 8 * 100 -> 10 ** (8 + 2)
 
       return {
         ...bal,
