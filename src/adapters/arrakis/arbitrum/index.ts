@@ -4,27 +4,13 @@ import { resolveBalances } from '@lib/balance'
 import { getArrakisFarmBalances, getLpBalances } from '../common/balances'
 import { getFarmersContracts, getVaults } from '../common/contracts'
 
-const farmers: `0x${string}`[] = [
-  '0xfb5b8515b011b073defb5fa63b05a7190a5207b3',
-  '0x33d1ad9cd88a509397cd924c2d7613c285602c20',
-  '0x56c5b00bdeb3cb8adf745650599f9adef3c40275',
-  '0x9941c03d31bc8b3aa26e363f7dd908725e1a21bb',
-  '0xedf8c3ad1186d6ecb8b8cd08230b9434768252a5',
-  '0xdb01724cd5885d76438d2b54097c9dd8dbf443a1',
-  '0x5e65a272fb0d594c7447f05928011c4f7f53c808',
-  '0x50be234a8405c32c15712850377deec768628bc9',
-  '0x0fca3755b1de447d15f8414f83fa650da255020f',
-  '0x15bde1a8d16d4072d949591afd4fa7ad9d127d05',
-  '0x5aabe80f1d80842408da860384a05a85e9a64e98',
-  '0x67092ab1c3dac772ff15f823eb48cb63f087b691',
-  '0xb76359a71843bcef4cc749f0f0cf1a2672f604ba',
-]
+const farmers: `0x${string}`[] = ['0xc78f036f557925270e3506e140cfe5f2a188c3a3']
 
 const factoryArrakis: Contract = {
   name: 'factory',
   displayName: 'Arrakis Factory',
-  chain: 'polygon',
-  address: '0x37265A834e95D11c36527451c7844eF346dC342a',
+  chain: 'arbitrum',
+  address: '0xd68b055fb444D136e3aC4df023f4C42334F06395',
 }
 
 export const getContracts = async (ctx: BaseContext) => {

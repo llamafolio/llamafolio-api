@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { getBalancesOf } from '@lib/erc20'
-import { abi as erc20Abi } from '@lib/erc20'
+import { abi as erc20Abi, getBalancesOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 
@@ -38,7 +37,7 @@ export async function getLpBalances(ctx: BalancesContext, contracts: Contract[])
 
   const [underlyingBalancesRes, totalSupplyRes] = await Promise.all([
     multicall({ ctx, calls, abi: abi.getUnderlyingBalances }),
-    multicall({ ctx, calls: calls, abi: erc20Abi.totalSupply }),
+    multicall({ ctx, calls, abi: erc20Abi.totalSupply }),
   ])
 
   for (let i = 0; i < calls.length; i++) {
@@ -57,6 +56,60 @@ export async function getLpBalances(ctx: BalancesContext, contracts: Contract[])
 
     nonZeroBalances[i].category = 'lp'
     balances.push(nonZeroBalances[i])
+  }
+
+  return balances
+}
+
+export async function getArrakisFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
+  const balances: Balance[] = []
+
+  const [userBalancesRes, underlyingBalancesRes, totalSuppliesRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: erc20Abi.balanceOf,
+    }),
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.token! }) as const),
+      abi: abi.getUnderlyingBalances,
+    }),
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.address }) as const),
+      abi: erc20Abi.totalSupply,
+    }),
+  ])
+
+  for (const [index, farmer] of farmers.entries()) {
+    const underlyings = farmer.underlyings as Contract[]
+    const userBalanceRes = userBalancesRes[index]
+    const underlyingBalances = underlyingBalancesRes[index]
+    const totalSupplyRes = totalSuppliesRes[index]
+
+    if (
+      !underlyings ||
+      !userBalanceRes.success ||
+      !underlyingBalances.success ||
+      !totalSupplyRes.success ||
+      totalSupplyRes.output === 0n
+    ) {
+      continue
+    }
+
+    const [amount0Current, amount1Current] = underlyingBalances.output
+
+    const underlyings0 = { ...underlyings[0], amount: (userBalanceRes.output * amount0Current) / totalSupplyRes.output }
+    const underlyings1 = { ...underlyings[1], amount: (userBalanceRes.output * amount1Current) / totalSupplyRes.output }
+
+    balances.push({
+      ...farmer,
+      amount: userBalanceRes.output,
+      underlyings: [underlyings0, underlyings1],
+      rewards: undefined,
+      category: 'farm',
+    })
   }
 
   return balances
