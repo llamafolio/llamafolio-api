@@ -1,39 +1,17 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 
 export interface IHistoryTransaction {
-  contract_interacted?: {
-    contract: string
-    adapter?: { adapter_id?: string }
-  }
-  block_number: string
+  block_number: number
   chain: string
-  from_address: string
+  from: string
+  to: string
   gas_price: string
-  gas: string
+  gas: number
   hash: string
-  method_name?: {
-    name: string
-  }
-  receipt: {
-    status: string
-  }
-  timestamp: string
-  to_address: string
-  erc20_transfers_aggregate: {
-    nodes: {
-      from_address: string
-      to_address: string
-      log_index: number
-      token: string
-      value: string
-      token_details?: {
-        decimals: number
-        name: string
-        symbol: string
-      }
-    }[]
-  }
+  status: string
   value: string
+  timestamp: string
+  token_transfers: [string, string, string, number, string, string, string | null][]
 }
 
 export async function selectHistory(
@@ -48,40 +26,81 @@ export async function selectHistory(
   const queryRes = await client.query({
     query: `
       WITH "transactions" AS (
-        SELECT "chain", "hash"
+        SELECT "chain", "hash", "timestamp"
         FROM (
           (
             SELECT "chain", "hash", "timestamp"
             FROM evm_indexer.transactions_history_mv
             WHERE "target" = {address: String}
-            ORDER BY "timestamp" DESC
           )
             UNION ALL
           (
-            SELECT "chain", "transaction_hash" AS "hash", "timestamp"
+            SELECT "chain", "hash", "timestamp"
             FROM evm_indexer.token_transfers_history_mv
             WHERE "to" = {address: String}
-            ORDER BY "timestamp" DESC
           )
         )
+        GROUP BY "chain", "hash", "timestamp"
         ORDER BY "timestamp" DESC
         LIMIT {limit: UInt8}
       )
       SELECT
+        "block_number",
         "chain",
         "from",
         "to",
         "hash",
+        "gas",
+        "gas_price",
+        "status",
+        "value",
         "timestamp",
-        tt."type" AS "tt_type",
-        tt."address" AS "tt_token"
+        tt."transfers" AS "token_transfers"
       FROM evm_indexer.transactions AS "t"
       LEFT JOIN (
-        SELECT "chain", "transaction_hash" AS "hash", "type", "address"
-        FROM evm_indexer.token_transfers
-        WHERE ("chain", "hash") IN "transactions"
-      ) AS "tt" ON (t."chain", t."hash") = (tt."chain", tt."hash")
-      WHERE ("chain", "hash") IN "transactions;"
+        SELECT
+          "chain",
+          "transaction_hash" AS "hash",
+          "timestamp",
+          groupArray(("from", "to", "address", "log_index", "type", "value", "id")) AS "transfers"
+        FROM (
+          (
+            SELECT
+              "chain",
+              "transaction_hash",
+              "timestamp",
+              "from",
+              "to",
+              "address",
+              "log_index",
+              "type",
+              "value",
+              "id"
+            FROM evm_indexer.token_transfers
+            WHERE "from" = {address: String}
+          )
+            UNION ALL
+          (
+            SELECT
+              "chain",
+              "transaction_hash",
+              "timestamp",
+              "from",
+              "to",
+              "address",
+              "log_index",
+              "type",
+              "value",
+              "id"
+            FROM evm_indexer.token_transfers
+            WHERE "to" = {address: String}
+          )
+        )
+        WHERE ("chain", "hash", "timestamp") IN "transactions"
+        GROUP BY "chain", "hash", "timestamp"
+      ) AS "tt" ON (t."chain", t."hash", t."timestamp") = (tt."chain", tt."hash", tt."timestamp")
+      WHERE ("chain", "hash", "timestamp") IN "transactions"
+      SETTINGS max_threads = 16;
     `,
     query_params: {
       address: address.toLowerCase(),
@@ -108,20 +127,22 @@ export async function selectHistoryCount(
 ) {
   const queryRes = await client.query({
     query: `
-      SELECT count() FROM (
-        (
-          SELECT "chain", "hash"
-          FROM evm_indexer.transactions_history_mv
-          WHERE "target" = '0xbdfa4f4492dd7b7cf211209c4791af8d52bf5c50'
+      SELECT count() AS count FROM (
+        SELECT "chain", "hash" FROM (
+          (
+            SELECT "chain", "hash"
+            FROM evm_indexer.transactions_history_mv
+            WHERE "target" = {address: String}
+          )
+            UNION ALL
+          (
+            SELECT "chain", "hash"
+            FROM evm_indexer.token_transfers_history_mv
+            WHERE "to" = {address: String}
+          )
         )
-          UNION ALL
-        (
-          SELECT "chain", "hash"
-          FROM evm_indexer.token_transfers_history_mv
-          WHERE "to" = '0xbdfa4f4492dd7b7cf211209c4791af8d52bf5c50'
-        )
-      )
-      GROUP BY "chain", "hash";
+        GROUP BY "chain", "hash"
+      );
     `,
     query_params: {
       address: address.toLowerCase(),
