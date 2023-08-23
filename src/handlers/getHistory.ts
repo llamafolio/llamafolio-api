@@ -4,6 +4,7 @@ import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import { type Chain, chainByChainId } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
+import { unixFromDateTime } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
 import type { Token } from '@lib/token'
@@ -91,7 +92,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
       transactionsData.push({
         chain,
         blockNumber: tx.block_number.toString(),
-        timestamp: parseInt(tx.timestamp),
+        timestamp: unixFromDateTime(tx.timestamp),
         hash: tx.hash,
         fromAddress: tx.from,
         toAddress: tx.to,
