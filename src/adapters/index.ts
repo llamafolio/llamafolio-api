@@ -137,6 +137,7 @@ import onyxProtocol from '@adapters/onyx-protocol'
 import opynSqueeth from '@adapters/opyn-squeeth'
 import originDefi from '@adapters/origin-defi'
 import originDollar from '@adapters/origin-dollar'
+import overnightFinance from '@adapters/overnight-finance'
 import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
@@ -376,6 +377,7 @@ export const adapters: Adapter[] = [
   opynSqueeth,
   originDefi,
   originDollar,
+  overnightFinance,
   pancakeswap,
   pandora,
   pangolin,
