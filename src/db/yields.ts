@@ -1,9 +1,8 @@
+import type { ClickHouseClient } from '@clickhouse/client'
 import { environment } from '@environment'
-import { sliceIntoChunks } from '@lib/array'
-import type { Chain } from '@lib/chains'
+import { type Chain, chainByChainId, chainById } from '@lib/chains'
+import { fromDateTime, toDateTime } from '@lib/fmt'
 import { extractAddress } from '@lib/yields'
-import type { PoolClient } from 'pg'
-import format from 'pg-format'
 
 export interface YieldOld {
   chain: string
@@ -75,6 +74,7 @@ export interface Yield {
   apyPct7D?: number
   apyPct30D?: number
   underlyings?: string[]
+  updatedAt: Date
 }
 
 export interface YieldStorage {
@@ -91,6 +91,7 @@ export interface YieldStorage {
   apy_pct_7d: number | null
   apy_pct_30d: number | null
   underlyings: string[] | null
+  updated_at: string
 }
 
 export interface YieldStorable {
@@ -107,38 +108,18 @@ export interface YieldStorable {
   apyPct7D: number | null
   apyPct30D: number | null
   underlyings: string[] | null
-}
-
-export function toStorage(yields: Yield[]) {
-  const yieldsStorage: YieldStorage[] = []
-
-  for (const _yield of yields) {
-    const yieldStorage: YieldStorage = {
-      chain: _yield.chain,
-      adapter_id: _yield.adapterId,
-      address: _yield.address,
-      pool: _yield.pool,
-      apy: _yield.apy,
-      apy_base: _yield.apyBase ?? null,
-      apy_reward: _yield.apyReward ?? null,
-      apy_mean_30d: _yield.apyMean30d ?? null,
-      il_risk: _yield.ilRisk,
-      apy_pct_1d: _yield.apyPct1D ?? null,
-      apy_pct_7d: _yield.apyPct7D ?? null,
-      apy_pct_30d: _yield.apyPct30D ?? null,
-      underlyings: _yield.underlyings ?? [],
-    }
-
-    yieldsStorage.push(yieldStorage)
-  }
-
-  return yieldsStorage
+  updated_at: string
 }
 
 export function fromStorage(yieldsStorage: YieldStorage[]) {
   const yields: Yield[] = []
 
   for (const yieldStorage of yieldsStorage) {
+    const chain = chainByChainId[parseInt(yieldStorage.chain)]
+    if (!chain) {
+      continue
+    }
+
     const _yield: Yield = {
       chain: yieldStorage.chain as Chain,
       adapterId: yieldStorage.adapter_id,
@@ -153,6 +134,7 @@ export function fromStorage(yieldsStorage: YieldStorage[]) {
       apyPct7D: yieldStorage.apy_pct_7d ?? undefined,
       apyPct30D: yieldStorage.apy_mean_30d,
       underlyings: yieldStorage.underlyings ?? undefined,
+      updatedAt: fromDateTime(yieldStorage.updated_at),
     }
 
     yields.push(_yield)
@@ -161,58 +143,60 @@ export function fromStorage(yieldsStorage: YieldStorage[]) {
   return yields
 }
 
-export function toRow(_yield: YieldStorable) {
-  return [
-    _yield.chain,
-    _yield.adapterId,
-    _yield.address.toLowerCase(),
-    _yield.pool,
-    _yield.apy,
-    _yield.apyBase,
-    _yield.apyReward,
-    _yield.apyMean30d,
-    _yield.ilRisk,
-    _yield.apyPct1D,
-    _yield.apyPct7D,
-    _yield.apyPct30D,
-    `{ ${_yield.underlyings} }`,
-  ]
+export function toStorage(yields: Yield[]) {
+  const yieldsStorage: YieldStorage[] = []
+
+  for (const _yield of yields) {
+    const chainId = chainById[_yield.chain]?.chainId
+    if (chainId == null) {
+      console.error(`Missing chain ${_yield.chain}`)
+      continue
+    }
+
+    const yieldStorage: YieldStorage = {
+      chain: _yield.chain,
+      adapter_id: _yield.adapterId,
+      address: _yield.address,
+      pool: _yield.pool,
+      apy: _yield.apy,
+      apy_base: _yield.apyBase ?? null,
+      apy_reward: _yield.apyReward ?? null,
+      apy_mean_30d: _yield.apyMean30d ?? null,
+      il_risk: _yield.ilRisk,
+      apy_pct_1d: _yield.apyPct1D ?? null,
+      apy_pct_7d: _yield.apyPct7D ?? null,
+      apy_pct_30d: _yield.apyPct30D ?? null,
+      underlyings: _yield.underlyings ?? [],
+      updated_at: toDateTime(_yield.updatedAt),
+    }
+
+    yieldsStorage.push(yieldStorage)
+  }
+
+  return yieldsStorage
 }
 
-export async function deleteAllYields(client: PoolClient) {
-  return client.query('DELETE FROM yields WHERE true;', [])
+export function deleteOldYields(client: ClickHouseClient) {
+  return client.command({
+    query: `
+      WITH latest AS (
+        SELECT "timestamp" FROM lf.yields ORDER BY "timestamp" DESC LIMIT 1
+      )
+      DELETE FROM lf.yields WHERE "timestamp" < latest."timestamp";
+    `,
+  })
 }
 
-export async function insertYields(client: PoolClient, yields: YieldStorable[]) {
-  const yieldsStorable = yields.map(toRow)
+export function insertYields(client: ClickHouseClient, yields: Yield[]) {
+  const values = toStorage(yields)
 
-  if (yieldsStorable.length === 0) {
+  if (values.length === 0) {
     return
   }
 
-  return Promise.all(
-    sliceIntoChunks(yieldsStorable, 200).map((chunk) =>
-      client.query(
-        format(
-          `INSERT INTO yields (
-            chain,
-            adapter_id,
-            address,
-            pool,
-            apy,
-            apy_base,
-            apy_reward,
-            apy_mean_30d,
-            il_risk,
-            apy_pct_1d,
-            apy_pct_7d,
-            apy_pct_30d,
-            underlyings
-          ) VALUES %L;`,
-          chunk,
-        ),
-        [],
-      ),
-    ),
-  )
+  return client.insert({
+    table: 'lf.yields',
+    values,
+    format: 'JSONEachRow',
+  })
 }

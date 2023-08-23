@@ -1,4 +1,4 @@
-import type { PoolClient } from 'pg'
+import type { ClickHouseClient } from '@clickhouse/client'
 
 export interface IHistoryTransaction {
   contract_interacted?: {
@@ -37,331 +37,103 @@ export interface IHistoryTransaction {
 }
 
 export async function selectHistory(
-  client: PoolClient,
+  client: ClickHouseClient,
   address: string,
   limit: number,
   offset: number,
   chainsFilter: string[],
   protocolsFilter: string[],
 ) {
-  const queryRes = await client.query(
-    `
-  SELECT
-  coalesce(
-    json_agg(
-      "root"
-      ORDER BY
-        "root.pg.timestamp" DESC NULLS FIRST
-    ),
-    '[]'
-  ) AS "root"
-FROM
-  (
-    SELECT
-      row_to_json(
-        (
-          SELECT
-            "_e"
-          FROM
-            (
-              SELECT
-                "_root.ar.root.adapters_contracts"."adapters_contracts" AS "adapters_contracts",
-                "_root.base"."block_number" AS "block_number",
-                "_root.base"."chain" AS "chain",
-                "_root.base"."from_address" AS "from_address",
-                "_root.base"."gas_price" AS "gas_price",
-                "_root.base"."gas" AS "gas",
-                "_root.base"."hash" AS "hash",
-                "_root.or.method_name"."method_name" AS "method_name",
-                "_root.or.receipt"."receipt" AS "receipt",
-                "_root.base"."timestamp" AS "timestamp",
-                "_root.base"."to_address" AS "to_address",
-                "_root.ar.root.erc20_transfers_aggregate"."erc20_transfers_aggregate" AS "erc20_transfers_aggregate",
-                "_root.base"."value" AS "value"
-            ) AS "_e"
-        )
-      ) AS "root",
-      "_root.base"."timestamp" AS "root.pg.timestamp"
-    FROM
-      (
-        SELECT
-          *
-        FROM
-          "public"."transactions"
-        WHERE
+  // TODO: contract interacted -> adapter_id
+  const queryRes = await client.query({
+    query: `
+      WITH "transactions" AS (
+        SELECT "chain", "hash"
+        FROM (
           (
-            ("public"."transactions"."from_address") = ($1 :: text)
-            ${
-              chainsFilter.length > 0
-                ? `AND (
-              ("public"."transactions"."chain") = ANY ($4 :: string[])
-            )`
-                : 'AND ($4 :: boolean)'
-            }
-            ${
-              protocolsFilter.length > 0
-                ? `AND (
-                    EXISTS (
-                      SELECT
-                        1
-                      FROM
-                        "public"."adapters_contracts" ac
-                      WHERE
-                        ac.address = ("public"."transactions"."to_address")
-                        AND ac.chain = ("public"."transactions"."chain")
-                        AND ac.adapter_id = ANY ($5 :: string[])
-                    )
-            )`
-                : 'AND ($5 :: boolean)'
-            }
+            SELECT "chain", "hash", "timestamp"
+            FROM evm_indexer.transactions_history_mv
+            WHERE "target" = {address: String}
+            ORDER BY "timestamp" DESC
           )
-        ORDER BY
-          "timestamp" DESC NULLS FIRST
-        LIMIT
-          $2 :: int OFFSET $3 :: int
-      ) AS "_root.base"
-      LEFT OUTER JOIN LATERAL (
-        SELECT
-          row_to_json(
-            (
-              SELECT
-                "_e"
-              FROM
-                (
-                  SELECT
-                    "_root.or.receipt.base"."status" AS "status"
-                ) AS "_e"
-            )
-          ) AS "receipt"
-        FROM
+            UNION ALL
           (
-            SELECT
-              *
-            FROM
-              "public"."receipts"
-            WHERE
-              (("_root.base"."hash") = ("hash"))
-            LIMIT
-              1
-          ) AS "_root.or.receipt.base"
-      ) AS "_root.or.receipt" ON ('true')
-      LEFT OUTER JOIN LATERAL (
-        SELECT
-          row_to_json(
-            (
-              SELECT
-                "_e"
-              FROM
-                (
-                  SELECT
-                    "_root.or.method_name.base"."name" AS "name"
-                ) AS "_e"
-            )
-          ) AS "method_name"
-        FROM
-          (
-            SELECT
-              *
-            FROM
-              "public"."methods"
-            WHERE
-              (("_root.base"."method") = ("method"))
-            LIMIT
-              1
-          ) AS "_root.or.method_name.base"
-      ) AS "_root.or.method_name" ON ('true')
-      LEFT OUTER JOIN LATERAL (
-        SELECT
-          coalesce(json_agg("adapters_contracts"), '[]') AS "adapters_contracts"
-        FROM
-          (
-            SELECT
-              row_to_json(
-                (
-                  SELECT
-                    "_e"
-                  FROM
-                    (
-                      SELECT
-                        "_root.ar.root.adapters_contracts.base"."adapter_id" AS "adapter_id"
-                    ) AS "_e"
-                )
-              ) AS "adapters_contracts"
-            FROM
-              (
-                SELECT
-                  *
-                FROM
-                  "public"."adapters_contracts"
-                WHERE
-                  (
-                    (("_root.base"."chain") = ("chain"))
-                    AND (("_root.base"."to_address") = ("address"))
-                  )
-              ) AS "_root.ar.root.adapters_contracts.base"
-          ) AS "_root.ar.root.adapters_contracts"
-      ) AS "_root.ar.root.adapters_contracts" ON ('true')
-      LEFT OUTER JOIN LATERAL (
-        SELECT
-          json_build_object(
-            'nodes',
-            coalesce(
-              json_agg(
-                "nodes"
-                ORDER BY
-                  "root.ar.root.erc20_transfers_aggregate.pg.log_index" ASC NULLS LAST
-              ),
-              '[]'
-            )
-          ) AS "erc20_transfers_aggregate"
-        FROM
-          (
-            SELECT
-              "_root.ar.root.erc20_transfers_aggregate.base"."log_index" AS "root.ar.root.erc20_transfers_aggregate.pg.log_index",
-              row_to_json(
-                (
-                  SELECT
-                    "_e"
-                  FROM
-                    (
-                      SELECT
-                        "_root.ar.root.erc20_transfers_aggregate.base"."from_address" AS "from_address",
-                        "_root.ar.root.erc20_transfers_aggregate.base"."to_address" AS "to_address",
-                        "_root.ar.root.erc20_transfers_aggregate.base"."log_index" AS "log_index",
-                        "_root.ar.root.erc20_transfers_aggregate.base"."token" AS "token",
-                        "_root.ar.root.erc20_transfers_aggregate.base"."value" AS "value",
-                        "_root.ar.root.erc20_transfers_aggregate.or.token_details"."token_details" AS "token_details"
-                    ) AS "_e"
-                )
-              ) AS "nodes"
-            FROM
-              (
-                SELECT
-                  *
-                FROM
-                  "public"."erc20_transfers"
-                WHERE
-                  (("_root.base"."hash") = ("hash"))
-                ORDER BY
-                  "log_index" ASC NULLS LAST
-              ) AS "_root.ar.root.erc20_transfers_aggregate.base"
-              LEFT OUTER JOIN LATERAL (
-                SELECT
-                  row_to_json(
-                    (
-                      SELECT
-                        "_e"
-                      FROM
-                        (
-                          SELECT
-                            "_root.ar.root.erc20_transfers_aggregate.or.token_details.base"."decimals" AS "decimals",
-                            "_root.ar.root.erc20_transfers_aggregate.or.token_details.base"."name" AS "name",
-                            "_root.ar.root.erc20_transfers_aggregate.or.token_details.base"."symbol" AS "symbol"
-                        ) AS "_e"
-                    )
-                  ) AS "token_details"
-                FROM
-                  (
-                    SELECT
-                      *
-                    FROM
-                      "public"."erc20_tokens"
-                    WHERE
-                      (
-                        (
-                          (
-                            "_root.ar.root.erc20_transfers_aggregate.base"."chain"
-                          ) = ("chain")
-                        )
-                        AND (
-                          (
-                            "_root.ar.root.erc20_transfers_aggregate.base"."token"
-                          ) = ("address")
-                        )
-                      )
-                    LIMIT
-                      1
-                  ) AS "_root.ar.root.erc20_transfers_aggregate.or.token_details.base"
-              ) AS "_root.ar.root.erc20_transfers_aggregate.or.token_details" ON ('true')
-            ORDER BY
-              "root.ar.root.erc20_transfers_aggregate.pg.log_index" ASC NULLS LAST
-          ) AS "_root.ar.root.erc20_transfers_aggregate"
-      ) AS "_root.ar.root.erc20_transfers_aggregate" ON ('true')
-    ORDER BY
-      "root.pg.timestamp" DESC NULLS FIRST
-  ) AS "_root"
-  `,
-    [
-      address.toLowerCase(),
+            SELECT "chain", "transaction_hash" AS "hash", "timestamp"
+            FROM evm_indexer.token_transfers_history_mv
+            WHERE "to" = {address: String}
+            ORDER BY "timestamp" DESC
+          )
+        )
+        ORDER BY "timestamp" DESC
+        LIMIT {limit: UInt8}
+      )
+      SELECT
+        "chain",
+        "from",
+        "to",
+        "hash",
+        "timestamp",
+        tt."type" AS "tt_type",
+        tt."address" AS "tt_token"
+      FROM evm_indexer.transactions AS "t"
+      LEFT JOIN (
+        SELECT "chain", "transaction_hash" AS "hash", "type", "address"
+        FROM evm_indexer.token_transfers
+        WHERE ("chain", "hash") IN "transactions"
+      ) AS "tt" ON (t."chain", t."hash") = (tt."chain", tt."hash")
+      WHERE ("chain", "hash") IN "transactions;"
+    `,
+    query_params: {
+      address: address.toLowerCase(),
       limit,
       offset,
-      chainsFilter.length > 0 ? chainsFilter : true,
-      protocolsFilter.length > 0 ? protocolsFilter : true,
-    ],
-  )
+      // TODO: FILTERS
+      chainsFilter: chainsFilter.length > 0 ? chainsFilter : true,
+      protocolsFilter: protocolsFilter.length > 0 ? protocolsFilter : true,
+    },
+  })
 
-  return queryRes.rows[0].root as IHistoryTransaction[]
+  const res = (await queryRes.json()) as {
+    data: IHistoryTransaction[]
+  }
+
+  return res.data
 }
 
-export async function selectHistoryAggregate(
-  client: PoolClient,
+export async function selectHistoryCount(
+  client: ClickHouseClient,
   address: string,
   chainsFilter: string[],
   protocolsFilter: string[],
 ) {
-  const queryRes = await client.query(
-    `
-  SELECT
-  json_build_object(
-    'aggregate',
-    json_build_object('count', COUNT(*))
-  ) AS "root"
-FROM
-  (
-    SELECT
-      1
-    FROM
-      (
-        SELECT
-          *
-        FROM
-          "public"."transactions"
-        WHERE
-          (
-            ("public"."transactions"."from_address") = ($1 :: text)
-            ${
-              chainsFilter.length > 0
-                ? `AND (
-              ("public"."transactions"."chain") = ANY ($2 :: string[])
-            )`
-                : 'AND ($2 :: boolean)'
-            }
-            ${
-              protocolsFilter.length > 0
-                ? `AND (
-                    EXISTS (
-                      SELECT
-                        1
-                      FROM
-                        "public"."adapters_contracts" ac
-                      WHERE
-                        ac.chain = ("public"."transactions"."chain")
-                        AND ac.address = ("public"."transactions"."to_address")
-                        AND ac.adapter_id = ANY ($3 :: string[])
-                    )
-            )`
-                : 'AND ($3 :: boolean)'
-            }
-          )
-      ) AS "_root.base"
-  ) AS "_root"
-  `,
-    [
-      address.toLowerCase(),
-      chainsFilter.length > 0 ? chainsFilter : true,
-      protocolsFilter.length > 0 ? protocolsFilter : true,
-    ],
-  )
+  const queryRes = await client.query({
+    query: `
+      SELECT count() FROM (
+        (
+          SELECT "chain", "hash"
+          FROM evm_indexer.transactions_history_mv
+          WHERE "target" = '0xbdfa4f4492dd7b7cf211209c4791af8d52bf5c50'
+        )
+          UNION ALL
+        (
+          SELECT "chain", "hash"
+          FROM evm_indexer.token_transfers_history_mv
+          WHERE "to" = '0xbdfa4f4492dd7b7cf211209c4791af8d52bf5c50'
+        )
+      )
+      GROUP BY "chain", "hash";
+    `,
+    query_params: {
+      address: address.toLowerCase(),
+      // TODO: FILTERS
+      chainsFilter: chainsFilter.length > 0 ? chainsFilter : true,
+      protocolsFilter: protocolsFilter.length > 0 ? protocolsFilter : true,
+    },
+  })
 
-  return queryRes.rows[0].root
+  const res = (await queryRes.json()) as {
+    data: [{ count: string }]
+  }
+
+  return res.data[0]?.count ? parseInt(res.data[0].count) : 0
 }

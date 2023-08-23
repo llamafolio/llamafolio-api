@@ -1,5 +1,13 @@
 import { createClient } from '@clickhouse/client'
 
+Object.defineProperties(BigInt.prototype, {
+  toJSON: {
+    value: function (this: bigint) {
+      return this.toString()
+    },
+  },
+})
+
 let client: ReturnType<typeof createClient> | undefined
 
 export function connect() {
@@ -11,6 +19,7 @@ export function connect() {
       clickhouse_settings: {
         async_insert: 1,
         wait_for_async_insert: 1,
+        enable_lightweight_delete: 1,
       },
     })
   }

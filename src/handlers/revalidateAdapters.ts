@@ -1,12 +1,12 @@
 import { adapters } from '@adapters/index'
 import type { Adapter as DBAdapter } from '@db/adapters'
-import { selectAdapter, selectAdaptersContractsExpired, selectDistinctAdaptersIds, upsertAdapters } from '@db/adapters'
-import { deleteContractsByAdapter, insertAdaptersContracts } from '@db/contracts'
-import pool from '@db/pool'
+import { insertAdapters, selectAdapter, selectAdaptersContractsExpired, selectDistinctAdaptersIds } from '@db/adapters'
+import { connect } from '@db/clickhouse'
+import { flattenContracts, insertAdaptersContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
-import { chains } from '@lib/chains'
+import { chainById, chains } from '@lib/chains'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { resolveContractsTokens } from '@lib/token'
 import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
@@ -14,7 +14,7 @@ import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
     const [expiredAdaptersRes, adapterIdsRes] = await Promise.all([
@@ -55,8 +55,6 @@ const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, conte
   } catch (e) {
     console.error('Failed to revalidate adapters contracts', e)
     return serverError('Failed to revalidate adapters contracts')
-  } finally {
-    client.release(true)
   }
 }
 
@@ -65,7 +63,7 @@ export const scheduledRevalidateAdaptersContracts = wrapScheduledLambda(revalida
 export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
 
-  const client = await pool.connect()
+  const client = connect()
 
   const { adapterId, chain } = event as APIGatewayProxyEvent & { adapterId?: string; chain?: Chain }
 
@@ -89,18 +87,22 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     )
   }
 
+  const chainId = chainById[chain]?.chainId
+  if (chainId == null) {
+    console.error(`Failed to revalidate adapter contracts, chain ${chain} is missing`)
+    return serverError(`Failed to revalidate adapter contracts, chain ${chain} is missing`)
+  }
+
   try {
-    const prevDbAdapter = await selectAdapter(client, chain, adapter.id)
+    const prevDbAdapter = await selectAdapter(client, chainId, adapter.id)
 
     const ctx: BaseContext = { chain, adapterId: adapter.id }
 
     const config = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
 
     const [contracts, props] = await Promise.all([
-      resolveContractsTokens({ client, contractsMap: config.contracts || {}, storeMissingTokens: true }),
-      config.props
-        ? resolveContractsTokens({ client, contractsMap: config.props, storeMissingTokens: true })
-        : undefined,
+      resolveContractsTokens(config.contracts || {}),
+      config.props ? resolveContractsTokens(config.props) : undefined,
     ])
 
     let expire_at: Date | undefined = undefined
@@ -118,27 +120,14 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
       createdAt: new Date(),
     }
 
-    await client.query('BEGIN')
-
-    await upsertAdapters(client, [dbAdapter])
-
-    // Delete old contracts unless it's a revalidate.
-    // In such case we want to add new contracts, not replace the old ones
-    if (!config.revalidate) {
-      await deleteContractsByAdapter(client, adapterId, chain)
-    }
+    await insertAdapters(client, [dbAdapter])
 
     // Insert new contracts
-    await insertAdaptersContracts(client, contracts, adapter.id)
-
-    await client.query('COMMIT')
+    await insertAdaptersContracts(client, flattenContracts(contracts), adapter.id)
 
     return success({})
   } catch (e) {
-    await client.query('ROLLBACK')
     console.error('Failed to revalidate adapter contracts', e)
     return serverError('Failed to revalidate adapter contracts')
-  } finally {
-    client.release(true)
   }
 }

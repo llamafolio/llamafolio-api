@@ -1,10 +1,10 @@
 import path from 'node:path'
 import url from 'node:url'
 
+import { connect } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
-import pool from '@db/pool'
 import type { Adapter, BalancesContext } from '@lib/adapter'
-import type { Chain } from '@lib/chains'
+import { type Chain, chainById } from '@lib/chains'
 import { printBalancesConfig } from 'scripts/utils/balances'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -30,9 +30,14 @@ async function main() {
   const chain = process.argv[3] as Chain
   const address = process.argv[4].toLowerCase() as `0x${string}`
 
+  const chainId = chainById[chain]?.chainId
+  if (chainId == null) {
+    return console.error(`Missing chain ${chain}`)
+  }
+
   const ctx: BalancesContext = { address, chain, adapterId }
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
     const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
@@ -45,7 +50,7 @@ async function main() {
       )
     }
 
-    const contracts = await getContractsInteractions(client, address, adapterId, chain)
+    const contracts = await getContractsInteractions(client, address, adapterId, chainId)
 
     console.log(`Interacted with ${contracts.length} contracts`)
 
@@ -58,8 +63,6 @@ async function main() {
     console.log(`Completed in ${endTime - startTime}ms`)
   } catch (e) {
     console.log('Failed to run balances', e)
-  } finally {
-    client.release(true)
   }
 }
 

@@ -1,6 +1,6 @@
 import { selectDistinctAdaptersIds } from '@db/adapters'
-import pool from '@db/pool'
-import { deleteAllProtocols, insertProtocols } from '@db/protocols'
+import { connect } from '@db/clickhouse'
+import { insertProtocols } from '@db/protocols'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { fetchProtocols } from '@lib/protocols'
@@ -14,10 +14,8 @@ const updateProtocols: APIGatewayProxyHandler = async () => {
 
 export const scheduledUpdateProtocols = wrapScheduledLambda(updateProtocols)
 
-export const handler: APIGatewayProxyHandler = async (_event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
-  const client = await pool.connect()
+export const handler: APIGatewayProxyHandler = async () => {
+  const client = connect()
 
   try {
     const adapters = await selectDistinctAdaptersIds(client)
@@ -27,20 +25,13 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
 
     const protocols = await fetchProtocols(adaptersIds)
 
-    await client.query('BEGIN')
-
-    await deleteAllProtocols(client)
-
     await insertProtocols(client, protocols)
-
-    await client.query('COMMIT')
 
     console.log(`Inserted ${protocols.length} protocols`)
 
     return success({})
   } catch (e) {
     console.log('Failed to update protocols', e)
-    await client.query('ROLLBACK')
     return serverError('Failed to update protocols')
   }
 }

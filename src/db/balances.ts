@@ -1,99 +1,136 @@
-import type { BalancesGroup } from '@db/balances-groups'
-import { deleteBalancesGroupsCascadeByFromAddress, insertBalancesGroups } from '@db/balances-groups'
-import { groupBy, sliceIntoChunks } from '@lib/array'
-import { strToBuf } from '@lib/buf'
+import type { ClickHouseClient } from '@clickhouse/client'
+import { groupBy } from '@lib/array'
 import type { Category } from '@lib/category'
-import type { Chain } from '@lib/chains'
-import { sleep } from '@lib/promise'
-import type { PoolClient } from 'pg'
-import format from 'pg-format'
+import { type Chain, chainByChainId, chainById } from '@lib/chains'
+import { fromDateTime, toDateTime } from '@lib/fmt'
+import { avg, sum } from '@lib/math'
 
 export interface Balance {
-  groupId: string
-  amount: bigint
-  price?: string
-  balanceUSD?: number
-  rewardUSD?: number
-  debtUSD?: number
+  chain: Chain
+  adapterId: string
+  fromAddress: string
   address: string
   category: Category
+  groupIdx: number
+  amount: string
+  price: number
+  balanceUSD: number
+  rewardUSD: number
+  debtUSD: number
+  healthFactor: number
+  timestamp: Date
   data?: any
 }
 
 export interface BalanceStorage {
-  group_id: string
-  amount: string
-  price?: string
-  balance_usd?: string
-  reward_usd?: string
-  debt_usd?: string
+  chain: number
+  adapter_id: string
+  from_address: string
   address: string
-  category: string
-  data?: any
+  category: Category
+  group_idx: number
+  amount: string
+  price: string
+  balance_usd: string
+  reward_usd: string
+  debt_usd: string
+  health_factor: string
+  timestamp: string
+  data: string
 }
 
 export interface BalanceStorable {
-  group_id: string
-  amount: string
-  price?: string
-  balance_usd?: number
-  reward_usd?: number
-  debt_usd?: number
+  chain: number
+  adapter_id: string
+  from_address: string
   address: string
   category: Category
-  data?: any
-}
-
-export function fromRowStorage(balanceStorage: BalanceStorage) {
-  const balance: Balance = {
-    ...balanceStorage.data,
-    address: balanceStorage.address,
-    price: balanceStorage.price ? parseFloat(balanceStorage.price) : undefined,
-    amount: balanceStorage.amount,
-    balanceUSD: balanceStorage.balance_usd ? parseFloat(balanceStorage.balance_usd) : undefined,
-    rewardUSD: balanceStorage.reward_usd ? parseFloat(balanceStorage.reward_usd) : undefined,
-    debtUSD: balanceStorage.debt_usd ? parseFloat(balanceStorage.debt_usd) : undefined,
-    category: balanceStorage.category,
-  }
-
-  return balance
+  group_idx: number
+  amount: bigint | string
+  price: number
+  balance_usd: number
+  reward_usd: number
+  debt_usd: number
+  health_factor: number
+  timestamp: string
+  data: string
 }
 
 export function fromStorage(balancesStorage: BalanceStorage[]) {
-  return balancesStorage.map(fromRowStorage)
-}
+  const balances: Balance[] = []
 
-export function toRow(balance: BalanceStorable) {
-  return [
-    balance.group_id,
-    balance.amount,
-    balance.price,
-    balance.balance_usd,
-    balance.reward_usd,
-    balance.debt_usd,
-    balance.address.toLowerCase(),
-    balance.category,
-    balance.data,
-  ]
+  for (const balanceStorage of balancesStorage) {
+    const chain = chainByChainId[balanceStorage.chain]?.id
+    if (chain == null) {
+      console.error(`Missing chain ${balanceStorage.chain}`)
+      continue
+    }
+
+    const balance: Balance = {
+      ...JSON.parse(balanceStorage.data),
+      chain,
+      adapterId: balanceStorage.adapter_id,
+      fromAddress: balanceStorage.from_address,
+      address: balanceStorage.address,
+      category: balanceStorage.category,
+      groupIdx: balanceStorage.group_idx,
+      amount: balanceStorage.amount,
+      price: parseFloat(balanceStorage.price),
+      balanceUSD: parseFloat(balanceStorage.balance_usd),
+      rewardUSD: parseFloat(balanceStorage.reward_usd),
+      debtUSD: parseFloat(balanceStorage.debt_usd),
+      healthFactor: parseFloat(balanceStorage.health_factor),
+      timestamp: fromDateTime(balanceStorage.timestamp),
+    }
+
+    balances.push(balance)
+  }
+
+  return balances
 }
 
 export function toStorage(balances: Balance[]) {
   const balancesStorable: BalanceStorable[] = []
 
   for (const balance of balances) {
-    const { groupId, address, price, amount, balanceUSD, rewardUSD, debtUSD, category, ...data } = balance
-
-    const balanceStorable: BalanceStorable = {
-      group_id: groupId,
-      amount: amount.toString(),
-      price,
-      balance_usd: balanceUSD,
-      reward_usd: rewardUSD,
-      debt_usd: debtUSD,
+    const {
+      chain,
+      adapterId,
+      fromAddress,
       address,
       category,
-      // \\u0000 cannot be converted to text
-      data: JSON.parse(JSON.stringify(data).replace(/\\u0000/g, '')),
+      groupIdx,
+      amount,
+      price,
+      balanceUSD,
+      rewardUSD,
+      debtUSD,
+      healthFactor,
+      timestamp,
+      ...data
+    } = balance
+
+    const chainId = chainById[chain]?.chainId
+    if (chainId == null) {
+      console.error(`Missing chain ${chain}`)
+      continue
+    }
+
+    const balanceStorable: BalanceStorable = {
+      chain: chainId,
+      adapter_id: adapterId,
+      from_address: fromAddress,
+      address,
+      category,
+      group_idx: groupIdx,
+      amount,
+      price: price || 0,
+      balance_usd: balanceUSD || 0,
+      reward_usd: rewardUSD || 0,
+      debt_usd: debtUSD || 0,
+      health_factor: healthFactor || 0,
+      timestamp: toDateTime(timestamp),
+      data: JSON.stringify(data),
     }
 
     balancesStorable.push(balanceStorable)
@@ -102,181 +139,98 @@ export function toStorage(balances: Balance[]) {
   return balancesStorable
 }
 
-export async function selectBalancesByFromAddress(client: PoolClient, fromAddress: string) {
-  const balancesRes = await client.query(`select * from balances where from_address = $1;`, [fromAddress])
-
-  return fromStorage(balancesRes.rows)
-}
-
-export async function selectBalancesWithGroupsAndYieldsByFromAddress(client: PoolClient, fromAddress: string) {
+export async function selectLatestBalancesGroupsByFromAddress(client: ClickHouseClient, fromAddress: string) {
   const balancesGroups: any[] = []
 
-  const queryRes = await client.query(
-    /*sql*/ `
-    select
-      bg.id as group_id,
-      bg.adapter_id,
-      bg.chain,
-      bg.balance_usd as g_balance_usd,
-      bg.debt_usd as g_debt_usd,
-      bg.reward_usd as g_reward_usd,
-      bg.health_factor,
-      bg.timestamp,
-      bg.from_address,
-      b.amount,
-      b.price,
-      b.balance_usd,
-      b.reward_usd,
-      b.debt_usd,
-      b.address,
-      b.category,
-      b.data
-    from balances_groups bg
-    inner join balances b on b.group_id = bg.id
-    where bg.from_address = $1;
-  `,
-    [fromAddress.toLowerCase()],
-  )
+  const queryRes = await client.query({
+    query: `
+      WITH (
+        SELECT timestamp
+        FROM lf.balances
+        WHERE from_address = {fromAddress: String}
+        ORDER BY timestamp DESC
+        LIMIT 1
+      ) AS latest
+      SELECT *
+      FROM lf.balances
+      WHERE from_address = {fromAddress: String} AND timestamp IN latest;
+    `,
+    query_params: {
+      fromAddress: fromAddress.toLowerCase(),
+    },
+  })
 
-  const balancesByGroupId = groupBy(queryRes.rows, 'group_id')
+  const res = (await queryRes.json()) as {
+    data: BalanceStorage[]
+  }
 
-  for (const groupId in balancesByGroupId) {
-    const balances = balancesByGroupId[groupId]
+  const balancesByChain = groupBy(fromStorage(res.data), 'chain')
 
-    balancesGroups.push({
-      adapterId: balances[0].adapter_id,
-      chain: balances[0].chain,
-      balanceUSD: balances[0].g_balance_usd != null ? parseFloat(balances[0].g_balance_usd) : undefined,
-      debtUSD: balances[0].g_debt_usd != null ? parseFloat(balances[0].g_debt_usd) : undefined,
-      rewardUSD: balances[0].g_reward_usd != null ? parseFloat(balances[0].g_reward_usd) : undefined,
-      healthFactor: balances[0].health_factor != null ? parseFloat(balances[0].health_factor) : undefined,
-      timestamp: balances[0].timestamp,
-      balances: balances.map((balance) => ({
-        address: balance.address,
-        price: balance.price != null ? parseFloat(balance.price) : undefined,
-        amount: balance.amount,
-        balanceUSD: balance.balance_usd != null ? parseFloat(balance.balance_usd) : undefined,
-        rewardUSD: balance.reward_usd != null ? parseFloat(balance.reward_usd) : undefined,
-        debtUSD: balance.debt_usd != null ? parseFloat(balance.debt_usd) : undefined,
-        category: balance.category,
-        data: balance.data,
-      })),
-    })
+  for (const chain in balancesByChain) {
+    const balancesByAdapterId = groupBy(balancesByChain[chain], 'adapterId')
+
+    for (const adapterId in balancesByAdapterId) {
+      const balancesByGroupIdx = groupBy(balancesByAdapterId[adapterId], 'groupIdx')
+
+      for (const groupIdx in balancesByGroupIdx) {
+        const balances = balancesByGroupIdx[groupIdx].map((balance) => ({
+          address: balance.address,
+          price: balance.price,
+          amount: balance.amount,
+          balanceUSD: balance.balanceUSD,
+          rewardUSD: balance.rewardUSD,
+          debtUSD: balance.debtUSD,
+          category: balance.category,
+        }))
+
+        balancesGroups.push({
+          adapterId,
+          chain,
+          balanceUSD: sum(balances.map((balance) => balance.balanceUSD)),
+          debtUSD: sum(balances.map((balance) => balance.debtUSD)),
+          rewardUSD: sum(balances.map((balance) => balance.rewardUSD)),
+          healthFactor: avg(
+            balancesByGroupIdx[groupIdx].map((balance) => balance.healthFactor),
+            balancesByGroupIdx[groupIdx].length,
+          ),
+          timestamp: balancesByGroupIdx[groupIdx][0].timestamp,
+          balances,
+        })
+      }
+    }
   }
 
   return balancesGroups
 }
 
-export async function selectBalancesHolders(client: PoolClient, contractAddress: string, chain: Chain, limit: number) {
-  const res = await client.query(
-    format(
-      /*sql*/ `
-      select bg.from_address as address, b.amount from balances b
-      inner join balances_groups bg on b.group_id = bg.id
-      where (
-        b.address = %L and
-        bg.chain = %L and
-        bg.adapter_id = 'wallet'
-      )
-      order by b.amount desc limit %L;
-      `,
-      contractAddress,
-      chain,
-      limit,
-    ),
-  )
-
-  return res.rows
+export async function selectBalancesHolders(
+  client: ClickHouseClient,
+  contractAddress: string,
+  chain: Chain,
+  limit: number,
+) {
+  console.error('Unimplemented function db/balances#selectBalancesHolders')
+  return []
 }
 
-export function deleteBalancesByFromAddress(client: PoolClient, fromAddress: string) {
-  return client.query(format('delete from balances where from_address = %L', [strToBuf(fromAddress)]), [])
-}
-
-export function insertBalances(client: PoolClient, balances: Balance[]) {
-  const values = toStorage(balances).map(toRow)
+export function insertBalances(client: ClickHouseClient, balances: Balance[]) {
+  const values = toStorage(balances)
 
   if (values.length === 0) {
     return
   }
 
-  return Promise.all(
-    sliceIntoChunks(values, 200).map((chunk) =>
-      client.query(
-        format(
-          `INSERT INTO balances (
-            group_id,
-            amount,
-            price,
-            balance_usd,
-            reward_usd,
-            debt_usd,
-            address,
-            category,
-            data
-          ) VALUES %L ON CONFLICT DO NOTHING;
-          `,
-          chunk,
-        ),
-        [],
-      ),
-    ),
-  )
+  return client.insert({
+    table: 'lf.balances',
+    values,
+    format: 'JSONEachRow',
+  })
 }
 
-/**
- * Update wallet balances in a transaction (delete previous and insert new ones)
- * @param client
- * @param address
- * @param balancesGroups
- * @param balances
- */
-export async function updateBalances(
-  client: PoolClient,
-  address: string,
-  balancesGroups: BalancesGroup[],
-  balances: Balance[],
-) {
-  const backoffIntervalMs = 100
-  const maxTries = 5
-  let tries = 0
-
-  try {
-    // Do the transaction in a loop (with exponential backoff) to prevent Cockroach contention errors
-    // See: https://www.cockroachlabs.com/docs/stable/transaction-retry-error-reference.html
-    while (tries <= maxTries) {
-      await client.query('BEGIN')
-
-      tries++
-
-      try {
-        // Delete old balances
-        await deleteBalancesGroupsCascadeByFromAddress(client, address)
-
-        // Insert balances groups
-        await insertBalancesGroups(client, balancesGroups)
-
-        // Insert new balances
-        await insertBalances(client, balances)
-
-        await client.query('COMMIT')
-
-        return
-      } catch (err: any) {
-        await client.query('ROLLBACK')
-
-        console.error('Failed to insert balances: code', err.code)
-        if (err.code !== '40001' || tries == maxTries) {
-          throw err
-        } else {
-          console.error('Failed to insert balances, transaction contention retry', tries)
-          await sleep(tries * backoffIntervalMs)
-        }
-      }
-    }
-  } catch (error) {
-    const errorMessage = error instanceof Error ? error.message : `Encoutered an error: ` + error
-    console.trace(`updateBalances failed: ${errorMessage}`)
-    return
-  }
+export function deleteOldBalances(client: ClickHouseClient, fromAddress: string, timestamp: Date) {
+  return client.command({
+    query:
+      'DELETE FROM lf.balances WHERE "from_address" = {fromAddress: String} AND "timestamp" < {timestamp: DateTime};',
+    query_params: { fromAddress: fromAddress.toLowerCase(), timestamp: toDateTime(timestamp) },
+  })
 }

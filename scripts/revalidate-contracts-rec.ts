@@ -4,11 +4,11 @@ import url from 'node:url'
 import isEqual from 'lodash/isEqual'
 
 import type { Adapter as DBAdapter } from '../src/db/adapters'
-import { selectAdapter, upsertAdapters } from '../src/db/adapters'
-import { deleteContractsByAdapter, insertAdaptersContracts } from '../src/db/contracts'
-import pool from '../src/db/pool'
+import { insertAdapters, selectAdapter } from '../src/db/adapters'
+import { connect } from '../src/db/clickhouse'
+import { flattenContracts, insertAdaptersContracts } from '../src/db/contracts'
 import type { Adapter, BaseContext } from '../src/lib/adapter'
-import type { Chain } from '../src/lib/chains'
+import { type Chain, chainById } from '../src/lib/chains'
 import { resolveContractsTokens } from '../src/lib/token'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -41,10 +41,15 @@ async function main() {
     console.error(`Could not find chain ${chain} for adapter ${adapter}`)
     return
   }
+  const chainId = chainById[chain]?.chainId
+  if (chainId == null) {
+    console.error(`Missing chain ${chain}`)
+    return
+  }
 
-  const client = await pool.connect()
+  const client = connect()
 
-  let prevDbAdapter = await selectAdapter(client, chain, adapter.id)
+  let prevDbAdapter = await selectAdapter(client, chainId, adapter.id)
 
   for (let i = 0; ; i++) {
     try {
@@ -63,11 +68,7 @@ async function main() {
         break
       }
 
-      const contracts = await resolveContractsTokens({
-        client,
-        contractsMap: config.contracts || {},
-        storeMissingTokens: true,
-      })
+      const contracts = await resolveContractsTokens(config.contracts || {})
 
       let expire_at: Date | undefined = undefined
       if (config.revalidate) {
@@ -85,28 +86,15 @@ async function main() {
 
       prevDbAdapter = dbAdapter
 
-      await client.query('BEGIN')
-
-      await upsertAdapters(client, [dbAdapter])
-
-      // Delete old contracts unless it's a revalidate.
-      // In such case we want to add new contracts, not replace the old ones
-      if (!config.revalidate) {
-        await deleteContractsByAdapter(client, adapter.id, chain)
-      }
+      await insertAdapters(client, [dbAdapter])
 
       // Insert new contracts
-      await insertAdaptersContracts(client, contracts, adapter.id)
-
-      await client.query('COMMIT')
+      await insertAdaptersContracts(client, flattenContracts(contracts), adapter.id)
     } catch (e) {
       console.log('Failed to revalidate adapter contracts', e)
-      await client.query('ROLLBACK')
       break
     }
   }
-
-  client.release(true)
 }
 
 main()

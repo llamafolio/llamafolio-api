@@ -1,24 +1,5 @@
 import type { ClickHouseClient } from '@clickhouse/client'
-import { sliceIntoChunks } from '@lib/array'
 import type { IProtocol } from '@lib/protocols'
-import type { PoolClient } from 'pg'
-import format from 'pg-format'
-
-export interface IProtocolStorable {
-  name: string
-  url: string
-  logo: string
-  category: string
-  slug: string
-  chain: string
-  chains: string[]
-  symbol?: string
-  tvl: number
-  twitter?: string
-  description?: string
-  address?: string
-  color?: string
-}
 
 export interface ProtocolStorage {
   name: string
@@ -34,26 +15,6 @@ export interface ProtocolStorage {
   description: string | null
   address: string | null
   color: string | null
-}
-
-const toRow = (protocol: IProtocolStorable) => {
-  const chains = protocol.chains.toString()
-
-  return [
-    protocol.name,
-    protocol.url,
-    protocol.logo,
-    protocol.category,
-    protocol.slug,
-    protocol.chain,
-    `{ ${chains} }`,
-    protocol.symbol,
-    protocol.tvl,
-    protocol.twitter,
-    protocol.description,
-    protocol.address,
-    protocol.color,
-  ]
 }
 
 export function fromRowStorage(protocolStorage: ProtocolStorage) {
@@ -80,63 +41,30 @@ export function fromStorage(protocolsStorage: ProtocolStorage[]) {
   return protocolsStorage.map(fromRowStorage)
 }
 
-export function deleteAllProtocols(client: PoolClient) {
-  return client.query('DELETE FROM protocols WHERE true;', [])
+export function deleteProtocol(client: ClickHouseClient, slug: string) {
+  return client.command({
+    query: 'DELETE FROM lf.protocols WHERE slug = {slug: String};',
+    query_params: { slug },
+  })
 }
 
-export async function selectProtocols(client: PoolClient): Promise<IProtocol[]> {
-  const protocolsRes = await client.query('select * from protocols', [])
-
-  return fromStorage(protocolsRes.rows)
-}
-
-export async function insertProtocols(client: PoolClient, protocols: IProtocol[]) {
-  const protocolsStorable = protocols.map(toRow)
-
-  if (protocolsStorable.length === 0) {
-    return
-  }
-
-  return Promise.all(
-    sliceIntoChunks(protocolsStorable, 200).map((chunk) =>
-      client.query(
-        format(
-          `INSERT INTO protocols (
-            name,
-            url,
-            logo,
-            category,
-            slug,
-            chain,
-            chains,
-            symbol,
-            tvl,
-            twitter,
-            description,
-            address,
-            color
-          ) VALUES %L;`,
-          chunk,
-        ),
-        [],
-      ),
-    ),
-  )
-}
-
-export async function selectProtocolsV1(client: ClickHouseClient) {
+export async function selectProtocols(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: 'select * from lf.protocols;',
+    query: 'SELECT * FROM lf.protocols;',
   })
 
   const res = (await queryRes.json()) as {
-    data: IProtocol[]
+    data: ProtocolStorage[]
   }
 
-  return res.data
+  return fromStorage(res.data)
 }
 
-export async function updateProtocolsV1(client: ClickHouseClient, protocols: IProtocol[]) {
+export async function insertProtocols(client: ClickHouseClient, protocols: IProtocol[]) {
+  if (protocols.length === 0) {
+    return
+  }
+
   await client.insert({
     table: 'lf.protocols',
     values: protocols,

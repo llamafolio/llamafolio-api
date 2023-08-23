@@ -61,11 +61,11 @@ export function parseStringJSON(jsonString: string) {
  * format Date to Clickhouse compatible DateTime
  */
 export function toDateTime(date: Date) {
-  return dayjs(date).format('YYYY-MM-DD HH:mm:ss')
+  return dayjs(date).utc().format('YYYY-MM-DD HH:mm:ss')
 }
 
 export function fromDateTime(date: string) {
-  return dayjs(date, 'YYYY-MM-DD HH:mm:ss').toDate()
+  return dayjs(date, 'YYYY-MM-DD HH:mm:ss').utc().toDate()
 }
 
 export function unixFromDateTime(date: string) {

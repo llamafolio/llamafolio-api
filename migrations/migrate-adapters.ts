@@ -40,6 +40,11 @@ async function main() {
       values: formattedAdapters,
       format: 'JSONEachRow',
     })
+
+    // merge duplicates
+    await clickhouseClient.command({
+      query: 'OPTIMIZE TABLE lf.adapters FINAL DEDUPLICATE BY "chain", "id";',
+    })
   } catch (e) {
     console.log('Failed to migrate adapters', e)
   } finally {

@@ -1,5 +1,5 @@
-import { selectLastBalancesGroupsByFromAddress } from '@db/balances-groups'
-import pool from '@db/pool'
+import { selectLatestBalancesGroupsByFromAddress } from '@db/balances'
+import { connect } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
@@ -33,10 +33,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
-    const lastBalancesGroups = await selectLastBalancesGroupsByFromAddress(client, address)
+    const lastBalancesGroups = await selectLatestBalancesGroupsByFromAddress(client, address)
 
     if (lastBalancesGroups.length === 0) {
       const response: LatestSnapshotResponse = {
@@ -70,7 +70,5 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (e) {
     console.error('Failed to retrieve latest snapshot', e)
     return serverError('Failed to retrieve latest snapshot')
-  } finally {
-    client.release(true)
   }
 }

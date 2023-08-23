@@ -19,6 +19,12 @@ async function main() {
       console.log('Offset', offset)
       const adaptersContracts = await client.query('select * from adapters_contracts offset $1 limit 10000;', [offset])
       if (adaptersContracts.rows.length === 0) {
+        // merge duplicates
+        await clickhouseClient.command({
+          query:
+            'OPTIMIZE TABLE lf.adapters_contracts FINAL DEDUPLICATE BY "chain", "adapter_id", "address", "category";',
+        })
+
         console.log('Done')
         return
       }

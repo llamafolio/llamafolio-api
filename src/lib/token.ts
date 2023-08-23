@@ -1,12 +1,9 @@
-import type { ERC20Token } from '@db/tokens'
-import { insertERC20Tokens, selectChainTokens } from '@db/tokens'
 import type { BaseContract, Contract, RawContract } from '@lib/adapter'
 import { type Chain, chainById } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getERC20Details } from '@lib/erc20'
 import { isNotNullish } from '@lib/type'
 import { getToken } from '@llamafolio/tokens'
-import type { PoolClient } from 'pg'
 
 export const ETH_ADDR = '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
 
@@ -90,16 +87,8 @@ async function processContracts(contracts: Array<RawContract | Contract>) {
   return chainsAddresses
 }
 
-export async function resolveContractsTokens({
-  client,
-  contractsMap,
-  storeMissingTokens = false,
-}: {
-  client?: PoolClient
-  contractsMap: {
-    [key: string]: RawContract | RawContract[] | Contract | Contract[] | undefined
-  }
-  storeMissingTokens?: boolean
+export async function resolveContractsTokens(contractsMap: {
+  [key: string]: RawContract | RawContract[] | Contract | Contract[] | undefined
 }) {
   const contractsArray: (RawContract | Contract)[] = []
 
@@ -116,23 +105,6 @@ export async function resolveContractsTokens({
   const chains = Object.keys(chainsAddresses)
 
   const chainsTokens: Partial<Record<Chain, Record<`0x${string}`, Token>>> = {}
-
-  // get tokens info from DB
-  if (client) {
-    const chainsTokensResponse = await Promise.all(
-      chains.map((chain) => selectChainTokens(client, chain as Chain, [...(chainsAddresses[chain as Chain] || [])])),
-    )
-
-    for (let index = 0; index < chains.length; index++) {
-      const chain = chains[index] as Chain
-      for (const token of chainsTokensResponse[index]) {
-        if (!chainsTokens[chain]) {
-          chainsTokens[chain] = {}
-        }
-        chainsTokens[chain]![token.address.toLowerCase()] = { ...token, chain }
-      }
-    }
-  }
 
   // collect missing tokens and fetch their info on-chain
   const missingChainsTokens: Partial<Record<Chain, string[]>> = {}
@@ -230,30 +202,6 @@ export async function resolveContractsTokens({
     }
 
     response[key] = responseContracts
-  }
-
-  if (client && storeMissingTokens) {
-    const missingTokens: ERC20Token[] = []
-
-    for (let chainIndex = 0; chainIndex < missingTokensChains.length; chainIndex++) {
-      for (const token of missingChainsTokensResponse[chainIndex]) {
-        missingTokens.push({
-          address: token.address,
-          chain: missingTokensChains[chainIndex] as Chain,
-          name: (token as unknown as any).name,
-          symbol: token.symbol,
-          decimals: token.decimals,
-          coingeckoId: token.coingeckoId || undefined,
-          cmcId: undefined,
-        })
-      }
-    }
-
-    if (missingTokens.length > 0) {
-      await insertERC20Tokens(client, missingTokens)
-
-      console.log(`Inserted ${missingTokens.length} tokens`)
-    }
   }
 
   return response

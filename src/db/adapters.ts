@@ -1,10 +1,7 @@
 import type { ClickHouseClient } from '@clickhouse/client'
-import { sliceIntoChunks } from '@lib/array'
-import { type Chain, chainByChainId } from '@lib/chains'
-import { fromDateTime } from '@lib/fmt'
+import { type Chain, chainByChainId, chainById } from '@lib/chains'
+import { fromDateTime, toDateTime } from '@lib/fmt'
 import { isNotFalsy } from '@lib/type'
-import type { PoolClient } from 'pg'
-import format from 'pg-format'
 
 export interface Adapter {
   id: string
@@ -26,60 +23,37 @@ export interface AdapterStorage {
 
 export interface AdapterStorable {
   id: string
-  chain: Chain
-  contracts_expire_at?: Date
-  contracts_revalidate_props?: { [key: string]: any }
-  contracts_props?: { [key: string]: any }
-  created_at?: Date
+  chain: number
+  contracts_expire_at?: string
+  contracts_revalidate_props?: string
+  contracts_props?: string
+  created_at?: string
 }
 
 export function fromStorage(adaptersStorage: AdapterStorage[]) {
   const adapters: Adapter[] = []
 
   for (const adapterStorage of adaptersStorage) {
+    const chain = chainByChainId[parseInt(adapterStorage.chain)]
+    if (!chain) {
+      continue
+    }
+
     const adapter: Adapter = {
       id: adapterStorage.id,
-      chain: adapterStorage.chain as Chain,
-      contractsExpireAt: adapterStorage.contracts_expire_at ? new Date(adapterStorage.contracts_expire_at) : undefined,
+      chain: chain.id,
+      contractsExpireAt: adapterStorage.contracts_expire_at
+        ? fromDateTime(adapterStorage.contracts_expire_at)
+        : undefined,
       contractsRevalidateProps: adapterStorage.contracts_revalidate_props || {},
       contractsProps: adapterStorage.contracts_props || {},
-      createdAt: new Date(adapterStorage.created_at),
+      createdAt: fromDateTime(adapterStorage.created_at),
     }
 
     adapters.push(adapter)
   }
 
   return adapters
-}
-
-export function fromPartialStorage(adaptersStorage: Partial<AdapterStorage>[]) {
-  const adapters: Partial<Adapter>[] = []
-
-  for (const adapterStorage of adaptersStorage) {
-    const adapter: Partial<Adapter> = {
-      id: adapterStorage?.id,
-      chain: adapterStorage?.chain as Chain,
-      contractsExpireAt: adapterStorage.contracts_expire_at ? new Date(adapterStorage.contracts_expire_at) : undefined,
-      contractsRevalidateProps: adapterStorage?.contracts_revalidate_props || {},
-      contractsProps: adapterStorage?.contracts_props || {},
-      createdAt: adapterStorage.created_at ? new Date(adapterStorage.created_at) : undefined,
-    }
-
-    adapters.push(adapter)
-  }
-
-  return adapters
-}
-
-export function toRow(adapterStorable: AdapterStorable) {
-  return [
-    adapterStorable.id,
-    adapterStorable.chain,
-    adapterStorable.contracts_expire_at,
-    adapterStorable.contracts_revalidate_props,
-    adapterStorable.contracts_props,
-    adapterStorable.created_at,
-  ]
 }
 
 export function toStorage(adapters: Adapter[]) {
@@ -88,13 +62,19 @@ export function toStorage(adapters: Adapter[]) {
   for (const adapter of adapters) {
     const { id, chain, contractsExpireAt, contractsRevalidateProps, contractsProps, createdAt } = adapter
 
+    const chainId = chainById[chain]?.chainId
+    if (chainId == null) {
+      console.error(`Missing chain ${chain}`)
+      continue
+    }
+
     const adapterStorable: AdapterStorable = {
       id,
-      chain,
-      contracts_expire_at: contractsExpireAt,
-      contracts_revalidate_props: contractsRevalidateProps,
-      contracts_props: contractsProps,
-      created_at: createdAt,
+      chain: chainId,
+      contracts_expire_at: contractsExpireAt ? toDateTime(contractsExpireAt) : undefined,
+      contracts_revalidate_props: contractsRevalidateProps ? JSON.stringify(contractsRevalidateProps) : undefined,
+      contracts_props: contractsProps ? JSON.stringify(contractsProps) : undefined,
+      created_at: toDateTime(createdAt),
     }
 
     adaptersStorable.push(adapterStorable)
@@ -103,15 +83,9 @@ export function toStorage(adapters: Adapter[]) {
   return adaptersStorable
 }
 
-export async function countAdapters(client: PoolClient) {
-  const res = await client.query(`select count(distinct(id)) from adapters;`, [])
-
-  return parseInt(res.rows[0].count)
-}
-
-export async function countAdaptersV1(client: ClickHouseClient) {
+export async function countAdapters(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: 'select count() as count from lf.adapters;',
+    query: 'SELECT count() AS count FROM lf.adapters;',
   })
 
   const res = (await queryRes.json()) as {
@@ -121,19 +95,20 @@ export async function countAdaptersV1(client: ClickHouseClient) {
   return parseInt(res.data[0].count)
 }
 
-export async function selectAdapter(client: PoolClient, chain: Chain, adapterId: string) {
-  const adaptersRes = await client.query(`select * from adapters where id = $1 and chain = $2;`, [adapterId, chain])
+export async function selectAdapter(client: ClickHouseClient, chainId: number, adapterId: string) {
+  const queryRes = await client.query({
+    query: 'SELECT * FROM lf.adapters WHERE "chain" = {chainId: UInt64} AND "id" = {adapterId: String};',
+    query_params: { adapterId, chainId },
+  })
 
-  return adaptersRes.rows.length === 1 ? fromStorage(adaptersRes.rows)[0] : null
+  const res = (await queryRes.json()) as {
+    data: AdapterStorage[]
+  }
+
+  return res.data.length === 1 ? fromStorage(res.data)[0] : null
 }
 
-export async function selectDistinctAdaptersIds(client: PoolClient) {
-  const adaptersRes = await client.query(`select distinct(id) from adapters;`, [])
-
-  return fromStorage(adaptersRes.rows)
-}
-
-export async function selectDistinctAdaptersIdsV1(client: ClickHouseClient) {
+export async function selectDistinctAdaptersIds(client: ClickHouseClient) {
   const queryRes = await client.query({
     query: 'SELECT id FROM lf.adapters GROUP BY id;',
   })
@@ -145,52 +120,23 @@ export async function selectDistinctAdaptersIdsV1(client: ClickHouseClient) {
   return res.data
 }
 
-export async function selectAdaptersContractsExpired(client: PoolClient) {
-  const adaptersRes = await client.query(`select * from adapters where contracts_expire_at <= now();`, [])
+export async function selectAdaptersContractsExpired(client: ClickHouseClient) {
+  const queryRes = await client.query({ query: `SELECT * FROM adapters WHERE contracts_expire_at <= now();` })
 
-  return fromStorage(adaptersRes.rows)
+  const res = (await queryRes.json()) as {
+    data: AdapterStorage[]
+  }
+
+  return fromStorage(res.data)
 }
 
-export async function selectLatestCreatedAdapters(client: PoolClient, limit = 5) {
-  // select x last added protocols (no matter which chain) and collect
-  // all of their chains we support
-  const adaptersRes = await client.query(
-    `
-    with last_adapters as (
-      select * from (
-        select distinct on (a.id) a.id, a.created_at from (
-          select distinct id, created_at from adapters
-          where id <> 'wallet' and created_at is not null
-          order by created_at desc
-          limit $2
-        ) a
-        limit $1
-      ) b
-      order by b.created_at desc
-      )
-      select id, array_agg(chain) as chains, created_at from (
-        select la.id, a.chain, la.created_at from last_adapters la
-        inner join adapters a on a.id = la.id
-      ) as _ group by (id, created_at) order by created_at desc;
-    `,
-    [limit, limit * 2],
-  )
-
-  return adaptersRes.rows.map((row) => ({
-    id: row.id as string,
-    chains: row.chains as Chain[],
-    createdAt: new Date(row.created_at),
-  }))
-}
-
-export async function selectLatestCreatedAdaptersV1(client: ClickHouseClient, limit = 5) {
+export async function selectLatestCreatedAdapters(client: ClickHouseClient, limit = 5) {
   // select last added protocols (no matter which chain) and collect
   // all of their chains we support
   const queryRes = await client.query({
-    query: `select id, groupArray(chain) as chains, created_at from lf.adapters group by (id, created_at) order by created_at desc limit {limit: UInt8};`,
+    query: `SELECT "id", groupArray("chain") AS "chains", "created_at" FROM lf.adapters GROUP BY ("id", "created_at") ORDER BY "created_at" DESC LIMIT {limit: UInt8};`,
     query_params: {
       limit,
-      limitDouble: limit * 2,
     },
   })
 
@@ -205,55 +151,28 @@ export async function selectLatestCreatedAdaptersV1(client: ClickHouseClient, li
   }))
 }
 
-export function insertAdapters(client: PoolClient, adapters: Adapter[]) {
-  const values = toStorage(adapters).map(toRow)
+export async function insertAdapters(client: ClickHouseClient, adapters: Adapter[]) {
+  const values = toStorage(adapters)
 
   if (values.length === 0) {
     return
   }
 
-  return Promise.all(
-    sliceIntoChunks(values, 200).map((chunk) =>
-      client.query(
-        format(
-          'INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, contracts_props, created_at) VALUES %L ON CONFLICT DO NOTHING;',
-          chunk,
-        ),
-        [],
-      ),
-    ),
-  )
+  await client.insert({
+    table: 'lf.adapters',
+    values,
+    format: 'JSONEachRow',
+  })
+
+  // merge duplicates
+  await client.command({
+    query: 'OPTIMIZE TABLE lf.adapters FINAL DEDUPLICATE BY "chain", "id";',
+  })
 }
 
-export function upsertAdapters(client: PoolClient, adapters: Adapter[]) {
-  const values = toStorage(adapters).map(toRow)
-
-  if (values.length === 0) {
-    return
-  }
-
-  return Promise.all(
-    sliceIntoChunks(values, 200).map((chunk) =>
-      client.query(
-        format(
-          `
-          INSERT INTO adapters (id, chain, contracts_expire_at, contracts_revalidate_props, contracts_props, created_at)
-          VALUES %L
-          ON CONFLICT (id, chain)
-          DO
-            UPDATE SET
-              contracts_expire_at = EXCLUDED.contracts_expire_at,
-              contracts_revalidate_props = EXCLUDED.contracts_revalidate_props,
-              contracts_props = EXCLUDED.contracts_props
-          ;`,
-          chunk,
-        ),
-        [],
-      ),
-    ),
-  )
-}
-
-export function deleteAdapterById(client: PoolClient, adapterId: string) {
-  return client.query('DELETE FROM adapters WHERE id = $1;', [adapterId])
+export function deleteAdapterById(client: ClickHouseClient, adapterId: string) {
+  return client.command({
+    query: 'DELETE FROM lf.adapters WHERE "id" = {adapterId: String};',
+    query_params: { adapterId },
+  })
 }

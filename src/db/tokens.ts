@@ -1,89 +1,39 @@
-import { sliceIntoChunks } from '@lib/array'
-import type { Chain } from '@lib/chains'
-import type { PoolClient } from 'pg'
-import format from 'pg-format'
+import type { ClickHouseClient } from '@clickhouse/client'
+import { type Chain, chainById } from '@lib/chains'
 
-export interface ERC20Token {
+export interface Token {
   address: string
   chain: Chain
   name?: string
+  type: number
   symbol: string
   decimals: number
-  coingeckoId?: string
-  cmcId?: string | null
+  coingecko_id?: string
+  cmc_id?: string | null
   stable?: boolean | null
 }
 
-export interface ERC20TokenStorage {
-  address: string
-  chain: string
-  name: string | null
-  symbol: string
-  decimals: number
-  coingecko_id: string | null
-  cmc_id: string | null
-  stable: boolean | null
-}
-
-export interface ERC20TokenStorable {
-  address: string
-  chain: Chain
-  name?: string
-  symbol: string
-  decimals: number
-  coingeckoId?: string | null
-  cmcId?: string | null
-  stable?: boolean | null
-}
-
-export function fromERC20Storage(tokensStorage: ERC20TokenStorage[]) {
-  const tokens: ERC20Token[] = []
-
-  for (const tokenStorage of tokensStorage) {
-    const token: ERC20Token = {
-      address: tokenStorage.address,
-      chain: tokenStorage.chain as Chain,
-      name: tokenStorage.name || undefined,
-      symbol: tokenStorage.symbol,
-      decimals: tokenStorage.decimals,
-      coingeckoId: tokenStorage.coingecko_id || undefined,
-      cmcId: tokenStorage.cmc_id,
-      stable: tokenStorage.stable,
-    }
-
-    tokens.push(token)
-  }
-
-  return tokens
-}
-
-export function toRow(token: ERC20TokenStorable) {
-  return [
-    token.address.toLowerCase(),
-    token.chain,
-    token.name,
-    token.symbol,
-    token.decimals,
-    token.coingeckoId,
-    token.cmcId,
-    token.stable,
-  ]
-}
-
-export function toERC20Storage(tokens: ERC20Token[]) {
-  const tokensStorable: ERC20TokenStorable[] = []
+export function toTokenStorage(tokens: Token[]) {
+  const tokensStorable: any[] = []
 
   for (const token of tokens) {
-    const { address, chain, name, symbol, decimals, coingeckoId, cmcId, stable } = token
+    const { address, chain, name, symbol, type, decimals, coingecko_id, cmc_id, stable } = token
 
-    const tokenStorable: ERC20TokenStorable = {
+    const chainId = chainById[chain]?.chainId
+    if (chainId == null) {
+      console.log(`Missing chain ${chain}`)
+      continue
+    }
+
+    const tokenStorable = {
       address,
-      chain,
+      chain: chainId,
+      type,
       name,
       symbol: symbol.replaceAll('\x00', ''),
       decimals,
-      coingeckoId,
-      cmcId,
+      coingecko_id,
+      cmc_id,
       stable,
     }
 
@@ -93,64 +43,48 @@ export function toERC20Storage(tokens: ERC20Token[]) {
   return tokensStorable
 }
 
-export async function selectChainTokens(client: PoolClient, chain: Chain, tokens: string[]) {
-  const tokensRes = await client.query(
-    format(`select * from erc20_tokens where chain = %L and address in (%L);`, chain, tokens),
-    [],
-  )
+export async function selectUndecodedChainAddresses(client: ClickHouseClient, limit?: number, offset?: number) {
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        "chain",
+        "address"
+      FROM evm_indexer.token_transfers
+      WHERE ("chain", "address") NOT IN (
+        SELECT "chain", "address" FROM evm_indexer.tokens
+      )
+      GROUP BY "chain", "address"
+      LIMIT {limit: UInt32}
+      OFFSET {offset: UInt32};
+    `,
+    query_params: {
+      limit: limit || 100,
+      offset: offset || 0,
+    },
+  })
 
-  return fromERC20Storage(tokensRes.rows)
+  const res = (await queryRes.json()) as {
+    data: { chain: number; address: `0x${string}` }[]
+  }
+
+  return res.data
 }
 
-export async function selectUndecodedChainAddresses(client: PoolClient, limit?: number, offset?: number) {
-  const tokensRes = await client.query(
-    format(
-      `
-      select distinct transfer.chain, transfer.token from erc20_transfers as transfer
-      where not exists (
-        select 1 from erc20_tokens as token
-        where token.chain = transfer.chain and token.address = transfer.token
-        ) limit %L offset %L;
-      `,
-      limit || 100,
-      offset || 0,
-    ),
-    [],
-  )
-
-  return tokensRes.rows.map(({ chain, token }) => [chain, token])
-}
-
-export function insertERC20Tokens(client: PoolClient, tokens: ERC20Token[]) {
-  const values = toERC20Storage(tokens).map(toRow)
+export async function insertERC20Tokens(client: ClickHouseClient, tokens: Token[]) {
+  const values = toTokenStorage(tokens)
 
   if (values.length === 0) {
     return
   }
 
-  return Promise.all(
-    sliceIntoChunks(values, 200).map((chunk) =>
-      client.query(
-        format(
-          `INSERT INTO erc20_tokens (
-            address,
-            chain,
-            name,
-            symbol,
-            decimals,
-            coingecko_id,
-            cmc_id,
-            stable
-          ) VALUES %L ON CONFLICT (address, chain) DO
-            UPDATE SET
-              coingecko_id = EXCLUDED.coingecko_id,
-              cmc_id = EXCLUDED.cmc_id,
-              stable = EXCLUDED.stable;
-          `,
-          chunk,
-        ),
-        [],
-      ),
-    ),
-  )
+  await client.insert({
+    table: 'evm_indexer.tokens',
+    values,
+    format: 'JSONEachRow',
+  })
+
+  // merge duplicates
+  await client.command({
+    query: 'OPTIMIZE TABLE evm_indexer.tokens FINAL DEDUPLICATE;',
+  })
 }

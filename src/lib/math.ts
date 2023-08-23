@@ -18,6 +18,10 @@ export function sum(nums: number[]) {
   return res
 }
 
+export function avg(nums: number[], len: number) {
+  return sum(nums) / len
+}
+
 export function mulPrice(amount: bigint, decimals: number, price: number) {
   try {
     const priceBI = parseUnits(price.toFixed(decimals || 0) as `${number}`, decimals)

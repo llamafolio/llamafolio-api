@@ -1,5 +1,5 @@
-import { selectBalancesWithGroupsAndYieldsByFromAddress } from '@db/balances'
-import pool from '@db/pool'
+import { selectLatestBalancesGroupsByFromAddress } from '@db/balances'
+import { connect } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { ContractStandard } from '@lib/adapter'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
@@ -153,9 +153,7 @@ export interface BalancesResponse {
   groups: GroupResponse[]
 }
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event) => {
   const address = event.pathParameters?.address as `0x${string}`
   if (!address) {
     return badRequest('Missing address parameter')
@@ -167,10 +165,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
   console.log('Get balances', address)
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
-    const balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
+    const balancesGroups = await selectLatestBalancesGroupsByFromAddress(client, address)
 
     const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
 
@@ -195,7 +193,5 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
-  } finally {
-    client.release(true)
   }
 }

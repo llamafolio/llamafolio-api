@@ -1,6 +1,5 @@
 import { connect } from '@db/clickhouse'
-import { selectHistory, selectHistoryAggregate } from '@db/history'
-import pool from '@db/pool'
+import { selectHistory, selectHistoryCount } from '@db/history'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
@@ -72,15 +71,13 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const offset = parseInt(queries?.offset || '') || 0
   const limit = parseInt(queries?.limit || '') || 50
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
-    const [transactions, transactionsAggregate] = await Promise.all([
+    const [transactions, count] = await Promise.all([
       selectHistory(client, address.toLowerCase(), limit, offset, chains, protocols),
-      selectHistoryAggregate(client, address.toLowerCase(), chains, protocols),
+      selectHistoryCount(client, address.toLowerCase(), chains, protocols),
     ])
-
-    const count = parseInt(transactionsAggregate.aggregate.count)
 
     const transactionsData: ITransaction[] = transactions.map((tx: any) => ({
       chain: tx.chain,
@@ -177,8 +174,6 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (e) {
     console.error('Failed to retrieve history', e)
     return serverError('Failed to retrieve history')
-  } finally {
-    client.release(true)
   }
 }
 

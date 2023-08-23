@@ -1,28 +1,21 @@
 import '../environment'
 
-import pool from '../src/db/pool'
-import { deleteAllYields, fetchYields, insertYields } from '../src/db/yields'
+import { connect } from '../src/db/clickhouse'
+import { deleteOldYields, fetchYields, insertYields } from '../src/db/yields'
 
 async function main() {
-  const client = await pool.connect()
+  const client = connect()
 
   try {
     const yields = await fetchYields()
 
-    await client.query('BEGIN')
-
-    await deleteAllYields(client)
+    await deleteOldYields(client)
 
     await insertYields(client, yields)
-
-    await client.query('COMMIT')
 
     console.log(`Inserted ${yields.length} yields`)
   } catch (e) {
     console.log('Failed to update yields', e)
-    await client.query('ROLLBACK')
-  } finally {
-    client.release(true)
   }
 }
 

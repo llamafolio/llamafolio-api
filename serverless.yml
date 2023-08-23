@@ -104,14 +104,6 @@ functions:
           method: get
           path: /adapters
 
-  getAdaptersV1:
-    handler: src/handlers/getAdapters.handlerV1
-    description: Get adapters
-    events:
-      - httpApi:
-          method: get
-          path: /v1/adapters
-
   getBalances:
     handler: src/handlers/getBalances.handler
     description: Get address balances
@@ -143,28 +135,20 @@ functions:
     memorySize: 512
 
   getContracts:
-    handler: src/handlers/getContracts.getContract
+    handler: src/handlers/getContracts.handler
     description: Get contracts
     events:
       - httpApi:
           method: get
           path: /contracts/{address}
 
-  getContractsV1:
-    handler: src/handlers/getContracts.handlerV1
-    description: Get contracts
+  getGasUsedChart:
+    handler: src/handlers/getGasUsedChart.handler
+    description: Get gas used chart
     events:
       - httpApi:
           method: get
-          path: /v1/contracts/{address}
-
-  getGasPriceChart:
-    handler: src/handlers/getGasPriceChart.handler
-    description: Get gas price chart
-    events:
-      - httpApi:
-          method: get
-          path: /gas_price/{chain}/chart
+          path: /gas_used/{chain}/chart
 
   getHistory:
     handler: src/handlers/getHistory.handler
@@ -176,15 +160,6 @@ functions:
     timeout: 15
     memorySize: 512
 
-  getHistoryV1:
-    handler: src/handlers/getHistory.handlerV1
-    description: Get address history
-    events:
-      - httpApi:
-          method: get
-          path: /v1/history/{address}
-    timeout: 15
-
   getInfoStats:
     handler: src/handlers/getInfoStats.handler
     description: Get stats on supported protocols, chains and tokens
@@ -192,14 +167,6 @@ functions:
       - httpApi:
           method: get
           path: /info/stats
-
-  getInfoStatsV1:
-    handler: src/handlers/getInfoStats.handlerV1
-    description: Get stats on supported protocols, chains and tokens
-    events:
-      - httpApi:
-          method: get
-          path: /v1/info/stats
 
   getInfoAddress:
     handler: src/handlers/getInfoAddress.handler
@@ -209,14 +176,6 @@ functions:
           method: get
           path: /info/{address}
     timeout: 15
-
-  getInfoAddressV1:
-    handler: src/handlers/getInfoAddress.handlerV1
-    description: Get address info
-    events:
-      - httpApi:
-          method: get
-          path: /v1/info/{address}
 
   getLabels:
     handler: src/handlers/getLabels.handler
@@ -234,14 +193,6 @@ functions:
           method: get
           path: /protocols
 
-  getProtocolsV1:
-    handler: src/handlers/getProtocols.handlerV1
-    description: Get protocols
-    events:
-      - httpApi:
-          method: get
-          path: /v1/protocols
-
   getLatestProtocols:
     handler: src/handlers/getLatestProtocols.handler
     description: Get latest protocols
@@ -249,15 +200,6 @@ functions:
       - httpApi:
           method: get
           path: /protocols/latest
-    timeout: 15
-
-  getLatestProtocolsV1:
-    handler: src/handlers/getLatestProtocols.handlerV1
-    description: Get latest protocols
-    events:
-      - httpApi:
-          method: get
-          path: /v1/protocols/latest
     timeout: 15
 
   getLatestSnapshot:
@@ -276,14 +218,6 @@ functions:
       - httpApi:
           method: get
           path: /sync_status
-
-  getSyncStatusV1:
-    handler: src/handlers/getSyncStatus.handlerV1
-    description: Get sync status
-    events:
-      - httpApi:
-          method: get
-          path: /v1/sync_status
 
   getTokens:
     handler: src/handlers/getTokens.handler

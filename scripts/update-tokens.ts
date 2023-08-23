@@ -1,11 +1,11 @@
 import '../environment'
 
 import type { Chain } from '@lib/chains'
-import { chainsNames } from '@lib/chains'
+import { chainByChainId, chainsNames } from '@lib/chains'
 import type { Address } from 'viem'
 
-import pool from '../src/db/pool'
-import type { ERC20Token } from '../src/db/tokens'
+import { connect } from '../src/db/clickhouse'
+import type { Token } from '../src/db/tokens'
 import { insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/tokens'
 import { getERC20Details } from '../src/lib/erc20'
 
@@ -21,7 +21,7 @@ async function main() {
     return help()
   }
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
     const limit = 100
@@ -38,8 +38,9 @@ async function main() {
       const tokensByChain = {} as { [chain in Chain]: Address[] }
 
       for (const item of chainsAddresses) {
-        const [chain, address] = item as [Chain, Address]
-        if (!chainsNames.includes(chain)) {
+        const { chain: chainId, address } = item
+        const chain = chainByChainId[chainId]?.id
+        if (!chain || !chainsNames.includes(chain)) {
           console.error(`Unknown chain ${chain}`)
           continue
         }
@@ -55,7 +56,7 @@ async function main() {
         chains.map((chain) => getERC20Details({ chain, adapterId: '' }, tokensByChain[chain])),
       )
 
-      const tokens: ERC20Token[] = []
+      const tokens: Token[] = []
 
       for (let chainIdx = 0; chainIdx < chains.length; chainIdx++) {
         const chain = chains[chainIdx]
@@ -83,8 +84,6 @@ async function main() {
     }
   } catch (e) {
     console.log('Failed to insert tokens', e)
-  } finally {
-    client.release(true)
   }
 }
 

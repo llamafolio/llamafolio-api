@@ -1,7 +1,5 @@
 import type { ClickHouseClient } from '@clickhouse/client'
-import { bufToStr, strToBuf } from '@lib/buf'
-import type { PoolClient } from 'pg'
-import format from 'pg-format'
+import { fromDateTime } from '@lib/fmt'
 
 export interface Label {
   address: string
@@ -11,17 +9,10 @@ export interface Label {
 }
 
 export interface LabelStorage {
-  address: Buffer
+  address: string
   type: string
   value: string
   updated_at: string
-}
-
-export interface LabelStorable {
-  address: Buffer
-  type: string
-  value: string
-  updated_at: Date
 }
 
 export function fromStorage(labelsStorage: LabelStorage[]) {
@@ -29,10 +20,10 @@ export function fromStorage(labelsStorage: LabelStorage[]) {
 
   for (const labelStorage of labelsStorage) {
     const label: Label = {
-      address: bufToStr(labelStorage.address),
+      address: labelStorage.address,
       type: labelStorage.type,
       value: labelStorage.value,
-      updatedAt: new Date(labelStorage.updated_at),
+      updatedAt: fromDateTime(labelStorage.updated_at),
     }
 
     labels.push(label)
@@ -41,15 +32,9 @@ export function fromStorage(labelsStorage: LabelStorage[]) {
   return labels
 }
 
-export async function selectLabelsByAddresses(client: PoolClient, addresses: string[]) {
-  const labelsRes = await client.query(format(`select * from labels where address in %L;`, [addresses.map(strToBuf)]))
-
-  return fromStorage(labelsRes.rows)
-}
-
-export async function selectLabelsByAddressesV1(client: ClickHouseClient, addresses: string[]) {
+export async function selectLabelsByAddresses(client: ClickHouseClient, addresses: string[]) {
   const queryRes = await client.query({
-    query: 'select * from labels where address in {addresses: Array(String)};',
+    query: 'SELECT * FROM lf.labels WHERE "address" IN {addresses: Array(String)};',
     query_params: {
       addresses,
     },
