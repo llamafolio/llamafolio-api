@@ -12,6 +12,7 @@ import {
   moonbeam,
   optimism,
   polygon,
+  polygonZkEvm,
 } from 'viem/chains'
 
 const gnosis = {
@@ -54,6 +55,7 @@ export const viemChainById: { [key in Chain]: _Chain } = {
   arbitrum,
   avalanche,
   bsc,
+  base,
   celo,
   ethereum,
   fantom,
@@ -62,5 +64,5 @@ export const viemChainById: { [key in Chain]: _Chain } = {
   moonbeam,
   optimism,
   polygon,
-  base,
+  'polygon-zkevm': polygonZkEvm,
 } as const
