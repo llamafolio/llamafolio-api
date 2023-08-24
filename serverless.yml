@@ -157,8 +157,7 @@ functions:
       - httpApi:
           method: get
           path: /history/{address}
-    timeout: 15
-    memorySize: 512
+    timeout: 25
 
   getInfoStats:
     handler: src/handlers/getInfoStats.handler

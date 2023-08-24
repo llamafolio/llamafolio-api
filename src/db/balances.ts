@@ -173,15 +173,7 @@ export async function selectLatestBalancesGroupsByFromAddress(client: ClickHouse
       const balancesByGroupIdx = groupBy(balancesByAdapterId[adapterId], 'groupIdx')
 
       for (const groupIdx in balancesByGroupIdx) {
-        const balances = balancesByGroupIdx[groupIdx].map((balance) => ({
-          address: balance.address,
-          price: balance.price,
-          amount: balance.amount,
-          balanceUSD: balance.balanceUSD,
-          rewardUSD: balance.rewardUSD,
-          debtUSD: balance.debtUSD,
-          category: balance.category,
-        }))
+        const balances = balancesByGroupIdx[groupIdx]
 
         balancesGroups.push({
           adapterId,
@@ -190,10 +182,10 @@ export async function selectLatestBalancesGroupsByFromAddress(client: ClickHouse
           debtUSD: sum(balances.map((balance) => balance.debtUSD)),
           rewardUSD: sum(balances.map((balance) => balance.rewardUSD)),
           healthFactor: avg(
-            balancesByGroupIdx[groupIdx].map((balance) => balance.healthFactor),
-            balancesByGroupIdx[groupIdx].length,
+            balances.map((balance) => balance.healthFactor),
+            balances.length,
           ),
-          timestamp: balancesByGroupIdx[groupIdx][0].timestamp,
+          timestamp: balances[0]?.timestamp,
           balances,
         })
       }
