@@ -17,7 +17,7 @@ export async function getOldBalancerPools(ctx: BaseContext, url: string): Promis
       }
     }
   `
-  const res = await request(url, query)
+  const res: any = await request(url, query)
 
   for (const pool of res.pools) {
     if (!pool.id || !pool.tokens) {
