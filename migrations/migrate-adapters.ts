@@ -44,7 +44,7 @@ async function main() {
 
     // merge duplicates
     await clickhouseClient.command({
-      query: 'OPTIMIZE TABLE lf.adapters FINAL DEDUPLICATE BY "chain", "id";',
+      query: 'OPTIMIZE TABLE lf.adapters FINAL DEDUPLICATE BY "chain", "id", "updated_at";',
     })
   } catch (e) {
     console.log('Failed to migrate adapters', e)
