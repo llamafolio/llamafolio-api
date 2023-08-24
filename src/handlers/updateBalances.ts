@@ -107,8 +107,9 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
   )
 
   // Update balances
-  // TODO: keep old balances once we're able to run this process in the past
-  await deleteOldBalances(client, address, now)
+  await insertBalances(client, sanitizedPricedBalances)
 
-  return insertBalances(client, sanitizedPricedBalances)
+  // Cleanup old balances
+  // TODO: keep old balances once we're able to run this process in the past and reconcile missing adapters
+  return deleteOldBalances(client, address, now)
 }

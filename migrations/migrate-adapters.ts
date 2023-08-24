@@ -32,6 +32,7 @@ async function main() {
           : null,
         contracts_props: row.contracts_props ? JSON.stringify(row.contracts_props) : null,
         created_at: toDateTime(row.created_at),
+        updated_at: toDateTime(row.created_at),
       }
     })
 

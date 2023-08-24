@@ -1,6 +1,7 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import type { Contract, ContractStandard } from '@lib/adapter'
 import { chainByChainId, chainById } from '@lib/chains'
+import { toDateTime } from '@lib/fmt'
 
 export interface ContractStorage {
   standard?: ContractStandard
@@ -10,6 +11,7 @@ export interface ContractStorage {
   category?: string
   adapter_id: string
   data?: string
+  created_at?: string
 }
 
 export function fromStorage(contractsStorage: ContractStorage[]) {
@@ -39,7 +41,7 @@ export function fromStorage(contractsStorage: ContractStorage[]) {
   return contracts
 }
 
-export function toStorage(contracts: Contract[], adapterId: string) {
+export function toStorage(contracts: Contract[], adapterId: string, timestamp: Date) {
   const contractsStorage: ContractStorage[] = []
 
   for (const contract of contracts) {
@@ -59,6 +61,7 @@ export function toStorage(contracts: Contract[], adapterId: string) {
       category,
       adapter_id: adapterId,
       data: JSON.stringify(data),
+      created_at: toDateTime(timestamp),
     }
 
     contractsStorage.push(contractStorage)
@@ -69,7 +72,8 @@ export function toStorage(contracts: Contract[], adapterId: string) {
 
 export async function selectAdaptersContractsByAddress(client: ClickHouseClient, address: string, chainId: number) {
   const queryRes = await client.query({
-    query: 'SELECT * FROM lf.adapters_contracts WHERE "chain" = {chainId: UInt8} AND "address" = {address: String};',
+    query:
+      'SELECT * FROM lf.adapters_contracts_last_v WHERE "chain" = {chainId: UInt8} AND "address" = {address: String};',
     query_params: {
       address: address.toLowerCase(),
       chainId,
@@ -83,8 +87,13 @@ export async function selectAdaptersContractsByAddress(client: ClickHouseClient,
   return fromStorage(res.data)
 }
 
-export async function insertAdaptersContracts(client: ClickHouseClient, contracts: Contract[], adapterId: string) {
-  const values = toStorage(contracts, adapterId)
+export async function insertAdaptersContracts(
+  client: ClickHouseClient,
+  contracts: Contract[],
+  adapterId: string,
+  timestamp: Date,
+) {
+  const values = toStorage(contracts, adapterId, timestamp)
 
   if (values.length === 0) {
     return
@@ -94,11 +103,6 @@ export async function insertAdaptersContracts(client: ClickHouseClient, contract
     table: 'lf.adapters_contracts',
     values: values,
     format: 'JSONEachRow',
-  })
-
-  // merge duplicates
-  await client.command({
-    query: 'OPTIMIZE TABLE lf.adapters_contracts FINAL DEDUPLICATE BY "chain", "adapter_id", "address", "category";',
   })
 }
 
@@ -126,7 +130,7 @@ export async function getContractsInteractions(
   const queryRes = await client.query({
     query: `
       SELECT *
-      FROM lf.adapters_contracts
+      FROM lf.adapters_contracts_last_v
       WHERE
         ${condition}
         ("chain", "address") IN (
@@ -187,7 +191,7 @@ export async function getContracts(client: ClickHouseClient, address: string, ch
         SELECT
           "address",
           "adapter_id"
-        FROM lf.adapters_contracts
+        FROM lf.adapters_contracts_last_v
         WHERE "address" = {address: String}
         ${chainId != null ? ' AND "chain" = {chain: UInt8} ' : ''}
       )
@@ -221,6 +225,27 @@ export function deleteContractsByAdapterId(client: ClickHouseClient, adapterId: 
   return client.command({
     query: 'DELETE FROM lf.adapters WHERE id = {adapterId: String};',
     query_params: { adapterId },
+  })
+}
+
+export function deleteOldAdaptersContracts(
+  client: ClickHouseClient,
+  adapterId: string,
+  chains: number[],
+  timestamp: Date,
+) {
+  return client.command({
+    query:
+      'DELETE FROM lf.adapters_contracts WHERE "chain" IN {chains: Array(UInt64)} AND "adapter_id" = {adapterId: String} AND "created_at" < {timestamp: DateTime};',
+    query_params: {
+      adapterId,
+      chains,
+      timestamp: toDateTime(timestamp),
+    },
+    clickhouse_settings: {
+      enable_lightweight_delete: 1,
+      mutations_sync: '2',
+    },
   })
 }
 

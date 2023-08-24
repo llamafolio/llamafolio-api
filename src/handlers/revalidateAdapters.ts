@@ -1,8 +1,14 @@
 import { adapters } from '@adapters/index'
 import type { Adapter as DBAdapter } from '@db/adapters'
-import { insertAdapters, selectAdapter, selectAdaptersContractsExpired, selectDistinctAdaptersIds } from '@db/adapters'
+import {
+  deleteOldAdapters,
+  insertAdapters,
+  selectAdapter,
+  selectAdaptersContractsExpired,
+  selectDistinctAdaptersIds,
+} from '@db/adapters'
 import { connect } from '@db/clickhouse'
-import { flattenContracts, insertAdaptersContracts } from '@db/contracts'
+import { deleteOldAdaptersContracts, flattenContracts, insertAdaptersContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
@@ -105,9 +111,11 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
       config.props ? resolveContractsTokens(config.props) : undefined,
     ])
 
+    const now = new Date()
+
     let expire_at: Date | undefined = undefined
     if (config.revalidate) {
-      expire_at = new Date()
+      expire_at = new Date(now)
       expire_at.setSeconds(expire_at.getSeconds() + config.revalidate)
     }
 
@@ -117,13 +125,18 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
       contractsExpireAt: expire_at,
       contractsRevalidateProps: config.revalidateProps,
       contractsProps: props,
-      createdAt: new Date(),
+      createdAt: prevDbAdapter?.createdAt || now,
+      updatedAt: now,
     }
 
     await insertAdapters(client, [dbAdapter])
 
     // Insert new contracts
-    await insertAdaptersContracts(client, flattenContracts(contracts), adapter.id)
+    await insertAdaptersContracts(client, flattenContracts(contracts), adapter.id, now)
+
+    // Cleanup old adapters
+    await deleteOldAdapters(client, adapterId, [chainId], now)
+    await deleteOldAdaptersContracts(client, adapterId, [chainId], now)
 
     return success({})
   } catch (e) {

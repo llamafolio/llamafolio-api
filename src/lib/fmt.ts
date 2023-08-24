@@ -65,7 +65,7 @@ export function toDateTime(date: Date) {
 }
 
 export function fromDateTime(date: string) {
-  return dayjs(date, 'YYYY-MM-DD HH:mm:ss').utc().toDate()
+  return dayjs.utc(date, 'YYYY-MM-DD HH:mm:ss').toDate()
 }
 
 export function unixFromDateTime(date: string) {

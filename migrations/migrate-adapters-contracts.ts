@@ -1,6 +1,7 @@
 import pool from '../src/db/pool'
 import { chainById } from '../src/lib/chains'
 import { connect } from '../src/db/clickhouse'
+import { toDateTime } from '@lib/fmt'
 
 function help() {
   console.log('pnpm run migrate-adapters-contracts')
@@ -17,12 +18,15 @@ async function main() {
     let offset = 0
     while (true) {
       console.log('Offset', offset)
-      const adaptersContracts = await client.query('select * from adapters_contracts offset $1 limit 10000;', [offset])
+      const adaptersContracts = await client.query(
+        'select ac.*, a.created_at from adapters_contracts ac join adapters a on ac.chain = a.chain and ac.adapter_id = a.id  offset $1 limit 10000;',
+        [offset],
+      )
       if (adaptersContracts.rows.length === 0) {
         // merge duplicates
         await clickhouseClient.command({
           query:
-            'OPTIMIZE TABLE lf.adapters_contracts FINAL DEDUPLICATE BY "chain", "adapter_id", "address", "category";',
+            'OPTIMIZE TABLE lf.adapters_contracts FINAL DEDUPLICATE BY "chain", "adapter_id", "address", "created_at";',
         })
 
         console.log('Done')
@@ -47,6 +51,7 @@ async function main() {
           address: row.address,
           adapter_id: row.adapter_id,
           data: JSON.stringify(row.data || {}),
+          created_at: toDateTime(row.created_at),
         }
       })
 

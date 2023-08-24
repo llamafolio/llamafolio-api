@@ -1,10 +1,12 @@
 import path from 'node:path'
 import url from 'node:url'
 
+import { isNotNullish } from '@lib/type'
+
 import type { Adapter as DBAdapter } from '../src/db/adapters'
-import { insertAdapters, selectAdapter } from '../src/db/adapters'
+import { deleteOldAdapters, insertAdapters, selectAdapters } from '../src/db/adapters'
 import { connect } from '../src/db/clickhouse'
-import { flattenContracts, insertAdaptersContracts } from '../src/db/contracts'
+import { deleteOldAdaptersContracts, flattenContracts, insertAdaptersContracts } from '../src/db/contracts'
 import type { Adapter, BaseContext } from '../src/lib/adapter'
 import type { Chain } from '../src/lib/chains'
 import { chainById, chains } from '../src/lib/chains'
@@ -29,14 +31,18 @@ async function main() {
     return help()
   }
 
+  const adapterId = process.argv[2]
   const chain = process.argv[3] as Chain | undefined
-  const module = await import(path.join(__dirname, '..', 'src', 'adapters', process.argv[2]))
+  const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
 
   try {
     const client = connect()
 
     const adapterChains = chain ? [chain] : chains.filter((chain) => adapter[chain.id]).map((chain) => chain.id)
+    const chainIds = adapterChains.map((chain) => chainById[chain]?.chainId).filter(isNotNullish)
+
+    const prevDbAdapters = await selectAdapters(client, chainIds, adapter.id)
 
     const chainContractsConfigs = await Promise.all(
       adapterChains.map(async (chain) => {
@@ -45,7 +51,7 @@ async function main() {
           throw new Error(`Missing chain ${chain}`)
         }
 
-        const prevDbAdapter = await selectAdapter(client, chainId, adapter.id)
+        const prevDbAdapter = prevDbAdapters.find((adapter) => adapter.chain === chain)
 
         const ctx: BaseContext = { chain, adapterId: adapter.id }
 
@@ -53,7 +59,12 @@ async function main() {
 
         const contracts = await resolveContractsTokens(contractsRes?.contracts || {})
 
-        return { ...contractsRes, contracts }
+        return {
+          contracts,
+          revalidate: contractsRes.revalidate,
+          revalidateProps: contractsRes.revalidateProps,
+          prevDbAdapter,
+        }
       }),
     )
 
@@ -71,7 +82,8 @@ async function main() {
         chain: adapterChains[i],
         contractsExpireAt: expire_at,
         contractsRevalidateProps: config.revalidateProps,
-        createdAt: now,
+        createdAt: config.prevDbAdapter?.createdAt || now,
+        updatedAt: now,
       }
     })
 
@@ -79,8 +91,11 @@ async function main() {
 
     // Insert new contracts for all specified chains
     const adaptersContracts = chainContractsConfigs.map((config) => flattenContracts(config.contracts)).flat()
+    await insertAdaptersContracts(client, adaptersContracts, adapter.id, now)
 
-    await insertAdaptersContracts(client, adaptersContracts, adapter.id)
+    // Cleanup old adapters
+    await deleteOldAdapters(client, adapterId, chainIds, now)
+    await deleteOldAdaptersContracts(client, adapterId, chainIds, now)
   } catch (e) {
     console.log('Failed to revalidate adapter contracts', e)
   }

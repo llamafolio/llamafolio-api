@@ -231,6 +231,13 @@ export function deleteOldBalances(client: ClickHouseClient, fromAddress: string,
   return client.command({
     query:
       'DELETE FROM lf.balances WHERE "from_address" = {fromAddress: String} AND "timestamp" < {timestamp: DateTime};',
-    query_params: { fromAddress: fromAddress.toLowerCase(), timestamp: toDateTime(timestamp) },
+    query_params: {
+      fromAddress: fromAddress.toLowerCase(),
+      timestamp: toDateTime(timestamp),
+    },
+    clickhouse_settings: {
+      enable_lightweight_delete: 1,
+      mutations_sync: '2',
+    },
   })
 }
