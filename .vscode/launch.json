@@ -60,7 +60,8 @@
         "harmony",
         "moonbeam",
         "optimism",
-        "polygon"
+        "polygon",
+        "polygon-zkevm"
       ],
       "default": "ethereum"
     },
