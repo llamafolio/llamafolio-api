@@ -13,6 +13,7 @@ export const chainsNames = [
   'arbitrum',
   'avalanche',
   'bsc',
+  'base',
   'celo',
   'ethereum',
   'fantom',
@@ -21,7 +22,7 @@ export const chainsNames = [
   'moonbeam',
   'optimism',
   'polygon',
-  'base',
+  'polygon-zkevm',
 ] as const
 
 export type Chain = (typeof chainsNames)[number]
@@ -232,6 +233,21 @@ export const chains = [
       decimals: 18,
       name: 'Matic',
       symbol: 'MATIC',
+    },
+  },
+  {
+    id: 'polygon-zkevm',
+    chainId: 1101,
+    name: 'Polygon ZKEVM',
+    rpcUrls: [
+      http('"https://zkevm-rpc.com"', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://rpc.ankr.com/polygon_zkevm', { batch: { wait: 0, batchSize: 5_000 } }),
+    ],
+    nativeCurrency: {
+      address: ADDRESS_ZERO,
+      decimals: 18,
+      name: 'Ether',
+      symbol: 'ETH',
     },
   },
   {
