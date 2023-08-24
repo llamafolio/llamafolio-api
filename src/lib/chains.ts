@@ -240,7 +240,7 @@ export const chains = [
     chainId: 1101,
     name: 'Polygon ZKEVM',
     rpcUrls: [
-      http('"https://zkevm-rpc.com"', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://zkevm-rpc.com', { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://rpc.ankr.com/polygon_zkevm', { batch: { wait: 0, batchSize: 5_000 } }),
     ],
     nativeCurrency: {
