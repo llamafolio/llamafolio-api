@@ -97,6 +97,7 @@ const AURA: { [key: string]: `0x${string}`[] } = {
   optimism: ['0x1509706a6c66CA549ff0cB464de88231DDBe213B', '0xec1c780a275438916e7ceb174d80878f29580606'],
   arbitrum: ['0x1509706a6c66CA549ff0cB464de88231DDBe213B', '0xeC1c780A275438916E7CEb174D80878f29580606'],
   polygon: ['0x1509706a6c66CA549ff0cB464de88231DDBe213B', '0x8b2970c237656d3895588B99a8bFe977D5618201'],
+  gnosis: ['0x1509706a6c66CA549ff0cB464de88231DDBe213B', '0x8b2970c237656d3895588B99a8bFe977D5618201'],
 }
 
 export async function getAuraBalStakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
@@ -155,42 +156,36 @@ export async function getAuraBalancesInternal(
 ): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const pools: Contract[] = []
+  const fmtPools: Contract[] = []
   inputPools.forEach((pool) => {
     if (targetProp === 'gauge' && Array.isArray(pool.gauge)) {
       pool.gauge.forEach((gauge) => {
-        pools.push({ ...pool, gauge: gauge })
+        fmtPools.push({ ...pool, gauge: gauge })
       })
     } else {
-      pools.push(pool)
+      fmtPools.push(pool)
     }
-  })
-
-  const test = await multicall({
-    ctx,
-    calls: pools.map((pool) => ({ target: pool[targetProp], params: [ctx.address] }) as const),
-    abi: erc20Abi.balanceOf,
   })
 
   const [poolBalancesRes, uBalancesRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool[targetProp], params: [ctx.address] }) as const),
+      calls: fmtPools.map((pool) => ({ target: pool[targetProp], params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: vault.address, params: [pool.poolId] }) as const),
+      calls: fmtPools.map((pool) => ({ target: vault.address, params: [pool.poolId] }) as const),
       abi: abi.getPoolTokens,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address }) as const),
+      calls: fmtPools.map((pool) => ({ target: pool.address }) as const),
       abi: erc20Abi.totalSupply,
     }),
   ])
 
-  for (const [index, pool] of pools.entries()) {
+  for (const [index, pool] of fmtPools.entries()) {
     const underlyings = pool.underlyings as Contract[]
     const rewards = pool.rewards as Balance[]
     const poolBalanceRes = poolBalancesRes[index]
