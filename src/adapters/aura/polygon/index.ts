@@ -4,18 +4,18 @@ import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const auraStaker: Contract = {
-  chain: 'arbitrum',
+  chain: 'polygon',
   address: '0x4ea9317d90b61fc28c418c247ad0ca8939bbb0e9',
   token: '0x223738a747383d6F9f827d95964e4d8E8AC754cE',
 }
 
 const booster: Contract = {
-  chain: 'arbitrum',
+  chain: 'polygon',
   address: '0x98Ef32edd24e2c92525E59afc4475C1242a30184',
 }
 
 const vaultBAL: Contract = {
-  chain: 'arbitrum',
+  chain: 'polygon',
   address: '0xba12222222228d8ba445958a75a0704d566bf2c8',
 }
 

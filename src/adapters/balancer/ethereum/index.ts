@@ -1,11 +1,11 @@
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getBalancesBalances } from '@adapters/balancer/common/balance'
+import { getLockerBalances } from '@adapters/balancer/ethereum/locker'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPoolsBalances } from '@lib/pools'
 import type { Token } from '@lib/token'
 
-import { getBalancerPoolsBalances, getLpBalancerPoolsBalances } from '../common/balance'
 import { getBalancerPools } from '../common/pool'
-import { getLockerBalances } from './locker'
 import { getOldBalancerPools } from './pool'
 
 const BAL: Token = {
@@ -39,9 +39,9 @@ const votingEscrow: Contract = {
   symbol: 'veBAL',
 }
 
-const gaugeInfos: Contract = {
+const gaugeController: Contract = {
   chain: 'ethereum',
-  address: '0x2fFB7B215Ae7F088eC2530C7aa8E1B24E398f26a',
+  address: '0xC128468b7Ce63eA702C1f104D55A2566b13D3ABD',
 }
 
 const vault: Contract = {
@@ -53,22 +53,20 @@ const oldUrl = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer'
 const url = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2'
 
 export const getContracts = async (ctx: BaseContext) => {
-  const oldPools = await getOldBalancerPools(ctx, oldUrl)
-  const pools = await getBalancerPools(ctx, url, gaugeInfos)
+  const [oldPools, pools] = await Promise.all([
+    getOldBalancerPools(ctx, oldUrl),
+    getBalancerPools(ctx, url, gaugeController),
+  ])
 
   return {
-    contracts: { oldPools, pools, gaugeInfos, vault, votingEscrow },
+    contracts: { oldPools, pools, gaugeController, vault, votingEscrow },
   }
-}
-
-const getBalancerBalances = async (ctx: BalancesContext, pools: Contract[], vault: Contract) => {
-  return Promise.all([getBalancerPoolsBalances(ctx, pools, vault), getLpBalancerPoolsBalances(ctx, pools, vault)])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    pools: (...args) => getBalancesBalances(...args, vault),
     oldPools: (ctx, oldPools) => getPoolsBalances(ctx, oldPools, { getPoolAddress: (pool) => pool.address }),
-    pools: (...args) => getBalancerBalances(...args, vault),
     votingEscrow: (...args) => getLockerBalances(...args, vault),
   })
 

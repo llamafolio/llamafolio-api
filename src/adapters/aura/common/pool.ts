@@ -1,7 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { keyBy, mapSuccessFilter } from '@lib/array'
+import { keyBy, mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
-import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 
@@ -113,95 +112,60 @@ const BAL: Token = {
 }
 
 export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: Contract): Promise<Contract[]> {
-  const pools: Contract[] = []
+  const poolLength = await call({ ctx, target: booster.address, abi: abi.poolLength })
 
-  const poolLengthBI = await call({ ctx, target: booster.address, abi: abi.poolLength })
+  const poolsInfosRes = await multicall({
+    ctx,
+    calls: rangeBI(0n, poolLength).map((i) => ({ target: booster.address, params: [i] }) as const),
+    abi: abi.poolInfo,
+  })
 
-  const poolLength = Number(poolLengthBI)
+  const pools: Contract[] = mapSuccessFilter(poolsInfosRes, (res) => {
+    const [lptoken, _token, _gauge, crvRewards, _stash, _shutdown] = res.output
 
-  const calls: Call<typeof abi.poolInfo>[] = []
-  for (let idx = 0; idx < poolLength; idx++) {
-    calls.push({ target: booster.address, params: [BigInt(idx)] })
-  }
-
-  const poolsInfosRes = await multicall({ ctx, calls, abi: abi.poolInfo })
-
-  for (let idx = 0; idx < poolLength; idx++) {
-    const poolsInfoRes = poolsInfosRes[idx]
-
-    if (!poolsInfoRes.success) {
-      continue
-    }
-
-    const [lptoken, _token, _gauge, crvRewards, _stash, _shutdown] = poolsInfoRes.output
-
-    pools.push({
+    return {
       chain: ctx.chain,
       address: lptoken,
       pool: lptoken,
       lpToken: lptoken,
-      gauge: crvRewards,
+      gauge: [crvRewards],
       rewards: [BAL],
-    })
-  }
+    }
+  })
 
-  const rewardedPools = await getAuraExtraRewards(ctx, pools)
-
-  return getAuraPoolsId(ctx, rewardedPools, vault)
+  return getAuraPoolsId(ctx, await getAuraExtraRewards(ctx, pools), vault)
 }
 
 const getAuraPoolsId = async (ctx: BaseContext, pools: Contract[], vault: Contract): Promise<Contract[]> => {
-  const poolsWithIds: Contract[] = []
+  const poolIdsRes = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: pool.address })),
+    abi: abi.getPoolId,
+  })
 
-  const calls: Call<typeof abi.getPoolId>[] = []
-  for (const pool of pools) {
-    calls.push({ target: pool.address })
-  }
-
-  const poolIdsRes = await multicall({ ctx, calls, abi: abi.getPoolId })
-
-  for (let idx = 0; idx < pools.length; idx++) {
-    const pool = pools[idx]
-    const poolIdRes = poolIdsRes[idx]
-
-    if (!poolIdRes.success) {
-      continue
-    }
-
-    poolsWithIds.push({
-      ...pool,
-      id: poolIdRes.output,
-    })
-  }
+  const poolsWithIds: Contract[] = mapSuccessFilter(poolIdsRes, (res, idx) => ({
+    ...pools[idx],
+    poolId: res.output,
+  }))
 
   return getAuraPoolsUnderlyings(ctx, poolsWithIds, vault)
 }
 
 const getAuraPoolsUnderlyings = async (ctx: BaseContext, pools: Contract[], vault: Contract): Promise<Contract[]> => {
-  const poolsWithUnderlyings: Contract[] = []
+  const underlyingsRes = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: vault.address, params: [pool.poolId!] }) as const),
+    abi: abi.getPoolTokens,
+  })
 
-  const calls: Call<typeof abi.getPoolTokens>[] = []
-  for (const pool of pools) {
-    calls.push({ target: vault.address, params: [pool.id] })
-  }
+  const poolsWithUnderlyings: Contract[] = mapSuccessFilter(underlyingsRes, (res, idx) => {
+    const [tokens]: any = res.output
 
-  const underlyingsRes = await multicall({ ctx, calls, abi: abi.getPoolTokens })
-
-  for (let idx = 0; idx < pools.length; idx++) {
-    const pool = pools[idx]
-    const underlyingRes = underlyingsRes[idx]
-
-    if (!underlyingRes.success) {
-      continue
-    }
-
-    const [tokens]: any = underlyingRes.output
-
-    poolsWithUnderlyings.push({
-      ...pool,
+    return {
+      ...pools[idx],
       underlyings: tokens,
-    })
-  }
+    }
+  })
 
   return unwrapPoolsAsUnderlyings(poolsWithUnderlyings)
 }
@@ -234,7 +198,7 @@ const getAuraExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise
 
   const extraRewardsLengthRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.gauge }) as const),
+    calls: pools.map((pool) => ({ target: pool.gauge[0] }) as const),
     abi: abi.extraRewardsLength,
   })
 
