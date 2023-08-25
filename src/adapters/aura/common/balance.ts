@@ -166,6 +166,12 @@ export async function getAuraBalancesInternal(
     }
   })
 
+  const test = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: pool.gauge, params: [ctx.address] }) as const),
+    abi: erc20Abi.balanceOf,
+  })
+
   const [poolBalancesRes, uBalancesRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
