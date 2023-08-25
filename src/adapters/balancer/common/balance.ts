@@ -28,7 +28,7 @@ export async function getBalancesBalances(
   ])
 }
 
-async function getBalancerBalancesInternal(
+export async function getBalancerBalancesInternal(
   ctx: BalancesContext,
   inputPools: Contract[],
   vault: Contract,

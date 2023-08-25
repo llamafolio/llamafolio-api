@@ -1,9 +1,10 @@
+import { getBalancerBalancesInternal } from '@adapters/balancer/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { parseEther } from 'viem'
+import type { Token } from '@lib/token'
 
 const abi = {
   earned: {
@@ -84,29 +85,39 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  balanceOfUnderlying: {
-    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
-    name: 'balanceOfUnderlying',
-    outputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
 } as const
 
-const AURA: { [key: string]: `0x${string}`[] } = {
-  optimism: ['0x1509706a6c66CA549ff0cB464de88231DDBe213B', '0xec1c780a275438916e7ceb174d80878f29580606'],
-  arbitrum: ['0x1509706a6c66CA549ff0cB464de88231DDBe213B', '0xeC1c780A275438916E7CEb174D80878f29580606'],
-  polygon: ['0x1509706a6c66CA549ff0cB464de88231DDBe213B', '0x8b2970c237656d3895588B99a8bFe977D5618201'],
+const BAL: Token = {
+  chain: 'ethereum',
+  address: '0xba100000625a3754423978a60c9317c58a424e3D',
+  decimals: 18,
+  symbol: 'BAL',
+}
+
+const auraBal: Token = {
+  chain: 'ethereum',
+  address: '0x616e8BfA43F920657B3497DBf40D6b1A02D4608d',
+  decimals: 18,
+  symbol: 'auraBAL',
+}
+
+const AURA: Contract = {
+  chain: 'ethereum',
+  address: '0xc0c293ce456ff0ed870add98a0828dd4d2903dbf',
+  decimals: 18,
+  symbol: 'AURA',
 }
 
 export async function getAuraBalStakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const balanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.balanceOfUnderlying })
+  const [balanceOfRes, earnedRes] = await Promise.all([
+    call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.earned }),
+  ])
 
   return {
-    ...staker,
+    ...auraBal,
     amount: balanceOfRes,
-    underlyings: undefined,
-    rewards: undefined,
+    rewards: [{ ...BAL, amount: earnedRes }],
     category: 'farm',
   }
 }
@@ -118,7 +129,7 @@ export async function getAuraFarmBalances(
 ): Promise<Balance[]> {
   const balanceWithStandardRewards: Balance[] = []
   const balanceWithExtraRewards: Balance[] = []
-  const balances = await getAuraBalancesInternal(ctx, pools, vault, 'gauge')
+  const balances: Balance[] = await getBalancerBalancesInternal(ctx, pools, vault, 'farm', 'gauge')
 
   const earnedsRes = await multicall({
     ctx,
@@ -147,87 +158,58 @@ export async function getAuraFarmBalances(
   return getAuraMintAmount(ctx, [...balanceWithStandardRewards, ...balanceWithExtraRewardsBalances])
 }
 
-export async function getAuraBalancesInternal(
-  ctx: BalancesContext,
-  inputPools: Contract[],
-  vault: Contract,
-  targetProp: 'address' | 'gauge',
-): Promise<Balance[]> {
-  const balances: Balance[] = []
+export const getAuraMintAmount = async (ctx: BalancesContext, balances: Balance[]): Promise<Balance[]> => {
+  const balancesWithExtraRewards: Balance[] = []
 
-  const pools: Contract[] = []
-  inputPools.forEach((pool) => {
-    if (targetProp === 'gauge' && Array.isArray(pool.gauge)) {
-      pool.gauge.forEach((gauge) => {
-        pools.push({ ...pool, gauge: gauge })
-      })
-    } else {
-      pools.push(pool)
-    }
-  })
-
-  const [poolBalancesRes, uBalancesRes, totalSuppliesRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: pools.map((pool) => ({ target: pool.gauge, params: [ctx.address] }) as const),
-      abi: erc20Abi.balanceOf,
-    }),
-    multicall({
-      ctx,
-      calls: pools.map((pool) => ({ target: vault.address, params: [pool.poolId] }) as const),
-      abi: abi.getPoolTokens,
-    }),
-    multicall({
-      ctx,
-      calls: pools.map((pool) => ({ target: pool.address }) as const),
-      abi: erc20Abi.totalSupply,
-    }),
+  const [reductionPerCliff, maxSupply, totalSupply, totalCliffs] = await Promise.all([
+    call({ ctx, target: AURA.address, abi: abi.reductionPerCliff }),
+    call({ ctx, target: AURA.address, abi: abi.EMISSIONS_MAX_SUPPLY }),
+    call({ ctx, target: AURA.address, abi: abi.totalSupply }),
+    call({ ctx, target: AURA.address, abi: abi.totalCliffs }),
   ])
 
-  for (const [index, pool] of pools.entries()) {
-    const underlyings = pool.underlyings as Contract[]
-    const rewards = pool.rewards as Balance[]
-    const poolBalanceRes = poolBalancesRes[index]
-    const uBalanceRes = uBalancesRes[index]
-    const totalSupplyRes = totalSuppliesRes[index]
+  const minterMinted = 0n
 
-    if (
-      !underlyings ||
-      !poolBalanceRes.success ||
-      !uBalanceRes.success ||
-      !totalSupplyRes.success ||
-      totalSupplyRes.output === 0n
-    ) {
-      continue
+  // e.g. emissionsMinted = 6e25 - 5e25 - 0 = 1e25;
+  const emissionsMinted = totalSupply - maxSupply - minterMinted
+
+  // e.g. reductionPerCliff = 5e25 / 500 = 1e23
+  // e.g. cliff = 1e25 / 1e23 = 100
+  const cliff = emissionsMinted / reductionPerCliff
+
+  // e.g. 100 < 500
+  if (cliff < totalCliffs) {
+    // e.g. (new) reduction = (500 - 100) * 2.5 + 700 = 1700;
+    // e.g. (new) reduction = (500 - 250) * 2.5 + 700 = 1325;
+    // e.g. (new) reduction = (500 - 400) * 2.5 + 700 = 950;
+
+    const reduction = ((totalCliffs - cliff) * 5n) / 2n + 700n
+    // e.g. (new) amount = 1e19 * 1700 / 500 =  34e18;
+    // e.g. (new) amount = 1e19 * 1325 / 500 =  26.5e18;
+    // e.g. (new) amount = 1e19 * 950 / 500  =  19e17;
+
+    for (const balance of balances) {
+      const reward = balance.rewards?.[0]
+
+      if (!reward) {
+        continue
+      }
+
+      let amount = (reward.amount * reduction) / totalCliffs
+
+      // e.g. amtTillMax = 5e25 - 1e25 = 4e25
+      const amtTillMax = maxSupply - emissionsMinted
+      if (amount > amtTillMax) {
+        amount = amtTillMax
+      }
+
+      balance.rewards?.push({ ...AURA, amount })
+
+      balancesWithExtraRewards.push({ ...balance })
     }
-
-    const [_tokens, underlyingsBalances] = uBalanceRes.output
-
-    underlyings.forEach((underlying, idx) => {
-      const amount = underlyingsBalances[idx]
-      underlying.amount = amount
-    })
-
-    const lpTokenBalance = underlyings.find(
-      (underlying) => underlying.address.toLowerCase() === pool.address.toLowerCase(),
-    )
-
-    const fmtUnderlyings = underlyings
-      .map((underlying) => {
-        const realSupply = lpTokenBalance ? totalSupplyRes.output - lpTokenBalance.amount : totalSupplyRes.output
-        const amount = (underlying.amount * poolBalanceRes.output) / realSupply
-
-        return {
-          ...underlying,
-          amount,
-        }
-      })
-      .filter((underlying) => underlying.address.toLowerCase() !== pool.address.toLowerCase())
-
-    balances.push({ ...pool, amount: poolBalanceRes.output, underlyings: fmtUnderlyings, rewards, category: 'farm' })
   }
 
-  return balances
+  return balancesWithExtraRewards
 }
 
 const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: Balance[]): Promise<Balance[]> => {
@@ -243,22 +225,4 @@ const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: Balanc
   })
 
   return poolBalance
-}
-
-const getAuraMintAmount = async (ctx: BalancesContext, balances: Balance[]): Promise<Balance[]> => {
-  const mintRate = await call({ ctx, target: AURA[ctx.chain][1], abi: abi.mintRate })
-
-  return balances.map((balance) => ({
-    ...balance,
-    rewards: [
-      ...balance.rewards!,
-      {
-        chain: ctx.chain,
-        address: AURA[ctx.chain][0],
-        decimals: 18,
-        symbol: 'AURA',
-        amount: (balance.rewards![0].amount * mintRate) / parseEther('1.0'),
-      },
-    ],
-  }))
 }

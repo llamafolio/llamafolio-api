@@ -140,7 +140,7 @@ export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: C
       address: lptoken,
       pool: lptoken,
       lpToken: lptoken,
-      gauge: crvRewards,
+      gauge: [crvRewards],
       rewards: [BAL],
     })
   }
@@ -170,7 +170,7 @@ const getAuraPoolsId = async (ctx: BaseContext, pools: Contract[], vault: Contra
 
     poolsWithIds.push({
       ...pool,
-      id: poolIdRes.output,
+      poolId: poolIdRes.output,
     })
   }
 
@@ -182,7 +182,7 @@ const getAuraPoolsUnderlyings = async (ctx: BaseContext, pools: Contract[], vaul
 
   const calls: Call<typeof abi.getPoolTokens>[] = []
   for (const pool of pools) {
-    calls.push({ target: vault.address, params: [pool.id] })
+    calls.push({ target: vault.address, params: [pool.poolId] })
   }
 
   const underlyingsRes = await multicall({ ctx, calls, abi: abi.getPoolTokens })
@@ -234,7 +234,7 @@ const getAuraExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise
 
   const extraRewardsLengthRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.gauge }) as const),
+    calls: pools.map((pool) => ({ target: pool.gauge[0] }) as const),
     abi: abi.extraRewardsLength,
   })
 
