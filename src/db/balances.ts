@@ -2,7 +2,7 @@ import type { ClickHouseClient } from '@clickhouse/client'
 import { groupBy } from '@lib/array'
 import type { Category } from '@lib/category'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
-import { fromDateTime, toDateTime } from '@lib/fmt'
+import { fromDateTime, toDateTime, unixFromDateTime } from '@lib/fmt'
 import { avg, sum } from '@lib/math'
 
 export interface Balance {
@@ -137,6 +137,55 @@ export function toStorage(balances: Balance[]) {
   }
 
   return balancesStorable
+}
+
+export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHouseClient, fromAddress: string) {
+  const queryRes = await client.query({
+    query: `
+      WITH (
+        SELECT timestamp
+        FROM lf.balances
+        WHERE from_address = {fromAddress: String}
+        ORDER BY timestamp DESC
+        LIMIT 1
+      ) AS latest
+      SELECT "chain", sum("balance_usd") as "balance_usd", sum("debt_usd") as "debt_usd", sum("reward_usd") as "reward_usd", max("timestamp") as "last_timestamp"
+      FROM lf.balances
+      WHERE from_address = {fromAddress: String} AND timestamp IN latest
+      GROUP BY "chain";
+    `,
+    query_params: {
+      fromAddress: fromAddress.toLowerCase(),
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: { chain: string; balance_usd: string; debt_usd: string; reward_usd: string; last_timestamp: string }[]
+  }
+
+  if (res.data.length === 0) {
+    return {
+      balanceUSD: 0,
+      debtUSD: 0,
+      rewardUSD: 0,
+      chains: [],
+    }
+  }
+
+  const chains = res.data.map((row) => ({
+    id: chainByChainId[parseInt(row.chain)]?.id,
+    balanceUSD: parseFloat(row.balance_usd),
+    debtUSD: parseFloat(row.debt_usd),
+    rewardUSD: parseFloat(row.reward_usd),
+  }))
+
+  return {
+    balanceUSD: sum(chains.map((chain) => chain.balanceUSD)),
+    debtUSD: sum(chains.map((chain) => chain.debtUSD)),
+    rewardUSD: sum(chains.map((chain) => chain.rewardUSD)),
+    chains,
+    updatedAt: unixFromDateTime(res.data[0].last_timestamp),
+  }
 }
 
 export async function selectLatestBalancesGroupsByFromAddress(client: ClickHouseClient, fromAddress: string) {
