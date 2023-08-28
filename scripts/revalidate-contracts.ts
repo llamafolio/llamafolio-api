@@ -1,13 +1,15 @@
 import path from 'node:path'
 import url from 'node:url'
 
+import { isNotNullish } from '@lib/type'
+
 import type { Adapter as DBAdapter } from '../src/db/adapters'
-import { selectAdapter, upsertAdapters } from '../src/db/adapters'
-import { deleteContractsByAdapter, insertAdaptersContracts } from '../src/db/contracts'
-import pool from '../src/db/pool'
+import { deleteOldAdapters, insertAdapters, selectAdapters } from '../src/db/adapters'
+import { connect } from '../src/db/clickhouse'
+import { deleteOldAdaptersContracts, flattenContracts, insertAdaptersContracts } from '../src/db/contracts'
 import type { Adapter, BaseContext } from '../src/lib/adapter'
 import type { Chain } from '../src/lib/chains'
-import { chains } from '../src/lib/chains'
+import { chainById, chains } from '../src/lib/chains'
 import { resolveContractsTokens } from '../src/lib/token'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -29,30 +31,40 @@ async function main() {
     return help()
   }
 
+  const adapterId = process.argv[2]
   const chain = process.argv[3] as Chain | undefined
-  const module = await import(path.join(__dirname, '..', 'src', 'adapters', process.argv[2]))
+  const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
 
-  const client = await pool.connect()
-
   try {
+    const client = connect()
+
     const adapterChains = chain ? [chain] : chains.filter((chain) => adapter[chain.id]).map((chain) => chain.id)
+    const chainIds = adapterChains.map((chain) => chainById[chain]?.chainId).filter(isNotNullish)
+
+    const prevDbAdapters = await selectAdapters(client, chainIds, adapter.id)
 
     const chainContractsConfigs = await Promise.all(
       adapterChains.map(async (chain) => {
-        const prevDbAdapter = await selectAdapter(client, chain, adapter.id)
+        const chainId = chainById[chain]?.chainId
+        if (chainId == null) {
+          throw new Error(`Missing chain ${chain}`)
+        }
+
+        const prevDbAdapter = prevDbAdapters.find((adapter) => adapter.chain === chain)
 
         const ctx: BaseContext = { chain, adapterId: adapter.id }
 
         const contractsRes = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
 
-        const contracts = await resolveContractsTokens({
-          client,
-          contractsMap: contractsRes?.contracts || {},
-          storeMissingTokens: true,
-        })
+        const contracts = await resolveContractsTokens(contractsRes?.contracts || {})
 
-        return { ...contractsRes, contracts }
+        return {
+          contracts,
+          revalidate: contractsRes.revalidate,
+          revalidateProps: contractsRes.revalidateProps,
+          prevDbAdapter,
+        }
       }),
     )
 
@@ -70,36 +82,22 @@ async function main() {
         chain: adapterChains[i],
         contractsExpireAt: expire_at,
         contractsRevalidateProps: config.revalidateProps,
-        createdAt: now,
+        createdAt: config.prevDbAdapter?.createdAt || now,
+        updatedAt: now,
       }
     })
 
-    await client.query('BEGIN')
-
-    await upsertAdapters(client, dbAdapters)
-
-    // Delete old contracts unless it's a revalidate.
-    // In such case we want to add new contracts, not replace the old ones
-    await Promise.all(
-      chainContractsConfigs.map((config, i) => {
-        if (config.revalidate) {
-          return
-        }
-        return deleteContractsByAdapter(client, adapter.id, adapterChains[i])
-      }),
-    )
+    await insertAdapters(client, dbAdapters)
 
     // Insert new contracts for all specified chains
-    await Promise.all(
-      chainContractsConfigs.map((config) => insertAdaptersContracts(client, config.contracts, adapter.id)),
-    )
+    const adaptersContracts = chainContractsConfigs.map((config) => flattenContracts(config.contracts)).flat()
+    await insertAdaptersContracts(client, adaptersContracts, adapter.id, now)
 
-    await client.query('COMMIT')
+    // Cleanup old adapters
+    await deleteOldAdapters(client, adapterId, chainIds, now)
+    await deleteOldAdaptersContracts(client, adapterId, chainIds, now)
   } catch (e) {
     console.log('Failed to revalidate adapter contracts', e)
-    await client.query('ROLLBACK')
-  } finally {
-    client.release(true)
   }
 }
 

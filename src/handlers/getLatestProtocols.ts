@@ -1,5 +1,5 @@
 import { selectLatestCreatedAdapters } from '@db/adapters'
-import pool from '@db/pool'
+import { connect } from '@db/clickhouse'
 import { serverError, success } from '@handlers/response'
 import type { Chain } from '@lib/chains'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -14,12 +14,10 @@ interface LatestProtocolsResponse {
   protocols: ProtocolResponse[]
 }
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
-  const client = await pool.connect()
-
+export const handler: APIGatewayProxyHandler = async (event) => {
   try {
+    const client = connect()
+
     const limit = event.queryStringParameters?.limit ? parseInt(event.queryStringParameters?.limit) : undefined
 
     const latestCreatedProtocols = await selectLatestCreatedAdapters(client, limit)
@@ -36,7 +34,5 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (e) {
     console.error('Failed to retrieve latest protocols', e)
     return serverError('Failed to retrieve latest protocols')
-  } finally {
-    client.release(true)
   }
 }

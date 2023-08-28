@@ -1,8 +1,8 @@
+import { connect } from '@db/clickhouse'
 import { getContracts } from '@db/contracts'
-import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
-import type { Chain } from '@lib/chains'
+import { chainById } from '@lib/chains'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface IContract {
@@ -17,9 +17,7 @@ export interface IContract {
   name?: string
 }
 
-export const getContract: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event) => {
   const address = event.pathParameters?.address
 
   if (!address) {
@@ -29,18 +27,17 @@ export const getContract: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  const client = await pool.connect()
+  const chainParam = event.queryStringParameters?.chain || ''
+  const chain = chainById[chainParam]
 
   try {
-    const chain = event.queryStringParameters?.chain as Chain
+    const client = connect()
 
-    const contracts = await getContracts(client, address, chain)
+    const contracts = await getContracts(client, address, chain?.chainId)
 
     return success({ data: contracts }, { maxAge: 60 * 60 })
   } catch (e) {
     console.error('Failed to retrieve contracts', e)
     return serverError('Failed to retrieve contracts')
-  } finally {
-    client.release(true)
   }
 }

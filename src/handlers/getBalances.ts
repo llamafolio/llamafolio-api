@@ -1,5 +1,5 @@
-import { selectBalancesWithGroupsAndYieldsByFromAddress } from '@db/balances'
-import pool from '@db/pool'
+import { selectLatestBalancesGroupsByFromAddress } from '@db/balances'
+import { connect } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { ContractStandard } from '@lib/adapter'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
@@ -87,17 +87,17 @@ function formatBaseBalance(balance: any) {
 }
 
 export function formatBalance(balance: any): FormattedBalance {
-  const underlyings = balance.data?.underlyings?.map(formatBaseBalance)
-  const rewards = balance.data?.rewards?.map(formatBaseBalance)
+  const underlyings = balance.underlyings?.map(formatBaseBalance)
+  const rewards = balance.rewards?.map(formatBaseBalance)
 
   const formattedBalance: FormattedBalance = {
-    standard: balance.data?.standard,
-    name: balance.data?.name || undefined,
+    standard: balance.standard,
+    name: balance.name,
     address: balance.address,
-    symbol: balance.data?.symbol,
-    decimals: balance.data?.decimals != null ? parseInt(balance.data.decimals) : balance.data?.decimals,
+    symbol: balance.symbol,
+    decimals: balance.decimals != null ? parseInt(balance.decimals) : balance.decimals,
     category: balance.category as Category,
-    stable: balance.data?.stable || underlyings?.every((underlying: any) => underlying.stable),
+    stable: balance.stable || underlyings?.every((underlying: any) => underlying.stable),
     price: balance.price,
     amount: balance.amount,
     balanceUSD: balance.balanceUSD,
@@ -108,14 +108,14 @@ export function formatBalance(balance: any): FormattedBalance {
     apyReward: balance.apyReward,
     apyMean30d: balance.apyMean30d,
     ilRisk: balance.ilRisk,
-    unlockAt: balance.data?.unlockAt,
+    unlockAt: balance.unlockAt,
     //@ts-expect-error
-    side: balance.data?.side,
-    margin: balance.data?.margin,
-    entryPrice: balance.data?.entryPrice,
-    marketPrice: balance.data?.marketPrice,
-    leverage: balance.data?.leverage,
-    funding: balance.data?.funding,
+    side: balance.side,
+    margin: balance.margin,
+    entryPrice: balance.entryPrice,
+    marketPrice: balance.marketPrice,
+    leverage: balance.leverage,
+    funding: balance.funding,
     underlyings,
     rewards,
   }
@@ -153,9 +153,7 @@ export interface BalancesResponse {
   groups: GroupResponse[]
 }
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event) => {
   const address = event.pathParameters?.address as `0x${string}`
   if (!address) {
     return badRequest('Missing address parameter')
@@ -167,10 +165,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
   console.log('Get balances', address)
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
-    const balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
+    const balancesGroups = await selectLatestBalancesGroupsByFromAddress(client, address)
 
     const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
 
@@ -195,7 +193,5 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
-  } finally {
-    client.release(true)
   }
 }

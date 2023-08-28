@@ -1,4 +1,4 @@
-import pool from '../src/db/pool'
+import { connect } from '../src/db/clickhouse'
 import { updateBalances } from '../src/handlers/updateBalances'
 
 function help() {
@@ -16,14 +16,12 @@ async function main() {
 
   const address = process.argv[2].toLowerCase() as `0x${string}`
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
     await updateBalances(client, address)
   } catch (e) {
     console.log('Failed to update balances', e)
-  } finally {
-    client.release(true)
   }
 }
 

@@ -1,43 +1,18 @@
 import { adapterById } from '@adapters/index'
-import type { Balance as BalanceStore } from '@db/balances'
-import { updateBalances as updateDBBalances } from '@db/balances'
-import type { BalancesGroup } from '@db/balances-groups'
-import { getAllContractsInteractions, groupContracts } from '@db/contracts'
-import type { Balance, BalancesConfig, BalancesContext, PricedBalance } from '@lib/adapter'
-import { groupBy, groupBy2 } from '@lib/array'
-import { fmtBalanceBreakdown, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
+import type { ClickHouseClient } from '@clickhouse/client'
+import type { Balance } from '@db/balances'
+import { deleteOldBalances, insertBalances } from '@db/balances'
+import { getContractsInteractions, groupContracts } from '@db/contracts'
+import type { BalancesContext } from '@lib/adapter'
+import { groupBy2 } from '@lib/array'
+import { sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
 import { type Chain, chains } from '@lib/chains'
-import { sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
-import { isNotNullish } from '@lib/type'
-import type { PoolClient } from 'pg'
-import { v4 as uuidv4 } from 'uuid'
 
-type ExtendedBalance = (Balance | PricedBalance) & {
-  adapterId: string
-  groupIdx: number
-}
-
-interface BalancesGroupExtended {
-  balances: ExtendedBalance[]
-  healthFactor?: number
-}
-
-interface ExtendedBalancesConfig extends BalancesConfig {
-  adapterId: string
-  chain: Chain
-  groups: BalancesGroupExtended[]
-}
-
-/**
- *
- * @param client must be connected
- * @param address
- */
-export async function updateBalances(client: PoolClient, address: `0x${string}`) {
+export async function updateBalances(client: ClickHouseClient, address: `0x${string}`) {
   // Fetch all protocols (with their associated contracts) that the user interacted with
   // and all unique tokens he received
-  const contracts = await getAllContractsInteractions(client, address)
+  const contracts = await getContractsInteractions(client, address)
 
   const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
 
@@ -59,8 +34,11 @@ export async function updateBalances(client: PoolClient, address: `0x${string}`)
 
   console.log('Interacted with protocols:', adapterIds)
 
+  const now = new Date()
+  const balances: Balance[] = []
+
   // Run adapters `getBalances` only with the contracts the user interacted with
-  const adaptersBalancesConfigsRes = await Promise.all(
+  await Promise.all(
     adapterIdsChains.map(async ([adapterId, chain]) => {
       const adapter = adapterById[adapterId]
       if (!adapter) {
@@ -84,43 +62,33 @@ export async function updateBalances(client: PoolClient, address: `0x${string}`)
 
         const hrend = process.hrtime(hrstart)
 
-        const balancesLength = balancesConfig.groups.reduce((acc, group) => acc + (group.balances?.length || 0), 0)
+        let balancesLength = 0
+
+        for (let groupIdx = 0; groupIdx < balancesConfig.groups.length; groupIdx++) {
+          const group = balancesConfig.groups[groupIdx]
+          for (const balance of group.balances) {
+            balancesLength++
+
+            balance.groupIdx = groupIdx
+            balance.adapterId = adapterId
+            balance.timestamp = now
+            balance.healthFactor = group.healthFactor
+            balance.fromAddress = address
+
+            balances.push(balance)
+          }
+        }
+
         console.log(
           `[${adapterId}][${chain}] getBalances ${contractsByAdapterIdChain[adapterId][chain].length} contracts, found ${balancesLength} balances in %ds %dms`,
           hrend[0],
           hrend[1] / 1000000,
         )
-
-        const extendedBalancesConfig: ExtendedBalancesConfig = {
-          ...balancesConfig,
-          // Tag balances with adapterId abd groupIdx
-          groups: balancesConfig.groups.map((balancesGroup, groupIdx) => ({
-            ...balancesGroup,
-            balances: balancesGroup.balances.map((balance) => ({ ...balance, adapterId, groupIdx })),
-          })),
-          adapterId,
-          chain,
-        }
-
-        return extendedBalancesConfig
       } catch (error) {
         console.error(`[${adapterId}][${chain}]: Failed to getBalances`, error)
-        return
       }
     }),
   )
-
-  const adaptersBalancesConfigs = adaptersBalancesConfigsRes.filter(isNotNullish)
-
-  // Ungroup balances to make only 1 call to the price API
-  const balances: ExtendedBalance[] = []
-  for (const balancesConfig of adaptersBalancesConfigs) {
-    for (const group of balancesConfig.groups) {
-      for (const balance of group.balances) {
-        balances.push(balance)
-      }
-    }
-  }
 
   const sanitizedBalances = sanitizeBalances(balances)
 
@@ -138,52 +106,10 @@ export async function updateBalances(client: PoolClient, address: `0x${string}`)
     hrend[1] / 1000000,
   )
 
-  // Group balances back by adapter/chain
-  const pricedBalancesByAdapterIdChain = groupBy2(sanitizedPricedBalances, 'adapterId', 'chain')
-
-  const now = new Date()
-
-  const balancesGroupsStore: BalancesGroup[] = []
-  const balancesStore: BalanceStore[] = []
-
-  for (const balanceConfig of adaptersBalancesConfigs) {
-    const pricedBalances = pricedBalancesByAdapterIdChain[balanceConfig.adapterId]?.[balanceConfig.chain]
-    if (!pricedBalances || pricedBalances.length === 0) {
-      continue
-    }
-
-    const balancesByGroupIdx = groupBy(pricedBalances.filter(isNotNullish), 'groupIdx')
-
-    for (let groupIdx = 0; groupIdx < balanceConfig.groups.length; groupIdx++) {
-      const balances = balancesByGroupIdx[groupIdx]
-      if (!balances || balances.length === 0) {
-        continue
-      }
-
-      const id = uuidv4()
-
-      const groupBalances = balances.map((balance) => ({ groupId: id, ...fmtBalanceBreakdown(balance) }))
-
-      for (const balance of groupBalances) {
-        balancesStore.push(balance)
-      }
-
-      const balancesGroup: BalancesGroup & { balances: any[] } = {
-        id,
-        fromAddress: address,
-        adapterId: balanceConfig.adapterId,
-        chain: balanceConfig.chain,
-        balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
-        rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
-        debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
-        timestamp: now,
-        healthFactor: balanceConfig.groups[groupIdx].healthFactor,
-      }
-
-      balancesGroupsStore.push(balancesGroup)
-    }
-  }
-
   // Update balances
-  return updateDBBalances(client, address, balancesGroupsStore, balancesStore)
+  await insertBalances(client, sanitizedPricedBalances)
+
+  // Cleanup old balances
+  // TODO: keep old balances once we're able to run this process in the past and reconcile missing adapters
+  return deleteOldBalances(client, address, now)
 }

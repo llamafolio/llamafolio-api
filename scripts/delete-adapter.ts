@@ -1,6 +1,7 @@
-import { deleteAdapterById } from '../src/db/adapters'
-import { deleteContractsByAdapterId } from '../src/db/contracts'
-import pool from '../src/db/pool'
+import { deleteAdapterById } from '@db/adapters'
+import { connect } from '@db/clickhouse'
+import { deleteContractsByAdapterId } from '@db/contracts'
+import { deleteProtocol } from '@db/protocols'
 
 function help() {
   console.log('pnpm run delete-adapter {adapter}')
@@ -16,21 +17,17 @@ async function main() {
   }
 
   const adapterId = process.argv[2]
-  const client = await pool.connect()
 
   try {
-    await client.query('BEGIN')
+    const client = connect()
 
     await deleteAdapterById(client, adapterId)
 
-    await deleteContractsByAdapterId(client, adapterId)
+    await deleteProtocol(client, adapterId)
 
-    await client.query('COMMIT')
+    await deleteContractsByAdapterId(client, adapterId)
   } catch (e) {
     console.log('Failed to delete adapter', e)
-    await client.query('ROLLBACK')
-  } finally {
-    client.release(true)
   }
 }
 

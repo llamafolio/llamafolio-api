@@ -1,8 +1,7 @@
+import type { ClickHouseClient } from '@clickhouse/client'
 import type { Contract, ContractStandard } from '@lib/adapter'
-import { sliceIntoChunks } from '@lib/array'
-import type { Chain } from '@lib/chains'
-import type { PoolClient } from 'pg'
-import format from 'pg-format'
+import { chainByChainId, chainById } from '@lib/chains'
+import { toDateTime } from '@lib/fmt'
 
 export interface ContractStorage {
   standard?: ContractStandard
@@ -11,23 +10,26 @@ export interface ContractStorage {
   address: string
   category?: string
   adapter_id: string
-  data?: any
+  data?: string
+  created_at?: string
 }
 
 export function fromStorage(contractsStorage: ContractStorage[]) {
   const contracts: Contract[] = []
 
   for (const contractStorage of contractsStorage) {
+    const data = JSON.parse(contractStorage.data || '{}')
+
     const contract = {
-      ...contractStorage.data,
-      decimals: contractStorage.data?.decimals ? parseInt(contractStorage.data.decimals) : undefined,
+      ...data,
+      decimals: data?.decimals ? parseInt(data.decimals) : undefined,
       standard: contractStorage.standard,
       name: contractStorage.name,
-      chain: contractStorage.chain,
+      chain: chainByChainId[parseInt(contractStorage.chain)]?.id,
       address: contractStorage.address,
       category: contractStorage.category,
       adapterId: contractStorage.adapter_id,
-      underlyings: contractStorage.data?.underlyings?.map((underlying: any) => ({
+      underlyings: data?.underlyings?.map((underlying: any) => ({
         ...underlying,
         decimals: parseInt(underlying.decimals),
       })),
@@ -39,33 +41,27 @@ export function fromStorage(contractsStorage: ContractStorage[]) {
   return contracts
 }
 
-export function toRow(contract: ContractStorage) {
-  return [
-    contract.standard,
-    contract.category,
-    contract.name,
-    contract.chain,
-    contract.address.toLowerCase(),
-    contract.adapter_id,
-    contract.data,
-  ]
-}
-
-export function toStorage(contracts: Contract[], adapterId: string) {
+export function toStorage(contracts: Contract[], adapterId: string, timestamp: Date) {
   const contractsStorage: ContractStorage[] = []
 
   for (const contract of contracts) {
     const { standard, name, chain, address, category, ...data } = contract
 
+    const chainId = chainById[chain]?.chainId
+    if (chainId == null) {
+      console.error(`Missing chain ${chain}`)
+      continue
+    }
+
     const contractStorage = {
       standard,
       name,
-      chain,
+      chain: chainId,
       address,
       category,
       adapter_id: adapterId,
-      // \\u0000 cannot be converted to text
-      data: JSON.parse(JSON.stringify(data).replace(/\\u0000/g, '')),
+      data: JSON.stringify(data),
+      created_at: toDateTime(timestamp),
     }
 
     contractsStorage.push(contractStorage)
@@ -74,62 +70,40 @@ export function toStorage(contracts: Contract[], adapterId: string) {
   return contractsStorage
 }
 
-export async function selectContractsByAdapterId(client: PoolClient, adapterId: string) {
-  const adaptersContractsRes = await client.query('select * from adapters_contracts where adapter_id = $1;', [
-    adapterId,
-  ])
+export async function selectAdaptersContractsByAddress(client: ClickHouseClient, address: string, chainId: number) {
+  const queryRes = await client.query({
+    query:
+      'SELECT * FROM lf.adapters_contracts_last_v WHERE "chain" = {chainId: UInt8} AND "address" = {address: String};',
+    query_params: {
+      address: address.toLowerCase(),
+      chainId,
+    },
+  })
 
-  return fromStorage(adaptersContractsRes.rows)
-}
-
-export async function selectAdaptersContractsByAddress(client: PoolClient, address: string, chain?: Chain) {
-  if (chain) {
-    const adaptersContractsRes = await client.query(
-      'select * from adapters_contracts where address = $1 and chain = $2;',
-      [address.toLowerCase(), chain],
-    )
-
-    return fromStorage(adaptersContractsRes.rows)
+  const res = (await queryRes.json()) as {
+    data: ContractStorage[]
   }
 
-  const adaptersContractsRes = await client.query('select * from adapters_contracts where address = $1;', [
-    address.toLowerCase(),
-  ])
-
-  return fromStorage(adaptersContractsRes.rows)
+  return fromStorage(res.data)
 }
 
-export function insertAdaptersContracts(
-  client: PoolClient,
-  contracts: { [key: string]: Contract | Contract[] | undefined },
+export async function insertAdaptersContracts(
+  client: ClickHouseClient,
+  contracts: Contract[],
   adapterId: string,
+  timestamp: Date,
 ) {
-  const values = toStorage(flattenContracts(contracts), adapterId).map(toRow)
+  const values = toStorage(contracts, adapterId, timestamp)
 
   if (values.length === 0) {
     return
   }
 
-  return Promise.all(
-    sliceIntoChunks(values, 200).map((chunk) =>
-      client.query(
-        format(
-          `
-          INSERT INTO adapters_contracts (
-            standard,
-            category,
-            name,
-            chain,
-            address,
-            adapter_id,
-            data
-          ) VALUES %L ON CONFLICT DO NOTHING;`,
-          chunk,
-        ),
-        [],
-      ),
-    ),
-  )
+  await client.insert({
+    table: 'lf.adapters_contracts',
+    values: values,
+    format: 'JSONEachRow',
+  })
 }
 
 /**
@@ -137,145 +111,142 @@ export function insertAdaptersContracts(
  * @param client
  * @param address
  * @param adapterId
- * @param chain
+ * @param chainId
  */
-export async function getContractsInteractions(client: PoolClient, address: string, adapterId: string, chain?: Chain) {
-  if (chain) {
-    const res = await client.query(
-      /*sql*/ `
-      with interactions as (
-        (
-          select t.chain, t.to_address as address from transactions t
-          where from_address = $1
-        )
-          union all
-        (
-          select t.chain, t.token as address from erc20_transfers t
-          where to_address = $1
-        )
-          union all
-        (
-          select t.chain, '0x0000000000000000000000000000000000000000' as address from transactions t
-          where from_address = $1
-        )
-      )
-      select c.* from interactions i
-      inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
-      where c.adapter_id = $2 and c.chain = $3
-      group by c.chain, c.address, c.adapter_id;
-    `,
-      [address.toLowerCase(), adapterId, chain],
-    )
-
-    return fromStorage(res.rows)
+export async function getContractsInteractions(
+  client: ClickHouseClient,
+  address: string,
+  adapterId?: string,
+  chainId?: number,
+) {
+  let condition = ' '
+  if (adapterId != null) {
+    condition += 'adapter_id = {adapterId: String} AND '
+  }
+  if (chainId != null) {
+    condition += 'chain = {chainId: UInt64} AND '
   }
 
-  const res = await client.query(
-    `
-    with interactions as (
-      (
-        select t.chain, t.to_address as address from transactions t
-        where from_address = $1
-      )
-        union all
-      (
-        select t.chain, t.token as address from erc20_transfers t
-        where to_address = $1
-      )
-        union all
-      (
-        select t.chain, '0x0000000000000000000000000000000000000000' as address from transactions t
-        where from_address = $1
-      )
-    )
-    select c.* from interactions i
-    inner join adapters_contracts c on c.chain = i.chain and c.address = i.address
-    where c.adapter_id = $2
-    group by c.chain, c.address, c.adapter_id;
-  `,
-    [address.toLowerCase(), adapterId],
-  )
+  const queryRes = await client.query({
+    query: `
+      SELECT *
+      FROM lf.adapters_contracts_last_v
+      WHERE
+        ${condition}
+        ("chain", "address") IN (
+          SELECT "chain", "address" FROM (
+            (
+              SELECT "chain", "to" AS "address"
+              FROM evm_indexer.transactions_to_mv
+              WHERE "from" = {address: String}
+            )
+              UNION ALL
+            (
+              SELECT "chain", "address"
+              FROM evm_indexer.token_transfers_received_mv
+              WHERE "to" = {address: String}
+            )
+          )
+          GROUP BY "chain", "address"
+        );
+    `,
+    query_params: {
+      address: address.toLowerCase(),
+      adapterId,
+      chainId,
+    },
+  })
 
-  return fromStorage(res.rows)
+  const res = (await queryRes.json()) as {
+    data: ContractStorage[]
+  }
+
+  return fromStorage(res.data)
 }
 
-/**
- * Get a list of all contracts a given account interacted with
- * @param client
- * @param address
- */
-export async function getAllContractsInteractions(client: PoolClient, address: string) {
-  const res = await client.query(
-    `
-  with interactions as (
-    (
-      select t.chain, t.to_address as address from transactions t
-      where from_address = $1
-    )
-      union all
-    (
-      select t.chain, t.token as address from erc20_transfers t
-      where to_address = $1
-    )
-      union all
-    (
-      select distinct on (chain, address) t.chain, '0x0000000000000000000000000000000000000000' as address from transactions t
-      where from_address = $1
-    )
-  )
-  select distinct on (c.chain, c.address, c.adapter_id) c.* from interactions i
-  inner join adapters_contracts c on c.chain = i.chain and c.address = i.address;
-  `,
-    [address.toLowerCase()],
-  )
+export async function getContracts(client: ClickHouseClient, address: string, chainId?: number) {
+  const queryRes = await client.query({
+    query: `
+      WITH
+      a AS (
+        SELECT
+          "chain",
+          "hash",
+          "timestamp",
+          "from",
+          "block_number",
+          "contract_created"
+        FROM evm_indexer.transactions
+        WHERE ("chain", "timestamp", "hash") IN (
+          SELECT
+            "chain",
+            "timestamp",
+            "hash"
+          FROM evm_indexer.transactions
+          WHERE "contract_created" = {address: String}
+          ${chainId != null ? ' AND "chain" = {chain: UInt8} ' : ''}
+        )
+      ),
+      b AS (
+        SELECT
+          "address",
+          "adapter_id"
+        FROM lf.adapters_contracts_last_v
+        WHERE "address" = {address: String}
+        ${chainId != null ? ' AND "chain" = {chain: UInt8} ' : ''}
+      )
+      SELECT
+        a.*, b.adapter_id
+      FROM a
+      LEFT JOIN b
+      ON a."contract_created" = b."address";
+    `,
+    query_params: {
+      address: address.toLowerCase(),
+      chainId,
+    },
+  })
 
-  return fromStorage(res.rows)
-}
+  const res = (await queryRes.json()) as {
+    data: { chain: string; hash: string; timestamp: string; from: string; block_number: string; adapter_id: string }[]
+  }
 
-export async function getContracts(client: PoolClient, address: string, chain?: Chain) {
-  const chainQuery = `
-    select c.*, ci.name, ci.abi, ac.adapter_id from contracts c
-    left join contracts_information ci on ci.contract = c.contract and ci.chain = c.chain
-    left join adapters_contracts ac on ac.address = c.contract and ac.chain = c.chain
-    where c.contract = $1 and c.chain = $2;
-  `
-
-  const noChainQuery = `
-    select c.*, ci.name, ci.abi, ac.adapter_id from contracts c
-    left join contracts_information ci on ci.contract = c.contract and ci.chain = c.chain
-    left join adapters_contracts ac on ac.address = c.contract and ac.chain = c.chain
-    where c.contract = $1;
-  `
-
-  const query = chain ? chainQuery : noChainQuery
-  const args = chain ? [address, chain] : [address]
-
-  const queryRes = await client.query(query, args)
-
-  return queryRes.rows.map((row) => ({
-    block: parseInt(row.block),
-    chain: row.chain,
-    contract: row.contract,
-    creator: row.creator,
+  return res.data.map((row) => ({
+    block: parseInt(row.block_number),
+    chain: chainByChainId[parseInt(row.chain)]?.id,
+    contract: address,
+    creator: row.from,
     hash: row.hash,
-    verified: row.verified,
-    abi: row.abi ?? undefined,
-    name: row.name ?? undefined,
     protocol: row.adapter_id ?? undefined,
   }))
 }
 
-/**
- *
- * @param client
- * @param adapterId
- */
-export function deleteContractsByAdapterId(client: PoolClient, adapterId: string) {
-  return client.query('DELETE FROM adapters_contracts WHERE adapter_id = $1;', [adapterId])
+export function deleteContractsByAdapterId(client: ClickHouseClient, adapterId: string) {
+  return client.command({
+    query: 'DELETE FROM lf.adapters WHERE id = {adapterId: String};',
+    query_params: { adapterId },
+  })
 }
 
-export function deleteContractsByAdapter(client: PoolClient, adapterId: string, chain: Chain) {
-  return client.query('DELETE FROM adapters_contracts WHERE adapter_id = $1 AND chain = $2;', [adapterId, chain])
+export function deleteOldAdaptersContracts(
+  client: ClickHouseClient,
+  adapterId: string,
+  chains: number[],
+  timestamp: Date,
+) {
+  return client.command({
+    query:
+      'DELETE FROM lf.adapters_contracts WHERE "chain" IN {chains: Array(UInt64)} AND "adapter_id" = {adapterId: String} AND "created_at" < {timestamp: DateTime};',
+    query_params: {
+      adapterId,
+      chains,
+      timestamp: toDateTime(timestamp),
+    },
+    clickhouse_settings: {
+      enable_lightweight_delete: 1,
+      mutations_sync: '2',
+    },
+  })
 }
 
 export function flattenContracts(contracts: { [key: string]: Contract | Contract[] | undefined }) {

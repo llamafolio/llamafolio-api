@@ -1,14 +1,12 @@
 import { selectDistinctAdaptersIds } from '@db/adapters'
-import pool from '@db/pool'
+import { connect } from '@db/clickhouse'
 import { serverError, success } from '@handlers/response'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
-export const handler: APIGatewayProxyHandler = async (_event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
-  const client = await pool.connect()
-
+export const handler: APIGatewayProxyHandler = async () => {
   try {
+    const client = connect()
+
     const adapters = await selectDistinctAdaptersIds(client)
 
     return success(
@@ -22,7 +20,5 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
   } catch (error) {
     console.error('Failed to get adapters', { error })
     return serverError('Failed to get adapters')
-  } finally {
-    client.release(true)
   }
 }

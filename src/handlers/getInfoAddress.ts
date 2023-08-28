@@ -1,6 +1,7 @@
-import pool from '@db/pool'
+import { connect } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
+import { unixFromDateTime } from '@lib/fmt'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface AddressInfoResponse {
@@ -12,9 +13,7 @@ interface AddressInfoResponse {
 /**
  * Get address info
  */
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event) => {
   const address = event.pathParameters?.address
 
   if (!address) {
@@ -25,28 +24,32 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  const client = await pool.connect()
-
   try {
-    const activeSince = await client.query(
-      `
-      select timestamp from transactions
-      where from_address = $1
-      order by timestamp asc
-      limit 1;
-    `,
-      [address.toLowerCase()],
-    )
+    const client = connect()
+
+    const queryRes = await client.query({
+      query: `
+        SELECT "timestamp" from evm_indexer.transactions_history_agg
+        WHERE "target" = {address: String}
+        ORDER BY "timestamp" ASC
+        LIMIT 1;
+      `,
+      query_params: {
+        address: address.toLowerCase(),
+      },
+    })
+
+    const res = (await queryRes.json()) as {
+      data: { timestamp: string }[]
+    }
 
     const response: AddressInfoResponse = {
-      data: { activeSince: activeSince.rows[0]?.timestamp ? parseInt(activeSince.rows[0].timestamp) : undefined },
+      data: { activeSince: res.data[0]?.timestamp ? unixFromDateTime(res.data[0].timestamp) : undefined },
     }
 
     return success(response, { maxAge: 60 * 60 })
   } catch (error) {
     console.error('Failed to get address info', { error })
     return serverError('Failed to get address info')
-  } finally {
-    client.release(true)
   }
 }

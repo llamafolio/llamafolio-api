@@ -135,20 +135,20 @@ functions:
     memorySize: 512
 
   getContracts:
-    handler: src/handlers/getContracts.getContract
+    handler: src/handlers/getContracts.handler
     description: Get contracts
     events:
       - httpApi:
           method: get
           path: /contracts/{address}
 
-  getGasPriceChart:
-    handler: src/handlers/getGasPriceChart.handler
-    description: Get gas price chart
+  getGasUsedChart:
+    handler: src/handlers/getGasUsedChart.handler
+    description: Get gas used chart
     events:
       - httpApi:
           method: get
-          path: /gas_price/{chain}/chart
+          path: /gas_used/{chain}/chart
 
   getHistory:
     handler: src/handlers/getHistory.handler
@@ -157,8 +157,7 @@ functions:
       - httpApi:
           method: get
           path: /history/{address}
-    timeout: 15
-    memorySize: 512
+    timeout: 25
 
   getInfoStats:
     handler: src/handlers/getInfoStats.handler
@@ -218,14 +217,6 @@ functions:
       - httpApi:
           method: get
           path: /sync_status
-
-  getSyncStatusV1:
-    handler: src/handlers/getSyncStatus.handlerV1
-    description: Get sync status
-    events:
-      - httpApi:
-          method: get
-          path: /v1/sync_status
 
   getTokens:
     handler: src/handlers/getTokens.handler

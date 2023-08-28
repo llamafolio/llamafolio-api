@@ -1,10 +1,10 @@
+import { connect } from '@db/clickhouse'
 import { selectAdaptersContractsByAddress } from '@db/contracts'
-import pool from '@db/pool'
 import { badRequest, notFound, serverError, success } from '@handlers/response'
 import type { Balance, BaseContext, BaseContract, Contract, PricedBalance } from '@lib/adapter'
 import { isHex } from '@lib/buf'
 import { call } from '@lib/call'
-import type { Chain } from '@lib/chains'
+import { type Chain, chainById } from '@lib/chains'
 import { abi as erc20Abi } from '@lib/erc20'
 import { sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
@@ -22,14 +22,17 @@ function formatBaseContract(contract: any) {
   }
 }
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event) => {
   const chain = event.pathParameters?.chain as Chain
   const address = event.pathParameters?.address?.toLowerCase() as `0x${string}`
 
   if (!chain) {
     return badRequest('Missing chain parameter')
+  }
+
+  const chainId = chainById[chain]?.chainId
+  if (chainId == null) {
+    return badRequest(`Unsupported chain ${chain}`)
   }
 
   if (!address) {
@@ -40,13 +43,13 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  const client = await pool.connect()
-
   const ctx: BaseContext = { chain, adapterId: '' }
 
   try {
+    const client = connect()
+
     // `token` key can also be used to retrieve token details, ignore it
-    const adaptersContracts = (await selectAdaptersContractsByAddress(client, address, chain)).filter(
+    const adaptersContracts = (await selectAdaptersContractsByAddress(client, address, chainId)).filter(
       (contract) => !contract.token || contract.token?.toLowerCase() === address,
     )
 
@@ -122,7 +125,5 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (e) {
     console.error('Failed to retrieve token', e)
     return serverError('Failed to retrieve token')
-  } finally {
-    client.release(true)
   }
 }

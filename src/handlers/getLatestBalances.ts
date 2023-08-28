@@ -1,5 +1,5 @@
-import { selectBalancesWithGroupsAndYieldsByFromAddress } from '@db/balances'
-import pool from '@db/pool'
+import { selectLatestBalancesGroupsByFromAddress } from '@db/balances'
+import { connect } from '@db/clickhouse'
 import type { BalancesResponse } from '@handlers/getBalances'
 import { formatBalancesGroups } from '@handlers/getBalances'
 import { badRequest, serverError, success } from '@handlers/response'
@@ -23,12 +23,12 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
 
   console.log('Get latest balances', address)
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
     await updateBalances(client, address)
 
-    const balancesGroups = await selectBalancesWithGroupsAndYieldsByFromAddress(client, address)
+    const balancesGroups = await selectLatestBalancesGroupsByFromAddress(client, address)
 
     const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
 
@@ -46,7 +46,5 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
-  } finally {
-    client.release(true)
   }
 }

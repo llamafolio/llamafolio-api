@@ -1,4 +1,8 @@
 import { isNotFalsy } from '@lib/type'
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+
+dayjs.extend(utc)
 
 export function boolean(val: any): boolean {
   switch (val) {
@@ -51,4 +55,19 @@ export function parseStringJSON(jsonString: string) {
     console.error('Failed to parse JSON', { string: jsonString })
     return jsonString
   }
+}
+
+/**
+ * format Date to Clickhouse compatible DateTime
+ */
+export function toDateTime(date: Date) {
+  return dayjs(date).utc().format('YYYY-MM-DD HH:mm:ss')
+}
+
+export function fromDateTime(date: string) {
+  return dayjs.utc(date, 'YYYY-MM-DD HH:mm:ss').toDate()
+}
+
+export function unixFromDateTime(date: string) {
+  return dayjs(date, 'YYYY-MM-DD HH:mm:ss').unix()
 }

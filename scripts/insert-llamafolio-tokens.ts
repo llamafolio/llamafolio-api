@@ -2,21 +2,22 @@ import '../environment'
 
 import { chains } from '@llamafolio/tokens'
 
-import pool from '../src/db/pool'
-import type { ERC20Token } from '../src/db/tokens'
+import { connect } from '../src/db/clickhouse'
+import type { Token } from '../src/db/tokens'
 import { insertERC20Tokens } from '../src/db/tokens'
 
 async function main() {
-  const client = await pool.connect()
+  const client = connect()
 
   try {
-    const tokens: ERC20Token[] = []
+    const tokens: Token[] = []
 
     for (const chain in chains) {
       for (const token of chains[chain]) {
         tokens.push({
           address: token.address,
           chain,
+          type: 0,
           name: token.name,
           symbol: token.symbol,
           decimals: token.decimals,
@@ -32,8 +33,6 @@ async function main() {
     console.log(`Inserted ${tokens.length} tokens`)
   } catch (e) {
     console.log('Failed to insert tokens', e)
-  } finally {
-    client.release(true)
   }
 }
 

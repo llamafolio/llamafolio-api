@@ -1,9 +1,10 @@
-import { selectHistory, selectHistoryAggregate } from '@db/history'
-import pool from '@db/pool'
+import { connect } from '@db/clickhouse'
+import { selectHistory } from '@db/history'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
-import type { Chain } from '@lib/chains'
+import { type Chain, chainByChainId } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
+import { unixFromDateTime } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
 import type { Token } from '@lib/token'
@@ -69,41 +70,50 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   }
 
   const offset = parseInt(queries?.offset || '') || 0
-  const limit = parseInt(queries?.limit || '') || 50
+  const limit = parseInt(queries?.limit || '') || 25
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
-    const [transactions, transactionsAggregate] = await Promise.all([
-      selectHistory(client, address.toLowerCase(), limit, offset, chains, protocols),
-      selectHistoryAggregate(client, address.toLowerCase(), chains, protocols),
-    ])
+    const transactionsData: ITransaction[] = []
+    let count = 0
 
-    const count = parseInt(transactionsAggregate.aggregate.count)
+    const transactions = await selectHistory(client, address.toLowerCase(), limit, offset, chains, protocols)
 
-    const transactionsData: ITransaction[] = transactions.map((tx: any) => ({
-      chain: tx.chain,
-      blockNumber: tx.block_number,
-      timestamp: parseInt(tx.timestamp),
-      hash: tx.hash,
-      fromAddress: tx.from_address,
-      toAddress: tx.to_address,
-      gasUsed: tx.gas,
-      gasPrice: tx.gas_price,
-      inputFunctionName: tx.method_name?.name,
-      success: tx.receipt?.status === '1',
-      adapterId: tx.adapters_contracts?.[0]?.adapter_id,
-      value: tx.value,
-      tokenTransfers: tx.erc20_transfers_aggregate?.nodes.map((token_transfer: any) => ({
-        name: token_transfer?.token_details?.name,
-        symbol: token_transfer?.token_details?.symbol,
-        decimals: token_transfer?.token_details?.decimals,
-        tokenAddress: token_transfer?.token,
-        fromAddress: token_transfer?.from_address,
-        toAddress: token_transfer?.to_address,
-        value: token_transfer?.value,
-      })),
-    }))
+    for (const tx of transactions) {
+      const chain = chainByChainId[parseInt(tx.chain)]?.id
+      if (chain == null) {
+        console.error(`Missing chain ${tx.chain}`)
+        continue
+      }
+
+      count = parseInt(tx.total)
+
+      transactionsData.push({
+        chain,
+        blockNumber: tx.block_number.toString(),
+        timestamp: unixFromDateTime(tx.timestamp),
+        hash: tx.hash,
+        fromAddress: tx.from,
+        toAddress: tx.to,
+        gasUsed: tx.gas.toString(),
+        gasPrice: tx.gas_price,
+        // inputFunctionName: tx.method_name?.name,
+        inputFunctionName: undefined,
+        success: tx.status === 'success',
+        // adapterId: tx.adapters_contracts?.[0]?.adapter_id,
+        value: tx.value,
+        tokenTransfers: tx.token_transfers.map(([from, to, address, _log_index, _type, value, _id]) => ({
+          // name: token_transfer?.token_details?.name,
+          // symbol: token_transfer?.token_details?.symbol,
+          // decimals: token_transfer?.token_details?.decimals,
+          tokenAddress: address,
+          fromAddress: from,
+          toAddress: to,
+          value: value,
+        })),
+      })
+    }
 
     // 1. collect tokens / coins
     // 2. fetch their prices
@@ -176,7 +186,5 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (e) {
     console.error('Failed to retrieve history', e)
     return serverError('Failed to retrieve history')
-  } finally {
-    client.release(true)
   }
 }
