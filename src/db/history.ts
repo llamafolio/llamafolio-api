@@ -1,6 +1,7 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 
 export interface IHistoryTransaction {
+  total: string
   block_number: number
   chain: string
   from: string
@@ -25,22 +26,16 @@ export async function selectHistory(
   // TODO: contract interacted -> adapter_id
   const queryRes = await client.query({
     query: `
-      WITH "transactions" AS (
+      WITH "all_transactions" AS (
         SELECT "chain", "hash", "timestamp"
-        FROM (
-          (
-            SELECT "chain", "hash", "timestamp"
-            FROM evm_indexer.transactions_history_mv
-            WHERE "target" = {address: String}
-          )
-            UNION ALL
-          (
-            SELECT "chain", "hash", "timestamp"
-            FROM evm_indexer.token_transfers_history_mv
-            WHERE "to" = {address: String}
-          )
-        )
-        GROUP BY "chain", "hash", "timestamp"
+        FROM evm_indexer.transactions_history_agg
+        WHERE "target" = {address: String}
+      ),
+      (
+        SELECT count(*) FROM "all_transactions"
+      ) AS "total",
+      "transactions" AS (
+        SELECT * FROM "all_transactions"
         ORDER BY "timestamp" DESC
         LIMIT {limit: UInt8}
       )
@@ -55,7 +50,8 @@ export async function selectHistory(
         "status",
         "value",
         "timestamp",
-        tt."transfers" AS "token_transfers"
+        tt."transfers" AS "token_transfers",
+        "total"
       FROM evm_indexer.transactions AS "t"
       LEFT JOIN (
         SELECT
@@ -63,44 +59,13 @@ export async function selectHistory(
           "transaction_hash" AS "hash",
           "timestamp",
           groupArray(("from", "to", "address", "log_index", "type", "value", "id")) AS "transfers"
-        FROM (
-          (
-            SELECT
-              "chain",
-              "transaction_hash",
-              "timestamp",
-              "from",
-              "to",
-              "address",
-              "log_index",
-              "type",
-              "value",
-              "id"
-            FROM evm_indexer.token_transfers
-            WHERE "from" = {address: String}
-          )
-            UNION ALL
-          (
-            SELECT
-              "chain",
-              "transaction_hash",
-              "timestamp",
-              "from",
-              "to",
-              "address",
-              "log_index",
-              "type",
-              "value",
-              "id"
-            FROM evm_indexer.token_transfers
-            WHERE "to" = {address: String}
-          )
-        )
-        WHERE ("chain", "hash", "timestamp") IN "transactions"
+        FROM evm_indexer.token_transfers
+        WHERE
+          ("chain", "hash", "timestamp") IN "transactions"
         GROUP BY "chain", "hash", "timestamp"
-      ) AS "tt" ON (t."chain", t."hash", t."timestamp") = (tt."chain", tt."hash", tt."timestamp")
-      WHERE ("chain", "hash", "timestamp") IN "transactions"
-      SETTINGS max_threads = 16;
+      ) AS "tt"
+      ON (t."chain", t."hash", t."timestamp") = (tt."chain", tt."hash", tt."timestamp")
+      WHERE ("chain", "hash", "timestamp") IN "transactions";
     `,
     query_params: {
       address: address.toLowerCase(),
@@ -119,7 +84,7 @@ export async function selectHistory(
   return res.data
 }
 
-export async function selectHistoryCount(
+export async function selectHistoryMonthlyCount(
   client: ClickHouseClient,
   address: string,
   chainsFilter: string[],
@@ -127,22 +92,12 @@ export async function selectHistoryCount(
 ) {
   const queryRes = await client.query({
     query: `
-      SELECT count() AS count FROM (
-        SELECT "chain", "hash" FROM (
-          (
-            SELECT "chain", "hash"
-            FROM evm_indexer.transactions_history_mv
-            WHERE "target" = {address: String}
-          )
-            UNION ALL
-          (
-            SELECT "chain", "hash"
-            FROM evm_indexer.token_transfers_history_mv
-            WHERE "to" = {address: String}
-          )
-        )
-        GROUP BY "chain", "hash"
-      );
+      SELECT count() AS "count", toYYYYMM("timestamp") AS "month"
+      FROM evm_indexer.transactions_history_agg
+      WHERE "target" = {address: String}
+      GROUP BY "target", toYYYYMM("timestamp")
+      ORDER BY "month" ASC
+      SETTINGS use_skip_indexes=1;
     `,
     query_params: {
       address: address.toLowerCase(),
@@ -153,8 +108,8 @@ export async function selectHistoryCount(
   })
 
   const res = (await queryRes.json()) as {
-    data: [{ count: string }]
+    data: { count: string; month: number }[]
   }
 
-  return res.data[0]?.count ? parseInt(res.data[0].count) : 0
+  return res.data.map((row) => ({ count: parseInt(row.count), month: row.month }))
 }

@@ -1,5 +1,5 @@
 import { connect } from '@db/clickhouse'
-import { selectHistory, selectHistoryCount } from '@db/history'
+import { selectHistory } from '@db/history'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import { type Chain, chainByChainId } from '@lib/chains'
@@ -75,12 +75,10 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   const client = connect()
 
   try {
-    const [transactions, count] = await Promise.all([
-      selectHistory(client, address.toLowerCase(), limit, offset, chains, protocols),
-      selectHistoryCount(client, address.toLowerCase(), chains, protocols),
-    ])
-
     const transactionsData: ITransaction[] = []
+    let count = 0
+
+    const transactions = await selectHistory(client, address.toLowerCase(), limit, offset, chains, protocols)
 
     for (const tx of transactions) {
       const chain = chainByChainId[parseInt(tx.chain)]?.id
@@ -88,6 +86,8 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
         console.error(`Missing chain ${tx.chain}`)
         continue
       }
+
+      count = parseInt(tx.total)
 
       transactionsData.push({
         chain,
