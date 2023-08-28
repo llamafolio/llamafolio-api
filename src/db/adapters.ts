@@ -90,7 +90,7 @@ export function toStorage(adapters: Adapter[]) {
 
 export async function countAdapters(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: 'SELECT count() AS count FROM lf.adapters_last_v;',
+    query: 'SELECT count(distinct "id") AS count FROM lf.adapters_last_v;',
   })
 
   const res = (await queryRes.json()) as {
@@ -153,7 +153,7 @@ export async function selectLatestCreatedAdapters(client: ClickHouseClient, limi
   // select last added protocols (no matter which chain) and collect
   // all of their chains we support
   const queryRes = await client.query({
-    query: `SELECT "id", groupArray("chain") AS "chains", "created_at" FROM lf.adapters_last_v GROUP BY ("id", "created_at") ORDER BY "created_at" DESC LIMIT {limit: UInt8};`,
+    query: `SELECT "id", groupArray("chain") AS "chains", max("created_at") AS "created_at" FROM lf.adapters_last_v GROUP BY "id" ORDER BY "created_at" DESC LIMIT {limit: UInt8};`,
     query_params: {
       limit,
     },
