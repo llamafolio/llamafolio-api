@@ -194,11 +194,9 @@ export async function selectLatestBalancesGroupsByFromAddress(client: ClickHouse
   const queryRes = await client.query({
     query: `
       WITH (
-        SELECT timestamp
+        SELECT max("timestamp") as "timestamp"
         FROM lf.balances
         WHERE from_address = {fromAddress: String}
-        ORDER BY timestamp DESC
-        LIMIT 1
       ) AS latest
       SELECT *
       FROM lf.balances
