@@ -19,7 +19,7 @@
     "lint": "eslint --fix . --ext js,cjs,mjs,ts,d.ts,json,md --cache",
     "format": "prettier --write '**/*.{md,json,js,cjs,mjs,ts,d.ts,sh}' --ignore-path='./.eslintignore' --ignore-unknown --cache",
     "typecheck": "tsc --noEmit --skipLibCheck",
-    "clean": "rm -rf dist .esbuild .serverless"
+    "clean": "rm -rf .esbuild .serverless"
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
@@ -33,7 +33,7 @@
     "lodash": "^4.17.21",
     "pg": "^8.11.3",
     "pg-format": "^1.0.4",
-    "viem": "^1.9.0", 
+    "viem": "^1.9.0",
     "zod": "^3.22.2"
   },
   "devDependencies": {
