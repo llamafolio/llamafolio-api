@@ -29,7 +29,6 @@
     "ts-node": "tsx",
     "clean": "rm -rf dist .esbuild .serverless"
   },
-  "keywords": [],
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.370.0",
@@ -90,5 +89,12 @@
     "pnpm": ">=8.0.0",
     "yarn": "------>PLEASE USE PNPM<------",
     "npm": "------>PLEASE USE PNPM<------"
-  }
+  },
+  "keywords": [
+    "LlamaFolio",
+    "API",
+    "OSS",
+    "Portfolio",
+    "Tracker"
+  ]
 }
