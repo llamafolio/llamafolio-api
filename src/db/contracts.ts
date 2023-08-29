@@ -73,7 +73,7 @@ export function toStorage(contracts: Contract[], adapterId: string, timestamp: D
 export async function selectAdaptersContractsByAddress(client: ClickHouseClient, address: string, chainId: number) {
   const queryRes = await client.query({
     query:
-      'SELECT * FROM lf.adapters_contracts_last_v WHERE "chain" = {chainId: UInt8} AND "address" = {address: String};',
+      'SELECT * FROM lf.adapters_contracts_last_v WHERE "chain" = {chainId: UInt8} AND lower("address") = {address: String};',
     query_params: {
       address: address.toLowerCase(),
       chainId,
@@ -133,7 +133,7 @@ export async function getContractsInteractions(
       FROM lf.adapters_contracts_last_v
       WHERE
         ${condition}
-        ("chain", "address") IN (
+        ("chain", lower("address")) IN (
           SELECT "chain", "address" FROM (
             (
               SELECT "chain", "to" AS "address"
@@ -192,7 +192,7 @@ export async function getContracts(client: ClickHouseClient, address: string, ch
           "address",
           "adapter_id"
         FROM lf.adapters_contracts_last_v
-        WHERE "address" = {address: String}
+        WHERE lower("address") = {address: String}
         ${chainId != null ? ' AND "chain" = {chain: UInt8} ' : ''}
       )
       SELECT
