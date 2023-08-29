@@ -1,5 +1,5 @@
+import { connect } from '@db/clickhouse'
 import { selectLabelsByAddresses } from '@db/labels'
-import pool from '@db/pool'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -22,7 +22,7 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
     data[address] = { labels: [], links: {} }
   }
 
-  const client = await pool.connect()
+  const client = connect()
 
   try {
     const labels = await selectLabelsByAddresses(client, addresses)
@@ -48,7 +48,5 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (error) {
     console.error('Failed to retrieve labels', { error, addresses })
     return serverError('Failed to retrieve labels')
-  } finally {
-    client.release(true)
   }
 }

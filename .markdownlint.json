@@ -1,8 +1,0 @@
-{
-  "$schema": "https://raw.githubusercontent.com/DavidAnson/markdownlint/main/schema/markdownlint-config-schema.json",
-  "MD041": false,
-  "MD013": {
-    // Number of characters
-    "line_length": 80
-  }
-}

@@ -26,18 +26,10 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": true
   },
-  "[markdown]": {
-    "editor.defaultFormatter": "DavidAnson.vscode-markdownlint",
-    "editor.wordWrap": "on",
-    "editor.wordWrapColumn": 80
-  },
-  "[json][jsonc]": {
-    "editor.wordWrapColumn": 120
-  },
-  "files.associations": {
-    ".markdownlint.json": "jsonc"
-  },
   "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
