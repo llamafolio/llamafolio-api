@@ -5,11 +5,6 @@ import { z } from 'zod'
 export const environmentSchema = z.object({
   NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]).default('development'),
   STAGE: z.union([z.literal('dev'), z.literal('prod'), z.literal('local')]).optional(),
-  PGHOST: z.string().optional(),
-  PGUSER: z.string().optional(),
-  PGDATABASE: z.string().optional(),
-  PGPASSWORD: z.string().optional(),
-  PGPORT: z.string().optional(),
   CLICKHOUSE_HOST: z.string().optional(),
   CLICKHOUSE_USER: z.string().optional(),
   CLICKHOUSE_PASSWORD: z.string().optional(),

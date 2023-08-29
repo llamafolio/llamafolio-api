@@ -37,11 +37,6 @@ provider:
           Resource: '*'
 
   environment:
-    PGHOST: ${env:PGHOST}
-    PGUSER: ${env:PGUSER}
-    PGDATABASE: ${env:PGDATABASE}
-    PGPASSWORD: ${env:PGPASSWORD}
-    PGPORT: ${env:PGPORT}
     CLICKHOUSE_HOST: ${env:CLICKHOUSE_HOST}
     CLICKHOUSE_USER: ${env:CLICKHOUSE_USER}
     CLICKHOUSE_PASSWORD: ${env:CLICKHOUSE_PASSWORD}

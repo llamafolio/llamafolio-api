@@ -31,8 +31,6 @@
     "graphql": "^16.8.0",
     "graphql-request": "^6.1.0",
     "lodash": "^4.17.21",
-    "pg": "^8.11.3",
-    "pg-format": "^1.0.4",
     "viem": "^1.9.0",
     "zod": "^3.22.2"
   },
@@ -40,8 +38,6 @@
     "@types/aws-lambda": "^8.10.119",
     "@types/eslint": "^8.44.2",
     "@types/node": "^20.5.7",
-    "@types/pg": "^8.10.2",
-    "@types/pg-format": "^1.0.2",
     "@types/serverless": "^3.12.14",
     "@typescript-eslint/eslint-plugin": "^6.5.0",
     "@typescript-eslint/parser": "^6.5.0",
@@ -75,11 +71,5 @@
     "yarn": "------>PLEASE USE PNPM<------",
     "npm": "------>PLEASE USE PNPM<------"
   },
-  "keywords": [
-    "LlamaFolio",
-    "API",
-    "OSS",
-    "Portfolio",
-    "Tracker"
-  ]
+  "keywords": ["LlamaFolio", "API", "OSS", "Portfolio", "Tracker"]
 }
