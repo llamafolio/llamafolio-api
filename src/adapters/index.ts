@@ -194,6 +194,7 @@ import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
 import strike from '@adapters/strike'
 import sturdy from '@adapters/sturdy'
+import stusdt from '@adapters/stusdt'
 import sudoswap from '@adapters/sudoswap'
 import superfarm from '@adapters/superfarm'
 import sushiswap from '@adapters/sushiswap'
@@ -434,6 +435,7 @@ export const adapters: Adapter[] = [
   stargate,
   strike,
   sturdy,
+  stusdt,
   sudoswap,
   superfarm,
   sushiswap,
