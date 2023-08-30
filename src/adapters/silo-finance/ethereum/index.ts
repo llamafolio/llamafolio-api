@@ -35,6 +35,7 @@ const siloVaults: `0x${string}`[] = [
   '0x58f93cb4ef4e3428066c848ec4d054edd68441af',
   '0x6926e507339eca2b01bede825d762f4ea19e13c2',
   '0x0bce613ef6a197e8c56be525cf173c27b49ac47d',
+  '0x96efdf95cc47fe90e8f63d2f5ef9fb8b180daeb9',
 ]
 
 const routers: Contract[] = [
