@@ -12,6 +12,9 @@ const contracts: Contract[] = [
   { chain: 'ethereum', address: '0xb516247596ca36bf32876199fbdcad6b3322330b' },
   { chain: 'ethereum', address: '0x7cd3ab8354289bef52c84c2bf0a54e3608e66b37' },
   { chain: 'ethereum', address: '0x743a502cf0e213f6fee56cd9c6b03de7fa951dcf' },
+  { chain: 'ethereum', address: '0x27b6c301fd441f3345d61b7a4245e1f823c3f9c4' },
+  { chain: 'ethereum', address: '0x93685185666c8d34ad4c574b3dbf41231bbfb31b' },
+  { chain: 'ethereum', address: '0x63df5e23db45a2066508318f172ba45b9cd37035' },
 ]
 
 // Deprecated -> https://docs.inverse.finance/inverse-finance/technical/smart-contracts
