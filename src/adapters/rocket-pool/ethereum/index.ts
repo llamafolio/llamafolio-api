@@ -21,6 +21,11 @@ const abi = {
   },
 }
 
+const rEth: Contract = {
+  chain: 'ethereum',
+  address: '0xae78736cd615f374d3085123a210448e74fc6393',
+}
+
 const RPL: Token = {
   chain: 'ethereum',
   address: '0xd33526068d116ce69f19a9ee46f0bd304f21a51f',
@@ -67,7 +72,7 @@ async function getMiniPoolManagerBalance(ctx: BalancesContext, miniPoolManager: 
 
 export const getContracts = () => {
   return {
-    contracts: { miniPoolManager, nodeStaking },
+    contracts: { miniPoolManager, nodeStaking, rEth },
   }
 }
 
@@ -75,6 +80,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     miniPoolManager: getMiniPoolManagerBalance,
     nodeStaking: getNodeStakingBalance,
+    rEth: getSingleStakeBalance,
   })
 
   return {
