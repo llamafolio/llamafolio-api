@@ -28,6 +28,7 @@ export const environmentSchema = z.object({
   RESERVOIR_API_KEY: z.string().optional(),
   QUICKNODE_API_KEY: z.string().optional(),
   QUICKNODE_HTTP_URL: z.string().optional(),
+  ELEMENT_API_KEY: z.string().optional(),
 })
 
 export type Environment = z.infer<typeof environmentSchema>
