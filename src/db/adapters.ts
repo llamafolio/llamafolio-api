@@ -160,6 +160,9 @@ export async function selectLatestCreatedAdapters(client: ClickHouseClient, limi
         max("created_at") AS "created_at"
       FROM lf.adapters_last_v
       WHERE "id" <> 'wallet'
+      AND "id" IN (
+        SELECT "slug" FROM lf.protocols
+      )
       GROUP BY "id"
       ORDER BY "created_at" DESC
       LIMIT {limit: UInt8};
