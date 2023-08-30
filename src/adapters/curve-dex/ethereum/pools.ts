@@ -173,10 +173,8 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
     params: [pool.address],
   }))
 
-  const [gaugesRes, gaugesTypesRes, poolsNamesRes, lpTokensRes, coinsRes, underlyingsRes] = await Promise.all([
+  const [gaugesRes, lpTokensRes, coinsRes, underlyingsRes] = await Promise.all([
     multicall({ ctx, calls: poolsDetailsCalls, abi: abiPools.get_gauge }),
-    multicall({ ctx, calls: poolsDetailsCalls, abi: abiPools.get_gauge_type }),
-    multicall({ ctx, calls: poolsDetailsCalls, abi: abiPools.get_pool_name }),
     multicall({ ctx, calls: poolsDetailsCalls, abi: abiPools.get_lp_token }),
     multicall({ ctx, calls: poolsDetailsCalls, abi: abiPools.get_coins }),
     multicall({ ctx, calls: poolsDetailsCalls, abi: abiPools.get_underlying_coins }),
@@ -185,16 +183,12 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
   let poolIdx = 0
   for (let callIdx = 0; callIdx < pools.length; callIdx++) {
     const gaugeRes = gaugesRes[callIdx]
-    const gaugeTypeRes = gaugesTypesRes[callIdx]
-    const poolNameRes = poolsNamesRes[callIdx]
     const lpTokenRes = lpTokensRes[callIdx]
     const coinRes = coinsRes[callIdx]
     const underlyingRes = underlyingsRes[callIdx]
 
     if (
       !gaugeRes.success ||
-      !gaugeTypeRes.success ||
-      !poolNameRes.success ||
       !lpTokenRes.success ||
       // registry responses seem wrong for these addresses since it returns 1e24 number with only 8 decimals or 6 decimals underlyings
       lpTokenRes.output === '0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2' || // compound-gauge
@@ -210,10 +204,7 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
     poolContracts.push({
       ...pools[poolIdx],
       address: lpTokenRes.output,
-      name: poolNameRes.output,
-      symbol: poolNameRes.output,
       gauge: gaugeRes.output,
-      gaugeType: gaugeTypeRes.output,
       lpToken: lpTokenRes.output,
       yieldKey: lpTokenRes.output,
       tokens: coinRes.output
@@ -227,7 +218,7 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
         // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
         .filter((address) => address !== ADDRESS_ZERO)
         // replace ETH alias
-        .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)),
+        .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)) as `0x${string}`[],
     })
 
     poolIdx++
@@ -257,7 +248,7 @@ export async function getGaugesContracts(ctx: BaseContext, pools: Contract[], CR
     for (let rewardIdx = 0; rewardIdx < 4; rewardIdx++) {
       const rewardTokenRes = rewardTokensRes[callIdx]
       if (rewardTokenRes.success && rewardTokenRes.output !== ADDRESS_ZERO) {
-        rewards.push(rewardTokenRes.output)
+        rewards.push(rewardTokenRes.output as any)
       }
       callIdx++
     }
