@@ -5,7 +5,7 @@ import { deleteOldBalances, insertBalances } from '@db/balances'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import type { BalancesContext } from '@lib/adapter'
 import { groupBy2 } from '@lib/array'
-import { sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
+import { fmtBalanceBreakdown, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
 import { type Chain, chains } from '@lib/chains'
 import { getPricedBalances } from '@lib/price'
 
@@ -106,8 +106,10 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
     hrend[1] / 1000000,
   )
 
+  const balancesWithBreakdown = sanitizedPricedBalances.map(fmtBalanceBreakdown)
+
   // Update balances
-  await insertBalances(client, sanitizedPricedBalances)
+  await insertBalances(client, balancesWithBreakdown)
 
   // Cleanup old balances
   // TODO: keep old balances once we're able to run this process in the past and reconcile missing adapters
