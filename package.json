@@ -16,6 +16,7 @@
     "revalidate-contracts": "tsx scripts/revalidate-contracts.ts",
     "revalidate-contracts-rec": "tsx scripts/revalidate-contracts-rec.ts",
     "update-protocols": "tsx scripts/update-protocols.ts",
+    "nft-floors": "tsx --require='dotenv/config' scripts/nft-floors.ts",
     "lint": "eslint --fix . --ext js,cjs,mjs,ts,d.ts,json,md --cache",
     "format": "prettier --write '**/*.{md,json,js,cjs,mjs,ts,d.ts,sh}' --ignore-path='./.eslintignore' --ignore-unknown --cache",
     "typecheck": "tsc --noEmit --skipLibCheck",
@@ -71,5 +72,11 @@
     "yarn": "------>PLEASE USE PNPM<------",
     "npm": "------>PLEASE USE PNPM<------"
   },
-  "keywords": ["LlamaFolio", "API", "OSS", "Portfolio", "Tracker"]
+  "keywords": [
+    "LlamaFolio",
+    "API",
+    "OSS",
+    "Portfolio",
+    "Tracker"
+  ]
 }
