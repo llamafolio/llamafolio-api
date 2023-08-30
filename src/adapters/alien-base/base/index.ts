@@ -1,4 +1,3 @@
-// import { getAlienBalances } from '@adapters/alien-base/base/balance'
 import { getAlienFarmBalances } from '@adapters/alien-base/base/balance'
 import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
