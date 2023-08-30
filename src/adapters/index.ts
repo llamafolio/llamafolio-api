@@ -133,6 +133,7 @@ import nexusMutual from '@adapters/nexus-mutual'
 import nf3Ape from '@adapters/nf3-ape'
 import nodedao from '@adapters/nodedao'
 import olympusDao from '@adapters/olympus-dao'
+import ondoFinance from '@adapters/ondo-finance'
 import onyxProtocol from '@adapters/onyx-protocol'
 import opynSqueeth from '@adapters/opyn-squeeth'
 import originDefi from '@adapters/origin-defi'
@@ -373,6 +374,7 @@ export const adapters: Adapter[] = [
   nf3Ape,
   nodedao,
   olympusDao,
+  ondoFinance,
   onyxProtocol,
   opynSqueeth,
   originDefi,
