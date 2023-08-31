@@ -7,6 +7,7 @@ import across from '@adapters/across'
 import agave from '@adapters/agave'
 import agilityLsd from '@adapters/agility-lsd'
 import alchemix from '@adapters/alchemix'
+import alienBase from '@adapters/alien-base'
 import alpacaFinance from '@adapters/alpaca-finance'
 import ambireWallet from '@adapters/ambire-wallet'
 import angle from '@adapters/angle'
@@ -91,6 +92,7 @@ import hex from '@adapters/hex'
 import homoraV2 from '@adapters/homora-v2'
 import honeyswap from '@adapters/honeyswap'
 import horizonProtocol from '@adapters/horizon-protocol'
+import houdiniSwap from '@adapters/houdini-swap'
 import hundredFinance from '@adapters/hundred-finance'
 import illuvium from '@adapters/illuvium'
 import inverseFinance from '@adapters/inverse-finance'
@@ -229,6 +231,7 @@ import venus from '@adapters/venus'
 import verse from '@adapters/verse'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
+import whiteheart from '@adapters/whiteheart'
 import wigoswap from '@adapters/wigoswap'
 import wombatExchange from '@adapters/wombat-exchange'
 import wonderland from '@adapters/wonderland'
@@ -249,6 +252,7 @@ export const adapters: Adapter[] = [
   agave,
   agilityLsd,
   alchemix,
+  alienBase,
   alpacaFinance,
   ambireWallet,
   angle,
@@ -333,6 +337,7 @@ export const adapters: Adapter[] = [
   homoraV2,
   honeyswap,
   horizonProtocol,
+  houdiniSwap,
   hundredFinance,
   illuvium,
   inverseFinance,
@@ -471,6 +476,7 @@ export const adapters: Adapter[] = [
   verse,
   wallet,
   wepiggy,
+  whiteheart,
   wigoswap,
   wombatExchange,
   wonderland,

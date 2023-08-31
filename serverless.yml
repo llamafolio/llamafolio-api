@@ -212,6 +212,7 @@ functions:
       - httpApi:
           method: get
           path: /sync_status
+    timeout: 15
 
   getTokens:
     handler: src/handlers/getTokens.handler

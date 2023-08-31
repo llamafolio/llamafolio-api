@@ -94,7 +94,6 @@ export async function getCRVUSDContracts(ctx: BaseContext, factory: Contract): P
       chain: ctx.chain,
       address: controllerRes.output,
       token: collateralRes.output,
-      underlyings: [collateralRes.output],
     })
   }
 

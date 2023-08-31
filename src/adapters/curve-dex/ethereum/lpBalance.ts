@@ -6,10 +6,12 @@ export async function getLpCurveBalances(
   ctx: BalancesContext,
   pools: Contract[],
   registry: Contract,
-): Promise<Balance[]> {
+): Promise<Balance[] | undefined> {
   const balances: Balance[] = []
 
   const lpBalances = await getPoolsBalances(ctx, pools, registry)
+
+  if (!lpBalances) return
 
   for (const lpBalance of lpBalances) {
     const underlyings = lpBalance.underlyings as Contract[]
