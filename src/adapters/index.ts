@@ -230,6 +230,7 @@ import venus from '@adapters/venus'
 import verse from '@adapters/verse'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
+import whiteheart from '@adapters/whiteheart'
 import wigoswap from '@adapters/wigoswap'
 import wombatExchange from '@adapters/wombat-exchange'
 import wonderland from '@adapters/wonderland'
@@ -473,6 +474,7 @@ export const adapters: Adapter[] = [
   verse,
   wallet,
   wepiggy,
+  whiteheart,
   wigoswap,
   wombatExchange,
   wonderland,
