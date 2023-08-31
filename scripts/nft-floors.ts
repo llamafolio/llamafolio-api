@@ -1,4 +1,6 @@
-#!/usr/bin/env tsx
+#!/usr/bin/env bun
+import 'dotenv/config'
+
 import { urlSearchParams } from '@lib/fetcher'
 
 main()
