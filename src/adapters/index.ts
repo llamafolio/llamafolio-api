@@ -7,6 +7,7 @@ import across from '@adapters/across'
 import agave from '@adapters/agave'
 import agilityLsd from '@adapters/agility-lsd'
 import alchemix from '@adapters/alchemix'
+import alienBase from '@adapters/alien-base'
 import alpacaFinance from '@adapters/alpaca-finance'
 import ambireWallet from '@adapters/ambire-wallet'
 import angle from '@adapters/angle'
@@ -249,6 +250,7 @@ export const adapters: Adapter[] = [
   agave,
   agilityLsd,
   alchemix,
+  alienBase,
   alpacaFinance,
   ambireWallet,
   angle,
