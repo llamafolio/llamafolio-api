@@ -92,6 +92,7 @@ import hex from '@adapters/hex'
 import homoraV2 from '@adapters/homora-v2'
 import honeyswap from '@adapters/honeyswap'
 import horizonProtocol from '@adapters/horizon-protocol'
+import houdiniSwap from '@adapters/houdini-swap'
 import hundredFinance from '@adapters/hundred-finance'
 import illuvium from '@adapters/illuvium'
 import inverseFinance from '@adapters/inverse-finance'
@@ -336,6 +337,7 @@ export const adapters: Adapter[] = [
   homoraV2,
   honeyswap,
   horizonProtocol,
+  houdiniSwap,
   hundredFinance,
   illuvium,
   inverseFinance,
