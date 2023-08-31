@@ -11,7 +11,7 @@ on:
     #        │  │  │ │ │
     #        │  │  │ │ │
     #        *  *  * * *
-    - cron: '0 */2 * * *' # Every 2 hours
+    - cron: '0 */2 * * *' # Every 3 hours
   repository_dispatch: # REST API
     types:
       - 'refresh-r2'
@@ -56,6 +56,33 @@ jobs:
             CLOUDFLARE_AWS_SECRET_ACCESS_KEY="${{ secrets.CLOUDFLARE_AWS_SECRET_ACCESS_KEY }}" \
             /bin/bash ${{ github.workspace }}/scripts/r2/upload.sh
 
+  refresh-nft-floors:
+    name: 'NFT Floors'
+    runs-on: [ubuntu-latest]
+    timeout-minutes: 4
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: 'latest'
+
+      - name: '[Download] Floor Data'
+        run: |
+          bun ./scripts/nft-floors.ts > "/${{ runner.temp }}/nft_floors.json"
+
+      - name: '[Upload] NFT Floors to Cloudflare R2'
+        run: |
+          FILE_PATH="/${{ runner.temp }}/nft_floors.json" \
+            UPLOAD_PATH="nft/floors.json" \
+            CLOUDFLARE_S3_URL="${{ env.CLOUDFLARE_S3_URL }}/llamafolio" \
+            CLOUDFLARE_AWS_ACCESS_KEY_ID="${{ secrets.CLOUDFLARE_AWS_ACCESS_KEY_ID }}" \
+            CLOUDFLARE_AWS_SECRET_ACCESS_KEY="${{ secrets.CLOUDFLARE_AWS_SECRET_ACCESS_KEY }}" \
+            /bin/bash ${{ github.workspace }}/scripts/r2/upload.sh
+
   refresh-yield-pools:
     name: 'DefiLlama Yield Pools'
     runs-on: [ubuntu-latest]
@@ -77,7 +104,7 @@ jobs:
             --header 'Content-Type: application/json' \
             --output "/${{ runner.temp }}/llama_yields_pools_old.json"
 
-      - name: '[Upload] Cloudflare R2'
+      - name: '[Upload] Yield Pools to Cloudflare R2'
         run: |
           FILE_PATH="/${{ runner.temp }}/llama_yields_pools_old.json" \
             UPLOAD_PATH="yield/llama_yields_pools_old.json" \
