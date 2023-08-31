@@ -22,7 +22,11 @@ async function main() {
       }
     }),
   )
-  return prices
+  // return object where key is contractAddress
+  return prices.reduce((accumulator, currentValue) => {
+    accumulator[currentValue.contractAddress] = currentValue
+    return accumulator
+  }, {})
 }
 
 // https://element.readme.io/reference/get-collection-ranking-list
@@ -33,7 +37,7 @@ async function topCollections() {
     chain: 'eth',
     sort_type: 'Top',
     level: 'L5M',
-    limit: 100, // max 100
+    limit: 10, // max 100
   })
   try {
     const response = await fetch(`https://api.element.market/openapi/v1/collection/ranking?${searchParams}`, {
@@ -50,7 +54,7 @@ async function topCollections() {
     return result.data.rankingList.map((item: any) => ({
       name: item.collectionRank.collection.name,
       slug: item.collectionRank.collection.slug,
-      contractAddress: item.collectionRank.collection.contracts[0].address,
+      contractAddress: item.collectionRank.collection.contracts[0].address.toLowerCase(),
     }))
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : `Encoutered an error: error`
