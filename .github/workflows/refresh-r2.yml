@@ -71,6 +71,9 @@ jobs:
           bun-version: 'latest'
 
       - name: '[Download] Floor Data'
+        env:
+          RESERVOIR_API_KEY: ${{ secrets.RESERVOIR_API_KEY }}
+          ELEMENT_API_KEY: ${{ secrets.ELEMENT_API_KEY }}
         run: |
           bun ./scripts/nft-floors.ts > "/${{ runner.temp }}/nft_floors.json"
 
