@@ -20,7 +20,7 @@ export const handler: APIGatewayProxyHandler = async () => {
       count_blocks: parseInt(row.count),
     }))
 
-    return success(response, { maxAge: 10 })
+    return success(response, { maxAge: 60 })
   } catch (e) {
     console.error('Failed to retrieve sync status', e)
     return serverError('Failed to retrieve sync status')
