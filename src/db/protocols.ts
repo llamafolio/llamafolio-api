@@ -50,7 +50,7 @@ export function deleteProtocol(client: ClickHouseClient, slug: string) {
 
 export async function selectProtocols(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: 'SELECT * FROM lf.protocols;',
+    query: 'SELECT * FROM lf.protocols FINAL;',
   })
 
   const res = (await queryRes.json()) as {
@@ -69,10 +69,5 @@ export async function insertProtocols(client: ClickHouseClient, protocols: IProt
     table: 'lf.protocols',
     values: protocols,
     format: 'JSONEachRow',
-  })
-
-  // merge duplicates
-  await client.query({
-    query: 'OPTIMIZE TABLE lf.protocols FINAL DEDUPLICATE BY "slug";',
   })
 }
