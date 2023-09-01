@@ -143,11 +143,9 @@ export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHou
   const queryRes = await client.query({
     query: `
       WITH (
-        SELECT timestamp
+        SELECT max("timestamp") as "timestamp"
         FROM lf.balances
         WHERE from_address = {fromAddress: String}
-        ORDER BY timestamp DESC
-        LIMIT 1
       ) AS latest
       SELECT "chain", sum("balance_usd") as "balance_usd", sum("debt_usd") as "debt_usd", sum("reward_usd") as "reward_usd", max("timestamp") as "last_timestamp"
       FROM lf.balances
@@ -243,10 +241,10 @@ export async function selectLatestBalancesGroupsByFromAddress(client: ClickHouse
 }
 
 export async function selectBalancesHolders(
-  client: ClickHouseClient,
-  contractAddress: string,
-  chain: Chain,
-  limit: number,
+  _client: ClickHouseClient,
+  _contractAddress: string,
+  _chain: Chain,
+  _limit: number,
 ) {
   console.error('Unimplemented function db/balances#selectBalancesHolders')
   return []
@@ -263,20 +261,5 @@ export function insertBalances(client: ClickHouseClient, balances: Balance[]) {
     table: 'lf.balances',
     values,
     format: 'JSONEachRow',
-  })
-}
-
-export function deleteOldBalances(client: ClickHouseClient, fromAddress: string, timestamp: Date) {
-  return client.command({
-    query:
-      'DELETE FROM lf.balances WHERE "from_address" = {fromAddress: String} AND "timestamp" < {timestamp: DateTime};',
-    query_params: {
-      fromAddress: fromAddress.toLowerCase(),
-      timestamp: toDateTime(timestamp),
-    },
-    clickhouse_settings: {
-      enable_lightweight_delete: 1,
-      mutations_sync: '2',
-    },
   })
 }
