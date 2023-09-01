@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { call } from '@lib/call'
+import { mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
-import type { Token } from '@lib/token'
+import { multicall } from '@lib/multicall'
 
 const abi = {
   convertToAssets: {
@@ -13,35 +13,26 @@ const abi = {
   },
 } as const
 
-const USDR: Token = {
-  chain: 'polygon',
-  address: '0xb5dfabd7ff7f83bab83995e72a52b97abb7bcf63',
-  decimals: 9,
-  symbol: 'USDR',
-}
-
-export async function getTangibleStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const userBalance = await call({
+export async function getTangibleStakeBalance(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
+  const userBalancesRes = await multicall({
     ctx,
-    target: staker.address,
-    params: [ctx.address],
+    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }) as const),
     abi: erc20Abi.balanceOf,
   })
 
-  const fmtBalance = await call({
+  const fmtBalances = await multicall({
     ctx,
-    target: staker.address,
-    params: [userBalance],
+    calls: mapSuccessFilter(userBalancesRes, (res) => ({ target: res.input.target, params: [res.output] }) as const),
     abi: abi.convertToAssets,
   })
 
-  const balance: Balance = {
-    ...staker,
-    amount: fmtBalance,
-    underlyings: [USDR],
+  const balances: Balance[] = mapSuccessFilter(fmtBalances, (res, idx) => ({
+    ...stakers[idx],
+    amount: res.output,
+    underlyings: stakers[idx].underlyings as Contract[],
     rewards: undefined,
     category: 'stake',
-  }
+  }))
 
-  return balance
+  return balances
 }
