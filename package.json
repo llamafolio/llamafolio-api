@@ -72,11 +72,5 @@
     "yarn": "------>PLEASE USE PNPM<------",
     "npm": "------>PLEASE USE PNPM<------"
   },
-  "keywords": [
-    "LlamaFolio",
-    "API",
-    "OSS",
-    "Portfolio",
-    "Tracker"
-  ]
+  "keywords": ["LlamaFolio", "API", "OSS", "Portfolio", "Tracker"]
 }

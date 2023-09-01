@@ -82,9 +82,4 @@ export async function insertERC20Tokens(client: ClickHouseClient, tokens: Token[
     values,
     format: 'JSONEachRow',
   })
-
-  // merge duplicates
-  await client.command({
-    query: 'OPTIMIZE TABLE evm_indexer.tokens FINAL DEDUPLICATE;',
-  })
 }
