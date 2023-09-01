@@ -102,7 +102,7 @@ export async function countAdapters(client: ClickHouseClient) {
 
 export async function selectAdapter(client: ClickHouseClient, chainId: number, adapterId: string) {
   const queryRes = await client.query({
-    query: 'SELECT * FROM lf.adapters WHERE "chain" = {chainId: UInt64} AND "id" = {adapterId: String} FINAL;',
+    query: 'SELECT * FROM lf.adapters FINAL WHERE "chain" = {chainId: UInt64} AND "id" = {adapterId: String};',
     query_params: { chainId, adapterId },
   })
 
@@ -115,7 +115,7 @@ export async function selectAdapter(client: ClickHouseClient, chainId: number, a
 
 export async function selectAdapters(client: ClickHouseClient, chainIds: number[], adapterId: string) {
   const queryRes = await client.query({
-    query: 'SELECT * FROM lf.adapters WHERE "chain" IN {chainIds: Array(UInt64)} AND "id" = {adapterId: String} FINAL;',
+    query: 'SELECT * FROM lf.adapters FINAL WHERE "chain" IN {chainIds: Array(UInt64)} AND "id" = {adapterId: String};',
     query_params: { chainIds, adapterId },
   })
 
