@@ -90,7 +90,7 @@ export function toStorage(adapters: Adapter[]) {
 
 export async function countAdapters(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: 'SELECT count(distinct "id") AS count FROM lf.adapters_last_v;',
+    query: 'SELECT count() AS "count" FROM (SELECT id FROM lf.adapters GROUP BY id);',
   })
 
   const res = (await queryRes.json()) as {
@@ -102,7 +102,7 @@ export async function countAdapters(client: ClickHouseClient) {
 
 export async function selectAdapter(client: ClickHouseClient, chainId: number, adapterId: string) {
   const queryRes = await client.query({
-    query: 'SELECT * FROM lf.adapters_last_v WHERE "chain" = {chainId: UInt64} AND "id" = {adapterId: String};',
+    query: 'SELECT * FROM lf.adapters WHERE "chain" = {chainId: UInt64} AND "id" = {adapterId: String} FINAL;',
     query_params: { chainId, adapterId },
   })
 
@@ -115,8 +115,7 @@ export async function selectAdapter(client: ClickHouseClient, chainId: number, a
 
 export async function selectAdapters(client: ClickHouseClient, chainIds: number[], adapterId: string) {
   const queryRes = await client.query({
-    query:
-      'SELECT * FROM lf.adapters_last_v WHERE "chain" IN {chainIds: Array(UInt64)} AND "id" = {adapterId: String};',
+    query: 'SELECT * FROM lf.adapters WHERE "chain" IN {chainIds: Array(UInt64)} AND "id" = {adapterId: String} FINAL;',
     query_params: { chainIds, adapterId },
   })
 
@@ -129,7 +128,7 @@ export async function selectAdapters(client: ClickHouseClient, chainIds: number[
 
 export async function selectDistinctAdaptersIds(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: 'SELECT id FROM lf.adapters_last_v GROUP BY id;',
+    query: 'SELECT id FROM lf.adapters GROUP BY id;',
   })
 
   const res = (await queryRes.json()) as {
@@ -156,9 +155,9 @@ export async function selectLatestCreatedAdapters(client: ClickHouseClient, limi
     query: `
       SELECT
         "id",
-        groupArray("chain") AS "chains",
+        groupUniqArray("chain") AS "chains",
         max("created_at") AS "created_at"
-      FROM lf.adapters_last_v
+      FROM lf.adapters
       WHERE "id" <> 'wallet'
       AND "id" IN (
         SELECT "slug" FROM lf.protocols GROUP BY "slug"
@@ -201,21 +200,5 @@ export function deleteAdapterById(client: ClickHouseClient, adapterId: string) {
   return client.command({
     query: 'DELETE FROM lf.adapters WHERE "id" = {adapterId: String};',
     query_params: { adapterId },
-  })
-}
-
-export function deleteOldAdapters(client: ClickHouseClient, adapterId: string, chains: number[], timestamp: Date) {
-  return client.command({
-    query:
-      'DELETE FROM lf.adapters WHERE "chain" IN {chains: Array(UInt64)} AND "id" = {adapterId: String} AND "updated_at" < {timestamp: DateTime};',
-    query_params: {
-      adapterId,
-      chains,
-      timestamp: toDateTime(timestamp),
-    },
-    clickhouse_settings: {
-      enable_lightweight_delete: 1,
-      mutations_sync: '2',
-    },
   })
 }

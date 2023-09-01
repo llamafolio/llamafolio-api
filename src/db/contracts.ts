@@ -223,7 +223,7 @@ export async function getContracts(client: ClickHouseClient, address: string, ch
 
 export function deleteContractsByAdapterId(client: ClickHouseClient, adapterId: string) {
   return client.command({
-    query: 'DELETE FROM lf.adapters WHERE id = {adapterId: String};',
+    query: 'DELETE FROM lf.adapters_contracts WHERE adapter_id = {adapterId: String};',
     query_params: { adapterId },
   })
 }
