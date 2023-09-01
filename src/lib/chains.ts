@@ -11,6 +11,7 @@ const { ARBITRUM_RPC, LLAMANODES_API_KEY, OPTIMISM_RPC } = environment
  */
 export const chainsNames = [
   'arbitrum',
+  'arbitrum-nova',
   'avalanche',
   'bsc',
   'base',
@@ -40,6 +41,7 @@ export interface IChainInfo {
   // adjust transport config based on RPC endpoints
   rpcWssUrl?: WebSocketTransport[]
   rpcUrls: HttpTransport[]
+  indexed?: boolean
 }
 
 // Currently supported chains
@@ -59,6 +61,7 @@ export const chains = [
       name: 'Ether',
       symbol: 'ETH',
     },
+    indexed: true,
   },
   {
     id: 'arbitrum-nova',
@@ -71,6 +74,7 @@ export const chains = [
       name: 'Ether',
       symbol: 'ETH',
     },
+    indexed: true,
   },
   {
     id: 'avalanche',
@@ -88,6 +92,7 @@ export const chains = [
       name: 'Avalanche',
       symbol: 'AVAX',
     },
+    indexed: true,
   },
   {
     id: 'base',
@@ -105,6 +110,7 @@ export const chains = [
       name: 'Ether',
       symbol: 'ETH',
     },
+    indexed: true,
   },
   {
     id: 'bsc',
@@ -123,6 +129,7 @@ export const chains = [
       name: 'Binance Coin',
       symbol: 'BNB',
     },
+    indexed: false, // syncing
   },
   {
     id: 'celo',
@@ -138,6 +145,7 @@ export const chains = [
       name: 'Celo',
       symbol: 'CELO',
     },
+    indexed: false,
   },
   {
     id: 'ethereum',
@@ -162,6 +170,7 @@ export const chains = [
       name: 'Ether',
       symbol: 'ETH',
     },
+    indexed: true,
   },
   {
     id: 'fantom',
@@ -178,6 +187,7 @@ export const chains = [
       name: 'Fantom',
       symbol: 'FTM',
     },
+    indexed: true,
   },
   {
     id: 'gnosis',
@@ -194,6 +204,7 @@ export const chains = [
       name: 'xDai',
       symbol: 'xDAI',
     },
+    indexed: false,
   },
   {
     id: 'harmony',
@@ -211,6 +222,7 @@ export const chains = [
       name: 'One',
       symbol: 'ONE',
     },
+    indexed: false,
   },
   {
     id: 'polygon',
@@ -234,6 +246,7 @@ export const chains = [
       name: 'Matic',
       symbol: 'MATIC',
     },
+    indexed: true,
   },
   {
     id: 'polygon-zkevm',
@@ -249,6 +262,7 @@ export const chains = [
       name: 'Ether',
       symbol: 'ETH',
     },
+    indexed: true,
   },
   {
     id: 'moonbeam',
@@ -265,6 +279,7 @@ export const chains = [
       name: 'Glimmer',
       symbol: 'GLMR',
     },
+    indexed: true,
   },
   {
     id: 'optimism',
@@ -284,6 +299,7 @@ export const chains = [
       name: 'Ether',
       symbol: 'ETH',
     },
+    indexed: true,
   },
 ] satisfies IChainInfo[]
 

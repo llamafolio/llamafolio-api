@@ -17,8 +17,9 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
   const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
 
-  // add wallet adapter on each chain (in case there's no interaction at all)
-  for (const chain of chains) {
+  // add wallet adapter on each non-indexed chain, assuming there was an interaction with each token
+  const nonIndexedChains = chains.filter((chain) => !chain.indexed)
+  for (const chain of nonIndexedChains) {
     if (!contractsByAdapterIdChain.wallet) {
       contractsByAdapterIdChain.wallet = {}
     }
