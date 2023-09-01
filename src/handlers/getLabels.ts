@@ -9,9 +9,7 @@ const LINKS = ['github', 'telegram', 'twitter', 'website']
 /**
  * Get labels of given addresses
  */
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const addresses = event.pathParameters?.address?.split(',') ?? []
   const data: { [key: string]: any } = {}
   for (const address of addresses) {

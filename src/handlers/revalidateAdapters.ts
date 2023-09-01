@@ -11,9 +11,7 @@ import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { resolveContractsTokens } from '@lib/token'
 import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 
-const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, _context) => {
   const client = connect()
 
   try {
@@ -60,9 +58,7 @@ const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, conte
 
 export const scheduledRevalidateAdaptersContracts = wrapScheduledLambda(revalidateAdaptersContracts)
 
-export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, _context) => {
   const client = connect()
 
   const { adapterId, chain } = event as APIGatewayProxyEvent & { adapterId?: string; chain?: Chain }

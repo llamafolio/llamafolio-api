@@ -49,8 +49,7 @@ async function history(address: string, body: string | null) {
 /**
  * Takes array of nft tokens (contractAddress, tokenId, chain) and returns trading history for each token
  */
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
+export const handler: APIGatewayProxyHandler = async (event, _context) => {
   try {
     const address = event.pathParameters?.address
     if (!address) {
@@ -66,8 +65,6 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (error) {
     console.error('Failed to fetch NFTs trading history', { error })
     return serverError('Failed to fetch NFTs trading history')
-  } finally {
-    console.log('NFTs trading history request took', context.getRemainingTimeInMillis() / 1000, 'seconds')
   }
 }
 

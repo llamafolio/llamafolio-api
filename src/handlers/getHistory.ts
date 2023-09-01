@@ -43,9 +43,7 @@ interface IHistory {
   next: number
 }
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const address = event.pathParameters?.address
 
   if (!address) {

@@ -97,9 +97,7 @@ export async function balancesHandler({ address }: { address: Address }): Promis
   }
 }
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const address = event.pathParameters?.address
   if (!address) {
     return badRequest('Missing address parameter')
@@ -115,7 +113,5 @@ export const handler: APIGatewayProxyHandler = async (event, context) => {
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
-  } finally {
-    console.log('Balances request took', context.getRemainingTimeInMillis() / 1000, 'seconds')
   }
 }

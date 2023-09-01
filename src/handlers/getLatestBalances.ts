@@ -9,9 +9,7 @@ import { isHex } from '@lib/buf'
 import { aggregateYields } from '@lib/yields'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const address = event.pathParameters?.address as `0x${string}`
   if (!address) {
     return badRequest('Missing address parameter')

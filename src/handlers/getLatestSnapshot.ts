@@ -21,9 +21,7 @@ export interface LatestSnapshotResponse {
   updatedAt?: TUnixTimestamp
 }
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const address = event.pathParameters?.address
   if (!address) {
     return badRequest('Missing address parameter')

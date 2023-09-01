@@ -9,9 +9,7 @@ import type { APIGatewayProxyHandler } from 'aws-lambda'
 /**
  * Get stats on supported protocols, chains and tokens
  */
-export const handler: APIGatewayProxyHandler = async (_event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (_event, _context) => {
   try {
     const client = connect()
     const adaptersCount = await countAdapters(client)
