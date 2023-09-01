@@ -4,9 +4,9 @@ import url from 'node:url'
 import { isNotNullish } from '@lib/type'
 
 import type { Adapter as DBAdapter } from '../src/db/adapters'
-import { deleteOldAdapters, insertAdapters, selectAdapters } from '../src/db/adapters'
+import { insertAdapters, selectAdapters } from '../src/db/adapters'
 import { connect } from '../src/db/clickhouse'
-import { deleteOldAdaptersContracts, flattenContracts, insertAdaptersContracts } from '../src/db/contracts'
+import { flattenContracts, insertAdaptersContracts } from '../src/db/contracts'
 import type { Adapter, BaseContext } from '../src/lib/adapter'
 import type { Chain } from '../src/lib/chains'
 import { chainById, chains } from '../src/lib/chains'
@@ -92,10 +92,6 @@ async function main() {
     // Insert new contracts for all specified chains
     const adaptersContracts = chainContractsConfigs.map((config) => flattenContracts(config.contracts)).flat()
     await insertAdaptersContracts(client, adaptersContracts, adapter.id, now)
-
-    // Cleanup old adapters
-    await deleteOldAdapters(client, adapterId, chainIds, now)
-    await deleteOldAdaptersContracts(client, adapterId, chainIds, now)
   } catch (e) {
     console.log('Failed to revalidate adapter contracts', e)
   }

@@ -1,14 +1,8 @@
 import { adapters } from '@adapters/index'
 import type { Adapter as DBAdapter } from '@db/adapters'
-import {
-  deleteOldAdapters,
-  insertAdapters,
-  selectAdapter,
-  selectAdaptersContractsExpired,
-  selectDistinctAdaptersIds,
-} from '@db/adapters'
+import { insertAdapters, selectAdapter, selectAdaptersContractsExpired, selectDistinctAdaptersIds } from '@db/adapters'
 import { connect } from '@db/clickhouse'
-import { deleteOldAdaptersContracts, flattenContracts, insertAdaptersContracts } from '@db/contracts'
+import { flattenContracts, insertAdaptersContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
@@ -132,11 +126,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     await insertAdapters(client, [dbAdapter])
 
     // Insert new contracts
-    await insertAdaptersContracts(client, flattenContracts(contracts), adapter.id, now)
-
-    // Cleanup old adapters
-    await deleteOldAdapters(client, adapterId, [chainId], now)
-    await deleteOldAdaptersContracts(client, adapterId, [chainId], now)
+    await insertAdaptersContracts(client, flattenContracts(contracts), adapter.id)
 
     return success({})
   } catch (e) {
