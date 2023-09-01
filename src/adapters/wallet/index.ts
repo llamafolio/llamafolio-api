@@ -7,20 +7,18 @@ import { chains as tokensByChain } from '@llamafolio/tokens'
 const getChainHandlers = (chain: Chain) => {
   const getContracts = () => {
     const coin: Contract = { ...chainById[chain].nativeCurrency, chain, category: 'wallet' }
-    const erc20: Contract[] = []
-
-    for (const token of tokensByChain[chain]) {
-      erc20.push({ ...token, chain, category: 'wallet' } as Contract)
-    }
+    const erc20: Contract[] = (tokensByChain[chain] || []).map(
+      (token) => ({ ...token, chain, category: 'wallet' }) as Contract,
+    )
 
     return {
       contracts: { coin, erc20 },
     }
   }
 
-  const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, _contracts) => {
+  const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
     // Note: use all balances from llamafolio-tokens directory instead of relying on Transfer interactions
-    const tokenBalances = await userBalances({ chain, walletAddress: ctx.address, tokens: tokensByChain[chain] })
+    const tokenBalances = await userBalances({ chain, walletAddress: ctx.address, tokens: contracts.erc20 || [] })
     const balances: Balance[] = tokenBalances.map((tokenBalance) => ({ ...tokenBalance, category: 'wallet' }))
 
     return {
