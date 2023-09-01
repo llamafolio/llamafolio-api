@@ -4,9 +4,10 @@ import type { Balance } from '@db/balances'
 import { insertBalances } from '@db/balances'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import type { BalancesContext } from '@lib/adapter'
-import { groupBy2 } from '@lib/array'
+import { groupBy, groupBy2 } from '@lib/array'
 import { fmtBalanceBreakdown, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
 import { type Chain, chains } from '@lib/chains'
+import { avg, sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
 
 export async function updateBalances(client: ClickHouseClient, address: `0x${string}`) {
@@ -109,5 +110,38 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
   const balancesWithBreakdown = sanitizedPricedBalances.map(fmtBalanceBreakdown)
 
   // Update balances
-  return insertBalances(client, balancesWithBreakdown)
+  await insertBalances(client, balancesWithBreakdown)
+
+  // Group back
+  const balancesGroups: any[] = []
+
+  const balancesByChain = groupBy(balancesWithBreakdown, 'chain')
+
+  for (const chain in balancesByChain) {
+    const balancesByAdapterId = groupBy(balancesByChain[chain], 'adapterId')
+
+    for (const adapterId in balancesByAdapterId) {
+      const balancesByGroupIdx = groupBy(balancesByAdapterId[adapterId], 'groupIdx')
+
+      for (const groupIdx in balancesByGroupIdx) {
+        const balances = balancesByGroupIdx[groupIdx]
+
+        balancesGroups.push({
+          adapterId,
+          chain,
+          balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
+          debtUSD: sum(balances.map((balance) => balance.debtUSD || 0)),
+          rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
+          healthFactor: avg(
+            balances.map((balance) => balance.healthFactor || 0),
+            balances.length,
+          ),
+          timestamp: balances[0]?.timestamp,
+          balances,
+        })
+      }
+    }
+  }
+
+  return balancesGroups
 }

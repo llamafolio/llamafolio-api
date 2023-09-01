@@ -1,4 +1,3 @@
-import { selectLatestBalancesGroupsByFromAddress } from '@db/balances'
 import { connect } from '@db/clickhouse'
 import type { BalancesResponse } from '@handlers/getBalances'
 import { formatBalancesGroups } from '@handlers/getBalances'
@@ -24,9 +23,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const client = connect()
 
   try {
-    await updateBalances(client, address)
-
-    const balancesGroups = await selectLatestBalancesGroupsByFromAddress(client, address)
+    const balancesGroups = await updateBalances(client, address)
 
     const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
 
