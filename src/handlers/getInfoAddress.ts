@@ -30,7 +30,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const queryRes = await client.query({
       query: `
         SELECT min("timestamp") as "timestamp" from evm_indexer.transactions_history_agg
-        WHERE "target" = {address: String};
+        WHERE "target" = {address: String}
+        SETTINGS optimize_read_in_order=1;
       `,
       query_params: {
         address: address.toLowerCase(),
