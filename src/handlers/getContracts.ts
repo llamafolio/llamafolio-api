@@ -35,7 +35,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     const contracts = await getContracts(client, address, chain?.chainId)
 
-    return success({ data: contracts }, { maxAge: 60 * 60 })
+    return success({ data: contracts }, { maxAge: 24 * 60 * 60 })
   } catch (e) {
     console.error('Failed to retrieve contracts', e)
     return serverError('Failed to retrieve contracts')

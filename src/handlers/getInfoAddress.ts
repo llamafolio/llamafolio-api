@@ -46,7 +46,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       data: { activeSince: res.data[0]?.timestamp ? unixFromDateTime(res.data[0].timestamp) : undefined },
     }
 
-    return success(response, { maxAge: 60 * 60 })
+    return success(response, { maxAge: 24 * 60 * 60 })
   } catch (error) {
     console.error('Failed to get address info', { error })
     return serverError('Failed to get address info')
