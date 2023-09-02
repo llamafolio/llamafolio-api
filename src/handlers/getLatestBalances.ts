@@ -1,4 +1,3 @@
-import { selectLatestBalancesGroupsByFromAddress } from '@db/balances'
 import { connect } from '@db/clickhouse'
 import type { BalancesResponse } from '@handlers/getBalances'
 import { badRequest, serverError, success } from '@handlers/response'
@@ -22,9 +21,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const client = connect()
 
   try {
-    const { timestamp } = await updateBalances(client, address)
-
-    const { updatedAt, balancesGroups } = await selectLatestBalancesGroupsByFromAddress(client, address, timestamp)
+    const { updatedAt, balancesGroups } = await updateBalances(client, address)
 
     const balancesResponse: BalancesResponse = {
       status: 'success',

@@ -1,12 +1,14 @@
 import { adapterById } from '@adapters/index'
 import type { ClickHouseClient } from '@clickhouse/client'
-import { insertBalances } from '@db/balances'
+import { formatBalance, insertBalances } from '@db/balances'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import type { Balance, BalancesContext } from '@lib/adapter'
-import { groupBy2 } from '@lib/array'
+import { groupBy, groupBy2 } from '@lib/array'
 import { fmtBalanceBreakdown, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
 import { type Chain, chains } from '@lib/chains'
+import { sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
+import { aggregateYields } from '@lib/yields'
 
 type AdapterBalance = Balance & {
   groupIdx: number
@@ -118,5 +120,35 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
   await insertBalances(client, balancesWithBreakdown)
 
-  return { timestamp: now }
+  // Group back and fetch yields to have a unified balance response format for /balances/{address} and /balances/{address}/latest
+  // It's better than refetching balances from the DB to save a round trip and because data isn't atomically inserted across shards, so it
+  // may not be available right after insert
+  const balancesGroups: any[] = []
+
+  const balancesByChain = groupBy(balancesWithBreakdown, 'chain')
+
+  for (const chain in balancesByChain) {
+    const balancesByAdapterId = groupBy(balancesByChain[chain], 'adapterId')
+
+    for (const adapterId in balancesByAdapterId) {
+      const balancesByGroupIdx = groupBy(balancesByAdapterId[adapterId], 'groupIdx')
+
+      for (const groupIdx in balancesByGroupIdx) {
+        const balances = balancesByGroupIdx[groupIdx].map(formatBalance)
+
+        balancesGroups.push({
+          protocol: adapterId,
+          chain,
+          balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
+          debtUSD: sum(balances.map((balance) => balance.debtUSD || 0)),
+          rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
+          balances,
+        })
+      }
+    }
+  }
+
+  await aggregateYields(balancesGroups)
+
+  return { updatedAt: Math.floor(now.getTime() / 1000), balancesGroups }
 }
