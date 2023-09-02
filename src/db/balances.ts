@@ -1,16 +1,124 @@
 import type { ClickHouseClient } from '@clickhouse/client'
-import type { Balance } from '@lib/adapter'
+import type { Balance, ContractStandard } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
+import type { Category } from '@lib/category'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
 import { toDateTime, unixFromDateTime } from '@lib/fmt'
-import { avg, sum } from '@lib/math'
+import { sum } from '@lib/math'
 
-export type BalanceStorable = Balance & {
-  groupIdx: number
-  adapterId: string
-  timestamp: Date
-  healthFactor: number
-  fromAddress: string
+export interface Yield {
+  apy?: number
+  apyBase?: number
+  apyReward?: number
+  apyMean30d?: number
+  ilRisk?: boolean
+}
+
+export interface BaseFormattedBalance extends Yield {
+  standard?: ContractStandard
+  name?: string
+  address: string
+  symbol?: string
+  decimals?: number
+  category: Category
+  stable?: boolean
+  price?: number
+  amount?: string
+  balanceUSD?: number
+  rewardUSD?: number
+  debtUSD?: number
+  unlockAt?: number
+  underlyings?: FormattedBalance[]
+  rewards?: FormattedBalance[]
+}
+
+export interface PerpFormattedBalance extends BaseFormattedBalance {
+  category: 'perpetual'
+  side: 'long' | 'short'
+  margin: string
+  entryPrice: string
+  marketPrice: string
+  leverage: string
+  funding: string
+}
+
+type FormattedBalance = BaseFormattedBalance | PerpFormattedBalance
+
+/**
+ * If there's only one underlying, replace balance by its underlying
+ * @param balance
+ */
+function unwrapUnderlyings(balance: FormattedBalance) {
+  if (balance.underlyings?.length === 1) {
+    const underlying = balance.underlyings[0]
+
+    return {
+      ...balance,
+      address: underlying.address,
+      symbol: underlying.symbol,
+      decimals: underlying.decimals,
+      stable: underlying.stable || balance.stable,
+      price: underlying.price,
+      amount: underlying.amount,
+      underlyings: undefined,
+    }
+  }
+
+  return balance
+}
+
+function formatBaseBalance(balance: any) {
+  return {
+    standard: balance.standard,
+    name: balance.name,
+    address: balance.address,
+    symbol: balance.symbol,
+    decimals: balance.decimals,
+    category: balance.category as Category,
+    stable: balance.stable,
+    price: balance.price,
+    amount: balance.amount,
+    balanceUSD: balance.balanceUSD,
+    rewardUSD: balance.rewardUSD,
+    debtUSD: balance.debtUSD,
+  }
+}
+
+export function formatBalance(balance: any): FormattedBalance {
+  const underlyings = balance.underlyings?.map(formatBaseBalance)
+  const rewards = balance.rewards?.map(formatBaseBalance)
+
+  const formattedBalance: FormattedBalance = {
+    standard: balance.standard,
+    name: balance.name,
+    address: balance.address,
+    symbol: balance.symbol,
+    decimals: balance.decimals != null ? parseInt(balance.decimals) : balance.decimals,
+    category: balance.category as Category,
+    stable: balance.stable || underlyings?.every((underlying: any) => underlying.stable),
+    price: balance.price,
+    amount: balance.amount,
+    balanceUSD: balance.balanceUSD,
+    rewardUSD: balance.rewardUSD,
+    debtUSD: balance.debtUSD,
+    apy: balance.apy,
+    apyBase: balance.apyBase,
+    apyReward: balance.apyReward,
+    apyMean30d: balance.apyMean30d,
+    ilRisk: balance.ilRisk,
+    unlockAt: balance.unlockAt,
+    //@ts-expect-error
+    side: balance.side,
+    margin: balance.margin,
+    entryPrice: balance.entryPrice,
+    marketPrice: balance.marketPrice,
+    leverage: balance.leverage,
+    funding: balance.funding,
+    underlyings,
+    rewards,
+  }
+
+  return unwrapUnderlyings(formattedBalance)
 }
 
 export interface AdapterBalances {
@@ -126,7 +234,7 @@ export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHou
       FROM lf.adapters_balances
       WHERE
         from_address = {fromAddress: String} AND
-        toStartOfDay("timestamp") = (SELECT max(toStartOfDay(timestamp)) AS "timestamp" FROM lf.adapters_balances WHERE from_address = {fromAddress: String})
+        "timestamp" = (SELECT max("timestamp") AS "timestamp" FROM lf.adapters_balances WHERE from_address = {fromAddress: String})
       GROUP BY "chain";
     `,
     query_params: {
@@ -163,69 +271,128 @@ export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHou
   }
 }
 
-export async function selectLatestBalancesGroupsByFromAddress(client: ClickHouseClient, fromAddress: string) {
+export async function selectLatestBalancesGroupsByFromAddress(
+  client: ClickHouseClient,
+  fromAddress: string,
+  timestamp?: Date,
+) {
   const balancesGroups: any[] = []
 
   const queryRes = await client.query({
     query: `
-      SELECT * FROM lf.adapters_balances
-      WHERE
-        from_address = {fromAddress: String} AND
-        toStartOfDay("timestamp") = (SELECT max(toStartOfDay(timestamp)) AS "timestamp" FROM lf.adapters_balances WHERE from_address = {fromAddress: String});
+      SELECT
+        ab.chain as chain,
+        ab.adapter_id as adapter_id,
+        ab.timestamp as timestamp,
+        ab.balance as balance,
+        y.apy as apy,
+        y.apy_base as apy_base,
+        y.apy_reward as apy_reward,
+        y.apy_mean_30d as apy_mean_30d,
+        y.il_risk as il_risk
+      FROM (
+        SELECT
+          chain,
+          adapter_id,
+          timestamp,
+          balances as balance,
+          lower(JSONExtractString(balance, 'address')) AS address,
+          arrayMap(x->JSONExtractString(x, 'address'), JSONExtractArrayRaw(balance, 'underlyings')) AS underlyings
+        FROM lf.adapters_balances
+        ARRAY JOIN balances
+        WHERE
+          from_address = {fromAddress: String} AND
+          "timestamp" = ${
+            timestamp
+              ? '{timestamp: DateTime}'
+              : '(SELECT max("timestamp") AS "timestamp" FROM lf.adapters_balances WHERE from_address = {fromAddress: String})'
+          }
+      ) AS ab
+      LEFT JOIN (
+        SELECT
+          chain,
+          adapter_id,
+          address,
+          apy,
+          apy_base,
+          apy_reward,
+          apy_mean_30d,
+          il_risk,
+          underlyings
+        FROM lf.yields
+        WHERE "timestamp" = (SELECT max("timestamp") AS "timestamp" FROM lf.yields)
+      ) AS y ON
+        (ab.chain = y.chain AND ab.adapter_id = y.adapter_id AND ab.address = y.address) OR
+        (notEmpty(ab.underlyings) AND ab.chain = y.chain AND ab.adapter_id = y.adapter_id AND ab.underlyings = y.underlyings);
     `,
     query_params: {
       fromAddress: fromAddress.toLowerCase(),
+      timestamp: timestamp ? toDateTime(timestamp) : undefined,
     },
   })
 
   const res = (await queryRes.json()) as {
-    data: AdapterBalancesStorage[]
+    data: {
+      chain: number
+      adapter_id: string
+      timestamp: string
+      balance: string
+      apy: string | null
+      apy_base: string | null
+      apy_reward: string | null
+      apy_mean_30d: string | null
+      il_risk: boolean | null
+    }[]
   }
 
   let updatedAt = undefined
 
-  for (const adapterBalance of res.data) {
-    const chain = chainByChainId[adapterBalance.chain]?.id
+  const balancesByChain = groupBy(res.data, 'chain')
+
+  for (const chainId in balancesByChain) {
+    const chain = chainByChainId[parseInt(chainId)]?.id
     if (chain == null) {
-      console.error(`Missing chain ${adapterBalance.chain}`)
+      console.error(`Missing chain ${chainId}`)
       continue
     }
 
     if (!updatedAt) {
-      updatedAt = unixFromDateTime(adapterBalance.timestamp)
+      updatedAt = unixFromDateTime(balancesByChain[chainId][0].timestamp)
     }
 
-    const balances = adapterBalance.balances.map((raw) => {
-      const balance = JSON.parse(raw)
+    const balancesByAdapterId = groupBy(balancesByChain[chainId], 'adapter_id')
 
-      return {
-        ...balance,
-        groupIdx: balance.group_idx,
-        balanceUSD: parseFloat(balance.balance_usd),
-        debtUSD: parseFloat(balance.debt_usd),
-        rewardUSD: parseFloat(balance.reward_usd),
-        healthFactor: parseFloat(balance.health_factor),
-      }
-    })
+    for (const adapterId in balancesByAdapterId) {
+      const balances = balancesByAdapterId[adapterId].map((row) => {
+        const balance = JSON.parse(row.balance)
 
-    const balancesByGroupIdx = groupBy(balances, 'groupIdx')
-
-    for (const groupIdx in balancesByGroupIdx) {
-      const balances = balancesByGroupIdx[groupIdx]
-
-      balancesGroups.push({
-        adapterId: adapterBalance.adapter_id,
-        chain: adapterBalance.chain,
-        balanceUSD: sum(balances.map((balance) => balance.balanceUSD)),
-        debtUSD: sum(balances.map((balance) => balance.debtUSD)),
-        rewardUSD: sum(balances.map((balance) => balance.rewardUSD)),
-        healthFactor: avg(
-          balances.map((balance) => balance.healthFactor),
-          balances.length,
-        ),
-        timestamp: balances[0]?.timestamp,
-        balances,
+        return {
+          ...balance,
+          balanceUSD: parseFloat(balance.balance_usd),
+          debtUSD: parseFloat(balance.debt_usd),
+          rewardUSD: parseFloat(balance.reward_usd),
+          healthFactor: parseFloat(balance.health_factor),
+          apy: balance.apy != null ? parseFloat(balance.apy) : undefined,
+          apy_base: balance.apy_base != null ? parseFloat(balance.apy_base) : undefined,
+          apy_reward: balance.apy_reward != null ? parseFloat(balance.apy_reward) : undefined,
+          apy_mean_30d: balance.apy_mean_30d != null ? parseFloat(balance.apy_mean_30d) : undefined,
+          il_risk: balance.il_risk != null ? balance.il_risk : undefined,
+        }
       })
+      const balancesByGroupIdx = groupBy(balances, 'group_idx')
+
+      for (const groupIdx in balancesByGroupIdx) {
+        const balances = balancesByGroupIdx[groupIdx].map(formatBalance)
+
+        balancesGroups.push({
+          protocol: adapterId,
+          chain,
+          balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
+          debtUSD: sum(balances.map((balance) => balance.debtUSD || 0)),
+          rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
+          balances,
+        })
+      }
     }
   }
 

@@ -1,14 +1,20 @@
 import { adapterById } from '@adapters/index'
 import type { ClickHouseClient } from '@clickhouse/client'
-import type { BalanceStorable } from '@db/balances'
 import { insertBalances } from '@db/balances'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
-import type { BalancesContext } from '@lib/adapter'
-import { groupBy, groupBy2 } from '@lib/array'
+import type { Balance, BalancesContext } from '@lib/adapter'
+import { groupBy2 } from '@lib/array'
 import { fmtBalanceBreakdown, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
 import { type Chain, chains } from '@lib/chains'
-import { avg, sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
+
+type AdapterBalance = Balance & {
+  groupIdx: number
+  adapterId: string
+  timestamp: Date
+  healthFactor: number
+  fromAddress: string
+}
 
 export async function updateBalances(client: ClickHouseClient, address: `0x${string}`) {
   // Fetch all protocols (with their associated contracts) that the user interacted with
@@ -37,7 +43,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
   console.log('Interacted with protocols:', adapterIds)
 
   const now = new Date()
-  const balances: BalanceStorable[] = []
+  const balances: AdapterBalance[] = []
 
   // Run adapters `getBalances` only with the contracts the user interacted with
   await Promise.all(
@@ -110,39 +116,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
   const balancesWithBreakdown = sanitizedPricedBalances.map(fmtBalanceBreakdown)
 
-  // Update balances
   await insertBalances(client, balancesWithBreakdown)
 
-  // Group back
-  const balancesGroups: any[] = []
-
-  const balancesByChain = groupBy(balancesWithBreakdown, 'chain')
-
-  for (const chain in balancesByChain) {
-    const balancesByAdapterId = groupBy(balancesByChain[chain], 'adapterId')
-
-    for (const adapterId in balancesByAdapterId) {
-      const balancesByGroupIdx = groupBy(balancesByAdapterId[adapterId], 'groupIdx')
-
-      for (const groupIdx in balancesByGroupIdx) {
-        const balances = balancesByGroupIdx[groupIdx]
-
-        balancesGroups.push({
-          adapterId,
-          chain,
-          balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
-          debtUSD: sum(balances.map((balance) => balance.debtUSD || 0)),
-          rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
-          healthFactor: avg(
-            balances.map((balance) => balance.healthFactor || 0),
-            balances.length,
-          ),
-          timestamp: balances[0]?.timestamp,
-          balances,
-        })
-      }
-    }
-  }
-
-  return balancesGroups
+  return { timestamp: now }
 }
