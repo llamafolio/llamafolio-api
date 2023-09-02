@@ -1,7 +1,7 @@
 import { selectLatestBalancesGroupsByFromAddress } from '@db/balances'
 import { connect } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
-import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
+import { areBalancesStale } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -53,7 +53,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       groups: balancesGroups,
     }
 
-    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC })
+    return success(balancesResponse)
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
