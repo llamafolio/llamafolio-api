@@ -1,6 +1,6 @@
 import { adapterById } from '@adapters/index'
 import type { ClickHouseClient } from '@clickhouse/client'
-import type { Balance } from '@db/balances'
+import type { BalanceStorable } from '@db/balances'
 import { insertBalances } from '@db/balances'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import type { BalancesContext } from '@lib/adapter'
@@ -37,7 +37,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
   console.log('Interacted with protocols:', adapterIds)
 
   const now = new Date()
-  const balances: Balance[] = []
+  const balances: BalanceStorable[] = []
 
   // Run adapters `getBalances` only with the contracts the user interacted with
   await Promise.all(

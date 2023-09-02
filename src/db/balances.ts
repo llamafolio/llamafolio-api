@@ -1,155 +1,132 @@
 import type { ClickHouseClient } from '@clickhouse/client'
-import { groupBy } from '@lib/array'
-import type { Category } from '@lib/category'
+import type { Balance } from '@lib/adapter'
+import { groupBy, groupBy2 } from '@lib/array'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
-import { fromDateTime, toDateTime, unixFromDateTime } from '@lib/fmt'
+import { toDateTime, unixFromDateTime } from '@lib/fmt'
 import { avg, sum } from '@lib/math'
 
-export interface Balance {
+export type BalanceStorable = Balance & {
+  groupIdx: number
+  adapterId: string
+  timestamp: Date
+  healthFactor: number
+  fromAddress: string
+}
+
+export interface AdapterBalances {
   chain: Chain
   adapterId: string
   fromAddress: string
   address: string
-  category: Category
-  groupIdx: number
-  amount: string
-  price: number
   balanceUSD: number
   rewardUSD: number
   debtUSD: number
-  healthFactor: number
   timestamp: Date
-  data?: any
+  balances: any[]
 }
 
-export interface BalanceStorage {
+export interface AdapterBalancesStorage {
   chain: number
   adapter_id: string
   from_address: string
   address: string
-  category: Category
-  group_idx: number
-  amount: string
-  price: string
   balance_usd: string
   reward_usd: string
   debt_usd: string
-  health_factor: string
   timestamp: string
-  data: string
+  balances: string[]
 }
 
-export interface BalanceStorable {
+export interface AdapterBalancesStorable {
   chain: number
   adapter_id: string
   from_address: string
-  address: string
-  category: Category
-  group_idx: number
-  amount: bigint | string
-  price: number
   balance_usd: number
   reward_usd: number
   debt_usd: number
-  health_factor: number
   timestamp: string
-  data: string
-}
-
-export function fromStorage(balancesStorage: BalanceStorage[]) {
-  const balances: Balance[] = []
-
-  for (const balanceStorage of balancesStorage) {
-    const chain = chainByChainId[balanceStorage.chain]?.id
-    if (chain == null) {
-      console.error(`Missing chain ${balanceStorage.chain}`)
-      continue
-    }
-
-    const balance: Balance = {
-      ...JSON.parse(balanceStorage.data),
-      chain,
-      adapterId: balanceStorage.adapter_id,
-      fromAddress: balanceStorage.from_address,
-      address: balanceStorage.address,
-      category: balanceStorage.category,
-      groupIdx: balanceStorage.group_idx,
-      amount: balanceStorage.amount,
-      price: parseFloat(balanceStorage.price),
-      balanceUSD: parseFloat(balanceStorage.balance_usd),
-      rewardUSD: parseFloat(balanceStorage.reward_usd),
-      debtUSD: parseFloat(balanceStorage.debt_usd),
-      healthFactor: parseFloat(balanceStorage.health_factor),
-      timestamp: fromDateTime(balanceStorage.timestamp),
-    }
-
-    balances.push(balance)
-  }
-
-  return balances
+  balances: string[]
 }
 
 export function toStorage(balances: Balance[]) {
-  const balancesStorable: BalanceStorable[] = []
+  const adaptersBalancesStorable: AdapterBalancesStorable[] = []
 
-  for (const balance of balances) {
-    const {
-      chain,
-      adapterId,
-      fromAddress,
-      address,
-      category,
-      groupIdx,
-      amount,
-      price,
-      balanceUSD,
-      rewardUSD,
-      debtUSD,
-      healthFactor,
-      timestamp,
-      ...data
-    } = balance
+  const balancesByChainByAdapterId = groupBy2(balances, 'chain', 'adapterId')
 
+  for (const chain in balancesByChainByAdapterId) {
     const chainId = chainById[chain]?.chainId
     if (chainId == null) {
       console.error(`Missing chain ${chain}`)
       continue
     }
 
-    const balanceStorable: BalanceStorable = {
-      chain: chainId,
-      adapter_id: adapterId,
-      from_address: fromAddress,
-      address,
-      category,
-      group_idx: groupIdx,
-      amount,
-      price: price || 0,
-      balance_usd: balanceUSD || 0,
-      reward_usd: rewardUSD || 0,
-      debt_usd: debtUSD || 0,
-      health_factor: healthFactor || 0,
-      timestamp: toDateTime(timestamp),
-      data: JSON.stringify(data),
-    }
+    for (const adapterId in balancesByChainByAdapterId[chain]) {
+      let balance_usd = 0
+      let debt_usd = 0
+      let reward_usd = 0
 
-    balancesStorable.push(balanceStorable)
+      const balances = balancesByChainByAdapterId[chain][adapterId].map((balance) => {
+        const {
+          chain: _chain,
+          adapterId: _adapterId,
+          fromAddress: _fromAddress,
+          address,
+          category,
+          groupIdx,
+          amount,
+          price,
+          balanceUSD,
+          rewardUSD,
+          debtUSD,
+          healthFactor,
+          timestamp: _timestamp,
+          ...data
+        } = balance
+
+        balance_usd += balanceUSD || 0
+        debt_usd += debtUSD || 0
+        reward_usd += rewardUSD || 0
+
+        return JSON.stringify({
+          ...data,
+          address,
+          category,
+          group_idx: groupIdx,
+          amount,
+          price: price || 0,
+          balance_usd: balanceUSD || 0,
+          reward_usd: rewardUSD || 0,
+          debt_usd: debtUSD || 0,
+          health_factor: healthFactor || 0,
+        })
+      })
+
+      const adapterBalancesStorable: AdapterBalancesStorable = {
+        adapter_id: adapterId,
+        chain: chainId,
+        from_address: balancesByChainByAdapterId[chain][adapterId][0].fromAddress,
+        timestamp: toDateTime(balancesByChainByAdapterId[chain][adapterId][0].timestamp),
+        balance_usd,
+        debt_usd,
+        reward_usd,
+        balances,
+      }
+
+      adaptersBalancesStorable.push(adapterBalancesStorable)
+    }
   }
 
-  return balancesStorable
+  return adaptersBalancesStorable
 }
 
 export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHouseClient, fromAddress: string) {
   const queryRes = await client.query({
     query: `
-      WITH (
-        SELECT max("timestamp") as "timestamp"
-        FROM lf.balances
-        WHERE from_address = {fromAddress: String}
-      ) AS latest
       SELECT "chain", sum("balance_usd") as "balance_usd", sum("debt_usd") as "debt_usd", sum("reward_usd") as "reward_usd", max("timestamp") as "last_timestamp"
-      FROM lf.balances
-      WHERE from_address = {fromAddress: String} AND timestamp IN latest
+      FROM lf.adapters_balances
+      WHERE
+        from_address = {fromAddress: String} AND
+        toStartOfDay("timestamp") = (SELECT max(toStartOfDay(timestamp)) AS "timestamp" FROM lf.adapters_balances WHERE from_address = {fromAddress: String})
       GROUP BY "chain";
     `,
     query_params: {
@@ -191,14 +168,10 @@ export async function selectLatestBalancesGroupsByFromAddress(client: ClickHouse
 
   const queryRes = await client.query({
     query: `
-      WITH (
-        SELECT max("timestamp") as "timestamp"
-        FROM lf.balances
-        WHERE from_address = {fromAddress: String}
-      ) AS latest
-      SELECT *
-      FROM lf.balances
-      WHERE from_address = {fromAddress: String} AND timestamp IN latest;
+      SELECT * FROM lf.adapters_balances
+      WHERE
+        from_address = {fromAddress: String} AND
+        toStartOfDay("timestamp") = (SELECT max(toStartOfDay(timestamp)) AS "timestamp" FROM lf.adapters_balances WHERE from_address = {fromAddress: String});
     `,
     query_params: {
       fromAddress: fromAddress.toLowerCase(),
@@ -206,38 +179,57 @@ export async function selectLatestBalancesGroupsByFromAddress(client: ClickHouse
   })
 
   const res = (await queryRes.json()) as {
-    data: BalanceStorage[]
+    data: AdapterBalancesStorage[]
   }
 
-  const balancesByChain = groupBy(fromStorage(res.data), 'chain')
+  let updatedAt = undefined
 
-  for (const chain in balancesByChain) {
-    const balancesByAdapterId = groupBy(balancesByChain[chain], 'adapterId')
+  for (const adapterBalance of res.data) {
+    const chain = chainByChainId[adapterBalance.chain]?.id
+    if (chain == null) {
+      console.error(`Missing chain ${adapterBalance.chain}`)
+      continue
+    }
 
-    for (const adapterId in balancesByAdapterId) {
-      const balancesByGroupIdx = groupBy(balancesByAdapterId[adapterId], 'groupIdx')
+    if (!updatedAt) {
+      updatedAt = unixFromDateTime(adapterBalance.timestamp)
+    }
 
-      for (const groupIdx in balancesByGroupIdx) {
-        const balances = balancesByGroupIdx[groupIdx]
+    const balances = adapterBalance.balances.map((raw) => {
+      const balance = JSON.parse(raw)
 
-        balancesGroups.push({
-          adapterId,
-          chain,
-          balanceUSD: sum(balances.map((balance) => balance.balanceUSD)),
-          debtUSD: sum(balances.map((balance) => balance.debtUSD)),
-          rewardUSD: sum(balances.map((balance) => balance.rewardUSD)),
-          healthFactor: avg(
-            balances.map((balance) => balance.healthFactor),
-            balances.length,
-          ),
-          timestamp: balances[0]?.timestamp,
-          balances,
-        })
+      return {
+        ...balance,
+        groupIdx: balance.group_idx,
+        balanceUSD: parseFloat(balance.balance_usd),
+        debtUSD: parseFloat(balance.debt_usd),
+        rewardUSD: parseFloat(balance.reward_usd),
+        healthFactor: parseFloat(balance.health_factor),
       }
+    })
+
+    const balancesByGroupIdx = groupBy(balances, 'groupIdx')
+
+    for (const groupIdx in balancesByGroupIdx) {
+      const balances = balancesByGroupIdx[groupIdx]
+
+      balancesGroups.push({
+        adapterId: adapterBalance.adapter_id,
+        chain: adapterBalance.chain,
+        balanceUSD: sum(balances.map((balance) => balance.balanceUSD)),
+        debtUSD: sum(balances.map((balance) => balance.debtUSD)),
+        rewardUSD: sum(balances.map((balance) => balance.rewardUSD)),
+        healthFactor: avg(
+          balances.map((balance) => balance.healthFactor),
+          balances.length,
+        ),
+        timestamp: balances[0]?.timestamp,
+        balances,
+      })
     }
   }
 
-  return balancesGroups
+  return { updatedAt, balancesGroups }
 }
 
 export async function selectBalancesHolders(
@@ -258,7 +250,7 @@ export function insertBalances(client: ClickHouseClient, balances: Balance[]) {
   }
 
   return client.insert({
-    table: 'lf.balances',
+    table: 'lf.adapters_balances',
     values,
     format: 'JSONEachRow',
   })

@@ -168,9 +168,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const client = connect()
 
   try {
-    const balancesGroups = await selectLatestBalancesGroupsByFromAddress(client, address)
-
-    const updatedAt = balancesGroups[0]?.timestamp ? new Date(balancesGroups[0]?.timestamp).getTime() : undefined
+    const { updatedAt, balancesGroups } = await selectLatestBalancesGroupsByFromAddress(client, address)
 
     let status: Status = 'success'
     if (updatedAt === undefined) {
@@ -185,7 +183,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     const balancesResponse: BalancesResponse = {
       status,
-      updatedAt: updatedAt === undefined ? undefined : Math.floor(updatedAt / 1000),
+      updatedAt,
       groups: formattedBalancesGroups,
     }
 
