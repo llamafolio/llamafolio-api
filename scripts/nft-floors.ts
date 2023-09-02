@@ -37,7 +37,7 @@ async function topCollections() {
     chain: 'eth',
     sort_type: 'Top',
     level: 'L5M',
-    limit: 10, // max 100
+    limit: 100, // max 100
   })
   try {
     const response = await fetch(`https://api.element.market/openapi/v1/collection/ranking?${searchParams}`, {
