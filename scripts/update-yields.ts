@@ -1,15 +1,13 @@
 import '../environment'
 
 import { connect } from '../src/db/clickhouse'
-import { deleteOldYields, fetchYields, insertYields } from '../src/db/yields'
+import { fetchYields, insertYields } from '../src/db/yields'
 
 async function main() {
   const client = connect()
 
   try {
     const yields = await fetchYields()
-
-    await deleteOldYields(client)
 
     await insertYields(client, yields)
 

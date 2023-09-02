@@ -1,5 +1,5 @@
 import { connect } from '@db/clickhouse'
-import { deleteOldYields, fetchYields, insertYields } from '@db/yields'
+import { fetchYields, insertYields } from '@db/yields'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -21,8 +21,6 @@ export const handler: APIGatewayProxyHandler = async (_event, context) => {
 
   try {
     const yields = await fetchYields()
-
-    await deleteOldYields(client)
 
     await insertYields(client, yields)
 
