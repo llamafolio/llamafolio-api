@@ -21,7 +21,7 @@ const getChainHandlers = (chain: Chain) => {
     const tokenBalances = await userBalances({
       chain,
       walletAddress: ctx.address,
-      tokens: (contracts.erc20 ? chainById[chain].indexed : tokensByChain[chain]) || [],
+      tokens: (chainById[chain]?.indexed ? contracts.erc20 : tokensByChain[chain]) || [],
     })
     const balances: Balance[] = tokenBalances.map((tokenBalance) => ({ ...tokenBalance, category: 'wallet' }))
 
