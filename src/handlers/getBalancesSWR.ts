@@ -4,7 +4,6 @@ import { badRequest, serverError, success } from '@handlers/response'
 import { updateBalances } from '@handlers/updateBalances'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/buf'
-import { invokeLambda } from '@lib/lambda'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface GroupResponse {
@@ -27,7 +26,7 @@ export interface BalancesResponse {
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   const address = event.pathParameters?.address as `0x${string}`
-  console.log('Get balances SWR', address)
+  console.log('Get balances', address)
   if (!address) {
     return badRequest('Missing address parameter')
   }
@@ -41,30 +40,29 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   try {
     const { updatedAt, balancesGroups } = await selectLatestBalancesGroupsByFromAddress(client, address)
 
-    const balancesResponse: BalancesResponse = {
-      status: 'success',
-      updatedAt,
-      groups: balancesGroups,
+    let status: Status = 'success'
+    if (updatedAt === undefined) {
+      status = 'empty'
+    } else if (areBalancesStale(updatedAt)) {
+      status = 'stale'
     }
 
-    // no balance registered for this user
-    if (updatedAt === undefined) {
+    if (status !== 'success') {
       const { updatedAt, balancesGroups } = await updateBalances(client, address)
 
-      balancesResponse.status = updatedAt ? 'success' : 'empty'
-      balancesResponse.updatedAt = updatedAt || Math.floor(Date.now() / 1000)
-      balancesResponse.groups = balancesGroups
+      const balancesResponse: BalancesResponse = {
+        status,
+        updatedAt,
+        groups: balancesGroups,
+      }
 
       return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 86_400 })
     }
 
-    // update in the background
-    if (areBalancesStale(updatedAt)) {
-      await invokeLambda('updateBalances', { address }, 'RequestResponse')
-
-      balancesResponse.status = 'stale'
-
-      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 86_400 })
+    const balancesResponse: BalancesResponse = {
+      status,
+      updatedAt,
+      groups: balancesGroups,
     }
 
     return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 86_400 })
