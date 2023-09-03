@@ -294,7 +294,7 @@ export function fmtBalanceBreakdown(balance: PricedBalance): PricedBalance & Bal
   }
 }
 
-export const BALANCE_UPDATE_THRESHOLD_SEC = 5 * 60
+export const BALANCE_UPDATE_THRESHOLD_SEC = 4 * 60
 
 /**
  * At the moment, balances are considered "stale" if they haven't been updated in the last x minutes.

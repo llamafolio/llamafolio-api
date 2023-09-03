@@ -109,6 +109,16 @@ functions:
     timeout: 10
     memorySize: 512
 
+  getBalancesSWR:
+    handler: src/handlers/getBalancesSWR.handler
+    description: Get address balances
+    events:
+      - httpApi:
+          method: get
+          path: /balances-swr/{address}
+    timeout: 10
+    memorySize: 512
+
   getLatestBalances:
     handler: src/handlers/getLatestBalances.handler
     description: Get latest address balances
