@@ -164,6 +164,32 @@ export async function getContractsInteractions(
   return fromStorage(res.data)
 }
 
+export async function getWalletInteractions(client: ClickHouseClient, address: string) {
+  const queryRes = await client.query({
+    query: `
+      SELECT *
+      FROM lf.adapters_contracts FINAL
+      WHERE
+        adapter_id = 'wallet' AND
+        ("chain", lower("address")) IN (
+          SELECT "chain", "address"
+          FROM evm_indexer.token_transfers_received_mv
+          WHERE "to" = {address: String}
+          GROUP BY "chain", "address"
+        );
+    `,
+    query_params: {
+      address: address.toLowerCase(),
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: ContractStorage[]
+  }
+
+  return fromStorage(res.data)
+}
+
 export async function getContracts(client: ClickHouseClient, address: string, chainId?: number) {
   const queryRes = await client.query({
     query: `

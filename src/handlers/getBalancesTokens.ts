@@ -1,38 +1,38 @@
 // Get balances of all ERC20 tokens owned by an address.
+// Uses the "wallet" adapter internally to narrow down the list of contracts to llamafolio-tokens ("allow list")
 
+import walletAdapter from '@adapters/wallet'
+import { connect } from '@db/clickhouse'
+import { getContractsInteractions, groupContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
+import type { BalancesContext, PricedBalance } from '@lib/adapter'
+import { groupBy } from '@lib/array'
+import { isBalanceUSDGtZero, sanitizeBalances, sortBalances, sumBalances } from '@lib/balance'
+import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
-import { chainById, chainsNames } from '@lib/chains'
-import { userBalances } from '@lib/erc20'
+import { chainById, chains as allChains } from '@lib/chains'
 import { getPricedBalances } from '@lib/price'
-import { isFulfilled } from '@lib/promise'
-import { chains as tokensByChain } from '@llamafolio/tokens'
+import { isNotNullish } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-import type { Address } from 'viem'
-import { isAddress } from 'viem'
-
-export const MIN_BALANCE_USD = 0.001
 
 function formatBalance(balance: any): FormattedBalance {
   return {
     address: balance.address,
-    name: balance.name,
     symbol: balance.symbol,
     decimals: balance.decimals,
     price: balance.price,
-    amount: balance.amount.toString(),
+    amount: balance.amount,
     balanceUSD: balance.balanceUSD,
   }
 }
 
 export interface FormattedBalance {
   address: string
-  name: string
-  symbol: string
-  decimals: number
-  price: number
-  amount: string
-  balanceUSD: number
+  symbol?: string
+  decimals?: number
+  price?: number
+  amount?: string
+  balanceUSD?: number
 }
 
 export interface BalancesErc20ChainResponse {
@@ -45,69 +45,109 @@ export interface BalancesErc20Response {
   updatedAt: string
   chains: BalancesErc20ChainResponse[]
 }
+export const handler: APIGatewayProxyHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false
 
-// extracted so it can be used in tests
-export async function balancesHandler({ address }: { address: Address }): Promise<BalancesErc20Response> {
-  const promiseResult = await Promise.allSettled(
-    chainsNames.map((chain) =>
-      userBalances({
-        chain,
-        walletAddress: address,
-        tokens: tokensByChain[chain],
-      }),
-    ),
-  )
-
-  const fulfilledResults = (
-    promiseResult.filter((result) => isFulfilled(result)) as PromiseFulfilledResult<
-      Awaited<ReturnType<typeof userBalances>>
-    >[]
-  ).flatMap((item) => item.value)
-
-  //@ts-expect-error
-  const withPrice = await getPricedBalances(fulfilledResults)
-
-  const chainsBalances = chainsNames.reduce(
-    (accumulator, chain) => {
-      accumulator[chain] = {
-        id: chain as Chain,
-        chainId: chainById[chain].chainId,
-        balances: [],
-      }
-      return accumulator
-    },
-    {} as Record<Chain, BalancesErc20ChainResponse>,
-  )
-
-  for (const [, balance] of withPrice.entries()) {
-    if (
-      // filter out tokens w/ balance < 0.1 USD except for native tokens, never filter out native tokens
-      balance.address.toLowerCase() !== chainById[balance.chain].nativeCurrency.address.toLowerCase() &&
-      // @ts-expect-error
-      balance.balanceUSD < MIN_BALANCE_USD
-    ) {
-      continue
-    }
-    chainsBalances[balance.chain].balances.push(formatBalance(balance))
-  }
-
-  return {
-    updatedAt: new Date().toISOString(),
-    chains: Object.values(chainsBalances).filter((chain) => chain.balances.length > 0),
-  }
-}
-
-export const handler: APIGatewayProxyHandler = async (event, _context) => {
-  const address = event.pathParameters?.address
+  const address = event.pathParameters?.address as `0x${string}` | undefined
   if (!address) {
     return badRequest('Missing address parameter')
   }
-  if (!isAddress(address)) {
+  if (!isHex(address)) {
     return badRequest('Invalid address parameter, expected hex')
   }
 
+  console.log(`Get balances tokens`, address)
+
+  const client = connect()
+
   try {
-    const balancesResponse = await balancesHandler({ address })
+    const tokens = await getContractsInteractions(client, address, 'wallet')
+
+    const tokensByChain = groupBy(tokens, 'chain')
+
+    // add wallet adapter on each non-indexed chain, assuming there was an interaction with each token
+    const nonIndexedChains = allChains.filter((chain) => !chain.indexed)
+    for (const chain of nonIndexedChains) {
+      if (!tokensByChain[chain.id]) {
+        tokensByChain[chain.id] = []
+      }
+    }
+
+    const chains = Object.keys(tokensByChain)
+
+    const chainsBalances = await Promise.all(
+      chains
+        .filter((chain) => walletAdapter[chain as Chain])
+        .map(async (chain) => {
+          const handler = walletAdapter[chain as Chain]!
+
+          try {
+            const hrstart = process.hrtime()
+
+            const contracts = groupContracts(tokensByChain[chain]) || []
+
+            const ctx: BalancesContext = { address, chain: chain as Chain, adapterId: walletAdapter.id }
+
+            console.log(`[${walletAdapter.id}][${chain}] getBalances ${tokensByChain[chain].length} contracts`)
+
+            const balancesConfig = await handler.getBalances(ctx, contracts)
+
+            const hrend = process.hrtime(hrstart)
+
+            console.log(
+              `[${walletAdapter.id}][${chain}] found ${balancesConfig.groups[0].balances.length} balances in %ds %dms`,
+              hrend[0],
+              hrend[1] / 1000000,
+            )
+
+            return balancesConfig.groups[0].balances
+          } catch (error) {
+            console.error(`[${walletAdapter.id}][${chain}]: Failed to getBalances`, error)
+            return
+          }
+        }),
+    )
+
+    const walletBalances = chainsBalances.filter(isNotNullish)
+
+    // Ungroup balances to make only 1 call to the price API
+    const balances = walletBalances.flat().filter(isNotNullish)
+
+    const sanitizedBalances = sanitizeBalances(balances)
+
+    const hrstart = process.hrtime()
+
+    const pricedBalances = await getPricedBalances(sanitizedBalances)
+
+    const nonZeroPricedBalances = pricedBalances.filter(isBalanceUSDGtZero)
+
+    const hrend = process.hrtime(hrstart)
+
+    console.log(
+      `getPricedBalances ${sanitizedBalances.length} balances, found ${nonZeroPricedBalances.length} balances in %ds %dms`,
+      hrend[0],
+      hrend[1] / 1000000,
+    )
+
+    const pricedBalancesByChain = groupBy(nonZeroPricedBalances, 'chain')
+
+    const now = new Date()
+
+    const balancesResponse: BalancesErc20Response = {
+      updatedAt: now.toISOString(),
+      chains: Object.keys(pricedBalancesByChain)
+        .map((chain) => {
+          const chainInfo = chainById[chain]
+          const balances = pricedBalancesByChain[chain] as PricedBalance[]
+
+          return {
+            id: chain as Chain,
+            chainId: chainInfo.chainId,
+            balances: balances.sort(sortBalances).map(formatBalance),
+          }
+        })
+        .sort((a, b) => sumBalances(b.balances) - sumBalances(a.balances)),
+    }
 
     return success(balancesResponse, { maxAge: 20 })
   } catch (error) {
