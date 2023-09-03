@@ -70,6 +70,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 86_400 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
-    return serverError('Failed to retrieve balances')
+    return serverError('Failed to retrieve balances', { error, address })
   }
 }

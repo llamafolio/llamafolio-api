@@ -84,9 +84,9 @@ export function notFound(message?: string, options?: Partial<ResponseOptions>) {
   })
 }
 
-export function serverError(message: string) {
+export function serverError(message: string, params?: { [key: string]: any }) {
   return response({
     statusCode: 500,
-    body: { message },
+    body: { message, ...params },
   })
 }
