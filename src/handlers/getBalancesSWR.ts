@@ -16,11 +16,12 @@ export interface GroupResponse {
   balances: any[]
 }
 
-export type Status = 'empty' | 'stale' | 'success'
+export type Status = 'stale' | 'success'
 
 export interface BalancesResponse {
   status: Status
-  updatedAt?: number
+  updatedAt: number
+  nextUpdateAt: number
   groups: GroupResponse[]
 }
 
@@ -40,19 +41,16 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   try {
     const { updatedAt, balancesGroups } = await selectLatestBalancesGroupsByFromAddress(client, address)
 
-    let status: Status = 'success'
-    if (updatedAt === undefined) {
-      status = 'empty'
-    } else if (areBalancesStale(updatedAt)) {
-      status = 'stale'
-    }
-
-    if (status !== 'success') {
+    // update stale or missing balances
+    if (updatedAt === undefined || areBalancesStale(updatedAt)) {
       const { updatedAt, balancesGroups } = await updateBalances(client, address)
 
+      const _updatedAt = updatedAt || Math.floor(Date.now() / 1000)
+
       const balancesResponse: BalancesResponse = {
-        status,
-        updatedAt,
+        status: 'success',
+        updatedAt: _updatedAt,
+        nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
         groups: balancesGroups,
       }
 
@@ -60,8 +58,9 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     }
 
     const balancesResponse: BalancesResponse = {
-      status,
+      status: 'success',
       updatedAt,
+      nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
       groups: balancesGroups,
     }
 
