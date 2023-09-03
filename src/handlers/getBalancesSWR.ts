@@ -4,6 +4,7 @@ import { badRequest, serverError, success } from '@handlers/response'
 import { updateBalances } from '@handlers/updateBalances'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/buf'
+import { invokeLambda } from '@lib/lambda'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface GroupResponse {
@@ -40,18 +41,27 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   try {
     const { updatedAt, balancesGroups } = await selectLatestBalancesGroupsByFromAddress(client, address)
 
-    let status: Status = 'success'
+    // no balance registered for this user
     if (updatedAt === undefined) {
-      status = 'empty'
-    } else if (areBalancesStale(updatedAt)) {
-      status = 'stale'
-    }
-
-    if (status !== 'success') {
       const { updatedAt, balancesGroups } = await updateBalances(client, address)
 
+      const now = Date.now()
+
       const balancesResponse: BalancesResponse = {
-        status,
+        status: updatedAt ? 'success' : 'empty',
+        updatedAt: Math.floor(now / 1000),
+        groups: balancesGroups,
+      }
+
+      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 60 })
+    }
+
+    // update in the background
+    if (areBalancesStale(updatedAt)) {
+      await invokeLambda('updateBalances', { address }, 'RequestResponse')
+
+      const balancesResponse: BalancesResponse = {
+        status: 'stale',
         updatedAt,
         groups: balancesGroups,
       }
@@ -60,7 +70,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     }
 
     const balancesResponse: BalancesResponse = {
-      status,
+      status: 'success',
       updatedAt,
       groups: balancesGroups,
     }
