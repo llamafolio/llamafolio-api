@@ -272,11 +272,6 @@ functions:
     handler: src/handlers/revalidateAdapters.revalidateAdapterContracts
     description: Revalidate adapter contracts
 
-  updateBalances:
-    handler: src/handlers/updateBalances.handler
-    description: Update balances
-    timeout: 60
-
   updateProtocols:
     handler: src/handlers/updateProtocols.handler
     description: Update protocols

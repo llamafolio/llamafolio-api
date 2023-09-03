@@ -1,9 +1,7 @@
 import { adapterById } from '@adapters/index'
 import type { ClickHouseClient } from '@clickhouse/client'
 import { formatBalance, insertBalances } from '@db/balances'
-import { connect } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
-import { serverError, success } from '@handlers/response'
 import type { Balance, BalancesContext } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
 import { fmtBalanceBreakdown, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
@@ -11,7 +9,6 @@ import { type Chain, chains } from '@lib/chains'
 import { sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
 import { aggregateYields } from '@lib/yields'
-import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 
 type AdapterBalance = Balance & {
   groupIdx: number
@@ -154,21 +151,4 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
   await aggregateYields(balancesGroups)
 
   return { updatedAt: Math.floor(now.getTime() / 1000), balancesGroups }
-}
-
-export const handler: APIGatewayProxyHandler = async (event, _context) => {
-  const { address } = event as APIGatewayProxyEvent & { address: `0x${string}` }
-
-  const client = connect()
-
-  console.log('Updating balances', address)
-
-  try {
-    await updateBalances(client, address)
-
-    return success({})
-  } catch (e) {
-    console.error('Failed to update balances', e)
-    return serverError('Failed to update balances')
-  }
 }
