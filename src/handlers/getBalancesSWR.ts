@@ -27,7 +27,7 @@ export interface BalancesResponse {
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   const address = event.pathParameters?.address as `0x${string}`
-  console.log('Get balances', address)
+  console.log('Get balances SWR', address)
   if (!address) {
     return badRequest('Missing address parameter')
   }
@@ -41,41 +41,33 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   try {
     const { updatedAt, balancesGroups } = await selectLatestBalancesGroupsByFromAddress(client, address)
 
-    // no balance registered for this user
-    if (updatedAt === undefined) {
-      const { updatedAt, balancesGroups } = await updateBalances(client, address)
-
-      const now = Date.now()
-
-      const balancesResponse: BalancesResponse = {
-        status: updatedAt ? 'success' : 'empty',
-        updatedAt: Math.floor(now / 1000),
-        groups: balancesGroups,
-      }
-
-      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 604_800 })
-    }
-
-    // update in the background
-    if (areBalancesStale(updatedAt)) {
-      await invokeLambda('updateBalances', { address }, 'RequestResponse')
-
-      const balancesResponse: BalancesResponse = {
-        status: 'stale',
-        updatedAt,
-        groups: balancesGroups,
-      }
-
-      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 604_800 })
-    }
-
     const balancesResponse: BalancesResponse = {
       status: 'success',
       updatedAt,
       groups: balancesGroups,
     }
 
-    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 604_800 })
+    // no balance registered for this user
+    if (updatedAt === undefined) {
+      const { updatedAt, balancesGroups } = await updateBalances(client, address)
+
+      balancesResponse.status = updatedAt ? 'success' : 'empty'
+      balancesResponse.updatedAt = updatedAt || Math.floor(Date.now() / 1000)
+      balancesResponse.groups = balancesGroups
+
+      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 86_400 })
+    }
+
+    // update in the background
+    if (areBalancesStale(updatedAt)) {
+      await invokeLambda('updateBalances', { address }, 'RequestResponse')
+
+      balancesResponse.status = 'stale'
+
+      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 86_400 })
+    }
+
+    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 86_400 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
