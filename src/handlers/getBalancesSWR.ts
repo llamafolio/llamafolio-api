@@ -53,7 +53,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         groups: balancesGroups,
       }
 
-      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 60 })
+      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 604_800 })
     }
 
     // update in the background
@@ -66,7 +66,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         groups: balancesGroups,
       }
 
-      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 60 })
+      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 604_800 })
     }
 
     const balancesResponse: BalancesResponse = {
@@ -75,7 +75,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       groups: balancesGroups,
     }
 
-    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 60 })
+    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 604_800 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
     return serverError('Failed to retrieve balances')
