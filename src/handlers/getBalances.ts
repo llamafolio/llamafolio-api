@@ -25,6 +25,7 @@ export interface BalancesResponse {
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   const address = event.pathParameters?.address as `0x${string}`
+  console.log('Get balances', address)
   if (!address) {
     return badRequest('Missing address parameter')
   }
@@ -32,8 +33,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   if (!isHex(address)) {
     return badRequest('Invalid address parameter, expected hex')
   }
-
-  console.log('Get balances', address)
 
   const client = connect()
 

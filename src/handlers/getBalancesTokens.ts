@@ -45,18 +45,15 @@ export interface BalancesErc20Response {
   updatedAt: string
   chains: BalancesErc20ChainResponse[]
 }
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
+export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const address = event.pathParameters?.address as `0x${string}` | undefined
+  console.log(`Get balances tokens`, address)
   if (!address) {
     return badRequest('Missing address parameter')
   }
   if (!isHex(address)) {
     return badRequest('Invalid address parameter, expected hex')
   }
-
-  console.log(`Get balances tokens`, address)
 
   const client = connect()
 
