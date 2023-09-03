@@ -5,6 +5,7 @@ Object.defineProperties(BigInt.prototype, {
     value: function (this: bigint) {
       return this.toString()
     },
+    configurable: true,
   },
 })
 
