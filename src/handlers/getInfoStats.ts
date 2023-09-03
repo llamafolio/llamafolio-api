@@ -26,6 +26,6 @@ export const handler: APIGatewayProxyHandler = async (_event, _context) => {
     )
   } catch (error) {
     console.error('Failed to info stats', { error })
-    return serverError('Failed to get info stats')
+    return serverError('Failed to get info stats', { error })
   }
 }

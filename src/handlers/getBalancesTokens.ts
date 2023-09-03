@@ -149,6 +149,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     return success(balancesResponse, { maxAge: 20 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
-    return serverError('Failed to retrieve balances')
+    return serverError('Failed to retrieve balances', { error })
   }
 }

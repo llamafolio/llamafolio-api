@@ -106,16 +106,6 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}
-    timeout: 10
-    memorySize: 512
-
-  getLatestBalances:
-    handler: src/handlers/getLatestBalances.handler
-    description: Get latest address balances
-    events:
-      - httpApi:
-          method: get
-          path: /balances/{address}/latest
     timeout: 29
     memorySize: 512
 

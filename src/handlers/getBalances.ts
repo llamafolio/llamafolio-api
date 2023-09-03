@@ -1,11 +1,12 @@
 import { selectLatestBalancesGroupsByFromAddress } from '@db/balances'
 import { connect } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
+import { updateBalances } from '@handlers/updateBalances'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
-export interface GroupResponse {
+interface GroupResponse {
   protocol: string
   chain: string
   balanceUSD: number
@@ -15,11 +16,12 @@ export interface GroupResponse {
   balances: any[]
 }
 
-export type Status = 'empty' | 'stale' | 'success'
+type Status = 'stale' | 'success'
 
-export interface BalancesResponse {
+interface BalancesResponse {
   status: Status
-  updatedAt?: number
+  updatedAt: number
+  nextUpdateAt: number
   groups: GroupResponse[]
 }
 
@@ -39,22 +41,32 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   try {
     const { updatedAt, balancesGroups } = await selectLatestBalancesGroupsByFromAddress(client, address)
 
-    let status: Status = 'success'
-    if (updatedAt === undefined) {
-      status = 'empty'
-    } else if (areBalancesStale(updatedAt)) {
-      status = 'stale'
+    // update stale or missing balances
+    if (updatedAt === undefined || areBalancesStale(updatedAt)) {
+      const { updatedAt, balancesGroups } = await updateBalances(client, address)
+
+      const _updatedAt = updatedAt || Math.floor(Date.now() / 1000)
+
+      const balancesResponse: BalancesResponse = {
+        status: 'success',
+        updatedAt: _updatedAt,
+        nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
+        groups: balancesGroups,
+      }
+
+      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 5 * 86_400 })
     }
 
     const balancesResponse: BalancesResponse = {
-      status,
+      status: 'success',
       updatedAt,
+      nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
       groups: balancesGroups,
     }
 
-    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC })
+    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 5 * 86_400 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
-    return serverError('Failed to retrieve balances')
+    return serverError('Failed to retrieve balances', { error, address })
   }
 }

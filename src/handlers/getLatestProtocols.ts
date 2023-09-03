@@ -31,8 +31,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     }
 
     return success(response, { maxAge: 10 * 60 })
-  } catch (e) {
-    console.error('Failed to retrieve latest protocols', e)
-    return serverError('Failed to retrieve latest protocols')
+  } catch (error) {
+    console.error('Failed to retrieve latest protocols', error)
+    return serverError('Failed to retrieve latest protocols', { error })
   }
 }

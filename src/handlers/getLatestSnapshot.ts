@@ -36,8 +36,8 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     const lastBalancesGroups = await selectLatestBalancesSnapshotByFromAddress(client, address)
 
     return success(lastBalancesGroups, { maxAge: 5 * 60 })
-  } catch (e) {
-    console.error('Failed to retrieve latest snapshot', e)
-    return serverError('Failed to retrieve latest snapshot')
+  } catch (error) {
+    console.error('Failed to retrieve latest snapshot', error)
+    return serverError('Failed to retrieve latest snapshot', { error })
   }
 }
