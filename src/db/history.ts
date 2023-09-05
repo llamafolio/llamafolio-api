@@ -129,6 +129,7 @@ export async function selectHistory(
       fromTimestamp: toDateTime(fromDate),
       toTimestamp: toDateTime(toDate),
       chainIds,
+      // TODO: protocol filter
       protocols,
     },
   })
