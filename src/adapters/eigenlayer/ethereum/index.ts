@@ -20,15 +20,20 @@ const stETH: Contract = {
   token: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
 }
 
+const poolManager: Contract = {
+  chain: 'ethereum',
+  address: '0x858646372CC42E1A627fcE94aa7A7033e7CF075A',
+}
+
 export const getContracts = () => {
   return {
-    contracts: { pools: [rETH, cbETH, stETH] },
+    contracts: { poolManager },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: getEigenlayerBalances,
+    poolManager: (...args) => getEigenlayerBalances(...args, [rETH, cbETH, stETH]),
   })
 
   return {
