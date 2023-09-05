@@ -153,6 +153,7 @@ import platypusFinance from '@adapters/platypus-finance'
 import pods from '@adapters/pods'
 import polkastarter from '@adapters/polkastarter'
 import popsicleFinance from '@adapters/popsicle-finance'
+import prismaFinance from '@adapters/prisma-finance'
 import pstakeFinance from '@adapters/pstake-finance'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
@@ -399,6 +400,7 @@ export const adapters: Adapter[] = [
   pods,
   polkastarter,
   popsicleFinance,
+  prismaFinance,
   pstakeFinance,
   quickswapDex,
   radiantV1,
