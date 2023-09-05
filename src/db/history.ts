@@ -1,5 +1,7 @@
 import type { ClickHouseClient } from '@clickhouse/client'
+import { chainById } from '@lib/chains'
 import { toDateTime } from '@lib/fmt'
+import { isNotNullish } from '@lib/type'
 
 export interface IHistoryTransaction {
   total: string
@@ -36,10 +38,10 @@ export async function selectHistory(
   offset: number,
   fromDate: Date,
   toDate: Date,
-  chainsFilter: string[],
-  protocolsFilter: string[],
+  chains: string[],
+  protocols: string[],
 ) {
-  console.log({ fromTimestamp: toDateTime(fromDate), toTimestamp: toDateTime(toDate) })
+  const chainIds = chains.map((chain) => chainById[chain]?.chainId).filter(isNotNullish)
 
   const queryRes = await client.query({
     query: `
@@ -48,6 +50,7 @@ export async function selectHistory(
         FROM evm_indexer.transactions_history_agg
         WHERE
           "target" = {address: String} AND
+          ${chainIds.length > 0 ? ' "chain" IN {chainIds: Array(UInt64)} AND' : ''}
           "timestamp" <= {toTimestamp: DateTime} AND
           "timestamp" >= {fromTimestamp: DateTime}
         ORDER BY "timestamp" DESC
@@ -57,22 +60,24 @@ export async function selectHistory(
       ),
       "sub_transactions" AS (
         SELECT
-          "block_number",
-          "chain",
-          "from",
-          "to",
-          substring("input", 1, 10) AS "selector",
-          "hash",
-          "gas",
-          "gas_price",
-          "status",
-          "value",
-          "timestamp",
-        FROM evm_indexer.transactions
+          t."block_number" AS "block_number",
+          t."chain" AS "chain",
+          t."from" AS "from",
+          t."to" AS "to",
+          substring(t."input", 1, 10) AS "selector",
+          t."hash" AS "hash",
+          t."gas" AS "gas",
+          t."gas_price" AS "gas_price",
+          t."status" AS "status",
+          t."value" AS "value",
+          t."timestamp" AS "timestamp",
+          ac."adapter_id" AS "adapter_id"
+        FROM evm_indexer.transactions AS "t"
+        LEFT JOIN lf.adapters_contracts AS "ac" ON (t."chain", t."to") = (ac."chain", ac."address")
         WHERE
-          "timestamp" <= {toTimestamp: DateTime} AND
-          "timestamp" >= {fromTimestamp: DateTime} AND
-          ("chain", "hash") IN "sub_history"
+          t."timestamp" <= {toTimestamp: DateTime} AND
+          t."timestamp" >= {fromTimestamp: DateTime} AND
+          (t."chain", t."hash") IN "sub_history"
       ),
       "sub_token_transfers" AS (
         SELECT
@@ -84,13 +89,15 @@ export async function selectHistory(
         WHERE
           tt."timestamp" <= {toTimestamp: DateTime} AND
           tt."timestamp" >= {fromTimestamp: DateTime} AND
-          (tt."chain", tt."transaction_hash") IN "sub_history"
+          (tt."chain", tt."transaction_hash") IN "sub_history" AND
+          (tt."from" = {address: String} OR tt."to" = {address: String})
         GROUP BY tt."chain", tt."transaction_hash"
       ),
       (
         SELECT count(*) FROM evm_indexer.transactions_history_agg
         WHERE
           "target" = {address: String} AND
+          ${chainIds.length > 0 ? ' "chain" IN {chainIds: Array(UInt64)} AND' : ''}
           "timestamp" <= {toTimestamp: DateTime} AND
           "timestamp" >= {fromTimestamp: DateTime}
       ) AS "total"
@@ -106,13 +113,12 @@ export async function selectHistory(
         t."status" AS "status",
         t."value" AS "value",
         t."timestamp" AS "timestamp",
+        t."adapter_id" AS "adapter_id",
         m."name" AS "method_name",
-        "adapter_id",
         tt."token_transfers" AS "token_transfers",
         "total"
       FROM "sub_transactions" AS "t"
       LEFT JOIN "sub_token_transfers" AS "tt" ON (t."chain", t."hash") = (tt."chain", tt."hash")
-      LEFT JOIN lf.adapters_contracts AS "ac" ON (t."chain", t."to") = (ac."chain", ac."address")
       LEFT JOIN lf.methods AS "m" ON m."selector" = t."selector"
       ORDER BY "timestamp" DESC;
     `,
@@ -122,9 +128,8 @@ export async function selectHistory(
       offset,
       fromTimestamp: toDateTime(fromDate),
       toTimestamp: toDateTime(toDate),
-      // TODO: FILTERS
-      chainsFilter: chainsFilter.length > 0 ? chainsFilter : true,
-      protocolsFilter: protocolsFilter.length > 0 ? protocolsFilter : true,
+      chainIds,
+      protocols,
     },
   })
 
