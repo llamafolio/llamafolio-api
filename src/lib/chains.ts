@@ -116,13 +116,16 @@ export const chains = [
     id: 'bsc',
     chainId: 56,
     name: 'BNB Chain',
+    rpcWssUrl: [
+      LLAMANODES_API_KEY ? webSocket(`wss://binance.llamarpc.com/rpc/${LLAMANODES_API_KEY}`) : undefined,
+    ].filter(isNotFalsy),
     rpcUrls: [
-      http('https://rpc.ankr.com/bsc', { batch: { wait: 0, batchSize: 5_000 } }),
+      LLAMANODES_API_KEY
+        ? http(`https://binance.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
+        : undefined,
       http('https://bsc-dataseed.binance.org/', { batch: { batchSize: 1_000, wait: 10 } }),
       http('https://bsc-dataseed1.ninicoin.io/', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://bsc-dataseed2.defibit.io/', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://bsc-dataseed2.ninicoin.io/', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    ].filter(isNotFalsy),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
