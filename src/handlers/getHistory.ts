@@ -84,6 +84,16 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     return badRequest('Invalid time range parameters, window too large')
   }
 
+  console.log({
+    address,
+    limit,
+    offset,
+    fromTimestamp: toStartOfDay(new Date(fromTimestamp)),
+    toTimestamp: toStartOfDay(toNextDay(new Date(toTimestamp))),
+    chains,
+    protocols,
+  })
+
   const client = connect()
 
   try {
