@@ -4,7 +4,7 @@ import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import { type Chain, chainByChainId } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
-import { unixFromDateTime } from '@lib/fmt'
+import { toNextDay, toStartOfDay, unixFromDateTime } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
 import type { Token } from '@lib/token'
@@ -70,13 +70,36 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const offset = parseInt(queries?.offset || '') || 0
   const limit = parseInt(queries?.limit || '') || 25
 
+  const now = Date.now()
+
+  // 3 months
+  const maxTimeRange = 60 * 60 * 24 * 3 * 31 * 1000
+
+  const queryFromTimestamp = parseInt(queries?.from_ts || '0')
+  const queryToTimestamp = parseInt(queries?.to_ts || '0')
+  const fromTimestamp = queryFromTimestamp ? queryFromTimestamp * 1000 : now - maxTimeRange
+  const toTimestamp = queryToTimestamp ? queryToTimestamp * 1000 : now
+
+  if (toTimestamp - fromTimestamp > maxTimeRange) {
+    return badRequest('Invalid time range parameters, window too large')
+  }
+
   const client = connect()
 
   try {
     const transactionsData: ITransaction[] = []
     let count = 0
 
-    const transactions = await selectHistory(client, address.toLowerCase(), limit, offset, chains, protocols)
+    const transactions = await selectHistory(
+      client,
+      address.toLowerCase(),
+      limit,
+      offset,
+      toStartOfDay(new Date(fromTimestamp)),
+      toStartOfDay(toNextDay(new Date(toTimestamp))),
+      chains,
+      protocols,
+    )
 
     for (const tx of transactions) {
       const chain = chainByChainId[parseInt(tx.chain)]?.id
@@ -96,20 +119,21 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
         toAddress: tx.to,
         gasUsed: tx.gas.toString(),
         gasPrice: tx.gas_price,
-        // inputFunctionName: tx.method_name?.name,
-        inputFunctionName: undefined,
+        inputFunctionName: tx.method_name,
         success: tx.status === 'success',
-        // adapterId: tx.adapters_contracts?.[0]?.adapter_id,
+        adapterId: tx.adapter_id,
         value: tx.value,
-        tokenTransfers: tx.token_transfers.map(([from, to, address, _log_index, _type, value, _id]) => ({
-          // name: token_transfer?.token_details?.name,
-          // symbol: token_transfer?.token_details?.symbol,
-          // decimals: token_transfer?.token_details?.decimals,
-          tokenAddress: address,
-          fromAddress: from,
-          toAddress: to,
-          value: value,
-        })),
+        tokenTransfers: tx.token_transfers.map(
+          ([from, to, address, _log_index, _type, value, _id, decimals, symbol, name]) => ({
+            name,
+            symbol,
+            decimals,
+            tokenAddress: address,
+            fromAddress: from,
+            toAddress: to,
+            value: value,
+          }),
+        ),
       })
     }
 
@@ -140,34 +164,36 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
       tokensByChain[chain].map((address) => ({ chain, address }) as Token),
     )
 
-    const prices = await getTokenPrices(tokens)
+    if (tokens.length > 0) {
+      const prices = await getTokenPrices(tokens)
 
-    for (const transaction of transactionsData) {
-      const chain = transaction.chain as Chain
+      for (const transaction of transactionsData) {
+        const chain = transaction.chain as Chain
 
-      // gas cost
-      const gasKey = getTokenKey({ chain, address: ADDRESS_ZERO })
-      if (gasKey) {
-        const priceInfo = prices.coins[gasKey]
-        if (priceInfo) {
-          transaction.price = priceInfo.price
+        // gas cost
+        const gasKey = getTokenKey({ chain, address: ADDRESS_ZERO })
+        if (gasKey) {
+          const priceInfo = prices.coins[gasKey]
+          if (priceInfo) {
+            transaction.price = priceInfo.price
+          }
         }
-      }
 
-      // gas transfer
-      if (transaction.value !== '0' && transaction.price) {
-        transaction.valueUSD = mulPrice(BigInt(transaction.value), 18, transaction.price)
-      }
+        // gas transfer
+        if (transaction.value !== '0' && transaction.price) {
+          transaction.valueUSD = mulPrice(BigInt(transaction.value), 18, transaction.price)
+        }
 
-      // token transfers
-      if (transaction.tokenTransfers) {
-        for (const transfer of transaction.tokenTransfers) {
-          const key = getTokenKey({ chain, address: transfer.tokenAddress })
-          if (key) {
-            const priceInfo = prices.coins[key]
-            if (priceInfo && priceInfo.decimals) {
-              transfer.price = priceInfo.price
-              transfer.valueUSD = mulPrice(BigInt(transfer.value), priceInfo.decimals, priceInfo.price)
+        // token transfers
+        if (transaction.tokenTransfers) {
+          for (const transfer of transaction.tokenTransfers) {
+            const key = getTokenKey({ chain, address: transfer.tokenAddress })
+            if (key) {
+              const priceInfo = prices.coins[key]
+              if (priceInfo && priceInfo.decimals) {
+                transfer.price = priceInfo.price
+                transfer.valueUSD = mulPrice(BigInt(transfer.value), priceInfo.decimals, priceInfo.price)
+              }
             }
           }
         }
