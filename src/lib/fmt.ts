@@ -57,6 +57,18 @@ export function parseStringJSON(jsonString: string) {
   }
 }
 
+export function toStartOfDay(date: Date) {
+  const newDate = new Date(date)
+  newDate.setUTCHours(0, 0, 0, 0)
+  return newDate
+}
+
+export function toNextDay(date: Date) {
+  const newDate = new Date(date)
+  newDate.setDate(newDate.getDate() + 1)
+  return newDate
+}
+
 /**
  * format Date to Clickhouse compatible DateTime
  */
