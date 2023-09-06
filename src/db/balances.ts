@@ -296,7 +296,7 @@ export async function selectLatestBalancesGroupsByFromAddress(
           adapter_id,
           timestamp,
           balances as balance,
-          lower(JSONExtractString(balance, 'address')) AS address,
+          JSONExtractString(balance, 'address') AS address,
           arrayMap(x->JSONExtractString(x, 'address'), JSONExtractArrayRaw(balance, 'underlyings')) AS underlyings
         FROM lf.adapters_balances
         ARRAY JOIN balances
