@@ -45,7 +45,9 @@ export interface BalancesErc20Response {
   updatedAt: string
   chains: BalancesErc20ChainResponse[]
 }
-export const handler: APIGatewayProxyHandler = async (event, _context) => {
+export const handler: APIGatewayProxyHandler = async (event, context) => {
+  context.callbackWaitsForEmptyEventLoop = false
+
   const address = event.pathParameters?.address as `0x${string}` | undefined
   console.log(`Get balances tokens`, address)
   if (!address) {

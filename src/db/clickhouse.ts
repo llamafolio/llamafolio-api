@@ -17,6 +17,7 @@ export function connect() {
       host: process.env.CLICKHOUSE_HOST || 'http://localhost:8123',
       username: process.env.CLICKHOUSE_USER || 'default',
       password: process.env.CLICKHOUSE_PASSWORD || '',
+      max_open_connections: 1,
       clickhouse_settings: {
         async_insert: 1,
         wait_for_async_insert: 1,
