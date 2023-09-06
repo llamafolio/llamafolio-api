@@ -200,6 +200,7 @@ import strike from '@adapters/strike'
 import sturdy from '@adapters/sturdy'
 import stusdt from '@adapters/stusdt'
 import sudoswap from '@adapters/sudoswap'
+import summerFi from '@adapters/summer.fi'
 import superfarm from '@adapters/superfarm'
 import sushiswap from '@adapters/sushiswap'
 import swell from '@adapters/swell'
@@ -447,6 +448,7 @@ export const adapters: Adapter[] = [
   sturdy,
   stusdt,
   sudoswap,
+  summerFi,
   superfarm,
   sushiswap,
   swell,
