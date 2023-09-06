@@ -45,6 +45,10 @@ export function deleteProtocol(client: ClickHouseClient, slug: string) {
   return client.command({
     query: 'DELETE FROM lf.protocols WHERE slug = {slug: String};',
     query_params: { slug },
+    clickhouse_settings: {
+      enable_lightweight_delete: 1,
+      mutations_sync: '2',
+    },
   })
 }
 

@@ -200,5 +200,9 @@ export function deleteAdapterById(client: ClickHouseClient, adapterId: string) {
   return client.command({
     query: 'DELETE FROM lf.adapters WHERE "id" = {adapterId: String};',
     query_params: { adapterId },
+    clickhouse_settings: {
+      enable_lightweight_delete: 1,
+      mutations_sync: '2',
+    },
   })
 }

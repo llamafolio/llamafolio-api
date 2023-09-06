@@ -57,7 +57,7 @@ export function toStorage(contracts: Contract[], adapterId: string, timestamp: D
       standard,
       name,
       chain: chainId,
-      address,
+      address: address.toLowerCase(),
       category,
       adapter_id: adapterId,
       data: JSON.stringify(data),
@@ -73,7 +73,7 @@ export function toStorage(contracts: Contract[], adapterId: string, timestamp: D
 export async function selectAdaptersContractsByAddress(client: ClickHouseClient, address: string, chainId: number) {
   const queryRes = await client.query({
     query:
-      'SELECT * FROM lf.adapters_contracts FINAL WHERE "chain" = {chainId: UInt8} AND lower("address") = {address: String};',
+      'SELECT * FROM lf.adapters_contracts FINAL WHERE "chain" = {chainId: UInt8} AND "address" = {address: String};',
     query_params: {
       address: address.toLowerCase(),
       chainId,
@@ -133,7 +133,7 @@ export async function getContractsInteractions(
       FROM lf.adapters_contracts FINAL
       WHERE
         ${condition}
-        ("chain", lower("address")) IN (
+        ("chain", "address") IN (
           SELECT "chain", "address" FROM (
             (
               SELECT "chain", "to" AS "address"
@@ -171,7 +171,7 @@ export async function getWalletInteractions(client: ClickHouseClient, address: s
       FROM lf.adapters_contracts FINAL
       WHERE
         adapter_id = 'wallet' AND
-        ("chain", lower("address")) IN (
+        ("chain", "address") IN (
           SELECT "chain", "address"
           FROM evm_indexer.token_transfers_received_mv
           WHERE "to" = {address: String}
@@ -218,7 +218,7 @@ export async function getContracts(client: ClickHouseClient, address: string, ch
           "address",
           "adapter_id"
         FROM lf.adapters_contracts FINAL
-        WHERE lower("address") = {address: String}
+        WHERE "address" = {address: String}
         ${chainId != null ? ' AND "chain" = {chain: UInt8} ' : ''}
       )
       SELECT
@@ -251,23 +251,6 @@ export function deleteContractsByAdapterId(client: ClickHouseClient, adapterId: 
   return client.command({
     query: 'DELETE FROM lf.adapters_contracts WHERE adapter_id = {adapterId: String};',
     query_params: { adapterId },
-  })
-}
-
-export function deleteOldAdaptersContracts(
-  client: ClickHouseClient,
-  adapterId: string,
-  chains: number[],
-  timestamp: Date,
-) {
-  return client.command({
-    query:
-      'DELETE FROM lf.adapters_contracts WHERE "chain" IN {chains: Array(UInt64)} AND "adapter_id" = {adapterId: String} AND "created_at" < {timestamp: DateTime};',
-    query_params: {
-      adapterId,
-      chains,
-      timestamp: toDateTime(timestamp),
-    },
     clickhouse_settings: {
       enable_lightweight_delete: 1,
       mutations_sync: '2',
