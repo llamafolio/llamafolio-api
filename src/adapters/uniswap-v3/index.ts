@@ -1,6 +1,8 @@
 import type { Adapter } from '@lib/adapter'
 
 import * as arbitrum from './arbitrum'
+import * as base from './base'
+import * as bsc from './bsc'
 import * as celo from './celo'
 import * as ethereum from './ethereum'
 import * as optimism from './optimism'
@@ -13,6 +15,8 @@ const adapter: Adapter = {
   polygon,
   optimism,
   celo,
+  base,
+  bsc,
 }
 
 export default adapter
