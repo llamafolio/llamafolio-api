@@ -140,33 +140,3 @@ export async function selectHistory(
 
   return res.data
 }
-
-export async function selectHistoryMonthlyCount(
-  client: ClickHouseClient,
-  address: string,
-  chainsFilter: string[],
-  protocolsFilter: string[],
-) {
-  const queryRes = await client.query({
-    query: `
-      SELECT count() AS "count", toYYYYMM("timestamp") AS "month"
-      FROM evm_indexer.transactions_history_agg
-      WHERE "target" = {address: String}
-      GROUP BY "target", toYYYYMM("timestamp")
-      ORDER BY "month" ASC
-      SETTINGS use_skip_indexes=1;
-    `,
-    query_params: {
-      address: address.toLowerCase(),
-      // TODO: FILTERS
-      chainsFilter: chainsFilter.length > 0 ? chainsFilter : true,
-      protocolsFilter: protocolsFilter.length > 0 ? protocolsFilter : true,
-    },
-  })
-
-  const res = (await queryRes.json()) as {
-    data: { count: string; month: number }[]
-  }
-
-  return res.data.map((row) => ({ count: parseInt(row.count), month: row.month }))
-}
