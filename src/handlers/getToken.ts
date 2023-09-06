@@ -1,6 +1,6 @@
 import { connect } from '@db/clickhouse'
 import { selectAdaptersContractsByAddress } from '@db/contracts'
-import { badRequest, notFound, serverError, success } from '@handlers/response'
+import { badRequest, serverError, success } from '@handlers/response'
 import type { Balance, BaseContext, BaseContract, Contract, PricedBalance } from '@lib/adapter'
 import { isHex } from '@lib/buf'
 import { call } from '@lib/call'
@@ -78,7 +78,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const contract: Contract = {
       chain,
       address,
-      category: category || 'wallet',
+      category,
       symbol: symbol || _symbol,
       decimals: decimals || _decimals,
       adapterId,
@@ -115,10 +115,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       totalSupply,
       price: contractPrice || lpTokenPrice,
       underlyings: maybePricedUnderlyings,
-    }
-
-    if (!token.symbol && !token.decimals) {
-      return notFound('Token not found', { maxAge: 60 * 60 })
     }
 
     return success(token, { maxAge: 60 * 60 })
