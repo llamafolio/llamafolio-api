@@ -1,5 +1,5 @@
 import { deleteAdapterById } from '@db/adapters'
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { deleteContractsByAdapterId } from '@db/contracts'
 import { deleteProtocol } from '@db/protocols'
 
@@ -19,8 +19,6 @@ async function main() {
   const adapterId = process.argv[2]
 
   try {
-    const client = connect()
-
     await deleteAdapterById(client, adapterId)
 
     await deleteProtocol(client, adapterId)

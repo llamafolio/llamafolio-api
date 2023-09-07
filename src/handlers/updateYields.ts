@@ -1,4 +1,4 @@
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { fetchYields, insertYields } from '@db/yields'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
@@ -16,8 +16,6 @@ export const handleUpdateYields = updateYields
 
 export const handler: APIGatewayProxyHandler = async (_event, context) => {
   context.callbackWaitsForEmptyEventLoop = false
-
-  const client = connect()
 
   try {
     const yields = await fetchYields()

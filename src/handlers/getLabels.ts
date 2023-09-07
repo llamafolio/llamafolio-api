@@ -1,4 +1,4 @@
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { selectLabelsByAddresses } from '@db/labels'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
@@ -19,8 +19,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     data[address] = { labels: [], links: {} }
   }
-
-  const client = connect()
 
   try {
     const labels = await selectLabelsByAddresses(client, addresses)

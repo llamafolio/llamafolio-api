@@ -1,5 +1,5 @@
 import { selectBalancesHolders } from '@db/balances'
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
@@ -26,8 +26,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   if (!isHex(address)) {
     return badRequest('Invalid address parameter, expected hex')
   }
-
-  const client = connect()
 
   try {
     const queries = event.queryStringParameters

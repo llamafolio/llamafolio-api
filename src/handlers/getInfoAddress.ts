@@ -1,4 +1,4 @@
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import { unixFromDateTime } from '@lib/fmt'
@@ -25,8 +25,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   try {
-    const client = connect()
-
     const queryRes = await client.query({
       query: `
         SELECT min("timestamp") as "timestamp" from evm_indexer.transactions_history_agg

@@ -1,12 +1,10 @@
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { serverError, success } from '@handlers/response'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async () => {
   try {
-    const clickhouseClient = connect()
-
-    const lastSyncedBlocksQueryRes = await clickhouseClient.query({
+    const lastSyncedBlocksQueryRes = await client.query({
       query: `SELECT chain, max(number) AS max FROM evm_indexer.blocks GROUP BY chain;`,
     })
 

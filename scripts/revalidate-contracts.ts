@@ -5,7 +5,7 @@ import { isNotNullish } from '@lib/type'
 
 import type { Adapter as DBAdapter } from '../src/db/adapters'
 import { insertAdapters, selectAdapters } from '../src/db/adapters'
-import { connect } from '../src/db/clickhouse'
+import { client } from '../src/db/clickhouse'
 import { flattenContracts, insertAdaptersContracts } from '../src/db/contracts'
 import type { Adapter, BaseContext } from '../src/lib/adapter'
 import type { Chain } from '../src/lib/chains'
@@ -37,8 +37,6 @@ async function main() {
   const adapter = module.default as Adapter
 
   try {
-    const client = connect()
-
     const adapterChains = chain ? [chain] : chains.filter((chain) => adapter[chain.id]).map((chain) => chain.id)
     const chainIds = adapterChains.map((chain) => chainById[chain]?.chainId).filter(isNotNullish)
 

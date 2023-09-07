@@ -1,11 +1,9 @@
 import '../environment'
 
-import { connect } from '../src/db/clickhouse'
+import { client } from '../src/db/clickhouse'
 import { fetchYields, insertYields } from '../src/db/yields'
 
 async function main() {
-  const client = connect()
-
   try {
     const yields = await fetchYields()
 

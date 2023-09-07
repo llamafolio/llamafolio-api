@@ -1,12 +1,10 @@
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 
 import { selectDistinctAdaptersIds } from '../src/db/adapters'
 import { insertProtocols } from '../src/db/protocols'
 import { fetchProtocols } from '../src/lib/protocols'
 
 async function main() {
-  const client = connect()
-
   try {
     const adapters = await selectDistinctAdaptersIds(client)
 

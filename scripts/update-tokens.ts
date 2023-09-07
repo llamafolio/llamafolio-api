@@ -4,7 +4,7 @@ import type { Chain } from '@lib/chains'
 import { chainByChainId, chainsNames } from '@lib/chains'
 import type { Address } from 'viem'
 
-import { connect } from '../src/db/clickhouse'
+import { client } from '../src/db/clickhouse'
 import type { Token } from '../src/db/tokens'
 import { insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/tokens'
 import { getERC20Details } from '../src/lib/erc20'
@@ -20,8 +20,6 @@ async function main() {
     console.error('Missing arguments')
     return help()
   }
-
-  const client = connect()
 
   try {
     const limit = 100

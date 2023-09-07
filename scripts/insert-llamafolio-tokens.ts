@@ -2,13 +2,11 @@ import '../environment'
 
 import { chains } from '@llamafolio/tokens'
 
-import { connect } from '../src/db/clickhouse'
+import { client } from '../src/db/clickhouse'
 import type { Token } from '../src/db/tokens'
 import { insertERC20Tokens } from '../src/db/tokens'
 
 async function main() {
-  const client = connect()
-
   try {
     const tokens: Token[] = []
 
