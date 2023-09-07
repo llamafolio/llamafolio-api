@@ -5,7 +5,7 @@ import isEqual from 'lodash/isEqual'
 
 import type { Adapter as DBAdapter } from '../src/db/adapters'
 import { insertAdapters, selectAdapter } from '../src/db/adapters'
-import { connect } from '../src/db/clickhouse'
+import { client } from '../src/db/clickhouse'
 import { flattenContracts, insertAdaptersContracts } from '../src/db/contracts'
 import type { Adapter, BaseContext } from '../src/lib/adapter'
 import { type Chain, chainById } from '../src/lib/chains'
@@ -46,8 +46,6 @@ async function main() {
     console.error(`Missing chain ${chain}`)
     return
   }
-
-  const client = connect()
 
   let prevDbAdapter = await selectAdapter(client, chainId, adapter.id)
 

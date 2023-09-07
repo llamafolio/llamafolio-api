@@ -1,5 +1,5 @@
 import { countAdapters } from '@db/adapters'
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { serverError, success } from '@handlers/response'
 import { chains } from '@lib/chains'
 import { sum } from '@lib/math'
@@ -11,7 +11,6 @@ import type { APIGatewayProxyHandler } from 'aws-lambda'
  */
 export const handler: APIGatewayProxyHandler = async (_event, _context) => {
   try {
-    const client = connect()
     const adaptersCount = await countAdapters(client)
 
     return success(

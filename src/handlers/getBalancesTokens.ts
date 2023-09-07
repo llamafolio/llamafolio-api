@@ -2,7 +2,7 @@
 // Uses the "wallet" adapter internally to narrow down the list of contracts to llamafolio-tokens ("allow list")
 
 import walletAdapter from '@adapters/wallet'
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext, PricedBalance } from '@lib/adapter'
@@ -54,8 +54,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   if (!isHex(address)) {
     return badRequest('Invalid address parameter, expected hex')
   }
-
-  const client = connect()
 
   try {
     const tokens = await getContractsInteractions(client, address, 'wallet')

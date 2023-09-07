@@ -1,4 +1,4 @@
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { selectAdaptersContractsByAddress } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { Balance, BaseContext, BaseContract, Contract, PricedBalance } from '@lib/adapter'
@@ -46,8 +46,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const ctx: BaseContext = { chain, adapterId: '' }
 
   try {
-    const client = connect()
-
     // `token` key can also be used to retrieve token details, ignore it
     const adaptersContracts = (await selectAdaptersContractsByAddress(client, address, chainId)).filter(
       (contract) => !contract.token || contract.token?.toLowerCase() === address,

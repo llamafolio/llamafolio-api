@@ -1,5 +1,5 @@
 import { selectLatestBalancesGroupsByFromAddress } from '@db/balances'
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { updateBalances } from '@handlers/updateBalances'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
@@ -35,8 +35,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   if (!isHex(address)) {
     return badRequest('Invalid address parameter, expected hex')
   }
-
-  const client = connect()
 
   try {
     const { updatedAt, balancesGroups } = await selectLatestBalancesGroupsByFromAddress(client, address)

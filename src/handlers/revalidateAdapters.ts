@@ -1,7 +1,7 @@
 import { adapters } from '@adapters/index'
 import type { Adapter as DBAdapter } from '@db/adapters'
 import { insertAdapters, selectAdapter, selectAdaptersContractsExpired, selectDistinctAdaptersIds } from '@db/adapters'
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { flattenContracts, insertAdaptersContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
@@ -12,8 +12,6 @@ import { resolveContractsTokens } from '@lib/token'
 import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 
 const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, _context) => {
-  const client = connect()
-
   try {
     const [expiredAdaptersRes, adapterIdsRes] = await Promise.all([
       selectAdaptersContractsExpired(client),
@@ -59,8 +57,6 @@ const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, _cont
 export const scheduledRevalidateAdaptersContracts = wrapScheduledLambda(revalidateAdaptersContracts)
 
 export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, _context) => {
-  const client = connect()
-
   const { adapterId, chain } = event as APIGatewayProxyEvent & { adapterId?: string; chain?: Chain }
 
   if (!adapterId) {

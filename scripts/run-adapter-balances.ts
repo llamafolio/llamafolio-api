@@ -1,7 +1,7 @@
 import path from 'node:path'
 import url from 'node:url'
 
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import type { Adapter, BalancesContext } from '@lib/adapter'
 import { type Chain, chainById } from '@lib/chains'
@@ -36,8 +36,6 @@ async function main() {
   }
 
   const ctx: BalancesContext = { address, chain, adapterId }
-
-  const client = connect()
 
   try {
     const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))

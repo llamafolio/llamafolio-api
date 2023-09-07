@@ -1,5 +1,5 @@
 import { selectLatestCreatedAdapters } from '@db/adapters'
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { serverError, success } from '@handlers/response'
 import type { Chain } from '@lib/chains'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -16,8 +16,6 @@ interface LatestProtocolsResponse {
 
 export const handler: APIGatewayProxyHandler = async (event) => {
   try {
-    const client = connect()
-
     const limit = event.queryStringParameters?.limit ? parseInt(event.queryStringParameters?.limit) : undefined
 
     const latestCreatedProtocols = await selectLatestCreatedAdapters(client, limit)

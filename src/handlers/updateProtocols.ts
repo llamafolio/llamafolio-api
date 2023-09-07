@@ -1,5 +1,5 @@
 import { selectDistinctAdaptersIds } from '@db/adapters'
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { insertProtocols } from '@db/protocols'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
@@ -15,8 +15,6 @@ const updateProtocols: APIGatewayProxyHandler = async () => {
 export const scheduledUpdateProtocols = wrapScheduledLambda(updateProtocols)
 
 export const handler: APIGatewayProxyHandler = async () => {
-  const client = connect()
-
   try {
     const adapters = await selectDistinctAdaptersIds(client)
 

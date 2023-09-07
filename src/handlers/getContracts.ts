@@ -1,4 +1,4 @@
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import { getContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
@@ -31,8 +31,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const chain = chainById[chainParam]
 
   try {
-    const client = connect()
-
     const contracts = await getContracts(client, address, chain?.chainId)
 
     return success({ data: contracts }, { maxAge: 24 * 60 * 60 })

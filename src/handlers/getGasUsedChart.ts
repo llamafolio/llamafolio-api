@@ -1,4 +1,4 @@
-import { connect } from '@db/clickhouse'
+import { client } from '@db/clickhouse'
 import type { Window } from '@db/gas-price'
 import { selectGasPriceChart } from '@db/gas-price'
 import { badRequest, serverError, success } from '@handlers/response'
@@ -29,8 +29,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   if (!WINDOWS.includes(window)) {
     return badRequest('Unsupported window')
   }
-
-  const client = connect()
 
   try {
     const gasPrices = await selectGasPriceChart(client, chainId, window)
