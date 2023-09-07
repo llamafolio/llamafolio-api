@@ -1,4 +1,5 @@
 import { createClient } from '@clickhouse/client'
+import environment from '@environment'
 
 Object.defineProperties(BigInt.prototype, {
   toJSON: {
@@ -11,9 +12,9 @@ Object.defineProperties(BigInt.prototype, {
 
 // Initialize client outside of Lambda handlers to reuse TCP/IP connection
 export const client = createClient({
-  host: process.env.CLICKHOUSE_HOST || 'http://localhost:8123',
-  username: process.env.CLICKHOUSE_USER || 'default',
-  password: process.env.CLICKHOUSE_PASSWORD || '',
+  host: environment.CLICKHOUSE_HOST || 'http://localhost:8123',
+  username: environment.CLICKHOUSE_USER || 'default',
+  password: environment.CLICKHOUSE_PASSWORD || '',
   keep_alive: {
     enabled: true,
     socket_ttl: 2500,
