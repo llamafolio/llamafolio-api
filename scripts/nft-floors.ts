@@ -1,6 +1,7 @@
 #!/usr/bin/env bun
 import 'dotenv/config'
 
+import environment from '@environment'
 import { urlSearchParams } from '@lib/fetcher'
 
 main()
@@ -31,7 +32,7 @@ async function main() {
 
 // https://element.readme.io/reference/get-collection-ranking-list
 async function topCollections() {
-  const ELEMENT_API_KEY = process.env.ELEMENT_API_KEY
+  const ELEMENT_API_KEY = environment.ELEMENT_API_KEY
   if (!ELEMENT_API_KEY) throw new Error('Missing ELEMENT_API_KEY')
   const searchParams = urlSearchParams({
     chain: 'eth',

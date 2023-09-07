@@ -1,7 +1,7 @@
 import { InvokeCommand, LambdaClient, LogType } from '@aws-sdk/client-lambda'
 import environment from '@environment'
 
-const { STAGE } = environment
+const { STAGE, IS_OFFLINE } = environment
 
 type LambdaFunctionName = 'revalidateAdapterContracts' | 'updateBalances' | 'updateProtocols' | 'updateYields'
 
@@ -15,7 +15,7 @@ const lambdaFunctionNames: { [key in LambdaFunctionName]: string } = {
 }
 
 export async function invokeLambda(functionName: LambdaFunctionName, event: any, invocationType?: InvocationType) {
-  if (process.env.IS_OFFLINE) {
+  if (IS_OFFLINE) {
     return
   }
 
