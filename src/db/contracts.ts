@@ -61,6 +61,8 @@ export function toStorage(contracts: Contract[], adapterId: string, timestamp: D
       category,
       adapter_id: adapterId,
       data: JSON.stringify(data),
+      rewards: (data?.rewards || []).map((reward) => (reward as Contract).address.toLowerCase()).sort(),
+      underlyings: (data?.underlyings || []).map((underlying) => (underlying as Contract).address.toLowerCase()).sort(),
       created_at: toDateTime(timestamp),
     }
 
