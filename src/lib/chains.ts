@@ -51,8 +51,10 @@ export const chains = [
     chainId: 42161,
     name: 'Arbitrum',
     rpcUrls: [
+      LLAMANODES_API_KEY
+        ? http(`https://arbitrum.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
+        : undefined,
       http('https://rpc.ankr.com/arbitrum', { batch: { wait: 0, batchSize: 5_000 } }),
-      ARBITRUM_RPC ? http(ARBITRUM_RPC, { batch: { batchSize: 1_000, wait: 10 } }) : undefined,
       http('https://arb1.arbitrum.io/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
     ].filter(isNotFalsy),
     nativeCurrency: {
