@@ -44,29 +44,6 @@ export interface PerpFormattedBalance extends BaseFormattedBalance {
 
 type FormattedBalance = BaseFormattedBalance | PerpFormattedBalance
 
-/**
- * If there's only one underlying, replace balance by its underlying
- * @param balance
- */
-function unwrapUnderlyings(balance: FormattedBalance) {
-  if (balance.underlyings?.length === 1) {
-    const underlying = balance.underlyings[0]
-
-    return {
-      ...balance,
-      address: underlying.address,
-      symbol: underlying.symbol,
-      decimals: underlying.decimals,
-      stable: underlying.stable || balance.stable,
-      price: underlying.price,
-      amount: underlying.amount,
-      underlyings: undefined,
-    }
-  }
-
-  return balance
-}
-
 function formatBaseBalance(balance: any) {
   return {
     standard: balance.standard,
@@ -118,7 +95,7 @@ export function formatBalance(balance: any): FormattedBalance {
     rewards,
   }
 
-  return unwrapUnderlyings(formattedBalance)
+  return formattedBalance
 }
 
 export interface AdapterBalances {
