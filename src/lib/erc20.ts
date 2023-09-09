@@ -36,6 +36,20 @@ export const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  name: {
+    constant: true,
+    inputs: [],
+    name: 'name',
+    outputs: [
+      {
+        name: '',
+        type: 'string',
+      },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
   symbol: {
     constant: true,
     inputs: [],
