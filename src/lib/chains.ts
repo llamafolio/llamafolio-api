@@ -332,6 +332,7 @@ export const toDefiLlamaChain: { [key in Chain]: string } = {
   moonbeam: 'moonbeam',
   optimism: 'optimism',
   polygon: 'polygon',
+  'polygon-zkevm': 'polygonzkevm',
   base: 'base',
 }
 
