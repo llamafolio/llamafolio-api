@@ -5,8 +5,8 @@ dependencies:
     specifier: ^3.398.0
     version: 3.398.0
   '@clickhouse/client':
-    specifier: ^0.2.1
-    version: 0.2.1
+    specifier: ^0.2.2
+    version: 0.2.2
   '@llamafolio/tokens':
     specifier: ^0.1.87
     version: 0.1.87
@@ -26,8 +26,8 @@ dependencies:
     specifier: ^4.17.21
     version: 4.17.21
   viem:
-    specifier: ^1.9.0
-    version: 1.9.0(typescript@5.2.2)(zod@3.22.2)
+    specifier: ^1.10.8
+    version: 1.10.8(typescript@5.2.2)(zod@3.22.2)
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -132,8 +132,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /@adraffy/ens-normalize@1.9.0:
-    resolution: {integrity: sha512-iowxq3U30sghZotgl4s/oJRci6WPBfNO5YYgk2cIOMCHr3LeGPcsZjCEr+33Q4N+oV3OABDAtA+pyvWjbvBifQ==}
+  /@adraffy/ens-normalize@1.9.4:
+    resolution: {integrity: sha512-UK0bHA7hh9cR39V+4gl2/NnBBjoXIxkuWAPCaY4X7fbH4L/azIi7ilWOCjMUYfpJgraLUAqkRi2BqrjME8Rynw==}
     dev: false
 
   /@aws-crypto/crc32@3.0.0:
@@ -534,15 +534,15 @@ packages:
     dependencies:
       tslib: 2.6.2
 
-  /@clickhouse/client-common@0.2.1:
-    resolution: {integrity: sha512-tPcodTjrotxozNykyKQH32Lxpa0yoY9i4Sq07xaNAz3EPf51JY7XEPEhmFOmdtXTDBtHtWi0GzWOSTSJulhKuw==}
+  /@clickhouse/client-common@0.2.2:
+    resolution: {integrity: sha512-jlom9zLfcDzX9E3off93ZD3CPOkClyM213Y7TN1datkuRGKMvVyj1k0KXaMekhbRev+FTe85CqfoD5eq6qOnPg==}
     dev: false
 
-  /@clickhouse/client@0.2.1:
-    resolution: {integrity: sha512-2ECCsJLQlm9v8kZZT/6WWpBq86evAqkKJJ7gALMiS36cPNuI83/P10yiuUeB1DMyWX+H6GWVYarOx+ownRd9Xg==}
+  /@clickhouse/client@0.2.2:
+    resolution: {integrity: sha512-2faBnDS4x7ZkcOZqi3f6H967kH+nOfJLhBTWWjz0wTSBnEJBXRtePhN/ZY0NJIKc9Ga5w41Pf67mQgm6Dm/1/w==}
     engines: {node: '>=16'}
     dependencies:
-      '@clickhouse/client-common': 0.2.1
+      '@clickhouse/client-common': 0.2.2
     dev: false
 
   /@esbuild-kit/cjs-loader@2.4.2:
@@ -1290,24 +1290,14 @@ packages:
     engines: {node: '>=18', npm: '------>PLEASE USE PNPM<------', pnpm: '>=8.0.0', yarn: '------>PLEASE USE PNPM<------'}
     dev: false
 
-  /@noble/curves@1.0.0:
-    resolution: {integrity: sha512-2upgEu0iLiDVDZkNLeFV2+ht0BAVgQnEmCk6JsOch9Rp8xfkMCbvbAZlA2pBHQc73dbl+vFOXfqkf4uemdn0bw==}
+  /@noble/curves@1.2.0:
+    resolution: {integrity: sha512-oYclrNgRaM9SsBUBVbb8M6DTV7ZHRTKugureoYEncY5c65HOmRzvSiTE3y5CYaPYJA/GVkrhXEoF0M3Ya9PMnw==}
     dependencies:
-      '@noble/hashes': 1.3.0
+      '@noble/hashes': 1.3.2
     dev: false
 
-  /@noble/curves@1.1.0:
-    resolution: {integrity: sha512-091oBExgENk/kGj3AZmtBDMpxQPDtxQABR2B9lb1JbVTs6ytdzZNwvhxQ4MWasRNEzlbEH8jCWFCwhF/Obj5AA==}
-    dependencies:
-      '@noble/hashes': 1.3.1
-    dev: false
-
-  /@noble/hashes@1.3.0:
-    resolution: {integrity: sha512-ilHEACi9DwqJB0pw7kv+Apvh50jiiSyR/cQ3y4W7lOR5mhvn/50FLUfsnfJz0BDZtl/RR16kXvptiv6q1msYZg==}
-    dev: false
-
-  /@noble/hashes@1.3.1:
-    resolution: {integrity: sha512-EbqwksQwz9xDRGfDST86whPBgM65E0OH/pCgqW0GBVzO22bNE+NuIbeTb714+IfSjU3aRk47EUvXIb5bTsenKA==}
+  /@noble/hashes@1.3.2:
+    resolution: {integrity: sha512-MVC8EAQp7MvEcm30KWENFjgR+Mkmf+D189XJTkFIlwohU5hcBbn1ZkKq7KVTi2Hme3PMGF390DaL52beVrIihQ==}
     engines: {node: '>= 16'}
     dev: false
 
@@ -1348,18 +1338,18 @@ packages:
     resolution: {integrity: sha512-sSCrnIdaUZQHhBxZThMuk7Wm1TWzMD3uJNdGgx3JS23xSqevu0tAOsg8k66nL3R2NwQe65AI9GgqpPOgZys/eA==}
     dev: false
 
-  /@scure/bip32@1.3.0:
-    resolution: {integrity: sha512-bcKpo1oj54hGholplGLpqPHRbIsnbixFtc06nwuNM5/dwSXOq/AAYoIBRsBmnZJSdfeNW5rnff7NTAz3ZCqR9Q==}
+  /@scure/bip32@1.3.2:
+    resolution: {integrity: sha512-N1ZhksgwD3OBlwTv3R6KFEcPojl/W4ElJOeCZdi+vuI5QmTFwLq3OFf2zd2ROpKvxFdgZ6hUpb0dx9bVNEwYCA==}
     dependencies:
-      '@noble/curves': 1.0.0
-      '@noble/hashes': 1.3.0
+      '@noble/curves': 1.2.0
+      '@noble/hashes': 1.3.2
       '@scure/base': 1.1.2
     dev: false
 
-  /@scure/bip39@1.2.0:
-    resolution: {integrity: sha512-SX/uKq52cuxm4YFXWFaVByaSHJh2w3BnokVSeUJVCv6K7WulT9u2BuNRBhuFl8vAuYnzx9bEu9WgpcNYTrYieg==}
+  /@scure/bip39@1.2.1:
+    resolution: {integrity: sha512-Z3/Fsz1yr904dduJD0NpiyRHhRYHdcnyh73FZWiV+/qhWi83wNJ3NWolYqCEN+ZWsUz2TWwajJggcRE9r1zUYg==}
     dependencies:
-      '@noble/hashes': 1.3.0
+      '@noble/hashes': 1.3.2
       '@scure/base': 1.1.2
     dev: false
 
@@ -2083,21 +2073,6 @@ packages:
       pretty-format: 29.6.3
     dev: true
 
-  /abitype@0.9.3(typescript@5.2.2)(zod@3.22.2):
-    resolution: {integrity: sha512-dz4qCQLurx97FQhnb/EIYTk/ldQ+oafEDUqC0VVIeQS1Q48/YWt/9YNfMmp9SLFqN41ktxny3c8aYxHjmFIB/w==}
-    peerDependencies:
-      typescript: '>=5.0.4'
-      zod: ^3 >=3.19.1
-    peerDependenciesMeta:
-      typescript:
-        optional: true
-      zod:
-        optional: true
-    dependencies:
-      typescript: 5.2.2
-      zod: 3.22.2
-    dev: false
-
   /abitype@0.9.8(typescript@5.2.2)(zod@3.22.2):
     resolution: {integrity: sha512-puLifILdm+8sjyss4S+fsUN09obiT1g2YW6CtcQF+QDzxR0euzgEB29MZujC6zMk2a6SVmtttq1fc6+YFA7WYQ==}
     peerDependencies:
@@ -2111,7 +2086,6 @@ packages:
     dependencies:
       typescript: 5.2.2
       zod: 3.22.2
-    dev: true
 
   /abort-controller@3.0.0:
     resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
@@ -4451,12 +4425,12 @@ packages:
       ws: 7.5.9
     dev: true
 
-  /isomorphic-ws@5.0.0(ws@8.12.0):
+  /isomorphic-ws@5.0.0(ws@8.13.0):
     resolution: {integrity: sha512-muId7Zzn9ywDsyXgTIafTry2sV3nySZeUDe6YedVd1Hvuuep5AsIlqK+XefWpYTyJG5e503F2xIuT2lcU6rCSw==}
     peerDependencies:
       ws: '*'
     dependencies:
-      ws: 8.12.0
+      ws: 8.13.0
     dev: false
 
   /java-invoke-local@0.0.6:
@@ -6532,24 +6506,24 @@ packages:
       - supports-color
     dev: true
 
-  /viem@1.9.0(typescript@5.2.2)(zod@3.22.2):
-    resolution: {integrity: sha512-YSRmS6ck2pVQZLDTwpNb04c8dN74uxMgDlj2jAixbCokP1e1th2ly8j+EQVRdwq0mFAW4Pdmx8/KNIICtkQLuA==}
+  /viem@1.10.8(typescript@5.2.2)(zod@3.22.2):
+    resolution: {integrity: sha512-/kVDjc9j1OVoDsxV0E1iw1ehPuWPXv5x/9Yc1H0wKky6ACWRoKsURDeLi0Xwtli7vmFcJne+MMPhA96zVu5iIg==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@adraffy/ens-normalize': 1.9.0
-      '@noble/curves': 1.1.0
-      '@noble/hashes': 1.3.0
-      '@scure/bip32': 1.3.0
-      '@scure/bip39': 1.2.0
+      '@adraffy/ens-normalize': 1.9.4
+      '@noble/curves': 1.2.0
+      '@noble/hashes': 1.3.2
+      '@scure/bip32': 1.3.2
+      '@scure/bip39': 1.2.1
       '@types/ws': 8.5.5
-      abitype: 0.9.3(typescript@5.2.2)(zod@3.22.2)
-      isomorphic-ws: 5.0.0(ws@8.12.0)
+      abitype: 0.9.8(typescript@5.2.2)(zod@3.22.2)
+      isomorphic-ws: 5.0.0(ws@8.13.0)
       typescript: 5.2.2
-      ws: 8.12.0
+      ws: 8.13.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -6845,19 +6819,6 @@ packages:
         optional: true
     dev: true
 
-  /ws@8.12.0:
-    resolution: {integrity: sha512-kU62emKIdKVeEIOIKVegvqpXMSTAMLJozpHZaJNDYqBjzlSYXQGviYwN1osDLJ9av68qHd4a2oSjd7yD4pacig==}
-    engines: {node: '>=10.0.0'}
-    peerDependencies:
-      bufferutil: ^4.0.1
-      utf-8-validate: '>=5.0.2'
-    peerDependenciesMeta:
-      bufferutil:
-        optional: true
-      utf-8-validate:
-        optional: true
-    dev: false
-
   /ws@8.13.0:
     resolution: {integrity: sha512-x9vcZYTrFPC7aSIbj7sRCYo7L/Xb8Iy+pW0ng0wt2vCJv7M9HOMy0UoN3rr+IFC7hb7vXoqS+P9ktyLLLhO+LA==}
     engines: {node: '>=10.0.0'}
@@ -6869,7 +6830,6 @@ packages:
         optional: true
       utf-8-validate:
         optional: true
-    dev: true
 
   /xml2js@0.5.0:
     resolution: {integrity: sha512-drPFnkQJik/O+uPKpqSgr22mpuFHqKdbS835iAQrUC73L2F5WkboIRd63ai/2Yg6I1jzifPFKH2NTK+cfglkIA==}
