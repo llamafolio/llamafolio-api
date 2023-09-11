@@ -73,12 +73,19 @@ const vault: Contract = {
   address: '0xba12222222228d8ba445958a75a0704d566bf2c8',
 }
 
-export async function getStakeDaoCurveBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
+export async function getStakeDaoCurveBalances(
+  ctx: BalancesContext,
+  pools: Contract[],
+): Promise<Balance[] | undefined> {
   const poolsBalances = await getPoolsBalances(
     ctx,
     pools.map((pool) => ({ ...pool, lpToken: pool.token })),
     metaRegistry,
   )
+
+  if (!poolsBalances) {
+    return
+  }
 
   const pendingRewardsRes = await multicall({
     ctx,

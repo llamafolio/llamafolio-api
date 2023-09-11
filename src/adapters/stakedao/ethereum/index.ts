@@ -53,7 +53,7 @@ const vesters: Contract[] = [
 
 const gaugeInfos: Contract = {
   chain: 'ethereum',
-  address: '0x2fFB7B215Ae7F088eC2530C7aa8E1B24E398f26a',
+  address: '0xC128468b7Ce63eA702C1f104D55A2566b13D3ABD',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
