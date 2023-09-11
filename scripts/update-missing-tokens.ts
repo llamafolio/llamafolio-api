@@ -28,6 +28,8 @@ async function main() {
 
   const ctx: BaseContext = { chain: chain.id, adapterId: '' }
 
+  let prevTokensKey = ''
+
   try {
     for (;;) {
       const hrstart = process.hrtime()
@@ -54,10 +56,17 @@ async function main() {
 
       console.log(`Found ${res.data.length} missing tokens`)
 
-      if (res.data.length === 0) {
+      const currentTokensKey = res.data
+        .map((row) => row.address.toLowerCase())
+        .sort()
+        .join('##')
+
+      if (res.data.length === 0 || (prevTokensKey && currentTokensKey === prevTokensKey)) {
         console.log('Done')
         return process.exit(0)
       }
+
+      prevTokensKey = currentTokensKey
 
       // Decode
       const calls: Call<typeof abi.symbol>[] = res.data.map((row) => ({ target: row.address })).filter(isNotNullish)
@@ -75,6 +84,10 @@ async function main() {
         const nameRes = names[i]
         const decimalsRes = decimals[i]
         const symbolRes = symbols[i]
+
+        if (decimalsRes.success && decimalsRes.output > 128) {
+          continue
+        }
 
         tokens.push({
           chain: chain.chainId,
