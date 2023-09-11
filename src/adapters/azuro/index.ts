@@ -1,8 +1,8 @@
 import type { Adapter } from '@lib/adapter'
 
-import * as polygon from './polygon'
-import * as gnosis from './gnosis'
 import * as arbitrum from './arbitrum'
+import * as gnosis from './gnosis'
+import * as polygon from './polygon'
 
 const adapter: Adapter = {
   id: 'azuro',
