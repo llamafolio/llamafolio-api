@@ -32,11 +32,11 @@ export function fromStorage(labelsStorage: LabelStorage[]) {
   return labels
 }
 
-export async function selectLabelsByAddresses(client: ClickHouseClient, addresses: string[]) {
+export async function selectLabelsByAddress(client: ClickHouseClient, address: string) {
   const queryRes = await client.query({
-    query: 'SELECT * FROM lf.labels WHERE "address" IN {addresses: Array(String)};',
+    query: 'SELECT * FROM lf.labels WHERE "address" = {address: String};',
     query_params: {
-      addresses,
+      address,
     },
   })
 
