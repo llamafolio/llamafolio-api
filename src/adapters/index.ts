@@ -113,7 +113,9 @@ import llamapay from '@adapters/llamapay'
 import lodestarFinance from '@adapters/lodestar-finance'
 import looksrare from '@adapters/looksrare'
 import lusdChickenbonds from '@adapters/lusd-chickenbonds'
+import lybraFinance from '@adapters/lybra-finance'
 import lybraV1 from '@adapters/lybra-v1'
+import lybraV2 from '@adapters/lybra-v2'
 import lyra from '@adapters/lyra'
 import magnateFinance from '@adapters/magnate-finance'
 import magpie from '@adapters/magpie'
@@ -364,6 +366,7 @@ export const adapters: Adapter[] = [
   looksrare,
   lusdChickenbonds,
   lybraV1,
+  lybraV2,
   lyra,
   magnateFinance,
   magpie,
