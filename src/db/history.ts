@@ -153,5 +153,3 @@ export async function selectHistory(
 
   return res.data
 }
-
-// 2023-09-10 00:00:00
