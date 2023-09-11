@@ -129,7 +129,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
         gasPrice: tx.gas_price,
         inputFunctionName: tx.method_name,
         success: tx.status === 'success',
-        adapterId: tx.adapter_id,
+        adapterId: tx.adapter_ids?.[0],
         value: tx.value,
         tokenTransfers: tx.token_transfers.map(
           ([from, to, address, _log_index, _type, value, _id, decimals, symbol, name]) => ({

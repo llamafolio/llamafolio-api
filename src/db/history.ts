@@ -15,7 +15,7 @@ export interface IHistoryTransaction {
   status: string
   value: string
   timestamp: string
-  adapter_id?: string
+  adapter_ids?: string[]
   method_name?: string
   token_transfers: [
     string,
@@ -54,6 +54,7 @@ export async function selectHistory(
           "timestamp" <= {toTimestamp: DateTime} AND
           "timestamp" >= {fromTimestamp: DateTime}
         ORDER BY "timestamp" DESC
+        LIMIT {limit: UInt8} BY "chain", "hash"
         LIMIT {limit: UInt8}
         OFFSET {offset: UInt16}
         SETTINGS optimize_read_in_order=1
@@ -70,14 +71,25 @@ export async function selectHistory(
           t."gas_price" AS "gas_price",
           t."status" AS "status",
           t."value" AS "value",
-          t."timestamp" AS "timestamp",
-          ac."adapter_id" AS "adapter_id"
+          t."timestamp" AS "timestamp"
         FROM evm_indexer.transactions AS "t"
-        LEFT JOIN lf.adapters_contracts AS "ac" ON (t."chain", t."to") = (ac."chain", ac."address")
         WHERE
           t."timestamp" <= {toTimestamp: DateTime} AND
           t."timestamp" >= {fromTimestamp: DateTime} AND
           (t."chain", t."hash") IN "sub_history"
+      ),
+      "sub_adapters_contracts" AS (
+        SELECT
+          "chain",
+          "address",
+          groupArray("adapter_id") AS "adapter_ids"
+        FROM lf.adapters_contracts
+        WHERE
+          "adapter_id" <> 'wallet' AND
+          ("chain", "address") IN (
+            SELECT "chain", "to" FROM "sub_transactions"
+          )
+        GROUP BY "chain", "address"
       ),
       "sub_token_transfers" AS (
         SELECT
@@ -113,11 +125,12 @@ export async function selectHistory(
         t."status" AS "status",
         t."value" AS "value",
         t."timestamp" AS "timestamp",
-        t."adapter_id" AS "adapter_id",
+        ac."adapter_ids" AS "adapter_ids",
         m."name" AS "method_name",
         tt."token_transfers" AS "token_transfers",
         "total"
       FROM "sub_transactions" AS "t"
+      LEFT JOIN sub_adapters_contracts AS "ac" ON (t."chain", t."to") = (ac."chain", ac."address")
       LEFT JOIN "sub_token_transfers" AS "tt" ON (t."chain", t."hash") = (tt."chain", tt."hash")
       LEFT JOIN lf.methods AS "m" ON m."selector" = t."selector"
       ORDER BY "timestamp" DESC;
