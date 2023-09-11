@@ -222,6 +222,7 @@ import tornadoCash from '@adapters/tornado-cash'
 import tprotocol from '@adapters/tprotocol'
 import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
+import trufinProtocol from '@adapters/trufin-protocol'
 import trustswap from '@adapters/trustswap'
 import uniswapV2 from '@adapters/uniswap-v2'
 import uniswapV3 from '@adapters/uniswap-v3'
@@ -471,6 +472,7 @@ export const adapters: Adapter[] = [
   tprotocol,
   traderjoe,
   truefi,
+  trufinProtocol,
   trustswap,
   uniswapV2,
   uniswapV3,
