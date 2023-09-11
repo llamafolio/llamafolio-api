@@ -134,7 +134,7 @@ export const chains = [
       name: 'Binance Coin',
       symbol: 'BNB',
     },
-    indexed: false, // syncing
+    indexed: true,
   },
   {
     id: 'celo',

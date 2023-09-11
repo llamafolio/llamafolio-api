@@ -2,7 +2,7 @@ import type { Chain } from '@lib/chains'
 import type { Chain as _Chain } from 'viem/chains'
 import {
   arbitrum,
-  // arbitrumNova,
+  arbitrumNova,
   avalanche,
   base,
   bsc,
@@ -54,7 +54,7 @@ const gnosis = {
 
 export const viemChainById: { [key in Chain]: _Chain } = {
   arbitrum,
-  // 'arbitrum-nova': arbitrumNova,
+  'arbitrum-nova': arbitrumNova,
   avalanche,
   bsc,
   base,
