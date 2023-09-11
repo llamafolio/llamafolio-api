@@ -37,6 +37,8 @@ function getGammaPairsBalances(ctx: BalancesContext, pairs: Pair[]) {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  console.log(contracts)
+
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (ctx, pools) => getGammaPairsBalances(ctx, pools as Pair[]),
   })

@@ -5,11 +5,8 @@ import { getGammaFarmBalances } from '../common/balance'
 import { getPoolContractsFromAPI } from '../common/contract'
 
 const API_URLs = [
-  'https://wire2.gamma.xyz/arbitrum/hypervisors/allData',
-  'https://wire2.gamma.xyz/zyberswap/arbitrum/hypervisors/allData',
-  'https://wire2.gamma.xyz/sushi/arbitrum/hypervisors/allData',
-  'https://wire2.gamma.xyz/camelot/arbitrum/hypervisors/allData',
-  'https://wire2.gamma.xyz/ramses/arbitrum/hypervisors/allData',
+  'https://wire2.gamma.xyz/beamswap/moonbeam/hypervisors/allData',
+  'https://wire2.gamma.xyz/stellaswap/moonbeam/hypervisors/allData',
 ]
 
 export const getContracts = async (ctx: BaseContext) => {

@@ -1,9 +1,12 @@
 import type { Adapter } from '@lib/adapter'
 
 import * as arbitrum from './arbitrum'
+import * as avalanche from './avalanche'
+import * as base from './base'
 import * as bsc from './bsc'
 import * as celo from './celo'
 import * as ethereum from './ethereum'
+import * as moonbeam from './moonbeam'
 import * as optimism from './optimism'
 import * as polygon from './polygon'
 
@@ -15,6 +18,9 @@ const adapter: Adapter = {
   ethereum,
   bsc,
   celo,
+  base,
+  avalanche,
+  moonbeam,
 }
 
 // TODO: Find logic behind rewards
