@@ -24,6 +24,7 @@ export const chainsNames = [
   'optimism',
   'polygon',
   'polygon-zkevm',
+  'zkSync-era',
 ] as const
 
 export type Chain = (typeof chainsNames)[number]
@@ -306,6 +307,23 @@ export const chains = [
     },
     indexed: true,
   },
+  {
+    id: 'zkSync-era',
+    chainId: 324,
+    name: 'zkSync-Era',
+    rpcUrls: [
+      http('https://mainnet.era.zksync.io', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://zksync-era.blockpi.network/v1/rpc/public', { batch: { wait: 0, batchSize: 1_000 } }),
+      http('https://zksync.drpc.org', { batch: { wait: 0, batchSize: 1_000 } }),
+    ],
+    nativeCurrency: {
+      address: ADDRESS_ZERO,
+      decimals: 18,
+      name: 'Ether',
+      symbol: 'ETH',
+    },
+    indexed: true,
+  },
 ] satisfies IChainInfo[]
 
 export const chainById: { [key: string]: IChainInfo } = {}
@@ -334,6 +352,7 @@ export const toDefiLlamaChain: { [key in Chain]: string } = {
   polygon: 'polygon',
   'polygon-zkevm': 'polygonzkevm',
   base: 'base',
+  'zkSync-era': 'era',
 }
 
 export const fromDefiLlamaChain: { [key: string]: Chain } = {
@@ -347,5 +366,6 @@ export const fromDefiLlamaChain: { [key: string]: Chain } = {
   Moonbeam: 'moonbeam',
   Optimism: 'optimism',
   Polygon: 'polygon',
-  base: 'base',
+  Base: 'base',
+  zkSyncEra: 'zkSync-era',
 }

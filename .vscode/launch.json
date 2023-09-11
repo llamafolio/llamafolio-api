@@ -61,7 +61,8 @@
         "moonbeam",
         "optimism",
         "polygon",
-        "polygon-zkevm"
+        "polygon-zkevm",
+        "zkSync-era"
       ],
       "default": "ethereum"
     },
