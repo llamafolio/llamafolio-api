@@ -24,6 +24,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  getReservedLBRForVesting: {
+    inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
+    name: 'getReservedLBRForVesting',
+    outputs: [{ internalType: 'uint256', name: 'amount', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 const LBR: Token = {
@@ -34,9 +41,9 @@ const LBR: Token = {
 }
 
 export async function getLybraVestBalance(ctx: BalancesContext, vester: Contract): Promise<Balance> {
-  const [userBalance, userAutoCompoundEarned, userLockTime] = await Promise.all([
+  const [userBalance, userReservedBalance, userLockTime] = await Promise.all([
     call({ ctx, target: vester.address, params: [ctx.address], abi: abi.getClaimAbleLBR }),
-    call({ ctx, target: vester.address, params: [ctx.address], abi: abi.earned }),
+    call({ ctx, target: vester.address, params: [ctx.address], abi: abi.getReservedLBRForVesting }),
     call({ ctx, target: vester.address, params: [ctx.address], abi: abi.time2fullRedemption }),
   ])
 
@@ -45,7 +52,7 @@ export async function getLybraVestBalance(ctx: BalancesContext, vester: Contract
 
   return {
     ...vester,
-    amount: userBalance + userAutoCompoundEarned,
+    amount: userBalance + userReservedBalance,
     underlyings: [LBR],
     claimable: now > unlockAt ? userBalance : 0n,
     unlockAt,
