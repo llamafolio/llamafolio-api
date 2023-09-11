@@ -23,6 +23,7 @@ import asymetrixProtocol from '@adapters/asymetrix-protocol'
 import atlantisLoans from '@adapters/atlantis-loans'
 import atlasUsv from '@adapters/atlas-usv'
 import aura from '@adapters/aura'
+import azuro from '@adapters/azuro'
 import babylonFinance from '@adapters/babylon-finance'
 import badgerDao from '@adapters/badger-dao'
 import balancer from '@adapters/balancer'
@@ -271,6 +272,7 @@ export const adapters: Adapter[] = [
   atlantisLoans,
   atlasUsv,
   aura,
+  azuro,
   babylonFinance,
   badgerDao,
   balancer,
