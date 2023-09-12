@@ -24,7 +24,7 @@ export const chainsNames = [
   'optimism',
   'polygon',
   'polygon-zkevm',
-  'zkSync-era',
+  'zksync-era',
 ] as const
 
 export type Chain = (typeof chainsNames)[number]
@@ -308,7 +308,7 @@ export const chains = [
     indexed: true,
   },
   {
-    id: 'zkSync-era',
+    id: 'zksync-era',
     chainId: 324,
     name: 'zkSync-Era',
     rpcUrls: [
@@ -340,7 +340,9 @@ for (const chain of chains) {
 
 export const toDefiLlamaChain: { [key in Chain]: string } = {
   arbitrum: 'arbitrum',
+  'arbitrum-nova': 'arbitrum',
   avalanche: 'avax',
+  base: 'base',
   bsc: 'bsc',
   celo: 'celo',
   ethereum: 'ethereum',
@@ -350,15 +352,15 @@ export const toDefiLlamaChain: { [key in Chain]: string } = {
   moonbeam: 'moonbeam',
   optimism: 'optimism',
   polygon: 'polygon',
-  'polygon-zkevm': 'polygonzkevm',
-  base: 'base',
-  'zkSync-era': 'era',
+  'polygon-zkevm': 'polygon zkevm',
+  'zksync-era': 'zksync era',
 }
 
 export const fromDefiLlamaChain: { [key: string]: Chain } = {
   Arbitrum: 'arbitrum',
   Avalanche: 'avalanche',
   BSC: 'bsc',
+  Base: 'base',
   Celo: 'celo',
   Ethereum: 'ethereum',
   Fantom: 'fantom',
@@ -366,6 +368,6 @@ export const fromDefiLlamaChain: { [key: string]: Chain } = {
   Moonbeam: 'moonbeam',
   Optimism: 'optimism',
   Polygon: 'polygon',
-  Base: 'base',
-  zkSyncEra: 'zkSync-era',
+  'Polygon zkEVM': 'polygon-zkevm',
+  'zkSync Era': 'zksync-era',
 }

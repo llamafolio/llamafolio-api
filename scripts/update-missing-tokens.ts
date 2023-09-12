@@ -45,7 +45,7 @@ async function main() {
                 SELECT "address" FROM evm_indexer.tokens
                 WHERE "chain" = {chainId: UInt64}
             )
-        LIMIT 1000;
+        LIMIT 100;
       `,
         query_params: { chainId: chain.chainId },
       })
