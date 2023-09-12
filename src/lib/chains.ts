@@ -340,7 +340,7 @@ for (const chain of chains) {
 
 export const toDefiLlamaChain: { [key in Chain]: string } = {
   arbitrum: 'arbitrum',
-  'arbitrum-nova': 'arbitrum',
+  'arbitrum-nova': 'arbitrum nova',
   avalanche: 'avax',
   base: 'base',
   bsc: 'bsc',
@@ -358,6 +358,7 @@ export const toDefiLlamaChain: { [key in Chain]: string } = {
 
 export const fromDefiLlamaChain: { [key: string]: Chain } = {
   Arbitrum: 'arbitrum',
+  'Arbitrum Nova': 'arbitrum-nova',
   Avalanche: 'avalanche',
   BSC: 'bsc',
   Base: 'base',
