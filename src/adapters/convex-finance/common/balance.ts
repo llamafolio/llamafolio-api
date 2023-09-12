@@ -58,7 +58,7 @@ export async function getConvexAltChainsBalances(ctx: BalancesContext, pools: Co
   const poolBalances: Balance[] = []
 
   const calls: Call<typeof erc20Abi.balanceOf>[] = pools.flatMap((pool) =>
-    pool.crvRewards.map((crvReward: `0x${string}`) => ({ target: crvReward, params: [ctx.address] })),
+    pool.crvRewards.map(() => ({ target: pool.gauge, params: [ctx.address] })),
   )
 
   const [poolBalancesOfRes, pendingRewardsOfRes] = await Promise.all([

@@ -116,14 +116,15 @@ export async function getPoolsContracts(ctx: BaseContext, contract: Contract): P
       continue
     }
 
-    const [address, token, gauge, crvRewards] = poolInfoRes.output
+    const [address, _token, gauge, crvRewards] = poolInfoRes.output
     pools.push({
       chain: ctx.chain,
       address,
       gauge,
-      token,
+      // token,
       lpToken: address,
       crvRewards,
+      pid: poolInfoRes.input.params[0],
       rewards: [CRV, CVX],
     })
   }
@@ -157,7 +158,7 @@ export async function getPoolsContracts(ctx: BaseContext, contract: Contract): P
       continue
     }
 
-    pool.underlyings = underlyingRes.output
+    ;(pool.underlyings as any) = underlyingRes.output
       .map((address) => address.toLowerCase())
       // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
       .filter((address) => address !== ADDRESS_ZERO)
