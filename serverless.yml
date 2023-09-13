@@ -127,14 +127,6 @@ functions:
           method: get
           path: /contracts/{chain}/{address}
 
-  getContracts:
-    handler: src/handlers/getContracts.handler
-    description: Get contracts
-    events:
-      - httpApi:
-          method: get
-          path: /contracts/{address}
-
   getGasUsedChart:
     handler: src/handlers/getGasUsedChart.handler
     description: Get gas used chart

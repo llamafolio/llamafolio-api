@@ -230,63 +230,6 @@ export async function getContract(client: ClickHouseClient, chainId: number, add
   }
 }
 
-export async function getContracts(client: ClickHouseClient, address: string, chainId?: number) {
-  const queryRes = await client.query({
-    query: `
-      WITH
-      a AS (
-        SELECT
-          "chain",
-          "hash",
-          "timestamp",
-          "from",
-          "block_number",
-          "contract_created"
-        FROM evm_indexer.transactions
-        WHERE ("chain", "timestamp", "hash") IN (
-          SELECT
-            "chain",
-            "timestamp",
-            "hash"
-          FROM evm_indexer.transactions
-          WHERE "contract_created" = {address: String}
-          ${chainId != null ? ' AND "chain" = {chain: UInt8} ' : ''}
-        )
-      ),
-      b AS (
-        SELECT
-          "address",
-          "adapter_id"
-        FROM lf.adapters_contracts FINAL
-        WHERE "address" = {address: String}
-        ${chainId != null ? ' AND "chain" = {chain: UInt8} ' : ''}
-      )
-      SELECT
-        a.*, b.adapter_id
-      FROM a
-      LEFT JOIN b
-      ON a."contract_created" = b."address";
-    `,
-    query_params: {
-      address: address.toLowerCase(),
-      chainId,
-    },
-  })
-
-  const res = (await queryRes.json()) as {
-    data: { chain: string; hash: string; timestamp: string; from: string; block_number: string; adapter_id: string }[]
-  }
-
-  return res.data.map((row) => ({
-    block: parseInt(row.block_number),
-    chain: chainByChainId[parseInt(row.chain)]?.id,
-    contract: address,
-    creator: row.from,
-    hash: row.hash,
-    protocol: row.adapter_id ?? undefined,
-  }))
-}
-
 export function deleteContractsByAdapterId(client: ClickHouseClient, adapterId: string) {
   return client.command({
     query: 'DELETE FROM lf.adapters_contracts WHERE adapter_id = {adapterId: String};',
