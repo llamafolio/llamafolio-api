@@ -1,7 +1,6 @@
 import { getUnderlyingsPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
-import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -57,46 +56,40 @@ const abi = {
 export async function getConvexAltChainsBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const poolBalances: Balance[] = []
 
-  const calls: Call<typeof erc20Abi.balanceOf>[] = pools.flatMap((pool) =>
-    pool.crvRewards.map(() => ({ target: pool.gauge, params: [ctx.address] })),
-  )
-
   const [poolBalancesOfRes, pendingRewardsOfRes] = await Promise.all([
-    multicall({ ctx, calls, abi: erc20Abi.balanceOf }),
-    multicall({ ctx, calls, abi: abi.earned }),
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: pool.crvRewards, params: [ctx.address] }) as const),
+      abi: erc20Abi.balanceOf,
+    }),
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: pool.crvRewards, params: [ctx.address] }) as const),
+      abi: abi.earned,
+    }),
   ])
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-
+  for (const [index, pool] of pools.entries()) {
     const underlyings = pool.underlyings as Contract[]
-    const rewards = pool.rewards as Balance[]
-    const crvRewards = pool.crvRewards
+    const rewards = pool.rewards as Contract[]
+    const poolBalanceOfRes = poolBalancesOfRes[index]
+    const pendingRewardOfRes = pendingRewardsOfRes[index]
 
-    if (!underlyings || !rewards) {
+    if (!underlyings || !rewards || !poolBalanceOfRes.success || !pendingRewardOfRes.success) {
       continue
     }
 
-    crvRewards.forEach((crvReward: `0x${string}`) => {
-      const poolBalanceOfRes = poolBalancesOfRes.find((res) => res.input.target === crvReward)
-      const pendingRewardOfRes = pendingRewardsOfRes.find((res) => res.input.target === crvReward)
+    const fmtRewards = rewards.map((reward, rewardIdx) => ({
+      ...reward,
+      amount: pendingRewardOfRes.output[rewardIdx].amount,
+    }))
 
-      if (!poolBalanceOfRes || !pendingRewardOfRes || !poolBalanceOfRes.success || !pendingRewardOfRes.success) {
-        return
-      }
-
-      const fmtRewards = rewards.map((reward, rewardIdx) => ({
-        ...reward,
-        amount: pendingRewardOfRes.output[rewardIdx].amount,
-      }))
-
-      poolBalances.push({
-        ...pool,
-        amount: poolBalanceOfRes.output,
-        underlyings,
-        rewards: fmtRewards,
-        category: 'stake',
-      })
+    poolBalances.push({
+      ...pool,
+      amount: poolBalanceOfRes.output,
+      underlyings,
+      rewards: fmtRewards,
+      category: 'stake',
     })
   }
 
