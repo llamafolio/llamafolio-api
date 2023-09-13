@@ -40,12 +40,11 @@ export async function getConvexGaugesBalances(
   ctx: BalancesContext,
   pools: Contract[],
   registry: Contract,
-  staker: 'gauge' | 'crvRewards',
 ): Promise<Balance[] | undefined> {
   const commonRewardsPools: Balance[] = []
   const extraRewardsPools: Balance[] = []
 
-  pools = pools.map((pool) => ({ ...pool, address: pool[staker] }))
+  pools = pools.map((pool) => ({ ...pool, address: pool.crvRewards }))
 
   const gaugesBalancesRes = await getPoolsBalances(ctx, pools, registry)
 
