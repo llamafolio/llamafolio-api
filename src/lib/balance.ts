@@ -10,6 +10,7 @@ import type { Category } from '@lib/category'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getBalancesOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { isPricedBalance } from '@lib/price'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -147,13 +148,6 @@ export function sanitizeBalances<T extends Balance>(balances: T[]) {
   return sanitizedBalances
 }
 
-export function sanitizePricedBalances<T extends PricedBalance>(balances: T[]) {
-  return balances.filter(
-    (balance) =>
-      balance.balanceUSD != null && balance.balanceUSD >= MIN_BALANCE_USD && balance.balanceUSD <= MAX_BALANCE_USD,
-  )
-}
-
 export async function resolveBalances<C extends GetContractsHandler>(
   ctx: BalancesContext,
   contracts: ExcludeRawContract<Partial<Awaited<ReturnType<C>>['contracts']>>,
@@ -189,31 +183,48 @@ export async function resolveBalances<C extends GetContractsHandler>(
   return balances.flat(2).filter(isNotNullish)
 }
 
-export function isBalanceUSDGtZero(balance: Balance | PricedBalance) {
-  if ((balance as PricedBalance).price != null && ((balance as PricedBalance).balanceUSD || 0) > 1e-5) {
-    return true
-  }
+export function sanitizePricedBalances<T extends PricedBalance>(balances: T[]) {
+  function isPricedBalanceInRange(balance: Balance | PricedBalance) {
+    if (
+      isPricedBalance(balance) &&
+      balance.balanceUSD != null &&
+      balance.balanceUSD >= MIN_BALANCE_USD &&
+      balance.balanceUSD <= MAX_BALANCE_USD
+    ) {
+      return true
+    }
 
-  if (balance.underlyings) {
-    for (const underlying of balance.underlyings) {
-      if (((underlying as PricedBalance).price != null && (underlying as PricedBalance).balanceUSD) || 0 > 1e-5) {
-        return true
+    if (balance.underlyings) {
+      for (const underlying of balance.underlyings) {
+        if (
+          isPricedBalance(underlying) &&
+          underlying.balanceUSD != null &&
+          underlying.balanceUSD >= MIN_BALANCE_USD &&
+          underlying.balanceUSD <= MAX_BALANCE_USD
+        ) {
+          return true
+        }
       }
     }
-  }
 
-  if (balance.rewards) {
-    for (const reward of balance.rewards) {
-      if (
-        (reward as PricedBalance).price != null &&
-        (((reward as PricedBalance).claimableUSD || 0) > 0 || ((reward as PricedBalance).balanceUSD || 0) > 1e-5)
-      ) {
-        return true
+    if (balance.rewards) {
+      for (const reward of balance.rewards) {
+        if (
+          isPricedBalance(reward) &&
+          ((reward.claimableUSD != null &&
+            reward.claimableUSD >= MIN_BALANCE_USD &&
+            reward.claimableUSD <= MAX_BALANCE_USD) ||
+            (reward.balanceUSD != null && reward.balanceUSD >= MIN_BALANCE_USD && reward.balanceUSD <= MAX_BALANCE_USD))
+        ) {
+          return true
+        }
       }
     }
+
+    return false
   }
 
-  return false
+  return balances.filter(isPricedBalanceInRange)
 }
 
 export interface SortBalance {

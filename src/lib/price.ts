@@ -157,3 +157,7 @@ export async function getPricedBalances(balances: Balance[]): Promise<(Balance |
 
   return pricedBalances
 }
+
+export function isPricedBalance(balance: Balance | PricedBalance): balance is PricedBalance {
+  return (balance as PricedBalance).price != null
+}

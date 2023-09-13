@@ -2,7 +2,6 @@
   "name": "llamafolio-api",
   "version": "0.0.1",
   "description": "LlamaFolio API",
-  "type": "module",
   "scripts": {
     "adapter": "tsx scripts/run-adapter.ts",
     "build": "tsx scripts/build-adapters.ts",

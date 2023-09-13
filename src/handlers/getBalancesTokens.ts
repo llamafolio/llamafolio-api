@@ -7,7 +7,7 @@ import { getContractsInteractions, groupContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy } from '@lib/array'
-import { isBalanceUSDGtZero, sanitizeBalances, sortBalances, sumBalances } from '@lib/balance'
+import { sanitizeBalances, sanitizePricedBalances, sortBalances, sumBalances } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
 import { chainById, chains as allChains } from '@lib/chains'
@@ -114,17 +114,17 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     const pricedBalances = await getPricedBalances(sanitizedBalances)
 
-    const nonZeroPricedBalances = pricedBalances.filter(isBalanceUSDGtZero)
+    const sanitizedPricedBalances = sanitizePricedBalances(pricedBalances)
 
     const hrend = process.hrtime(hrstart)
 
     console.log(
-      `getPricedBalances ${sanitizedBalances.length} balances, found ${nonZeroPricedBalances.length} balances in %ds %dms`,
+      `getPricedBalances ${sanitizedBalances.length} balances, found ${sanitizedPricedBalances.length} balances in %ds %dms`,
       hrend[0],
       hrend[1] / 1000000,
     )
 
-    const pricedBalancesByChain = groupBy(nonZeroPricedBalances, 'chain')
+    const pricedBalancesByChain = groupBy(sanitizedPricedBalances, 'chain')
 
     const now = new Date()
 
