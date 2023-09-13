@@ -37,8 +37,10 @@ export const WETH: Token = {
 const resolveTokenAddress = (contract: Contract) => contract.token?.toLowerCase() ?? contract.address.toLowerCase()
 
 export function retrieveToken(chain: Chain, address: string) {
-  address = address.toLowerCase() === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' ? ADDRESS_ZERO : address
-  if (address === ADDRESS_ZERO) return chainById[chain].nativeCurrency
+  if (address === ETH_ADDR || address === ADDRESS_ZERO) {
+    return chainById[chain].nativeCurrency
+  }
+
   return getToken(chain, address)
 }
 

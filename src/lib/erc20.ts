@@ -5,9 +5,9 @@ import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { sleep } from '@lib/promise'
 import { providers } from '@lib/providers'
+import { retrieveToken } from '@lib/token'
 import { isNotFalsy, isNotNullish } from '@lib/type'
 import type { Token } from '@llamafolio/tokens'
-import { getToken } from '@llamafolio/tokens'
 import type { Address, PublicClient } from 'viem'
 import { getAddress } from 'viem'
 import { readContract } from 'viem/contract'
@@ -443,7 +443,7 @@ export async function getBalancesOf<T extends Contract>(ctx: BalancesContext, co
 export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${string}`[]): Promise<Token[]> {
   const found: { [key: string]: Token } = {}
   for (const address of tokens) {
-    const tokenInfo = getToken(ctx.chain, address.toLowerCase())
+    const tokenInfo = retrieveToken(ctx.chain, address.toLowerCase())
     if (tokenInfo) {
       found[address] = tokenInfo as Token
     }
