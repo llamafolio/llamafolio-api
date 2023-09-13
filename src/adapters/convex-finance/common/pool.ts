@@ -2,7 +2,6 @@ import type { BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isNotNullish } from '@lib/type'
 
 const abi = {
   poolLength: {
@@ -60,25 +59,17 @@ export async function getConvexAltChainsPools(
       crvRewards: rewards,
       factory,
       rewards: booster.rewards,
+      pid: res.input.params[0],
     }
   })
 
-  const fmtPools: [{ [key: string]: Contract[] }] = pools.reduce((acc: any, pool) => {
-    const { address, crvRewards, ...rest } = pool
-    if (address in acc) {
-      acc[address].crvRewards.push(crvRewards)
-    } else {
-      acc[address] = { ...rest, crvRewards: [crvRewards] }
+  const mergedAndFilteredPools: Contract[] = pools.reduce((acc: Contract[], pool) => {
+    const matchingCurvePool = curvePools.find((curvePool) => curvePool.lpToken === pool.lpToken)
+    if (matchingCurvePool) {
+      acc.push({ ...matchingCurvePool, ...pool })
     }
     return acc
-  }, {})
+  }, [])
 
-  const fmtCvxPools = Object.values(fmtPools)
-    .map((pool) => {
-      const fmtCurvePool = curvePools.find((curvePool) => curvePool.lpToken === pool.lpToken)
-      return fmtCurvePool ? { ...pool, ...fmtCurvePool } : null
-    })
-    .filter(isNotNullish)
-
-  return fmtCvxPools
+  return mergedAndFilteredPools
 }
