@@ -1,22 +1,14 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { flatMapSuccess, mapSuccessFilter, rangeBI } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
-import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { ETH_ADDR } from '@lib/token'
 
 const abi = {
   poolLength: {
     inputs: [],
     name: 'poolLength',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -34,20 +26,6 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  extraRewards: {
-    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    name: 'extraRewards',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  extraRewardsLength: {
-    inputs: [],
-    name: 'extraRewardsLength',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
   getPoolFromLPToken: {
     stateMutability: 'view',
     type: 'function',
@@ -56,12 +34,26 @@ const abi = {
     outputs: [{ name: '', type: 'address' }],
     gas: 2443,
   },
-  getUnderlyingsCoins: {
+  getCoins: {
     stateMutability: 'view',
     type: 'function',
     name: 'get_underlying_coins',
     inputs: [{ name: '_pool', type: 'address' }],
     outputs: [{ name: '', type: 'address[8]' }],
+  },
+  extraRewardsLength: {
+    inputs: [],
+    name: 'extraRewardsLength',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  extraRewards: {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'extraRewards',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
   },
   rewardToken: {
     inputs: [],
@@ -93,130 +85,79 @@ const CVX: Token = {
   decimals: 18,
 }
 
-const metaRegistry: Contract = {
-  chain: 'ethereum',
-  address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
-}
+export async function getConvexPoolsContracts(
+  ctx: BaseContext,
+  booster: Contract,
+  curvePools: Contract[],
+): Promise<Contract[]> {
+  const poolWithOnlyCommonRewards: Contract[] = []
+  const poolWithExtraRewards: Contract[] = []
 
-export async function getPoolsContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
-  const pools: Contract[] = []
-
-  const poolLengthBI = await call({ ctx, target: contract.address, abi: abi.poolLength })
-  const poolLength = Number(poolLengthBI)
+  const poolLength = await call({ ctx, target: booster.address, abi: abi.poolLength })
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLengthBI).map((i) => ({ target: contract.address, params: [i] }) as const),
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: booster.address, params: [idx] }) as const),
     abi: abi.poolInfo,
   })
 
-  for (let idx = 0; idx < poolLength; idx++) {
-    const poolInfoRes = poolInfosRes[idx]
-    if (!poolInfoRes.success) {
-      continue
-    }
+  const pools: Contract[] = mapSuccessFilter(poolInfosRes, (res) => {
+    const [lpToken, _token, gauge, crvRewards, stash] = res.output
+    const pid = res.input.params[0]
 
-    const [address, _token, gauge, crvRewards] = poolInfoRes.output
-    pools.push({
+    return {
       chain: ctx.chain,
-      address,
+      address: lpToken,
+      lpToken,
       gauge,
-      // token,
-      lpToken: address,
       crvRewards,
-      pid: poolInfoRes.input.params[0],
+      stash,
       rewards: [CRV, CVX],
-    })
-  }
-
-  const poolsAddressesRes = await multicall({
-    ctx,
-    calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] }) as const),
-    abi: abi.getPoolFromLPToken,
+      pid,
+    }
   })
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-    const poolAddressRes = poolsAddressesRes[poolIdx]
-    if (!poolAddressRes.success) {
-      continue
+  const mergedAndFilteredPools: Contract[] = pools.reduce((acc: Contract[], pool) => {
+    const matchingCurvePool = curvePools.find((curvePool) => curvePool.lpToken === pool.lpToken)
+    if (matchingCurvePool) {
+      acc.push({ ...matchingCurvePool, ...pool })
     }
-
-    pool.pool = poolAddressRes.output
-  }
-
-  const underlyingsRes = await multicall({
-    ctx,
-    calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] }) as const),
-    abi: abi.getUnderlyingsCoins,
-  })
-
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-    const underlyingRes = underlyingsRes[poolIdx]
-    if (!underlyingRes.success) {
-      continue
-    }
-
-    ;(pool.underlyings as any) = underlyingRes.output
-      .map((address) => address.toLowerCase())
-      // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-      .filter((address) => address !== ADDRESS_ZERO)
-      // replace ETH alias
-      .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
-  }
-
-  return getExtraRewards(ctx, pools)
-}
-
-const getExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
-  const commonRewardsPools: Contract[] = []
-  const extraRewardsPools: Contract[] = []
+    return acc
+  }, [])
 
   const extraRewardsLengthsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({
-      target: pool.crvRewards,
-    })),
+    calls: mergedAndFilteredPools.map(({ crvRewards }) => ({ target: crvRewards }) as const),
     abi: abi.extraRewardsLength,
   })
 
-  const extraRewardsRes = await multicall({
+  mapSuccessFilter(extraRewardsLengthsRes, (res, idx) => {
+    const pool: Contract = { ...mergedAndFilteredPools[idx], extraRewardsLength: res.output, rewarders: [] }
+
+    if (pool.extraRewardsLength !== 0n) {
+      poolWithExtraRewards.push(pool)
+    } else {
+      poolWithOnlyCommonRewards.push(pool)
+    }
+  })
+
+  return [...poolWithOnlyCommonRewards, ...(await getExtraRewards(ctx, poolWithExtraRewards))]
+}
+
+async function getExtraRewards(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
+  const extraRewardersRes = await multicall({
     ctx,
-    calls: flatMapSuccess(extraRewardsLengthsRes, (res) =>
-      rangeBI(0n, res.output).map((idx) => ({ target: res.input.target, params: [idx] }) as const),
+    calls: pools.flatMap((pool) =>
+      rangeBI(0n, pool.extraRewardsLength).map((idx) => ({ target: pool.crvRewards, params: [idx] }) as const),
     ),
     abi: abi.extraRewards,
   })
 
-  let extraRewardsCallIdx = 0
-  for (let poolIdx = 0; poolIdx < extraRewardsLengthsRes.length; poolIdx++) {
-    const extraRewardsLengthRes = extraRewardsLengthsRes[poolIdx]
-    if (!extraRewardsLengthRes.success) {
-      continue
-    }
-
-    const baseRewardPool: Contract = { ...pools[poolIdx], rewarder: [] as string[] }
-
-    for (let extraRewardIdx = 0; extraRewardIdx < extraRewardsLengthRes.output; extraRewardIdx++) {
-      const extraRewardRes = extraRewardsRes[extraRewardsCallIdx]
-      if (extraRewardRes.success) {
-        baseRewardPool.rewarder.push(extraRewardRes.output)
-      }
-      extraRewardsCallIdx++
-    }
-
-    if (baseRewardPool.rewarder.length === 0n) {
-      commonRewardsPools.push(baseRewardPool)
-      continue
-    }
-
-    extraRewardsPools.push(baseRewardPool)
-  }
+  pools = mapItemsByTarget(pools, extraRewardersRes, 'crvRewards', 'rewarders')
 
   const extraRewardsTokensRes = await multicall({
     ctx,
-    calls: extraRewardsPools.flatMap((pool) => pool.rewarder.map((res: any) => ({ target: res }))),
+    calls: pools.flatMap((pool) => pool.rewarders.map((res: any) => ({ target: res }))),
     abi: abi.rewardToken,
   })
 
@@ -226,24 +167,53 @@ const getExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise<Con
     abi: abi.token,
   })
 
-  let extraRewardsTokensIdx = 0
-  for (let poolIdx = 0; poolIdx < extraRewardsPools.length; poolIdx++) {
-    const pool = extraRewardsPools[poolIdx]
+  const extraRewardsTokensByTarget: { [key: string]: any } = {}
+  extraRewardsTokensRes.forEach((res) => {
+    extraRewardsTokensByTarget[res.input.target] = res
+  })
 
-    for (let extraRewardIdx = 0; extraRewardIdx < pool.rewarder.length; extraRewardIdx++) {
-      const extraRewardsTokens = extraRewardsTokensRes[extraRewardsTokensIdx]
-      const tokenRes = tokensRes[extraRewardsTokensIdx]
+  const tokensResByTarget: { [key: string]: any } = {}
+  tokensRes.forEach((res) => {
+    tokensResByTarget[res.input.target] = res
+  })
 
-      const rewards: any = tokenRes.success
-        ? tokenRes.output
-        : extraRewardsTokens.success
-        ? extraRewardsTokens.output
-        : undefined
+  for (const pool of pools) {
+    const newRewards = pool.rewarders.map((rewarder: `0x${string}`) => {
+      const extraRewardsTokens = extraRewardsTokensByTarget[rewarder]
+      const tokenRes = tokensResByTarget[extraRewardsTokens?.output]
 
-      pool.rewards?.push(rewards)
-      extraRewardsTokensIdx++
-    }
+      return tokenRes?.success ? tokenRes.output : extraRewardsTokens?.success ? extraRewardsTokens.output : undefined
+    })
+
+    pool.rewards = [...(pool.rewards || []), ...newRewards]
   }
 
-  return [...commonRewardsPools, ...extraRewardsPools]
+  return pools
+}
+
+function mapItemsByTarget<T, K extends keyof T, L extends keyof T>(
+  items: T[],
+  mapItems: any,
+  indexKey: L,
+  outputKey: K,
+): T[] {
+  const groupedByTarget = mapItems.reduce(
+    (acc: any, { input, success, output }: { input: any; success: any; output: any }) => {
+      if (success) {
+        const key = input.target
+        if (!acc[key]) {
+          acc[key] = []
+        }
+        acc[key].push(output)
+      }
+      return acc
+    },
+    {} as Record<string, string[]>,
+  )
+
+  for (const item of items) {
+    ;(item[outputKey] as any) = groupedByTarget[item[indexKey] as any] || []
+  }
+
+  return items
 }
