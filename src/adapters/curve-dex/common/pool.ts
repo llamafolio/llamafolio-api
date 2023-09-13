@@ -292,51 +292,5 @@ export async function getFmtPoolsContracts(ctx: BaseContext, registry: `0x${stri
     })
   }
 
-  // Some pools have different logics, this function makes sure that we do not miss any underlyings
-  return processUnderlyings(ctx, poolContracts)
-}
-
-const processUnderlyings = async (ctx: BaseContext, pools: PoolContract[]): Promise<PoolContract[]> => {
-  const poolWithUnderlyings: PoolContract[] = []
-  const poolsWithoutUnderlyings: PoolContract[] = []
-
-  for (const pool of pools) {
-    if (pool.underlyings && pool.underlyings.length < 2) {
-      poolsWithoutUnderlyings.push(pool)
-    } else {
-      poolWithUnderlyings.push(pool)
-    }
-  }
-
-  const underlyingsTokensRes = await multicall({
-    ctx,
-    calls: poolsWithoutUnderlyings.flatMap((pool) =>
-      range(0, 4).map((_, idx) => ({ target: pool.address, params: [BigInt(idx)] }) as const),
-    ),
-    abi: abi.coins,
-  })
-
-  let idx = 0
-  for (let poolIdx = 0; poolIdx < poolsWithoutUnderlyings.length; poolIdx++) {
-    const pool = poolsWithoutUnderlyings[poolIdx]
-
-    if (!pool) {
-      idx += 4
-      continue
-    }
-
-    for (let underlyingIdx = 0; underlyingIdx < 4; underlyingIdx++) {
-      const underlyingTokenRes = underlyingsTokensRes[idx]
-
-      if (underlyingTokenRes.success) {
-        pool.underlyings?.push(underlyingTokenRes.output as any)
-      }
-
-      idx++
-    }
-
-    poolWithUnderlyings.push(pool)
-  }
-
-  return poolWithUnderlyings
+  return poolContracts
 }
