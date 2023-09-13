@@ -1,3 +1,4 @@
+import { getPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
@@ -25,6 +26,17 @@ const abi = {
     outputs: [
       { internalType: 'uint128', name: 'amount', type: 'uint128' },
       { internalType: 'uint128', name: 'timestamp', type: 'uint128' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  claimableReward: {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'claimableReward',
+    outputs: [
+      { internalType: 'uint256', name: 'prismaAmount', type: 'uint256' },
+      { internalType: 'uint256', name: 'crvAmount', type: 'uint256' },
+      { internalType: 'uint256', name: 'cvxAmount', type: 'uint256' },
     ],
     stateMutability: 'view',
     type: 'function',
@@ -80,4 +92,30 @@ export async function getPrismaFarmBalance(ctx: BalancesContext, farmer: Contrac
     rewards: undefined,
     category: 'farm',
   }
+}
+
+export async function getPrismaFarmBalancesFromConvex(
+  ctx: BalancesContext,
+  farmers: Contract[],
+  registry: Contract,
+): Promise<Balance[] | undefined> {
+  const poolBalances = await getPoolsBalances(ctx, farmers, registry)
+
+  if (!poolBalances) return
+
+  const userPendingsRewardsRes = await multicall({
+    ctx,
+    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+    abi: abi.claimableReward,
+  })
+
+  return mapSuccessFilter(userPendingsRewardsRes, (res, poolIdx) => {
+    const rewards = poolBalances[poolIdx].rewards!.map((reward, idx) => ({ ...reward, amount: res.output[idx] }))
+
+    return {
+      ...poolBalances[poolIdx],
+      rewards,
+      category: 'farm',
+    }
+  })
 }

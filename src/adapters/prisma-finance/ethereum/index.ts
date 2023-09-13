@@ -1,5 +1,11 @@
-import { getPrismaFarmBalance, getPrismaLendBalances } from '@adapters/prisma-finance/ethereum/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getPoolsContracts } from '@adapters/curve-dex/ethereum/pools'
+import {
+  getPrismaFarmBalance,
+  getPrismaFarmBalancesFromConvex,
+  getPrismaLendBalances,
+} from '@adapters/prisma-finance/ethereum/balance'
+import { getConvexPools } from '@adapters/prisma-finance/ethereum/pool'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const farmer: Contract = {
@@ -7,6 +13,39 @@ const farmer: Contract = {
   address: '0xed8b26d99834540c5013701bb3715fafd39993ba',
   token: '0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28',
 }
+
+const farmersFromConvex: Contract[] = [
+  {
+    chain: 'ethereum',
+    address: '0x0ae09f649e9da1b6aea0c10527ac4e8a88a37480',
+    pid: 225,
+    rewards: [
+      '0xdA47862a83dac0c112BA89c6abC2159b95afd71C',
+      '0xD533a949740bb3306d119CC777fa900bA034cd52',
+      '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
+    ],
+  },
+  {
+    chain: 'ethereum',
+    address: '0xf6aa46869220ae703924d5331d88a21dcef3b19d',
+    pid: 226,
+    rewards: [
+      '0xdA47862a83dac0c112BA89c6abC2159b95afd71C',
+      '0xD533a949740bb3306d119CC777fa900bA034cd52',
+      '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
+    ],
+  },
+  {
+    chain: 'ethereum',
+    address: '0x5f8d4319c27a940b5783b4495cca6626e880532e',
+    pid: 227,
+    rewards: [
+      '0xdA47862a83dac0c112BA89c6abC2159b95afd71C',
+      '0xD533a949740bb3306d119CC777fa900bA034cd52',
+      '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
+    ],
+  },
+]
 
 const vaults: Contract[] = [
   {
@@ -31,9 +70,18 @@ const vaults: Contract[] = [
   },
 ]
 
-export const getContracts = () => {
+const metaRegistry: Contract = {
+  name: 'Curve Metaregistry',
+  chain: 'ethereum',
+  address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
+}
+
+export const getContracts = async (ctx: BaseContext) => {
+  const curvePools = await getPoolsContracts(ctx, metaRegistry)
+  const convexPools = await getConvexPools(ctx, farmersFromConvex, curvePools)
+
   return {
-    contracts: { vaults, farmer },
+    contracts: { vaults, farmer, convexPools },
   }
 }
 
@@ -41,6 +89,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     vaults: getPrismaLendBalances,
     farmer: getPrismaFarmBalance,
+    convexPools: (...args) => getPrismaFarmBalancesFromConvex(...args, metaRegistry),
   })
 
   return {
