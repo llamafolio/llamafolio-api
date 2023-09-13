@@ -44,13 +44,20 @@ export async function getConvexGaugesBalances(
   const commonRewardsPools: Balance[] = []
   const extraRewardsPools: Balance[] = []
 
-  pools = pools.map((pool) => ({ ...pool, address: pool.crvRewards }))
+  pools = pools.map((pool) => ({ ...pool, address: pool.gauge }))
 
-  const gaugesBalancesRes = await getPoolsBalances(ctx, pools, registry)
+  // const gaugesBalancesRes = await getPoolsBalances(ctx, pools, registry)
+  const gaugesBalancesResTEST = await getPoolsBalances(ctx, pools, registry)
 
-  if (!gaugesBalancesRes) {
+  if (!gaugesBalancesResTEST) {
     return
   }
+
+  const gaugesBalancesRes = gaugesBalancesResTEST.filter((g) => g.pid === 25n)
+
+  console.log(gaugesBalancesRes)
+
+  // console.log(gaugesBalancesRes)
 
   const calls: Call<typeof abi.earned>[] = []
   for (const gaugeBalance of gaugesBalancesRes) {
@@ -87,7 +94,7 @@ export async function getConvexGaugesBalances(
     extraRewardsPools.push(gaugeBalance)
 
     for (let rewardIdx = 0; rewardIdx < gaugeBalance.rewards!.length - 2; rewardIdx++) {
-      const rewarder = (gaugeBalance as Contract).rewarder[rewardIdx]
+      const rewarder = (gaugeBalance as Contract).rewarders[rewardIdx]
       extraRewardsCalls.push({ target: rewarder, params: [ctx.address] })
     }
   }

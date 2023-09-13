@@ -3,7 +3,7 @@ import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
-import { ETH_ADDR, type Token } from '@lib/token'
+import type { Token } from '@lib/token'
 
 const abi = {
   poolLength: {
@@ -86,7 +86,11 @@ const CVX: Token = {
   decimals: 18,
 }
 
-export async function getPoolsContracts(ctx: BaseContext, booster: Contract, registry: Contract): Promise<Contract[]> {
+export async function getConvexPoolsContracts(
+  ctx: BaseContext,
+  booster: Contract,
+  curvePools: Contract[],
+): Promise<Contract[]> {
   const poolWithOnlyCommonRewards: Contract[] = []
   const poolWithExtraRewards: Contract[] = []
 
@@ -98,7 +102,7 @@ export async function getPoolsContracts(ctx: BaseContext, booster: Contract, reg
     abi: abi.poolInfo,
   })
 
-  let pools: Contract[] = mapSuccessFilter(poolInfosRes, (res) => {
+  const pools: Contract[] = mapSuccessFilter(poolInfosRes, (res) => {
     const [lpToken, _token, gauge, crvRewards, stash] = res.output
     const pid = res.input.params[0]
 
@@ -114,52 +118,35 @@ export async function getPoolsContracts(ctx: BaseContext, booster: Contract, reg
     }
   })
 
-  const poolAddresseRes = await multicall({
-    ctx,
-    calls: pools.map((pool) => ({ target: registry.address, params: [pool.lpToken] }) as const),
-    abi: abi.getPoolFromLPToken,
+  const mergedAndFilteredPools: Contract[] = pools.reduce((acc: Contract[], pool) => {
+    const matchingCurvePool = curvePools.find((curvePool) => curvePool.lpToken === pool.lpToken)
+    if (matchingCurvePool) {
+      acc.push({ ...matchingCurvePool, ...pool })
+    }
+    return acc
+  }, [])
+
+  const updatedPools: any[] = mergedAndFilteredPools.map((pool) => {
+    const updatedUnderlyings = pool.underlyings!.map((address) =>
+      address === ADDRESS_ZERO ? '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2' : address,
+    )
+
+    return { ...pool, underlyings: updatedUnderlyings }
   })
 
-  pools = mapSuccessFilter(poolAddresseRes, (res, idx) => ({ ...pools[idx], pool: res.output }))
+  const extraRewardsLengthsRes = await multicall({
+    ctx,
+    calls: updatedPools.map(({ crvRewards }) => ({ target: crvRewards }) as const),
+    abi: abi.extraRewardsLength,
+  })
 
-  const [coinsRes, extraRewardsLengthsRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: pools.map(({ pool }) => ({ target: registry.address, params: [pool] }) as const),
-      abi: abi.getCoins,
-    }),
-    multicall({
-      ctx,
-      calls: pools.map(({ crvRewards }) => ({ target: crvRewards }) as const),
-      abi: abi.extraRewardsLength,
-    }),
-  ])
+  mapSuccessFilter(extraRewardsLengthsRes, (res, idx) => {
+    const pool: Contract = { ...updatedPools[idx], extraRewardsLength: res.output, rewarders: [] }
 
-  pools.forEach((pool, idx) => {
-    const coinRes = coinsRes[idx]
-    const extraRewardLengthsRes = extraRewardsLengthsRes[idx]
-
-    if (!coinRes.success || !extraRewardLengthsRes.success) {
-      return null
-    }
-
-    const underlyings: any = coinRes.output
-      .map((address) => address.toLowerCase())
-      // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-      .filter((address) => address !== ADDRESS_ZERO)
-      // replace ETH alias
-      .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address))
-
-    if (extraRewardLengthsRes.output > 0n) {
-      poolWithExtraRewards.push({ ...pool, underlyings, extraRewardsLength: extraRewardLengthsRes.output })
+    if (pool.extraRewardsLength !== 0n) {
+      poolWithExtraRewards.push(pool)
     } else {
-      poolWithOnlyCommonRewards.push({ ...pool, underlyings, extraRewardsLength: extraRewardLengthsRes.output })
-    }
-
-    return {
-      ...pool,
-      underlyings,
-      extraRewardsLength: extraRewardLengthsRes.output,
+      poolWithOnlyCommonRewards.push(pool)
     }
   })
 
