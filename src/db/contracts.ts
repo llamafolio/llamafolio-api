@@ -192,6 +192,44 @@ export async function getWalletInteractions(client: ClickHouseClient, address: s
   return fromStorage(res.data)
 }
 
+export async function getContract(client: ClickHouseClient, chainId: number, address: string) {
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        "chain",
+        "hash",
+        "timestamp",
+        "from",
+        "block_number",
+        "contract_created"
+      FROM evm_indexer.transactions
+      WHERE
+        "chain" = {chainId: UInt64} AND
+        "contract_created" = {address: String};
+    `,
+    query_params: {
+      address: address.toLowerCase(),
+      chainId,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: { chain: string; hash: string; timestamp: string; from: string; block_number: string }[]
+  }
+
+  if (res.data.length === 0) {
+    return null
+  }
+
+  return {
+    block: parseInt(res.data[0].block_number),
+    chain: chainByChainId[parseInt(res.data[0].chain)]?.id,
+    contract: address,
+    creator: res.data[0].from,
+    hash: res.data[0].hash,
+  }
+}
+
 export async function getContracts(client: ClickHouseClient, address: string, chainId?: number) {
   const queryRes = await client.query({
     query: `

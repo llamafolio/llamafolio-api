@@ -119,6 +119,14 @@ functions:
     timeout: 29
     memorySize: 512
 
+  getContract:
+    handler: src/handlers/getContract.handler
+    description: Get contract info
+    events:
+      - httpApi:
+          method: get
+          path: /contracts/{chain}/{address}
+
   getContracts:
     handler: src/handlers/getContracts.handler
     description: Get contracts
