@@ -126,6 +126,7 @@ functions:
       - httpApi:
           method: get
           path: /contracts/{chain}/{address}
+    timeout: 15
 
   getGasUsedChart:
     handler: src/handlers/getGasUsedChart.handler
