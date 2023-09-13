@@ -6,16 +6,19 @@ import url from 'node:url'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
-import { fetchProtocolsLite } from '../src/lib/protocols'
+import { chainById, fromDefiLlamaChain } from '@lib/chains'
+import { slugify } from '@lib/fmt'
+import { fetchProtocolsLite } from '@lib/protocols'
+import { isNotNullish } from '@lib/type'
 
 const adapterTemplate = (slug: string, chains: string[]) => `
 import type { Adapter } from '@lib/adapter';
 
-${chains.map((chain) => `import * as ${chain} from './${chain}'`).join(';')}
+${chains.map((chain) => `import * as ${slugify(chain)} from './${chain}'`).join(';')}
 
 const adapter: Adapter = {
   id: '${slug}',
-  ${chains.join(',')}
+  ${chains.map((chain) => `'${chain}': ${slugify(chain)}`).join(',')}
 };
 
 export default adapter;
@@ -83,7 +86,7 @@ async function main() {
     return
   }
 
-  const chains = protocol.chains.map((chain) => chain.toLowerCase())
+  const chains = protocol.chains.map((chain) => chainById[fromDefiLlamaChain[chain]]?.id).filter(isNotNullish)
 
   fs.mkdirSync(dst)
   fs.writeFileSync(path.join(dst, 'index.ts'), adapterTemplate(slug, chains))

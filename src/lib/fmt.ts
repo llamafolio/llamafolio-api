@@ -4,6 +4,23 @@ import utc from 'dayjs/plugin/utc'
 
 dayjs.extend(utc)
 
+export function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+export function isCharNumeric(char: string) {
+  return /\d/.test(char)
+}
+
+export function slugify(adapter: string) {
+  const slug = adapter
+    .split(/[-,.]+/)
+    .map((part, idx) => (idx > 0 ? capitalize(part) : part))
+    .join('')
+
+  return isCharNumeric(slug[0]) ? `_${slug}` : slug
+}
+
 export function boolean(val: any): boolean {
   switch (val) {
     case 0:
