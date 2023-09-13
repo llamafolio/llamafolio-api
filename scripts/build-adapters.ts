@@ -5,7 +5,8 @@ import url from 'node:url'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
-import { chains } from '../src/lib/chains'
+import { chains } from '@lib/chains'
+import { slugify } from '@lib/fmt'
 
 const exportsTemplate = (adapters: string[]) => `
 ${adapters.map((adapter) => `import ${slugify(adapter)} from '@adapters/${adapter}'`).join(';')}
@@ -91,23 +92,6 @@ const vsCodeLaunchTemplate = (adapters: string[], chains: string[]) =>
       },
     ],
   })
-
-function capitalize(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
-}
-
-function isCharNumeric(char: string) {
-  return /\d/.test(char)
-}
-
-function slugify(adapter: string) {
-  const slug = adapter
-    .split(/[-,.]+/)
-    .map((part, idx) => (idx > 0 ? capitalize(part) : part))
-    .join('')
-
-  return isCharNumeric(slug[0]) ? `_${slug}` : slug
-}
 
 function getAdapters() {
   const src = path.join(__dirname, '..', 'src', 'adapters')

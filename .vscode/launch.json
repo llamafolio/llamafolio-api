@@ -62,7 +62,7 @@
         "optimism",
         "polygon",
         "polygon-zkevm",
-        "zkSync-era"
+        "zksync-era"
       ],
       "default": "ethereum"
     },

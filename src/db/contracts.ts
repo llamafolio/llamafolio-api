@@ -192,42 +192,20 @@ export async function getWalletInteractions(client: ClickHouseClient, address: s
   return fromStorage(res.data)
 }
 
-export async function getContracts(client: ClickHouseClient, address: string, chainId?: number) {
+export async function getContract(client: ClickHouseClient, chainId: number, address: string) {
   const queryRes = await client.query({
     query: `
-      WITH
-      a AS (
-        SELECT
-          "chain",
-          "hash",
-          "timestamp",
-          "from",
-          "block_number",
-          "contract_created"
-        FROM evm_indexer.transactions
-        WHERE ("chain", "timestamp", "hash") IN (
-          SELECT
-            "chain",
-            "timestamp",
-            "hash"
-          FROM evm_indexer.transactions
-          WHERE "contract_created" = {address: String}
-          ${chainId != null ? ' AND "chain" = {chain: UInt8} ' : ''}
-        )
-      ),
-      b AS (
-        SELECT
-          "address",
-          "adapter_id"
-        FROM lf.adapters_contracts FINAL
-        WHERE "address" = {address: String}
-        ${chainId != null ? ' AND "chain" = {chain: UInt8} ' : ''}
-      )
       SELECT
-        a.*, b.adapter_id
-      FROM a
-      LEFT JOIN b
-      ON a."contract_created" = b."address";
+        "chain",
+        "hash",
+        "timestamp",
+        "from",
+        "block_number",
+        "contract_created"
+      FROM evm_indexer.transactions
+      WHERE
+        "chain" = {chainId: UInt64} AND
+        "contract_created" = {address: String};
     `,
     query_params: {
       address: address.toLowerCase(),
@@ -236,17 +214,20 @@ export async function getContracts(client: ClickHouseClient, address: string, ch
   })
 
   const res = (await queryRes.json()) as {
-    data: { chain: string; hash: string; timestamp: string; from: string; block_number: string; adapter_id: string }[]
+    data: { chain: string; hash: string; timestamp: string; from: string; block_number: string }[]
   }
 
-  return res.data.map((row) => ({
-    block: parseInt(row.block_number),
-    chain: chainByChainId[parseInt(row.chain)]?.id,
+  if (res.data.length === 0) {
+    return null
+  }
+
+  return {
+    block: parseInt(res.data[0].block_number),
+    chain: chainByChainId[parseInt(res.data[0].chain)]?.id,
     contract: address,
-    creator: row.from,
-    hash: row.hash,
-    protocol: row.adapter_id ?? undefined,
-  }))
+    creator: res.data[0].from,
+    hash: res.data[0].hash,
+  }
 }
 
 export function deleteContractsByAdapterId(client: ClickHouseClient, adapterId: string) {

@@ -1,6 +1,6 @@
 import { client } from '@db/clickhouse'
-import { getContracts } from '@db/contracts'
-import { badRequest, serverError, success } from '@handlers/response'
+import { getContract } from '@db/contracts'
+import { badRequest, notFound, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import { chainById } from '@lib/chains'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -11,8 +11,7 @@ export interface IContract {
   contract: string
   creator: string
   hash: string
-  verified: boolean
-  protocol?: string
+  verified?: boolean
   abi?: any
   name?: string
 }
@@ -27,13 +26,19 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return badRequest('Invalid address parameter, expected hex')
   }
 
-  const chainParam = event.queryStringParameters?.chain || ''
+  const chainParam = event.pathParameters?.chain || ''
   const chain = chainById[chainParam]
+  if (!chain) {
+    return badRequest('Invalid chain parameter')
+  }
 
   try {
-    const contracts = await getContracts(client, address, chain?.chainId)
+    const contract = await getContract(client, chain.chainId, address)
+    if (!contract) {
+      return notFound('Could not find contract')
+    }
 
-    return success({ data: contracts }, { maxAge: 24 * 60 * 60 })
+    return success({ data: contract }, { maxAge: 24 * 60 * 60 })
   } catch (e) {
     console.error('Failed to retrieve contracts', e)
     return serverError('Failed to retrieve contracts')
