@@ -14,6 +14,7 @@ import {
   optimism,
   polygon,
   polygonZkEvm,
+  zkSync,
 } from 'viem/chains'
 
 const gnosis = {
@@ -67,4 +68,5 @@ export const viemChainById: { [key in Chain]: _Chain } = {
   optimism,
   polygon,
   'polygon-zkevm': polygonZkEvm,
+  'zksync-era': zkSync,
 } as const
