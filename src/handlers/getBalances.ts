@@ -26,7 +26,7 @@ interface BalancesResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  const address = event.pathParameters?.address as `0x${string}`
+  const address = event.pathParameters?.address?.toLowerCase() as `0x${string}`
   console.log('Get balances', address)
   if (!address) {
     return badRequest('Missing address parameter')

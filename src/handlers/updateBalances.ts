@@ -79,6 +79,9 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
           for (const balance of group.balances) {
             balancesLength++
 
+            // use token when available
+            balance.address = (balance.token || balance.address).toLowerCase()
+            // metadata
             balance.groupIdx = groupIdx
             balance.adapterId = adapterId
             balance.timestamp = now
@@ -120,7 +123,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
   await insertBalances(client, balancesWithBreakdown)
 
-  // Group back and fetch yields to have a unified balance response format for /balances/{address} and /balances/{address}/latest
+  // Group back and fetch yields to have a unified balance response format for /balances/{address}
   // It's better than refetching balances from the DB to save a round trip and because data isn't atomically inserted across shards, so it
   // may not be available right after insert
   const balancesGroups: any[] = []
