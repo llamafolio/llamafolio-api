@@ -37,7 +37,11 @@ export async function getStargateLpContracts(ctx: BaseContext, lpStakers: Contra
 
     // replace SGETH to WETH
     const fmtUnderlyings =
-      ETH[ctx.chain][0].toLowerCase() === underlyingRes.output.toLowerCase() ? ETH[ctx.chain][1] : underlyingRes.output
+      ctx.chain === 'polygon' || ctx.chain === 'fantom' || ctx.chain === 'avalanche' || ctx.chain === 'bsc'
+        ? underlyingRes.output
+        : ETH[ctx.chain][0].toLowerCase() === underlyingRes.output.toLowerCase()
+        ? ETH[ctx.chain][1]
+        : underlyingRes.output
 
     contracts.push({ ...lpStaker, underlyings: [fmtUnderlyings] })
   }
