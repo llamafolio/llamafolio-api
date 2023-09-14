@@ -102,6 +102,7 @@ import ironBank from '@adapters/iron-bank'
 import izumiFinance from '@adapters/izumi-finance'
 import keep3rNetwork from '@adapters/keep3r-network'
 import klimaDao from '@adapters/klima-dao'
+import kwenta from '@adapters/kwenta'
 import leonicornswap from '@adapters/leonicornswap'
 import lido from '@adapters/lido'
 import lifeDao from '@adapters/life-dao'
@@ -353,6 +354,7 @@ export const adapters: Adapter[] = [
   izumiFinance,
   keep3rNetwork,
   klimaDao,
+  kwenta,
   leonicornswap,
   lido,
   lifeDao,
