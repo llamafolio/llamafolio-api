@@ -291,12 +291,14 @@ export const chains = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
+    rpcWssUrl: [
+      LLAMANODES_API_KEY ? webSocket(`wss://optimism.llamarpc.com/rpc/${LLAMANODES_API_KEY}`) : undefined,
+    ].filter(isNotFalsy),
     rpcUrls: [
+      LLAMANODES_API_KEY
+        ? http(`https://optimism.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
+        : undefined,
       http('https://rpc.ankr.com/optimism', { batch: { wait: 0, batchSize: 5_000 } }),
-      OPTIMISM_RPC ? http(OPTIMISM_RPC, { batch: { batchSize: 1_000, wait: 10 } }) : undefined,
-      http('https://optimism.publicnode.com', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://optimism-mainnet.public.blastapi.io', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://1rpc.io/op', { batch: { batchSize: 1_000, wait: 10 } }),
       http('https://mainnet.optimism.io', { batch: { batchSize: 1_000, wait: 10 } }),
     ].filter(isNotFalsy),
     nativeCurrency: {
