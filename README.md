@@ -6,7 +6,7 @@
 
 <br>
 <h5 align="center">
-  <a href="https://beta.llamafolio.com">Website</a> ⁃
+  <a href="https://llamafolio.com">Website</a> ⁃
   <a href="https://docs.llamafolio.com">Docs</a> ⁃
   <a href="https://discord.llamafolio.com">Discord</a> ⁃
   <a href="https://twitter.com/LlamaFolio">Twitter</a>
