@@ -157,26 +157,26 @@ export async function getContractsInteractions(
 
   const queryRes = await client.query({
     query: `
-      SELECT *
-      FROM lf.adapters_contracts FINAL
+      SELECT
+        "chain",
+        "address",
+        "category",
+        "adapter_id",
+        "data"
+      FROM lf.adapters_contracts
       WHERE
         ${condition}
         ("chain", "address") IN (
-          SELECT "chain", "address" FROM (
-            (
-              SELECT "chain", "to" AS "address"
-              FROM evm_indexer.transactions_to_mv
-              WHERE "from" = {address: String}
-            )
-              UNION ALL
-            (
-              SELECT "chain", "address"
-              FROM evm_indexer.token_transfers_received_mv
-              WHERE "to" = {address: String}
-            )
-          )
-          GROUP BY "chain", "address"
-        );
+          SELECT "chain", "to" AS "address"
+          FROM evm_indexer.transactions_to_mv
+          WHERE "from" = {address: String}
+        ) OR
+        ("chain", "address") IN (
+          SELECT "chain", "address"
+          FROM evm_indexer.token_transfers_received_mv
+          WHERE "to" = {address: String}
+        )
+      LIMIT 1 BY "chain", "address", "adapter_id";
     `,
     query_params: {
       address: address.toLowerCase(),
