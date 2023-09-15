@@ -73,10 +73,25 @@ export function toStorage(contracts: Contract[], adapterId: string, timestamp: D
   return contractsStorage
 }
 
-export async function selectAdaptersContractsByAddress(client: ClickHouseClient, address: string, chainId: number) {
+/**
+ * Return token info from adapters_contracts
+ * @param client
+ * @param address
+ * @param chainId
+ */
+export async function selectAdaptersContractsToken(client: ClickHouseClient, address: string, chainId: number) {
   const queryRes = await client.query({
-    query:
-      'SELECT * FROM lf.adapters_contracts FINAL WHERE "chain" = {chainId: UInt8} AND "address" = {address: String};',
+    query: `
+      SELECT
+        "adapter_id",
+        "category",
+        JSONExtractString("data", 'symbol') AS "symbol",
+        JSONExtractUInt("data", 'decimals') AS "decimals",
+        JSONExtractString("data", 'token') AS "token",
+        JSONExtractArrayRaw(data, 'underlyings') AS underlyings
+      FROM lf.adapters_contracts
+      WHERE "chain" = {chainId: UInt8} AND "address" = {address: String};
+    `,
     query_params: {
       address: address.toLowerCase(),
       chainId,
@@ -84,10 +99,20 @@ export async function selectAdaptersContractsByAddress(client: ClickHouseClient,
   })
 
   const res = (await queryRes.json()) as {
-    data: ContractStorage[]
+    data: {
+      adapter_id: string
+      category: string | null
+      underlyings: string[]
+      symbol: string
+      decimals: number
+      token: string
+    }[]
   }
 
-  return fromStorage(res.data)
+  return res.data.map((row) => {
+    row.underlyings = row.underlyings.map((underlying) => JSON.parse(underlying))
+    return row
+  })
 }
 
 export async function insertAdaptersContracts(

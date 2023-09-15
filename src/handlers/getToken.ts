@@ -1,5 +1,5 @@
 import { client } from '@db/clickhouse'
-import { selectAdaptersContractsByAddress } from '@db/contracts'
+import { selectAdaptersContractsToken } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { Balance, BaseContext, BaseContract, Contract, PricedBalance } from '@lib/adapter'
 import { isHex } from '@lib/buf'
@@ -47,14 +47,14 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
   try {
     // `token` key can also be used to retrieve token details, ignore it
-    const adaptersContracts = (await selectAdaptersContractsByAddress(client, address, chainId)).filter(
+    const adaptersContracts = (await selectAdaptersContractsToken(client, address, chainId)).filter(
       (contract) => !contract.token || contract.token?.toLowerCase() === address,
     )
 
     const symbol = adaptersContracts[0]?.symbol
     const decimals = adaptersContracts[0]?.decimals
     const category = adaptersContracts[0]?.category
-    const adapterId = adaptersContracts[0]?.adapterId
+    const adapterId = adaptersContracts[0]?.adapter_id
 
     const contractsUnderlyings = adaptersContracts[0]?.underlyings
 
