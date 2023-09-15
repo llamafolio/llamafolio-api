@@ -15,10 +15,11 @@ export const client = createClient({
   host: environment.CLICKHOUSE_HOST || 'http://localhost:8123',
   username: environment.CLICKHOUSE_USER || 'default',
   password: environment.CLICKHOUSE_PASSWORD || '',
+  max_open_connections: 1_000,
   keep_alive: {
-    enabled: true,
-    socket_ttl: 2500,
-    retry_on_expired_socket: true,
+    enabled: false,
+    // socket_ttl: 2500,
+    // retry_on_expired_socket: true,
   },
   clickhouse_settings: {
     async_insert: 1,
