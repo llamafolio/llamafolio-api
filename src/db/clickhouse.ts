@@ -15,7 +15,7 @@ export const client = createClient({
   host: environment.CLICKHOUSE_HOST || 'http://localhost:8123',
   username: environment.CLICKHOUSE_USER || 'default',
   password: environment.CLICKHOUSE_PASSWORD || '',
-  max_open_connections: 1_000,
+  max_open_connections: 50,
   keep_alive: {
     enabled: false,
     // socket_ttl: 2500,
