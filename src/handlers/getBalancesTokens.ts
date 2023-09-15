@@ -56,9 +56,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   }
 
   try {
-    const tokens = await getWalletInteractions(client, address)
-
-    const tokensByChain = groupBy(tokens, 'chain')
+    const tokensByChain = await getWalletInteractions(client, address)
 
     // add wallet adapter on each non-indexed chain, assuming there was an interaction with each token
     const nonIndexedChains = allChains.filter((chain) => !chain.indexed)
