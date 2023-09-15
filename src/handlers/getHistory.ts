@@ -44,7 +44,7 @@ interface IHistory {
 }
 
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
-  const address = event.pathParameters?.address
+  const address = event.pathParameters?.address?.toLowerCase()
 
   if (!address) {
     return badRequest('Missing address parameter')
@@ -100,7 +100,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     const transactions = await selectHistory(
       client,
-      address.toLowerCase(),
+      address,
       limit,
       offset,
       toStartOfDay(new Date(fromTimestamp)),

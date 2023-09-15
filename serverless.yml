@@ -116,7 +116,7 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}/tokens
-    timeout: 29
+    timeout: 15
     memorySize: 512
 
   getContract:
@@ -143,7 +143,7 @@ functions:
       - httpApi:
           method: get
           path: /history/{address}
-    timeout: 25
+    timeout: 29
 
   getInfoStats:
     handler: src/handlers/getInfoStats.handler
@@ -194,7 +194,7 @@ functions:
       - httpApi:
           method: get
           path: /snapshots/{address}/latest
-    timeout: 15
+    timeout: 8
 
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler
