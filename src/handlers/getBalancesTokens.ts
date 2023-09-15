@@ -3,7 +3,7 @@
 
 import walletAdapter from '@adapters/wallet'
 import { client } from '@db/clickhouse'
-import { getWalletInteractions, groupContracts } from '@db/contracts'
+import { getWalletInteractions } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy } from '@lib/array'
@@ -56,9 +56,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   }
 
   try {
-    const tokens = await getWalletInteractions(client, address)
-
-    const tokensByChain = groupBy(tokens, 'chain')
+    const tokensByChain = await getWalletInteractions(client, address)
 
     // add wallet adapter on each non-indexed chain, assuming there was an interaction with each token
     const nonIndexedChains = allChains.filter((chain) => !chain.indexed)
@@ -79,7 +77,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
           try {
             const hrstart = process.hrtime()
 
-            const contracts = groupContracts(tokensByChain[chain]) || []
+            const contracts = { erc20: tokensByChain[chain] }
 
             const ctx: BalancesContext = { address, chain: chain as Chain, adapterId: walletAdapter.id }
 

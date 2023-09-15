@@ -1,5 +1,6 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import type { Contract, ContractStandard } from '@lib/adapter'
+import { groupBy, keyBy } from '@lib/array'
 import { chainByChainId, chainById } from '@lib/chains'
 import { toDateTime } from '@lib/fmt'
 
@@ -169,15 +170,18 @@ export async function getContractsInteractions(
 export async function getWalletInteractions(client: ClickHouseClient, address: string) {
   const queryRes = await client.query({
     query: `
-      SELECT *
-      FROM lf.adapters_contracts FINAL
+      SELECT
+        "chain",
+        "address",
+        JSONExtractString("data", 'symbol') AS "symbol",
+        JSONExtractUInt("data", 'decimals') AS "decimals"
+      FROM lf.adapters_contracts
       WHERE
         adapter_id = 'wallet' AND
         ("chain", "address") IN (
           SELECT "chain", "address"
           FROM evm_indexer.token_transfers_received_mv
           WHERE "to" = {address: String}
-          GROUP BY "chain", "address"
         );
     `,
     query_params: {
@@ -186,10 +190,40 @@ export async function getWalletInteractions(client: ClickHouseClient, address: s
   })
 
   const res = (await queryRes.json()) as {
-    data: ContractStorage[]
+    data: { chain: number; address: string; decimals: number; symbol: string }[]
   }
 
-  return fromStorage(res.data)
+  const rowsByChain = groupBy(res.data, 'chain')
+
+  const tokensByChain: { [chain: string]: Contract[] } = {}
+
+  for (const chainId in rowsByChain) {
+    const chain = chainByChainId[parseInt(chainId)]?.id
+    if (!chain) {
+      console.error(`Could not find chain ${chainId}`)
+      continue
+    }
+
+    tokensByChain[chain] = []
+
+    const rowByAddress = keyBy(rowsByChain[chainId], 'address')
+
+    for (const address in rowByAddress) {
+      const row = rowByAddress[address]
+      if (!row.decimals || !row.symbol) {
+        continue
+      }
+
+      tokensByChain[chain].push({
+        chain,
+        address: address as `0x${string}`,
+        decimals: row.decimals,
+        symbol: row.symbol,
+      })
+    }
+  }
+
+  return tokensByChain
 }
 
 export async function getContract(client: ClickHouseClient, chainId: number, address: string) {

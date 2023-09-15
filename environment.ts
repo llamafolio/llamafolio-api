@@ -11,7 +11,6 @@ export const environmentSchema = z.object({
   LLAMANODES_API_KEY: z.string().optional(),
   DEFILLAMA_LABELS_API_KEY: z.string().optional(),
   ANKR_API_KEY: z.string().optional().default(''),
-  OPTIMISM_RPC: z.string().optional(),
   IS_OFFLINE: z.literal('true').or(z.literal('false')).optional(),
   API_URL: z.string().optional(),
   AWS_GATEWAY_API_ID_DEV: z.string().optional(),

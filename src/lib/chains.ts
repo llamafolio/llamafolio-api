@@ -4,7 +4,7 @@ import { isNotFalsy } from '@lib/type'
 import type { Address, HttpTransport, WebSocketTransport } from 'viem'
 import { http, webSocket } from 'viem'
 
-const { LLAMANODES_API_KEY, OPTIMISM_RPC } = environment
+const { LLAMANODES_API_KEY } = environment
 
 /**
  * Supported chains
