@@ -207,12 +207,17 @@ export function toStorage(balances: Balance[]) {
 export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHouseClient, fromAddress: string) {
   const queryRes = await client.query({
     query: `
-      SELECT "chain", sum("balance_usd") as "balance_usd", sum("debt_usd") as "debt_usd", sum("reward_usd") as "reward_usd", max("timestamp") as "last_timestamp"
-      FROM lf.adapters_balances
-      WHERE
-        from_address = {fromAddress: String} AND
-        "timestamp" = (SELECT max("timestamp") AS "timestamp" FROM lf.adapters_balances WHERE from_address = {fromAddress: String})
-      GROUP BY "chain";
+    SELECT
+      "chain",
+      "timestamp",
+      sum("balance_usd") as "balance_usd",
+      sum("debt_usd") as "debt_usd",
+      sum("reward_usd") as "reward_usd"
+    FROM lf.adapters_balances
+    where from_address = {fromAddress: String}
+    GROUP BY "chain", "timestamp"
+    ORDER BY "timestamp" DESC
+    LIMIT 1 BY "chain"
     `,
     query_params: {
       fromAddress: fromAddress.toLowerCase(),
@@ -220,7 +225,7 @@ export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHou
   })
 
   const res = (await queryRes.json()) as {
-    data: { chain: string; balance_usd: string; debt_usd: string; reward_usd: string; last_timestamp: string }[]
+    data: { chain: string; balance_usd: string; debt_usd: string; reward_usd: string; timestamp: string }[]
   }
 
   if (res.data.length === 0) {
@@ -244,7 +249,7 @@ export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHou
     debtUSD: sum(chains.map((chain) => chain.debtUSD)),
     rewardUSD: sum(chains.map((chain) => chain.rewardUSD)),
     chains,
-    updatedAt: unixFromDateTime(res.data[0].last_timestamp),
+    updatedAt: unixFromDateTime(res.data[0].timestamp),
   }
 }
 
