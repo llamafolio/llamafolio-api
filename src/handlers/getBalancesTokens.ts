@@ -3,7 +3,7 @@
 
 import walletAdapter from '@adapters/wallet'
 import { client } from '@db/clickhouse'
-import { getWalletInteractions, groupContracts } from '@db/contracts'
+import { getWalletInteractions } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy } from '@lib/array'
@@ -77,7 +77,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
           try {
             const hrstart = process.hrtime()
 
-            const contracts = groupContracts(tokensByChain[chain]) || []
+            const contracts = { erc20: tokensByChain[chain] }
 
             const ctx: BalancesContext = { address, chain: chain as Chain, adapterId: walletAdapter.id }
 
