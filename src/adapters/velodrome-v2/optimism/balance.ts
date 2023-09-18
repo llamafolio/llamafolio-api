@@ -15,18 +15,11 @@ const abi = {
   },
 } as const
 
-const VELO: Token = {
-  chain: 'optimism',
-  address: '0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db',
-  decimals: 18,
-  symbol: 'VELO',
+export async function getVelodromeBalances(ctx: BalancesContext, pairs: Contract[], reward: Token) {
+  return Promise.all([getPairsBalances(ctx, pairs), getGaugesBalances(ctx, pairs, reward)])
 }
 
-export async function getVelodromeBalances(ctx: BalancesContext, pairs: Contract[]) {
-  return Promise.all([getPairsBalances(ctx, pairs), getGaugesBalances(ctx, pairs)])
-}
-
-async function getGaugesBalances(ctx: BalancesContext, pairs: Contract[]): Promise<Balance[]> {
+async function getGaugesBalances(ctx: BalancesContext, pairs: Contract[], reward: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
   pairs = pairs.filter((pair) => pair.gauge !== ADDRESS_ZERO)
 
@@ -56,7 +49,7 @@ async function getGaugesBalances(ctx: BalancesContext, pairs: Contract[]): Promi
       ...pair,
       amount: userBalanceRes.output,
       underlyings,
-      rewards: [{ ...VELO, amount: userEarnedRes.output }],
+      rewards: [{ ...reward, amount: userEarnedRes.output }],
       category: 'farm',
     })
   }
