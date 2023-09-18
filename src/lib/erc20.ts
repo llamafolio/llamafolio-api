@@ -482,3 +482,40 @@ export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${st
 
   return tokens.map((address) => found[address]).filter(isNotNullish)
 }
+
+export async function getTokenDetails(ctx: BaseContext, tokens: readonly `0x${string}`[]) {
+  const found: { [key: string]: Partial<Token> } = {}
+  for (const address of tokens) {
+    const tokenInfo = retrieveToken(ctx.chain, address.toLowerCase())
+    if (tokenInfo) {
+      found[address] = tokenInfo as Token
+    }
+  }
+
+  const missingTokens = tokens.filter((address) => !found[address])
+
+  const calls: Call<typeof abi.symbol>[] = missingTokens.map((address) => ({ target: address }))
+
+  const [symbols, decimals, names] = await Promise.all([
+    multicall({ ctx, calls, abi: abi.symbol }),
+    multicall({ ctx, calls, abi: abi.decimals }),
+    multicall({ ctx, calls, abi: abi.name }),
+  ])
+
+  for (let i = 0; i < missingTokens.length; i++) {
+    const address = missingTokens[i]
+    const symbolRes = symbols[i]
+    const decimalsRes = decimals[i]
+    const nameRes = names[i]
+
+    found[address] = {
+      chain: ctx.chain,
+      address,
+      symbol: symbolRes.output || undefined,
+      decimals: decimalsRes.output || undefined,
+      name: nameRes.output || undefined,
+    }
+  }
+
+  return tokens.map((address) => found[address]).filter(isNotNullish)
+}

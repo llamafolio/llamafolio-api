@@ -1,9 +1,11 @@
 import { client } from '@db/clickhouse'
 import { selectHistory } from '@db/history'
 import { badRequest, serverError, success } from '@handlers/response'
+import type { BaseContext } from '@lib/adapter'
 import { isHex } from '@lib/buf'
 import { type Chain, chainByChainId } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
+import { getTokenDetails } from '@lib/erc20'
 import { toNextDay, toStartOfDay, unixFromDateTime } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
@@ -23,6 +25,7 @@ export interface ITransaction {
   success: boolean
   adapterId?: string | null
   tokenTransfers: {
+    name?: string
     symbol?: string
     decimals?: number
     tokenAddress: string
@@ -146,9 +149,10 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     }
 
     // 1. collect tokens / coins
-    // 2. fetch their prices
-    // 3. attach prices to tokens / coins
+    // 2. fetch their prices + details
+    // 3. attach prices + details to tokens / coins
     const tokensByChain: { [chain: string]: string[] } = {}
+    const tokensInfoByChainAddress: { [chain: string]: { [address: string]: Token } } = {}
 
     for (const transaction of transactionsData) {
       // gas price
@@ -170,6 +174,22 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     const tokens = Object.keys(tokensByChain).flatMap((chain) =>
       tokensByChain[chain].map((address) => ({ chain, address }) as Token),
+    )
+
+    // Fetch tokens info
+    await Promise.all(
+      Object.keys(tokensByChain).map(async (chain) => {
+        const ctx: BaseContext = { chain: chain as Chain, adapterId: '' }
+        const tokens = await getTokenDetails(ctx, tokensByChain[chain] as `0x${string}`[])
+
+        for (const token of tokens) {
+          if (!tokensInfoByChainAddress[chain]) {
+            tokensInfoByChainAddress[chain] = {}
+          }
+
+          tokensInfoByChainAddress[chain][token.address] = token
+        }
+      }),
     )
 
     if (tokens.length > 0) {
@@ -195,6 +215,15 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
         // token transfers
         if (transaction.tokenTransfers) {
           for (const transfer of transaction.tokenTransfers) {
+            // info
+            const tokenInfo = tokensInfoByChainAddress[transaction.chain][transfer.tokenAddress]
+            if (tokenInfo) {
+              transfer.decimals = tokenInfo.decimals
+              transfer.symbol = tokenInfo.symbol
+              transfer.name = tokenInfo.name
+            }
+
+            // price
             const key = getTokenKey({ chain, address: transfer.tokenAddress })
             if (key) {
               const priceInfo = prices.coins[key]
