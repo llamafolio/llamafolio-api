@@ -1,4 +1,5 @@
 import { getVelodromeBalances } from '@adapters/velodrome-v2/optimism/balance'
+import { getLockerFeesBribesBalances } from '@adapters/velodrome-v2/optimism/locker'
 import { getVelodromePairsContracts } from '@adapters/velodrome-v2/optimism/pair'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -21,11 +22,18 @@ const voter: Contract = {
   address: '0x16613524e02ad97eDfeF371bC883F2F5d6C480A5',
 }
 
+const locker: Contract = {
+  chain: 'base',
+  address: '0xebf418fe2512e7e6bd9b87a8f0f294acdc67e6b4',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
   const pairs = await getVelodromePairsContracts(ctx, factory, voter)
 
+  const lockerWithBribesAndFees = { ...locker, pairs }
+
   return {
-    contracts: { pairs },
+    contracts: { pairs, lockerWithBribesAndFees },
     revalidate: 60 * 60,
   }
 }
@@ -33,6 +41,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: (...args) => getVelodromeBalances(...args, AERO),
+    lockerWithBribesAndFees: (...args) => getLockerFeesBribesBalances(...args, AERO),
   })
 
   return {

@@ -53,13 +53,8 @@ type VelodromeBalance = Balance & {
 
 export async function getLockerFeesBribesBalances(ctx: BalancesContext, locker: Contract, asset: Token) {
   const lockers = await getVelodromeLockerBalances(ctx, locker, asset)
-
-  const feesAndBribes = await getVelodromeBribesBalances(
-    ctx,
-    locker,
-    lockers.map((locker) => locker.tokenId),
-  )
-
+  const tokenIds = lockers.map((locker) => locker.tokenId)
+  const feesAndBribes = await getVelodromeBribesBalances(ctx, locker, tokenIds)
   return [...lockers, ...feesAndBribes]
 }
 
