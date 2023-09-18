@@ -17,18 +17,7 @@ export interface IHistoryTransaction {
   timestamp: string
   adapter_ids?: string[]
   method_name?: string
-  token_transfers: [
-    string,
-    string,
-    string,
-    number,
-    string,
-    string,
-    string | undefined,
-    number | undefined,
-    string | undefined,
-    string | undefined,
-  ][]
+  token_transfers: [string, string, string, number, string, string, string | undefined][]
 }
 
 export async function selectHistory(
@@ -93,9 +82,8 @@ export async function selectHistory(
         SELECT
           tt."chain" AS "chain",
           tt."transaction_hash" AS "hash",
-          groupArray((tt."from", tt."to", tt."address", tt."log_index", tt."type", tt."value", tt."id", tk."decimals", tk."symbol", tk."name")) AS "token_transfers"
+          groupArray((tt."from", tt."to", tt."address", tt."log_index", tt."type", tt."value", tt."id")) AS "token_transfers"
         FROM evm_indexer.token_transfers AS "tt"
-        LEFT JOIN evm_indexer.tokens AS "tk" ON (tk."chain", tk."address") = (tt."chain", tt."address")
         WHERE
           (tt."chain", tt."transaction_hash", tt."timestamp") IN "sub_history" AND
           (tt."from" = {address: String} OR tt."to" = {address: String})
