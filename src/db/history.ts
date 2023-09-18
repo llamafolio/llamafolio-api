@@ -46,7 +46,7 @@ export async function selectHistory(
   const queryRes = await client.query({
     query: `
       WITH "sub_history" AS (
-        SELECT "chain", "hash"
+        SELECT "chain", "hash", "timestamp"
         FROM evm_indexer.transactions_history_agg
         WHERE
           "target" = {address: String} AND
@@ -74,9 +74,7 @@ export async function selectHistory(
           t."timestamp" AS "timestamp"
         FROM evm_indexer.transactions AS "t"
         WHERE
-          t."timestamp" <= {toTimestamp: DateTime} AND
-          t."timestamp" >= {fromTimestamp: DateTime} AND
-          (t."chain", t."hash") IN "sub_history"
+          (t."chain", t."hash", t."timestamp") IN "sub_history"
       ),
       "sub_adapters_contracts" AS (
         SELECT
@@ -99,9 +97,7 @@ export async function selectHistory(
         FROM evm_indexer.token_transfers AS "tt"
         LEFT JOIN evm_indexer.tokens AS "tk" ON (tk."chain", tk."address") = (tt."chain", tt."address")
         WHERE
-          tt."timestamp" <= {toTimestamp: DateTime} AND
-          tt."timestamp" >= {fromTimestamp: DateTime} AND
-          (tt."chain", tt."transaction_hash") IN "sub_history" AND
+          (tt."chain", tt."transaction_hash", tt."timestamp") IN "sub_history" AND
           (tt."from" = {address: String} OR tt."to" = {address: String})
         GROUP BY tt."chain", tt."transaction_hash"
       ),
