@@ -50,14 +50,14 @@ const mkUSD: Token = {
   decimals: 18,
 }
 
-export async function getPrismaLendBalances(ctx: BalancesContext, vaults: Contract[]): Promise<Balance[][]> {
+export async function getPrismaLendBalances(ctx: BalancesContext, vaults: Contract[]) {
   const userBalances = await multicall({
     ctx,
     calls: vaults.map((vault) => ({ target: vault.troves, params: [ctx.address] }) as const),
     abi: abi.Troves,
   })
 
-  const balances: Balance[][] = mapSuccessFilter(userBalances, (res, idx) => {
+  const balances = mapSuccessFilter(userBalances, (res, idx) => {
     const [debt, coll, _stake, _status, _arrayIndex, _activeInterestIndex] = res.output
 
     const lendBalance: LendBalance = {
@@ -76,7 +76,7 @@ export async function getPrismaLendBalances(ctx: BalancesContext, vaults: Contra
       category: 'borrow',
     }
 
-    return [lendBalance, borrowBalance]
+    return { balances: [lendBalance, borrowBalance] }
   })
 
   return balances
