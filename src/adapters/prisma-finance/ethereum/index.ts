@@ -86,13 +86,15 @@ export const getContracts = async (ctx: BaseContext) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    vaults: getPrismaLendBalances,
-    farmer: getPrismaFarmBalance,
-    convexPools: (...args) => getPrismaFarmBalancesFromConvex(...args, metaRegistry),
-  })
+  const [vaultsBalancesGroups, balances] = await Promise.all([
+    getPrismaLendBalances(ctx, contracts.vaults || []),
+    resolveBalances<typeof getContracts>(ctx, contracts, {
+      farmer: getPrismaFarmBalance,
+      convexPools: (...args) => getPrismaFarmBalancesFromConvex(...args, metaRegistry),
+    }),
+  ])
 
   return {
-    groups: [{ balances }],
+    groups: [...vaultsBalancesGroups, { balances }],
   }
 }
