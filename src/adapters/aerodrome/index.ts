@@ -1,10 +1,10 @@
 import type { Adapter } from '@lib/adapter'
 
-import * as optimism from './optimism'
+import * as base from './base'
 
 const adapter: Adapter = {
-  id: 'velodrome',
-  optimism,
+  id: 'aerodrome',
+  base: base,
 }
 
 export default adapter

@@ -1,42 +1,46 @@
 // https://solidlizard.gitbook.io/solidlizard/security/contracts
 
-import { getGaugesBalances } from '@adapters/velodrome/optimism/gauge'
-import { getVotingEscrowBalances } from '@adapters/velodrome/optimism/votingEscrow'
+import { getSolidlizardContracts } from '@adapters/solidlizard/arbitrum/pair'
+import { getSolidlyBalances } from '@adapters/solidly-v2/ethereum/balance'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getPairsBalances } from '@lib/uniswap/v2/pair'
+import { getNFTLockerBalances } from '@lib/lock'
+import type { Token } from '@lib/token'
 
-import { getPairsContracts } from './pair'
-
-const sliz: Contract = {
+const SLIZ: Token = {
   chain: 'arbitrum',
   address: '0x463913d3a3d3d291667d53b8325c598eb88d3b0e',
   name: 'SolidLizard',
   symbol: 'SLIZ',
   decimals: 18,
   coingeckoId: 'solidlizard',
-  stable: false,
 }
 
-const votingEscrow: Contract = {
+const voter: Contract = {
+  chain: 'arbitrum',
+  address: '0x98A1De08715800801E9764349F5A71cBe63F99cc',
+}
+
+const locker: Contract = {
   chain: 'arbitrum',
   address: '0x29d3622c78615A1E7459e4bE434d816b7de293e4',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const { pairs, gauges } = await getPairsContracts(ctx)
+  const pools = await getSolidlizardContracts(ctx, voter)
 
   return {
-    contracts: { pairs, gauges, votingEscrow },
-    revalidate: 60 * 60,
+    contracts: {
+      pools,
+      locker,
+    },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: getPairsBalances,
-    gauges: getGaugesBalances,
-    votingEscrow: (ctx, votingEscrow) => getVotingEscrowBalances(ctx, votingEscrow, sliz),
+    pools: (...args) => getSolidlyBalances(...args, SLIZ),
+    locker: (...args) => getNFTLockerBalances(...args, SLIZ, 'locked'),
   })
 
   return {

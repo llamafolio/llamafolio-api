@@ -4,6 +4,7 @@ import aaveV2 from '@adapters/aave-v2'
 import aaveV3 from '@adapters/aave-v3'
 import abracadabra from '@adapters/abracadabra'
 import across from '@adapters/across'
+import aerodrome from '@adapters/aerodrome'
 import agave from '@adapters/agave'
 import agilityLsd from '@adapters/agility-lsd'
 import alchemix from '@adapters/alchemix'
@@ -233,6 +234,8 @@ import uwuLend from '@adapters/uwu-lend'
 import valasFinance from '@adapters/valas-finance'
 import vector from '@adapters/vector'
 import velodrome from '@adapters/velodrome'
+import velodromeV1 from '@adapters/velodrome-v1'
+import velodromeV2 from '@adapters/velodrome-v2'
 import venus from '@adapters/venus'
 import verse from '@adapters/verse'
 import vesper from '@adapters/vesper'
@@ -256,6 +259,7 @@ export const adapters: Adapter[] = [
   aaveV3,
   abracadabra,
   across,
+  aerodrome,
   agave,
   agilityLsd,
   alchemix,
@@ -485,6 +489,8 @@ export const adapters: Adapter[] = [
   valasFinance,
   vector,
   velodrome,
+  velodromeV1,
+  velodromeV2,
   venus,
   verse,
   vesper,
