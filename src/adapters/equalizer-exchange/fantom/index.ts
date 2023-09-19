@@ -1,42 +1,43 @@
-// https://equalizer0x.gitbook.io/equalizer-exchange-docs/guides/deployed-contract-addresses
+// https://docs.equalizer.exchange/overview/contract-addresses/
 
-import { getGaugesBalances } from '@adapters/velodrome/optimism/gauge'
-import { getVotingEscrowBalances } from '@adapters/velodrome/optimism/votingEscrow'
+import { getSolidlyBalances } from '@adapters/solidly-v2/ethereum/balance'
+import { getThenaContracts } from '@adapters/thena/bsc/pair'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getPairsBalances } from '@lib/uniswap/v2/pair'
+import { getNFTLockerBalances } from '@lib/lock'
+import type { Token } from '@lib/token'
 
-import { getPairsContracts } from './pair'
-
-const equal: Contract = {
+const EQUAL: Token = {
   chain: 'fantom',
   address: '0x3fd3a0c85b70754efc07ac9ac0cbbdce664865a6',
   name: 'Equalizer DEX',
   symbol: 'EQUAL',
   decimals: 18,
   coingeckoId: 'equalizer-dex',
-  stable: false,
 }
 
-const votingEscrow: Contract = {
+const voter: Contract = {
   chain: 'fantom',
-  address: '0x8313f3551C4D3984FfbaDFb42f780D0c8763Ce94',
+  address: '0xe3d1a117df7dcac2eb0ac8219341bad92f18dac1',
+}
+
+const locker: Contract = {
+  chain: 'fantom',
+  address: '0x8313f3551c4d3984ffbadfb42f780d0c8763ce94',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const { pairs, gauges } = await getPairsContracts(ctx)
+  const pools = await getThenaContracts(ctx, voter)
 
   return {
-    contracts: { pairs, gauges, votingEscrow },
-    revalidate: 60 * 60,
+    contracts: { pools, locker },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: getPairsBalances,
-    gauges: getGaugesBalances,
-    votingEscrow: (ctx, votingEscrow) => getVotingEscrowBalances(ctx, votingEscrow, equal),
+    pools: (...args) => getSolidlyBalances(...args, EQUAL),
+    locker: (...args) => getNFTLockerBalances(...args, EQUAL, 'locked'),
   })
 
   return {
