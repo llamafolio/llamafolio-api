@@ -2,6 +2,7 @@ import { getThenaBalances } from '@adapters/thena/bsc/balance'
 import { getThenaContracts } from '@adapters/thena/bsc/pair'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getNFTLockerBalances } from '@lib/lock'
 import type { Token } from '@lib/token'
 
 const THE: Token = {
@@ -25,17 +26,15 @@ export const getContracts = async (ctx: BaseContext) => {
   const pools = await getThenaContracts(ctx, voter)
 
   return {
-    contracts: { pools },
+    contracts: { pools, locker },
     revalidate: 60 * 60,
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  console.log(contracts)
-
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: (...args) => getThenaBalances(...args, THE),
-    // lockerWithBribesAndFees: (...args) => getLockerFeesBribesBalances(...args, THE),
+    locker: (...args) => getNFTLockerBalances(...args, THE, 'locked'),
   })
 
   return {
