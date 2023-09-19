@@ -105,6 +105,8 @@ async function getVelodromeBribesBalances(
   locker: Contract,
   lockerIds: bigint[],
 ): Promise<Balance[]> {
+  const balances: Balance[] = []
+
   const callsWithMapping = lockerIds.flatMap((lockerId) =>
     locker.pairs.flatMap((pair: Contract) => [
       ...pair.bribeTokens.map((token: Contract) => ({
@@ -140,25 +142,29 @@ async function getVelodromeBribesBalances(
     'provider',
   )
 
-  const feeBalance: Balance = {
-    chain: ctx.chain,
-    address: locker.address,
-    symbol: 'FEE',
-    amount: 1n,
-    underlyings: underlyings.fee,
-    rewards: undefined,
-    category: 'reward',
+  if (underlyings.fee && underlyings.fee.length > 0) {
+    balances.push({
+      chain: ctx.chain,
+      address: locker.address,
+      symbol: 'FEE',
+      amount: 1n,
+      underlyings: underlyings.fee,
+      rewards: undefined,
+      category: 'reward',
+    })
   }
 
-  const bribeBalance: Balance = {
-    chain: ctx.chain,
-    address: locker.address,
-    symbol: 'INCENTIVE',
-    amount: 1n,
-    underlyings: underlyings.bribe,
-    rewards: undefined,
-    category: 'reward',
+  if (underlyings.bribe && underlyings.bribe.length > 0) {
+    balances.push({
+      chain: ctx.chain,
+      address: locker.address,
+      symbol: 'INCENTIVE',
+      amount: 1n,
+      underlyings: underlyings.bribe,
+      rewards: undefined,
+      category: 'reward',
+    })
   }
 
-  return [feeBalance, bribeBalance]
+  return balances
 }

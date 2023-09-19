@@ -1,99 +1,53 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
+import { call } from '@lib/call'
+import { multicall } from '@lib/multicall'
+import { getPairsDetails } from '@lib/uniswap/v2/factory'
 
-export interface PairsResponse {
-  success: boolean
-  data: Pair[]
-  meta: Meta
-}
+const abi = {
+  length: {
+    inputs: [],
+    name: 'length',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pools: {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'pools',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  gauges: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'gauges',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+} as const
 
-export interface Pair {
-  address: `0x${string}`
-  symbol: string
-  totalSupply: number
-  tvl: number
-  isStable: boolean
-  gauge: Gauge
-  token0: Token
-  token1: Token
-  isValid: boolean
-}
+export async function getThenaContracts(ctx: BaseContext, voter: Contract): Promise<Contract[]> {
+  const poolLength = await call({ ctx, target: voter.address, abi: abi.length })
 
-export interface Gauge {
-  tvl: number
-  apr: number
-  projectedApr: number
-  voteApr: number
-  totalSupply: number
-  address: `0x${string}`
-  fee: `0x${string}`
-  bribe: `0x${string}`
-  weight: number
-  weightPercent: number
-  bribesInUsd: number
-  bribes: Bribes | null
-}
+  const poolsAddressesRes = await multicall({
+    ctx,
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: voter.address, params: [idx] }) as const),
+    abi: abi.pools,
+  })
 
-export interface Bribes {
-  fee: Bribe[] | null
-  bribe: Bribe[] | null
-}
+  const gaugesAddressesRes = await multicall({
+    ctx,
+    calls: mapSuccessFilter(poolsAddressesRes, (res) => ({ target: voter.address, params: [res.output] }) as const),
+    abi: abi.gauges,
+  })
 
-export interface Bribe {
-  amount: string
-  symbol: string
-  address: string
-  decimals: number
-}
-
-export interface Token {
-  address: `0x${string}`
-  symbol: string
-  decimals: number
-  reserve: number
-  logoURI: string
-}
-
-export interface Meta {
-  total_supply: number
-  circulating_supply: number
-  locked_supply: number
-}
-
-export interface GaugeContract extends Contract {
-  token: `0x${string}`
-  bribeAddress?: `0x${string}`
-  feesAddress?: `0x${string}`
-}
-
-export async function getPairsContracts(ctx: BaseContext) {
-  // use API directly as we need to look for transactions to retrieve gauges
-  // TODO: fetch on-chain info
-  const res = await fetch('https://api.thena.fi/api/v1/pools')
-  if (!res.ok) {
-    throw new Error('failed to fetch pairs')
-  }
-
-  const json: PairsResponse = await res.json()
-
-  const pairs: Contract[] = (json?.data || []).map((pair) => ({
+  const pools = mapSuccessFilter(gaugesAddressesRes, (res) => ({
     chain: ctx.chain,
-    address: pair.address,
-    stable: pair.isStable,
-    category: 'lp',
-    underlyings: [pair.token0.address, pair.token1.address],
+    address: res.input.params[0],
+    gauge: res.output,
   }))
 
-  const gauges: GaugeContract[] = (json?.data || [])
-    .map((pair) => ({
-      chain: ctx.chain,
-      address: pair.gauge.address,
-      token: pair.address,
-      stable: pair.isStable,
-      bribeAddress: pair.gauge.bribe,
-      feesAddress: pair.gauge.fee,
-      underlyings: [pair.token0.address, pair.token1.address],
-    }))
-    .filter((gauge) => gauge.address)
-
-  return { pairs, gauges }
+  return getPairsDetails(ctx, pools)
 }
