@@ -1,46 +1,43 @@
 // https://docs.solidly.com/resources/contract-addresses
 
-import { getGaugesBalances } from '@adapters/velodrome/optimism/gauge'
-import { getVotingEscrowBalances } from '@adapters/velodrome/optimism/votingEscrow'
+import { getSolidlyBalances } from '@adapters/solidly-v2/ethereum/balance'
+import { getThenaContracts } from '@adapters/thena/bsc/pair'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getPairsBalances } from '@lib/uniswap/v2/pair'
+import { getNFTLockerBalances } from '@lib/lock'
+import type { Token } from '@lib/token'
 
-import { getLensContracts } from './lens'
-
-const solid: Contract = {
+const SOLID: Token = {
   chain: 'ethereum',
   address: '0x777172d858dc1599914a1c4c6c9fc48c99a60990',
   name: 'Solidly',
   symbol: 'SOLID',
   decimals: 18,
   coingeckoId: 'solidlydex',
-  stable: false,
 }
 
-const votingEscrow: Contract = {
+const voter: Contract = {
+  chain: 'ethereum',
+  address: '0x777034fEF3CCBed74536Ea1002faec9620deAe0A',
+}
+
+const locker: Contract = {
   chain: 'ethereum',
   address: '0x77730ed992d286c53f3a0838232c3957daeaaf73',
 }
 
-const lens: Contract = {
-  chain: 'ethereum',
-  address: '0x7778D2091E3c97a259367c2cfc621cF839Bbbe2c',
-}
-
 export const getContracts = async (ctx: BaseContext) => {
-  const { pairs, gauges } = await getLensContracts(ctx, lens)
+  const pools = await getThenaContracts(ctx, voter)
 
   return {
-    contracts: { pairs, gauges, votingEscrow },
+    contracts: { pools, locker },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: getPairsBalances,
-    gauges: getGaugesBalances,
-    votingEscrow: (ctx, votingEscrow) => getVotingEscrowBalances(ctx, votingEscrow, solid),
+    pools: (...args) => getSolidlyBalances(...args, SOLID),
+    locker: (...args) => getNFTLockerBalances(...args, SOLID, 'locked'),
   })
 
   return {
