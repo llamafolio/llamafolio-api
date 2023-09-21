@@ -1,40 +1,46 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { isNotNullish } from '@lib/type'
 
 const NATIVE: Record<string, string> = {
   ethereum: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  bsc: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+  arbitrum: '0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+  base: '0x4200000000000000000000000000000000000006',
+  optimism: '0x4200000000000000000000000000000000000006',
+  fantom: '0x21be370d5312f44cb42ce377bc9b8a0cef1a4c83',
+  polygon: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
 }
 
 export async function getBeefyPools(ctx: BaseContext): Promise<Contract[]> {
-  const API_URL = `https://databarn.beefy.com/api/v1/beefy/product/${ctx.chain}?include_eol=false`
+  const API_URL = `https://api.beefy.finance/vaults`
   const vaults: any[] = await fetch(API_URL).then((response) => response.json())
 
   const pools: Contract[] = vaults
-    .map(({ productData }) => {
-      if (!productData?.vault) return null
-
+    .filter((vault) => vault.chain === ctx.chain && vault.status !== 'eol')
+    .map((vault) => {
       const {
         chain,
-        token_name,
-        token_decimals,
-        contract_address,
-        want_address,
+        earnContractAddress,
+        tokenAddress,
+        token,
+        tokenDecimals,
+        tokenProviderId,
         assets,
-        protocol,
-        want_price_feed_key,
-      } = productData.vault
+        strategy,
+        oracleId,
+      } = vault
+
       return {
         chain,
-        address: contract_address,
-        decimals: token_decimals,
-        symbol: token_name,
-        lpToken: want_address,
+        address: earnContractAddress,
+        symbol: token,
+        decimals: tokenDecimals,
+        lpToken: tokenAddress,
         underlyings: assets,
-        beefyKey: want_price_feed_key,
-        protocol,
+        strategy,
+        beefyKey: oracleId,
+        provider: tokenProviderId,
       }
     })
-    .filter(isNotNullish)
 
   return getBeefyUnderlyings(ctx, pools)
 }

@@ -1,11 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { groupBy } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { parseEther } from 'viem'
-
-import type { fmtProviderBalancesParams } from './utils'
-import { fmtBalancerProvider, fmtCurveProvider, fmtSolidlyProvider, fmtSushiProvider } from './utils'
 
 const abi = {
   getPricePerFullShare: {
@@ -17,90 +13,133 @@ const abi = {
   },
 } as const
 
-export async function getYieldBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
-  const balances: Balance[] = []
+type BeefyBalances = Balance & {
+  beefyKey: string
+}
 
-  const [balanceOfsRes, rateOfsRes] = await Promise.all([
+export async function getBeefyBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
+  const balances: BeefyBalances[] = []
+
+  const [userBalancesRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] as const })),
       abi: erc20Abi.balanceOf,
     }),
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.getPricePerFullShare }),
   ])
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-    const balanceOfRes = balanceOfsRes[poolIdx]
-    const rateOfRes = rateOfsRes[poolIdx]
+  for (const [index, pool] of pools.entries()) {
+    const userBalanceRes = userBalancesRes[index]
+    const exchangeRateRes = exchangeRatesRes[index]
 
-    if (!balanceOfRes.success || !rateOfRes.success) {
+    if (!userBalanceRes.success || !exchangeRateRes.success || userBalanceRes.output === 0n) {
       continue
     }
 
     balances.push({
       ...pool,
-      amount: (balanceOfRes.output * rateOfRes.output) / parseEther('1.0'),
+      amount: (userBalanceRes.output * exchangeRateRes.output) / parseEther('1.0'),
       underlyings: pool.underlyings as Contract[],
       rewards: undefined,
+      beefyKey: pool.beefyKey,
       category: 'farm',
     })
   }
 
-  return getUnderlyingsBeefyBalances(ctx, balances)
+  return getBeefyUnderlyingsBalances(ctx, balances)
 }
 
-const providers: Record<string, Record<string, Provider | undefined>> = {
-  ethereum: {
-    solidly: fmtSolidlyProvider,
-    sushi: fmtSushiProvider,
-    balancer: (...args) => fmtBalancerProvider(...args, '0xba12222222228d8ba445958a75a0704d566bf2c8'),
-    curve: (...args) =>
-      fmtCurveProvider(...args, [{ address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC', underlyingAbi: true }]),
-  },
-  arbitrum: {
-    // TODO: List all providers used on arbitrum and other altchains
-    sushi: fmtSushiProvider,
-    swapfish: fmtSushiProvider,
-    curve: (...args) =>
-      fmtCurveProvider(...args, [
-        { address: '0x0e9fbb167df83ede3240d6a5fa5d40c6c6851e15', underlyingAbi: false },
-        { address: '0x445FE580eF8d70FF569aB36e80c647af338db351', underlyingAbi: true },
-        { address: '0xb17b674D9c5CB2e441F8e196a2f048A81355d031', underlyingAbi: true },
-      ]),
-  },
-}
+async function getBeefyUnderlyingsBalances(ctx: BalancesContext, pools: BeefyBalances[]): Promise<Balance[]> {
+  const API_URL = `https://api.beefy.finance/lps/breakdown`
+  const vaults: any = await fetch(API_URL).then((response) => response.json())
 
-type Provider = (ctx: BalancesContext, pools: fmtProviderBalancesParams[]) => Promise<fmtProviderBalancesParams[]>
+  for (const pool of pools) {
+    const { underlyings } = pool
+    if (!underlyings || !vaults[pool.beefyKey]) continue
 
-const getUnderlyingsBeefyBalances = async (ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> => {
-  // add totalSupply
-  const totalSuppliesRes = await multicall({
-    ctx,
-    calls: pools.map((pool) => ({ target: pool.lpToken })),
-    abi: erc20Abi.totalSupply,
-  })
+    const { tokens, balances: rawBalances, totalSupply: rawTotalSupply } = vaults[pool.beefyKey]
+    const balances = rawBalances.map((balance: number) => BigInt(balance * Math.pow(10, 18)))
+    const totalSupply = BigInt(rawTotalSupply * Math.pow(10, 18))
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const totalSupplyRes = totalSuppliesRes[poolIdx]
-    if (totalSupplyRes.success) {
-      pools[poolIdx].totalSupply = totalSupplyRes.output
+    const remainingUnderlyings = [...underlyings]
+    const matchingUnderlyings: any[] = []
+    const unmatchedTokens: any[] = []
+
+    for (const [index, token] of tokens.entries()) {
+      const matchingUnderlyingIndex: number = remainingUnderlyings.findIndex(
+        (underlying: any) => underlying.address.toLowerCase() === token.toLowerCase(),
+      )
+
+      if (matchingUnderlyingIndex !== -1) {
+        const matchingUnderlying: any = remainingUnderlyings[matchingUnderlyingIndex]
+        const amount = (pool.amount * balances[index]) / totalSupply
+        matchingUnderlying.decimals = 18
+        matchingUnderlying.amount = amount
+
+        matchingUnderlyings.push(matchingUnderlying)
+        remainingUnderlyings.splice(matchingUnderlyingIndex, 1)
+      } else {
+        unmatchedTokens.push({
+          chain: ctx.chain,
+          address: token,
+          amount: (pool.amount * balances[index]) / totalSupply,
+        })
+      }
     }
+
+    const unmatchedUnderlyings = [...remainingUnderlyings]
+    const fmtUnmatchedUnderlyings = await getUnmatchUnderlyings(unmatchedTokens, unmatchedUnderlyings, vaults)
+
+    pool.underlyings = [...matchingUnderlyings, ...(fmtUnmatchedUnderlyings || [])]
   }
 
-  // resolve underlyings
-  const poolsByProvider = groupBy(pools, 'provider')
+  return pools
+}
 
-  return (
-    await Promise.all(
-      Object.keys(poolsByProvider).map((providerId) => {
-        const providerFn = providers[ctx.chain]?.[providerId]
-        if (!providerFn) {
-          return poolsByProvider[providerId] as Balance[]
-        }
+async function getUnmatchUnderlyings(
+  unmatchedTokens: Contract[],
+  unmatchedUnderlyings: Contract[],
+  vaults: any,
+): Promise<any[]> {
+  const API_URL = `https://api.beefy.finance/tokens`
+  const response = await fetch(API_URL)
+  const tokens: { [key: string]: any } = await response.json()
 
-        return providerFn(ctx, poolsByProvider[providerId] as fmtProviderBalancesParams[])
-      }),
-    )
-  ).flat()
+  for (let i = unmatchedTokens.length - 1; i >= 0; i--) {
+    const unmatchedToken = unmatchedTokens[i]
+    const tokensByChain = tokens[unmatchedToken.chain] || {}
+
+    Object.values(tokensByChain).some((vault: any) => {
+      const isAddressMatch =
+        unmatchedToken.address &&
+        vault.address &&
+        unmatchedToken.address.toLocaleLowerCase() === vault.address.toLowerCase()
+
+      if (isAddressMatch && vaults[vault.oracleId]) {
+        const { tokens, balances: rawBalances, totalSupply: rawTotalSupply } = vaults[vault.oracleId]
+        const totalSupply = BigInt(rawTotalSupply * Math.pow(10, 18))
+
+        const tokenBalances = tokens.map((token: string, index: number) => {
+          const balance = (BigInt(rawBalances[index] * Math.pow(10, 18)) * unmatchedToken.amount) / totalSupply
+          return { address: token, amount: balance, chain: unmatchedToken.chain }
+        })
+
+        unmatchedTokens.splice(i, 1, ...tokenBalances)
+        return true
+      }
+      return false
+    })
+  }
+
+  if (unmatchedTokens.length !== unmatchedUnderlyings.length) return []
+
+  return unmatchedTokens.map((token, index) => {
+    const underlying = unmatchedUnderlyings[index]
+    return {
+      ...underlying,
+      decimals: 18,
+      amount: token.amount,
+    }
+  })
 }
