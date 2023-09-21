@@ -55,10 +55,16 @@ async function getBeefyUnderlyingsBalances(ctx: BalancesContext, pools: BeefyBal
   const vaults: any = await fetch(API_URL).then((response) => response.json())
 
   for (const pool of pools) {
+    const unmatchedResults: any[] = []
+
     const { underlyings } = pool
     if (!underlyings) continue
 
-    const { tokens, balances, totalSupply } = vaults[pool.beefyKey]
+    const { tokens, balances: rawBalances, totalSupply: rawTotalSupply } = vaults[pool.beefyKey]
+    const balances = rawBalances.map((balance: number) => BigInt(balance * Math.pow(10, 18)))
+    const totalSupply = BigInt(rawTotalSupply * Math.pow(10, 18))
+
+    let unmatchedUnderlyings = [...underlyings]
 
     tokens.forEach((token: any, index: number) => {
       const matchingUnderlying: any = underlyings.find(
@@ -66,11 +72,47 @@ async function getBeefyUnderlyingsBalances(ctx: BalancesContext, pools: BeefyBal
       )
 
       if (matchingUnderlying) {
-        const amount = (Number(pool.amount) * balances[index]) / totalSupply
-        matchingUnderlying.amount = BigInt(amount)
+        const amount = (pool.amount * balances[index]) / totalSupply
+        matchingUnderlying.decimals = 18
+        matchingUnderlying.amount = amount
+
+        unmatchedUnderlyings = unmatchedUnderlyings.filter(
+          (underlying: any) => underlying.address.toLowerCase() !== matchingUnderlying.address.toLowerCase(),
+        )
+      } else {
+        unmatchedResults.push({
+          chain: ctx.chain,
+          address: token,
+          amount: (pool.amount * balances[index]) / totalSupply,
+          underlyings: unmatchedUnderlyings,
+          totalSupply,
+        })
       }
     })
-  }
 
-  return pools
+    const callsWithIndex: { call: any; resultIndex: number; underlyingIndex: number }[] = []
+    unmatchedResults.forEach((result, resultIndex) => {
+      result.underlyings.forEach((underlying: Contract, underlyingIndex: number) => {
+        callsWithIndex.push({
+          call: { target: underlying.address, params: [result.address] },
+          resultIndex,
+          underlyingIndex,
+        })
+      })
+    })
+
+    const tokenBalances = await multicall({
+      ctx,
+      calls: callsWithIndex.map((c) => c.call),
+      abi: erc20Abi.balanceOf,
+    })
+
+    callsWithIndex.forEach(({ resultIndex, underlyingIndex }, callIndex) => {
+      const result = unmatchedResults[resultIndex]
+      const underlying = result.underlyings[underlyingIndex]
+      underlying.amount = tokenBalances[callIndex].output
+    })
+  }
 }
+
+// TEST_ADDRESS 0x6e466ee4905962b2375d152c81c2730dd9c4d78b
