@@ -85,34 +85,46 @@ async function getBeefyUnderlyingsBalances(ctx: BalancesContext, pools: BeefyBal
           address: token,
           amount: (pool.amount * balances[index]) / totalSupply,
           underlyings: unmatchedUnderlyings,
-          totalSupply,
         })
       }
     })
 
-    const callsWithIndex: { call: any; resultIndex: number; underlyingIndex: number }[] = []
-    unmatchedResults.forEach((result, resultIndex) => {
-      result.underlyings.forEach((underlying: Contract, underlyingIndex: number) => {
-        callsWithIndex.push({
-          call: { target: underlying.address, params: [result.address] },
-          resultIndex,
-          underlyingIndex,
-        })
+    const fmtUnmatchedResults = await getUnmatchUnderlyings(ctx, unmatchedResults)
+    for (const fmtUnmatchedResult of fmtUnmatchedResults) {
+      const underlyings = fmtUnmatchedResult.underlyings as Contract[]
+      if (!underlyings) {
+        continue
+      }
+
+      const { tokens, balances: rawBalances, totalSupply: rawTotalSupply } = vaults[fmtUnmatchedResult.beefyKey]
+      const balances = rawBalances.map((balance: number) => BigInt(balance * Math.pow(10, 18)))
+      const totalSupply = BigInt(rawTotalSupply * Math.pow(10, 18))
+
+      underlyings.forEach((underlying) => {
+        const matchIndex = tokens.findIndex((token: any) => token === underlying.address)
+        if (matchIndex !== -1) {
+          underlying.amount = (BigInt(fmtUnmatchedResult.amount) * balances[matchIndex]) / totalSupply
+          underlying.decimals = 18
+        }
       })
-    })
-
-    const tokenBalances = await multicall({
-      ctx,
-      calls: callsWithIndex.map((c) => c.call),
-      abi: erc20Abi.balanceOf,
-    })
-
-    callsWithIndex.forEach(({ resultIndex, underlyingIndex }, callIndex) => {
-      const result = unmatchedResults[resultIndex]
-      const underlying = result.underlyings[underlyingIndex]
-      underlying.amount = tokenBalances[callIndex].output
-    })
+    }
   }
+  return pools
 }
 
-// TEST_ADDRESS 0x6e466ee4905962b2375d152c81c2730dd9c4d78b
+async function getUnmatchUnderlyings(ctx: BalancesContext, unmatchedResults: Contract[]) {
+  const API_URL = `https://api.beefy.finance/tokens`
+  const tokens: { [key: string]: any } = await fetch(API_URL).then((response) => response.json())
+
+  unmatchedResults.forEach((unmatchedResult) => {
+    const tokensByChain = tokens[unmatchedResult.chain]
+
+    Object.values(tokensByChain).forEach((vault: any) => {
+      if (unmatchedResult.address.toLowerCase() === vault.address.toLowerCase()) {
+        unmatchedResult.beefyKey = vault.oracleId
+      }
+    })
+  })
+
+  return unmatchedResults
+}
