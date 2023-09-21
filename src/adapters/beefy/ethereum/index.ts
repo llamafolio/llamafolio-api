@@ -1,11 +1,10 @@
+import { getBeefyBalances } from '@adapters/beefy/common/balance'
+import { getBeefyPools } from '@adapters/beefy/common/pool'
 import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getYieldBalances } from '../common/balance'
-import { getBeefyContracts } from '../common/contract'
-
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getBeefyContracts(ctx)
+  const pools = await getBeefyPools(ctx)
 
   return {
     contracts: { pools },
@@ -14,7 +13,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: getYieldBalances,
+    pools: getBeefyBalances,
   })
 
   return {
