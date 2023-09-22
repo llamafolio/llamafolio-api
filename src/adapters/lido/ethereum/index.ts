@@ -1,7 +1,7 @@
-import { getStEthStakeBalances, getStMaticBalances, getWStEthStakeBalances } from '@adapters/lido/ethereum/stake'
 import { getUnstakeLidoBalances } from '@adapters/lido/ethereum/unstake'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getSingleStakeBalances } from '@lib/stake'
 
 const nftUnstaking: Contract = {
   chain: 'ethereum',
@@ -41,9 +41,7 @@ const stMATIC: Contract = {
 export const getContracts = () => {
   return {
     contracts: {
-      stETH,
-      wstETH,
-      stMATIC,
+      stakers: [stETH, wstETH, stMATIC],
       nftUnstaking,
     },
   }
@@ -51,9 +49,7 @@ export const getContracts = () => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    stETH: getStEthStakeBalances,
-    wstETH: getWStEthStakeBalances,
-    stMATIC: getStMaticBalances,
+    stakers: getSingleStakeBalances,
     nftUnstaking: getUnstakeLidoBalances,
   })
 
