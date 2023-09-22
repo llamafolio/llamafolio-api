@@ -34,15 +34,19 @@ export async function getBoostBeefyBalances(ctx: BalancesContext, pools: Contrac
   const [userBalancesRes, userPendingRewardsRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: boostPools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
+      calls: boostPools.map((pool) => ({ target: pool.earnContractAddress, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: boostPools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
+      calls: boostPools.map((pool) => ({ target: pool.earnContractAddress, params: [ctx.address] }) as const),
       abi: abi.earned,
     }),
-    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.getPricePerFullShare }),
+    multicall({
+      ctx,
+      calls: boostPools.map((pool) => ({ target: pool.address }) as const),
+      abi: abi.getPricePerFullShare,
+    }),
   ])
 
   for (const [index, pool] of boostPools.entries()) {
