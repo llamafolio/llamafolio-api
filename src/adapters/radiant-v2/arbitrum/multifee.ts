@@ -180,8 +180,7 @@ export async function getMultiFeeDistributionBalances(
   const underlyingBalances = (underlyings: Contract[], vaultBalances: any, amount: bigint, supply: bigint) => {
     return underlyings.map((underlying: Contract, index: number) => ({
       ...underlying,
-      amount: (vaultBalances.balances[index] * amount) / supply,
-      underlyings: undefined,
+      amount: (vaultBalances[index] * amount) / supply,
     }))
   }
 
@@ -210,7 +209,7 @@ export async function getMultiFeeDistributionBalances(
       address: contract.address,
       symbol: contract.symbol,
       decimals: contract.decimals,
-      underlyings: underlyingBalances(underlyings, vaultBalances, amount, totalSupply),
+      underlyings: underlyingBalances(underlyings, vaultBalances[1], amount, totalSupply),
       rewards: undefined,
       amount,
       unlockAt: Number(unlockTime),
