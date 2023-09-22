@@ -11,12 +11,19 @@ const NATIVE: Record<string, string> = {
 }
 
 export async function getBeefyPools(ctx: BaseContext): Promise<Contract[]> {
-  const API_URL = `https://api.beefy.finance/vaults`
-  const vaults: any[] = await fetch(API_URL).then((response) => response.json())
+  const API_VAULT_URL = `https://api.beefy.finance/vaults`
+  const API_BOOST_URL = `https://api.beefy.finance/boosts`
 
-  const pools: Contract[] = vaults
+  const [vaults, boosts]: [any[], any[]] = await Promise.all([
+    fetch(API_VAULT_URL).then((response) => response.json()),
+    fetch(API_BOOST_URL).then((response) => response.json()),
+  ])
+
+  const pools: { [key: string]: Contract } = {}
+
+  vaults
     .filter((vault) => vault.chain === ctx.chain && vault.status !== 'eol')
-    .map((vault) => {
+    .forEach((vault) => {
       const {
         chain,
         earnContractAddress,
@@ -29,7 +36,7 @@ export async function getBeefyPools(ctx: BaseContext): Promise<Contract[]> {
         oracleId,
       } = vault
 
-      return {
+      pools[oracleId] = {
         chain,
         address: earnContractAddress,
         symbol: token,
@@ -42,7 +49,28 @@ export async function getBeefyPools(ctx: BaseContext): Promise<Contract[]> {
       }
     })
 
-  return getBeefyUnderlyings(ctx, pools)
+  boosts
+    .filter((boost) => boost.chain === ctx.chain && boost.status === 'active')
+    .forEach((boost) => {
+      const { chain, earnContractAddress, earnedTokenAddress, earnedTokenDecimals, earnedToken, poolId, status } = boost
+
+      const boosterContract = {
+        chain,
+        address: earnContractAddress,
+        boostStatus: status,
+        rewards: [{ chain, address: earnedTokenAddress, decimals: earnedTokenDecimals, symbol: earnedToken }],
+        beefyKey: poolId,
+      }
+
+      if (pools[poolId]) {
+        pools[poolId] = {
+          ...pools[poolId],
+          ...boosterContract,
+        }
+      }
+    })
+
+  return getBeefyUnderlyings(ctx, Object.values(pools))
 }
 
 async function getBeefyUnderlyings(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {

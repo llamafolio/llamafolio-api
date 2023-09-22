@@ -17,7 +17,7 @@ type BeefyBalances = Balance & {
   beefyKey: string
 }
 
-export async function getBeefyBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
+export async function getBeefyFarmBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: BeefyBalances[] = []
 
   const [userBalancesRes, exchangeRatesRes] = await Promise.all([
@@ -50,7 +50,7 @@ export async function getBeefyBalances(ctx: BalancesContext, pools: Contract[]):
   return getBeefyUnderlyingsBalances(ctx, balances)
 }
 
-async function getBeefyUnderlyingsBalances(ctx: BalancesContext, pools: BeefyBalances[]): Promise<Balance[]> {
+export async function getBeefyUnderlyingsBalances(ctx: BalancesContext, pools: BeefyBalances[]): Promise<Balance[]> {
   const API_URL = `https://api.beefy.finance/lps/breakdown`
   const vaults: any = await fetch(API_URL).then((response) => response.json())
 
