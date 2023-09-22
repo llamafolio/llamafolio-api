@@ -25,7 +25,7 @@
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.398.0",
     "@clickhouse/client": "^0.2.2",
-    "@llamafolio/tokens": "^0.1.93",
+    "@llamafolio/tokens": "^0.1.94",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
     "graphql": "^16.8.0",
