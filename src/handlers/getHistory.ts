@@ -209,7 +209,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
         // gas transfer
         if (transaction.value !== '0' && transaction.price) {
-          transaction.valueUSD = mulPrice(BigInt(transaction.value), 18, transaction.price)
+          transaction.valueUSD = mulPrice(BigInt(transaction.value || 0), 18, transaction.price)
         }
 
         // token transfers
@@ -229,7 +229,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
               const priceInfo = prices.coins[key]
               if (priceInfo && priceInfo.decimals) {
                 transfer.price = priceInfo.price
-                transfer.valueUSD = mulPrice(BigInt(transfer.value), priceInfo.decimals, priceInfo.price)
+                transfer.valueUSD = mulPrice(BigInt(transfer.value || 0), priceInfo.decimals, priceInfo.price)
               }
             }
           }
