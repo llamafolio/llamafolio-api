@@ -1,6 +1,7 @@
-import { getBeefyBalances } from '@adapters/beefy/common/balance'
+import { getBeefyFarmBalances } from '@adapters/beefy/common/balance'
+import { getBoostBeefyBalances } from '@adapters/beefy/common/boost'
 import { getBeefyPools } from '@adapters/beefy/common/pool'
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 export const getContracts = async (ctx: BaseContext) => {
@@ -9,6 +10,10 @@ export const getContracts = async (ctx: BaseContext) => {
   return {
     contracts: { pools },
   }
+}
+
+async function getBeefyBalances(ctx: BalancesContext, pools: Contract[]) {
+  return Promise.all([getBeefyFarmBalances(ctx, pools), getBoostBeefyBalances(ctx, pools)])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
