@@ -3,7 +3,7 @@ import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
-const abiWonderland = {
+const abi = {
   rewardTokenLength: {
     constant: true,
     inputs: [],
@@ -37,13 +37,13 @@ export async function getRewardsMEMOFarmTokens(ctx: BaseContext, wMEMOFarm: Cont
   const rewardTokenLength = await call({
     ctx,
     target: wMEMOFarm.address,
-    abi: abiWonderland.rewardTokenLength,
+    abi: abi.rewardTokenLength,
   })
 
   const rewardTokensRes = await multicall({
     ctx,
     calls: rangeBI(0n, rewardTokenLength).map((i) => ({ target: wMEMOFarm.address, params: [i] }) as const),
-    abi: abiWonderland.rewardTokens,
+    abi: abi.rewardTokens,
   })
 
   const rewardTokens = mapSuccessFilter(rewardTokensRes, (res) => res.output)

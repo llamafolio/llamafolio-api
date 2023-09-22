@@ -238,12 +238,12 @@ import velodromeV2 from '@adapters/velodrome-v2'
 import venus from '@adapters/venus'
 import verse from '@adapters/verse'
 import vesper from '@adapters/vesper'
+import voltaClub from '@adapters/volta-club'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
 import whiteheart from '@adapters/whiteheart'
 import wigoswap from '@adapters/wigoswap'
 import wombatExchange from '@adapters/wombat-exchange'
-import wonderland from '@adapters/wonderland'
 import woofi from '@adapters/woofi'
 import x2y2 from '@adapters/x2y2'
 import yearnFinance from '@adapters/yearn-finance'
@@ -492,12 +492,12 @@ export const adapters: Adapter[] = [
   venus,
   verse,
   vesper,
+  voltaClub,
   wallet,
   wepiggy,
   whiteheart,
   wigoswap,
   wombatExchange,
-  wonderland,
   woofi,
   x2y2,
   yearnFinance,
