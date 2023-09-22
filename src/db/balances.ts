@@ -372,6 +372,7 @@ export async function selectLatestBalancesGroupsByFromAddress(
           balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
           debtUSD: sum(balances.map((balance) => balance.debtUSD || 0)),
           rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
+          healthFactor: balancesByGroupIdx[groupIdx][0].healthFactor,
           balances,
         })
       }
