@@ -10,7 +10,6 @@ import type { Category } from '@lib/category'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getBalancesOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { isPricedBalance } from '@lib/price'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -183,48 +182,30 @@ export async function resolveBalances<C extends GetContractsHandler>(
   return balances.flat(2).filter(isNotNullish)
 }
 
+function isPricedBalanceInRange(balance: PricedBalance, key: 'balanceUSD' | 'claimableUSD' = 'balanceUSD') {
+  const value = balance[key]
+  return value != null && value >= MIN_BALANCE_USD && value <= MAX_BALANCE_USD
+}
+
 export function sanitizePricedBalances<T extends PricedBalance>(balances: T[]) {
-  function isPricedBalanceInRange(balance: Balance | PricedBalance) {
-    if (
-      isPricedBalance(balance) &&
-      balance.balanceUSD != null &&
-      balance.balanceUSD >= MIN_BALANCE_USD &&
-      balance.balanceUSD <= MAX_BALANCE_USD
-    ) {
-      return true
+  const sanitizedBalances: T[] = []
+
+  for (const balance of balances) {
+    // Note: some LP tokens are not priced (only their underlyings), ex: uniswap-v3 (LP token is an NFT)
+    if (!isPricedBalanceInRange(balance)) {
+      continue
     }
 
-    if (balance.underlyings) {
-      for (const underlying of balance.underlyings) {
-        if (
-          isPricedBalance(underlying) &&
-          underlying.balanceUSD != null &&
-          underlying.balanceUSD >= MIN_BALANCE_USD &&
-          underlying.balanceUSD <= MAX_BALANCE_USD
-        ) {
-          return true
-        }
-      }
-    }
+    // sanitize rewards and underlyings
+    balance.rewards = balance.rewards?.filter(
+      (reward) => isPricedBalanceInRange(reward, 'balanceUSD') && isPricedBalanceInRange(reward, 'claimableUSD'),
+    )
+    balance.underlyings = balance.underlyings?.filter((underlying) => isPricedBalanceInRange(underlying))
 
-    if (balance.rewards) {
-      for (const reward of balance.rewards) {
-        if (
-          isPricedBalance(reward) &&
-          ((reward.claimableUSD != null &&
-            reward.claimableUSD >= MIN_BALANCE_USD &&
-            reward.claimableUSD <= MAX_BALANCE_USD) ||
-            (reward.balanceUSD != null && reward.balanceUSD >= MIN_BALANCE_USD && reward.balanceUSD <= MAX_BALANCE_USD))
-        ) {
-          return true
-        }
-      }
-    }
-
-    return false
+    sanitizedBalances.push(balance)
   }
 
-  return balances.filter(isPricedBalanceInRange)
+  return sanitizedBalances
 }
 
 export interface SortBalance {
