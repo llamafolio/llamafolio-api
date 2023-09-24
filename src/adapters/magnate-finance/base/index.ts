@@ -14,8 +14,6 @@ const cEther: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  console.log(cEther)
-
   const markets = await getMarketsContracts(ctx, {
     comptrollerAddress: '0x9C1925d9fA1E9ba7aa57db36B15E29C07f5d85e2',
   })
