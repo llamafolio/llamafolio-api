@@ -36,7 +36,6 @@ const abi = {
     outputs: [
       { internalType: 'uint256', name: 'prismaAmount', type: 'uint256' },
       { internalType: 'uint256', name: 'crvAmount', type: 'uint256' },
-      { internalType: 'uint256', name: 'cvxAmount', type: 'uint256' },
     ],
     stateMutability: 'view',
     type: 'function',
@@ -110,10 +109,17 @@ export async function getPrismaFarmBalancesFromConvex(
   })
 
   return mapSuccessFilter(userPendingsRewardsRes, (res, poolIdx) => {
-    const rewards = poolBalances[poolIdx].rewards!.map((reward, idx) => ({ ...reward, amount: res.output[idx] }))
+    const poolBalance = poolBalances[poolIdx]
+    if (!poolBalance) return null
+
+    let rewards = poolBalance.rewards
+
+    if (rewards) {
+      rewards = rewards.map((reward, idx) => ({ ...reward, amount: res.output[idx] }))
+    }
 
     return {
-      ...poolBalances[poolIdx],
+      ...poolBalance,
       rewards,
       category: 'farm',
     }

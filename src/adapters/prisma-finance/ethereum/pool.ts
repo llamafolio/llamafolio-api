@@ -54,3 +54,15 @@ export async function getConvexPools(ctx: BaseContext, pools: Contract[], curveP
 
   return mergedAndFilteredPools
 }
+
+export async function getCurvePools(_ctx: BaseContext, pools: Contract[], curvePools: Contract[]): Promise<Contract[]> {
+  const mergedAndFilteredPools: Contract[] = pools.reduce((acc: Contract[], contracts) => {
+    const matchingCurvePool = curvePools.find((curvePool) => curvePool.lpToken === contracts.lpToken)
+    if (matchingCurvePool) {
+      acc.push({ ...matchingCurvePool, ...contracts })
+    }
+    return acc
+  }, [])
+
+  return mergedAndFilteredPools
+}
