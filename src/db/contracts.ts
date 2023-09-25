@@ -168,17 +168,23 @@ export async function getContractsInteractions(
         ${condition}
         ("chain", "address") IN (
           SELECT "chain", "address" FROM (
-              (
-                  SELECT "chain", "to" AS "address"
-                  FROM evm_indexer.transactions_to_mv
-                  WHERE "from" = {address: String}
-              )
-                  UNION DISTINCT
-              (
-                  SELECT "chain", "address"
-                  FROM evm_indexer.token_transfers_received_mv
-                  WHERE "to" = {address: String}
-              )
+            (
+              SELECT "chain", "to" AS "address"
+              FROM evm_indexer.transactions_to_mv
+              WHERE "from" = {address: String}
+            )
+              UNION DISTINCT
+            (
+              SELECT "chain", "address"
+              FROM evm_indexer.token_transfers_received_mv
+              WHERE "to" = {address: String}
+            )
+              UNION DISTINCT
+            (
+              SELECT "chain", '0x0000000000000000000000000000000000000000' AS "address"
+              FROM evm_indexer.transactions_history_agg
+              WHERE "target" = {address: String}
+            )
           )
         )
       LIMIT 1 BY "chain", "address", "adapter_id";
