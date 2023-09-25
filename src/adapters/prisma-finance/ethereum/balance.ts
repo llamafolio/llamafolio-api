@@ -108,8 +108,6 @@ export async function getPrismaFarmBalancesFromConvex(
     abi: abi.claimableReward,
   })
 
-  console.log(userPendingsRewardsRes)
-
   return mapSuccessFilter(userPendingsRewardsRes, (res, poolIdx) => {
     const poolBalance = poolBalances[poolIdx]
     if (!poolBalance) return null
