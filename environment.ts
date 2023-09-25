@@ -10,6 +10,7 @@ export const environmentSchema = z.object({
   CLICKHOUSE_PASSWORD: z.string().optional(),
   LLAMANODES_API_KEY: z.string().optional(),
   DEFILLAMA_LABELS_API_KEY: z.string().optional(),
+  DEFILLAMA_PRICE_API_KEY: z.string().optional(),
   ANKR_API_KEY: z.string().optional().default(''),
   IS_OFFLINE: z.literal('true').or(z.literal('false')).optional(),
   API_URL: z.string().optional(),

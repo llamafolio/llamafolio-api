@@ -1,3 +1,4 @@
+import environment from '@environment'
 import type { Balance, BaseBalance, PricedBalance } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
 import { type Chain, toDefiLlamaChain } from '@lib/chains'
@@ -30,7 +31,10 @@ interface PricesResponse {
 export async function fetchTokenPrices(keys: string[]): Promise<PricesResponse> {
   try {
     const coinsParam = keys.join(',')
-    const pricesRes = await fetch(`https://coins.llama.fi/prices/current/${coinsParam}`, {
+    const endpoint = environment.DEFILLAMA_PRICE_API_KEY
+      ? `https://coins.llama.fi/prices/current/${coinsParam}?apikey=${environment.DEFILLAMA_PRICE_API_KEY}`
+      : `https://coins.llama.fi/prices/current/${coinsParam}`
+    const pricesRes = await fetch(endpoint, {
       method: 'GET',
     })
 
