@@ -12,8 +12,8 @@ dependencies:
     specifier: ^0.2.2
     version: 0.2.2
   '@llamafolio/tokens':
-    specifier: ^0.1.94
-    version: 0.1.94
+    specifier: ^0.1.96
+    version: 0.1.96
   dayjs:
     specifier: ^1.11.9
     version: 1.11.9
@@ -1289,8 +1289,8 @@ packages:
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
     dev: true
 
-  /@llamafolio/tokens@0.1.94:
-    resolution: {integrity: sha512-wLR/gEifK8M0Ro8ltwWRjwCFho+qaDFzNXSS8zGYseUmyRPyjpe6fb1Bh4zFRU7RnzTQlP3cw5mTGIQ0a1HMkg==}
+  /@llamafolio/tokens@0.1.96:
+    resolution: {integrity: sha512-taLczkqofS7uIvcghzY1se89aNKeuSAj4o8Nk5eUqEFIcpDoZMWBF7uN3LjBG4qu+/jMpbP2Pk7h6uDcxBKVkA==}
     engines: {node: '>=18', npm: '------>PLEASE USE PNPM<------', pnpm: '>=8.0.0', yarn: '------>PLEASE USE PNPM<------'}
     dev: false
 
