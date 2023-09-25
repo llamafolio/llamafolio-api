@@ -42,13 +42,13 @@ export async function getSNXBalances(ctx: BalancesContext, contract: Contract): 
   const [userLendBalanceOf, userDebtBalanceOf, userPendingRewardBalanceOf] = await Promise.all([
     call({
       ctx,
-      target: contract.token!,
+      target: contract.address,
       params: [ctx.address],
       abi: abi.collateral,
     }),
     call({
       ctx,
-      target: contract.token!,
+      target: contract.address,
       params: [ctx.address],
       abi: abi.remainingIssuableSynths,
     }),
@@ -71,9 +71,9 @@ export async function getSNXBalances(ctx: BalancesContext, contract: Contract): 
   }
 
   const borrowBalance: BorrowBalance = {
-    ...contract,
+    ...contract.asset,
     amount: alreadyIssued,
-    underlyings: contract.underlyings as Contract[],
+    underlyings: undefined,
     rewards: undefined,
     category: 'borrow',
   }

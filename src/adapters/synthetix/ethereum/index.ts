@@ -2,12 +2,19 @@ import { getSNXBalances } from '@adapters/synthetix/common/balance'
 import { getSNXFarmBalances } from '@adapters/synthetix/common/farm'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import type { Token } from '@lib/token'
+
+const sUSD: Token = {
+  chain: 'ethereum',
+  address: '0x57Ab1ec28D129707052df4dF418D58a2D46d5f51',
+  decimals: 18,
+  symbol: 'sUSD',
+}
 
 const SNX: Contract = {
   chain: 'ethereum',
   address: '0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f',
-  token: '0xd0dA9cBeA9C3852C5d63A95F9ABCC4f6eA0F9032',
-  underlyings: ['0x57Ab1ec28D129707052df4dF418D58a2D46d5f51'],
+  asset: sUSD,
   rewarder: '0x83105D7CDd2fd9b8185BFF1cb56bB1595a618618',
 }
 
