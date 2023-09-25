@@ -4,7 +4,7 @@ import {
   getPrismaFarmBalancesFromConvex,
   getPrismaLendBalances,
 } from '@adapters/prisma-finance/ethereum/balance'
-import { getConvexPools } from '@adapters/prisma-finance/ethereum/pool'
+import { getConvexPools, getCurvePools } from '@adapters/prisma-finance/ethereum/pool'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -45,6 +45,25 @@ const farmersFromConvex: Contract[] = [
       '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
     ],
   },
+  {
+    chain: 'ethereum',
+    address: '0x3d56e0ea536a78976503618d663921c97a3cba3c',
+    pid: 234,
+    rewards: [
+      '0xdA47862a83dac0c112BA89c6abC2159b95afd71C',
+      '0xD533a949740bb3306d119CC777fa900bA034cd52',
+      '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
+    ],
+  },
+]
+
+const farmersFromCurve: Contract[] = [
+  {
+    chain: 'ethereum',
+    address: '0x6d3cd0dd2c05fa4eb8d1159159bef445593a93fc',
+    lpToken: '0x65f228ED6a6001eD6485535e0Dc33E525734f54c',
+    rewards: ['0xdA47862a83dac0c112BA89c6abC2159b95afd71C', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
+  },
 ]
 
 const vaults: Contract[] = [
@@ -78,10 +97,14 @@ const metaRegistry: Contract = {
 
 export const getContracts = async (ctx: BaseContext) => {
   const curvePools = await getPoolsContracts(ctx, metaRegistry)
-  const convexPools = await getConvexPools(ctx, farmersFromConvex, curvePools)
+
+  const [convexPools, crvPrismaPools] = await Promise.all([
+    getConvexPools(ctx, farmersFromConvex, curvePools),
+    getCurvePools(ctx, farmersFromCurve, curvePools),
+  ])
 
   return {
-    contracts: { vaults, farmer, convexPools },
+    contracts: { vaults, farmer, convexPools, crvcrxPools: [...convexPools, ...crvPrismaPools] },
   }
 }
 
@@ -90,7 +113,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     getPrismaLendBalances(ctx, contracts.vaults || []),
     resolveBalances<typeof getContracts>(ctx, contracts, {
       farmer: getPrismaFarmBalance,
-      convexPools: (...args) => getPrismaFarmBalancesFromConvex(...args, metaRegistry),
+      crvcrxPools: (...args) => getPrismaFarmBalancesFromConvex(...args, metaRegistry),
     }),
   ])
 
