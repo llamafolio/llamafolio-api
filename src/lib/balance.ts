@@ -198,7 +198,7 @@ export function sanitizePricedBalances<T extends PricedBalance>(balances: T[]) {
 
     // sanitize rewards and underlyings
     balance.rewards = balance.rewards?.filter(
-      (reward) => isPricedBalanceInRange(reward, 'balanceUSD') && isPricedBalanceInRange(reward, 'claimableUSD'),
+      (reward) => isPricedBalanceInRange(reward, 'balanceUSD') || isPricedBalanceInRange(reward, 'claimableUSD'),
     )
     balance.underlyings = balance.underlyings?.filter((underlying) => isPricedBalanceInRange(underlying))
 
