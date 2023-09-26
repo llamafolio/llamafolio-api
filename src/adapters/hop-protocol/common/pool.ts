@@ -99,8 +99,6 @@ function mapVaults(vaults: Record<string, any>, chain: string) {
         chain,
         address: l2SaddleLpToken,
         lpToken: l2SaddleSwap,
-        // address: l2SaddleSwap,
-        // lpToken: l2SaddleLpToken,
         underlyings: [l2CanonicalToken, l2HopBridgeToken],
       }
     })
