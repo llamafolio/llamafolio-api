@@ -59,6 +59,9 @@ export async function getBeefyUnderlyingsBalances(ctx: BalancesContext, pools: B
     if (!underlyings || !vaults[pool.beefyKey]) continue
 
     const { tokens, balances: rawBalances, totalSupply: rawTotalSupply } = vaults[pool.beefyKey]
+
+    if (!rawBalances) continue
+
     const balances = rawBalances.map((balance: number) => BigInt(balance * Math.pow(10, 18)))
     const totalSupply = BigInt(rawTotalSupply * Math.pow(10, 18))
 
