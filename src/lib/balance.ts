@@ -187,6 +187,11 @@ function isPricedBalanceInRange(balance: PricedBalance, key: 'balanceUSD' | 'cla
   return value != null && value >= MIN_BALANCE_USD && value <= MAX_BALANCE_USD
 }
 
+function isPricedBalanceLtMax(balance: PricedBalance, key: 'balanceUSD' | 'claimableUSD' = 'balanceUSD') {
+  const value = balance[key]
+  return value != null && value <= MAX_BALANCE_USD
+}
+
 export function sanitizePricedBalances<T extends PricedBalance>(balances: T[]) {
   const sanitizedBalances: T[] = []
 
@@ -200,7 +205,7 @@ export function sanitizePricedBalances<T extends PricedBalance>(balances: T[]) {
     balance.rewards = balance.rewards?.filter(
       (reward) => isPricedBalanceInRange(reward, 'balanceUSD') || isPricedBalanceInRange(reward, 'claimableUSD'),
     )
-    balance.underlyings = balance.underlyings?.filter((underlying) => isPricedBalanceInRange(underlying))
+    balance.underlyings = balance.underlyings?.filter((underlying) => isPricedBalanceLtMax(underlying))
 
     sanitizedBalances.push(balance)
   }
