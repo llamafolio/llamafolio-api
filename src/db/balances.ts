@@ -278,8 +278,7 @@ export async function selectLatestBalancesGroupsByFromAddress(
           adapter_id,
           timestamp,
           balances as balance,
-          JSONExtractString(balance, 'address') AS address,
-          arrayMap(x->JSONExtractString(x, 'address'), JSONExtractArrayRaw(balance, 'underlyings')) AS underlyings
+          JSONExtractString(balance, 'address') AS address
         FROM lf.adapters_balances
         ARRAY JOIN balances
         WHERE
@@ -304,8 +303,7 @@ export async function selectLatestBalancesGroupsByFromAddress(
         FROM lf.yields
         WHERE "timestamp" = (SELECT max("timestamp") AS "timestamp" FROM lf.yields)
       ) AS y ON
-        (ab.chain = y.chain AND ab.adapter_id = y.adapter_id AND ab.address = y.address) OR
-        (notEmpty(ab.underlyings) AND ab.chain = y.chain AND ab.adapter_id = y.adapter_id AND ab.underlyings = y.underlyings);
+        (ab.chain = y.chain AND ab.adapter_id = y.adapter_id AND ab.address = y.address);
     `,
     query_params: {
       fromAddress: fromAddress.toLowerCase(),
