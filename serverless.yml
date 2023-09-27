@@ -235,13 +235,6 @@ functions:
     events:
       - schedule: rate(10 minutes)
 
-  scheduledUpdateProtocols:
-    handler: src/handlers/updateProtocols.scheduledUpdateProtocols
-    description: Scheduled update protocols
-    events:
-      # every new hour
-      - schedule: cron(0 * * * ? *)
-
   scheduledUpdateYields:
     handler: src/handlers/updateYields.scheduledUpdateYields
     description: Scheduled update yields
@@ -252,11 +245,6 @@ functions:
   revalidateAdapterContracts:
     handler: src/handlers/revalidateAdapters.revalidateAdapterContracts
     description: Revalidate adapter contracts
-
-  updateProtocols:
-    handler: src/handlers/updateProtocols.handler
-    description: Update protocols
-    timeout: 300
 
   updateYields:
     handler: src/handlers/updateYields.handler
