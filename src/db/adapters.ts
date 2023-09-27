@@ -1,4 +1,5 @@
 import type { ClickHouseClient } from '@clickhouse/client'
+import environment from '@environment'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
 import { fromDateTime, toDateTime } from '@lib/fmt'
 import { isNotFalsy } from '@lib/type'
@@ -115,7 +116,7 @@ export async function selectAdapter(client: ClickHouseClient, chainId: number, a
 
 export async function selectAdapters(client: ClickHouseClient, chainIds: number[], adapterId: string) {
   const queryRes = await client.query({
-    query: 'SELECT * FROM lf.adapters FINAL WHERE "chain" IN {chainIds: Array(UInt64)} AND "id" = {adapterId: String};',
+    query: `SELECT * FROM ${environment.NS_LF}.adapters FINAL WHERE "chain" IN {chainIds: Array(UInt64)} AND "id" = {adapterId: String};`,
     query_params: { chainIds, adapterId },
   })
 
@@ -128,7 +129,7 @@ export async function selectAdapters(client: ClickHouseClient, chainIds: number[
 
 export async function selectDistinctAdaptersIds(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: 'SELECT id FROM lf.adapters GROUP BY id;',
+    query: `SELECT id FROM ${environment.NS_LF}.adapters GROUP BY id;`,
   })
 
   const res = (await queryRes.json()) as {
@@ -190,7 +191,7 @@ export async function insertAdapters(client: ClickHouseClient, adapters: Adapter
   }
 
   return client.insert({
-    table: 'lf.adapters',
+    table: `${environment.NS_LF}.adapters`,
     values,
     format: 'JSONEachRow',
   })
@@ -198,7 +199,7 @@ export async function insertAdapters(client: ClickHouseClient, adapters: Adapter
 
 export function deleteAdapterById(client: ClickHouseClient, adapterId: string) {
   return client.command({
-    query: 'DELETE FROM lf.adapters WHERE "id" = {adapterId: String};',
+    query: `DELETE FROM ${environment.NS_LF}.adapters WHERE "id" = {adapterId: String};`,
     query_params: { adapterId },
     clickhouse_settings: {
       enable_lightweight_delete: 1,

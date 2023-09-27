@@ -1,4 +1,5 @@
 import type { ClickHouseClient } from '@clickhouse/client'
+import environment from '@environment'
 import type { IProtocol } from '@lib/protocols'
 
 export interface ProtocolStorage {
@@ -43,7 +44,7 @@ export function fromStorage(protocolsStorage: ProtocolStorage[]) {
 
 export function deleteProtocol(client: ClickHouseClient, slug: string) {
   return client.command({
-    query: 'DELETE FROM lf.protocols WHERE slug = {slug: String};',
+    query: `DELETE FROM ${environment.NS_LF}.protocols WHERE slug = {slug: String};`,
     query_params: { slug },
     clickhouse_settings: {
       enable_lightweight_delete: 1,
@@ -70,7 +71,7 @@ export async function insertProtocols(client: ClickHouseClient, protocols: IProt
   }
 
   await client.insert({
-    table: 'lf.protocols',
+    table: `${environment.NS_LF}.protocols`,
     values: protocols,
     format: 'JSONEachRow',
   })

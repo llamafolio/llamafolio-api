@@ -1,4 +1,5 @@
 import type { ClickHouseClient } from '@clickhouse/client'
+import environment from '@environment'
 import type { Contract, ContractStandard } from '@lib/adapter'
 import { groupBy, keyBy } from '@lib/array'
 import { chainByChainId, chainById } from '@lib/chains'
@@ -128,7 +129,7 @@ export async function insertAdaptersContracts(
   }
 
   await client.insert({
-    table: 'lf.adapters_contracts',
+    table: `${environment.NS_LF}.adapters_contracts`,
     values: values,
     format: 'JSONEachRow',
   })
@@ -163,7 +164,7 @@ export async function getContractsInteractions(
         "category",
         "adapter_id",
         "data"
-      FROM lf.adapters_contracts
+      FROM ${environment.NS_LF}.adapters_contracts
       WHERE
         ${condition}
         ("chain", "address") IN (
@@ -296,7 +297,7 @@ export async function getContract(client: ClickHouseClient, chainId: number, add
 
 export function deleteContractsByAdapterId(client: ClickHouseClient, adapterId: string) {
   return client.command({
-    query: 'DELETE FROM lf.adapters_contracts WHERE adapter_id = {adapterId: String};',
+    query: `DELETE FROM ${environment.NS_LF}.adapters_contracts WHERE adapter_id = {adapterId: String};`,
     query_params: { adapterId },
     clickhouse_settings: {
       enable_lightweight_delete: 1,
