@@ -1,6 +1,6 @@
 import { getConvexGaugesBalances } from '@adapters/convex-finance/ethereum/balance'
 import { getConvexPoolsContracts } from '@adapters/convex-finance/ethereum/pool'
-import { getCvxCrvStakeBalance, getCVXStakeBalance } from '@adapters/convex-finance/ethereum/stake'
+import { getCvxCrvStakeBalance, getCVXStakeBalance, getStkCvxCrvBalance } from '@adapters/convex-finance/ethereum/stake'
 import { getPoolsContracts } from '@adapters/curve-dex/ethereum/pools'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -84,6 +84,19 @@ const cvxCRVStaker: Contract = {
   rewarder: '0x7091dbb7fcbA54569eF1387Ac89Eb2a5C9F6d2EA',
 }
 
+const stkCvxCrv: Contract = {
+  chain: 'ethereum',
+  address: '0xaa0c3f5f7dfd688c6e646f66cd2a6b66acdbe434',
+  symbol: 'stkCvxCrv',
+  decimals: 18,
+  displayName: 'cvxCRV Staker',
+  underlyings: [
+    { chain: 'ethereum', address: '0x62b9c7356a2dc64a1969e19c23e4f579f9810aa7', symbol: 'cvxCRV', decimals: 18 },
+  ],
+  rewards: [CRV, CVX, threeCrv],
+  rewarder: '0x7091dbb7fcbA54569eF1387Ac89Eb2a5C9F6d2EA',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
   const curvePools = await getPoolsContracts(ctx, metaRegistry)
   const pools = await getConvexPoolsContracts(ctx, booster, curvePools)
@@ -94,6 +107,7 @@ export const getContracts = async (ctx: BaseContext) => {
       cvxRewardPool,
       locker,
       pools,
+      stkCvxCrv,
     },
   }
 }
@@ -104,6 +118,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     cvxRewardPool: getCVXStakeBalance,
     cvxCRVStaker: getCvxCrvStakeBalance,
     locker: (...args) => getMultipleLockerBalances(...args, CVX, [cvxCRV, cvxFXS, FXS], true),
+    stkCvxCrv: getStkCvxCrvBalance,
   })
 
   return {
