@@ -38,7 +38,7 @@ export async function getHopLpBalances(ctx: BalancesContext, pools: Contract[]):
 export async function getHopFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [userBalancesRes, userPendingRewardsRes] = await Promise.all([
+  const [userBalancesRes, userPendingRewardsRes, suppliesLpRes, suppliesTokenRes] = await Promise.all([
     multicall({
       ctx,
       calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
@@ -49,6 +49,16 @@ export async function getHopFarmBalances(ctx: BalancesContext, farmers: Contract
       calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
       abi: abi.earned,
     }),
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.address }) as const),
+      abi: erc20Abi.totalSupply,
+    }),
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.token! }) as const),
+      abi: erc20Abi.totalSupply,
+    }),
   ])
 
   for (const [index, farmer] of farmers.entries()) {
@@ -56,14 +66,24 @@ export async function getHopFarmBalances(ctx: BalancesContext, farmers: Contract
     const reward = farmer.rewards?.[0] as Contract
     const userBalanceRes = userBalancesRes[index]
     const userPendingRewardRes = userPendingRewardsRes[index]
+    const supplyLpRes = suppliesLpRes[index]
+    const supplyTokenRes = suppliesTokenRes[index]
 
-    if (!underlyings || !reward || !userBalanceRes.success || !userPendingRewardRes.success) {
+    if (
+      !underlyings ||
+      !reward ||
+      !userBalanceRes.success ||
+      !userPendingRewardRes.success ||
+      !supplyLpRes.success ||
+      !supplyTokenRes.success ||
+      supplyTokenRes.output === 0n
+    ) {
       continue
     }
 
     balances.push({
       ...farmer,
-      amount: BigInt(Math.round(Number(userBalanceRes.output) * 0.8956326522751297)),
+      amount: (userBalanceRes.output * supplyLpRes.output) / supplyTokenRes.output,
       underlyings,
       rewards: [{ ...reward, amount: userPendingRewardRes.output }],
       category: 'farm',
@@ -76,7 +96,7 @@ export async function getHopFarmBalances(ctx: BalancesContext, farmers: Contract
 export async function processBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const [underlyings0BalancesRes, underlyings1BalancesRes, totalSuppliesRes] = await Promise.all([
+  const [underlying0BalancesRes, underlying1BalancesRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
       calls: pools.map((pool) => ({ target: pool.lpToken, params: [0] }) as const),
@@ -97,8 +117,8 @@ export async function processBalances(ctx: BalancesContext, pools: Contract[]): 
   for (const [index, pool] of pools.entries()) {
     const underlyings = pool.underlyings as Contract[]
     const amount = pool.amount
-    const underlyings0BalanceRes = underlyings0BalancesRes[index]
-    const underlyings1BalanceRes = underlyings1BalancesRes[index]
+    const underlyings0BalanceRes = underlying0BalancesRes[index]
+    const underlyings1BalanceRes = underlying1BalancesRes[index]
     const totalSupplyRes = totalSuppliesRes[index]
 
     if (
@@ -111,8 +131,15 @@ export async function processBalances(ctx: BalancesContext, pools: Contract[]): 
       continue
     }
 
-    const underlyings0 = calculateUnderlyingAmount(underlyings[0], amount, underlyings0BalanceRes, totalSupplyRes)
-    const underlyings1 = calculateUnderlyingAmount(underlyings[1], amount, underlyings1BalanceRes, totalSupplyRes)
+    const underlyings0 = fmtUnderlying(underlyings[0], amount, underlyings0BalanceRes, totalSupplyRes)
+    // hTokens prices are not fetched from the Defillama API, however they are peg with the standard token so we can just fetch standard prices
+    const underlyings1 = fmtUnderlying(
+      underlyings[1],
+      amount,
+      underlyings1BalanceRes,
+      totalSupplyRes,
+      underlyings0.address,
+    )
 
     balances.push({
       ...pool,
@@ -126,11 +153,16 @@ export async function processBalances(ctx: BalancesContext, pools: Contract[]): 
   return balances
 }
 
-function calculateUnderlyingAmount(
+function fmtUnderlying(
   underlying: Contract,
   userBalanceRes: any,
   underlyingBalanceRes: any,
   totalSupplyRes: any,
+  address?: `0x${string}`,
 ) {
-  return { ...underlying, amount: (underlyingBalanceRes.output * userBalanceRes) / totalSupplyRes.output }
+  return {
+    ...underlying,
+    address: address ? address : underlying.address,
+    amount: (underlyingBalanceRes.output * userBalanceRes) / totalSupplyRes.output,
+  }
 }
