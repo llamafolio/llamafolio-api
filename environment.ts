@@ -8,6 +8,7 @@ export const environmentSchema = z.object({
   CLICKHOUSE_HOST: z.string().optional(),
   CLICKHOUSE_USER: z.string().optional(),
   CLICKHOUSE_PASSWORD: z.string().optional(),
+  NS_LF: z.string().optional().default('lf'),
   LLAMANODES_API_KEY: z.string().optional(),
   DEFILLAMA_LABELS_API_KEY: z.string().optional(),
   DEFILLAMA_PRICE_API_KEY: z.string().optional(),
