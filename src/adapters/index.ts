@@ -93,6 +93,7 @@ import hectorNetwork from '@adapters/hector-network'
 import hex from '@adapters/hex'
 import homoraV2 from '@adapters/homora-v2'
 import honeyswap from '@adapters/honeyswap'
+import hopProtocol from '@adapters/hop-protocol'
 import horizonProtocol from '@adapters/horizon-protocol'
 import houdiniSwap from '@adapters/houdini-swap'
 import hundredFinance from '@adapters/hundred-finance'
@@ -348,6 +349,7 @@ export const adapters: Adapter[] = [
   hex,
   homoraV2,
   honeyswap,
+  hopProtocol,
   horizonProtocol,
   houdiniSwap,
   hundredFinance,
