@@ -103,7 +103,7 @@ export async function countAdapters(client: ClickHouseClient) {
 
 export async function selectAdapter(client: ClickHouseClient, chainId: number, adapterId: string) {
   const queryRes = await client.query({
-    query: 'SELECT * FROM lf.adapters FINAL WHERE "chain" = {chainId: UInt64} AND "id" = {adapterId: String};',
+    query: `SELECT * FROM ${environment.NS_LF}.adapters FINAL WHERE "chain" = {chainId: UInt64} AND "id" = {adapterId: String};`,
     query_params: { chainId, adapterId },
   })
 
