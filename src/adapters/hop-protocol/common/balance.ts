@@ -131,20 +131,14 @@ export async function processBalances(ctx: BalancesContext, pools: Contract[]): 
       continue
     }
 
-    const underlyings0 = fmtUnderlying(underlyings[0], amount, underlyings0BalanceRes, totalSupplyRes)
+    const token0 = fmtUnderlying(underlyings[0], amount, underlyings0BalanceRes, totalSupplyRes)
     // hTokens prices are not fetched from the Defillama API, however they are peg with the standard token so we can just fetch standard prices
-    const underlyings1 = fmtUnderlying(
-      underlyings[1],
-      amount,
-      underlyings1BalanceRes,
-      totalSupplyRes,
-      underlyings0.address,
-    )
+    const token1 = fmtUnderlying(underlyings[1], amount, underlyings1BalanceRes, totalSupplyRes, underlyings[0].address)
 
     balances.push({
       ...pool,
       amount,
-      underlyings: [underlyings0, underlyings1],
+      underlyings: [token0, token1],
       rewards: pool.rewards as Balance[],
       category: pool.category!,
     })

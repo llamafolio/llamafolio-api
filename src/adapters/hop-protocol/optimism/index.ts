@@ -17,8 +17,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     farmers: getHopFarmBalances,
   })
 
-  console.log(balances)
-
   return {
     groups: [{ balances }],
   }
