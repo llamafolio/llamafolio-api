@@ -1,4 +1,5 @@
 import type { ClickHouseClient } from '@clickhouse/client'
+import environment from '@environment'
 import type { Balance, ContractStandard } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
 import type { Category } from '@lib/category'
@@ -26,6 +27,7 @@ export interface BaseFormattedBalance extends Yield {
   amount?: string
   balanceUSD?: number
   rewardUSD?: number
+  collateralUSD?: number
   debtUSD?: number
   unlockAt?: number
   underlyings?: FormattedBalance[]
@@ -152,6 +154,8 @@ export function toStorage(balances: Balance[]) {
 
       const balances = balancesByChainByAdapterId[chain][adapterId].map((balance) => {
         const {
+          __key,
+          __key_is_array,
           chain: _chain,
           adapterId: _adapterId,
           fromAddress: _fromAddress,
@@ -279,14 +283,14 @@ export async function selectLatestBalancesGroupsByFromAddress(
           timestamp,
           balances as balance,
           JSONExtractString(balance, 'address') AS address
-        FROM lf.adapters_balances
+        FROM ${environment.NS_LF}.adapters_balances
         ARRAY JOIN balances
         WHERE
           from_address = {fromAddress: String} AND
           "timestamp" = ${
             timestamp
               ? '{timestamp: DateTime}'
-              : '(SELECT max("timestamp") AS "timestamp" FROM lf.adapters_balances WHERE from_address = {fromAddress: String})'
+              : `(SELECT max("timestamp") AS "timestamp" FROM ${environment.NS_LF}.adapters_balances WHERE from_address = {fromAddress: String})`
           }
       ) AS ab
       LEFT JOIN (
@@ -300,7 +304,7 @@ export async function selectLatestBalancesGroupsByFromAddress(
           apy_mean_30d,
           il_risk,
           underlyings
-        FROM lf.yields
+        FROM ${environment.NS_LF}.yields
         WHERE "timestamp" = (SELECT max("timestamp") AS "timestamp" FROM lf.yields)
       ) AS y ON
         (ab.chain = y.chain AND ab.adapter_id = y.adapter_id AND ab.address = y.address);
@@ -398,7 +402,7 @@ export function insertBalances(client: ClickHouseClient, balances: Balance[]) {
   }
 
   return client.insert({
-    table: 'lf.adapters_balances',
+    table: `${environment.NS_LF}.adapters_balances`,
     values,
     format: 'JSONEachRow',
   })

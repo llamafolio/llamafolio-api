@@ -139,6 +139,7 @@ export type WithPrice<T extends BaseBalance> = T & {
 export interface BalancesGroup {
   balances: Balance[]
   // Metadata
+  MCR?: number // Minimum Collateralization Ratio
   healthFactor?: number
 }
 

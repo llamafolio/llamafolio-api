@@ -147,6 +147,26 @@ export function sanitizeBalances<T extends Balance>(balances: T[]) {
   return sanitizedBalances
 }
 
+export function resolveHealthFactor({
+  healthFactor,
+  MCR,
+  collateralUSD,
+  debtUSD,
+}: {
+  healthFactor?: number
+  MCR?: number
+  collateralUSD: number
+  debtUSD: number
+}) {
+  if (healthFactor != null) {
+    return healthFactor
+  }
+
+  if (MCR != null) {
+    return collateralUSD / (MCR * debtUSD)
+  }
+}
+
 export async function resolveBalances<C extends GetContractsHandler>(
   ctx: BalancesContext,
   contracts: ExcludeRawContract<Partial<Awaited<ReturnType<C>>['contracts']>>,
@@ -256,6 +276,7 @@ export function sumBalances(balances: SumBalance[]) {
 
 export interface BalanceBreakdown {
   balanceUSD?: number
+  collateralUSD?: number
   debtUSD?: number
   rewardUSD?: number
 }
@@ -265,13 +286,18 @@ export interface BalanceBreakdown {
  */
 export function fmtBalanceBreakdown(balance: PricedBalance): PricedBalance & BalanceBreakdown {
   let balanceUSD = 0
+  let collateralUSD = 0
   let debtUSD = 0
   let rewardUSD = 0
 
   if (balance.category === 'borrow') {
+    // don't count debt as balance
     debtUSD += balance.balanceUSD || 0
   } else if (balance.category === 'reward') {
     rewardUSD += balance.claimableUSD || balance.balanceUSD || 0
+  } else if (balance.category === 'lend') {
+    collateralUSD += balance.balanceUSD || 0
+    balanceUSD += balance.balanceUSD || 0
   } else {
     balanceUSD += balance.balanceUSD || 0
   }
@@ -286,6 +312,7 @@ export function fmtBalanceBreakdown(balance: PricedBalance): PricedBalance & Bal
   return {
     ...balance,
     balanceUSD: balanceUSD || undefined,
+    collateralUSD: collateralUSD || undefined,
     debtUSD: debtUSD || undefined,
     rewardUSD: rewardUSD || undefined,
   }

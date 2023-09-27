@@ -32,3 +32,7 @@ export function mulPrice(amount: bigint, decimals: number, price: number) {
     return 0
   }
 }
+
+export function parseFloatBI(num: bigint, decimals: number) {
+  return parseFloat(formatUnits(num, decimals))
+}
