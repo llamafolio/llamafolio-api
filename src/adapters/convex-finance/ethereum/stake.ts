@@ -13,6 +13,23 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  cvxCrvStakingWrappingEarned: {
+    inputs: [{ internalType: 'address', name: '_account', type: 'address' }],
+    name: 'earned',
+    outputs: [
+      {
+        components: [
+          { internalType: 'address', name: 'token', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+        ],
+        internalType: 'struct CvxCrvStakingWrapper.EarnedData[]',
+        name: 'claimable',
+        type: 'tuple[]',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 } as const
 
 const threeCrv: Token = {
@@ -71,6 +88,22 @@ export async function getCvxCrvStakeBalance(ctx: BalancesContext, cvxCrv: Contra
     rewards,
     category: 'stake',
   }
+}
+
+export async function getStkCvxCrvBalance(ctx: BalancesContext, stkCvxCrv: Contract) {
+  const [balanceOf, earned] = await Promise.all([
+    call({ ctx, target: stkCvxCrv.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: stkCvxCrv.address, params: [ctx.address], abi: abi.cvxCrvStakingWrappingEarned }),
+  ])
+
+  const balance: Balance = {
+    ...stkCvxCrv,
+    amount: balanceOf,
+    category: 'stake',
+    rewards: stkCvxCrv.rewards!.map((reward, idx) => ({ ...reward, amount: earned[idx].amount })),
+  }
+
+  return balance
 }
 
 export async function getCVXStakeBalance(ctx: BalancesContext, cvxRewardPool: Contract): Promise<Balance> {
