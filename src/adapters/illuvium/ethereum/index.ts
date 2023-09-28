@@ -1,7 +1,7 @@
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getILVBalances } from './balance'
+import { getILVBalances, getILVExternalTokensBalances } from './balance'
 import { getILVContracts } from './contract'
 
 export interface IPools {
@@ -25,17 +25,36 @@ const pools: IPools[] = [
   },
 ]
 
+const linkStaker: Contract = {
+  chain: 'ethereum',
+  address: '0xc759c6233e9c1095328d29cfff319780b28cecd8',
+  token: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
+}
+
+const axsStaker: Contract = {
+  chain: 'ethereum',
+  address: '0x099a3b242dcec87e729cefc6157632d7d5f1c4ef',
+  token: '0xBB0E17EF65F82Ab018d8EDd776e8DD940327B28b',
+}
+
+const snxxStaker: Contract = {
+  chain: 'ethereum',
+  address: '0x9898d72c2901d09e72a426d1c24b6ab90eb100e7',
+  token: '0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
   const contracts = await getILVContracts(ctx, pools)
 
   return {
-    contracts: { contracts },
+    contracts: { contracts, pools: [linkStaker, axsStaker, snxxStaker] },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     contracts: getILVBalances,
+    pools: getILVExternalTokensBalances,
   })
 
   return {

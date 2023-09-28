@@ -5,8 +5,6 @@ import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 
-import type { ILVContract } from './contract'
-
 const abi = {
   pendingRewards: {
     inputs: [{ internalType: 'address', name: '_staker', type: 'address' }],
@@ -47,6 +45,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  pendingYieldRewards: {
+    inputs: [{ internalType: 'address', name: '_staker', type: 'address' }],
+    name: 'pendingYieldRewards',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 const ILV: Token = {
@@ -56,7 +61,7 @@ const ILV: Token = {
   symbol: 'ILV',
 }
 
-export async function getILVBalances(ctx: BalancesContext, pools: ILVContract[]): Promise<Balance[]> {
+export async function getILVBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const singleUnderlyingsBalances: Balance[] = []
   const multipleUnderlyingsBalances: Balance[] = []
 
@@ -89,7 +94,7 @@ export async function getILVBalances(ctx: BalancesContext, pools: ILVContract[])
 
     const balance: Balance = {
       ...pool,
-      address: pool.token,
+      address: pool.token!,
       amount: balanceOfRes.output + stakerBalanceOfRes.output,
       underlyings,
       rewards: [{ ...ILV, amount: pendingRewards }],
@@ -102,4 +107,37 @@ export async function getILVBalances(ctx: BalancesContext, pools: ILVContract[])
   })
 
   return [...singleUnderlyingsBalances, ...(await getUnderlyingBalances(ctx, multipleUnderlyingsBalances))]
+}
+
+export async function getILVExternalTokensBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
+  const balances: Balance[] = []
+  const [userBalances, userPendingRewards] = await Promise.all([
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
+      abi: erc20Abi.balanceOf,
+    }),
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
+      abi: abi.pendingYieldRewards,
+    }),
+  ])
+
+  for (const [index, pool] of pools.entries()) {
+    const userBalance = userBalances[index]
+    const userPendingReward = userPendingRewards[index]
+
+    if (!userBalance.success || !userPendingReward.success) continue
+
+    balances.push({
+      ...pool,
+      amount: userBalance.output,
+      underlyings: undefined,
+      rewards: [{ ...ILV, amount: userPendingReward.output }],
+      category: 'farm',
+    })
+  }
+
+  return balances
 }
