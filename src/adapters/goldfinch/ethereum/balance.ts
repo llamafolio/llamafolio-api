@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { mapSuccess, rangeBI } from '@lib/array'
+import { mapSuccess, mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -56,7 +56,53 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  tokens: {
+    inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'tokens',
+    outputs: [
+      { internalType: 'address', name: 'pool', type: 'address' },
+      { internalType: 'uint256', name: 'tranche', type: 'uint256' },
+      { internalType: 'uint256', name: 'principalAmount', type: 'uint256' },
+      { internalType: 'uint256', name: 'principalRedeemed', type: 'uint256' },
+      { internalType: 'uint256', name: 'interestRedeemed', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  availableToWithdraw: {
+    inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
+    name: 'availableToWithdraw',
+    outputs: [
+      { internalType: 'uint256', name: 'interestRedeemable', type: 'uint256' },
+      { internalType: 'uint256', name: 'principalRedeemable', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  withdrawalRequest: {
+    inputs: [{ internalType: 'uint256', name: 'tokenId', type: 'uint256' }],
+    name: 'withdrawalRequest',
+    outputs: [
+      {
+        components: [
+          { internalType: 'uint256', name: 'epochCursor', type: 'uint256' },
+          { internalType: 'uint256', name: 'usdcWithdrawable', type: 'uint256' },
+          { internalType: 'uint256', name: 'fiduRequested', type: 'uint256' },
+        ],
+        internalType: 'struct ISeniorPoolEpochWithdrawals.WithdrawalRequest',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
+
+type Ibalance = Balance & {
+  pool: `0x${string}`
+  tokenId: bigint
+}
 
 const GFI: Token = {
   chain: 'ethereum',
@@ -65,37 +111,54 @@ const GFI: Token = {
   decimals: 18,
 }
 
-const USDC: Token = {
-  chain: 'ethereum',
-  address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-  symbol: 'USDC',
-  decimals: 6,
-}
-
 const FiduToUSDC = async (ctx: BalancesContext) => {
   const RATE_ADDRESS = '0x8481a6EbAf5c7DABc3F7e09e44A89531fd31F822'
   return call({ ctx, target: RATE_ADDRESS, abi: abi.sharePrice })
 }
 
+export async function getGoldFinchDepositBalances(ctx: BalancesContext, depositer: Contract): Promise<Balance[]> {
+  const REQUEST_ADDRESS = '0x8481a6EbAf5c7DABc3F7e09e44A89531fd31F822'
+  const [userNftLength, rate] = await Promise.all([
+    call({ ctx, target: depositer.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    FiduToUSDC(ctx),
+  ])
+
+  const userTokensIdsRes = await multicall({
+    ctx,
+    calls: rangeBI(0n, userNftLength).map(
+      (idx) => ({ target: depositer.address, params: [ctx.address, idx] }) as const,
+    ),
+    abi: abi.tokenOfOwnerByIndex,
+  })
+
+  const tokensRes = await multicall({
+    ctx,
+    calls: mapSuccessFilter(userTokensIdsRes, (res) => ({ target: REQUEST_ADDRESS, params: [res.output] }) as const),
+    abi: abi.withdrawalRequest,
+  })
+
+  const balances: Balance[] = mapSuccessFilter(tokensRes, (res) => ({
+    ...depositer,
+    amount: (res.output.fiduRequested * rate) / parseEther('1.0'),
+    decimals: 18,
+    underlyings: undefined,
+    rewards: undefined,
+    category: 'stake',
+  }))
+
+  return balances
+}
+
 export async function getGoldFinchStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
   const [balance, rate] = await Promise.all([getSingleStakeBalance(ctx, staker), FiduToUSDC(ctx)])
-
-  return {
-    ...balance,
-    amount: (balance.amount * rate) / parseEther('1.0'),
-  }
+  return { ...balance, amount: (balance.amount * rate) / parseEther('1.0') }
 }
 
 export async function getGoldFinchNFTStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [nftLength, rate] = await Promise.all([
-    call({
-      ctx,
-      target: staker.address,
-      params: [ctx.address],
-      abi: erc20Abi.balanceOf,
-    }),
+    call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     FiduToUSDC(ctx),
   ])
 
@@ -126,15 +189,59 @@ export async function getGoldFinchNFTStakeBalances(ctx: BalancesContext, staker:
       continue
     }
 
-    const underlyingsAmount = (tokenBalanceRes.output * rate) / parseEther('1.0')
-
     balances.push({
       ...staker,
-      amount: tokenBalanceRes.output,
-      underlyings: [{ ...USDC, decimals: 18, amount: underlyingsAmount }],
+      amount: (tokenBalanceRes.output * rate) / parseEther('1.0'),
+      decimals: 18,
+      underlyings: undefined,
       rewards: [{ ...GFI, amount: tokenPendingRewardRes.output }],
       category: 'stake',
     })
+  }
+
+  return balances
+}
+
+export async function getGoldFinchNFTFarmBalances(ctx: BalancesContext, farmer: Contract): Promise<Balance[]> {
+  const userNftLength = await call({ ctx, target: farmer.address, params: [ctx.address], abi: erc20Abi.balanceOf })
+
+  const userTokensIdsRes = await multicall({
+    ctx,
+    calls: rangeBI(0n, userNftLength).map((idx) => ({ target: farmer.address, params: [ctx.address, idx] }) as const),
+    abi: abi.tokenOfOwnerByIndex,
+  })
+
+  const tokensRes = await multicall({
+    ctx,
+    calls: mapSuccessFilter(userTokensIdsRes, (res) => ({ target: farmer.address, params: [res.output] }) as const),
+    abi: abi.tokens,
+  })
+
+  const balances: Ibalance[] = mapSuccessFilter(tokensRes, (res) => {
+    const [pool, _, amount] = res.output
+
+    return {
+      ...farmer,
+      amount,
+      pool,
+      underlyings: farmer.underlyings as Contract[],
+      rewards: farmer.rewards as Balance[],
+      tokenId: res.input.params[0],
+      category: 'farm',
+    }
+  })
+
+  const userRewardsRes = await multicall({
+    ctx,
+    calls: balances.map((balance) => ({ target: balance.pool, params: [balance.tokenId] }) as const),
+    abi: abi.availableToWithdraw,
+  })
+
+  for (const [index, balance] of balances.entries()) {
+    const userRewardRes = userRewardsRes[index]
+
+    if (!userRewardRes.success) continue
+    ;(balance.rewards as any) = [{ ...balance.rewards?.[0], amount: userRewardRes.output[0] }]
   }
 
   return balances
