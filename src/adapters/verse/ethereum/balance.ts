@@ -1,4 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
@@ -56,4 +57,19 @@ export async function getVerseBalances(ctx: BalancesContext, farmers: Contract[]
   }
 
   return getUnderlyingBalances(ctx, balances)
+}
+
+export async function getVerseSingleBalance(ctx: BalancesContext, farmer: Contract): Promise<Balance> {
+  const [balanceOfRes, earnedRes] = await Promise.all([
+    call({ ctx, target: farmer.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.earned }),
+  ])
+
+  return {
+    ...farmer,
+    amount: balanceOfRes,
+    underlyings: undefined,
+    rewards: [{ ...VERSE, amount: earnedRes }],
+    category: 'farm',
+  }
 }
