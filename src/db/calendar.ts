@@ -1,5 +1,4 @@
 import type { ClickHouseClient } from '@clickhouse/client'
-import environment from '@environment'
 import type { CalendarEvent } from '@lib/calendar'
 import { chainByChainId } from '@lib/chains'
 import { toStartOfDay, unixFromDate } from '@lib/fmt'
@@ -11,24 +10,39 @@ import { toStartOfDay, unixFromDate } from '@lib/fmt'
 export async function selectCalendarEvents(client: ClickHouseClient, address: string) {
   const queryRes = await client.query({
     query: `
-      SELECT
-        "chain",
-        "adapter_id",
-        "timestamp",
-        "balances",
-        "governance_proposals"
-      FROM ${environment.NS_LF}.adapters_balances AS ab
-      LEFT JOIN (
+      WITH "sub_balances" AS (
         SELECT
           "chain",
-          "protocol_id",
-          groupArray("data") as "governance_proposals"
-        FROM ${environment.NS_LF}.governance_proposals
-        GROUP BY "chain", "protocol_id", "id"
-      ) AS gp ON (ab."chain", ab."adapter_id") = (gp."chain", gp."protocol_id")
-      WHERE
-        "from_address" = {fromAddress: String} AND
-        "timestamp" = (SELECT max("timestamp") AS "timestamp" FROM ${environment.NS_LF}.adapters_balances WHERE "from_address" = {fromAddress: String})
+          "adapter_id",
+          "timestamp",
+          "balances",
+          "parent_id"
+        FROM lf.adapters_balances AS ab
+        LEFT JOIN lf.adapters AS a ON (a.chain, a.id) = (ab.chain, ab.adapter_id)
+        WHERE
+          "from_address" = {fromAddress: String} AND
+          "timestamp" = (SELECT max("timestamp") AS "timestamp" FROM lf.adapters_balances WHERE "from_address" = {fromAddress: String})
+      ),
+      "sub_governance_proposals" AS (
+          SELECT
+            "chain",
+            "protocol_id",
+            groupUniqArray("data") as "governance_proposals"
+          FROM lf.governance_proposals
+          WHERE "end_time" >= toStartOfDay(now())
+          GROUP BY "chain", "protocol_id"
+      )
+      SELECT
+        ab.chain as chain,
+          ab.adapter_id as adapter_id,
+          ab.timestamp as timestamp,
+          ab.balances as balances,
+          ab.parent_id as parent_id,
+          gp.governance_proposals as governance_proposals
+      FROM "sub_balances" AS ab
+      LEFT JOIN sub_governance_proposals AS gp ON
+        (ab."chain", ab."adapter_id") = (gp."chain", gp."protocol_id") OR
+        (ab."chain", ab."parent_id") = (gp."chain", gp."protocol_id")
     `,
     query_params: {
       fromAddress: address.toLowerCase(),
@@ -39,6 +53,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
     data: {
       chain: string
       adapter_id: string
+      parent_id: string
       timestamp: string
       balances: string[]
       governance_proposals: string[]
@@ -56,27 +71,31 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
 
     const balances = row.balances.map((str) => JSON.parse(str))
     const governanceProposals = row.governance_proposals.map((str) => JSON.parse(str))
+    const today = unixFromDate(toStartOfDay(new Date()))
 
     for (const balance of balances) {
-      if (balance.category === 'lock' && balance.unlockAt != null) {
+      if (balance.category === 'lock' && balance.unlockAt != null && balance.unlockAt >= today) {
         calendarEvents.push({
           balance,
           chain,
           startDate: balance.unlockAt,
           protocol: row.adapter_id,
+          parentProtocol: row.parent_id,
           type: 'unlock',
         })
-      } else if (balance.category === 'vest' && balance.unlockAt != null) {
+      } else if (balance.category === 'vest' && balance.unlockAt != null && balance.unlockAt >= today) {
         calendarEvents.push({
           balance,
           chain,
           startDate: balance.unlockAt,
           protocol: row.adapter_id,
+          parentProtocol: row.parent_id,
           type: 'vest',
         })
       }
     }
 
+    // Note: past proposals are filtered out in the DB layer
     for (const governanceProposal of governanceProposals) {
       calendarEvents.push({
         governanceProposal,
@@ -84,23 +103,11 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
         startDate: governanceProposal.start,
         endDate: governanceProposal.end,
         protocol: row.adapter_id,
+        parentProtocol: row.parent_id,
         type: 'governance_proposal',
       })
     }
   }
 
-  const today = unixFromDate(toStartOfDay(new Date()))
-
-  // filter past events
-  return calendarEvents.filter((event) => {
-    if (event.endDate != null && event.endDate < today) {
-      return false
-    }
-
-    if (event.startDate != null && event.startDate < today) {
-      return false
-    }
-
-    return true
-  })
+  return calendarEvents
 }

@@ -4,17 +4,6 @@ import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
-export interface IContract {
-  block: number
-  chain: string
-  contract: string
-  creator: string
-  hash: string
-  verified?: boolean
-  abi?: any
-  name?: string
-}
-
 export const handler: APIGatewayProxyHandler = async (event) => {
   const address = event.pathParameters?.address
 

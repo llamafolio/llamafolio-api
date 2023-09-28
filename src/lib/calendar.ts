@@ -8,6 +8,7 @@ export interface CalendarBaseEvent {
   startDate: number
   endDate?: number
   protocol: string
+  parentProtocol: string
   chain: string
 }
 
