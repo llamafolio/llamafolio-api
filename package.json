@@ -28,7 +28,7 @@
     "@llamafolio/tokens": "^0.1.96",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
-    "graphql": "^16.8.0",
+    "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "lodash": "^4.17.21",
     "viem": "^1.10.8",
