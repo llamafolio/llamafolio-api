@@ -1,6 +1,7 @@
 import path from 'node:path'
 import url from 'node:url'
 
+import { fetchProtocolToParentMapping } from '@lib/protocols'
 import { isNotNullish } from '@lib/type'
 
 import type { Adapter as DBAdapter } from '../src/db/adapters'
@@ -68,6 +69,8 @@ async function main() {
 
     const now = new Date()
 
+    const protocolToParent = await fetchProtocolToParentMapping()
+
     const dbAdapters: DBAdapter[] = chainContractsConfigs.map((config, i) => {
       let expire_at: Date | undefined = undefined
       if (config.revalidate) {
@@ -77,6 +80,7 @@ async function main() {
 
       return {
         id: adapter.id,
+        parentId: protocolToParent[adapter.id] || '',
         chain: adapterChains[i],
         contractsExpireAt: expire_at,
         contractsRevalidateProps: config.revalidateProps,

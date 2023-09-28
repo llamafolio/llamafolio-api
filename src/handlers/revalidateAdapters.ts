@@ -8,6 +8,7 @@ import type { BaseContext } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { chainById, chains } from '@lib/chains'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
+import { fetchProtocolToParentMapping } from '@lib/protocols'
 import { resolveContractsTokens } from '@lib/token'
 import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -99,6 +100,8 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
 
     const now = new Date()
 
+    const protocolToParent = await fetchProtocolToParentMapping()
+
     let expire_at: Date | undefined = undefined
     if (config.revalidate) {
       expire_at = new Date(now)
@@ -107,6 +110,7 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
 
     const dbAdapter: DBAdapter = {
       id: adapterId,
+      parentId: protocolToParent[adapterId] || '',
       chain,
       contractsExpireAt: expire_at,
       contractsRevalidateProps: config.revalidateProps,
