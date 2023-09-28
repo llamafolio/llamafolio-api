@@ -4,7 +4,7 @@ import { formatBalance, insertBalances } from '@db/balances'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import type { Balance, BalancesContext } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
-import { fmtBalanceBreakdown, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
+import { fmtBalanceBreakdown, resolveHealthFactor, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
 import { type Chain, chains } from '@lib/chains'
 import { sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
@@ -85,6 +85,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
             balance.adapterId = adapterId
             balance.timestamp = now
             balance.healthFactor = group.healthFactor
+            balance.MCR = group.MCR
             balance.fromAddress = address
 
             balances.push(balance)
@@ -120,11 +121,9 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
   const balancesWithBreakdown = sanitizedPricedBalances.map(fmtBalanceBreakdown)
 
-  await insertBalances(client, balancesWithBreakdown)
+  const dbBalances: any[] = []
 
-  // Group back and fetch yields to have a unified balance response format for /balances/{address}
-  // It's better than refetching balances from the DB to save a round trip and because data isn't atomically inserted across shards, so it
-  // may not be available right after insert
+  // Group back
   const balancesGroups: any[] = []
 
   const balancesByChain = groupBy(balancesWithBreakdown, 'chain')
@@ -138,13 +137,27 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
       for (const groupIdx in balancesByGroupIdx) {
         const balances = balancesByGroupIdx[groupIdx].map(formatBalance)
 
+        const collateralUSD = sum(balances.map((balance) => balance.collateralUSD || 0))
+        const debtUSD = sum(balances.map((balance) => balance.debtUSD || 0))
+
+        const healthFactor = resolveHealthFactor({
+          healthFactor: balancesByGroupIdx[groupIdx]?.[0]?.healthFactor,
+          MCR: balancesByGroupIdx[groupIdx]?.[0]?.MCR,
+          collateralUSD,
+          debtUSD,
+        })
+
+        for (const balance of balancesByGroupIdx[groupIdx]) {
+          dbBalances.push({ ...balance, healthFactor })
+        }
+
         balancesGroups.push({
           protocol: adapterId,
           chain,
           balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
-          debtUSD: sum(balances.map((balance) => balance.debtUSD || 0)),
+          debtUSD,
           rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
-          healthFactor: balancesByGroupIdx[groupIdx][0].healthFactor,
+          healthFactor,
           balances,
         })
       }
@@ -152,6 +165,8 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
   }
 
   await aggregateYields(balancesGroups)
+
+  await insertBalances(client, dbBalances)
 
   return { updatedAt: Math.floor(now.getTime() / 1000), balancesGroups }
 }

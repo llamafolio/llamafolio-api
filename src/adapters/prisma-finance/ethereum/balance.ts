@@ -2,6 +2,7 @@ import { getPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
+import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 
@@ -40,6 +41,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  MCR: {
+    inputs: [],
+    name: 'MCR',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 const mkUSD: Token = {
@@ -50,14 +58,22 @@ const mkUSD: Token = {
 }
 
 export async function getPrismaLendBalances(ctx: BalancesContext, vaults: Contract[]) {
-  const userBalances = await multicall({
-    ctx,
-    calls: vaults.map((vault) => ({ target: vault.troves, params: [ctx.address] }) as const),
-    abi: abi.Troves,
-  })
+  const [userBalances, MCRs] = await Promise.all([
+    multicall({
+      ctx,
+      calls: vaults.map((vault) => ({ target: vault.troves, params: [ctx.address] }) as const),
+      abi: abi.Troves,
+    }),
+    multicall({
+      ctx,
+      calls: vaults.map((vault) => ({ target: vault.troves })),
+      abi: abi.MCR,
+    }),
+  ])
 
   const balances = mapSuccessFilter(userBalances, (res, idx) => {
     const [debt, coll, _stake, _status, _arrayIndex, _activeInterestIndex] = res.output
+    const MCR = MCRs[idx]
 
     const lendBalance: LendBalance = {
       ...vaults[idx],
@@ -75,7 +91,10 @@ export async function getPrismaLendBalances(ctx: BalancesContext, vaults: Contra
       category: 'borrow',
     }
 
-    return { balances: [lendBalance, borrowBalance] }
+    return {
+      balances: [lendBalance, borrowBalance],
+      MCR: MCR.output != null ? parseFloatBI(MCR.output, 18) : undefined,
+    }
   })
 
   return balances

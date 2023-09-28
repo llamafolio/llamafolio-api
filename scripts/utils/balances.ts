@@ -1,5 +1,5 @@
 import { groupBy } from '@lib/array'
-import { fmtBalanceBreakdown, sanitizeBalances } from '@lib/balance'
+import { fmtBalanceBreakdown, resolveHealthFactor, sanitizeBalances } from '@lib/balance'
 import { millify, millifyBI } from '@lib/fmt'
 import { sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
@@ -127,13 +127,19 @@ export async function printBalancesConfig(balancesConfig: BalancesConfig) {
   const balancesByGroupIdx = groupBy(pricedBalances, 'groupIdx')
 
   for (let groupIdx = 0; groupIdx < balancesConfig.groups.length; groupIdx++) {
-    const { healthFactor } = balancesConfig.groups[groupIdx]
     const balances = balancesByGroupIdx[groupIdx] || []
     const balanceBreakdowns = balances.map(fmtBalanceBreakdown)
     const balance = sum(balanceBreakdowns.map((balance) => balance.balanceUSD || 0))
     const reward = sum(balanceBreakdowns.map((balance) => balance.rewardUSD || 0))
+    const collateral = sum(balanceBreakdowns.map((balance) => balance.collateralUSD || 0))
     const debt = sum(balanceBreakdowns.map((balance) => balance.debtUSD || 0))
     const netWorth = balance - debt + reward
+    const healthFactor = resolveHealthFactor({
+      healthFactor: balancesConfig.groups[groupIdx].healthFactor,
+      MCR: balancesConfig.groups[groupIdx].MCR,
+      collateralUSD: collateral,
+      debtUSD: debt,
+    })
 
     console.log(`\nGroup ${groupIdx}:`)
     console.table([
