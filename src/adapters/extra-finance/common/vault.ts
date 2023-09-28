@@ -197,7 +197,7 @@ const abi = {
 } as const
 
 export async function getExtraVaults(ctx: BaseContext, factory: Contract): Promise<Contract[]> {
-  const LIMIT = 100n
+  const LIMIT = 200n
 
   const vaultsRes = await multicall({
     ctx,
@@ -205,15 +205,15 @@ export async function getExtraVaults(ctx: BaseContext, factory: Contract): Promi
     abi: abi.getVault,
   })
 
-  return mapSuccessFilter(vaultsRes, (res, idx) => {
+  return mapSuccessFilter(vaultsRes, (res) => {
     const { gauge, pair, token0, token1 } = res.output
 
     return {
       chain: ctx.chain,
-      address: pair,
-      gauge,
+      address: gauge,
+      token: pair,
       underlyings: [token0, token1],
-      pid: idx + 1,
+      pid: res.input.params[0],
     }
   })
 }
