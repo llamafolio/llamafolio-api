@@ -56,19 +56,21 @@ const abi = {
   },
 } as const
 
-const lendingPool: Contract = {
-  chain: 'optimism',
-  address: '0xbb505c54d71e9e599cb8435b4f0ceec05fc71cbd',
-}
+export async function getExtraPoolsBalances(
+  ctx: BalancesContext,
+  lendingPool: Contract,
+): Promise<Balance[] | undefined> {
+  const { pools } = lendingPool
 
-export async function getExtraPoolsBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
+  if (!pools) return
+
   const userBalancesRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: lendingPool.address, params: [[pool.pid], ctx.address] }) as const),
+    calls: pools.map((pool: Contract) => ({ target: lendingPool.address, params: [[pool.pid], ctx.address] }) as const),
     abi: abi.getPositionStatus,
   })
 
-  const balances: Balance[] = mapSuccessFilter(userBalancesRes, (res, idx) => {
+  return mapSuccessFilter(userBalancesRes, (res, idx) => {
     const pool = pools[idx]
     const underlying = pool.underlyings?.[0] as Contract
     const [{ eTokenStaked, liquidity }] = res.output
@@ -83,6 +85,4 @@ export async function getExtraPoolsBalances(ctx: BalancesContext, pools: Contrac
 
     return balance
   })
-
-  return balances
 }
