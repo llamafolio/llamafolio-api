@@ -1,6 +1,7 @@
 import path from 'node:path'
 import url from 'node:url'
 
+import { fetchProtocolToParentMapping } from '@lib/protocols'
 import isEqual from 'lodash/isEqual'
 
 import type { Adapter as DBAdapter } from '../src/db/adapters'
@@ -49,6 +50,8 @@ async function main() {
 
   let prevDbAdapter = await selectAdapter(client, chainId, adapter.id)
 
+  const protocolToParent = await fetchProtocolToParentMapping()
+
   for (let i = 0; ; i++) {
     try {
       console.log(`revalidate props`, prevDbAdapter?.contractsRevalidateProps)
@@ -76,6 +79,7 @@ async function main() {
 
       const dbAdapter: DBAdapter = {
         id: adapter.id,
+        parentId: protocolToParent[adapter.id] || '',
         chain,
         contractsExpireAt: expire_at,
         contractsRevalidateProps: config.revalidateProps,

@@ -93,10 +93,21 @@ export function toDateTime(date: Date) {
   return dayjs(date).utc().format('YYYY-MM-DD HH:mm:ss')
 }
 
+/**
+ * @param timestamp in sec
+ */
+export function unixToDateTime(timestamp: number) {
+  return toDateTime(new Date(timestamp * 1000))
+}
+
 export function fromDateTime(date: string) {
   return dayjs.utc(date, 'YYYY-MM-DD HH:mm:ss').toDate()
 }
 
 export function unixFromDateTime(date: string) {
   return dayjs(date, 'YYYY-MM-DD HH:mm:ss').unix()
+}
+
+export function unixFromDate(date: Date) {
+  return Math.floor(date.getTime() / 1000)
 }

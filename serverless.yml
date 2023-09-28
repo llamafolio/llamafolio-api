@@ -119,6 +119,15 @@ functions:
     timeout: 15
     memorySize: 512
 
+  getCalendar:
+    handler: src/handlers/getCalendar.handler
+    description: Get calendar
+    events:
+      - httpApi:
+          method: get
+          path: /calendar/{address}
+    timeout: 10
+
   getContract:
     handler: src/handlers/getContract.handler
     description: Get contract info
@@ -235,6 +244,13 @@ functions:
     events:
       - schedule: rate(10 minutes)
 
+  scheduledUpdateGovernanceProposals:
+    handler: src/handlers/updateGovernanceProposals.scheduledUpdateGovernanceProposals
+    description: Scheduled update governance proposals
+    events:
+      # every new hour
+      - schedule: cron(0 * * * ? *)
+
   scheduledUpdateProtocols:
     handler: src/handlers/updateProtocols.scheduledUpdateProtocols
     description: Scheduled update protocols
@@ -252,6 +268,11 @@ functions:
   revalidateAdapterContracts:
     handler: src/handlers/revalidateAdapters.revalidateAdapterContracts
     description: Revalidate adapter contracts
+
+  updateGovernanceProposals:
+    handler: src/handlers/updateGovernanceProposals.handler
+    description: Update governance proposals
+    timeout: 300
 
   updateProtocols:
     handler: src/handlers/updateProtocols.handler

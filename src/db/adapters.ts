@@ -2,10 +2,11 @@ import type { ClickHouseClient } from '@clickhouse/client'
 import environment from '@environment'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
 import { fromDateTime, toDateTime } from '@lib/fmt'
-import { isNotFalsy } from '@lib/type'
+import { isNotFalsy, isNotNullish } from '@lib/type'
 
 export interface Adapter {
   id: string
+  parentId: string
   chain: Chain
   contractsExpireAt?: Date
   contractsRevalidateProps?: { [key: string]: any }
@@ -16,6 +17,7 @@ export interface Adapter {
 
 export interface AdapterStorage {
   id: string
+  parent_id: string
   chain: string
   contracts_expire_at: string | null
   contracts_revalidate_props: { [key: string]: any } | null
@@ -26,6 +28,7 @@ export interface AdapterStorage {
 
 export interface AdapterStorable {
   id: string
+  parent_id: string
   chain: number
   contracts_expire_at?: string
   contracts_revalidate_props?: string
@@ -45,6 +48,7 @@ export function fromStorage(adaptersStorage: AdapterStorage[]) {
 
     const adapter: Adapter = {
       id: adapterStorage.id,
+      parentId: adapterStorage.parent_id,
       chain: chain.id,
       contractsExpireAt: adapterStorage.contracts_expire_at
         ? fromDateTime(adapterStorage.contracts_expire_at)
@@ -65,7 +69,8 @@ export function toStorage(adapters: Adapter[]) {
   const adaptersStorable: AdapterStorable[] = []
 
   for (const adapter of adapters) {
-    const { id, chain, contractsExpireAt, contractsRevalidateProps, contractsProps, createdAt, updatedAt } = adapter
+    const { id, parentId, chain, contractsExpireAt, contractsRevalidateProps, contractsProps, createdAt, updatedAt } =
+      adapter
 
     const chainId = chainById[chain]?.chainId
     if (chainId == null) {
@@ -75,6 +80,7 @@ export function toStorage(adapters: Adapter[]) {
 
     const adapterStorable: AdapterStorable = {
       id,
+      parent_id: parentId,
       chain: chainId,
       contracts_expire_at: contractsExpireAt ? toDateTime(contractsExpireAt) : undefined,
       contracts_revalidate_props: contractsRevalidateProps ? JSON.stringify(contractsRevalidateProps) : undefined,
@@ -137,6 +143,41 @@ export async function selectDistinctAdaptersIds(client: ClickHouseClient) {
   }
 
   return res.data
+}
+
+export async function selectDistinctAdaptersChains(client: ClickHouseClient) {
+  const adaptersChains: { [key: string]: Set<Chain> } = {}
+  const adapters: { [key: string]: Chain[] } = {}
+
+  const queryRes = await client.query({
+    query: `SELECT "id", "parent_id", groupUniqArray("chain") AS "chains" FROM ${environment.NS_LF}.adapters GROUP BY "id", "parent_id"`,
+  })
+
+  const res = (await queryRes.json()) as {
+    data: { id: string; parent_id: string; chains: string[] }[]
+  }
+
+  for (const row of res.data) {
+    const chains = row.chains.map((chainIdStr) => chainByChainId[parseInt(chainIdStr)]?.id).filter(isNotNullish)
+    if (!adaptersChains[row.id]) {
+      adaptersChains[row.id] = new Set()
+    }
+
+    if (!adaptersChains[row.parent_id]) {
+      adaptersChains[row.parent_id] = new Set()
+    }
+
+    for (const chain of chains) {
+      adaptersChains[row.id].add(chain)
+      adaptersChains[row.parent_id].add(chain)
+    }
+  }
+
+  for (const adapter in adaptersChains) {
+    adapters[adapter] = [...adaptersChains[adapter]]
+  }
+
+  return adapters
 }
 
 export async function selectAdaptersContractsExpired(client: ClickHouseClient) {

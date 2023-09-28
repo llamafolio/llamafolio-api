@@ -59,7 +59,6 @@ function formatBaseBalance(balance: any) {
     amount: balance.amount,
     balanceUSD: balance.balanceUSD,
     rewardUSD: balance.rewardUSD,
-    USD: balance.debtUSD,
     collateralUSD: balance.collateralUSD,
     debtUSD: balance.debtUSD,
   }

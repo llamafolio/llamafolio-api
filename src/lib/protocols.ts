@@ -130,6 +130,23 @@ async function fetchProtocolsConfig(adapterIds: string[]) {
   return filteredData
 }
 
+export async function fetchProtocolToParentMapping() {
+  const configRes = await fetch('https://api.llama.fi/config')
+  const config = await configRes.json()
+
+  const protocolToParent: { [key: string]: string } = {}
+
+  for (const protocol of config.protocols) {
+    const slug = getProtocolSlug(protocol.name)
+    if (protocol.parentProtocol) {
+      const parentSlug = getProtocolSlug(protocol.parentProtocol.split('parent#')[1])
+      protocolToParent[slug] = parentSlug
+    }
+  }
+
+  return protocolToParent
+}
+
 export async function fetchProtocolsLite(adapterIds: string[]) {
   const res = await fetch('https://api.llama.fi/lite/protocols2')
   const data = await res.json()
