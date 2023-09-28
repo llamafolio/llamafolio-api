@@ -1,4 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 
@@ -13,24 +14,19 @@ const abi = {
 } as const
 
 export async function getVerseContracts(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
-  const contracts: Contract[] = []
-
   const tokensRes = await multicall({
     ctx,
     calls: pools.map((pool) => ({ target: pool.address })),
     abi: abi.stakeToken,
   })
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-    const tokenRes = tokensRes[poolIdx]
+  const contracts: Contract[] = mapSuccessFilter(tokensRes, (res) => ({
+    chain: ctx.chain,
+    address: res.output,
+    pool: res.input.target,
+    token: res.output,
+    lpToken: res.output,
+  }))
 
-    if (!tokenRes.success) {
-      continue
-    }
-
-    contracts.push({ ...pool, address: tokenRes.output, pool: pool.address, lpToken: tokenRes.output })
-  }
-
-  return getPairsDetails(ctx, contracts)
+  return (await getPairsDetails(ctx, contracts)).map((contract) => ({ ...contract, address: contract.pool }))
 }

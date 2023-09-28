@@ -3,7 +3,7 @@ import { resolveBalances } from '@lib/balance'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
-import { getVerseBalances } from './balance'
+import { getVerseBalances, getVerseSingleBalance } from './balance'
 import { getVerseContracts } from './contract'
 
 const farmers: Contract[] = [
@@ -17,7 +17,14 @@ const farmers: Contract[] = [
   { chain: 'ethereum', address: '0xcb2e16623b91dff38b7e5d8cb66631b375d71a0e' },
   { chain: 'ethereum', address: '0x42535f228897d309e644523189d44cff8a961dc7' },
   { chain: 'ethereum', address: '0x29e9c97de8e04a2f40508f9c379cf4f4d53447f6' },
+  { chain: 'ethereum', address: '0xc5af93687088c28da839371f3249df757b219aa8' },
 ]
+
+const verseStaker: Contract = {
+  chain: 'ethereum',
+  address: '0xd920556b0f3522bb1257923292a256f1e3023e07',
+  token: '0x249cA82617eC3DfB2589c4c17ab7EC9765350a18',
+}
 
 export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
@@ -37,6 +44,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
     contracts: {
       pools,
       pairs,
+      verseStaker,
     },
     revalidate: 60 * 60,
     revalidateProps: {
@@ -49,6 +57,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: getPairsBalances,
     pools: getVerseBalances,
+    verseStaker: getVerseSingleBalance,
   })
 
   return {
