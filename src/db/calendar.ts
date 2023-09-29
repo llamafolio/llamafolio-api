@@ -108,7 +108,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
     // Note: past proposals are filtered out in the DB layer
     for (const governanceProposal of governanceProposals) {
       // Note: remove duplicates (left join on balances can yield the same goverance proposal multiple times)
-      const key = `governance_proposal_${chain}_${row.adapter_id}_${governanceProposal.id}`
+      const key = `governance_proposal_${chain}_${row.parent_id || row.adapter_id}_${governanceProposal.id}`
 
       calendarEventByKey[key] = {
         governanceProposal,
