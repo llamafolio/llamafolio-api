@@ -97,6 +97,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  totalCapitalHeldBy: {
+    inputs: [{ internalType: 'address', name: 'addr', type: 'address' }],
+    name: 'totalCapitalHeldBy',
+    outputs: [
+      { internalType: 'uint256', name: 'eligibleAmount', type: 'uint256' },
+      { internalType: 'uint256', name: 'totalAmount', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 type Ibalance = Balance & {
@@ -109,6 +119,13 @@ const GFI: Token = {
   address: '0xdab396ccf3d84cf2d07c4454e10c8a6f5b008d2b',
   symbol: 'GFI',
   decimals: 18,
+}
+
+const USDC: Token = {
+  chain: 'ethereum',
+  address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
+  symbol: 'USDC',
+  decimals: 6,
 }
 
 const FiduToUSDC = async (ctx: BalancesContext) => {
@@ -247,19 +264,34 @@ export async function getGoldFinchNFTFarmBalances(ctx: BalancesContext, farmer: 
   return balances
 }
 
-export async function getGFIFarmBalances(ctx: BalancesContext, farmer: Contract): Promise<Balance> {
-  const [totalGFIHeldBy, pendingReward] = await Promise.all([
+export async function getGFIBalances(ctx: BalancesContext, farmer: Contract): Promise<Balance[]> {
+  const balances: Balance[] = []
+
+  const [totalGFIHeldBy, totalUSDCHeldBy, pendingReward] = await Promise.all([
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.totalGFIHeldBy }),
+    call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.totalCapitalHeldBy }),
     call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.claimableRewards }),
   ])
 
-  const [eligibleAmount, _totalAmount] = totalGFIHeldBy
+  const [eligibleGFIAmount] = totalGFIHeldBy
+  const [eligibleUSDCAmount] = totalUSDCHeldBy
 
-  return {
-    ...farmer,
-    amount: eligibleAmount,
-    underlyings: [GFI],
-    rewards: [{ ...GFI, amount: pendingReward }],
-    category: 'farm',
-  }
+  balances.push(
+    {
+      ...GFI,
+      amount: eligibleGFIAmount,
+      underlyings: undefined,
+      rewards: [{ ...GFI, amount: pendingReward }],
+      category: 'farm',
+    },
+    {
+      ...USDC,
+      amount: eligibleUSDCAmount,
+      underlyings: undefined,
+      rewards: undefined,
+      category: 'stake',
+    },
+  )
+
+  return balances
 }

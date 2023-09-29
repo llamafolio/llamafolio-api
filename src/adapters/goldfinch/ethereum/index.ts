@@ -1,5 +1,5 @@
 import {
-  getGFIFarmBalances,
+  getGFIBalances,
   getGoldFinchDepositBalances,
   getGoldFinchNFTFarmBalances,
   getGoldFinchNFTStakeBalances,
@@ -36,7 +36,7 @@ const GFI_V2_Farmer: Contract = {
   rewards: ['0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48'],
 }
 
-const GFI_farm: Contract = {
+const GFI: Contract = {
   chain: 'ethereum',
   address: '0x4e5d9b093986d864331d88e0a13a616e1d508838',
   token: '0xdab396ccf3d84cf2d07c4454e10c8a6f5b008d2b',
@@ -45,7 +45,7 @@ const GFI_farm: Contract = {
 
 export const getContracts = () => {
   return {
-    contracts: { FIDU, GFI_V2_Staker, GFI_V2_Farmer, GFI_farm, GFI_Depositer },
+    contracts: { FIDU, GFI_V2_Staker, GFI_V2_Farmer, GFI, GFI_Depositer },
   }
 }
 
@@ -55,7 +55,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     GFI_Depositer: getGoldFinchDepositBalances,
     GFI_V2_Staker: getGoldFinchNFTStakeBalances,
     GFI_V2_Farmer: getGoldFinchNFTFarmBalances,
-    GFI_farm: getGFIFarmBalances,
+    GFI: getGFIBalances,
   })
 
   return {
