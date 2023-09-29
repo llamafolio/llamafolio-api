@@ -77,6 +77,7 @@ export interface IProtocol {
   logo: string
   category: string
   slug: string
+  parent_slug?: string
   chain: string
   chains: string[]
   symbol?: string
@@ -173,6 +174,7 @@ export async function fetchProtocolsLite(adapterIds: string[]) {
 
     protocols.push({
       slug: getProtocolSlug(protocol.name),
+      parent_slug: protocol.parentProtocol ? getProtocolSlug(protocol.parentProtocol.split('parent#')[1]) : undefined,
       chain: getChainName(protocol.chains),
       name: protocol.name,
       url: protocol.url,
