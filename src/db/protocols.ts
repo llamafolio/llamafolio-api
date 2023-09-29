@@ -8,6 +8,7 @@ export interface ProtocolStorage {
   logo: string
   category: string
   slug: string
+  parent_slug?: string
   chain: string
   chains: string[]
   symbol: string | null
@@ -25,6 +26,7 @@ export function fromRowStorage(protocolStorage: ProtocolStorage) {
     logo: protocolStorage.logo,
     category: protocolStorage.category,
     slug: protocolStorage.slug,
+    parent_slug: protocolStorage.parent_slug,
     chain: protocolStorage.chain,
     chains: protocolStorage.chains,
     symbol: protocolStorage.symbol || undefined,
