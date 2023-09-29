@@ -1,10 +1,10 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getArrakisFarmBalances, getLpBalances } from '../common/balances'
+import { getArrakisV1FarmBalances, getLpBalances } from '../common/balances'
 import { getFarmersContracts, getVaults } from '../common/contracts'
 
-const farmers: `0x${string}`[] = [
+const farmers_v1: `0x${string}`[] = [
   '0xfb5b8515b011b073defb5fa63b05a7190a5207b3',
   '0x33d1ad9cd88a509397cd924c2d7613c285602c20',
   '0x56c5b00bdeb3cb8adf745650599f9adef3c40275',
@@ -28,10 +28,10 @@ const factoryArrakis: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const [vaults, pools] = await Promise.all([getVaults(ctx, factoryArrakis), getFarmersContracts(ctx, farmers)])
+  const [vaults, pools_v1] = await Promise.all([getVaults(ctx, factoryArrakis), getFarmersContracts(ctx, farmers_v1)])
 
   return {
-    contracts: { vaults, pools },
+    contracts: { vaults, pools_v1 },
     revalidate: 60 * 60,
   }
 }
@@ -39,7 +39,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     vaults: getLpBalances,
-    pools: getArrakisFarmBalances,
+    pools_v1: getArrakisV1FarmBalances,
   })
 
   return {

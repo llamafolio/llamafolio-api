@@ -1,10 +1,10 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getArrakisFarmBalances, getLpBalances } from '../common/balances'
+import { getArrakisV1FarmBalances, getArrakisV2FarmBalances, getLpBalances } from '../common/balances'
 import { getFarmersContracts, getVaults } from '../common/contracts'
 
-const farmers: `0x${string}`[] = [
+const farmers_v1: `0x${string}`[] = [
   '0x8b24d44772a27030353bee0f252844602abbb0f1',
   '0x87c7c885365700d157cd0f39a7803320fe86f0f5',
   '0x8d1c480bca1439ae5d5a81a75d53f9bf6ec513f1',
@@ -31,6 +31,8 @@ const farmers: `0x${string}`[] = [
   '0xbee2b73493f342b1abee4c747be6ad53e02c071e',
 ]
 
+const farmers_v2: `0x${string}`[] = ['0xd9723fffda369d119fbd66a15113144bf76e281c']
+
 const factoryArrakis: Contract = {
   name: 'factory',
   displayName: 'Arrakis Factory',
@@ -38,12 +40,20 @@ const factoryArrakis: Contract = {
   address: '0x2845c6929d621e32B7596520C8a1E5a37e616F09',
 }
 
+const helper: Contract = {
+  chain: 'optimism',
+  address: '0x89E4bE1F999E3a58D16096FBe405Fc2a1d7F07D6',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
-  const vaults = await getVaults(ctx, factoryArrakis)
-  const pools = await getFarmersContracts(ctx, farmers)
+  const [vaults, pools_v1, pool_v2] = await Promise.all([
+    getVaults(ctx, factoryArrakis),
+    getFarmersContracts(ctx, farmers_v1),
+    getFarmersContracts(ctx, farmers_v2),
+  ])
 
   return {
-    contracts: { vaults, pools },
+    contracts: { vaults, pools_v1, pool_v2 },
     revalidate: 60 * 60,
   }
 }
@@ -51,7 +61,8 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     vaults: getLpBalances,
-    pools: getArrakisFarmBalances,
+    pools_v1: getArrakisV1FarmBalances,
+    pool_v2: (...args) => getArrakisV2FarmBalances(...args, helper),
   })
 
   return {

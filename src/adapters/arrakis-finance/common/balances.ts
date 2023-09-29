@@ -186,7 +186,6 @@ export async function getArrakisV2FarmBalances(
           (reward) => ({ target: farmer.address, params: [ctx.address, (reward as Contract).address] }) as const,
         ),
       ),
-      // calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
       abi: abi.claimable_reward,
     }),
     multicall({
