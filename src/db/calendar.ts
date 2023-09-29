@@ -4,6 +4,10 @@ import { chainByChainId } from '@lib/chains'
 import { toStartOfDay, unixFromDate } from '@lib/fmt'
 
 /**
+ * Return calendar upcoming events (including today's events):
+ * - token vest end
+ * - token lock end
+ * - governance proposal of protocols the user is invested in
  * @param client
  * @param address wallet
  */
@@ -60,7 +64,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
     }[]
   }
 
-  const calendarEvents: CalendarEvent[] = []
+  const calendarEventByKey: { [key: string]: CalendarEvent } = {}
 
   for (const row of res.data) {
     const chain = chainByChainId[parseInt(row.chain)]?.id
@@ -73,31 +77,40 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
     const governanceProposals = row.governance_proposals.map((str) => JSON.parse(str))
     const today = unixFromDate(toStartOfDay(new Date()))
 
-    for (const balance of balances) {
+    for (let balanceIdx = 0; balanceIdx < balances.length; balanceIdx++) {
+      const balance = balances[balanceIdx]
+
       if (balance.category === 'lock' && balance.unlockAt != null && balance.unlockAt >= today) {
-        calendarEvents.push({
+        const key = `lock_${chain}_${row.adapter_id}_${balanceIdx}`
+
+        calendarEventByKey[key] = {
           balance,
           chain,
           startDate: balance.unlockAt,
           protocol: row.adapter_id,
           parentProtocol: row.parent_id,
           type: 'unlock',
-        })
+        }
       } else if (balance.category === 'vest' && balance.unlockAt != null && balance.unlockAt >= today) {
-        calendarEvents.push({
+        const key = `vest_${chain}_${row.adapter_id}_${balanceIdx}`
+
+        calendarEventByKey[key] = {
           balance,
           chain,
           startDate: balance.unlockAt,
           protocol: row.adapter_id,
           parentProtocol: row.parent_id,
           type: 'vest',
-        })
+        }
       }
     }
 
     // Note: past proposals are filtered out in the DB layer
     for (const governanceProposal of governanceProposals) {
-      calendarEvents.push({
+      // Note: remove duplicates (left join on balances can yield the same goverance proposal multiple times)
+      const key = `governance_proposal_${chain}_${row.adapter_id}_${governanceProposal.id}`
+
+      calendarEventByKey[key] = {
         governanceProposal,
         chain,
         startDate: governanceProposal.start,
@@ -105,9 +118,9 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
         protocol: row.adapter_id,
         parentProtocol: row.parent_id,
         type: 'governance_proposal',
-      })
+      }
     }
   }
 
-  return calendarEvents.sort((a, b) => a.startDate - b.startDate)
+  return Object.values(calendarEventByKey).sort((a, b) => a.startDate - b.startDate)
 }
