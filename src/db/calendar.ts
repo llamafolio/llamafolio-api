@@ -109,5 +109,5 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
     }
   }
 
-  return calendarEvents
+  return calendarEvents.sort((a, b) => a.startDate - b.startDate)
 }
