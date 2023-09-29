@@ -81,7 +81,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
       const balance = balances[balanceIdx]
 
       if (balance.category === 'lock' && balance.unlockAt != null && balance.unlockAt >= today) {
-        const key = `lock_${balanceIdx}`
+        const key = `lock_${chain}_${row.adapter_id}_${balanceIdx}`
 
         calendarEventByKey[key] = {
           balance,
@@ -92,7 +92,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
           type: 'unlock',
         }
       } else if (balance.category === 'vest' && balance.unlockAt != null && balance.unlockAt >= today) {
-        const key = `vest_${balanceIdx}`
+        const key = `vest_${chain}_${row.adapter_id}_${balanceIdx}`
 
         calendarEventByKey[key] = {
           balance,
