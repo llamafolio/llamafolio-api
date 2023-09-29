@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter } from '@lib/array'
+import { flatMapSuccess, mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
@@ -59,6 +59,22 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  reward_count: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'reward_count',
+    inputs: [],
+    outputs: [{ name: '', type: 'uint256' }],
+    gas: 3450,
+  },
+  reward_tokens: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'reward_tokens',
+    inputs: [{ name: 'arg0', type: 'uint256' }],
+    outputs: [{ name: '', type: 'address' }],
+    gas: 3525,
+  },
 } as const
 
 export async function getVaults(ctx: BaseContext, factoryArrakis: Contract) {
@@ -99,7 +115,7 @@ export async function getVaults(ctx: BaseContext, factoryArrakis: Contract) {
 }
 
 export async function getFarmersContracts(ctx: BaseContext, farmers: `0x${string}`[]): Promise<Contract[]> {
-  const contracts: Contract[] = []
+  const rewardsMap: { [key: string]: any[] } = {}
 
   const tokensRes = await multicall({
     ctx,
@@ -107,34 +123,48 @@ export async function getFarmersContracts(ctx: BaseContext, farmers: `0x${string
     abi: abi.staking_token,
   })
 
-  const [underlying0Res, underlying1Res] = await Promise.all([
-    multicall({
-      ctx,
-      calls: mapSuccessFilter(tokensRes, (res) => ({ target: res.output }) as const),
-      abi: abi.token0,
-    }),
-    multicall({
-      ctx,
-      calls: mapSuccessFilter(tokensRes, (res) => ({ target: res.output }) as const),
-      abi: abi.token1,
-    }),
-  ])
+  const pools: Contract[] = mapSuccessFilter(tokensRes, (res, idx) => ({
+    chain: ctx.chain,
+    address: res.output,
+    token: res.output,
+    staker: farmers[idx],
+  }))
 
-  for (const [index, farmer] of farmers.entries()) {
-    const underlying0 = underlying0Res[index]
-    const underlying1 = underlying1Res[index]
+  const poolsRewardsLength = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: pool.staker }) as const),
+    abi: abi.reward_count,
+  })
 
-    if (!underlying0.success || !underlying1.success) {
-      continue
+  const poolsRewardsRes = await multicall({
+    ctx,
+    calls: flatMapSuccess(poolsRewardsLength, (res) =>
+      rangeBI(0n, res.output).map((idx) => ({ target: res.input.target, params: [idx] }) as const),
+    ).flat(),
+    abi: abi.reward_tokens,
+  })
+
+  poolsRewardsRes.forEach((res) => {
+    if (res.success) {
+      const address = res.input.target
+      if (!rewardsMap[address]) rewardsMap[address] = []
+      rewardsMap[address].push(res.output)
     }
+  })
 
-    contracts.push({
-      chain: ctx.chain,
-      address: farmer,
-      token: underlying0.input.target,
-      underlyings: [underlying0.output, underlying1.output],
-    })
+  pools.forEach((pool) => {
+    const address = pool.staker
+    pool.rewards = rewardsMap[address] || []
+  })
+
+  const fmtPools = await getPairsDetails(ctx, pools)
+
+  for (let i = 0; i < fmtPools.length; i++) {
+    const contractIndex = pools.findIndex((c) => c.address === fmtPools[i].address)
+    if (contractIndex !== -1) {
+      pools[contractIndex] = Object.assign({}, pools[contractIndex], fmtPools[i])
+    }
   }
 
-  return contracts
+  return pools.map((pool) => ({ ...pool, address: pool.staker }))
 }

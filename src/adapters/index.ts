@@ -20,7 +20,7 @@ import apeswapLending from '@adapters/apeswap-lending'
 import api3 from '@adapters/api3'
 import apollox from '@adapters/apollox'
 import arbitrumExchange from '@adapters/arbitrum-exchange'
-import arrakis from '@adapters/arrakis'
+import arrakisFinance from '@adapters/arrakis-finance'
 import asymetrixProtocol from '@adapters/asymetrix-protocol'
 import atlantisLoans from '@adapters/atlantis-loans'
 import atlasUsv from '@adapters/atlas-usv'
@@ -278,7 +278,7 @@ export const adapters: Adapter[] = [
   api3,
   apollox,
   arbitrumExchange,
-  arrakis,
+  arrakisFinance,
   asymetrixProtocol,
   atlantisLoans,
   atlasUsv,
