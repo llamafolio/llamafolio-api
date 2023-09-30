@@ -1,5 +1,9 @@
 const GOVERNANCE_SNAPSHOT_API = 'https://defillama-datasets.llama.fi/governance-cache/overview/snapshot.json'
 const PROTOCOL_GOVERNANCE_SNAPSHOT_API = 'https://defillama-datasets.llama.fi/governance-cache/snapshot'
+const GOVERNANCE_COMPOUND_API = 'https://defillama-datasets.llama.fi/governance-cache/overview/compound.json'
+const PROTOCOL_GOVERNANCE_COMPOUND_API = 'https://defillama-datasets.llama.fi/governance-cache/compound'
+const GOVERNANCE_TALLY_API = 'https://defillama-datasets.llama.fi/governance-cache/overview/tally.json'
+const PROTOCOL_GOVERNANCE_TALLY_API = 'https://defillama-datasets.llama.fi/governance-cache/tally'
 
 export interface GovernanceSnapshotResponse {
   [key: string]: GovernanceSnapshot
@@ -136,7 +140,54 @@ export interface StatsStates {
 
 export async function fetchProtocolGovernanceSnapshot(id: string) {
   try {
-    const res = await fetch(PROTOCOL_GOVERNANCE_SNAPSHOT_API + '/' + id.replace(/(:|’|')/g, '/') + '.json')
+    const endpoint = PROTOCOL_GOVERNANCE_SNAPSHOT_API + '/' + id.replace(/(:|’|')/g, '/') + '.json'
+    const res = await fetch(endpoint.toLowerCase())
+    const json: ProtocolGovernanceResponse = await res.json()
+    return json
+  } catch (error) {
+    console.error('Failed to fetch protocol governance snapshot', error)
+    return null
+  }
+}
+
+export async function fetchGovernanceCompound() {
+  try {
+    const res = await fetch(GOVERNANCE_COMPOUND_API)
+    const json: GovernanceSnapshotResponse = await res.json()
+    return json
+  } catch (error) {
+    console.error('Failed to fetch governance snapshot', error)
+    return {}
+  }
+}
+
+export async function fetchProtocolGovernanceCompound(id: string) {
+  try {
+    const endpoint = PROTOCOL_GOVERNANCE_COMPOUND_API + '/' + id.replace(/(:|’|')/g, '/') + '.json'
+    const res = await fetch(endpoint.toLowerCase())
+    const json: ProtocolGovernanceResponse = await res.json()
+    return json
+  } catch (error) {
+    console.error('Failed to fetch protocol governance snapshot', error)
+    return null
+  }
+}
+
+export async function fetchGovernanceTally() {
+  try {
+    const res = await fetch(GOVERNANCE_TALLY_API)
+    const json: GovernanceSnapshotResponse = await res.json()
+    return json
+  } catch (error) {
+    console.error('Failed to fetch governance snapshot', error)
+    return {}
+  }
+}
+
+export async function fetchProtocolGovernanceTally(id: string) {
+  try {
+    const endpoint = PROTOCOL_GOVERNANCE_TALLY_API + '/' + id.replace(/(:|’|')/g, '/') + '.json'
+    const res = await fetch(endpoint.toLowerCase())
     const json: ProtocolGovernanceResponse = await res.json()
     return json
   } catch (error) {

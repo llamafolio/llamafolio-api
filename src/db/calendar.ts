@@ -7,7 +7,7 @@ import { toStartOfDay, unixFromDate } from '@lib/fmt'
  * Return calendar upcoming events (including today's events):
  * - token vest end
  * - token lock end
- * - governance proposal of protocols the user is invested in
+ * - governance proposal (non closed) of protocols the user is invested in
  * @param client
  * @param address wallet
  */
@@ -33,7 +33,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
             "protocol_id",
             groupUniqArray("data") as "governance_proposals"
           FROM lf.governance_proposals
-          WHERE "end_time" >= toStartOfDay(now())
+          WHERE "end_time" >= toStartOfDay(now()) AND "status" <> 'closed'
           GROUP BY "chain", "protocol_id"
       )
       SELECT
