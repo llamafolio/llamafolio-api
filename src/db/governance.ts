@@ -8,6 +8,8 @@ export interface GovernanceProposalStorage {
   chain: string
   protocol_id: string
   id: string
+  app: string
+  status: string
   start_time: string
   end_time: string
   data: string
@@ -34,6 +36,8 @@ function toStorage(proposals: GovernanceProposalStorable[]) {
       chain: chainId,
       protocol_id: protocol,
       id: proposal.id,
+      app: proposal.app,
+      status: proposal.state,
       start_time: unixToDateTime(proposal.start),
       end_time: unixToDateTime(proposal.end),
       data: JSON.stringify(data),
