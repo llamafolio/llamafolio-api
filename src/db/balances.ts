@@ -259,12 +259,30 @@ export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHou
   }
 }
 
-export async function selectLatestBalancesGroupsByFromAddress(
+export interface LatestProtocolBalancesGroup {
+  balanceUSD: number
+  debtUSD?: number
+  rewardUSD?: number
+  healthFactor?: number
+  balances: any[]
+}
+
+export interface LatestProtocolBalances {
+  id: string
+  chain: string
+  balanceUSD: number
+  debtUSD?: number
+  rewardUSD?: number
+  healthFactor?: number
+  groups: LatestProtocolBalancesGroup[]
+}
+
+export async function selectLatestProtocolsBalancesByFromAddress(
   client: ClickHouseClient,
   fromAddress: string,
   timestamp?: Date,
 ) {
-  const balancesGroups: any[] = []
+  const protocolsBalances: LatestProtocolBalances[] = []
 
   const queryRes = await client.query({
     query: `
@@ -346,10 +364,10 @@ export async function selectLatestBalancesGroupsByFromAddress(
       updatedAt = unixFromDateTime(balancesByChain[chainId][0].timestamp)
     }
 
-    const balancesByAdapterId = groupBy(balancesByChain[chainId], 'adapter_id')
+    const balancesByProtocol = groupBy(balancesByChain[chainId], 'adapter_id')
 
-    for (const adapterId in balancesByAdapterId) {
-      const balances = balancesByAdapterId[adapterId].map((row) => {
+    for (const protocolId in balancesByProtocol) {
+      const balances = balancesByProtocol[protocolId].map((row) => {
         const balance = JSON.parse(row.balance)
 
         return {
@@ -365,25 +383,35 @@ export async function selectLatestBalancesGroupsByFromAddress(
           il_risk: balance.il_risk != null ? balance.il_risk : undefined,
         }
       })
+
+      const protocolBalances: LatestProtocolBalances = {
+        id: protocolId,
+        chain,
+        balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
+        debtUSD: sum(balances.map((balance) => balance.debtUSD || 0)),
+        rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
+        groups: [],
+      }
+
       const balancesByGroupIdx = groupBy(balances, 'group_idx')
 
       for (const groupIdx in balancesByGroupIdx) {
-        const balances = balancesByGroupIdx[groupIdx].map(formatBalance)
+        const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
 
-        balancesGroups.push({
-          protocol: adapterId,
-          chain,
-          balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
-          debtUSD: sum(balances.map((balance) => balance.debtUSD || 0)),
-          rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
+        protocolBalances.groups.push({
+          balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
+          debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
+          rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
           healthFactor: balancesByGroupIdx[groupIdx][0].healthFactor,
-          balances,
+          balances: groupBalances,
         })
       }
+
+      protocolsBalances.push(protocolBalances)
     }
   }
 
-  return { updatedAt, balancesGroups }
+  return { updatedAt, protocolsBalances }
 }
 
 export async function selectBalancesHolders(
