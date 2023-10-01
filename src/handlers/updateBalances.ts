@@ -1,6 +1,6 @@
 import { adapterById } from '@adapters/index'
 import type { ClickHouseClient } from '@clickhouse/client'
-import { formatBalance, insertBalances } from '@db/balances'
+import { formatBalance, insertBalances, type LatestProtocolBalances } from '@db/balances'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import type { Balance, BalancesContext } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
@@ -124,21 +124,31 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
   const dbBalances: any[] = []
 
   // Group back
-  const balancesGroups: any[] = []
+  const protocolsBalances: LatestProtocolBalances[] = []
 
   const balancesByChain = groupBy(balancesWithBreakdown, 'chain')
 
   for (const chain in balancesByChain) {
-    const balancesByAdapterId = groupBy(balancesByChain[chain], 'adapterId')
+    const balancesByProtocol = groupBy(balancesByChain[chain], 'adapterId')
 
-    for (const adapterId in balancesByAdapterId) {
-      const balancesByGroupIdx = groupBy(balancesByAdapterId[adapterId], 'groupIdx')
+    for (const protocolId in balancesByProtocol) {
+      const balances = balancesByProtocol[protocolId]
+      const balancesByGroupIdx = groupBy(balances, 'groupIdx')
+
+      const protocolBalances: LatestProtocolBalances = {
+        id: protocolId,
+        chain,
+        balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
+        debtUSD: sum(balances.map((balance) => balance.debtUSD || 0)),
+        rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
+        groups: [],
+      }
 
       for (const groupIdx in balancesByGroupIdx) {
-        const balances = balancesByGroupIdx[groupIdx].map(formatBalance)
+        const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
 
-        const collateralUSD = sum(balances.map((balance) => balance.collateralUSD || 0))
-        const debtUSD = sum(balances.map((balance) => balance.debtUSD || 0))
+        const collateralUSD = sum(groupBalances.map((balance) => balance.collateralUSD || 0))
+        const debtUSD = sum(groupBalances.map((balance) => balance.debtUSD || 0))
 
         const healthFactor = resolveHealthFactor({
           healthFactor: balancesByGroupIdx[groupIdx]?.[0]?.healthFactor,
@@ -151,22 +161,22 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
           dbBalances.push({ ...balance, healthFactor })
         }
 
-        balancesGroups.push({
-          protocol: adapterId,
-          chain,
-          balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
-          debtUSD,
-          rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
-          healthFactor,
-          balances,
+        protocolBalances.groups.push({
+          balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
+          debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
+          rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
+          healthFactor: healthFactor === 0 ? undefined : healthFactor,
+          balances: groupBalances,
         })
       }
+
+      protocolsBalances.push(protocolBalances)
     }
   }
 
-  await aggregateYields(balancesGroups)
+  await aggregateYields(protocolsBalances)
 
   await insertBalances(client, dbBalances)
 
-  return { updatedAt: Math.floor(now.getTime() / 1000), balancesGroups }
+  return { updatedAt: Math.floor(now.getTime() / 1000), protocolsBalances }
 }

@@ -1,4 +1,4 @@
-import { selectLatestBalancesGroupsByFromAddress } from '@db/balances'
+import { type LatestProtocolBalances, selectLatestProtocolsBalancesByFromAddress } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { updateBalances } from '@handlers/updateBalances'
@@ -6,23 +6,13 @@ import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/buf'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
-interface GroupResponse {
-  protocol: string
-  chain: string
-  balanceUSD: number
-  debtUSD?: number
-  rewardUSD?: number
-  healthFactor?: number
-  balances: any[]
-}
-
 type Status = 'stale' | 'success'
 
 interface BalancesResponse {
   status: Status
   updatedAt: number
   nextUpdateAt: number
-  groups: GroupResponse[]
+  protocols: LatestProtocolBalances[]
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
@@ -37,11 +27,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   try {
-    const { updatedAt, balancesGroups } = await selectLatestBalancesGroupsByFromAddress(client, address)
+    const { updatedAt, protocolsBalances } = await selectLatestProtocolsBalancesByFromAddress(client, address)
 
     // update stale or missing balances
     if (updatedAt === undefined || areBalancesStale(updatedAt)) {
-      const { updatedAt, balancesGroups } = await updateBalances(client, address)
+      const { updatedAt, protocolsBalances } = await updateBalances(client, address)
 
       const _updatedAt = updatedAt || Math.floor(Date.now() / 1000)
 
@@ -49,7 +39,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
         status: 'success',
         updatedAt: _updatedAt,
         nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
-        groups: balancesGroups,
+        protocols: protocolsBalances,
       }
 
       return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 5 * 86_400 })
@@ -59,7 +49,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       status: 'success',
       updatedAt,
       nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
-      groups: balancesGroups,
+      protocols: protocolsBalances,
     }
 
     return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 5 * 86_400 })

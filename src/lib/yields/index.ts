@@ -1,3 +1,4 @@
+import type { LatestProtocolBalances } from '@db/balances'
 import environment from '@environment'
 import type { Balance } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
@@ -6,25 +7,26 @@ import { fromDefiLlamaChain } from '@lib/chains'
 import type { YieldPool, YieldPoolResponse } from './types'
 
 /**
- * Aggregate yield data for balances group
- * @param balancesGroups
+ * Aggregate yield data for protocol balances
+ * @param protocolBalnaces
  */
-export async function aggregateYields(balancesGroups: any[]) {
+export async function aggregateYields(protocolBalances: LatestProtocolBalances[]) {
   try {
     const yieldPoolsByChainProtocol = await parseYieldsPools()
 
-    for (const balancesGroup of balancesGroups) {
-      const yieldPools = yieldPoolsByChainProtocol[balancesGroup.chain as Chain]?.[balancesGroup.protocol] ?? []
-      balancesGroup.balances = balancesGroup.balances.map((balance: Balance) =>
-        aggregateBalanceYield({ balance, yieldPools }),
-      )
+    for (const protocolBalance of protocolBalances) {
+      const yieldPools = yieldPoolsByChainProtocol[protocolBalance.chain as Chain]?.[protocolBalance.id] ?? []
+      protocolBalance.groups = protocolBalance.groups.map((balancesGroup) => ({
+        ...balancesGroup,
+        balances: balancesGroup.balances.map((balance: Balance) => aggregateBalanceYield({ balance, yieldPools })),
+      }))
     }
 
-    return balancesGroups
+    return protocolBalances
   } catch (error) {
     console.error('Failed to aggregate yields', error)
     // Don't fail early if yields cannot be fetched
-    return balancesGroups
+    return protocolBalances
   }
 }
 
