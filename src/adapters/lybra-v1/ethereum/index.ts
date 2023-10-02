@@ -50,14 +50,16 @@ export const getContracts = () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    lendingPool: getLybraLendingBalances,
-    vester: getLybraVestBalance,
-    staker: getSingleStakeBalance,
-    farmers: getLybraFarmBalances,
-  })
+  const [lendingBalances, balances] = await Promise.all([
+    getLybraLendingBalances(ctx, lendingPool || undefined),
+    resolveBalances<typeof getContracts>(ctx, contracts, {
+      vester: getLybraVestBalance,
+      staker: getSingleStakeBalance,
+      farmers: getLybraFarmBalances,
+    }),
+  ])
 
   return {
-    groups: [{ balances }],
+    groups: [lendingBalances, { balances }],
   }
 }
