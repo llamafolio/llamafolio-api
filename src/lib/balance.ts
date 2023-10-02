@@ -167,6 +167,10 @@ export function resolveHealthFactor(balances: (PricedBalance & BalanceBreakdown)
     }
   }
 
+  if (collateralUSD === 0 || debtUSD === 0) {
+    return undefined
+  }
+
   return collateralUSD / debtUSD
 }
 
