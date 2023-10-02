@@ -1,6 +1,5 @@
-import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
 import { call } from '@lib/call'
-import { parseEther } from 'viem'
 
 const abi = {
   Troves: {
@@ -51,15 +50,9 @@ const abi = {
   },
 } as const
 
-const priceFeed: Contract = {
-  chain: 'ethereum',
-  address: '0x4c517D4e2C851CA76d7eC94B805269Df0f2201De',
-}
-const MCR = parseEther('1.1')
+const MCR = 1.1
 
 export async function getLendBalances(ctx: BalancesContext, _borrowerOperations: Contract, troveManager: Contract) {
-  const balances: Balance[] = []
-
   const troveDetailsRes = await call({
     ctx,
     target: troveManager.address,
@@ -69,43 +62,26 @@ export async function getLendBalances(ctx: BalancesContext, _borrowerOperations:
 
   const [debt, coll, _stake, _status, _arrayIndex] = troveDetailsRes
 
-  balances.push({
+  const lendingBalance: LendBalance = {
     chain: ctx.chain,
     category: 'lend',
     symbol: 'ETH',
     decimals: 18,
     address: '0x0000000000000000000000000000000000000000',
     amount: coll,
-  })
+  }
 
-  balances.push({
+  const borrowBalance: BorrowBalance = {
     chain: ctx.chain,
     category: 'borrow',
     symbol: 'LUSD',
     decimals: 18,
     address: '0x5f98805a4e8be255a32880fdec7f6728c6568ba0',
     amount: debt,
-  })
-
-  return balances
-}
-
-export const getHealthFactor = async (ctx: BalancesContext, balances: Balance[]): Promise<number | undefined> => {
-  const priceFeedRes = await call({ ctx, target: priceFeed.address, abi: abi.Price })
-
-  const lendBalance = balances.find(
-    (balance) => balance.category === 'lend' && balance.address === '0x0000000000000000000000000000000000000000',
-  )
-  const borrowBalance = balances.find(
-    (balance) => balance.category === 'borrow' && balance.address === '0x5f98805a4e8be255a32880fdec7f6728c6568ba0',
-  )
-
-  const lendAmount = ((lendBalance?.amount || 0n) * priceFeedRes) / parseEther('1.0')
-  const borrowAmount = ((borrowBalance?.amount || 0n) * MCR) / parseEther('1.0')
-
-  if (borrowAmount === 0n) {
-    return
   }
 
-  return Number(lendAmount) / Number(borrowAmount)
+  return {
+    balances: [lendingBalance, borrowBalance],
+    MCR,
+  }
 }

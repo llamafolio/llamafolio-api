@@ -2,7 +2,7 @@ import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getFarmBalance } from './farm'
-import { getHealthFactor, getLendBalances } from './lend'
+import { getLendBalances } from './lend'
 import { getStakeBalances } from './stake'
 
 const stabilityPool: Contract = {
@@ -57,15 +57,15 @@ export const getContracts = () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    stabilityPool: getFarmBalance,
-    borrowerOperations: (...args) => getLendBalances(...args, troveManager),
-    lqtyStaking: getStakeBalances,
-  })
-
-  const healthFactor = await getHealthFactor(ctx, balances)
+  const [lendingBalance, balances] = await Promise.all([
+    getLendBalances(ctx, borrowerOperations, troveManager),
+    resolveBalances<typeof getContracts>(ctx, contracts, {
+      stabilityPool: getFarmBalance,
+      lqtyStaking: getStakeBalances,
+    }),
+  ])
 
   return {
-    groups: [{ balances, healthFactor }],
+    groups: [lendingBalance, { balances }],
   }
 }
