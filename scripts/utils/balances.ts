@@ -131,16 +131,9 @@ export async function printBalancesConfig(balancesConfig: BalancesConfig) {
     const balanceBreakdowns = balances.map(fmtBalanceBreakdown)
     const balance = sum(balanceBreakdowns.map((balance) => balance.balanceUSD || 0))
     const reward = sum(balanceBreakdowns.map((balance) => balance.rewardUSD || 0))
-    const collateral = sum(balanceBreakdowns.map((balance) => balance.collateralUSD || 0))
     const debt = sum(balanceBreakdowns.map((balance) => balance.debtUSD || 0))
     const netWorth = balance - debt + reward
-    const healthFactor = resolveHealthFactor({
-      balances: balanceBreakdowns,
-      healthFactor: balancesConfig.groups[groupIdx].healthFactor,
-      MCR: balancesConfig.groups[groupIdx].MCR,
-      collateralUSD: collateral,
-      debtUSD: debt,
-    })
+    const healthFactor = balancesConfig.groups[groupIdx].healthFactor || resolveHealthFactor(balanceBreakdowns)
 
     console.log(`\nGroup ${groupIdx}:`)
     console.table([

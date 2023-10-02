@@ -81,6 +81,7 @@ export async function getPrismaLendBalances(ctx: BalancesContext, vaults: Contra
       underlyings: undefined,
       rewards: undefined,
       category: 'lend',
+      MCR: MCR.output != null ? parseFloatBI(MCR.output, 18) : undefined,
     }
 
     const borrowBalance: BorrowBalance = {
@@ -93,7 +94,6 @@ export async function getPrismaLendBalances(ctx: BalancesContext, vaults: Contra
 
     return {
       balances: [lendBalance, borrowBalance],
-      MCR: MCR.output != null ? parseFloatBI(MCR.output, 18) : undefined,
     }
   })
 

@@ -4,6 +4,7 @@ import type {
   BaseContract,
   ExcludeRawContract,
   GetContractsHandler,
+  LendBalance,
   PricedBalance,
 } from '@lib/adapter'
 import type { Category } from '@lib/category'
@@ -14,12 +15,6 @@ import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-
-type IPricedBalance = PricedBalance & {
-  collateralFactor: bigint
-  collateralUSD: number
-  debtUSD: number
-}
 
 /**
  * Min and Max range for a balance unit (in USD).
@@ -154,49 +149,25 @@ export function sanitizeBalances<T extends Balance>(balances: T[]) {
   return sanitizedBalances
 }
 
-export function resolveHealthFactor({
-  balances,
-  healthFactor,
-  MCR,
-  collateralUSD,
-  debtUSD,
-}: {
-  balances: PricedBalance[]
-  healthFactor?: number
-  MCR?: number
-  collateralUSD: number
-  debtUSD: number
-}) {
-  if (healthFactor != null) {
-    return healthFactor
+export function resolveHealthFactor(balances: (PricedBalance & BalanceBreakdown)[]) {
+  let collateralUSD = 0
+  let debtUSD = 0
+
+  for (const balance of balances) {
+    if (balance.category === 'lend') {
+      const MCR = (balance as LendBalance).MCR
+      const collateralFactor = (balance as LendBalance).collateralFactor
+      if (MCR != null) {
+        collateralUSD += (balance.collateralUSD || 0) / MCR
+      } else if (collateralFactor != null) {
+        collateralUSD += (balance.collateralUSD || 0) * parseFloatBI(collateralFactor, 18)
+      }
+    } else if (balance.category === 'borrow') {
+      debtUSD += balance.debtUSD || 0
+    }
   }
 
-  if (MCR != null) {
-    return collateralUSD / (MCR * debtUSD)
-  }
-
-  return processHealthFactor(balances as IPricedBalance[])
-}
-
-function processHealthFactor(balances: IPricedBalance[]) {
-  const lendBalances = balances.filter(
-    (balance) => balance.category === 'lend' && balance.collateralFactor && balance.collateralUSD,
-  )
-
-  const borrowBalances = balances.filter((balance) => balance.category === 'borrow' && balance.debtUSD)
-
-  if (lendBalances.length > 0 && borrowBalances.length > 0) {
-    const sumOfFormattedLendAmounts = lendBalances.reduce(
-      (sum, lendBalance) => sum + lendBalance.collateralUSD * parseFloatBI(lendBalance.collateralFactor, 18),
-      0,
-    )
-
-    const sumOfBorrowAmounts = borrowBalances.reduce((sum, borrowBalance) => sum + borrowBalance.debtUSD, 0)
-
-    if (sumOfBorrowAmounts !== 0) return sumOfFormattedLendAmounts / sumOfBorrowAmounts
-  }
-
-  return undefined
+  return collateralUSD / debtUSD
 }
 
 export async function resolveBalances<C extends GetContractsHandler>(
