@@ -79,7 +79,7 @@ export async function getFarmBalances(ctx: BalancesContext, vault: Contract): Pr
     }
   }
 
-  return (await getUnderlyingsPoolsBalances(ctx, balances, metaRegistry, true)).map((pool) => ({
+  return (await getUnderlyingsPoolsBalances(ctx, balances, metaRegistry)).map((pool) => ({
     ...pool,
     category: 'farm',
   }))

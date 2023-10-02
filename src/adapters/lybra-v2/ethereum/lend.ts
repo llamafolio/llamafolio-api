@@ -1,6 +1,8 @@
-import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
+import type { BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
+import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   depositedAsset: {
@@ -17,6 +19,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  badCollateralRatio: {
+    inputs: [],
+    name: 'badCollateralRatio',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 const eUSD: Token = {
@@ -26,10 +35,8 @@ const eUSD: Token = {
   symbol: 'eUSD',
 }
 
-export async function getLybraLendBalances(ctx: BalancesContext, vaults: Contract[]): Promise<Balance[]> {
-  const balances: Balance[] = []
-
-  const [userDepositsRes, userBorrowsRes] = await Promise.all([
+export async function getLybraLendBalances(ctx: BalancesContext, vaults: Contract[]) {
+  const [userDepositsRes, userBorrowsRes, MCRs] = await Promise.all([
     multicall({
       ctx,
       calls: vaults.map((vault) => ({ target: vault.address, params: [ctx.address] }) as const),
@@ -40,34 +47,41 @@ export async function getLybraLendBalances(ctx: BalancesContext, vaults: Contrac
       calls: vaults.map((vault) => ({ target: vault.address, params: [ctx.address] }) as const),
       abi: abi.getBorrowedOf,
     }),
+    multicall({
+      ctx,
+      calls: vaults.map((vault) => ({ target: vault.address }) as const),
+      abi: abi.badCollateralRatio,
+    }),
   ])
 
-  for (const [index, vault] of vaults.entries()) {
-    const userDepositRes = userDepositsRes[index]
-    const userBorrowRes = userBorrowsRes[index]
+  return vaults
+    .map((vault, index) => {
+      const userDepositRes = userDepositsRes[index]
+      const userBorrowRes = userBorrowsRes[index]
+      const MCR = MCRs[index]
 
-    if (!userDepositRes.success || !userBorrowRes.success) {
-      continue
-    }
+      if (!userDepositRes.success || !userBorrowRes.success) {
+        return null
+      }
 
-    const lend: LendBalance = {
-      ...vault,
-      amount: userDepositRes.output,
-      underlyings: undefined,
-      rewards: undefined,
-      category: 'lend',
-    }
+      const lend: LendBalance = {
+        ...vault,
+        amount: userDepositRes.output,
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'lend',
+        MCR: MCR.output != null ? parseFloatBI(MCR.output, 18) / 100 : undefined,
+      }
 
-    const borrow: BorrowBalance = {
-      ...eUSD,
-      amount: userBorrowRes.output,
-      underlyings: undefined,
-      rewards: undefined,
-      category: 'borrow',
-    }
+      const borrow: BorrowBalance = {
+        ...eUSD,
+        amount: userBorrowRes.output,
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'borrow',
+      }
 
-    balances.push(lend, borrow)
-  }
-
-  return balances
+      return { balances: [lend, borrow] }
+    })
+    .filter(isNotNullish)
 }
