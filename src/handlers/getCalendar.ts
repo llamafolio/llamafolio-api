@@ -1,11 +1,10 @@
-import { selectCalendarEvents } from '@db/calendar'
-import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/buf'
+import { getCalendarEvents } from '@lib/calendar'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  const address = event.pathParameters?.address
+  const address = event.pathParameters?.address as `0x${string}`
 
   if (!address) {
     return badRequest('Missing address parameter')
@@ -15,7 +14,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   try {
-    const calendarEvents = await selectCalendarEvents(client, address)
+    const calendarEvents = await getCalendarEvents(address)
 
     return success({ data: calendarEvents }, { maxAge: 10 * 60 })
   } catch (e) {

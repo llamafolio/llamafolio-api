@@ -1,7 +1,10 @@
 import type { BaseFormattedBalance } from '@db/balances'
+import { selectCalendarEvents } from '@db/calendar'
+import { client } from '@db/clickhouse'
+import { type ENSRegistration, getENSRegistrations } from '@lib/ens'
 import type { GovernanceProposal } from '@lib/governance'
 
-export type CalendarEventType = 'unlock' | 'vest' | 'governance_proposal'
+export type CalendarEventType = 'unlock' | 'vest' | 'governance_proposal' | 'ens_registration'
 
 export interface CalendarBaseEvent {
   type: CalendarEventType
@@ -27,4 +30,38 @@ export interface CalendarGovernanceProposalEvent extends CalendarBaseEvent {
   governanceProposal: GovernanceProposal
 }
 
-export type CalendarEvent = CalendarUnlockEvent | CalendarVestEvent | CalendarGovernanceProposalEvent
+export interface CalendarEnsRegistrationEvent extends CalendarBaseEvent {
+  type: 'ens_registration'
+  registration: Pick<ENSRegistration, 'domainName' | 'owner' | 'registrant'>
+}
+
+export type CalendarEvent =
+  | CalendarUnlockEvent
+  | CalendarVestEvent
+  | CalendarGovernanceProposalEvent
+  | CalendarEnsRegistrationEvent
+
+export async function getCalendarEvents(address: `0x${string}`) {
+  const [dbCalendarEvents, ensRegistrations] = await Promise.all([
+    selectCalendarEvents(client, address),
+    getENSRegistrations(address),
+  ])
+
+  const ensRegistrationEvents: CalendarEnsRegistrationEvent[] = ensRegistrations.map((registration) => ({
+    type: 'ens_registration',
+    protocol: 'ens',
+    parentProtocol: 'ens',
+    chain: 'ethereum',
+    startDate: registration.registrationDate,
+    endDate: registration.expiryDate,
+    registration: {
+      domainName: registration.domainName,
+      owner: registration.owner,
+      registrant: registration.registrant,
+    },
+  }))
+
+  const calendarEvents: CalendarEvent[] = [...dbCalendarEvents, ...ensRegistrationEvents]
+
+  return calendarEvents.sort((a, b) => a.startDate - b.startDate)
+}
