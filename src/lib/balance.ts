@@ -4,11 +4,13 @@ import type {
   BaseContract,
   ExcludeRawContract,
   GetContractsHandler,
+  LendBalance,
   PricedBalance,
 } from '@lib/adapter'
 import type { Category } from '@lib/category'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getBalancesOf } from '@lib/erc20'
+import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
@@ -147,24 +149,25 @@ export function sanitizeBalances<T extends Balance>(balances: T[]) {
   return sanitizedBalances
 }
 
-export function resolveHealthFactor({
-  healthFactor,
-  MCR,
-  collateralUSD,
-  debtUSD,
-}: {
-  healthFactor?: number
-  MCR?: number
-  collateralUSD: number
-  debtUSD: number
-}) {
-  if (healthFactor != null) {
-    return healthFactor
+export function resolveHealthFactor(balances: (PricedBalance & BalanceBreakdown)[]) {
+  let collateralUSD = 0
+  let debtUSD = 0
+
+  for (const balance of balances) {
+    if (balance.category === 'lend') {
+      const MCR = (balance as LendBalance).MCR
+      const collateralFactor = (balance as LendBalance).collateralFactor
+      if (MCR != null) {
+        collateralUSD += (balance.collateralUSD || 0) / MCR
+      } else if (collateralFactor != null) {
+        collateralUSD += (balance.collateralUSD || 0) * parseFloatBI(collateralFactor, 18)
+      }
+    } else if (balance.category === 'borrow') {
+      debtUSD += balance.debtUSD || 0
+    }
   }
 
-  if (MCR != null) {
-    return collateralUSD / (MCR * debtUSD)
-  }
+  return collateralUSD / debtUSD
 }
 
 export async function resolveBalances<C extends GetContractsHandler>(

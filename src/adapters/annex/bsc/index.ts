@@ -2,8 +2,7 @@ import { getAnnexFarmBalances } from '@adapters/annex/bsc/balance'
 import { getAnnexContracts } from '@adapters/annex/bsc/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import type { BalanceWithExtraProps } from '@lib/compound/v2/lending'
-import { getHealthFactor, getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
 
 const Comptroller: Contract = {
   chain: 'bsc',
@@ -51,9 +50,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     pools: getAnnexFarmBalances,
   })
 
-  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
-
   return {
-    groups: [{ balances, healthFactor }],
+    groups: [{ balances }],
   }
 }

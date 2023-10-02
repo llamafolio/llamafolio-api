@@ -1,7 +1,7 @@
+import { getMoonwellMarketsBalances } from '@adapters/moonwell/common/balance'
 import { getMarketsContracts } from '@adapters/moonwell/common/market'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsBalances } from '@lib/compound/v2/lending'
 import type { Token } from '@lib/token'
 
 const WELL: Token = {
@@ -17,11 +17,20 @@ const comptroller: Contract = {
   underlyings: [WELL],
 }
 
+const rewardDistributor: Contract = {
+  chain: 'base',
+  address: '0xe9005b078701e2A0948D2EaC43010D35870Ad9d2',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
-  const markets = await getMarketsContracts(ctx, {
-    comptrollerAddress: comptroller.address,
-    underlyingAddressByMarketAddress: {},
-  })
+  const markets = await getMarketsContracts(
+    ctx,
+    {
+      comptrollerAddress: comptroller.address,
+      underlyingAddressByMarketAddress: {},
+    },
+    [WELL],
+  )
 
   return {
     contracts: { markets },
@@ -30,7 +39,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    markets: getMarketsBalances,
+    markets: (...args) => getMoonwellMarketsBalances(...args, comptroller, rewardDistributor),
   })
 
   return {

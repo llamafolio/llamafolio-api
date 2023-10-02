@@ -73,6 +73,9 @@ export interface WalletBalance extends RootBaseBalance {
 
 export interface LendBalance extends RootBaseBalance {
   category: 'lend'
+  // Note: 18 decimals
+  collateralFactor?: bigint
+  MCR?: number // Minimum Collateralization Ratio
 }
 
 export interface BorrowBalance extends RootBaseBalance {

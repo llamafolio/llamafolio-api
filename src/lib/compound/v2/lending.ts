@@ -1,9 +1,7 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { getBalancesOf } from '@lib/erc20'
-import { sum } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 
 const abi = {
@@ -200,33 +198,4 @@ export async function getMarketsBalances(ctx: BalancesContext, contracts: Contra
     .filter(isNotNullish)
 
   return [...cTokensSupplyBalances, ...cTokensBorrowBalances]
-}
-
-export async function getHealthFactor(balances: BalanceWithExtraProps[]): Promise<number | undefined> {
-  // TODO: batch getPricedBalances into 1 call for all balances
-  return
-
-  const nonZerobalances = balances.filter((balance) => balance.amount > 0n)
-
-  const nonZeroSupplyBalances = nonZerobalances.filter((supply) => supply.category === 'lend')
-  const nonZeroBorrowBalances = nonZerobalances.filter((borrow) => borrow.category === 'borrow')
-
-  // no borrowed balance
-  if (nonZeroBorrowBalances.length === 0) {
-    return
-  }
-
-  const [supplyPriced, borrowPriced] = await Promise.all([
-    getPricedBalances(nonZeroSupplyBalances),
-    getPricedBalances(nonZeroBorrowBalances),
-  ])
-
-  const supplyUSD = sum(
-    supplyPriced.map((supply: any) => (+supply.balanceUSD * supply.collateralFactor) / Math.pow(10, 18)),
-  )
-  const borrowUSD = sum(borrowPriced.map((borrow: any) => borrow.balanceUSD))
-
-  const healthFactor = supplyUSD / borrowUSD
-
-  return healthFactor
 }
