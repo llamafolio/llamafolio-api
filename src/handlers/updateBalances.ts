@@ -85,7 +85,6 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
             balance.adapterId = adapterId
             balance.timestamp = now
             balance.healthFactor = group.healthFactor
-            balance.MCR = group.MCR
             balance.fromAddress = address
 
             balances.push(balance)
@@ -146,7 +145,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
       for (const groupIdx in balancesByGroupIdx) {
         const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
-        const healthFactor = balancesByGroupIdx[groupIdx]?.[0]?.healthFactor || resolveHealthFactor(balances)
+        const healthFactor = balancesByGroupIdx[groupIdx]?.[0]?.healthFactor || resolveHealthFactor(groupBalances)
 
         for (const balance of balancesByGroupIdx[groupIdx]) {
           dbBalances.push({ ...balance, healthFactor })
@@ -156,7 +155,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
           balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
           debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
           rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
-          healthFactor: healthFactor === 0 ? undefined : healthFactor,
+          healthFactor: healthFactor || undefined,
           balances: groupBalances,
         })
       }

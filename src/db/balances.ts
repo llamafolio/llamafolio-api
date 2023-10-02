@@ -29,6 +29,8 @@ export interface BaseFormattedBalance extends Yield {
   rewardUSD?: number
   collateralUSD?: number
   debtUSD?: number
+  MCR?: number
+  collateralFactor?: bigint
   unlockAt?: number
   underlyings?: FormattedBalance[]
   rewards?: FormattedBalance[]
@@ -82,6 +84,8 @@ export function formatBalance(balance: any): FormattedBalance {
     rewardUSD: balance.rewardUSD,
     collateralUSD: balance.collateralUSD,
     debtUSD: balance.debtUSD,
+    MCR: balance.MCR,
+    collateralFactor: balance.collateralFactor,
     apy: balance.apy,
     apyBase: balance.apyBase,
     apyReward: balance.apyReward,
