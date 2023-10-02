@@ -22,11 +22,6 @@ const rewardDistributor: Contract = {
   address: '0xe9005b078701e2A0948D2EaC43010D35870Ad9d2',
 }
 
-const chainLinkOracle: Contract = {
-  chain: 'base',
-  address: '0xEC942bE8A8114bFD0396A5052c36027f2cA6a9d0',
-}
-
 export const getContracts = async (ctx: BaseContext) => {
   const markets = await getMarketsContracts(
     ctx,
