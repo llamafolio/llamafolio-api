@@ -1,8 +1,7 @@
 import { getInverseMarketsBalances, getInverseMarketsContracts } from '@adapters/inverse-finance/ethereum/market'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import type { BalanceWithExtraProps } from '@lib/compound/v2/lending'
-import { getHealthFactor, getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsContracts } from '@lib/compound/v2/lending'
 
 import { getInverseLendingBalances } from './balance'
 
@@ -48,9 +47,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     markets: getInverseMarketsBalances,
   })
 
-  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
-
   return {
-    groups: [{ balances, healthFactor }],
+    groups: [{ balances }],
   }
 }

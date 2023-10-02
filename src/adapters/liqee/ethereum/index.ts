@@ -1,7 +1,5 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import type { BalanceWithExtraProps } from '@lib/compound/v2/lending'
-import { getHealthFactor } from '@lib/compound/v2/lending'
 
 import { getMarketsBalances } from '../common/balance'
 import { getMarketsContracts } from '../common/contract'
@@ -30,9 +28,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     markets: getMarketsBalances,
   })
 
-  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
-
   return {
-    groups: [{ balances, healthFactor }],
+    groups: [{ balances }],
   }
 }

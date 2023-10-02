@@ -42,6 +42,7 @@ export interface GetMarketsContractsProps {
 export async function getMarketsContracts(
   ctx: BaseContext,
   { comptrollerAddress, underlyingAddressByMarketAddress = {} }: GetMarketsContractsProps,
+  rewards: Contract[],
 ): Promise<Contract[]> {
   const contracts: Contract[] = []
 
@@ -83,6 +84,7 @@ export async function getMarketsContracts(
       address: cToken,
       collateralFactor: collateralFactorMantissa,
       underlyings: [underlying],
+      rewards,
     })
   }
 

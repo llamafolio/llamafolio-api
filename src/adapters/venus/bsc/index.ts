@@ -1,8 +1,7 @@
 import { getVAIStakeBalance, getXVSStakeBalance } from '@adapters/venus/bsc/stake'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import type { BalanceWithExtraProps } from '@lib/compound/v2/lending'
-import { getHealthFactor, getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsContracts } from '@lib/compound/v2/lending'
 import { ADDRESS_ZERO } from '@lib/contract'
 import type { Token } from '@lib/token'
 
@@ -74,9 +73,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     Comptroller: (...args) => getRewardsBalances(...args, VenusLens),
   })
 
-  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
-
   return {
-    groups: [{ balances, healthFactor }],
+    groups: [{ balances }],
   }
 }

@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import type { BalanceWithExtraProps } from '@lib/compound/v2/lending'
-import { getHealthFactor, getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
 import { getNFTLockerBalances } from '@lib/lock'
 
 import { getIronFarmBalances } from './farm'
@@ -45,9 +44,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     locker: (...args) => getNFTLockerBalances(...args, IB, 'locked'),
   })
 
-  const healthFactor = await getHealthFactor(balances as BalanceWithExtraProps[])
-
   return {
-    groups: [{ balances, healthFactor }],
+    groups: [{ balances }],
   }
 }

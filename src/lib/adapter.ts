@@ -73,6 +73,8 @@ export interface WalletBalance extends RootBaseBalance {
 
 export interface LendBalance extends RootBaseBalance {
   category: 'lend'
+  // collateralFactor
+  collateralFactor?: bigint
 }
 
 export interface BorrowBalance extends RootBaseBalance {
