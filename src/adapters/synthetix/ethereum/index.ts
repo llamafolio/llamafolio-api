@@ -88,12 +88,14 @@ export const getContracts = async () => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    SNX: getSNXBalances,
-    farmers: getSNXFarmBalances,
-  })
+  const [lendBalances, balances] = await Promise.all([
+    getSNXBalances(ctx, contracts.SNX || undefined),
+    resolveBalances<typeof getContracts>(ctx, contracts, {
+      farmers: getSNXFarmBalances,
+    }),
+  ])
 
-  return {
-    groups: [{ balances }],
-  }
+  const groups = lendBalances ? [{ ...lendBalances }, { balances }] : [{ balances }]
+
+  return { groups }
 }
