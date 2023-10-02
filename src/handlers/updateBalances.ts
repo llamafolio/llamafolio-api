@@ -146,16 +146,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
       for (const groupIdx in balancesByGroupIdx) {
         const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
-
-        const collateralUSD = sum(groupBalances.map((balance) => balance.collateralUSD || 0))
-        const debtUSD = sum(groupBalances.map((balance) => balance.debtUSD || 0))
-
-        const healthFactor = resolveHealthFactor({
-          healthFactor: balancesByGroupIdx[groupIdx]?.[0]?.healthFactor,
-          MCR: balancesByGroupIdx[groupIdx]?.[0]?.MCR,
-          collateralUSD,
-          debtUSD,
-        })
+        const healthFactor = balancesByGroupIdx[groupIdx]?.[0]?.healthFactor || resolveHealthFactor(balances)
 
         for (const balance of balancesByGroupIdx[groupIdx]) {
           dbBalances.push({ ...balance, healthFactor })
