@@ -23,11 +23,19 @@ const abi = {
   },
 } as const
 
-const STAR: Token = {
-  chain: 'arbitrum',
-  address: '0xc19669a405067927865b40ea045a2baabbbe57f5',
-  decimals: 18,
-  symbol: 'STAR',
+const STAR: { [key: string]: Token } = {
+  arbitrum: {
+    chain: 'arbitrum',
+    address: '0xc19669a405067927865b40ea045a2baabbbe57f5',
+    decimals: 18,
+    symbol: 'STAR',
+  },
+  polygon: {
+    chain: 'polygon',
+    address: '0xc19669a405067927865b40ea045a2baabbbe57f5',
+    decimals: 18,
+    symbol: 'STAR',
+  },
 }
 
 export async function getPreonBalances(
@@ -44,20 +52,25 @@ export async function getPreonBalances(
   return mapSuccessFilter(userVessel, (res, idx) => {
     const asset = assets[idx]
     const [debt, coll] = res.output
+    // https://docs.preon.finance/introduction/overview
+    // LTV = 0.9 CR
+    // MCR = 1 / 0.9
+    const MCR = 1.11
 
-    const lend = createBalance(asset, coll, 'lend')
-    const borrow = createBalance(STAR, debt, 'borrow')
+    const lend = createBalance(asset, coll, 'lend', MCR)
+    const borrow = createBalance(STAR[ctx.chain], debt, 'borrow')
 
     return [lend, borrow]
   })
 }
 
-function createBalance(asset: Contract, amount: bigint, category: Category): Balance {
+function createBalance(asset: Contract, amount: bigint, category: Category, MCR?: number): Balance {
   return {
     ...asset,
     amount,
     underlyings: undefined,
     rewards: undefined,
+    MCR,
     category,
   }
 }

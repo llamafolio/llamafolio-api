@@ -1,5 +1,6 @@
-import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance, RewardBalance } from '@lib/adapter'
+import type { BalancesContext, BorrowBalance, Contract, LendBalance, RewardBalance } from '@lib/adapter'
 import { call } from '@lib/call'
+import { parseFloatBI } from '@lib/math'
 
 const abi = {
   collateral: {
@@ -36,10 +37,20 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  collateralisationRatio: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: '_issuer', type: 'address' }],
+    name: 'collateralisationRatio',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
-export async function getSNXBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
-  const [userLendBalanceOf, userDebtBalanceOf, userPendingRewardBalanceOf] = await Promise.all([
+export async function getSNXBalances(ctx: BalancesContext, contract?: Contract) {
+  if (!contract) return
+  const [userLendBalanceOf, userDebtBalanceOf, userPendingRewardBalanceOf, collateralisationRatio] = await Promise.all([
     call({
       ctx,
       target: contract.address,
@@ -57,6 +68,12 @@ export async function getSNXBalances(ctx: BalancesContext, contract: Contract): 
       target: contract.rewarder,
       params: [ctx.address],
       abi: abi.feesAvailable,
+    }),
+    call({
+      ctx,
+      target: contract.address,
+      params: [ctx.address],
+      abi: abi.collateralisationRatio,
     }),
   ])
 
@@ -86,5 +103,8 @@ export async function getSNXBalances(ctx: BalancesContext, contract: Contract): 
     category: 'reward',
   }
 
-  return [lendBalance, borrowBalance, rewardBalance]
+  return {
+    balances: [lendBalance, borrowBalance, rewardBalance],
+    healthFactor: 1 / parseFloatBI(collateralisationRatio, 18),
+  }
 }

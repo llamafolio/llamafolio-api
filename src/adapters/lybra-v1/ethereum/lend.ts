@@ -1,5 +1,6 @@
 import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
 import { call } from '@lib/call'
+import { parseFloatBI } from '@lib/math'
 
 const abi = {
   depositedEther: {
@@ -16,12 +17,20 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  badCollateralRate: {
+    inputs: [],
+    name: 'badCollateralRate',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 export async function getLybraLendingBalances(ctx: BalancesContext, lendingPool: Contract): Promise<Balance[]> {
-  const [userLendingBalance, userBorrowBalance] = await Promise.all([
+  const [userLendingBalance, userBorrowBalance, MCR] = await Promise.all([
     call({ ctx, target: lendingPool.address, params: [ctx.address], abi: abi.depositedEther }),
     call({ ctx, target: lendingPool.address, params: [ctx.address], abi: abi.getBorrowedOf }),
+    call({ ctx, target: lendingPool.address, abi: abi.badCollateralRate }),
   ])
 
   const lendingBalance: LendBalance = {
@@ -31,6 +40,7 @@ export async function getLybraLendingBalances(ctx: BalancesContext, lendingPool:
     underlyings: undefined,
     rewards: undefined,
     category: 'lend',
+    MCR: MCR != null ? parseFloatBI(MCR, 18) / 100 : undefined,
   }
 
   const borrowBalance: BorrowBalance = {

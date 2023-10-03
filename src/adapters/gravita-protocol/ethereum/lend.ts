@@ -65,6 +65,8 @@ const tokens: Token[] = [
   { chain: 'ethereum', address: '0xae78736Cd615f374D3085123A210448E74Fc6393', symbol: 'rETH', decimals: 18 },
   { chain: 'ethereum', address: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0', symbol: 'wstETH', decimals: 18 },
   { chain: 'ethereum', address: '0xB9D7DdDca9a4AC480991865EfEf82E01273F79C3', symbol: 'bLUSD', decimals: 18 },
+  { chain: 'ethereum', address: '0xf951E335afb289353dc249e82926178EaC7DEd78', symbol: 'swETH', decimals: 18 },
+  { chain: 'ethereum', address: '0xac3E018457B222d93114458476f3E3416Abbe38F', symbol: 'sfrxETH', decimals: 18 },
 ]
 
 export async function getGravitaLendBalances(
