@@ -13,20 +13,37 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  maxLTV: {
+    inputs: [],
+    name: 'maxLTV',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contract[], FRAX: Contract) => {
   const balances: Balance[] = []
 
-  const userSnapshotsRes = await multicall({
-    ctx,
-    calls: pairs.map((pair) => ({ target: pair.address, params: [ctx.address] }) as const),
-    abi: abi.getUserSnapshot,
-  })
+  const [userSnapshotsRes, LTVs] = await Promise.all([
+    multicall({
+      ctx,
+      calls: pairs.map((pair) => ({ target: pair.address, params: [ctx.address] }) as const),
+      abi: abi.getUserSnapshot,
+    }),
+    multicall({
+      ctx,
+      calls: pairs.map((pair) => ({
+        target: pair.address,
+      })),
+      abi: abi.maxLTV,
+    }),
+  ])
 
   for (let pairIdx = 0; pairIdx < pairs.length; pairIdx++) {
     const pair = pairs[pairIdx]
     const userSnapshotRes = userSnapshotsRes[pairIdx]
+    const LTV = LTVs[pairIdx]
 
     if (userSnapshotRes.success) {
       const [userAssetShares, userBorrowShares, userCollateralBalance] = userSnapshotRes.output
@@ -36,6 +53,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
         amount: userAssetShares,
         underlyings: [FRAX],
         rewards: undefined,
+        collateralFactor: LTV.output != null ? LTV.output * 10n ** 13n : undefined,
         category: 'lend',
       }
 
@@ -46,6 +64,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
         amount: userCollateralBalance,
         underlyings: pair.underlyings as Contract[],
         rewards: undefined,
+        collateralFactor: LTV.output != null ? LTV.output * 10n ** 13n : undefined,
         category: 'lend',
       }
 
@@ -64,8 +83,6 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
       balances.push(borrow)
     }
   }
-
-  console.log(balances)
 
   return balances
 }
