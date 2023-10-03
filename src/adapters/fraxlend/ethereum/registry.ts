@@ -17,13 +17,6 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  maxLTV: {
-    inputs: [],
-    name: 'maxLTV',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
 } as const
 
 export async function getPairsContracts(ctx: BaseContext, registry: `0x${string}`) {
@@ -35,27 +28,17 @@ export async function getPairsContracts(ctx: BaseContext, registry: `0x${string}
     abi: abi.getAllPairAddresses,
   })
 
-  const [collateralContractsRes, LTVs] = await Promise.all([
-    multicall({
-      ctx,
-      calls: pairs.map((address) => ({
-        target: address,
-      })),
-      abi: abi.collateralContract,
-    }),
-    multicall({
-      ctx,
-      calls: pairs.map((address) => ({
-        target: address,
-      })),
-      abi: abi.maxLTV,
-    }),
-  ])
+  const collateralContractsRes = await multicall({
+    ctx,
+    calls: pairs.map((address) => ({
+      target: address,
+    })),
+    abi: abi.collateralContract,
+  })
 
   for (let pairIdx = 0; pairIdx < pairs.length; pairIdx++) {
     const pair = pairs[pairIdx]
     const collateralContractRes = collateralContractsRes[pairIdx]
-    const LTV = LTVs[pairIdx]
 
     if (!collateralContractRes.success) {
       continue
@@ -65,7 +48,6 @@ export async function getPairsContracts(ctx: BaseContext, registry: `0x${string}
       chain: ctx.chain,
       address: pair,
       underlyings: [collateralContractRes.output],
-      collateralFactor: LTV.output != null ? LTV.output * 10n ** 13n : undefined,
     }
 
     contracts.push(poolToken)
