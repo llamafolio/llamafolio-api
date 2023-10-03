@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { parseEther } from 'viem'
@@ -42,15 +41,21 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  voteLocks: {
-    inputs: [
-      { internalType: 'address', name: '', type: 'address' },
-      { internalType: 'uint256', name: '', type: 'uint256' },
-    ],
-    name: 'voteLocks',
+  userLocks: {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'userLocks',
     outputs: [
-      { internalType: 'uint256', name: 'amount', type: 'uint256' },
-      { internalType: 'uint256', name: 'unlockTime', type: 'uint256' },
+      {
+        components: [
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+          { internalType: 'uint64', name: 'unlockTime', type: 'uint64' },
+          { internalType: 'uint128', name: 'boost', type: 'uint128' },
+          { internalType: 'uint64', name: 'id', type: 'uint64' },
+        ],
+        internalType: 'struct ICNCLockerV2.VoteLock[]',
+        name: '',
+        type: 'tuple[]',
+      },
     ],
     stateMutability: 'view',
     type: 'function',
@@ -153,33 +158,31 @@ export async function getConicBalances(
 export async function getCNCLockerBalances(ctx: BalancesContext, lockers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
 
-  const calls: Call<typeof abi.voteLocks>[] = []
-  for (const locker of lockers) {
-    // Number of iterations is not predictable but 10 seems to be a reasonable number of positions that an user locks
-    for (let idx = 0; idx < 10; idx++) {
-      calls.push({ target: locker.address, params: [ctx.address, BigInt(idx)] })
-    }
-  }
+  const lockedBalancesRes = await multicall({
+    ctx,
+    calls: lockers.map((locker) => ({ target: locker.address, params: [ctx.address] }) as const),
+    abi: abi.userLocks,
+  })
 
-  const lockedBalancesRes = await multicall({ ctx, calls, abi: abi.voteLocks })
-
-  for (let lockIdx = 0; lockIdx < lockers.length; lockIdx++) {
-    const locker = lockers[lockIdx]
+  for (const [lockIdx, locker] of lockers.entries()) {
     const lockedBalanceRes = lockedBalancesRes[lockIdx]
 
     if (!lockedBalanceRes.success) {
       continue
     }
 
-    const [amount, unlockTime] = lockedBalanceRes.output
+    const now = Date.now() / 1000
+    const { amount, unlockTime } = lockedBalanceRes.output[0]
+    const unlockAt = Number(unlockTime)
 
     balances.push({
       ...locker,
       symbol: CNC.symbol,
       decimals: CNC.decimals,
       amount,
-      unlockAt: Number(unlockTime),
-      underlyings: [CNC],
+      unlockAt,
+      claimable: now > unlockAt ? amount : 0n,
+      underlyings: undefined,
       rewards: undefined,
       category: 'lock',
     })
