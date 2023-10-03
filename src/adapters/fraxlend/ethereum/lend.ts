@@ -32,25 +32,21 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
       const [userAssetShares, userBorrowShares, userCollateralBalance] = userSnapshotRes.output
 
       const asset: Balance = {
-        chain: ctx.chain,
-        decimals: pair.decimals,
-        symbol: pair.symbol,
-        address: pair.address,
+        ...pair,
         amount: userAssetShares,
-        category: 'lend',
         underlyings: [FRAX],
+        rewards: undefined,
+        category: 'lend',
       }
 
       balances.push(asset)
 
       const collateral: Balance = {
-        chain: ctx.chain,
-        decimals: pair.decimals,
-        symbol: pair.symbol,
-        address: pair.address,
+        ...pair,
         amount: userCollateralBalance,
-        category: 'lend',
         underlyings: pair.underlyings as Contract[],
+        rewards: undefined,
+        category: 'lend',
       }
 
       balances.push(collateral)
@@ -68,6 +64,8 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
       balances.push(borrow)
     }
   }
+
+  console.log(balances)
 
   return balances
 }

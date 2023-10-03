@@ -58,7 +58,7 @@ export async function getRaftBalances(ctx: BalancesContext, pools: Contract[]) {
         underlyings: pool.underlyings as Contract[],
         rewards: undefined,
         category: 'lend',
-        MCR: parseFloatBI(MCR, 18),
+        MCR: MCR != null ? parseFloatBI(MCR, 18) : undefined,
       }
 
       const borrowBalance: BorrowBalance = {
