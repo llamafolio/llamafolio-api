@@ -153,14 +153,12 @@ export async function getLendingPoolContracts(
         address: stableDebtToken,
         underlyings: [underlyingToken],
         category: 'borrow',
-        stable: true,
       },
       {
         chain: ctx.chain,
         address: variableDebtToken,
         underlyings: [underlyingToken],
         category: 'borrow',
-        stable: false,
       },
     )
   }
