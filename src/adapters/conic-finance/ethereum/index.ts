@@ -4,26 +4,16 @@ import { resolveBalances } from '@lib/balance'
 import { getCNCLockerBalances, getConicBalances, getConicFarmBalances } from './balance'
 import { getlpTokensContracts } from './contract'
 
-const stakers: `0x${string}`[] = [
-  '0x07b577f10d4e00f3018542d08a87f255a49175a5', // USDC
-  '0xabb735648a076d570aff2a61d8d141099823eae9', // DAI
-  '0x40293380f5292bb13905608b35a936c332f07f94', // FRAX
-  '0x369cbc5c6f139b1132d3b91b87241b37fc5b971f', // crvUSD
-  '0x5f2e1ac047e6a8526f8640a7ed8ab53a0b3f4acf', // CNC
-  '0x3f41480dd3b32f1cc579125f9570dccd07e07667', // CNC
-  '0xf432110e5206356cd6448da16b05394a89b44cef', // USDT
-]
-
 const CNCLockerV1: Contract = {
   chain: 'ethereum',
   address: '0x3f41480dd3b32f1cc579125f9570dccd07e07667',
-  underlyings: ['0x9aE380F0272E2162340a5bB646c354271c0F5cFC'],
+  token: '0x9aE380F0272E2162340a5bB646c354271c0F5cFC',
 }
 
 const CNCLockerV2: Contract = {
   chain: 'ethereum',
   address: '0x5f2e1ac047e6a8526f8640a7ed8ab53a0b3f4acf',
-  underlyings: ['0x9aE380F0272E2162340a5bB646c354271c0F5cFC'],
+  token: '0x9aE380F0272E2162340a5bB646c354271c0F5cFC',
 }
 
 const CNC_ETH: Contract = {
@@ -35,13 +25,18 @@ const CNC_ETH: Contract = {
   rewards: ['0x9aE380F0272E2162340a5bB646c354271c0F5cFC'],
 }
 
+const controller: Contract = {
+  chain: 'ethereum',
+  address: '0x013A3Da6591d3427F164862793ab4e388F9B587e',
+}
+
 const lpTokenStaker: Contract = {
   chain: 'ethereum',
   address: '0xeC037423A61B634BFc490dcc215236349999ca3d',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const lpTokens = await getlpTokensContracts(ctx, stakers)
+  const lpTokens = await getlpTokensContracts(ctx, controller)
 
   return {
     contracts: { lpTokenStaker, lpTokens, lockers: [CNCLockerV1, CNCLockerV2], CNC_ETH },
