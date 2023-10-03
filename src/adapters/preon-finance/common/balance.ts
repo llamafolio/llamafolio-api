@@ -53,7 +53,9 @@ export async function getPreonBalances(
     const asset = assets[idx]
     const [debt, coll] = res.output
     // https://docs.preon.finance/introduction/overview
-    const MCR = 1.1
+    // LTV = 0.9 CR
+    // MCR = 1 / 0.9
+    const MCR = 1.11
 
     const lend = createBalance(asset, coll, 'lend', MCR)
     const borrow = createBalance(STAR[ctx.chain], debt, 'borrow')
