@@ -66,11 +66,12 @@ export function printBalances(balances: PricedBalance[]) {
           symbol: balance.symbol,
           balance: millifyBI(balance.amount / decimals),
           balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
-          stable: balance.stable
-            ? balance.stable
-            : Array.isArray(balance.underlyings)
-            ? balance.underlyings.every((underlying) => underlying.stable)
-            : undefined,
+          stable:
+            typeof balance.stable !== 'undefined'
+              ? balance.stable
+              : Array.isArray(balance.underlyings)
+              ? balance.underlyings.every((underlying) => underlying.stable)
+              : undefined,
         }
 
         if (balance.claimable) {
