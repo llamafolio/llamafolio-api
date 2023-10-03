@@ -61,9 +61,9 @@ const client = new GraphQLClient(endpoint, {
 })
 
 export async function getENSRegistrations(address: `0x${string}`) {
-  const { account } = (await client.request(DOMAINS_QUERY, { address: address.toLowerCase() })) as DomainsResponse
+  const response = (await client.request(DOMAINS_QUERY, { address: address.toLowerCase() })) as DomainsResponse
 
-  const registrations: ENSRegistration[] = (account.registrations || []).map((registration) => ({
+  const registrations: ENSRegistration[] = (response?.account?.registrations || []).map((registration) => ({
     domainName: registration.domain.name,
     owner: registration.domain.owner.id,
     registrant: registration.domain.registrant.id,
