@@ -42,12 +42,14 @@ export const getContracts = async (ctx: BaseContext) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getInverseLendingBalances(...args, comptroller),
-    markets: getInverseMarketsBalances,
-  })
+  const [marketsBalancesGroups, balances] = await Promise.all([
+    getInverseMarketsBalances(ctx, contracts.markets || []),
+    resolveBalances<typeof getContracts>(ctx, contracts, {
+      pools: (...args) => getInverseLendingBalances(...args, comptroller),
+    }),
+  ])
 
   return {
-    groups: [{ balances }],
+    groups: [...marketsBalancesGroups, { balances }],
   }
 }

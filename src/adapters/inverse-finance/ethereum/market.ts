@@ -1,7 +1,8 @@
-import type { Balance, BalancesContext, BaseContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
+import type { BalancesContext, BaseContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   collateral: {
@@ -132,6 +133,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  collateralFactorBps: {
+    inputs: [],
+    name: 'collateralFactorBps',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 const DOLA: Token = {
@@ -169,10 +177,8 @@ export async function getInverseMarketsContracts(ctx: BaseContext, markets: Cont
   return contracts
 }
 
-export async function getInverseMarketsBalances(ctx: BalancesContext, markets: Contract[]): Promise<Balance[]> {
-  const balances: Balance[] = []
-
-  const [userDebtsRes, escrowsRes] = await Promise.all([
+export async function getInverseMarketsBalances(ctx: BalancesContext, markets: Contract[]) {
+  const [userDebtsRes, escrowsRes, collateralFactorsRes] = await Promise.all([
     multicall({
       ctx,
       calls: markets.map((market) => ({ target: market.address, params: [ctx.address] }) as const),
@@ -183,6 +189,11 @@ export async function getInverseMarketsBalances(ctx: BalancesContext, markets: C
       calls: markets.map((market) => ({ target: market.address, params: [ctx.address] }) as const),
       abi: abi.escrows,
     }),
+    multicall({
+      ctx,
+      calls: markets.map((market) => ({ target: market.address }) as const),
+      abi: abi.collateralFactorBps,
+    }),
   ])
 
   const escrowsBalancesRes = await multicall({
@@ -191,33 +202,34 @@ export async function getInverseMarketsBalances(ctx: BalancesContext, markets: C
     abi: abi.balance,
   })
 
-  for (let marketIdx = 0; marketIdx < markets.length; marketIdx++) {
-    const market = markets[marketIdx]
-    const userDebtRes = userDebtsRes[marketIdx]
-    const escrowsBalanceRes = escrowsBalancesRes[marketIdx]
+  return markets
+    .map((market, marketIdx) => {
+      const userDebtRes = userDebtsRes[marketIdx]
+      const escrowsBalanceRes = escrowsBalancesRes[marketIdx]
+      const collateralFactorRes = collateralFactorsRes[marketIdx]
 
-    if (!userDebtRes.success || !escrowsBalanceRes.success) {
-      continue
-    }
+      if (!userDebtRes.success || !escrowsBalanceRes.success) {
+        return null
+      }
 
-    const lend: LendBalance = {
-      ...market,
-      amount: escrowsBalanceRes.output,
-      underlyings: undefined,
-      rewards: undefined,
-      category: 'lend',
-    }
+      const lend: LendBalance = {
+        ...market,
+        amount: escrowsBalanceRes.output,
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'lend',
+        collateralFactor: collateralFactorRes.output != null ? collateralFactorRes.output * 10n ** 14n : undefined,
+      }
 
-    const borrow: BorrowBalance = {
-      ...DOLA,
-      amount: userDebtRes.output,
-      underlyings: undefined,
-      rewards: undefined,
-      category: 'borrow',
-    }
+      const borrow: BorrowBalance = {
+        ...DOLA,
+        amount: userDebtRes.output,
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'borrow',
+      }
 
-    balances.push(lend, borrow)
-  }
-
-  return balances
+      return { balances: [lend, borrow] }
+    })
+    .filter(isNotNullish)
 }
