@@ -1,14 +1,22 @@
-import { getPoolsContracts } from '@adapters/curve-dex/common/pool'
-import { getRegistries } from '@adapters/curve-dex/common/registries'
 import { getYearnBalances } from '@adapters/yearn-finance/common/balance'
-import { getYearnVaults } from '@adapters/yearn-finance/common/vault'
+import { getYearnVaults, mergeContracts } from '@adapters/yearn-finance/common/vault'
 import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getPairsDetails } from '@lib/uniswap/v2/factory'
 
 export const getContracts = async (ctx: BaseContext) => {
-  const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap'])
-  const pools = await getPoolsContracts(ctx, registries)
-  const vaults = await getYearnVaults(ctx, pools)
+  const vaults = await getYearnVaults(ctx)
+
+  const fmtAeroVaults = await getPairsDetails(
+    ctx,
+    vaults.map((vault) => ({ ...vault, address: vault.lpToken, staker: vault.address })),
+  )
+
+  fmtAeroVaults.forEach((vault) => {
+    vault.address = vault.staker
+  })
+
+  mergeContracts(vaults, fmtAeroVaults)
 
   return {
     contracts: { vaults },
