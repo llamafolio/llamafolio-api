@@ -19,6 +19,12 @@ const locker: Contract = {
   underlyings: [PEARL],
 }
 
+const lockerV2: Contract = {
+  chain: 'polygon',
+  address: '0x017a26b18e4da4fe1182723a39311e67463cf633',
+  underlyings: [PEARL],
+}
+
 const farmers: `0x${string}`[] = [
   // v2
   '0x97bd59a8202f8263c2ec39cf6cf6b438d0b45876',
@@ -70,7 +76,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   ])
 
   return {
-    contracts: { pairs, pools, locker },
+    contracts: { pairs, pools, locker, lockerV2 },
     revalidate: 60 * 60,
     revalidateProps: {
       pairOffset: Math.min(offset + limit, allPairsLength),
@@ -83,6 +89,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     pairs: getPairsBalances,
     pools: getPearlFarmBalances,
     locker: (...args) => getNFTLockerBalances(...args, PEARL, 'locked'),
+    lockerV2: (...args) => getNFTLockerBalances(...args, PEARL, 'locked'),
   })
 
   return {
