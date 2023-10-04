@@ -77,7 +77,7 @@ export function formatBalance(balance: any): FormattedBalance {
     symbol: balance.symbol,
     decimals: balance.decimals != null ? parseInt(balance.decimals) : balance.decimals,
     category: balance.category as Category,
-    stable: balance.stable || underlyings?.every((underlying: any) => underlying.stable),
+    stable: Boolean(balance.stable || underlyings?.every((underlying: any) => underlying.stable)),
     price: balance.price,
     amount: balance.amount,
     balanceUSD: balance.balanceUSD,
