@@ -32,7 +32,7 @@ const STG: Token = {
  *  This is locked due to our Special event “Auction launch”. This amount is represented on your wallet as aaSTG. 1 aaSTG = 4 STG.
  */
 
-const CONVERTER = 4
+const CONVERTER = 4n
 
 export async function getStargateVesterBalances(ctx: BalancesContext, vester: Contract): Promise<VestBalance> {
   const now = Math.floor(Date.now() / 1000)
