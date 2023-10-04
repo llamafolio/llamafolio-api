@@ -101,7 +101,7 @@ function mergeBalances(balances: IYearnBalances[], fmtBalances: IYearnBalances[]
   }
 }
 
-function adjustUnderlyingAmounts(balances: IYearnBalances[]) {
+export function adjustUnderlyingAmounts(balances: IYearnBalances[]) {
   for (const balance of balances) {
     if (!balance.underlyings) continue
 
