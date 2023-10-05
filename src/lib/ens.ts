@@ -1,11 +1,13 @@
+import { toStartOfDay, unixFromDate } from '@lib/fmt'
 import type { TUnixTimestamp } from '@lib/type'
 import { GraphQLClient } from 'graphql-request'
 
 export const DOMAINS_QUERY = `
-  query getDomains($address: String!) {
+  query getDomains($address: String!, $expiryDateGte: Int!) {
     account(id: $address) {
       registrations(
         orderBy:expiryDate, orderDirection:asc,
+        where:{ expiryDate_gte: $expiryDateGte }
       ) {
         expiryDate
         registrationDate
@@ -61,7 +63,10 @@ const client = new GraphQLClient(endpoint, {
 })
 
 export async function getENSRegistrations(address: `0x${string}`) {
-  const response = (await client.request(DOMAINS_QUERY, { address: address.toLowerCase() })) as DomainsResponse
+  const response = (await client.request(DOMAINS_QUERY, {
+    address: address.toLowerCase(),
+    expiryDateGte: unixFromDate(toStartOfDay(new Date())),
+  })) as DomainsResponse
 
   const registrations: ENSRegistration[] = (response?.account?.registrations || []).map((registration) => ({
     domainName: registration.domain.name,
