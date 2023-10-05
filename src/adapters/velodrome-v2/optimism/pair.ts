@@ -177,13 +177,15 @@ export async function getVelodromePairsContracts(
   })
 
   for (const pool of pools) {
-    const [feeTokens, bribeTokens] = await Promise.all([
-      getERC20Details(ctx, pool.feeTokens),
-      getERC20Details(ctx, pool.bribeTokens),
-    ])
+    if (pool.feeTokens.length > 0 && pool.bribeTokens > 0) {
+      const [feeTokens, bribeTokens] = await Promise.all([
+        getERC20Details(ctx, pool.feeTokens),
+        getERC20Details(ctx, pool.bribeTokens),
+      ])
 
-    pool.feeTokens = feeTokens
-    pool.bribeTokens = bribeTokens
+      pool.feeTokens = feeTokens
+      pool.bribeTokens = bribeTokens
+    }
   }
 
   return getPairsDetails(ctx, pools)
