@@ -32,7 +32,7 @@ export interface CalendarGovernanceProposalEvent extends CalendarBaseEvent {
 
 export interface CalendarEnsRegistrationEvent extends CalendarBaseEvent {
   type: 'ens_registration'
-  registration: Pick<ENSRegistration, 'domainName' | 'owner' | 'registrant'>
+  registration: ENSRegistration
 }
 
 export type CalendarEvent =
@@ -52,13 +52,8 @@ export async function getCalendarEvents(address: `0x${string}`) {
     protocol: 'ens',
     parentProtocol: 'ens',
     chain: 'ethereum',
-    startDate: registration.registrationDate,
-    endDate: registration.expiryDate,
-    registration: {
-      domainName: registration.domainName,
-      owner: registration.owner,
-      registrant: registration.registrant,
-    },
+    startDate: registration.expiryDate,
+    registration,
   }))
 
   const calendarEvents: CalendarEvent[] = [...dbCalendarEvents, ...ensRegistrationEvents]
