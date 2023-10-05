@@ -25,6 +25,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { wMEMO, wMEMOStake },
+    revalidate: 60 * 60,
   }
 }
 

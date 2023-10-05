@@ -17,6 +17,7 @@ export const getContracts = async (ctx: BaseContext) => {
   const pools = await getBadgerContractsFromAPI(ctx)
   return {
     contracts: { pools, staker },
+    revalidate: 60 * 60,
   }
 }
 

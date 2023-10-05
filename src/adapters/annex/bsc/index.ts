@@ -41,6 +41,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { markets, Comptroller, masterchef, masterchef_v2, pools: [...pools, annSingleFarm] },
+    revalidate: 60 * 60,
   }
 }
 

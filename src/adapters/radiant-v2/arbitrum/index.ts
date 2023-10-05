@@ -53,6 +53,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { pools, fmtMultifeeDistributionContract },
+    revalidate: 60 * 60,
   }
 }
 

@@ -58,6 +58,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { booster, pools, auraStaker, auraLocker, stkAura },
+    revalidate: 60 * 60,
   }
 }
 

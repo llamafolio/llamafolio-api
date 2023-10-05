@@ -29,6 +29,7 @@ const pools: Contract[] = [
 export const getContracts = () => {
   return {
     contracts: { pools, masterChef },
+    revalidate: 60 * 60,
   }
 }
 

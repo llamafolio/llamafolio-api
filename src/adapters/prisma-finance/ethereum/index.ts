@@ -101,6 +101,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { vaults, farmer, convexPools, crvcrxPools: [...convexPools, ...crvPrismaPools] },
+    revalidate: 60 * 60,
   }
 }
 

@@ -29,6 +29,7 @@ const pikaPerpV3: Contract = {
 export const getContracts = async () => {
   return {
     contracts: { pikaPerpV3 },
+    revalidate: 60 * 60,
   }
 }
 

@@ -2,7 +2,7 @@ import { getSmoothyStakeBalances } from '@adapters/smoothy/common/stake'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-const tokens: string[] = [
+const tokens: `0x${string}`[] = [
   '0xe9e7cea3dedca5984780bafc599bd69add087d56',
   '0x55d398326f99059ff775485246999027b3197955',
   '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',

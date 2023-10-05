@@ -48,6 +48,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { markets, Comptroller, stakers: [atlStaker, lpStaker] },
+    revalidate: 60 * 60,
   }
 }
 

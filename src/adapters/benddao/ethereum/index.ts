@@ -50,6 +50,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { bendWeth, veBend, registry, nfts, lendPool, apeStaker },
+    revalidate: 60 * 60,
   }
 }
 
