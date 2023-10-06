@@ -10,6 +10,7 @@ export async function call<TAbi extends Abi[number] | readonly unknown[]>(option
   target: `0x${string}`
   abi: DecodeFunctionResultParameters<TAbi[]>['abi'][number]
   params?: DecodeFunctionResultParameters<TAbi[]>['args']
+  enabled?: boolean
 }): Promise<DecodeFunctionResultReturnType<TAbi[]>> {
   const args = options.params == null ? [] : Array.isArray(options.params) ? options.params : [options.params]
 

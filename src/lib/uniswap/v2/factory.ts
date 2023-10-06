@@ -87,11 +87,15 @@ export async function getPairsContracts({
   return { pairs, allPairsLength }
 }
 
-export async function getPairsDetails<T extends Contract>(ctx: BaseContext, contracts: T[]): Promise<T[]> {
+export async function getPairsDetails<T extends Contract>(
+  ctx: BaseContext,
+  contracts: T[],
+  params = { getAddress: (contract: T) => contract.address },
+): Promise<T[]> {
   const res: T[] = []
 
   const calls: Call<typeof abi.token0>[] = contracts.map((contract) => ({
-    target: contract.address,
+    target: params.getAddress(contract),
   }))
 
   const [token0sRes, token1sRes] = await Promise.all([

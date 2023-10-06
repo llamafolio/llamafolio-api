@@ -14,18 +14,18 @@ export interface Call<TAbi extends Abi[number] | readonly unknown[]> {
 export type MultiCallResult<TAbi extends Abi[number] | readonly unknown[]> =
   | {
       success: true
-      input: { target: `0x${string}`; params?: DecodeFunctionResultParameters<TAbi[]>['args'] }
+      input: { target: `0x${string}`; params?: DecodeFunctionResultParameters<TAbi[]>['args']; enabled?: boolean }
       output: DecodeFunctionResultReturnType<TAbi[]>
     }
   | {
       success: false
-      input: { target: `0x${string}`; params?: DecodeFunctionResultParameters<TAbi[]>['args'] }
+      input: { target: `0x${string}`; params?: DecodeFunctionResultParameters<TAbi[]>['args']; enabled?: boolean }
       output: null
     }
 
 export async function multicall<
   TAbi extends Abi[number] | readonly unknown[],
-  Call extends { target: `0x${string}`; params?: DecodeFunctionResultParameters<TAbi[]>['args'] },
+  Call extends { target?: `0x${string}`; params?: DecodeFunctionResultParameters<TAbi[]>['args']; enabled?: boolean },
 >(options: {
   ctx: BaseContext
   abi: DecodeFunctionResultParameters<TAbi[]>['abi'][number]
@@ -47,7 +47,7 @@ export async function multicall<
   // Allow nullish input calls but don't pass them to the underlying multicall function.
   // Nullish calls results are automatically unsuccessful.
   // This allows us to "chain" multicall responses while preserving input indices
-  const calls = options.calls.filter(isNotNullish)
+  const calls = options.calls.filter((call): call is Call => isNotNullish(call) && call.enabled !== false)
 
   const multicallRes = await providers[options.ctx.chain].multicall({
     // @ts-ignore
@@ -64,7 +64,7 @@ export async function multicall<
   let callIdx = 0
   // @ts-ignore
   return options.calls.map((input, idx) => {
-    if (input == null) {
+    if (input == null || input.enabled === false) {
       return { input: options.calls[idx], success: false, output: null }
     }
 
