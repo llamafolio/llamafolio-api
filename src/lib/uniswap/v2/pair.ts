@@ -39,7 +39,7 @@ export const abi = {
 
 /**
  * Retrieves pairs balances (with underlyings) of Uniswap V2 like Pair.
- * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
+ * If `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) are not defined, return input balance.
  */
 export async function getPairsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
   const balances = await getBalancesOf(ctx, contracts)
@@ -49,30 +49,48 @@ export async function getPairsBalances(ctx: BalancesContext, contracts: Contract
 
 /**
  * Retrieves underlying balances of Uniswap V2 like Pair contract balance.
- * `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) must be defined.
+ * If `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) are not defined, return input balance.
  */
 export async function getUnderlyingBalances(ctx: BalancesContext, balances: Balance[]) {
-  // filter empty balances
-  balances = balances.filter(
-    (balance) => balance.amount && balance.amount > 0n && balance.underlyings?.[0] && balance.underlyings?.[1],
-  )
+  function isEnabled(balance: Balance) {
+    return (
+      balance.amount != null && balance.amount > 0n && balance.underlyings != null && balance.underlyings.length >= 2
+    )
+  }
 
   const [token0sBalanceOfRes, token1sBalanceOfRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: balances.map((bToken) => ({ target: bToken.underlyings![0].address, params: [bToken.address] }) as const),
+      calls: balances.map(
+        (balance) =>
+          ({
+            target: balance.underlyings?.[0]?.address,
+            params: [balance.address],
+            enabled: isEnabled(balance),
+          }) as const,
+      ),
       abi: abi.balanceOf,
     }),
 
     multicall({
       ctx,
-      calls: balances.map((bToken) => ({ target: bToken.underlyings![1].address, params: [bToken.address] }) as const),
+      calls: balances.map(
+        (balance) =>
+          ({
+            target: balance.underlyings?.[1]?.address,
+            params: [balance.address],
+            enabled: isEnabled(balance),
+          }) as const,
+      ),
       abi: abi.balanceOf,
     }),
 
     multicall({
       ctx,
-      calls: balances.map((token) => ({ target: token.address })),
+      calls: balances.map((balance) => ({
+        target: balance.address,
+        enabled: isEnabled(balance),
+      })),
       abi: abi.totalSupply,
     }),
   ])
