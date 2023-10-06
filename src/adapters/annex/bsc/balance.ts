@@ -52,8 +52,7 @@ const ANN: Token = {
 }
 
 export async function getAnnexFarmBalances(ctx: BalancesContext, masterchefPools: Contract[]): Promise<Balance[]> {
-  const poolsBalances: Balance[] = []
-  const singleBalances: Balance[] = []
+  const balances: Balance[] = []
 
   const rewardTokenName = masterchefPools.map((master) =>
     master.masterchef === '0x95660cc9fdf5e55c579101f5867b89f24f254ea1' ? 'Reward' : 'Annex',
@@ -94,12 +93,8 @@ export async function getAnnexFarmBalances(ctx: BalancesContext, masterchefPools
       rewards: [{ ...ANN, amount: pendingRewardRes.output }],
     }
 
-    if (!balance.underlyings) {
-      singleBalances.push(balance)
-    } else {
-      poolsBalances.push(balance)
-    }
+    balances.push(balance)
   }
 
-  return (await Promise.all([singleBalances, getUnderlyingBalances(ctx, poolsBalances)])).flat()
+  return getUnderlyingBalances(ctx, balances)
 }
