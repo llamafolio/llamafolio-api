@@ -24,7 +24,6 @@ const AGI: Token = {
 
 export async function getAgilityStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const balances: Balance[] = []
-  const fmtUniBalances: Balance[] = []
 
   const calls: Call<typeof abi.earned>[] = stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }))
 
@@ -44,19 +43,15 @@ export async function getAgilityStakeBalances(ctx: BalancesContext, stakers: Con
 
     const balance: Balance = {
       ...staker,
+      address: staker.token || staker.address,
       amount: userBalanceRes.output,
       underlyings: staker.underlyings as Contract[],
       rewards: earnedRes.success ? [{ ...AGI, amount: earnedsRes[stakeIdx].output || 0n }] : undefined,
       category: 'stake',
     }
 
-    if (balance.underlyings && balance.underlyings.length > 1 && balance.token) {
-      fmtUniBalances.push({ ...balance, address: balance.token })
-      continue
-    }
-
     balances.push(balance)
   }
 
-  return [...balances, ...(await getUnderlyingBalances(ctx, fmtUniBalances))]
+  return getUnderlyingBalances(ctx, balances)
 }
