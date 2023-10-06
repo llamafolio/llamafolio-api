@@ -242,7 +242,6 @@ export const chains = [
         ? http(`https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
         : undefined,
       http('https://rpc.ankr.com/polygon', { batch: { wait: 0, batchSize: 5_000 } }),
-
       http('https://polygon-rpc.com/', { batch: { batchSize: 1_000, wait: 10 } }),
       http('https://rpc-mainnet.maticvigil.com/', { batch: { batchSize: 1_000, wait: 10 } }),
     ].filter(isNotFalsy),

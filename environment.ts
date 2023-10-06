@@ -30,6 +30,8 @@ export const environmentSchema = z.object({
   QUICKNODE_API_KEY: z.string().optional(),
   QUICKNODE_HTTP_URL: z.string().optional(),
   ELEMENT_API_KEY: z.string().optional(),
+  // Explorers
+  ETHERSCAN_API_KEY: z.string().optional(),
 })
 
 export type Environment = z.infer<typeof environmentSchema>

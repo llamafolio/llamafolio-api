@@ -342,3 +342,26 @@ export function groupContracts<T extends Contract>(contracts: T[]) {
 
   return contractsMap
 }
+
+export interface ContractInfo {
+  chain: number
+  address: string
+  creator: string
+  transaction_hash: string
+  name: string
+  abi: string
+  verified: boolean
+  data: string
+}
+
+export async function insertContracts(client: ClickHouseClient, values: ContractInfo[]) {
+  if (values.length === 0) {
+    return
+  }
+
+  await client.insert({
+    table: `${environment.NS_LF}.contracts`,
+    values: values,
+    format: 'JSONEachRow',
+  })
+}
