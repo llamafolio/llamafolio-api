@@ -177,6 +177,7 @@ import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import rook from '@adapters/rook'
 import scream from '@adapters/scream'
+import seamlessProtocol from '@adapters/seamless-protocol'
 import sentiment from '@adapters/sentiment'
 import setProtocol from '@adapters/set-protocol'
 import sharedstake from '@adapters/sharedstake'
@@ -435,6 +436,7 @@ export const adapters: Adapter[] = [
   rocketPool,
   rook,
   scream,
+  seamlessProtocol,
   sentiment,
   setProtocol,
   sharedstake,
