@@ -1,4 +1,5 @@
 import type { ClickHouseClient } from '@clickhouse/client'
+import { formatBalance } from '@db/balances'
 import type { CalendarEvent } from '@lib/calendar'
 import { chainByChainId } from '@lib/chains'
 import { toStartOfDay, unixFromDate } from '@lib/fmt'
@@ -73,7 +74,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
       continue
     }
 
-    const balances = row.balances.map((str) => JSON.parse(str))
+    const balances = row.balances.map((str) => formatBalance(JSON.parse(str)))
     const governanceProposals = row.governance_proposals.map((str) => JSON.parse(str))
     const today = unixFromDate(toStartOfDay(new Date()))
 
