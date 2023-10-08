@@ -91,7 +91,7 @@ export function formatBalance(balance: any): FormattedBalance {
     apyReward: balance.apyReward,
     apyMean30d: balance.apyMean30d,
     ilRisk: balance.ilRisk,
-    unlockAt: parseInt(balance.unlockAt),
+    unlockAt: balance.unlockAt != null ? parseInt(balance.unlockAt) : balance.unlockAt,
     //@ts-expect-error
     side: balance.side,
     margin: balance.margin,
