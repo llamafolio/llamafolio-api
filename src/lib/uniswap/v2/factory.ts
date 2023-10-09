@@ -5,6 +5,7 @@ import type { Category } from '@lib/category'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
+import type { AbiFunction } from 'abitype'
 
 const abi = {
   allPairsLength: {
@@ -65,7 +66,7 @@ export async function getPairsContracts({
   limit = 100,
   allPairsLengthABI = abi.allPairsLength,
 }: getPairsContractsParams) {
-  const allPairsLengthRes = await call({ ctx, abi: allPairsLengthABI, target: factoryAddress })
+  const allPairsLengthRes = await call({ ctx, abi: allPairsLengthABI as AbiFunction, target: factoryAddress })
 
   const allPairsLength = Number(allPairsLengthRes)
   const end = Math.min(offset + limit, allPairsLength)

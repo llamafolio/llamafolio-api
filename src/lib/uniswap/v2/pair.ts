@@ -51,7 +51,11 @@ export async function getPairsBalances(ctx: BalancesContext, contracts: Contract
  * Retrieves underlying balances of Uniswap V2 like Pair contract balance.
  * If `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) are not defined, return input balance.
  */
-export async function getUnderlyingBalances(ctx: BalancesContext, balances: Balance[]) {
+export async function getUnderlyingBalances<T extends Balance>(
+  ctx: BalancesContext,
+  balances: T[],
+  params = { getAddress: (balance: T) => balance.address },
+): Promise<T[]> {
   function isEnabled(balance: Balance) {
     return (
       balance.amount != null && balance.amount > 0n && balance.underlyings != null && balance.underlyings.length >= 2
@@ -65,7 +69,7 @@ export async function getUnderlyingBalances(ctx: BalancesContext, balances: Bala
         (balance) =>
           ({
             target: balance.underlyings?.[0]?.address,
-            params: [balance.address],
+            params: [params.getAddress(balance)],
             enabled: isEnabled(balance),
           }) as const,
       ),
@@ -78,7 +82,7 @@ export async function getUnderlyingBalances(ctx: BalancesContext, balances: Bala
         (balance) =>
           ({
             target: balance.underlyings?.[1]?.address,
-            params: [balance.address],
+            params: [params.getAddress(balance)],
             enabled: isEnabled(balance),
           }) as const,
       ),
@@ -88,7 +92,7 @@ export async function getUnderlyingBalances(ctx: BalancesContext, balances: Bala
     multicall({
       ctx,
       calls: balances.map((balance) => ({
-        target: balance.address,
+        target: params.getAddress(balance),
         enabled: isEnabled(balance),
       })),
       abi: abi.totalSupply,
