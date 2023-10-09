@@ -1,4 +1,8 @@
-import { getMasterChefPoolsNFTInfos } from '@adapters/baseswap/base/contract'
+import { getMasterChefPoolsNFTBalances } from '@adapters/baseswap/base/balance'
+import { getMasterChefPoolsNFTContracts } from '@adapters/baseswap/base/contract'
+import { getLockersBalances } from '@adapters/baseswap/base/locker'
+import { getBaseSwapStakeBalances, getBaseSwapStakeContracts } from '@adapters/baseswap/base/stake'
+import { getPoolsBalances } from '@adapters/uniswap-v3/common/pools'
 import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
@@ -19,13 +23,13 @@ import { getPairsBalances } from '@lib/uniswap/v2/pair'
 // BASEX V3 SWAPROUTER: 0x1B8eea9315bE495187D873DA7773a874545D9D48
 // BASEX V3 NONFUNGIBLEPOSITIONMANAGER: 0xDe151D5c92BfAA288Db4B67c21CD55d5826bCc93
 
-const BSX: Token = {
-  chain: 'base',
-  address: '0xd5046b976188eb40f6de40fb527f89c05b323385',
-  name: 'BaseX',
-  symbol: 'BSX',
-  decimals: 18,
-}
+const stakerAddresses: `0x${string}`[] = [
+  '0x86dbd5baae91ac576e8e5197eb2497603d0056ea',
+  '0x64fcfa940f286af1261107f993189379e8d3ae1c',
+  '0x326929eae4e1923b9d08de6bd8b2e16f7dd35cd4',
+  '0x55da9a8a85d37764934a8915621baa00fafdc3eb',
+  '0x26fd5de668f091222791cc0ea45ac072d7bfe0cd',
+]
 
 const BSWAP: Token = {
   chain: 'base',
@@ -46,25 +50,43 @@ const masterChef2: Contract = {
   name: 'MasterChef',
 }
 
+const lockManager: Contract = {
+  chain: 'base',
+  address: '0x4e4c89937f85bd101c7fcb273435ed89b49ad0b0',
+}
+
+export const factory: Contract = {
+  chain: 'base',
+  address: '0x38015D05f4fEC8AFe15D7cc0386a126574e8077B',
+}
+
+const nonFungiblePositionManager: Contract = {
+  chain: 'base',
+  address: '0xDe151D5c92BfAA288Db4B67c21CD55d5826bCc93',
+}
+
 export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
-  const limit = 200
+  const limit = 300
 
-  const [{ pairs, allPairsLength }, pools] = await Promise.all([
+  const [{ pairs, allPairsLength }, pools, stakers] = await Promise.all([
     getPairsContracts({
       ctx,
       factoryAddress: '0xfda619b6d20975be80a10332cd39b9a4b0faa8bb',
       offset,
       limit,
     }),
-    getMasterChefPoolsNFTInfos(ctx, masterChef2),
+    getMasterChefPoolsNFTContracts(ctx, masterChef2),
+    getBaseSwapStakeContracts(ctx, stakerAddresses),
   ])
-
-  console.log(pools)
 
   return {
     contracts: {
       pairs,
+      pools,
+      lockManager,
+      nonFungiblePositionManager,
+      stakers,
     },
     revalidate: 60 * 60,
     revalidateProps: {
@@ -83,6 +105,12 @@ function getBaseSwapPairsBalances(ctx: BalancesContext, pairs: Pair[], masterche
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: (...args) => getBaseSwapPairsBalances(...args, masterChef, BSWAP),
+    pools: getMasterChefPoolsNFTBalances,
+    lockManager: (...args) => getLockersBalances(...args, contracts.pairs || []),
+    stakers: getBaseSwapStakeBalances,
+    // TODO: manage extreme values or close to 0 to prevent extreme underlyings values `ex: 0xd3f85ade70adf48ed17c8cb182b8b1aff542e51f`
+    nonFungiblePositionManager: (ctx, nonFungiblePositionManager) =>
+      getPoolsBalances(ctx, nonFungiblePositionManager, factory),
   })
 
   return {

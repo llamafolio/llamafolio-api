@@ -39,7 +39,7 @@ const abi = {
   },
 } as const
 
-export const getMasterChefPoolsNFTInfos = async (ctx: BaseContext, masterchef: Contract): Promise<Contract[]> => {
+export const getMasterChefPoolsNFTContracts = async (ctx: BaseContext, masterchef: Contract): Promise<Contract[]> => {
   const poolLengthRes = await call({ ctx, target: masterchef.address, abi: abi.poolsLength })
   const poolAddresses = await multicall({
     ctx,
@@ -65,10 +65,11 @@ export const getMasterChefPoolsNFTInfos = async (ctx: BaseContext, masterchef: C
     return {
       ...pools[idx],
       address: pools[idx].address,
+      token: lpToken,
       lpToken,
       rewards: [BSX, xBSX],
     }
   })
 
-  return getPairsDetails(ctx, pools)
+  return getPairsDetails(ctx, pools, { getAddress: (pool) => pool.lpToken })
 }

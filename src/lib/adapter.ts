@@ -45,6 +45,7 @@ export interface Contract extends BaseContract {
 }
 
 export interface BaseBalance extends BaseContract {
+  lpToken?: `0x${string}`
   amount: bigint
   claimable?: bigint
 }
