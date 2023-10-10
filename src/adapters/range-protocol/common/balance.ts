@@ -68,7 +68,7 @@ export async function getRangeBalances(ctx: BalancesContext, pools: Contract[]) 
     userBalancesRes.map((_, i) => [userBalancesRes[i], underlyingsBalancesRes[i], totalSuppliesRes[i]]),
     (res, index) => {
       const underlyings = pools[index].underlyings as Contract[]
-      const [amount, underlyingBalances, totalSupply] = res.outputs
+      const [{ output: amount }, { output: underlyingBalances }, { output: totalSupply }] = res.inputOutputPairs
 
       if (!underlyings || totalSupply === 0n) return null
 
