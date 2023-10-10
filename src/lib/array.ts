@@ -159,3 +159,34 @@ export function mapSuccessFilter<T extends MultiCallResult<never>, S>(
 ) {
   return mapSuccess(results, mapFn).filter(isNotNullish)
 }
+
+/**
+ * The `mapMultiSuccessFilter` function processes an array of MultiCallResult objects, applying
+ * a specified mapping function `mapFn` only to those result sets that have been successfully resolved.
+ *
+ * @param results
+ * @param mapFn
+ */
+
+export function mapMultiSuccessFilter<T extends MultiCallResult<never>[], S>(
+  results: { [K in keyof T]: T[K][] },
+  mapFn: (
+    res: {
+      success: true
+      inputs: { [K in keyof T]: T[K]['input'] }
+      outputs: any
+      // outputs: { [K in keyof T]: NonNullable<T[K]['output']> }
+    },
+    index: number,
+  ) => S | null,
+): S[] {
+  return results
+    .map((resArray, index) => {
+      const inputs = resArray.map((res) => res.input) as { [K in keyof T]: T[K]['input'] }
+      const outputs = resArray.map((res) => res.output) as { [K in keyof T]: NonNullable<T[K]['output']> }
+
+      const allSuccess = resArray.every((res) => res.success)
+      return allSuccess ? mapFn({ success: true, inputs, outputs }, index) : null
+    })
+    .filter(isNotNullish)
+}
