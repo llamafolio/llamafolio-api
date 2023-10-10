@@ -128,6 +128,7 @@ import makerdao from '@adapters/makerdao'
 import mantisswap from '@adapters/mantisswap'
 import maple from '@adapters/maple'
 import mdex from '@adapters/mdex'
+import meanFinance from '@adapters/mean-finance'
 import meritCircle from '@adapters/merit-circle'
 import metronome from '@adapters/metronome'
 import moonwell from '@adapters/moonwell'
@@ -388,6 +389,7 @@ export const adapters: Adapter[] = [
   mantisswap,
   maple,
   mdex,
+  meanFinance,
   meritCircle,
   metronome,
   moonwell,
