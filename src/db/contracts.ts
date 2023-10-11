@@ -62,7 +62,7 @@ export function toStorage(contracts: Contract[], adapterId: string, timestamp: D
       name,
       chain: chainId,
       address: address.toLowerCase(),
-      token: (token || '').toLowerCase(),
+      token: (token || address).toLowerCase(),
       category,
       adapter_id: adapterId,
       data: JSON.stringify(data),

@@ -21,7 +21,6 @@ export interface BaseContract {
   name?: string
   chain: Chain
   address: `0x${string}`
-  // if specified, used to retrieve token details: symbol / decimals
   token?: `0x${string}`
   symbol?: string
   decimals?: number
