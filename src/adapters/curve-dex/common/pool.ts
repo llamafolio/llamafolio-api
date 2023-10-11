@@ -185,7 +185,7 @@ const abi = {
 } as const
 
 export interface PoolContract extends Contract {
-  lpToken?: `0x${string}`
+  token?: `0x${string}`
   pool: `0x${string}`
   registry: string
   registryId?: string
@@ -195,16 +195,14 @@ export async function getPoolsContracts(ctx: BaseContext, registries: Partial<Re
   const registriesIds = Object.keys(registries) as Registry[]
   const registriesAddresses = Object.values(registries)
 
-  const poolsPromises = registriesAddresses.map((address, index) =>
-    getFmtPoolsContracts(ctx, address, registriesIds[index]),
+  const pools = await Promise.all(
+    registriesAddresses.map((address, index) => getFmtPoolsContracts(ctx, address, registriesIds[index])),
   )
-
-  const pools = await Promise.all(poolsPromises)
 
   const allPools = pools.flat()
 
   // Check if pools use MetaStablePool and merge underlyings if a match is found
-  return Promise.all(allPools.map(async (pool) => processPoolUnderlyings(ctx, pool, pools[0])))
+  return Promise.all(allPools.map((pool) => processPoolUnderlyings(ctx, pool, pools[0])))
 }
 
 const processPoolUnderlyings = async (ctx: BaseContext, pool: PoolContract, stablePools: PoolContract[]) => {
@@ -267,7 +265,7 @@ export async function getFmtPoolsContracts(ctx: BaseContext, registry: `0x${stri
     const pool = lpTokenRes.input.params![0]
 
     // Factory LP tokens are the same as the pool
-    const lpToken: `0x${string}` /* | undefined */ = lpTokenRes.success ? lpTokenRes.output : pool
+    const token = lpTokenRes.success ? lpTokenRes.output : pool
 
     // Format underlyings since response is backfilled
     const underlyings: string[] = underlyingTokensRes.success
@@ -282,8 +280,8 @@ export async function getFmtPoolsContracts(ctx: BaseContext, registry: `0x${stri
     poolContracts.push({
       chain: ctx.chain,
       // We must define address as lpToken address since user interact only with lpToken, or we cant catch interaction in index.
-      address: lpToken,
-      lpToken,
+      address: token,
+      token,
       pool,
       registryId,
       registry,

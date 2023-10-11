@@ -10,6 +10,7 @@ export interface ContractStorage {
   name?: string
   chain: string
   address: string
+  token: string
   category?: string
   adapter_id: string
   data?: string
@@ -29,6 +30,7 @@ export function fromStorage(contractsStorage: ContractStorage[]) {
       name: contractStorage.name,
       chain: chainByChainId[parseInt(contractStorage.chain)]?.id,
       address: contractStorage.address,
+      token: contractStorage.token,
       category: contractStorage.category,
       adapterId: contractStorage.adapter_id,
       underlyings: data?.underlyings?.map((underlying: any) => ({
@@ -47,7 +49,7 @@ export function toStorage(contracts: Contract[], adapterId: string, timestamp: D
   const contractsStorage: ContractStorage[] = []
 
   for (const contract of contracts) {
-    const { standard, name, chain, address, category, ...data } = contract
+    const { standard, name, chain, address, token, category, ...data } = contract
 
     const chainId = chainById[chain]?.chainId
     if (chainId == null) {
@@ -60,6 +62,7 @@ export function toStorage(contracts: Contract[], adapterId: string, timestamp: D
       name,
       chain: chainId,
       address: address.toLowerCase(),
+      token: (token || '').toLowerCase(),
       category,
       adapter_id: adapterId,
       data: JSON.stringify(data),
@@ -90,7 +93,7 @@ export async function selectAdaptersContractsToken(client: ClickHouseClient, add
         JSONExtractUInt("data", 'decimals') AS "decimals",
         JSONExtractString("data", 'token') AS "token",
         JSONExtractArrayRaw(data, 'underlyings') AS underlyings
-      FROM lf.adapters_contracts
+      FROM ${environment.NS_LF}.adapters_contracts
       WHERE "chain" = {chainId: UInt8} AND "address" = {address: String};
     `,
     query_params: {
@@ -206,7 +209,7 @@ export async function getWalletInteractions(client: ClickHouseClient, address: s
         "address",
         JSONExtractString("data", 'symbol') AS "symbol",
         JSONExtractUInt("data", 'decimals') AS "decimals"
-      FROM lf.adapters_contracts
+      FROM ${environment.NS_LF}.adapters_contracts
       WHERE
         adapter_id = 'wallet' AND
         ("chain", "address") IN (
