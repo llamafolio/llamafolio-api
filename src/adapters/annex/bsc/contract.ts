@@ -42,7 +42,7 @@ export async function getAnnexContracts(ctx: BaseContext, masterchefs: Contract[
   const contracts: Contract[] = mapSuccessFilter(poolInfosRes, (res, idx) => ({
     chain: ctx.chain,
     address: res.output[0],
-    lpToken: res.output[0],
+    token: res.output[0],
     masterchef: res.input.target,
     pid: idx,
   }))

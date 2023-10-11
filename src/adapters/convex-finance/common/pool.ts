@@ -53,7 +53,6 @@ export async function getConvexAltChainsPools(
     return {
       chain: ctx.chain,
       address,
-      lpToken: address,
       token: address,
       gauge,
       crvRewards: rewards,

@@ -21,26 +21,22 @@ const abi = {
   },
 } as const
 
-export async function getInchPools(ctx: BaseContext, deployer: Contract): Promise<Contract[]> {
+export async function getInchPools(ctx: BaseContext, deployer: Contract) {
   const allPoolsRes = await call({ ctx, target: deployer.address, abi: abi.getAllPools })
 
-  const contracts: Contract[] = (allPoolsRes || []).map((address) => ({ chain: ctx.chain, address }))
+  const contracts = allPoolsRes.map((address) => ({ chain: ctx.chain, address }))
 
   return getPairsDetails(ctx, contracts)
 }
 
-export async function getInchFarmingPools(ctx: BaseContext, pools: `0x${string}`[]): Promise<Contract[]> {
+export async function getInchFarmingPools(ctx: BaseContext, pools: `0x${string}`[]) {
   const lpTokensRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool })), abi: abi.mooniswap })
 
-  const contracts: Contract[] = mapSuccessFilter(lpTokensRes, (res, idx) => ({
+  const contracts = mapSuccessFilter(lpTokensRes, (res, idx) => ({
     chain: ctx.chain,
-    address: res.output,
-    lpToken: res.output,
-    pool: pools[idx],
+    address: pools[idx],
+    token: res.output,
   }))
 
-  return (await getPairsDetails(ctx, contracts)).map((res) => ({
-    ...res,
-    address: res.pool,
-  }))
+  return getPairsDetails(ctx, contracts, { getAddress: (contract) => contract.token })
 }

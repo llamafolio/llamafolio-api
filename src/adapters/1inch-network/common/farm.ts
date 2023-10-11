@@ -81,18 +81,14 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
         ctx,
         calls: pools.flatMap((pool) =>
           pool.underlyings!.map(
-            (underlying) =>
-              ({
-                target: pool.lpToken,
-                params: [(underlying as Contract).address],
-              }) as const,
+            (underlying) => ({ target: pool.token, params: [(underlying as Contract).address] }) as const,
           ),
         ),
         abi: abi.getBalanceForAddition,
       }),
       multicall({
         ctx,
-        calls: pools.map((pool) => ({ target: pool.lpToken })),
+        calls: pools.map((pool) => ({ target: pool.token })),
         abi: erc20Abi.totalSupply,
       }),
     ])

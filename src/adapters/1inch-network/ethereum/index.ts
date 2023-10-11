@@ -10,7 +10,7 @@ import { getInchStakingBalances } from '../common/stake'
 
 const Inch: Token = {
   chain: 'ethereum',
-  address: '0x111111111117dC0aa78b770fA6A738034120C302',
+  address: '0x111111111117dc0aa78b770fa6a738034120c302',
   decimals: 18,
   symbol: '1INCH',
 }
