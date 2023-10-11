@@ -28,11 +28,8 @@ export const getRegistries = async (ctx: BaseContext, registries: Registry[]) =>
     ctx,
     calls: registries.map(
       (id) =>
-        ({
-          params: [Registries[id]],
-          // Immutable address provider (same address on all chains)
-          target: '0x0000000022d53366457f9d5e68ec105046fc4383',
-        }) as const,
+        // Immutable address provider (same address on all chains)
+        ({ params: [Registries[id]], target: '0x0000000022d53366457f9d5e68ec105046fc4383' }) as const,
     ),
     abi: abi.get_address,
   })

@@ -191,9 +191,9 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
       !gaugeRes.success ||
       !lpTokenRes.success ||
       // registry responses seem wrong for these addresses since it returns 1e24 number with only 8 decimals or 6 decimals underlyings
-      lpTokenRes.output === '0x845838DF265Dcd2c412A1Dc9e959c7d08537f8a2' || // compound-gauge
-      lpTokenRes.output === '0x5282a4eF67D9C33135340fB3289cc1711c13638C' || // ib3CRV-gauge
-      lpTokenRes.output === '0x3F1B0278A9ee595635B61817630cC19DE792f506' || // ibAUD/sAUD-gauge
+      lpTokenRes.output.toLowerCase() === '0x845838df265dcd2c412a1dc9e959c7d08537f8a2' || // compound-gauge
+      lpTokenRes.output.toLowerCase() === '0x5282a4ef67d9c33135340fb3289cc1711c13638c' || // ib3CRV-gauge
+      lpTokenRes.output.toLowerCase() === '0x3f1b0278a9ee595635b61817630cc19de792f506' || // ibAUD/sAUD-gauge
       !coinRes.success ||
       !underlyingRes.success
     ) {
@@ -205,7 +205,7 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
       ...pools[poolIdx],
       address: lpTokenRes.output,
       gauge: gaugeRes.output,
-      lpToken: lpTokenRes.output,
+      token: lpTokenRes.output,
       yieldKey: lpTokenRes.output,
       tokens: coinRes.output
         .map((address) => address.toLowerCase())
