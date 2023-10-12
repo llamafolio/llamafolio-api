@@ -102,15 +102,17 @@ export async function getMagpieBalances(
   const [userBalancesRes, pendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) =>
-        pool.staker ? ({ target: masterchef.address, params: [pool.staker, ctx.address] } as const) : null,
+      calls: pools.map(
+        (pool) =>
+          ({ target: masterchef.address, params: [pool.staker, ctx.address], enabled: pool.staker != null }) as const,
       ),
       abi: abi.stakingInfo,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) =>
-        pool.staker ? ({ target: masterchef.address, params: [pool.staker, ctx.address] } as const) : null,
+      calls: pools.map(
+        (pool) =>
+          ({ target: masterchef.address, params: [pool.staker, ctx.address], enabled: pool.staker != null }) as const,
       ),
       abi: abi.allPendingTokens,
     }),

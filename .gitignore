@@ -50,6 +50,7 @@ tests/local
 .env.development
 bun.lockb
 
+test/addresses.json
 test/coverage/*
 test/reports
 test/fixtures/*.json

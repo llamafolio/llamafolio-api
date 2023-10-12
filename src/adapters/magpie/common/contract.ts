@@ -66,7 +66,7 @@ const abi = {
   },
 } as const
 
-export async function getMagpieContracts(ctx: BaseContext, masterchef: Contract): Promise<Contract[]> {
+export async function getMagpieContracts(ctx: BaseContext, masterchef: Contract) {
   const poolLength = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
 
   const registeredTokensRes = await multicall({
@@ -88,8 +88,10 @@ export async function getMagpieContracts(ctx: BaseContext, masterchef: Contract)
     const [stakingToken, _allocPoint, _lastRewardTimestamp, _accMGPPerShare, rewarder, helper] = res.output
 
     return {
+      name: masterchef.name,
       chain: ctx.chain,
-      address: stakingToken,
+      address: masterchef.address,
+      token: stakingToken,
       rewarder,
       helper,
       rewards: masterchef.rewards,
@@ -99,7 +101,7 @@ export async function getMagpieContracts(ctx: BaseContext, masterchef: Contract)
   return getUnderlyingsAndRewardsTokens(ctx, contracts)
 }
 
-const getUnderlyingsAndRewardsTokens = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
+const getUnderlyingsAndRewardsTokens = async (ctx: BaseContext, pools: Contract[]) => {
   const contracts: Contract[] = []
 
   const [bonusRewardsTokensRes, depositTokensRes, lpTokensRes] = await Promise.all([
@@ -127,10 +129,9 @@ const getUnderlyingsAndRewardsTokens = async (ctx: BaseContext, pools: Contract[
 
     contracts.push({
       ...pool,
-      address: lpTokenRes.output,
+      token: lpTokenRes.output,
       staker: pool.address,
       underlyings: depositTokenRes ? [depositTokenRes.output] : [pool.address],
-      lpToken: lpTokenRes.output,
       rewards: [...(pool.rewards as `0x${string}`[]), ...noDuplicateRewards],
     })
   }

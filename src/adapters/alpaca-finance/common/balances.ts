@@ -56,12 +56,10 @@ export async function getPoolsBalances(
     params: [pool.pid, ctx.address],
   }))
 
-  const supplyCalls: Call<typeof abi.totalSupply>[] = pools.map((pool) => ({
-    target: pool.address,
-  }))
+  const supplyCalls: Call<typeof abi.totalSupply>[] = pools.map((pool) => ({ target: pool.token! }))
 
   const balanceOfCalls: Call<typeof erc20Abi.balanceOf>[] = pools.map((pool) => ({
-    target: pool.address,
+    target: pool.token!,
     params: [ctx.address],
   }))
 
