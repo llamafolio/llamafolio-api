@@ -230,7 +230,7 @@ import tokenlon from '@adapters/tokenlon'
 import tonpound from '@adapters/tonpound'
 import tornadoCash from '@adapters/tornado-cash'
 import tprotocol from '@adapters/tprotocol'
-import traderjoe from '@adapters/traderjoe'
+import traderJoe from '@adapters/trader-joe'
 import truefi from '@adapters/truefi'
 import trufinProtocol from '@adapters/trufin-protocol'
 import trustswap from '@adapters/trustswap'
@@ -239,7 +239,7 @@ import uniswapV3 from '@adapters/uniswap-v3'
 import unsheth from '@adapters/unsheth'
 import uwuLend from '@adapters/uwu-lend'
 import valasFinance from '@adapters/valas-finance'
-import vector from '@adapters/vector'
+import vectorFinance from '@adapters/vector-finance'
 import velodromeV1 from '@adapters/velodrome-v1'
 import velodromeV2 from '@adapters/velodrome-v2'
 import venus from '@adapters/venus'
@@ -491,7 +491,7 @@ export const adapters: Adapter[] = [
   tonpound,
   tornadoCash,
   tprotocol,
-  traderjoe,
+  traderJoe,
   truefi,
   trufinProtocol,
   trustswap,
@@ -500,7 +500,7 @@ export const adapters: Adapter[] = [
   unsheth,
   uwuLend,
   valasFinance,
-  vector,
+  vectorFinance,
   velodromeV1,
   velodromeV2,
   venus,

@@ -28,20 +28,20 @@ const sJOE: Contract = {
 const veJOE: Contract = {
   name: 'veJOE staking',
   chain: 'avalanche',
-  address: '0x25D85E17dD9e544F6E9F8D44F99602dbF5a97341',
+  address: '0x25d85e17dd9e544f6e9f8d44f99602dbf5a97341',
   types: 'stake',
 }
 
 const rJOE: Contract = {
   name: 'rJOE staking',
   chain: 'avalanche',
-  address: '0x102D195C3eE8BF8A9A89d63FB3659432d3174d81',
+  address: '0x102d195c3ee8bf8a9a89d63fb3659432d3174d81',
   types: 'stake',
 }
 
 const boostedMasterchef: Contract = {
   chain: 'avalanche',
-  address: '0x4483f0b6e2F5486D06958C20f8C39A7aBe87bf8F',
+  address: '0x4483f0b6e2f5486d06958c20f8c39a7abe87bf8f',
 }
 
 export const getContracts = async (ctx: BaseContext, props: any) => {
@@ -49,12 +49,12 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   const limit = 100
 
   const markets = await getMarketsContracts(ctx, {
-    comptrollerAddress: '0xdc13687554205E5b89Ac783db14bb5bba4A1eDaC',
+    comptrollerAddress: '0xdc13687554205e5b89ac783db14bb5bba4a1edac',
   })
 
   const { pairs, allPairsLength } = await getPairsContracts({
     ctx,
-    factoryAddress: '0x9Ad6C38BE94206cA50bb0d90783181662f0Cfa10',
+    factoryAddress: '0x9ad6c38be94206ca50bb0d90783181662f0cfa10',
     offset,
     limit,
   })
