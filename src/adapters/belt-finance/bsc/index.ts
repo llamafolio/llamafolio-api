@@ -42,9 +42,12 @@ const fourBeltV2: Contract = {
 }
 
 const masterChef: Contract = {
+  name: 'MasterBelt',
   chain: 'bsc',
   address: '0xd4bbc80b9b102b77b21a06cb77e954049605e6c1',
 }
+
+const deployers = ['0x7111d0f651a331bc2b9eefcfe56d8a03f92601a1']
 
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getBeltContracts(ctx, masterChef, [fourBelt, fourBeltV2])
