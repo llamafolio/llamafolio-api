@@ -60,7 +60,6 @@ export function printBalances(balances: PricedBalance[]) {
         const decimals = balance.decimals ? 10n ** BigInt(balance.decimals) : 1n
 
         const d: { [key: string]: any } = {
-          chain: balance.chain,
           address: balance.address,
           category: balance.category,
           symbol: balance.symbol,
