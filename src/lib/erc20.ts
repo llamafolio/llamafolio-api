@@ -1,6 +1,6 @@
-import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { sliceIntoChunks } from '@lib/array'
-import { type Chain, chainById } from '@lib/chains'
+import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter, sliceIntoChunks } from '@lib/array'
+import { chainById, type Chain } from '@lib/chains'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { sleep } from '@lib/promise'
@@ -422,22 +422,20 @@ export async function userBalances({
 /**
  * @description Returns given contracts with their ERC20 token balances
  */
-export async function getBalancesOf<T extends Contract>(ctx: BalancesContext, contracts: T[]): Promise<Balance[]> {
+export async function getBalancesOf(
+  ctx: BalancesContext,
+  contracts: Contract[],
+  params = { getAddress: (contract: Contract) => contract.token },
+) {
   const balancesOf = await multicall({
     ctx,
     calls: contracts.map(
-      (contract) => ({ target: contract.token || contract.address, params: [ctx.address] }) as const,
+      (contract) => ({ target: params.getAddress(contract) || contract.address, params: [ctx.address] }) as const,
     ),
     abi: abi.balanceOf,
   })
 
-  for (let contractIdx = 0; contractIdx < contracts.length; contractIdx++) {
-    const balanceOfRes = balancesOf[contractIdx]
-
-    ;(contracts[contractIdx] as Balance).amount = balanceOfRes.success ? balanceOfRes.output : 0n
-  }
-
-  return contracts as Balance[]
+  return mapSuccessFilter(balancesOf, (res, idx) => ({ ...contracts[idx], amount: res.output }))
 }
 
 export async function getERC20Details(ctx: BaseContext, tokens: readonly `0x${string}`[]): Promise<Token[]> {

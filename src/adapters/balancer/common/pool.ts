@@ -119,8 +119,6 @@ async function getBalancerEthGauges(
 }
 
 async function getBalancerChildGauges(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
-  const gauges: any = []
-
   const fmtCtx = ctx.chain === 'gnosis' ? 'gnosis-chain' : ctx.chain
 
   const URL = `https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-gauges-${fmtCtx}`
@@ -135,24 +133,50 @@ async function getBalancerChildGauges(ctx: BaseContext, pools: Contract[]): Prom
       }
     }
   `
+  // const res: any = await request(URL, query)
+
+  // for (const pool of res.pools) {
+  //   if (!pool.address || !pool.gauges) {
+  //     continue
+  //   }
+
+  //   gauges.push({ address: pool.address, gauges: pool.gauges })
+  // }
+
+  // const mergedPools: any[] = pools.map((pool) => {
+  //   const poolAddressLower = pool.address.toLowerCase()
+  //   const matchingLpToken = gauges.find((gauge: any) => gauge.address.toLowerCase() === poolAddressLower)
+
+  //   if (matchingLpToken) {
+  //     return { ...pool, gauge: matchingLpToken.gauges.map((gauge: any) => gauge.id) }
+  //   } else {
+  //     return { ...pool, gauge: undefined }
+  //   }
+  // })
+
+  // return mergedPools
+
   const res: any = await request(URL, query)
 
-  for (const pool of res.pools) {
-    if (!pool.address || !pool.gauges) {
-      continue
+  const gauges = res.pools.map((pool: any) => {
+    return {
+      address: pool.address.toLowerCase(),
+      gauges: pool.gauges.map((gauge: any) => gauge.id),
     }
+  })
 
-    gauges.push({ address: pool.address, gauges: pool.gauges })
-  }
+  const mergedPools: Contract[] = []
 
-  const mergedPools: any[] = pools.map((pool) => {
+  pools.forEach((pool: Contract) => {
     const poolAddressLower = pool.address.toLowerCase()
-    const matchingLpToken = gauges.find((gauge: any) => gauge.address.toLowerCase() === poolAddressLower)
+    const matchingGauge = gauges.find((gauge: any) => gauge.address === poolAddressLower)
 
-    if (matchingLpToken) {
-      return { ...pool, gauge: matchingLpToken.gauges.map((gauge: any) => gauge.id) }
+    if (matchingGauge) {
+      matchingGauge.gauges.forEach((gaugeId: string, id: number) => {
+        mergedPools.push({ ...pool, gauge: gaugeId, id })
+      })
     } else {
-      return { ...pool, gauge: undefined }
+      mergedPools.push({ ...pool, gauge: undefined })
     }
   })
 
