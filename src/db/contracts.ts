@@ -45,11 +45,11 @@ export function fromStorage(contractsStorage: ContractStorage[]) {
   return contracts
 }
 
-export function toStorage(contracts: Contract[], adapterId: string, timestamp: Date) {
+export function toStorage(contracts: Contract[]) {
   const contractsStorage: ContractStorage[] = []
 
   for (const contract of contracts) {
-    const { standard, name, chain, address, token, category, ...data } = contract
+    const { standard, name, chain, address, token, category, adapterId, timestamp, ...data } = contract
 
     const chainId = chainById[chain]?.chainId
     if (chainId == null) {
@@ -62,7 +62,7 @@ export function toStorage(contracts: Contract[], adapterId: string, timestamp: D
       name,
       chain: chainId,
       address: address.toLowerCase(),
-      token: (token || address).toLowerCase(),
+      token: (token || '').toLowerCase(),
       category,
       adapter_id: adapterId,
       data: JSON.stringify(data),
@@ -119,13 +119,8 @@ export async function selectAdaptersContractsToken(client: ClickHouseClient, add
   })
 }
 
-export async function insertAdaptersContracts(
-  client: ClickHouseClient,
-  contracts: Contract[],
-  adapterId: string,
-  timestamp: Date,
-) {
-  const values = toStorage(contracts, adapterId, timestamp)
+export async function insertAdaptersContracts(client: ClickHouseClient, contracts: Contract[]) {
+  const values = toStorage(contracts)
 
   if (values.length === 0) {
     return

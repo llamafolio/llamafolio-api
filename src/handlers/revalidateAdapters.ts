@@ -94,8 +94,8 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     const config = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
 
     const [contracts, props] = await Promise.all([
-      resolveContractsTokens(config.contracts || {}),
-      config.props ? resolveContractsTokens(config.props) : undefined,
+      resolveContractsTokens(ctx, config.contracts || {}),
+      config.props ? resolveContractsTokens(ctx, config.props) : undefined,
     ])
 
     const now = new Date()
@@ -122,7 +122,14 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
     await insertAdapters(client, [dbAdapter])
 
     // Insert new contracts
-    await insertAdaptersContracts(client, flattenContracts(contracts), adapter.id)
+    // add context to contracts
+    const adapterContracts = flattenContracts(contracts).map((contract) => ({
+      chain,
+      adapterId: adapter.id,
+      timestamp: now,
+      ...contract,
+    }))
+    await insertAdaptersContracts(client, adapterContracts)
 
     return success({})
   } catch (e) {

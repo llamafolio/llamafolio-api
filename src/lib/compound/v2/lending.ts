@@ -114,7 +114,6 @@ export async function getMarketsContracts(
     const [_isListed, collateralFactorMantissa] = marketRes.output
 
     contracts.push({
-      chain: ctx.chain,
       address: cToken,
       collateralFactor: collateralFactorMantissa,
       underlyings: [underlying],
