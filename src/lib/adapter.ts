@@ -19,7 +19,6 @@ export interface BaseContract {
   category?: Category
 
   name?: string
-  chain: Chain
   address: `0x${string}`
   token?: `0x${string}`
   symbol?: string

@@ -50,6 +50,8 @@ async function main() {
 
   let prevDbAdapter = await selectAdapter(client, chainId, adapter.id)
 
+  const now = new Date()
+
   const protocolToParent = await fetchProtocolToParentMapping()
 
   for (let i = 0; ; i++) {
@@ -69,7 +71,7 @@ async function main() {
         break
       }
 
-      const contracts = await resolveContractsTokens(config.contracts || {})
+      const contracts = await resolveContractsTokens(ctx, config.contracts || {})
 
       let expire_at: Date | undefined = undefined
       if (config.revalidate) {
@@ -83,7 +85,7 @@ async function main() {
         chain,
         contractsExpireAt: expire_at,
         contractsRevalidateProps: config.revalidateProps,
-        createdAt: new Date(),
+        createdAt: now,
       }
 
       prevDbAdapter = dbAdapter
@@ -91,7 +93,14 @@ async function main() {
       await insertAdapters(client, [dbAdapter])
 
       // Insert new contracts
-      await insertAdaptersContracts(client, flattenContracts(contracts), adapter.id)
+      // add context to contracts
+      const adapterContracts = flattenContracts(contracts).map((contract) => ({
+        chain,
+        adapterId: adapter.id,
+        timestamp: now,
+        ...contract,
+      }))
+      await insertAdaptersContracts(client, adapterContracts)
     } catch (e) {
       console.log('Failed to revalidate adapter contracts', e)
       break

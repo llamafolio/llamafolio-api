@@ -6,9 +6,9 @@ import { chains as tokensByChain } from '@llamafolio/tokens'
 
 const getChainHandlers = (chain: Chain) => {
   const getContracts = () => {
-    const coin: Contract = { ...chainById[chain].nativeCurrency, chain, category: 'wallet' }
+    const coin: Contract = { ...chainById[chain].nativeCurrency, category: 'wallet' }
     const erc20: Contract[] = (tokensByChain[chain] || []).map(
-      (token) => ({ ...token, chain, category: 'wallet' }) as Contract,
+      (token) => ({ ...token, category: 'wallet' }) as Contract,
     )
 
     return {
