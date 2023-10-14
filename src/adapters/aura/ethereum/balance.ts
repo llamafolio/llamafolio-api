@@ -1,35 +1,17 @@
-import { getBalancerBalancesInternal } from '@adapters/balancer/common/balance'
+import { getExtraRewardsBalances } from '@adapters/aura/common/extraReward'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
+import { abi as erc20Abi, getBalancesOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { resolveUnderlyingsBalances } from '@lib/underlying'
 
 const abi = {
   earned: {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
     name: 'earned',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  extraEarned: {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-    ],
-    name: 'earned',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
     stateMutability: 'view',
     type: 'function',
   },
@@ -127,35 +109,35 @@ export async function getAuraFarmBalances(
   pools: Contract[],
   vault: Contract,
 ): Promise<Balance[]> {
-  const balanceWithStandardRewards: Balance[] = []
-  const balanceWithExtraRewards: Balance[] = []
-  const balances: Balance[] = await getBalancerBalancesInternal(ctx, pools, vault, 'farm', 'gauge')
+  const balances = (await getBalancesOf(ctx, pools, { getAddress: (contract) => contract.gauge })).map((balance) => ({
+    ...balance,
+    category: 'farm',
+  }))
+
+  const poolBalances = await resolveUnderlyingsBalances('balancer', {
+    ctx,
+    balances: balances as Balance[],
+    vault,
+    params: {
+      getAddress: (balance: Balance) => balance.address,
+      getCategory: (balance: Balance) => balance.category,
+    },
+  })
 
   const earnedsRes = await multicall({
     ctx,
-    calls: balances.map((balance: Contract) => ({ target: balance.gauge, params: [ctx.address] }) as const),
+    calls: poolBalances.map((balance: Contract) => ({ target: balance.gauge, params: [ctx.address] }) as const),
     abi: abi.earned,
   })
 
-  mapSuccessFilter(earnedsRes, (res, idx) => {
-    const balance = balances[idx]
-    const rewards = balance.rewards
+  const fmtBalances = mapSuccessFilter(earnedsRes, (res, idx) => {
+    const poolBalance = poolBalances[idx]
+    const rewards = poolBalance.rewards as Contract[]
 
-    const poolBalance: Balance = {
-      ...balance,
-      rewards: [{ ...rewards![0], amount: res.output }, ...rewards!.slice(1)],
-    }
+    return { ...poolBalance, rewards: [{ ...rewards![0], amount: res.output }, ...rewards!.slice(1)] }
+  }) as Balance[]
 
-    if (poolBalance.rewards && poolBalance.rewards.length > 1) {
-      balanceWithExtraRewards.push(poolBalance)
-    } else {
-      balanceWithStandardRewards.push(poolBalance)
-    }
-  })
-
-  const balanceWithExtraRewardsBalances = await getExtraRewardsBalances(ctx, balanceWithExtraRewards)
-
-  return getAuraMintAmount(ctx, [...balanceWithStandardRewards, ...balanceWithExtraRewardsBalances])
+  return getAuraMintAmount(ctx, await getExtraRewardsBalances(ctx, fmtBalances))
 }
 
 export const getAuraMintAmount = async (ctx: BalancesContext, balances: Balance[]): Promise<Balance[]> => {
@@ -210,19 +192,4 @@ export const getAuraMintAmount = async (ctx: BalancesContext, balances: Balance[
   }
 
   return balancesWithExtraRewards
-}
-
-const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: Balance[]): Promise<Balance[]> => {
-  const extraRewardsBalancesRes = await multicall({
-    ctx,
-    calls: poolBalance.map((pool: Contract) => ({ target: pool.rewarder, params: [ctx.address] }) as const),
-    abi: abi.extraEarned,
-  })
-
-  poolBalance.forEach((pool, idx) => {
-    const extraRewardsBalances = extraRewardsBalancesRes[idx].success ? extraRewardsBalancesRes[idx].output : 0n
-    pool.rewards = [pool.rewards![0], { ...pool.rewards![1], amount: extraRewardsBalances! }]
-  })
-
-  return poolBalance
 }

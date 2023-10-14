@@ -133,28 +133,6 @@ async function getBalancerChildGauges(ctx: BaseContext, pools: Contract[]): Prom
       }
     }
   `
-  // const res: any = await request(URL, query)
-
-  // for (const pool of res.pools) {
-  //   if (!pool.address || !pool.gauges) {
-  //     continue
-  //   }
-
-  //   gauges.push({ address: pool.address, gauges: pool.gauges })
-  // }
-
-  // const mergedPools: any[] = pools.map((pool) => {
-  //   const poolAddressLower = pool.address.toLowerCase()
-  //   const matchingLpToken = gauges.find((gauge: any) => gauge.address.toLowerCase() === poolAddressLower)
-
-  //   if (matchingLpToken) {
-  //     return { ...pool, gauge: matchingLpToken.gauges.map((gauge: any) => gauge.id) }
-  //   } else {
-  //     return { ...pool, gauge: undefined }
-  //   }
-  // })
-
-  // return mergedPools
 
   const res: any = await request(URL, query)
 
