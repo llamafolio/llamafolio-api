@@ -1,3 +1,5 @@
+import { client } from '@db/clickhouse'
+import { selectContracts } from '@db/contracts'
 import type { BaseContext, BaseContract, Contract, RawContract } from '@lib/adapter'
 import { keyBy } from '@lib/array'
 import { type Chain, chainById } from '@lib/chains'
@@ -88,10 +90,26 @@ export async function resolveContractsTokens(
     }
   }
 
-  const tokens = (await getERC20Details(ctx, [...tokenAddresses])) as Contract[]
+  // cross-reference contracts defined by other adapters to build up a tree of underlyings
+  const tokens = await selectContracts(client, chainById[ctx.chain].chainId, [...tokenAddresses])
   const tokenByAddress = keyBy(tokens, 'address', { lowercase: true })
 
+  // fetch missing ERC20 on-chain (won't get extra data but will be able to move forward)
+  // NOTE: could be fetched using our tokens indexer
+  const missingTokenAddresses = new Set<`0x${string}`>()
+  for (const token of tokenAddresses) {
+    if (tokenByAddress[token] == null) {
+      missingTokenAddresses.add(token)
+    }
+  }
+
+  const missingTokens = await getERC20Details(ctx, [...missingTokenAddresses])
+  for (const missingToken of missingTokens) {
+    tokenByAddress[missingToken.address.toLowerCase()] = missingToken as Contract
+  }
+
   // map back and filter entries if missing tokens
+  // NOTE: there shouldn't be missing underlyings or rewards, that means we failed somewhere
   const response: { [key: string]: BaseContract | BaseContract[] | undefined } = {}
 
   for (const key in contractsMap) {
@@ -116,12 +134,17 @@ export async function resolveContractsTokens(
           underlyingTokens?.length === contract.underlyings?.length &&
           rewardTokens?.length === contract.rewards?.length
         ) {
+          const token = tokenByAddress[resolveTokenAddress(contract)]
           responseContracts.push({
-            ...tokenByAddress[resolveTokenAddress(contract)],
+            name: token?.name,
+            decimals: token?.decimals,
+            symbol: token?.symbol,
             ...contract,
             underlyings: underlyingTokens,
             rewards: rewardTokens,
           })
+        } else {
+          console.error('Failed to resolve tokens', contracts)
         }
       }
     } else if (contracts) {
@@ -137,12 +160,17 @@ export async function resolveContractsTokens(
         underlyingTokens?.length === contracts.underlyings?.length &&
         rewardTokens?.length === contracts.rewards?.length
       ) {
+        const token = tokenByAddress[resolveTokenAddress(contracts)]
         responseContracts = {
-          ...tokenByAddress[resolveTokenAddress(contracts)],
+          name: token?.name,
+          decimals: token?.decimals,
+          symbol: token?.symbol,
           ...contracts,
           underlyings: underlyingTokens,
           rewards: rewardTokens,
         }
+      } else {
+        console.error('Failed to resolve tokens', contracts)
       }
     }
 

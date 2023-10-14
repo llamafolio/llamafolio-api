@@ -77,6 +77,30 @@ export function toStorage(contracts: Contract[]) {
   return contractsStorage
 }
 
+export async function selectContracts(client: ClickHouseClient, chainId: number, addresses: string[]) {
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        "chain",
+        "address",
+        "adapter_id",
+        "data"
+      FROM ${environment.NS_LF}.adapters_contracts
+      WHERE "chain" = {chainId: UInt8} AND "address" IN {addresses: Array(String)};
+    `,
+    query_params: {
+      chainId,
+      addresses,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: { chain: string; address: string; adapter_id: string; data: string }[]
+  }
+
+  return fromStorage(res.data)
+}
+
 /**
  * Return token info from adapters_contracts
  * @param client
