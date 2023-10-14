@@ -5,7 +5,7 @@ import { call } from '@lib/call'
 import { abi as erc20Abi, getBalancesOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import { resolveUnderlyingsBalances } from '@lib/underlying'
+import { resolveUnderlyingsBalances } from '@lib/underlying/resolver'
 
 const abi = {
   earned: {
