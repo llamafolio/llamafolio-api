@@ -3,6 +3,7 @@ import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
 
 const Comptroller: Contract = {
+  chain: 'polygon',
   address: '0x8849f1a0cb6b5d6076ab150546eddee193754f1c',
 }
 
