@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getBalancesOf } from '@lib/erc20'
-import { resolveUnderlyingsBalances } from '@lib/underlying'
+import { resolveUnderlyingsBalances } from '@lib/underlying/resolver'
 
 export async function getBalancesBalances(ctx: BalancesContext, pools: Contract[], vault: Contract) {
   const [lpBalances, farmBalances]: Balance[][] = await Promise.all([

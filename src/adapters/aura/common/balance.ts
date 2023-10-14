@@ -4,7 +4,7 @@ import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { getBalancesOf } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { resolveUnderlyingsBalances } from '@lib/underlying'
+import { resolveUnderlyingsBalances } from '@lib/underlying/resolver'
 import { parseEther } from 'viem'
 
 const abi = {

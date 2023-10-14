@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter, sliceIntoChunks } from '@lib/array'
-import { chainById, type Chain } from '@lib/chains'
+import { type Chain, chainById } from '@lib/chains'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { sleep } from '@lib/promise'

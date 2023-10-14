@@ -159,3 +159,33 @@ export function mapSuccessFilter<T extends MultiCallResult<never>, S>(
 ) {
   return mapSuccess(results, mapFn).filter(isNotNullish)
 }
+
+export function mapMultiSuccessFilter<T extends MultiCallResult<never>[], S>(
+  results: { [K in keyof T]: T[K][] },
+  mapFn: (
+    res: {
+      success: true
+      inputOutputPairs: {
+        [K in keyof T]: {
+          input: T[K]['input']
+          output: any
+        }
+      }
+    },
+    index: number,
+  ) => S | null,
+): S[] {
+  return results
+    .map((resArray, index) => {
+      const inputOutputPairs = resArray.map((res) => ({ input: res.input, output: res.output })) as {
+        [K in keyof T]: {
+          input: T[K]['input']
+          output: NonNullable<T[K]['output']>
+        }
+      }
+
+      const allSuccess = resArray.every((res) => res.success)
+      return allSuccess ? mapFn({ success: true, inputOutputPairs }, index) : null
+    })
+    .filter(isNotNullish)
+}

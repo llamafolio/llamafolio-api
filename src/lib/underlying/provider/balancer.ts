@@ -1,7 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapMultiSuccessFilter } from '@lib/array'
 import type { Category } from '@lib/category'
 import { abi as erc20Abi } from '@lib/erc20'
-import { multicall, type MultiCallResult } from '@lib/multicall'
+import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
 
 const abi = {
@@ -23,24 +24,8 @@ export type IBalancerBalance = Balance & {
 }
 
 interface Params {
-  getAddress: (poolbalance: IBalancerBalance) => `0x${string}`
-  getCategory: (poolbalance: IBalancerBalance) => Category
-}
-
-interface BasicResolverArgs {
-  ctx: BalancesContext
-  balances: Balance[]
-}
-
-const getUnderlyingsBalances: { [key: string]: (args: any) => Promise<Balance[]> } = {
-  balancer: ({ ctx, balances, vault, params }: any) => getUnderlyingsBalancesFromBalancer(ctx, balances, vault, params),
-}
-
-export async function resolveUnderlyingsBalances<T extends BasicResolverArgs>(
-  provider: string,
-  resolverArgs: T,
-): Promise<Balance[]> {
-  return getUnderlyingsBalances[provider](resolverArgs)
+  getAddress: (poolbalance: Balance) => `0x${string}`
+  getCategory: (poolbalance: Balance) => Category
 }
 
 export async function getUnderlyingsBalancesFromBalancer(
@@ -48,8 +33,8 @@ export async function getUnderlyingsBalancesFromBalancer(
   poolbalances: IBalancerBalance[],
   vault: Contract,
   params: Params = {
-    getAddress: (poolbalance: IBalancerBalance) => poolbalance.address,
-    getCategory: (poolbalance: IBalancerBalance) => poolbalance.category,
+    getAddress: (poolbalance: Balance) => poolbalance.address,
+    getCategory: (poolbalance: Balance) => poolbalance.category,
   },
 ): Promise<Balance[]> {
   const [underlyingsBalancesRes, totalSuppliesRes] = await Promise.all([
@@ -102,34 +87,4 @@ export async function getUnderlyingsBalancesFromBalancer(
       }
     },
   ).filter(isNotNullish) as Balance[]
-}
-
-export function mapMultiSuccessFilter<T extends MultiCallResult<never>[], S>(
-  results: { [K in keyof T]: T[K][] },
-  mapFn: (
-    res: {
-      success: true
-      inputOutputPairs: {
-        [K in keyof T]: {
-          input: T[K]['input']
-          output: any
-        }
-      }
-    },
-    index: number,
-  ) => S | null,
-): S[] {
-  return results
-    .map((resArray, index) => {
-      const inputOutputPairs = resArray.map((res) => ({ input: res.input, output: res.output })) as {
-        [K in keyof T]: {
-          input: T[K]['input']
-          output: NonNullable<T[K]['output']>
-        }
-      }
-
-      const allSuccess = resArray.every((res) => res.success)
-      return allSuccess ? mapFn({ success: true, inputOutputPairs }, index) : null
-    })
-    .filter(isNotNullish)
 }
