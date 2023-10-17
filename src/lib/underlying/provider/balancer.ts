@@ -50,8 +50,9 @@ export async function getUnderlyingsBalancesFromBalancer(
     }),
   ])
 
-  return mapMultiSuccessFilter(
+  const formattedBalances = mapMultiSuccessFilter(
     underlyingsBalancesRes.map((_, i) => [underlyingsBalancesRes[i], totalSuppliesRes[i]]),
+
     (res, index) => {
       const poolBalance = poolbalances[index]
       const { underlyings, rewards } = poolBalance as { underlyings: Contract[]; rewards: Contract[] }
@@ -59,22 +60,24 @@ export async function getUnderlyingsBalancesFromBalancer(
 
       if (totalSupply === 0n) return null
 
+      // Update underlying amounts
       underlyings.forEach((underlying, idx) => {
         underlying.amount = underlyingsBalances[1][idx]
       })
 
+      // Find the LP token balance
       const lpTokenBalance = underlyings.find(
         (underlying) => underlying.address.toLowerCase() === poolBalance.address.toLowerCase(),
       )
 
+      // Calculate formatted underlyings
       const fmtUnderlyings = underlyings
         .map((underlying) => {
           const realSupply = lpTokenBalance ? totalSupply - lpTokenBalance.amount : totalSupply
-          const amount = (underlying.amount * poolBalance.amount) / realSupply
 
           return {
             ...underlying,
-            amount,
+            amount: (underlying.amount * poolBalance.amount) / realSupply,
           }
         })
         .filter((underlying) => underlying.address.toLowerCase() !== poolBalance.address.toLowerCase())
@@ -86,5 +89,7 @@ export async function getUnderlyingsBalancesFromBalancer(
         category: params.getCategory(poolBalance),
       }
     },
-  ).filter(isNotNullish) as Balance[]
+  )
+
+  return formattedBalances.filter(isNotNullish) as Balance[]
 }

@@ -12,17 +12,12 @@ const abi = {
 } as const
 
 export const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: Balance[]): Promise<Balance[]> => {
-  const balanceWithStandardRewards: Balance[] = []
-  const balanceWithExtraRewards: Balance[] = []
+  const balanceWithStandardRewards: Balance[] = poolBalance.filter((poolBalance) => {
+    return !poolBalance.rewards || poolBalance.rewards.length === 0
+  })
 
-  poolBalance.forEach((poolBalance) => {
-    if (!poolBalance.rewards) {
-      balanceWithStandardRewards.push(poolBalance)
-    } else if (poolBalance.rewards.length === 0) {
-      balanceWithStandardRewards.push(poolBalance)
-    } else {
-      balanceWithExtraRewards.push(poolBalance)
-    }
+  const balanceWithExtraRewards: Balance[] = poolBalance.filter((poolBalance) => {
+    return poolBalance.rewards && poolBalance.rewards.length > 0
   })
 
   const extraRewardsBalancesRes = await multicall({
