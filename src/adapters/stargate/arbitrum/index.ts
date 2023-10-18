@@ -24,7 +24,10 @@ const lpStakings: Contract[] = [
   { chain: 'arbitrum', address: '0x600E576F9d853c95d58029093A16EE49646F3ca5' },
 ]
 
-const farmStakings: Contract[] = [{ chain: 'arbitrum', address: '0xeA8DfEE1898a7e0a59f7527F076106d7e44c2176' }]
+const farmStakings: Contract[] = [
+  { chain: 'arbitrum', address: '0xeA8DfEE1898a7e0a59f7527F076106d7e44c2176' },
+  { chain: 'arbitrum', address: '0x9774558534036Ff2E236331546691b4eB70594b1' },
+]
 
 const locker: Contract = {
   chain: 'arbitrum',
