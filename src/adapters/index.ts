@@ -235,6 +235,7 @@ import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
 import trufinProtocol from '@adapters/trufin-protocol'
 import trustswap from '@adapters/trustswap'
+import umamiFinance from '@adapters/umami-finance'
 import uniswapV2 from '@adapters/uniswap-v2'
 import uniswapV3 from '@adapters/uniswap-v3'
 import unsheth from '@adapters/unsheth'
@@ -497,6 +498,7 @@ export const adapters: Adapter[] = [
   truefi,
   trufinProtocol,
   trustswap,
+  umamiFinance,
   uniswapV2,
   uniswapV3,
   unsheth,
