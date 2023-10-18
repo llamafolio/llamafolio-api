@@ -85,7 +85,7 @@ const abi = {
 
 type PoolBalance = Balance & {
   pool?: string
-  token?: string
+  lpToken?: string
   totalSupply?: bigint
   registry?: `0x${string}`
   registryId?: string
@@ -155,7 +155,7 @@ export const getUnderlyingsPoolsBalances = async (
 
   for (const pool of pools as Contract[]) {
     calls.push({ target: registry ? registry.address : pool.registry, params: [pool.pool] })
-    suppliesCalls.push({ target: pool.token })
+    suppliesCalls.push({ target: pool.lpToken })
   }
 
   const [totalSuppliesRes, get_underlying_balancesOfRes, get_balancesOfRes] = await Promise.all([

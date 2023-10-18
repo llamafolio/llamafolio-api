@@ -185,7 +185,7 @@ const abi = {
 } as const
 
 export interface PoolContract extends Contract {
-  token?: `0x${string}`
+  lpToken?: `0x${string}`
   pool: `0x${string}`
   registry: string
   registryId?: string
@@ -265,7 +265,7 @@ export async function getFmtPoolsContracts(ctx: BaseContext, registry: `0x${stri
     const pool = lpTokenRes.input.params![0]
 
     // Factory LP tokens are the same as the pool
-    const token = lpTokenRes.success ? lpTokenRes.output : pool
+    const lpToken = lpTokenRes.success ? lpTokenRes.output : pool
 
     // Format underlyings since response is backfilled
     const underlyings: string[] = underlyingTokensRes.success
@@ -280,8 +280,8 @@ export async function getFmtPoolsContracts(ctx: BaseContext, registry: `0x${stri
     poolContracts.push({
       chain: ctx.chain,
       // We must define address as lpToken address since user interact only with lpToken, or we cant catch interaction in index.
-      address: token,
-      token,
+      address: lpToken,
+      lpToken,
       pool,
       registryId,
       registry,
