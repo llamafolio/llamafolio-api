@@ -205,7 +205,7 @@ export async function getPoolsContracts(ctx: BaseContext, registry: Contract) {
       ...pools[poolIdx],
       address: lpTokenRes.output,
       gauge: gaugeRes.output,
-      token: lpTokenRes.output,
+      lpToken: lpTokenRes.output,
       yieldKey: lpTokenRes.output,
       tokens: coinRes.output
         .map((address) => address.toLowerCase())

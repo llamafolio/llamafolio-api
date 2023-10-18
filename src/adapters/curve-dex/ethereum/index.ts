@@ -62,5 +62,3 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
-
-export const getUnderlyingBalances = async (ctx, contracts) => {}
