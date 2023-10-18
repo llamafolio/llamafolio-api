@@ -14,7 +14,7 @@ export async function getBalancesBalances(ctx: BalancesContext, pools: Contract[
     })),
   ])
 
-  return resolveUnderlyingsBalances('balancer', {
+  return resolveUnderlyingsBalances({
     ctx,
     balances: [...lpBalances, ...farmBalances],
     vault,

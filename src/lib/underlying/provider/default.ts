@@ -1,6 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapMultiSuccessFilter } from '@lib/array'
 import { abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { isNotNullish } from '@lib/type'
 
 type DefaultSingleUnderlyingsBalances = Balance & {
   pricePerFullShare: bigint
@@ -13,13 +15,12 @@ export async function getDefaultSingleUnderlyingsBalances(
 ): Promise<Balance[]> {
   const filteredBalances = balances.filter((balance) => !balance.underlyings || balance.underlyings.length !== 1)
   const singleUnderlyingsBalances = balances.filter((balance) => balance.underlyings?.length === 1)
-  const updatedBalances: DefaultSingleUnderlyingsBalances[] = []
 
   const [tokenBalances, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
       calls: singleUnderlyingsBalances.map(
-        (balance) => ({ target: balance.underlyings?.[0].address, params: [balance.address] }) as const,
+        (balance) => ({ target: balance.underlyings![0].address, params: [balance.address] }) as const,
       ),
       abi: abi.balanceOf,
     }),
@@ -30,23 +31,27 @@ export async function getDefaultSingleUnderlyingsBalances(
     }),
   ])
 
-  for (const [index, singleUnderlyingsBalance] of singleUnderlyingsBalances.entries()) {
-    const underlying = singleUnderlyingsBalance.underlyings?.[0] as Contract
-    const tokenBalance = tokenBalances[index]
-    const totalSupplyRes = totalSuppliesRes[index]
+  const formattedBalances = mapMultiSuccessFilter(
+    singleUnderlyingsBalances.map((_, i) => [tokenBalances[i], totalSuppliesRes[i]]),
 
-    if (!underlying || !tokenBalance.success || !totalSupplyRes.success || totalSupplyRes.output === 0n) continue
+    (res, poolIdx) => {
+      const singleBalance = singleUnderlyingsBalances[poolIdx]
+      const underlying = singleBalance.underlyings?.[0] as Contract
+      const [{ output: tokensBalancesOf }, { output: totalSupply }] = res.inputOutputPairs
 
-    const pricedPerFullShare = singleUnderlyingsBalance.pricePerFullShare
-      ? singleUnderlyingsBalance.amount * singleUnderlyingsBalance.pricePerFullShare
-      : (singleUnderlyingsBalance.amount * tokenBalance.output) / totalSupplyRes.output
+      if (!underlying || totalSupply === 0n) return null
 
-    updatedBalances.push({
-      ...singleUnderlyingsBalance,
-      underlyings: [{ ...underlying, amount: pricedPerFullShare }],
-      category: params.getCategory(singleUnderlyingsBalance),
-    })
-  }
+      const pricedPerFullShare = singleBalance.pricePerFullShare
+        ? singleBalance.amount * singleBalance.pricePerFullShare
+        : (singleBalance.amount * tokensBalancesOf) / totalSupply.output
 
-  return [...filteredBalances, ...updatedBalances]
+      return {
+        ...singleBalance,
+        underlyings: [{ ...underlying, amount: pricedPerFullShare }],
+        category: params.getCategory(singleBalance),
+      }
+    },
+  ).filter(isNotNullish)
+
+  return [...filteredBalances, ...formattedBalances]
 }

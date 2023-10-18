@@ -66,13 +66,26 @@ export async function getBalancerPools(ctx: BaseContext, url: string, gaugeContr
       continue
     }
 
+    const { address, id, symbol } = pool
+
     contracts.push({
       chain: ctx.chain,
-      address: pool.address,
-      poolId: pool.id,
-      symbol: pool.symbol,
-      decimals: 18,
-      underlyings: pool.tokens.map((underlying: Contract) => ({ ...underlying, chain: ctx.chain })),
+      address: address,
+      stakingToken: {
+        adapterId: 'balancer',
+        address: address,
+        poolId: id,
+        symbol,
+        decimals: 18,
+        underlyings: pool.tokens.map((underlying: Contract) => ({
+          ...underlying,
+          chain: ctx.chain,
+        })),
+      },
+      // underlyings: pool.tokens.map((underlying: Contract) => ({
+      //   ...underlying,
+      //   chain: ctx.chain,
+      // })),
     })
   }
 
