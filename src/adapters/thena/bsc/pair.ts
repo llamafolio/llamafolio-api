@@ -45,9 +45,10 @@ export async function getThenaContracts(ctx: BaseContext, voter: Contract): Prom
 
   const pools = mapSuccessFilter(gaugesAddressesRes, (res) => ({
     chain: ctx.chain,
-    address: res.input.params[0],
+    address: voter.address,
+    token: res.input.params[0],
     gauge: res.output,
   }))
 
-  return getPairsDetails(ctx, pools)
+  return getPairsDetails(ctx, pools, { getAddress: (contract) => contract.token })
 }

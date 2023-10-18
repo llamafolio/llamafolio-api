@@ -8,7 +8,7 @@ import { getPoolsContracts } from './pools'
 const fairLaunch: Contract = {
   name: 'fairlaunchContractAddress',
   chain: 'bsc',
-  address: '0xA625AB01B08ce023B2a342Dbb12a16f2C8489A8F',
+  address: '0xa625ab01b08ce023b2a342dbb12a16f2c8489a8f',
 }
 
 const ALPACA: Contract = {

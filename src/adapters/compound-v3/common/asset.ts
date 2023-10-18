@@ -56,17 +56,16 @@ export async function getAssetsContracts(ctx: BaseContext, compounders: Contract
 
   const assetsInfoRes = await multicall({
     ctx,
-    //@ts-expect-error
     calls: mapSuccessFilter(numberOfAssets, (responses) =>
-      range(0, responses.output).map((res) => ({ target: responses.input.target, params: [res] })),
+      range(0, responses.output).map((res) => ({ target: responses.input.target, params: [res] }) as const),
     ).flat(),
     abi: abi.getAssetInfo,
   })
 
   return mapSuccessFilter(assetsInfoRes, (res) => ({
     chain: ctx.chain,
-    address: res.output.asset,
-    compounder: res.input.target,
+    address: res.input.target,
+    token: res.output.asset,
     collateralFactor: res.output.borrowCollateralFactor,
   }))
 }

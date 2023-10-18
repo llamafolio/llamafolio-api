@@ -48,11 +48,7 @@ const abi = {
 export async function getPoolsContracts(ctx: BaseContext, fairLaunch: Contract) {
   const contracts: Contract[] = []
 
-  const poolsLength = await call({
-    ctx,
-    target: fairLaunch.address,
-    abi: abi.poolLength,
-  })
+  const poolsLength = await call({ ctx, target: fairLaunch.address, abi: abi.poolLength })
 
   const poolsInfoRes = await multicall({
     ctx,
@@ -64,9 +60,7 @@ export async function getPoolsContracts(ctx: BaseContext, fairLaunch: Contract) 
 
   const underlyingsAddressesRes = await multicall({
     ctx,
-    calls: poolsAddresses.map((token) => ({
-      target: token,
-    })),
+    calls: poolsAddresses.map((token) => ({ target: token })),
     abi: abi.token,
   })
 
@@ -74,8 +68,10 @@ export async function getPoolsContracts(ctx: BaseContext, fairLaunch: Contract) 
     const underlyingRes = underlyingsAddressesRes[poolIdx]
 
     contracts.push({
+      name: fairLaunch.name,
       chain: ctx.chain,
-      address: poolsAddresses[poolIdx],
+      address: fairLaunch.address,
+      token: poolsAddresses[poolIdx],
       pid: poolIdx,
       underlyings: underlyingRes.success ? [underlyingRes.output] : undefined,
     })

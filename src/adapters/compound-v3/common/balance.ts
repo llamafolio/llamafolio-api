@@ -47,10 +47,10 @@ const abi = {
 } as const
 
 const COMP: { [key: string]: `0x${string}` } = {
-  arbitrum: '0x354A6dA3fcde098F8389cad84b0182725c6C91dE',
-  base: '0x9e1028F5F1D5eDE59748FFceE5532509976840E0',
+  arbitrum: '0x354a6da3fcde098f8389cad84b0182725c6c91de',
+  base: '0x9e1028f5f1d5ede59748ffcee5532509976840e0',
   ethereum: '0xc00e94cb662c3520282e6f5717214004a7f26888',
-  polygon: '0x8505b9d2254A7Ae468c0E9dd10Ccea3A837aef5c',
+  polygon: '0x8505b9d2254a7ae468c0e9dd10ccea3a837aef5c',
 }
 
 export async function getCompLendBalances(
@@ -61,7 +61,7 @@ export async function getCompLendBalances(
   const [userLendBalances, userBorrowBalances] = await Promise.all([
     multicall({
       ctx,
-      calls: assets.map((asset) => ({ target: asset.compounder, params: [ctx.address, asset.address] }) as const),
+      calls: assets.map((asset) => ({ target: asset.address, params: [ctx.address, asset.token!] }) as const),
       abi: abi.userCollateral,
     }),
     multicall({
@@ -78,7 +78,7 @@ export async function getCompLendBalances(
       chain: ctx.chain,
       decimals: assets[index].decimals,
       symbol: assets[index].symbol,
-      address: assets[index].address,
+      address: assets[index].token!,
       amount: balance,
       collateralFactor: assets[index].collateralFactor,
       category: 'lend',

@@ -4,6 +4,7 @@ import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const masterChef: Contract = {
+  name: 'MasterMagpie',
   chain: 'bsc',
   address: '0xa3b615667cbd33cfc69843bf11fbb2a1d926bd46',
   rewards: ['0xd06716e1ff2e492cc5034c2e81805562dd3b45fa'],
@@ -12,20 +13,22 @@ const masterChef: Contract = {
 const MGPContract: Contract = {
   chain: 'bsc',
   address: '0x9b69b06272980fa6bad9d88680a71e3c3beb32c6',
-  staker: '0x94Eb0E6800F10E22550e104EC04f98F043B6b3ad',
-  underlyings: ['0xD06716E1Ff2E492Cc5034c2E81805562dd3b45fa'],
+  staker: '0x94eb0e6800f10e22550e104ec04f98f043b6b3ad',
+  underlyings: ['0xd06716e1ff2e492cc5034c2e81805562dd3b45fa'],
   rewards: [
-    '0xD06716E1Ff2E492Cc5034c2E81805562dd3b45fa',
-    '0xAD6742A35fB341A9Cc6ad674738Dd8da98b94Fb1',
-    '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
-    '0x3BC5AC0dFdC871B365d159f728dd1B9A0B5481E8',
-    '0xf307910A4c7bbc79691fD374889b36d8531B08e3',
-    '0x4C882ec256823eE773B25b414d36F92ef58a7c0C',
-    '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
-    '0x0782b6d8c4551B9760e74c0545a9bCD90bdc41E5',
-    '0x027a9d301FB747cd972CFB29A63f3BDA551DFc5c',
+    '0xd06716e1ff2e492cc5034c2e81805562dd3b45fa',
+    '0xad6742a35fb341a9cc6ad674738dd8da98b94fb1',
+    '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
+    '0x3bc5ac0dfdc871b365d159f728dd1b9a0b5481e8',
+    '0xf307910a4c7bbc79691fd374889b36d8531b08e3',
+    '0x4c882ec256823ee773b25b414d36f92ef58a7c0c',
+    '0xe9e7cea3dedca5984780bafc599bd69add087d56',
+    '0x0782b6d8c4551b9760e74c0545a9bcd90bdc41e5',
+    '0x027a9d301fb747cd972cfb29a63f3bda551dfc5c',
   ],
 }
+
+const deployers = ['0x0cdb34e6a4d635142bb92fe403d38f636bbb77b8']
 
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getMagpieContracts(ctx, masterChef)

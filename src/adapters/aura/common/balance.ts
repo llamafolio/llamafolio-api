@@ -180,7 +180,7 @@ export async function getAuraBalancesInternal(
     }),
     multicall({
       ctx,
-      calls: fmtPools.map((pool) => ({ target: pool.address }) as const),
+      calls: fmtPools.map((pool) => ({ target: pool.token }) as const),
       abi: erc20Abi.totalSupply,
     }),
   ])
@@ -210,7 +210,7 @@ export async function getAuraBalancesInternal(
     })
 
     const lpTokenBalance = underlyings.find(
-      (underlying) => underlying.address.toLowerCase() === pool.address.toLowerCase(),
+      (underlying) => underlying.address.toLowerCase() === pool.token!.toLowerCase(),
     )
 
     const fmtUnderlyings = underlyings
@@ -223,7 +223,7 @@ export async function getAuraBalancesInternal(
           amount,
         }
       })
-      .filter((underlying) => underlying.address.toLowerCase() !== pool.address.toLowerCase())
+      .filter((underlying) => underlying.address.toLowerCase() !== pool.token!.toLowerCase())
 
     balances.push({ ...pool, amount: poolBalanceRes.output, underlyings: fmtUnderlyings, rewards, category: 'farm' })
   }

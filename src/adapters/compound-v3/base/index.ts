@@ -21,19 +21,19 @@ const WETH: Token = {
 
 const cUSDbCv3: Contract = {
   chain: 'base',
-  address: '0x9c4ec768c28520B50860ea7a15bd7213a9fF58bf',
+  address: '0x9c4ec768c28520b50860ea7a15bd7213a9ff58bf',
   underlyings: [USDbC],
 }
 
 const cWETHv3: Contract = {
   chain: 'base',
-  address: '0x46e6b214b524310239732D51387075E0e70970bf',
+  address: '0x46e6b214b524310239732d51387075e0e70970bf',
   underlyings: [WETH],
 }
 
 const rewarder: Contract = {
   chain: 'base',
-  address: '0x123964802e6ABabBE1Bc9547D72Ef1B69B00A6b1',
+  address: '0x123964802e6ababbe1bc9547d72ef1b69b00a6b1',
 }
 
 export const getContracts = async (ctx: BaseContext) => {

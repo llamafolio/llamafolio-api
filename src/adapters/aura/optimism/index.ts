@@ -5,7 +5,7 @@ import { resolveBalances } from '@lib/balance'
 
 const booster: Contract = {
   chain: 'optimism',
-  address: '0x98Ef32edd24e2c92525E59afc4475C1242a30184',
+  address: '0x98ef32edd24e2c92525e59afc4475c1242a30184',
 }
 
 const vaultBAL: Contract = {

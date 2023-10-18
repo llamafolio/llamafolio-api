@@ -183,28 +183,31 @@ export async function getContractsInteractions(
       SELECT
         "chain",
         "address",
+        "token",
         "category",
         "adapter_id",
         "data"
       FROM ${environment.NS_LF}.adapters_contracts
       WHERE
-        ${condition}
-        ("chain", "address") IN (
-          SELECT "chain", "address" FROM (
-            (
-              SELECT "chain", "to" AS "address"
-              FROM evm_indexer.transactions_to_mv
-              WHERE "from" = {address: String}
-            )
-              UNION DISTINCT
-            (
-              SELECT "chain", "address"
-              FROM evm_indexer.token_transfers_received_mv
-              WHERE "to" = {address: String}
-            )
+        (
+          ${condition}
+          "token" = '' AND
+          ("chain", "address") IN (
+            SELECT "chain", "to" AS "address"
+            FROM evm_indexer.transactions_to_mv
+            WHERE "from" = {address: String}
+          )
+        ) OR
+        (
+          ${condition}
+          "token" <> '' AND
+          ("chain", "token") IN (
+            SELECT "chain", "address" AS "token"
+            FROM evm_indexer.token_transfers_received_mv
+            WHERE "to" = {address: String}
           )
         )
-      LIMIT 1 BY "chain", "address", "adapter_id";
+      LIMIT 1 BY "chain", "address", "adapter_id", "token";
     `,
     query_params: {
       address: address.toLowerCase(),

@@ -41,10 +41,14 @@ export const abi = {
  * Retrieves pairs balances (with underlyings) of Uniswap V2 like Pair.
  * If `amount`, `underlyings[0]` (token0) and `underlyings[1]` (token1) are not defined, return input balance.
  */
-export async function getPairsBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
+export async function getPairsBalances(
+  ctx: BalancesContext,
+  contracts: Contract[],
+  params = { getAddress: (balance: Balance) => balance.address },
+): Promise<Balance[]> {
   const balances = await getBalancesOf(ctx, contracts)
 
-  return getUnderlyingBalances(ctx, balances)
+  return getUnderlyingBalances(ctx, balances, params)
 }
 
 /**

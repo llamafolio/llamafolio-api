@@ -7,20 +7,23 @@ import type { Token } from '@lib/token'
 
 const THE: Token = {
   chain: 'bsc',
-  address: '0xF4C8E32EaDEC4BFe97E0F595AdD0f4450a863a11',
+  address: '0xf4c8e32eadec4bfe97e0f595add0f4450a863a11',
   decimals: 18,
   symbol: 'THE',
 }
 
 const voter: Contract = {
+  name: 'VoterV3',
   chain: 'bsc',
-  address: '0x3A1D0952809F4948d15EBCe8d345962A282C4fCb',
+  address: '0x3a1d0952809f4948d15ebce8d345962a282c4fcb',
 }
 
 const locker: Contract = {
   chain: 'bsc',
   address: '0xfbbf371c9b0b994eebfcc977cef603f7f31c070d',
 }
+
+const deployers = ['0x993Ae2b514677c7AC52bAeCd8871d2b362A9D693']
 
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getThenaContracts(ctx, voter)

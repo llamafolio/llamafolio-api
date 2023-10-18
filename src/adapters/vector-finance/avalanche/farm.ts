@@ -137,11 +137,7 @@ const VTX: Token = {
 export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
   const contracts: FarmContract[] = []
 
-  const poolsLength = await call({
-    ctx,
-    target: masterChef.address,
-    abi: abi.poolLength,
-  })
+  const poolsLength = await call({ ctx, target: masterChef.address, abi: abi.poolLength })
 
   const poolsAddressesRes = await multicall({
     ctx,
@@ -194,7 +190,8 @@ export async function getFarmContracts(ctx: BaseContext, masterChef: Contract) {
 
     contracts.push({
       chain: ctx.chain,
-      address: poolInfoRes.input.params![0],
+      address: masterChef.address,
+      token: poolInfoRes.input.params![0],
       rewarder: rewarder,
       underlyings: [depositTokenRes.output],
       rewards: mapSuccessFilter(
@@ -217,14 +214,14 @@ export async function getFarmBalances(
   const [userDepositBalancesRes, pendingBaseRewardsRes, pendingRewardsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: masterChef.address, params: [pool.address, ctx.address] }) as const),
+      calls: pools.map((pool) => ({ target: masterChef.address, params: [pool.token!, ctx.address] }) as const),
       abi: abi.depositInfo,
     }),
 
     multicall({
       ctx,
       calls: pools.map(
-        (pool) => ({ target: masterChef.address, params: [pool.address, ctx.address, pool.address] }) as const,
+        (pool) => ({ target: masterChef.address, params: [pool.address, ctx.address, pool.token!] }) as const,
       ),
       abi: abi.pendingTokens,
     }),
@@ -256,6 +253,7 @@ export async function getFarmBalances(
     const balance: FarmBalance = {
       chain: ctx.chain,
       address: pool.address,
+      token: pool.token,
       symbol: pool.symbol,
       decimals: pool.decimals,
       amount: userDepositBalanceRes.output,
@@ -298,6 +296,7 @@ export async function getFarmBalances(
 }
 
 // TODO: reuse TraderJoe logic
+// TODO: reuse UniV2 lib
 const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Promise<Balance[]> => {
   const [
     underlyingToken0AddressesRes,
@@ -305,10 +304,10 @@ const getPoolsUnderlyings = async (ctx: BalancesContext, contract: Contract): Pr
     underlyingsTokensReservesRes,
     totalPoolSupplyRes,
   ] = await Promise.all([
-    call({ ctx, target: contract.address, abi: abi.token0 }),
-    call({ ctx, target: contract.address, abi: abi.token1 }),
-    call({ ctx, target: contract.address, abi: abi.getReserves }),
-    call({ ctx, target: contract.address, abi: abi.totalSupply }),
+    call({ ctx, target: contract.token!, abi: abi.token0 }),
+    call({ ctx, target: contract.token!, abi: abi.token1 }),
+    call({ ctx, target: contract.token!, abi: abi.getReserves }),
+    call({ ctx, target: contract.token!, abi: abi.totalSupply }),
   ])
   const [_reserve0, _reserve1] = underlyingsTokensReservesRes
 

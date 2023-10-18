@@ -50,7 +50,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   })
 
   return {
-    contracts: { locker, masterChef, spirit, gaugeController, pairs },
+    contracts: { locker, masterChef, gaugeController, pairs },
     revalidate: 60 * 60,
     revalidateProps: {
       pairOffset: Math.min(offset + limit, allPairsLength),

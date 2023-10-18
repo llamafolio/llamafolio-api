@@ -56,16 +56,11 @@ const abi = {
 export async function getPopsicleFarmContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
 
-  const poolLengthRes = await call({
-    ctx,
-    target: contract.address,
-    abi: abi.poolLength,
-  })
-  const poolLength = Number(poolLengthRes)
+  const poolLength = await call({ ctx, target: contract.address, abi: abi.poolLength })
 
   const poolInfosRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLengthRes).map((idx) => ({ target: contract.address, params: [idx] }) as const),
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: contract.address, params: [idx] }) as const),
     abi: abi.poolInfo,
   })
 
@@ -80,7 +75,7 @@ export async function getPopsicleFarmContracts(ctx: BaseContext, contract: Contr
 
     contracts.push({
       ...contract,
-      address: stakingToken,
+      token: stakingToken,
       comptroller: contract.address,
       pid: poolIdx,
     })
@@ -117,7 +112,7 @@ export async function getPopsicleFarmBalances(ctx: BalancesContext, contracts: C
 
     balances.push({
       ...contract,
-      amount: amount,
+      amount,
       underlyings,
       rewards: [{ ...reward, amount: pendingIceRes.output }],
       category: 'farm',

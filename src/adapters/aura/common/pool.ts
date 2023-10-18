@@ -125,9 +125,8 @@ export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: C
 
     return {
       chain: ctx.chain,
-      address: lptoken,
-      pool: lptoken,
-      lpToken: lptoken,
+      address: booster.address,
+      token: lptoken,
       gauge: [crvRewards],
       rewards: [BAL],
     }
@@ -139,7 +138,7 @@ export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: C
 const getAuraPoolsId = async (ctx: BaseContext, pools: Contract[], vault: Contract): Promise<Contract[]> => {
   const poolIdsRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address })),
+    calls: pools.map((pool) => ({ target: pool.token! })),
     abi: abi.getPoolId,
   })
 
@@ -173,7 +172,7 @@ const getAuraPoolsUnderlyings = async (ctx: BaseContext, pools: Contract[], vaul
 const unwrapPoolsAsUnderlyings = (pools: Contract[]) => {
   const unwrappedPools: Contract[] = []
 
-  const poolByAddress = keyBy(pools, 'address', { lowercase: true })
+  const poolByToken = keyBy(pools, 'token', { lowercase: true })
 
   for (const pool of pools) {
     const underlyings = pool.underlyings as Contract[]
@@ -181,7 +180,7 @@ const unwrapPoolsAsUnderlyings = (pools: Contract[]) => {
       continue
     }
 
-    const unwrappedUnderlyings = underlyings.map((address) => poolByAddress[address.toLowerCase()] || address)
+    const unwrappedUnderlyings = underlyings.map((address) => poolByToken[address.toLowerCase()] || address)
 
     unwrappedPools.push({
       ...pool,

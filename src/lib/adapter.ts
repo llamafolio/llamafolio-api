@@ -20,7 +20,9 @@ export interface BaseContract {
 
   name?: string
   chain: Chain
+  // Contract address. This contract belongs to one and only one protocol.
   address: `0x${string}`
+  // "Receipt" token. Often (not always) emitted by the protocol
   token?: `0x${string}`
   symbol?: string
   decimals?: number
@@ -33,6 +35,7 @@ export interface BaseContract {
 export interface RawContract extends BaseContract {
   // "raw" tokens
   rewards?: `0x${string}`[]
+  // Regular tokens, tokens you can find in your wallet
   underlyings?: `0x${string}`[]
   [key: string | number]: any
 }

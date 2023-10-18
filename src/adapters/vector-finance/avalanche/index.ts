@@ -16,7 +16,7 @@ const vtxLocker: Contract = {
 const masterChef: Contract = {
   name: 'Vector MasterChef',
   chain: 'avalanche',
-  address: '0x423D0FE33031aA4456a17b150804aA57fc157d97',
+  address: '0x423d0fe33031aa4456a17b150804aa57fc157d97',
 }
 
 export const getContracts = async (ctx: BaseContext) => {

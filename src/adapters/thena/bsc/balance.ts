@@ -26,7 +26,10 @@ const abi = {
 } as const
 
 export async function getThenaBalances(ctx: BalancesContext, pairs: Contract[], reward: Token) {
-  return Promise.all([getPairsBalances(ctx, pairs), getGaugesBalances(ctx, pairs, reward)])
+  return Promise.all([
+    getPairsBalances(ctx, pairs, { getAddress: (contract) => contract.token! }),
+    getGaugesBalances(ctx, pairs, reward),
+  ])
 }
 
 async function getGaugesBalances(ctx: BalancesContext, pools: Contract[], reward: Token): Promise<Balance[]> {
@@ -47,12 +50,12 @@ async function getGaugesBalances(ctx: BalancesContext, pools: Contract[], reward
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address }) as const),
+      calls: pools.map((pool) => ({ target: pool.token! }) as const),
       abi: erc20Abi.totalSupply,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address }) as const),
+      calls: pools.map((pool) => ({ target: pool.token! }) as const),
       abi: abi.getTotalAmounts,
     }),
   ])
