@@ -1,4 +1,8 @@
-import { getParallelLendBalances } from '@adapters/parallel-protocol/ethereum/balance'
+import {
+  getParallelBPTFarmBalances,
+  getParallelLendBalances,
+  getParallelLpFarmBalances,
+} from '@adapters/parallel-protocol/ethereum/balance'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleLockerBalance } from '@lib/lock'
@@ -30,6 +34,32 @@ const MIMO: Token = {
   symbol: 'MIMO',
 }
 
+const PAR_USDC_LP: Contract = {
+  chain: 'ethereum',
+  address: '0xc417b76fa727f44fa602c7cbc207b2b5263a1064',
+  token: '0x092a51b356930d907570Efec1fc94f3c591B7239',
+  underlyings: ['0x68037790A0229e9Ce6EaA8A99ea92964106C4703', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'],
+  rewards: ['0x90B831fa3Bebf58E9744A14D638E25B4eE06f9Bc'],
+}
+
+const PAR_MIMO_BPT: Contract = {
+  chain: 'ethereum',
+  address: '0x8f7befef762785139ad3fa2b7d14642ae4a3f740',
+  token: '0xa5533A44D06800Eaf2DaAD5aAd3f9AA9e1DC3614',
+  underlyings: ['0x68037790A0229e9Ce6EaA8A99ea92964106C4703', '0x90B831fa3Bebf58E9744A14D638E25B4eE06f9Bc'],
+  poolId: '0xa5533a44d06800eaf2daad5aad3f9aa9e1dc36140002000000000000000001b8',
+  rewards: ['0x90B831fa3Bebf58E9744A14D638E25B4eE06f9Bc'],
+}
+
+const PAR_USDC_BPT: Contract = {
+  chain: 'ethereum',
+  address: '0x0093a7cdfd0a53100064c349152e3b423fdee554',
+  token: '0x5d6e3d7632D6719e04cA162be652164Bec1EaA6b',
+  underlyings: ['0x68037790A0229e9Ce6EaA8A99ea92964106C4703', '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'],
+  poolId: '0x5d6e3d7632d6719e04ca162be652164bec1eaa6b000200000000000000000048',
+  rewards: ['0x90B831fa3Bebf58E9744A14D638E25B4eE06f9Bc'],
+}
+
 const vault: Contract = {
   chain: 'ethereum',
   address: '0x9c29d8d359255e524702c7a9c95c6e6ae38274dc',
@@ -48,7 +78,7 @@ const locker: Contract = {
 
 export const getContracts = async (_ctx: BaseContext) => {
   return {
-    contracts: { vault, locker },
+    contracts: { vault, locker, lpFarmers: [PAR_USDC_LP], bptFarmers: [PAR_MIMO_BPT, PAR_USDC_BPT] },
   }
 }
 
@@ -57,6 +87,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     getParallelLendBalances(ctx, contracts.vault!, config),
     resolveBalances<typeof getContracts>(ctx, contracts, {
       locker: (...args) => getSingleLockerBalance(...args, MIMO, 'locked'),
+      lpFarmers: getParallelLpFarmBalances,
+      bptFarmers: getParallelBPTFarmBalances,
     }),
   ])
 

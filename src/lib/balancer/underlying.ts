@@ -28,10 +28,15 @@ interface Params {
   getCategory: (poolbalance: Balance) => Category
 }
 
+const vaultBalancer: Contract = {
+  chain: 'optimism',
+  address: '0xba12222222228d8ba445958a75a0704d566bf2c8',
+}
+
 export async function getUnderlyingsBalancesFromBalancer(
   ctx: BalancesContext,
   poolbalances: IBalancerBalance[],
-  vault: Contract,
+  vault: Contract = vaultBalancer,
   params: Params = {
     getAddress: (poolbalance: Balance) => poolbalance.address,
     getCategory: (poolbalance: Balance) => poolbalance.category,

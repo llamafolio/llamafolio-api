@@ -1,7 +1,10 @@
-import type { BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
+import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
 import { mapMultiSuccessFilter, mapSuccessFilter } from '@lib/array'
+import { getUnderlyingsBalancesFromBalancer, type IBalancerBalance } from '@lib/balancer/underlying'
+import { abi as erc20Abi } from '@lib/erc20'
 import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   vaultId: {
@@ -51,6 +54,30 @@ const abi = {
   vaultDebt: {
     inputs: [{ internalType: 'uint256', name: '_vaultId', type: 'uint256' }],
     name: 'vaultDebt',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getUnderlyingBalances: {
+    inputs: [],
+    name: 'getUnderlyingBalances',
+    outputs: [
+      { internalType: 'uint256', name: 'amount0Current', type: 'uint256' },
+      { internalType: 'uint256', name: 'amount1Current', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  stake: {
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'stake',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingMIMO: {
+    inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
+    name: 'pendingMIMO',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
@@ -144,4 +171,106 @@ export async function getParallelLendBalances(ctx: BalancesContext, vault: Contr
   )
 }
 
-export async function getParallelFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {}
+export async function getParallelLpFarmBalances(ctx: BalancesContext, lpFarmers: Contract[]): Promise<Balance[]> {
+  const [userBalancesRes, userPendingRewardsRes, underlyingsBalancesRes, totalSuppliesRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: lpFarmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: abi.stake,
+    }),
+    multicall({
+      ctx,
+      calls: lpFarmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: abi.pendingMIMO,
+    }),
+    multicall({
+      ctx,
+      calls: lpFarmers.map((farmer) => ({ target: farmer.token! }) as const),
+      abi: abi.getUnderlyingBalances,
+    }),
+    multicall({
+      ctx,
+      calls: lpFarmers.map((farmer) => ({ target: farmer.token! }) as const),
+      abi: erc20Abi.totalSupply,
+    }),
+  ])
+
+  return mapMultiSuccessFilter(
+    userBalancesRes.map((_, i) => [
+      userBalancesRes[i],
+      userPendingRewardsRes[i],
+      underlyingsBalancesRes[i],
+      totalSuppliesRes[i],
+    ]),
+    (res, index) => {
+      const lpFarmer = lpFarmers[index]
+      const { underlyings, rewards } = lpFarmer as { underlyings: Contract[]; rewards: Contract[] }
+
+      if (!underlyings || !rewards) return null
+
+      const [
+        { output: userBalancesRes },
+        { output: userPendingRewardsRes },
+        { output: underlyingsBalancesRes },
+        { output: totalSuppliesRes },
+      ] = res.inputOutputPairs
+
+      if (totalSuppliesRes === 0n) return null
+
+      const updateUnderlyings = underlyings.map((underlying, x) => ({
+        ...underlying,
+        amount: (userBalancesRes * underlyingsBalancesRes[x]) / totalSuppliesRes,
+      }))
+
+      return {
+        ...lpFarmer,
+        amount: userBalancesRes,
+        underlyings: updateUnderlyings,
+        rewards: [{ ...rewards?.[0], amount: userPendingRewardsRes }],
+        category: 'farm',
+      }
+    },
+  ).filter(isNotNullish) as Balance[]
+}
+
+export async function getParallelBPTFarmBalances(ctx: BalancesContext, bptFarmers: Contract[]): Promise<Balance[]> {
+  const [userBalancesRes, userPendingRewardsRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: bptFarmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: abi.stake,
+    }),
+    multicall({
+      ctx,
+      calls: bptFarmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: abi.pendingMIMO,
+    }),
+  ])
+
+  const balances = mapMultiSuccessFilter(
+    userBalancesRes.map((_, i) => [userBalancesRes[i], userPendingRewardsRes[i]]),
+    (res, index) => {
+      const bptFarmer = bptFarmers[index]
+      const { underlyings, rewards } = bptFarmer as { underlyings: Contract[]; rewards: Contract[] }
+
+      if (!underlyings || !rewards) return null
+
+      const [{ output: userBalancesRes }, { output: userPendingRewardsRes }] = res.inputOutputPairs
+
+      return {
+        ...bptFarmer,
+        amount: userBalancesRes,
+        underlyings,
+        rewards: [{ ...rewards?.[0], amount: userPendingRewardsRes }],
+        category: 'farm',
+      }
+    },
+  ).filter(isNotNullish) as Balance[]
+
+  const poolBalances = await getUnderlyingsBalancesFromBalancer(ctx, balances as IBalancerBalance[], undefined, {
+    getAddress: (balance: Balance) => balance.token!,
+    getCategory: (balance: Balance) => balance.category,
+  })
+
+  return poolBalances
+}
