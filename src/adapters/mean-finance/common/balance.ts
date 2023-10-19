@@ -19,7 +19,7 @@ export async function getMeanFinanceBalances(ctx: BalancesContext, manager: Cont
         id
         status
         remainingLiquidity
-        toWithdraw
+        toWithdrawUnderlyingAccum
         from {
           id
           symbol
@@ -49,12 +49,12 @@ export async function getMeanFinanceBalances(ctx: BalancesContext, manager: Cont
   if (!positions) return
 
   for (const position of positions) {
-    const { id, remainingLiquidity, toWithdraw, from, to, status } = position
+    const { id, remainingLiquidity, toWithdrawUnderlyingAccum, from, to, status } = position
 
     if (status === 'COMPLETED' || status === 'TERMINATED') continue
 
     const underlying0 = createUnderlying(ctx, from, remainingLiquidity)
-    const underlying1 = createUnderlying(ctx, to, toWithdraw)
+    const underlying1 = createUnderlying(ctx, to, toWithdrawUnderlyingAccum)
 
     balances.push({
       chain: ctx.chain,
