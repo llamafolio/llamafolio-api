@@ -183,6 +183,7 @@ export async function getContractsInteractions(
       SELECT
         "chain",
         "address",
+        "token",
         "category",
         "adapter_id",
         "data"
