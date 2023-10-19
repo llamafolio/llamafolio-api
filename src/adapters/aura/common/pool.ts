@@ -128,7 +128,7 @@ export async function getAuraPools(ctx: BaseContext, booster: Contract, vault: C
       address: lptoken,
       pool: lptoken,
       lpToken: lptoken,
-      gauge: [crvRewards],
+      gauge: crvRewards,
       rewards: [BAL],
     }
   })
@@ -161,10 +161,7 @@ const getAuraPoolsUnderlyings = async (ctx: BaseContext, pools: Contract[], vaul
   const poolsWithUnderlyings: Contract[] = mapSuccessFilter(underlyingsRes, (res, idx) => {
     const [tokens]: any = res.output
 
-    return {
-      ...pools[idx],
-      underlyings: tokens,
-    }
+    return { ...pools[idx], underlyings: tokens }
   })
 
   return unwrapPoolsAsUnderlyings(poolsWithUnderlyings)
@@ -177,16 +174,11 @@ const unwrapPoolsAsUnderlyings = (pools: Contract[]) => {
 
   for (const pool of pools) {
     const underlyings = pool.underlyings as Contract[]
-    if (!underlyings) {
-      continue
-    }
+    if (!underlyings) continue
 
     const unwrappedUnderlyings = underlyings.map((address) => poolByAddress[address.toLowerCase()] || address)
 
-    unwrappedPools.push({
-      ...pool,
-      underlyings: unwrappedUnderlyings,
-    })
+    unwrappedPools.push({ ...pool, underlyings: unwrappedUnderlyings })
   }
 
   return unwrappedPools
@@ -198,7 +190,7 @@ const getAuraExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise
 
   const extraRewardsLengthRes = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.gauge[0] }) as const),
+    calls: pools.map((pool) => ({ target: pool.gauge }) as const),
     abi: abi.extraRewardsLength,
   })
 
@@ -237,9 +229,7 @@ const getAuraExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise
   extraRewardsPools.forEach((pool, idx) => {
     const baseTokenRes: any = baseTokensRes[idx]
 
-    if (!baseTokenRes) {
-      return
-    }
+    if (!baseTokenRes) return
 
     pool.rewards?.push(baseTokenRes.output)
   })
