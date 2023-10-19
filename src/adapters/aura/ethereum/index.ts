@@ -1,4 +1,4 @@
-import { getAuraBalStakerBalances, getAuraFarmBalances } from '@adapters/aura/ethereum/balance'
+import { getAuraBalStakerBalance, getAuraFarmBalances, getAuraYieldBalance } from '@adapters/aura/ethereum/balance'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMultipleLockerBalances } from '@lib/lock'
@@ -35,6 +35,14 @@ const auraStaker: Contract = {
   underlyings: [auraBal],
 }
 
+const stkAura: Contract = {
+  chain: 'ethereum',
+  address: '0xfaa2ed111b4f580fcb85c48e6dc6782dc5fcd7a6',
+  underlyings: ['0x616e8BfA43F920657B3497DBf40D6b1A02D4608d'],
+  rewards: ['0xC0c293ce456fF0ED870ADd98a0828Dd4d2903DBF'],
+  rewarder: '0xAc16927429c5c7Af63dD75BC9d8a58c63FfD0147',
+}
+
 const booster: Contract = {
   chain: 'ethereum',
   address: '0xA57b8d98dAE62B26Ec3bcC4a365338157060B234',
@@ -49,13 +57,14 @@ export const getContracts = async (ctx: BaseContext) => {
   const pools = await getAuraPools(ctx, booster, vaultBAL)
 
   return {
-    contracts: { booster, pools, auraStaker, auraLocker },
+    contracts: { booster, pools, auraStaker, auraLocker, stkAura },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    auraStaker: getAuraBalStakerBalances,
+    auraStaker: getAuraBalStakerBalance,
+    stkAura: getAuraYieldBalance,
     auraLocker: (...args) => getMultipleLockerBalances(...args, AURA, [auraBal], false),
     pools: (...args) => getAuraFarmBalances(...args, vaultBAL),
   })
