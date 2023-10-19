@@ -1,6 +1,6 @@
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
-import { isHex } from '@lib/buf'
+import { isHex } from '@lib/contract'
 import { unixFromDateTime } from '@lib/fmt'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 

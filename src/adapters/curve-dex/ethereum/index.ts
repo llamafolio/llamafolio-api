@@ -10,7 +10,7 @@ import { getVesterBalances } from './vester'
 
 const CRV: Token = {
   chain: 'ethereum',
-  address: '0xD533a949740bb3306d119CC777fa900bA034cd52',
+  address: '0xd533a949740bb3306d119cc777fa900ba034cd52',
   decimals: 18,
   symbol: 'CRV',
 }
@@ -18,7 +18,7 @@ const CRV: Token = {
 const locker: Contract = {
   chain: 'ethereum',
   address: '0x5f3b5dfeb7b28cdbd7faba78963ee202a494e2a2',
-  token: '0xD533a949740bb3306d119CC777fa900bA034cd52',
+  token: '0xd533a949740bb3306d119cc777fa900ba034cd52',
   name: 'Locker',
 }
 
@@ -31,7 +31,7 @@ const feeDistributor: Contract = {
 const metaRegistry: Contract = {
   name: 'Curve Metaregistry',
   chain: 'ethereum',
-  address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
+  address: '0xf98b45fa17de75fb1ad0e7afd971b0ca00e379fc',
 }
 
 const vesters: Contract[] = [

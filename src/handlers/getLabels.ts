@@ -1,6 +1,6 @@
 import { badRequest, serverError, success } from '@handlers/response'
 import { fetchLabels } from '@labels/defillama'
-import { isHex } from '@lib/buf'
+import { isHex } from '@lib/contract'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 /**

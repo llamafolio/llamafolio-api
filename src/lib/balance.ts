@@ -10,6 +10,7 @@ import type {
 import type { Category } from '@lib/category'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getBalancesOf } from '@lib/erc20'
+import { unixFromDate } from '@lib/fmt'
 import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { providers } from '@lib/providers'
@@ -330,10 +331,10 @@ export const BALANCE_UPDATE_THRESHOLD_SEC = 5 * 60
 /**
  * At the moment, balances are considered "stale" if they haven't been updated in the last x minutes.
  * Later, we can use more advanced strategies using transactions events, scheduled updates etc
- * @param lastUpdateTimestamp
+ * @param lastUpdateTimestamp unix timestamp (in seconds)
  */
 export function areBalancesStale(lastUpdateTimestamp: number) {
-  const now = new Date().getTime()
+  const now = unixFromDate(new Date())
 
-  return now - lastUpdateTimestamp > BALANCE_UPDATE_THRESHOLD_SEC * 1000
+  return now - lastUpdateTimestamp > BALANCE_UPDATE_THRESHOLD_SEC
 }

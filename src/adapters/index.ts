@@ -87,6 +87,7 @@ import gensokishi from '@adapters/gensokishi'
 import gmx from '@adapters/gmx'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
 import goldfinch from '@adapters/goldfinch'
+import goodentry from '@adapters/goodentry'
 import granaryFinance from '@adapters/granary-finance'
 import gravitaProtocol from '@adapters/gravita-protocol'
 import gro from '@adapters/gro'
@@ -128,6 +129,7 @@ import makerdao from '@adapters/makerdao'
 import mantisswap from '@adapters/mantisswap'
 import maple from '@adapters/maple'
 import mdex from '@adapters/mdex'
+import meanFinance from '@adapters/mean-finance'
 import meritCircle from '@adapters/merit-circle'
 import metronome from '@adapters/metronome'
 import moonwell from '@adapters/moonwell'
@@ -234,6 +236,7 @@ import traderjoe from '@adapters/traderjoe'
 import truefi from '@adapters/truefi'
 import trufinProtocol from '@adapters/trufin-protocol'
 import trustswap from '@adapters/trustswap'
+import umamiFinance from '@adapters/umami-finance'
 import uniswapV2 from '@adapters/uniswap-v2'
 import uniswapV3 from '@adapters/uniswap-v3'
 import unsheth from '@adapters/unsheth'
@@ -348,6 +351,7 @@ export const adapters: Adapter[] = [
   gmx,
   gnosisProtocolV1,
   goldfinch,
+  goodentry,
   granaryFinance,
   gravitaProtocol,
   gro,
@@ -389,6 +393,7 @@ export const adapters: Adapter[] = [
   mantisswap,
   maple,
   mdex,
+  meanFinance,
   meritCircle,
   metronome,
   moonwell,
@@ -495,6 +500,7 @@ export const adapters: Adapter[] = [
   truefi,
   trufinProtocol,
   trustswap,
+  umamiFinance,
   uniswapV2,
   uniswapV3,
   unsheth,

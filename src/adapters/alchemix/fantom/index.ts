@@ -26,19 +26,19 @@ const USDT: Token = {
 
 const daiTransmuter: Contract = {
   chain: 'fantom',
-  address: '0x486FCC9385dCd16fE9ac21a959B072dcB58912e0',
+  address: '0x486fcc9385dcd16fe9ac21a959b072dcb58912e0',
   underlyings: [DAI],
 }
 
 const usdcTransmuter: Contract = {
   chain: 'fantom',
-  address: '0xaE653176d1AF6A68B5ce57481427a065E1baC49f',
+  address: '0xae653176d1af6a68b5ce57481427a065e1bac49f',
   underlyings: [USDC],
 }
 
 const usdtTransmuter: Contract = {
   chain: 'fantom',
-  address: '0x53F05426D48E667c6a131F17db1b6f7AC535aBC6',
+  address: '0x53f05426d48e667c6a131f17db1b6f7ac535abc6',
   underlyings: [USDT],
 }
 
@@ -69,7 +69,7 @@ const alUSD: Token = {
 
 const alUSDtransmuter: Contract = {
   chain: 'fantom',
-  address: '0x76b2E3c5a183970AAAD2A48cF6Ae79E3e16D3A0E',
+  address: '0x76b2e3c5a183970aaad2a48cf6ae79e3e16d3a0e',
   underlyings: [alUSD],
 }
 
@@ -79,7 +79,7 @@ const transmutersV2 = [alUSDtransmuter]
 
 export const getContracts = () => {
   return {
-    contracts: { transmutersV2, reactivesV2 },
+    contracts: { transmutersV2 },
   }
 }
 

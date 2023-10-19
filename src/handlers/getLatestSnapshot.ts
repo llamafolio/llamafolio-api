@@ -1,8 +1,8 @@
 import { selectLatestBalancesSnapshotByFromAddress } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
-import { isHex } from '@lib/buf'
 import type { Chain } from '@lib/chains'
+import { isHex } from '@lib/contract'
 import type { TUnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 

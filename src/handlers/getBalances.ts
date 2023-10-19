@@ -3,7 +3,7 @@ import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { updateBalances } from '@handlers/updateBalances'
 import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
-import { isHex } from '@lib/buf'
+import { isHex } from '@lib/contract'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 type Status = 'stale' | 'success'

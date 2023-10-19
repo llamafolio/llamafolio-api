@@ -56,7 +56,7 @@ async function main() {
 
         const contractsRes = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
 
-        const contracts = await resolveContractsTokens(contractsRes?.contracts || {})
+        const contracts = await resolveContractsTokens(ctx, contractsRes?.contracts || {})
 
         return {
           contracts,
@@ -92,8 +92,18 @@ async function main() {
     await insertAdapters(client, dbAdapters)
 
     // Insert new contracts for all specified chains
-    const adaptersContracts = chainContractsConfigs.map((config) => flattenContracts(config.contracts)).flat()
-    await insertAdaptersContracts(client, adaptersContracts, adapter.id, now)
+    const adaptersContracts = chainContractsConfigs
+      .map((config, i) =>
+        // add context to contracts
+        flattenContracts(config.contracts).map((contract) => ({
+          chain: adapterChains[i],
+          adapterId: adapter.id,
+          timestamp: now,
+          ...contract,
+        })),
+      )
+      .flat()
+    await insertAdaptersContracts(client, adaptersContracts)
   } catch (e) {
     console.log('Failed to revalidate adapter contracts', e)
   }

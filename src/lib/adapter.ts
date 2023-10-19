@@ -8,7 +8,7 @@ export interface BaseContext {
 }
 
 export interface BalancesContext extends BaseContext {
-  readonly address: `0x${string}`
+  address: `0x${string}`
 }
 
 export type ContractStandard = 'erc20' | 'erc721'
@@ -19,10 +19,8 @@ export interface BaseContract {
   category?: Category
 
   name?: string
-  displayName?: string
   chain: Chain
-  readonly address: `0x${string}`
-  // if specified, used to retrieve token details: symbol / decimals
+  address: `0x${string}`
   token?: `0x${string}`
   symbol?: string
   decimals?: number
@@ -33,6 +31,7 @@ export interface BaseContract {
 }
 
 export interface RawContract extends BaseContract {
+  // "raw" tokens
   rewards?: `0x${string}`[]
   underlyings?: `0x${string}`[]
   [key: string | number]: any
@@ -45,7 +44,6 @@ export interface Contract extends BaseContract {
 }
 
 export interface BaseBalance extends BaseContract {
-  lpToken?: `0x${string}`
   amount: bigint
   claimable?: bigint
 }
@@ -193,22 +191,4 @@ export interface Adapter extends Partial<Record<Chain, AdapterHandler>> {
    * @see https://docs.llama.fi/list-your-project/submit-a-project to submit your adapter on DefiLlama.
    */
   id: string
-}
-
-/**
- * Tests
- */
-export interface AdapterTest {
-  address: string
-  blockHeight: number
-  expected: BalancesTest[]
-}
-
-export interface BalancesTest {
-  amount?: bigint
-  symbol?: string
-  decimals?: string
-  category: Category
-  underlying?: { symbol?: string; decimals?: string; amount: bigint }[]
-  rewards?: { symbol?: string; decimals?: string; amount: bigint }[]
 }

@@ -11,8 +11,8 @@ const Comptroller: Contract = {
 
 const annSingleFarm: Contract = {
   chain: 'bsc',
-  address: '0x98936Bde1CF1BFf1e7a8012Cee5e2583851f2067',
-  lpToken: '0x98936Bde1CF1BFf1e7a8012Cee5e2583851f2067',
+  address: '0x98936bde1cf1bff1e7a8012cee5e2583851f2067',
+  token: '0x98936bde1cf1bff1e7a8012cee5e2583851f2067',
   masterchef: '0x9c821500eaba9f9737fdaadf7984dff03edc74d1',
   pid: 2,
 }

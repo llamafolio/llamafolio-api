@@ -1,8 +1,8 @@
 import { client } from '@db/clickhouse'
 import { getContract } from '@db/contracts'
 import { badRequest, notFound, serverError, success } from '@handlers/response'
-import { isHex } from '@lib/buf'
 import { chainById } from '@lib/chains'
+import { isHex } from '@lib/contract'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface IContract {

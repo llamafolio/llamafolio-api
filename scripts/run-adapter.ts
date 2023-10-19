@@ -45,7 +45,7 @@ async function main() {
     const contractsRes = await chainAdapter.getContracts(ctx, {})
 
     // resolve tokens symbol/decimals from addresses
-    const contracts = await resolveContractsTokens(contractsRes?.contracts || {})
+    const contracts = await resolveContractsTokens(ctx, contractsRes?.contracts || {})
 
     const balancesConfig = await chainAdapter.getBalances(ctx, contracts)
 

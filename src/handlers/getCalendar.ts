@@ -1,6 +1,6 @@
 import { badRequest, serverError, success } from '@handlers/response'
-import { isHex } from '@lib/buf'
 import { getCalendarEvents } from '@lib/calendar'
+import { isHex } from '@lib/contract'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export const handler: APIGatewayProxyHandler = async (event) => {
