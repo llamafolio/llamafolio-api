@@ -32,38 +32,6 @@ export async function getRangeBalances(ctx: BalancesContext, pools: Contract[]) 
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address }) as const), abi: erc20Abi.totalSupply }),
   ])
 
-  // BEFORE
-  // for (const [index, pool] of pools.entries()) {
-  //   const underlyings = pool.underlyings as Contract[]
-  //   const userBalanceRes = userBalancesRes[index]
-  //   const underlyingsBalanceRes = underlyingsBalancesRes[index]
-  //   const totalSupplyRes = totalSuppliesRes[index]
-
-  //   if (
-  //     !underlyings ||
-  //     !userBalanceRes.success ||
-  //     !underlyingsBalanceRes.success ||
-  //     !totalSupplyRes.success ||
-  //     totalSupplyRes.output === 0n
-  //   ) {
-  //     continue
-  //   }
-
-  //   const [underlying0Amount, underlying1Amount] = underlyingsBalanceRes.output
-
-  //   balances.push({
-  //     ...pool,
-  //     amount: userBalanceRes.output,
-  //     underlyings: [
-  //       { ...underlyings[0], amount: (underlying0Amount * userBalanceRes.output) / totalSupplyRes.output },
-  //       { ...underlyings[1], amount: (underlying1Amount * userBalanceRes.output) / totalSupplyRes.output },
-  //     ],
-  //     rewards: undefined,
-  //     category: 'lp',
-  //   })
-  // }
-
-  // NOW
   return mapMultiSuccessFilter(
     userBalancesRes.map((_, i) => [userBalancesRes[i], underlyingsBalancesRes[i], totalSuppliesRes[i]]),
     (res, index) => {
