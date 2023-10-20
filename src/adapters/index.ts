@@ -151,9 +151,11 @@ import opynSqueeth from '@adapters/opyn-squeeth'
 import originDefi from '@adapters/origin-defi'
 import originDollar from '@adapters/origin-dollar'
 import overnightFinance from '@adapters/overnight-finance'
+import paladinFinance from '@adapters/paladin-finance'
 import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
+import parallelProtocol from '@adapters/parallel-protocol'
 import paraswap from '@adapters/paraswap'
 import pearlfi from '@adapters/pearlfi'
 import perennial from '@adapters/perennial'
@@ -415,9 +417,11 @@ export const adapters: Adapter[] = [
   originDefi,
   originDollar,
   overnightFinance,
+  paladinFinance,
   pancakeswap,
   pandora,
   pangolin,
+  parallelProtocol,
   paraswap,
   pearlfi,
   perennial,
