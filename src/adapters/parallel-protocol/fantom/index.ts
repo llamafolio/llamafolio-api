@@ -20,11 +20,17 @@ const PAR: Token = {
   symbol: 'PAR',
 }
 
-const MIMO: Token = {
+const MIMO: Contract = {
   chain: 'fantom',
   address: '0x1D1764F04DE29da6b90ffBef372D1A45596C4855',
   decimals: 18,
   symbol: 'MIMO',
+  rewarder: [
+    '0x3a851b97b786a601328496c80fd67934065eaad3',
+    '0x5f640bcb86d662a817316cb9ab739f9a5a9cc804',
+    '0x7d7bb07739bdfc71d2c942677a95406301a99c05',
+    '0xfe5972b8a965415bce47074da51d8bb487d50317',
+  ],
 }
 
 const vault: Contract = {
@@ -49,29 +55,6 @@ const staker_PAR: Contract = {
   rewards: ['0x13082681e8ce9bd0af505912d306403592490fc7', '0x1D1764F04DE29da6b90ffBef372D1A45596C4855'],
 }
 
-const rewarders_MIMO: Contract[] = [
-  {
-    chain: 'fantom',
-    address: '0x3a851b97b786a601328496c80fd67934065eaad3',
-    token: '0x1D1764F04DE29da6b90ffBef372D1A45596C4855',
-  },
-  {
-    chain: 'fantom',
-    address: '0x5f640bcb86d662a817316cb9ab739f9a5a9cc804',
-    token: '0x1D1764F04DE29da6b90ffBef372D1A45596C4855',
-  },
-  {
-    chain: 'fantom',
-    address: '0x7d7bb07739bdfc71d2c942677a95406301a99c05',
-    token: '0x1D1764F04DE29da6b90ffBef372D1A45596C4855',
-  },
-  {
-    chain: 'fantom',
-    address: '0xfe5972b8a965415bce47074da51d8bb487d50317',
-    token: '0x1D1764F04DE29da6b90ffBef372D1A45596C4855',
-  },
-]
-
 export const getContracts = async (ctx: BaseContext) => {
   const vaultWithAssets = await getVaultWithAssets(ctx, PAR, vault, assets)
 
@@ -80,7 +63,7 @@ export const getContracts = async (ctx: BaseContext) => {
       vaultWithAssets,
       locker,
       staker_PAR,
-      rewarders_MIMO,
+      MIMO,
     },
   }
 }
@@ -91,7 +74,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     resolveBalances<typeof getContracts>(ctx, contracts, {
       locker: (...args) => getSingleLockerBalance(...args, MIMO, 'locked'),
       staker_PAR: getParallelParStakeBalance,
-      rewarders_MIMO: getParallelMimoRewardsBalances,
+      MIMO: getParallelMimoRewardsBalances,
     }),
   ])
 

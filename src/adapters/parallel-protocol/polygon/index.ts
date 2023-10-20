@@ -31,11 +31,17 @@ const PAR: Token = {
   symbol: 'PAR',
 }
 
-const MIMO: Token = {
+const MIMO: Contract = {
   chain: 'polygon',
   address: '0xADAC33f543267c4D59a8c299cF804c303BC3e4aC',
   decimals: 18,
   symbol: 'MIMO',
+  rewarder: [
+    '0x0f307e021a7e7d03b6d753b972d349f48d0b7e2b',
+    '0xeac544c12e8ede461190bb573e5d56f9198811ac',
+    '0xdccd52eb99a7395398e4603d21f4932782f5d9ea',
+    '0x8b264d48c0887bc2946ea8995c3afcdbb576f799',
+  ],
 }
 
 // Lp Contracts
@@ -88,29 +94,6 @@ const staker_PAR: Contract = {
   rewards: ['0xe2aa7db6da1dae97c5f5c6914d285fbfcc32a128', '0xADAC33f543267c4D59a8c299cF804c303BC3e4aC'],
 }
 
-const rewarders_MIMO: Contract[] = [
-  {
-    chain: 'polygon',
-    address: '0x0f307e021a7e7d03b6d753b972d349f48d0b7e2b',
-    token: '0xADAC33f543267c4D59a8c299cF804c303BC3e4aC',
-  },
-  {
-    chain: 'polygon',
-    address: '0xeac544c12e8ede461190bb573e5d56f9198811ac',
-    token: '0xADAC33f543267c4D59a8c299cF804c303BC3e4aC',
-  },
-  {
-    chain: 'polygon',
-    address: '0xdccd52eb99a7395398e4603d21f4932782f5d9ea',
-    token: '0xADAC33f543267c4D59a8c299cF804c303BC3e4aC',
-  },
-  {
-    chain: 'polygon',
-    address: '0x8b264d48c0887bc2946ea8995c3afcdbb576f799',
-    token: '0xADAC33f543267c4D59a8c299cF804c303BC3e4aC',
-  },
-]
-
 export const getContracts = async (ctx: BaseContext) => {
   const vaultWithAssets = await getVaultWithAssets(ctx, PAR, vault, assets)
 
@@ -121,7 +104,7 @@ export const getContracts = async (ctx: BaseContext) => {
       lpFarmers: [USDC_PAR_LP],
       bptFarmersv2: [USDC_PAR_BPT_2, PAR_MIMO_2_BPT_2],
       staker_PAR,
-      rewarders_MIMO,
+      MIMO,
     },
   }
 }
@@ -134,7 +117,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
       lpFarmers: getParallelLpFarmBalances,
       bptFarmersv2: getParallelBPT_v2FarmBalances,
       staker_PAR: getParallelParStakeBalance,
-      rewarders_MIMO: getParallelMimoRewardsBalances,
+      MIMO: getParallelMimoRewardsBalances,
     }),
   ])
 

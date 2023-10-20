@@ -48,18 +48,17 @@ export async function getParallelParStakeBalance(ctx: BalancesContext, staker: C
   }
 }
 
-export async function getParallelMimoRewardsBalances(
-  ctx: BalancesContext,
-  rewarders: Contract[],
-): Promise<RewardBalance[]> {
+export async function getParallelMimoRewardsBalances(ctx: BalancesContext, MIMO: Contract): Promise<RewardBalance[]> {
+  const rewarders = MIMO.rewarder as `0x${string}`[]
+
   const pendingMimosRes = await multicall({
     ctx,
-    calls: rewarders.map((rewarder) => ({ target: rewarder.address, params: [ctx.address] }) as const),
+    calls: rewarders.map((rewarder) => ({ target: rewarder, params: [ctx.address] }) as const),
     abi: abi.pendingMIMO,
   })
 
-  return mapSuccessFilter(pendingMimosRes, (res, index) => ({
-    ...rewarders[index],
+  return mapSuccessFilter(pendingMimosRes, (res) => ({
+    ...MIMO,
     amount: res.output,
     underlyings: undefined,
     rewards: undefined,
