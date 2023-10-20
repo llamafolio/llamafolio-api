@@ -37,11 +37,16 @@ const PAR: Token = {
   symbol: 'PAR',
 }
 
-const MIMO: Token = {
+const MIMO: Contract = {
   chain: 'ethereum',
   address: '0x90B831fa3Bebf58E9744A14D638E25B4eE06f9Bc',
   decimals: 18,
   symbol: 'MIMO',
+  rewarder: [
+    '0x7dccb36ba7177154f364dab07cb57250aba50b3e',
+    '0x6105d733050fb504460fff37ea639f0052b12035',
+    '0x32385c4b89e16adcaef6a280b55ea42a86c3a01e',
+  ],
 }
 
 // Lp Contracts
@@ -131,24 +136,6 @@ const staker_PAR: Contract = {
   rewards: ['0x68037790A0229e9Ce6EaA8A99ea92964106C4703', '0x90B831fa3Bebf58E9744A14D638E25B4eE06f9Bc'],
 }
 
-const rewarders_MIMO: Contract[] = [
-  {
-    chain: 'ethereum',
-    address: '0x7dccb36ba7177154f364dab07cb57250aba50b3e',
-    token: '0x90B831fa3Bebf58E9744A14D638E25B4eE06f9Bc',
-  },
-  {
-    chain: 'ethereum',
-    address: '0x6105d733050fb504460fff37ea639f0052b12035',
-    token: '0x90B831fa3Bebf58E9744A14D638E25B4eE06f9Bc',
-  },
-  {
-    chain: 'ethereum',
-    address: '0x32385c4b89e16adcaef6a280b55ea42a86c3a01e',
-    token: '0x90B831fa3Bebf58E9744A14D638E25B4eE06f9Bc',
-  },
-]
-
 export const getContracts = async (ctx: BaseContext) => {
   const vaultWithAssets = await getVaultWithAssets(ctx, PAR, vault, assets)
 
@@ -160,7 +147,7 @@ export const getContracts = async (ctx: BaseContext) => {
       bptFarmersv1: [ETH_PAR_BPT, USDC_PAR_BPT],
       bptFarmersv2: [PAR_MIMO_BPT_2, PAR_USDC_BPT_2, PAR_MIMO_2_BPT_2, PAR_ETH_BPT_2],
       staker_PAR,
-      rewarders_MIMO,
+      MIMO,
     },
   }
 }
@@ -174,7 +161,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
       bptFarmersv1: getParallelBPT_v1FarmBalances,
       bptFarmersv2: getParallelBPT_v2FarmBalances,
       staker_PAR: getParallelParStakeBalance,
-      rewarders_MIMO: getParallelMimoRewardsBalances,
+      MIMO: getParallelMimoRewardsBalances,
     }),
   ])
 
