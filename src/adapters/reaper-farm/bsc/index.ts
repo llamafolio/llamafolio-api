@@ -6,8 +6,6 @@ import { resolveBalances } from '@lib/balance'
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getReaperPools(ctx)
 
-  console.log(pools)
-
   return {
     contracts: { pools },
   }

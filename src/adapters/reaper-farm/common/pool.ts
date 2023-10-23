@@ -31,8 +31,6 @@ export async function getReaperPools(ctx: BaseContext): Promise<Contract[]> {
   const URL = `https://2ch9hbg8hh.execute-api.us-east-1.amazonaws.com/dev/api/vaults/${chain}`
   const datas = await fetch(URL).then((res) => res.json())
 
-  console.log(URL)
-
   const pools: Contract[] = Object.values(datas.data).map((data) => {
     const { address, tokens, provider } = data as IParams
     const { lpToken, underlyingTokens } = tokens
