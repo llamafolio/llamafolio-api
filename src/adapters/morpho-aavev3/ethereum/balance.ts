@@ -1,4 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapMultiSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
@@ -23,6 +24,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  supplyBalance: {
+    inputs: [
+      { internalType: 'address', name: 'underlying', type: 'address' },
+      { internalType: 'address', name: 'user', type: 'address' },
+    ],
+    name: 'supplyBalance',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
   liquidityData: {
     inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
     name: 'liquidityData',
@@ -43,14 +54,8 @@ const abi = {
   },
 } as const
 
-export async function getLendBorrowBalancesAaveV3(
-  ctx: BalancesContext,
-  markets: Contract[],
-  comptroller: Contract,
-): Promise<Balance[]> {
-  const balances: Balance[] = []
-
-  const [lendBalancesRes, borrowBalancesRes] = await Promise.all([
+export async function getLendBorrowBalancesAaveV3(ctx: BalancesContext, markets: Contract[], comptroller: Contract) {
+  const [lendBalancesRes, borrowBalancesRes, suppliedBalancesRes] = await Promise.all([
     multicall({
       ctx,
       calls: markets.map((market) => ({ target: comptroller.address, params: [market.address, ctx.address] }) as const),
@@ -61,36 +66,47 @@ export async function getLendBorrowBalancesAaveV3(
       calls: markets.map((market) => ({ target: comptroller.address, params: [market.address, ctx.address] }) as const),
       abi: abi.borrowBalance,
     }),
+    multicall({
+      ctx,
+      calls: markets.map((market) => ({ target: comptroller.address, params: [market.address, ctx.address] }) as const),
+      abi: abi.supplyBalance,
+    }),
   ])
 
-  for (const [index, market] of markets.entries()) {
-    const lendBalanceRes = lendBalancesRes[index]
-    const borrowBalanceRes = borrowBalancesRes[index]
+  return mapMultiSuccessFilter(
+    lendBalancesRes.map((_, i) => [lendBalancesRes[i], borrowBalancesRes[i], suppliedBalancesRes[i]]),
 
-    if (!lendBalanceRes.success || !borrowBalanceRes.success) {
-      continue
-    }
+    (res, index) => {
+      const market = markets[index]
+      const [{ output: lendBalance }, { output: borrowBalance }, { output: supplyBalance }] = res.inputOutputPairs
 
-    const lend: Balance = {
-      ...market,
-      amount: lendBalanceRes.output,
-      underlyings: undefined,
-      rewards: undefined,
-      category: 'lend',
-    }
+      const lend: Balance = {
+        ...market,
+        amount: lendBalance,
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'lend',
+      }
 
-    const borrow: Balance = {
-      ...market,
-      amount: borrowBalanceRes.output,
-      underlyings: undefined,
-      rewards: undefined,
-      category: 'borrow',
-    }
+      const supply: Balance = {
+        ...market,
+        amount: supplyBalance,
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'lend',
+      }
 
-    balances.push(lend, borrow)
-  }
+      const borrow: Balance = {
+        ...market,
+        amount: borrowBalance,
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'borrow',
+      }
 
-  return balances
+      return [lend, supply, borrow]
+    },
+  )
 }
 
 export async function getUserHealthFactorV3(ctx: BalancesContext, comptroller: Contract): Promise<number | undefined> {
