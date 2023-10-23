@@ -107,11 +107,9 @@ export function adjustUnderlyingAmounts(balances: IYearnBalances[]) {
 
     balance.category = 'farm'
     balance.underlyings = balance.underlyings.map((underlying: any) => {
-      const decimals = balance.chain === 'ethereum' ? underlying.decimals : balance.decimals
-
       return {
         ...underlying,
-        amount: ((underlying.amount || balance.amount) * balance.exchangeRate) / 10n ** BigInt(decimals),
+        amount: ((underlying.amount || balance.amount) * balance.exchangeRate) / 10n ** BigInt(balance.decimals!),
       }
     })
   }
