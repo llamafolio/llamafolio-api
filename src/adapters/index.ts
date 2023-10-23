@@ -175,6 +175,7 @@ import raft from '@adapters/raft'
 import rageTrade from '@adapters/rage-trade'
 import railgun from '@adapters/railgun'
 import rangeProtocol from '@adapters/range-protocol'
+import reaperFarm from '@adapters/reaper-farm'
 import redacted from '@adapters/redacted'
 import reflexer from '@adapters/reflexer'
 import reserve from '@adapters/reserve'
@@ -441,6 +442,7 @@ export const adapters: Adapter[] = [
   rageTrade,
   railgun,
   rangeProtocol,
+  reaperFarm,
   redacted,
   reflexer,
   reserve,

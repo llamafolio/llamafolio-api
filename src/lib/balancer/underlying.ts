@@ -66,8 +66,13 @@ export async function getUnderlyingsBalancesFromBalancer(
       if (totalSupply === 0n) return null
 
       // Update underlying amounts
-      underlyings.forEach((underlying, idx) => {
-        underlying.amount = underlyingsBalances[1][idx]
+      underlyings.forEach((underlying) => {
+        const addressIndex = underlyingsBalances[0].findIndex(
+          (address: `0x${string}`) => address.toLowerCase() === underlying.address.toLowerCase(),
+        )
+        if (addressIndex !== -1) {
+          underlying.amount = underlyingsBalances[1][addressIndex]
+        }
       })
 
       // Find the LP token balance
