@@ -1,5 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
+import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 
 const abi = {
@@ -25,39 +27,39 @@ const abi = {
   },
 } as const
 
-const GRAI: Token = {
-  chain: 'ethereum',
-  address: '0x15f74458aE0bFdAA1a96CA1aa779D715Cc1Eefe4',
-  decimals: 18,
-  symbol: 'GRAI',
+const GRAI: { [key: string]: Token } = {
+  ethereum: {
+    chain: 'ethereum',
+    address: '0x15f74458aE0bFdAA1a96CA1aa779D715Cc1Eefe4',
+    decimals: 18,
+    symbol: 'GRAI',
+  },
+  arbitrum: {
+    chain: 'arbitrum',
+    address: '0x894134a25a5faC1c2C26F1d8fBf05111a3CB9487',
+    decimals: 18,
+    symbol: 'GRAI',
+  },
 }
 
-export async function getGravitaStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const rewardsAddresses: `0x${string}`[] = staker.rewards!.map((reward) => (reward as Contract).address)
-
+export async function getGravitaStakeBalance(
+  ctx: BalancesContext,
+  staker: Contract,
+  assets: Contract[],
+): Promise<Balance> {
   const [userDeposit, userPendingRewards] = await Promise.all([
     call({ ctx, target: staker.address, params: [ctx.address], abi: abi.deposits }),
-    call({
+    multicall({
       ctx,
-      target: staker.address,
-      params: [ctx.address, rewardsAddresses],
+      calls: assets.map((asset) => ({ target: staker.address, params: [ctx.address, [asset.address]] }) as const),
       abi: abi.getDepositorGains,
     }),
   ])
 
-  const fmtRewards = staker.rewards?.map((reward, idx) => {
-    const [_address, amount] = userPendingRewards
-    return {
-      ...(reward as Balance),
-      amount: amount[idx],
-    }
+  const rewards: any = mapSuccessFilter(userPendingRewards, (res, index) => {
+    const [_token, balance] = res.output.flat()
+    if (balance !== 0n) return { ...assets[index], amount: balance }
   })
 
-  return {
-    ...staker,
-    amount: userDeposit,
-    underlyings: [GRAI],
-    rewards: fmtRewards,
-    category: 'stake',
-  }
+  return { ...GRAI[ctx.chain], amount: userDeposit, underlyings: undefined, rewards, category: 'stake' }
 }
