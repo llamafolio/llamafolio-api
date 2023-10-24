@@ -102,11 +102,12 @@ export const chains = [
     chainId: 8453,
     name: 'Base',
     rpcUrls: [
+      LLAMANODES_API_KEY
+        ? http(`https://base.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
+        : undefined,
       http('https://base-mainnet.public.blastapi.io', { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://mainnet.base.org', { batch: { wait: 0, batchSize: 1_000 } }),
-      http('https://1rpc.io/base', { batch: { wait: 0, batchSize: 1_000 } }),
-      http('https://base.blockpi.network/v1/rpc/public', { batch: { wait: 0, batchSize: 1_000 } }),
-    ],
+    ].filter(isNotFalsy),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
