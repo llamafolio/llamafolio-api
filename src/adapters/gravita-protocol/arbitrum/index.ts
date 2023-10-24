@@ -23,8 +23,6 @@ const vesselManager: Contract = {
 export const getContracts = async (ctx: BaseContext) => {
   const assets = await getCollateralVessel(ctx, stabilityPool)
 
-  console.log(assets)
-
   return {
     contracts: { assets, borrowerOperations, stabilityPool },
   }
