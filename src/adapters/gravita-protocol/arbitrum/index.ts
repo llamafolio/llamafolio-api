@@ -5,23 +5,25 @@ import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const stabilityPool: Contract = {
-  chain: 'ethereum',
-  address: '0x4f39f12064d83f6dd7a2bdb0d53af8be560356a6',
+  chain: 'arbitrum',
+  address: '0x0a3137e103a8f268fa065f6d5922ed6173b7bdfa',
 }
 
 const borrowerOperations: Contract = {
   name: 'Borrower Operations',
-  chain: 'ethereum',
-  address: '0x2bca0300c2aa65de6f19c2d241b54a445c9990e2',
+  chain: 'arbitrum',
+  address: '0x89f1eccf2644902344db02788a790551bb070351',
 }
 
 const vesselManager: Contract = {
-  chain: 'ethereum',
-  address: '0xdB5DAcB1DFbe16326C3656a88017f0cB4ece0977',
+  chain: 'arbitrum',
+  address: '0x6adaa3eba85c77e8566b73aefb4c2f39df4046ca',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
   const assets = await getCollateralVessel(ctx, stabilityPool)
+
+  console.log(assets)
 
   return {
     contracts: { assets, borrowerOperations, stabilityPool },
