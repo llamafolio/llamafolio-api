@@ -7,5 +7,5 @@ const adapter: Adapter = {
   ethereum: ethereum,
 }
 
-// TODO: Find how to get pendingRewards
+// TODO: Find how to get pendingRewards + Metadatas (Debt Maturity, HFs..)
 export default adapter
