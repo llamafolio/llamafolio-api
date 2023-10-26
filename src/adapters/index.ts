@@ -159,6 +159,7 @@ import pangolin from '@adapters/pangolin'
 import parallelProtocol from '@adapters/parallel-protocol'
 import paraswap from '@adapters/paraswap'
 import pearlfi from '@adapters/pearlfi'
+import pendle from '@adapters/pendle'
 import perennial from '@adapters/perennial'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
@@ -427,6 +428,7 @@ export const adapters: Adapter[] = [
   parallelProtocol,
   paraswap,
   pearlfi,
+  pendle,
   perennial,
   piedao,
   pikaProtocol,

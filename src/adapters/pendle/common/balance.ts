@@ -42,7 +42,7 @@ export async function getPendleBalances(ctx: BalancesContext, pools: Contract[])
       const category = CATEGORY[matchingPosition.asset.baseType]
       const amount = Math.round(matchingPosition.positionSize * Math.pow(10, matchingPosition.asset.decimals))
       const pricePerFullShare = matchingPosition.asset.price.acc ?? 1
-      const underlyingsAmount = amount * pricePerFullShare
+      const underlyingsAmount = Math.round(amount * pricePerFullShare)
 
       return {
         ...pool,
@@ -97,17 +97,18 @@ async function getPendle_LPUnderlyingsBalances(ctx: BalancesContext, pools: Cont
 
     (res, index) => {
       const pool = pools[index]
-      const [underlying0, underlying1] = pool.underlyings as Contract[]
+      const [underlying0, _underlying1] = pool.underlyings as Contract[]
       const [{ output: token0Balance }, { output: token1Balance }, { output: totalSupply }] = res.inputOutputPairs
 
       if (totalSupply === 0n) return null
 
+      // underlying0 & underlying1 are identical, the first comes from SY, the second comes from PT
+      const deeperUnderlying = underlying0.underlyings?.[0] as Contract
+      const amount = BigInt((pool.amount * token0Balance + pool.amount * token1Balance) / totalSupply)
+
       return {
         ...pool,
-        underlyings: [
-          { ...underlying0, amount: BigInt((pool.amount * token0Balance) / totalSupply) },
-          { ...underlying1, amount: BigInt((pool.amount * token1Balance) / totalSupply) },
-        ],
+        underlyings: [{ ...deeperUnderlying, decimals: 18, amount }],
       }
     },
   ).filter(isNotNullish) as any

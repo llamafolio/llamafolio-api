@@ -1,10 +1,10 @@
 import type { Adapter } from '@lib/adapter'
 
-import * as ethereum from './ethereum'
 import * as arbitrum from './arbitrum'
-import * as bsc from './bsc'
-import * as optimism from './optimism'
 import * as avalanche from './avalanche'
+import * as bsc from './bsc'
+import * as ethereum from './ethereum'
+import * as optimism from './optimism'
 
 const adapter: Adapter = {
   id: 'pendle',
@@ -14,5 +14,7 @@ const adapter: Adapter = {
   optimism: optimism,
   avalanche: avalanche,
 }
+
+// TODO: find a way to retrieve real pendingRewards
 
 export default adapter
