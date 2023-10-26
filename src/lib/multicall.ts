@@ -26,24 +26,29 @@ export type MultiCallResult<TAbi extends Abi[number] | readonly unknown[]> =
 export async function multicall<
   TAbi extends Abi[number] | readonly unknown[],
   Call extends { target?: `0x${string}`; params?: DecodeFunctionResultParameters<TAbi[]>['args']; enabled?: boolean },
+  TAllowFailure extends boolean = true,
 >(options: {
   ctx: BaseContext
   abi: DecodeFunctionResultParameters<TAbi[]>['abi'][number]
   calls: (Call | null)[]
+  allowFailure?: TAllowFailure
 }): Promise<
-  (
-    | {
-        success: true
-        input: Call
-        output: DecodeFunctionResultReturnType<TAbi[]>
-      }
-    | {
-        success: false
-        input: Call
-        output: null
-      }
-  )[]
+  (TAllowFailure extends false
+    ? DecodeFunctionResultReturnType<TAbi[]>
+    :
+        | {
+            success: true
+            input: Call
+            output: DecodeFunctionResultReturnType<TAbi[]>
+          }
+        | {
+            success: false
+            input: Call
+            output: null
+          })[]
 > {
+  const allowFailure = options.allowFailure != null ? options.allowFailure : true
+
   // Allow nullish input calls but don't pass them to the underlying multicall function.
   // Nullish calls results are automatically unsuccessful.
   // This allows us to "chain" multicall responses while preserving input indices
@@ -58,6 +63,7 @@ export async function multicall<
       functionName: options.abi.name,
       args: call.params,
     })),
+    allowFailure,
   })
 
   // Build output by adding back nullish input calls
@@ -68,12 +74,16 @@ export async function multicall<
       return { input: options.calls[idx], success: false, output: null }
     }
 
-    const response = multicallRes[callIdx++]
+    const response = multicallRes[callIdx++] as any
 
-    return {
-      input: options.calls[idx],
-      success: response.status === 'success',
-      output: response.result,
+    if (allowFailure) {
+      return {
+        input: options.calls[idx],
+        success: response.status === 'success',
+        output: response.result,
+      }
     }
+
+    return response
   })
 }
