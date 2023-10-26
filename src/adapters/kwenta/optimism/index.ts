@@ -1,4 +1,4 @@
-import { getKwentaStakeBalance } from '@adapters/kwenta/optimism/balance'
+import { getKwentaStakeBalances } from '@adapters/kwenta/optimism/balance'
 import { getKwentaDepositBalances } from '@adapters/kwenta/optimism/deposit'
 import { getContractsFromPerpsProxies } from '@adapters/kwenta/optimism/vault'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -35,11 +35,18 @@ const factory: Contract = {
   address: '0x8234F990b149Ae59416dc260305E565e5DAfEb54',
 }
 
-const staker: Contract = {
-  chain: 'optimism',
-  address: '0x6e56a5d49f775ba08041e28030bc7826b13489e0',
-  token: '0x920cf626a271321c151d027030d5d08af699456b',
-}
+const stakers: Contract[] = [
+  {
+    chain: 'optimism',
+    address: '0x6e56a5d49f775ba08041e28030bc7826b13489e0',
+    token: '0x920cf626a271321c151d027030d5d08af699456b',
+  },
+  {
+    chain: 'optimism',
+    address: '0x61294940ce7cd1bda10e349adc5b538b722ceb88',
+    token: '0x920cf626a271321c151d027030d5d08af699456b',
+  },
+]
 
 export const getContracts = async (ctx: BaseContext) => {
   const vaults: Contract[] = await getContractsFromPerpsProxies(ctx, perpsV2Proxies)
@@ -47,7 +54,7 @@ export const getContracts = async (ctx: BaseContext) => {
   const accountFactory = { ...factory, vaults }
 
   return {
-    contracts: { accountFactory, vaults, staker },
+    contracts: { accountFactory, vaults, stakers },
     revalidate: 60 * 60,
   }
 }
@@ -55,7 +62,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     accountFactory: getKwentaDepositBalances,
-    staker: getKwentaStakeBalance,
+    stakers: getKwentaStakeBalances,
   })
 
   return {
