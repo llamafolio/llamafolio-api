@@ -64,7 +64,7 @@ const abi = {
   },
 } as const
 
-export async function getCRVUSDContracts(ctx: BaseContext, factory: Contract): Promise<Contract[]> {
+export async function getControllers(ctx: BaseContext, factory: Contract) {
   const contracts: Contract[] = []
 
   const collateralLength = await call({ ctx, target: factory.address, abi: abi.n_collaterals })
@@ -92,6 +92,7 @@ export async function getCRVUSDContracts(ctx: BaseContext, factory: Contract): P
 
     contracts.push({
       chain: ctx.chain,
+      name: 'crvUSD Controller',
       address: controllerRes.output,
       token: collateralRes.output,
     })

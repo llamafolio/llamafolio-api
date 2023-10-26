@@ -27,29 +27,29 @@ const crvUSD: Token = {
   decimals: 18,
 }
 
-export async function getCRVUSDBalances(ctx: BalancesContext, pools: Contract[]): Promise<BalancesGroup[]> {
-  const [userBalances, healthsRes] = await Promise.all([
+export async function getControllersBalances(ctx: BalancesContext, controllers: Contract[]) {
+  const [userStates, healthsRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
+      calls: controllers.map((controller) => ({ target: controller.address, params: [ctx.address] }) as const),
       abi: abi.user_state,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
+      calls: controllers.map((controller) => ({ target: controller.address, params: [ctx.address] }) as const),
       abi: abi.health,
     }),
   ])
 
-  const groups: BalancesGroup[] = mapSuccessFilter(userBalances, (res, idx) => {
-    const pool = pools[idx]
-    const underlyings = pool.underlyings as Contract[]
+  const groups: BalancesGroup[] = mapSuccessFilter(userStates, (res, idx) => {
+    const controller = controllers[idx]
+    const underlyings = controller.underlyings as Contract[]
     const healthFactor =
       healthsRes[idx].success && healthsRes[idx].output !== null ? 1 + Number(healthsRes[idx].output) / 1e18 : undefined
     const [collateralToken, collateralTokenCRVUSD, debt, _] = res.output
 
     const lend: LendBalance = {
-      ...pools[idx],
+      ...controller,
       amount: collateralToken,
       underlyings,
       rewards: undefined,
