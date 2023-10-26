@@ -97,18 +97,17 @@ async function getPendle_LPUnderlyingsBalances(ctx: BalancesContext, pools: Cont
 
     (res, index) => {
       const pool = pools[index]
-      const [underlying0, _underlying1] = pool.underlyings as Contract[]
+      const [underlying0, underlying1] = pool.underlyings as Contract[]
       const [{ output: token0Balance }, { output: token1Balance }, { output: totalSupply }] = res.inputOutputPairs
 
       if (totalSupply === 0n) return null
 
-      // underlying0 & underlying1 are identical, the first comes from SY, the second comes from PT
-      const deeperUnderlying = underlying0.underlyings?.[0] as Contract
-      const amount = BigInt((pool.amount * token0Balance + pool.amount * token1Balance) / totalSupply)
-
       return {
         ...pool,
-        underlyings: [{ ...deeperUnderlying, decimals: 18, amount }],
+        underlyings: [
+          { ...underlying0, decimals: 18, amount: BigInt((pool.amount * token0Balance) / totalSupply) },
+          { ...underlying1, decimals: 18, amount: BigInt((pool.amount * token1Balance) / totalSupply) },
+        ],
       }
     },
   ).filter(isNotNullish) as any
