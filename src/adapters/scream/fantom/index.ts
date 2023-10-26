@@ -53,6 +53,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { markets, markets_v1, locker, xSCREAM },
+    revalidate: 60 * 60,
   }
 }
 

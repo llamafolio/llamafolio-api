@@ -40,6 +40,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { lpTokenStaker, lpTokens, lockers: [CNCLockerV1, CNCLockerV2], CNC_ETH },
+    revalidate: 60 * 60,
   }
 }
 

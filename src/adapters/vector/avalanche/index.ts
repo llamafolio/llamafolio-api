@@ -24,6 +24,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { vtxLocker, farmContracts },
+    revalidate: 60 * 60,
   }
 }
 

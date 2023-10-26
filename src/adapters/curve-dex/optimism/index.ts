@@ -28,6 +28,7 @@ export const getContracts = async (ctx: BaseContext) => {
       pools,
       gauges,
     },
+    revalidate: 60 * 60,
   }
 }
 

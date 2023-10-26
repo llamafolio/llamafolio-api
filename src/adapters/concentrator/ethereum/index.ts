@@ -122,6 +122,7 @@ export const getContracts = async (ctx: BaseContext) => {
       abcCVX,
       veCTR,
     },
+    revalidate: 60 * 60,
   }
 }
 

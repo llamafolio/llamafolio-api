@@ -109,6 +109,7 @@ export const getContracts = async (ctx: BaseContext) => {
       pools,
       stkCvxCrv,
     },
+    revalidate: 60 * 60,
   }
 }
 

@@ -13,6 +13,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { vaults },
+    revalidate: 60 * 60,
   }
 }
 

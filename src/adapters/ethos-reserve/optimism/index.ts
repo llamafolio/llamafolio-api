@@ -35,6 +35,7 @@ const borrowerOperations: Contract = {
 export const getContracts = async (_ctx: BaseContext) => {
   return {
     contracts: { staker, stabilityPool, borrowerOperations },
+    revalidate: 60 * 60,
   }
 }
 

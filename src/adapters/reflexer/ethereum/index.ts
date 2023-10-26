@@ -1,6 +1,6 @@
 import { getReflexerFarmBalancesWithProxies } from '@adapters/reflexer/ethereum/farm'
 import { getReflexerStakeBalances } from '@adapters/reflexer/ethereum/stake'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const RAI: Contract = {
@@ -17,7 +17,7 @@ const FLX_ETH: Contract = {
   underlyings: ['0x6243d8CEA23066d098a15582d81a598b4e8391F4', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'],
 }
 
-export const getContracts = async (_ctx: BaseContext) => {
+export const getContracts = () => {
   return {
     contracts: { FLX_ETH, RAI },
   }

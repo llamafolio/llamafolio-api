@@ -60,6 +60,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { fmtMLPContract, fmtfMLPContract, sMPX, farmers: [vMLP, vMPX] },
+    revalidate: 60 * 60,
   }
 }
 

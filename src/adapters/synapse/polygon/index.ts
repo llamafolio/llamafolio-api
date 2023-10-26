@@ -24,6 +24,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { miniChef, pools },
+    revalidate: 60 * 60,
   }
 }
 

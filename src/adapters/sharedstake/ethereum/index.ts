@@ -70,6 +70,7 @@ const masterChef: Contract = {
 export const getContracts = () => {
   return {
     contracts: { masterChef, pools: [SGT, vETH2_WETH, SGT_WETH, vETH2, veSGT] },
+    revalidate: 60 * 60,
   }
 }
 
