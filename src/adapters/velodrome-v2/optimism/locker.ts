@@ -109,18 +109,22 @@ async function getVelodromeBribesBalances(
 
   const callsWithMapping = lockerIds.flatMap((lockerId) =>
     locker.pairs.flatMap((pair: Contract) => [
-      ...pair.bribeTokens.map((token: Contract) => ({
-        call: { target: pair.bribe, params: [token.address, lockerId] },
-        tokenContract: token,
-        lockerId: lockerId,
-        provider: 'bribe',
-      })),
-      ...pair.feeTokens.map((token: Contract) => ({
-        call: { target: pair.fee, params: [token.address, lockerId] },
-        tokenContract: token,
-        lockerId: lockerId,
-        provider: 'fee',
-      })),
+      ...(pair.bribeTokens || [])
+        .filter((token: `0x${string}`) => token != null)
+        .map((token: Contract) => ({
+          call: { target: pair.bribe, params: [token.address, lockerId] },
+          tokenContract: token,
+          lockerId: lockerId,
+          provider: 'bribe',
+        })),
+      ...(pair.feeTokens || [])
+        .filter((token: `0x${string}`) => token != null)
+        .map((token: Contract) => ({
+          call: { target: pair.fee, params: [token.address, lockerId] },
+          tokenContract: token,
+          lockerId: lockerId,
+          provider: 'fee',
+        })),
     ]),
   )
 
