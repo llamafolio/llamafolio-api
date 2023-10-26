@@ -41,7 +41,7 @@ async function getGaugesBalances(ctx: BalancesContext, pairs: Contract[], reward
     const userEarnedRes = userEarnedsRes[index]
     const underlyings = pair.underlyings as Contract[]
 
-    if (!underlyings || !userBalanceRes.success || !userEarnedRes.success) {
+    if (!underlyings || !userBalanceRes.success || !userEarnedRes.success || userBalanceRes.output === 0n) {
       continue
     }
 
