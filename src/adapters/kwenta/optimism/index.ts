@@ -1,6 +1,7 @@
 import { getKwentaStakeBalances } from '@adapters/kwenta/optimism/balance'
 import { getKwentaDepositBalances } from '@adapters/kwenta/optimism/deposit'
 import { getContractsFromPerpsProxies } from '@adapters/kwenta/optimism/vault'
+import { getKwentaVotingEscrowedBalance, getKwentaVotingEscrowedV2Balance } from '@adapters/kwenta/optimism/vest'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -48,13 +49,24 @@ const stakers: Contract[] = [
   },
 ]
 
+const kwentaRewardEscrow_v1: Contract = {
+  chain: 'optimism',
+  address: '0xb2a20fcdc506a685122847b21e34536359e94c56',
+  token: '0x920cf626a271321c151d027030d5d08af699456b',
+}
+
+const kwentaRewardEscrow_v2: Contract = {
+  chain: 'optimism',
+  address: '0x1066a8eb3d90af0ad3f89839b974658577e75be2',
+  token: '0x920cf626a271321c151d027030d5d08af699456b',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
   const vaults: Contract[] = await getContractsFromPerpsProxies(ctx, perpsV2Proxies)
-
   const accountFactory = { ...factory, vaults }
 
   return {
-    contracts: { accountFactory, vaults, stakers },
+    contracts: { accountFactory, vaults, stakers, kwentaRewardEscrow_v1, kwentaRewardEscrow_v2 },
     revalidate: 60 * 60,
   }
 }
@@ -63,6 +75,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     accountFactory: getKwentaDepositBalances,
     stakers: getKwentaStakeBalances,
+    kwentaRewardEscrow_v1: getKwentaVotingEscrowedBalance,
+    kwentaRewardEscrow_v2: getKwentaVotingEscrowedV2Balance,
   })
 
   return {

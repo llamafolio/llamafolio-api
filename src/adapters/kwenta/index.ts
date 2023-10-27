@@ -7,6 +7,6 @@ const adapter: Adapter = {
   optimism: optimism,
 }
 
-// TODO: Find a way to get vesting and perpetuals & futures
+// TODO: Find a way to get perpetuals & futures
 
 export default adapter
