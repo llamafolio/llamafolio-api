@@ -105,6 +105,15 @@ functions:
     events:
       - httpApi:
           method: get
+          path: /balances
+    timeout: 10
+
+  getBalancesAddress:
+    handler: src/handlers/getBalancesAddress.handler
+    description: Get address balances
+    events:
+      - httpApi:
+          method: get
           path: /balances/{address}
     timeout: 29
     memorySize: 512
@@ -273,6 +282,12 @@ functions:
     handler: src/handlers/updateGovernanceProposals.handler
     description: Update governance proposals
     timeout: 300
+
+  updateBalances:
+    handler: src/handlers/updateBalances.handler
+    description: Update balances
+    timeout: 300
+    memorySize: 512
 
   updateProtocols:
     handler: src/handlers/updateProtocols.handler
