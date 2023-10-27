@@ -68,6 +68,11 @@ export interface GetMarketsContractsProps {
    * map of underlying tokens by address not defined in Comptroller markets (ex: cETH -> WETH).
    */
   underlyingAddressByMarketAddress?: { [key: string]: `0x${string}` }
+  customAbi?: {
+    markets?: any
+    getAllMarkets?: any
+    underlying?: any
+  }
 }
 
 export type BalanceWithExtraProps = Balance & {
@@ -76,29 +81,27 @@ export type BalanceWithExtraProps = Balance & {
 
 export async function getMarketsContracts(
   ctx: BaseContext,
-  { comptrollerAddress, underlyingAddressByMarketAddress = {} }: GetMarketsContractsProps,
+  { comptrollerAddress, underlyingAddressByMarketAddress = {}, customAbi }: GetMarketsContractsProps,
 ): Promise<Contract[]> {
   const contracts: Contract[] = []
 
   const cTokensAddresses = await call({
     ctx,
-    abi: abi.getAllMarkets,
+    abi: customAbi?.getAllMarkets || abi.getAllMarkets,
     target: comptrollerAddress,
   })
 
   const [marketsRes, underlyingTokensAddressesRes] = await Promise.all([
     multicall({
       ctx,
-      abi: abi.markets,
-      calls: cTokensAddresses.map(
-        (cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] }) as const,
-      ),
+      abi: customAbi?.markets || abi.markets,
+      calls: cTokensAddresses.map((cTokenAddress) => ({ target: comptrollerAddress, params: [cTokenAddress] })),
     }),
 
     multicall({
       ctx,
       calls: cTokensAddresses.map((address) => ({ target: address })),
-      abi: abi.underlying,
+      abi: customAbi?.underlying || abi.underlying,
     }),
   ])
 
