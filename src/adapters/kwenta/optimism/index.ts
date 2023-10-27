@@ -1,6 +1,7 @@
-import { getKwentaStakeBalance } from '@adapters/kwenta/optimism/balance'
+import { getKwentaStakeBalances } from '@adapters/kwenta/optimism/balance'
 import { getKwentaDepositBalances } from '@adapters/kwenta/optimism/deposit'
 import { getContractsFromPerpsProxies } from '@adapters/kwenta/optimism/vault'
+import { getKwentaVotingEscrowedBalance, getKwentaVotingEscrowedV2Balance } from '@adapters/kwenta/optimism/vest'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -35,19 +36,37 @@ const factory: Contract = {
   address: '0x8234F990b149Ae59416dc260305E565e5DAfEb54',
 }
 
-const staker: Contract = {
+const stakers: Contract[] = [
+  {
+    chain: 'optimism',
+    address: '0x6e56a5d49f775ba08041e28030bc7826b13489e0',
+    token: '0x920cf626a271321c151d027030d5d08af699456b',
+  },
+  {
+    chain: 'optimism',
+    address: '0x61294940ce7cd1bda10e349adc5b538b722ceb88',
+    token: '0x920cf626a271321c151d027030d5d08af699456b',
+  },
+]
+
+const kwentaRewardEscrow_v1: Contract = {
   chain: 'optimism',
-  address: '0x6e56a5d49f775ba08041e28030bc7826b13489e0',
+  address: '0xb2a20fcdc506a685122847b21e34536359e94c56',
+  token: '0x920cf626a271321c151d027030d5d08af699456b',
+}
+
+const kwentaRewardEscrow_v2: Contract = {
+  chain: 'optimism',
+  address: '0x1066a8eb3d90af0ad3f89839b974658577e75be2',
   token: '0x920cf626a271321c151d027030d5d08af699456b',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
   const vaults: Contract[] = await getContractsFromPerpsProxies(ctx, perpsV2Proxies)
-
   const accountFactory = { ...factory, vaults }
 
   return {
-    contracts: { accountFactory, vaults, staker },
+    contracts: { accountFactory, vaults, stakers, kwentaRewardEscrow_v1, kwentaRewardEscrow_v2 },
     revalidate: 60 * 60,
   }
 }
@@ -55,7 +74,9 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     accountFactory: getKwentaDepositBalances,
-    staker: getKwentaStakeBalance,
+    stakers: getKwentaStakeBalances,
+    kwentaRewardEscrow_v1: getKwentaVotingEscrowedBalance,
+    kwentaRewardEscrow_v2: getKwentaVotingEscrowedV2Balance,
   })
 
   return {
