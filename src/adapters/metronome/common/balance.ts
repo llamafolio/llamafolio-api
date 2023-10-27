@@ -1,4 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
@@ -11,9 +12,20 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  tokensAccruedOf: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'tokensAccruedOf',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
-export async function getMetronomeBalances(ctx: BalancesContext, markets: Contract[]): Promise<Balance[]> {
+export async function getMetronomeBalances(
+  ctx: BalancesContext,
+  markets: Contract[],
+  rewarder?: Contract,
+): Promise<Balance[]> {
   const balances: Balance[] = []
 
   const [balanceOfsRes, pricePerSharesRes] = await Promise.all([
@@ -48,5 +60,25 @@ export async function getMetronomeBalances(ctx: BalancesContext, markets: Contra
     })
   }
 
+  if (rewarder) {
+    const incentiveRewardBalance = await getIncentivesRewards(ctx, rewarder)
+    return [...balances, incentiveRewardBalance]
+  }
+
   return balances
+}
+
+async function getIncentivesRewards(ctx: BalancesContext, rewarder: Contract): Promise<Balance> {
+  const incentiveReward = await call({
+    ctx,
+    target: rewarder.address,
+    params: [ctx.address],
+    abi: abi.tokensAccruedOf,
+  })
+
+  return {
+    ...(rewarder.underlyings?.[0] as Balance),
+    amount: incentiveReward,
+    category: 'reward',
+  }
 }
