@@ -3,15 +3,6 @@ import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
 
 const abi = {
-  getAllMarkets: {
-    constant: true,
-    inputs: [],
-    name: 'getAllMarkets',
-    outputs: [{ internalType: 'contract CToken[]', name: '', type: 'address[]' }],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
   markets: {
     inputs: [{ internalType: 'address', name: '', type: 'address' }],
     name: 'markets',
@@ -23,15 +14,6 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  underlying: {
-    constant: true,
-    inputs: [],
-    name: 'underlying',
-    outputs: [{ name: '', type: 'address' }],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
 } as const
 
 const comptroller: Contract = {
@@ -40,7 +22,6 @@ const comptroller: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const { getAllMarkets, markets, underlying } = abi
   const pools = await getMarketsContracts(
     ctx,
     {
@@ -52,9 +33,9 @@ export const getContracts = async (ctx: BaseContext) => {
         '0x6f063fe661d922e4fd77227f8579cb84f9f41f0b': '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
       },
     },
-    getAllMarkets,
-    markets,
-    underlying,
+    {
+      getMarketsInfoAbi: abi.markets,
+    },
   )
 
   return {

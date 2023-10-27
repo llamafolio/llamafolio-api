@@ -63,17 +63,18 @@ const COMPOUND_ABI = {
 
 const cTOKENS_DECIMALS = 8
 
+interface CompoundAbi {
+  getAllMarketsAbi?: AbiFunction
+  getMarketsInfoAbi?: AbiFunction
+  getUnderlyingAbi?: AbiFunction
+}
+
 export interface GetMarketsContractsProps {
   comptrollerAddress: `0x${string}`
   /**
    * map of underlying tokens by address not defined in Comptroller markets (ex: cETH -> WETH).
    */
   underlyingAddressByMarketAddress?: { [key: string]: `0x${string}` }
-  customAbi?: {
-    markets?: any
-    getAllMarkets?: any
-    underlying?: any
-  }
 }
 
 export type BalanceWithExtraProps = Balance & {
@@ -83,10 +84,14 @@ export type BalanceWithExtraProps = Balance & {
 export async function getMarketsContracts(
   ctx: BaseContext,
   { comptrollerAddress, underlyingAddressByMarketAddress = {} }: GetMarketsContractsProps,
-  getAllMarketsAbi: AbiFunction = COMPOUND_ABI.getAllMarkets,
-  getMarketsInfoAbi: AbiFunction = COMPOUND_ABI.markets,
-  getUnderlyingAbi: AbiFunction = COMPOUND_ABI.underlying,
+  abis: CompoundAbi = {},
 ): Promise<Contract[]> {
+  const {
+    getAllMarketsAbi = COMPOUND_ABI.getAllMarkets,
+    getMarketsInfoAbi = COMPOUND_ABI.markets,
+    getUnderlyingAbi = COMPOUND_ABI.underlying,
+  } = abis
+
   const cTokensAddresses = await getAllMarkets(ctx, comptrollerAddress, getAllMarketsAbi)
 
   if (!Array.isArray(cTokensAddresses) || cTokensAddresses.length === 0) return []
