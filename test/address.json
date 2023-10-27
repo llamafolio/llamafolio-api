@@ -1,0 +1,1104 @@
+{
+  "0vix": {
+    "polygon": [
+      "0x70144e5b5bbf464cff98d689254dc7c7223e01ab",
+      "0x7bfee91193d9df2ac0bfe90191d40f23c773c060",
+      "0x9fb2fbaecbc0db28ac5dde618d6ba2806f71167b"
+    ]
+  },
+  "1inch-network": {
+    "bsc": [],
+    "common": [],
+    "ethereum": []
+  },
+  "aave-v2": {
+    "avalanche": [],
+    "common": [],
+    "ethereum": [],
+    "polygon": []
+  },
+  "aave-v3": {
+    "arbitrum": [],
+    "avalanche": [],
+    "base": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "abracadabra": {
+    "arbitrum": [],
+    "avalanche": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": []
+  },
+  "across": {
+    "ethereum": {
+      "v1": [],
+      "v2": []
+    }
+  },
+  "aerodrome": {
+    "base": []
+  },
+  "agave": {
+    "gnosis": []
+  },
+  "agility-lsd": {
+    "ethereum": []
+  },
+  "alchemix": {
+    "common": [],
+    "ethereum": [],
+    "fantom": []
+  },
+  "alien-base": {
+    "base": []
+  },
+  "alpaca-finance": {
+    "bsc": [],
+    "common": [],
+    "fantom": []
+  },
+  "ambient": {
+    "ethereum": []
+  },
+  "ambire-wallet": {
+    "ethereum": []
+  },
+  "angle": {
+    "arbitrum": [],
+    "avalanche": [],
+    "common": [],
+    "ethereum": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "ankr": {
+    "avalanche": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": []
+  },
+  "annex": {
+    "bsc": []
+  },
+  "apeswap-amm": {
+    "bsc": [],
+    "ethereum": [],
+    "polygon": []
+  },
+  "apeswap-lending": {
+    "bsc": []
+  },
+  "api3": {
+    "ethereum": []
+  },
+  "apollox": {
+    "bsc": []
+  },
+  "arbitrum-exchange": {
+    "arbitrum": []
+  },
+  "arrakis-finance": {
+    "arbitrum": [],
+    "common": [],
+    "ethereum": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "asymetrix-protocol": {
+    "ethereum": []
+  },
+  "atlantis-loans": {
+    "avalanche": [],
+    "bsc": [],
+    "common": [],
+    "polygon": []
+  },
+  "atlas-usv": {
+    "avalanche": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "polygon": []
+  },
+  "aura": {
+    "arbitrum": [],
+    "common": [],
+    "ethereum": [],
+    "gnosis": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "azuro": {
+    "arbitrum": [],
+    "common": [],
+    "gnosis": [],
+    "polygon": []
+  },
+  "babylon-finance": {
+    "ethereum": []
+  },
+  "badger-dao": {
+    "arbitrum": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "polygon": []
+  },
+  "balancer": {
+    "arbitrum": [],
+    "avalanche": [],
+    "common": [],
+    "ethereum": [],
+    "gnosis": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "bancor-v3": {
+    "ethereum": []
+  },
+  "baseswap": {
+    "base": []
+  },
+  "beefy": {
+    "arbitrum": [],
+    "base": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "bella-protocol": {
+    "ethereum": []
+  },
+  "belt-finance": {
+    "bsc": []
+  },
+  "benddao": {
+    "ethereum": []
+  },
+  "benqi-lending": {
+    "avalanche": []
+  },
+  "benqi-staked-avax": {
+    "avalanche": []
+  },
+  "binance-staked-eth": {
+    "bsc": [],
+    "ethereum": []
+  },
+  "biswap": {
+    "bsc": []
+  },
+  "blur": {
+    "ethereum": []
+  },
+  "cap-finance": {
+    "arbitrum": []
+  },
+  "cat-in-a-box": {
+    "ethereum": []
+  },
+  "cega": {
+    "ethereum": []
+  },
+  "chainlink": {
+    "ethereum": []
+  },
+  "charm-finance": {
+    "ethereum": []
+  },
+  "coinbase-wrapped-staked-eth": {
+    "arbitrum": [],
+    "base": [],
+    "ethereum": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "coinwind": {
+    "bsc": [],
+    "common": []
+  },
+  "colony": {
+    "avalanche": []
+  },
+  "compound": {
+    "common": [],
+    "ethereum": []
+  },
+  "compound-v3": {
+    "arbitrum": [],
+    "base": [],
+    "common": [],
+    "ethereum": [],
+    "polygon": []
+  },
+  "concentrator": {
+    "ethereum": []
+  },
+  "conic-finance": {
+    "ethereum": []
+  },
+  "convex-finance": {
+    "arbitrum": [],
+    "common": [],
+    "ethereum": [],
+    "polygon": []
+  },
+  "creth2": {
+    "ethereum": []
+  },
+  "crvusd": {
+    "ethereum": []
+  },
+  "curve-dex": {
+    "arbitrum": [],
+    "avalanche": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "gnosis": [],
+    "moonbeam": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "cvault-finance": {
+    "ethereum": []
+  },
+  "definix": {
+    "bsc": []
+  },
+  "deltaprime": {
+    "avalanche": []
+  },
+  "dydx": {
+    "ethereum": []
+  },
+  "eigenlayer": {
+    "ethereum": []
+  },
+  "elephant-money": {
+    "bsc": []
+  },
+  "ellipsis-finance": {
+    "bsc": []
+  },
+  "equalizer-exchange": {
+    "fantom": []
+  },
+  "ether.fi": {
+    "ethereum": []
+  },
+  "ethos-reserve": {
+    "optimism": []
+  },
+  "euler": {
+    "common": [],
+    "ethereum": []
+  },
+  "everrise": {
+    "avalanche": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "polygon": []
+  },
+  "exactly": {
+    "common": [],
+    "ethereum": [],
+    "optimism": []
+  },
+  "extra-finance": {
+    "base": [],
+    "common": [],
+    "optimism": []
+  },
+  "fantohm": {
+    "fantom": []
+  },
+  "flamincome": {
+    "ethereum": []
+  },
+  "floor-dao": {
+    "ethereum": []
+  },
+  "florence-finance": {
+    "ethereum": []
+  },
+  "flux-finance": {
+    "ethereum": []
+  },
+  "fortress-loans": {
+    "bsc": []
+  },
+  "fractional-art": {
+    "ethereum": []
+  },
+  "frax-finance": {
+    "arbitrum": {
+      "providers": []
+    },
+    "avalanche": [],
+    "bsc": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": [],
+    "polygon": [],
+    "providers": []
+  },
+  "fraxlend": {
+    "ethereum": []
+  },
+  "gains-network": {
+    "arbitrum": [],
+    "common": [],
+    "polygon": []
+  },
+  "gamma": {
+    "arbitrum": [],
+    "avalanche": [],
+    "base": [],
+    "bsc": [],
+    "celo": [],
+    "common": [],
+    "ethereum": [],
+    "moonbeam": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "gearbox": {
+    "ethereum": []
+  },
+  "geist": {
+    "fantom": []
+  },
+  "gensokishi": {
+    "polygon": []
+  },
+  "gmx": {
+    "arbitrum": [],
+    "avalanche": [],
+    "common": []
+  },
+  "gnosis-protocol-v1": {
+    "ethereum": []
+  },
+  "goldfinch": {
+    "ethereum": []
+  },
+  "goodentry": {
+    "arbitrum": []
+  },
+  "granary-finance": {
+    "arbitrum": [],
+    "avalanche": [],
+    "base": [],
+    "bsc": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": []
+  },
+  "gravita-protocol": {
+    "arbitrum": [],
+    "common": [],
+    "ethereum": []
+  },
+  "gro": {
+    "avalanche": [],
+    "common": {
+      "providers": []
+    },
+    "ethereum": []
+  },
+  "gyro": {
+    "bsc": []
+  },
+  "hector-network": {
+    "fantom": []
+  },
+  "hex": {
+    "ethereum": []
+  },
+  "homora-v2": {
+    "avalanche": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": []
+  },
+  "honeyswap": {
+    "gnosis": [],
+    "polygon": []
+  },
+  "hop-protocol": {
+    "arbitrum": [],
+    "base": [],
+    "common": [],
+    "gnosis": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "horizon-protocol": {
+    "bsc": []
+  },
+  "houdini-swap": {
+    "ethereum": []
+  },
+  "hundred-finance": {
+    "arbitrum": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "illuvium": {
+    "ethereum": []
+  },
+  "inverse-finance": {
+    "ethereum": []
+  },
+  "ipor": {
+    "ethereum": []
+  },
+  "iron-bank": {
+    "avalanche": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": []
+  },
+  "izumi-finance": {
+    "arbitrum": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "polygon": []
+  },
+  "keep3r-network": {
+    "ethereum": []
+  },
+  "klima-dao": {
+    "common": [],
+    "polygon": []
+  },
+  "kwenta": {
+    "optimism": []
+  },
+  "leonicornswap": {
+    "bsc": []
+  },
+  "lido": {
+    "ethereum": [],
+    "moonbeam": []
+  },
+  "life-dao": {
+    "avalanche": [],
+    "common": []
+  },
+  "linear-finance": {
+    "bsc": []
+  },
+  "liqee": {
+    "bsc": [],
+    "common": [],
+    "ethereum": []
+  },
+  "liquid-collective": {
+    "ethereum": []
+  },
+  "liquity": {
+    "ethereum": []
+  },
+  "llama-airforce": {
+    "ethereum": []
+  },
+  "llamapay": {
+    "arbitrum": [],
+    "avalanche": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "gnosis": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "lodestar-finance": {
+    "arbitrum": []
+  },
+  "looksrare": {
+    "ethereum": []
+  },
+  "lusd-chickenbonds": {
+    "ethereum": []
+  },
+  "lybra-v1": {
+    "ethereum": []
+  },
+  "lybra-v2": {
+    "arbitrum": [],
+    "ethereum": []
+  },
+  "lyra": {
+    "arbitrum": [],
+    "common": [],
+    "ethereum": [],
+    "optimism": []
+  },
+  "magnate-finance": {
+    "base": []
+  },
+  "magpie": {
+    "arbitrum": [],
+    "bsc": [],
+    "common": []
+  },
+  "makerdao": {
+    "ethereum": []
+  },
+  "mantisswap": {
+    "polygon": []
+  },
+  "maple": {
+    "ethereum": []
+  },
+  "mdex": {
+    "bsc": []
+  },
+  "mean-finance": {
+    "arbitrum": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "merit-circle": {
+    "ethereum": []
+  },
+  "metronome": {
+    "common": [],
+    "ethereum": [],
+    "optimism": []
+  },
+  "moonwell": {
+    "base": [],
+    "common": [],
+    "moonbeam": []
+  },
+  "morpheus-swap": {
+    "fantom": []
+  },
+  "morphex": {
+    "common": [],
+    "fantom": []
+  },
+  "morpho-aave": {
+    "ethereum": []
+  },
+  "morpho-aavev3": {
+    "ethereum": []
+  },
+  "morpho-compound": {
+    "ethereum": []
+  },
+  "mstable": {
+    "ethereum": []
+  },
+  "multichain": {
+    "bsc": [],
+    "ethereum": [],
+    "fantom": []
+  },
+  "nemesis-dao": {
+    "bsc": []
+  },
+  "nexus-mutual": {
+    "ethereum": []
+  },
+  "nf3-ape": {
+    "ethereum": []
+  },
+  "nodedao": {
+    "ethereum": []
+  },
+  "notional": {
+    "common": [],
+    "ethereum": []
+  },
+  "olympus-dao": {
+    "common": [],
+    "ethereum": []
+  },
+  "ondo-finance": {
+    "ethereum": []
+  },
+  "onyx-protocol": {
+    "ethereum": []
+  },
+  "opyn-squeeth": {
+    "ethereum": []
+  },
+  "origin-defi": {
+    "ethereum": []
+  },
+  "origin-dollar": {
+    "ethereum": []
+  },
+  "overnight-finance": {
+    "arbitrum": [],
+    "base": [],
+    "common": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "paladin-finance": {
+    "ethereum": []
+  },
+  "pancakeswap": {
+    "bsc": [],
+    "common": [],
+    "ethereum": []
+  },
+  "pandora": {
+    "bsc": []
+  },
+  "pangolin": {
+    "avalanche": []
+  },
+  "parallel-protocol": {
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "polygon": []
+  },
+  "paraswap": {
+    "ethereum": []
+  },
+  "pearlfi": {
+    "polygon": []
+  },
+  "pendle": {
+    "arbitrum": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "optimism": []
+  },
+  "perennial": {
+    "arbitrum": []
+  },
+  "piedao": {
+    "ethereum": {
+      "providers": []
+    }
+  },
+  "pika-protocol": {
+    "optimism": []
+  },
+  "platypus-finance": {
+    "avalanche": []
+  },
+  "pods": {
+    "ethereum": []
+  },
+  "polkastarter": {
+    "bsc": [],
+    "common": [],
+    "ethereum": []
+  },
+  "popsicle-finance": {
+    "arbitrum": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "polygon": []
+  },
+  "preon-finance": {
+    "arbitrum": [],
+    "common": [],
+    "polygon": []
+  },
+  "prisma-finance": {
+    "ethereum": []
+  },
+  "pstake-finance": {
+    "bsc": [],
+    "common": [],
+    "ethereum": []
+  },
+  "quickswap-dex": {
+    "polygon": []
+  },
+  "radiant-v1": {
+    "arbitrum": []
+  },
+  "radiant-v2": {
+    "arbitrum": [],
+    "bsc": []
+  },
+  "raft": {
+    "ethereum": []
+  },
+  "rage-trade": {
+    "arbitrum": []
+  },
+  "railgun": {
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "polygon": []
+  },
+  "range-protocol": {
+    "arbitrum": [],
+    "base": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "polygon": []
+  },
+  "reaper-farm": {
+    "arbitrum": [],
+    "bsc": [],
+    "common": [],
+    "fantom": [],
+    "optimism": []
+  },
+  "redacted": {
+    "ethereum": []
+  },
+  "reflexer": {
+    "ethereum": []
+  },
+  "reserve": {
+    "ethereum": []
+  },
+  "retro": {
+    "polygon": []
+  },
+  "ribbon-finance": {
+    "common": [],
+    "ethereum": []
+  },
+  "rocket-pool": {
+    "ethereum": []
+  },
+  "rook": {
+    "ethereum": []
+  },
+  "scream": {
+    "fantom": []
+  },
+  "seamless-protocol": {
+    "base": []
+  },
+  "sentiment": {
+    "arbitrum": []
+  },
+  "set-protocol": {
+    "ethereum": []
+  },
+  "sharedstake": {
+    "ethereum": []
+  },
+  "sherlock": {
+    "ethereum": []
+  },
+  "shibaswap": {
+    "ethereum": []
+  },
+  "sideshift": {
+    "ethereum": []
+  },
+  "silo-finance": {
+    "arbitrum": [],
+    "common": [],
+    "ethereum": []
+  },
+  "smardex": {
+    "ethereum": []
+  },
+  "smoothy": {
+    "bsc": [],
+    "common": [],
+    "ethereum": []
+  },
+  "snowbank": {
+    "avalanche": []
+  },
+  "solidlizard": {
+    "arbitrum": []
+  },
+  "solidly-v2": {
+    "ethereum": []
+  },
+  "sommelier": {
+    "ethereum": []
+  },
+  "sonne-finance": {
+    "base": [],
+    "optimism": []
+  },
+  "spark": {
+    "ethereum": []
+  },
+  "spartacus": {
+    "fantom": []
+  },
+  "sphere-finance": {
+    "polygon": []
+  },
+  "spiritswap": {
+    "fantom": []
+  },
+  "spookyswap": {
+    "fantom": []
+  },
+  "spool": {
+    "ethereum": []
+  },
+  "stader": {
+    "bsc": [],
+    "fantom": [],
+    "polygon": []
+  },
+  "stafi": {
+    "ethereum": []
+  },
+  "stake.link": {
+    "ethereum": []
+  },
+  "stakedao": {
+    "common": [],
+    "ethereum": []
+  },
+  "stakehound": {
+    "ethereum": []
+  },
+  "stakewise": {
+    "ethereum": [],
+    "gnosis": []
+  },
+  "stargate": {
+    "arbitrum": [],
+    "avalanche": [],
+    "base": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "strike": {
+    "ethereum": []
+  },
+  "sturdy": {
+    "ethereum": [],
+    "fantom": []
+  },
+  "stusdt": {
+    "ethereum": []
+  },
+  "sudoswap": {
+    "ethereum": []
+  },
+  "summer.fi": {
+    "ethereum": []
+  },
+  "superfarm": {
+    "ethereum": []
+  },
+  "sushiswap": {
+    "arbitrum": [],
+    "avalanche": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "polygon": []
+  },
+  "swell": {
+    "ethereum": []
+  },
+  "synapse": {
+    "arbitrum": [],
+    "avalanche": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "synclub-staked-bnb": {
+    "bsc": []
+  },
+  "synthetix": {
+    "common": {
+      "provider": []
+    },
+    "ethereum": [],
+    "optimism": []
+  },
+  "tangible": {
+    "polygon": []
+  },
+  "templedao": {
+    "ethereum": []
+  },
+  "tetu": {
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "polygon": []
+  },
+  "the-idols": {
+    "ethereum": []
+  },
+  "the-open-dao-sos": {
+    "ethereum": []
+  },
+  "thena": {
+    "bsc": []
+  },
+  "timewarp": {
+    "bsc": [],
+    "common": [],
+    "ethereum": []
+  },
+  "tokemak": {
+    "ethereum": []
+  },
+  "tokenlon": {
+    "ethereum": []
+  },
+  "tonpound": {
+    "ethereum": []
+  },
+  "tornado-cash": {
+    "ethereum": []
+  },
+  "tprotocol": {
+    "ethereum": []
+  },
+  "trader-joe": {
+    "avalanche": []
+  },
+  "truefi": {
+    "ethereum": []
+  },
+  "trufin-protocol": {
+    "ethereum": []
+  },
+  "trustswap": {
+    "ethereum": []
+  },
+  "umami-finance": {
+    "arbitrum": []
+  },
+  "uniswap-v2": {
+    "ethereum": []
+  },
+  "uniswap-v3": {
+    "arbitrum": [],
+    "base": [],
+    "bsc": [],
+    "celo": [],
+    "common": [],
+    "ethereum": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "unsheth": {
+    "ethereum": []
+  },
+  "uwu-lend": {
+    "ethereum": []
+  },
+  "valas-finance": {
+    "bsc": []
+  },
+  "vector-finance": {
+    "avalanche": []
+  },
+  "velodrome-v1": {
+    "optimism": []
+  },
+  "velodrome-v2": {
+    "optimism": []
+  },
+  "venus": {
+    "bsc": []
+  },
+  "verse": {
+    "ethereum": []
+  },
+  "vesper": {
+    "avalanche": [],
+    "common": [],
+    "ethereum": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "volta-club": {
+    "avalanche": []
+  },
+  "wallet": [],
+  "wepiggy": {
+    "arbitrum": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "whiteheart": {
+    "ethereum": []
+  },
+  "wigoswap": {
+    "fantom": []
+  },
+  "wombat-exchange": {
+    "arbitrum": [],
+    "bsc": [],
+    "common": []
+  },
+  "woofi": {
+    "arbitrum": [],
+    "avalanche": [],
+    "bsc": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": [],
+    "polygon": []
+  },
+  "x2y2": {
+    "ethereum": []
+  },
+  "yearn-finance": {
+    "arbitrum": [],
+    "base": [],
+    "common": [],
+    "ethereum": [],
+    "fantom": [],
+    "optimism": []
+  },
+  "yoshi-exchange": {
+    "bsc": [],
+    "fantom": []
+  },
+  "zyberswap": {
+    "arbitrum": []
+  }
+}

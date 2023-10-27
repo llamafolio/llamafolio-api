@@ -2,6 +2,20 @@ import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
 
+const abi = {
+  markets: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'markets',
+    outputs: [
+      { internalType: 'bool', name: 'isListed', type: 'bool' },
+      { internalType: 'bool', name: 'autoCollaterize', type: 'bool' },
+      { internalType: 'uint256', name: 'collateralFactorMantissa', type: 'uint256' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+}
+
 const Comptroller: Contract = {
   chain: 'polygon',
   address: '0x8849f1a0cb6b5d6076ab150546eddee193754f1c',
@@ -16,6 +30,7 @@ export const getContracts = async (ctx: BaseContext) => {
       // oDAI -> DAI
       '0x6f063fe661d922e4fd77227f8579cb84f9f41f0b': '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
     },
+    customAbi: { markets: abi.markets },
   })
 
   return {
