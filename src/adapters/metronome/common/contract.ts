@@ -46,20 +46,6 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  poolRewards: {
-    inputs: [],
-    name: 'poolRewards',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  getRewardTokens: {
-    inputs: [],
-    name: 'getRewardTokens',
-    outputs: [{ internalType: 'address[]', name: '', type: 'address[]' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
   syntheticToken: {
     inputs: [],
     name: 'syntheticToken',
@@ -106,6 +92,7 @@ export async function getMetronomeContracts(ctx: BaseContext, contract: Contract
       address: depositTokenRes,
       token: token.output,
       underlyings: [underlying],
+      rewards: contract.rewards as Contract[],
       collateralFactor: collateralFactor.output,
       category: 'lend',
     })
