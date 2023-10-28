@@ -4,39 +4,7 @@ import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
 import type { AbiFunction } from 'abitype'
 
-const abi = {
-  markets: {
-    inputs: [{ internalType: 'address', name: '', type: 'address' }],
-    name: 'markets',
-    outputs: [
-      { internalType: 'bool', name: 'isListed', type: 'bool' },
-      { internalType: 'bool', name: 'autoCollaterize', type: 'bool' },
-      { internalType: 'uint256', name: 'collateralFactorMantissa', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-} as const
-
 const COMPOUND_ABI = {
-  borrowBalanceCurrent: {
-    constant: false,
-    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-    name: 'borrowBalanceCurrent',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  exchangeRateCurrent: {
-    constant: false,
-    inputs: [],
-    name: 'exchangeRateCurrent',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    payable: false,
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
   getAllMarkets: {
     constant: true,
     inputs: [],
@@ -106,15 +74,12 @@ export async function getMarketsContracts(
 
   return cTokensInfos
     .map((cToken: any, i: number) => {
-      const cTokenInfo = cTokensInfos[i]
-      if (!cTokenInfo.success) return null
-
       const underlying =
         underlyingAddressByMarketAddress?.[cToken.input.params[0].toLowerCase()] ||
         underlyingTokensAddressesRes[i].output
 
-      const collateralFactorMantissaIndex = getCollateralFactorIndex(cTokenInfo.abi)
-      const collateralFactorMantissa = cTokenInfo.output[collateralFactorMantissaIndex]
+      const collateralFactorMantissaIndex = getCollateralFactorIndex(cToken.abi)
+      const collateralFactorMantissa = cToken.output[collateralFactorMantissaIndex]
 
       return {
         chain: ctx.chain,
@@ -135,11 +100,11 @@ export async function getMarketsInfos(
   comptrollerAddress: `0x${string}`,
   { cTokensAddresses, getAllMarkets = getAllMarketsDefaults as any }: GetInfosParams = {},
 ) {
-  cTokensAddresses = cTokensAddresses || (await getAllMarkets(ctx, comptrollerAddress)!)
-
   return multicall({
     ctx,
-    calls: (cTokensAddresses || []).map((address) => ({ target: comptrollerAddress, params: [address] }) as const),
+    calls: (cTokensAddresses || (await getAllMarkets(ctx, comptrollerAddress)) || []).map(
+      (address) => ({ target: comptrollerAddress, params: [address] }) as const,
+    ),
     abi: COMPOUND_ABI.markets,
   })
 }
@@ -149,11 +114,11 @@ async function getUnderlyings(
   comptrollerAddress: `0x${string}`,
   { cTokensAddresses, getAllMarkets = getAllMarketsDefaults as any }: GetInfosParams = {},
 ) {
-  cTokensAddresses = cTokensAddresses || (await getAllMarkets(ctx, comptrollerAddress)!)
-
   return multicall({
     ctx,
-    calls: (cTokensAddresses || []).map((address) => ({ target: address })),
+    calls: (cTokensAddresses || (await getAllMarkets(ctx, comptrollerAddress)) || []).map((address) => ({
+      target: address,
+    })),
     abi: COMPOUND_ABI.underlying,
   })
 }

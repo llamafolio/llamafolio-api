@@ -1,7 +1,7 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances } from '@lib/compound/v2/lending'
-import { getAllMarketsDefaults, getMarketsContracts } from '@lib/compound/v2/newLending'
+import { getAllMarketsDefaults, getMarketsContracts } from '@lib/compound/v2/market'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -24,11 +24,11 @@ const comptroller: Contract = {
 }
 
 async function getMarketsInfos(ctx: BaseContext, comptroller: `0x${string}`) {
-  const marketsAddresses = await getAllMarketsDefaults(ctx, comptroller)
-
   return multicall({
     ctx,
-    calls: marketsAddresses.map((market) => ({ target: comptroller, params: [market] }) as const),
+    calls: (await getAllMarketsDefaults(ctx, comptroller)).map(
+      (market) => ({ target: comptroller, params: [market] }) as const,
+    ),
     abi: abi.markets,
   })
 }
