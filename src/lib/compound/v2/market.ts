@@ -80,7 +80,7 @@ export async function getMarketsContracts(
         underlyingTokensAddressesRes[i].output
 
       const collateralFactorMantissaIndex = getCollateralFactorIndex(cToken.abi)
-      const collateralFactorMantissa = cToken.output[collateralFactorMantissaIndex]
+      const collateralFactorMantissa = cToken.output[collateralFactorMantissaIndex] || undefined
 
       return {
         chain: ctx.chain,
