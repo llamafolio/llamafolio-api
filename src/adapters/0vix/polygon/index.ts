@@ -1,8 +1,7 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances } from '@lib/compound/v2/lending'
-import { getAllMarketsDefaults, getMarketsContracts } from '@lib/compound/v2/market'
-import { multicall } from '@lib/multicall'
+import { getMarketsContracts, getMarketsInfos } from '@lib/compound/v2/market'
 
 const abi = {
   markets: {
@@ -23,16 +22,6 @@ const comptroller: Contract = {
   address: '0x8849f1a0cb6b5d6076ab150546eddee193754f1c',
 }
 
-async function getMarketsInfos(ctx: BaseContext, comptroller: `0x${string}`) {
-  return multicall({
-    ctx,
-    calls: (await getAllMarketsDefaults(ctx, comptroller)).map(
-      (market) => ({ target: comptroller, params: [market] }) as const,
-    ),
-    abi: abi.markets,
-  })
-}
-
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getMarketsContracts(ctx, {
     comptrollerAddress: comptroller.address,
@@ -42,7 +31,9 @@ export const getContracts = async (ctx: BaseContext) => {
       // oDAI -> DAI
       '0x6f063fe661d922e4fd77227f8579cb84f9f41f0b': '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
     },
-    options: { getMarketsInfos },
+    options: {
+      getMarketsInfos: (ctx, comptrollerAddress) => getMarketsInfos(ctx, comptrollerAddress, { abi: abi.markets }),
+    },
   })
 
   return {

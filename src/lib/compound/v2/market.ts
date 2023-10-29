@@ -42,21 +42,22 @@ const COMPOUND_ABI = {
   },
 } as const
 
-export interface GetMarketsContractsProps {
+interface GetMarketsContractsProps {
   comptrollerAddress: `0x${string}`
   underlyingAddressByMarketAddress?: { [key: string]: `0x${string}` }
   options?: GetMarketsContractsOptions
 }
 
-interface GetMarketsContractsOptions {
-  getAllMarkets?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<`0x${string}`[]>
-  getMarketsInfos?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<any>
-  getUnderlyings?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<{ output: `0x${string}` }[]>
-}
-
 interface GetInfosParams {
   cTokensAddresses?: `0x${string}`[]
   getAllMarkets?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<`0x${string}`[]>
+  abi?: AbiFunction
+}
+
+interface GetMarketsContractsOptions {
+  getAllMarkets?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<`0x${string}`[]>
+  getMarketsInfos?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<any>
+  getUnderlyings?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<any>
 }
 
 export async function getMarketsContracts(
@@ -98,28 +99,32 @@ export async function getAllMarketsDefaults(ctx: BaseContext, comptrollerAddress
 export async function getMarketsInfos(
   ctx: BaseContext,
   comptrollerAddress: `0x${string}`,
-  { cTokensAddresses, getAllMarkets = getAllMarketsDefaults as any }: GetInfosParams = {},
+  { cTokensAddresses, getAllMarkets = getAllMarketsDefaults as any, abi = COMPOUND_ABI.markets }: GetInfosParams = {},
 ) {
   return multicall({
     ctx,
     calls: (cTokensAddresses || (await getAllMarkets(ctx, comptrollerAddress)) || []).map(
       (address) => ({ target: comptrollerAddress, params: [address] }) as const,
     ),
-    abi: COMPOUND_ABI.markets,
+    abi,
   })
 }
 
 async function getUnderlyings(
   ctx: BaseContext,
   comptrollerAddress: `0x${string}`,
-  { cTokensAddresses, getAllMarkets = getAllMarketsDefaults as any }: GetInfosParams = {},
+  {
+    cTokensAddresses,
+    getAllMarkets = getAllMarketsDefaults as any,
+    abi = COMPOUND_ABI.underlying,
+  }: GetInfosParams = {},
 ) {
   return multicall({
     ctx,
     calls: (cTokensAddresses || (await getAllMarkets(ctx, comptrollerAddress)) || []).map((address) => ({
       target: address,
     })),
-    abi: COMPOUND_ABI.underlying,
+    abi,
   })
 }
 
