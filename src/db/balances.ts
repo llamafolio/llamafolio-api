@@ -216,7 +216,7 @@ export function toStorage(balances: Balance[]) {
   return adaptersBalancesStorable
 }
 
-export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHouseClient, fromAddress: string) {
+export async function selectLatestBalancesSnapshotByFromAddresses(client: ClickHouseClient, fromAddresses: string[]) {
   const queryRes = await client.query({
     query: `
     SELECT
@@ -226,13 +226,13 @@ export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHou
       sum("debt_usd") as "debt_usd",
       sum("reward_usd") as "reward_usd"
     FROM lf.adapters_balances
-    where from_address = {fromAddress: String}
+    where from_address IN {fromAddresses: Array(String)}
     GROUP BY "chain", "timestamp"
     ORDER BY "timestamp" DESC
     LIMIT 1 BY "chain"
     `,
     query_params: {
-      fromAddress: fromAddress.toLowerCase(),
+      fromAddresses: fromAddresses.map((address) => address.toLowerCase()),
     },
   })
 
@@ -282,143 +282,6 @@ export interface LatestProtocolBalances {
   rewardUSD?: number
   healthFactor?: number
   groups: LatestProtocolBalancesGroup[]
-}
-
-export async function selectLatestProtocolsBalancesByFromAddress(
-  client: ClickHouseClient,
-  fromAddress: string,
-  timestamp?: Date,
-) {
-  const protocolsBalances: LatestProtocolBalances[] = []
-
-  const queryRes = await client.query({
-    query: `
-      SELECT
-        ab.chain as chain,
-        ab.adapter_id as adapter_id,
-        ab.timestamp as timestamp,
-        ab.balance as balance,
-        y.apy as apy,
-        y.apy_base as apy_base,
-        y.apy_reward as apy_reward,
-        y.apy_mean_30d as apy_mean_30d,
-        y.il_risk as il_risk
-      FROM (
-        SELECT
-          chain,
-          adapter_id,
-          timestamp,
-          balances as balance,
-          JSONExtractString(balance, 'address') AS address
-        FROM ${environment.NS_LF}.adapters_balances
-        ARRAY JOIN balances
-        WHERE
-          from_address = {fromAddress: String} AND
-          "timestamp" = ${
-            timestamp
-              ? '{timestamp: DateTime}'
-              : `(SELECT max("timestamp") AS "timestamp" FROM ${environment.NS_LF}.adapters_balances WHERE from_address = {fromAddress: String})`
-          }
-      ) AS ab
-      LEFT JOIN (
-        SELECT
-          chain,
-          adapter_id,
-          address,
-          apy,
-          apy_base,
-          apy_reward,
-          apy_mean_30d,
-          il_risk,
-          underlyings
-        FROM ${environment.NS_LF}.yields
-        WHERE "timestamp" = (SELECT max("timestamp") AS "timestamp" FROM lf.yields)
-      ) AS y ON
-        (ab.chain = y.chain AND ab.adapter_id = y.adapter_id AND ab.address = y.address);
-    `,
-    query_params: {
-      fromAddress: fromAddress.toLowerCase(),
-      timestamp: timestamp ? toDateTime(timestamp) : undefined,
-    },
-  })
-
-  const res = (await queryRes.json()) as {
-    data: {
-      chain: number
-      adapter_id: string
-      timestamp: string
-      balance: string
-      apy: string | null
-      apy_base: string | null
-      apy_reward: string | null
-      apy_mean_30d: string | null
-      il_risk: boolean | null
-    }[]
-  }
-
-  let updatedAt = undefined
-
-  const balancesByChain = groupBy(res.data, 'chain')
-
-  for (const chainId in balancesByChain) {
-    const chain = chainByChainId[parseInt(chainId)]?.id
-    if (chain == null) {
-      console.error(`Missing chain ${chainId}`)
-      continue
-    }
-
-    if (!updatedAt) {
-      updatedAt = unixFromDateTime(balancesByChain[chainId][0].timestamp)
-    }
-
-    const balancesByProtocol = groupBy(balancesByChain[chainId], 'adapter_id')
-
-    for (const protocolId in balancesByProtocol) {
-      const balances = balancesByProtocol[protocolId].map((row) => {
-        const balance = JSON.parse(row.balance)
-
-        return {
-          ...balance,
-          balanceUSD: parseFloat(balance.balance_usd),
-          debtUSD: parseFloat(balance.debt_usd),
-          rewardUSD: parseFloat(balance.reward_usd),
-          healthFactor: parseFloat(balance.health_factor),
-          apy: balance.apy != null ? parseFloat(balance.apy) : undefined,
-          apy_base: balance.apy_base != null ? parseFloat(balance.apy_base) : undefined,
-          apy_reward: balance.apy_reward != null ? parseFloat(balance.apy_reward) : undefined,
-          apy_mean_30d: balance.apy_mean_30d != null ? parseFloat(balance.apy_mean_30d) : undefined,
-          il_risk: balance.il_risk != null ? balance.il_risk : undefined,
-        }
-      })
-
-      const protocolBalances: LatestProtocolBalances = {
-        id: protocolId,
-        chain,
-        balanceUSD: sum(balances.map((balance) => balance.balanceUSD || 0)),
-        debtUSD: sum(balances.map((balance) => balance.debtUSD || 0)),
-        rewardUSD: sum(balances.map((balance) => balance.rewardUSD || 0)),
-        groups: [],
-      }
-
-      const balancesByGroupIdx = groupBy(balances, 'group_idx')
-
-      for (const groupIdx in balancesByGroupIdx) {
-        const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
-
-        protocolBalances.groups.push({
-          balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
-          debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
-          rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
-          healthFactor: balancesByGroupIdx[groupIdx][0].healthFactor,
-          balances: groupBalances,
-        })
-      }
-
-      protocolsBalances.push(protocolBalances)
-    }
-  }
-
-  return { updatedAt, protocolsBalances }
 }
 
 export async function selectLatestProtocolsBalancesByFromAddresses(client: ClickHouseClient, fromAddresses: string[]) {

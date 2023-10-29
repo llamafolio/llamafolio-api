@@ -3,7 +3,7 @@ import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/contract'
-import { unixFromDate } from '@lib/fmt'
+import { parseAddresses, unixFromDate } from '@lib/fmt'
 import { invokeLambda } from '@lib/lambda'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -17,8 +17,7 @@ interface BalancesResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  // comma separated addresses
-  const addresses = (event.queryStringParameters?.address || '').split(',').map((address) => address.toLowerCase())
+  const addresses = parseAddresses(event.pathParameters?.address || '')
   console.log('Get balances', addresses)
   if (addresses.length === 0) {
     return badRequest('Missing address parameter')

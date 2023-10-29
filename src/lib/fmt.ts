@@ -74,6 +74,14 @@ export function parseStringJSON(jsonString: string) {
   }
 }
 
+/**
+ * Parse comma separated addresses
+ * @param str
+ */
+export function parseAddresses(str: string) {
+  return str.split(',').map((address) => address.toLowerCase())
+}
+
 export function toStartOfDay(date: Date) {
   const newDate = new Date(date)
   newDate.setUTCHours(0, 0, 0, 0)
