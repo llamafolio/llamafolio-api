@@ -1,5 +1,6 @@
 import { client } from '@db/clickhouse'
 import { selectContracts } from '@db/contracts'
+import environment from '@environment'
 import type { BaseContext, BaseContract, Contract, RawContract } from '@lib/adapter'
 import { keyBy } from '@lib/array'
 import { type Chain, chainById } from '@lib/chains'
@@ -90,9 +91,13 @@ export async function resolveContractsTokens(
     }
   }
 
-  // cross-reference contracts defined by other adapters to build up a tree of underlyings
-  const tokens = await selectContracts(client, chainById[ctx.chain].chainId, [...tokenAddresses])
-  const tokenByAddress = keyBy(tokens, 'address', { lowercase: true })
+  let tokenByAddress: { [address: string]: Contract } = {}
+
+  if (environment.CLICKHOUSE_HOST) {
+    // cross-reference contracts defined by other adapters to build up a tree of underlyings
+    const tokens = await selectContracts(client, chainById[ctx.chain].chainId, [...tokenAddresses])
+    tokenByAddress = keyBy(tokens, 'address', { lowercase: true })
+  }
 
   // fetch missing ERC20 on-chain (won't get extra data but will be able to move forward)
   // NOTE: could be fetched using our tokens indexer
