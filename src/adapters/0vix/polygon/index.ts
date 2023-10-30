@@ -1,6 +1,8 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsBalances, getMarketsContracts, getMarketsInfos } from '@lib/compound/v2/market'
+import { getMarketsBalances } from '@lib/compound/v2/lending'
+import { getMarketsContracts } from '@lib/compound/v2/market'
+import { multicall } from '@lib/multicall'
 
 const abi = {
   markets: {
@@ -30,9 +32,12 @@ export const getContracts = async (ctx: BaseContext) => {
       // oDAI -> DAI
       '0x6f063fe661d922e4fd77227f8579cb84f9f41f0b': '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
     },
-    options: {
-      getMarketsInfos: (ctx, comptrollerAddress) => getMarketsInfos(ctx, comptrollerAddress, { abi: abi.markets }),
-    },
+    getMarketsInfos: (ctx, { markets, comptroller }) =>
+      multicall({
+        ctx,
+        calls: markets.map((address) => ({ target: comptroller, params: [address] }) as const),
+        abi: abi.markets,
+      }),
   })
 
   return {

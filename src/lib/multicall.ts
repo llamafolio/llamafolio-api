@@ -34,16 +34,12 @@ export async function multicall<
   allowFailure?: TAllowFailure
 }): Promise<
   (TAllowFailure extends false
-    ? {
-        abi: DecodeFunctionResultParameters<TAbi[]>['abi'][number]
-        data: DecodeFunctionResultReturnType<TAbi[]>
-      }
+    ? DecodeFunctionResultReturnType<TAbi[]>
     :
         | {
             success: true
             input: Call
             output: DecodeFunctionResultReturnType<TAbi[]>
-            abi: DecodeFunctionResultParameters<TAbi[]>['abi'][number]
           }
         | {
             success: false
@@ -85,7 +81,6 @@ export async function multicall<
         input: options.calls[idx],
         success: response.status === 'success',
         output: response.result,
-        abi: options.abi,
       }
     }
 

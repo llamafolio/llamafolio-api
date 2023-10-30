@@ -4,7 +4,6 @@ import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
-import type { AbiFunction } from 'abitype'
 
 const COMPOUND_ABI = {
   getAllMarkets: {
@@ -65,91 +64,71 @@ const COMPOUND_ABI = {
 interface GetMarketsContractsProps {
   comptrollerAddress: `0x${string}`
   underlyingAddressByMarketAddress?: { [key: string]: `0x${string}` }
-  options?: GetMarketsContractsOptions
+  getAllMarkets?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<`0x${string}`[]>
+  getMarketsInfos?: (ctx: BaseContext, params: GetInfosParams) => Promise<any>
+  getUnderlyings?: (ctx: BaseContext, params: GetInfosParams) => Promise<any>
+  getCollateralFactor?: (ctx: BaseContext, params: GetCollateralFactorParams) => Promise<any>
 }
 
 interface GetInfosParams {
-  cTokensAddresses?: `0x${string}`[]
-  getAllMarkets?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<`0x${string}`[]>
-  abi?: AbiFunction
+  comptroller: `0x${string}`
+  markets: readonly `0x${string}`[]
 }
 
-interface GetMarketsContractsOptions {
-  getAllMarkets?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<`0x${string}`[]>
-  getMarketsInfos?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<any>
-  getUnderlyings?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<any>
+interface GetCollateralFactorParams {
+  market: `0x${string}`
+  marketInfo: any
 }
 
-export async function getMarketsContracts(
-  ctx: BaseContext,
-  { comptrollerAddress, underlyingAddressByMarketAddress, options = {} }: GetMarketsContractsProps,
-) {
-  const _getAllMarkets = options?.getAllMarkets ?? getAllMarketsDefaults
-  const _getMarketsInfos = options?.getMarketsInfos ?? getMarketsInfos
-  const _getUnderlying = options?.getUnderlyings ?? getUnderlyings
+export async function getMarketsContracts(ctx: BaseContext, options: GetMarketsContractsProps) {
+  const _getAllMarkets = options.getAllMarkets || getAllMarkets
+  const _getMarketsInfos = options.getMarketsInfos || getMarketsInfos
+  const _getUnderlying = options.getUnderlyings || getUnderlyings
+  const _getCollateralFactor = options.getCollateralFactor || getCollateralFactor
+
+  const markets = await _getAllMarkets(ctx, options.comptrollerAddress)
 
   const [cTokensInfos, underlyingTokensAddressesRes] = await Promise.all([
-    _getMarketsInfos(ctx, comptrollerAddress, { getAllMarkets: _getAllMarkets as any }),
-    _getUnderlying(ctx, comptrollerAddress, { getAllMarkets: _getAllMarkets as any }),
+    _getMarketsInfos(ctx, { comptroller: options.comptrollerAddress, markets }),
+    _getUnderlying(ctx, { comptroller: options.comptrollerAddress, markets }),
   ])
 
   return cTokensInfos
     .map((cToken: any, i: number) => {
       const underlying =
-        underlyingAddressByMarketAddress?.[cToken.input.params[0].toLowerCase()] ||
+        options.underlyingAddressByMarketAddress?.[cToken.input.params[0].toLowerCase()] ||
         underlyingTokensAddressesRes[i].output
 
-      const collateralFactorMantissaIndex = getCollateralFactorIndex(cToken.abi)
-      const collateralFactorMantissa = cToken.output[collateralFactorMantissaIndex] || undefined
+      const collateralFactor = _getCollateralFactor(ctx, { market: markets[i], marketInfo: cToken.output })
 
       return {
         chain: ctx.chain,
         address: cToken.input.params[0],
-        collateralFactor: collateralFactorMantissa,
+        collateralFactor,
         underlyings: [underlying],
       }
     })
     .filter(isNotNullish)
 }
 
-export async function getAllMarketsDefaults(ctx: BaseContext, comptrollerAddress: `0x${string}`) {
-  return call({ ctx, target: comptrollerAddress, abi: COMPOUND_ABI.getAllMarkets })
+export async function getAllMarkets(ctx: BaseContext, comptroller: `0x${string}`) {
+  return call({ ctx, target: comptroller, abi: COMPOUND_ABI.getAllMarkets })
 }
 
-export async function getMarketsInfos(
-  ctx: BaseContext,
-  comptrollerAddress: `0x${string}`,
-  { cTokensAddresses, getAllMarkets = getAllMarketsDefaults as any, abi = COMPOUND_ABI.markets }: GetInfosParams = {},
-) {
+export async function getMarketsInfos(ctx: BaseContext, { comptroller, markets }: GetInfosParams) {
   return multicall({
     ctx,
-    calls: (cTokensAddresses || (await getAllMarkets(ctx, comptrollerAddress)) || []).map(
-      (address) => ({ target: comptrollerAddress, params: [address] }) as const,
-    ),
-    abi,
+    calls: markets.map((address) => ({ target: comptroller, params: [address] }) as const),
+    abi: COMPOUND_ABI.markets,
   })
 }
 
-async function getUnderlyings(
-  ctx: BaseContext,
-  comptrollerAddress: `0x${string}`,
-  {
-    cTokensAddresses,
-    getAllMarkets = getAllMarketsDefaults as any,
-    abi = COMPOUND_ABI.underlying,
-  }: GetInfosParams = {},
-) {
-  return multicall({
-    ctx,
-    calls: (cTokensAddresses || (await getAllMarkets(ctx, comptrollerAddress)) || []).map((address) => ({
-      target: address,
-    })),
-    abi,
-  })
+async function getUnderlyings(ctx: BaseContext, { markets }: GetInfosParams) {
+  return multicall({ ctx, calls: markets.map((address) => ({ target: address })), abi: COMPOUND_ABI.getAllMarkets })
 }
 
-function getCollateralFactorIndex(abiFunction: AbiFunction) {
-  return abiFunction.outputs.findIndex((output) => output.name === 'collateralFactorMantissa')
+function getCollateralFactor(ctx: BaseContext, { marketInfo }: GetCollateralFactorParams) {
+  return marketInfo[1]
 }
 
 export async function getMarketsBalances(ctx: BalancesContext, markets: Contract[]): Promise<Balance[][]> {
