@@ -1,14 +1,30 @@
-import type { BalancesContext, BaseContext, GetBalancesHandler } from '@lib/adapter'
-import type { Contract } from '@lib/adapter'
+import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
+import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import type { Pair } from '@lib/uniswap/v2/factory'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 import { getStakeBalance } from './balances'
+
+const abi = {
+  markets: {
+    constant: true,
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'markets',
+    outputs: [
+      { internalType: 'bool', name: 'isListed', type: 'bool' },
+      { internalType: 'uint256', name: 'collateralFactorMantissa', type: 'uint256' },
+      { internalType: 'enum JoetrollerV1Storage.Version', name: 'version', type: 'uint8' },
+    ],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function',
+  },
+} as const
 
 const JOE: Token = {
   chain: 'avalanche',
@@ -50,6 +66,12 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
 
   const markets = await getMarketsContracts(ctx, {
     comptrollerAddress: '0xdc13687554205E5b89Ac783db14bb5bba4A1eDaC',
+    getMarketsInfos: (ctx, { markets, comptroller }) =>
+      multicall({
+        ctx,
+        calls: markets.map((address) => ({ target: comptroller, params: [address] }) as const),
+        abi: abi.markets,
+      }),
   })
 
   const { pairs, allPairsLength } = await getPairsContracts({

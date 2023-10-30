@@ -1,7 +1,7 @@
 import { getVAIStakeBalance, getXVSStakeBalance } from '@adapters/venus/bsc/stake'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsContracts } from '@lib/compound/v2/market'
 import { ADDRESS_ZERO } from '@lib/contract'
 import type { Token } from '@lib/token'
 
@@ -28,7 +28,7 @@ const VenusLens: Contract = {
   underlyings: [XVS],
 }
 
-const Comptroller: Contract = {
+const comptroller: Contract = {
   chain: 'bsc',
   address: '0xfD36E2c2a6789Db23113685031d7F16329158384',
   underlyings: [XVS, VAI],
@@ -53,7 +53,7 @@ const XVSVenusVault: Contract = {
 export const getContracts = async (ctx: BaseContext) => {
   const markets = await getMarketsContracts(ctx, {
     // Venus Unitroller
-    comptrollerAddress: Comptroller.address,
+    comptrollerAddress: comptroller.address,
     underlyingAddressByMarketAddress: {
       // cBNB -> BNB
       '0xa07c5b74c9b40447a954e1466938b865b6bbea36': ADDRESS_ZERO,
@@ -61,7 +61,7 @@ export const getContracts = async (ctx: BaseContext) => {
   })
 
   return {
-    contracts: { markets, Comptroller, VenusLens, VAIVenusVault, XVSVenusVault },
+    contracts: { markets, comptroller, VenusLens, VAIVenusVault, XVSVenusVault },
     revalidate: 60 * 60,
   }
 }
@@ -70,8 +70,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     VAIVenusVault: getVAIStakeBalance,
     XVSVenusVault: getXVSStakeBalance,
-    markets: (...args) => getLendBorrowBalances(...args, Comptroller),
-    Comptroller: (...args) => getRewardsBalances(...args, VenusLens),
+    markets: (...args) => getLendBorrowBalances(...args, comptroller),
+    comptroller: (...args) => getRewardsBalances(...args, VenusLens),
   })
 
   return {
