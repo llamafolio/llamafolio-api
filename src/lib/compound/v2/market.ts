@@ -124,7 +124,7 @@ export async function getMarketsInfos(ctx: BaseContext, { comptroller, markets }
 }
 
 async function getUnderlyings(ctx: BaseContext, { markets }: GetInfosParams) {
-  return multicall({ ctx, calls: markets.map((address) => ({ target: address })), abi: COMPOUND_ABI.getAllMarkets })
+  return multicall({ ctx, calls: markets.map((address) => ({ target: address })), abi: COMPOUND_ABI.underlying })
 }
 
 function getCollateralFactor(ctx: BaseContext, { marketInfo }: GetCollateralFactorParams) {
