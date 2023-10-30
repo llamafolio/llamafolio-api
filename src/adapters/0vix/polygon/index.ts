@@ -1,7 +1,6 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsBalances } from '@lib/compound/v2/lending'
-import { getMarketsContracts, getMarketsInfos } from '@lib/compound/v2/market'
+import { getMarketsBalances, getMarketsContracts, getMarketsInfos } from '@lib/compound/v2/market'
 
 const abi = {
   markets: {
@@ -23,7 +22,7 @@ const comptroller: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getMarketsContracts(ctx, {
+  const markets = await getMarketsContracts(ctx, {
     comptrollerAddress: comptroller.address,
     underlyingAddressByMarketAddress: {
       // oMatic -> Matic
@@ -38,7 +37,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: {
-      pools,
+      markets,
       comptroller,
     },
     revalidate: 60 * 60,
@@ -47,7 +46,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: getMarketsBalances,
+    markets: getMarketsBalances,
   })
 
   return {

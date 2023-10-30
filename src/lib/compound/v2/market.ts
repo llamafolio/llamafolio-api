@@ -1,5 +1,7 @@
-import type { BaseContext } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
+import { mapMultiSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
+import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
 import type { AbiFunction } from 'abitype'
@@ -38,6 +40,24 @@ const COMPOUND_ABI = {
     outputs: [{ name: '', type: 'address' }],
     payable: false,
     stateMutability: 'view',
+    type: 'function',
+  },
+  borrowBalanceCurrent: {
+    constant: false,
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'borrowBalanceCurrent',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  exchangeRateCurrent: {
+    constant: false,
+    inputs: [],
+    name: 'exchangeRateCurrent',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    payable: false,
+    stateMutability: 'nonpayable',
     type: 'function',
   },
 } as const
@@ -130,4 +150,62 @@ async function getUnderlyings(
 
 function getCollateralFactorIndex(abiFunction: AbiFunction) {
   return abiFunction.outputs.findIndex((output) => output.name === 'collateralFactorMantissa')
+}
+
+export async function getMarketsBalances(ctx: BalancesContext, markets: Contract[]): Promise<Balance[][]> {
+  const [cTokensBalances, cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: markets.map((market) => ({ target: market.address, params: [ctx.address] }) as const),
+      abi: erc20Abi.balanceOf,
+    }),
+    multicall({
+      ctx,
+      calls: markets.map((market) => ({ target: market.address, params: [ctx.address] }) as const),
+      abi: COMPOUND_ABI.borrowBalanceCurrent,
+    }),
+    multicall({
+      ctx,
+      calls: markets.map((market) => ({ target: market.address })),
+      abi: COMPOUND_ABI.exchangeRateCurrent,
+    }),
+  ])
+
+  return mapMultiSuccessFilter(
+    cTokensBalances.map((_, i) => [
+      cTokensBalances[i],
+      cTokensBorrowBalanceCurrentRes[i],
+      cTokensExchangeRateCurrentRes[i],
+    ]),
+    (res, index) => {
+      const market = markets[index]
+      const underlying = market.underlyings?.[0] as Contract
+      const cDecimals = market.decimals // always 8
+      const uDecimals = underlying.decimals
+      const [{ output: lend }, { output: borrow }, { output: pricePerFullShare }] = res.inputOutputPairs
+
+      if (!underlying || !cDecimals || !uDecimals) return null
+
+      const fmtPricePerFullShare = pricePerFullShare / 10n ** BigInt(cDecimals + 2)
+      const cTokenAmount = lend * fmtPricePerFullShare
+
+      const lendBalance: LendBalance = {
+        ...market,
+        amount: cTokenAmount / 10n ** BigInt(uDecimals),
+        underlyings: [{ ...underlying, amount: cTokenAmount / 10n ** BigInt(cDecimals) }],
+        rewards: undefined,
+        category: 'lend',
+      }
+
+      const borrowBalance: BorrowBalance = {
+        ...underlying,
+        amount: borrow,
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'borrow',
+      }
+
+      return [lendBalance, borrowBalance]
+    },
+  ).filter(isNotNullish)
 }
