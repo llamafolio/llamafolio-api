@@ -1,6 +1,6 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
 import type { Token } from '@lib/token'
 
 import { getAtlantisFarmBalances } from '../common/farm'
@@ -32,14 +32,14 @@ const lpStaker: Contract = {
   underlyings: [atl, busd],
 }
 
-const Comptroller: Contract = {
+const comptroller: Contract = {
   chain: 'bsc',
   address: '0xE7E304F136c054Ee71199Efa6E26E8b0DAe242F3',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
   const markets = await getMarketsContracts(ctx, {
-    comptrollerAddress: Comptroller.address,
+    comptrollerAddress: comptroller.address,
     underlyingAddressByMarketAddress: {
       // aBNB -> WBNB
       '0x5a9a90983a369b6bb8f062f0afe6219ac01caf63': '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
@@ -47,7 +47,7 @@ export const getContracts = async (ctx: BaseContext) => {
   })
 
   return {
-    contracts: { markets, Comptroller, stakers: [atlStaker, lpStaker] },
+    contracts: { markets, comptroller, stakers: [atlStaker, lpStaker] },
     revalidate: 60 * 60,
   }
 }

@@ -1,7 +1,7 @@
 import { getMagnateMarketsBalances } from '@adapters/magnate-finance/base/balance'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsContracts } from '@lib/compound/v2/market'
 
 const cEther: Contract = {
   chain: 'base',

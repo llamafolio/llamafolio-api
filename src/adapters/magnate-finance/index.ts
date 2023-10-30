@@ -6,5 +6,5 @@ const adapter: Adapter = {
   id: 'magnate-finance',
   base,
 }
-
+// /!\ RUGPULL
 export default adapter

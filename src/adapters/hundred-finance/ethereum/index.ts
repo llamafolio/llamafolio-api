@@ -1,6 +1,6 @@
 import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
 
 export const getContracts = async (ctx: BaseContext) => {
   const comptrollerAddress = '0x0f390559f258eb8591c8e31cf0905e97cf36ace2'

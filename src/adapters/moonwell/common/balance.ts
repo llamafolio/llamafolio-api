@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract, RewardBalance } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
-import { getMarketsBalances } from '@lib/compound/v2/lending'
+import { getMarketsBalances } from '@lib/compound/v2/market'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
@@ -62,7 +62,7 @@ export async function getMoonwellMarketsBalances(
   comptroller: Contract,
   rewardDistributor?: Contract,
 ): Promise<Balance[] | undefined> {
-  const marketsBalances = await getMarketsBalances(ctx, markets)
+  const marketsBalances = (await getMarketsBalances(ctx, markets)).flat()
 
   const rewardsFunctionMap: { [key: string]: () => Promise<Balance[] | undefined> } = {
     base: () => getMoonwellBaseRewards(ctx, marketsBalances, rewardDistributor),

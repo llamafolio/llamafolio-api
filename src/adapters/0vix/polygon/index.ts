@@ -39,6 +39,9 @@ export const getContracts = async (ctx: BaseContext) => {
         calls: markets.map((address) => ({ target: comptroller, params: [address] }) as const),
         abi: abi.markets,
       }),
+    getCollateralFactor: ({ marketInfo }) => {
+      return marketInfo[2]
+    },
   })
 
   return {

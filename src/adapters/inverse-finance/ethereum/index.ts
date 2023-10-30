@@ -1,7 +1,7 @@
 import { getInverseMarketsBalances, getInverseMarketsContracts } from '@adapters/inverse-finance/ethereum/market'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsContracts } from '@lib/compound/v2/market'
 
 import { getInverseLendingBalances } from './balance'
 

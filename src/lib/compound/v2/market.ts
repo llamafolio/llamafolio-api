@@ -5,7 +5,7 @@ import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
 
-const COMPOUND_ABI = {
+export const COMPOUND_ABI = {
   getAllMarkets: {
     constant: true,
     inputs: [],
@@ -64,10 +64,10 @@ const COMPOUND_ABI = {
 interface GetMarketsContractsProps {
   comptrollerAddress: `0x${string}`
   underlyingAddressByMarketAddress?: { [key: string]: `0x${string}` }
-  getAllMarkets?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<`0x${string}`[]>
+  getAllMarkets?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<any>
   getMarketsInfos?: (ctx: BaseContext, params: GetInfosParams) => Promise<any>
   getUnderlyings?: (ctx: BaseContext, params: GetInfosParams) => Promise<any>
-  getCollateralFactor?: (ctx: BaseContext, params: GetCollateralFactorParams) => Promise<any>
+  getCollateralFactor?: (params: GetCollateralFactorParams) => Promise<any>
 }
 
 interface GetInfosParams {
@@ -99,7 +99,7 @@ export async function getMarketsContracts(ctx: BaseContext, options: GetMarketsC
         options.underlyingAddressByMarketAddress?.[cToken.input.params[0].toLowerCase()] ||
         underlyingTokensAddressesRes[i].output
 
-      const collateralFactor = _getCollateralFactor(ctx, { market: markets[i], marketInfo: cToken.output })
+      const collateralFactor = _getCollateralFactor({ market: markets[i], marketInfo: cToken.output })
 
       return {
         chain: ctx.chain,
@@ -127,7 +127,7 @@ async function getUnderlyings(ctx: BaseContext, { markets }: GetInfosParams) {
   return multicall({ ctx, calls: markets.map((address) => ({ target: address })), abi: COMPOUND_ABI.underlying })
 }
 
-function getCollateralFactor(ctx: BaseContext, { marketInfo }: GetCollateralFactorParams) {
+function getCollateralFactor({ marketInfo }: GetCollateralFactorParams) {
   return marketInfo[1]
 }
 
@@ -159,7 +159,8 @@ export async function getMarketsBalances(ctx: BalancesContext, markets: Contract
     (res, index) => {
       const market = markets[index]
       const underlying = market.underlyings?.[0] as Contract
-      const cDecimals = market.decimals // always 8
+      const rewards = market.rewards as Balance[]
+      const cDecimals = 8 // cDecimals are always 8
       const uDecimals = underlying.decimals
       const [{ output: lend }, { output: borrow }, { output: pricePerFullShare }] = res.inputOutputPairs
 
@@ -172,7 +173,7 @@ export async function getMarketsBalances(ctx: BalancesContext, markets: Contract
         ...market,
         amount: cTokenAmount / 10n ** BigInt(uDecimals),
         underlyings: [{ ...underlying, amount: cTokenAmount / 10n ** BigInt(cDecimals) }],
-        rewards: undefined,
+        rewards,
         category: 'lend',
       }
 
