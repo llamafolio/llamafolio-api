@@ -1,6 +1,5 @@
 import environment from '@environment'
 import { ADDRESS_ZERO } from '@lib/contract'
-import { isNotFalsy } from '@lib/type'
 import type { Address, HttpTransport, WebSocketTransport } from 'viem'
 import { http, webSocket } from 'viem'
 
@@ -52,12 +51,10 @@ export const chains = [
     chainId: 42161,
     name: 'Arbitrum',
     rpcUrls: [
-      LLAMANODES_API_KEY
-        ? http(`https://arbitrum.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
-        : undefined,
+      http(getLlamaNodesUrl('https://arbitrum.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://rpc.ankr.com/arbitrum', { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://arb1.arbitrum.io/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
-    ].filter(isNotFalsy),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -102,12 +99,10 @@ export const chains = [
     chainId: 8453,
     name: 'Base',
     rpcUrls: [
-      LLAMANODES_API_KEY
-        ? http(`https://base.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
-        : undefined,
+      http(getLlamaNodesUrl('https://base.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://base-mainnet.public.blastapi.io', { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://mainnet.base.org', { batch: { wait: 0, batchSize: 1_000 } }),
-    ].filter(isNotFalsy),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -120,16 +115,12 @@ export const chains = [
     id: 'bsc',
     chainId: 56,
     name: 'BNB Chain',
-    rpcWssUrl: [
-      LLAMANODES_API_KEY ? webSocket(`wss://binance.llamarpc.com/rpc/${LLAMANODES_API_KEY}`) : undefined,
-    ].filter(isNotFalsy),
+    rpcWssUrl: [webSocket(getLlamaNodesUrl('wss://binance.llamarpc.com'))],
     rpcUrls: [
-      LLAMANODES_API_KEY
-        ? http(`https://binance.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
-        : undefined,
+      http(getLlamaNodesUrl('https://binance.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://bsc-dataseed.binance.org/', { batch: { batchSize: 1_000, wait: 10 } }),
       http('https://bsc-dataseed1.ninicoin.io/', { batch: { batchSize: 1_000, wait: 10 } }),
-    ].filter(isNotFalsy),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -158,19 +149,15 @@ export const chains = [
     id: 'ethereum',
     chainId: 1,
     name: 'Ethereum',
-    rpcWssUrl: [LLAMANODES_API_KEY ? webSocket(`wss://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`) : undefined].filter(
-      isNotFalsy,
-    ),
+    rpcWssUrl: [webSocket(getLlamaNodesUrl('wss://eth.llamarpc.com'))],
     rpcUrls: [
-      LLAMANODES_API_KEY
-        ? http(`https://eth.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
-        : undefined,
+      http(getLlamaNodesUrl('https://eth.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://rpc.ankr.com/eth', { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79', {
         batch: { wait: 10, batchSize: 1_000 },
       }),
       http('https://cloudflare-eth.com', { batch: { batchSize: 1_000, wait: 10 } }),
-    ].filter(isNotFalsy),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -235,17 +222,13 @@ export const chains = [
     id: 'polygon',
     chainId: 137,
     name: 'Polygon',
-    rpcWssUrl: [
-      LLAMANODES_API_KEY ? webSocket(`wss://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`) : undefined,
-    ].filter(isNotFalsy),
+    rpcWssUrl: [webSocket(getLlamaNodesUrl('wss://polygon.llamarpc.com'))],
     rpcUrls: [
-      LLAMANODES_API_KEY
-        ? http(`https://polygon.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
-        : undefined,
+      http(getLlamaNodesUrl('https://polygon.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://rpc.ankr.com/polygon', { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://polygon-rpc.com/', { batch: { batchSize: 1_000, wait: 10 } }),
       http('https://rpc-mainnet.maticvigil.com/', { batch: { batchSize: 1_000, wait: 10 } }),
-    ].filter(isNotFalsy),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -291,16 +274,12 @@ export const chains = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcWssUrl: [
-      LLAMANODES_API_KEY ? webSocket(`wss://optimism.llamarpc.com/rpc/${LLAMANODES_API_KEY}`) : undefined,
-    ].filter(isNotFalsy),
+    rpcWssUrl: [webSocket(getLlamaNodesUrl('wss://optimism.llamarpc.com'))],
     rpcUrls: [
-      LLAMANODES_API_KEY
-        ? http(`https://optimism.llamarpc.com/rpc/${LLAMANODES_API_KEY}`, { batch: { wait: 0, batchSize: 5_000 } })
-        : undefined,
+      http(getLlamaNodesUrl('https://optimism.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://rpc.ankr.com/optimism', { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://mainnet.optimism.io', { batch: { batchSize: 1_000, wait: 10 } }),
-    ].filter(isNotFalsy),
+    ],
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -373,4 +352,12 @@ export const fromDefiLlamaChain: { [key: string]: Chain } = {
   Polygon: 'polygon',
   'Polygon zkEVM': 'polygon-zkevm',
   'zkSync Era': 'zksync-era',
+}
+
+/**
+ * Get LLamaNodes Premium RPC URL if API key specified in environment, free RPC otherwise
+ * @param baseEndpoint
+ */
+function getLlamaNodesUrl(baseEndpoint: string) {
+  return LLAMANODES_API_KEY ? `${baseEndpoint}/rpc/${LLAMANODES_API_KEY}` : baseEndpoint
 }
