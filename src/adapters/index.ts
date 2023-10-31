@@ -227,6 +227,7 @@ import synclubStakedBnb from '@adapters/synclub-staked-bnb'
 import synthetix from '@adapters/synthetix'
 import tangible from '@adapters/tangible'
 import templedao from '@adapters/templedao'
+import tenderFinance from '@adapters/tender-finance'
 import tetu from '@adapters/tetu'
 import theIdols from '@adapters/the-idols'
 import theOpenDaoSos from '@adapters/the-open-dao-sos'
@@ -496,6 +497,7 @@ export const adapters: Adapter[] = [
   synthetix,
   tangible,
   templedao,
+  tenderFinance,
   tetu,
   theIdols,
   theOpenDaoSos,
