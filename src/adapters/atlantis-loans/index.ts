@@ -11,4 +11,6 @@ const adapter: Adapter = {
   avalanche,
 }
 
+// /!\ RugPull
+
 export default adapter

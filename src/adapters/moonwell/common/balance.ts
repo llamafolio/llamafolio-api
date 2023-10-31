@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract, RewardBalance } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
-import { getMarketsBalances } from '@lib/compound/v2/lending'
+import { getMarketsBalances } from '@lib/compound/v2/market'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'

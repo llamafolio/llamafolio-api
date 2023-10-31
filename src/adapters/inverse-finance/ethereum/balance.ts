@@ -1,7 +1,9 @@
-import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract, RewardBalance } from '@lib/adapter'
 import { call } from '@lib/call'
-import { getMarketsBalances } from '@lib/compound/v2/lending'
+import { COMPOUND_ABI, getMarketsBalances } from '@lib/compound/v2/market'
+import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   compAccrued: {
@@ -22,27 +24,42 @@ const INV: Token = {
   symbol: 'INV',
 }
 
-export async function getInverseLendingBalances(
-  ctx: BalancesContext,
-  markets: Contract[],
-  comptroller: Contract,
-): Promise<Balance[]> {
-  const rewards: Balance[] = []
-
-  const [marketsBalancesRes, marketsRewardsRes] = await Promise.all([
+export async function getInverseLendingBalances(ctx: BalancesContext, markets: Contract[], comptroller: Contract) {
+  const [marketsBalancesRes, xinvBalance, marketsRewardsRes] = await Promise.all([
     getMarketsBalances(ctx, markets),
+    invLendBalance(
+      ctx,
+      markets.find((market) => market.address.toLowerCase() === '0x1637e4e9941d55703a7a5e7807d6ada3f7dcd61b'),
+    ),
     call({ ctx, target: comptroller.address, params: [ctx.address], abi: abi.compAccrued }),
   ])
 
-  //  small fix allowing to use a decimal value of 8 instead of 18 for INV token only
-  for (const marketsBalance of marketsBalancesRes) {
-    if (marketsBalance.address === '0x1637e4e9941d55703a7a5e7807d6ada3f7dcd61b') {
-      marketsBalance.decimals = 8
-      marketsBalance.underlyings![0].decimals = 8
-    }
+  const rewardBalance: RewardBalance = {
+    ...INV,
+    amount: marketsRewardsRes,
+    underlyings: undefined,
+    rewards: undefined,
+    category: 'reward',
   }
 
-  rewards.push({ ...INV, amount: marketsRewardsRes, category: 'reward' })
+  return [...marketsBalancesRes, xinvBalance, rewardBalance].filter(isNotNullish)
+}
 
-  return [...marketsBalancesRes, ...rewards]
+async function invLendBalance(ctx: BalancesContext, XINV?: Contract): Promise<Balance | undefined> {
+  if (!XINV) return
+
+  const [cTokensBalance, cTokensExchange] = await Promise.all([
+    call({ ctx, target: XINV.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
+    call({ ctx, target: XINV.address, abi: COMPOUND_ABI.exchangeRateCurrent }),
+  ])
+
+  const pricePerFullShare = cTokensExchange / 10n ** BigInt(8 + 2)
+
+  return {
+    ...XINV,
+    amount: (cTokensBalance * pricePerFullShare) / 10n ** BigInt(8),
+    underlyings: [{ ...INV, amount: (cTokensBalance * pricePerFullShare) / 10n ** BigInt(8) }],
+    rewards: undefined,
+    category: 'lend',
+  }
 }

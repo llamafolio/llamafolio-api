@@ -1,6 +1,6 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
 import type { Token } from '@lib/token'
 
 import { getFarmBalances } from './farm'
@@ -31,18 +31,31 @@ const comptroller: Contract = {
   address: '0x92a62f8c4750D7FbDf9ee1dB268D18169235117B',
   underlyings: [LODE],
 }
+const comptroller_v1: Contract = {
+  chain: 'arbitrum',
+  address: '0xa86dd95c210dd186fa7639f93e4177e97d057576',
+}
 
 export const getContracts = async (ctx: BaseContext) => {
-  const markets = await getMarketsContracts(ctx, {
-    comptrollerAddress: comptroller.address,
-    underlyingAddressByMarketAddress: {
-      // lETH -> WETH
-      '0x7a472988bd094a09f045120e78bb0cea44558b52': '0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-    },
-  })
+  const [markets, markets_v1] = await Promise.all([
+    getMarketsContracts(ctx, {
+      comptrollerAddress: comptroller.address,
+      underlyingAddressByMarketAddress: {
+        // lETH -> WETH
+        '0x7a472988bd094a09f045120e78bb0cea44558b52': '0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+      },
+    }),
+    getMarketsContracts(ctx, {
+      comptrollerAddress: comptroller_v1.address,
+      underlyingAddressByMarketAddress: {
+        // lETH -> WETH
+        '0x2193c45244AF12C280941281c8aa67dD08be0a64': '0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
+      },
+    }),
+  ])
 
   return {
-    contracts: { markets, comptroller, vester, farmer },
+    contracts: { markets, markets_v1, vester, farmer },
     revalidate: 60 * 60,
   }
 }
@@ -50,6 +63,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     markets: getMarketsBalances,
+    markets_v1: getMarketsBalances,
     vester: getVestBalances,
     farmer: getFarmBalances,
   })

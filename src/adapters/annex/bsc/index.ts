@@ -2,9 +2,9 @@ import { getAnnexFarmBalances } from '@adapters/annex/bsc/balance'
 import { getAnnexContracts } from '@adapters/annex/bsc/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/lending'
+import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
 
-const Comptroller: Contract = {
+const comptroller: Contract = {
   chain: 'bsc',
   address: '0xb13026db8aafa2fd6d23355533dccccbd4442f4c',
 }
@@ -30,7 +30,7 @@ const masterchef_v2: Contract = {
 export const getContracts = async (ctx: BaseContext) => {
   const [markets, pools] = await Promise.all([
     getMarketsContracts(ctx, {
-      comptrollerAddress: Comptroller.address,
+      comptrollerAddress: comptroller.address,
       underlyingAddressByMarketAddress: {
         // cBNB -> wBNB
         '0xc5a83ad9f3586e143d2c718e8999206887ef9ddc': '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
@@ -40,7 +40,7 @@ export const getContracts = async (ctx: BaseContext) => {
   ])
 
   return {
-    contracts: { markets, Comptroller, masterchef, masterchef_v2, pools: [...pools, annSingleFarm] },
+    contracts: { markets, masterchef, masterchef_v2, pools: [...pools, annSingleFarm] },
     revalidate: 60 * 60,
   }
 }

@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { getMarketsBalances } from '@lib/compound/v2/lending'
+import { getMarketsBalances } from '@lib/compound/v2/market'
 import type { Token } from '@lib/token'
 
 const abi = {

@@ -1,5 +1,4 @@
-import type { BalancesContext } from '@lib/adapter'
-import type { Balance, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 
 interface Token extends Contract {
@@ -196,6 +195,7 @@ export async function getStakeBalance(ctx: BalancesContext) {
     const balance: Balance = {
       ...JOE,
       address: pool,
+      underlyings: JOE.underlyings as Contract[],
       amount,
       rewards: [{ ...(rewardToken as Balance), amount: rewardBalance }],
       category: 'stake',

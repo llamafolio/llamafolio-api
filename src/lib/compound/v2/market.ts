@@ -1,11 +1,10 @@
 import type { Balance, BalancesContext, BaseContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
-import { mapMultiSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
 
-const COMPOUND_ABI = {
+export const COMPOUND_ABI = {
   getAllMarkets: {
     constant: true,
     inputs: [],
@@ -64,10 +63,10 @@ const COMPOUND_ABI = {
 interface GetMarketsContractsProps {
   comptrollerAddress: `0x${string}`
   underlyingAddressByMarketAddress?: { [key: string]: `0x${string}` }
-  getAllMarkets?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<`0x${string}`[]>
+  getAllMarkets?: (ctx: BaseContext, comptrollerAddress: `0x${string}`) => Promise<any>
   getMarketsInfos?: (ctx: BaseContext, params: GetInfosParams) => Promise<any>
   getUnderlyings?: (ctx: BaseContext, params: GetInfosParams) => Promise<any>
-  getCollateralFactor?: (ctx: BaseContext, params: GetCollateralFactorParams) => Promise<any>
+  getCollateralFactor?: (params: GetCollateralFactorParams) => Promise<any>
 }
 
 interface GetInfosParams {
@@ -99,7 +98,7 @@ export async function getMarketsContracts(ctx: BaseContext, options: GetMarketsC
         options.underlyingAddressByMarketAddress?.[cToken.input.params[0].toLowerCase()] ||
         underlyingTokensAddressesRes[i].output
 
-      const collateralFactor = _getCollateralFactor(ctx, { market: markets[i], marketInfo: cToken.output })
+      const collateralFactor = _getCollateralFactor({ market: markets[i], marketInfo: cToken.output })
 
       return {
         chain: ctx.chain,
@@ -127,11 +126,13 @@ async function getUnderlyings(ctx: BaseContext, { markets }: GetInfosParams) {
   return multicall({ ctx, calls: markets.map((address) => ({ target: address })), abi: COMPOUND_ABI.underlying })
 }
 
-function getCollateralFactor(ctx: BaseContext, { marketInfo }: GetCollateralFactorParams) {
+function getCollateralFactor({ marketInfo }: GetCollateralFactorParams) {
   return marketInfo[1]
 }
 
-export async function getMarketsBalances(ctx: BalancesContext, markets: Contract[]): Promise<Balance[][]> {
+export async function getMarketsBalances(ctx: BalancesContext, markets: Contract[]) {
+  const balances: Balance[] = []
+
   const [cTokensBalances, cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all([
     multicall({
       ctx,
@@ -150,41 +151,45 @@ export async function getMarketsBalances(ctx: BalancesContext, markets: Contract
     }),
   ])
 
-  return mapMultiSuccessFilter(
-    cTokensBalances.map((_, i) => [
-      cTokensBalances[i],
-      cTokensBorrowBalanceCurrentRes[i],
-      cTokensExchangeRateCurrentRes[i],
-    ]),
-    (res, index) => {
-      const market = markets[index]
-      const underlying = market.underlyings?.[0] as Contract
-      const cDecimals = market.decimals // always 8
-      const uDecimals = underlying.decimals
-      const [{ output: lend }, { output: borrow }, { output: pricePerFullShare }] = res.inputOutputPairs
+  for (let i = 0; i < markets.length; i++) {
+    const market = markets[i]
+    const underlying = market.underlyings?.[0] as Contract
+    const rewards = market.rewards as Balance[]
+    const cDecimals = 8 // cDecimals are always 8
+    const uDecimals = underlying.decimals
+    const lendRes = cTokensBalances[i]
+    const borrowRes = cTokensBorrowBalanceCurrentRes[i]
+    const pricePerFullShareRes = cTokensExchangeRateCurrentRes[i]
 
-      if (!underlying || !cDecimals || !uDecimals) return null
+    if (!underlying || !cDecimals || !uDecimals) {
+      continue
+    }
 
-      const fmtPricePerFullShare = pricePerFullShare / 10n ** BigInt(cDecimals + 2)
-      const cTokenAmount = lend * fmtPricePerFullShare
+    if (lendRes.success && pricePerFullShareRes.success) {
+      const fmtPricePerFullShare = pricePerFullShareRes.output / 10n ** BigInt(cDecimals + 2)
+      const cTokenAmount = lendRes.output * fmtPricePerFullShare
 
       const lendBalance: LendBalance = {
         ...market,
         amount: cTokenAmount / 10n ** BigInt(uDecimals),
         underlyings: [{ ...underlying, amount: cTokenAmount / 10n ** BigInt(cDecimals) }],
-        rewards: undefined,
+        rewards,
         category: 'lend',
       }
+      balances.push(lendBalance)
+    }
 
+    if (borrowRes.success) {
       const borrowBalance: BorrowBalance = {
         ...underlying,
-        amount: borrow,
+        amount: borrowRes.output,
         underlyings: undefined,
         rewards: undefined,
         category: 'borrow',
       }
+      balances.push(borrowBalance)
+    }
+  }
 
-      return [lendBalance, borrowBalance]
-    },
-  ).filter(isNotNullish)
+  return balances
 }
