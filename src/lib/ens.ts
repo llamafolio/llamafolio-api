@@ -46,6 +46,7 @@ interface DomainsResponse {
 }
 
 export interface ENSRegistration {
+  fromAddress: string
   domainName: string
   owner: string
   registrant: string
@@ -62,19 +63,33 @@ const client = new GraphQLClient(endpoint, {
   },
 })
 
-export async function getENSRegistrations(address: `0x${string}`) {
-  const response = (await client.request(DOMAINS_QUERY, {
-    address: address.toLowerCase(),
-    expiryDateGte: unixFromDate(toStartOfDay(new Date())),
-  })) as DomainsResponse
+export async function getENSRegistrations(addresses: `0x${string}`[]) {
+  const res: ENSRegistration[] = []
 
-  const registrations: ENSRegistration[] = (response?.account?.registrations || []).map((registration) => ({
-    domainName: registration.domain.name,
-    owner: registration.domain.owner.id,
-    registrant: registration.domain.registrant.id,
-    expiryDate: parseInt(registration.expiryDate),
-    registrationDate: parseInt(registration.registrationDate),
-  }))
+  const responses = (await Promise.all(
+    addresses.map((address) =>
+      client.request(DOMAINS_QUERY, {
+        address: address.toLowerCase(),
+        expiryDateGte: unixFromDate(toStartOfDay(new Date())),
+      }),
+    ),
+  )) as DomainsResponse[]
 
-  return registrations
+  for (let i = 0; i < responses.length; i++) {
+    const response = responses[i]
+    const registrations = response?.account?.registrations || []
+
+    for (const registration of registrations) {
+      res.push({
+        fromAddress: addresses[i],
+        domainName: registration.domain.name,
+        owner: registration.domain.owner.id,
+        registrant: registration.domain.registrant.id,
+        expiryDate: parseInt(registration.expiryDate),
+        registrationDate: parseInt(registration.registrationDate),
+      })
+    }
+  }
+
+  return res
 }

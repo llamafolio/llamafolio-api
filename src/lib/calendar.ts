@@ -8,6 +8,7 @@ export type CalendarEventType = 'unlock' | 'vest' | 'governance_proposal' | 'ens
 
 export interface CalendarBaseEvent {
   type: CalendarEventType
+  fromAddress: string
   startDate: number
   endDate?: number
   protocol: string
@@ -41,10 +42,10 @@ export type CalendarEvent =
   | CalendarGovernanceProposalEvent
   | CalendarEnsRegistrationEvent
 
-export async function getCalendarEvents(address: `0x${string}`) {
+export async function getCalendarEvents(addresses: `0x${string}`[]) {
   const [dbCalendarEvents, ensRegistrations] = await Promise.all([
-    selectCalendarEvents(client, address),
-    getENSRegistrations(address),
+    selectCalendarEvents(client, addresses),
+    getENSRegistrations(addresses),
   ])
 
   const ensRegistrationEvents: CalendarEnsRegistrationEvent[] = ensRegistrations.map((registration) => ({
@@ -52,6 +53,7 @@ export async function getCalendarEvents(address: `0x${string}`) {
     protocol: 'ens',
     parentProtocol: 'ens',
     chain: 'ethereum',
+    fromAddress: registration.fromAddress,
     startDate: registration.expiryDate,
     registration,
   }))
