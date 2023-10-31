@@ -1,6 +1,8 @@
+import { getCreamStakeBalances } from '@adapters/cream-finance/ethereum/stake'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
+import { getSingleLockerBalance } from '@lib/lock'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -18,6 +20,41 @@ const abi = {
     type: 'function',
   },
 } as const
+
+const CREAM: Contract = {
+  chain: 'ethereum',
+  address: '0x2ba592F78dB6436527729929AAf6c908497cB200',
+  decimals: 18,
+  symbol: 'CREAM',
+}
+
+const stakers: Contract[] = [
+  {
+    chain: 'ethereum',
+    address: '0xe618c25f580684770f2578faca31fb7acb2f5945',
+    token: '0x2ba592F78dB6436527729929AAf6c908497cB200',
+  },
+  {
+    chain: 'ethereum',
+    address: '0xd5586c1804d2e1795f3fbbafb1fbb9099ee20a6c',
+    token: '0x2ba592F78dB6436527729929AAf6c908497cB200',
+  },
+  {
+    chain: 'ethereum',
+    address: '0xbdc3372161dfd0361161e06083ee5d52a9ce7595',
+    token: '0x2ba592F78dB6436527729929AAf6c908497cB200',
+  },
+  {
+    chain: 'ethereum',
+    address: '0x780f75ad0b02afeb6039672e6a6cede7447a8b45',
+    token: '0x2ba592F78dB6436527729929AAf6c908497cB200',
+  },
+]
+
+const locker: Contract = {
+  chain: 'ethereum',
+  address: '0x3986425b96f11972d31c78ff340908832c5c0043',
+}
 
 const comptroller: Contract = {
   chain: 'ethereum',
@@ -43,6 +80,8 @@ export const getContracts = async (ctx: BaseContext) => {
     contracts: {
       markets,
       comptroller,
+      stakers,
+      locker,
     },
     revalidate: 60 * 60,
   }
@@ -51,6 +90,8 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     markets: getMarketsBalances,
+    stakers: getCreamStakeBalances,
+    locker: (...args) => getSingleLockerBalance(...args, CREAM, 'locked'),
   })
 
   return {
