@@ -250,6 +250,7 @@ import umamiFinance from '@adapters/umami-finance'
 import uniswapV2 from '@adapters/uniswap-v2'
 import uniswapV3 from '@adapters/uniswap-v3'
 import unsheth from '@adapters/unsheth'
+import usdfiLending from '@adapters/usdfi-lending'
 import uwuLend from '@adapters/uwu-lend'
 import valasFinance from '@adapters/valas-finance'
 import vectorFinance from '@adapters/vector-finance'
@@ -524,6 +525,7 @@ export const adapters: Adapter[] = [
   uniswapV2,
   uniswapV3,
   unsheth,
+  usdfiLending,
   uwuLend,
   valasFinance,
   vectorFinance,
