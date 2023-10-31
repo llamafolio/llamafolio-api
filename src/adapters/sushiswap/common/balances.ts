@@ -25,7 +25,7 @@ export async function getXSushiStakeBalance(ctx: BalancesContext, xSushi: Contra
 }
 
 export async function getMeowshiYieldBalance(ctx: BalancesContext, meowshi: Contract): Promise<Balance> {
-  const meowConverter = 1e5 // 1 xSushi -> 100k meowshi
+  const meowConverter = BigInt(1e5) // 1 xSushi -> 100k meowshi
 
   const balanceOf = await call({ ctx, target: meowshi.address, params: [ctx.address], abi: erc20Abi.balanceOf })
 
