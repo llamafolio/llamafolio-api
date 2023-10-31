@@ -3,6 +3,7 @@ import { call } from '@lib/call'
 import { COMPOUND_ABI, getMarketsBalances } from '@lib/compound/v2/market'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   compAccrued: {
@@ -41,7 +42,7 @@ export async function getInverseLendingBalances(ctx: BalancesContext, markets: C
     category: 'reward',
   }
 
-  return [...marketsBalancesRes.flat(), ...(xinvBalance !== undefined ? [xinvBalance] : []), rewardBalance]
+  return [...marketsBalancesRes, xinvBalance, rewardBalance].filter(isNotNullish)
 }
 
 async function invLendBalance(ctx: BalancesContext, XINV?: Contract): Promise<Balance | undefined> {

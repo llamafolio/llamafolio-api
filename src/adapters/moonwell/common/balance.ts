@@ -62,7 +62,7 @@ export async function getMoonwellMarketsBalances(
   comptroller: Contract,
   rewardDistributor?: Contract,
 ): Promise<Balance[] | undefined> {
-  const marketsBalances = (await getMarketsBalances(ctx, markets)).flat()
+  const marketsBalances = await getMarketsBalances(ctx, markets)
 
   const rewardsFunctionMap: { [key: string]: () => Promise<Balance[] | undefined> } = {
     base: () => getMoonwellBaseRewards(ctx, marketsBalances, rewardDistributor),

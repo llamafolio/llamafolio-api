@@ -1,5 +1,4 @@
 import type { Balance, BalancesContext, BaseContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
-import { mapMultiSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -131,7 +130,9 @@ function getCollateralFactor({ marketInfo }: GetCollateralFactorParams) {
   return marketInfo[1]
 }
 
-export async function getMarketsBalances(ctx: BalancesContext, markets: Contract[]): Promise<Balance[][]> {
+export async function getMarketsBalances(ctx: BalancesContext, markets: Contract[]) {
+  const balances: Balance[] = []
+
   const [cTokensBalances, cTokensBorrowBalanceCurrentRes, cTokensExchangeRateCurrentRes] = await Promise.all([
     multicall({
       ctx,
@@ -150,24 +151,23 @@ export async function getMarketsBalances(ctx: BalancesContext, markets: Contract
     }),
   ])
 
-  return mapMultiSuccessFilter(
-    cTokensBalances.map((_, i) => [
-      cTokensBalances[i],
-      cTokensBorrowBalanceCurrentRes[i],
-      cTokensExchangeRateCurrentRes[i],
-    ]),
-    (res, index) => {
-      const market = markets[index]
-      const underlying = market.underlyings?.[0] as Contract
-      const rewards = market.rewards as Balance[]
-      const cDecimals = 8 // cDecimals are always 8
-      const uDecimals = underlying.decimals
-      const [{ output: lend }, { output: borrow }, { output: pricePerFullShare }] = res.inputOutputPairs
+  for (let i = 0; i < markets.length; i++) {
+    const market = markets[i]
+    const underlying = market.underlyings?.[0] as Contract
+    const rewards = market.rewards as Balance[]
+    const cDecimals = 8 // cDecimals are always 8
+    const uDecimals = underlying.decimals
+    const lendRes = cTokensBalances[i]
+    const borrowRes = cTokensBorrowBalanceCurrentRes[i]
+    const pricePerFullShareRes = cTokensExchangeRateCurrentRes[i]
 
-      if (!underlying || !cDecimals || !uDecimals) return null
+    if (!underlying || !cDecimals || !uDecimals) {
+      continue
+    }
 
-      const fmtPricePerFullShare = pricePerFullShare / 10n ** BigInt(cDecimals + 2)
-      const cTokenAmount = lend * fmtPricePerFullShare
+    if (lendRes.success && pricePerFullShareRes.success) {
+      const fmtPricePerFullShare = pricePerFullShareRes.output / 10n ** BigInt(cDecimals + 2)
+      const cTokenAmount = lendRes.output * fmtPricePerFullShare
 
       const lendBalance: LendBalance = {
         ...market,
@@ -176,16 +176,20 @@ export async function getMarketsBalances(ctx: BalancesContext, markets: Contract
         rewards,
         category: 'lend',
       }
+      balances.push(lendBalance)
+    }
 
+    if (borrowRes.success) {
       const borrowBalance: BorrowBalance = {
         ...underlying,
-        amount: borrow,
+        amount: borrowRes.output,
         underlyings: undefined,
         rewards: undefined,
         category: 'borrow',
       }
+      balances.push(borrowBalance)
+    }
+  }
 
-      return [lendBalance, borrowBalance]
-    },
-  ).filter(isNotNullish)
+  return balances
 }

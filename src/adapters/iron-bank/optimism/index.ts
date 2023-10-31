@@ -59,7 +59,7 @@ const getIBbalances = async (ctx: BalancesContext, markets: Contract[]): Promise
     getMarketsBalances(ctx, markets),
     getIronFarmBalances(ctx, markets),
   ])
-  return [...marketsBalances.flat(), ...farmBalances]
+  return [...marketsBalances, ...farmBalances]
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {

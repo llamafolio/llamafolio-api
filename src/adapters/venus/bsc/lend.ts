@@ -29,7 +29,7 @@ export async function getLendBorrowBalances(
 ): Promise<Balance[]> {
   const VAIMinted: Balance[] = []
 
-  const marketsBalances = (await getMarketsBalances(ctx, contracts)).flat()
+  const marketsBalances = await getMarketsBalances(ctx, contracts)
 
   const VAIBalancesRes = await call({
     ctx,
