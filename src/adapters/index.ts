@@ -133,6 +133,7 @@ import maple from '@adapters/maple'
 import mdex from '@adapters/mdex'
 import meanFinance from '@adapters/mean-finance'
 import meritCircle from '@adapters/merit-circle'
+import mesher from '@adapters/mesher'
 import metronome from '@adapters/metronome'
 import moonwell from '@adapters/moonwell'
 import morpheusSwap from '@adapters/morpheus-swap'
@@ -405,6 +406,7 @@ export const adapters: Adapter[] = [
   mdex,
   meanFinance,
   meritCircle,
+  mesher,
   metronome,
   moonwell,
   morpheusSwap,
