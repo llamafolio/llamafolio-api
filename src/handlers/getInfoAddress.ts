@@ -1,7 +1,7 @@
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { isHex } from '@lib/contract'
-import { unixFromDateTime } from '@lib/fmt'
+import { parseAddresses, unixFromDateTime } from '@lib/fmt'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface AddressInfoResponse {
@@ -14,13 +14,12 @@ interface AddressInfoResponse {
  * Get address info
  */
 export const handler: APIGatewayProxyHandler = async (event) => {
-  const address = event.pathParameters?.address
-
-  if (!address) {
+  const addresses = parseAddresses(event.pathParameters?.address || '')
+  if (addresses.length === 0) {
     return badRequest('Missing address parameter')
   }
 
-  if (!isHex(address)) {
+  if (addresses.some((address) => !isHex(address))) {
     return badRequest('Invalid address parameter, expected hex')
   }
 
@@ -28,11 +27,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     const queryRes = await client.query({
       query: `
         SELECT min("timestamp") as "timestamp" from evm_indexer.transactions_history_agg
-        WHERE "target" = {address: String}
+        WHERE "target" IN {addresses: Array(String)}
         SETTINGS optimize_read_in_order=1;
       `,
       query_params: {
-        address: address.toLowerCase(),
+        addresses: addresses,
       },
     })
 
