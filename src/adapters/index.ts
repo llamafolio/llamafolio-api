@@ -44,6 +44,7 @@ import capFinance from '@adapters/cap-finance'
 import catInABox from '@adapters/cat-in-a-box'
 import cega from '@adapters/cega'
 import chainlink from '@adapters/chainlink'
+import channelsFinance from '@adapters/channels-finance'
 import charmFinance from '@adapters/charm-finance'
 import coinbaseWrappedStakedEth from '@adapters/coinbase-wrapped-staked-eth'
 import coinwind from '@adapters/coinwind'
@@ -314,6 +315,7 @@ export const adapters: Adapter[] = [
   catInABox,
   cega,
   chainlink,
+  channelsFinance,
   charmFinance,
   coinbaseWrappedStakedEth,
   coinwind,
