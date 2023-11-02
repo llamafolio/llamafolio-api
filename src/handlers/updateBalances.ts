@@ -6,7 +6,13 @@ import { getContractsInteractions, groupContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { Balance, BalancesContext } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
-import { fmtBalanceBreakdown, resolveHealthFactor, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
+import {
+  BALANCE_UPDATE_THRESHOLD_SEC,
+  fmtBalanceBreakdown,
+  resolveHealthFactor,
+  sanitizeBalances,
+  sanitizePricedBalances,
+} from '@lib/balance'
 import { type Chain, chains } from '@lib/chains'
 import { parseAddresses, unixFromDate } from '@lib/fmt'
 import { sum } from '@lib/math'
@@ -322,7 +328,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   try {
     await Promise.all(addresses.map((address) => updateBalancesV1(client, address)))
 
-    return success({})
+    const updatedAt = unixFromDate(new Date())
+
+    return success({
+      status: 'success',
+      updatedAt,
+      nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
+    })
   } catch (e) {
     console.error('Failed to update balances', e)
     return serverError('Failed to update balances')
