@@ -289,7 +289,7 @@ functions:
     events:
       - httpApi:
           method: post
-          path: v1/balances/{address}
+          path: /v1/balances/{address}
     timeout: 29
     memorySize: 512
 
