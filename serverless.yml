@@ -286,8 +286,12 @@ functions:
   updateBalances:
     handler: src/handlers/updateBalances.handler
     description: Update balances
-    timeout: 300
-    memorySize: 256
+    events:
+      - httpApi:
+          method: post
+          path: v1/balances/{address}
+    timeout: 29
+    memorySize: 512
 
   updateProtocols:
     handler: src/handlers/updateProtocols.handler

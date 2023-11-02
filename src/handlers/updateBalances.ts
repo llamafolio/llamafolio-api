@@ -8,11 +8,11 @@ import type { Balance, BalancesContext } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
 import { fmtBalanceBreakdown, resolveHealthFactor, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
 import { type Chain, chains } from '@lib/chains'
-import { unixFromDate } from '@lib/fmt'
+import { parseAddresses, unixFromDate } from '@lib/fmt'
 import { sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
 import { aggregateYields } from '@lib/yields'
-import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
+import type { APIGatewayProxyHandler } from 'aws-lambda'
 import { isHex } from 'viem'
 
 type AdapterBalance = Balance & {
@@ -308,20 +308,19 @@ async function updateBalancesV1(client: ClickHouseClient, address: `0x${string}`
   return { updatedAt: unixFromDate(new Date()) }
 }
 
-export const handler: APIGatewayProxyHandler = async (event, context) => {
-  context.callbackWaitsForEmptyEventLoop = false
-
-  const { address } = event as APIGatewayProxyEvent & { address?: string }
-  if (!address) {
+export const handler: APIGatewayProxyHandler = async (event) => {
+  const addresses = parseAddresses(event.pathParameters?.address || '')
+  console.log('Get balances', addresses)
+  if (addresses.length === 0) {
     return badRequest('Missing address parameter')
   }
 
-  if (!isHex(address)) {
+  if (addresses.some((address) => !isHex(address))) {
     return badRequest('Invalid address parameter, expected hex')
   }
 
   try {
-    await updateBalancesV1(client, address)
+    await Promise.all(addresses.map((address) => updateBalancesV1(client, address)))
 
     return success({})
   } catch (e) {
