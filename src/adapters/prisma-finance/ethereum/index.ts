@@ -2,6 +2,7 @@ import { getPoolsContracts } from '@adapters/curve-dex/ethereum/pools'
 import {
   getPrismaFarmBalance,
   getPrismaFarmBalancesFromConvex,
+  getPrismaFarmBalancesFromCurve,
   getPrismaLendBalances,
 } from '@adapters/prisma-finance/ethereum/balance'
 import { getConvexPools, getCurvePools } from '@adapters/prisma-finance/ethereum/pool'
@@ -12,6 +13,7 @@ const farmer: Contract = {
   chain: 'ethereum',
   address: '0xed8b26d99834540c5013701bb3715fafd39993ba',
   token: '0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28',
+  rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c'],
 }
 
 const farmersFromConvex: Contract[] = [
@@ -20,7 +22,7 @@ const farmersFromConvex: Contract[] = [
     address: '0x0ae09f649e9da1b6aea0c10527ac4e8a88a37480',
     pid: 225,
     rewards: [
-      '0xdA47862a83dac0c112BA89c6abC2159b95afd71C',
+      '0xda47862a83dac0c112ba89c6abc2159b95afd71c',
       '0xD533a949740bb3306d119CC777fa900bA034cd52',
       '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
     ],
@@ -30,7 +32,7 @@ const farmersFromConvex: Contract[] = [
     address: '0xf6aa46869220ae703924d5331d88a21dcef3b19d',
     pid: 226,
     rewards: [
-      '0xdA47862a83dac0c112BA89c6abC2159b95afd71C',
+      '0xda47862a83dac0c112ba89c6abc2159b95afd71c',
       '0xD533a949740bb3306d119CC777fa900bA034cd52',
       '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
     ],
@@ -40,7 +42,7 @@ const farmersFromConvex: Contract[] = [
     address: '0x3d56e0ea536a78976503618d663921c97a3cba3c',
     pid: 234,
     rewards: [
-      '0xdA47862a83dac0c112BA89c6abC2159b95afd71C',
+      '0xda47862a83dac0c112ba89c6abc2159b95afd71c',
       '0xD533a949740bb3306d119CC777fa900bA034cd52',
       '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
     ],
@@ -52,13 +54,13 @@ const farmersFromCurve: Contract[] = [
     chain: 'ethereum',
     address: '0x5f8d4319c27a940b5783b4495cca6626e880532e',
     lpToken: '0x0CFe5C777A7438C9Dd8Add53ed671cEc7A5FAeE5',
-    rewards: ['0xdA47862a83dac0c112BA89c6abC2159b95afd71C', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
+    rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
   },
   {
     chain: 'ethereum',
     address: '0x6d3cd0dd2c05fa4eb8d1159159bef445593a93fc',
     lpToken: '0x65f228ED6a6001eD6485535e0Dc33E525734f54c',
-    rewards: ['0xdA47862a83dac0c112BA89c6abC2159b95afd71C', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
+    rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
   },
 ]
 
@@ -100,7 +102,7 @@ export const getContracts = async (ctx: BaseContext) => {
   ])
 
   return {
-    contracts: { vaults, farmer, convexPools, crvcrxPools: [...convexPools, ...crvPrismaPools] },
+    contracts: { vaults, farmer, convexPools, crvPrismaPools },
     revalidate: 60 * 60,
   }
 }
@@ -110,7 +112,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     getPrismaLendBalances(ctx, contracts.vaults || []),
     resolveBalances<typeof getContracts>(ctx, contracts, {
       farmer: getPrismaFarmBalance,
-      crvcrxPools: (...args) => getPrismaFarmBalancesFromConvex(...args, metaRegistry),
+      crvPrismaPools: (...args) => getPrismaFarmBalancesFromCurve(...args, metaRegistry),
+      convexPools: (...args) => getPrismaFarmBalancesFromConvex(...args, metaRegistry),
     }),
   ])
 
