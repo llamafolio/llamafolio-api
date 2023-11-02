@@ -1,7 +1,6 @@
-import { getUnstakeLidoBalances } from '@adapters/lido/ethereum/unstake'
+import { getLidoStakeBalance } from '@adapters/lido/ethereum/stake'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getSingleStakeBalances } from '@lib/stake'
 
 const nftUnstaking: Contract = {
   chain: 'ethereum',
@@ -24,6 +23,7 @@ const wstETH: Contract = {
   displayName: 'Wrapped liquid staked Ether 2.0',
   chain: 'ethereum',
   address: '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0',
+  underlyings: [stETH],
   symbol: 'wstETH',
   decimals: 18,
   coingeckoId: 'wrapped-steth',
@@ -41,7 +41,8 @@ const stMATIC: Contract = {
 export const getContracts = () => {
   return {
     contracts: {
-      stakers: [stETH, wstETH, stMATIC],
+      // stakers: [stETH, wstETH, stMATIC],
+      wstETH,
       nftUnstaking,
     },
   }
@@ -49,8 +50,9 @@ export const getContracts = () => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    stakers: getSingleStakeBalances,
-    nftUnstaking: getUnstakeLidoBalances,
+    // stakers: getSingleStakeBalances,
+    wstETH: getLidoStakeBalance,
+    // nftUnstaking: getUnstakeLidoBalances,
   })
 
   return {
