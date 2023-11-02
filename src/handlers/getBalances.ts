@@ -1,4 +1,4 @@
-import { type LatestProtocolBalances, selectLatestProtocolsBalancesByFromAddress } from '@db/balances'
+import { type LatestProtocolBalances, selectLatestProtocolsBalancesByFromAddresses } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { updateBalances } from '@handlers/updateBalances'
@@ -27,7 +27,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   try {
-    const { updatedAt, protocolsBalances } = await selectLatestProtocolsBalancesByFromAddress(client, address)
+    const { updatedAt, protocolsBalances } = await selectLatestProtocolsBalancesByFromAddresses(client, [address])
 
     // update stale or missing balances
     if (updatedAt === undefined || areBalancesStale(updatedAt)) {

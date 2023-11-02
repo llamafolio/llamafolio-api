@@ -1,8 +1,9 @@
-import { selectLatestBalancesSnapshotByFromAddress } from '@db/balances'
+import { selectLatestBalancesSnapshotByFromAddresses } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { Chain } from '@lib/chains'
 import { isHex } from '@lib/contract'
+import { parseAddresses } from '@lib/fmt'
 import type { TUnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -22,16 +23,17 @@ export interface LatestSnapshotResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
-  const address = event.pathParameters?.address
-  if (!address) {
+  const addresses = parseAddresses(event.pathParameters?.address || '')
+  if (addresses.length === 0) {
     return badRequest('Missing address parameter')
   }
-  if (!isHex(address)) {
+
+  if (addresses.some((address) => !isHex(address))) {
     return badRequest('Invalid address parameter, expected hex')
   }
 
   try {
-    const lastBalancesGroups = await selectLatestBalancesSnapshotByFromAddress(client, address)
+    const lastBalancesGroups = await selectLatestBalancesSnapshotByFromAddresses(client, addresses)
 
     return success(lastBalancesGroups, { maxAge: 5 * 60, swr: 60 })
   } catch (error) {

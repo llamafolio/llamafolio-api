@@ -2,10 +2,12 @@ import type { ClickHouseClient } from '@clickhouse/client'
 import environment from '@environment'
 import type { Balance, ContractStandard } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
+import { areBalancesStale } from '@lib/balance'
 import type { Category } from '@lib/category'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
 import { toDateTime, unixFromDateTime } from '@lib/fmt'
 import { sum } from '@lib/math'
+import type { TUnixTimestamp } from '@lib/type'
 
 export interface Yield {
   apy?: number
@@ -214,7 +216,7 @@ export function toStorage(balances: Balance[]) {
   return adaptersBalancesStorable
 }
 
-export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHouseClient, fromAddress: string) {
+export async function selectLatestBalancesSnapshotByFromAddresses(client: ClickHouseClient, fromAddresses: string[]) {
   const queryRes = await client.query({
     query: `
     SELECT
@@ -224,13 +226,13 @@ export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHou
       sum("debt_usd") as "debt_usd",
       sum("reward_usd") as "reward_usd"
     FROM lf.adapters_balances
-    where from_address = {fromAddress: String}
+    where from_address IN {fromAddresses: Array(String)}
     GROUP BY "chain", "timestamp"
     ORDER BY "timestamp" DESC
     LIMIT 1 BY "chain"
     `,
     query_params: {
-      fromAddress: fromAddress.toLowerCase(),
+      fromAddresses: fromAddresses.map((address) => address.toLowerCase()),
     },
   })
 
@@ -264,6 +266,7 @@ export async function selectLatestBalancesSnapshotByFromAddress(client: ClickHou
 }
 
 export interface LatestProtocolBalancesGroup {
+  fromAddress?: string
   balanceUSD: number
   debtUSD?: number
   rewardUSD?: number
@@ -281,11 +284,7 @@ export interface LatestProtocolBalances {
   groups: LatestProtocolBalancesGroup[]
 }
 
-export async function selectLatestProtocolsBalancesByFromAddress(
-  client: ClickHouseClient,
-  fromAddress: string,
-  timestamp?: Date,
-) {
+export async function selectLatestProtocolsBalancesByFromAddresses(client: ClickHouseClient, fromAddresses: string[]) {
   const protocolsBalances: LatestProtocolBalances[] = []
 
   const queryRes = await client.query({
@@ -295,6 +294,7 @@ export async function selectLatestProtocolsBalancesByFromAddress(
         ab.adapter_id as adapter_id,
         ab.timestamp as timestamp,
         ab.balance as balance,
+        ab.from_address as from_address,
         y.apy as apy,
         y.apy_base as apy_base,
         y.apy_reward as apy_reward,
@@ -306,16 +306,17 @@ export async function selectLatestProtocolsBalancesByFromAddress(
           adapter_id,
           timestamp,
           balances as balance,
+          from_address,
           JSONExtractString(balance, 'address') AS address
         FROM ${environment.NS_LF}.adapters_balances
         ARRAY JOIN balances
         WHERE
-          from_address = {fromAddress: String} AND
-          "timestamp" = ${
-            timestamp
-              ? '{timestamp: DateTime}'
-              : `(SELECT max("timestamp") AS "timestamp" FROM ${environment.NS_LF}.adapters_balances WHERE from_address = {fromAddress: String})`
-          }
+          ("from_address", "timestamp") IN (
+            SELECT "from_address", max("timestamp") AS "timestamp"
+            FROM ${environment.NS_LF}.adapters_balances
+            WHERE from_address IN {fromAddresses: Array(String)}
+            GROUP BY "from_address"
+          )
       ) AS ab
       LEFT JOIN (
         SELECT
@@ -334,8 +335,7 @@ export async function selectLatestProtocolsBalancesByFromAddress(
         (ab.chain = y.chain AND ab.adapter_id = y.adapter_id AND ab.address = y.address);
     `,
     query_params: {
-      fromAddress: fromAddress.toLowerCase(),
-      timestamp: timestamp ? toDateTime(timestamp) : undefined,
+      fromAddresses: fromAddresses.map((address) => address.toLowerCase()),
     },
   })
 
@@ -345,6 +345,7 @@ export async function selectLatestProtocolsBalancesByFromAddress(
       adapter_id: string
       timestamp: string
       balance: string
+      from_address: string
       apy: string | null
       apy_base: string | null
       apy_reward: string | null
@@ -353,7 +354,7 @@ export async function selectLatestProtocolsBalancesByFromAddress(
     }[]
   }
 
-  let updatedAt = undefined
+  const updatedAtByFromAddress: { [key: string]: TUnixTimestamp | undefined } = {}
 
   const balancesByChain = groupBy(res.data, 'chain')
 
@@ -364,18 +365,19 @@ export async function selectLatestProtocolsBalancesByFromAddress(
       continue
     }
 
-    if (!updatedAt) {
-      updatedAt = unixFromDateTime(balancesByChain[chainId][0].timestamp)
-    }
-
     const balancesByProtocol = groupBy(balancesByChain[chainId], 'adapter_id')
 
     for (const protocolId in balancesByProtocol) {
       const balances = balancesByProtocol[protocolId].map((row) => {
         const balance = JSON.parse(row.balance)
 
+        if (updatedAtByFromAddress[row.from_address] == null) {
+          updatedAtByFromAddress[row.from_address] = unixFromDateTime(balancesByChain[chainId][0].timestamp)
+        }
+
         return {
           ...balance,
+          from_address: row.from_address,
           balanceUSD: parseFloat(balance.balance_usd),
           debtUSD: parseFloat(balance.debt_usd),
           rewardUSD: parseFloat(balance.reward_usd),
@@ -397,25 +399,50 @@ export async function selectLatestProtocolsBalancesByFromAddress(
         groups: [],
       }
 
-      const balancesByGroupIdx = groupBy(balances, 'group_idx')
+      const balancesByFromAddress = groupBy(balances, 'from_address')
 
-      for (const groupIdx in balancesByGroupIdx) {
-        const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
+      for (const fromAddress in balancesByFromAddress) {
+        const balancesByGroupIdx = groupBy(balancesByFromAddress[fromAddress], 'group_idx')
 
-        protocolBalances.groups.push({
-          balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
-          debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
-          rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
-          healthFactor: balancesByGroupIdx[groupIdx][0].healthFactor,
-          balances: groupBalances,
-        })
+        for (const groupIdx in balancesByGroupIdx) {
+          const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
+
+          protocolBalances.groups.push({
+            fromAddress,
+            balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
+            debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
+            rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
+            healthFactor: balancesByGroupIdx[groupIdx][0].healthFactor,
+            balances: groupBalances,
+          })
+        }
       }
 
       protocolsBalances.push(protocolBalances)
     }
   }
 
-  return { updatedAt, protocolsBalances }
+  // updatedAt is undefined if any of the address has never been updated or the oldest updatedAt of all balances
+  let updatedAt: number | undefined
+  for (const address in updatedAtByFromAddress) {
+    const addressUpdatedAt = updatedAtByFromAddress[address]
+    if (addressUpdatedAt == null) {
+      updatedAt = undefined
+      break
+    }
+
+    if (updatedAt != null) {
+      updatedAt = Math.min(updatedAt, addressUpdatedAt)
+    } else {
+      updatedAt = updatedAtByFromAddress[address]
+    }
+  }
+
+  const staleAddresses = Object.keys(updatedAtByFromAddress).filter(
+    (address) => updatedAtByFromAddress[address] == null || areBalancesStale(updatedAtByFromAddress[address]!),
+  )
+
+  return { updatedAt, protocolsBalances, staleAddresses }
 }
 
 export async function selectBalancesHolders(

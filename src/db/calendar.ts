@@ -1,5 +1,6 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import { formatBalance } from '@db/balances'
+import environment from '@environment'
 import type { CalendarEvent } from '@lib/calendar'
 import { chainByChainId } from '@lib/chains'
 import { toStartOfDay, unixFromDate } from '@lib/fmt'
@@ -10,23 +11,28 @@ import { toStartOfDay, unixFromDate } from '@lib/fmt'
  * - token lock end
  * - governance proposal (non closed) of protocols the user is invested in
  * @param client
- * @param address wallet
+ * @param addresses wallets
  */
-export async function selectCalendarEvents(client: ClickHouseClient, address: string) {
+export async function selectCalendarEvents(client: ClickHouseClient, addresses: string[]) {
   const queryRes = await client.query({
     query: `
       WITH "sub_balances" AS (
         SELECT
           "chain",
           "adapter_id",
+          "from_address",
           "timestamp",
           "balances",
           "parent_id"
         FROM lf.adapters_balances AS ab
         LEFT JOIN lf.adapters AS a ON (a.chain, a.id) = (ab.chain, ab.adapter_id)
         WHERE
-          "from_address" = {fromAddress: String} AND
-          "timestamp" = (SELECT max("timestamp") AS "timestamp" FROM lf.adapters_balances WHERE "from_address" = {fromAddress: String})
+          ("from_address", "timestamp") IN (
+            SELECT "from_address", max("timestamp") AS "timestamp"
+            FROM ${environment.NS_LF}.adapters_balances
+            WHERE from_address IN {fromAddresses: Array(String)}
+            GROUP BY "from_address"
+          )
       ),
       "sub_governance_proposals" AS (
           SELECT
@@ -50,7 +56,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
         (ab."chain", ab."parent_id") = (gp."chain", gp."protocol_id")
     `,
     query_params: {
-      fromAddress: address.toLowerCase(),
+      fromAddresses: addresses.map((address) => address.toLowerCase()),
     },
   })
 
@@ -59,6 +65,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
       chain: string
       adapter_id: string
       parent_id: string
+      from_address: string
       timestamp: string
       balances: string[]
       governance_proposals: string[]
@@ -87,6 +94,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
         calendarEventByKey[key] = {
           balance,
           chain,
+          fromAddress: row.from_address,
           startDate: balance.unlockAt,
           protocol: row.adapter_id,
           parentProtocol: row.parent_id,
@@ -98,6 +106,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
         calendarEventByKey[key] = {
           balance,
           chain,
+          fromAddress: row.from_address,
           startDate: balance.unlockAt,
           protocol: row.adapter_id,
           parentProtocol: row.parent_id,
@@ -114,6 +123,7 @@ export async function selectCalendarEvents(client: ClickHouseClient, address: st
       calendarEventByKey[key] = {
         governanceProposal,
         chain,
+        fromAddress: row.from_address,
         startDate: governanceProposal.start,
         endDate: governanceProposal.end,
         protocol: row.adapter_id,

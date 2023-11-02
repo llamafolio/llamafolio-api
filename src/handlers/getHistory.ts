@@ -6,7 +6,7 @@ import { type Chain, chainByChainId } from '@lib/chains'
 import { isHex } from '@lib/contract'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getTokenDetails } from '@lib/erc20'
-import { toNextDay, toStartOfDay, unixFromDateTime } from '@lib/fmt'
+import { parseAddresses, toNextDay, toStartOfDay, unixFromDateTime } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
 import type { Token } from '@lib/token'
@@ -47,13 +47,12 @@ interface IHistory {
 }
 
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
-  const address = event.pathParameters?.address?.toLowerCase()
-
-  if (!address) {
+  const addresses = parseAddresses(event.pathParameters?.address || '')
+  if (addresses.length === 0) {
     return badRequest('Missing address parameter')
   }
 
-  if (!isHex(address)) {
+  if (addresses.some((address) => !isHex(address))) {
     return badRequest('Invalid address parameter, expected hex')
   }
 
@@ -88,7 +87,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   }
 
   console.log({
-    address,
+    addresses,
     limit,
     offset,
     fromTimestamp: toStartOfDay(new Date(fromTimestamp)),
@@ -103,7 +102,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     const transactions = await selectHistory(
       client,
-      address,
+      addresses,
       limit,
       offset,
       toStartOfDay(new Date(fromTimestamp)),

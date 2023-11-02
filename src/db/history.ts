@@ -22,7 +22,7 @@ export interface IHistoryTransaction {
 
 export async function selectHistory(
   client: ClickHouseClient,
-  address: string,
+  addresses: string[],
   limit: number,
   offset: number,
   fromDate: Date,
@@ -38,7 +38,7 @@ export async function selectHistory(
         SELECT "chain", "hash", "timestamp"
         FROM evm_indexer.transactions_history_agg
         WHERE
-          "target" = {address: String} AND
+          "target" IN {addresses: Array(String)} AND
           ${chainIds.length > 0 ? ' "chain" IN {chainIds: Array(UInt64)} AND' : ''}
           "timestamp" <= {toTimestamp: DateTime} AND
           "timestamp" >= {fromTimestamp: DateTime}
@@ -86,13 +86,13 @@ export async function selectHistory(
         FROM evm_indexer.token_transfers AS "tt"
         WHERE
           (tt."chain", tt."transaction_hash", tt."timestamp") IN "sub_history" AND
-          (tt."from" = {address: String} OR tt."to" = {address: String})
+          (tt."from" IN {addresses: Array(String)} OR tt."to" IN {addresses: Array(String)})
         GROUP BY tt."chain", tt."transaction_hash"
       ),
       (
         SELECT count(*) FROM evm_indexer.transactions_history_agg
         WHERE
-          "target" = {address: String} AND
+          "target" IN {addresses: Array(String)} AND
           ${chainIds.length > 0 ? ' "chain" IN {chainIds: Array(UInt64)} AND' : ''}
           "timestamp" <= {toTimestamp: DateTime} AND
           "timestamp" >= {fromTimestamp: DateTime}
@@ -120,7 +120,7 @@ export async function selectHistory(
       ORDER BY "timestamp" DESC;
     `,
     query_params: {
-      address: address.toLowerCase(),
+      addresses: addresses.map((address) => address.toLowerCase()),
       limit,
       offset,
       fromTimestamp: toDateTime(fromDate),
