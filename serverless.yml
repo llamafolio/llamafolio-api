@@ -109,15 +109,6 @@ functions:
     timeout: 29
     memorySize: 512
 
-  getBalancesV1:
-    handler: src/handlers/getBalancesV1.handler
-    description: Get address balances
-    events:
-      - httpApi:
-          method: get
-          path: /v1/balances/{address}
-    timeout: 15
-
   getBalancesTokens:
     handler: src/handlers/getBalancesTokens.handler
     description: Get address erc20 balances
@@ -290,16 +281,6 @@ functions:
       - httpApi:
           method: post
           path: /balances/{address}
-    timeout: 29
-    memorySize: 512
-
-  updateBalancesV1:
-    handler: src/handlers/updateBalances.handler
-    description: Update balances
-    events:
-      - httpApi:
-          method: post
-          path: /v1/balances/{address}
     timeout: 29
     memorySize: 512
 
