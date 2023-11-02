@@ -116,7 +116,7 @@ functions:
       - httpApi:
           method: get
           path: /v1/balances/{address}
-    timeout: 10
+    timeout: 15
 
   getBalancesTokens:
     handler: src/handlers/getBalancesTokens.handler
