@@ -1,59 +1,60 @@
 import { type LatestProtocolBalances, selectLatestProtocolsBalancesByFromAddresses } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
-import { BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
+import { updateBalances } from '@handlers/updateBalances'
+import { areBalancesStale, BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { isHex } from '@lib/contract'
-import { parseAddresses, unixFromDate } from '@lib/fmt'
-import { invokeLambda } from '@lib/lambda'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 type Status = 'stale' | 'success'
 
 interface BalancesResponse {
   status: Status
-  updatedAt?: number
+  updatedAt: number
   nextUpdateAt: number
   protocols: LatestProtocolBalances[]
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  const addresses = parseAddresses(event.pathParameters?.address || '')
-  console.log('Get balances', addresses)
-  if (addresses.length === 0) {
+  const address = event.pathParameters?.address?.toLowerCase() as `0x${string}`
+  console.log('Get balances', address)
+  if (!address) {
     return badRequest('Missing address parameter')
   }
 
-  if (addresses.some((address) => !isHex(address))) {
+  if (!isHex(address)) {
     return badRequest('Invalid address parameter, expected hex')
   }
 
   try {
-    const { updatedAt, protocolsBalances, staleAddresses } = await selectLatestProtocolsBalancesByFromAddresses(
-      client,
-      addresses,
-    )
-
-    let status: Status = 'success'
+    const { updatedAt, protocolsBalances } = await selectLatestProtocolsBalancesByFromAddresses(client, [address])
 
     // update stale or missing balances
-    if (updatedAt === undefined || staleAddresses.length > 0) {
-      status = 'stale'
+    if (updatedAt === undefined || areBalancesStale(updatedAt)) {
+      const { updatedAt, protocolsBalances } = await updateBalances(client, address)
 
-      await Promise.all(
-        staleAddresses.map((staleAddress) => invokeLambda('updateBalances', { address: staleAddress }, 'Event')),
-      )
+      const _updatedAt = updatedAt || Math.floor(Date.now() / 1000)
+
+      const balancesResponse: BalancesResponse = {
+        status: 'success',
+        updatedAt: _updatedAt,
+        nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
+        protocols: protocolsBalances,
+      }
+
+      return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 5 * 86_400 })
     }
 
     const balancesResponse: BalancesResponse = {
-      status,
+      status: 'success',
       updatedAt,
-      nextUpdateAt: updatedAt != null ? updatedAt + BALANCE_UPDATE_THRESHOLD_SEC : unixFromDate(new Date()),
+      nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
       protocols: protocolsBalances,
     }
 
-    return success(balancesResponse)
+    return success(balancesResponse, { maxAge: BALANCE_UPDATE_THRESHOLD_SEC, swr: 5 * 86_400 })
   } catch (error) {
-    console.error('Failed to retrieve balances', { error, addresses })
-    return serverError('Failed to retrieve balances', { error, addresses })
+    console.error('Failed to retrieve balances', { error, address })
+    return serverError('Failed to retrieve balances', { error, address })
   }
 }
