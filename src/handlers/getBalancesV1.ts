@@ -41,7 +41,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       protocols: protocolsBalances,
     }
 
-    return success(balancesResponse)
+    return success(balancesResponse, { cacheControl: 'max-age=0, no-store' })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, addresses })
     return serverError('Failed to retrieve balances', { error, addresses })
