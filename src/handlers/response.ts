@@ -10,6 +10,7 @@ export interface ResponseOptions {
   swr?: number
   eTag?: string
   replacer?: (key: string, value: any) => any
+  cacheControl?: string
 }
 
 export interface Response {
@@ -32,6 +33,7 @@ export function response({
   swr,
   eTag,
   replacer = defaultReplacer,
+  cacheControl,
 }: ResponseOptions) {
   const response: Response = {
     statusCode,
@@ -46,7 +48,9 @@ export function response({
     body: JSON.stringify(body, replacer),
   }
 
-  if (maxAge !== undefined) {
+  if (cacheControl) {
+    response.headers['Cache-Control'] = cacheControl
+  } else if (maxAge !== undefined) {
     response.headers['Cache-Control'] = `max-age=${maxAge}`
 
     if (swr !== undefined) {
