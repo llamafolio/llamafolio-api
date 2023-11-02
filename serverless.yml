@@ -289,6 +289,16 @@ functions:
     events:
       - httpApi:
           method: post
+          path: /balances/{address}
+    timeout: 29
+    memorySize: 512
+
+  updateBalancesV1:
+    handler: src/handlers/updateBalances.handler
+    description: Update balances
+    events:
+      - httpApi:
+          method: post
           path: /v1/balances/{address}
     timeout: 29
     memorySize: 512
