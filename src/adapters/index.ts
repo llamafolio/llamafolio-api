@@ -62,6 +62,7 @@ import curveDex from '@adapters/curve-dex'
 import cvaultFinance from '@adapters/cvault-finance'
 import definix from '@adapters/definix'
 import deltaprime from '@adapters/deltaprime'
+import dhedge from '@adapters/dhedge'
 import dydx from '@adapters/dydx'
 import eigenlayer from '@adapters/eigenlayer'
 import elephantMoney from '@adapters/elephant-money'
@@ -337,6 +338,7 @@ export const adapters: Adapter[] = [
   cvaultFinance,
   definix,
   deltaprime,
+  dhedge,
   dydx,
   eigenlayer,
   elephantMoney,
