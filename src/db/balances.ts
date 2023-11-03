@@ -427,7 +427,7 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
           balances: groupBalances,
         })
       } else {
-        // Group balances by holder for all protocols as the "groups" cannot be "just" aggregated.
+        // Group balances by holder for all protocols but preserve each holder's groups (don't aggregate them) as it can be ambiguous.
         // Ex: lend/borrow "groups" look incorrect if we aggregate them as the holder may think the
         // collateral value is higher/lower
         const balancesByFromAddress = groupBy(balances, 'from_address')
