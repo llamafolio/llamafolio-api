@@ -6,7 +6,7 @@ import { areBalancesStale } from '@lib/balance'
 import type { Category } from '@lib/category'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
 import { toDateTime, unixFromDateTime } from '@lib/fmt'
-import { sum } from '@lib/math'
+import { sum, sumBI } from '@lib/math'
 import type { TUnixTimestamp } from '@lib/type'
 
 export interface Yield {
@@ -365,6 +365,7 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
       continue
     }
 
+    // Group balances by protocol
     const balancesByProtocol = groupBy(balancesByChain[chainId], 'adapter_id')
 
     for (const protocolId in balancesByProtocol) {
@@ -399,22 +400,53 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
         groups: [],
       }
 
-      const balancesByFromAddress = groupBy(balances, 'from_address')
+      // Aggregate wallet balances of each holder:
+      // - sum tokens
+      if (protocolId === 'wallet') {
+        const tokensByAddress = groupBy(balances, 'address')
+        const groupBalances: any[] = []
 
-      for (const fromAddress in balancesByFromAddress) {
-        const balancesByGroupIdx = groupBy(balancesByFromAddress[fromAddress], 'group_idx')
+        for (const address in tokensByAddress) {
+          const tokens = tokensByAddress[address]
 
-        for (const groupIdx in balancesByGroupIdx) {
-          const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
-
-          protocolBalances.groups.push({
-            fromAddress,
-            balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
-            debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
-            rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
-            healthFactor: balancesByGroupIdx[groupIdx][0].healthFactor,
-            balances: groupBalances,
+          groupBalances.push({
+            standard: tokens[0].standard,
+            name: tokens[0].name,
+            address: tokens[0].address,
+            symbol: tokens[0].symbol,
+            decimals: tokens[0].decimals,
+            stable: tokens[0].stable,
+            price: tokens[0].price,
+            amount: sumBI(tokens.map((balance) => BigInt(balance.amount || 0))).toString(),
+            balanceUSD: sum(tokens.map((balance) => balance.balanceUSD || 0)),
           })
+        }
+
+        protocolBalances.groups.push({
+          balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
+          balances: groupBalances,
+        })
+      } else {
+        // Group balances by holder for all protocols but preserve each holder's groups (don't aggregate them) as it can be ambiguous.
+        // Ex: lend/borrow "groups" look incorrect if we aggregate them as the holder may think the
+        // collateral value is higher/lower
+        const balancesByFromAddress = groupBy(balances, 'from_address')
+
+        for (const fromAddress in balancesByFromAddress) {
+          const balancesByGroupIdx = groupBy(balancesByFromAddress[fromAddress], 'group_idx')
+
+          for (const groupIdx in balancesByGroupIdx) {
+            const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
+
+            protocolBalances.groups.push({
+              fromAddress,
+              balanceUSD: sum(groupBalances.map((balance) => balance.balanceUSD || 0)),
+              debtUSD: sum(groupBalances.map((balance) => balance.debtUSD || 0)),
+              rewardUSD: sum(groupBalances.map((balance) => balance.rewardUSD || 0)),
+              healthFactor: balancesByGroupIdx[groupIdx][0].healthFactor,
+              balances: groupBalances,
+            })
+          }
         }
       }
 
