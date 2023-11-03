@@ -383,11 +383,11 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
           debtUSD: parseFloat(balance.debt_usd),
           rewardUSD: parseFloat(balance.reward_usd),
           healthFactor: parseFloat(balance.health_factor),
-          apy: balance.apy != null ? parseFloat(balance.apy) : undefined,
-          apy_base: balance.apy_base != null ? parseFloat(balance.apy_base) : undefined,
-          apy_reward: balance.apy_reward != null ? parseFloat(balance.apy_reward) : undefined,
-          apy_mean_30d: balance.apy_mean_30d != null ? parseFloat(balance.apy_mean_30d) : undefined,
-          il_risk: balance.il_risk != null ? balance.il_risk : undefined,
+          apy: row.apy != null ? parseFloat(row.apy) : undefined,
+          apyBase: row.apy_base != null ? parseFloat(row.apy_base) : undefined,
+          apyReward: row.apy_reward != null ? parseFloat(row.apy_reward) : undefined,
+          apyMean30d: row.apy_mean_30d != null ? parseFloat(row.apy_mean_30d) : undefined,
+          ilRisk: row.il_risk != null ? row.il_risk : undefined,
         }
       })
 
