@@ -1,8 +1,8 @@
-import { getPendle_LPUnderlyingsBalances } from '@adapters/pendle/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapMultiSuccessFilter, mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
+import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 import { parseEther } from 'viem'
 
 const abi = {
@@ -56,7 +56,7 @@ type MagpieBalance = Balance & {
 }
 
 const getUnderlyings: Record<string, BalanceFunction | undefined> = {
-  penpie: getPendle_LPUnderlyingsBalances,
+  penpie: getUnderlyingBalances,
   radpie: getRadpieUnderlyings,
 }
 
