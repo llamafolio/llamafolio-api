@@ -1,20 +1,24 @@
+import { getMasterMagpieBalances } from '@adapters/magpie/arbitrum/balance'
+import { getMagpieContracts } from '@adapters/magpie/arbitrum/contract'
 import { getMagpieStaker } from '@adapters/magpie/arbitrum/stake'
-import { getMagpieBalances, getMGPBalance } from '@adapters/magpie/common/balance'
-import { getMagpieContracts } from '@adapters/magpie/common/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-const masterChef: Contract = {
+const masterMagpie: Contract = {
   chain: 'arbitrum',
   address: '0x664cc2bcae1e057eb1ec379598c5b743ad9db6e7',
   rewards: ['0xa61f74247455a40b01b0559ff6274441fafa22a3'],
 }
-
-const MGPContract: Contract = {
+const masterPenpie: Contract = {
   chain: 'arbitrum',
-  address: '0x536599497Ce6a35FC65C7503232Fec71A84786b9',
-  staker: '0xca27B9c894DAcd41457F4DC8A9A061Baf5308176',
-  underlyings: ['0xa61f74247455a40b01b0559ff6274441fafa22a3'],
+  address: '0x0776c06907ce6ff3d9dbf84ba9b3422d7225942d',
+  rewards: ['0x2ac2b254bc18cd4999f64773a966e4f4869c34ee'],
+}
+
+const masterRadpie: Contract = {
+  chain: 'arbitrum',
+  address: '0xc9cb578d613d729c3c4c8ef7d46cb814570f2baa',
+  rewards: ['0x3082cc23568ea640225c2467653db90e9250aaa0'],
 }
 
 const staker: Contract = {
@@ -24,19 +28,24 @@ const staker: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getMagpieContracts(ctx, masterChef)
+  const { magpiePools, penpiePools, radpiePools } = await getMagpieContracts(ctx, [
+    masterMagpie,
+    masterPenpie,
+    masterRadpie,
+  ])
 
   return {
-    contracts: { masterChef, pools, MGPContract, staker },
+    contracts: { magpiePools, penpiePools, radpiePools, staker },
     revalidate: 60 * 60,
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getMagpieBalances(...args, masterChef),
-    MGPContract: getMGPBalance,
     staker: getMagpieStaker,
+    magpiePools: (...args) => getMasterMagpieBalances(...args, masterMagpie),
+    penpiePools: (...args) => getMasterMagpieBalances(...args, masterPenpie),
+    radpiePools: (...args) => getMasterMagpieBalances(...args, masterRadpie),
   })
 
   return {

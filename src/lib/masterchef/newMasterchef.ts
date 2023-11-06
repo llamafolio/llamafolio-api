@@ -57,7 +57,7 @@ interface GetPoolsContractsProps {
   getLpToken?: (params: GetLpTokenParams) => Promise<any>
 }
 
-interface GetPoolsInfosParams {
+export interface GetPoolsInfosParams {
   masterChefAddress: `0x${string}`
   poolLength: bigint
 }

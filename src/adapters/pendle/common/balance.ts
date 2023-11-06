@@ -69,7 +69,7 @@ function getPendleSingleUnderlyings(pools: Contract[]) {
   }))
 }
 
-async function getPendle_LPUnderlyingsBalances(ctx: BalancesContext, pools: Contract[]) {
+export async function getPendle_LPUnderlyingsBalances(ctx: BalancesContext, pools: Contract[]) {
   const [token0BalancesRes, token1BalancesRes, totalSuppliesRes] = await Promise.all([
     multicall({
       ctx,
