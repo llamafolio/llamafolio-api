@@ -1,5 +1,7 @@
 import { getMasterMagpieBalances } from '@adapters/magpie/common/balance'
-import { getMagpiePools, getPenpiePools, getRadpiePools } from '@adapters/magpie/common/contract'
+import { getMagpiePools } from '@adapters/magpie/common/magpie'
+import { getPenpiePools } from '@adapters/magpie/common/penpie'
+import { getRadpiePools } from '@adapters/magpie/common/radpie'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 

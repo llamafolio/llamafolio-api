@@ -73,12 +73,16 @@ export async function getMasterMagpieBalances(
   const [userBalances, userPendingRewards] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: masterChef.address, params: [pool.address, ctx.address] }) as const),
+      calls: pools.map(
+        (pool) => ({ target: masterChef.address, params: [pool.pid || pool.address, ctx.address] }) as const,
+      ),
       abi: abi.stakingInfo,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: masterChef.address, params: [pool.address, ctx.address] }) as const),
+      calls: pools.map(
+        (pool) => ({ target: masterChef.address, params: [pool.pid || pool.address, ctx.address] }) as const,
+      ),
       abi: abi.allPendingTokens,
     }),
   ])
@@ -144,12 +148,12 @@ async function getRadpieUnderlyings(ctx: BalancesContext, pools: Balance[]): Pro
 
     if (!underlyings) return null
 
-    const underlying0 = { ...underlyings[0], amount: (token0Balance * pool.amount) / PARSER[ctx.chain] / totalSupply }
-    const underlying1 = { ...underlyings[1], amount: (token1Balance * pool.amount) / PARSER[ctx.chain] / totalSupply }
-
     return {
       ...pool,
-      underlyings: [underlying0, underlying1],
+      underlyings: [
+        { ...underlyings[0], amount: (token0Balance * pool.amount) / PARSER[ctx.chain] / totalSupply },
+        { ...underlyings[1], amount: (token1Balance * pool.amount) / PARSER[ctx.chain] / totalSupply },
+      ],
     }
   }).filter(isNotNullish)
 

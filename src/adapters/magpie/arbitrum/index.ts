@@ -1,6 +1,8 @@
-import { getMagpieStaker } from '@adapters/magpie/arbitrum/stake'
 import { getMasterMagpieBalances } from '@adapters/magpie/common/balance'
-import { getMagpiePools, getPenpiePools, getRadpiePools } from '@adapters/magpie/common/contract'
+import { getMagpiePools } from '@adapters/magpie/common/magpie'
+import { getPenpiePools } from '@adapters/magpie/common/penpie'
+import { getRadpiePools } from '@adapters/magpie/common/radpie'
+import { getMagpieStaker } from '@adapters/magpie/common/stake'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -9,6 +11,7 @@ const masterMagpie: Contract = {
   address: '0x664cc2bcae1e057eb1ec379598c5b743ad9db6e7',
   rewards: ['0xa61f74247455a40b01b0559ff6274441fafa22a3'],
 }
+
 const masterPenpie: Contract = {
   chain: 'arbitrum',
   address: '0x0776c06907ce6ff3d9dbf84ba9b3422d7225942d',
@@ -42,7 +45,7 @@ const vlMGP: Contract = {
 }
 
 const mWOMsv: Contract = {
-  chain: 'bsc',
+  chain: 'arbitrum',
   address: '0x21804fb90593458630298f10a85094cb6d3b07db',
   underlyings: ['0x7b5eb3940021ec0e8e463d5dbb4b7b09a89ddf96'],
   rewards: [
@@ -68,6 +71,8 @@ export const getContracts = async (ctx: BaseContext) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+  console.log(contracts)
+
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     staker: getMagpieStaker,
     magpiePools: (...args) => getMasterMagpieBalances(...args, masterMagpie),
