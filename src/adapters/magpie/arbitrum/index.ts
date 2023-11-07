@@ -1,6 +1,6 @@
-import { getMasterMagpieBalances } from '@adapters/magpie/arbitrum/balance'
-import { getMagpieContracts } from '@adapters/magpie/arbitrum/contract'
 import { getMagpieStaker } from '@adapters/magpie/arbitrum/stake'
+import { getMasterMagpieBalances } from '@adapters/magpie/common/balance'
+import { getMagpiePools, getPenpiePools, getRadpiePools } from '@adapters/magpie/common/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -27,15 +27,42 @@ const staker: Contract = {
   token: '0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8',
 }
 
+const vlMGP: Contract = {
+  chain: 'arbitrum',
+  address: '0x536599497Ce6a35FC65C7503232Fec71A84786b9',
+  underlyings: ['0xa61f74247455a40b01b0559ff6274441fafa22a3'],
+  rewards: [
+    '0xa61f74247455a40b01b0559ff6274441fafa22a3',
+    '0x509fd25ee2ac7833a017f17ee8a6fb4aaf947876',
+    '0x912ce59144191c1204e64559fe8253a0e49e6548',
+    '0x4cfa50b7ce747e2d61724fcac57f24b748ff2b2a',
+    '0x2ac2b254bc18cd4999f64773a966e4f4869c34ee',
+    '0xb688ba096b7bb75d7841e47163cd12d18b36a5bf',
+  ],
+}
+
+const mWOMsv: Contract = {
+  chain: 'bsc',
+  address: '0x21804fb90593458630298f10a85094cb6d3b07db',
+  underlyings: ['0x7b5eb3940021ec0e8e463d5dbb4b7b09a89ddf96'],
+  rewards: [
+    '0xa61f74247455a40b01b0559ff6274441fafa22a3',
+    '0x7b5eb3940021ec0e8e463d5dbb4b7b09a89ddf96',
+    '0x912ce59144191c1204e64559fe8253a0e49e6548',
+    '0x4cfa50b7ce747e2d61724fcac57f24b748ff2b2a',
+    '0x2ac2b254bc18cd4999f64773a966e4f4869c34ee',
+  ],
+}
+
 export const getContracts = async (ctx: BaseContext) => {
-  const { magpiePools, penpiePools, radpiePools } = await getMagpieContracts(ctx, [
-    masterMagpie,
-    masterPenpie,
-    masterRadpie,
+  const [magpiePools, penpiePools, radpiePools] = await Promise.all([
+    getMagpiePools(ctx, masterMagpie),
+    getPenpiePools(ctx, masterPenpie),
+    getRadpiePools(ctx, masterRadpie),
   ])
 
   return {
-    contracts: { magpiePools, penpiePools, radpiePools, staker },
+    contracts: { magpiePools: [...magpiePools, vlMGP, mWOMsv], penpiePools, radpiePools, staker },
     revalidate: 60 * 60,
   }
 }

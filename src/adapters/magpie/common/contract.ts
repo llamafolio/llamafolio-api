@@ -1,16 +1,11 @@
+import { getPendlePools } from '@adapters/pendle/common/pool'
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccess, mapSuccessFilter, rangeBI } from '@lib/array'
-import { call } from '@lib/call'
+import { mapMultiSuccessFilter, mapSuccessFilter, rangeBI } from '@lib/array'
+import { getMasterChefPoolsContracts, type GetPoolsInfosParams } from '@lib/masterchef/newMasterchef'
 import { multicall } from '@lib/multicall'
+import type { AbiFunction } from 'abitype'
 
 const abi = {
-  poolLength: {
-    inputs: [],
-    name: 'poolLength',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
   registeredToken: {
     inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     name: 'registeredToken',
@@ -18,7 +13,7 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  tokenToPoolInfo: {
+  tokenToPoolInfo_magpie: {
     inputs: [{ internalType: 'address', name: '', type: 'address' }],
     name: 'tokenToPoolInfo',
     outputs: [
@@ -33,10 +28,35 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  getRewardLength: {
-    inputs: [],
-    name: 'getRewardLength',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+  tokenToPoolInfo_penpie: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'tokenToPoolInfo',
+    outputs: [
+      { internalType: 'address', name: 'stakingToken', type: 'address' },
+      { internalType: 'address', name: 'receiptToken', type: 'address' },
+      { internalType: 'uint256', name: 'allocPoint', type: 'uint256' },
+      { internalType: 'uint256', name: 'lastRewardTimestamp', type: 'uint256' },
+      { internalType: 'uint256', name: 'accPenpiePerShare', type: 'uint256' },
+      { internalType: 'uint256', name: 'totalStaked', type: 'uint256' },
+      { internalType: 'address', name: 'rewarder', type: 'address' },
+      { internalType: 'bool', name: 'isActive', type: 'bool' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  tokenToPoolInfo_radpie: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'tokenToPoolInfo',
+    outputs: [
+      { internalType: 'address', name: 'stakingToken', type: 'address' },
+      { internalType: 'address', name: 'receiptToken', type: 'address' },
+      { internalType: 'uint256', name: 'allocPoint', type: 'uint256' },
+      { internalType: 'uint256', name: 'lastRewardTimestamp', type: 'uint256' },
+      { internalType: 'uint256', name: 'accRadpiePerShare', type: 'uint256' },
+      { internalType: 'uint256', name: 'totalStaked', type: 'uint256' },
+      { internalType: 'address', name: 'rewarder', type: 'address' },
+      { internalType: 'bool', name: 'isActive', type: 'bool' },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
@@ -64,76 +84,219 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  dlpPoolHelper: {
+    inputs: [],
+    name: 'dlpPoolHelper',
+    outputs: [{ internalType: 'contract IPoolHelper', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  wethAddr: {
+    inputs: [],
+    name: 'wethAddr',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
-export async function getMagpieContracts(ctx: BaseContext, masterchef: Contract): Promise<Contract[]> {
-  const poolLength = await call({ ctx, target: masterchef.address, abi: abi.poolLength })
+const masterChefAbi: { [key: string]: AbiFunction } = {
+  // ARB
+  '0x664cc2bcae1e057eb1ec379598c5b743ad9db6e7': abi.tokenToPoolInfo_magpie,
+  '0x0776c06907ce6ff3d9dbf84ba9b3422d7225942d': abi.tokenToPoolInfo_penpie,
+  '0xc9cb578d613d729c3c4c8ef7d46cb814570f2baa': abi.tokenToPoolInfo_radpie,
 
-  const registeredTokensRes = await multicall({
+  // BSC
+  '0xa3b615667cbd33cfc69843bf11fbb2a1d926bd46': abi.tokenToPoolInfo_magpie,
+  '0xb35b3d118c0394e750b4b59d2a2f9307393cd5db': abi.tokenToPoolInfo_penpie,
+  '0x1b80eec9b25472c6119ead3b880976fa62e58453': abi.tokenToPoolInfo_radpie,
+}
+
+const RDNT: { [key: string]: `0x${string}` } = {
+  arbitrum: '0x3082cc23568ea640225c2467653db90e9250aaa0',
+  bsc: '0xf7de7e8a6bd59ed41a4b5fe50278b3b7f31384df',
+}
+
+export async function getMagpiePools(ctx: BaseContext, masterChef: Contract) {
+  const poolsMagpie = await getMasterChefPoolsContracts(ctx, {
+    masterChefAddress: masterChef.address,
+    getPoolInfos: (ctx, { masterChefAddress, poolLength }) => {
+      return getPoolInfos(ctx, { masterChefAddress, poolLength })
+    },
+  }).then((pools) => pools.map((pool) => ({ ...pool, rewards: masterChef.rewards })))
+
+  return getExtraPropsMagpie(ctx, poolsMagpie, masterChef.address)
+}
+
+export async function getPenpiePools(ctx: BaseContext, masterChef: Contract) {
+  const poolsPenpie = await getMasterChefPoolsContracts(ctx, {
+    masterChefAddress: masterChef.address,
+    getPoolInfos: (ctx, { masterChefAddress, poolLength }) => {
+      return getPoolInfos(ctx, { masterChefAddress, poolLength })
+    },
+  }).then((pools) => pools.map((pool) => ({ ...pool, rewards: masterChef.rewards })))
+
+  const fmtPoolsPenpie = await getExtraProps(ctx, poolsPenpie, masterChef.address)
+
+  return getPenpieUnderlyings(ctx, fmtPoolsPenpie, 'penpie')
+}
+
+export async function getRadpiePools(ctx: BaseContext, masterChef: Contract) {
+  const poolsRadpie = await getMasterChefPoolsContracts(ctx, {
+    masterChefAddress: masterChef.address,
+    getPoolInfos: (ctx, { masterChefAddress, poolLength }) => {
+      return getPoolInfos(ctx, { masterChefAddress, poolLength })
+    },
+  }).then((pools) => pools.map((pool) => ({ ...pool, rewards: masterChef.rewards })))
+
+  const fmtPoolsRadpie = await getExtraProps(ctx, poolsRadpie, masterChef.address)
+
+  return getRadpieUnderlyings(ctx, fmtPoolsRadpie, 'radpie')
+}
+
+async function getPoolInfos(ctx: BaseContext, { masterChefAddress, poolLength }: GetPoolsInfosParams) {
+  const poolsAddressesRes = await multicall({
     ctx,
-    calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterchef.address, params: [idx] }) as const),
+    calls: rangeBI(0n, poolLength).map((i) => ({ target: masterChefAddress, params: [i] }) as const),
     abi: abi.registeredToken,
   })
 
-  const tokenInfosRes = await multicall({
+  return multicall({
     ctx,
-    calls: mapSuccess(
-      registeredTokensRes,
-      (token) => ({ target: masterchef.address, params: [token.output] }) as const,
-    ),
-    abi: abi.tokenToPoolInfo,
+    calls: mapSuccessFilter(poolsAddressesRes, (res) => ({ target: masterChefAddress, params: [res.output] }) as const),
+    abi: masterChefAbi[masterChefAddress],
   })
-
-  const contracts: Contract[] = mapSuccessFilter(tokenInfosRes, (res) => {
-    const [stakingToken, _allocPoint, _lastRewardTimestamp, _accMGPPerShare, rewarder, helper] = res.output
-
-    return {
-      chain: ctx.chain,
-      address: stakingToken,
-      rewarder,
-      helper,
-      rewards: masterchef.rewards,
-    }
-  })
-
-  return getUnderlyingsAndRewardsTokens(ctx, contracts)
 }
 
-const getUnderlyingsAndRewardsTokens = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
-  const contracts: Contract[] = []
+async function getExtraPropsMagpie(
+  ctx: BaseContext,
+  pools: Contract[],
+  masterChefAddress: `0x${string}`,
+): Promise<Contract[]> {
+  const poolsExtraInfosRes = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.address] }) as const),
+    abi: masterChefAbi[masterChefAddress],
+  })
 
-  const [bonusRewardsTokensRes, depositTokensRes, lpTokensRes] = await Promise.all([
-    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.rewarder })), abi: abi.rewardTokenInfos }),
-    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.helper })), abi: abi.depositToken }),
-    multicall({ ctx, calls: pools.map((pool) => ({ target: pool.helper })), abi: abi.lpToken }),
+  const fmtPools: Contract[] = mapSuccessFilter(poolsExtraInfosRes, (res, index) => {
+    const [_, __, ___, ____, rewarder, helper] = res.output as any
+
+    return {
+      ...pools[index],
+      rewarder,
+      helper,
+    }
+  })
+
+  const [bonusRewardsTokensRes, underlyingsTokensRes, lpTokensRes] = await Promise.all([
+    multicall({ ctx, calls: fmtPools.map((pool) => ({ target: pool.rewarder })), abi: abi.rewardTokenInfos }),
+    multicall({ ctx, calls: fmtPools.map((pool) => ({ target: pool.helper })), abi: abi.depositToken }),
+    multicall({ ctx, calls: fmtPools.map((pool) => ({ target: pool.helper })), abi: abi.lpToken }),
   ])
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-    const bonusRewardsTokenRes = bonusRewardsTokensRes[poolIdx]
-    const depositTokenRes = depositTokensRes[poolIdx]
-    const lpTokenRes = lpTokensRes[poolIdx]
+  return mapMultiSuccessFilter(
+    underlyingsTokensRes.map((_, i) => [underlyingsTokensRes[i], bonusRewardsTokensRes[i], lpTokensRes[i]]),
 
-    if (!bonusRewardsTokenRes.success || !depositTokenRes.success || !lpTokenRes.success) {
-      continue
+    (res, index) => {
+      const pool = pools[index]
+
+      const [{ output: underlyingsTokens }, { output: bonusRewardsTokens }, { output: lpToken }] = res.inputOutputPairs
+      const [bonusTokenAddresses] = bonusRewardsTokens
+
+      // MGP can also appears as an extraReward
+      const noDuplicateRewards = bonusTokenAddresses.filter(
+        (res: string) => res.toLowerCase() !== (pool.rewards?.[0] as string).toLowerCase(),
+      )
+
+      return {
+        ...pool,
+        token: lpToken,
+        underlyings: underlyingsTokens ? [underlyingsTokens] : [pool.address],
+        rewards: [...(pool.rewards as `0x${string}`[]), ...noDuplicateRewards],
+      }
+    },
+  )
+}
+
+async function getExtraProps(
+  ctx: BaseContext,
+  pools: Contract[],
+  masterChefAddress: `0x${string}`,
+): Promise<Contract[]> {
+  const poolsExtraInfosRes = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.address] }) as const),
+    abi: masterChefAbi[masterChefAddress],
+  })
+
+  const fmtPools: Contract[] = mapSuccessFilter(poolsExtraInfosRes, (res, index) => {
+    const [_, _receiptToken, __, ___, ____, _____, rewarder] = res.output as any
+
+    return {
+      ...pools[index],
+      rewarder,
     }
+  })
 
-    const [bonusTokenAddresses] = bonusRewardsTokenRes.output
+  const bonusRewardsTokensRes = await multicall({
+    ctx,
+    calls: fmtPools.map((pool) => ({ target: pool.rewarder })),
+    abi: abi.rewardTokenInfos,
+  })
 
-    // MGP can also appears as an extraRewards
+  return mapSuccessFilter(bonusRewardsTokensRes, (res, index) => {
+    const pool = fmtPools[index]
+    const [bonusTokenAddresses] = res.output
+
+    // PNP | RDNT can also appears as extraRewards
     const noDuplicateRewards = bonusTokenAddresses.filter(
       (res: string) => res.toLowerCase() !== (pool.rewards?.[0] as string).toLowerCase(),
     )
 
-    contracts.push({
+    return {
       ...pool,
-      address: lpTokenRes.output,
-      staker: pool.address,
-      underlyings: depositTokenRes ? [depositTokenRes.output] : [pool.address],
-      lpToken: lpTokenRes.output,
       rewards: [...(pool.rewards as `0x${string}`[]), ...noDuplicateRewards],
-    })
-  }
+    }
+  })
+}
 
-  return contracts
+async function getPenpieUnderlyings(ctx: BaseContext, pools: Contract[], provider: string): Promise<Contract[]> {
+  // 1. We recover all the Pendle pools
+  // 2. We merge the PenpiePools in order to recover underlyings from the PendlePools
+  const pendlePools = await getPendlePools(ctx)
+
+  return pools.reduce((acc: Contract[], pool) => {
+    const matchingPendlePool = pendlePools.find(
+      (pendlePool) => pendlePool.address.toLowerCase() === pool.address.toLowerCase(),
+    )
+
+    const poolToAdd = matchingPendlePool ? { ...pool, ...matchingPendlePool, provider } : pool
+    acc.push(poolToAdd)
+
+    return acc
+  }, [])
+}
+
+async function getRadpieUnderlyings(ctx: BaseContext, pools: Contract[], provider: string): Promise<Contract[]> {
+  const helperRes = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: pool.address }) as const),
+    abi: abi.dlpPoolHelper,
+  })
+  const [token1Res] = await Promise.all([
+    multicall({ ctx, calls: mapSuccessFilter(helperRes, (res) => ({ target: res.output })), abi: abi.wethAddr }),
+  ])
+
+  pools.forEach((pool, index) => {
+    const underlying1 = token1Res[index] && token1Res[index].success ? token1Res[index].output : undefined
+
+    if (underlying1) {
+      pool.helper = token1Res[index].input.target
+      pool.underlyings = [RDNT[ctx.chain], underlying1]
+      pool.provider = provider
+    }
+  })
+
+  return pools
 }

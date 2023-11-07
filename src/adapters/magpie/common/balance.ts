@@ -1,6 +1,9 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { call } from '@lib/call'
+import { mapMultiSuccessFilter, mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
+import { isNotNullish } from '@lib/type'
+import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
+import { parseEther, parseGwei } from 'viem'
 
 const abi = {
   stakingInfo: {
@@ -13,32 +16,6 @@ const abi = {
       { internalType: 'uint256', name: 'stakedAmount', type: 'uint256' },
       { internalType: 'uint256', name: 'availableAmount', type: 'uint256' },
     ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  pendingTokens: {
-    inputs: [
-      { internalType: 'address', name: '_stakingToken', type: 'address' },
-      { internalType: 'address', name: '_user', type: 'address' },
-      { internalType: 'address', name: '_rewardToken', type: 'address' },
-    ],
-    name: 'pendingTokens',
-    outputs: [
-      { internalType: 'uint256', name: 'pendingMGP', type: 'uint256' },
-      { internalType: 'address', name: 'bonusTokenAddress', type: 'address' },
-      { internalType: 'string', name: 'bonusTokenSymbol', type: 'string' },
-      { internalType: 'uint256', name: 'pendingBonusToken', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  earned: {
-    inputs: [
-      { internalType: 'address', name: '_account', type: 'address' },
-      { internalType: 'address', name: '_rewardToken', type: 'address' },
-    ],
-    name: 'earned',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
@@ -57,127 +34,124 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  allEarned: {
-    inputs: [{ internalType: 'address', name: '_account', type: 'address' }],
-    name: 'allEarned',
-    outputs: [{ internalType: 'uint256[]', name: 'pendingBonusRewards', type: 'uint256[]' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  balanceOf: {
-    inputs: [{ internalType: 'address', name: '_account', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  totalStaked: {
+  getReserves: {
     inputs: [],
-    name: 'totalStaked',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  totalSupply: {
-    inputs: [],
-    name: 'totalSupply',
+    name: 'getReserves',
     outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
+      { internalType: 'uint256', name: 'rdnt', type: 'uint256' },
+      { internalType: 'uint256', name: 'weth', type: 'uint256' },
+      { internalType: 'uint256', name: 'lpTokenSupply', type: 'uint256' },
     ],
     stateMutability: 'view',
     type: 'function',
   },
 } as const
 
-export async function getMagpieBalances(
+interface BalanceFunction {
+  (ctx: BalancesContext, balances: Balance[]): Promise<Balance[]>
+}
+
+type MagpieBalance = Balance & {
+  provider: string
+}
+
+const getUnderlyings: Record<string, BalanceFunction | undefined> = {
+  penpie: getUnderlyingBalances,
+  radpie: getRadpieUnderlyings,
+}
+
+const PARSER: { [key: string]: any } = {
+  arbitrum: parseEther('1.0'),
+  bsc: parseGwei('0.000000001'),
+}
+
+export async function getMasterMagpieBalances(
   ctx: BalancesContext,
   pools: Contract[],
-  masterchef: Contract,
-): Promise<Balance[]> {
-  const balances: Balance[] = []
-  const [userBalancesRes, pendingRewardsRes] = await Promise.all([
+  masterChef: Contract,
+): Promise<Balance[][]> {
+  const [userBalances, userPendingRewards] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) =>
-        pool.staker ? ({ target: masterchef.address, params: [pool.staker, ctx.address] } as const) : null,
-      ),
+      calls: pools.map((pool) => ({ target: masterChef.address, params: [pool.address, ctx.address] }) as const),
       abi: abi.stakingInfo,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) =>
-        pool.staker ? ({ target: masterchef.address, params: [pool.staker, ctx.address] } as const) : null,
-      ),
+      calls: pools.map((pool) => ({ target: masterChef.address, params: [pool.address, ctx.address] }) as const),
       abi: abi.allPendingTokens,
     }),
   ])
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-    const underlyings = pool.underlyings as Contract[]
-    const rewards = pool.rewards as Contract[]
-    const userBalanceRes = userBalancesRes[poolIdx]
-    const pendingRewardRes = pendingRewardsRes[poolIdx]
+  const balances: MagpieBalance[] = mapMultiSuccessFilter(
+    userBalances.map((_, i) => [userBalances[i], userPendingRewards[i]]),
 
-    if (!underlyings || !rewards || !userBalanceRes.success || !pendingRewardRes.success) {
-      continue
-    }
+    (res, index) => {
+      const pool = pools[index]
+      const rewards = pool.rewards as Balance[]
+      const [{ output: userBalance }, { output: userRewards }] = res.inputOutputPairs
 
-    const fmtRewards: any[] = rewards
-      // prevent duplicate MGP rewards
-      .slice(1)
-      .map((reward, rewardIdx) => {
-        const [pendingMGP, _bonusTokenAddresses, _bonusTokenSymbols, pendingBonusRewards] = pendingRewardRes.output
-        const mgpReward = { ...(rewards[0] as Contract), amount: pendingMGP }
-        const bonusReward = {
-          ...(reward as Contract),
-          amount: pendingBonusRewards[rewardIdx],
+      const [stake] = userBalance
+      const [baseReward, bonusTokenAddresses, _, pendingBonusRewards] = userRewards
+
+      if (rewards.length > 0 && baseReward !== undefined) {
+        rewards[0] = { ...rewards[0], amount: baseReward }
+      }
+
+      bonusTokenAddresses.forEach((bonusAddress: `0x${string}`, bonusIndex: number) => {
+        const rewardIndex = rewards.findIndex(
+          (reward, index) => index > 0 && reward.address.toLowerCase() === bonusAddress.toLowerCase(),
+        )
+
+        if (rewardIndex > 0 && pendingBonusRewards[bonusIndex] !== undefined) {
+          rewards[rewardIndex] = { ...rewards[rewardIndex], amount: pendingBonusRewards[bonusIndex] }
         }
-        return [mgpReward, bonusReward]
       })
-      .flat()
 
-    const [stakedAmount] = userBalanceRes.output
+      return {
+        ...pool,
+        amount: stake,
+        underlyings: pool.underlyings as Contract[],
+        rewards,
+        category: 'farm',
+        provider: pool.provider,
+      }
+    },
+  )
 
-    balances.push({
-      ...pool,
-      amount: stakedAmount,
-      underlyings,
-      rewards: fmtRewards,
-      category: 'farm',
-    })
-  }
-
-  return balances
+  return Promise.all(
+    balances.map(async (balance) => {
+      const underlyingFunction = getUnderlyings[balance.provider] || ((_ctx, balances) => Promise.resolve(balances))
+      return underlyingFunction(ctx, [balance])
+    }),
+  )
 }
 
-export async function getMGPBalance(ctx: BalancesContext, MGP: Contract): Promise<Balance> {
-  const [userBalance, pendingRewards, totalStaked, totalSupply] = await Promise.all([
-    call({ ctx, target: MGP.staker, params: [ctx.address], abi: abi.balanceOf }),
-    call({ ctx, target: MGP.staker, params: [ctx.address], abi: abi.allEarned }),
-    call({ ctx, target: MGP.staker, abi: abi.totalStaked }),
-    call({ ctx, target: (MGP.underlyings?.[0] as Contract).address, params: [MGP.address], abi: abi.balanceOf }),
-  ])
+async function getRadpieUnderlyings(ctx: BalancesContext, pools: Balance[]): Promise<Balance[]> {
+  const singleUnderlyingsPools = pools.filter((pool) => pool.underlyings!.length < 2)
+  const multiUnderlyingsPools = pools.filter((pool) => pool.underlyings!.length > 1)
 
-  const fmtRewards = MGP.rewards?.map((reward, idx) => {
-    const rewardBalance = pendingRewards[idx]
-    return { ...(reward as Contract), amount: rewardBalance }
+  const reserveRes = await multicall({
+    ctx,
+    calls: multiUnderlyingsPools.map((pool: Contract) => ({ target: pool.helper }) as const),
+    abi: abi.getReserves,
   })
 
-  const fmtUnderlying = {
-    ...(MGP.underlyings?.[0] as Contract),
-    amount: (userBalance * totalStaked) / totalSupply,
-  }
+  const multiUnderlyingsBalances = mapSuccessFilter(reserveRes, (res, index) => {
+    const pool = multiUnderlyingsPools[index]
+    const underlyings = pool.underlyings as Contract[]
+    const [token0Balance, token1Balance, totalSupply] = res.output
 
-  return {
-    ...MGP,
-    amount: userBalance,
-    underlyings: [fmtUnderlying],
-    rewards: fmtRewards,
-    category: 'farm',
-  }
+    if (!underlyings) return null
+
+    const underlying0 = { ...underlyings[0], amount: (token0Balance * pool.amount) / PARSER[ctx.chain] / totalSupply }
+    const underlying1 = { ...underlyings[1], amount: (token1Balance * pool.amount) / PARSER[ctx.chain] / totalSupply }
+
+    return {
+      ...pool,
+      underlyings: [underlying0, underlying1],
+    }
+  }).filter(isNotNullish)
+
+  return [...singleUnderlyingsPools, ...multiUnderlyingsBalances]
 }
