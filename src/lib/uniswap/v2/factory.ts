@@ -1,7 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { rangeBI } from '@lib/array'
 import { call } from '@lib/call'
-import type { Category } from '@lib/category'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
@@ -104,19 +103,20 @@ export async function getPairsDetails<T extends Contract>(
     multicall({ ctx, calls, abi: abi.token1 }),
   ])
 
-  for (let i = 0; i < calls.length; i++) {
+  for (let i = 0; i < contracts.length; i++) {
     const token0Res = token0sRes[i]
     const token1Res = token1sRes[i]
 
     if (!token0Res.success || !token1Res.success) {
-      continue
+      res.push(contracts[i])
+    } else {
+      // If both calls are successful, add the extra properties and push
+      res.push({
+        ...contracts[i],
+        category: 'lp',
+        underlyings: [token0Res.output, token1Res.output],
+      })
     }
-
-    res.push({
-      ...contracts[i],
-      category: 'lp' as Category,
-      underlyings: [token0Res.output, token1Res.output],
-    })
   }
 
   return res

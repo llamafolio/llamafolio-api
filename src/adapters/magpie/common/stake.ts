@@ -19,7 +19,6 @@ export async function getMagpieStaker(ctx: BalancesContext, staker: Contract): P
 
   return {
     ...staker,
-    address: staker.token!,
     amount: deposited,
     underlyings: undefined,
     rewards: undefined,
