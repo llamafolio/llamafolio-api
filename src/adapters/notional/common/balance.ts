@@ -94,7 +94,7 @@ export async function getNotionalLendBalances(ctx: BalancesContext, proxy: Contr
 
   const GET_ACCOUNT_BALANCES = gql`
     query accountBalances($id: String!) {
-      account(id: "0x193991827e291599a262e7fa7d212ff1ae31d110") {
+      account(id: $id) {
         id
         balances {
           assetCashBalance
