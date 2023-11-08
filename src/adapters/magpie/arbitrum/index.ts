@@ -1,5 +1,5 @@
-import { getMasterMagpieBalances } from '@adapters/magpie/common/balance'
-import { getMagpiePools } from '@adapters/magpie/common/magpie'
+import { getMasterBalances } from '@adapters/magpie/common/balance'
+import { getMagpiePools, getMasterMagpieBalances } from '@adapters/magpie/common/magpie'
 import { getPenpiePools } from '@adapters/magpie/common/penpie'
 import { getRadpiePools } from '@adapters/magpie/common/radpie'
 import { getMagpieStaker } from '@adapters/magpie/common/stake'
@@ -33,7 +33,7 @@ const staker: Contract = {
 const vlMGP: Contract = {
   chain: 'arbitrum',
   address: '0x536599497Ce6a35FC65C7503232Fec71A84786b9',
-  underlyings: ['0xa61f74247455a40b01b0559ff6274441fafa22a3'],
+  token: '0xa61f74247455a40b01b0559ff6274441fafa22a3',
   rewards: [
     '0xa61f74247455a40b01b0559ff6274441fafa22a3',
     '0x509fd25ee2ac7833a017f17ee8a6fb4aaf947876',
@@ -47,7 +47,7 @@ const vlMGP: Contract = {
 const mWOMsv: Contract = {
   chain: 'arbitrum',
   address: '0x21804fb90593458630298f10a85094cb6d3b07db',
-  underlyings: ['0x7b5eb3940021ec0e8e463d5dbb4b7b09a89ddf96'],
+  token: '0x7b5eb3940021ec0e8e463d5dbb4b7b09a89ddf96',
   rewards: [
     '0xa61f74247455a40b01b0559ff6274441fafa22a3',
     '0x7b5eb3940021ec0e8e463d5dbb4b7b09a89ddf96',
@@ -58,26 +58,30 @@ const mWOMsv: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const [magpiePools, penpiePools, radpiePools] = await Promise.all([
-    getMagpiePools(ctx, masterMagpie),
+  const [{ masterChefMagpieWithPools, magpiePools }, penpiePools, radpiePools] = await Promise.all([
+    getMagpiePools(ctx, masterMagpie, [vlMGP, mWOMsv]),
     getPenpiePools(ctx, masterPenpie),
     getRadpiePools(ctx, masterRadpie),
   ])
 
   return {
-    contracts: { magpiePools: [...magpiePools, vlMGP, mWOMsv], penpiePools, radpiePools, staker },
+    contracts: {
+      masterChefMagpieWithPools,
+      magpiePools,
+      penpiePools,
+      radpiePools,
+      staker,
+    },
     revalidate: 60 * 60,
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  console.log(contracts)
-
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     staker: getMagpieStaker,
-    magpiePools: (...args) => getMasterMagpieBalances(...args, masterMagpie),
-    penpiePools: (...args) => getMasterMagpieBalances(...args, masterPenpie),
-    radpiePools: (...args) => getMasterMagpieBalances(...args, masterRadpie),
+    masterChefMagpieWithPools: getMasterMagpieBalances,
+    penpiePools: (...args) => getMasterBalances(...args, masterPenpie),
+    radpiePools: (...args) => getMasterBalances(...args, masterRadpie),
   })
 
   return {

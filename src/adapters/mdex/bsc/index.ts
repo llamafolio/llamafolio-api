@@ -1,6 +1,9 @@
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { resolveBalances } from '@lib/balance'
 import { getMasterChefPoolsBalances, getMasterChefPoolsContracts } from '@lib/masterchef/newMasterchef'
 import type { Token } from '@lib/token'
+import { getPairsContracts } from '@lib/uniswap/v2/factory'
+import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 const MDX: Token = {
   chain: 'bsc',
@@ -15,55 +18,42 @@ const masterChef: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext, props: any) => {
-  // const offset = props.pairOffset || 0
-  // const limit = 1980
+  const offset = props.pairOffset || 0
+  const limit = 1000
 
-  const test = await getMasterChefPoolsContracts(ctx, { masterChefAddress: masterChef.address })
-
-  // const { pairs, allPairsLength } = await getPairsContracts({
-  //   ctx,
-  //   factoryAddress: '0x3CD1C46068dAEa5Ebb0d3f55F6915B10648062B8',
-  //   offset,
-  //   limit,
-  // })
+  const [pools, { pairs, allPairsLength }] = await Promise.all([
+    getMasterChefPoolsContracts(ctx, { masterChefAddress: masterChef.address }),
+    getPairsContracts({
+      ctx,
+      factoryAddress: '0x3CD1C46068dAEa5Ebb0d3f55F6915B10648062B8',
+      offset,
+      limit,
+    }),
+  ])
 
   return {
     contracts: {
-      test,
-      /* pairs, masterChef*/
+      pools,
+      pairs,
     },
     revalidate: 60 * 60,
-    // revalidateProps: {
-    //   pairOffset: Math.min(offset + limit, allPairsLength),
-    // },
+    revalidateProps: {
+      pairOffset: Math.min(offset + limit, allPairsLength),
+    },
   }
 }
 
-// function getMdexPairsBalances(
-//   ctx: BalancesContext,
-//   pairs: Pair[],
-//   masterchef: Contract,
-//   rewardToken: Token,
-//   rewardTokenName?: string,
-//   lpTokenAbi?: boolean,
-// ) {
-//   return Promise.all([
-//     getPairsBalances(ctx, pairs),
-//     getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
-//   ])
-// }
-
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const test2 = await getMasterChefPoolsBalances(ctx, contracts.test || [], {
-    masterChefAddress: '0xc48fe252aa631017df253578b1405ea399728a50',
-    rewardToken: MDX,
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    pairs: getPairsBalances,
+    pools: (...args) =>
+      getMasterChefPoolsBalances(...args, {
+        masterChefAddress: '0xc48fe252aa631017df253578b1405ea399728a50',
+        rewardToken: MDX,
+      }),
   })
 
-  // const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-  //   // pairs: (...args) => getMdexPairsBalances(...args, masterChef, MDX),
-  // })
-
   return {
-    groups: [{ balances: test2 }],
+    groups: [{ balances }],
   }
 }

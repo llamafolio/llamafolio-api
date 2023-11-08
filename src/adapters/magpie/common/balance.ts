@@ -65,7 +65,7 @@ const PARSER: { [key: string]: any } = {
   bsc: parseGwei('0.000000001'),
 }
 
-export async function getMasterMagpieBalances(
+export async function getMasterBalances(
   ctx: BalancesContext,
   pools: Contract[],
   masterChef: Contract,
