@@ -1,7 +1,7 @@
 import {
   getAbracadabraFarmerContracts,
   getAbracadabraMasterChefBalances,
-} from '@adapters/abracadabra/ethereum/masterchef'
+} from '@adapters/abracadabra/common/masterchef'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -35,49 +35,6 @@ const MIM: Contract = {
   stable: true,
   wallet: true,
 }
-
-// const abracadabra_SPELL_WETH: Contract = {
-//   chain: 'ethereum',
-//   address: '0xb5De0C3753b6E1B4dBA616Db82767F17513E6d4E',
-//   decimals: 18,
-//   symbol: 'SLP',
-//   provider: 'sushi',
-//   underlyings: ['0x090185f2135308BaD17527004364eBcC2D37e5F6', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'],
-//   pid: 0,
-// }
-
-// const abracadabra_MIM3LP3CRV: Contract = {
-//   chain: 'ethereum',
-//   address: '0x5a6A4D54456819380173272A5E8E9B9904BdF41B',
-//   decimals: 18,
-//   gauge: '0xd8b712d29381748dB89c36BCa0138d7c75866ddF',
-//   pool: '0x5a6A4D54456819380173272A5E8E9B9904BdF41B',
-//   lpToken: '0x5a6A4D54456819380173272A5E8E9B9904BdF41B',
-//   symbol: 'MIM-3LP3CRV-f',
-//   provider: 'curve',
-//   underlyings: [
-//     '0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3',
-//     '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-//     '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
-//     '0xdAC17F958D2ee523a2206206994597C13D831ec7',
-//   ],
-//   pid: 1,
-// }
-
-// const abracadabra_MIM_WETH: Contract = {
-//   chain: 'ethereum',
-//   address: '0x07D5695a24904CC1B6e3bd57cC7780B90618e3c4',
-//   decimals: 18,
-//   symbol: 'SLP',
-//   provider: 'sushi',
-//   underlyings: ['0x99D8a9C45b2ecA8864373A26D1459e3Dff1e17F3', '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2'],
-//   pid: 2,
-// }
-
-// const abracadabraFarm: Contract = {
-//   chain: 'ethereum',
-//   address: '0xf43480afe9863da4acbd4419a47d9cc7d25a647f',
-// }
 
 const masterChef: Contract = {
   chain: 'ethereum',
@@ -139,8 +96,8 @@ const cauldrons: `0x${string}`[] = [
 ]
 
 export const getContracts = async (ctx: BaseContext) => {
-  const farmers = await getAbracadabraFarmerContracts(ctx, masterChef, metaRegistry)
-  const [mStakeContracts, sStakeContracts, marketsContracts] = await Promise.all([
+  const [farmers, mStakeContracts, sStakeContracts, marketsContracts] = await Promise.all([
+    getAbracadabraFarmerContracts(ctx, masterChef, metaRegistry),
     getMStakeContract(ctx, mSPELL),
     getSStakeContract(ctx, sSPELL),
     getMarketsContracts(ctx, cauldrons),
@@ -152,23 +109,21 @@ export const getContracts = async (ctx: BaseContext) => {
       sStakeContracts,
       marketsContracts,
       farmers,
-      // abracadabraFarm,
-      // farmTokens: [abracadabra_SPELL_WETH, abracadabra_MIM3LP3CRV, abracadabra_MIM_WETH],
     },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    mStakeContracts: getMStakeBalance,
-    sStakeContracts: getSStakeBalance,
-    marketsContracts: (ctx, markets) => getMarketsBalances(ctx, markets, MIM),
-    farmers: (...args) => getAbracadabraMasterChefBalances(...args, masterChef, metaRegistry),
-    // farmTokens: (...args) => getFarmBalances(...args, abracadabraFarm),
-    // farmTokens: (...args) => getMasterChefPoolsBalances(...args, {masterChefAddress:})
-  })
+  const [vaultsBalancesGroups, balances] = await Promise.all([
+    getMarketsBalances(ctx, contracts.marketsContracts || [], MIM),
+    resolveBalances<typeof getContracts>(ctx, contracts, {
+      mStakeContracts: getMStakeBalance,
+      sStakeContracts: getSStakeBalance,
+      farmers: (...args) => getAbracadabraMasterChefBalances(...args, masterChef, metaRegistry),
+    }),
+  ])
 
   return {
-    groups: [{ balances }],
+    groups: [...vaultsBalancesGroups, { balances }],
   }
 }

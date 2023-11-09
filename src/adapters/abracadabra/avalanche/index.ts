@@ -31,6 +31,7 @@ const cauldrons: `0x${string}`[] = [
   '0x0a1e6a80E93e62Bd0D3D3BFcF4c362C40FB1cF3D',
   '0x2450Bf8e625e98e14884355205af6F97E3E68d07',
   '0xAcc6821d0F368b02d223158F8aDA4824dA9f28E3',
+  '0x56984f04d2d04b2f63403f0ebedd3487716ba49d',
 ]
 
 export const getContracts = async (ctx: BaseContext) => {
@@ -45,12 +46,14 @@ export const getContracts = async (ctx: BaseContext) => {
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    mStakeContracts: getMStakeBalance,
-    marketsContracts: (ctx, markets) => getMarketsBalances(ctx, markets, MIM),
-  })
+  const [vaultsBalancesGroups, balances] = await Promise.all([
+    getMarketsBalances(ctx, contracts.marketsContracts || [], MIM),
+    resolveBalances<typeof getContracts>(ctx, contracts, {
+      mStakeContracts: getMStakeBalance,
+    }),
+  ])
 
   return {
-    groups: [{ balances }],
+    groups: [...vaultsBalancesGroups, { balances }],
   }
 }

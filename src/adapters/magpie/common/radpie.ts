@@ -92,10 +92,14 @@ async function getPoolInfos(ctx: BaseContext, { masterChefAddress, poolLength }:
     abi: abi.registeredToken,
   })
 
-  return multicall({
+  const poolInfos = await multicall({
     ctx,
     calls: mapSuccessFilter(poolsAddressesRes, (res) => ({ target: masterChefAddress, params: [res.output] }) as const),
     abi: abi.tokenToPoolInfo_radpie,
+  })
+
+  return mapSuccessFilter(poolInfos, (res) => {
+    return { chain: ctx.chain, address: res.output[0], pid: res.input.params![0] }
   })
 }
 
