@@ -1,4 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { mapMultiSuccessFilter } from '@lib/array'
+import { parseFloatBI } from '@lib/math'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 
@@ -34,6 +36,13 @@ const abi = {
   userBorrowPart: {
     inputs: [{ internalType: 'address', name: '', type: 'address' }],
     name: 'userBorrowPart',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  COLLATERIZATION: {
+    inputs: [],
+    name: 'COLLATERIZATION_RATE',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
@@ -83,49 +92,46 @@ export async function getMarketsContracts(ctx: BaseContext, cauldrons: `0x${stri
 }
 
 export async function getMarketsBalances(ctx: BalancesContext, markets: Contract[], MIM: Contract) {
-  const balances: Balance[] = []
-
   const calls: Call<typeof abi.userCollateralShare>[] = markets.map((contract) => ({
     target: contract.address,
     params: [ctx.address],
   }))
-  const [lendingBalancesRes, borrowingBalancesRes] = await Promise.all([
+  const [lendingBalancesRes, borrowingBalancesRes, LTVs] = await Promise.all([
     multicall({ ctx, calls, abi: abi.userCollateralShare }),
     multicall({ ctx, calls, abi: abi.userBorrowPart }),
+    multicall({ ctx, calls: markets.map((market) => ({ target: market.address }) as const), abi: abi.COLLATERIZATION }),
   ])
 
-  for (let marketIdx = 0; marketIdx < markets.length; marketIdx++) {
-    const market = markets[marketIdx]
-    const lendingBalanceRes = lendingBalancesRes[marketIdx]
-    const borrowingBalanceRes = borrowingBalancesRes[marketIdx]
-    const underlying = market.underlyings?.[0] as Contract
+  return mapMultiSuccessFilter(
+    lendingBalancesRes.map((_, i) => [lendingBalancesRes[i], borrowingBalancesRes[i]]),
 
-    if (lendingBalanceRes.success && underlying) {
-      const balance: Balance = {
+    (res, index) => {
+      const market = markets[index]
+      const LTV = LTVs[index]
+      const underlying = market.underlyings?.[0] as Contract
+
+      const [{ output: lend }, { output: borrow }] = res.inputOutputPairs
+
+      const lendBalance: Balance = {
         ...market,
         decimals: underlying.decimals,
         symbol: underlying.symbol,
-        amount: lendingBalanceRes.output,
-        underlyings: [{ ...underlying, amount: lendingBalanceRes.output }],
+        amount: lend,
+        underlyings: [{ ...underlying, amount: lend }],
         rewards: undefined,
+        MCR: LTV.success ? 1 / parseFloatBI(LTV.output, 5) : undefined,
         category: 'lend',
       }
 
-      balances.push(balance)
-    }
-
-    if (borrowingBalanceRes.success) {
-      const balance: Balance = {
+      const borrowBalance: Balance = {
         ...MIM,
-        amount: borrowingBalanceRes.output,
+        amount: borrow,
         underlyings: undefined,
         rewards: undefined,
         category: 'borrow',
       }
 
-      balances.push(balance)
-    }
-  }
-
-  return balances
+      return { balances: [lendBalance, borrowBalance] }
+    },
+  )
 }

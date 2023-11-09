@@ -52,14 +52,21 @@ export const MASTERCHEF_ABI = {
 
 interface GetPoolsContractsProps {
   masterChefAddress: `0x${string}`
+  registry?: Contract
   getAllPoolLength?: (ctx: BaseContext, masterchefAddress: `0x${string}`) => Promise<any>
   getPoolInfos?: (ctx: BaseContext, params: GetPoolsInfosParams) => Promise<any>
   getLpToken?: (params: GetLpTokenParams) => Promise<any>
+  getUnderlyings?: (ctx: BaseContext, params: GetUnderlyingsParams) => Promise<any>
 }
 
 export interface GetPoolsInfosParams {
   masterChefAddress: `0x${string}`
   poolLength: bigint
+  getLpToken?: (params: GetLpTokenParams) => Promise<any>
+}
+
+export interface GetUnderlyingsParams {
+  pools: Contract[]
 }
 
 interface GetLpTokenParams {
@@ -73,32 +80,36 @@ export async function getMasterChefPoolsContracts(
   const _getAllPoolLength = options.getAllPoolLength || getAllPoolLength
   const _getPoolInfos = options.getPoolInfos || getPoolInfos
   const _getLpToken = options.getLpToken || getLpToken
+  const _getUnderlyings = options.getUnderlyings || getUnderlyings
 
   const poolLength = await _getAllPoolLength(ctx, options.masterChefAddress)
-  const poolInfosRes = await _getPoolInfos(ctx, { masterChefAddress: options.masterChefAddress, poolLength })
-
-  const pools = mapSuccessFilter(poolInfosRes, (res) => {
-    const lpToken = Array.isArray(res.output) ? _getLpToken({ lpToken: res.output }) : res.output
-
-    return {
-      chain: ctx.chain,
-      address: lpToken,
-      pid: res.input.params![0],
-    }
+  const pools = await _getPoolInfos(ctx, {
+    masterChefAddress: options.masterChefAddress,
+    poolLength,
+    getLpToken: _getLpToken,
   })
 
-  return getPairsDetails(ctx, pools)
+  return _getUnderlyings(ctx, { pools })
 }
 
 export async function getAllPoolLength(ctx: BaseContext, masterChefAddress: `0x${string}`) {
   return call({ ctx, target: masterChefAddress, abi: MASTERCHEF_ABI.poolLength })
 }
 
-export async function getPoolInfos(ctx: BaseContext, { masterChefAddress, poolLength }: GetPoolsInfosParams) {
-  return multicall({
+export async function getPoolInfos(
+  ctx: BaseContext,
+  { masterChefAddress, poolLength, getLpToken }: GetPoolsInfosParams,
+) {
+  const poolInfos = await multicall({
     ctx,
     calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterChefAddress, params: [idx] }) as const),
     abi: MASTERCHEF_ABI.poolInfo,
+  })
+
+  return mapSuccessFilter(poolInfos, (res) => {
+    const lpToken = Array.isArray(res.output) ? getLpToken!({ lpToken: res.output }) : res.output
+
+    return { chain: ctx.chain, address: lpToken, pid: res.input.params![0] }
   })
 }
 
@@ -106,16 +117,25 @@ function getLpToken({ lpToken }: GetLpTokenParams) {
   return lpToken[0]
 }
 
+async function getUnderlyings(ctx: BaseContext, { pools }: GetUnderlyingsParams): Promise<Contract[]> {
+  return getPairsDetails(ctx, pools)
+}
+
 interface GetPoolsBalancesProps {
   masterChefAddress: `0x${string}`
   rewardToken?: Contract
-  getUserInfos?: (ctx: BaseContext, params: GetUsersInfosParams) => Promise<any>
-  getUserPendingRewards?: (ctx: BaseContext, params: GetUsersInfosParams) => Promise<any>
+  getUserInfos?: (ctx: BalancesContext, params: GetUsersInfosParams) => Promise<any>
+  getUserPendingRewards?: (ctx: BalancesContext, params: GetUsersInfosParams) => Promise<any>
+  getResolvedUnderlyings?: (ctx: BalancesContext, params: GetResolvedUnderlyingsParams) => Promise<any>
 }
 
-interface GetUsersInfosParams {
+export interface GetUsersInfosParams {
   masterChefAddress: `0x${string}`
   pools: Contract[]
+}
+
+export interface GetResolvedUnderlyingsParams {
+  pools: Balance[]
 }
 
 export async function getMasterChefPoolsBalances(
@@ -126,6 +146,7 @@ export async function getMasterChefPoolsBalances(
   const masterchef = options.masterChefAddress
   const _getUserInfos = options.getUserInfos || getUserInfos
   const _getUserPendingRewards = options.getUserPendingRewards || getUserPendingRewards
+  const _getResolvedUnderlyings = options.getResolvedUnderlyings || getResolvedUnderlyings
 
   const [userInfoRes, userPendingRewards] = await Promise.all([
     _getUserInfos(ctx, { masterChefAddress: masterchef, pools }),
@@ -151,7 +172,7 @@ export async function getMasterChefPoolsBalances(
     },
   )
 
-  return getUnderlyingBalances(ctx, poolBalances)
+  return _getResolvedUnderlyings(ctx, { pools: poolBalances })
 }
 
 export async function getUserInfos(ctx: BalancesContext, { masterChefAddress, pools }: GetUsersInfosParams) {
@@ -168,4 +189,11 @@ export async function getUserPendingRewards(ctx: BalancesContext, { masterChefAd
     calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.pid, ctx.address] }) as const),
     abi: MASTERCHEF_ABI.pendingReward,
   })
+}
+
+async function getResolvedUnderlyings(
+  ctx: BalancesContext,
+  { pools }: GetResolvedUnderlyingsParams,
+): Promise<Contract[]> {
+  return getUnderlyingBalances(ctx, pools)
 }
