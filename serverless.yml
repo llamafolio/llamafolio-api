@@ -106,8 +106,7 @@ functions:
       - httpApi:
           method: get
           path: /balances/{address}
-    timeout: 29
-    memorySize: 512
+    timeout: 10
 
   getBalancesTokens:
     handler: src/handlers/getBalancesTokens.handler
