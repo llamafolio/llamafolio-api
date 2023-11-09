@@ -6,7 +6,7 @@ import type { APIGatewayProxyHandler } from 'aws-lambda'
 export const handler: APIGatewayProxyHandler = async () => {
   try {
     const lastSyncedBlocksQueryRes = await client.query({
-      query: `SELECT chain, max(number) AS max FROM evm_indexer.blocks GROUP BY chain;`,
+      query: `SELECT chain, max(number) AS max FROM evm_indexer2.blocks GROUP BY chain;`,
     })
 
     const lastSyncedBlocksRes = (await lastSyncedBlocksQueryRes.json()) as {

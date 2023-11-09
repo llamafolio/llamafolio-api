@@ -245,7 +245,7 @@ functions:
       - httpApi:
           method: get
           path: /holders/{address}
-    timeout: 10
+    timeout: 15
 
   scheduledRevalidateAdaptersContracts:
     handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts

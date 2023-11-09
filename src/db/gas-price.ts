@@ -54,7 +54,7 @@ export async function selectGasPriceChart(client: ClickHouseClient, chainId: num
 
   const queryRes = await client.query({
     query:
-      'SELECT * FROM evm_indexer.gas_used_mv WHERE "chain" = {chainId: UInt64} ORDER BY "day" DESC LIMIT {limit: UInt8};',
+      'SELECT * FROM evm_indexer2.gas_used_hour_agg_mv WHERE "chain" = {chainId: UInt64} ORDER BY "hour" DESC LIMIT {limit: UInt8};',
     query_params: {
       chainId,
       limit,

@@ -93,7 +93,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
   try {
     const transactionsData: ITransaction[] = []
-    let count = 0
 
     const transactions = await selectHistory(
       client,
@@ -112,8 +111,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
         console.error(`Missing chain ${tx.chain}`)
         continue
       }
-
-      count = parseInt(tx.total)
 
       transactionsData.push({
         chain,
@@ -233,8 +230,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     const response: IHistory = {
       transactions: transactionsData,
-      count,
-      next: Math.min(offset + limit, count),
     }
 
     return success(response, { maxAge: 2 * 60 })

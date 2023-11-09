@@ -3,7 +3,7 @@ import environment from '@environment'
 import type { Contract, ContractStandard } from '@lib/adapter'
 import { groupBy, keyBy } from '@lib/array'
 import { chainByChainId, chainById } from '@lib/chains'
-import { toDateTime } from '@lib/fmt'
+import { shortAddress, toDateTime } from '@lib/fmt'
 
 export interface ContractStorage {
   standard?: ContractStandard
@@ -160,7 +160,7 @@ export async function insertAdaptersContracts(client: ClickHouseClient, contract
 /**
  * Get a list of all contracts a given account interacted with for a given protocol
  * @param client
- * @param address
+ * @param address wallet
  * @param adapterId
  * @param chainId
  */
@@ -193,22 +193,30 @@ export async function getContractsInteractions(
         ("chain", "address") IN (
           SELECT "chain", "address" FROM (
             (
-              SELECT "chain", "to" AS "address"
-              FROM evm_indexer.transactions_to_mv
-              WHERE "from" = {address: String}
+              SELECT "chain", "to_address" AS "address"
+              FROM evm_indexer2.transactions_from_to_agg
+              WHERE
+                "from_short" = {addressShort: String} AND
+                "from_address" = {address: String}
             )
               UNION DISTINCT
             (
               SELECT "chain", "address"
-              FROM evm_indexer.token_transfers_received_mv
-              WHERE "to" = {address: String}
+              FROM evm_indexer2.tokens_balances_mv
+              WHERE
+                "holder_short" = {addressShort: String} AND
+                "holder" = {address: String} AND
+                "type" = 'erc20'
+              GROUP BY "chain", "holder_short", "holder", "address_short", "address", "id", "type"
+              LIMIT 1 BY "chain", "address"
             )
           )
         )
       LIMIT 1 BY "chain", "address", "adapter_id";
     `,
     query_params: {
-      address: address.toLowerCase(),
+      addressShort: shortAddress(address),
+      address,
       adapterId,
       chainId,
     },
@@ -234,12 +242,18 @@ export async function getWalletInteractions(client: ClickHouseClient, address: s
         adapter_id = 'wallet' AND
         ("chain", "address") IN (
           SELECT "chain", "address"
-          FROM evm_indexer.token_transfers_received_mv
-          WHERE "to" = {address: String}
+          FROM evm_indexer2.tokens_balances_mv
+          WHERE
+            "holder_short" = {addressShort: String} AND
+            "holder" = {address: String} AND
+            "type" = 'erc20'
+          GROUP BY "chain", "holder_short", "holder", "address_short", "address", "id", "type"
+          LIMIT 1 BY "chain", "address"
         );
     `,
     query_params: {
-      address: address.toLowerCase(),
+      address,
+      addressShort: shortAddress(address),
     },
   })
 
@@ -281,6 +295,7 @@ export async function getWalletInteractions(client: ClickHouseClient, address: s
 }
 
 export async function getContract(client: ClickHouseClient, chainId: number, address: string) {
+  // TODO: use explorers API
   const queryRes = await client.query({
     query: `
       SELECT
@@ -290,7 +305,7 @@ export async function getContract(client: ClickHouseClient, chainId: number, add
         "from",
         "block_number",
         "contract_created"
-      FROM evm_indexer.transactions
+      FROM evm_indexer2.transactions
       WHERE
         "chain" = {chainId: UInt64} AND
         "contract_created" = {address: String};
