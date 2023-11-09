@@ -62,6 +62,7 @@ interface GetPoolsContractsProps {
 export interface GetPoolsInfosParams {
   masterChefAddress: `0x${string}`
   poolLength: bigint
+  getLpToken?: (params: GetLpTokenParams) => Promise<any>
 }
 
 export interface GetUnderlyingsParams {
@@ -83,16 +84,10 @@ export async function getMasterChefPoolsContracts(
   const _getUnderlyings = options.getUnderlyings || getUnderlyings
 
   const poolLength = await _getAllPoolLength(ctx, options.masterChefAddress)
-  const poolInfosRes = await _getPoolInfos(ctx, { masterChefAddress: options.masterChefAddress, poolLength })
-
-  const pools: Contract[] = mapSuccessFilter(poolInfosRes, (res) => {
-    const lpToken = Array.isArray(res.output) ? _getLpToken({ lpToken: res.output }) : res.output
-
-    return {
-      chain: ctx.chain,
-      address: lpToken,
-      pid: res.input.params![0],
-    }
+  const pools = await _getPoolInfos(ctx, {
+    masterChefAddress: options.masterChefAddress,
+    poolLength,
+    getLpToken: _getLpToken,
   })
 
   return _getUnderlyings(ctx, { pools: pools, registry: options.registry })
@@ -102,11 +97,20 @@ export async function getAllPoolLength(ctx: BaseContext, masterChefAddress: `0x$
   return call({ ctx, target: masterChefAddress, abi: MASTERCHEF_ABI.poolLength })
 }
 
-export async function getPoolInfos(ctx: BaseContext, { masterChefAddress, poolLength }: GetPoolsInfosParams) {
-  return multicall({
+export async function getPoolInfos(
+  ctx: BaseContext,
+  { masterChefAddress, poolLength, getLpToken }: GetPoolsInfosParams,
+) {
+  const poolInfos = await multicall({
     ctx,
     calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterChefAddress, params: [idx] }) as const),
     abi: MASTERCHEF_ABI.poolInfo,
+  })
+
+  return mapSuccessFilter(poolInfos, (res) => {
+    const lpToken = Array.isArray(res.output) ? getLpToken!({ lpToken: res.output }) : res.output
+
+    return { chain: ctx.chain, address: lpToken, pid: res.input.params![0] }
   })
 }
 
