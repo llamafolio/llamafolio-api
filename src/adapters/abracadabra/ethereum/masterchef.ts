@@ -100,7 +100,6 @@ export async function getAbracadabraMasterChefBalances(
 ) {
   return getMasterChefPoolsBalances(ctx, pools, {
     masterChefAddress: masterChef.address,
-    registry,
     rewardToken: SPELL,
     getUserPendingRewards: (ctx, { masterChefAddress, pools }) => {
       return multicall({
@@ -109,15 +108,13 @@ export async function getAbracadabraMasterChefBalances(
         abi: abi.pendingIce,
       })
     },
-    getResolvedUnderlyings: (ctx, { pools, registry }) => {
-      return getResolvedAbracadabraUnderlyings(ctx, { pools, registry })
-    },
+    getResolvedUnderlyings: (ctx, { pools }) => getResolvedAbracadabraUnderlyings(ctx, { pools, registry }),
   })
 }
 
 async function getResolvedAbracadabraUnderlyings(
   ctx: BalancesContext,
-  { pools, registry }: GetResolvedUnderlyingsParams,
+  { pools, registry }: GetResolvedUnderlyingsParams & { registry: Contract },
 ) {
   const curvedPoolBalances = pools.filter((pool) => (pool as AbracadabraPoolsBalance).provider === 'curve')
   const pairBalances = pools.filter((pool) => !(pool as AbracadabraPoolsBalance).provider)

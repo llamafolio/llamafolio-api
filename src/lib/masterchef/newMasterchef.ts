@@ -124,7 +124,6 @@ async function getUnderlyings(ctx: BaseContext, { pools }: GetUnderlyingsParams)
 interface GetPoolsBalancesProps {
   masterChefAddress: `0x${string}`
   rewardToken?: Contract
-  registry?: Contract
   getUserInfos?: (ctx: BalancesContext, params: GetUsersInfosParams) => Promise<any>
   getUserPendingRewards?: (ctx: BalancesContext, params: GetUsersInfosParams) => Promise<any>
   getResolvedUnderlyings?: (ctx: BalancesContext, params: GetResolvedUnderlyingsParams) => Promise<any>
@@ -137,7 +136,6 @@ export interface GetUsersInfosParams {
 
 export interface GetResolvedUnderlyingsParams {
   pools: Balance[]
-  registry?: Contract
 }
 
 export async function getMasterChefPoolsBalances(
@@ -174,7 +172,7 @@ export async function getMasterChefPoolsBalances(
     },
   )
 
-  return _getResolvedUnderlyings(ctx, { pools: poolBalances, registry: options.registry })
+  return _getResolvedUnderlyings(ctx, { pools: poolBalances })
 }
 
 export async function getUserInfos(ctx: BalancesContext, { masterChefAddress, pools }: GetUsersInfosParams) {
