@@ -49,21 +49,17 @@ export async function getAbracadabraFarmerContracts(
   masterChef: Contract,
   registry: Contract,
 ): Promise<Contract[]> {
-  const farmers: Contract[] = await getMasterChefPoolsContracts(ctx, {
+  return getMasterChefPoolsContracts(ctx, {
     masterChefAddress: masterChef.address,
     registry,
     getUnderlyings: (ctx, { pools, registry }) => {
       return getAbracadabraUnderlyings(ctx, { pools, registry })
     },
   })
-
-  return farmers
 }
 
 async function getAbracadabraUnderlyings(ctx: BaseContext, { pools, registry }: GetUnderlyingsParams) {
-  if (registry) {
-    return getCurveUnderlyings(ctx, await getPairsDetails(ctx, pools), registry)
-  }
+  return registry && getCurveUnderlyings(ctx, await getPairsDetails(ctx, pools), registry)
 }
 
 async function getCurveUnderlyings(ctx: BaseContext, pools: Contract[], registry: Contract) {
