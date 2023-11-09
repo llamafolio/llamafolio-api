@@ -67,7 +67,6 @@ export interface GetPoolsInfosParams {
 
 export interface GetUnderlyingsParams {
   pools: Contract[]
-  registry?: Contract
 }
 
 interface GetLpTokenParams {
@@ -90,7 +89,7 @@ export async function getMasterChefPoolsContracts(
     getLpToken: _getLpToken,
   })
 
-  return _getUnderlyings(ctx, { pools: pools, registry: options.registry })
+  return _getUnderlyings(ctx, { pools })
 }
 
 export async function getAllPoolLength(ctx: BaseContext, masterChefAddress: `0x${string}`) {

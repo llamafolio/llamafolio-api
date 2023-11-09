@@ -51,14 +51,14 @@ export async function getAbracadabraFarmerContracts(
 ): Promise<Contract[]> {
   return getMasterChefPoolsContracts(ctx, {
     masterChefAddress: masterChef.address,
-    registry,
-    getUnderlyings: (ctx, { pools, registry }) => {
-      return getAbracadabraUnderlyings(ctx, { pools, registry })
-    },
+    getUnderlyings: (ctx, { pools }) => getAbracadabraUnderlyings(ctx, { pools, registry }),
   })
 }
 
-async function getAbracadabraUnderlyings(ctx: BaseContext, { pools, registry }: GetUnderlyingsParams) {
+async function getAbracadabraUnderlyings(
+  ctx: BaseContext,
+  { pools, registry }: GetUnderlyingsParams & { registry: Contract },
+) {
   return registry && getCurveUnderlyings(ctx, await getPairsDetails(ctx, pools), registry)
 }
 
