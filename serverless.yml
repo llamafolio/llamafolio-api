@@ -136,13 +136,21 @@ functions:
           path: /contracts/{chain}/{address}
     timeout: 15
 
+  getGasUsed:
+    handler: src/handlers/getGasUsed.handler
+    description: Get gas used
+    events:
+      - httpApi:
+          method: get
+          path: /gas_used/{address}
+
   getGasUsedChart:
     handler: src/handlers/getGasUsedChart.handler
     description: Get gas used chart
     events:
       - httpApi:
           method: get
-          path: /gas_used/{chain}/chart
+          path: /gas_used/chart
 
   getHistory:
     handler: src/handlers/getHistory.handler
