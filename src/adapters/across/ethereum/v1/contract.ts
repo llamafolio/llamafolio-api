@@ -12,11 +12,17 @@ const abi = {
   },
 } as const
 
-export async function getAcrossContracts(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
-  const lpTokensRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: abi.l1Token })
+export async function getAcrossContracts(ctx: BaseContext, poolAddresses: `0x${string}`[]): Promise<Contract[]> {
+  const lpTokensRes = await multicall({
+    ctx,
+    calls: poolAddresses.map((address) => ({ target: address })),
+    abi: abi.l1Token,
+  })
 
-  return mapSuccessFilter(lpTokensRes, (res, idx) => ({
-    ...pools[idx],
+  return mapSuccessFilter(lpTokensRes, (res) => ({
+    chain: ctx.chain,
+    address: res.input.target,
     underlyings: [res.output],
+    category: 'lp',
   }))
 }
