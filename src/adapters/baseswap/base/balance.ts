@@ -164,5 +164,5 @@ export async function getMasterChefPoolsNFTBalances(ctx: BalancesContext, pools:
     })
   }
 
-  return getUnderlyingBalances(ctx, balances, { getAddress: (balance) => balance.lpToken! })
+  return getUnderlyingBalances(ctx, balances, { getAddress: (balance: Contract) => balance.lpToken! })
 }
