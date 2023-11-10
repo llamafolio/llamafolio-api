@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { getMasterChefPoolsInfos } from '@lib/masterchef/masterchef'
-import type { Call } from '@lib/multicall'
+import { mapSuccessFilter } from '@lib/array'
+import { getMasterChefPoolsBalances, type GetUsersInfosParams } from '@lib/masterchef/masterChefBalance'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import type { Pair } from '@lib/uniswap/v2/factory'
-import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 
 const abi = {
   userInfo: {
@@ -46,58 +44,35 @@ const ALB: Token = {
   symbol: 'ALB',
 }
 
-const ALBsingleFarmer: Contract = {
-  chain: 'base',
-  address: '0x1dd2d631c92b1aCdFCDd51A0F7145A50130050C4',
-  pid: 0,
-}
-
 export async function getAlienFarmBalances(
   ctx: BalancesContext,
-  pairs: Pair[],
+  pools: Contract[],
   masterchef: Contract,
 ): Promise<Balance[]> {
-  const poolsBalances: Balance[] = []
+  const test = await getMasterChefPoolsBalances(ctx, pools, {
+    masterChefAddress: masterchef.address,
+    rewardToken: ALB,
+    getUserPendingRewards: (ctx, { masterChefAddress, pools, rewardToken }) =>
+      getUserPendingRewards(ctx, { masterChefAddress, pools, rewardToken }),
+  })
 
-  const pools = [...(await getMasterChefPoolsInfos(ctx, pairs, masterchef)), ALBsingleFarmer]
-  if (!pools) return []
+  return test
+}
 
-  const calls: Call<typeof abi.userInfo>[] = []
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    calls.push({ target: masterchef.address, params: [pools[poolIdx].pid, ctx.address] })
-  }
+async function getUserPendingRewards(
+  ctx: BalancesContext,
+  { masterChefAddress, pools, rewardToken }: GetUsersInfosParams,
+) {
+  const userPendingRewards = await multicall({
+    ctx,
+    calls: pools.map(({ pid }) => ({ target: masterChefAddress, params: [pid, ctx.address] }) as const),
+    abi: abi.pendingTokens,
+  })
 
-  const [poolsBalancesRes, pendingRewardsRes] = await Promise.all([
-    multicall({ ctx, calls, abi: abi.userInfo }),
-    multicall({ ctx, calls, abi: abi.pendingTokens }),
-  ])
+  return mapSuccessFilter(userPendingRewards, (res: any, index) => {
+    const pool = pools[index]
+    const reward = rewardToken || (pool.rewards?.[0] as Contract)
 
-  for (const [index, pool] of pools.entries()) {
-    const underlyings = pool.underlyings as Contract[]
-    const poolsBalanceRes = poolsBalancesRes[index]
-    const pendingRewardRes = pendingRewardsRes[index]
-
-    if (!poolsBalanceRes.success || !pendingRewardRes.success) {
-      continue
-    }
-
-    poolsBalances.push({
-      ...pool,
-      underlyings,
-      category: 'farm',
-      amount: poolsBalanceRes.output[0],
-      rewards: [{ ...ALB, amount: pendingRewardRes.output[3][0] }],
-    })
-  }
-
-  const fmtPoolsBalances = await getUnderlyingBalances(ctx, poolsBalances)
-
-  for (let i = 0; i < fmtPoolsBalances.length; i++) {
-    const contractIndex = poolsBalances.findIndex((c) => c.address === fmtPoolsBalances[i].address)
-    if (contractIndex !== -1) {
-      poolsBalances[contractIndex] = Object.assign({}, poolsBalances[contractIndex], fmtPoolsBalances[i])
-    }
-  }
-
-  return poolsBalances
+    return [{ ...reward, amount: res.output[3][0] }]
+  })
 }

@@ -1,12 +1,9 @@
 import { getUnderlyingsPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
 import { ADDRESS_ZERO } from '@lib/contract'
-import {
-  getMasterChefPoolsBalances,
-  getMasterChefPoolsContracts,
-  type GetResolvedUnderlyingsParams,
-  type GetUnderlyingsParams,
-} from '@lib/masterchef/newMasterchef'
+import { getMasterChefPoolsBalances, type GetResolvedUnderlyingsParams } from '@lib/masterchef/masterChefBalance'
+import { getMasterChefPoolsContracts, type GetUnderlyingsParams } from '@lib/masterchef/masterChefContract'
 import { multicall } from '@lib/multicall'
 import { ETH_ADDR } from '@lib/token'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
@@ -101,11 +98,18 @@ export async function getAbracadabraMasterChefBalances(
   return getMasterChefPoolsBalances(ctx, pools, {
     masterChefAddress: masterChef.address,
     rewardToken: SPELL,
-    getUserPendingRewards: (ctx, { masterChefAddress, pools }) => {
-      return multicall({
+    getUserPendingRewards: async (ctx, { masterChefAddress, pools, rewardToken }) => {
+      const userPendingRewards = await multicall({
         ctx,
         calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.pid, ctx.address] }) as const),
         abi: abi.pendingIce,
+      })
+
+      return mapSuccessFilter(userPendingRewards, (res: any, index) => {
+        const pool = pools[index]
+        const reward = rewardToken || (pool.rewards?.[0] as Contract)
+
+        return [{ ...reward, amount: res.output }]
       })
     },
     getResolvedUnderlyings: (ctx, { pools }) => getResolvedAbracadabraUnderlyings(ctx, { pools, registry }),

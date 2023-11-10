@@ -1,6 +1,11 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { mapMultiSuccessFilter } from '@lib/array'
+import { mapMultiSuccessFilter, mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
+import {
+  getMasterChefPoolsBalances,
+  type GetUserBalanceParams,
+  type GetUsersInfosParams,
+} from '@lib/masterchef/masterChefBalance'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 
@@ -113,35 +118,63 @@ async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[], mana
   )
 }
 
-async function getAcrossFarmBalances(ctx: BalancesContext, pools: Contract[], farmer: Contract): Promise<Balance[]> {
-  const [userBalancesOfsRes, userPendingsRewardsRes] = await Promise.all([
-    multicall({
-      ctx,
-      calls: pools.map((pool) => ({ target: farmer.address, params: [pool.address, ctx.address] }) as const),
-      abi: abi.getUserStake,
-    }),
-    multicall({
-      ctx,
-      calls: pools.map((pool) => ({ target: farmer.address, params: [pool.address, ctx.address] }) as const),
-      abi: abi.getOutstandingRewards,
-    }),
-  ])
+async function getAcrossFarmBalances(
+  ctx: BalancesContext,
+  pools: Contract[],
+  masterChef: Contract,
+): Promise<Balance[]> {
+  return await getMasterChefPoolsBalances(ctx, pools, {
+    masterChefAddress: masterChef.address,
+    rewardToken: ACX,
+    getUserBalance,
+    getUserInfos: (ctx, { masterChefAddress, pools, getUserBalance }) =>
+      getUserInfos(ctx, { masterChefAddress, pools, getUserBalance }),
+    getUserPendingRewards: async (ctx, { masterChefAddress, pools, rewardToken }) =>
+      getUserPendingRewards(ctx, { masterChefAddress, pools, rewardToken }),
+  })
+}
 
-  return mapMultiSuccessFilter(
-    userBalancesOfsRes.map((_, i) => [userBalancesOfsRes[i], userPendingsRewardsRes[i]]),
+function getUserBalance({ userBalance }: GetUserBalanceParams) {
+  return userBalance.cumulativeBalance
+}
 
-    (res, index) => {
-      const pool = pools[index]
-      const underlying = pool.underlyings?.[0] as Contract
-      const [{ output: userBalance }, { output: pendingRewards }] = res.inputOutputPairs
+async function getUserInfos(ctx: BalancesContext, { masterChefAddress, pools, getUserBalance }: GetUsersInfosParams) {
+  const poolsInfos = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.address, ctx.address] }) as const),
+    abi: abi.getUserStake,
+  })
 
-      return {
-        ...pool,
-        amount: userBalance.cumulativeBalance,
-        underlyings: [underlying],
-        rewards: [{ ...ACX, amount: pendingRewards }],
-        category: 'farm',
-      }
-    },
-  )
+  return mapSuccessFilter(poolsInfos, (res: any, index) => {
+    const pool = pools[index]
+    const underlyings = pool.underlyings as Contract[]
+    const rewards = pool.rewards as Contract[]
+    const userBalance = getUserBalance!({ userBalance: res.output })
+
+    return {
+      ...pool,
+      amount: userBalance,
+      underlyings,
+      rewards,
+      category: 'farm',
+    }
+  })
+}
+
+async function getUserPendingRewards(
+  ctx: BalancesContext,
+  { masterChefAddress, pools, rewardToken }: GetUsersInfosParams,
+) {
+  const userPendingRewards = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.pid, ctx.address] }) as const),
+    abi: abi.getOutstandingRewards,
+  })
+
+  return mapSuccessFilter(userPendingRewards, (res: any, index) => {
+    const pool = pools[index]
+    const reward = rewardToken || (pool.rewards?.[0] as Contract)
+
+    return [{ ...reward, amount: res.output }]
+  })
 }
