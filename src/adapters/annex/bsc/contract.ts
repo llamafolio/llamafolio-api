@@ -27,13 +27,13 @@ const abi = {
 } as const
 
 export async function getAnnexContracts(ctx: BaseContext, masterchefs: Contract[]) {
-  const [pools, poolsv2, poolsv3] = await Promise.all(
+  const [pools, poolsv2] = await Promise.all(
     masterchefs.map((masterChef) =>
       getMasterChefPoolsContracts(ctx, { masterChefAddress: masterChef.address, getPoolInfos }),
     ),
   )
 
-  return { pools, poolsv2, poolsv3 }
+  return { pools, poolsv2 }
 }
 
 async function getPoolInfos(ctx: BaseContext, { masterChefAddress, poolLength, getLpToken }: GetPoolsInfosParams) {
