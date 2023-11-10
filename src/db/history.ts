@@ -149,7 +149,7 @@ export async function selectHistory(
       LEFT JOIN lf.methods AS "m" ON m."selector" = t."selector"
       ORDER BY "timestamp" DESC
       LIMIT {limit: UInt8}
-      OFFSET {offset: UInt16};
+      OFFSET {offset: UInt32};
     `,
     query_params: {
       addresses,

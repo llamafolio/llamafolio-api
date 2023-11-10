@@ -11,7 +11,7 @@ import { getTokenKey, getTokenPrices } from '@lib/price'
 import type { Token } from '@lib/token'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
-export interface ITransaction {
+export interface Transaction {
   chain: string
   blockNumber: string
   timestamp: number
@@ -39,8 +39,8 @@ export interface ITransaction {
   valueUSD?: number
 }
 
-interface IHistory {
-  transactions: ITransaction[]
+interface HistoryResponse {
+  transactions: Transaction[]
   count: number
   next: number
 }
@@ -228,7 +228,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
       }
     }
 
-    const response: IHistory = {
+    const response: HistoryResponse = {
       transactions: transactionsData,
     }
 
