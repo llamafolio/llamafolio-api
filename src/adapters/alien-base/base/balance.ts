@@ -49,14 +49,11 @@ export async function getAlienFarmBalances(
   pools: Contract[],
   masterchef: Contract,
 ): Promise<Balance[]> {
-  const test = await getMasterChefPoolsBalances(ctx, pools, {
+  return getMasterChefPoolsBalances(ctx, pools, {
     masterChefAddress: masterchef.address,
     rewardToken: ALB,
-    getUserPendingRewards: (ctx, { masterChefAddress, pools, rewardToken }) =>
-      getUserPendingRewards(ctx, { masterChefAddress, pools, rewardToken }),
+    getUserPendingRewards: (...args) => getUserPendingRewards(...args),
   })
-
-  return test
 }
 
 async function getUserPendingRewards(

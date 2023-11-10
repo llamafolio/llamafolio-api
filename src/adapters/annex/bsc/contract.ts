@@ -1,7 +1,7 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter } from '@lib/array'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
+import { getMasterChefPoolsContracts, type GetPoolsInfosParams } from '@lib/masterchef/masterChefContract'
 import { multicall } from '@lib/multicall'
-import { getPairsDetails } from '@lib/uniswap/v2/factory'
 
 const abi = {
   poolLength: {
@@ -26,26 +26,26 @@ const abi = {
   },
 } as const
 
-export async function getAnnexContracts(ctx: BaseContext, masterchefs: Contract[]): Promise<Contract[]> {
-  const poolLength = await multicall({
-    ctx,
-    calls: masterchefs.map((master) => ({ target: master.address })),
-    abi: abi.poolLength,
-  })
+export async function getAnnexContracts(ctx: BaseContext, masterchefs: Contract[]) {
+  const [pools, poolsv2, poolsv3] = await Promise.all(
+    masterchefs.map((masterChef) =>
+      getMasterChefPoolsContracts(ctx, { masterChefAddress: masterChef.address, getPoolInfos }),
+    ),
+  )
 
-  const poolInfosRes = await multicall({
+  return { pools, poolsv2, poolsv3 }
+}
+
+async function getPoolInfos(ctx: BaseContext, { masterChefAddress, poolLength, getLpToken }: GetPoolsInfosParams) {
+  const poolInfos = await multicall({
     ctx,
-    calls: poolLength.map((pool, idx) => ({ target: pool.input.target, params: [BigInt(idx)] }) as const),
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterChefAddress, params: [idx] }) as const),
     abi: abi.getPoolInfo,
   })
 
-  const contracts: Contract[] = mapSuccessFilter(poolInfosRes, (res, idx) => ({
-    chain: ctx.chain,
-    address: res.output[0],
-    token: res.output[0],
-    masterchef: res.input.target,
-    pid: idx,
-  }))
+  return mapSuccessFilter(poolInfos, (res) => {
+    const lpToken = Array.isArray(res.output) ? getLpToken!({ lpToken: res.output }) : res.output
 
-  return getPairsDetails(ctx, contracts)
+    return { chain: ctx.chain, address: lpToken, pid: res.input.params![0] }
+  })
 }

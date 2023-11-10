@@ -45,7 +45,7 @@ export interface GetUnderlyingsParams {
   pools: Contract[]
 }
 
-interface GetLpTokenParams {
+export interface GetLpTokenParams {
   lpToken: any
 }
 

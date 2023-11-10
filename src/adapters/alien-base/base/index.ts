@@ -5,13 +5,6 @@ import { getMasterChefPoolsContracts } from '@lib/masterchef/masterChefContract'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
-const ALB: Contract = {
-  chain: 'base',
-  address: '0x1dd2d631c92b1acdfcdd51a0f7145a50130050c4',
-  decimals: 18,
-  symbol: 'ALB',
-}
-
 const masterChef: Contract = {
   chain: 'base',
   address: '0x52eaecac2402633d98b95213d0b473e069d86590',
