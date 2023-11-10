@@ -1,11 +1,12 @@
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
+import { getMasterChefPoolsContracts } from '@lib/masterchef/masterChefContract'
 import type { Token } from '@lib/token'
-import type { Pair } from '@lib/uniswap/v2/factory'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
-import { getArxMasterChefPoolsBalances, getStakerBalances } from './balance'
+import { getStakerBalances, getUserPendingArx } from './balance'
 
 const stakers: Contract[] = [
   {
@@ -68,16 +69,19 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 1500
 
-  const { pairs, allPairsLength } = await getPairsContracts({
-    ctx,
-    factoryAddress: '0x1C6E968f2E6c9DEC61DB874E28589fd5CE3E1f2c',
-    offset,
-    limit,
-  })
+  const [pools, { pairs, allPairsLength }] = await Promise.all([
+    getMasterChefPoolsContracts(ctx, { masterChefAddress: masterChef.address }),
+    getPairsContracts({
+      ctx,
+      factoryAddress: '0x1C6E968f2E6c9DEC61DB874E28589fd5CE3E1f2c',
+      offset,
+      limit,
+    }),
+  ])
 
   return {
     contracts: {
-      masterChef,
+      pools,
       pairs,
       stakers,
     },
@@ -88,24 +92,16 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
-export async function getArxPairsBalances(
-  ctx: BalancesContext,
-  pairs: Pair[],
-  masterchef: Contract,
-  rewardToken: Token,
-  rewardTokenName?: string,
-  lpTokenAbi?: boolean,
-) {
-  return Promise.all([
-    getPairsBalances(ctx, pairs),
-    getArxMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
-  ])
-}
-
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getArxPairsBalances(...args, masterChef, ARX, 'Arx'),
+    pairs: getPairsBalances,
     stakers: getStakerBalances,
+    pools: (...args) =>
+      getMasterChefPoolsBalances(...args, {
+        masterChefAddress: masterChef.address,
+        rewardToken: ARX,
+        getUserPendingRewards: (...args) => getUserPendingArx(...args),
+      }),
   })
 
   return {
