@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapMultiSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
-import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 
@@ -60,22 +60,25 @@ const ACX: Token = {
   symbol: 'ACX',
 }
 
-export async function getAcrossV2LPBalances(
+export async function getAcrossBalances(
   ctx: BalancesContext,
   pools: Contract[],
   manager: Contract,
-): Promise<Balance[]> {
-  const balances: Balance[] = []
+  masterChef: Contract,
+) {
+  return Promise.all([getAcrossLPBalances(ctx, pools, manager), getAcrossFarmBalances(ctx, pools, masterChef)])
+}
 
+async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[], manager: Contract): Promise<Balance[]> {
   const [userBalancesOfsRes, totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
+      calls: pools.map(({ address }) => ({ target: address, params: [ctx.address] }) as const),
       abi: erc20Abi.balanceOf,
     }),
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.address })),
+      calls: pools.map(({ address }) => ({ target: address })),
       abi: erc20Abi.totalSupply,
     }),
     multicall({
@@ -87,75 +90,58 @@ export async function getAcrossV2LPBalances(
     }),
   ])
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-    const underlying = pool.underlyings?.[0] as Contract
-    const userBalanceOfRes = userBalancesOfsRes[poolIdx]
-    const totalSupplyRes = totalSuppliesRes[poolIdx]
-    const underlyingsBalanceRes = underlyingsBalancesRes[poolIdx]
+  return mapMultiSuccessFilter(
+    userBalancesOfsRes.map((_, i) => [userBalancesOfsRes[i], totalSuppliesRes[i], underlyingsBalancesRes[i]]),
 
-    if (
-      !underlying ||
-      !userBalanceOfRes.success ||
-      !totalSupplyRes.success ||
-      totalSupplyRes.output === 0n ||
-      !underlyingsBalanceRes.success
-    ) {
-      continue
-    }
+    (res, index) => {
+      const pool = pools[index]
 
-    const [_lpToken, _isEnabled, _lastLpFeeUpdate, utilizedReserves, liquidReserves] = underlyingsBalanceRes.output
+      const [{ output: userBalance }, { output: totalSupply }, { output: tokenBalance }] = res.inputOutputPairs
+      const [_lpToken, _isEnabled, _lastLpFeeUpdate, utilizedReserves, liquidReserves] = tokenBalance
 
-    const fmtUnderlyings = {
-      ...underlying,
-      amount: (userBalanceOfRes.output * (liquidReserves + utilizedReserves)) / totalSupplyRes.output,
-    }
+      let underlying = pool.underlyings?.[0] as Contract
+      underlying = { ...underlying, amount: (userBalance * (utilizedReserves + liquidReserves)) / totalSupply }
 
-    balances.push({
-      ...pool,
-      amount: userBalanceOfRes.output,
-      underlyings: [fmtUnderlyings],
-      rewards: undefined,
-      category: 'lp',
-    })
-  }
-
-  return balances
+      return {
+        ...pool,
+        amount: userBalance,
+        underlyings: [underlying],
+        rewards: undefined,
+        category: 'lp',
+      }
+    },
+  )
 }
 
-export async function getAcrossV2FarmBalances(
-  ctx: BalancesContext,
-  pools: Contract[],
-  farmer: Contract,
-): Promise<Balance[]> {
-  const balances: Balance[] = []
-  const calls: Call<typeof abi.getUserStake>[] = pools.map((pool) => ({
-    target: farmer.address,
-    params: [pool.address, ctx.address],
-  }))
-
+async function getAcrossFarmBalances(ctx: BalancesContext, pools: Contract[], farmer: Contract): Promise<Balance[]> {
   const [userBalancesOfsRes, userPendingsRewardsRes] = await Promise.all([
-    multicall({ ctx, calls, abi: abi.getUserStake }),
-    multicall({ ctx, calls, abi: abi.getOutstandingRewards }),
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: farmer.address, params: [pool.address, ctx.address] }) as const),
+      abi: abi.getUserStake,
+    }),
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: farmer.address, params: [pool.address, ctx.address] }) as const),
+      abi: abi.getOutstandingRewards,
+    }),
   ])
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-    const underlying = pool.underlyings?.[0] as Contract
-    const userBalanceOfRes = userBalancesOfsRes[poolIdx]
-    const userPendingRewardRes = userPendingsRewardsRes[poolIdx]
+  return mapMultiSuccessFilter(
+    userBalancesOfsRes.map((_, i) => [userBalancesOfsRes[i], userPendingsRewardsRes[i]]),
 
-    if (!underlying || !userBalanceOfRes.success || !userPendingRewardRes.success) {
-      continue
-    }
+    (res, index) => {
+      const pool = pools[index]
+      const underlying = pool.underlyings?.[0] as Contract
+      const [{ output: userBalance }, { output: pendingRewards }] = res.inputOutputPairs
 
-    balances.push({
-      ...underlying,
-      amount: userBalanceOfRes.output.cumulativeBalance,
-      underlyings: undefined,
-      rewards: [{ ...ACX, amount: userPendingRewardRes.output }],
-      category: 'farm',
-    })
-  }
-  return balances
+      return {
+        ...pool,
+        amount: userBalance.cumulativeBalance,
+        underlyings: [underlying],
+        rewards: [{ ...ACX, amount: pendingRewards }],
+        category: 'farm',
+      }
+    },
+  )
 }
