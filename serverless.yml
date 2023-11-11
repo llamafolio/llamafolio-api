@@ -246,6 +246,15 @@ functions:
           method: get
           path: /tokens/{chain}/{address}
 
+  getTokenBalanceChart:
+    handler: src/handlers/getTokenBalanceChart.handler
+    description: Get token balance chart
+    events:
+      - httpApi:
+          method: get
+          path: /balances/{address}/tokens/{token}/chart
+    timeout: 10
+
   getTokenHolders:
     handler: src/handlers/getTokenHolders.handler
     description: Get the holders data for a token

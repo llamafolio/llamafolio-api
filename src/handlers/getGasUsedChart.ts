@@ -29,7 +29,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     return success(response, { maxAge: 10 * 60 })
   } catch (error) {
-    console.error('Failed to gas used chart', { error })
+    console.error('Failed to get gas used chart', { error })
     return serverError('Failed to get gas used chart')
   }
 }

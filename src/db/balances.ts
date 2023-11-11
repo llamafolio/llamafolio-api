@@ -536,6 +536,85 @@ export async function selectTokenHoldersBalances(
   return res.data || []
 }
 
+export type Window = 'D' | 'W' | 'M'
+
+/**
+ * Get historical token balance
+ * @param client
+ * @param chainId
+ * @param window
+ */
+export async function selectTokenBalanceChart(
+  client: ClickHouseClient,
+  addresses: `0x${string}`[],
+  token: `0x${string}`,
+  chainId: number,
+  window: Window,
+) {
+  const chartData: [number, string][] = []
+  const hours: { [key in Window]: number } = {
+    D: 24,
+    W: 24 * 7,
+    M: 24 * 30,
+  }
+
+  const limit = hours[window] || 24
+
+  const now = new Date()
+  const toTimestamp = toDateTime(now)
+  now.setHours(-limit)
+  const fromTimestamp = toDateTime(now)
+
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        toStartOfHour("hour") AS "hour",
+        (sumMerge("value_to") - sumMerge("value_from")) AS "value"
+      FROM evm_indexer2.tokens_balances_hour_mv
+      WHERE
+        "holder_short" IN {holdersShort: Array(String)} AND
+        "holder" IN {holders: Array(String)} AND
+        "hour" <= {toTimestamp: DateTime} AND
+        "hour" >= {fromTimestamp: DateTime} AND
+        "type" = 'erc20' AND
+        "chain" = {chainId: UInt64} AND
+        "address_short" = {addressShort: String} AND
+        "address" = {address: String}
+      GROUP BY "chain", "hour", "holder_short", "holder", "address_short", "address", "id", "type"
+      ORDER BY "hour" DESC
+      LIMIT {limit: UInt32};
+    `,
+    query_params: {
+      holdersShort: addresses.map(shortAddress),
+      holders: addresses,
+      addressShort: shortAddress(token),
+      address: token,
+      chainId,
+      limit,
+      toTimestamp,
+      fromTimestamp,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: {
+      hour: string
+      /**
+       * "value" represents the hourly cumulated token transfer delta.
+       * To get the historical balance we need to get the current balance and
+       * compute the running sum
+       */
+      value: string
+    }[]
+  }
+
+  for (const row of res.data) {
+    chartData.push([unixFromDateTime(row.hour), row.value])
+  }
+
+  return chartData
+}
+
 export function insertBalances(client: ClickHouseClient, balances: Balance[]) {
   const values = toStorage(balances)
 
