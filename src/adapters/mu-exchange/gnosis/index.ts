@@ -1,4 +1,4 @@
-import { getsDaiBalances } from '@adapters/sdai/gnosis/balance'
+import { getsDaiBalances } from '@adapters/mu-exchange/gnosis/balance'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 

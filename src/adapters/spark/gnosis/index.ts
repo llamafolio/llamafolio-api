@@ -5,8 +5,8 @@ import { resolveBalances } from '@lib/balance'
 
 const lendingPool: Contract = {
   name: 'Lending Pool',
-  address: '0xC13e21B648A5Ee794902342038FF3aDAB66BE987',
-  chain: 'ethereum',
+  address: '0x2dae5307c5e3fd1cf5a72cb6f698f915860607e0',
+  chain: 'gnosis',
 }
 
 export const getContracts = async (ctx: BaseContext) => {

@@ -144,6 +144,7 @@ import morphoAave from '@adapters/morpho-aave'
 import morphoAavev3 from '@adapters/morpho-aavev3'
 import morphoCompound from '@adapters/morpho-compound'
 import mstable from '@adapters/mstable'
+import muExchange from '@adapters/mu-exchange'
 import multichain from '@adapters/multichain'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
@@ -192,7 +193,6 @@ import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import rook from '@adapters/rook'
 import scream from '@adapters/scream'
-import sdai from '@adapters/sdai'
 import seamlessProtocol from '@adapters/seamless-protocol'
 import sentiment from '@adapters/sentiment'
 import setProtocol from '@adapters/set-protocol'
@@ -423,6 +423,7 @@ export const adapters: Adapter[] = [
   morphoAavev3,
   morphoCompound,
   mstable,
+  muExchange,
   multichain,
   nemesisDao,
   nexusMutual,
@@ -471,7 +472,6 @@ export const adapters: Adapter[] = [
   rocketPool,
   rook,
   scream,
-  sdai,
   seamlessProtocol,
   sentiment,
   setProtocol,
