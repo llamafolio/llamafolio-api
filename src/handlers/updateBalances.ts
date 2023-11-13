@@ -29,7 +29,7 @@ type AdapterBalance = Balance & {
 
 // Update Balances
 // NOTE: doesn't return aggregated result
-async function updateBalances(client: ClickHouseClient, address: `0x${string}`) {
+export async function updateBalances(client: ClickHouseClient, address: `0x${string}`) {
   // Fetch all protocols (with their associated contracts) that the user interacted with
   // and all unique tokens he received
   const contracts = await getContractsInteractions(client, address)
