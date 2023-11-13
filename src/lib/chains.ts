@@ -117,7 +117,7 @@ export const chains = [
     name: 'BNB Chain',
     rpcWssUrl: [webSocket(getLlamaNodesUrl('wss://binance.llamarpc.com'))],
     rpcUrls: [
-      // http(getLlamaNodesUrl('https://binance.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
+      http(getLlamaNodesUrl('https://binance.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
       http('https://bsc-dataseed.binance.org/', { batch: { batchSize: 1_000, wait: 10 } }),
       http('https://bsc-dataseed1.ninicoin.io/', { batch: { batchSize: 1_000, wait: 10 } }),
     ],
