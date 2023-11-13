@@ -1,6 +1,6 @@
-import type { Balance, Contract } from '@lib/adapter'
-import type { BalancesContext } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import type { Category } from '@lib/category'
 import { abi as erc20Abi } from '@lib/erc20'
 import type { Token } from '@lib/token'
 
@@ -41,6 +41,7 @@ export async function getStakeBalances(ctx: BalancesContext, contract: Contract)
     rewards: undefined,
     amount: fmtBalanceOf,
     underlyings: [{ ...WAVAX }],
+    category: contract.category as Category,
   }
 
   return balance
