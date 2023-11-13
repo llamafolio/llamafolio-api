@@ -11,13 +11,13 @@ import { getPairsBalances } from '@lib/uniswap/v2/pair'
 const masterChef: Contract = {
   name: 'masterChef',
   displayName: 'masterChef',
-  chain: 'avalanche',
-  address: '0xe11252176cedd4a493aec9767192c06a04a6b04f',
+  chain: 'gnosis',
+  address: '0xddcbf776df3de60163066a5dddf2277cb445e0f3',
 }
 
 const SUSHI: Token = {
-  chain: 'avalanche',
-  address: '0x37b608519f91f70f2eeb0e5ed9af4061722e4f76',
+  chain: 'gnosis',
+  address: '0x2995d1317dcd4f0ab89f4ae60f3f020a4f17c7ce',
   symbol: 'SUSHI',
   decimals: 18,
 }
