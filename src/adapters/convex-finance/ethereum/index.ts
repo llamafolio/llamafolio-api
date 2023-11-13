@@ -1,11 +1,6 @@
 import { getConvexGaugesBalances } from '@adapters/convex-finance/ethereum/balance'
 import { getConvexPoolsContracts } from '@adapters/convex-finance/ethereum/pool'
-import {
-  cvxPrisma,
-  cvxPrismaStaking,
-  getCvxPrismaBalance,
-  getStakedCvxPrismaBalance,
-} from '@adapters/convex-finance/ethereum/prisma'
+import { cvxPrismaStaking, getStakedCvxPrismaBalance } from '@adapters/convex-finance/ethereum/prisma'
 import { getCvxCrvStakeBalance, getCVXStakeBalance, getStkCvxCrvBalance } from '@adapters/convex-finance/ethereum/stake'
 import { getPoolsContracts } from '@adapters/curve-dex/ethereum/pools'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -109,7 +104,6 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: {
-      cvxPrisma,
       cvxPrismaStaking,
       cvxCRVStaker,
       cvxRewardPool,
@@ -128,7 +122,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     cvxCRVStaker: getCvxCrvStakeBalance,
     locker: (...args) => getMultipleLockerBalances(...args, CVX, [cvxCRV, cvxFXS, FXS], true),
     stkCvxCrv: getStkCvxCrvBalance,
-    cvxPrisma: getCvxPrismaBalance,
     cvxPrismaStaking: getStakedCvxPrismaBalance,
   })
 

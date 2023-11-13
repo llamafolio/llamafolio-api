@@ -22,13 +22,6 @@ const abi = {
   },
 } as const
 
-export const cvxPrisma: Contract = {
-  name: 'cvxPrisma',
-  chain: 'ethereum',
-  address: '0x34635280737b5bfe6c7dc2fc3065d60d66e78185',
-  token: '0xda47862a83dac0c112ba89c6abc2159b95afd71c', // PRISMA
-}
-
 export const cvxPrismaStaking: Contract = {
   name: 'cvxPrismaStaking',
   chain: 'ethereum',
@@ -37,17 +30,6 @@ export const cvxPrismaStaking: Contract = {
   underlyings: ['0x34635280737b5bfe6c7dc2fc3065d60d66e78185'], // cvxPRISMA
   rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c', '0x4e3fbd56cd56c3e72c1403e103b45db9da5b9d2b'], // PRISMA, CVX
   category: 'stake',
-}
-
-export async function getCvxPrismaBalance(ctx: BalancesContext, cvxPrisma: Contract) {
-  const balanceOf = await call({ ctx, target: cvxPrisma.address, abi: erc20Abi.balanceOf, params: [ctx.address] })
-
-  const balance: Balance = {
-    ...cvxPrisma,
-    amount: balanceOf,
-  }
-
-  return balance
 }
 
 export async function getStakedCvxPrismaBalance(ctx: BalancesContext, cvxPrismaStaking: Contract) {
