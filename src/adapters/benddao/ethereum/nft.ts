@@ -183,7 +183,7 @@ export async function getNftBalances(
 
       for (let i = 0; i < res.output; i++) {
         nftContracts.push({ ...nftContract, amount: 1 })
-        tokenOfOwnerCalls.push({ target: nftContract.proxy, params: [ctx.address, i] })
+        tokenOfOwnerCalls.push({ target: nftContract.proxy, params: [ctx.address, BigInt(i)] })
       }
     }
   })
