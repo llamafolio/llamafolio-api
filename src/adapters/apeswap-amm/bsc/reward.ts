@@ -4,49 +4,36 @@ import type { GetUsersInfosParams } from '@lib/masterchef/masterChefBalance'
 import { multicall } from '@lib/multicall'
 
 const abi = {
-  userInfo: {
-    inputs: [
-      { internalType: 'uint256', name: '', type: 'uint256' },
-      { internalType: 'address', name: '', type: 'address' },
-    ],
-    name: 'userInfo',
-    outputs: [
-      { internalType: 'uint256', name: 'amount', type: 'uint256' },
-      { internalType: 'uint256', name: 'rewardDebt', type: 'uint256' },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
   pendingReward: {
     inputs: [
       { internalType: 'uint256', name: '_pid', type: 'uint256' },
       { internalType: 'address', name: '_user', type: 'address' },
     ],
-    name: 'pendingReward',
+    name: 'pendingCake',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
-  pendingANN: {
+  pendingBanana: {
     inputs: [
       { internalType: 'uint256', name: '_pid', type: 'uint256' },
       { internalType: 'address', name: '_user', type: 'address' },
     ],
-    name: 'pendingAnnex',
+    name: 'pendingBanana',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
 } as const
 
-export async function getAnnexV1Rewards(
+export async function getUserPendingBananaV1(
   ctx: BalancesContext,
   { masterChefAddress, pools, rewardToken }: GetUsersInfosParams,
 ) {
   const userPendingRewards = await multicall({
     ctx,
     calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.pid, ctx.address] }) as const),
-    abi: abi.pendingANN,
+    abi: abi.pendingReward,
   })
 
   return mapSuccessFilter(userPendingRewards, (res: any, index) => {
@@ -57,14 +44,14 @@ export async function getAnnexV1Rewards(
   })
 }
 
-export async function getAnnexV2Rewards(
+export async function getUserPendingBananaV2(
   ctx: BalancesContext,
   { masterChefAddress, pools, rewardToken }: GetUsersInfosParams,
 ) {
   const userPendingRewards = await multicall({
     ctx,
     calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.pid, ctx.address] }) as const),
-    abi: abi.pendingReward,
+    abi: abi.pendingBanana,
   })
 
   return mapSuccessFilter(userPendingRewards, (res: any, index) => {

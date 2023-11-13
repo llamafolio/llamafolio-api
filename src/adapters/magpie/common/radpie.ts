@@ -1,6 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter, rangeBI } from '@lib/array'
-import { getMasterChefPoolsContracts, type GetPoolsInfosParams } from '@lib/masterchef/newMasterchef'
+import { getMasterChefPoolsContracts, type GetPoolsInfosParams } from '@lib/masterchef/masterChefContract'
 import { multicall } from '@lib/multicall'
 
 const abi = {

@@ -1,9 +1,9 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
+import { mapSuccessFilter } from '@lib/array'
+import type { GetUsersInfosParams } from '@lib/masterchef/masterChefBalance'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
-import type { Pair } from '@lib/uniswap/v2/factory'
 
 const abi = {
   pendingWETH: {
@@ -12,6 +12,16 @@ const abi = {
       { internalType: 'address', name: '_user', type: 'address' },
     ],
     name: 'pendingWETH',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingArx: {
+    inputs: [
+      { internalType: 'uint256', name: '_pid', type: 'uint256' },
+      { internalType: 'address', name: '_user', type: 'address' },
+    ],
+    name: 'pendingArx',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
@@ -49,31 +59,32 @@ const ARX: Token = {
   symbol: 'ARX',
 }
 
-export const getArxMasterChefPoolsBalances = async (
+export async function getUserPendingArx(
   ctx: BalancesContext,
-  pairs: Pair[],
-  masterchef: Contract,
-  rewardToken: Token,
-  rewardTokenName?: string,
-  lpTokenAbi?: boolean,
-): Promise<Balance[]> => {
-  const [poolBalances, extraRewardsRes] = await Promise.all([
-    getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
+  { masterChefAddress, pools, rewardToken }: GetUsersInfosParams,
+) {
+  const [userPendingRewards, pendingExtraWeths] = await Promise.all([
     multicall({
       ctx,
-      calls: pairs.map((pair) => ({ target: masterchef.address, params: [BigInt(pair.pid), ctx.address] }) as const),
+      calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.pid, ctx.address] }) as const),
+      abi: abi.pendingArx,
+    }),
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.pid, ctx.address] }) as const),
       abi: abi.pendingWETH,
     }),
   ])
 
-  return poolBalances.map((poolBalance, idx) => {
-    const extraRewardRes = extraRewardsRes[idx]
+  return mapSuccessFilter(userPendingRewards, (res: any, index) => {
+    const pool = pools[index]
+    const reward = rewardToken || (pool.rewards?.[0] as Contract)
+    const pendingExtraWeth = pendingExtraWeths[index].success ? pendingExtraWeths[index].output : undefined
 
-    if (extraRewardRes.success) {
-      poolBalance.rewards?.push({ ...WETH, amount: extraRewardRes.output })
-    }
-
-    return poolBalance
+    return [
+      { ...reward, amount: res.output },
+      { ...WETH, amount: pendingExtraWeth },
+    ]
   })
 }
 

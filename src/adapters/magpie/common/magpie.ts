@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapt
 import { mapMultiSuccessFilter, mapSuccessFilter, rangeBI } from '@lib/array'
 import type { Category } from '@lib/category'
 import { getERC20Details } from '@lib/erc20'
-import { getMasterChefPoolsContracts, type GetPoolsInfosParams } from '@lib/masterchef/newMasterchef'
+import { getMasterChefPoolsContracts, type GetPoolsInfosParams } from '@lib/masterchef/masterChefContract'
 import { multicall } from '@lib/multicall'
 
 const abi = {

@@ -1,13 +1,15 @@
 import { getMasterChefPoolsNFTBalances } from '@adapters/baseswap/base/balance'
 import { getMasterChefPoolsNFTContracts } from '@adapters/baseswap/base/contract'
 import { getLockersBalances } from '@adapters/baseswap/base/locker'
+import { getUserPendingBSWAP } from '@adapters/baseswap/base/reward'
 import { getBaseSwapStakeBalances, getBaseSwapStakeContracts } from '@adapters/baseswap/base/stake'
 import { getPoolsBalances } from '@adapters/uniswap-v3/common/pools'
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
+import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
+import { getMasterChefPoolsContracts } from '@lib/masterchef/masterChefContract'
 import type { Token } from '@lib/token'
-import { getPairsContracts, type Pair } from '@lib/uniswap/v2/factory'
+import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 // https://base-swap-1.gitbook.io/baseswap/info/smart-contracts
@@ -69,21 +71,23 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 300
 
-  const [{ pairs, allPairsLength }, pools, stakers] = await Promise.all([
+  const [pools, poolsNfts, stakers, { pairs, allPairsLength }] = await Promise.all([
+    getMasterChefPoolsContracts(ctx, { masterChefAddress: masterChef.address }),
+    getMasterChefPoolsNFTContracts(ctx, masterChef2),
+    getBaseSwapStakeContracts(ctx, stakerAddresses),
     getPairsContracts({
       ctx,
       factoryAddress: '0xfda619b6d20975be80a10332cd39b9a4b0faa8bb',
       offset,
       limit,
     }),
-    getMasterChefPoolsNFTContracts(ctx, masterChef2),
-    getBaseSwapStakeContracts(ctx, stakerAddresses),
   ])
 
   return {
     contracts: {
       pairs,
       pools,
+      poolsNfts,
       lockManager,
       nonFungiblePositionManager,
       stakers,
@@ -95,18 +99,19 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
-function getBaseSwapPairsBalances(ctx: BalancesContext, pairs: Pair[], masterchef: Contract, rewardToken: Token) {
-  return Promise.all([
-    getPairsBalances(ctx, pairs),
-    getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, 'Reward'),
-  ])
-}
-
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getBaseSwapPairsBalances(...args, masterChef, BSWAP),
-    pools: getMasterChefPoolsNFTBalances,
+    pairs: getPairsBalances,
+    poolsNfts: getMasterChefPoolsNFTBalances,
     lockManager: (...args) => getLockersBalances(...args, contracts.pairs || []),
+
+    pools: (...args) =>
+      getMasterChefPoolsBalances(...args, {
+        masterChefAddress: masterChef.address,
+        rewardToken: BSWAP,
+        getUserPendingRewards: (...args) => getUserPendingBSWAP(...args),
+      }),
+
     stakers: getBaseSwapStakeBalances,
     // TODO: manage extreme values or close to 0 to prevent extreme underlyings values `ex: 0xd3f85ade70adf48ed17c8cb182b8b1aff542e51f`
     nonFungiblePositionManager: (ctx, nonFungiblePositionManager) =>

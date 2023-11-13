@@ -1,7 +1,8 @@
 import { getAlienFarmBalances } from '@adapters/alien-base/base/balance'
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getPairsContracts, type Pair } from '@lib/uniswap/v2/factory'
+import { getMasterChefPoolsContracts } from '@lib/masterchef/masterChefContract'
+import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 const masterChef: Contract = {
@@ -13,16 +14,20 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
 
-  const { pairs, allPairsLength } = await getPairsContracts({
-    ctx,
-    factoryAddress: '0x3E84D913803b02A4a7f027165E8cA42C14C0FdE7',
-    offset,
-    limit,
-  })
+  const [pools, { pairs, allPairsLength }] = await Promise.all([
+    getMasterChefPoolsContracts(ctx, { masterChefAddress: masterChef.address }),
+    getPairsContracts({
+      ctx,
+      factoryAddress: '0x3e84d913803b02a4a7f027165e8ca42c14c0fde7',
+      offset,
+      limit,
+    }),
+  ])
 
   return {
     contracts: {
       pairs,
+      pools,
     },
     revalidate: 60 * 60,
     revalidateProps: {
@@ -31,13 +36,10 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
-function getAlienBalances(ctx: BalancesContext, pairs: Pair[], masterChef: Contract) {
-  return Promise.all([getPairsBalances(ctx, pairs), getAlienFarmBalances(ctx, pairs, masterChef)])
-}
-
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getAlienBalances(...args, masterChef),
+    pairs: getPairsBalances,
+    pools: (...args) => getAlienFarmBalances(...args, masterChef),
   })
 
   return {
