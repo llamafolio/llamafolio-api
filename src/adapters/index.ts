@@ -270,6 +270,7 @@ import woofi from '@adapters/woofi'
 import x2y2 from '@adapters/x2y2'
 import yearnFinance from '@adapters/yearn-finance'
 import yoshiExchange from '@adapters/yoshi-exchange'
+import zerolend from '@adapters/zerolend'
 import zyberswap from '@adapters/zyberswap'
 import type { Adapter } from '@lib/adapter'
 
@@ -546,6 +547,7 @@ export const adapters: Adapter[] = [
   x2y2,
   yearnFinance,
   yoshiExchange,
+  zerolend,
   zyberswap,
 ]
 
