@@ -1,7 +1,13 @@
 import { getConvexGaugesBalances } from '@adapters/convex-finance/ethereum/balance'
-import { getCvxFxnStakingContract, getStakedCvxFxnBalance } from '@adapters/convex-finance/ethereum/fx'
+import {
+  cvxFpisStaking,
+  cvxFxsStaking,
+  getStkCvxFxsBalance,
+  getStkCvxFxsContract,
+} from '@adapters/convex-finance/ethereum/frax'
+import { cvxFxnStaking } from '@adapters/convex-finance/ethereum/fx'
 import { getConvexPoolsContracts } from '@adapters/convex-finance/ethereum/pool'
-import { getCvxPrismaStakingContract, getStakedCvxPrismaBalance } from '@adapters/convex-finance/ethereum/prisma'
+import { cvxPrismaStaking } from '@adapters/convex-finance/ethereum/prisma'
 import { getCvxCrvStakeBalance, getCVXStakeBalance, getStkCvxCrvBalance } from '@adapters/convex-finance/ethereum/stake'
 import { getPoolsContracts } from '@adapters/curve-dex/ethereum/pools'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -100,18 +106,22 @@ const stkCvxCrv: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const [curvePools, cvxPrismaStaking, cvxFxnStaking] = await Promise.all([
+  const [curvePools, stkCvxFpis, stkCvxFxs, stkCvxFxn, stkCvxPrisma] = await Promise.all([
     getPoolsContracts(ctx, metaRegistry),
-    getCvxPrismaStakingContract(ctx),
-    getCvxFxnStakingContract(ctx),
+    getStkCvxFxsContract(ctx, cvxFpisStaking),
+    getStkCvxFxsContract(ctx, cvxFxsStaking),
+    getStkCvxFxsContract(ctx, cvxFxnStaking),
+    getStkCvxFxsContract(ctx, cvxPrismaStaking),
   ])
 
   const pools = await getConvexPoolsContracts(ctx, booster, curvePools)
 
   return {
     contracts: {
-      cvxFxnStaking,
-      cvxPrismaStaking,
+      stkCvxFpis,
+      stkCvxFxs,
+      stkCvxFxn,
+      stkCvxPrisma,
       cvxCRVStaker,
       cvxRewardPool,
       locker,
@@ -129,8 +139,10 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     cvxCRVStaker: getCvxCrvStakeBalance,
     locker: (...args) => getMultipleLockerBalances(...args, CVX, [cvxCRV, cvxFXS, FXS], true),
     stkCvxCrv: getStkCvxCrvBalance,
-    cvxPrismaStaking: getStakedCvxPrismaBalance,
-    cvxFxnStaking: getStakedCvxFxnBalance,
+    stkCvxFpis: getStkCvxFxsBalance,
+    stkCvxFxs: getStkCvxFxsBalance,
+    stkCvxFxn: getStkCvxFxsBalance,
+    stkCvxPrisma: getStkCvxFxsBalance,
   })
 
   return {
