@@ -92,7 +92,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   })
 
   try {
-    const transactionsData: ITransaction[] = []
+    const transactionsData: Transaction[] = []
 
     const transactions = await selectHistory(
       client,
