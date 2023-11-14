@@ -14,7 +14,7 @@ const abi = {
           { internalType: 'address', name: 'token', type: 'address' },
           { internalType: 'uint256', name: 'amount', type: 'uint256' },
         ],
-        internalType: 'struct cvxPrismaStaking.EarnedData[]',
+        internalType: 'struct cvxFxnStaking.EarnedData[]',
         name: 'userRewards',
         type: 'tuple[]',
       },
@@ -38,47 +38,48 @@ const abi = {
   },
 } as const
 
-export const cvxPrismaStaking: Contract = {
-  name: 'cvxPrismaStaking',
+export const cvxFxnStaking: Contract = {
+  name: 'cvxFxnStaking',
   chain: 'ethereum',
-  address: '0x0c73f1cfd5c9dfc150c8707aa47acbd14f0be108',
-  token: '0xda47862a83dac0c112ba89c6abc2159b95afd71c', // PRISMA
-  underlyings: ['0x34635280737b5bfe6c7dc2fc3065d60d66e78185'], // cvxPRISMA
+  address: '0xec60cd4a5866fb3b0dd317a46d3b474a24e06bef',
+  token: '0x365accfca291e7d3914637abf1f7635db165bb09', // FXN
+  underlyings: ['0x183395dbd0b5e93323a7286d1973150697fffcb3'], // cvxFXN
   category: 'stake',
 }
 
-export async function getCvxPrismaStakingContract(ctx: BaseContext) {
-  const rewardTokenLength = await call({ ctx, target: cvxPrismaStaking.address, abi: abi.rewardTokenLength })
+export async function getCvxFxnStakingContract(ctx: BaseContext) {
+  const rewardTokenLength = await call({ ctx, target: cvxFxnStaking.address, abi: abi.rewardTokenLength })
   const rewardsRes = await multicall({
     ctx,
-    calls: rangeBI(0n, rewardTokenLength).map((idx) => ({ target: cvxPrismaStaking.address, params: [idx] }) as const),
+    calls: rangeBI(0n, rewardTokenLength).map((idx) => ({ target: cvxFxnStaking.address, params: [idx] }) as const),
     abi: abi.rewardTokens,
   })
 
   const contract: Contract = {
-    ...cvxPrismaStaking,
+    ...cvxFxnStaking,
     rewards: mapSuccessFilter(rewardsRes, (reward) => reward.output),
   }
 
   return contract
 }
 
-export async function getStakedCvxPrismaBalance(ctx: BalancesContext, cvxPrismaStaking: Contract) {
+export async function getStakedCvxFxnBalance(ctx: BalancesContext, cvxFxnStaking: Contract) {
   const [balanceOf, claimableRewards] = await Promise.all([
-    call({ ctx, target: cvxPrismaStaking.address, abi: erc20Abi.balanceOf, params: [ctx.address] }),
-    call({ ctx, target: cvxPrismaStaking.address, abi: abi.claimableRewards, params: [ctx.address] }),
+    call({ ctx, target: cvxFxnStaking.address, abi: erc20Abi.balanceOf, params: [ctx.address] }),
+    call({ ctx, target: cvxFxnStaking.address, abi: abi.claimableRewards, params: [ctx.address] }),
   ])
 
-  const cvxPrisma = cvxPrismaStaking.underlyings![0] as Contract
-  const rewards = (cvxPrismaStaking.rewards as Contract[]).map((reward, idx) => ({
+  const cvxFxn = cvxFxnStaking.underlyings![0] as Contract
+
+  const rewards = (cvxFxnStaking.rewards as Contract[]).map((reward, idx) => ({
     ...reward,
     amount: claimableRewards[idx]?.amount || 0n,
   }))
 
   const balance: Balance = {
-    ...cvxPrismaStaking,
+    ...cvxFxnStaking,
     amount: balanceOf,
-    underlyings: [{ ...cvxPrisma, amount: balanceOf }],
+    underlyings: [{ ...cvxFxn, amount: balanceOf }],
     rewards,
     category: 'stake',
   }
