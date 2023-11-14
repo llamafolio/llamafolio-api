@@ -16,6 +16,7 @@ const ETH: { [key: string]: `0x${string}`[] } = {
   base: ['0x224d8fd7ab6ad4c6eb4611ce56ef35dec2277f03', '0x4200000000000000000000000000000000000006'],
   ethereum: ['0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c', '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2'],
   optimism: ['0xb69c8cbcd90a39d8d3d3ccf0a3e968511c3856a0', '0x4200000000000000000000000000000000000006'],
+  linea: ['0x224d8fd7ab6ad4c6eb4611ce56ef35dec2277f03', '0xe5d7c2a44ffddf6b295a15c148167daaaf5cf34f'],
 }
 
 export async function getStargateLpContracts(ctx: BaseContext, lpStakers: Contract[]): Promise<Contract[]> {
