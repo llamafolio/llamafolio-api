@@ -30,7 +30,8 @@ interface PricesResponse {
 
 export async function fetchTokenPrices(keys: string[]): Promise<PricesResponse> {
   try {
-    const coinsParam = keys.join(',')
+    // sort to increase cache hits
+    const coinsParam = keys.sort().join(',')
     const endpoint = environment.DEFILLAMA_PRICE_API_KEY
       ? `https://coins.llama.fi/prices/current/${coinsParam}?apikey=${environment.DEFILLAMA_PRICE_API_KEY}`
       : `https://coins.llama.fi/prices/current/${coinsParam}`
