@@ -20,6 +20,7 @@ export async function call<TAbi extends Abi[number] | readonly unknown[]>(option
     abi: [options.abi],
     // @ts-ignore
     functionName: options.abi.name,
+    blockNumber: options.ctx.blockNumber != null ? BigInt(options.ctx.blockNumber) : undefined,
     args,
   })
 

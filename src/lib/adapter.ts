@@ -4,7 +4,7 @@ import type { Chain } from '@lib/chains'
 export interface BaseContext {
   chain: Chain
   adapterId: string
-  blockHeight?: number
+  blockNumber?: number
 }
 
 export interface BalancesContext extends BaseContext {

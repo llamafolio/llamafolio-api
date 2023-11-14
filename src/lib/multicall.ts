@@ -63,6 +63,7 @@ export async function multicall<
       functionName: options.abi.name,
       args: call.params,
     })),
+    blockNumber: options.ctx.blockNumber != null ? BigInt(options.ctx.blockNumber) : undefined,
     allowFailure,
   })
 
