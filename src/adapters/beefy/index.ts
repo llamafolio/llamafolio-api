@@ -5,6 +5,7 @@ import * as base from './base'
 import * as bsc from './bsc'
 import * as ethereum from './ethereum'
 import * as fantom from './fantom'
+import * as gnosis from './gnosis'
 import * as optimism from './optimism'
 import * as polygon from './polygon'
 
@@ -17,6 +18,7 @@ const adapter: Adapter = {
   bsc,
   base,
   fantom,
+  gnosis,
 }
 
 export default adapter
