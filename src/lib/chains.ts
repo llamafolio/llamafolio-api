@@ -24,6 +24,7 @@ export const chainsNames = [
   'polygon',
   'polygon-zkevm',
   'zksync-era',
+  'linea',
 ] as const
 
 export type Chain = (typeof chainsNames)[number]
@@ -289,6 +290,23 @@ export const chains = [
     indexed: true,
   },
   {
+    id: 'linea',
+    chainId: 59144,
+    name: 'Linea',
+    rpcUrls: [
+      http('https://linea.blockpi.network/v1/rpc/public', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://rpc.linea.build', { batch: { wait: 0, batchSize: 5_000 } }),
+      http('https://1rpc.io/linea', { batch: { batchSize: 1_000, wait: 10 } }),
+    ],
+    nativeCurrency: {
+      address: ADDRESS_ZERO,
+      decimals: 18,
+      name: 'Ether',
+      symbol: 'ETH',
+    },
+    indexed: false,
+  },
+  {
     id: 'zksync-era',
     chainId: 324,
     name: 'zkSync-Era',
@@ -333,6 +351,7 @@ export const toDefiLlamaChain: { [key in Chain]: string } = {
   moonbeam: 'moonbeam',
   optimism: 'optimism',
   polygon: 'polygon',
+  linea: 'linea',
   'polygon-zkevm': 'polygon zkevm',
   'zksync-era': 'zksync era',
 }
