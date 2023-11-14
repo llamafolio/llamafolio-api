@@ -1,7 +1,6 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import { chainById, fromDefiLlamaChain } from '@lib/chains'
 import { boolean, toDateTime } from '@lib/fmt'
-import { extractAddress } from '@lib/yields'
 
 export interface YieldOld {
   chain: string
@@ -37,6 +36,21 @@ export interface YieldOld {
 export interface YieldOldResponse {
   status: string
   data: YieldOld[]
+}
+
+/**
+ * Extract address from string containing metadata. Ex:
+ * "0xd7d069493685a581d27824fc46eda46b7efc0063-binance" -> "0xd7d069493685a581d27824fc46eda46b7efc0063"
+ * "TXJgMdjVX5dKiQaUi9QobwNxtSQaFqccvd" -> "TXJgMdjVX5dKiQaUi9QobwNxtSQaFqccvd"
+ * "ankr-ankrETH" -> "ankr-ankrETH"
+ * @param str
+ */
+function extractAddress(str: string) {
+  if (str.startsWith('0x')) {
+    return str.split('-')[0]
+  }
+
+  return str
 }
 
 export async function fetchYields() {
