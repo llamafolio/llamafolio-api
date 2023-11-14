@@ -76,7 +76,8 @@ export async function getHopFarmBalances(ctx: BalancesContext, farmers: Contract
       !userPendingRewardRes.success ||
       !supplyLpRes.success ||
       !supplyTokenRes.success ||
-      supplyTokenRes.output === 0n
+      supplyTokenRes.output === 0n ||
+      userBalanceRes.output === 0n
     ) {
       continue
     }
