@@ -88,6 +88,7 @@ import gamma from '@adapters/gamma'
 import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
 import gensokishi from '@adapters/gensokishi'
+import giveth from '@adapters/giveth'
 import gmx from '@adapters/gmx'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
 import goldfinch from '@adapters/goldfinch'
@@ -371,6 +372,7 @@ export const adapters: Adapter[] = [
   gearbox,
   geist,
   gensokishi,
+  giveth,
   gmx,
   gnosisProtocolV1,
   goldfinch,
