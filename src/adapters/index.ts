@@ -113,6 +113,7 @@ import keep3rNetwork from '@adapters/keep3r-network'
 import klimaDao from '@adapters/klima-dao'
 import kwenta from '@adapters/kwenta'
 import leonicornswap from '@adapters/leonicornswap'
+import levinswap from '@adapters/levinswap'
 import lido from '@adapters/lido'
 import lifeDao from '@adapters/life-dao'
 import linearFinance from '@adapters/linear-finance'
@@ -393,6 +394,7 @@ export const adapters: Adapter[] = [
   klimaDao,
   kwenta,
   leonicornswap,
+  levinswap,
   lido,
   lifeDao,
   linearFinance,
