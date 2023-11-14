@@ -231,6 +231,7 @@ import sudoswap from '@adapters/sudoswap'
 import summerFi from '@adapters/summer.fi'
 import superfarm from '@adapters/superfarm'
 import sushiswap from '@adapters/sushiswap'
+import swapr from '@adapters/swapr'
 import swell from '@adapters/swell'
 import synapse from '@adapters/synapse'
 import synclubStakedBnb from '@adapters/synclub-staked-bnb'
@@ -513,6 +514,7 @@ export const adapters: Adapter[] = [
   summerFi,
   superfarm,
   sushiswap,
+  swapr,
   swell,
   synapse,
   synclubStakedBnb,
