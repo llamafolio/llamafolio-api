@@ -52,7 +52,7 @@ export async function selectToken(client: ClickHouseClient, chainId: number, add
         "decimals",
         "symbol",
         "name",
-        "coingecko_id" AS "coingeckoId,
+        "coingecko_id" AS "coingeckoId",
         "stable"
       FROM evm_indexer2.tokens
       WHERE
