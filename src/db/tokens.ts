@@ -1,5 +1,6 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import { type Chain, chainById } from '@lib/chains'
+import { shortAddress } from '@lib/fmt'
 
 export interface Token {
   address: string
@@ -41,6 +42,36 @@ export function toTokenStorage(tokens: Token[]) {
   }
 
   return tokensStorable
+}
+
+export async function selectToken(client: ClickHouseClient, chainId: number, address: string) {
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        "type",
+        "decimals",
+        "symbol",
+        "name",
+        "coingecko_id",
+        "stable"
+      FROM evm_indexer2.tokens
+      WHERE
+        "chain" = {chainId: UInt64} AND
+        "address_short" = {addressShort: String} AND
+        "address" = {address: String};
+    `,
+    query_params: {
+      chainId,
+      addressShort: shortAddress(address),
+      address,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: { type: string; decimals: number; symbol: string; name: string; coingecko_id: string; stable: boolean }[]
+  }
+
+  return res.data[0]
 }
 
 export async function selectUndecodedChainAddresses(client: ClickHouseClient, limit?: number, offset?: number) {
