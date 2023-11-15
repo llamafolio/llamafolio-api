@@ -5,6 +5,17 @@ import { type Chain, chainById } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
+interface TokenResponse {
+  data: {
+    type?: string
+    decimals?: number
+    symbol?: string
+    name?: string
+    coingeckoId?: string
+    stable: boolean
+  }
+}
+
 export const handler: APIGatewayProxyHandler = async (event) => {
   const address = parseAddress(event.pathParameters?.address || '')
   if (!address) {
@@ -22,9 +33,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   try {
-    const token = await selectToken(client, chainId, address)
+    const data = await selectToken(client, chainId, address)
 
-    return success(token, { maxAge: 60 * 60 })
+    const response: TokenResponse = {
+      data,
+    }
+
+    return success(response, { maxAge: 60 * 60 })
   } catch (e) {
     console.error('Failed to retrieve token', e)
     return serverError('Failed to retrieve token')

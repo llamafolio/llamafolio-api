@@ -52,7 +52,7 @@ export async function selectToken(client: ClickHouseClient, chainId: number, add
         "decimals",
         "symbol",
         "name",
-        "coingecko_id",
+        "coingecko_id" AS "coingeckoId,
         "stable"
       FROM evm_indexer2.tokens
       WHERE
@@ -68,7 +68,7 @@ export async function selectToken(client: ClickHouseClient, chainId: number, add
   })
 
   const res = (await queryRes.json()) as {
-    data: { type: string; decimals: number; symbol: string; name: string; coingecko_id: string; stable: boolean }[]
+    data: { type: string; decimals: number; symbol: string; name: string; coingeckoId: string; stable: boolean }[]
   }
 
   return res.data[0]
