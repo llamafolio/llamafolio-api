@@ -1,12 +1,36 @@
 import '../environment'
 
+import { client } from '@db/clickhouse'
+import type { Token } from '@db/tokens'
+import { insertERC20Tokens } from '@db/tokens'
+import { coingeckoPlatformToChain, fetchCoingeckoCoins } from '@lib/coingecko'
 import { chains } from '@llamafolio/tokens'
 
-import { client } from '../src/db/clickhouse'
-import type { Token } from '../src/db/tokens'
-import { insertERC20Tokens } from '../src/db/tokens'
-
 async function main() {
+  const coingeckoCoins = await fetchCoingeckoCoins()
+
+  const coingeckoIdByChainByAddress: { [chain: string]: { [address: string]: string } } = {}
+
+  for (const coin of coingeckoCoins) {
+    if (!coin.platforms) {
+      continue
+    }
+
+    for (const platform in coin.platforms) {
+      const chain = coingeckoPlatformToChain[platform]
+      if (!chain) {
+        continue
+      }
+
+      if (!coingeckoIdByChainByAddress[chain]) {
+        coingeckoIdByChainByAddress[chain] = {}
+      }
+
+      const address = coin.platforms[platform].toLowerCase()
+      coingeckoIdByChainByAddress[chain][address] = coin.id
+    }
+  }
+
   try {
     const tokens: Token[] = []
 
@@ -19,7 +43,7 @@ async function main() {
           name: token.name,
           symbol: token.symbol,
           decimals: token.decimals,
-          coingeckoId: token.coingeckoId || undefined,
+          coingeckoId: token.coingeckoId || coingeckoIdByChainByAddress[chain]?.[token.address] || undefined,
           cmcId: undefined,
           stable: token.stable,
         })

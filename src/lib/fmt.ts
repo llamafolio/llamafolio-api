@@ -1,3 +1,4 @@
+import { isHex } from '@lib/contract'
 import { isNotFalsy } from '@lib/type'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
@@ -10,6 +11,10 @@ export function capitalize(str: string) {
 
 export function isCharNumeric(char: string) {
   return /\d/.test(char)
+}
+
+export function shortAddress(address?: string) {
+  return address?.slice(0, 10)
 }
 
 export function slugify(adapter: string) {
@@ -79,6 +84,14 @@ export function fromAddresses(addresses: `0x${string}`[]) {
     .map((address) => address.toLowerCase())
     .sort()
     .join(',')
+}
+
+/**
+ * Parse address
+ * @param str
+ */
+export function parseAddress(str: string) {
+  return isHex(str) ? (str.toLowerCase() as `0x${string}`) : null
 }
 
 /**
