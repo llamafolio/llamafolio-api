@@ -211,6 +211,7 @@ import smoothy from '@adapters/smoothy'
 import snowbank from '@adapters/snowbank'
 import solidlizard from '@adapters/solidlizard'
 import solidlyV2 from '@adapters/solidly-v2'
+import solvProtocol from '@adapters/solv-protocol'
 import sommelier from '@adapters/sommelier'
 import sonneFinance from '@adapters/sonne-finance'
 import spark from '@adapters/spark'
@@ -496,6 +497,7 @@ export const adapters: Adapter[] = [
   snowbank,
   solidlizard,
   solidlyV2,
+  solvProtocol,
   sommelier,
   sonneFinance,
   spark,
