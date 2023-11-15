@@ -1,3 +1,5 @@
+import { parseAddress } from '@lib/fmt'
+
 import type { LabelSource } from '../src/labels'
 import { fetchENSName } from '../src/labels/ens'
 import { fetchLlamaFolioLabel } from '../src/labels/llamafolio'
@@ -22,7 +24,11 @@ async function main() {
     console.error('Missing user argument')
     return help()
   }
-  const address = process.argv[2].toLowerCase()
+  const address = parseAddress(process.argv[2] || '')
+  if (!address) {
+    console.error('Invalid address parameter')
+    return help()
+  }
 
   const [llamaFolioLabels, openSea, ens] = await Promise.all([
     fetchLlamaFolioLabel(address),
