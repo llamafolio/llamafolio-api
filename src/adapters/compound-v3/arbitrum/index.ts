@@ -14,11 +14,11 @@ const USDC: Token = {
 }
 
 // USDC.e Bridged version
-const USDC_E: Token = {
+const USDC_e: Token = {
   chain: 'arbitrum',
   address: '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',
   decimals: 6,
-  symbol: 'USDC',
+  symbol: 'USDC.e',
 }
 
 // cUSDCv3 through USDC Native version
@@ -32,7 +32,7 @@ const cUSDCv3_n: Contract = {
 const cUSDCv3_b: Contract = {
   chain: 'arbitrum',
   address: '0xA5EDBDD9646f8dFF606d7448e414884C7d905dCA',
-  underlyings: [USDC_E],
+  underlyings: [USDC_e],
 }
 
 const rewarder: Contract = {
