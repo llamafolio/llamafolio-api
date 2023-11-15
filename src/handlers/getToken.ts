@@ -7,6 +7,8 @@ import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface TokenResponse {
   data: {
+    chain: string
+    address: string
     type?: string
     decimals?: number
     symbol?: string
@@ -33,10 +35,14 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   try {
-    const data = await selectToken(client, chainId, address)
+    const token = await selectToken(client, chainId, address)
 
     const response: TokenResponse = {
-      data,
+      data: {
+        chain: chainById[chain].id,
+        address,
+        ...token,
+      },
     }
 
     return success(response, { maxAge: 60 * 60 })
