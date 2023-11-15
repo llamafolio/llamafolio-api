@@ -1,5 +1,8 @@
-export async function fetchOpenSeaUser(address: string): Promise<string | undefined> {
-  const openSeaUser = await fetch(`https://api.opensea.io/user/${address}?format=json`)
-  const json = await openSeaUser.json()
-  return json.username
+export async function fetchOpenSeaUser(address: `0x${string}`): Promise<string | undefined> {
+  const response = await fetch(`https://api.opensea.io/user/${address}?format=json`)
+
+  if (response.ok) {
+    const json = await response.json()
+    return json.username
+  }
 }

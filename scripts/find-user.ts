@@ -12,18 +12,18 @@ interface Label {
 }
 
 function help() {
-  console.log('pnpm run find-user {adapter} {address}')
+  console.log('pnpm run find-user {address}')
 }
 
 async function main() {
   // argv[0]: node_modules/.bin/tsx
   // argv[1]: find-user.ts
-  // argv[2]: adapter
-  // argv[3]: address
-  if (process.argv.length < 3) {
+  // argv[2]: address
+  if (process.argv.length < 2) {
     console.error('Missing user argument')
     return help()
   }
+
   const address = parseAddress(process.argv[2] || '')
   if (!address) {
     console.error('Invalid address parameter')
@@ -38,8 +38,6 @@ async function main() {
 
   const foundNames: Label[] = []
   const foundLinks: Label[] = []
-
-  console.log(llamaFolioLabels)
 
   if (llamaFolioLabels) {
     if (llamaFolioLabels.labels) {
