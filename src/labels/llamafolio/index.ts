@@ -3,10 +3,13 @@ export interface LlamaLabel {
   links?: { [key: string]: string }
 }
 
-export async function fetchLlamaFolioLabel(address: string): Promise<LlamaLabel> {
-  const llamaLabels = await fetch(
+export async function fetchLlamaFolioLabel(address: `0x${string}`): Promise<LlamaLabel | undefined> {
+  const response = await fetch(
     `https://raw.githubusercontent.com/llamafolio/llamafolio-labels/main/labels/${address}.json`,
   )
-  const json = await llamaLabels.json()
-  return json
+
+  if (response.ok) {
+    const json = await response.json()
+    return json
+  }
 }
