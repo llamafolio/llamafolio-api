@@ -1,22 +1,28 @@
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { getSolvFarmBalances } from '@adapters/solv-protocol/common/balance'
+import { getSolvContracts } from '@adapters/solv-protocol/common/pool'
+import { getSolvVestingBalances } from '@adapters/solv-protocol/common/vesting'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
+const farmers: Contract[] = [
+  { chain: 'bsc', address: '0x66e6b4c8aa1b8ca548cc4ebcd6f3a8c6f4f3d04d' },
+  { chain: 'bsc', address: '0xfef2625c1a03dc8e29c0c183efd0502193708e74' },
+  { chain: 'bsc', address: '0xc4341c6e7df9db26a58e6ec3c53b937bdff06d65' },
+]
+
 export const getContracts = async (ctx: BaseContext) => {
+  const vestings = await getSolvContracts(ctx)
+
   return {
-    // Contracts grouped by keys. They will be passed to getBalances, filtered by user interaction
-    contracts: {},
-    // Optional revalidate time (in seconds).
-    // Contracts returned by the adapter are cached by default and can be updated by interval with this parameter.
-    // This is mostly used for Factory contracts, where the number of contracts deployed increases over time
-    // revalidate: 60 * 60,
+    contracts: { vestings, farmers },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  // Any method to check the contracts retrieved above (based on user interaction).
-  // This function will be run each time a user queries his balances.
-  // As static contracts info is filled in getContracts, this should ideally only fetch the current amount of each contract (+ underlyings and rewards)
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {})
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    vestings: getSolvVestingBalances,
+    farmers: getSolvFarmBalances,
+  })
 
   return {
     groups: [{ balances }],
