@@ -5,17 +5,34 @@ import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalances } from '@lib/stake'
 import type { Token } from '@lib/token'
 
+// USDC Native version
 const USDC: Token = {
   chain: 'arbitrum',
-  address: '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8',
+  address: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
   decimals: 6,
   symbol: 'USDC',
 }
 
-const cUSDCv3: Contract = {
+// USDC.e Bridged version
+const USDC_E: Token = {
+  chain: 'arbitrum',
+  address: '0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8',
+  decimals: 6,
+  symbol: 'USDC',
+}
+
+// cUSDCv3 through USDC Native version
+const cUSDCv3_n: Contract = {
+  chain: 'arbitrum',
+  address: '0x9c4ec768c28520B50860ea7a15bd7213a9fF58bf',
+  underlyings: [USDC],
+}
+
+// cUSDCv3 through USDC.e Bridged version
+const cUSDCv3_b: Contract = {
   chain: 'arbitrum',
   address: '0xA5EDBDD9646f8dFF606d7448e414884C7d905dCA',
-  underlyings: [USDC],
+  underlyings: [USDC_E],
 }
 
 const rewarder: Contract = {
@@ -24,10 +41,10 @@ const rewarder: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const assets = await getAssetsContracts(ctx, [cUSDCv3])
+  const assets = await getAssetsContracts(ctx, [cUSDCv3_n, cUSDCv3_b])
 
   return {
-    contracts: { compounders: [cUSDCv3], assets, rewarder },
+    contracts: { compounders: [cUSDCv3_n, cUSDCv3_b], assets, rewarder },
     revalidate: 60 * 60,
   }
 }
@@ -38,7 +55,7 @@ const compoundBalances = async (ctx: BalancesContext, compounders: Contract[], r
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    assets: (...args) => getCompLendBalances(...args, [cUSDCv3]),
+    assets: (...args) => getCompLendBalances(...args, [cUSDCv3_n, cUSDCv3_b]),
     compounders: (...args) => compoundBalances(...args, rewarder),
   })
 
