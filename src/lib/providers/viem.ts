@@ -1,5 +1,5 @@
 import type { IChainInfo } from '@lib/chains'
-import { createPublicClient, fallback } from 'viem'
+import { createPublicClient, fallback, type PublicClientConfig } from 'viem'
 
 import { viemChainById } from './chains'
 
@@ -27,7 +27,7 @@ export function evmClient(
     options,
   }: {
     protocol: Protocol
-    options: Pick<Parameters<typeof createPublicClient>[0], 'batch' | 'key' | 'pollingInterval'>
+    options: Pick<PublicClientConfig, 'batch' | 'key' | 'pollingInterval'>
   } = {
     protocol: 'http',
     options: {
