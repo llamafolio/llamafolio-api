@@ -55,10 +55,12 @@ const COMP: { [key: string]: `0x${string}` } = {
 
 export async function getCompLendBalances(
   ctx: BalancesContext,
-  assets: Contract[],
   compounders: Contract[],
+  rewarder: Contract,
 ): Promise<Balance[]> {
-  const [userLendBalances, userBorrowBalances] = await Promise.all([
+  const assets = compounders.flatMap((compounder) => compounder.assets)
+
+  const [userLendBalances, userBorrowBalances, pendingCompRewards] = await Promise.all([
     multicall({
       ctx,
       calls: assets.map((asset) => ({ target: asset.compounder, params: [ctx.address, asset.address] }) as const),
@@ -69,56 +71,36 @@ export async function getCompLendBalances(
       calls: compounders.map((compounder) => ({ target: compounder.address, params: [ctx.address] }) as const),
       abi: abi.borrowBalanceOf,
     }),
+    multicall({
+      ctx,
+      calls: compounders.map(
+        (contract) => ({ target: rewarder.address, params: [contract.address, ctx.address] }) as const,
+      ),
+      abi: abi.getRewardOwed,
+    }),
   ])
 
   const supplyBalance: Balance[] = mapSuccessFilter(userLendBalances, (res, index) => {
+    const asset = assets[index] as Balance
     const [balance, _reserved] = res.output
-
     return {
-      chain: ctx.chain,
-      decimals: assets[index].decimals,
-      symbol: assets[index].symbol,
-      address: assets[index].address,
+      ...asset,
       amount: balance,
-      collateralFactor: assets[index].collateralFactor,
       category: 'lend',
     }
   })
 
   const borrowBalance: Balance[] = mapSuccessFilter(userBorrowBalances, (res, index) => {
     const underlying = compounders[index].underlyings?.[0] as Contract
-
-    if (!underlying) {
-      return null
-    }
-
+    if (!underlying) return null
     return {
-      chain: ctx.chain,
-      decimals: underlying.decimals,
-      symbol: underlying.symbol,
-      address: underlying.address,
+      ...underlying,
       amount: res.output,
       category: 'borrow',
     }
   }).filter(isNotNullish) as Balance[]
 
-  return [...supplyBalance, ...borrowBalance]
-}
-
-export async function getCompRewardBalances(
-  ctx: BalancesContext,
-  rewarder: Contract,
-  compounders: Contract[],
-): Promise<Balance[]> {
-  const pendingCompRewards = await multicall({
-    ctx,
-    calls: compounders.map(
-      (contract) => ({ target: rewarder.address, params: [contract.address, ctx.address] }) as const,
-    ),
-    abi: abi.getRewardOwed,
-  })
-
-  return mapSuccessFilter(pendingCompRewards, (res) => ({
+  const rewardBalance: Balance[] = mapSuccessFilter(pendingCompRewards, (res) => ({
     chain: ctx.chain,
     address: COMP[ctx.chain],
     decimals: 18,
@@ -126,4 +108,6 @@ export async function getCompRewardBalances(
     amount: res.output.owed,
     category: 'reward',
   }))
+
+  return [...supplyBalance, ...borrowBalance, ...rewardBalance]
 }
