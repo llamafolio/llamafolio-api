@@ -15,7 +15,7 @@ const ALPACA: Contract = {
   chain: 'fantom',
   address: '0xad996a45fd2373ed0b10efa4a8ecb9de445a4302',
   decimals: 18,
-  symbols: 'ALPACA',
+  symbol: 'ALPACA',
 }
 
 const xALPACA: Contract = {
