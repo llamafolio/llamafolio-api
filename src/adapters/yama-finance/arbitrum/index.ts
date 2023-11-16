@@ -18,14 +18,14 @@ const USDT_YL: Contract = {
 
 export const getContracts = async () => {
   return {
-    contracts: { compounders: [USDT_YL] },
+    contracts: { assets: [USDT_YL] },
     revalidate: 60 * 60,
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    compounders: getSingleStakeBalances,
+    assets: getSingleStakeBalances,
   })
 
   return {
