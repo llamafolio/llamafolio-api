@@ -1,6 +1,6 @@
+import { getYamaStakeBalances } from '@adapters/yama-finance/arbitrum/balance'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getSingleStakeBalances } from '@lib/stake'
 import type { Token } from '@lib/token'
 
 const USDT: Token = {
@@ -18,14 +18,14 @@ const USDT_YL: Contract = {
 
 export const getContracts = async () => {
   return {
-    contracts: { assets: [USDT_YL] },
+    contracts: { USDT_YL },
     revalidate: 60 * 60,
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    assets: getSingleStakeBalances,
+    USDT_YL: getYamaStakeBalances,
   })
 
   return {
