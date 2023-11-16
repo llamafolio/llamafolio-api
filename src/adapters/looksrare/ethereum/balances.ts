@@ -35,7 +35,7 @@ const LOOKS: Contract = {
   chain: 'ethereum',
   address: '0xf4d2888d29D722226FafA5d9B24F9164c092421E',
   decimals: 18,
-  symbols: 'LOOKS',
+  symbol: 'LOOKS',
 }
 
 const WETH: Contract = {
@@ -43,7 +43,7 @@ const WETH: Contract = {
   chain: 'ethereum',
   address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
   decimals: 18,
-  symbols: 'WETH',
+  symbol: 'WETH',
 }
 
 export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Contract): Promise<Balance> => {
