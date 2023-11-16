@@ -1,5 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { call } from '@lib/call'
+import { mapSuccessFilter } from '@lib/array'
+import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 
 const abi = {
@@ -29,28 +30,28 @@ const SDEX: Token = {
   symbol: 'SDEX',
 }
 
-export async function getSmarDexStakeBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const userInfo = await call({
+export async function getSmarDexStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
+  const userInfosRes = await multicall({
     ctx,
-    target: staker.address,
-    params: [ctx.address],
+    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }) as const),
     abi: abi.userInfo,
   })
 
-  const [shares, _lastBlockUpdate] = userInfo
-
-  const sharesToTokens = await call({
+  const sharesToTokens = await multicall({
     ctx,
-    target: staker.address,
-    params: [shares],
+    calls: mapSuccessFilter(userInfosRes, (res) => ({ target: res.input.target, params: [res.output[0]] }) as const),
     abi: abi.sharesToTokens,
   })
 
-  return {
-    ...staker,
-    amount: sharesToTokens,
-    underlyings: [SDEX],
-    rewards: undefined,
-    category: 'stake',
-  }
+  return mapSuccessFilter(sharesToTokens, (res, index) => {
+    const staker = stakers[index]
+
+    return {
+      ...staker,
+      amount: res.output,
+      underlyings: [SDEX],
+      rewards: undefined,
+      category: 'stake',
+    }
+  })
 }
