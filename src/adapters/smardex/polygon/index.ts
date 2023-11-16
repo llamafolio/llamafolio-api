@@ -7,14 +7,14 @@ import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
 const SDEX: Contract = {
-  chain: 'bsc',
+  chain: 'polygon',
   address: '0x6899fAcE15c14348E1759371049ab64A3a06bFA6',
   decimals: 18,
   symbol: 'SDEX',
 }
 
 const masterChef: Contract = {
-  chain: 'bsc',
+  chain: 'polygon',
   address: '0x7DB73A1e526db36c40e508b09428420c1fA8e46b',
 }
 
