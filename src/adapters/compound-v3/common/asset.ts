@@ -1,5 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, range } from '@lib/array'
+import { mapMultiSuccessFilter, mapSuccessFilter, range } from '@lib/array'
+import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -62,10 +63,36 @@ export async function getAssetsContracts(ctx: BaseContext, compounders: Contract
     abi: abi.getAssetInfo,
   })
 
-  return mapSuccessFilter(assetsInfoRes, (res) => ({
+  const rawAssets = mapSuccessFilter(assetsInfoRes, (res) => ({
     chain: ctx.chain,
     address: res.output.asset,
     compounder: res.input.target,
     collateralFactor: res.output.borrowCollateralFactor,
   }))
+
+  const [symbolRes, decimalsRes] = await Promise.all([
+    multicall({ ctx, calls: rawAssets.map((asset) => ({ target: asset.address }) as const), abi: erc20Abi.symbol }),
+    multicall({ ctx, calls: rawAssets.map((asset) => ({ target: asset.address }) as const), abi: erc20Abi.decimals }),
+  ])
+
+  const assets: Contract[] = mapMultiSuccessFilter(
+    symbolRes.map((_, i) => [symbolRes[i], decimalsRes[i]]),
+
+    (res, index) => {
+      const rawAsset = rawAssets[index]
+      const [{ output: symbol }, { output: decimals }] = res.inputOutputPairs
+
+      return {
+        ...rawAsset,
+        decimals,
+        symbol,
+      }
+    },
+  )
+
+  compounders.forEach((compounder) => {
+    compounder.assets = assets.filter((asset) => asset.compounder === compounder.address)
+  })
+
+  return compounders
 }
