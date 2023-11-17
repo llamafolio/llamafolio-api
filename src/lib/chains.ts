@@ -373,6 +373,11 @@ export const fromDefiLlamaChain: { [key: string]: Chain } = {
   'zkSync Era': 'zksync-era',
 }
 
+export function getChainId(chain: string) {
+  return (chainById[chain] || chainById[fromDefiLlamaChain[chain]] || chainByChainId[chain as unknown as number])
+    ?.chainId
+}
+
 /**
  * Get LLamaNodes Premium RPC URL if API key specified in environment, free RPC otherwise
  * @param baseEndpoint

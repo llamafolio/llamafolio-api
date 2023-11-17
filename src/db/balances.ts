@@ -5,7 +5,7 @@ import { groupBy, groupBy2 } from '@lib/array'
 import { areBalancesStale } from '@lib/balance'
 import type { Category } from '@lib/category'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
-import { toDateTime, unixFromDateTime } from '@lib/fmt'
+import { shortAddress, toDateTime, unixFromDateTime } from '@lib/fmt'
 import { sum, sumBI } from '@lib/math'
 import type { TUnixTimestamp } from '@lib/type'
 
@@ -477,14 +477,63 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
   return { updatedAt, protocolsBalances, staleAddresses }
 }
 
-export async function selectBalancesHolders(
-  _client: ClickHouseClient,
-  _contractAddress: string,
-  _chain: Chain,
-  _limit: number,
+export async function selectTokenHoldersBalances(
+  client: ClickHouseClient,
+  address: string,
+  chainId: number,
+  limit: number,
+  offset: number,
 ) {
-  console.error('Unimplemented function db/balances#selectBalancesHolders')
-  return []
+  const queryRes = await client.query({
+    query: `
+      WITH "holders" AS (
+        SELECT
+          "holder",
+          "value"
+        FROM (
+          SELECT
+            "holder",
+            (sumMerge("value_to") - sumMerge("value_from")) AS "value"
+          FROM evm_indexer2.tokens_balances_mv
+          WHERE
+            "type" = 'erc20' AND
+            "chain" = {chainId: UInt64} AND
+            "address_short" = {addressShort: String} AND
+            "address" = {address: String}
+          GROUP BY "chain", "holder_short", "holder", "address_short", "address", "id", "type"
+        )
+        WHERE "value" > 0
+      ),
+      (
+        SELECT count(*) FROM "holders"
+      ) AS "count"
+      SELECT
+        "holder",
+        "value",
+        "count"
+      FROM "holders"
+      ORDER BY "value" DESC
+      LIMIT {limit: UInt8}
+      OFFSET {offset: UInt32};
+    `,
+    query_params: {
+      address,
+      addressShort: shortAddress(address),
+      chainId,
+      limit,
+      offset,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: {
+      holder: string
+      value: string
+      count: string
+    }[]
+  }
+
+  return res.data || []
 }
 
 export function insertBalances(client: ClickHouseClient, balances: Balance[]) {

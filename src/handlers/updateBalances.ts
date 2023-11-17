@@ -1,7 +1,6 @@
 import { adapterById } from '@adapters/index'
 import type { ClickHouseClient } from '@clickhouse/client'
 import { formatBalance, insertBalances } from '@db/balances'
-import { client } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { Balance, BalancesContext } from '@lib/adapter'
@@ -171,7 +170,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   try {
-    await Promise.all(addresses.map((address) => updateBalances(client, address)))
+    // await Promise.all(addresses.map((address) => updateBalances(client, address)))
 
     const updatedAt = unixFromDate(new Date())
 
