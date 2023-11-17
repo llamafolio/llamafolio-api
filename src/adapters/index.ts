@@ -85,6 +85,7 @@ import fortressLoans from '@adapters/fortress-loans'
 import fractionalArt from '@adapters/fractional-art'
 import fraxFinance from '@adapters/frax-finance'
 import fraxlend from '@adapters/fraxlend'
+import fxProtocol from '@adapters/fx-protocol'
 import gainsNetwork from '@adapters/gains-network'
 import gamma from '@adapters/gamma'
 import gearbox from '@adapters/gearbox'
@@ -375,6 +376,7 @@ export const adapters: Adapter[] = [
   fractionalArt,
   fraxFinance,
   fraxlend,
+  fxProtocol,
   gainsNetwork,
   gamma,
   gearbox,
