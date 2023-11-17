@@ -33,8 +33,6 @@ const farmAddresses: `0x${string}`[] = [
 export const getContracts = async (ctx: BaseContext) => {
   const [LPs, pools] = await Promise.all([getKineLpPools(ctx, lpAddresses), getKineFarmingPools(ctx, farmAddresses)])
 
-  console.log(pools)
-
   return {
     contracts: { LPs: [KBNB, xKINE, ...LPs], pools },
   }
