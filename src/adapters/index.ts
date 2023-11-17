@@ -278,6 +278,7 @@ import wigoswap from '@adapters/wigoswap'
 import wombatExchange from '@adapters/wombat-exchange'
 import woofi from '@adapters/woofi'
 import x2y2 from '@adapters/x2y2'
+import yamaFinance from '@adapters/yama-finance'
 import yearnFinance from '@adapters/yearn-finance'
 import yoshiExchange from '@adapters/yoshi-exchange'
 import zerolend from '@adapters/zerolend'
@@ -565,6 +566,7 @@ export const adapters: Adapter[] = [
   wombatExchange,
   woofi,
   x2y2,
+  yamaFinance,
   yearnFinance,
   yoshiExchange,
   zerolend,
