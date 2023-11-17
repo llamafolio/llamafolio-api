@@ -38,6 +38,7 @@ import beltFinance from '@adapters/belt-finance'
 import benddao from '@adapters/benddao'
 import benqiLending from '@adapters/benqi-lending'
 import benqiStakedAvax from '@adapters/benqi-staked-avax'
+import bifrostLiquidStaking from '@adapters/bifrost-liquid-staking'
 import binanceStakedEth from '@adapters/binance-staked-eth'
 import biswap from '@adapters/biswap'
 import blur from '@adapters/blur'
@@ -327,6 +328,7 @@ export const adapters: Adapter[] = [
   benddao,
   benqiLending,
   benqiStakedAvax,
+  bifrostLiquidStaking,
   binanceStakedEth,
   biswap,
   blur,
