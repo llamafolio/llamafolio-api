@@ -151,6 +151,7 @@ import morphex from '@adapters/morphex'
 import morphoAave from '@adapters/morpho-aave'
 import morphoAavev3 from '@adapters/morpho-aavev3'
 import morphoCompound from '@adapters/morpho-compound'
+import mountainProtocol from '@adapters/mountain-protocol'
 import mstable from '@adapters/mstable'
 import muExchange from '@adapters/mu-exchange'
 import multichain from '@adapters/multichain'
@@ -442,6 +443,7 @@ export const adapters: Adapter[] = [
   morphoAave,
   morphoAavev3,
   morphoCompound,
+  mountainProtocol,
   mstable,
   muExchange,
   multichain,
