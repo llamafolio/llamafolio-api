@@ -3,7 +3,7 @@ import { selectToken } from '@db/tokens'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { call } from '@lib/call'
-import { type Chain, chainByChainId, chainById } from '@lib/chains'
+import { chainByChainId, getChainId } from '@lib/chains'
 import { abi as erc20Abi } from '@lib/erc20'
 import { parseAddress } from '@lib/fmt'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -28,17 +28,14 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return badRequest('Invalid address parameter')
   }
 
-  const chain = event.pathParameters?.chain as Chain
-  if (!chain) {
-    return badRequest('Missing chain parameter')
+  const chainId = getChainId(event.pathParameters?.chain || '')
+  if (!chainId) {
+    return badRequest('Invalid chain parameter')
   }
 
-  const chainId = chainById[chain]?.chainId
-  if (chainId == null) {
-    return badRequest(`Unsupported chain ${chain}`)
-  }
+  const chain = chainByChainId[chainId].id
 
-  const ctx: BaseContext = { chain: chainByChainId[chainId].id, adapterId: '' }
+  const ctx: BaseContext = { chain, adapterId: '' }
 
   try {
     const [token, decimals, totalSupply] = await Promise.all([
@@ -49,10 +46,10 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     const response: TokenResponse = {
       data: {
-        chain: chainById[chain].id,
-        address,
         ...token,
-        decimals: token.decimals || decimals,
+        chain,
+        address,
+        decimals: token?.decimals || decimals,
         totalSupply: totalSupply?.toString(),
       },
     }
