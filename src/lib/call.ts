@@ -1,7 +1,5 @@
-import '@lib/providers'
-
 import type { BaseContext } from '@lib/adapter'
-import { providers } from '@lib/providers'
+import { chainById } from '@lib/chains'
 import type { Abi } from 'abitype'
 import type { DecodeFunctionResultParameters, DecodeFunctionResultReturnType } from 'viem'
 
@@ -15,7 +13,7 @@ export async function call<TAbi extends Abi[number] | readonly unknown[]>(option
   const args = options.params == null ? [] : Array.isArray(options.params) ? options.params : [options.params]
 
   // @ts-ignore
-  const output = await providers[options.ctx.chain].readContract({
+  const output = await chainById[options.ctx.chain].client.readContract({
     address: options.target,
     abi: [options.abi],
     // @ts-ignore

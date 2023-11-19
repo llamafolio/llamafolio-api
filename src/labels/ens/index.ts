@@ -1,7 +1,7 @@
-import { providers } from '@lib/providers'
+import { chainById } from '@lib/chains'
 
 export function fetchENSName(address: `0x${string}`) {
-  const provider = providers.ethereum
+  const client = chainById.ethereum.client
 
-  return provider.getEnsName({ address })
+  return client.getEnsName({ address })
 }

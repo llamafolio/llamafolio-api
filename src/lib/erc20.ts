@@ -4,7 +4,6 @@ import { type Chain, chainById } from '@lib/chains'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { sleep } from '@lib/promise'
-import { providers } from '@lib/providers'
 import { retrieveToken } from '@lib/token'
 import { isNotFalsy, isNotNullish } from '@lib/type'
 import type { Token } from '@llamafolio/tokens'
@@ -379,7 +378,7 @@ export async function userBalances({
     tokens.map((item) => Object.assign({}, item, { address: getAddress(item.address), chain })),
     chunkSize,
   )
-  const client = providers[chain]
+  const client = chainById[chain].client
 
   const balancesResults = await Promise.allSettled(
     chunks.map(async (chunk) => {
