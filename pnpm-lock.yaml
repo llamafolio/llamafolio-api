@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.398.0
     version: 3.398.0
   '@clickhouse/client':
-    specifier: ^0.2.2
-    version: 0.2.2
+    specifier: ^0.2.6
+    version: 0.2.6
   '@llamafolio/tokens':
     specifier: ^0.1.102
     version: 0.1.102
@@ -30,8 +30,8 @@ dependencies:
     specifier: ^4.17.21
     version: 4.17.21
   viem:
-    specifier: ^1.19.0
-    version: 1.19.0(typescript@5.2.2)(zod@3.22.2)
+    specifier: ^1.19.3
+    version: 1.19.3(typescript@5.2.2)(zod@3.22.2)
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -136,8 +136,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /@adraffy/ens-normalize@1.9.4:
-    resolution: {integrity: sha512-UK0bHA7hh9cR39V+4gl2/NnBBjoXIxkuWAPCaY4X7fbH4L/azIi7ilWOCjMUYfpJgraLUAqkRi2BqrjME8Rynw==}
+  /@adraffy/ens-normalize@1.10.0:
+    resolution: {integrity: sha512-nA9XHtlAkYfJxY7bce8DcN7eKxWWCWkU+1GR9d+U6MbNpfwQp8TI7vqOsBsMcHoT4mBu2kypKoSKnghEzOOq5Q==}
     dev: false
 
   /@aws-crypto/crc32@3.0.0:
@@ -538,15 +538,15 @@ packages:
     dependencies:
       tslib: 2.6.2
 
-  /@clickhouse/client-common@0.2.2:
-    resolution: {integrity: sha512-jlom9zLfcDzX9E3off93ZD3CPOkClyM213Y7TN1datkuRGKMvVyj1k0KXaMekhbRev+FTe85CqfoD5eq6qOnPg==}
+  /@clickhouse/client-common@0.2.6:
+    resolution: {integrity: sha512-T2HwPCKi98vGGtPxcV1q5YH/tET5f1FhdKYxo3AqOdawIMPoymQGzfsxsAL5UpMsfdBYrko6Sjy3RJxt7/gYyg==}
     dev: false
 
-  /@clickhouse/client@0.2.2:
-    resolution: {integrity: sha512-2faBnDS4x7ZkcOZqi3f6H967kH+nOfJLhBTWWjz0wTSBnEJBXRtePhN/ZY0NJIKc9Ga5w41Pf67mQgm6Dm/1/w==}
+  /@clickhouse/client@0.2.6:
+    resolution: {integrity: sha512-vvy101CNKRHr/M7eML19fIOOSELNpE2kwvBMdqag9ImosK2Lx5e4X8D7jt84EUD1V1JC1Dp2cG36/1JJb8ZC9g==}
     engines: {node: '>=16'}
     dependencies:
-      '@clickhouse/client-common': 0.2.2
+      '@clickhouse/client-common': 0.2.6
     dev: false
 
   /@esbuild-kit/cjs-loader@2.4.2:
@@ -6505,15 +6505,15 @@ packages:
       - supports-color
     dev: true
 
-  /viem@1.19.0(typescript@5.2.2)(zod@3.22.2):
-    resolution: {integrity: sha512-Q4gU7D5KMZDK2rarQqjeqW7KmZRdfbDyP+bDlsu0Ia+IWR4Aali+dMbis1s3rC12OWdNfSR5MNmPCHoqoQa5ew==}
+  /viem@1.19.3(typescript@5.2.2)(zod@3.22.2):
+    resolution: {integrity: sha512-SymIbCO0nIq2ucna8R3XV4f/lEshKGLuhYU2f6O+OAbmE2ugBxBKx2axMKQrQML87nE0jb2qqqtRJka5SO/7MA==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
-      '@adraffy/ens-normalize': 1.9.4
+      '@adraffy/ens-normalize': 1.10.0
       '@noble/curves': 1.2.0
       '@noble/hashes': 1.3.2
       '@scure/bip32': 1.3.2

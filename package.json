@@ -25,14 +25,14 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.398.0",
-    "@clickhouse/client": "^0.2.2",
+    "@clickhouse/client": "^0.2.6",
     "@llamafolio/tokens": "^0.1.102",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "lodash": "^4.17.21",
-    "viem": "^1.19.0",
+    "viem": "^1.19.3",
     "zod": "^3.22.2"
   },
   "devDependencies": {
