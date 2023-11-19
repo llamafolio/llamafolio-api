@@ -1,7 +1,8 @@
 import environment from '@environment'
 import { ADDRESS_ZERO } from '@lib/contract'
-import type { Address, HttpTransport, WebSocketTransport } from 'viem'
-import { http, webSocket } from 'viem'
+import type { Address, PublicClient } from 'viem'
+import { createPublicClient, fallback, http, webSocket } from 'viem'
+import * as viemChains from 'viem/chains'
 
 const { LLAMANODES_API_KEY } = environment
 
@@ -39,9 +40,7 @@ export interface IChainInfo {
     name: string
     symbol: string
   }
-  // adjust transport config based on RPC endpoints
-  rpcWssUrl?: WebSocketTransport[]
-  rpcUrls: HttpTransport[]
+  client: PublicClient
   indexed?: boolean
 }
 
@@ -51,11 +50,14 @@ export const chains = [
     id: 'arbitrum',
     chainId: 42161,
     name: 'Arbitrum',
-    rpcUrls: [
-      http(getLlamaNodesUrl('https://arbitrum.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://rpc.ankr.com/arbitrum', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://arb1.arbitrum.io/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.arbitrum,
+      transport: fallback([
+        webSocket(getLlamaNodesUrl('wss://arbitrum.llamarpc.com')),
+        http('https://rpc.ankr.com/arbitrum', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://arb1.arbitrum.io/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -68,7 +70,10 @@ export const chains = [
     id: 'arbitrum-nova',
     chainId: 42170,
     name: 'Arbitrum Nova',
-    rpcUrls: [http('https://nova.arbitrum.io/rpc', { batch: { wait: 0, batchSize: 5_000 } })],
+    client: createPublicClient({
+      chain: viemChains.arbitrumNova,
+      transport: fallback([http('https://nova.arbitrum.io/rpc', { batch: { wait: 0, batchSize: 5_000 } })]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -81,12 +86,15 @@ export const chains = [
     id: 'avalanche',
     chainId: 43114,
     name: 'Avalanche',
-    rpcUrls: [
-      http('https://rpc.ankr.com/avalanche', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://avalanche.public-rpc.com', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://api.avax.network/ext/bc/C/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.avalanche,
+      transport: fallback([
+        http('https://rpc.ankr.com/avalanche', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://avalanche.public-rpc.com', { batch: { batchSize: 1_000, wait: 10 } }),
+        http('https://api.avax.network/ext/bc/C/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
+        http('https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -99,11 +107,14 @@ export const chains = [
     id: 'base',
     chainId: 8453,
     name: 'Base',
-    rpcUrls: [
-      http(getLlamaNodesUrl('https://base.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://base-mainnet.public.blastapi.io', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://mainnet.base.org', { batch: { wait: 0, batchSize: 1_000 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.base,
+      transport: fallback([
+        webSocket(getLlamaNodesUrl('wss://base.llamarpc.com')),
+        http('https://base-mainnet.public.blastapi.io', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://mainnet.base.org', { batch: { wait: 0, batchSize: 1_000 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -116,12 +127,14 @@ export const chains = [
     id: 'bsc',
     chainId: 56,
     name: 'BNB Chain',
-    rpcWssUrl: [webSocket(getLlamaNodesUrl('wss://binance.llamarpc.com'))],
-    rpcUrls: [
-      http(getLlamaNodesUrl('https://binance.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://bsc-dataseed.binance.org/', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://bsc-dataseed1.ninicoin.io/', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.bsc,
+      transport: fallback([
+        webSocket(getLlamaNodesUrl('wss://binance.llamarpc.com')),
+        http('https://bsc-dataseed.binance.org/', { batch: { batchSize: 1_000, wait: 10 } }),
+        http('https://bsc-dataseed1.ninicoin.io/', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -134,10 +147,13 @@ export const chains = [
     id: 'celo',
     chainId: 42220,
     name: 'Celo',
-    rpcUrls: [
-      http('https://rpc.ankr.com/celo', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://forno.celo.org', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.celo,
+      transport: fallback([
+        http('https://rpc.ankr.com/celo', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://forno.celo.org', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: '0x471ece3750da237f93b8e339c536989b8978a438',
       decimals: 18,
@@ -150,15 +166,17 @@ export const chains = [
     id: 'ethereum',
     chainId: 1,
     name: 'Ethereum',
-    rpcWssUrl: [webSocket(getLlamaNodesUrl('wss://eth.llamarpc.com'))],
-    rpcUrls: [
-      http(getLlamaNodesUrl('https://eth.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://rpc.ankr.com/eth', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79', {
-        batch: { wait: 10, batchSize: 1_000 },
-      }),
-      http('https://cloudflare-eth.com', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.mainnet,
+      transport: fallback([
+        webSocket(getLlamaNodesUrl('wss://eth.llamarpc.com')),
+        http('https://rpc.ankr.com/eth', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79', {
+          batch: { wait: 10, batchSize: 1_000 },
+        }),
+        http('https://cloudflare-eth.com', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -171,11 +189,14 @@ export const chains = [
     id: 'fantom',
     chainId: 250,
     name: 'Fantom',
-    rpcUrls: [
-      http('https://rpc.ankr.com/fantom', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://rpc.ftm.tools/', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://rpcapi.fantom.network', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.fantom,
+      transport: fallback([
+        http('https://rpc.ankr.com/fantom', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://rpc.ftm.tools/', { batch: { batchSize: 1_000, wait: 10 } }),
+        http('https://rpcapi.fantom.network', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -188,11 +209,14 @@ export const chains = [
     id: 'gnosis',
     chainId: 100,
     name: 'Gnosis Chain',
-    rpcUrls: [
-      http('https://rpc.ankr.com/gnosis', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://rpc.gnosischain.com', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://xdai-archive.blockscout.com', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.gnosis,
+      transport: fallback([
+        http('https://rpc.ankr.com/gnosis', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://rpc.gnosischain.com', { batch: { batchSize: 1_000, wait: 10 } }),
+        http('https://xdai-archive.blockscout.com', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -205,12 +229,15 @@ export const chains = [
     id: 'harmony',
     chainId: 1666600000,
     name: 'Harmony',
-    rpcUrls: [
-      http('https://rpc.ankr.com/harmony', { batch: { wait: 0, batchSize: 5_000 } }),
-      http(`https://api.harmony.one`, { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://harmony-0-rpc.gateway.pokt.network', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://api.s0.t.hmny.io', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.harmonyOne,
+      transport: fallback([
+        http('https://rpc.ankr.com/harmony', { batch: { wait: 0, batchSize: 5_000 } }),
+        http(`https://api.harmony.one`, { batch: { batchSize: 1_000, wait: 10 } }),
+        http('https://harmony-0-rpc.gateway.pokt.network', { batch: { batchSize: 1_000, wait: 10 } }),
+        http('https://api.s0.t.hmny.io', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -223,13 +250,15 @@ export const chains = [
     id: 'polygon',
     chainId: 137,
     name: 'Polygon',
-    rpcWssUrl: [webSocket(getLlamaNodesUrl('wss://polygon.llamarpc.com'))],
-    rpcUrls: [
-      http(getLlamaNodesUrl('https://polygon.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://rpc.ankr.com/polygon', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://polygon-rpc.com/', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://rpc-mainnet.maticvigil.com/', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.polygon,
+      transport: fallback([
+        webSocket(getLlamaNodesUrl('wss://polygon.llamarpc.com')),
+        http('https://rpc.ankr.com/polygon', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://polygon-rpc.com/', { batch: { batchSize: 1_000, wait: 10 } }),
+        http('https://rpc-mainnet.maticvigil.com/', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -242,10 +271,13 @@ export const chains = [
     id: 'polygon-zkevm',
     chainId: 1101,
     name: 'Polygon ZKEVM',
-    rpcUrls: [
-      http('https://zkevm-rpc.com', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://rpc.ankr.com/polygon_zkevm', { batch: { wait: 0, batchSize: 5_000 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.polygonZkEvm,
+      transport: fallback([
+        http('https://zkevm-rpc.com', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://rpc.ankr.com/polygon_zkevm', { batch: { wait: 0, batchSize: 5_000 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -258,11 +290,14 @@ export const chains = [
     id: 'moonbeam',
     chainId: 1284,
     name: 'Moonbeam',
-    rpcUrls: [
-      http('https://rpc.ankr.com/moonbeam', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://rpc.api.moonbeam.network', { batch: { batchSize: 1_000, wait: 10 } }),
-      http('https://rpc.ankr.com/moonbeam', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.moonbeam,
+      transport: fallback([
+        http('https://rpc.ankr.com/moonbeam', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://rpc.api.moonbeam.network', { batch: { batchSize: 1_000, wait: 10 } }),
+        http('https://rpc.ankr.com/moonbeam', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -275,12 +310,14 @@ export const chains = [
     id: 'optimism',
     chainId: 10,
     name: 'Optimism',
-    rpcWssUrl: [webSocket(getLlamaNodesUrl('wss://optimism.llamarpc.com'))],
-    rpcUrls: [
-      http(getLlamaNodesUrl('https://optimism.llamarpc.com'), { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://rpc.ankr.com/optimism', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://mainnet.optimism.io', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.optimism,
+      transport: fallback([
+        webSocket(getLlamaNodesUrl('wss://optimism.llamarpc.com')),
+        http('https://rpc.ankr.com/optimism', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://mainnet.optimism.io', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -293,11 +330,14 @@ export const chains = [
     id: 'linea',
     chainId: 59144,
     name: 'Linea',
-    rpcUrls: [
-      http('https://linea.blockpi.network/v1/rpc/public', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://rpc.linea.build', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://1rpc.io/linea', { batch: { batchSize: 1_000, wait: 10 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.linea,
+      transport: fallback([
+        http('https://linea.blockpi.network/v1/rpc/public', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://rpc.linea.build', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://1rpc.io/linea', { batch: { batchSize: 1_000, wait: 10 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,
@@ -310,11 +350,14 @@ export const chains = [
     id: 'zksync-era',
     chainId: 324,
     name: 'zkSync-Era',
-    rpcUrls: [
-      http('https://mainnet.era.zksync.io', { batch: { wait: 0, batchSize: 5_000 } }),
-      http('https://zksync-era.blockpi.network/v1/rpc/public', { batch: { wait: 0, batchSize: 1_000 } }),
-      http('https://zksync.drpc.org', { batch: { wait: 0, batchSize: 1_000 } }),
-    ],
+    client: createPublicClient({
+      chain: viemChains.zkSync,
+      transport: fallback([
+        http('https://mainnet.era.zksync.io', { batch: { wait: 0, batchSize: 5_000 } }),
+        http('https://zksync-era.blockpi.network/v1/rpc/public', { batch: { wait: 0, batchSize: 1_000 } }),
+        http('https://zksync.drpc.org', { batch: { wait: 0, batchSize: 1_000 } }),
+      ]),
+    }),
     nativeCurrency: {
       address: ADDRESS_ZERO,
       decimals: 18,

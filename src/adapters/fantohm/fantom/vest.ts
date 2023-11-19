@@ -1,6 +1,6 @@
 import type { BalancesContext, Contract, VestBalance } from '@lib/adapter'
+import { chainById } from '@lib/chains'
 import { multicall } from '@lib/multicall'
-import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 
 const abi = {
@@ -45,8 +45,8 @@ export async function getFHMVesterBalances(ctx: BalancesContext, vesters: Contra
 
     const [payout, _vesting, lastBlock] = bondInfoRes.output
 
-    const provider = providers[ctx.chain]
-    const unlockAt = Number((await provider.getBlock({ blockNumber: lastBlock })).timestamp)
+    const client = chainById[ctx.chain].client
+    const unlockAt = Number((await client.getBlock({ blockNumber: lastBlock })).timestamp)
 
     balances.push({
       ...vester,

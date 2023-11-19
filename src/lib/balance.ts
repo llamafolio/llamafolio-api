@@ -8,12 +8,12 @@ import type {
   PricedBalance,
 } from '@lib/adapter'
 import type { Category } from '@lib/category'
+import { chainById } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getBalancesOf } from '@lib/erc20'
 import { unixFromDate } from '@lib/fmt'
 import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { providers } from '@lib/providers'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
@@ -71,9 +71,8 @@ export async function multicallBalances(params: any) {
   const coinsBalancesRes = await Promise.all(
     coinsCallsAddresses.map(async (address) => {
       try {
-        // @ts-expect-error
-        const provider = providers[chain]
-        const balance = await provider.getBalance(address)
+        const client = chainById[chain].client
+        const balance = await client.getBalance({ address: address as `0x${string}` })
         return balance
       } catch (err) {
         console.error(`Failed to get coin balance for chain ${chain}`, err)

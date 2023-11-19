@@ -1,7 +1,5 @@
-import '@lib/providers'
-
 import type { BaseContext } from '@lib/adapter'
-import { providers } from '@lib/providers'
+import { chainById } from '@lib/chains'
 import { isNotNullish } from '@lib/type'
 import type { Abi } from 'abitype'
 import type { DecodeFunctionResultParameters, DecodeFunctionResultReturnType } from 'viem'
@@ -54,7 +52,7 @@ export async function multicall<
   // This allows us to "chain" multicall responses while preserving input indices
   const calls = options.calls.filter((call): call is Call => isNotNullish(call) && call.enabled !== false)
 
-  const multicallRes = await providers[options.ctx.chain].multicall({
+  const multicallRes = await chainById[options.ctx.chain].client.multicall({
     // @ts-ignore
     contracts: calls.map((call) => ({
       address: call.target,
