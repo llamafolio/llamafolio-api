@@ -38,23 +38,32 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const ctx: BaseContext = { chain, adapterId: '' }
 
   try {
-    const [token, decimals, totalSupply] = await Promise.all([
+    const [token, totalSupply] = await Promise.all([
       selectToken(client, chainId, address),
-      call({ ctx, abi: erc20Abi.decimals, target: address }).catch(() => undefined),
       call({ ctx, abi: erc20Abi.totalSupply, target: address }).catch(() => undefined),
+    ])
+
+    // fetch missing info on-chain
+    const [decimals, symbol, name] = await Promise.all([
+      token?.decimals || call({ ctx, abi: erc20Abi.decimals, target: address }).catch(() => undefined),
+      token?.symbol || call({ ctx, abi: erc20Abi.symbol, target: address }).catch(() => undefined),
+      token?.name || call({ ctx, abi: erc20Abi.name, target: address }).catch(() => undefined),
     ])
 
     const response: TokenResponse = {
       data: {
         ...token,
+        decimals,
+        symbol,
+        name,
         chain,
         address,
-        decimals: token?.decimals || decimals,
         totalSupply: totalSupply?.toString(),
       },
     }
 
-    return success(response, { maxAge: 60 * 60 })
+    return success(response)
+    // return success(response, { maxAge: 60 * 60 })
   } catch (e) {
     console.error('Failed to retrieve token', e)
     return serverError('Failed to retrieve token')
