@@ -10,7 +10,7 @@ const thalesStaking: Contract = {
 }
 
 const veThales: Contract = {
-  chain: 'arbitrum',
+  chain: 'base',
   address: '0x29dfc5fee05578cd913c75ff1c7a0d315595939a',
   token: '0xf34e0cff046e154cafcae502c7541b9e5fd8c249',
 }
