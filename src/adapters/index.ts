@@ -13,6 +13,7 @@ import alongside from '@adapters/alongside'
 import alpacaFinance from '@adapters/alpaca-finance'
 import ambient from '@adapters/ambient'
 import ambireWallet from '@adapters/ambire-wallet'
+import amphor from '@adapters/amphor'
 import angle from '@adapters/angle'
 import ankr from '@adapters/ankr'
 import annex from '@adapters/annex'
@@ -306,6 +307,7 @@ export const adapters: Adapter[] = [
   alpacaFinance,
   ambient,
   ambireWallet,
+  amphor,
   angle,
   ankr,
   annex,
