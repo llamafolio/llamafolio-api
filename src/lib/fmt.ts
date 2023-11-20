@@ -101,6 +101,7 @@ export function parseAddress(str: string) {
 export function parseAddresses(str: string) {
   return str
     .split(',')
+    .filter(isHex)
     .map((address) => address.toLowerCase() as `0x${string}`)
     .sort()
 }
