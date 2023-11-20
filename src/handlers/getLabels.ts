@@ -1,6 +1,5 @@
 import { badRequest, serverError, success } from '@handlers/response'
 import { fetchLabels } from '@labels/defillama'
-import { isHex } from '@lib/contract'
 import { parseAddresses } from '@lib/fmt'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -10,11 +9,7 @@ import type { APIGatewayProxyHandler } from 'aws-lambda'
 export const handler: APIGatewayProxyHandler = async (event) => {
   const addresses = parseAddresses(event.pathParameters?.address || '')
   if (addresses.length === 0) {
-    return badRequest('Missing address parameter')
-  }
-
-  if (addresses.some((address) => !isHex(address))) {
-    return badRequest('Invalid address parameter, expected hex')
+    return badRequest('Invalid address parameter')
   }
 
   try {

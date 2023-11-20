@@ -2,7 +2,6 @@ import { type LatestProtocolBalances, selectLatestProtocolsBalancesByFromAddress
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import { BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
-import { isHex } from '@lib/contract'
 import { parseAddresses, unixFromDate } from '@lib/fmt'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -19,11 +18,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const addresses = parseAddresses(event.pathParameters?.address || '')
   console.log('Get balances', addresses)
   if (addresses.length === 0) {
-    return badRequest('Missing address parameter')
-  }
-
-  if (addresses.some((address) => !isHex(address))) {
-    return badRequest('Invalid address parameter, expected hex')
+    return badRequest('Invalid address parameter')
   }
 
   try {

@@ -3,7 +3,6 @@ import { selectHistory } from '@db/history'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { type Chain, chainByChainId } from '@lib/chains'
-import { isHex } from '@lib/contract'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getTokenDetails } from '@lib/erc20'
 import { parseAddresses, toNextDay, toStartOfDay, unixFromDateTime } from '@lib/fmt'
@@ -49,11 +48,7 @@ interface IHistory {
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const addresses = parseAddresses(event.pathParameters?.address || '')
   if (addresses.length === 0) {
-    return badRequest('Missing address parameter')
-  }
-
-  if (addresses.some((address) => !isHex(address))) {
-    return badRequest('Invalid address parameter, expected hex')
+    return badRequest('Invalid address parameter')
   }
 
   const queries = event.queryStringParameters

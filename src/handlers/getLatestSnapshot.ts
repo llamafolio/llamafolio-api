@@ -2,7 +2,6 @@ import { selectLatestBalancesSnapshotByFromAddresses } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { Chain } from '@lib/chains'
-import { isHex } from '@lib/contract'
 import { parseAddresses } from '@lib/fmt'
 import type { TUnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -26,10 +25,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const addresses = parseAddresses(event.pathParameters?.address || '')
   if (addresses.length === 0) {
     return badRequest('Missing address parameter')
-  }
-
-  if (addresses.some((address) => !isHex(address))) {
-    return badRequest('Invalid address parameter, expected hex')
   }
 
   try {

@@ -17,7 +17,6 @@ import { type Chain, chains } from '@lib/chains'
 import { parseAddresses, unixFromDate } from '@lib/fmt'
 import { getPricedBalances } from '@lib/price'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
-import { isHex } from 'viem'
 
 type AdapterBalance = Balance & {
   groupIdx: number
@@ -163,11 +162,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const addresses = parseAddresses(event.pathParameters?.address || '')
   console.log('Get balances', addresses)
   if (addresses.length === 0) {
-    return badRequest('Missing address parameter')
-  }
-
-  if (addresses.some((address) => !isHex(address))) {
-    return badRequest('Invalid address parameter, expected hex')
+    return badRequest('Invalid address parameter')
   }
 
   try {

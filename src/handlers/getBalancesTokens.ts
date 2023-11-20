@@ -10,7 +10,7 @@ import { groupBy } from '@lib/array'
 import { sanitizeBalances, sanitizePricedBalances, sortBalances, sumBalances } from '@lib/balance'
 import type { Chain } from '@lib/chains'
 import { chainById, chains as allChains } from '@lib/chains'
-import { isHex } from '@lib/contract'
+import { parseAddress } from '@lib/fmt'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -46,13 +46,10 @@ export interface BalancesErc20Response {
   chains: BalancesErc20ChainResponse[]
 }
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
-  const address = event.pathParameters?.address as `0x${string}` | undefined
+  const address = parseAddress(event.pathParameters?.address || '')
   console.log(`Get balances tokens`, address)
   if (!address) {
-    return badRequest('Missing address parameter')
-  }
-  if (!isHex(address)) {
-    return badRequest('Invalid address parameter, expected hex')
+    return badRequest('Invalid address parameter')
   }
 
   try {
