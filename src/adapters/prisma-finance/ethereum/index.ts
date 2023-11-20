@@ -75,6 +75,12 @@ const farmersFromCurve: Contract[] = [
     lpToken: '0x3de254A0f838a844F727fee81040e0FA7884B935',
     rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
   },
+  {
+    chain: 'ethereum',
+    address: '0xb5376ab455194328fe41450a587f11bcda2363fa',
+    lpToken: '0xb34e1a3D07f9D180Bc2FDb9Fd90B8994423e33c1',
+    rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
+  },
 ]
 
 const vaults: Contract[] = [
