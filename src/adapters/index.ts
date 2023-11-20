@@ -248,6 +248,7 @@ import tangible from '@adapters/tangible'
 import templedao from '@adapters/templedao'
 import tenderFinance from '@adapters/tender-finance'
 import tetu from '@adapters/tetu'
+import thales from '@adapters/thales'
 import theIdols from '@adapters/the-idols'
 import theOpenDaoSos from '@adapters/the-open-dao-sos'
 import thena from '@adapters/thena'
@@ -540,6 +541,7 @@ export const adapters: Adapter[] = [
   templedao,
   tenderFinance,
   tetu,
+  thales,
   theIdols,
   theOpenDaoSos,
   thena,
