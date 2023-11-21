@@ -170,6 +170,7 @@ import opynSqueeth from '@adapters/opyn-squeeth'
 import originDefi from '@adapters/origin-defi'
 import originDollar from '@adapters/origin-dollar'
 import overnightFinance from '@adapters/overnight-finance'
+import paalAi from '@adapters/paal-ai'
 import paladinFinance from '@adapters/paladin-finance'
 import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
@@ -466,6 +467,7 @@ export const adapters: Adapter[] = [
   originDefi,
   originDollar,
   overnightFinance,
+  paalAi,
   paladinFinance,
   pancakeswap,
   pandora,
