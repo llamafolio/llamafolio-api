@@ -1,5 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapMultiSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   getUserSnapshot: {
@@ -20,12 +22,37 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  totalBorrow: {
+    inputs: [],
+    name: 'totalBorrow',
+    outputs: [
+      { internalType: 'uint128', name: 'amount', type: 'uint128' },
+      { internalType: 'uint128', name: 'shares', type: 'uint128' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  totalAsset: {
+    inputs: [],
+    name: 'totalAsset',
+    outputs: [
+      { internalType: 'uint128', name: 'amount', type: 'uint128' },
+      { internalType: 'uint128', name: 'shares', type: 'uint128' },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
-export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contract[], FRAX: Contract) => {
-  const balances: Balance[] = []
+const FRAX: Contract = {
+  chain: 'ethereum',
+  address: '0x853d955acef822db058eb8505911ed77f175b99e',
+  decimals: 18,
+  symbol: 'FRAX',
+}
 
-  const [userSnapshotsRes, LTVs] = await Promise.all([
+export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contract[]) => {
+  const [userSnapshotsRes, LTVs, totalBorrowRes, totalAssetRes] = await Promise.all([
     multicall({
       ctx,
       calls: pairs.map((pair) => ({ target: pair.address, params: [ctx.address] }) as const),
@@ -33,56 +60,70 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
     }),
     multicall({
       ctx,
-      calls: pairs.map((pair) => ({
-        target: pair.address,
-      })),
+      calls: pairs.map((pair) => ({ target: pair.address })),
       abi: abi.maxLTV,
+    }),
+    multicall({
+      ctx,
+      calls: pairs.map((pair) => ({ target: pair.address })),
+      abi: abi.totalBorrow,
+    }),
+    multicall({
+      ctx,
+      calls: pairs.map((pair) => ({ target: pair.address })),
+      abi: abi.totalAsset,
     }),
   ])
 
-  for (let pairIdx = 0; pairIdx < pairs.length; pairIdx++) {
-    const pair = pairs[pairIdx]
-    const userSnapshotRes = userSnapshotsRes[pairIdx]
-    const LTV = LTVs[pairIdx]
+  return mapMultiSuccessFilter(
+    userSnapshotsRes.map((_, i) => [userSnapshotsRes[i], LTVs[i], totalBorrowRes[i], totalAssetRes[i]]),
 
-    if (userSnapshotRes.success) {
-      const [userAssetShares, userBorrowShares, userCollateralBalance] = userSnapshotRes.output
+    (res, index) => {
+      const pair = pairs[index]
+
+      const [{ output: balances }, { output: LTV }, { output: borrowInfos }, { output: assetInfos }] =
+        res.inputOutputPairs
+
+      const [userAssetShares, userBorrowShares, userCollateralBalance] = balances
+
+      const [amountBorrow, sharesBorrow] = borrowInfos
+      const [amountAsset, sharesAsset] = assetInfos
+
+      if (sharesBorrow === 0n || sharesAsset === 0n) return null
+
+      const pricePerFullShareBorrow = Number(amountBorrow) / Number(sharesBorrow)
+      const userBorrow = Number(userBorrowShares) * pricePerFullShareBorrow
+
+      const pricePerFullShareAsset = Number(amountAsset) / Number(sharesAsset)
+      const userAsset = Number(userAssetShares) * pricePerFullShareAsset
 
       const asset: Balance = {
-        ...pair,
-        amount: userAssetShares,
-        underlyings: [FRAX],
+        ...FRAX,
+        amount: BigInt(userAsset),
+        underlyings: undefined,
         rewards: undefined,
-        collateralFactor: LTV.output != null ? LTV.output * 10n ** 13n : undefined,
+        collateralFactor: LTV != null ? LTV * 10n ** 13n : undefined,
         category: 'lend',
       }
-
-      balances.push(asset)
 
       const collateral: Balance = {
         ...pair,
         amount: userCollateralBalance,
         underlyings: pair.underlyings as Contract[],
         rewards: undefined,
-        collateralFactor: LTV.output != null ? LTV.output * 10n ** 13n : undefined,
+        collateralFactor: LTV != null ? LTV * 10n ** 13n : undefined,
         category: 'lend',
       }
 
-      balances.push(collateral)
-
       const borrow: Balance = {
-        chain: ctx.chain,
-        decimals: pair.decimals,
-        symbol: pair.symbol,
-        address: pair.address,
-        amount: userBorrowShares,
+        ...FRAX,
+        amount: BigInt(userBorrow),
+        underlyings: undefined,
+        rewards: undefined,
         category: 'borrow',
-        underlyings: [FRAX],
       }
 
-      balances.push(borrow)
-    }
-  }
-
-  return balances
+      return [asset, collateral, borrow]
+    },
+  ).filter(isNotNullish)
 }
