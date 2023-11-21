@@ -63,8 +63,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
       next: Math.min(offset + limit, count),
     }
 
-    return success(response)
-    // return success(response, { maxAge: 10 * 60 })
+    return success(response, { maxAge: 10 * 60 })
   } catch (e) {
     console.error('Failed to retrieve token holders', e)
     return serverError('Failed to retrieve token holders')
