@@ -47,6 +47,7 @@ import blur from '@adapters/blur'
 import capFinance from '@adapters/cap-finance'
 import catInABox from '@adapters/cat-in-a-box'
 import cega from '@adapters/cega'
+import centrifuge from '@adapters/centrifuge'
 import chainlink from '@adapters/chainlink'
 import channelsFinance from '@adapters/channels-finance'
 import charmFinance from '@adapters/charm-finance'
@@ -342,6 +343,7 @@ export const adapters: Adapter[] = [
   capFinance,
   catInABox,
   cega,
+  centrifuge,
   chainlink,
   channelsFinance,
   charmFinance,
