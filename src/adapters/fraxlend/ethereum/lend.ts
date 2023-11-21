@@ -2,6 +2,7 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapMultiSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
+import { parseEther } from 'viem'
 
 const abi = {
   getUserSnapshot: {
@@ -92,14 +93,14 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
       if (sharesBorrow === 0n || sharesAsset === 0n) return null
 
       const pricePerFullShareBorrow = Number(amountBorrow) / Number(sharesBorrow)
-      const userBorrow = Number(userBorrowShares) * pricePerFullShareBorrow
+      const userBorrow = Number(userBorrowShares) * pricePerFullShareBorrow * 10 ** 18
 
       const pricePerFullShareAsset = Number(amountAsset) / Number(sharesAsset)
-      const userAsset = Number(userAssetShares) * pricePerFullShareAsset
+      const userAsset = Number(userAssetShares) * pricePerFullShareAsset * 10 ** 18
 
       const asset: Balance = {
         ...FRAX,
-        amount: BigInt(userAsset),
+        amount: BigInt(userAsset) / parseEther('1.0'),
         underlyings: undefined,
         rewards: undefined,
         collateralFactor: LTV != null ? LTV * 10n ** 13n : undefined,
@@ -117,7 +118,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
 
       const borrow: Balance = {
         ...FRAX,
-        amount: BigInt(userBorrow),
+        amount: BigInt(userBorrow) / parseEther('1.0'),
         underlyings: undefined,
         rewards: undefined,
         category: 'borrow',
