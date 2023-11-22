@@ -1,4 +1,4 @@
-import { getConvexGaugesBalances } from '@adapters/convex-finance/ethereum/balance'
+// import { getConvexPoolsContracts } from '@adapters/convex-finance/ethereum/pool'
 import {
   cvxFpisStaking,
   cvxFxsStaking,
@@ -6,12 +6,11 @@ import {
   getStkCvxFxsContract,
 } from '@adapters/convex-finance/ethereum/frax'
 import { cvxFxnStaking } from '@adapters/convex-finance/ethereum/fx'
-import { getConvexPoolsContracts } from '@adapters/convex-finance/ethereum/pool'
 import { cvxPrismaStaking } from '@adapters/convex-finance/ethereum/prisma'
-import { getCvxCrvStakeBalance, getCVXStakeBalance, getStkCvxCrvBalance } from '@adapters/convex-finance/ethereum/stake'
-import { getPoolsContracts } from '@adapters/curve-dex/ethereum/pools'
+import { getCVXStakeBalance, getCvxCrvStakeBalance, getStkCvxCrvBalance } from '@adapters/convex-finance/ethereum/stake'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getConvexGaugesBalances, getConvexPoolsContracts } from '@lib/convex/pool'
 import { getMultipleLockerBalances } from '@lib/lock'
 import type { Token } from '@lib/token'
 
@@ -106,27 +105,26 @@ const stkCvxCrv: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const [curvePools, stkCvxFpis, stkCvxFxs, stkCvxFxn, stkCvxPrisma] = await Promise.all([
-    getPoolsContracts(ctx, metaRegistry),
+  const [stkCvxFpis, stkCvxFxs, stkCvxFxn, stkCvxPrisma] = await Promise.all([
     getStkCvxFxsContract(ctx, cvxFpisStaking),
     getStkCvxFxsContract(ctx, cvxFxsStaking),
     getStkCvxFxsContract(ctx, cvxFxnStaking),
     getStkCvxFxsContract(ctx, cvxPrismaStaking),
   ])
 
-  const pools = await getConvexPoolsContracts(ctx, booster, curvePools)
+  const pools = await getConvexPoolsContracts(ctx, booster)
 
   return {
     contracts: {
+      pools,
       stkCvxFpis,
       stkCvxFxs,
       stkCvxFxn,
       stkCvxPrisma,
       cvxCRVStaker,
       cvxRewardPool,
-      locker,
-      pools,
       stkCvxCrv,
+      locker,
     },
     revalidate: 60 * 60,
   }
@@ -134,15 +132,15 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getConvexGaugesBalances(...args, metaRegistry),
+    locker: (...args) => getMultipleLockerBalances(...args, CVX, [cvxCRV, cvxFXS, FXS], true),
     cvxRewardPool: getCVXStakeBalance,
     cvxCRVStaker: getCvxCrvStakeBalance,
-    locker: (...args) => getMultipleLockerBalances(...args, CVX, [cvxCRV, cvxFXS, FXS], true),
     stkCvxCrv: getStkCvxCrvBalance,
     stkCvxFpis: getStkCvxFxsBalance,
     stkCvxFxs: getStkCvxFxsBalance,
     stkCvxFxn: getStkCvxFxsBalance,
     stkCvxPrisma: getStkCvxFxsBalance,
+    pools: getConvexGaugesBalances,
   })
 
   return {

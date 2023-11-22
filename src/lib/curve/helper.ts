@@ -13,7 +13,7 @@ interface PoolData {
   token: `0x${string}`
   pool?: `0x${string}`
   coinsBalances: CoinBalance[]
-  totalSupply: string
+  totalSupply: number
 }
 
 type CoinBalance = Contract & {
@@ -85,8 +85,11 @@ function processRawPoolBalance(rawPool: CurveBalance, pools: PoolData[]): Balanc
   }
 }
 
-function calculateUnderlyingAmount(rawAmount: bigint, coinBalances: CoinBalance[], totalSupply: string): Contract[] {
-  return coinBalances.map((coinBalance) => {
-    return { ...coinBalance, amount: (rawAmount * BigInt(coinBalance.poolBalance)) / BigInt(totalSupply) }
-  })
+function calculateUnderlyingAmount(rawAmount: bigint, coinBalances: CoinBalance[], totalSupply: number): Contract[] {
+  return coinBalances
+    .map((coinBalance) => {
+      if (totalSupply == 0) return null
+      return { ...coinBalance, amount: (rawAmount * BigInt(coinBalance.poolBalance)) / BigInt(totalSupply) }
+    })
+    .filter(isNotNullish)
 }
