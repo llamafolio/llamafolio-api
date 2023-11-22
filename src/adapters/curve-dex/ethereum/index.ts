@@ -1,19 +1,10 @@
+import { getLockerBalances } from '@adapters/curve-dex/ethereum/locker'
+import { getVesterBalances } from '@adapters/curve-dex/ethereum/vester'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import type { Token } from '@lib/token'
-
-import { getGaugesBalances } from '../common/balance'
-import { getLockerBalances } from './locker'
-import { getLpCurveBalances } from './lpBalance'
-import { getGaugesContracts, getPoolsContracts } from './pools'
-import { getVesterBalances } from './vester'
-
-const CRV: Token = {
-  chain: 'ethereum',
-  address: '0xd533a949740bb3306d119cc777fa900ba034cd52',
-  decimals: 18,
-  symbol: 'CRV',
-}
+import { getGaugesBalances } from '@lib/curve/farmBalance'
+import { getCurvePoolBalances } from '@lib/curve/lpBalance'
+import { getCurvePools } from '@lib/curve/pool'
 
 const locker: Contract = {
   chain: 'ethereum',
@@ -28,12 +19,6 @@ const feeDistributor: Contract = {
   name: 'FeeDistributor',
 }
 
-const metaRegistry: Contract = {
-  name: 'Curve Metaregistry',
-  chain: 'ethereum',
-  address: '0xf98b45fa17de75fb1ad0e7afd971b0ca00e379fc',
-}
-
 const vesters: Contract[] = [
   { chain: 'ethereum', address: '0xd2d43555134dc575bf7279f4ba18809645db0f1d' },
   { chain: 'ethereum', address: '0x2a7d59e327759acd5d11a8fb652bf4072d28ac04' },
@@ -42,20 +27,20 @@ const vesters: Contract[] = [
 ]
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getPoolsContracts(ctx, metaRegistry)
-  const gauges = await getGaugesContracts(ctx, pools, CRV)
+  const pools = await getCurvePools(ctx)
+  const gauges = pools.filter((pool) => pool.gauge !== undefined)
 
   return {
-    contracts: { gauges, pools, metaRegistry, locker, vesters },
+    contracts: { pools, gauges, locker, vesters },
     revalidate: 60 * 60,
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getLpCurveBalances(...args, metaRegistry),
-    gauges: (...args) => getGaugesBalances(...args, metaRegistry),
     locker: (...args) => getLockerBalances(...args, feeDistributor),
+    pools: getCurvePoolBalances,
+    gauges: getGaugesBalances,
     vesters: getVesterBalances,
   })
 
