@@ -1,9 +1,9 @@
 import { getLockerBalances } from '@adapters/curve-dex/ethereum/locker'
 import { getVesterBalances } from '@adapters/curve-dex/ethereum/vester'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getGaugesBalances } from '@lib/curve/farmBalance'
-import { getCurvePoolBalances } from '@lib/curve/lpBalance'
+import { getGaugesBalances } from '@lib/curve/gauge'
+import { getCurvePoolBalances } from '@lib/curve/lp'
 import { getCurvePools } from '@lib/curve/pool'
 
 const locker: Contract = {
@@ -28,19 +28,21 @@ const vesters: Contract[] = [
 
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getCurvePools(ctx)
-  const gauges = pools.filter((pool) => pool.gauge !== undefined)
 
   return {
-    contracts: { pools, gauges, locker, vesters },
+    contracts: { pools, locker, vesters },
     revalidate: 60 * 60,
   }
+}
+
+async function getCurveBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[][]> {
+  return Promise.all([getCurvePoolBalances(ctx, pools), getGaugesBalances(ctx, pools)])
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     locker: (...args) => getLockerBalances(...args, feeDistributor),
-    pools: getCurvePoolBalances,
-    gauges: getGaugesBalances,
+    pools: getCurveBalances,
     vesters: getVesterBalances,
   })
 

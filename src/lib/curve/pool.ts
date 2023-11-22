@@ -1,4 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import type { Chain } from '@lib/chains'
 import { getCurveRegistriesIds } from '@lib/curve/registries'
 
 interface Coin {
@@ -25,6 +26,8 @@ interface PoolData {
   isBroken: boolean
 }
 
+const chainId = (chain: Chain) => (chain === 'gnosis' ? 'xdai' : chain)
+
 export async function getCurvePools(ctx: BaseContext): Promise<Contract[]> {
   const registries: string[] = await getCurveRegistriesIds(ctx)
   const poolsData: any[] = await fetchPoolsData(ctx, registries)
@@ -32,7 +35,9 @@ export async function getCurvePools(ctx: BaseContext): Promise<Contract[]> {
 }
 
 async function fetchPoolsData(ctx: BaseContext, registries: string[]): Promise<any[]> {
-  const urls: string[] = registries.map((registry) => `https://api.curve.fi/api/getPools/${ctx.chain}/${registry}`)
+  const urls: string[] = registries.map(
+    (registry) => `https://api.curve.fi/api/getPools/${chainId(ctx.chain)}/${registry}`,
+  )
 
   const requests: Promise<any>[] = urls.map((url) => fetch(url).then((res) => res.json()))
 
@@ -52,9 +57,10 @@ function createContractFromPoolData(ctx: BaseContext, pool: PoolData): Contract 
 
   return {
     chain: ctx.chain,
-    address,
+    address: lpTokenAddress,
     token: lpTokenAddress,
     gauge: gaugeAddress,
+    pool: address,
     underlyings: processCoins(ctx, isMetaPool ? underlyingCoins : coins, isMetaPool),
     rewards: (gaugeRewards || []).map((reward) => processReward(ctx, reward)),
     isBroken,
