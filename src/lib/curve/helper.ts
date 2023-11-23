@@ -20,14 +20,36 @@ const chainId = (chain: Chain) => (chain === 'gnosis' ? 'xdai' : chain)
 export async function getCurveUnderlyingsBalances<T extends Balance | Balance[]>(
   ctx: BalancesContext,
   rawPoolBalances: T,
-): Promise<T extends Balance[] ? Balance[] : Balance> {
+): Promise<any> {
   const pools = await fetchPoolsData(ctx)
+
+  const isCurveLP = Array.isArray(rawPoolBalances)
+    ? rawPoolBalances.every((rawPool) => isRelatedToCurvePool(rawPool, pools))
+    : isRelatedToCurvePool(rawPoolBalances as Balance, pools)
+
+  if (!isCurveLP) {
+    return rawPoolBalances
+  }
 
   const result = Array.isArray(rawPoolBalances)
     ? rawPoolBalances.map((rawPool) => processRawPoolBalance(rawPool, pools)).filter(isNotNullish)
     : processRawPoolBalance(rawPoolBalances as Balance, pools)
 
   return result as T extends Balance[] ? Balance[] : Balance
+}
+
+function isCurveLPToken(tokenAddress: `0x${string}` | undefined, pools: PoolData[]) {
+  if (!tokenAddress) return false
+  return pools.some((pool) => pool.token.toLowerCase() === tokenAddress.toLowerCase())
+}
+
+function isRelatedToCurvePool(rawPool: any, pools: PoolData[]) {
+  const tokenCheck = rawPool.token ? isCurveLPToken(rawPool.token, pools) : false
+  const underlyingsCheck =
+    rawPool.underlyings?.some((underlying: Contract) => isCurveLPToken(underlying.address, pools)) ?? false
+  const rewardsCheck = rawPool.rewards?.some((reward: Contract) => isCurveLPToken(reward.address, pools)) ?? false
+
+  return tokenCheck || underlyingsCheck || rewardsCheck
 }
 
 async function fetchPoolsData(ctx: BalancesContext): Promise<PoolData[]> {
