@@ -305,7 +305,7 @@ export async function getContract(client: ClickHouseClient, chainId: number, add
         "from",
         "block_number",
         "contract_created"
-      FROM evm_indexer2.transactions
+      FROM evm_indexer.transactions
       WHERE
         "chain" = {chainId: UInt64} AND
         "contract_created" = {address: String};
