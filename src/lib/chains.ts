@@ -169,7 +169,7 @@ export const chains = [
     client: createPublicClient({
       chain: viemChains.mainnet,
       transport: fallback([
-        // webSocket(getLlamaNodesUrl('wss://eth.llamarpc.com')),
+        webSocket(getLlamaNodesUrl('wss://eth.llamarpc.com')),
         http('https://rpc.ankr.com/eth', { batch: { wait: 0, batchSize: 5_000 } }),
         http('https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79', {
           batch: { wait: 10, batchSize: 1_000 },
