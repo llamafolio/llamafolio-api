@@ -6,10 +6,6 @@ import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
 
-type CurveBalance = Balance & {
-  token: `0x${string}`
-  pool?: `0x${string}`
-}
 export async function getCurvePoolBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const userBalancesRes = await fetchUserBalances(ctx, pools)
   const poolBalances = processBalances(pools, userBalancesRes)
@@ -24,8 +20,8 @@ async function fetchUserBalances(ctx: BalancesContext, pools: Contract[]): Promi
   })
 }
 
-function processBalances(pools: Contract[], userBalancesRes: any[]): CurveBalance[] {
+function processBalances(pools: Contract[], userBalancesRes: any[]): Balance[] {
   return mapSuccessFilter(userBalancesRes, (res, index) =>
-    res.output === 0n ? null : { ...(pools[index] as CurveBalance), amount: res.output, category: 'lp' as Category },
+    res.output === 0n ? null : { ...(pools[index] as Balance), amount: res.output, category: 'lp' as Category },
   ).filter(isNotNullish)
 }

@@ -1,7 +1,5 @@
 import { getConvexAltChainsBalances } from '@adapters/convex-finance/common/balance'
 import { getConvexAltChainsPools } from '@adapters/convex-finance/common/pool'
-import { getPoolsContracts } from '@adapters/curve-dex/common/pool'
-import { getRegistries } from '@adapters/curve-dex/common/registries'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -13,19 +11,17 @@ const booster: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap'])
-  const pools = await getPoolsContracts(ctx, registries)
-  const cvxPools = await getConvexAltChainsPools(ctx, booster, pools)
+  const pools = await getConvexAltChainsPools(ctx, booster)
 
   return {
-    contracts: { cvxPools },
+    contracts: { pools },
     revalidate: 60 * 60,
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    cvxPools: getConvexAltChainsBalances,
+    pools: getConvexAltChainsBalances,
   })
 
   return {

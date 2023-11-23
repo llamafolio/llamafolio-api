@@ -28,11 +28,6 @@ const abi = {
   },
 } as const
 
-type CurveBalance = Balance & {
-  token: `0x${string}`
-  pool?: `0x${string}`
-}
-
 const CRV: { [key: string]: Contract } = {
   arbitrum: { chain: 'arbitrum', address: '0x11cdb42b0eb46d95f990bedd4695a6e3fa034978', decimals: 18, symbol: 'CRV' },
   avalanche: { chain: 'avalanche', address: '0x249848beca43ac405b8102ec90dd5f22ca513c06', decimals: 18, symbol: 'CRV' },
@@ -96,7 +91,7 @@ export function processBalances(
   userBalancesRes: any[],
   userRewardsRes: any[],
   userExtraRewardsRes: any[],
-): CurveBalance[] {
+): Balance[] {
   return mapMultiSuccessFilter(
     userBalancesRes.map((_, i) => [userBalancesRes[i], userRewardsRes[i]]),
 
@@ -108,7 +103,7 @@ export function processBalances(
       if (userBalance === 0n) return null
 
       const rewards = processRewards(ctx, pool, userReward, extraRewardsRes)
-      return { ...(pool as CurveBalance), amount: userBalance, rewards, category: 'farm' as Category }
+      return { ...(pool as Balance), amount: userBalance, rewards, category: 'farm' as Category }
     },
   ).filter(isNotNullish)
 }

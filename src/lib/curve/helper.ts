@@ -3,11 +3,6 @@ import type { Chain } from '@lib/chains'
 import { getCurveRegistriesIds } from '@lib/curve/registries'
 import { isNotNullish } from '@lib/type'
 
-type CurveBalance = Balance & {
-  token: `0x${string}`
-  pool?: `0x${string}`
-}
-
 interface PoolData {
   address: `0x${string}`
   token: `0x${string}`
@@ -22,13 +17,17 @@ type CoinBalance = Contract & {
 
 const chainId = (chain: Chain) => (chain === 'gnosis' ? 'xdai' : chain)
 
-export async function getCurveUnderlyingsBalances(
+export async function getCurveUnderlyingsBalances<T extends Balance | Balance[]>(
   ctx: BalancesContext,
-  rawPoolBalances: CurveBalance[],
-): Promise<Balance[]> {
+  rawPoolBalances: T,
+): Promise<T extends Balance[] ? Balance[] : Balance> {
   const pools = await fetchPoolsData(ctx)
 
-  return calculateUnderlyingsBalances(rawPoolBalances, pools)
+  const result = Array.isArray(rawPoolBalances)
+    ? rawPoolBalances.map((rawPool) => processRawPoolBalance(rawPool, pools)).filter(isNotNullish)
+    : processRawPoolBalance(rawPoolBalances as Balance, pools)
+
+  return result as T extends Balance[] ? Balance[] : Balance
 }
 
 async function fetchPoolsData(ctx: BalancesContext): Promise<PoolData[]> {
@@ -71,18 +70,38 @@ function createCoinBalance(ctx: BalancesContext, { poolBalance, decimals, addres
   return { chain: ctx.chain, address, decimals, symbol, poolBalance }
 }
 
-function calculateUnderlyingsBalances(rawPoolBalances: CurveBalance[], pools: PoolData[]): Balance[] {
-  return rawPoolBalances.map((rawPool) => processRawPoolBalance(rawPool, pools)).filter(isNotNullish)
-}
+function processRawPoolBalance(rawPool: any, pools: PoolData[]): Balance {
+  const findMatchingPool = (address: string) => pools.find((pool) => pool.token.toLowerCase() === address.toLowerCase())
 
-function processRawPoolBalance(rawPool: CurveBalance, pools: PoolData[]): Balance | null {
-  const matchingPool = pools.find((p) => p.token.toLowerCase() === rawPool.token.toLowerCase())
-  if (!matchingPool) return null
-
-  return {
-    ...rawPool,
-    underlyings: calculateUnderlyingAmount(rawPool.amount, matchingPool.coinsBalances, matchingPool.totalSupply),
+  const matchingPoolForToken = rawPool.token ? findMatchingPool(rawPool.token) : null
+  if (matchingPoolForToken) {
+    rawPool.underlyings = calculateUnderlyingAmount(
+      rawPool.amount,
+      matchingPoolForToken.coinsBalances,
+      matchingPoolForToken.totalSupply,
+    )
   }
+
+  const processedRewards =
+    rawPool.rewards?.flatMap((reward: Contract) => {
+      const matchingPool = findMatchingPool(reward.address)
+      return matchingPool
+        ? calculateUnderlyingAmount(reward.amount, matchingPool.coinsBalances, matchingPool.totalSupply)
+        : reward
+    }) || rawPool.rewards
+
+  const processedUnderlyings =
+    rawPool.underlyings?.flatMap((underlying: Contract) => {
+      const matchingPool = findMatchingPool(underlying.address)
+      return matchingPool
+        ? calculateUnderlyingAmount(underlying.amount, matchingPool.coinsBalances, matchingPool.totalSupply)
+        : underlying
+    }) || rawPool.underlyings
+
+  rawPool.rewards = processedRewards
+  rawPool.underlyings = processedUnderlyings
+
+  return rawPool
 }
 
 function calculateUnderlyingAmount(rawAmount: bigint, coinBalances: CoinBalance[], totalSupply: number): Contract[] {
