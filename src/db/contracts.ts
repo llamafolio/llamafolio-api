@@ -1,7 +1,7 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import environment from '@environment'
 import type { Contract, ContractStandard } from '@lib/adapter'
-import { groupBy, keyBy } from '@lib/array'
+import { groupBy, keyBy, sliceIntoChunks } from '@lib/array'
 import { chainByChainId, chainById } from '@lib/chains'
 import { shortAddress, toDateTime } from '@lib/fmt'
 
@@ -78,27 +78,36 @@ export function toStorage(contracts: Contract[]) {
 }
 
 export async function selectContracts(client: ClickHouseClient, chainId: number, addresses: string[]) {
-  const queryRes = await client.query({
-    query: `
-      SELECT
-        "chain",
-        "address",
-        "adapter_id",
-        "data"
-      FROM ${environment.NS_LF}.adapters_contracts
-      WHERE "chain" = {chainId: UInt8} AND "address" IN {addresses: Array(String)};
-    `,
-    query_params: {
-      chainId,
-      addresses,
-    },
-  })
+  // NOTE: prevent "Field value too long" errors
+  const slices = sliceIntoChunks(addresses, 1000)
 
-  const res = (await queryRes.json()) as {
-    data: { chain: string; address: string; adapter_id: string; data: string }[]
-  }
+  const slicesContracts = await Promise.all(
+    slices.map(async (addresses) => {
+      const queryRes = await client.query({
+        query: `
+          SELECT
+            "chain",
+            "address",
+            "adapter_id",
+            "data"
+          FROM ${environment.NS_LF}.adapters_contracts
+          WHERE "chain" = {chainId: UInt8} AND "address" IN {addresses: Array(String)};
+        `,
+        query_params: {
+          chainId,
+          addresses,
+        },
+      })
 
-  return fromStorage(res.data)
+      const res = (await queryRes.json()) as {
+        data: { chain: string; address: string; adapter_id: string; data: string }[]
+      }
+
+      return fromStorage(res.data)
+    }),
+  )
+
+  return slicesContracts.flat()
 }
 
 /**
