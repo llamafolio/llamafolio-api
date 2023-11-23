@@ -16,7 +16,9 @@ export interface IHistoryTransaction {
   timestamp: string
   adapter_ids?: string[]
   method_name?: string
-  token_transfers: [string, string, string, number, string, string, string | undefined][]
+  count: string
+  // [from_address, to_address, address, log_index, type, value, id]
+  token_transfers: [`0x${string}`, `0x${string}`, `0x${string}`, number, string, string, string | undefined][]
 }
 
 export async function selectHistory(
@@ -62,6 +64,8 @@ export async function selectHistory(
           "timestamp" <= {toTimestamp: DateTime} AND
           "timestamp" >= {fromTimestamp: DateTime}
           ${chainIds.length > 0 ? 'AND "chain" IN {chainIds: Array(UInt64)}' : ''}
+        ORDER BY "from_short", "from_address", "timestamp" DESC
+        SETTINGS optimize_read_in_order = 1
       ),
       "sub_transactions_to" AS (
         SELECT
@@ -84,6 +88,8 @@ export async function selectHistory(
           "timestamp" <= {toTimestamp: DateTime} AND
           "timestamp" >= {fromTimestamp: DateTime} AND
           "value" > 0
+        ORDER BY "to_short", "to_address", "timestamp" DESC
+        SETTINGS optimize_read_in_order = 1
       ),
       "sub_token_transfers_to" AS (
         SELECT
@@ -99,29 +105,40 @@ export async function selectHistory(
           0 AS "value",
           "timestamp",
           groupArray(("from_address", "to_address", "address", "log_index", "type", "value", "id")) as "token_transfers"
-        FROM evm_indexer2.token_transfers_to_mv
-        WHERE
-          "to_short" IN {addressesShort: Array(String)} AND
-          "to_address" IN {addresses: Array(String)} AND
-          "timestamp" <= {toTimestamp: DateTime} AND
-          "timestamp" >= {fromTimestamp: DateTime} AND
-          ("chain", "transaction_hash") NOT IN (
-              SELECT "chain", "hash" FROM "sub_transactions_from"
-          )
-          GROUP BY "chain", "transaction_hash", "timestamp"
+        FROM (
+          SELECT
+            "chain",
+            "transaction_hash",
+            "timestamp",
+            "from_address",
+            "to_address",
+            "address",
+            "log_index",
+            "type",
+            "value",
+            "id"
+          FROM evm_indexer2.token_transfers_to_mv
+          WHERE
+            "to_short" IN {addressesShort: Array(String)} AND
+            "to_address" IN {addresses: Array(String)} AND
+            "timestamp" <= {toTimestamp: DateTime} AND
+            "timestamp" >= {fromTimestamp: DateTime} AND
+            ("chain", "transaction_hash") NOT IN (
+                SELECT "chain", "hash" FROM "sub_transactions_from"
+            )
+          ORDER BY "to_short", "to_address", "timestamp" DESC
+          LIMIT {limit: UInt8} BY "chain", "transaction_hash", "timestamp"
+          SETTINGS optimize_read_in_order = 1, optimize_aggregation_in_order = 1
+        )
+        GROUP BY "chain", "transaction_hash", "timestamp"
       ),
-      "sub_adapters_contracts" AS (
-        SELECT
-          "chain",
-          "address",
-          groupArray("adapter_id") AS "adapter_ids"
-        FROM lf.adapters_contracts
+      "sub_methods" AS (
+        SELECT "selector", "name" FROM lf.methods2
         WHERE
-          "adapter_id" <> 'wallet' AND
-          ("chain", "address") IN (
-            SELECT "chain", "to_address" FROM "sub_transactions_from"
+          "selector" IN (
+            SELECT "selector" FROM "sub_transactions_from"
           )
-        GROUP BY "chain", "address"
+        GROUP BY "selector", "name"
       )
       SELECT
         t."block_number" AS "block_number",
@@ -136,8 +153,8 @@ export async function selectHistory(
         t."value" AS "value",
         t."timestamp" AS "timestamp",
         t."token_transfers" AS "token_transfers",
-        ac."adapter_ids" AS "adapter_ids",
-        m."name" AS "method_name"
+        m."name" AS "method_name",
+        count() OVER() AS "count"
       FROM (
         (SELECT * FROM "sub_transactions_from")
           UNION ALL
@@ -145,8 +162,7 @@ export async function selectHistory(
           UNION ALL
         (SELECT * FROM "sub_token_transfers_to")
       ) AS "t"
-      LEFT JOIN sub_adapters_contracts AS "ac" ON (t."chain", t."to_address") = (ac."chain", ac."address")
-      LEFT JOIN lf.methods AS "m" ON m."selector" = t."selector"
+      LEFT JOIN "sub_methods" AS "m" ON m."selector" = t."selector"
       ORDER BY "timestamp" DESC
       LIMIT {limit: UInt8}
       OFFSET {offset: UInt32};

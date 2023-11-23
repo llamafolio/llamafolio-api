@@ -93,6 +93,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
   try {
     const transactionsData: Transaction[] = []
+    let count = 0
 
     const transactions = await selectHistory(
       client,
@@ -112,6 +113,8 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
         continue
       }
 
+      count = parseInt(tx.count)
+
       transactionsData.push({
         chain,
         blockNumber: tx.block_number.toString(),
@@ -125,17 +128,19 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
         success: tx.status === 'success',
         adapterId: tx.adapter_ids?.[0],
         value: tx.value,
-        tokenTransfers: tx.token_transfers.map(
-          ([from, to, address, _log_index, _type, value, _id, decimals, symbol, name]) => ({
-            name,
-            symbol,
-            decimals,
-            tokenAddress: address,
-            fromAddress: from,
-            toAddress: to,
-            value: value,
-          }),
-        ),
+        tokenTransfers: tx.token_transfers
+          .map(([fromAddress, toAddress, tokenAddress, _log_index, _type, value, _id]) => ({
+            tokenAddress,
+            fromAddress,
+            toAddress,
+            value,
+          }))
+          // sanity filters
+          // TODO: move this check to the DB query to save some network time
+          .filter(
+            (tokenTransfer) =>
+              addresses.includes(tokenTransfer.toAddress) || addresses.includes(tokenTransfer.fromAddress),
+          ),
       })
     }
 
@@ -230,9 +235,11 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     const response: HistoryResponse = {
       transactions: transactionsData,
+      count,
+      next: Math.min(offset + limit, count),
     }
 
-    return success(response, { maxAge: 2 * 60 })
+    return success(response, { maxAge: 5 * 60 })
   } catch (e) {
     console.error('Failed to retrieve history', e)
     return serverError('Failed to retrieve history')
