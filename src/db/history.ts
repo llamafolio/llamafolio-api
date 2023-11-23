@@ -6,12 +6,12 @@ import { isNotNullish } from '@lib/type'
 export interface IHistoryTransaction {
   block_number: number
   chain: string
-  from: string
-  to: string
+  from_address: string
+  to_address: string
   gas_price: string
   gas: number
   hash: string
-  status: string
+  status: number
   value: string
   timestamp: string
   adapter_ids?: string[]
@@ -93,16 +93,8 @@ export async function selectHistory(
       ),
       "sub_token_transfers_to" AS (
         SELECT
-          0 AS "block_number",
           "chain",
-          '' AS "from_address",
-          '' AS "to_address",
-          '' AS "selector",
           "transaction_hash" AS "hash",
-          0 AS "gas",
-          0 AS "gas_price",
-          1 AS "status",
-          0 AS "value",
           "timestamp",
           groupArray(("from_address", "to_address", "address", "log_index", "type", "value", "id")) as "token_transfers"
         FROM (
@@ -127,8 +119,7 @@ export async function selectHistory(
                 SELECT "chain", "hash" FROM "sub_transactions_from"
             )
           ORDER BY "to_short", "to_address", "timestamp" DESC
-          LIMIT {limit: UInt8} BY "chain", "transaction_hash", "timestamp"
-          SETTINGS optimize_read_in_order = 1, optimize_aggregation_in_order = 1
+          SETTINGS optimize_read_in_order = 1
         )
         GROUP BY "chain", "transaction_hash", "timestamp"
       ),
@@ -143,8 +134,8 @@ export async function selectHistory(
       SELECT
         t."block_number" AS "block_number",
         t."chain" AS "chain",
-        t."from_address" AS "from",
-        t."to_address" AS "to",
+        t."from_address" AS "from_address",
+        t."to_address" AS "to_address",
         t."selector" AS "selector",
         t."hash" AS "hash",
         t."gas" AS "gas",
@@ -160,7 +151,22 @@ export async function selectHistory(
           UNION ALL
         (SELECT * FROM "sub_transactions_to")
           UNION ALL
-        (SELECT * FROM "sub_token_transfers_to")
+        (
+          SELECT
+            0 AS "block_number",
+            "chain",
+            '' AS "from_address",
+            '' AS "to_address",
+            '' AS "selector",
+            "hash",
+            0 AS "gas",
+            0 AS "gas_price",
+            1 AS "status",
+            0 AS "value",
+            "timestamp",
+            "token_transfers"
+          FROM "sub_token_transfers_to"
+        )
       ) AS "t"
       LEFT JOIN "sub_methods" AS "m" ON m."selector" = t."selector"
       ORDER BY "timestamp" DESC
