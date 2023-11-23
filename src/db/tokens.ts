@@ -79,12 +79,13 @@ export async function selectUndecodedChainAddresses(client: ClickHouseClient, li
     query: `
       SELECT
         "chain",
+        "address_short",
         "address"
-      FROM evm_indexer.token_transfers
-      WHERE ("chain", "address") NOT IN (
-        SELECT "chain", "address" FROM evm_indexer.tokens
+      FROM evm_indexer2.token_transfers
+      WHERE ("chain", "address_short", "address") NOT IN (
+        SELECT "chain", "address_short", "address" FROM evm_indexer2.tokens
       )
-      GROUP BY "chain", "address"
+      GROUP BY "chain", "address_short", "address"
       LIMIT {limit: UInt32}
       OFFSET {offset: UInt32};
     `,
@@ -109,7 +110,7 @@ export async function insertERC20Tokens(client: ClickHouseClient, tokens: Token[
   }
 
   await client.insert({
-    table: 'evm_indexer.tokens',
+    table: 'evm_indexer2.tokens',
     values,
     format: 'JSONEachRow',
   })

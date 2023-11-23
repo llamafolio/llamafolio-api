@@ -136,13 +136,21 @@ functions:
           path: /contracts/{chain}/{address}
     timeout: 15
 
+  getGasUsed:
+    handler: src/handlers/getGasUsed.handler
+    description: Get gas used
+    events:
+      - httpApi:
+          method: get
+          path: /gas_used/{address}
+
   getGasUsedChart:
     handler: src/handlers/getGasUsedChart.handler
     description: Get gas used chart
     events:
       - httpApi:
           method: get
-          path: /gas_used/{chain}/chart
+          path: /gas_used/chart
 
   getHistory:
     handler: src/handlers/getHistory.handler
@@ -211,16 +219,7 @@ functions:
       - httpApi:
           method: get
           path: /sync_status
-    timeout: 5
-
-  getSyncStatusV1:
-    handler: src/handlers/getSyncStatus.handlerV1
-    description: Get sync status v1
-    events:
-      - httpApi:
-          method: get
-          path: /v1/sync_status
-    timeout: 5
+    timeout: 10
 
   getTokens:
     handler: src/handlers/getTokens.handler
@@ -238,6 +237,15 @@ functions:
           method: get
           path: /tokens/{chain}/{address}
 
+  getTokenBalanceChart:
+    handler: src/handlers/getTokenBalanceChart.handler
+    description: Get token balance chart
+    events:
+      - httpApi:
+          method: get
+          path: /balances/{address}/tokens/{token}/chart
+    timeout: 10
+
   getTokenHolders:
     handler: src/handlers/getTokenHolders.handler
     description: Get the holders data for a token
@@ -245,7 +253,7 @@ functions:
       - httpApi:
           method: get
           path: /holders/{address}
-    timeout: 10
+    timeout: 15
 
   scheduledRevalidateAdaptersContracts:
     handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts

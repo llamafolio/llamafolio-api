@@ -1,5 +1,4 @@
 import { isHex } from '@lib/contract'
-import { isNotFalsy } from '@lib/type'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
@@ -63,20 +62,6 @@ export function millify(amount: number): string {
 
 export function millifyBI(amount: bigint): string {
   return millify(Number(amount))
-}
-
-/**
- * parse stringified JSON, removing newlines and tabs
- * if it fails to parse, return the original string
- */
-export function parseStringJSON(jsonString: string) {
-  try {
-    if (!isNotFalsy(jsonString)) return jsonString
-    return JSON.parse(jsonString.replaceAll(/[\n\\\n\r\t\\\\]/g, ''))
-  } catch (error) {
-    console.error('Failed to parse JSON', { string: jsonString })
-    return jsonString
-  }
 }
 
 export function fromAddresses(addresses: `0x${string}`[]) {

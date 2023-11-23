@@ -37,12 +37,12 @@ async function main() {
       // TODO: handle ERC721 and ERC1155
       const queryRes = await client.query({
         query: `
-        SELECT DISTINCT("address") FROM evm_indexer.token_transfers AS "tt"
+        SELECT DISTINCT("address") FROM evm_indexer2.token_transfers AS "tt"
         WHERE
             tt."chain" = {chainId: UInt64} AND
             tt."type" = 'erc20' AND
             tt."address" NOT IN (
-                SELECT "address" FROM evm_indexer.tokens
+                SELECT "address" FROM evm_indexer2.tokens
                 WHERE "chain" = {chainId: UInt64}
             )
         LIMIT 100;
@@ -103,7 +103,7 @@ async function main() {
       }
 
       await client.insert({
-        table: 'evm_indexer.tokens',
+        table: 'evm_indexer2.tokens',
         values: tokens,
         format: 'JSONEachRow',
       })

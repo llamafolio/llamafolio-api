@@ -1,10 +1,9 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import { chainById } from '@lib/chains'
-import { toDateTime } from '@lib/fmt'
+import { shortAddress, toDateTime } from '@lib/fmt'
 import { isNotNullish } from '@lib/type'
 
 export interface IHistoryTransaction {
-  total: string
   block_number: number
   chain: string
   from: string
@@ -17,7 +16,9 @@ export interface IHistoryTransaction {
   timestamp: string
   adapter_ids?: string[]
   method_name?: string
-  token_transfers: [string, string, string, number, string, string, string | undefined][]
+  count: string
+  // [from_address, to_address, address, log_index, type, value, id]
+  token_transfers: [`0x${string}`, `0x${string}`, `0x${string}`, number, string, string, string | undefined][]
 }
 
 export async function selectHistory(
@@ -34,74 +35,116 @@ export async function selectHistory(
 
   const queryRes = await client.query({
     query: `
-      WITH "sub_history" AS (
-        SELECT "chain", "hash", "timestamp"
-        FROM evm_indexer.transactions_history_agg
-        WHERE
-          "target" IN {addresses: Array(String)} AND
-          ${chainIds.length > 0 ? ' "chain" IN {chainIds: Array(UInt64)} AND' : ''}
-          "timestamp" <= {toTimestamp: DateTime} AND
-          "timestamp" >= {fromTimestamp: DateTime}
-        ORDER BY "timestamp" DESC
-        LIMIT {limit: UInt8} BY "chain", "hash"
-        LIMIT {limit: UInt8}
-        OFFSET {offset: UInt16}
-        SETTINGS optimize_read_in_order=1
-      ),
-      "sub_transactions" AS (
+      WITH "sub_transactions_from" AS (
         SELECT
-          t."block_number" AS "block_number",
-          t."chain" AS "chain",
-          t."from" AS "from",
-          t."to" AS "to",
-          substring(t."input", 1, 10) AS "selector",
-          t."hash" AS "hash",
-          t."gas" AS "gas",
-          t."gas_price" AS "gas_price",
-          t."status" AS "status",
-          t."value" AS "value",
-          t."timestamp" AS "timestamp"
-        FROM evm_indexer.transactions AS "t"
-        WHERE
-          (t."chain", t."hash", t."timestamp") IN "sub_history"
-      ),
-      "sub_adapters_contracts" AS (
-        SELECT
+          "block_number",
           "chain",
-          "address",
-          groupArray("adapter_id") AS "adapter_ids"
-        FROM lf.adapters_contracts
+          "from_address",
+          "to_address",
+          substring("input", 1, 10) AS "selector",
+          "hash",
+          "gas",
+          "gas_price",
+          "status",
+          "value",
+          "timestamp",
+          arrayMap(x -> (
+            JSONExtractString(x, 'from_address'),
+            JSONExtractString(x, 'to_address'),
+            JSONExtractString(x, 'address'),
+            JSONExtractUInt(x, 'log_index'),
+            JSONExtractInt(x, 'type'),
+            JSONExtractUInt(x, 'value'),
+            JSONExtractUInt(x, 'id')
+          ), "token_transfers") AS "token_transfers"
+        FROM evm_indexer2.transactions_from_mv
         WHERE
-          "adapter_id" <> 'wallet' AND
-          ("chain", "address") IN (
-            SELECT "chain", "to" FROM "sub_transactions"
-          )
-        GROUP BY "chain", "address"
-      ),
-      "sub_token_transfers" AS (
-        SELECT
-          tt."chain" AS "chain",
-          tt."transaction_hash" AS "hash",
-          groupArray((tt."from", tt."to", tt."address", tt."log_index", tt."type", tt."value", tt."id")) AS "token_transfers"
-        FROM evm_indexer.token_transfers AS "tt"
-        WHERE
-          (tt."chain", tt."transaction_hash", tt."timestamp") IN "sub_history" AND
-          (tt."from" IN {addresses: Array(String)} OR tt."to" IN {addresses: Array(String)})
-        GROUP BY tt."chain", tt."transaction_hash"
-      ),
-      (
-        SELECT count(*) FROM evm_indexer.transactions_history_agg
-        WHERE
-          "target" IN {addresses: Array(String)} AND
-          ${chainIds.length > 0 ? ' "chain" IN {chainIds: Array(UInt64)} AND' : ''}
+          "from_short" IN {addressesShort: Array(String)} AND
+          "from_address" IN {addresses: Array(String)} AND
           "timestamp" <= {toTimestamp: DateTime} AND
           "timestamp" >= {fromTimestamp: DateTime}
-      ) AS "total"
+          ${chainIds.length > 0 ? 'AND "chain" IN {chainIds: Array(UInt64)}' : ''}
+        ORDER BY "from_short", "from_address", "timestamp" DESC
+        SETTINGS optimize_read_in_order = 1
+      ),
+      "sub_transactions_to" AS (
+        SELECT
+          "block_number",
+          "chain",
+          "from_address",
+          "to_address",
+          substring("input", 1, 10) AS "selector",
+          "hash",
+          "gas",
+          "gas_price",
+          "status",
+          "value",
+          "timestamp",
+          [] AS "token_transfers"
+        FROM evm_indexer2.transactions_to_mv
+        WHERE
+          "to_short" IN {addressesShort: Array(String)} AND
+          "to_address" IN {addresses: Array(String)} AND
+          "timestamp" <= {toTimestamp: DateTime} AND
+          "timestamp" >= {fromTimestamp: DateTime} AND
+          "value" > 0
+        ORDER BY "to_short", "to_address", "timestamp" DESC
+        SETTINGS optimize_read_in_order = 1
+      ),
+      "sub_token_transfers_to" AS (
+        SELECT
+          0 AS "block_number",
+          "chain",
+          '' AS "from_address",
+          '' AS "to_address",
+          '' AS "selector",
+          "transaction_hash" AS "hash",
+          0 AS "gas",
+          0 AS "gas_price",
+          1 AS "status",
+          0 AS "value",
+          "timestamp",
+          groupArray(("from_address", "to_address", "address", "log_index", "type", "value", "id")) as "token_transfers"
+        FROM (
+          SELECT
+            "chain",
+            "transaction_hash",
+            "timestamp",
+            "from_address",
+            "to_address",
+            "address",
+            "log_index",
+            "type",
+            "value",
+            "id"
+          FROM evm_indexer2.token_transfers_to_mv
+          WHERE
+            "to_short" IN {addressesShort: Array(String)} AND
+            "to_address" IN {addresses: Array(String)} AND
+            "timestamp" <= {toTimestamp: DateTime} AND
+            "timestamp" >= {fromTimestamp: DateTime} AND
+            ("chain", "transaction_hash") NOT IN (
+                SELECT "chain", "hash" FROM "sub_transactions_from"
+            )
+          ORDER BY "to_short", "to_address", "timestamp" DESC
+          LIMIT {limit: UInt8} BY "chain", "transaction_hash", "timestamp"
+          SETTINGS optimize_read_in_order = 1, optimize_aggregation_in_order = 1
+        )
+        GROUP BY "chain", "transaction_hash", "timestamp"
+      ),
+      "sub_methods" AS (
+        SELECT "selector", "name" FROM lf.methods2
+        WHERE
+          "selector" IN (
+            SELECT "selector" FROM "sub_transactions_from"
+          )
+        GROUP BY "selector", "name"
+      )
       SELECT
         t."block_number" AS "block_number",
         t."chain" AS "chain",
-        t."from" AS "from",
-        t."to" AS "to",
+        t."from_address" AS "from",
+        t."to_address" AS "to",
         t."selector" AS "selector",
         t."hash" AS "hash",
         t."gas" AS "gas",
@@ -109,18 +152,24 @@ export async function selectHistory(
         t."status" AS "status",
         t."value" AS "value",
         t."timestamp" AS "timestamp",
-        ac."adapter_ids" AS "adapter_ids",
+        t."token_transfers" AS "token_transfers",
         m."name" AS "method_name",
-        tt."token_transfers" AS "token_transfers",
-        "total"
-      FROM "sub_transactions" AS "t"
-      LEFT JOIN sub_adapters_contracts AS "ac" ON (t."chain", t."to") = (ac."chain", ac."address")
-      LEFT JOIN "sub_token_transfers" AS "tt" ON (t."chain", t."hash") = (tt."chain", tt."hash")
-      LEFT JOIN lf.methods AS "m" ON m."selector" = t."selector"
-      ORDER BY "timestamp" DESC;
+        count() OVER() AS "count"
+      FROM (
+        (SELECT * FROM "sub_transactions_from")
+          UNION ALL
+        (SELECT * FROM "sub_transactions_to")
+          UNION ALL
+        (SELECT * FROM "sub_token_transfers_to")
+      ) AS "t"
+      LEFT JOIN "sub_methods" AS "m" ON m."selector" = t."selector"
+      ORDER BY "timestamp" DESC
+      LIMIT {limit: UInt8}
+      OFFSET {offset: UInt32};
     `,
     query_params: {
-      addresses: addresses.map((address) => address.toLowerCase()),
+      addresses,
+      addressesShort: addresses.map(shortAddress),
       limit,
       offset,
       fromTimestamp: toDateTime(fromDate),

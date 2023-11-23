@@ -35,9 +35,7 @@ export async function fetchTokenPrices(keys: string[]): Promise<PricesResponse> 
     const endpoint = environment.DEFILLAMA_PRICE_API_KEY
       ? `https://coins.llama.fi/prices/current/${coinsParam}?apikey=${environment.DEFILLAMA_PRICE_API_KEY}`
       : `https://coins.llama.fi/prices/current/${coinsParam}`
-    const pricesRes = await fetch(endpoint, {
-      method: 'GET',
-    })
+    const pricesRes = await fetch(endpoint, { method: 'GET' })
 
     if (!pricesRes.ok) {
       throw new Error(`bad response for coins ${coinsParam}`)
