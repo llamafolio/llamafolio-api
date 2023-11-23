@@ -20,22 +20,20 @@ const chainId = (chain: Chain) => (chain === 'gnosis' ? 'xdai' : chain)
 export async function getCurveUnderlyingsBalances<T extends Balance | Balance[]>(
   ctx: BalancesContext,
   rawPoolBalances: T,
-): Promise<any> {
+) {
   const pools = await fetchPoolsData(ctx)
 
-  const isCurveLP = Array.isArray(rawPoolBalances)
-    ? rawPoolBalances.every((rawPool) => isRelatedToCurvePool(rawPool, pools))
-    : isRelatedToCurvePool(rawPoolBalances as Balance, pools)
+  if (Array.isArray(rawPoolBalances)) {
+    const processedBalances = rawPoolBalances
+      .map((rawPool) => (isRelatedToCurvePool(rawPool, pools) ? processRawPoolBalance(rawPool, pools) : rawPool))
+      .filter(isNotNullish)
 
-  if (!isCurveLP) {
-    return rawPoolBalances
+    return processedBalances as T
+  } else {
+    return isRelatedToCurvePool(rawPoolBalances as Balance, pools)
+      ? processRawPoolBalance(rawPoolBalances as Balance, pools)
+      : (rawPoolBalances as T)
   }
-
-  const result = Array.isArray(rawPoolBalances)
-    ? rawPoolBalances.map((rawPool) => processRawPoolBalance(rawPool, pools)).filter(isNotNullish)
-    : processRawPoolBalance(rawPoolBalances as Balance, pools)
-
-  return result as T extends Balance[] ? Balance[] : Balance
 }
 
 function isCurveLPToken(tokenAddress: `0x${string}` | undefined, pools: PoolData[]) {
