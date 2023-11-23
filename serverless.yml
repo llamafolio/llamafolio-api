@@ -219,16 +219,7 @@ functions:
       - httpApi:
           method: get
           path: /sync_status
-    timeout: 5
-
-  getSyncStatusV1:
-    handler: src/handlers/getSyncStatus.handlerV1
-    description: Get sync status v1
-    events:
-      - httpApi:
-          method: get
-          path: /v1/sync_status
-    timeout: 5
+    timeout: 10
 
   getTokens:
     handler: src/handlers/getTokens.handler
