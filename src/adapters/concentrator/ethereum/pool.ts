@@ -1,10 +1,9 @@
-import type { BaseContext, Contract } from '@lib/adapter'
-import { rangeBI } from '@lib/array'
-import { call } from '@lib/call'
-import { ADDRESS_ZERO } from '@lib/contract'
-import { getERC20Details } from '@lib/erc20'
+import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
+import { getCurveUnderlyingsBalances } from '@lib/curve/helper'
+import type { GetResolvedUnderlyingsParams, GetUsersInfosParams } from '@lib/masterchef/masterChefBalance'
+import type { GetPoolsInfosParams } from '@lib/masterchef/masterChefContract'
 import { multicall } from '@lib/multicall'
-import { ETH_ADDR } from '@lib/token'
 
 const abi = {
   poolLength: {
@@ -50,21 +49,6 @@ const abi = {
     ],
     stateMutability: 'view',
     type: 'function',
-  },
-  getPoolFromLPToken: {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'get_pool_from_lp_token',
-    inputs: [{ name: 'arg0', type: 'address' }],
-    outputs: [{ name: '', type: 'address' }],
-    gas: 2443,
-  },
-  getUnderlyingsCoins: {
-    stateMutability: 'view',
-    type: 'function',
-    name: 'get_underlying_coins',
-    inputs: [{ name: '_pool', type: 'address' }],
-    outputs: [{ name: '', type: 'address[8]' }],
   },
   poolInfoOld: {
     inputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
@@ -117,158 +101,133 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  pendingCTR: {
+    inputs: [
+      { internalType: 'uint256', name: '_pid', type: 'uint256' },
+      { internalType: 'address', name: '_account', type: 'address' },
+    ],
+    name: 'pendingCTR',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  pendingReward: {
+    inputs: [
+      { internalType: 'uint256', name: '_pid', type: 'uint256' },
+      { internalType: 'address', name: '_account', type: 'address' },
+    ],
+    name: 'pendingReward',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  convertToAssets: {
+    inputs: [{ internalType: 'uint256', name: '_shares', type: 'uint256' }],
+    name: 'convertToAssets',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
-const metaRegistry: Contract = {
-  chain: 'ethereum',
-  address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
-}
-
-export async function getPoolsContracts(ctx: BaseContext, contracts: Contract[]): Promise<Contract[]> {
-  const pools: Contract[] = []
-
-  for (const contract of contracts) {
-    const poolsCountBI = await call({ ctx, target: contract.address, abi: abi.poolLength })
-    const poolsCount = Number(poolsCountBI)
-
-    const poolInfosRes = await multicall({
-      ctx,
-      calls: rangeBI(0n, poolsCountBI).map((i) => ({ target: contract.address, params: [i] }) as const),
-      abi: abi.poolInfo,
-    })
-
-    for (let idx = 0; idx < poolsCount; idx++) {
-      const poolInfoRes = poolInfosRes[idx]
-      if (!poolInfoRes.success) {
-        continue
-      }
-
-      const [_totalUnderlying, _totalShare, _accRewardPerShare, convexPoolId, lpToken, crvRewards] = poolInfoRes.output
-      pools.push({
-        chain: ctx.chain,
-        address: lpToken,
-        pid: idx,
-        convexPoolId,
-        lpToken,
-        crvRewards,
-        vaultName: contract.name,
-        vaultAddress: poolInfoRes.input.target,
-        rewards: contract.rewards,
-      })
-    }
-
-    const poolsAddressesRes = await multicall({
-      ctx,
-      calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] }) as const),
-      abi: abi.getPoolFromLPToken,
-    })
-
-    for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-      const pool = pools[poolIdx]
-      const poolAddressRes = poolsAddressesRes[poolIdx]
-      if (!poolAddressRes.success) {
-        continue
-      }
-
-      pool.pool = poolAddressRes.output
-    }
-
-    const underlyingsRes = await multicall({
-      ctx,
-      calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] }) as const),
-      abi: abi.getUnderlyingsCoins,
-    })
-
-    for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-      const pool = pools[poolIdx]
-      const underlyingRes = underlyingsRes[poolIdx]
-      if (!underlyingRes.success) {
-        continue
-      }
-
-      pool.underlyings = await getERC20Details(
-        ctx,
-        underlyingRes.output
-          .map((address) => address.toLowerCase())
-          // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-          .filter((address) => address !== ADDRESS_ZERO)
-          // replace ETH alias
-          .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)) as `0x${string}`[],
-      )
-    }
-  }
-
-  return pools
-}
-
-export async function getOldContracts(ctx: BaseContext, contract: Contract): Promise<Contract[]> {
-  const pools: Contract[] = []
-
-  const poolsCountBI = await call({ ctx, target: contract.address, abi: abi.poolLength })
-  const poolsCount = Number(poolsCountBI)
-
-  const poolInfosRes = await multicall({
+export async function getConcentratorPoolInfos(
+  ctx: BaseContext,
+  { masterChefAddress, poolLength, getLpToken }: GetPoolsInfosParams,
+) {
+  const poolInfos = await multicall({
     ctx,
-    calls: rangeBI(0n, poolsCountBI).map((i) => ({ target: contract.address, params: [i] }) as const),
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterChefAddress, params: [idx] }) as const),
+    abi: abi.poolInfo,
+  })
+
+  return mapSuccessFilter(poolInfos, (res) => {
+    const lpToken = Array.isArray(res.output) ? getLpToken!({ lpToken: res.output }) : res.output
+
+    return { chain: ctx.chain, address: lpToken, token: lpToken, pid: res.input.params![0] }
+  })
+}
+
+export async function getConcentratorOldPoolInfos(
+  ctx: BaseContext,
+  { masterChefAddress, poolLength, getLpToken }: GetPoolsInfosParams,
+) {
+  const poolInfos = await multicall({
+    ctx,
+    calls: rangeBI(0n, poolLength).map((idx) => ({ target: masterChefAddress, params: [idx] }) as const),
     abi: abi.poolInfoOld,
   })
 
-  for (let idx = 0; idx < poolsCount; idx++) {
-    const poolInfoRes = poolInfosRes[idx]
-    if (!poolInfoRes.success) {
-      continue
-    }
+  return mapSuccessFilter(poolInfos, (res) => {
+    const lpToken = Array.isArray(res.output) ? getLpToken!({ lpToken: res.output }) : res.output
 
-    pools.push({
-      chain: ctx.chain,
-      address: poolInfoRes.output[1].token,
-      lpToken: poolInfoRes.output[1].token,
-      pid: idx,
-      vaultName: contract.name,
-      vaultAddress: poolInfoRes.input.target,
-      rewards: contract.rewards,
-    })
-  }
+    return { chain: ctx.chain, address: lpToken, token: lpToken, pid: res.input.params![0] }
+  })
+}
 
-  const poolsAddressesRes = await multicall({
+export async function getConcentratorUnderlyings(ctx: BalancesContext, { pools }: GetResolvedUnderlyingsParams) {
+  return getCurveUnderlyingsBalances(ctx, pools)
+}
+
+export async function getUserPendingaCRV(
+  ctx: BalancesContext,
+  { masterChefAddress, pools, rewardToken }: GetUsersInfosParams,
+) {
+  const userPendingRewards = await multicall({
     ctx,
-    calls: pools.map(({ address }) => ({ target: metaRegistry.address, params: [address] }) as const),
-    abi: abi.getPoolFromLPToken,
+    calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.pid, ctx.address] }) as const),
+    abi: abi.pendingReward,
   })
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-    const poolAddressRes = poolsAddressesRes[poolIdx]
-    if (!poolAddressRes.success) {
-      continue
-    }
+  const rewards: Contract[] = mapSuccessFilter(userPendingRewards, (res: any, index) => {
+    const pool = pools[index]
+    const reward = rewardToken || (pool.rewards?.[0] as Contract)
 
-    pool.pool = poolAddressRes.output
-  }
-
-  const underlyingsRes = await multicall({
-    ctx,
-    calls: pools.map(({ pool }) => ({ target: metaRegistry.address, params: [pool] }) as const),
-    abi: abi.getUnderlyingsCoins,
+    return { ...reward, amount: res.output }
   })
 
-  for (let poolIdx = 0; poolIdx < pools.length; poolIdx++) {
-    const pool = pools[poolIdx]
-    const underlyingRes = underlyingsRes[poolIdx]
-    if (!underlyingRes.success) {
-      continue
-    }
+  const convertedBalances = await multicall({
+    ctx,
+    calls: rewards.map((reward) => ({ target: reward.address, params: [reward.amount] }) as const),
+    abi: abi.convertToAssets,
+  })
 
-    pool.underlyings = await getERC20Details(
-      ctx,
-      underlyingRes.output
-        .map((address) => address.toLowerCase())
-        // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-        .filter((address) => address !== ADDRESS_ZERO)
-        // replace ETH alias
-        .map((address) => (address === ETH_ADDR ? ADDRESS_ZERO : address)) as `0x${string}`[],
-    )
-  }
+  return mapSuccessFilter(convertedBalances, (res, index) => {
+    const reward = rewards[index]
+    const underlyingsReward = reward.underlyings?.[0] as Contract
 
-  return pools
+    return [{ ...underlyingsReward, amount: res.output }]
+  })
+}
+
+export async function getUserPendingaFXS(
+  ctx: BalancesContext,
+  { masterChefAddress, pools, rewardToken }: GetUsersInfosParams,
+) {
+  const userPendingRewards = await multicall({
+    ctx,
+    calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.pid, ctx.address] }) as const),
+    abi: abi.pendingReward,
+  })
+
+  const rewards: Contract[] = mapSuccessFilter(userPendingRewards, (res: any, index) => {
+    const pool = pools[index]
+    const reward = rewardToken || (pool.rewards?.[0] as Contract)
+
+    return { ...reward, amount: res.output }
+  })
+
+  const convertedBalances = await multicall({
+    ctx,
+    calls: rewards.map((reward) => ({ target: reward.address, params: [reward.amount] }) as const),
+    abi: abi.convertToAssets,
+  })
+
+  const fmtRewards: any[] = mapSuccessFilter(convertedBalances, (res, index) => {
+    const reward = rewards[index]
+    const underlyingsReward = reward.underlyings?.[0] as Contract
+
+    return [{ ...underlyingsReward, amount: res.output }]
+  })
+
+  return getCurveUnderlyingsBalances(ctx, fmtRewards)
 }
