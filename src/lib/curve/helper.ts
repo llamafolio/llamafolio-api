@@ -20,7 +20,7 @@ const chainId = (chain: Chain) => (chain === 'gnosis' ? 'xdai' : chain)
 export async function getCurveUnderlyingsBalances<T extends Balance | Balance[]>(
   ctx: BalancesContext,
   rawPoolBalances: T,
-) {
+): Promise<any> {
   const pools = await fetchPoolsData(ctx)
 
   if (Array.isArray(rawPoolBalances)) {
@@ -97,7 +97,8 @@ function createCoinBalance(ctx: BalancesContext, { poolBalance, decimals, addres
 }
 
 function processRawPoolBalance(rawPool: any, pools: PoolData[]): Balance {
-  const findMatchingPool = (address: string) => pools.find((pool) => pool.token.toLowerCase() === address.toLowerCase())
+  const findMatchingPool = (address: string) =>
+    address ? pools.find((pool) => pool.token.toLowerCase() === address.toLowerCase()) : null
 
   const matchingPoolForAddress = rawPool.address ? findMatchingPool(rawPool.address) : null
   if (matchingPoolForAddress) {
@@ -142,7 +143,7 @@ function processRawPoolBalance(rawPool: any, pools: PoolData[]): Balance {
 function calculateUnderlyingAmount(rawAmount: bigint, coinBalances: CoinBalance[], totalSupply: number): Contract[] {
   return coinBalances
     .map((coinBalance) => {
-      if (totalSupply == 0) return null
+      if (!rawAmount || totalSupply == 0) return null
       return { ...coinBalance, amount: (rawAmount * BigInt(coinBalance.poolBalance)) / BigInt(totalSupply) }
     })
     .filter(isNotNullish)
