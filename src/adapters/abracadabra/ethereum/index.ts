@@ -41,12 +41,6 @@ const masterChef: Contract = {
   address: '0xf43480afe9863da4acbd4419a47d9cc7d25a647f',
 }
 
-const metaRegistry: Contract = {
-  name: 'Curve Metaregistry',
-  chain: 'ethereum',
-  address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
-}
-
 const cauldrons: `0x${string}`[] = [
   //  Active v2
   '0x7b7473a76D6ae86CE19f7352A1E89F6C9dc39020', // ALCX
@@ -97,7 +91,7 @@ const cauldrons: `0x${string}`[] = [
 
 export const getContracts = async (ctx: BaseContext) => {
   const [farmers, mStakeContracts, sStakeContracts, marketsContracts] = await Promise.all([
-    getAbracadabraFarmerContracts(ctx, masterChef, metaRegistry),
+    getAbracadabraFarmerContracts(ctx, masterChef),
     getMStakeContract(ctx, mSPELL),
     getSStakeContract(ctx, sSPELL),
     getMarketsContracts(ctx, cauldrons),
@@ -119,7 +113,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     resolveBalances<typeof getContracts>(ctx, contracts, {
       mStakeContracts: getMStakeBalance,
       sStakeContracts: getSStakeBalance,
-      farmers: (...args) => getAbracadabraMasterChefBalances(...args, masterChef, metaRegistry),
+      farmers: (...args) => getAbracadabraMasterChefBalances(...args, masterChef),
     }),
   ])
 

@@ -36,6 +36,11 @@ export async function getCurveUnderlyingsBalances<T extends Balance | Balance[]>
   }
 }
 
+function isCurvePoolAddress(poolAddress: `0x${string}` | undefined, pools: PoolData[]) {
+  if (!poolAddress) return false
+  return pools.some((pool) => pool.address.toLowerCase() === poolAddress.toLowerCase())
+}
+
 function isCurveLPToken(tokenAddress: `0x${string}` | undefined, pools: PoolData[]) {
   if (!tokenAddress) return false
   return pools.some((pool) => pool.token.toLowerCase() === tokenAddress.toLowerCase())
@@ -43,11 +48,12 @@ function isCurveLPToken(tokenAddress: `0x${string}` | undefined, pools: PoolData
 
 function isRelatedToCurvePool(rawPool: any, pools: PoolData[]) {
   const tokenCheck = rawPool.token ? isCurveLPToken(rawPool.token, pools) : false
+  const addressCheck = rawPool.address ? isCurvePoolAddress(rawPool.address, pools) : false
   const underlyingsCheck =
     rawPool.underlyings?.some((underlying: Contract) => isCurveLPToken(underlying.address, pools)) ?? false
   const rewardsCheck = rawPool.rewards?.some((reward: Contract) => isCurveLPToken(reward.address, pools)) ?? false
 
-  return tokenCheck || underlyingsCheck || rewardsCheck
+  return tokenCheck || addressCheck || underlyingsCheck || rewardsCheck
 }
 
 async function fetchPoolsData(ctx: BalancesContext): Promise<PoolData[]> {
@@ -92,6 +98,15 @@ function createCoinBalance(ctx: BalancesContext, { poolBalance, decimals, addres
 
 function processRawPoolBalance(rawPool: any, pools: PoolData[]): Balance {
   const findMatchingPool = (address: string) => pools.find((pool) => pool.token.toLowerCase() === address.toLowerCase())
+
+  const matchingPoolForAddress = rawPool.address ? findMatchingPool(rawPool.address) : null
+  if (matchingPoolForAddress) {
+    rawPool.underlyings = calculateUnderlyingAmount(
+      rawPool.amount,
+      matchingPoolForAddress.coinsBalances,
+      matchingPoolForAddress.totalSupply,
+    )
+  }
 
   const matchingPoolForToken = rawPool.token ? findMatchingPool(rawPool.token) : null
   if (matchingPoolForToken) {

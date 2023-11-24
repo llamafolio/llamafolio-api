@@ -1,11 +1,9 @@
-import { getUnderlyingsPoolsBalances } from '@adapters/curve-dex/common/balance'
-import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
-import { ADDRESS_ZERO } from '@lib/contract'
+import { getCurveUnderlyingsBalances } from '@lib/curve/helper'
 import { getMasterChefPoolsBalances, type GetResolvedUnderlyingsParams } from '@lib/masterchef/masterChefBalance'
-import { getMasterChefPoolsContracts, type GetUnderlyingsParams } from '@lib/masterchef/masterChefContract'
+import { getMasterChefPoolsContracts } from '@lib/masterchef/masterChefContract'
 import { multicall } from '@lib/multicall'
-import { ETH_ADDR } from '@lib/token'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 
@@ -37,64 +35,14 @@ const SPELL: Contract = {
   symbol: 'SPELL',
 }
 
-type AbracadabraPoolsBalance = Balance & {
-  provider: string
-}
-
-export async function getAbracadabraFarmerContracts(
-  ctx: BaseContext,
-  masterChef: Contract,
-  registry: Contract,
-): Promise<Contract[]> {
+export async function getAbracadabraFarmerContracts(ctx: BaseContext, masterChef: Contract): Promise<Contract[]> {
   return getMasterChefPoolsContracts(ctx, {
     masterChefAddress: masterChef.address,
-    getUnderlyings: (ctx, { pools }) => getAbracadabraUnderlyings(ctx, { pools, registry }),
+    getUnderlyings: (ctx, { pools }) => getPairsDetails(ctx, pools),
   })
 }
 
-async function getAbracadabraUnderlyings(
-  ctx: BaseContext,
-  { pools, registry }: GetUnderlyingsParams & { registry: Contract },
-) {
-  return registry && getCurveUnderlyings(ctx, await getPairsDetails(ctx, pools), registry)
-}
-
-async function getCurveUnderlyings(ctx: BaseContext, pools: Contract[], registry: Contract) {
-  const resolvedPools = pools.filter((pool) => pool.underlyings)
-  const unresolvedPools = pools.filter((pool) => !pool.underlyings)
-
-  const underlyingsRes = await multicall({
-    ctx,
-    calls: unresolvedPools.map((pool) => ({ target: registry.address, params: [pool.address] }) as const),
-    abi: abi.get_underlying_coins,
-  })
-
-  unresolvedPools.forEach((pool, index) => {
-    const underlyingRes = underlyingsRes[index]
-    const underlyings: any = underlyingRes.success
-      ? underlyingRes.output
-          .map((address) => (address as `0x${string}`).toLowerCase())
-          // response is backfilled with zero addresses: [address0,address1,0x0,0x0...]
-          .filter((address) => (address as `0x${string}`) !== ADDRESS_ZERO)
-          // replace ETH alias
-          .map((address) => ((address as `0x${string}`) === ETH_ADDR ? ADDRESS_ZERO : address))
-      : []
-
-    pool.underlyings = underlyings
-    pool.provider = 'curve'
-    pool.pool = pool.address
-    pool.lpToken = pool.address
-  })
-
-  return [...resolvedPools, ...unresolvedPools]
-}
-
-export async function getAbracadabraMasterChefBalances(
-  ctx: BalancesContext,
-  pools: Contract[],
-  masterChef: Contract,
-  registry: Contract,
-) {
+export async function getAbracadabraMasterChefBalances(ctx: BalancesContext, pools: Contract[], masterChef: Contract) {
   return getMasterChefPoolsBalances(ctx, pools, {
     masterChefAddress: masterChef.address,
     rewardToken: SPELL,
@@ -112,19 +60,11 @@ export async function getAbracadabraMasterChefBalances(
         return [{ ...reward, amount: res.output }]
       })
     },
-    getResolvedUnderlyings: (ctx, { pools }) => getResolvedAbracadabraUnderlyings(ctx, { pools, registry }),
+    getResolvedUnderlyings: (ctx, { pools }) => getResolvedAbracadabraUnderlyings(ctx, { pools }),
   })
 }
 
-async function getResolvedAbracadabraUnderlyings(
-  ctx: BalancesContext,
-  { pools, registry }: GetResolvedUnderlyingsParams & { registry: Contract },
-) {
-  const curvedPoolBalances = pools.filter((pool) => (pool as AbracadabraPoolsBalance).provider === 'curve')
-  const pairBalances = pools.filter((pool) => !(pool as AbracadabraPoolsBalance).provider)
-
-  return Promise.all([
-    registry && getUnderlyingsPoolsBalances(ctx, curvedPoolBalances, registry),
-    getUnderlyingBalances(ctx, pairBalances),
-  ])
+async function getResolvedAbracadabraUnderlyings(ctx: BalancesContext, { pools }: GetResolvedUnderlyingsParams) {
+  const resolveLPUnderlyings = await getUnderlyingBalances(ctx, pools)
+  return getCurveUnderlyingsBalances(ctx, resolveLPUnderlyings)
 }
