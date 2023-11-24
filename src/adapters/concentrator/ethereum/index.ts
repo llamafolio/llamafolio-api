@@ -106,27 +106,27 @@ export const getContracts = async (ctx: BaseContext) => {
   ] = await Promise.all([
     getMasterChefPoolsContracts(ctx, {
       masterChefAddress: '0x3cf54f3a1969be9916dad548f3c084331c4450b5',
-      getPoolInfos: (...args) => getConcentratorPoolInfos(...args),
+      getPoolInfos: getConcentratorPoolInfos,
       getLpToken: ({ lpToken }) => lpToken[4],
     }),
     getMasterChefPoolsContracts(ctx, {
       masterChefAddress: '0xc8fF37F7d057dF1BB9Ad681b53Fa4726f268E0e8',
-      getPoolInfos: (...args) => getConcentratorPoolInfos(...args),
+      getPoolInfos: getConcentratorPoolInfos,
       getLpToken: ({ lpToken }) => lpToken[4],
     }),
     getMasterChefPoolsContracts(ctx, {
       masterChefAddress: '0xD6E3BB7b1D6Fa75A71d48CFB10096d59ABbf99E1',
-      getPoolInfos: (...args) => getConcentratorPoolInfos(...args),
+      getPoolInfos: getConcentratorPoolInfos,
       getLpToken: ({ lpToken }) => lpToken[4],
     }),
     getMasterChefPoolsContracts(ctx, {
       masterChefAddress: '0x50B47c4A642231dbe0B411a0B2FBC1EBD129346D',
-      getPoolInfos: (...args) => getConcentratorOldPoolInfos(...args),
+      getPoolInfos: getConcentratorOldPoolInfos,
       getLpToken: ({ lpToken }) => lpToken[1].token,
     }),
     getMasterChefPoolsContracts(ctx, {
       masterChefAddress: '0x59866EC5650e9BA00c51f6D681762b48b0AdA3de',
-      getPoolInfos: (...args) => getConcentratorOldPoolInfos(...args),
+      getPoolInfos: getConcentratorOldPoolInfos,
       getLpToken: ({ lpToken }) => lpToken[1].token,
     }),
   ])
@@ -161,36 +161,36 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
       getMasterChefPoolsBalances(...args, {
         masterChefAddress: '0x3cf54f3a1969be9916dad548f3c084331c4450b5',
         rewardToken: aCRV,
-        getResolvedUnderlyings: (...args) => getConcentratorUnderlyings(...args),
-        getUserPendingRewards: (...args) => getUserPendingaCRV(...args),
+        getResolvedUnderlyings: getConcentratorUnderlyings,
+        getUserPendingRewards: getUserPendingaCRV,
       }),
     aladdinConvexPools: (...args) =>
       getMasterChefPoolsBalances(...args, {
         masterChefAddress: '0xc8fF37F7d057dF1BB9Ad681b53Fa4726f268E0e8',
         rewardToken: aCRV,
-        getResolvedUnderlyings: (...args) => getConcentratorUnderlyings(...args),
-        getUserPendingRewards: (...args) => getUserPendingaCRV(...args),
+        getResolvedUnderlyings: getConcentratorUnderlyings,
+        getUserPendingRewards: getUserPendingaCRV,
       }),
     aladdinFXSConvexPools: (...args) =>
       getMasterChefPoolsBalances(...args, {
         masterChefAddress: '0xD6E3BB7b1D6Fa75A71d48CFB10096d59ABbf99E1',
         rewardToken: aFXS,
-        getResolvedUnderlyings: (...args) => getConcentratorUnderlyings(...args),
-        getUserPendingRewards: (...args) => getUserPendingaFXS(...args),
+        getResolvedUnderlyings: getConcentratorUnderlyings,
+        getUserPendingRewards: getUserPendingaFXS,
       }),
     concentratorAladdinETHPools: (...args) =>
       getMasterChefPoolsBalances(...args, {
         masterChefAddress: '0x50B47c4A642231dbe0B411a0B2FBC1EBD129346D',
         rewardToken: afrxETH,
-        getResolvedUnderlyings: (...args) => getConcentratorUnderlyings(...args),
-        getUserPendingRewards: (...args) => getUserPendingaFXS(...args),
+        getResolvedUnderlyings: getConcentratorUnderlyings,
+        getUserPendingRewards: getUserPendingaFXS,
       }),
     ConcentratorAsdCRVPools: (...args) =>
       getMasterChefPoolsBalances(...args, {
         masterChefAddress: '0x59866EC5650e9BA00c51f6D681762b48b0AdA3de',
         rewardToken: sdCRV,
-        getResolvedUnderlyings: (...args) => getConcentratorUnderlyings(...args),
-        getUserPendingRewards: (...args) => getUserPendingaFXS(...args),
+        getResolvedUnderlyings: getConcentratorUnderlyings,
+        getUserPendingRewards: getUserPendingaFXS,
       }),
   })
 
