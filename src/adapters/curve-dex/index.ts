@@ -1,5 +1,6 @@
 import * as arbitrum from '@adapters/curve-dex/arbitrum'
 import * as avalanche from '@adapters/curve-dex/avalanche'
+import * as base from '@adapters/curve-dex/base'
 import * as ethereum from '@adapters/curve-dex/ethereum'
 import * as fantom from '@adapters/curve-dex/fantom'
 import * as gnosis from '@adapters/curve-dex/gnosis'
@@ -18,6 +19,7 @@ const adapter: Adapter = {
   polygon,
   gnosis,
   moonbeam,
+  base,
 }
 
 export default adapter
