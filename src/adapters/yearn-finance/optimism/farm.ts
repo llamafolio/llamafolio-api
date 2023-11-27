@@ -1,18 +1,15 @@
-import { adjustUnderlyingAmounts } from '@adapters/yearn-finance/common/balance'
-import { mergeContracts } from '@adapters/yearn-finance/common/vault'
+import { AdjustUnderlyingsAmount } from '@adapters/yearn-finance/common/balance'
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter, rangeBI } from '@lib/array'
+import { mapMultiSuccessFilter, mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
+import type { Category } from '@lib/category'
 import { abi as erc20Abi } from '@lib/erc20'
+import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-
-type IYearnBalances = Balance & {
-  exchangeRate: bigint
-  lpToken: `0x${string}`
-}
 
 const abi = {
   numTokens: {
@@ -61,6 +58,10 @@ const abi = {
   },
 } as const
 
+type PoolBalances = Balance & {
+  pricePerFullShare: number
+}
+
 const OP: Token = {
   chain: 'optimism',
   address: '0x4200000000000000000000000000000000000042',
@@ -69,8 +70,6 @@ const OP: Token = {
 }
 
 export async function getOptimisticYearnFarmContracts(ctx: BaseContext, registry: Contract): Promise<Contract[]> {
-  const pools: Contract[] = []
-
   const poolLength = await call({ ctx, target: registry.address, abi: abi.numTokens })
 
   const poolsAddressesRes = await multicall({
@@ -95,33 +94,25 @@ export async function getOptimisticYearnFarmContracts(ctx: BaseContext, registry
     }),
   ])
 
-  for (let index = 0; index < poolLength; index++) {
-    const poolsAddressRes = poolsAddressesRes[index]
-    const stakingPoolRes = stakingPoolsRes[index]
-    const lpTokenRes = lpTokensRes[index]
+  const pools: Contract[] = mapMultiSuccessFilter(
+    stakingPoolsRes.map((_, i) => [stakingPoolsRes[i], lpTokensRes[i]]),
 
-    if (!poolsAddressRes.success || !stakingPoolRes.success || !lpTokenRes.success) {
-      continue
-    }
+    (res) => {
+      const [{ output: gauge }, token] = res.inputOutputPairs
 
-    pools.push({
-      chain: ctx.chain,
-      address: lpTokenRes.output,
-      pool: poolsAddressRes.output,
-      lpToken: lpTokenRes.output,
-      gauge: stakingPoolRes.output,
-    })
-  }
+      return {
+        chain: ctx.chain,
+        address: token.input.target,
+        gauge: gauge,
+        token: token.output,
+      }
+    },
+  )
 
-  const fmtPools = await getPairsDetails(ctx, pools)
-  mergeContracts(pools, fmtPools)
-
-  return pools.map((pool) => ({ ...pool, address: pool.pool }))
+  return getPairsDetails(ctx, pools, { getAddress: (contract) => contract.token! })
 }
 
 export async function getYearnFarmBalances(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
-  const balances: IYearnBalances[] = []
-
   const [userBalancesRes, userRewardsRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
@@ -135,35 +126,33 @@ export async function getYearnFarmBalances(ctx: BalancesContext, farmers: Contra
     }),
     multicall({
       ctx,
-      calls: farmers.map((farmer) => ({ target: farmer.pool }) as const),
+      calls: farmers.map((farmer) => ({ target: farmer.address }) as const),
       abi: abi.pricePerShare,
     }),
   ])
 
-  for (const [index, farmer] of farmers.entries()) {
-    const userBalanceRes = userBalancesRes[index]
-    const userRewardRes = userRewardsRes[index]
-    const exchangeRateRes = exchangeRatesRes[index]
+  const pairBalances: PoolBalances[] = mapMultiSuccessFilter(
+    userBalancesRes.map((_, i) => [userBalancesRes[i], userRewardsRes[i], exchangeRatesRes[i]]),
 
-    if (!userBalanceRes.success || !userRewardRes.success || !exchangeRateRes.success) {
-      continue
-    }
+    (res, index) => {
+      const farmer = farmers[index]
+      const [{ output: userBalance }, { output: userReward }, { output: pricePerFullShareRes }] = res.inputOutputPairs
 
-    balances.push({
-      ...farmer,
-      address: farmer.lpToken,
-      lpToken: farmer.lpToken,
-      amount: userBalanceRes.output,
-      underlyings: farmer.underlyings as Contract[],
-      exchangeRate: exchangeRateRes.output,
-      rewards: [{ ...OP, amount: userRewardRes.output }],
-      category: 'farm',
-    })
-  }
+      const pricePerFullShare = parseFloatBI(pricePerFullShareRes!, farmer.decimals!)
+      if (userBalance === 0n) return null
 
-  const fmtBalances = await getUnderlyingBalances(ctx, balances)
-  mergeContracts(balances, fmtBalances)
-  adjustUnderlyingAmounts(balances)
+      return {
+        ...farmer,
+        amount: userBalance,
+        underlyings: farmer.underlyings as Contract[],
+        pricePerFullShare,
+        rewards: [{ ...OP, amount: userReward }],
+        category: 'farm' as Category,
+      }
+    },
+  ).filter(isNotNullish)
 
-  return balances
+  return AdjustUnderlyingsAmount(
+    await getUnderlyingBalances(ctx, pairBalances, { getAddress: (contract) => contract.token! }),
+  )
 }
