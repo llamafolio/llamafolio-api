@@ -1,8 +1,7 @@
-import { getUnderlyingsPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { call } from '@lib/call'
+import { mapSuccessFilter } from '@lib/array'
+import { getCurveUnderlyingsBalances } from '@lib/curve/helper'
 import { abi as erc20Abi } from '@lib/erc20'
-import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -16,67 +15,32 @@ const abi = {
 } as const
 
 export async function getStakerBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
-  const balances: Balance[] = []
-
-  const calls: Call<typeof erc20Abi.balanceOf>[] = []
-  for (const staker of stakers) {
-    calls.push({ target: staker.address, params: [ctx.address] })
-  }
-  const balanceOfsRes = await multicall({ ctx, calls, abi: erc20Abi.balanceOf })
-
-  const balanceOfAssetsRes = await multicall({
+  const userBalancesOfs = await multicall({
     ctx,
-    calls: stakers.map((staker, idx) => {
-      const balanceOfRes = balanceOfsRes[idx]
-      return {
-        target: staker.address,
-        params: [balanceOfRes.success ? balanceOfRes.output : 0n],
-      } as const
-    }),
+    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] }) as const),
+    abi: erc20Abi.balanceOf,
+  })
+
+  const fmtUserBalancesOfs = await multicall({
+    ctx,
+    calls: mapSuccessFilter(userBalancesOfs, (res) => ({ target: res.input.target, params: [res.output] }) as const),
     abi: abi.convertToAssets,
   })
 
-  for (let idx = 0; idx < stakers.length; idx++) {
-    const staker = stakers[idx]
-    const underlying = staker.underlyings?.[0] as Contract
-    const balanceOfAssetRes = balanceOfAssetsRes[idx]
+  return mapSuccessFilter(fmtUserBalancesOfs, (res, index) => {
+    const underlying = (stakers[index].underlyings?.[0] as Contract) ?? undefined
 
-    if (!balanceOfAssetRes.success) {
-      continue
-    }
-
-    balances.push({
-      ...staker,
-      amount: balanceOfAssetRes.input.params[0],
-      underlyings: [{ ...underlying, amount: balanceOfAssetRes.output }],
+    return {
+      ...stakers[index],
+      amount: res.input.params[0],
+      underlyings: [{ ...underlying, amount: res.output }],
       rewards: undefined,
       category: 'stake',
-    })
-  }
-
-  return balances
+    }
+  })
 }
 
 export async function getPoolStakingBalances(ctx: BalancesContext, contract: Contract): Promise<Balance[]> {
-  const balanceOfsRes = await call({ ctx, target: contract.address, params: [ctx.address], abi: erc20Abi.balanceOf })
-
-  const balanceOfAssetsRes = await call({
-    ctx,
-    target: contract.address,
-    params: [balanceOfsRes],
-    abi: abi.convertToAssets,
-  })
-
-  const balance: Balance = {
-    ...contract,
-    amount: balanceOfAssetsRes,
-    underlyings: contract.underlyings as Contract[],
-    rewards: undefined,
-    category: 'stake',
-  }
-
-  return (await getUnderlyingsPoolsBalances(ctx, [balance], undefined, true)).map((res) => ({
-    ...res,
-    category: 'stake',
-  }))
+  const poolBalances = await getStakerBalances(ctx, [contract])
+  return getCurveUnderlyingsBalances(ctx, poolBalances)
 }

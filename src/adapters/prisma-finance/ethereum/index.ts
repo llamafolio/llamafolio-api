@@ -1,4 +1,3 @@
-import { getPoolsContracts } from '@adapters/curve-dex/ethereum/pools'
 import {
   getPrismaFarmBalance,
   getPrismaFarmBalancesFromConvex,
@@ -6,8 +5,7 @@ import {
   getPrismaLendBalances,
 } from '@adapters/prisma-finance/ethereum/balance'
 import { getPrismaLockerBalance } from '@adapters/prisma-finance/ethereum/locker'
-import { getConvexPools, getCurvePools } from '@adapters/prisma-finance/ethereum/pool'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const farmer: Contract = {
@@ -60,25 +58,25 @@ const farmersFromCurve: Contract[] = [
   {
     chain: 'ethereum',
     address: '0x5f8d4319c27a940b5783b4495cca6626e880532e',
-    lpToken: '0x0CFe5C777A7438C9Dd8Add53ed671cEc7A5FAeE5',
+    token: '0x0CFe5C777A7438C9Dd8Add53ed671cEc7A5FAeE5',
     rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
   },
   {
     chain: 'ethereum',
     address: '0x6d3cd0dd2c05fa4eb8d1159159bef445593a93fc',
-    lpToken: '0x65f228ED6a6001eD6485535e0Dc33E525734f54c',
+    token: '0x65f228ED6a6001eD6485535e0Dc33E525734f54c',
     rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
   },
   {
     chain: 'ethereum',
     address: '0x71ad6c1d92546065b13bf701a7524c69b409e25c',
-    lpToken: '0x3de254A0f838a844F727fee81040e0FA7884B935',
+    token: '0x3de254A0f838a844F727fee81040e0FA7884B935',
     rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
   },
   {
     chain: 'ethereum',
     address: '0xb5376ab455194328fe41450a587f11bcda2363fa',
-    lpToken: '0xb34e1a3D07f9D180Bc2FDb9Fd90B8994423e33c1',
+    token: '0xb34e1a3D07f9D180Bc2FDb9Fd90B8994423e33c1',
     rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c', '0xD533a949740bb3306d119CC777fa900bA034cd52'],
   },
 ]
@@ -106,23 +104,9 @@ const vaults: Contract[] = [
   },
 ]
 
-const metaRegistry: Contract = {
-  name: 'Curve Metaregistry',
-  chain: 'ethereum',
-  address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
-}
-
-export const getContracts = async (ctx: BaseContext) => {
-  const curvePools = await getPoolsContracts(ctx, metaRegistry)
-
-  const [convexPools, crvPrismaPools] = await Promise.all([
-    getConvexPools(ctx, farmersFromConvex, curvePools),
-    getCurvePools(ctx, farmersFromCurve, curvePools),
-  ])
-
+export const getContracts = () => {
   return {
-    contracts: { vaults, farmer, convexPools, crvPrismaPools, locker },
-    revalidate: 60 * 60,
+    contracts: { vaults, farmer, farmersFromConvex, farmersFromCurve, locker },
   }
 }
 
@@ -132,8 +116,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     resolveBalances<typeof getContracts>(ctx, contracts, {
       farmer: getPrismaFarmBalance,
       locker: getPrismaLockerBalance,
-      crvPrismaPools: (...args) => getPrismaFarmBalancesFromCurve(...args, metaRegistry),
-      convexPools: (...args) => getPrismaFarmBalancesFromConvex(...args, metaRegistry),
+      farmersFromCurve: getPrismaFarmBalancesFromCurve,
+      farmersFromConvex: getPrismaFarmBalancesFromConvex,
     }),
   ])
 

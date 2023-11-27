@@ -1,4 +1,3 @@
-import { getPoolsContracts } from '@adapters/curve-dex/ethereum/pools'
 import { getYearnBalances, getYearnStakeBalance } from '@adapters/yearn-finance/common/balance'
 import { getYearnVaults } from '@adapters/yearn-finance/common/vault'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -32,15 +31,8 @@ const locker: Contract = {
   symbol: 'veYFI',
 }
 
-const metaRegistry: Contract = {
-  name: 'Curve Metaregistry',
-  chain: 'ethereum',
-  address: '0xF98B45FA17DE75FB1aD0e7aFD971b0ca00e379fC',
-}
-
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getPoolsContracts(ctx, metaRegistry)
-  const vaults = await getYearnVaults(ctx, pools)
+  const vaults = await getYearnVaults(ctx)
 
   return {
     contracts: { vaults, locker, yETH, styETH },
@@ -50,8 +42,8 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    vaults: (...args) => getYearnBalances(...args, metaRegistry),
     locker: (...args) => getSingleLockerBalance(...args, YFI, 'locked'),
+    vaults: getYearnBalances,
     yETH: getSingleStakeBalance,
     styETH: getYearnStakeBalance,
   })

@@ -1,5 +1,3 @@
-import { getPoolsContracts } from '@adapters/curve-dex/common/pool'
-import { getRegistries } from '@adapters/curve-dex/common/registries'
 import { getYearnBalances } from '@adapters/yearn-finance/common/balance'
 import { getYearnOptimisticVault } from '@adapters/yearn-finance/common/vault'
 import { getOptimisticYearnFarmContracts, getYearnFarmBalances } from '@adapters/yearn-finance/optimism/farm'
@@ -18,11 +16,8 @@ const registryFarmer: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const registries = await getRegistries(ctx, ['stableSwap', 'stableFactory', 'cryptoSwap'])
-  const pools = await getPoolsContracts(ctx, registries)
-
   const [vaults, farmers] = await Promise.all([
-    getYearnOptimisticVault(ctx, registryAdapter, pools),
+    getYearnOptimisticVault(ctx, registryAdapter),
     getOptimisticYearnFarmContracts(ctx, registryFarmer),
   ])
 

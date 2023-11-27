@@ -1,10 +1,13 @@
-import { getPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance, RewardBalance } from '@lib/adapter'
-import { mapSuccessFilter } from '@lib/array'
+import { mapMultiSuccessFilter, mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
+import type { Category } from '@lib/category'
+import { getCurveUnderlyingsBalances } from '@lib/curve/helper'
+import { abi as erc20Abi } from '@lib/erc20'
 import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   Troves: {
@@ -154,68 +157,80 @@ export async function getPrismaFarmBalance(ctx: BalancesContext, farmer: Contrac
   }
 }
 
-export async function getPrismaFarmBalancesFromConvex(
-  ctx: BalancesContext,
-  farmers: Contract[],
-  registry: Contract,
-): Promise<Balance[] | undefined> {
-  const poolBalances = await getPoolsBalances(ctx, farmers, registry)
+export async function getPrismaFarmBalancesFromConvex(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
+  const [userBalanceOf, userPendingRewardsRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: erc20Abi.balanceOf,
+    }),
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: abi.cvxClaimableReward,
+    }),
+  ])
 
-  if (!poolBalances) return
+  const poolBalances: Balance[] = mapMultiSuccessFilter(
+    userBalanceOf.map((_, i) => [userBalanceOf[i], userPendingRewardsRes[i]]),
 
-  const userPendingsRewardsRes = await multicall({
-    ctx,
-    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
-    abi: abi.cvxClaimableReward,
-  })
+    (res, index) => {
+      const pool = farmers[index] as Balance
+      let rewards = pool.rewards
+      const [{ output: userBalance }, { output: pendingRewards }] = res.inputOutputPairs
 
-  return mapSuccessFilter(userPendingsRewardsRes, (res, poolIdx) => {
-    const poolBalance = poolBalances[poolIdx]
-    if (!poolBalance) return null
+      if (rewards) {
+        rewards = rewards.map((reward, idx) => ({ ...reward, amount: pendingRewards[idx] }))
+      }
 
-    let rewards = poolBalance.rewards
+      return {
+        ...pool,
+        amount: userBalance,
+        underlyings: undefined,
+        rewards,
+        category: 'farm' as Category,
+      }
+    },
+  ).filter(isNotNullish)
 
-    if (rewards) {
-      rewards = rewards.map((reward, idx) => ({ ...reward, amount: res.output[idx] }))
-    }
-
-    return {
-      ...poolBalance,
-      rewards,
-      category: 'farm',
-    }
-  })
+  return getCurveUnderlyingsBalances(ctx, poolBalances)
 }
 
-export async function getPrismaFarmBalancesFromCurve(
-  ctx: BalancesContext,
-  farmers: Contract[],
-  registry: Contract,
-): Promise<Balance[] | undefined> {
-  const poolBalances = await getPoolsBalances(ctx, farmers, registry)
+export async function getPrismaFarmBalancesFromCurve(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
+  const [userBalanceOf, userPendingRewardsRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: erc20Abi.balanceOf,
+    }),
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: abi.crvclaimableReward,
+    }),
+  ])
 
-  if (!poolBalances) return
+  const poolBalances: Balance[] = mapMultiSuccessFilter(
+    userBalanceOf.map((_, i) => [userBalanceOf[i], userPendingRewardsRes[i]]),
 
-  const userPendingsRewardsRes = await multicall({
-    ctx,
-    calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
-    abi: abi.crvclaimableReward,
-  })
+    (res, index) => {
+      const pool = farmers[index] as Balance
+      let rewards = pool.rewards
+      const [{ output: userBalance }, { output: pendingRewards }] = res.inputOutputPairs
 
-  return mapSuccessFilter(userPendingsRewardsRes, (res, poolIdx) => {
-    const poolBalance = poolBalances[poolIdx]
-    if (!poolBalance) return null
+      if (rewards) {
+        rewards = rewards.map((reward, idx) => ({ ...reward, amount: pendingRewards[idx] }))
+      }
 
-    let rewards = poolBalance.rewards
+      return {
+        ...pool,
+        amount: userBalance,
+        underlyings: undefined,
+        rewards,
+        category: 'farm' as Category,
+      }
+    },
+  ).filter(isNotNullish)
 
-    if (rewards) {
-      rewards = rewards.map((reward, idx) => ({ ...reward, amount: res.output[idx] }))
-    }
-
-    return {
-      ...poolBalance,
-      rewards,
-      category: 'farm',
-    }
-  })
+  return getCurveUnderlyingsBalances(ctx, poolBalances)
 }

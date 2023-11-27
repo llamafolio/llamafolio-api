@@ -1,15 +1,15 @@
-import { getUnderlyingsPoolsBalances } from '@adapters/curve-dex/common/balance'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
+import type { Category } from '@lib/category'
+import { getCurveUnderlyingsBalances } from '@lib/curve/helper'
 import { abi as erc20Abi } from '@lib/erc20'
+import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
-
-type IYearnBalances = Balance & {
-  exchangeRate: bigint
-  lpToken: `0x${string}`
-}
+import { parseEther } from 'viem'
 
 const abi = {
   pricePerShare: {
@@ -36,13 +36,11 @@ const WETH: Token = {
   symbol: 'WETH',
 }
 
-export async function getYearnBalances(
-  ctx: BalancesContext,
-  vaults: Contract[],
-  registry?: Contract,
-): Promise<Balance[]> {
-  const balances: IYearnBalances[] = []
+type PoolBalances = Balance & {
+  pricePerFullShare: number
+}
 
+export async function getYearnBalances(ctx: BalancesContext, vaults: Contract[]): Promise<Balance[]> {
   const [userBalancesRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
@@ -56,63 +54,59 @@ export async function getYearnBalances(
     }),
   ])
 
-  for (const [index, vault] of vaults.entries()) {
-    const underlyings = vault.underlyings as Contract[]
-    const userBalanceRes = userBalancesRes[index]
+  const poolBalances: PoolBalances[] = mapSuccessFilter(userBalancesRes, (res, index) => {
+    const vault = vaults[index] as Balance
     const exchangeRate = exchangeRatesRes[index].success ? exchangeRatesRes[index].output : 1n
+    const pricePerFullShare = parseFloatBI(exchangeRate!, vault.decimals!)
 
-    if (!underlyings || !userBalanceRes.success || userBalanceRes.output === 0n || !exchangeRate) continue
+    if (res.output === 0n) return null
 
-    balances.push({
-      ...vaults[index],
-      lpToken: vaults[index].lpToken,
-      amount: userBalanceRes.output,
-      underlyings,
-      exchangeRate,
+    return {
+      ...vault,
+      amount: res.output,
+      token: vault.token,
+      pricePerFullShare,
       rewards: undefined,
-      category: 'farm',
-    })
-  }
-
-  const fmtCurveBalances = (await getUnderlyingsPoolsBalances(ctx, balances, registry)) as IYearnBalances[]
-
-  let balancesToUse = fmtCurveBalances
-
-  if (ctx.chain === 'optimism' || ctx.chain === 'base') {
-    const fmtSwapBalances = (await getUnderlyingBalances(
-      ctx,
-      fmtCurveBalances.map((balance) => ({ ...balance, address: balance.lpToken })),
-    )) as IYearnBalances[]
-    balancesToUse = fmtSwapBalances
-  }
-
-  adjustUnderlyingAmounts(balancesToUse)
-  mergeBalances(balances, balancesToUse)
-
-  return balances
-}
-
-function mergeBalances(balances: IYearnBalances[], fmtBalances: IYearnBalances[]) {
-  for (let i = 0; i < fmtBalances.length; i++) {
-    const contractIndex = balances.findIndex((c) => c.lpToken.toLowerCase() === fmtBalances[i].lpToken.toLowerCase())
-    if (contractIndex !== -1) {
-      balances[contractIndex] = Object.assign({}, balances[contractIndex], fmtBalances[i])
+      category: 'farm' as Category,
     }
-  }
+  }).filter(isNotNullish)
+
+  return getUnderlyingsBalances(ctx, poolBalances)
 }
 
-export function adjustUnderlyingAmounts(balances: IYearnBalances[]) {
-  for (const balance of balances) {
-    if (!balance.underlyings) continue
+async function getUnderlyingsBalances(ctx: BalancesContext, pools: PoolBalances[]): Promise<PoolBalances[]> {
+  const pairBalances = await getUnderlyingBalances(ctx, pools, { getAddress: (c) => c.token! })
+  return AdjustUnderlyingsAmount(await getCurveUnderlyingsBalances(ctx, pairBalances))
+}
 
-    balance.category = 'farm'
-    balance.underlyings = balance.underlyings.map((underlying: any) => {
+function calculateAdjustedAmount(originalAmount: bigint, pricePerFullShare: number, scaleFactor: number) {
+  if (typeof originalAmount !== 'undefined') {
+    return BigInt(Number(originalAmount) * pricePerFullShare * scaleFactor) / parseEther('1.0')
+  }
+  return originalAmount
+}
+
+export function AdjustUnderlyingsAmount(pools: PoolBalances[]): PoolBalances[] {
+  const scaleFactor = 10 ** 18
+
+  return pools.map((pool) => {
+    if (!pool.underlyings || pool.underlyings.length === 0) {
+      return pool
+    }
+
+    const adjustedUnderlyings = pool.underlyings.map((underlying: Contract) => {
+      const amountToAdjust = underlying.amount || pool.amount
       return {
         ...underlying,
-        amount: ((underlying.amount || balance.amount) * balance.exchangeRate) / 10n ** BigInt(balance.decimals!),
+        amount: calculateAdjustedAmount(amountToAdjust, pool.pricePerFullShare, scaleFactor),
       }
     })
-  }
+
+    return {
+      ...pool,
+      underlyings: adjustedUnderlyings,
+    }
+  })
 }
 
 export async function getYearnStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
@@ -121,8 +115,8 @@ export async function getYearnStakeBalance(ctx: BalancesContext, staker: Contrac
 
   return {
     ...staker,
-    amount: fmtUserBalances,
-    underlyings: [WETH],
+    amount: userBalances,
+    underlyings: [{ ...WETH, amount: fmtUserBalances, decimals: staker.decimals }],
     rewards: undefined,
     category: 'stake',
   }
