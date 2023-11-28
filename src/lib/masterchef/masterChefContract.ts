@@ -31,7 +31,7 @@ interface GetPoolsContractsProps {
   registry?: Contract
   getAllPoolLength?: (ctx: BaseContext, masterchefAddress: `0x${string}`) => Promise<any>
   getPoolInfos?: (ctx: BaseContext, params: GetPoolsInfosParams) => Promise<any>
-  getLpToken?: (params: GetLpTokenParams) => Promise<any>
+  getLpToken?: (params: GetLpTokenParams) => any
   getUnderlyings?: (ctx: BaseContext, params: GetUnderlyingsParams) => Promise<any>
 }
 
