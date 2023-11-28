@@ -53,6 +53,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { thalesStaking, lPStakings, veThales, thalesAMM_v2, marketsAddresses },
+    revalidate: 60 * 60,
   }
 }
 

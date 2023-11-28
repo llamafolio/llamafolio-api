@@ -34,6 +34,7 @@ const marketsAddresses: Contract[] = [
 export const getContracts = () => {
   return {
     contracts: { thalesStaking, veThales, thalesAMM_v2, marketsAddresses },
+    revalidate: 60 * 60,
   }
 }
 
