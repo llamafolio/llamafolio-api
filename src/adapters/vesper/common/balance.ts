@@ -73,8 +73,6 @@ export async function getVesperStakeBalances(ctx: BalancesContext, pools: Contra
 }
 
 export async function getvVSPStakeBalance(ctx: BalancesContext, pool: Contract): Promise<Balance> {
-  const balances: Balance[] = []
-
   const [userBalance, exchangeRate] = await Promise.all([
     call({ ctx, target: pool.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: pool.address, abi: abi.getPricePerShare }),

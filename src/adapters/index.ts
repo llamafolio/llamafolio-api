@@ -149,6 +149,7 @@ import meanFinance from '@adapters/mean-finance'
 import meritCircle from '@adapters/merit-circle'
 import mesher from '@adapters/mesher'
 import metronome from '@adapters/metronome'
+import mevProtocol from '@adapters/mev-protocol'
 import moonwell from '@adapters/moonwell'
 import morpheusSwap from '@adapters/morpheus-swap'
 import morphex from '@adapters/morphex'
@@ -447,6 +448,7 @@ export const adapters: Adapter[] = [
   meritCircle,
   mesher,
   metronome,
+  mevProtocol,
   moonwell,
   morpheusSwap,
   morphex,
