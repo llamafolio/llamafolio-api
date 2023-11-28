@@ -26,6 +26,7 @@ const farmersFromConvex: Contract[] = [
     chain: 'ethereum',
     address: '0x0ae09f649e9da1b6aea0c10527ac4e8a88a37480',
     pid: 225,
+    token: '0x0CFe5C777A7438C9Dd8Add53ed671cEc7A5FAeE5',
     rewards: [
       '0xda47862a83dac0c112ba89c6abc2159b95afd71c',
       '0xD533a949740bb3306d119CC777fa900bA034cd52',
@@ -35,6 +36,7 @@ const farmersFromConvex: Contract[] = [
   {
     chain: 'ethereum',
     address: '0xf6aa46869220ae703924d5331d88a21dcef3b19d',
+    token: '0x3de254A0f838a844F727fee81040e0FA7884B935',
     pid: 226,
     rewards: [
       '0xda47862a83dac0c112ba89c6abc2159b95afd71c',
@@ -45,6 +47,7 @@ const farmersFromConvex: Contract[] = [
   {
     chain: 'ethereum',
     address: '0x3d56e0ea536a78976503618d663921c97a3cba3c',
+    token: '0x65f228ED6a6001eD6485535e0Dc33E525734f54c',
     pid: 234,
     rewards: [
       '0xda47862a83dac0c112ba89c6abc2159b95afd71c',
