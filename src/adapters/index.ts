@@ -43,6 +43,7 @@ import benqiStakedAvax from '@adapters/benqi-staked-avax'
 import bifrostLiquidStaking from '@adapters/bifrost-liquid-staking'
 import binanceStakedEth from '@adapters/binance-staked-eth'
 import biswap from '@adapters/biswap'
+import blast from '@adapters/blast'
 import blur from '@adapters/blur'
 import capFinance from '@adapters/cap-finance'
 import catInABox from '@adapters/cat-in-a-box'
@@ -345,6 +346,7 @@ export const adapters: Adapter[] = [
   bifrostLiquidStaking,
   binanceStakedEth,
   biswap,
+  blast,
   blur,
   capFinance,
   catInABox,
