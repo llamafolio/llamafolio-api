@@ -1,5 +1,4 @@
-import type { BalancesContext, Contract } from '@lib/adapter'
-import type { Balance } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
@@ -95,14 +94,14 @@ export const getStakeV2Balances = async (ctx: BalancesContext, stakingContract: 
   const [stakeBalanceOfRes, rewardsBalanceOfRes] = await Promise.all([
     call({
       ctx,
-      target: stakingContract.address,
+      target: stakingContract.staker,
       params: [ctx.address],
       abi: erc20Abi.balanceOf,
     }),
 
     call({
       ctx,
-      target: stakingContract.address,
+      target: stakingContract.staker,
       params: [ctx.address],
       abi: abi.earned,
     }),
