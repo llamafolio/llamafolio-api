@@ -25,9 +25,10 @@ const stakingV1: Contract = {
 }
 
 const stakingV2: Contract = {
-  name: 'StakingRewards',
   chain: 'ethereum',
-  address: '0x0000000000017b2a2a6a336079Abc67f6f48aB9A',
+  address: '0xe7bac7d798d66d353b9e50ebfc6859950fe13ce4',
+  token: '0xf4d2888d29D722226FafA5d9B24F9164c092421E',
+  staker: '0x0000000000017b2a2a6a336079Abc67f6f48aB9A',
   rewards: [WETH],
 }
 
