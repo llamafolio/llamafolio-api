@@ -1,7 +1,6 @@
 import { groupBy } from '@lib/array'
 import { fmtBalanceBreakdown, resolveHealthFactor, sanitizeBalances } from '@lib/balance'
-import { millify, millifyBI } from '@lib/fmt'
-import { sum } from '@lib/math'
+import { parseFloatBI, sum } from '@lib/math'
 import { getPricedBalances } from '@lib/price'
 
 import type { Balance, BalancesConfig, PricedBalance } from '@/lib/adapter'
@@ -47,37 +46,32 @@ export function printBalances(balances: PricedBalance[]) {
   categoriesBalances.sort((a, b) => b.totalUSD - a.totalUSD)
 
   for (const categoryBalances of categoriesBalances) {
-    console.log(
-      `Category: ${categoryBalances.title}, totalUSD: ${millify(categoryBalances.totalUSD)} (${
-        categoryBalances.totalUSD
-      })`,
-    )
+    console.log(`Category: ${categoryBalances.title}, totalUSD: ${categoryBalances.totalUSD.toLocaleString()}`)
 
     const data: any[] = []
 
     for (const balance of categoryBalances.balances) {
       try {
-        const decimals = balance.decimals ? 10n ** BigInt(balance.decimals) : 1n
+        const decimals = Number(balance.decimals || 18n)
 
         const d: { [key: string]: any } = {
-          chain: balance.chain,
           address: balance.address,
           category: balance.category,
           symbol: balance.symbol,
-          balance: millifyBI(balance.amount / decimals),
-          balanceUSD: `$${millify(balance.balanceUSD !== undefined ? balance.balanceUSD : 0)}`,
+          balance: parseFloatBI(balance.amount, decimals).toLocaleString(),
+          balanceUSD: `$${balance.balanceUSD !== undefined ? balance.balanceUSD.toLocaleString() : 0}`,
           stable: Boolean(balance.stable || balance.underlyings?.every((underlying) => underlying.stable)),
         }
 
         if (balance.claimable) {
-          d.claimable = balance.claimable ? millifyBI(balance.claimable / decimals) : undefined
+          d.claimable = balance.claimable ? parseFloatBI(balance.claimable, decimals).toLocaleString() : undefined
         }
 
         if (balance.rewards) {
           d.reward = balance.rewards
             .map((reward) => {
-              const decimals = reward.decimals ? 10n ** BigInt(reward.decimals) : 1n
-              return `${millifyBI(reward.amount / decimals)} ${reward.symbol}`
+              const decimals = Number(reward.decimals || 1n)
+              return `${parseFloatBI(reward.amount, decimals).toLocaleString()} ${reward.symbol}`
             })
             .join(' + ')
         }
@@ -85,17 +79,17 @@ export function printBalances(balances: PricedBalance[]) {
         if (balance.underlyings) {
           d.underlying = balance.underlyings
             .map((underlying) => {
-              const decimals = underlying.decimals ? 10n ** BigInt(underlying.decimals) : 1n
-              return `${millify(Number(underlying.amount / decimals))} ${underlying.symbol}`
+              const decimals = Number(underlying.decimals || 1n)
+              return `${parseFloatBI(underlying.amount, decimals).toLocaleString()} ${underlying.symbol}`
             })
             .join(' + ')
         }
 
         if (balance.category === 'perpetual') {
-          d.margin = balance.margin ? millifyBI(balance.margin / decimals) : undefined
-          d.entryPrice = balance.entryPrice ? millifyBI(balance.entryPrice / decimals) : undefined
-          d.marketPrice = balance.marketPrice ? millifyBI(balance.marketPrice / decimals) : undefined
-          d.leverage = balance.leverage ? millifyBI(balance.leverage / decimals) : undefined
+          d.margin = balance.margin ? parseFloatBI(balance.margin, decimals).toLocaleString() : undefinedA
+          d.entryPrice = balance.entryPrice ? parseFloatBI(balance.entryPrice, decimals).toLocaleString() : undefined
+          d.marketPrice = balance.marketPrice ? parseFloatBI(balance.marketPrice, decimals).toLocaleString() : undefined
+          d.leverage = balance.leverage ? parseFloatBI(balance.leverage, decimals).toLocaleString() : undefined
         }
 
         data.push(d)
@@ -138,11 +132,11 @@ export async function printBalancesConfig(balancesConfig: BalancesConfig) {
     console.log(`\nGroup ${groupIdx}:`)
     console.table([
       {
-        'net worth': millify(netWorth),
-        balance: millify(balance),
-        reward: millify(reward),
-        debt: millify(debt),
-        'health factor': healthFactor,
+        'net worth': `$${netWorth.toLocaleString()}`,
+        balance: `$${balance.toLocaleString()}`,
+        reward: `$${reward.toLocaleString()}`,
+        debt: `$${debt.toLocaleString()}`,
+        'health factor': healthFactor?.toLocaleString(),
       },
     ])
     printBalances(balances)
