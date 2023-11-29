@@ -38,9 +38,9 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
-  rewards: {
-    inputs: [{ internalType: 'address', name: '', type: 'address' }],
-    name: 'rewards',
+  earned: {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'earned',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
@@ -104,7 +104,7 @@ export const getStakeV2Balances = async (ctx: BalancesContext, stakingContract: 
       ctx,
       target: stakingContract.address,
       params: [ctx.address],
-      abi: abi.rewards,
+      abi: abi.earned,
     }),
   ])
 
