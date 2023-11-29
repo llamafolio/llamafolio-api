@@ -183,6 +183,7 @@ import paraswap from '@adapters/paraswap'
 import pearlfi from '@adapters/pearlfi'
 import pendle from '@adapters/pendle'
 import perennial from '@adapters/perennial'
+import perpetualProtocol from '@adapters/perpetual-protocol'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
 import platypusFinance from '@adapters/platypus-finance'
@@ -483,6 +484,7 @@ export const adapters: Adapter[] = [
   pearlfi,
   pendle,
   perennial,
+  perpetualProtocol,
   piedao,
   pikaProtocol,
   platypusFinance,
