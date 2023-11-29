@@ -304,20 +304,22 @@ export async function getWalletInteractions(client: ClickHouseClient, address: s
 }
 
 export async function getContract(client: ClickHouseClient, chainId: number, address: string) {
-  // TODO: use explorers API
+  // TODO: use explorers API to lookup missing contracts (might have been created in Traces)
   const queryRes = await client.query({
     query: `
       SELECT
         "chain",
-        "hash",
-        "timestamp",
-        "from",
+        "creator",
+        "transaction_hash",
+        "name",
+        "abi",
+        "verified",
         "block_number",
-        "contract_created"
-      FROM evm_indexer.transactions
+        "timestamp"
+      FROM ${environment.NS_LF}.contracts
       WHERE
         "chain" = {chainId: UInt64} AND
-        "contract_created" = {address: String};
+        "address" = {address: String};
     `,
     query_params: {
       address: address.toLowerCase(),
@@ -326,19 +328,33 @@ export async function getContract(client: ClickHouseClient, chainId: number, add
   })
 
   const res = (await queryRes.json()) as {
-    data: { chain: string; hash: string; timestamp: string; from: string; block_number: string }[]
+    data: {
+      chain: string
+      creator: string
+      transaction_hash: string
+      name: string
+      abi: string | null
+      verified: boolean | null
+      block_number: string
+      timestamp: string
+    }[]
   }
 
   if (res.data.length === 0) {
     return null
   }
 
+  const row = res.data[0]
+
   return {
-    block: parseInt(res.data[0].block_number),
-    chain: chainByChainId[parseInt(res.data[0].chain)]?.id,
+    block: parseInt(row.block_number),
+    chain: chainByChainId[parseInt(row.chain)]?.id,
     contract: address,
-    creator: res.data[0].from,
-    hash: res.data[0].hash,
+    creator: row.creator,
+    hash: row.transaction_hash,
+    verified: row.verified,
+    abi: row.abi ? JSON.parse(row.abi) : null,
+    name: row.name,
   }
 }
 

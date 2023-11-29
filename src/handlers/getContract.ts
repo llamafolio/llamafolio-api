@@ -11,7 +11,7 @@ export interface IContract {
   contract: string
   creator: string
   hash: string
-  verified?: boolean
+  verified?: boolean | null
   abi?: any
   name?: string
 }
