@@ -1,9 +1,10 @@
-import type { BalancesContext, Contract } from '@lib/adapter'
-import type { Balance } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
+import { abi as erc20Abi } from '@lib/erc20'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
 
 const abi = {
+  // V1
   calculateSharesValueInLOOKS: {
     inputs: [{ internalType: 'address', name: 'user', type: 'address' }],
     name: 'calculateSharesValueInLOOKS',
@@ -28,6 +29,21 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  // V2
+  maxWithdraw: {
+    inputs: [{ internalType: 'address', name: 'owner', type: 'address' }],
+    name: 'maxWithdraw',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  earned: {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'earned',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 const LOOKS: Contract = {
@@ -46,7 +62,7 @@ const WETH: Contract = {
   symbol: 'WETH',
 }
 
-export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Contract): Promise<Balance> => {
+export const getStakeV1Balances = async (ctx: BalancesContext, stakingContract: Contract): Promise<Balance> => {
   const [stakeBalanceOfRes, rewardsBalanceOfRes] = await Promise.all([
     call({
       ctx,
@@ -74,12 +90,59 @@ export const getStakeBalances = async (ctx: BalancesContext, stakingContract: Co
   }
 }
 
-export const getCompounderBalances = async (ctx: BalancesContext, compounder: Contract): Promise<Balance> => {
+export const getStakeV2Balances = async (ctx: BalancesContext, stakingContract: Contract): Promise<Balance> => {
+  const [stakeBalanceOfRes, rewardsBalanceOfRes] = await Promise.all([
+    call({
+      ctx,
+      target: stakingContract.staker,
+      params: [ctx.address],
+      abi: erc20Abi.balanceOf,
+    }),
+
+    call({
+      ctx,
+      target: stakingContract.staker,
+      params: [ctx.address],
+      abi: abi.earned,
+    }),
+  ])
+
+  return {
+    chain: ctx.chain,
+    address: LOOKS.address,
+    decimals: LOOKS.decimals,
+    symbol: LOOKS.symbol,
+    amount: stakeBalanceOfRes,
+    rewards: [{ ...WETH, amount: rewardsBalanceOfRes }],
+    category: 'stake',
+  }
+}
+
+export const getCompounderV1Balances = async (ctx: BalancesContext, compounder: Contract): Promise<Balance> => {
   const sharesValue = await call({
     ctx,
     target: compounder.address,
     params: [ctx.address],
     abi: abi.calculateSharesValueInLOOKS,
+  })
+
+  return {
+    chain: ctx.chain,
+    address: LOOKS.address,
+    decimals: LOOKS.decimals,
+    symbol: LOOKS.symbol,
+    amount: sharesValue,
+    yieldKey: compounder.address,
+    category: 'farm',
+  }
+}
+
+export const getCompounderV2Balances = async (ctx: BalancesContext, compounder: Contract): Promise<Balance> => {
+  const sharesValue = await call({
+    ctx,
+    target: compounder.address,
+    params: [ctx.address],
+    abi: abi.maxWithdraw,
   })
 
   return {
