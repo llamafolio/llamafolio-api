@@ -1,7 +1,13 @@
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getCompounderBalances, getFarmBalances, getStakeBalances } from './balances'
+import {
+  getCompounderV1Balances,
+  getCompounderV2Balances,
+  getFarmBalances,
+  getStakeV1Balances,
+  getStakeV2Balances,
+} from './balances'
 
 const WETH: Contract = {
   name: 'Wrapped Ether',
@@ -11,17 +17,30 @@ const WETH: Contract = {
   symbol: 'WETH',
 }
 
-const staking: Contract = {
+const stakingV1: Contract = {
   name: 'FeeSharingSystem',
   chain: 'ethereum',
   address: '0xbcd7254a1d759efa08ec7c3291b2e85c5dcc12ce',
   rewards: [WETH],
 }
 
-const compounder: Contract = {
+const stakingV2: Contract = {
+  name: 'StakingRewards',
+  chain: 'ethereum',
+  address: '0x0000000000017b2a2a6a336079Abc67f6f48aB9A',
+  rewards: [WETH],
+}
+
+const compounderV1: Contract = {
   name: 'AggregatorFeeSharingWithUniswapV3',
   chain: 'ethereum',
   address: '0x3ab16af1315dc6c95f83cbf522fecf98d00fd9ba',
+}
+
+const compounderV2: Contract = {
+  name: 'AutoCompounder',
+  chain: 'ethereum',
+  address: '0x000000000077Ee1fCFE351dF1Ff22736e995806B',
 }
 
 const farmer: Contract = {
@@ -33,14 +52,17 @@ const farmer: Contract = {
 
 export const getContracts = () => {
   return {
-    contracts: { staking, compounder, farmer },
+    contracts: { stakingV1, stakingV2, compounderV1, compounderV2, farmer },
+    revalidate: 60 * 60,
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    staking: getStakeBalances,
-    compounder: getCompounderBalances,
+    stakingV1: getStakeV1Balances,
+    stakingV2: getStakeV2Balances,
+    compounderV1: getCompounderV1Balances,
+    compounderV2: getCompounderV2Balances,
     farmer: getFarmBalances,
   })
 
