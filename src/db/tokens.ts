@@ -57,7 +57,6 @@ export async function selectToken(client: ClickHouseClient, chainId: number, add
       FROM evm_indexer2.tokens
       WHERE
         "chain" = {chainId: UInt64} AND
-        "address_short" = {addressShort: String} AND
         "address" = {address: String};
     `,
     query_params: {
@@ -79,13 +78,12 @@ export async function selectUndecodedChainAddresses(client: ClickHouseClient, li
     query: `
       SELECT
         "chain",
-        "address_short",
         "address"
       FROM evm_indexer2.token_transfers
       WHERE ("chain", "address_short", "address") NOT IN (
-        SELECT "chain", "address_short", "address" FROM evm_indexer2.tokens
+        SELECT "chain", "address" FROM evm_indexer2.tokens
       )
-      GROUP BY "chain", "address_short", "address"
+      GROUP BY "chain", "address"
       LIMIT {limit: UInt32}
       OFFSET {offset: UInt32};
     `,
