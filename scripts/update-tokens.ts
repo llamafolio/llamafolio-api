@@ -1,25 +1,38 @@
 import '../environment'
 
-import type { Chain } from '@lib/chains'
-import { chainByChainId, chainsNames } from '@lib/chains'
-import type { Address } from 'viem'
+import { client } from '@db/clickhouse'
+import { insertERC20Tokens, selectUndecodedChainAddresses } from '@db/tokens'
+import type { BaseContext } from '@lib/adapter'
+import { chainByChainId, getChainId } from '@lib/chains'
+import { getTokenDetails } from '@lib/erc20'
 
-import { client } from '../src/db/clickhouse'
-import type { Token } from '../src/db/tokens'
-import { insertERC20Tokens, selectUndecodedChainAddresses } from '../src/db/tokens'
-import { getERC20Details } from '../src/lib/erc20'
+const types = ['erc20', 'erc721', 'erc1155'] as const
 
 function help() {
-  console.log('pnpm run update-tokens')
+  console.log('pnpm run update-tokens {chain} {?type}')
 }
 
 async function main() {
   // argv[0]: node_modules/.bin/tsx
   // argv[1]: update-tokens.ts
-  if (process.argv.length < 2) {
+  // argv[2]: chain
+  // argv[3]: type
+  if (process.argv.length < 3) {
     console.error('Missing arguments')
     return help()
   }
+
+  const chainId = getChainId(process.argv[2])
+  if (chainId == null) {
+    return console.error(`Invalid chain ${process.argv[2]}`)
+  }
+
+  const type = (process.argv[3] as 'erc20' | 'erc721' | 'erc1155') || 'erc20'
+  if (!types.includes(type)) {
+    return console.error(`Invalid type ${process.argv[3]}`)
+  }
+
+  const ctx: BaseContext = { chain: chainByChainId[chainId].id, adapterId: '' }
 
   try {
     const limit = 100
@@ -27,56 +40,24 @@ async function main() {
 
     for (;;) {
       console.log('Offset', offset)
-      const chainsAddresses = await selectUndecodedChainAddresses(client, limit, offset)
-      if (chainsAddresses.length === 0) {
+      const rows = await selectUndecodedChainAddresses(client, chainId, type, limit, offset)
+      if (rows.length === 0) {
         console.log(`Insert tokens done`)
         return
       }
 
-      const tokensByChain = {} as { [chain in Chain]: Address[] }
+      const addresses = rows.map((row) => row.address as `0x${string}`)
 
-      for (const item of chainsAddresses) {
-        const { chain: chainId, address } = item
-        const chain = chainByChainId[chainId]?.id
-        if (!chain || !chainsNames.includes(chain)) {
-          console.error(`Unknown chain ${chain}`)
-          continue
-        }
-        if (!tokensByChain[chain]) {
-          tokensByChain[chain] = []
-        }
-        tokensByChain[chain].push(address)
-      }
+      const tokens = await getTokenDetails(ctx, addresses)
 
-      const chains = Object.keys(tokensByChain) as Chain[]
+      // remove tokens without metadata
+      const _tokens = tokens.filter((token) => token.decimals != null || token.name != null || token.symbol != null)
 
-      const chainsTokens = await Promise.all(
-        chains.map((chain) => getERC20Details({ chain, adapterId: '' }, tokensByChain[chain])),
-      )
+      console.log(_tokens)
 
-      const tokens: Token[] = []
+      await insertERC20Tokens(client, _tokens)
 
-      for (let chainIdx = 0; chainIdx < chains.length; chainIdx++) {
-        const chain = chains[chainIdx]
-
-        for (const token of chainsTokens[chainIdx]) {
-          tokens.push({
-            address: token.address,
-            chain,
-            name: token.name,
-            symbol: token.symbol.replaceAll('\x00', ''),
-            decimals: token.decimals,
-            coingeckoId: token.coingeckoId || undefined,
-            cmcId: undefined,
-          })
-        }
-      }
-
-      console.log(tokens)
-
-      await insertERC20Tokens(client, tokens)
-
-      console.log(`Inserted ${tokens.length} tokens`)
+      console.log(`Inserted ${_tokens.length} tokens, found ${tokens.length - _tokens.length} without metadata`)
 
       offset += limit
     }

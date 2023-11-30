@@ -27,9 +27,9 @@ export function timeout<T>(promise: Promise<T>, ms = 10_000, timeoutError = new 
 }
 
 // https://jasonformat.com/javascript-sleep/
-export function sleep(milliseconds: number): void {
+export function sleep(milliseconds: number) {
   if (typeof Atomics === 'undefined') {
-    new Promise((resolve) => setTimeout(resolve, milliseconds))
+    return new Promise((resolve) => setTimeout(resolve, milliseconds))
   }
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, milliseconds)
 }
