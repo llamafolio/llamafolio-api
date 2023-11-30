@@ -11,7 +11,7 @@ export interface BalancesContext extends BaseContext {
   address: `0x${string}`
 }
 
-export type ContractStandard = 'erc20' | 'erc721'
+export type ContractStandard = 'erc20' | 'erc721' | 'erc1155'
 
 export interface BaseContract {
   // discriminators

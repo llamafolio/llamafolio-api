@@ -31,7 +31,7 @@ export function toTokenStorage(tokens: Token[]) {
       chain: chainId,
       type,
       name,
-      symbol: symbol.replaceAll('\x00', ''),
+      symbol: (symbol || '').replaceAll('\x00', ''),
       decimals,
       coingecko_id,
       cmc_id,
@@ -73,28 +73,37 @@ export async function selectToken(client: ClickHouseClient, chainId: number, add
   return res.data[0]
 }
 
-export async function selectUndecodedChainAddresses(client: ClickHouseClient, limit?: number, offset?: number) {
+export async function selectUndecodedChainAddresses(
+  client: ClickHouseClient,
+  chainId: number,
+  type: 'erc20' | 'erc721' | 'erc1155' = 'erc20',
+  limit = 100,
+  offset = 0,
+) {
   const queryRes = await client.query({
     query: `
       SELECT
-        "chain",
-        "address"
-      FROM evm_indexer2.token_transfers
-      WHERE ("chain", "address_short", "address") NOT IN (
-        SELECT "chain", "address" FROM evm_indexer2.tokens
-      )
-      GROUP BY "chain", "address"
+        distinct("address")
+      FROM evm_indexer2.tokens_balances_mv
+      WHERE
+        "type" = {type: String} AND
+        "chain" = {chainId: UInt64} AND
+        ({chainId: UInt64}, "address") NOT IN (
+          SELECT "chain", "address" FROM evm_indexer2.tokens
+        )
       LIMIT {limit: UInt32}
       OFFSET {offset: UInt32};
     `,
     query_params: {
-      limit: limit || 100,
-      offset: offset || 0,
+      type,
+      chainId,
+      limit,
+      offset,
     },
   })
 
   const res = (await queryRes.json()) as {
-    data: { chain: number; address: `0x${string}` }[]
+    data: { address: `0x${string}` }[]
   }
 
   return res.data
