@@ -48,15 +48,19 @@ export async function selectHistory(
           "status",
           "value",
           "timestamp",
-          arrayMap(x -> (
-            JSONExtractString(x, 'from_address'),
-            JSONExtractString(x, 'to_address'),
-            JSONExtractString(x, 'address'),
-            JSONExtractUInt(x, 'log_index'),
-            JSONExtractInt(x, 'type'),
-            JSONExtractUInt(x, 'value'),
-            JSONExtractUInt(x, 'id')
-          ), "token_transfers") AS "token_transfers"
+          arrayFilter(x ->
+            -- only keep transfers IN and OUT of address
+            (tupleElement(x, 1) IN {addresses: Array(String)}) OR (tupleElement(x, 2) IN {addresses: Array(String)}),
+            arrayMap(x -> (
+              JSONExtractString(x, 'from_address'),
+              JSONExtractString(x, 'to_address'),
+              JSONExtractString(x, 'address'),
+              JSONExtractUInt(x, 'log_index'),
+              JSONExtractInt(x, 'type'),
+              JSONExtractUInt(x, 'value'),
+              JSONExtractUInt(x, 'id')
+            ), "token_transfers")
+         ) AS "token_transfers"
         FROM evm_indexer2.transactions_from_mv
         WHERE
           "from_short" IN {addressesShort: Array(String)} AND
@@ -65,7 +69,6 @@ export async function selectHistory(
           "timestamp" >= {fromTimestamp: DateTime}
           ${chainIds.length > 0 ? 'AND "chain" IN {chainIds: Array(UInt64)}' : ''}
         ORDER BY "from_short", "from_address", "timestamp" DESC
-        SETTINGS optimize_read_in_order = 1
       ),
       "sub_transactions_to" AS (
         SELECT
@@ -89,7 +92,6 @@ export async function selectHistory(
           "timestamp" >= {fromTimestamp: DateTime} AND
           "value" > 0
         ORDER BY "to_short", "to_address", "timestamp" DESC
-        SETTINGS optimize_read_in_order = 1
       ),
       "sub_token_transfers_to" AS (
         SELECT
@@ -119,12 +121,11 @@ export async function selectHistory(
                 SELECT "chain", "hash" FROM "sub_transactions_from"
             )
           ORDER BY "to_short", "to_address", "timestamp" DESC
-          SETTINGS optimize_read_in_order = 1
         )
         GROUP BY "chain", "transaction_hash", "timestamp"
       ),
       "sub_methods" AS (
-        SELECT "selector", "name" FROM lf.methods2
+        SELECT "selector", "name" FROM lf.methods
         WHERE
           "selector" IN (
             SELECT "selector" FROM "sub_transactions_from"

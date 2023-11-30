@@ -128,19 +128,14 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
         success: tx.status === 1,
         adapterId: tx.adapter_ids?.[0],
         value: tx.value,
-        tokenTransfers: tx.token_transfers
-          .map(([fromAddress, toAddress, tokenAddress, _log_index, _type, value, _id]) => ({
+        tokenTransfers: tx.token_transfers.map(
+          ([fromAddress, toAddress, tokenAddress, _log_index, _type, value, _id]) => ({
             tokenAddress,
             fromAddress,
             toAddress,
             value,
-          }))
-          // sanity filters
-          // TODO: move this check to the DB query to save some network time
-          .filter(
-            (tokenTransfer) =>
-              addresses.includes(tokenTransfer.toAddress) || addresses.includes(tokenTransfer.fromAddress),
-          ),
+          }),
+        ),
       })
     }
 
