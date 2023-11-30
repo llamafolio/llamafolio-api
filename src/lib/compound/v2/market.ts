@@ -69,12 +69,12 @@ interface GetMarketsContractsProps {
   getCollateralFactor?: (params: GetCollateralFactorParams) => Promise<any>
 }
 
-interface GetInfosParams {
+export interface GetInfosParams {
   comptroller: `0x${string}`
   markets: readonly `0x${string}`[]
 }
 
-interface GetCollateralFactorParams {
+export interface GetCollateralFactorParams {
   market: `0x${string}`
   marketInfo: any
 }

@@ -125,6 +125,7 @@ import kineFinance from '@adapters/kine-finance'
 import kinzaFinance from '@adapters/kinza-finance'
 import klimaDao from '@adapters/klima-dao'
 import kwenta from '@adapters/kwenta'
+import layerbank from '@adapters/layerbank'
 import leonicornswap from '@adapters/leonicornswap'
 import levinswap from '@adapters/levinswap'
 import lido from '@adapters/lido'
@@ -148,6 +149,7 @@ import mantisswap from '@adapters/mantisswap'
 import maple from '@adapters/maple'
 import mdex from '@adapters/mdex'
 import meanFinance from '@adapters/mean-finance'
+import mendiFinance from '@adapters/mendi-finance'
 import meritCircle from '@adapters/merit-circle'
 import mesher from '@adapters/mesher'
 import metronome from '@adapters/metronome'
@@ -428,6 +430,7 @@ export const adapters: Adapter[] = [
   kinzaFinance,
   klimaDao,
   kwenta,
+  layerbank,
   leonicornswap,
   levinswap,
   lido,
@@ -451,6 +454,7 @@ export const adapters: Adapter[] = [
   maple,
   mdex,
   meanFinance,
+  mendiFinance,
   meritCircle,
   mesher,
   metronome,
