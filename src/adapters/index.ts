@@ -231,6 +231,7 @@ import solidlyV2 from '@adapters/solidly-v2'
 import solvProtocol from '@adapters/solv-protocol'
 import sommelier from '@adapters/sommelier'
 import sonneFinance from '@adapters/sonne-finance'
+import soswap from '@adapters/soswap'
 import spark from '@adapters/spark'
 import spartacus from '@adapters/spartacus'
 import sphereFinance from '@adapters/sphere-finance'
@@ -537,6 +538,7 @@ export const adapters: Adapter[] = [
   solvProtocol,
   sommelier,
   sonneFinance,
+  soswap,
   spark,
   spartacus,
   sphereFinance,
