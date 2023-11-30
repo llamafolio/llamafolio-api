@@ -59,7 +59,9 @@ export function printBalances(balances: PricedBalance[]) {
           category: balance.category,
           symbol: balance.symbol,
           balance: parseFloatBI(balance.amount, decimals).toLocaleString(),
-          balanceUSD: `$${balance.balanceUSD !== undefined ? balance.balanceUSD.toLocaleString() : 0}`,
+          balanceUSD: `${
+            balance.balanceUSD !== undefined ? `$${balance.balanceUSD.toLocaleString()}` : 'Missing price'
+          }`,
           stable: Boolean(balance.stable || balance.underlyings?.every((underlying) => underlying.stable)),
         }
 
