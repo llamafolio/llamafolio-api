@@ -190,11 +190,11 @@ export function toStorage(balances: Balance[]) {
           category,
           group_idx: groupIdx,
           amount,
-          price: price || 0,
-          balance_usd: balanceUSD || 0,
-          reward_usd: rewardUSD || 0,
-          debt_usd: debtUSD || 0,
-          health_factor: healthFactor || 0,
+          price,
+          balance_usd: balanceUSD,
+          reward_usd: rewardUSD,
+          debt_usd: debtUSD,
+          health_factor: healthFactor,
         })
       })
 
@@ -379,10 +379,10 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
         return {
           ...balance,
           from_address: row.from_address,
-          balanceUSD: parseFloat(balance.balance_usd),
-          debtUSD: parseFloat(balance.debt_usd),
-          rewardUSD: parseFloat(balance.reward_usd),
-          healthFactor: parseFloat(balance.health_factor),
+          balanceUSD: balance.balance_usd != null ? parseFloat(balance.balance_usd) : undefined,
+          debtUSD: balance.debt_usd != null ? parseFloat(balance.debt_usd) : undefined,
+          rewardUSD: balance.reward_usd != null ? parseFloat(balance.reward_usd) : undefined,
+          healthFactor: balance.health_factor != null ? parseFloat(balance.health_factor) : undefined,
           apy: row.apy != null ? parseFloat(row.apy) : undefined,
           apyBase: row.apy_base != null ? parseFloat(row.apy_base) : undefined,
           apyReward: row.apy_reward != null ? parseFloat(row.apy_reward) : undefined,
@@ -418,7 +418,7 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
             stable: tokens[0].stable,
             price: tokens[0].price,
             amount: sumBI(tokens.map((balance) => BigInt(balance.amount || 0))).toString(),
-            balanceUSD: sum(tokens.map((balance) => balance.balanceUSD || 0)),
+            balanceUSD: tokens[0].price != null ? sum(tokens.map((balance) => balance.balanceUSD || 0)) : undefined,
           })
         }
 

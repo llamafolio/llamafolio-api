@@ -209,14 +209,20 @@ export async function resolveBalances<C extends GetContractsHandler>(
   return balances.flat(2).filter(isNotNullish)
 }
 
+/**
+ * NOTE: consider unpriced balance as valid
+ */
 function isPricedBalanceInRange(balance: PricedBalance, key: 'balanceUSD' | 'claimableUSD' = 'balanceUSD') {
   const value = balance[key]
-  return value != null && value >= MIN_BALANCE_USD && value <= MAX_BALANCE_USD
+  return value == null || (value >= MIN_BALANCE_USD && value <= MAX_BALANCE_USD)
 }
 
+/**
+ * NOTE: consider unpriced balance as valid
+ */
 function isPricedBalanceLtMax(balance: PricedBalance, key: 'balanceUSD' | 'claimableUSD' = 'balanceUSD') {
   const value = balance[key]
-  return value != null && value <= MAX_BALANCE_USD
+  return value == null || value <= MAX_BALANCE_USD
 }
 
 export function sanitizePricedBalances<T extends PricedBalance>(balances: T[]) {
