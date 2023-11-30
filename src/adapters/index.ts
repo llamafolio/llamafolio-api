@@ -33,6 +33,7 @@ import babylonFinance from '@adapters/babylon-finance'
 import badgerDao from '@adapters/badger-dao'
 import balancer from '@adapters/balancer'
 import bancorV3 from '@adapters/bancor-v3'
+import basedmarkets from '@adapters/basedmarkets'
 import baseswap from '@adapters/baseswap'
 import beefy from '@adapters/beefy'
 import bellaProtocol from '@adapters/bella-protocol'
@@ -338,6 +339,7 @@ export const adapters: Adapter[] = [
   badgerDao,
   balancer,
   bancorV3,
+  basedmarkets,
   baseswap,
   beefy,
   bellaProtocol,
