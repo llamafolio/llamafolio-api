@@ -29,13 +29,6 @@ const abi = {
   },
 } as const
 
-const FORT: Contract = {
-  chain: 'base',
-  address: '0x7233062d88133b5402d39d62bfa23a1b6c8d0898',
-  decimals: 18,
-  symbol: 'FORT',
-}
-
 export async function getFortLockerBalances(ctx: BalancesContext, locker: Contract): Promise<Balance[]> {
   const userLockLength = await call({
     ctx,
@@ -52,17 +45,15 @@ export async function getFortLockerBalances(ctx: BalancesContext, locker: Contra
 
   return mapSuccessFilter(userLockedInfos, (res) => {
     const [amount, _, unlockTime, __, rewardAmount] = res.output
-
-    const now = Date.now() / 1000
     const unlockAt = Number(unlockTime)
 
     return {
       ...locker,
       amount,
       unlockAt,
-      claimable: now > unlockAt ? amount : 0n,
+      claimable: rewardAmount,
       underlyings: undefined,
-      rewards: [{ ...FORT, amount: rewardAmount }],
+      rewards: undefined,
       category: 'lock',
     }
   })
