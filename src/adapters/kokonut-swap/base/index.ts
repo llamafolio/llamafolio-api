@@ -1,8 +1,15 @@
 import { getKokonutBalances, getKokonutPools } from '@adapters/kokonut-swap/base/pool'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getSingleStakeBalance } from '@lib/stake'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
+
+const sKOKOS: Contract = {
+  chain: 'base',
+  address: '0xf6805d485c44b99ca6aa1182ccca908616bd4bda',
+  token: '0x7901fcdbbf3a6fc7b9e79ebe2b78909216cd3a39',
+}
 
 const factory: Contract = {
   chain: 'base',
@@ -24,7 +31,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   ])
 
   return {
-    contracts: { pairs, pools },
+    contracts: { pairs, pools, sKOKOS },
     revalidate: 60 * 60,
     revalidateProps: {
       pairOffset: Math.min(offset + limit, allPairsLength),
@@ -34,6 +41,7 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    sKOKOS: getSingleStakeBalance,
     pairs: getPairsBalances,
     pools: (...args) => getKokonutBalances(...args, factory),
   })
