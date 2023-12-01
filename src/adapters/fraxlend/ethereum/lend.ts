@@ -81,6 +81,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
 
     (res, index) => {
       const pair = pairs[index]
+      const underlying = pair.underlyings![0] as Contract
 
       const [{ output: balances }, { output: LTV }, { output: borrowInfos }, { output: assetInfos }] =
         res.inputOutputPairs
@@ -101,6 +102,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
       const asset: Balance = {
         ...FRAX,
         amount: BigInt(userAsset) / parseEther('1.0'),
+        decimals: underlying.decimals,
         underlyings: undefined,
         rewards: undefined,
         collateralFactor: LTV != null ? LTV * 10n ** 13n : undefined,
@@ -110,6 +112,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
       const collateral: Balance = {
         ...pair,
         amount: userCollateralBalance,
+        decimals: underlying.decimals,
         underlyings: pair.underlyings as Contract[],
         rewards: undefined,
         collateralFactor: LTV != null ? LTV * 10n ** 13n : undefined,
@@ -124,7 +127,7 @@ export const getLendBorrowBalances = async (ctx: BalancesContext, pairs: Contrac
         category: 'borrow',
       }
 
-      return [asset, collateral, borrow]
+      return { balances: [asset, collateral, borrow] }
     },
   ).filter(isNotNullish)
 }
