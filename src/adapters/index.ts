@@ -215,6 +215,7 @@ import retro from '@adapters/retro'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import rook from '@adapters/rook'
+import rubicon from '@adapters/rubicon'
 import scream from '@adapters/scream'
 import sdai from '@adapters/sdai'
 import seamlessProtocol from '@adapters/seamless-protocol'
@@ -524,6 +525,7 @@ export const adapters: Adapter[] = [
   ribbonFinance,
   rocketPool,
   rook,
+  rubicon,
   scream,
   sdai,
   seamlessProtocol,
