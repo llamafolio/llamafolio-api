@@ -54,6 +54,7 @@ import chainlink from '@adapters/chainlink'
 import channelsFinance from '@adapters/channels-finance'
 import charmFinance from '@adapters/charm-finance'
 import citadelswap from '@adapters/citadelswap'
+import clearpool from '@adapters/clearpool'
 import coinbaseWrappedStakedEth from '@adapters/coinbase-wrapped-staked-eth'
 import coinwind from '@adapters/coinwind'
 import colony from '@adapters/colony'
@@ -364,6 +365,7 @@ export const adapters: Adapter[] = [
   channelsFinance,
   charmFinance,
   citadelswap,
+  clearpool,
   coinbaseWrappedStakedEth,
   coinwind,
   colony,
