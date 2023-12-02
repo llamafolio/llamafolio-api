@@ -536,7 +536,7 @@ export async function selectTokenHoldersBalances(
   return res.data || []
 }
 
-export type Window = 'D' | 'W' | 'M'
+export type Window = 'D' | 'W' | 'M' | 'Y'
 
 /**
  * Get historical token balance
@@ -556,6 +556,7 @@ export async function selectTokenBalanceChart(
     D: 24,
     W: 24 * 7,
     M: 24 * 30,
+    Y: 24 * 365,
   }
 
   const limit = hours[window] || 24

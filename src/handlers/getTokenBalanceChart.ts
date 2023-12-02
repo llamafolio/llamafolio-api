@@ -11,13 +11,10 @@ import { sumBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
-const WINDOWS: Window[] = ['D', 'W', 'M']
+const WINDOWS: Window[] = ['D', 'W', 'M', 'Y']
 
 interface TokenBalanceChartResponse {
-  /**
-   * [timestamp, amount]
-   */
-  data: [number, string][]
+  data: { timestamp: number; amount: string; inflow: string }[]
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
@@ -59,10 +56,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     let value = sumBI(mapSuccessFilter(balancesRes, (res) => res.output))
 
     // running sum
-    const data: [number, string][] = [[now, value.toString()]]
+    const data: { timestamp: number; amount: string; inflow: string }[] = [
+      { timestamp: now, amount: value.toString(), inflow: '0' },
+    ]
     for (let i = chartData.length - 1; i >= 0; i--) {
       value += BigInt(chartData[i][1])
-      data.push([chartData[i][0], value.toString()])
+      data.push({ timestamp: chartData[i][0], amount: value.toString(), inflow: chartData[i][1] })
     }
 
     const response: TokenBalanceChartResponse = { data: data.reverse() }
