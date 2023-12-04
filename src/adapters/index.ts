@@ -36,6 +36,7 @@ import bancorV3 from '@adapters/bancor-v3'
 import basedmarkets from '@adapters/basedmarkets'
 import baseswap from '@adapters/baseswap'
 import beefy from '@adapters/beefy'
+import beethovenX from '@adapters/beethoven-x'
 import bellaProtocol from '@adapters/bella-protocol'
 import beltFinance from '@adapters/belt-finance'
 import benddao from '@adapters/benddao'
@@ -347,6 +348,7 @@ export const adapters: Adapter[] = [
   basedmarkets,
   baseswap,
   beefy,
+  beethovenX,
   bellaProtocol,
   beltFinance,
   benddao,
