@@ -1,22 +1,20 @@
 import { getBalancerBalances } from '@adapters/balancer/common/balance'
+import { getBalancerPools } from '@adapters/balancer/common/pool'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getBalancerPools } from '../common/pool'
+const url = 'https://api.thegraph.com/subgraphs/name/beethovenxfi/beethovenx-optimism'
 
 const vault: Contract = {
-  chain: 'polygon',
-  address: '0xBA12222222228d8Ba445958a75a0704d566BF2C8',
+  chain: 'optimism',
+  address: '0xba12222222228d8ba445958a75a0704d566bf2c8',
 }
-
-const url = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-polygon-v2'
 
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getBalancerPools(ctx, url)
 
   return {
-    contracts: { pools, vault },
-    revalidate: 60 * 60,
+    contracts: { pools },
   }
 }
 
