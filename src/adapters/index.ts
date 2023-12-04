@@ -138,6 +138,7 @@ import lifeDao from '@adapters/life-dao'
 import linearFinance from '@adapters/linear-finance'
 import liqee from '@adapters/liqee'
 import liquidCollective from '@adapters/liquid-collective'
+import liquidDriver from '@adapters/liquid-driver'
 import liquity from '@adapters/liquity'
 import llamaAirforce from '@adapters/llama-airforce'
 import llamapay from '@adapters/llamapay'
@@ -450,6 +451,7 @@ export const adapters: Adapter[] = [
   linearFinance,
   liqee,
   liquidCollective,
+  liquidDriver,
   liquity,
   llamaAirforce,
   llamapay,
