@@ -1,5 +1,7 @@
-import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract, LockBalance } from '@lib/adapter'
+import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
+import { multicall } from '@lib/multicall'
 
 const abi = {
   earned: {
@@ -23,6 +25,27 @@ const abi = {
     inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
     name: 'getUnlockable',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getUserRedeemsLength: {
+    inputs: [{ internalType: 'address', name: 'userAddress', type: 'address' }],
+    name: 'getUserRedeemsLength',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  userRedeems: {
+    inputs: [
+      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'uint256', name: '', type: 'uint256' },
+    ],
+    name: 'userRedeems',
+    outputs: [
+      { internalType: 'uint256', name: 'eqbAmount', type: 'uint256' },
+      { internalType: 'uint256', name: 'xEqbAmount', type: 'uint256' },
+      { internalType: 'uint256', name: 'endTime', type: 'uint256' },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
@@ -54,4 +77,35 @@ export async function getEqLockerBalance(ctx: BalancesContext, locker: Contract)
     rewards: [{ ...(locker.rewards?.[0] as Contract), amount: pendingReward }],
     category: 'lock',
   }
+}
+
+export async function getxEqbLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance[]> {
+  const userRedeemsLength = await call({
+    ctx,
+    target: locker.address,
+    params: [ctx.address],
+    abi: abi.getUserRedeemsLength,
+  })
+
+  const userRedeem = await multicall({
+    ctx,
+    calls: rangeBI(0n, userRedeemsLength).map((i) => ({ target: locker.address, params: [ctx.address, i] }) as const),
+    abi: abi.userRedeems,
+  })
+
+  return mapSuccessFilter(userRedeem, (res) => {
+    const [eqbAmount, xEqbAmount, endTime] = res.output
+    const unlockAt = Number(endTime)
+    const now = Date.now() / 1000
+
+    return {
+      ...locker,
+      amount: xEqbAmount,
+      unlockAt,
+      claimable: now > unlockAt ? xEqbAmount : 0n,
+      underlyings: [{ ...(locker.underlyings?.[0] as Contract), amount: eqbAmount }],
+      rewards: undefined,
+      category: 'lock',
+    }
+  })
 }

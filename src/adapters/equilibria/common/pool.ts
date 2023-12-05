@@ -2,8 +2,8 @@ import { getPendlePools } from '@adapters/pendle/common/pool'
 import type { BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter, rangeBI } from '@lib/array'
 import {
-  type GetLpTokenParams,
   getMasterChefPoolsContracts,
+  type GetLpTokenParams,
   type GetPoolsInfosParams,
 } from '@lib/masterchef/masterChefContract'
 import { multicall } from '@lib/multicall'
@@ -66,7 +66,7 @@ export function getEqLpToken({ lpToken }: GetLpTokenParams) {
 async function getEqRewardsBalances(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
   const rewardsTokens = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: pool.address }) as const),
+    calls: pools.map((pool) => ({ target: pool.pool }) as const),
     abi: abi.getRewardTokens,
   })
 
