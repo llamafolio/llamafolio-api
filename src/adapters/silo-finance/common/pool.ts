@@ -1,6 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
-import { getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -107,27 +106,16 @@ export async function getSiloPools(ctx: BaseContext, vaults: `0x${string}`[]): P
     })
   }).flat(2)
 
-  return getSiloUnderlyings(ctx, pools)
-}
-
-const getSiloUnderlyings = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
   const assetsRes = await multicall({
     ctx,
     calls: pools.map((pool) => ({ target: pool.address })),
     abi: abi.asset,
   })
 
-  const assets = await getERC20Details(
-    ctx,
-    mapSuccessFilter(assetsRes, (res) => res.output),
-  )
-
-  return pools.map((pool, idx) => ({
+  return mapSuccessFilter(assetsRes, (res, index) => ({
     chain: ctx.chain,
-    address: pool.address,
-    decimals: assets[idx].decimals,
-    symbol: `XAI-${assets[idx].symbol}`,
-    underlyings: [assets[idx]],
-    category: pool.category,
+    address: res.output,
+    silo: pools[index].vault,
+    category: pools[index].category,
   }))
 }
