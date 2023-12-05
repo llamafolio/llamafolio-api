@@ -9,7 +9,7 @@ import { getStargateLPBalances } from '../common/lp'
 
 const STG: Token = {
   chain: 'polygon',
-  address: '0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6',
+  address: '0x2f6f07cdcf3588944bf4c42ac74ff24bf56e7590',
   decimals: 18,
   symbol: 'STG',
 }
