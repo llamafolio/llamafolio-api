@@ -39,8 +39,6 @@ export async function getEqPoolsContracts(ctx: BaseContext, masterChef: Contract
 
   const fmtPools = await getEqRewardsBalances(ctx, pools)
 
-  console.log(fmtPools)
-
   return getPendleUnderlyings(ctx, fmtPools)
 }
 
