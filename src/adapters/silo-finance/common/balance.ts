@@ -1,93 +1,99 @@
-import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter } from '@lib/array'
-import type { Category } from '@lib/category'
-import { abi as erc20Abi } from '@lib/erc20'
+import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance } from '@lib/adapter'
+import { groupBy, mapMultiSuccessFilter } from '@lib/array'
+import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import type { Token } from '@lib/token'
 
 const abi = {
-  getRewardsBalance: {
+  collateralBalanceOfUnderlying: {
     inputs: [
-      {
-        internalType: 'address[]',
-        name: 'assets',
-        type: 'address[]',
-      },
-      {
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
+      { internalType: 'contract ISilo', name: '_silo', type: 'address' },
+      { internalType: 'address', name: '_asset', type: 'address' },
+      { internalType: 'address', name: '_user', type: 'address' },
     ],
-    name: 'getRewardsBalance',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
+    name: 'collateralBalanceOfUnderlying',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  debtBalanceOfUnderlying: {
+    inputs: [
+      { internalType: 'contract ISilo', name: '_silo', type: 'address' },
+      { internalType: 'address', name: '_asset', type: 'address' },
+      { internalType: 'address', name: '_user', type: 'address' },
     ],
+    name: 'debtBalanceOfUnderlying',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getUserLTV: {
+    inputs: [
+      { internalType: 'contract ISilo', name: '_silo', type: 'address' },
+      { internalType: 'address', name: '_user', type: 'address' },
+    ],
+    name: 'getUserMaximumLTV',
+    outputs: [{ internalType: 'uint256', name: 'maximumLTV', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
 } as const
 
-const Silo: { [key: string]: Token } = {
-  arbitrum: {
-    chain: 'arbitrum',
-    address: '0x0341c0c0ec423328621788d4854119b97f44e391',
-    decimals: 18,
-    symbol: 'Silo',
-  },
-  ethereum: {
-    chain: 'ethereum',
-    address: '0x6f80310CA7F2C654691D1383149Fa1A57d8AB1f8',
-    decimals: 18,
-    symbol: 'Silo',
-  },
+type SiloBalance = Balance & {
+  silo?: `0x${string}`
 }
 
-export async function getSiloBalances(
-  ctx: BalancesContext,
-  routers: Contract[],
-  incentive: Contract,
-): Promise<Balance[]> {
-  //Avoid duplicates since pools are stored in router objects
-  const pools = Array.from(new Set(routers.flatMap((router) => router.pools)))
+export async function getSiloBalances(ctx: BalancesContext, routers: Contract[], lens: Contract) {
+  const pools = routers
+    .flatMap((router) => router.underlyings as Contract[])
+    .filter((pool, index, self) => self.findIndex((p) => p.address === pool.address && p.silo === pool.silo) === index)
 
-  const userBalances = await multicall({
-    ctx,
-    calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
-    abi: erc20Abi.balanceOf,
-  })
+  const [userCollateral, userDebt, userLtv] = await Promise.all([
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: lens.address, params: [pool.silo, pool.address, ctx.address] }) as const),
+      abi: abi.collateralBalanceOfUnderlying,
+    }),
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: lens.address, params: [pool.silo, pool.address, ctx.address] }) as const),
+      abi: abi.debtBalanceOfUnderlying,
+    }),
+    multicall({
+      ctx,
+      calls: pools.map((pool) => ({ target: lens.address, params: [pool.silo, ctx.address] }) as const),
+      abi: abi.getUserLTV,
+    }),
+  ])
 
-  const userSuppliesBalances = mapSuccessFilter(userBalances, (res, idx) => ({
-    ...pools[idx],
-    amount: res.output,
-    underlyings: pools[idx].underlyings as Contract[],
-    rewards: undefined,
-    category: pools[idx].category as Category,
-  }))
+  const poolBalances: SiloBalance[][] = mapMultiSuccessFilter(
+    userCollateral.map((_, i) => [userCollateral[i], userDebt[i], userLtv[i]]),
 
-  return getSiloRewards(ctx, userSuppliesBalances, incentive)
-}
+    (res, index) => {
+      const pool = pools[index]
 
-const getSiloRewards = async (ctx: BalancesContext, pools: Balance[], incentive: Contract): Promise<Balance[]> => {
-  const nonEmptyPools = pools.filter((pool) => pool.amount > 0n)
+      const [{ output: collateral }, { output: debt }, { output: ltv }] = res.inputOutputPairs
+      const MCR = 1 / parseFloatBI(ltv, 18)
 
-  const userRewardsBalancesRes = await multicall({
-    ctx,
-    calls: nonEmptyPools.map((pool) => ({ target: incentive.address, params: [[pool.address], ctx.address] }) as const),
-    abi: abi.getRewardsBalance,
-  })
+      const lendBalance: LendBalance = {
+        ...pool,
+        amount: collateral,
+        underlyings: undefined,
+        rewards: undefined,
+        MCR,
+        category: 'lend',
+      }
 
-  const userRewards: Balance[] = mapSuccessFilter(userRewardsBalancesRes, (res) => ({
-    ...Silo[ctx.chain],
-    amount: res.output,
-    underlyings: undefined,
-    rewards: undefined,
-    category: 'reward',
-  }))
+      const borrowBalance: BorrowBalance = {
+        ...pool,
+        amount: debt,
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'borrow',
+      }
 
-  return [...nonEmptyPools, ...userRewards]
+      return [lendBalance, borrowBalance]
+    },
+  )
+
+  return Object.values(groupBy(poolBalances.flat(), 'silo')).map((balance) => ({ balances: balance }))
 }
