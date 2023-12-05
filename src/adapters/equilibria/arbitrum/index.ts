@@ -1,5 +1,5 @@
 import { getEqPoolBalances, getSingleEqBalance } from '@adapters/equilibria/common/balance'
-import { getEqLockerBalance } from '@adapters/equilibria/common/lock'
+import { getEqLockerBalance, getxEqbLockerBalances } from '@adapters/equilibria/common/lock'
 import { getEqPoolsContracts } from '@adapters/equilibria/common/pool'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -23,6 +23,12 @@ const locker: Contract = {
   rewards: ['0xd4848211B699503C772aA1Bc7D33b433C4242Ac3'],
 }
 
+const xEQB: Contract = {
+  chain: 'arbitrum',
+  address: '0x96c4a48abdf781e9c931cfa92ec0167ba219ad8e',
+  underlyings: ['0xbfbcfe8873fe28dfa25f1099282b088d52bbad9c'],
+}
+
 const masterChef: Contract = {
   chain: 'arbitrum',
   address: '0x4d32c8ff2facc771ec7efc70d6a8468bc30c26bf',
@@ -32,7 +38,7 @@ export const getContracts = async (ctx: BaseContext) => {
   const pools = await getEqPoolsContracts(ctx, masterChef)
 
   return {
-    contracts: { pools, locker, ePendle },
+    contracts: { pools, locker, ePendle, xEQB },
     revalidate: 60 * 60,
   }
 }
@@ -41,6 +47,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: getEqPoolBalances,
     locker: getEqLockerBalance,
+    xEQB: getxEqbLockerBalances,
     ePendle: getSingleEqBalance,
   })
 
