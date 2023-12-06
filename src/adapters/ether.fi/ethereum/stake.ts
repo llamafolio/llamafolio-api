@@ -1,5 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
+import { call } from '@lib/call'
+import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 
@@ -17,29 +19,29 @@ const abi = {
   },
   userToErc20Balance: {
     inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
+      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'address', name: '', type: 'address' },
     ],
     name: 'userToErc20Balance',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  getEETHByWeETH: {
+    inputs: [{ internalType: 'uint256', name: '_weETHAmount', type: 'uint256' }],
+    name: 'getEETHByWeETH',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
 } as const
+
+const WETH: Contract = {
+  chain: 'ethereum',
+  address: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  decimals: 18,
+  symbol: 'WETH',
+}
 
 const assets: Token[] = [
   { chain: 'ethereum', address: '0xae78736cd615f374d3085123a210448e74fc6393', decimals: 18, symbol: 'rETH' },
@@ -69,4 +71,17 @@ export async function getEtherBalances(ctx: BalancesContext, staker: Contract): 
     rewards: undefined,
     category: 'stake',
   }))
+}
+
+export async function getWeETHBalance(ctx: BalancesContext, weETH: Contract): Promise<Balance> {
+  const userShare = await call({ ctx, target: weETH.address, params: [ctx.address], abi: erc20Abi.balanceOf })
+  const userAsset = await call({ ctx, target: weETH.address, params: [userShare], abi: abi.getEETHByWeETH })
+
+  return {
+    ...weETH,
+    amount: userShare,
+    underlyings: [{ ...WETH, amount: userAsset }],
+    rewards: undefined,
+    category: 'stake',
+  }
 }
