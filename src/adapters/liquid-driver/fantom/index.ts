@@ -79,6 +79,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
   return {
     contracts: { shadowChefs, pools_v1, pools_v2, locker },
+    revalidate: 60 * 60,
   }
 }
 
