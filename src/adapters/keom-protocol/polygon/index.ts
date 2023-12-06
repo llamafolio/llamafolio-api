@@ -27,7 +27,7 @@ export const getContracts = async (ctx: BaseContext) => {
     comptrollerAddress: comptroller.address,
     underlyingAddressByMarketAddress: {
       // kMatic -> Matic
-      '0x7854d4cfa7d0b877e399bcbdffb49536d7a14fc7': '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0',
+      '0x7854d4cfa7d0b877e399bcbdffb49536d7a14fc7': '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
     },
     getMarketsInfos: (ctx, { markets, comptroller }) =>
       multicall({
