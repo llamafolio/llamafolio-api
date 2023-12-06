@@ -201,6 +201,7 @@ import polkastarter from '@adapters/polkastarter'
 import popsicleFinance from '@adapters/popsicle-finance'
 import preonFinance from '@adapters/preon-finance'
 import prismaFinance from '@adapters/prisma-finance'
+import proxy from '@adapters/proxy'
 import pstakeFinance from '@adapters/pstake-finance'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
@@ -514,6 +515,7 @@ export const adapters: Adapter[] = [
   popsicleFinance,
   preonFinance,
   prismaFinance,
+  proxy,
   pstakeFinance,
   quickswapDex,
   radiantV1,

@@ -27,12 +27,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     pools: (...args) => getAuraFarmBalances(...args, vaultBAL),
   })
 
-  for (const balance of balances) {
-    if (balance.amount !== 0n) {
-      console.log(balance)
-    }
-  }
-
   return {
     groups: [{ balances }],
   }
