@@ -25,6 +25,7 @@ import arbitrumExchange from '@adapters/arbitrum-exchange'
 import arcSwap from '@adapters/arc-swap'
 import arrakisFinance from '@adapters/arrakis-finance'
 import asymetrixProtocol from '@adapters/asymetrix-protocol'
+import asymmetryFinance from '@adapters/asymmetry-finance'
 import atlantisLoans from '@adapters/atlantis-loans'
 import atlasUsv from '@adapters/atlas-usv'
 import aura from '@adapters/aura'
@@ -340,6 +341,7 @@ export const adapters: Adapter[] = [
   arcSwap,
   arrakisFinance,
   asymetrixProtocol,
+  asymmetryFinance,
   atlantisLoans,
   atlasUsv,
   aura,
