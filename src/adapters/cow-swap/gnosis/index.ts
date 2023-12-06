@@ -3,15 +3,15 @@ import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const veCOW: Contract = {
-  chain: 'ethereum',
-  address: '0xd057b63f5e69cf1b929b356b579cba08d7688048',
-  token: '0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB',
+  chain: 'gnosis',
+  address: '0xc20c9c13e853fc64d054b73ff21d3636b2d97eab',
+  token: '0x177127622c4a00f3d409b75571e12cb3c8973d3c',
 }
 
 const rewarder: Contract = {
-  chain: 'ethereum',
-  address: '0x68ffaac7a431f276fe73604c127bd78e49070c92',
-  token: '0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB',
+  chain: 'gnosis',
+  address: '0x3d610e917130f9d036e85a030596807f57e11093',
+  token: '0x177127622c4a00f3d409b75571e12cb3c8973d3c',
 }
 
 export const getContracts = () => {

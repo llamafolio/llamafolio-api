@@ -19,22 +19,10 @@ const abi = {
   },
 } as const
 
-const COW: Contract = {
-  chain: 'ethereum',
-  address: '0xDEf1CA1fb7FBcDC777520aa7f396b4E015F497aB',
-  decimals: 18,
-  symbol: 'COW',
-}
-
-export async function getCowVestingBalance(
-  ctx: BalancesContext,
-  veCOW: Contract,
-  rewarder: Contract,
-): Promise<Balance> {
-  const [userBalance, userClaimable, pendingRewards] = await Promise.all([
+export async function getCowVestingBalance(ctx: BalancesContext, veCOW: Contract): Promise<Balance> {
+  const [userBalance, userClaimable] = await Promise.all([
     call({ ctx, target: veCOW.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
     call({ ctx, target: veCOW.address, params: [ctx.address], abi: abi.swappableBalanceOf }),
-    call({ ctx, target: rewarder.address, params: [ctx.address], abi: abi.claimableNow }),
   ])
 
   return {
@@ -42,7 +30,19 @@ export async function getCowVestingBalance(
     amount: userBalance,
     claimable: userClaimable,
     underlyings: undefined,
-    rewards: [{ ...COW, amount: pendingRewards }],
+    rewards: undefined,
     category: 'vest',
+  }
+}
+
+export async function getCowRewardBalance(ctx: BalancesContext, rewarder: Contract): Promise<Balance> {
+  const pendingReward = await call({ ctx, target: rewarder.address, params: [ctx.address], abi: abi.claimableNow })
+
+  return {
+    ...rewarder,
+    amount: pendingReward,
+    underlyings: undefined,
+    rewards: undefined,
+    category: 'reward',
   }
 }
