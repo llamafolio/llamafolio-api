@@ -91,14 +91,6 @@ functions:
     timeout: 29
     memorySize: 512
 
-  getAdapters:
-    handler: src/handlers/getAdapters.handler
-    description: Get adapters
-    events:
-      - httpApi:
-          method: get
-          path: /adapters
-
   getBalances:
     handler: src/handlers/getBalances.handler
     description: Get address balances
@@ -220,14 +212,6 @@ functions:
           method: get
           path: /sync_status
     timeout: 10
-
-  getTokens:
-    handler: src/handlers/getTokens.handler
-    description: Get tokens
-    events:
-      - httpApi:
-          method: get
-          path: /tokens/{address}
 
   getToken:
     handler: src/handlers/getToken.handler
