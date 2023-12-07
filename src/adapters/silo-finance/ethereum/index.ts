@@ -53,6 +53,10 @@ const rawRouters: Contract[] = [
     chain: 'ethereum',
     address: '0x8658047e48cc09161f4152c79155dac1d710ff0a',
   },
+  {
+    chain: 'ethereum',
+    address: '0xF380F025675A868eD5614a1Dd77c6b05f4147004',
+  },
 ]
 
 const legacylens: Contract = {
