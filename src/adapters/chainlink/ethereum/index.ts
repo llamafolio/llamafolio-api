@@ -1,6 +1,13 @@
 import { getLinkStaker_v1Balance, getLinkStaker_v2Balances } from '@adapters/chainlink/ethereum/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+
+const LINK: Contract = {
+  chain: 'ethereum',
+  address: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
+  decimals: 18,
+  symbol: 'LINK',
+}
 
 const sLINK: Contract = {
   chain: 'ethereum',
@@ -25,14 +32,21 @@ const v2Stakers: Contract[] = [
 
 export const getContracts = async () => {
   return {
-    contracts: { sLINK, v2Stakers },
+    contracts: { LINK, sLINK, v2Stakers },
   }
+}
+
+async function getLinkBalances(ctx: BalancesContext, _LINK: Contract, sLINK: Contract, v2Stakers: Contract[]) {
+  const [v1kBalances, v2Balances] = await Promise.all([
+    getLinkStaker_v1Balance(ctx, sLINK),
+    getLinkStaker_v2Balances(ctx, v2Stakers),
+  ])
+  return [v1kBalances, ...v2Balances]
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    sLINK: getLinkStaker_v1Balance,
-    v2Stakers: getLinkStaker_v2Balances,
+    LINK: (...args) => getLinkBalances(...args, sLINK, v2Stakers),
   })
 
   return {
