@@ -12,7 +12,7 @@ async function fetchURI(url: string) {
   // TODO: arweave
 
   if (isIPFS(url)) {
-    url = await getIPFSUrl(url)
+    url = getIPFSUrl(url)
   }
 
   const response = await fetch(url)
@@ -120,7 +120,7 @@ export async function decodeNFTMetadata(ctx: BaseContext, contracts: NFTContract
         })
 
         if (meta.image) {
-          meta.imageURL = await getIPFSUrl(meta.image)
+          meta.imageURL = getIPFSUrl(meta.image)
         }
 
         if (meta.image_data) {
@@ -129,7 +129,7 @@ export async function decodeNFTMetadata(ctx: BaseContext, contracts: NFTContract
         }
 
         if (meta.animation_url) {
-          meta.contentURL = await getIPFSUrl(meta.animation_url)
+          meta.contentURL = getIPFSUrl(meta.animation_url)
         }
 
         if (!meta.contentURL && meta.imageURL) {
@@ -146,7 +146,7 @@ export async function decodeNFTMetadata(ctx: BaseContext, contracts: NFTContract
 
         const metadata = {
           tokenURI,
-          tokenURL: await getIPFSUrl(tokenURI),
+          tokenURL: getIPFSUrl(tokenURI),
           tokenURLMimeType: 'application/json',
           name: meta.name,
           description: meta.description,

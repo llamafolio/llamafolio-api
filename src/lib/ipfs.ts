@@ -1,10 +1,7 @@
 import environment from '@environment'
 import { cid as isCID } from 'is-ipfs'
 
-export async function getCID(url: string) {
-  // NOTE: ESM issue
-  // const { cid: isCID } = await import('is-ipfs')
-
+export function getCID(url: string) {
   const splitUrl = url.split('/')
 
   for (const split of splitUrl) {
@@ -25,10 +22,8 @@ export function isIPFS(uri: string) {
   return !!getCID(uri)
 }
 
-export async function getIPFSUrl(uri: string) {
-  const { cid: isCID } = await import('is-ipfs')
-
-  const cid = await getCID(uri)
+export function getIPFSUrl(uri: string) {
+  const cid = getCID(uri)
   if (cid) {
     const splitUrl = uri.split(cid)
 
