@@ -103,6 +103,7 @@ import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
 import gensokishi from '@adapters/gensokishi'
 import getProtocol from '@adapters/get-protocol'
+import gitcoin from '@adapters/gitcoin'
 import giveth from '@adapters/giveth'
 import gmx from '@adapters/gmx'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
@@ -420,6 +421,7 @@ export const adapters: Adapter[] = [
   geist,
   gensokishi,
   getProtocol,
+  gitcoin,
   giveth,
   gmx,
   gnosisProtocolV1,
