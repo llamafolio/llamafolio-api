@@ -536,6 +536,50 @@ export async function selectTokenHoldersBalances(
   return res.data || []
 }
 
+export async function selectNFTBalances(client: ClickHouseClient, addresses: `0x${string}`[]) {
+  const queryRes = await client.query({
+    query: `
+      SELECT * FROM (
+        SELECT
+          "chain",
+          "address",
+          "id",
+          "holder",
+          (sumMerge("value_to") - sumMerge("value_from")) AS "amount"
+        FROM evm_indexer2.tokens_balances_mv
+        WHERE
+          "holder_short" IN {addressesShort: Array(String)} AND
+          "holder" IN {addresses: Array(String)} AND
+          "type" = 'erc721'
+        GROUP BY "chain", "holder_short", "holder", "address", "id", "type"
+      )
+      WHERE "amount" > 0;
+    `,
+    query_params: {
+      addressesShort: addresses.map(shortAddress),
+      addresses,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: {
+      chain: string
+      holder: `0x${string}`
+      address: `0x${string}`
+      id: string
+      amount: string
+    }[]
+  }
+
+  return (res.data || []).map((row) => ({
+    chain: chainByChainId[parseInt(row.chain)]?.id,
+    holder: row.holder,
+    address: row.address,
+    id: row.id,
+    amount: parseInt(row.amount),
+  }))
+}
+
 export type Window = 'D' | 'W' | 'M' | 'Y'
 
 /**

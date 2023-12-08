@@ -8,7 +8,12 @@ export async function defillamaCollections() {
   return fetcher<Array<DefillamaNFTCollection>>(`${CLOUDFLARE_R2_PUBLIC_URL}/nft/llama_nft_collections.json`)
 }
 
+export function fetchNFTCollections() {
+  return fetcher<Array<DefillamaNFTCollection>>('https://nft.llama.fi/collections')
+}
+
 export interface DefillamaNFTCollection {
+  /** address */
   collectionId: string
   name?: string | null
   symbol?: string | null

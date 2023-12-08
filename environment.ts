@@ -1,6 +1,7 @@
-import 'dotenv/config'
-
+import dotenv from 'dotenv'
 import { z } from 'zod'
+
+dotenv.config()
 
 export const environmentSchema = z.object({
   NODE_ENV: z.union([z.literal('development'), z.literal('production'), z.literal('test')]).default('development'),
@@ -32,6 +33,8 @@ export const environmentSchema = z.object({
   ELEMENT_API_KEY: z.string().optional(),
   // Explorers
   ETHERSCAN_API_KEY: z.string().optional(),
+  // IPFS
+  IPFS_GATEWAY_URL: z.string().optional(),
 })
 
 export type Environment = z.infer<typeof environmentSchema>
