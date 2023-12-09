@@ -4,6 +4,7 @@
 import type { BaseContext } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { abi as erc721Abi } from '@lib/erc721'
+import fetchWithRetry from '@lib/fetcher'
 import { getIPFSUrl, isIPFS } from '@lib/ipfs'
 import { createDataURI, fetchMimeType } from '@lib/media'
 import { multicall } from '@lib/multicall'
@@ -15,7 +16,7 @@ async function fetchURI(url: string) {
     url = getIPFSUrl(url)
   }
 
-  const response = await fetch(url)
+  const response = await fetchWithRetry(url, { timeout: 5_000, tries: 1 })
 
   if (!response.ok) {
     console.log(`Failed to fetch URI ${url}, reason: [${response.status}] ${response.statusText}`)
