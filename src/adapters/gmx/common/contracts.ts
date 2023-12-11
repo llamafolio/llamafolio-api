@@ -67,6 +67,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  feeGlpTracker: {
+    inputs: [],
+    name: 'feeGlpTracker',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract, vault: Contract) {
@@ -77,6 +84,7 @@ export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract, vau
     glpRes,
     wethRes,
     stakerGmxFeesRes,
+    stakerGlpFeesRes,
     esGmxRes,
     gmxVesterRes,
     glpVesterRes,
@@ -88,6 +96,7 @@ export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract, vau
     call({ ctx, target: gmxRouter.address, abi: abi.glp }),
     call({ ctx, target: gmxRouter.address, abi: abi.weth }),
     call({ ctx, target: gmxRouter.address, abi: abi.feeGmxTracker }),
+    call({ ctx, target: gmxRouter.address, abi: abi.feeGlpTracker }),
     call({ ctx, target: gmxRouter.address, abi: abi.esGmx }),
     call({ ctx, target: gmxRouter.address, abi: abi.gmxVester }),
     call({ ctx, target: gmxRouter.address, abi: abi.glpVester }),
@@ -113,6 +122,7 @@ export async function getGMXContracts(ctx: BaseContext, gmxRouter: Contract, vau
   const glpStaker: Contract = {
     chain: ctx.chain,
     address: stakedGlpTrackerRes,
+    sfGlp: stakerGlpFeesRes,
     fGlp: stakerGmxFeesRes,
     glp: glpRes,
     underlyings: vaultTokens,
