@@ -182,7 +182,7 @@ export async function resolveBalances<C extends GetContractsHandler>(
       ctx: BalancesContext,
       contracts: ExcludeRawContract<Awaited<ReturnType<C>>['contracts']>[key],
     ) =>
-      | Promise<Balance | Balance[] | Balance[][] | null | undefined>
+      | Promise<Balance | Balance[] | Balance[][] | (Balance | undefined)[] | null | undefined>
       | Balance
       | Balance[]
       | Balance[][]
