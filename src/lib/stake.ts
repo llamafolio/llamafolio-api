@@ -11,9 +11,8 @@ export async function getSingleStakeBalance(ctx: BalancesContext, contract: Cont
     params: [ctx.address],
     ...options,
   })
-  const balance: Balance = { ...(contract as Balance), amount, category: 'stake' }
 
-  return balance
+  return { ...(contract as Balance), amount, category: 'stake' } as Balance
 }
 
 export async function getSingleStakeBalances(ctx: BalancesContext, contracts: Contract[]) {
