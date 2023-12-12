@@ -15,12 +15,14 @@ const fETH: Contract = {
   address: '0x53805a76e1f5ebbfe7115f16f9c87c2f7e633726',
   decimals: 18,
   symbol: 'fETH',
+  id: 0,
 }
 
 const sfETH: Contract = {
   chain: 'ethereum',
   address: '0xa677d95b91530d56791fba72c01a862f1b01a49e',
   token: '0x53805a76e1f5ebbfe7115f16f9c87c2f7e633726',
+  id: 1,
 }
 
 const xETH: Contract = {
@@ -28,6 +30,7 @@ const xETH: Contract = {
   address: '0xe063f04f280c60aeca68b38341c2eecbec703ae2',
   decimals: 18,
   symbol: 'xETH',
+  id: 2,
 }
 
 const treasury: Contract = {
