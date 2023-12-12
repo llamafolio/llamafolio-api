@@ -71,13 +71,15 @@ async function getVaultInfos(ctx: BalancesContext, vaults: Contract[]): Promise<
   ])
 
   return mapMultiSuccessFilter(
-    vaultBalances.map((_, i) => [vaultBalances[i], pendingEarneds[i], curvePools[i]]),
+    vaultBalances.map((_, i) => [vaultBalances[i], pendingEarneds[i]]),
 
     (res, index) => {
       const pool = vaults[index]
-      const rawRewards = pool.rewards as Contract[]
-      const [{ output: amount }, { output: pendingEarneds }, { output: curveLp }] = res.inputOutputPairs
+      const token = curvePools[index].success ? curvePools[index].output : pool.token!
+      if (!token) return null
 
+      const rawRewards = pool.rewards as Contract[]
+      const [{ output: amount }, { output: pendingEarneds }] = res.inputOutputPairs
       const [tokens, balances] = pendingEarneds
 
       const rewards = rawRewards
@@ -92,7 +94,7 @@ async function getVaultInfos(ctx: BalancesContext, vaults: Contract[]): Promise<
       return {
         ...pool,
         amount,
-        token: curveLp,
+        token,
         underlyings: undefined,
         rewards,
         category: 'stake',
