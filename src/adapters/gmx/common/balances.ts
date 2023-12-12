@@ -1,5 +1,5 @@
 import type { Balance, BalancesContext, BaseContract, Contract } from '@lib/adapter'
-import { mapMultiSuccessFilter } from '@lib/array'
+import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
@@ -150,35 +150,19 @@ export async function getGLPUnderlyingsBalances(
   const rawUnderlyings = glpBalance.underlyings as Contract[]
   if (!rawUnderlyings) return
 
-  const [underlyingsRedemptions, underlyingsInPoolAmounts, totalSupply] = await Promise.all([
+  const [underlyingsRedemptions, totalSupply] = await Promise.all([
     multicall({
       ctx,
       calls: rawUnderlyings.map((underlying) => ({ target: vault.address, params: [underlying.address] }) as const),
       abi: abi.getRedemptionCollateral,
     }),
-    multicall({
-      ctx,
-      calls: rawUnderlyings.map((underlying) => ({ target: vault.address, params: [underlying.address] }) as const),
-      abi: abi.poolAmounts,
-    }),
     call({ ctx, target: glpBalance.sfGlp, abi: erc20Abi.totalSupply }),
   ])
 
-  const underlyings = mapMultiSuccessFilter(
-    underlyingsRedemptions.map((_, i) => [underlyingsRedemptions[i], underlyingsInPoolAmounts[i]]),
-
-    (res, index) => {
-      const underlying = rawUnderlyings[index]
-      const [{ output: balanceUsed }, { output: underlyinAmount }] = res.inputOutputPairs
-
-      return {
-        ...underlying,
-        amount:
-          (BigInt((Number(balanceUsed) / Number(underlyinAmount)) * Number(underlyinAmount)) * glpBalance.amount) /
-          totalSupply,
-      }
-    },
-  )
+  const underlyings = mapSuccessFilter(underlyingsRedemptions, (res, index) => {
+    const underlying = rawUnderlyings[index]
+    return { ...underlying, amount: (res.output * glpBalance.amount) / totalSupply }
+  })
 
   return { ...glpBalance, underlyings }
 }
