@@ -1,65 +1,45 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import { mapMultiSuccessFilter } from '@lib/array'
+import type { Category } from '@lib/category'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 import { parseEther } from 'viem'
 
 const abi = {
   balanceOf: {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'lpToken',
-        type: 'address',
-      },
+      { internalType: 'address', name: 'account', type: 'address' },
+      { internalType: 'address', name: 'lpToken', type: 'address' },
     ],
     name: 'balanceOf',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   calculateExchangeRate: {
     inputs: [],
     name: 'calculateExchangeRate',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },
   calculateAccountRewards: {
     inputs: [
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'lpToken',
-        type: 'address',
-      },
+      { internalType: 'address', name: 'account', type: 'address' },
+      { internalType: 'address[]', name: 'lpTokens', type: 'address[]' },
     ],
     name: 'calculateAccountRewards',
     outputs: [
       {
-        internalType: 'uint256',
+        components: [
+          { internalType: 'address', name: 'lpToken', type: 'address' },
+          { internalType: 'uint256', name: 'rewardsAmount', type: 'uint256' },
+          { internalType: 'uint256', name: 'allocatedPwTokens', type: 'uint256' },
+        ],
+        internalType: 'struct LiquidityMiningTypes.AccountRewardResult[]',
         name: '',
-        type: 'uint256',
+        type: 'tuple[]',
       },
     ],
     stateMutability: 'view',
@@ -79,8 +59,6 @@ export async function getIporFarmBalances(
   assets: Contract[],
   farmer: Contract,
 ): Promise<Balance[]> {
-  const balances: Balance[] = []
-
   const [userBalancesRes, userPendingRewardsRes, exchangeRatesRes] = await Promise.all([
     multicall({
       ctx,
@@ -89,7 +67,7 @@ export async function getIporFarmBalances(
     }),
     multicall({
       ctx,
-      calls: assets.map((asset) => ({ target: farmer.address, params: [ctx.address, asset.token!] }) as const),
+      calls: assets.map((asset) => ({ target: farmer.address, params: [ctx.address, [asset.token!]] }) as const),
       abi: abi.calculateAccountRewards,
     }),
     multicall({
@@ -99,28 +77,28 @@ export async function getIporFarmBalances(
     }),
   ])
 
-  for (let assetIdx = 0; assetIdx < assets.length; assetIdx++) {
-    const asset = assets[assetIdx]
-    const underlying = asset.underlyings?.[0] as Contract
-    const userBalanceRes = userBalancesRes[assetIdx]
-    const userPendingRewardRes = userPendingRewardsRes[assetIdx]
-    const exchangeRateRes = exchangeRatesRes[assetIdx]
+  return mapMultiSuccessFilter(
+    userBalancesRes.map((_, i) => [userBalancesRes[i], userPendingRewardsRes[i]]),
 
-    if (!underlying || !userBalanceRes.success || !userPendingRewardRes.success || !exchangeRateRes.success) {
-      continue
-    }
+    (res, index) => {
+      const asset = assets[index]
+      const pricePerFullShare = exchangeRatesRes[index].success
+        ? exchangeRatesRes[index].output! / parseEther('1.0')
+        : 1n
+      const underlying = asset.underlyings![0] as Contract
+      if (!underlying || !pricePerFullShare) return null
 
-    balances.push({
-      ...asset,
-      decimals: 18,
-      amount: userBalanceRes.output,
-      underlyings: [
-        { ...underlying, decimals: 18, amount: (userBalanceRes.output * exchangeRateRes.output) / parseEther('1.0') },
-      ],
-      rewards: [{ ...IPOR, amount: userPendingRewardRes.output }],
-      category: 'farm',
-    })
-  }
+      const [{ output: amount }, { output: rewards }] = res.inputOutputPairs
+      const [{ rewardsAmount }] = rewards
 
-  return balances
+      return {
+        ...asset,
+        decimals: 18,
+        amount,
+        underlyings: [{ ...underlying, amount: amount * pricePerFullShare }],
+        rewards: [{ ...IPOR, amount: rewardsAmount }],
+        category: 'farm' as Category,
+      }
+    },
+  ).filter(isNotNullish)
 }
