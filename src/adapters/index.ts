@@ -123,6 +123,7 @@ import hopr from '@adapters/hopr'
 import horizonProtocol from '@adapters/horizon-protocol'
 import houdiniSwap from '@adapters/houdini-swap'
 import hundredFinance from '@adapters/hundred-finance'
+import idle from '@adapters/idle'
 import illuvium from '@adapters/illuvium'
 import inverseFinance from '@adapters/inverse-finance'
 import ipor from '@adapters/ipor'
@@ -442,6 +443,7 @@ export const adapters: Adapter[] = [
   horizonProtocol,
   houdiniSwap,
   hundredFinance,
+  idle,
   illuvium,
   inverseFinance,
   ipor,
