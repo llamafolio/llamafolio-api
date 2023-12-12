@@ -30,6 +30,7 @@ import atlantisLoans from '@adapters/atlantis-loans'
 import atlasUsv from '@adapters/atlas-usv'
 import aura from '@adapters/aura'
 import azuro from '@adapters/azuro'
+import bProtocol from '@adapters/b.protocol'
 import babylonFinance from '@adapters/babylon-finance'
 import badgerDao from '@adapters/badger-dao'
 import balancer from '@adapters/balancer'
@@ -348,6 +349,7 @@ export const adapters: Adapter[] = [
   atlasUsv,
   aura,
   azuro,
+  bProtocol,
   babylonFinance,
   badgerDao,
   balancer,
