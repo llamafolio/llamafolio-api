@@ -1,3 +1,4 @@
+import { getAbracadabraFarmBalances, getAbracadabraFarmContracts } from '@adapters/abracadabra/common/farm'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -30,14 +31,17 @@ const cauldrons: `0x${string}`[] = [
   '0x726413d7402fF180609d0EBc79506df8633701B1', // magic GLP
 ]
 
+const farmAddresses: `0x${string}`[] = ['0x6d2070b13929df15b13d96cfc509c574168988cd']
+
 export const getContracts = async (ctx: BaseContext) => {
-  const [mStakeContracts, marketsContracts] = await Promise.all([
+  const [mStakeContracts, marketsContracts, pools] = await Promise.all([
     getMStakeContract(ctx, mSPELL),
     getMarketsContracts(ctx, cauldrons),
+    getAbracadabraFarmContracts(ctx, farmAddresses),
   ])
 
   return {
-    contracts: { mStakeContracts, marketsContracts },
+    contracts: { mStakeContracts, marketsContracts, pools },
   }
 }
 
@@ -46,6 +50,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     getMarketsBalances(ctx, contracts.marketsContracts || [], MIM),
     resolveBalances<typeof getContracts>(ctx, contracts, {
       mStakeContracts: getMStakeBalance,
+      pools: getAbracadabraFarmBalances,
     }),
   ])
 
