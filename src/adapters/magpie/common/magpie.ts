@@ -4,6 +4,7 @@ import type { Category } from '@lib/category'
 import { getERC20Details } from '@lib/erc20'
 import { getMasterChefPoolsContracts, type GetPoolsInfosParams } from '@lib/masterchef/masterChefContract'
 import { multicall } from '@lib/multicall'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   registeredToken: {
@@ -182,16 +183,23 @@ async function getAttachMagpiePoolsToMasterChef(
   masterChef: Contract,
 ) {
   const processPoolDetails = async (pool: Contract) => {
-    const [[{ address, symbol }], rewardsDetails] = await Promise.all([
+    const [erc20Details, rewardsDetails] = await Promise.all([
       getERC20Details(ctx, [pool.token!]),
       getERC20Details(ctx, pool.rewards as `0x${string}`[]),
     ])
 
-    return { ...pool, token: address, symbol, rewards: rewardsDetails }
+    const hasValidERC20Details = erc20Details.length > 0 && erc20Details[0].address && erc20Details[0].symbol
+    if (!hasValidERC20Details) return null
+
+    return {
+      ...pool,
+      token: erc20Details[0].address,
+      symbol: erc20Details[0].symbol,
+      rewards: rewardsDetails,
+    }
   }
 
-  const fmtPools = await Promise.all([...pools, ...basePools].map(processPoolDetails))
-
+  const fmtPools = (await Promise.all([...pools, ...basePools].map(processPoolDetails))).filter(isNotNullish)
   return { ...masterChef, tokens: fmtPools as Contract[] }
 }
 
