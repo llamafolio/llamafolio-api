@@ -1,3 +1,4 @@
+import { getFraxArbLockerBalances } from '@adapters/frax-finance/arbitrum/locker'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
@@ -38,11 +39,17 @@ const L2D4: Contract = {
   decimals: 18,
 }
 
+const locker: Contract = {
+  chain: 'arbitrum',
+  address: '0xcde7054e7a232938cdde8bf40faf827e6f377f54',
+  token: '0x2E9963ae673A885b6bfeDa2f80132CE28b784C40',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
   const pairs = await getPairsDetails(ctx, pools)
 
   return {
-    contracts: { pairs, farmers: [VST_FRAX, L2D4] },
+    contracts: { pairs, farmers: [VST_FRAX, L2D4], locker },
   }
 }
 
@@ -50,6 +57,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: getPairsBalances,
     farmers: getFraxBalances,
+    locker: getFraxArbLockerBalances,
   })
 
   return {
