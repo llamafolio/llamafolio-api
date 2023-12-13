@@ -94,7 +94,7 @@ export async function getFraxArbLockerBalances(ctx: BalancesContext, locker: Con
       ...lockedBalance,
       underlyings,
       claimable: now > lockedBalance.unlockAt ? lockedBalance.amount : 0n,
-      category: 'locked' as Category,
+      category: 'lock' as Category,
     }
   })
 }
