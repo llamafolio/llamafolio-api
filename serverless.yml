@@ -153,6 +153,15 @@ functions:
           path: /history/{address}
     timeout: 29
 
+  getHistoryStats:
+    handler: src/handlers/getHistoryStats.handler
+    description: Get address history stats
+    events:
+      - httpApi:
+          method: get
+          path: /history/{address}/stats
+    timeout: 15
+
   getInfoStats:
     handler: src/handlers/getInfoStats.handler
     description: Get stats on supported protocols, chains and tokens

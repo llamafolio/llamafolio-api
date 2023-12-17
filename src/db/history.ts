@@ -1,6 +1,6 @@
 import type { ClickHouseClient } from '@clickhouse/client'
-import { chainById } from '@lib/chains'
-import { shortAddress, toDateTime } from '@lib/fmt'
+import { chainByChainId, chainById } from '@lib/chains'
+import { shortAddress, toDateTime, unixFromDateTime } from '@lib/fmt'
 import { isNotNullish } from '@lib/type'
 
 export interface IHistoryTransaction {
@@ -192,4 +192,57 @@ export async function selectHistory(
   }
 
   return res.data
+}
+
+export interface HistoryStat {
+  timestamp: number
+  chains: { chain: string; chainId: number; transactionFromCount: number }[]
+}
+
+export async function selectHistoryStats(client: ClickHouseClient, addresses: string[], year: number) {
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        "day",
+        groupArray(("chain", "count")) as "counts"
+      FROM (
+        SELECT
+          "chain",
+          toStartOfDay("timestamp") as "day",
+          count(distinct("hash")) as "count"
+        FROM evm_indexer.transactions_history
+        WHERE
+          "target" IN {addresses: Array(String)} AND
+          toYear("day") = {year: UInt32} AND
+          "type" = 0 -- transactions from
+        GROUP BY "chain", "day"
+        ORDER BY "day" DESC
+      )
+      GROUP BY "day";
+    `,
+    query_params: {
+      addresses,
+      year,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: { day: string; counts: [string, string][] }[]
+  }
+
+  return res.data.map((row) => {
+    return {
+      timestamp: unixFromDateTime(row.day),
+      chains: row.counts.map((count) => {
+        const chainId = parseInt(count[0])
+        const transactionFromCount = parseInt(count[1])
+        const chain = chainByChainId[chainId]
+        return {
+          chain: chain?.id ?? '',
+          chainId,
+          transactionFromCount,
+        }
+      }),
+    }
+  }) as HistoryStat[]
 }
