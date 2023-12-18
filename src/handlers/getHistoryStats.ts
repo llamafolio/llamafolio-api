@@ -23,7 +23,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       data,
     }
 
-    return success(historyStatsResponse)
+    return success(historyStatsResponse, { maxAge: 60 * 60, swr: 20 * 60 })
   } catch (error) {
     console.error('Failed to retrieve history stats', { error, addresses })
     return serverError('Failed to retrieve history stats', { error, addresses })

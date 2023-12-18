@@ -214,7 +214,7 @@ export async function selectHistoryStats(client: ClickHouseClient, addresses: st
         WHERE
           "target" IN {addresses: Array(String)} AND
           toYear("day") = {year: UInt32} AND
-          "type" = 0 -- transactions from
+          "type" = 0
         GROUP BY "chain", "day"
         ORDER BY "day" DESC
       )
