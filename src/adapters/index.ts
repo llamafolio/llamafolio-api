@@ -289,6 +289,7 @@ import tonpound from '@adapters/tonpound'
 import tornadoCash from '@adapters/tornado-cash'
 import tprotocol from '@adapters/tprotocol'
 import traderJoe from '@adapters/trader-joe'
+import treasuredao from '@adapters/treasuredao'
 import truefi from '@adapters/truefi'
 import trufinProtocol from '@adapters/trufin-protocol'
 import trustswap from '@adapters/trustswap'
@@ -612,6 +613,7 @@ export const adapters: Adapter[] = [
   tornadoCash,
   tprotocol,
   traderJoe,
+  treasuredao,
   truefi,
   trufinProtocol,
   trustswap,
