@@ -149,6 +149,7 @@ import liquidDriver from '@adapters/liquid-driver'
 import liquity from '@adapters/liquity'
 import llamaAirforce from '@adapters/llama-airforce'
 import llamapay from '@adapters/llamapay'
+import locusFinance from '@adapters/locus-finance'
 import lodestarFinance from '@adapters/lodestar-finance'
 import looksrare from '@adapters/looksrare'
 import lusdChickenbonds from '@adapters/lusd-chickenbonds'
@@ -473,6 +474,7 @@ export const adapters: Adapter[] = [
   liquity,
   llamaAirforce,
   llamapay,
+  locusFinance,
   lodestarFinance,
   looksrare,
   lusdChickenbonds,
