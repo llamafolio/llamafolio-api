@@ -263,6 +263,7 @@ import stakedao from '@adapters/stakedao'
 import stakehound from '@adapters/stakehound'
 import stakewise from '@adapters/stakewise'
 import stargate from '@adapters/stargate'
+import steerProtocol from '@adapters/steer-protocol'
 import strike from '@adapters/strike'
 import sturdy from '@adapters/sturdy'
 import stusdt from '@adapters/stusdt'
@@ -588,6 +589,7 @@ export const adapters: Adapter[] = [
   stakehound,
   stakewise,
   stargate,
+  steerProtocol,
   strike,
   sturdy,
   stusdt,
