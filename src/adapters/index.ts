@@ -236,6 +236,7 @@ import seamlessProtocol from '@adapters/seamless-protocol'
 import sentiment from '@adapters/sentiment'
 import setProtocol from '@adapters/set-protocol'
 import sharedstake from '@adapters/sharedstake'
+import shellProtocol from '@adapters/shell-protocol'
 import sherlock from '@adapters/sherlock'
 import shibaswap from '@adapters/shibaswap'
 import sideshift from '@adapters/sideshift'
@@ -562,6 +563,7 @@ export const adapters: Adapter[] = [
   sentiment,
   setProtocol,
   sharedstake,
+  shellProtocol,
   sherlock,
   shibaswap,
   sideshift,
