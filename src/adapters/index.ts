@@ -159,6 +159,7 @@ import magnateFinance from '@adapters/magnate-finance'
 import magpie from '@adapters/magpie'
 import makerdao from '@adapters/makerdao'
 import mantisswap from '@adapters/mantisswap'
+import mantleStakedEth from '@adapters/mantle-staked-eth'
 import maple from '@adapters/maple'
 import mdex from '@adapters/mdex'
 import meanFinance from '@adapters/mean-finance'
@@ -481,6 +482,7 @@ export const adapters: Adapter[] = [
   magpie,
   makerdao,
   mantisswap,
+  mantleStakedEth,
   maple,
   mdex,
   meanFinance,
