@@ -46,6 +46,7 @@ export async function getParaspaceBPTStakeBalances(
     call({ ctx, target: staker.token!, abi: erc20Abi.totalSupply }),
     call({ ctx, target: staker.vault, params: [staker.poolId], abi: abi.getPoolTokens }),
   ])
+
   const [_tokens, balances, _lastChangeBlock] = poolTokens
 
   const fmtUnderlyings = underlyings.map((underlying, idx) => {
