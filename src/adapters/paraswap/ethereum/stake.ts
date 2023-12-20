@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
+import { abi as erc20Abi, getBalancesOf } from '@lib/erc20'
 import { getSingleStakeBalance } from '@lib/stake'
 import type { Token } from '@lib/token'
 
@@ -86,4 +86,11 @@ export async function getParaspaceBPTFarmBalances(
     rewards: [{ ...PSP, amount: pendingReward }],
     category: 'farm',
   }
+}
+
+export async function getParaSpaceStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
+  return (await getBalancesOf(ctx, stakers, { getAddress: (contract) => contract.address })).map((res) => ({
+    ...res,
+    category: 'stake',
+  }))
 }

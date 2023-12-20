@@ -1,7 +1,10 @@
-import { getParaspaceBPTFarmBalances, getParaspaceBPTStakeBalances } from '@adapters/paraswap/ethereum/stake'
+import {
+  getParaspaceBPTFarmBalances,
+  getParaspaceBPTStakeBalances,
+  getParaSpaceStakeBalances,
+} from '@adapters/paraswap/ethereum/stake'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getSingleStakeBalances } from '@lib/stake'
 
 const bptParaStake: Contract = {
   chain: 'ethereum',
@@ -75,8 +78,8 @@ export const getContracts = () => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     bptParaStake: getParaspaceBPTStakeBalances,
-    stakers: getSingleStakeBalances,
     bptParaFarmer: getParaspaceBPTFarmBalances,
+    stakers: getParaSpaceStakeBalances,
   })
 
   return {
