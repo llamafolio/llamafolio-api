@@ -19,11 +19,9 @@ const abi = {
   },
 } as const
 
-export async function getEigenlayerBalances(
-  ctx: BalancesContext,
-  poolManager: Contract,
-  pools: Contract[],
-): Promise<Balance[]> {
+export async function getEigenlayerBalances(ctx: BalancesContext, poolManager: Contract): Promise<Balance[]> {
+  const pools = poolManager.underlyings as Contract[]
+
   const userBalances = await multicall({
     ctx,
     calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
