@@ -202,11 +202,11 @@ export async function selectHistoryStats(client: ClickHouseClient, addresses: st
           "chain",
           toStartOfDay("timestamp") as "day",
           count(distinct("hash")) as "count"
-        FROM evm_indexer.transactions_history
+        FROM evm_indexer2.transactions_from_mv
         WHERE
-          "target" IN {addresses: Array(String)} AND
-          toYear("day") = {year: UInt32} AND
-          "type" = 0
+          "from_short" IN {addressesShort: Array(String)} AND
+          "from_address" IN {addresses: Array(String)} AND
+          toYear("day") = {year: UInt32}
         GROUP BY "chain", "day"
         ORDER BY "day" DESC
       )
@@ -214,6 +214,7 @@ export async function selectHistoryStats(client: ClickHouseClient, addresses: st
     `,
     query_params: {
       addresses,
+      addressesShort: addresses.map(shortAddress),
       year,
     },
   })
