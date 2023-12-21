@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
-import { parseEther } from 'viem'
 
 const abi = {
   getPricePerFullShare: {
@@ -30,6 +29,7 @@ export async function getBeefyFarmBalances(ctx: BalancesContext, pools: Contract
   ])
 
   for (const [index, pool] of pools.entries()) {
+    const decimals = BigInt(pool.decimals!)
     const userBalanceRes = userBalancesRes[index]
     const exchangeRateRes = exchangeRatesRes[index]
 
@@ -39,7 +39,7 @@ export async function getBeefyFarmBalances(ctx: BalancesContext, pools: Contract
 
     balances.push({
       ...pool,
-      amount: (userBalanceRes.output * exchangeRateRes.output) / parseEther('1.0'),
+      amount: (userBalanceRes.output * exchangeRateRes.output) / 10n ** decimals,
       underlyings: pool.underlyings as Contract[],
       rewards: undefined,
       beefyKey: pool.beefyKey,
