@@ -64,7 +64,7 @@ export async function getFraxArbLockerBalances(ctx: BalancesContext, locker: Con
     call({ ctx, target: locker.address, params: [ctx.address] as const, abi: abi.earned }),
   ])
 
-  const lockedShareBalances = userShares.map((share, i) => {
+  const lockedShareBalances = userShares.map((share) => {
     const { liquidity, ending_timestamp } = share
     const rewards = [{ ...FXS, amount: userRewards }]
     const unlockAt = Number(ending_timestamp)
