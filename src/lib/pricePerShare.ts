@@ -28,12 +28,12 @@ export async function getPricesPerShares(
   contracts: Contract[],
   params = { getAddress: (contract: Contract) => contract.token },
 ): Promise<number[]> {
-  const tokenCalls = contracts.flatMap((contract) => {
+  const tokenCalls = contracts.map((contract) => {
     const target = params.getAddress(contract) || contract.address
     return { target, params: [contract.address] } as const
   })
 
-  const suppliesCalls = contracts.flatMap((contract) => {
+  const suppliesCalls = contracts.map((contract) => {
     return { target: contract.address } as const
   })
 

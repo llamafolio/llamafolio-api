@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { getBalancesOf } from '@lib/erc20'
-import { getPricesPerShares } from '@lib/pricePerFullShare'
+import { getPricesPerShares } from '@lib/pricePerShare'
 
 const abi = {}
 
