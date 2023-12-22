@@ -5,7 +5,7 @@ import type { BaseContext } from '@lib/adapter'
 import { type Chain, chainByChainId } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getTokenDetails } from '@lib/erc20'
-import { parseAddresses, toNextDay, toStartOfDay, unixFromDateTime } from '@lib/fmt'
+import { parseAddresses, toDateTime, toStartOfMonth, toStartOfNextMonth, unixFromDateTime } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
 import type { Token } from '@lib/token'
@@ -67,15 +67,15 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const offset = parseInt(queries?.offset || '') || 0
   const limit = parseInt(queries?.limit || '') || 25
 
-  const now = Date.now()
+  const now = new Date()
 
   // 3 months
   const maxTimeRange = 60 * 60 * 24 * 3 * 31 * 1000
 
   const queryFromTimestamp = parseInt(queries?.from_ts || '0')
   const queryToTimestamp = parseInt(queries?.to_ts || '0')
-  const fromTimestamp = queryFromTimestamp ? queryFromTimestamp * 1000 : now - maxTimeRange
-  const toTimestamp = queryToTimestamp ? queryToTimestamp * 1000 : now
+  const fromTimestamp = queryFromTimestamp ? queryFromTimestamp * 1000 : toStartOfMonth(now).getTime()
+  const toTimestamp = queryToTimestamp ? queryToTimestamp * 1000 : toStartOfNextMonth(now).getTime()
 
   if (toTimestamp - fromTimestamp > maxTimeRange) {
     return badRequest('Invalid time range parameters, window too large')
@@ -85,8 +85,8 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     addresses,
     limit,
     offset,
-    fromTimestamp: toStartOfDay(new Date(fromTimestamp)),
-    toTimestamp: toStartOfDay(toNextDay(new Date(toTimestamp))),
+    fromTimestamp: toDateTime(fromTimestamp),
+    toTimestamp: toDateTime(toTimestamp),
     chains,
     protocols,
   })
@@ -100,8 +100,8 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
       addresses,
       limit,
       offset,
-      toStartOfDay(new Date(fromTimestamp)),
-      toStartOfDay(toNextDay(new Date(toTimestamp))),
+      fromTimestamp,
+      toTimestamp,
       chains,
       protocols,
     )

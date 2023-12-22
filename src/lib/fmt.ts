@@ -71,22 +71,28 @@ export function parseAddresses(str: string) {
     .sort()
 }
 
-export function toStartOfDay(date: Date) {
-  const newDate = new Date(date)
-  newDate.setUTCHours(0, 0, 0, 0)
-  return newDate
+export function toStartOfDay(date: Date | string | number) {
+  return dayjs(date).utc().startOf('day').toDate()
 }
 
-export function toNextDay(date: Date) {
+export function toStartOfNextDay(date: Date | string | number) {
   const newDate = new Date(date)
   newDate.setDate(newDate.getDate() + 1)
-  return newDate
+  return toStartOfDay(newDate)
+}
+
+export function toStartOfMonth(date: Date) {
+  return dayjs(date).utc().startOf('month').toDate()
+}
+
+export function toStartOfNextMonth(date: Date) {
+  return dayjs(date).utc().startOf('month').add(1, 'month').toDate()
 }
 
 /**
  * format Date to Clickhouse compatible DateTime
  */
-export function toDateTime(date: Date) {
+export function toDateTime(date: Date | string | number) {
   return dayjs(date).utc().format('YYYY-MM-DD HH:mm:ss')
 }
 
