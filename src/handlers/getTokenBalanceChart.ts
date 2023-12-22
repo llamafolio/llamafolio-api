@@ -1,6 +1,6 @@
 import { selectTokenBalanceChart } from '@db/balances'
 import { client } from '@db/clickhouse'
-import type { Window } from '@db/gasUsed'
+import type { Window } from '@db/gas'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'

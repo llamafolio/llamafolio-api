@@ -1,5 +1,5 @@
 import { client } from '@db/clickhouse'
-import { selectGasUsed } from '@db/gasUsed'
+import { selectGasUsed } from '@db/gas'
 import { badRequest, serverError, success } from '@handlers/response'
 import { getChainId } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
