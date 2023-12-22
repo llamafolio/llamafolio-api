@@ -1,5 +1,4 @@
 import { getAllUnitusMarkets, getUnitusMarketsInfos } from '@adapters/unitus/common/lend'
-import { getUnitusStakers } from '@adapters/unitus/common/staker'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
@@ -10,14 +9,11 @@ const comptroller: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const [stakers, markets] = await Promise.all([
-    getUnitusStakers(ctx, stakersAddresses),
-    getMarketsContracts(ctx, {
-      comptrollerAddress: comptroller.address,
-      getAllMarkets: getAllUnitusMarkets,
-      getMarketsInfos: getUnitusMarketsInfos,
-    }),
-  ])
+  const markets = await getMarketsContracts(ctx, {
+    comptrollerAddress: comptroller.address,
+    getAllMarkets: getAllUnitusMarkets,
+    getMarketsInfos: getUnitusMarketsInfos,
+  })
 
   return {
     contracts: { markets },
