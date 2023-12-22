@@ -208,9 +208,9 @@ export async function selectHistoryStats(client: ClickHouseClient, addresses: st
           "from_address" IN {addresses: Array(String)} AND
           toYear("day") = {year: UInt32}
         GROUP BY "chain", "day"
-        ORDER BY "day" DESC
       )
-      GROUP BY "day";
+      GROUP BY "day"
+      ORDER BY "day" ASC;
     `,
     query_params: {
       addresses,
