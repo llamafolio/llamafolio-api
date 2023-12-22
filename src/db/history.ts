@@ -26,8 +26,8 @@ export async function selectHistory(
   addresses: string[],
   limit: number,
   offset: number,
-  fromDate: Date,
-  toDate: Date,
+  fromDate: Date | string | number,
+  toDate: Date | string | number,
   chains: string[],
   protocols: string[],
 ) {
@@ -65,7 +65,7 @@ export async function selectHistory(
         WHERE
           "from_short" IN {addressesShort: Array(String)} AND
           "from_address" IN {addresses: Array(String)} AND
-          "timestamp" <= {toTimestamp: DateTime} AND
+          "timestamp" < {toTimestamp: DateTime} AND
           "timestamp" >= {fromTimestamp: DateTime}
           ${chainIds.length > 0 ? 'AND "chain" IN {chainIds: Array(UInt64)}' : ''}
         ORDER BY "from_short", "from_address", "timestamp" DESC
@@ -88,7 +88,7 @@ export async function selectHistory(
         WHERE
           "to_short" IN {addressesShort: Array(String)} AND
           "to_address" IN {addresses: Array(String)} AND
-          "timestamp" <= {toTimestamp: DateTime} AND
+          "timestamp" < {toTimestamp: DateTime} AND
           "timestamp" >= {fromTimestamp: DateTime} AND
           "value" > 0
         ORDER BY "to_short", "to_address", "timestamp" DESC
@@ -115,7 +115,7 @@ export async function selectHistory(
           WHERE
             "to_short" IN {addressesShort: Array(String)} AND
             "to_address" IN {addresses: Array(String)} AND
-            "timestamp" <= {toTimestamp: DateTime} AND
+            "timestamp" < {toTimestamp: DateTime} AND
             "timestamp" >= {fromTimestamp: DateTime} AND
             ("chain", "transaction_hash") NOT IN (
                 SELECT "chain", "hash" FROM "sub_transactions_from"
