@@ -254,6 +254,7 @@ import sonneFinance from '@adapters/sonne-finance'
 import soswap from '@adapters/soswap'
 import spark from '@adapters/spark'
 import spartacus from '@adapters/spartacus'
+import spartadex from '@adapters/spartadex'
 import sphereFinance from '@adapters/sphere-finance'
 import spiceFinance from '@adapters/spice-finance'
 import spiritswap from '@adapters/spiritswap'
@@ -584,6 +585,7 @@ export const adapters: Adapter[] = [
   soswap,
   spark,
   spartacus,
+  spartadex,
   sphereFinance,
   spiceFinance,
   spiritswap,
