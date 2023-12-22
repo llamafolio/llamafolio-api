@@ -56,11 +56,11 @@ export async function getPricePerShare({
 export async function getPricePerShareBalance(
   ctx: BalancesContext,
   contract: PricePerShareBalance,
-  params: GetPricePerShareBalanceParams,
+  params?: GetPricePerShareBalanceParams,
 ): Promise<Balance> {
-  const _getPricePerShare = params.getPricePerShare || getPricePerShare
+  const _getPricePerShare = params?.getPricePerShare || getPricePerShare
   const _getCategory =
-    typeof params.getCategory === 'function' ? params.getCategory() : params.getCategory || contract.category
+    typeof params?.getCategory === 'function' ? params.getCategory() : params?.getCategory || contract.category
   const pricePerShare = contract.pricePerShare || (await _getPricePerShare({ ctx, contract }))
   const rawUnderlying = contract.underlyings?.[0] as Contract
 
@@ -104,9 +104,9 @@ export async function getPricesPerShares({
 export async function getPricesPerSharesBalances(
   ctx: BalancesContext,
   contracts: PricePerShareBalance[],
-  params: GetPricesPerSharesBalancesParams,
+  params?: GetPricesPerSharesBalancesParams,
 ): Promise<Balance[]> {
-  const _getPricesPerShares = params.getPricesPerShares || getPricesPerShares
+  const _getPricesPerShares = params?.getPricesPerShares || getPricesPerShares
   const pricesPerShares = await _getPricesPerShares({ ctx, contracts })
 
   return Promise.all(
@@ -116,7 +116,7 @@ export async function getPricesPerSharesBalances(
       const rawUnderlying = contract.underlyings?.[0] as Contract
       const assetAmount = (contract.amount * pricePerShare) / 10n ** BigInt(contract.decimals!)
       const _getCategory =
-        typeof params.getCategory === 'function' ? params.getCategory() : params.getCategory || contract.category
+        typeof params?.getCategory === 'function' ? params.getCategory() : params?.getCategory || contract.category
 
       if (!rawUnderlying) return { ...contract, amount: assetAmount, category: _getCategory }
       return { ...contract, underlyings: [{ ...rawUnderlying, amount: assetAmount }], category: _getCategory }
