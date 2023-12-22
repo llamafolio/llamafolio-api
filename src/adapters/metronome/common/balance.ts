@@ -48,7 +48,7 @@ export async function getMetronomeBalances(
     const pricePerShareRes = pricePerSharesRes[marketIdx]
     const pricePerShare = pricePerShareRes.success ? parseFloatBI(pricePerShareRes.output, underlying.decimals!) : 1
 
-    if (!underlying || !balanceOfRes.success || !pricePerShare) {
+    if (!underlying || !balanceOfRes.success || !pricePerShare || balanceOfRes.output === 0n) {
       continue
     }
 
