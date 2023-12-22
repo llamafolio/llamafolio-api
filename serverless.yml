@@ -136,13 +136,14 @@ functions:
           method: get
           path: /gas_used/{address}
 
-  getGasUsedChart:
-    handler: src/handlers/getGasUsedChart.handler
-    description: Get gas used chart
+  getGasChart:
+    handler: src/handlers/getGasChart.handler
+    description: Get gas chart
     events:
       - httpApi:
           method: get
-          path: /gas_used/chart
+          path: /gas/chart
+    timeout: 15
 
   getHistory:
     handler: src/handlers/getHistory.handler

@@ -1,13 +1,13 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import { shortAddress, unixFromDateTime } from '@lib/fmt'
 
-export interface GasUsedChart {
+export interface GasChart {
   timestamp: number
-  totalGasUsed: number
-  avgGasUsed: number
-  medianGasUsed: number
-  minGasUsed: number
-  maxGasUsed: number
+  totalGasFee: string
+  avgGasFee: string
+  medianGasFee: string
+  minGasFee: string
+  maxGasFee: string
 }
 
 /**
@@ -67,35 +67,33 @@ export type Window = 'D' | 'W' | 'M'
  * @param chainId
  * @param window
  */
-export async function selectGasUsedChart(client: ClickHouseClient, chainId: number, window: Window) {
-  const chartData: GasUsedChart[] = []
+export async function selectChainGasChart(client: ClickHouseClient, chainId: number, window: Window) {
+  const chartData: GasChart[] = []
   const hours: { [key in Window]: number } = {
     D: 24,
     W: 24 * 7,
     M: 24 * 30,
   }
 
-  const limit = hours[window] || 24
+  const interval = hours[window] || 24
 
   const queryRes = await client.query({
     query: `
       SELECT
-        "chain",
-        toStartOfHour("hour") AS "hour",
-        sum("total_gas_used") AS "totalGasUsed",
-        round(avg("avg_gas_used")) AS "avgGasUsed",
-        quantileExact(0.5)("median_gas_used") AS "medianGasUsed",
-        min("min_gas_used") AS "minGasUsed",
-        max("max_gas_used") AS "maxGasUsed"
-      FROM evm_indexer2.gas_used_hour_agg_mv
-      WHERE "chain" = {chainId: UInt64}
-      GROUP BY "chain", "hour"
-      ORDER BY "hour" DESC
-      LIMIT {limit: UInt16};
+        toStartOfHour("timestamp") AS "hour",
+        sum("gas_price" * "gas_used") AS "total_gas_fee",
+        round(avg("gas_price" * "gas_used")) AS "avg_gas_fee",
+        quantileExact(0.5)("gas_price" * "gas_used") AS "median_gas_fee",
+        min("gas_price" * "gas_used") AS "min_gas_fee",
+        max("gas_price" * "gas_used") AS "max_gas_fee"
+      FROM evm_indexer2.transactions
+      WHERE "chain" = {chainId: UInt64} AND "hour" >= toStartOfHour(now()) - interval {interval: UInt16} hour
+      GROUP BY "hour"
+      ORDER BY "hour" ASC;
     `,
     query_params: {
       chainId,
-      limit,
+      interval,
     },
   })
 
@@ -103,22 +101,22 @@ export async function selectGasUsedChart(client: ClickHouseClient, chainId: numb
     data: {
       chain: string
       hour: string
-      totalGasUsed: string
-      avgGasUsed: string
-      medianGasUsed: string
-      minGasUsed: string
-      maxGasUsed: string
+      total_gas_fee: string
+      avg_gas_fee: string
+      median_gas_fee: string
+      min_gas_fee: string
+      max_gas_fee: string
     }[]
   }
 
   for (const row of res.data) {
-    const gasUsed: GasUsedChart = {
+    const gasUsed: GasChart = {
       timestamp: unixFromDateTime(row.hour),
-      totalGasUsed: parseInt(row.totalGasUsed),
-      avgGasUsed: parseInt(row.avgGasUsed),
-      medianGasUsed: parseInt(row.medianGasUsed),
-      minGasUsed: parseInt(row.minGasUsed),
-      maxGasUsed: parseInt(row.maxGasUsed),
+      totalGasFee: row.total_gas_fee,
+      avgGasFee: row.avg_gas_fee,
+      medianGasFee: row.median_gas_fee,
+      minGasFee: row.min_gas_fee,
+      maxGasFee: row.max_gas_fee,
     }
 
     chartData.push(gasUsed)
