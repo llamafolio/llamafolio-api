@@ -13,7 +13,14 @@ type PricePerShareBalance = Balance & {
   pricePerShare?: bigint
 }
 
-interface PricePerShareParams {
+export interface PricePerShareParams {
+  ctx: BalancesContext
+  contract: Contract
+  getAddress?: (contract: Contract) => `0x${string}`
+}
+export interface PricesPerSharesParams {
+  ctx: BalancesContext
+  contracts: Contract[]
   getAddress?: (contract: Contract) => `0x${string}`
 }
 
@@ -26,14 +33,14 @@ interface GetPricePerShareBalanceParams {
 interface GetPricesPerSharesBalancesParams {
   getAddress?: (contract: Contract) => `0x${string}`
   getCategory?: () => Category
-  getPricesPerShares?: (params: PricePerShareParams) => Promise<bigint[]>
+  getPricesPerShares?: (params: PricesPerSharesParams) => Promise<bigint[]>
 }
 
-export async function getPricePerShare(
-  ctx: BalancesContext,
-  contract: Contract,
-  { getAddress = (contract: Contract) => contract.token! }: PricePerShareParams = {},
-): Promise<bigint> {
+export async function getPricePerShare({
+  ctx,
+  contract,
+  getAddress = (contract: Contract) => contract.token!,
+}: PricePerShareParams): Promise<bigint> {
   const decimals = contract.decimals!
   const target = getAddress(contract) || contract.address
 
@@ -48,26 +55,26 @@ export async function getPricePerShare(
 
 export async function getPricePerShareBalance(
   ctx: BalancesContext,
-  balance: PricePerShareBalance,
+  contract: PricePerShareBalance,
   params: GetPricePerShareBalanceParams,
 ): Promise<Balance> {
   const _getPricePerShare = params.getPricePerShare || getPricePerShare
   const _getCategory =
-    typeof params.getCategory === 'function' ? params.getCategory() : params.getCategory || balance.category
-  const pricePerShare = balance.pricePerShare || (await _getPricePerShare(ctx, balance))
-  const rawUnderlying = balance.underlyings?.[0] as Contract
+    typeof params.getCategory === 'function' ? params.getCategory() : params.getCategory || contract.category
+  const pricePerShare = contract.pricePerShare || (await _getPricePerShare({ ctx, contract }))
+  const rawUnderlying = contract.underlyings?.[0] as Contract
 
-  const assetAmount = (balance.amount * pricePerShare) / 10n ** BigInt(balance.decimals!)
+  const assetAmount = (contract.amount * pricePerShare) / 10n ** BigInt(contract.decimals!)
 
-  if (!rawUnderlying) return { ...balance, amount: assetAmount, category: _getCategory }
-  return { ...balance, underlyings: [{ ...rawUnderlying, amount: assetAmount }], category: _getCategory }
+  if (!rawUnderlying) return { ...contract, amount: assetAmount, category: _getCategory }
+  return { ...contract, underlyings: [{ ...rawUnderlying, amount: assetAmount }], category: _getCategory }
 }
 
-export async function getPricesPerShares(
-  ctx: BalancesContext,
-  contracts: Contract[],
-  { getAddress = (contract: Contract) => contract.token! }: PricePerShareParams = {},
-): Promise<bigint[]> {
+export async function getPricesPerShares({
+  ctx,
+  contracts,
+  getAddress = (contract: Contract) => contract.token!,
+}: PricesPerSharesParams): Promise<bigint[]> {
   const tokenCalls = contracts.map((contract) => {
     const target = getAddress(contract) || contract.address
     return { ctx, target, params: [contract.address], abi: erc20Abi.balanceOf } as const
@@ -96,22 +103,23 @@ export async function getPricesPerShares(
 
 export async function getPricesPerSharesBalances(
   ctx: BalancesContext,
-  balances: PricePerShareBalance[],
+  contracts: PricePerShareBalance[],
   params: GetPricesPerSharesBalancesParams,
 ): Promise<Balance[]> {
   const _getPricesPerShares = params.getPricesPerShares || getPricesPerShares
-  const pricesPerShares = await _getPricesPerShares(ctx, balances)
+  const pricesPerShares = await _getPricesPerShares({ ctx, contracts })
 
   return Promise.all(
-    balances.map(async (balance, index) => {
-      const rawUnderlying = balance.underlyings?.[0] as Contract
-      const pricePerShare = pricesPerShares[index] || balance.pricePerShare
-      const assetAmount = (balance.amount * pricePerShare!) / 10n ** BigInt(balance.decimals!)
-      const _getCategory =
-        typeof params.getCategory === 'function' ? params.getCategory() : params.getCategory || balance.category
+    contracts.map(async (contract, index) => {
+      const pricePerShare = contract.pricePerShare !== undefined ? contract.pricePerShare : pricesPerShares[index] || 1n
 
-      if (!rawUnderlying) return { ...balance, amount: assetAmount, category: _getCategory }
-      return { ...balance, underlyings: [{ ...rawUnderlying, amount: assetAmount }], category: _getCategory }
+      const rawUnderlying = contract.underlyings?.[0] as Contract
+      const assetAmount = (contract.amount * pricePerShare) / 10n ** BigInt(contract.decimals!)
+      const _getCategory =
+        typeof params.getCategory === 'function' ? params.getCategory() : params.getCategory || contract.category
+
+      if (!rawUnderlying) return { ...contract, amount: assetAmount, category: _getCategory }
+      return { ...contract, underlyings: [{ ...rawUnderlying, amount: assetAmount }], category: _getCategory }
     }),
   )
 }

@@ -300,6 +300,7 @@ import trustswap from '@adapters/trustswap'
 import umamiFinance from '@adapters/umami-finance'
 import uniswapV2 from '@adapters/uniswap-v2'
 import uniswapV3 from '@adapters/uniswap-v3'
+import unitus from '@adapters/unitus'
 import unsheth from '@adapters/unsheth'
 import usdfiLending from '@adapters/usdfi-lending'
 import uwuLend from '@adapters/uwu-lend'
@@ -628,6 +629,7 @@ export const adapters: Adapter[] = [
   umamiFinance,
   uniswapV2,
   uniswapV3,
+  unitus,
   unsheth,
   usdfiLending,
   uwuLend,
