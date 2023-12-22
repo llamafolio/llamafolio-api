@@ -178,6 +178,7 @@ import morphoCompound from '@adapters/morpho-compound'
 import mountainProtocol from '@adapters/mountain-protocol'
 import mstable from '@adapters/mstable'
 import muExchange from '@adapters/mu-exchange'
+import mugenfinance from '@adapters/mugenfinance'
 import multichain from '@adapters/multichain'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
@@ -507,6 +508,7 @@ export const adapters: Adapter[] = [
   mountainProtocol,
   mstable,
   muExchange,
+  mugenfinance,
   multichain,
   nemesisDao,
   nexusMutual,
