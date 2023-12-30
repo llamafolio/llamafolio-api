@@ -4,6 +4,7 @@ import { client } from '@db/clickhouse'
 import { type ContractInfo, insertContracts } from '@db/contracts'
 import { chainById } from '@lib/chains'
 import { fetcher } from '@lib/fetcher'
+import { parseAddresses } from '@lib/fmt'
 
 import environment from '../environment'
 
@@ -66,14 +67,18 @@ async function main() {
   if (!chainInfo) {
     return console.error(`Chain not found ${chain}`)
   }
-  const addressesStr = process.argv[3]
-  const addresses = addressesStr.split(',')
+  const addresses = parseAddresses(process.argv[3] || '')
+  if (!addresses) {
+    return console.error('Invalid addresses')
+  }
 
   try {
     if (chain === 'ethereum') {
       const [contractCreationsRes, abisRes] = await Promise.all([
         fetcher<ContractCreationEtherscanResponse>(
-          `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=${addressesStr}&apikey=${environment.ETHERSCAN_API_KEY}`,
+          `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=${addresses.join(
+            ',',
+          )}&apikey=${environment.ETHERSCAN_API_KEY}`,
         ),
         Promise.all(
           addresses.map((address) =>
