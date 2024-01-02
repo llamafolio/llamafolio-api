@@ -386,6 +386,8 @@ export const chains = [
   },
 ] satisfies IChainInfo[]
 
+export const chainIds = chains.map((chain) => chain.chainId)
+
 export const chainById: { [key: string]: IChainInfo } = {}
 
 for (const chain of chains) {
