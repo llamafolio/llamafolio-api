@@ -128,6 +128,15 @@ functions:
           path: /contracts/{chain}/{address}
     timeout: 15
 
+  getTrendingContracts:
+    handler: src/handlers/getTrendingContracts.handler
+    description: Get trending contracts
+    events:
+      - httpApi:
+          method: get
+          path: /contracts/trending
+    timeout: 29
+
   getGasUsed:
     handler: src/handlers/getGasUsed.handler
     description: Get gas used
