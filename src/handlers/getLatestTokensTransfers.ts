@@ -2,7 +2,7 @@ import { client } from '@db/clickhouse'
 import { selectLatestTokensTransfers } from '@db/tokensTransfers'
 import { badRequest, serverError, success } from '@handlers/response'
 import { chainByChainId, getChainId } from '@lib/chains'
-import { parseAddress, unixFromDate } from '@lib/fmt'
+import { parseAddress } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenPrice } from '@lib/price'
 import type { Token } from '@lib/token'
@@ -11,6 +11,8 @@ import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface TokenTransfer {
   timestamp: TUnixTimestamp
+  transactionHash: string
+  logIndex: number
   balanceUSD?: number
   amount: string
   fromAddress: string
@@ -19,7 +21,6 @@ export interface TokenTransfer {
 
 export interface LatestTokensTransfersResponse {
   data: TokenTransfer[]
-  updatedAt?: TUnixTimestamp
   count: number
 }
 
@@ -59,7 +60,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     }
 
     const response: LatestTokensTransfersResponse = {
-      updatedAt: unixFromDate(new Date()),
       data: tokensTransfers,
       count,
     }

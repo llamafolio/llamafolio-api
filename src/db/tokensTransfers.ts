@@ -14,6 +14,7 @@ export async function selectLatestTokensTransfers(
         SELECT
           "timestamp",
           "transaction_hash",
+          "log_index",
           "from_address",
           "to_address",
           "value"
@@ -23,7 +24,7 @@ export async function selectLatestTokensTransfers(
         "timestamp" >= now() - interval 24 hour AND
         "address_short" = substring({address: String}, 1, 10) AND
         "address" = {address: String}
-      GROUP BY "timestamp", "transaction_hash", "from_address", "to_address", "value"
+      GROUP BY "timestamp", "transaction_hash", "log_index", "from_address", "to_address", "value"
       ),
       (
         SELECT count() FROM "latest_tokens_transfers"
@@ -48,6 +49,7 @@ export async function selectLatestTokensTransfers(
     data: {
       timestamp: string
       transaction_hash: string
+      log_index: string
       from_address: string
       to_address: string
       value: string
@@ -57,6 +59,7 @@ export async function selectLatestTokensTransfers(
 
   return res.data.map((row) => ({
     transactionHash: row.transaction_hash,
+    logIndex: parseInt(row.log_index),
     fromAddress: row.from_address,
     toAddress: row.to_address,
     amount: row.value,
