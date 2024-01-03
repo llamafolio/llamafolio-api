@@ -223,6 +223,15 @@ functions:
           path: /snapshots/{address}/latest
     timeout: 10
 
+  getLatestTokensTransfers:
+    handler: src/handlers/getLatestTokensTransfers.handler
+    description: Get latest tokens transfers
+    events:
+      - httpApi:
+          method: get
+          path: /tokens_transfers/{chain}/{address}/latest
+    timeout: 10
+
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler
     description: Get sync status
