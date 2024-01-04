@@ -28,10 +28,15 @@ export async function selectLatestTokensTransfers(
       ),
       (
         SELECT count() FROM "latest_tokens_transfers"
-      ) AS "count"
+      ) AS "count",
+      (
+        SELECT max("timestamp") FROM evm_indexer2.blocks
+        WHERE "chain" = {chainId: UInt64}
+      ) AS "updated_at"
       SELECT
         *,
-        "count"
+        "count",
+        "updated_at"
       FROM "latest_tokens_transfers"
       ORDER BY "timestamp" DESC
       LIMIT {limit: UInt8}
@@ -54,6 +59,7 @@ export async function selectLatestTokensTransfers(
       to_address: string
       value: string
       count: string
+      updated_at: string
     }[]
   }
 
@@ -65,5 +71,6 @@ export async function selectLatestTokensTransfers(
     amount: row.value,
     count: parseInt(row.count),
     timestamp: unixFromDateTime(row.timestamp),
+    updatedAt: unixFromDateTime(row.updated_at),
   }))
 }

@@ -2,7 +2,7 @@ import { client } from '@db/clickhouse'
 import { selectLatestTokensTransfers } from '@db/tokensTransfers'
 import { badRequest, serverError, success } from '@handlers/response'
 import { chainByChainId, getChainId } from '@lib/chains'
-import { parseAddress } from '@lib/fmt'
+import { parseAddress, unixFromDate } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenPrice } from '@lib/price'
 import type { Token } from '@lib/token'
@@ -20,6 +20,7 @@ export interface TokenTransfer {
 }
 
 export interface LatestTokensTransfersResponse {
+  updatedAt: TUnixTimestamp
   data: TokenTransfer[]
   count: number
 }
@@ -46,9 +47,11 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     const tokensTransfers: TokenTransfer[] = []
     let count = 0
+    let updatedAt = unixFromDate(new Date())
 
     for (const tokenTransfer of latestTokensTransfers) {
       count = tokenTransfer.count
+      updatedAt = tokenTransfer.updatedAt
 
       tokensTransfers.push({
         ...tokenTransfer,
@@ -60,6 +63,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     }
 
     const response: LatestTokensTransfersResponse = {
+      updatedAt,
       data: tokensTransfers,
       count,
     }
