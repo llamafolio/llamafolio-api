@@ -9,6 +9,9 @@ import type { Token } from '@lib/token'
 import type { TUnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
+type Window = 'd' | 'w' | 'm'
+const WINDOWS: Window[] = ['d', 'w', 'm']
+
 export interface TokenTransfer {
   timestamp: TUnixTimestamp
   transactionHash: string
@@ -36,12 +39,17 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     return badRequest('Invalid chain parameter')
   }
 
+  const window = (event.queryStringParameters?.w?.toLowerCase() as Window) || 'm'
+  if (!WINDOWS.includes(window)) {
+    return badRequest('Unsupported window')
+  }
+
   const offset = parseInt(event.queryStringParameters?.offset || '') || 0
   const limit = parseInt(event.queryStringParameters?.limit || '') || 25
 
   try {
     const [latestTokensTransfers, tokenPrice] = await Promise.all([
-      selectLatestTokensTransfers(client, chainId, address, limit, offset),
+      selectLatestTokensTransfers(client, chainId, address, limit, offset, window),
       getTokenPrice({ chain: chainByChainId[chainId].id, address } as Token),
     ])
 

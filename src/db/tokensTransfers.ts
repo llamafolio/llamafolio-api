@@ -7,7 +7,16 @@ export async function selectLatestTokensTransfers(
   address: string,
   limit: number,
   offset: number,
+  window: 'd' | 'w' | 'm',
 ) {
+  const hours: { [key in 'd' | 'w' | 'm']: number } = {
+    d: 24,
+    w: 24 * 7,
+    m: 24 * 30,
+  }
+
+  const interval = hours[window] || 24
+
   const queryRes = await client.query({
     query: `
       WITH "latest_tokens_transfers" AS (
@@ -21,7 +30,7 @@ export async function selectLatestTokensTransfers(
       FROM evm_indexer2.token_transfers
       WHERE
         "chain" = {chainId: UInt64} AND
-        "timestamp" >= now() - interval 24 hour AND
+        "timestamp" >= now() - interval {interval: UInt16} hour AND
         "address_short" = substring({address: String}, 1, 10) AND
         "address" = {address: String}
       GROUP BY "timestamp", "transaction_hash", "log_index", "from_address", "to_address", "value"
@@ -47,6 +56,7 @@ export async function selectLatestTokensTransfers(
       address,
       limit,
       offset,
+      interval,
     },
   })
 
