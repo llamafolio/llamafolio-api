@@ -268,6 +268,15 @@ functions:
           path: /holders/{address}
     timeout: 15
 
+  getTokenYields:
+    handler: src/handlers/getTokenYields.handler
+    description: Get token yields
+    events:
+      - httpApi:
+          method: get
+          path: /tokens/{chain}/{address}/yields
+    timeout: 15
+
   scheduledRevalidateAdaptersContracts:
     handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts
     description: Revalidate expired adapters contracts
