@@ -27,7 +27,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const limit = parseInt(event.queryStringParameters?.limit || '') || 25
 
   try {
-    const { updatedAt, data, count } = await selectTokenYields(client, chainId, address, offset, limit)
+    const { updatedAt, data, count } = await selectTokenYields(client, chainId, address, limit, offset)
 
     const response: TokenYieldsResponse = {
       updatedAt,
@@ -35,8 +35,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       count,
     }
 
-    return success(response)
-    // return success(response, { maxAge: 60 * 60, swr: 10 * 60 })
+    return success(response, { maxAge: 30 * 60, swr: 10 * 60 })
   } catch (error) {
     console.error('Failed to retrieve token yields', { error, address })
     return serverError('Failed to retrieve token yields', { error, address })
