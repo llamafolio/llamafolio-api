@@ -1,5 +1,4 @@
 import type { ClickHouseClient } from '@clickhouse/client'
-import environment from '@environment'
 import { chainById, fromDefiLlamaChain } from '@lib/chains'
 import { boolean, toDateTime, unixFromDate, unixFromDateTime } from '@lib/fmt'
 
@@ -101,7 +100,7 @@ export interface TokenYield {
   apyReward: string | null
   apyMean30d: string | null
   ilRisk: boolean | null
-  underlyings: string[] | null
+  underlyings: { address: string; symbol: string; name: string }[] | null
 }
 
 export async function selectTokenYields(
@@ -113,28 +112,53 @@ export async function selectTokenYields(
 ) {
   const queryRes = await client.query({
     query: `
-      WITH (
-        SELECT max("timestamp") AS "timestamp" FROM ${environment.NS_LF}.yields
-      ) AS "updated_at"
+      WITH "sub_yields" AS (
+        WITH (
+          SELECT max("timestamp") AS "timestamp" FROM lf.yields
+        ) AS "updated_at"
+        SELECT
+          "chain",
+          "adapter_id",
+          "address",
+          "pool",
+          "apy",
+          "apy_base",
+          "apy_reward",
+          "apy_mean_30d",
+          "il_risk",
+          "underlyings",
+          "underlying"
+        FROM lf.yields
+        LEFT ARRAY JOIN "underlyings" AS "underlying"
+        WHERE
+          "timestamp" = "updated_at" AND
+          "chain" = {chainId: UInt64} AND (
+            "address" = {address: String} OR
+            has("underlyings", {address: String})
+          )
+        ORDER BY "apy" DESC
+      )
       SELECT
-        "pool",
+        "chain",
         "adapter_id",
         "address",
+        "pool",
         "apy",
         "apy_base",
         "apy_reward",
         "apy_mean_30d",
         "il_risk",
-        "underlyings",
-        "updated_at"
-      FROM ${environment.NS_LF}.yields
-      WHERE
-        "timestamp" = "updated_at" AND
-        "chain" = {chainId: UInt64} AND (
-          "address" = {address: String} OR
-          has("underlyings", {address: String})
-        )
-      ORDER BY "apy" DESC
+        groupArray(("address", "symbol", "name")) as "underlyings"
+      FROM "sub_yields" AS "y"
+      LEFT JOIN (
+        SELECT "address", "symbol", "name" FROM evm_indexer2.tokens
+        WHERE
+          "chain" = {chainId: UInt64} AND
+          "address" IN (
+            SELECT "underlying" FROM "sub_yields"
+          )
+      ) AS "t" ON y.underlying = t.address
+      GROUP BY chain, adapter_id, address, pool, apy, apy_base, apy_reward, apy_mean_30d, il_risk
       LIMIT {limit: UInt8}
       OFFSET {offset: UInt32};
     `,
@@ -156,7 +180,7 @@ export async function selectTokenYields(
       apy_reward: string | null
       apy_mean_30d: string | null
       il_risk: boolean | null
-      underlyings: string[] | null
+      underlyings: [string, string, string][] | null
       updated_at: string
     }[]
   }
@@ -176,7 +200,7 @@ export async function selectTokenYields(
       apyReward: row.apy_reward,
       apyMean30d: row.apy_mean_30d,
       ilRisk: row.il_risk,
-      underlyings: row.underlyings,
+      underlyings: (row.underlyings || []).map(([address, symbol, name]) => ({ address, symbol, name })),
     })
   }
 
