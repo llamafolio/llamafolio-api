@@ -1,6 +1,7 @@
 import type { ClickHouseClient } from '@clickhouse/client'
+import environment from '@environment'
 import { chainById, fromDefiLlamaChain } from '@lib/chains'
-import { boolean, toDateTime } from '@lib/fmt'
+import { boolean, toDateTime, unixFromDate, unixFromDateTime } from '@lib/fmt'
 
 export interface YieldOld {
   chain: string
@@ -89,6 +90,97 @@ export async function fetchYields() {
   }
 
   return data
+}
+
+export interface TokenYield {
+  pool: string
+  adapterId: string
+  address: string
+  apy: string | null
+  apyBase: string | null
+  apyReward: string | null
+  apyMean30d: string | null
+  ilRisk: boolean | null
+  underlyings: string[] | null
+}
+
+export async function selectTokenYields(
+  client: ClickHouseClient,
+  chainId: number,
+  address: `0x${string}`,
+  limit = 25,
+  offset = 0,
+) {
+  const queryRes = await client.query({
+    query: `
+      WITH (
+        SELECT max("timestamp") AS "timestamp" FROM ${environment.NS_LF}.yields
+      ) AS "updated_at"
+      SELECT
+        "pool",
+        "adapter_id",
+        "address",
+        "apy",
+        "apy_base",
+        "apy_reward",
+        "apy_mean_30d",
+        "il_risk",
+        "underlyings",
+        "updated_at"
+      FROM ${environment.NS_LF}.yields
+      WHERE
+        "timestamp" = "updated_at" AND
+        "chain" = {chainId: UInt64} AND (
+          "address" = {address: String} OR
+          has("underlyings", {address: String})
+        )
+      ORDER BY "apy" DESC
+      LIMIT {limit: UInt8}
+      OFFSET {offset: UInt32};
+    `,
+    query_params: {
+      address,
+      chainId,
+      offset,
+      limit,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: {
+      pool: string
+      adapter_id: string
+      address: string
+      apy: string | null
+      apy_base: string | null
+      apy_reward: string | null
+      apy_mean_30d: string | null
+      il_risk: boolean | null
+      underlyings: string[] | null
+      updated_at: string
+    }[]
+  }
+
+  const data: TokenYield[] = []
+  let updatedAt = unixFromDate(new Date())
+
+  for (const row of res.data) {
+    updatedAt = unixFromDateTime(row.updated_at)
+
+    data.push({
+      pool: row.pool,
+      adapterId: row.adapter_id,
+      address: row.address,
+      apy: row.apy,
+      apyBase: row.apy_base,
+      apyReward: row.apy_reward,
+      apyMean30d: row.apy_mean_30d,
+      ilRisk: row.il_risk,
+      underlyings: row.underlyings,
+    })
+  }
+
+  return { updatedAt, data, count: data.length }
 }
 
 export interface YieldStorage {
