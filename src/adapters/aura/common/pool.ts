@@ -185,9 +185,6 @@ const unwrapPoolsAsUnderlyings = (pools: Contract[]) => {
 }
 
 const getAuraExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise<Contract[]> => {
-  const standardRewardsPools: Contract[] = []
-  const extraRewardsPools: Contract[] = []
-
   const extraRewardsLengthRes = await multicall({
     ctx,
     calls: pools.map((pool) => ({ target: pool.gauge }) as const),
@@ -196,43 +193,45 @@ const getAuraExtraRewards = async (ctx: BaseContext, pools: Contract[]): Promise
 
   const extraRewardsRes = await multicall({
     ctx,
-    calls: mapSuccessFilter(
-      extraRewardsLengthRes,
-      (res) => ({ target: res.input.target, params: [res.output - 1n] }) as const,
-    ),
+    calls: mapSuccessFilter(extraRewardsLengthRes, (res, index) => {
+      return rangeBI(0n, res.output).map((i) => ({ target: res.input.target, params: [i], poolIndex: index }) as const)
+    }).flat(),
     abi: abi.extraRewards,
-  })
-
-  pools.forEach((pool, idx) => {
-    const extraRewardRes = extraRewardsRes[idx].success ? extraRewardsRes[idx].output : undefined
-    pool.rewarder = extraRewardRes
-
-    if (pool.rewarder) {
-      extraRewardsPools.push(pool)
-    } else {
-      standardRewardsPools.push(pool)
-    }
   })
 
   const stashRewardsRes = await multicall({
     ctx,
-    calls: extraRewardsPools.map((pool) => ({ target: pool.rewarder }) as const),
+    calls: mapSuccessFilter(
+      extraRewardsRes,
+      (res) => ({ target: res.output, poolIndex: res.input.poolIndex }) as const,
+    ),
     abi: abi.rewardToken,
   })
 
   const baseTokensRes = await multicall({
     ctx,
-    calls: mapSuccessFilter(stashRewardsRes, (res) => ({ target: res.output }) as const),
+    calls: mapSuccessFilter(
+      stashRewardsRes,
+      (res) => ({ target: res.output, poolIndex: res.input.poolIndex }) as const,
+    ),
     abi: abi.baseToken,
   })
 
-  extraRewardsPools.forEach((pool, idx) => {
-    const baseTokenRes: any = baseTokensRes[idx]
+  pools.forEach((pool, index) => {
+    pool.rewarders = []
 
-    if (!baseTokenRes) return
+    mapSuccessFilter(extraRewardsRes, (res) => {
+      if (res.input.poolIndex === index) {
+        pool.rewarders.push(res.output)
+      }
+    })
 
-    pool.rewards?.push(baseTokenRes.output)
+    mapSuccessFilter(baseTokensRes, (res) => {
+      if (res.input.poolIndex === index) {
+        pool.rewards!.push(res.output as any)
+      }
+    })
   })
 
-  return [...standardRewardsPools, ...extraRewardsPools]
+  return pools
 }
