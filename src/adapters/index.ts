@@ -226,6 +226,7 @@ import realt from '@adapters/realt'
 import reaperFarm from '@adapters/reaper-farm'
 import redacted from '@adapters/redacted'
 import reflexer from '@adapters/reflexer'
+import renzo from '@adapters/renzo'
 import reserve from '@adapters/reserve'
 import retro from '@adapters/retro'
 import ribbonFinance from '@adapters/ribbon-finance'
@@ -557,6 +558,7 @@ export const adapters: Adapter[] = [
   reaperFarm,
   redacted,
   reflexer,
+  renzo,
   reserve,
   retro,
   ribbonFinance,
