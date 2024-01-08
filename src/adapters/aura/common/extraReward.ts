@@ -29,7 +29,7 @@ export const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance:
   })
 
   const balanceWithExtraRewards: Balance[] = poolBalance.filter((poolBalance) => {
-    return poolBalance.rewards && poolBalance.rewarders.length > 0 && poolBalance.amount > 0n
+    return poolBalance.rewards && poolBalance.rewarders.length > 0
   })
 
   const extraRewardsBalancesRes = await multicall({
