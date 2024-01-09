@@ -12,6 +12,9 @@ interface Approval {
   data: { owner: `0x${string}`; spender: `0x${string}`; value: bigint }
 }
 
+type Window = 'd' | 'w' | 'm'
+const WINDOWS: Window[] = ['d', 'w', 'm']
+
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const chainId = getChainId(event.pathParameters?.chain || '')
   if (!chainId) {
@@ -28,11 +31,16 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     return badRequest('Missing signature parameter')
   }
 
+  const window = (event.queryStringParameters?.w?.toLowerCase() as Window) || 'd'
+  if (!WINDOWS.includes(window)) {
+    return badRequest('Unsupported window')
+  }
+
   const offset = parseInt(event.queryStringParameters?.offset || '') || 0
   const limit = parseInt(event.queryStringParameters?.limit || '') || 25
 
   try {
-    const latestApprovals = await selectLatestApprovals(client, chainId, address, signature, limit, offset)
+    const latestApprovals = await selectLatestApprovals(client, chainId, address, signature, limit, offset, window)
 
     const approvals: Approval[] = latestApprovals.map((latestApproval) => {
       const {

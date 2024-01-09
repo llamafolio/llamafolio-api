@@ -9,8 +9,15 @@ export async function selectLatestApprovals(
   signature: string,
   limit: number,
   offset: number,
+  window: 'd' | 'w' | 'm',
 ) {
-  const interval = 24
+  const hours: { [key in 'd' | 'w' | 'm']: number } = {
+    d: 24,
+    w: 24 * 7,
+    m: 24 * 30,
+  }
+
+  const interval = hours[window] || 24
 
   const queryRes = await client.query({
     query: `
