@@ -14,6 +14,7 @@
     "update-balances": "tsx scripts/update-balances.ts",
     "revalidate-contracts": "tsx scripts/revalidate-contracts.ts",
     "revalidate-contracts-rec": "tsx scripts/revalidate-contracts-rec.ts",
+    "signature": "tsx scripts/get-abi-sig.ts",
     "update-protocols": "tsx scripts/update-protocols.ts",
     "update-yields": "tsx scripts/update-yields.ts",
     "nft-floors": "tsx --require='dotenv/config' scripts/nft-floors.ts",

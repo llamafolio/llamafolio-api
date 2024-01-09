@@ -241,6 +241,15 @@ functions:
           path: /tokens_approvals/{chain}/{address}/{signature}/latest
     timeout: 10
 
+  getLatestDexes:
+    handler: src/handlers/getLatestDexes.handler
+    description: Get latest dexes
+    events:
+      - httpApi:
+          method: get
+          path: /tokens_dexes/{chain}/latest
+    timeout: 10
+
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler
     description: Get sync status
