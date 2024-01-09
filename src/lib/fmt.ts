@@ -1,4 +1,4 @@
-import { isHex } from '@lib/contract'
+import { isHex, isHexSignature } from '@lib/contract'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
@@ -69,6 +69,10 @@ export function parseAddresses(str: string) {
     .filter(isHex)
     .map((address) => address.toLowerCase() as `0x${string}`)
     .sort()
+}
+
+export function parseSignatureAddress(str: string) {
+  return isHexSignature(str) ? (str.toLowerCase() as `0x${string}`) : null
 }
 
 export function toStartOfDay(date: Date | string | number) {

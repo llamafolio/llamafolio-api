@@ -232,6 +232,15 @@ functions:
           path: /tokens_transfers/{chain}/{address}/latest
     timeout: 10
 
+  getLatestApprovals:
+    handler: src/handlers/getLatestApprovals.handler
+    description: Get latest approvals
+    events:
+      - httpApi:
+          method: get
+          path: /tokens_approvals/{chain}/{address}/{signature}/latest
+    timeout: 10
+
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler
     description: Get sync status
