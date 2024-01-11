@@ -11,6 +11,7 @@
     "create-adapter": "tsx scripts/create-adapter.ts",
     "delete-adapter": "tsx scripts/delete-adapter.ts",
     "adapter-balances": "tsx scripts/run-adapter-balances.ts",
+    "get-contract-info": "tsx scripts/get-contract-info.ts",
     "update-balances": "tsx scripts/update-balances.ts",
     "revalidate-contracts": "tsx scripts/revalidate-contracts.ts",
     "revalidate-contracts-rec": "tsx scripts/revalidate-contracts-rec.ts",

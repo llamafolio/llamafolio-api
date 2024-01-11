@@ -470,6 +470,9 @@ export interface ContractInfo {
   name: string
   abi: string
   verified: boolean
+  adapter_id: string
+  timestamp: string
+  updated_at: string
   data: string
 }
 
