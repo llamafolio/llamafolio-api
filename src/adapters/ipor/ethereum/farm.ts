@@ -1,10 +1,10 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapMultiSuccessFilter } from '@lib/array'
 import type { Category } from '@lib/category'
+import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import { parseEther } from 'viem'
 
 const abi = {
   balanceOf: {
@@ -45,6 +45,25 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  getBalance: {
+    inputs: [],
+    name: 'getBalance',
+    outputs: [
+      {
+        components: [
+          { internalType: 'uint256', name: 'totalCollateralPayFixed', type: 'uint256' },
+          { internalType: 'uint256', name: 'totalCollateralReceiveFixed', type: 'uint256' },
+          { internalType: 'uint256', name: 'liquidityPool', type: 'uint256' },
+          { internalType: 'uint256', name: 'vault', type: 'uint256' },
+        ],
+        internalType: 'struct IporTypes.AmmBalancesMemory',
+        name: '',
+        type: 'tuple',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 const IPOR: Token = {
@@ -59,7 +78,7 @@ export async function getIporFarmBalances(
   assets: Contract[],
   farmer: Contract,
 ): Promise<Balance[]> {
-  const [userBalancesRes, userPendingRewardsRes, exchangeRatesRes] = await Promise.all([
+  const [userBalancesRes, userPendingRewardsRes, ipTokenSupplies, storageSupplies] = await Promise.all([
     multicall({
       ctx,
       calls: assets.map((asset) => ({ target: farmer.address, params: [ctx.address, asset.token!] }) as const),
@@ -72,30 +91,39 @@ export async function getIporFarmBalances(
     }),
     multicall({
       ctx,
-      calls: assets.map((asset) => ({ target: asset.address }) as const),
-      abi: abi.calculateExchangeRate,
+      calls: assets.map((asset) => ({ target: asset.token! }) as const),
+      abi: erc20Abi.totalSupply,
+    }),
+    multicall({
+      ctx,
+      calls: assets.map((asset) => ({ target: asset.storage }) as const),
+      abi: abi.getBalance,
     }),
   ])
 
   return mapMultiSuccessFilter(
-    userBalancesRes.map((_, i) => [userBalancesRes[i], userPendingRewardsRes[i]]),
+    userBalancesRes.map((_, i) => [
+      userBalancesRes[i],
+      userPendingRewardsRes[i],
+      ipTokenSupplies[i],
+      storageSupplies[i],
+    ]),
 
     (res, index) => {
       const asset = assets[index]
-      const pricePerFullShare = exchangeRatesRes[index].success
-        ? exchangeRatesRes[index].output! / parseEther('1.0')
-        : 1n
       const underlying = asset.underlyings![0] as Contract
-      if (!underlying || !pricePerFullShare) return null
 
-      const [{ output: amount }, { output: rewards }] = res.inputOutputPairs
+      const [{ output: amount }, { output: rewards }, { output: ipTokenSupply }, { output: storageSupplyRes }] =
+        res.inputOutputPairs
       const [{ rewardsAmount }] = rewards
+      const storageSupply = storageSupplyRes.liquidityPool
+      const underlyingAmount = (amount * storageSupply) / ipTokenSupply
 
       return {
         ...asset,
         decimals: 18,
         amount,
-        underlyings: [{ ...underlying, amount: amount * pricePerFullShare }],
+        underlyings: [{ ...underlying, amount: underlyingAmount }],
         rewards: [{ ...IPOR, amount: rewardsAmount }],
         category: 'farm' as Category,
       }
