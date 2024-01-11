@@ -73,7 +73,7 @@ async function main() {
     return console.error('Invalid addresses')
   }
 
-  const protocol = process.argv[4] || ''
+  const adapter_id = process.argv[4] || ''
 
   try {
     const now = new Date()
@@ -126,7 +126,7 @@ async function main() {
           transaction_hash: contractCreation?.txHash?.toLowerCase() || '',
           verified: abiSuccess,
           data: JSON.stringify(data),
-          protocol,
+          adapter_id,
           timestamp: toDateTime(now),
           updated_at: toDateTime(now),
         })
