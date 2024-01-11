@@ -27,6 +27,13 @@ const abi = {
     inputs: [{ name: '_shares', type: 'uint256' }],
     outputs: [{ name: '', type: 'uint256' }],
   },
+  deposits: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'deposits',
+    inputs: [{ name: 'arg0', type: 'address' }],
+    outputs: [{ name: '', type: 'uint256' }],
+  },
 } as const
 
 const WETH: Token = {
@@ -110,13 +117,26 @@ export function AdjustUnderlyingsAmount(pools: PoolBalances[]): PoolBalances[] {
 }
 
 export async function getYearnStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const userBalances = await call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf })
-  const fmtUserBalances = await call({ ctx, target: staker.address, params: [userBalances], abi: abi.convertToAssets })
+  const userBalance = await call({ ctx, target: staker.address, params: [ctx.address], abi: erc20Abi.balanceOf })
+  const fmtUserBalances = await call({ ctx, target: staker.address, params: [userBalance], abi: abi.convertToAssets })
 
   return {
     ...staker,
-    amount: userBalances,
+    amount: userBalance,
     underlyings: [{ ...WETH, amount: fmtUserBalances, decimals: staker.decimals }],
+    rewards: undefined,
+    category: 'stake',
+  }
+}
+
+export async function getVeYearnBalance(ctx: BalancesContext, depositer: Contract): Promise<Balance> {
+  const userBalance = await call({ ctx, target: depositer.address, params: [ctx.address], abi: abi.deposits })
+  const fmtUserBalances = await call({ ctx, target: depositer.token!, params: [userBalance], abi: abi.convertToAssets })
+
+  return {
+    ...depositer,
+    amount: userBalance,
+    underlyings: [{ ...WETH, amount: fmtUserBalances, decimals: 18 }],
     rewards: undefined,
     category: 'stake',
   }
