@@ -1,5 +1,4 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter } from '@lib/array'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -24,12 +23,12 @@ type AuraBalance = Balance & {
 }
 
 export const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: AuraBalance[]): Promise<Balance[]> => {
-  const balanceWithStandardRewards: Balance[] = poolBalance.filter((poolBalance) => {
-    return !poolBalance.rewards || poolBalance.rewarders.length === 0
+  const balanceWithStandardRewards: AuraBalance[] = poolBalance.filter((poolBalance) => {
+    return !poolBalance.rewards || (poolBalance.rewarders && poolBalance.rewarders.length === 0)
   })
 
-  const balanceWithExtraRewards: Balance[] = poolBalance.filter((poolBalance) => {
-    return poolBalance.rewards && poolBalance.rewarders.length > 0
+  const balanceWithExtraRewards: AuraBalance[] = poolBalance.filter((poolBalance) => {
+    return poolBalance.rewards && poolBalance.rewarders && poolBalance.rewarders.length > 0
   })
 
   const extraRewardsBalancesRes = await multicall({
@@ -42,16 +41,17 @@ export const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance:
     abi: abi.earned,
   })
 
+  let resultIndex = 0
   balanceWithExtraRewards.forEach((pool) => {
     const rewards = pool.rewards as Contract[]
     const extraRewards = rewards.slice(1)
-
-    const extraRewardsBalances = mapSuccessFilter(extraRewardsBalancesRes, (res, index) => {
-      return { ...extraRewards[index], amount: res.output }
+    const extraRewardsBalances = pool.rewarders.map((_, rewarderIndex) => {
+      const res = extraRewardsBalancesRes[resultIndex]
+      resultIndex++
+      return { ...extraRewards[rewarderIndex], amount: res.output }
     })
-
-    pool.rewards = [pool.rewards![0], ...extraRewardsBalances]
+    pool.rewards = [pool.rewards![0], ...(extraRewardsBalances as Balance[])]
   })
 
-  return [...balanceWithExtraRewards, ...balanceWithStandardRewards]
+  return [...balanceWithStandardRewards, ...balanceWithExtraRewards]
 }
