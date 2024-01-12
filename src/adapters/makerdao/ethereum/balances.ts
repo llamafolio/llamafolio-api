@@ -234,7 +234,7 @@ const getUrnsBalances = async (ctx: BalancesContext, vat: Contract, urnHandlers:
     }
   }
 
-  return balancesGroups
+  return balancesGroups.map((balances: any) => ({ balances, healthFactor: getHealthFactor(balances) }))
 }
 
 export function getHealthFactor(balancesGroup: BalanceWithExtraProps[]) {
