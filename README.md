@@ -26,7 +26,7 @@ pnpm add --global pnpm@latest
 
 ## Installation
 
-The API is using NodeJS and Typescript.    
+The API is using Node.js and TypeScript.    
 Install dependencies:
 
 ```bash
