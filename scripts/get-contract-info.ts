@@ -2,8 +2,9 @@ import '../environment'
 
 import { client } from '@db/clickhouse'
 import { type ContractInfo, insertContracts } from '@db/contracts'
-import { chainById } from '@lib/chains'
+import { chainByChainId, getChainId } from '@lib/chains'
 import { fetcher } from '@lib/fetcher'
+import { parseAddresses, toDateTime } from '@lib/fmt'
 
 import environment from '../environment'
 
@@ -56,24 +57,33 @@ async function main() {
   // argv[1]: get-contract-info.ts
   // argv[2]: chain
   // argv[3]: address (comma separated, max 5 at a time)
+  // argv[4]: protocol (optional)
   if (process.argv.length < 4) {
     console.error('Missing arguments')
     return help()
   }
 
-  const chain = process.argv[2]
-  const chainInfo = chainById[chain]
+  const chainInfo = chainByChainId[getChainId(process.argv[2])]
   if (!chainInfo) {
-    return console.error(`Chain not found ${chain}`)
+    return console.error(`Chain not found ${process.argv[2]}`)
   }
-  const addressesStr = process.argv[3]
-  const addresses = addressesStr.split(',')
+
+  const addresses = parseAddresses(process.argv[3] || '')
+  if (!addresses) {
+    return console.error('Invalid addresses')
+  }
+
+  const adapter_id = process.argv[4] || ''
 
   try {
-    if (chain === 'ethereum') {
+    const now = new Date()
+
+    if (chainInfo.id === 'ethereum') {
       const [contractCreationsRes, abisRes] = await Promise.all([
         fetcher<ContractCreationEtherscanResponse>(
-          `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=${addressesStr}&apikey=${environment.ETHERSCAN_API_KEY}`,
+          `https://api.etherscan.io/api?module=contract&action=getcontractcreation&contractaddresses=${addresses.join(
+            ',',
+          )}&apikey=${environment.ETHERSCAN_API_KEY}`,
         ),
         Promise.all(
           addresses.map((address) =>
@@ -92,23 +102,33 @@ async function main() {
       const contractsInfo: ContractInfo[] = []
 
       for (let idx = 0; idx < addresses.length; idx++) {
-        if (abisRes[idx].message !== 'OK') {
+        const address = addresses[idx].toLowerCase()
+        const abiSuccess = abisRes[idx].message === 'OK'
+
+        if (!abiSuccess) {
           console.log(`Failed to get ABI`, abisRes[idx].message)
         }
 
-        const abi = abisRes[idx].message === 'OK' ? abisRes[idx].result[0].ABI : ''
-        const name = abisRes[idx].message === 'OK' ? abisRes[idx].result[0].ContractName : ''
-        const data = abisRes[idx].message === 'OK' ? abisRes[idx].result[0] : {}
+        const abi = abiSuccess && Array.isArray(abisRes[idx].result[0].ABI) ? abisRes[idx].result[0].ABI : ''
+        const name = abiSuccess ? abisRes[idx].result[0].ContractName : ''
+        const data = abiSuccess ? abisRes[idx].result[0] : {}
+
+        const contractCreation = contractCreationsRes.result.find(
+          (result) => result.contractAddress.toLowerCase() === address,
+        )
 
         contractsInfo.push({
           chain: chainInfo.chainId,
           address: addresses[idx].toLowerCase(),
           abi,
           name,
-          creator: contractCreationsRes.result[idx].contractCreator.toLowerCase(),
-          transaction_hash: contractCreationsRes.result[idx].txHash.toLowerCase(),
-          verified: abisRes[idx].message === 'OK',
+          creator: contractCreation?.contractCreator?.toLowerCase() || '',
+          transaction_hash: contractCreation?.txHash?.toLowerCase() || '',
+          verified: abiSuccess,
           data: JSON.stringify(data),
+          adapter_id,
+          timestamp: toDateTime(now),
+          updated_at: toDateTime(now),
         })
       }
 

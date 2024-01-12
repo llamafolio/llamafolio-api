@@ -9,27 +9,49 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  earned: {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'earned',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
-export const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: Balance[]): Promise<Balance[]> => {
-  const balanceWithStandardRewards: Balance[] = poolBalance.filter((poolBalance) => {
-    return !poolBalance.rewards || poolBalance.rewards.length === 0
+type AuraBalance = Balance & {
+  rewarders: `0x${string}`[]
+}
+
+export const getExtraRewardsBalances = async (ctx: BalancesContext, poolBalance: AuraBalance[]): Promise<Balance[]> => {
+  const balanceWithStandardRewards: AuraBalance[] = poolBalance.filter((poolBalance) => {
+    return !poolBalance.rewards || (poolBalance.rewarders && poolBalance.rewarders.length === 0)
   })
 
-  const balanceWithExtraRewards: Balance[] = poolBalance.filter((poolBalance) => {
-    return poolBalance.rewards && poolBalance.rewards.length > 0
+  const balanceWithExtraRewards: AuraBalance[] = poolBalance.filter((poolBalance) => {
+    return poolBalance.rewards && poolBalance.rewarders && poolBalance.rewarders.length > 0
   })
 
   const extraRewardsBalancesRes = await multicall({
     ctx,
-    calls: balanceWithExtraRewards.map((pool: Contract) => ({ target: pool.rewarder, params: [ctx.address] }) as const),
-    abi: abi.extraEarned,
+    calls: balanceWithExtraRewards
+      .map((pool: Contract) =>
+        pool.rewarders.map((rewarder: `0x${string}`) => ({ target: rewarder, params: [ctx.address] }) as const),
+      )
+      .flat(),
+    abi: abi.earned,
   })
 
-  balanceWithExtraRewards.forEach((pool, idx) => {
-    const extraRewardsBalances = extraRewardsBalancesRes[idx].success ? extraRewardsBalancesRes[idx].output : 0n
-    pool.rewards = [pool.rewards![0], { ...pool.rewards![1], amount: extraRewardsBalances! }]
+  let resultIndex = 0
+  balanceWithExtraRewards.forEach((pool) => {
+    const rewards = pool.rewards as Contract[]
+    const extraRewards = rewards.slice(1)
+    const extraRewardsBalances = pool.rewarders.map((_, rewarderIndex) => {
+      const res = extraRewardsBalancesRes[resultIndex]
+      resultIndex++
+      return { ...extraRewards[rewarderIndex], amount: res.output }
+    })
+    pool.rewards = [pool.rewards![0], ...(extraRewardsBalances as Balance[])]
   })
 
-  return [...balanceWithExtraRewards, ...balanceWithStandardRewards]
+  return [...balanceWithStandardRewards, ...balanceWithExtraRewards]
 }

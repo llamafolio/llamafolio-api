@@ -2,7 +2,7 @@ import type { ClickHouseClient } from '@clickhouse/client'
 import environment from '@environment'
 import type { Contract, ContractStandard } from '@lib/adapter'
 import { groupBy, keyBy, sliceIntoChunks } from '@lib/array'
-import { chainByChainId, chainById } from '@lib/chains'
+import { chainByChainId, chainById, chainIds } from '@lib/chains'
 import { shortAddress, toDateTime } from '@lib/fmt'
 
 export interface ContractStorage {
@@ -358,6 +358,62 @@ export async function getContract(client: ClickHouseClient, chainId: number, add
   }
 }
 
+export async function selectTrendingContracts(client: ClickHouseClient, window: string, chainId?: number) {
+  const contracts: { chain: string; chainId: number; address: string; count: number }[] = []
+  const hours: { [key: string]: number } = {
+    D: 24,
+    W: 24 * 7,
+    M: 24 * 30,
+  }
+
+  const interval = hours[window] || 24
+
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        "chain",
+        "to_address" AS "address",
+        count() as "count"
+      FROM evm_indexer2.transactions_to_mv
+      WHERE
+        "chain" IN {chainIds: Array(UInt64)} AND
+        toStartOfHour("timestamp") >= toStartOfHour(now()) - interval {interval: UInt16} hour
+      GROUP BY "chain", "to_address"
+      ORDER BY "count" DESC
+      LIMIT 100
+    `,
+    query_params: {
+      chainIds: chainId != null ? [chainId] : chainIds,
+      interval,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: {
+      chain: string
+      address: string
+      count: string
+    }[]
+  }
+
+  for (const row of res.data) {
+    const chainId = parseInt(row.chain)
+    const chain = chainByChainId[chainId]
+    if (chain == null) {
+      continue
+    }
+
+    contracts.push({
+      chain: chain.id,
+      chainId,
+      address: row.address,
+      count: parseInt(row.count),
+    })
+  }
+
+  return contracts
+}
+
 export function deleteContractsByAdapterId(client: ClickHouseClient, adapterId: string) {
   return client.command({
     query: `DELETE FROM ${environment.NS_LF}.adapters_contracts WHERE adapter_id = {adapterId: String};`,
@@ -414,6 +470,9 @@ export interface ContractInfo {
   name: string
   abi: string
   verified: boolean
+  adapter_id: string
+  timestamp: string
+  updated_at: string
   data: string
 }
 

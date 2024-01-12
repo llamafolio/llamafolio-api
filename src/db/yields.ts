@@ -1,6 +1,6 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import { chainById, fromDefiLlamaChain } from '@lib/chains'
-import { boolean, toDateTime } from '@lib/fmt'
+import { boolean, toDateTime, unixFromDate, unixFromDateTime } from '@lib/fmt'
 
 export interface YieldOld {
   chain: string
@@ -89,6 +89,122 @@ export async function fetchYields() {
   }
 
   return data
+}
+
+export interface TokenYield {
+  pool: string
+  adapterId: string
+  address: string
+  apy: string | null
+  apyBase: string | null
+  apyReward: string | null
+  apyMean30d: string | null
+  ilRisk: boolean | null
+  underlyings: { address: string; symbol: string; name: string }[] | null
+}
+
+export async function selectTokenYields(
+  client: ClickHouseClient,
+  chainId: number,
+  address: `0x${string}`,
+  limit = 25,
+  offset = 0,
+) {
+  const queryRes = await client.query({
+    query: `
+      WITH "sub_yields" AS (
+        WITH (
+          SELECT max("timestamp") AS "timestamp" FROM lf.yields
+        ) AS "updated_at"
+        SELECT
+          "chain",
+          "adapter_id",
+          "address",
+          "pool",
+          "apy",
+          "apy_base",
+          "apy_reward",
+          "apy_mean_30d",
+          "il_risk",
+          "underlyings",
+          "underlying"
+        FROM lf.yields
+        LEFT ARRAY JOIN "underlyings" AS "underlying"
+        WHERE
+          "timestamp" = "updated_at" AND
+          "chain" = {chainId: UInt64} AND (
+            "address" = {address: String} OR
+            has("underlyings", {address: String})
+          )
+        ORDER BY "apy" DESC
+      )
+      SELECT
+        "chain",
+        "adapter_id",
+        "address",
+        "pool",
+        "apy",
+        "apy_base",
+        "apy_reward",
+        "apy_mean_30d",
+        "il_risk",
+        groupArray(("address", "symbol", "name")) as "underlyings"
+      FROM "sub_yields" AS "y"
+      LEFT JOIN (
+        SELECT "address", "symbol", "name" FROM evm_indexer2.tokens
+        WHERE
+          "chain" = {chainId: UInt64} AND
+          "address" IN (
+            SELECT "underlying" FROM "sub_yields"
+          )
+      ) AS "t" ON y.underlying = t.address
+      GROUP BY chain, adapter_id, address, pool, apy, apy_base, apy_reward, apy_mean_30d, il_risk
+      LIMIT {limit: UInt8}
+      OFFSET {offset: UInt32};
+    `,
+    query_params: {
+      address,
+      chainId,
+      offset,
+      limit,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: {
+      pool: string
+      adapter_id: string
+      address: string
+      apy: string | null
+      apy_base: string | null
+      apy_reward: string | null
+      apy_mean_30d: string | null
+      il_risk: boolean | null
+      underlyings: [string, string, string][] | null
+      updated_at: string
+    }[]
+  }
+
+  const data: TokenYield[] = []
+  let updatedAt = unixFromDate(new Date())
+
+  for (const row of res.data) {
+    updatedAt = unixFromDateTime(row.updated_at)
+
+    data.push({
+      pool: row.pool,
+      adapterId: row.adapter_id,
+      address: row.address,
+      apy: row.apy,
+      apyBase: row.apy_base,
+      apyReward: row.apy_reward,
+      apyMean30d: row.apy_mean_30d,
+      ilRisk: row.il_risk,
+      underlyings: (row.underlyings || []).map(([address, symbol, name]) => ({ address, symbol, name })),
+    })
+  }
+
+  return { updatedAt, data, count: data.length }
 }
 
 export interface YieldStorage {

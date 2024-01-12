@@ -126,11 +126,13 @@ import houdiniSwap from '@adapters/houdini-swap'
 import hundredFinance from '@adapters/hundred-finance'
 import idle from '@adapters/idle'
 import illuvium from '@adapters/illuvium'
+import interportFinance from '@adapters/interport-finance'
 import inverseFinance from '@adapters/inverse-finance'
 import ipor from '@adapters/ipor'
 import ironBank from '@adapters/iron-bank'
 import izumiFinance from '@adapters/izumi-finance'
 import keep3rNetwork from '@adapters/keep3r-network'
+import kelpDao from '@adapters/kelp-dao'
 import keomProtocol from '@adapters/keom-protocol'
 import kineFinance from '@adapters/kine-finance'
 import kinzaFinance from '@adapters/kinza-finance'
@@ -226,6 +228,7 @@ import realt from '@adapters/realt'
 import reaperFarm from '@adapters/reaper-farm'
 import redacted from '@adapters/redacted'
 import reflexer from '@adapters/reflexer'
+import renzo from '@adapters/renzo'
 import reserve from '@adapters/reserve'
 import retro from '@adapters/retro'
 import ribbonFinance from '@adapters/ribbon-finance'
@@ -457,11 +460,13 @@ export const adapters: Adapter[] = [
   hundredFinance,
   idle,
   illuvium,
+  interportFinance,
   inverseFinance,
   ipor,
   ironBank,
   izumiFinance,
   keep3rNetwork,
+  kelpDao,
   keomProtocol,
   kineFinance,
   kinzaFinance,
@@ -557,6 +562,7 @@ export const adapters: Adapter[] = [
   reaperFarm,
   redacted,
   reflexer,
+  renzo,
   reserve,
   retro,
   ribbonFinance,

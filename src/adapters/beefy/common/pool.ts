@@ -1,4 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
+import { isNotNullish } from '@lib/type'
 
 const NATIVE: Record<string, string> = {
   ethereum: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
@@ -34,9 +35,10 @@ export async function getBeefyPools(ctx: BaseContext): Promise<Contract[]> {
         assets,
         strategy,
         oracleId,
+        id,
       } = vault
 
-      pools[oracleId] = {
+      pools[id] = {
         chain,
         address: earnContractAddress,
         symbol: token,
@@ -49,9 +51,9 @@ export async function getBeefyPools(ctx: BaseContext): Promise<Contract[]> {
       }
     })
 
-  boosts
+  const fmtBoosts = boosts
     .filter((boost) => boost.chain === ctx.chain && boost.status === 'active')
-    .forEach((boost) => {
+    .map((boost) => {
       const { chain, earnContractAddress, earnedTokenAddress, earnedTokenDecimals, earnedToken, poolId, status } = boost
 
       const boosterContract = {
@@ -62,17 +64,18 @@ export async function getBeefyPools(ctx: BaseContext): Promise<Contract[]> {
         beefyKey: poolId,
       }
 
-      if (pools[poolId]) {
-        pools[poolId] = {
-          ...pools[poolId],
-          earnContractAddress,
-          boostStatus: boosterContract.boostStatus,
-          rewards: boosterContract.rewards,
-        }
+      if (!pools[poolId]) return null
+
+      return {
+        ...pools[poolId],
+        earnContractAddress,
+        boostStatus: boosterContract.boostStatus,
+        rewards: boosterContract.rewards,
       }
     })
+    .filter(isNotNullish)
 
-  return getBeefyUnderlyings(ctx, Object.values(pools))
+  return getBeefyUnderlyings(ctx, Object.values(fmtBoosts))
 }
 
 async function getBeefyUnderlyings(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {

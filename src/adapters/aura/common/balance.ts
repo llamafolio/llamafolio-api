@@ -76,6 +76,10 @@ const abi = {
   },
 } as const
 
+type AuraBalance = Balance & {
+  rewarders: `0x${string}`[]
+}
+
 const AURA: { [key: string]: `0x${string}`[] } = {
   optimism: ['0x1509706a6c66CA549ff0cB464de88231DDBe213B', '0xec1c780a275438916e7ceb174d80878f29580606'],
   arbitrum: ['0x1509706a6c66CA549ff0cB464de88231DDBe213B', '0xeC1c780A275438916E7CEb174D80878f29580606'],
@@ -85,7 +89,6 @@ const AURA: { [key: string]: `0x${string}`[] } = {
 
 export async function getAuraBalStakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
   const balanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.balanceOfUnderlying })
-
   return { ...staker, amount: balanceOfRes, underlyings: undefined, rewards: undefined, category: 'farm' }
 }
 
@@ -117,25 +120,35 @@ export async function getAuraFarmBalances(
     const rewards = poolBalance.rewards as Contract[]
 
     return { ...poolBalance, rewards: [{ ...rewards![0], amount: res.output }, ...rewards!.slice(1)] }
-  }) as Balance[]
+  }) as AuraBalance[]
 
   return getAuraMintAmount(ctx, await getExtraRewardsBalances(ctx, fmtBalances))
 }
 
 const getAuraMintAmount = async (ctx: BalancesContext, balances: Balance[]): Promise<Balance[]> => {
   const mintRate = await call({ ctx, target: AURA[ctx.chain][1], abi: abi.mintRate })
+  const auraAddress = AURA[ctx.chain][0].toLowerCase() as `0x${string}`
 
-  return balances.map((balance) => ({
-    ...balance,
-    rewards: [
-      ...balance.rewards!,
-      {
+  return balances.map((balance) => {
+    const auraAmount = (balance.rewards![0].amount * mintRate) / parseEther('1.0')
+
+    const existingAuraIndex = balance.rewards!.findIndex((reward) => reward.address.toLowerCase() === auraAddress)
+
+    if (existingAuraIndex !== -1) {
+      balance.rewards![existingAuraIndex].amount += auraAmount
+    } else {
+      balance.rewards!.push({
         chain: ctx.chain,
-        address: AURA[ctx.chain][0],
+        address: auraAddress,
         decimals: 18,
         symbol: 'AURA',
-        amount: (balance.rewards![0].amount * mintRate) / parseEther('1.0'),
-      },
-    ],
-  }))
+        amount: auraAmount,
+      })
+    }
+
+    return {
+      ...balance,
+      rewards: balance.rewards!,
+    }
+  })
 }
