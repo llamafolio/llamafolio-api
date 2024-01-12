@@ -212,7 +212,7 @@ const getUrnsBalances = async (ctx: BalancesContext, vat: Contract, urnHandlers:
             chain: ctx.chain,
             amount: userSupply,
             address: urnHandler.asset.address,
-            decimals: urnHandler.asset.decimals,
+            decimals: 18,
             symbol: urnHandler.asset.symbol,
           },
         ],
