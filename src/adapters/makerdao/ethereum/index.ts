@@ -85,7 +85,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const [balancesGroups, balances] = await Promise.all([
     getProxiesBalances(ctx, Vat, IlkRegistry, Spot, cdpid),
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      yieldDai: (...args) => getDaiYieldBalance(...args, proxies),
+      MakerProxyRegistry: (...args) => getDaiYieldBalance(...args, yieldDai, proxies),
       sDai: getsDaiYieldBalance,
     }),
   ])

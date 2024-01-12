@@ -55,6 +55,7 @@ const DAI: Token = {
 
 export async function getDaiYieldBalance(
   ctx: BalancesContext,
+  _MakerProxyRegistry: Contract,
   farmer: Contract,
   proxies: Contract[],
 ): Promise<Balance> {
