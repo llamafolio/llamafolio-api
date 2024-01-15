@@ -4,10 +4,13 @@ import { getSingleStakeBalance } from '@lib/stake'
 import type { Token } from '@lib/token'
 
 const abi = {
-  getClaimableReward: {
+  getClaimableRewards: {
     inputs: [{ internalType: 'address', name: '_user', type: 'address' }],
-    name: 'getClaimableReward',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    name: 'getClaimableRewards',
+    outputs: [
+      { internalType: 'uint256', name: '_asxReward', type: 'uint256' },
+      { internalType: 'uint256', name: '_esAsxReward', type: 'uint256' },
+    ],
     stateMutability: 'view',
     type: 'function',
   },
@@ -20,11 +23,24 @@ const ASX: Token = {
   symbol: 'ASX',
 }
 
+const esASX: Token = {
+  chain: 'ethereum',
+  address: '0x4cE33C67E5C4A7a5F7cDFc93a8D9dcB2bfDD63A3',
+  decimals: 18,
+  symbol: 'esASX',
+}
+
 export async function getAsymetrixBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
   const [balance, pendingReward] = await Promise.all([
     getSingleStakeBalance(ctx, { ...staker, address: staker.staker }),
-    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getClaimableReward }),
+    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.getClaimableRewards }),
   ])
 
-  return { ...balance, rewards: [{ ...ASX, amount: pendingReward }] }
+  return {
+    ...balance,
+    rewards: [
+      { ...ASX, amount: pendingReward[0] },
+      { ...esASX, amount: pendingReward[1] },
+    ],
+  }
 }

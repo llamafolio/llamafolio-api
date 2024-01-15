@@ -1,6 +1,5 @@
 import { getRaftBalances } from '@adapters/raft/ethereum/balance'
 import { getRaftContracts } from '@adapters/raft/ethereum/contract'
-import { getRaftFarmBalance } from '@adapters/raft/ethereum/farm'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import type { Token } from '@lib/token'
@@ -54,7 +53,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   const [balancesGroups, balances] = await Promise.all([
     getRaftBalances(ctx, contracts.pools || []),
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      farmer: getRaftFarmBalance,
+      // farmer: getRaftFarmBalance, disable since hack on nov. 2023
     }),
   ])
 

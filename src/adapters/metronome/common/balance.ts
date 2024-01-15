@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -46,7 +45,7 @@ export async function getMetronomeBalances(
     const underlying = market.underlyings?.[0] as Contract
     const balanceOfRes = balanceOfsRes[marketIdx]
     const pricePerShareRes = pricePerSharesRes[marketIdx]
-    const pricePerShare = pricePerShareRes.success ? parseFloatBI(pricePerShareRes.output, underlying.decimals!) : 1
+    const pricePerShare = pricePerShareRes.success ? pricePerShareRes.output : 1n * BigInt(underlying.decimals!)
 
     if (!underlying || !balanceOfRes.success || !pricePerShare || balanceOfRes.output === 0n) {
       continue
@@ -54,7 +53,7 @@ export async function getMetronomeBalances(
 
     balances.push({
       ...(market as Balance),
-      amount: BigInt(Number(balanceOfRes.output) * pricePerShare),
+      amount: BigInt((balanceOfRes.output * pricePerShare) / 10n ** BigInt(underlying.decimals!)),
       underlyings: [underlying],
       rewards: undefined,
     })
