@@ -157,6 +157,7 @@ export async function selectTokenYields(
           "address" IN (
             SELECT "underlying" FROM "sub_yields"
           )
+        GROUP BY "address", "symbol", "name"
       ) AS "t" ON y.underlying = t.address
       GROUP BY chain, adapter_id, address, pool, apy, apy_base, apy_reward, apy_mean_30d, il_risk
       LIMIT {limit: UInt8}
