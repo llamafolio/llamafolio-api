@@ -77,6 +77,7 @@ import cvaultFinance from '@adapters/cvault-finance'
 import definix from '@adapters/definix'
 import deltaprime from '@adapters/deltaprime'
 import dhedge from '@adapters/dhedge'
+import dineroPirexeth from '@adapters/dinero-pirexeth'
 import dydx from '@adapters/dydx'
 import eigenlayer from '@adapters/eigenlayer'
 import elephantMoney from '@adapters/elephant-money'
@@ -411,6 +412,7 @@ export const adapters: Adapter[] = [
   definix,
   deltaprime,
   dhedge,
+  dineroPirexeth,
   dydx,
   eigenlayer,
   elephantMoney,
