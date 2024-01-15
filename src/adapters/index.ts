@@ -284,6 +284,7 @@ import swapr from '@adapters/swapr'
 import swell from '@adapters/swell'
 import synapse from '@adapters/synapse'
 import synclubStakedBnb from '@adapters/synclub-staked-bnb'
+import syncus from '@adapters/syncus'
 import synthetix from '@adapters/synthetix'
 import tangible from '@adapters/tangible'
 import templedao from '@adapters/templedao'
@@ -620,6 +621,7 @@ export const adapters: Adapter[] = [
   swell,
   synapse,
   synclubStakedBnb,
+  syncus,
   synthetix,
   tangible,
   templedao,
