@@ -148,7 +148,7 @@ export async function selectTokenYields(
         "apy_reward",
         "apy_mean_30d",
         "il_risk",
-        groupArray(("address", "symbol", "name")) as "underlyings"
+        groupArray(("underlying", "symbol", "name")) as "underlyings"
       FROM "sub_yields" AS "y"
       LEFT JOIN (
         SELECT "address", "symbol", "name" FROM evm_indexer2.tokens
