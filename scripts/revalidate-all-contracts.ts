@@ -33,7 +33,7 @@ async function main() {
   for (const adapter of adapters) {
     console.log(`Revalidate contracts ${adapter}`)
     try {
-      const stdout = execSync(`npm run revalidate-contracts ${adapter}`, {})
+      const stdout = execSync(`pnpm run revalidate-contracts ${adapter}`, {})
       console.log(stdout.toString())
     } catch (err) {
       console.error(err)
