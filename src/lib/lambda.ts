@@ -5,6 +5,7 @@ const { STAGE, IS_OFFLINE } = environment
 
 type LambdaFunctionName =
   | 'revalidateAdapterContracts'
+  | 'updateCoingeckoCoins'
   | 'updateGovernanceProposals'
   | 'updateProtocols'
   | 'updateYields'
@@ -13,6 +14,7 @@ type InvocationType = 'RequestResponse' | 'Event' | 'DryRun'
 
 const lambdaFunctionNames: { [key in LambdaFunctionName]: string } = {
   revalidateAdapterContracts: `llamafolio-api-${STAGE}-revalidateAdapterContracts`,
+  updateCoingeckoCoins: `llamafolio-api-${STAGE}-updateCoingeckoCoins`,
   updateGovernanceProposals: `llamafolio-api-${STAGE}-updateGovernanceProposals`,
   updateProtocols: `llamafolio-api-${STAGE}-updateProtocols`,
   updateYields: `llamafolio-api-${STAGE}-updateYields`,

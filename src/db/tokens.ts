@@ -57,7 +57,8 @@ export async function selectToken(client: ClickHouseClient, chainId: number, add
       FROM evm_indexer2.tokens
       WHERE
         "chain" = {chainId: UInt64} AND
-        "address" = {address: String};
+        "address" = {address: String}
+      LIMIT 1;
     `,
     query_params: {
       chainId,
