@@ -283,6 +283,13 @@ functions:
     events:
       - schedule: rate(10 minutes)
 
+  scheduledUpdateCoingeckoCoins:
+    handler: src/handlers/updateCoingeckoCoins.scheduledUpdateCoingeckoCoins
+    description: Scheduled update Coingecko coins
+    events:
+      # every new hour
+      - schedule: cron(0 * * * ? *)
+
   scheduledUpdateGovernanceProposals:
     handler: src/handlers/updateGovernanceProposals.scheduledUpdateGovernanceProposals
     description: Scheduled update governance proposals
@@ -322,6 +329,11 @@ functions:
           path: /balances/{address}
     timeout: 29
     memorySize: 512
+
+  updateCoingeckoCoins:
+    handler: src/handlers/updateCoingeckoCoins.handler
+    description: Update Coingecko coins
+    timeout: 300
 
   updateProtocols:
     handler: src/handlers/updateProtocols.handler
