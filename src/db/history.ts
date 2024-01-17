@@ -123,6 +123,22 @@ export async function selectHistory(
           ORDER BY "to_short", "to_address", "timestamp" DESC
         )
         GROUP BY "chain", "transaction_hash", "timestamp"
+      ),
+      "sub_transactions_token_transfers_to" AS (
+        SELECT
+          0 AS "block_number",
+          "chain",
+          '' AS "from_address",
+          '' AS "to_address",
+          '' AS "selector",
+          "hash",
+          0 AS "gas",
+          0 AS "gas_price",
+          1 AS "status",
+          0 AS "value",
+          "timestamp",
+          "token_transfers"
+        FROM "sub_token_transfers_to"
       )
       SELECT
         t."block_number" AS "block_number",
@@ -144,24 +160,15 @@ export async function selectHistory(
           UNION ALL
         (SELECT * FROM "sub_transactions_to")
           UNION ALL
-        (
-          SELECT
-            0 AS "block_number",
-            "chain",
-            '' AS "from_address",
-            '' AS "to_address",
-            '' AS "selector",
-            "hash",
-            0 AS "gas",
-            0 AS "gas_price",
-            1 AS "status",
-            0 AS "value",
-            "timestamp",
-            "token_transfers"
-          FROM "sub_token_transfers_to"
-        )
+        (SELECT * FROM "sub_transactions_token_transfers_to")
       ) AS "t"
-      LEFT JOIN lf.methods AS "m" ON m."selector" = t."selector"
+      LEFT JOIN (
+        SELECT "name", "selector" FROM lf.methods
+        WHERE "selector" IN (
+          SELECT "selector" FROM "sub_transactions_from"
+          GROUP BY "selector"
+        )
+      ) AS "m" ON m."selector" = t."selector"
       ORDER BY "timestamp" DESC
       LIMIT {limit: UInt8}
       OFFSET {offset: UInt32};
