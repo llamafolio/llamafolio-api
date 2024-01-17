@@ -5,6 +5,7 @@ import aaveV3 from '@adapters/aave-v3'
 import abracadabra from '@adapters/abracadabra'
 import across from '@adapters/across'
 import aerodrome from '@adapters/aerodrome'
+import affineDefi from '@adapters/affine-defi'
 import agave from '@adapters/agave'
 import agilityLsd from '@adapters/agility-lsd'
 import alchemix from '@adapters/alchemix'
@@ -347,6 +348,7 @@ export const adapters: Adapter[] = [
   abracadabra,
   across,
   aerodrome,
+  affineDefi,
   agave,
   agilityLsd,
   alchemix,
