@@ -330,6 +330,7 @@ import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
 import whiteheart from '@adapters/whiteheart'
 import wigoswap from '@adapters/wigoswap'
+import winrProtocol from '@adapters/winr-protocol'
 import wombatExchange from '@adapters/wombat-exchange'
 import woofi from '@adapters/woofi'
 import x2y2 from '@adapters/x2y2'
@@ -673,6 +674,7 @@ export const adapters: Adapter[] = [
   wepiggy,
   whiteheart,
   wigoswap,
+  winrProtocol,
   wombatExchange,
   woofi,
   x2y2,
