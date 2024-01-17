@@ -268,6 +268,7 @@ import spiceFinance from '@adapters/spice-finance'
 import spiritswap from '@adapters/spiritswap'
 import spookyswap from '@adapters/spookyswap'
 import spool from '@adapters/spool'
+import stablFi from '@adapters/stabl.fi'
 import stader from '@adapters/stader'
 import stafi from '@adapters/stafi'
 import stakeLink from '@adapters/stake.link'
@@ -609,6 +610,7 @@ export const adapters: Adapter[] = [
   spiritswap,
   spookyswap,
   spool,
+  stablFi,
   stader,
   stafi,
   stakeLink,
