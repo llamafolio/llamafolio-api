@@ -282,6 +282,7 @@ functions:
     description: Revalidate expired adapters contracts
     events:
       - schedule: rate(15 minutes)
+    memorySize: 1024
     timeout: 300
 
   scheduledUpdateCoingeckoCoins:
