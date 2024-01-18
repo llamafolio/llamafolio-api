@@ -24,6 +24,7 @@ import api3 from '@adapters/api3'
 import apollox from '@adapters/apollox'
 import arbitrumExchange from '@adapters/arbitrum-exchange'
 import arcSwap from '@adapters/arc-swap'
+import arpaStaking from '@adapters/arpa-staking'
 import arrakisFinance from '@adapters/arrakis-finance'
 import asymetrixProtocol from '@adapters/asymetrix-protocol'
 import asymmetryFinance from '@adapters/asymmetry-finance'
@@ -369,6 +370,7 @@ export const adapters: Adapter[] = [
   apollox,
   arbitrumExchange,
   arcSwap,
+  arpaStaking,
   arrakisFinance,
   asymetrixProtocol,
   asymmetryFinance,
