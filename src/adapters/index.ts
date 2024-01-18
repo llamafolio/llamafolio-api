@@ -30,6 +30,7 @@ import asymmetryFinance from '@adapters/asymmetry-finance'
 import atlantisLoans from '@adapters/atlantis-loans'
 import atlasUsv from '@adapters/atlas-usv'
 import aura from '@adapters/aura'
+import avalaunch from '@adapters/avalaunch'
 import azuro from '@adapters/azuro'
 import bProtocol from '@adapters/b.protocol'
 import babylonFinance from '@adapters/babylon-finance'
@@ -374,6 +375,7 @@ export const adapters: Adapter[] = [
   atlantisLoans,
   atlasUsv,
   aura,
+  avalaunch,
   azuro,
   bProtocol,
   babylonFinance,
