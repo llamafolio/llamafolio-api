@@ -181,7 +181,9 @@ export async function selectDistinctAdaptersChains(client: ClickHouseClient) {
 }
 
 export async function selectAdaptersContractsExpired(client: ClickHouseClient) {
-  const queryRes = await client.query({ query: `SELECT * FROM adapters WHERE contracts_expire_at <= now();` })
+  const queryRes = await client.query({
+    query: `SELECT * FROM ${environment.NS_LF}.adapters WHERE contracts_expire_at <= now();`,
+  })
 
   const res = (await queryRes.json()) as {
     data: AdapterStorage[]
