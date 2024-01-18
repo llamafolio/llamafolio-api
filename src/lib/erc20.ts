@@ -9,7 +9,6 @@ import { isNotFalsy, isNotNullish } from '@lib/type'
 import type { Token } from '@llamafolio/tokens'
 import type { Address, PublicClient } from 'viem'
 import { getAddress } from 'viem'
-import { readContract } from 'viem/contract'
 
 export const abi = {
   balanceOf: {
@@ -298,7 +297,7 @@ export async function balanceOf({
   token: Token
 }): Promise<TokenBalance> {
   try {
-    const result = await readContract(client, {
+    const result = await client.readContract({
       abi: ERC20_ABI,
       address: getAddress(token.address),
       functionName: 'balanceOf',
@@ -338,7 +337,7 @@ export async function balancesOf({
     }
 > {
   try {
-    const [nativeResult, ...results] = await readContract(client, {
+    const [nativeResult, ...results] = await client.readContract({
       abi: BALANCES_OF_ABI,
       address: multiCoinContracts[chain],
       functionName: 'balancesOf',
