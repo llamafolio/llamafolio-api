@@ -281,7 +281,8 @@ functions:
     handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts
     description: Revalidate expired adapters contracts
     events:
-      - schedule: rate(10 minutes)
+      - schedule: rate(15 minutes)
+    timeout: 300
 
   scheduledUpdateCoingeckoCoins:
     handler: src/handlers/updateCoingeckoCoins.scheduledUpdateCoingeckoCoins
