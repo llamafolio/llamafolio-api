@@ -1,5 +1,6 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import environment from '@environment'
+import type { Category } from '@lib/category'
 import type { IProtocol } from '@lib/protocols'
 
 export interface ProtocolStorage {
@@ -65,6 +66,77 @@ export async function selectProtocols(client: ClickHouseClient) {
   }
 
   return fromStorage(res.data)
+}
+
+export async function selectProtocolContracts(
+  client: ClickHouseClient,
+  protocol: string,
+  category?: Category,
+  chainId?: number,
+  limit = 10,
+  offset = 0,
+) {
+  const queryRes = await client.query({
+    query: `
+      WITH "contracts" AS (
+        SELECT
+          "chain",
+          "address",
+          "name",
+          "token",
+          JSONExtractString("data", 'symbol') AS "symbol",
+          JSONExtractString("data", 'decimals') AS "decimals",
+          arrayMap(x -> (
+            JSONExtractString(x, 'address'),
+            JSONExtractString(x, 'symbol'),
+            JSONExtractString(x, 'decimals')
+          ), JSONExtractArrayRaw("data", 'underlyings')) AS "underlyings",
+          arrayMap(x -> (
+            JSONExtractString(x, 'address'),
+            JSONExtractString(x, 'symbol'),
+            JSONExtractString(x, 'decimals')
+          ), JSONExtractArrayRaw("data", 'rewards')) AS "rewards"
+        FROM ${environment.NS_LF}.adapters_contracts
+        WHERE
+          ${chainId ? '"chain" = {chainId: UInt64} AND' : ''}
+          "adapter_id" = {adapterId: String}
+          ${category ? ' AND "category" = {category: String}' : ''}
+        LIMIT 1 BY "chain", "address", "token"
+      ),
+      (
+        SELECT count() AS "count" FROM "contracts"
+      ) AS "count"
+      SELECT
+        *,
+        "count"
+      FROM "contracts"
+      LIMIT {limit: UInt8}
+      OFFSET {offset: UInt32};
+    `,
+    query_params: {
+      chainId,
+      limit,
+      offset,
+      category,
+      adapterId: protocol,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: {
+      chain: string
+      address: string
+      name: string
+      token: string
+      symbol: string
+      decimals: string
+      underlyings: [string, string, string][]
+      rewards: [string, string, string][]
+      count: string
+    }[]
+  }
+
+  return res.data
 }
 
 export async function insertProtocols(client: ClickHouseClient, protocols: IProtocol[]) {
