@@ -205,6 +205,15 @@ functions:
           method: get
           path: /protocols
 
+  getProtocolContracts:
+    handler: src/handlers/getProtocolContracts.handler
+    description: Get protocol contracts
+    events:
+      - httpApi:
+          method: get
+          path: /protocols/{protocol}/contracts
+    timeout: 10
+
   getLatestProtocols:
     handler: src/handlers/getLatestProtocols.handler
     description: Get latest protocols
