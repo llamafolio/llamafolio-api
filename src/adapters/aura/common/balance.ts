@@ -1,5 +1,5 @@
 import { getExtraRewardsBalances } from '@adapters/aura/common/extraReward'
-import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseBalance, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { getUnderlyingsBalancesFromBalancer, type IBalancerBalance } from '@lib/balancer/underlying'
 import { call } from '@lib/call'
@@ -87,9 +87,20 @@ const AURA: { [key: string]: `0x${string}`[] } = {
   gnosis: ['0x1509706a6c66CA549ff0cB464de88231DDBe213B', '0x8b2970c237656d3895588B99a8bFe977D5618201'],
 }
 
+const rewarder: { [key: string]: `0x${string}` } = {
+  ethereum: '0xac16927429c5c7af63dd75bc9d8a58c63ffd0147',
+  arbitrum: '0x14b820f0f69614761e81ea4431509178df47bbd3',
+  polygon: '0x14b820f0f69614761e81ea4431509178df47bbd3',
+}
+
 export async function getAuraBalStakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const balanceOfRes = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.balanceOfUnderlying })
-  return { ...staker, amount: balanceOfRes, underlyings: undefined, rewards: undefined, category: 'farm' }
+  const [balanceOfRes, earnedReward] = await Promise.all([
+    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.balanceOfUnderlying }),
+    call({ ctx, target: rewarder[ctx.chain], params: [ctx.address], abi: abi.earned }),
+  ])
+
+  const reward: BaseBalance = { chain: ctx.chain, address: AURA[ctx.chain][0], amount: earnedReward }
+  return { ...staker, amount: balanceOfRes, underlyings: undefined, rewards: [reward], category: 'farm' }
 }
 
 export async function getAuraFarmBalances(
