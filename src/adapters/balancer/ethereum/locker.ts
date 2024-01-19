@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import type { Token } from '@lib/token'
 
 const abi = {
   getPoolTokens: {
@@ -29,16 +28,32 @@ const abi = {
     inputs: [],
     outputs: [{ name: '', type: 'uint256' }],
   },
+  locked: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'locked',
+    inputs: [{ name: 'arg0', type: 'address' }],
+    outputs: [
+      {
+        name: '',
+        type: 'tuple',
+        components: [
+          { name: 'amount', type: 'int128' },
+          { name: 'end', type: 'uint256' },
+        ],
+      },
+    ],
+  },
 } as const
 
-const BAL: Token = {
+const BAL: Contract = {
   chain: 'ethereum',
   address: '0xba100000625a3754423978a60c9317c58a424e3D',
   decimals: 18,
   symbol: 'BAL',
 }
 
-const WETH: Token = {
+const WETH: Contract = {
   chain: 'ethereum',
   address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
   decimals: 18,
@@ -50,10 +65,11 @@ export async function getLockerBalances(
   votingEscrow: Contract,
   vault: Contract,
 ): Promise<Balance> {
-  const [balanceOf, lockedEnd, totalSupply, poolTokens] = await Promise.all([
-    call({ ctx, target: votingEscrow.address, params: [ctx.address], abi: erc20Abi.balanceOf }),
-    call({ ctx, target: votingEscrow.address, params: [ctx.address], abi: abi.locked__end }),
-    call({ ctx, target: votingEscrow.address, abi: erc20Abi.totalSupply }),
+  const underlyings = [BAL, WETH]
+
+  const [balanceLocked, totalSupply, poolTokens] = await Promise.all([
+    call({ ctx, target: votingEscrow.address, params: [ctx.address], abi: abi.locked }),
+    call({ ctx, target: (votingEscrow.underlyings![0] as Contract).address, abi: erc20Abi.totalSupply }),
     call({
       ctx,
       target: vault.address,
@@ -62,27 +78,25 @@ export async function getLockerBalances(
       abi: abi.getPoolTokens,
     }),
   ])
+
   const [_tokens, balances, _lastChangeBlock] = poolTokens
-
-  const underlyings0Balances = (balanceOf * balances[0]) / totalSupply
-
-  const underlyings1Balances = (balanceOf * balances[1]) / totalSupply
-
   const now = Date.now() / 1000
-  const unlockAt = Number(lockedEnd)
+  const { amount, end } = balanceLocked
+  const unlockAt = Number(end)
+
+  underlyings.forEach((underlying, index) => {
+    underlying.amount = (amount * balances[index]) / totalSupply
+  })
 
   return {
     chain: ctx.chain,
     address: votingEscrow.address,
     symbol: votingEscrow.symbol,
     decimals: votingEscrow.decimals,
-    amount: balanceOf,
-    claimable: now > unlockAt ? balanceOf : 0n,
+    amount: amount,
+    claimable: now > unlockAt ? amount : 0n,
     unlockAt,
-    underlyings: [
-      { ...BAL, amount: underlyings0Balances },
-      { ...WETH, amount: underlyings1Balances },
-    ],
+    underlyings,
     rewards: undefined,
     category: 'lock',
   }
