@@ -1,8 +1,9 @@
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getPangolinPoolInfos, getPNGPendingRewards } from '@adapters/pangolin/avalanche/masterChef'
+import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getMasterChefPoolsBalances } from '@lib/masterchef/masterchef'
+import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
+import { getMasterChefPoolsContracts } from '@lib/masterchef/masterChefContract'
 import type { Token } from '@lib/token'
-import type { Pair } from '@lib/uniswap/v2/factory'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
@@ -32,15 +33,18 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   const offset = props.pairOffset || 0
   const limit = 100
 
-  const { pairs, allPairsLength } = await getPairsContracts({
-    ctx,
-    factoryAddress: '0xefa94de7a4656d787667c749f7e1223d71e9fd88',
-    offset,
-    limit,
-  })
+  const [pools, { pairs, allPairsLength }] = await Promise.all([
+    getMasterChefPoolsContracts(ctx, { masterChefAddress: miniChef.address, getPoolInfos: getPangolinPoolInfos }),
+    getPairsContracts({
+      ctx,
+      factoryAddress: '0xefa94de7a4656d787667c749f7e1223d71e9fd88',
+      offset,
+      limit,
+    }),
+  ])
 
   return {
-    contracts: { staker, miniChef, pairs },
+    contracts: { pools, staker, miniChef, pairs },
     revalidate: 60 * 60,
     revalidateProps: {
       pairOffset: Math.min(offset + limit, allPairsLength),
@@ -48,24 +52,16 @@ export const getContracts = async (ctx: BaseContext, props: any) => {
   }
 }
 
-function getPangolinPairsBalances(
-  ctx: BalancesContext,
-  pairs: Pair[],
-  masterchef: Contract,
-  rewardToken: Token,
-  rewardTokenName?: string,
-  lpTokenAbi?: boolean,
-) {
-  return Promise.all([
-    getPairsBalances(ctx, pairs),
-    getMasterChefPoolsBalances(ctx, pairs, masterchef, rewardToken, rewardTokenName, lpTokenAbi),
-  ])
-}
-
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pairs: (...args) => getPangolinPairsBalances(...args, miniChef, pangolin, 'Reward', true),
     staker: getPangolinStakeBalances,
+    pairs: getPairsBalances,
+    pools: (...args) =>
+      getMasterChefPoolsBalances(...args, {
+        masterChefAddress: miniChef.address,
+        rewardToken: pangolin,
+        getUserPendingRewards: getPNGPendingRewards,
+      }),
   })
 
   return {
