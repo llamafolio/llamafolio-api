@@ -76,6 +76,9 @@ const abi = {
   },
 } as const
 
+type AuraBalance = Balance & {
+  rewarders: `0x${string}`[]
+}
 const BAL: Token = {
   chain: 'ethereum',
   address: '0xba100000625a3754423978a60c9317c58a424e3D',
@@ -155,7 +158,7 @@ export async function getAuraFarmBalances(
     return { ...poolBalance, rewards: [{ ...rewards![0], amount: res.output }, ...rewards!.slice(1)] }
   }) as Balance[]
 
-  return getAuraMintAmount(ctx, await getExtraRewardsBalances(ctx, fmtBalances))
+  return getAuraMintAmount(ctx, await getExtraRewardsBalances(ctx, fmtBalances as AuraBalance[]))
 }
 
 export const getAuraMintAmount = async (ctx: BalancesContext, balances: Balance[]): Promise<Balance[]> => {
