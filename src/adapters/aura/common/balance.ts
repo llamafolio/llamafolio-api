@@ -99,7 +99,14 @@ export async function getAuraBalStakerBalances(ctx: BalancesContext, staker: Con
     call({ ctx, target: rewarder[ctx.chain], params: [ctx.address], abi: abi.earned }),
   ])
 
-  const reward: BaseBalance = { chain: ctx.chain, address: AURA[ctx.chain][0], amount: earnedReward }
+  const reward: BaseBalance = {
+    chain: ctx.chain,
+    address: AURA[ctx.chain][0],
+    decimals: 18,
+    symbol: 'AURA',
+    amount: earnedReward,
+  }
+
   return { ...staker, amount: balanceOfRes, underlyings: undefined, rewards: [reward], category: 'farm' }
 }
 
