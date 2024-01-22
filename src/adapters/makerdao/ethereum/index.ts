@@ -1,6 +1,4 @@
-import { getDaiYieldBalance, getsDaiYieldBalance } from '@adapters/makerdao/ethereum/farm'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
-import { resolveBalances } from '@lib/balance'
 import type { Token } from '@lib/token'
 
 import { getProxiesBalances } from './balances'
@@ -57,40 +55,21 @@ const DAI: Token = {
   symbol: 'DAI',
 }
 
-const yieldDai: Contract = {
-  chain: 'ethereum',
-  address: '0x197e90f9fad81970ba7976f33cbd77088e5d7cf7',
-  token: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-}
-
-const sDai: Contract = {
-  chain: 'ethereum',
-  address: '0x83f20f44975d03b1b09e64809b757c47f942beea',
-  token: '0x6B175474E89094C44Da98b954EedeAC495271d0F',
-}
-
 export const getContracts = () => {
   return {
-    contracts: { MakerProxyRegistry, InstadAppProxyRegistry, DAI, yieldDai, sDai },
+    contracts: { MakerProxyRegistry, InstadAppProxyRegistry, DAI },
   }
 }
 
-export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
+export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx) => {
   const proxies = (
     await Promise.all([getMakerContracts(ctx, MakerProxyRegistry), getInstaDappContracts(ctx, InstadAppProxyRegistry)])
   ).flat()
 
   const cdpid = await getCdpidFromProxiesAddresses(ctx, getCdps, cdpManager, proxies)
-
-  const [balancesGroups, balances] = await Promise.all([
-    getProxiesBalances(ctx, Vat, IlkRegistry, Spot, cdpid),
-    resolveBalances<typeof getContracts>(ctx, contracts, {
-      MakerProxyRegistry: (...args) => getDaiYieldBalance(...args, yieldDai, proxies),
-      sDai: getsDaiYieldBalance,
-    }),
-  ])
+  const balancesGroups = await getProxiesBalances(ctx, Vat, IlkRegistry, Spot, cdpid)
 
   return {
-    groups: [...balancesGroups, { balances }],
+    groups: [...balancesGroups],
   }
 }
