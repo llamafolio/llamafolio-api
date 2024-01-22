@@ -98,6 +98,7 @@ import everrise from '@adapters/everrise'
 import exactly from '@adapters/exactly'
 import extraFinance from '@adapters/extra-finance'
 import fantohm from '@adapters/fantohm'
+import firebot from '@adapters/firebot'
 import flamincome from '@adapters/flamincome'
 import floorDao from '@adapters/floor-dao'
 import florenceFinance from '@adapters/florence-finance'
@@ -446,6 +447,7 @@ export const adapters: Adapter[] = [
   exactly,
   extraFinance,
   fantohm,
+  firebot,
   flamincome,
   floorDao,
   florenceFinance,
