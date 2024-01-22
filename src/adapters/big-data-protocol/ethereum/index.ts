@@ -64,5 +64,3 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
-
-// getBPDPendingRewards
