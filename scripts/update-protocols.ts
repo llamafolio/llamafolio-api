@@ -1,15 +1,26 @@
 import { client } from '@db/clickhouse'
+import environment from '@environment'
 
-import { selectDistinctAdaptersIds } from '../src/db/adapters'
 import { insertProtocols } from '../src/db/protocols'
 import { fetchProtocols } from '../src/lib/protocols'
 
 async function main() {
   try {
-    const adapters = await selectDistinctAdaptersIds(client)
+    const queryRes = await client.query({
+      query: `
+        SELECT distinct("id") FROM ${environment.NS_LF}.adapters
+        WHERE "id" NOT IN (
+          SELECT distinct("slug") FROM ${environment.NS_LF}.protocols
+        );
+      `,
+    })
+
+    const res = (await queryRes.json()) as {
+      data: { id: string }[]
+    }
 
     // 'wallet' is a custom LlamaFolio adapter (not a protocol)
-    const adaptersIds = adapters.map((adapter) => adapter.id).filter((id) => id !== 'wallet')
+    const adaptersIds = res.data.map((row) => row.id).filter((id) => id !== 'wallet')
 
     const protocols = await fetchProtocols(adaptersIds)
 

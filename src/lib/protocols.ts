@@ -3,8 +3,6 @@ import { chainById } from '@lib/chains'
 import { sum } from '@lib/math'
 import { isNotNullish } from '@lib/type'
 
-export const DEFILLAMA_ICONS_PALETTE_CDN = 'https://icons.llamao.fi/palette'
-
 export interface IParentProtocolLiteResponse {
   chains: string[]
   cmcId: string
@@ -85,12 +83,10 @@ export interface IProtocol {
   twitter?: string
   description?: string
   address?: string
-  color?: string
 }
 
 export async function fetchProtocols(adapterIds: string[]): Promise<IProtocol[]> {
-  const [colors, protocols, protocolsDetails] = await Promise.all([
-    Promise.all(adapterIds.map((adapter) => getProtocolColor(adapter))),
+  const [protocols, protocolsDetails] = await Promise.all([
     fetchProtocolsLite(adapterIds),
     fetchProtocolsConfig(adapterIds),
   ])
@@ -99,7 +95,7 @@ export async function fetchProtocols(adapterIds: string[]): Promise<IProtocol[]>
   const protocolDetailsBySlug = keyBy(protocolsDetails, 'slug')
 
   return adapterIds
-    .map((id, idx) => {
+    .map((id) => {
       const protocol = protocolBySlug[id]
       const protocolDetails = protocolDetailsBySlug[id]
       if (!protocol) {
@@ -107,7 +103,7 @@ export async function fetchProtocols(adapterIds: string[]): Promise<IProtocol[]>
         return null
       }
 
-      return { ...protocol, ...(protocolDetails || {}), color: colors[idx] }
+      return { ...protocol, ...(protocolDetails || {}) }
     })
     .filter(isNotNullish)
 }
@@ -227,23 +223,4 @@ function getChainName(chains: string[]) {
   }
 
   return chains[0]
-}
-
-function defillamaProtocolPaletteUrl(name: string) {
-  const x = name ?? ''
-  return `${DEFILLAMA_ICONS_PALETTE_CDN}/protocols/${x.toLowerCase().split(' ').join('-').split("'").join('')}`
-}
-
-async function getColor(path: string) {
-  try {
-    const color = await fetch(path).then((res) => res.text())
-
-    return color
-  } catch (error) {
-    return undefined
-  }
-}
-
-export function getProtocolColor(name: string) {
-  return getColor(defillamaProtocolPaletteUrl(name))
 }
