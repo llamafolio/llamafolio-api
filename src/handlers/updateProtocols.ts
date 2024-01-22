@@ -2,6 +2,7 @@ import { client } from '@db/clickhouse'
 import { insertProtocols } from '@db/protocols'
 import environment from '@environment'
 import { serverError, success } from '@handlers/response'
+import { toDateTime } from '@lib/fmt'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { fetchProtocols } from '@lib/protocols'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -32,7 +33,13 @@ export const handler: APIGatewayProxyHandler = async () => {
     // 'wallet' is a custom LlamaFolio adapter (not a protocol)
     const adaptersIds = res.data.map((row) => row.id).filter((id) => id !== 'wallet')
 
+    const updated_at = toDateTime(new Date())
+
     const protocols = await fetchProtocols(adaptersIds)
+
+    for (const protocol of protocols) {
+      protocol.updated_at = updated_at
+    }
 
     await insertProtocols(client, protocols)
 

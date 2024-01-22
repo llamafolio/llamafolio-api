@@ -1,5 +1,6 @@
 import { client } from '@db/clickhouse'
 import environment from '@environment'
+import { toDateTime } from '@lib/fmt'
 
 import { insertProtocols } from '../src/db/protocols'
 import { fetchProtocols } from '../src/lib/protocols'
@@ -22,7 +23,13 @@ async function main() {
     // 'wallet' is a custom LlamaFolio adapter (not a protocol)
     const adaptersIds = res.data.map((row) => row.id).filter((id) => id !== 'wallet')
 
+    const updated_at = toDateTime(new Date())
+
     const protocols = await fetchProtocols(adaptersIds)
+
+    for (const protocol of protocols) {
+      protocol.updated_at = updated_at
+    }
 
     await insertProtocols(client, protocols)
 

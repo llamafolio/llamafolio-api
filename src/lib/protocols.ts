@@ -83,6 +83,7 @@ export interface IProtocol {
   twitter?: string
   description?: string
   address?: string
+  updated_at?: string
 }
 
 export async function fetchProtocols(adapterIds: string[]): Promise<IProtocol[]> {
