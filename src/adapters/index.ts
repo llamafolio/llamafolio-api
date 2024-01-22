@@ -137,6 +137,7 @@ import houdiniSwap from '@adapters/houdini-swap'
 import hundredFinance from '@adapters/hundred-finance'
 import idle from '@adapters/idle'
 import illuvium from '@adapters/illuvium'
+import integral from '@adapters/integral'
 import interportFinance from '@adapters/interport-finance'
 import inverseFinance from '@adapters/inverse-finance'
 import ipor from '@adapters/ipor'
@@ -487,6 +488,7 @@ export const adapters: Adapter[] = [
   hundredFinance,
   idle,
   illuvium,
+  integral,
   interportFinance,
   inverseFinance,
   ipor,
