@@ -22,6 +22,7 @@ import apeswapAmm from '@adapters/apeswap-amm'
 import apeswapLending from '@adapters/apeswap-lending'
 import api3 from '@adapters/api3'
 import apollox from '@adapters/apollox'
+import apwine from '@adapters/apwine'
 import arbitrumExchange from '@adapters/arbitrum-exchange'
 import arcSwap from '@adapters/arc-swap'
 import arpaStaking from '@adapters/arpa-staking'
@@ -369,6 +370,7 @@ export const adapters: Adapter[] = [
   apeswapLending,
   api3,
   apollox,
+  apwine,
   arbitrumExchange,
   arcSwap,
   arpaStaking,
