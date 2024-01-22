@@ -1,6 +1,6 @@
-import { selectDistinctAdaptersIds } from '@db/adapters'
 import { client } from '@db/clickhouse'
 import { insertProtocols } from '@db/protocols'
+import environment from '@environment'
 import { serverError, success } from '@handlers/response'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { fetchProtocols } from '@lib/protocols'
@@ -16,10 +16,21 @@ export const scheduledUpdateProtocols = wrapScheduledLambda(updateProtocols)
 
 export const handler: APIGatewayProxyHandler = async () => {
   try {
-    const adapters = await selectDistinctAdaptersIds(client)
+    const queryRes = await client.query({
+      query: `
+        SELECT distinct("id") FROM ${environment.NS_LF}.adapters
+        WHERE "id" NOT IN (
+          SELECT distinct("slug") FROM ${environment.NS_LF}.protocols
+        );
+      `,
+    })
+
+    const res = (await queryRes.json()) as {
+      data: { id: string }[]
+    }
 
     // 'wallet' is a custom LlamaFolio adapter (not a protocol)
-    const adaptersIds = adapters.map((adapter) => adapter.id).filter((id) => id !== 'wallet')
+    const adaptersIds = res.data.map((row) => row.id).filter((id) => id !== 'wallet')
 
     const protocols = await fetchProtocols(adaptersIds)
 

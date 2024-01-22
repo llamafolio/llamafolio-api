@@ -85,12 +85,10 @@ export interface IProtocol {
   twitter?: string
   description?: string
   address?: string
-  color?: string
 }
 
 export async function fetchProtocols(adapterIds: string[]): Promise<IProtocol[]> {
-  const [colors, protocols, protocolsDetails] = await Promise.all([
-    Promise.all(adapterIds.map((adapter) => getProtocolColor(adapter))),
+  const [protocols, protocolsDetails] = await Promise.all([
     fetchProtocolsLite(adapterIds),
     fetchProtocolsConfig(adapterIds),
   ])
@@ -99,7 +97,7 @@ export async function fetchProtocols(adapterIds: string[]): Promise<IProtocol[]>
   const protocolDetailsBySlug = keyBy(protocolsDetails, 'slug')
 
   return adapterIds
-    .map((id, idx) => {
+    .map((id) => {
       const protocol = protocolBySlug[id]
       const protocolDetails = protocolDetailsBySlug[id]
       if (!protocol) {
@@ -107,7 +105,7 @@ export async function fetchProtocols(adapterIds: string[]): Promise<IProtocol[]>
         return null
       }
 
-      return { ...protocol, ...(protocolDetails || {}), color: colors[idx] }
+      return { ...protocol, ...(protocolDetails || {}) }
     })
     .filter(isNotNullish)
 }
