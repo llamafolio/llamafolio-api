@@ -68,45 +68,61 @@ export async function getWarlordVault(ctx: BalancesContext, vault: Contract): Pr
   const [tWarBalance, warBalance] = await multicall({
     ctx,
     abi: erc20Abi.balanceOf,
-    calls: [{
-      target: vault.address,
-      params: [ctx.address],
-    }, {
-      target: stkWAR.address,
-      params: [vault.address],
-    }],
+    calls: [
+      {
+        target: vault.address,
+        params: [ctx.address],
+      },
+      {
+        target: stkWAR.address,
+        params: [vault.address],
+      },
+    ],
   })
   const [tWarTotalSupply, warTotalSupply] = await multicall({
     ctx,
     abi: erc20Abi.totalSupply,
-    calls: [vault.address, (vault!.underlyings![0] as BaseContract).address].map((target) => ({
-      target,
-    }) as const),
+    calls: [vault.address, (vault!.underlyings![0] as BaseContract).address].map(
+      (target) =>
+        ({
+          target,
+        }) as const,
+    ),
   })
   const [cvxLocked, auraLocked] = await multicall({
     ctx,
     abi: abi.getCurrentLockedTokens,
-    calls: [warCvxLocker.address, warAuraLocker.address].map((target) => ({
-      target,
-    }) as const),
+    calls: [warCvxLocker.address, warAuraLocker.address].map(
+      (target) =>
+        ({
+          target,
+        }) as const,
+    ),
   })
   const [auraQueued, cvxQueued] = await multicall({
     ctx,
     abi: abi.queuedForWithdrawal,
-    calls: [aura.address, cvx.address].map((token) => ({
-      target: warRedeemer.address,
-      params: [token],
-    }) as const),
+    calls: [aura.address, cvx.address].map(
+      (token) =>
+        ({
+          target: warRedeemer.address,
+          params: [token],
+        }) as const,
+    ),
   })
 
-  let cvxUserBalanceAmount: bigint = 0n;
-  let auraUserBalanceAmount: bigint = 0n;
+  let cvxUserBalanceAmount: bigint = 0n
+  let auraUserBalanceAmount: bigint = 0n
   if (warBalance.success && warTotalSupply.success && tWarBalance.success && tWarTotalSupply.success) {
     if (cvxLocked.success && cvxQueued.success) {
-      cvxUserBalanceAmount = ((((cvxLocked.output - cvxQueued.output) * warBalance.output) / warTotalSupply.output) * tWarBalance.output) / tWarTotalSupply.output;
+      cvxUserBalanceAmount =
+        ((((cvxLocked.output - cvxQueued.output) * warBalance.output) / warTotalSupply.output) * tWarBalance.output) /
+        tWarTotalSupply.output
     }
     if (auraLocked.success && auraQueued.success) {
-      auraUserBalanceAmount = ((((auraLocked.output - auraQueued.output) * warBalance.output) / warTotalSupply.output) * tWarBalance.output) / tWarTotalSupply.output;
+      auraUserBalanceAmount =
+        ((((auraLocked.output - auraQueued.output) * warBalance.output) / warTotalSupply.output) * tWarBalance.output) /
+        tWarTotalSupply.output
     }
   }
 
@@ -128,11 +144,10 @@ export async function getWarlordVault(ctx: BalancesContext, vault: Contract): Pr
   }
 
   return {
+    ...vault,
     amount: tWarBalance.success ? tWarBalance.output : 0n,
     underlyings: [cvxUserBalance, auraUserBalance],
     category: 'stake',
-    chain: ctx.chain,
-    address: vault.address,
-    symbol: vault.symbol,
+    rewards: undefined,
   }
 }
