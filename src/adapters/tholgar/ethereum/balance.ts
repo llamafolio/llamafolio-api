@@ -1,6 +1,6 @@
-import type { Balance, BalancesContext, BaseBalance, Contract } from '@lib/adapter'
-import { call } from '@lib/call'
+import type { Balance, BalancesContext, BaseBalance, BaseContract, Contract } from '@lib/adapter'
 import { abi as erc20Abi } from '@lib/erc20'
+import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 
 const abi = {
@@ -32,11 +32,6 @@ const abi = {
   },
 } as const
 
-const warAuraLocker = '0x7B90e043aaC79AdeA0Dbb0690E3c832757207a3B'
-const warCvxLocker = '0x700d6d24A55512c6AEC08820B49da4e4193105B3'
-const warRedeemerAddress = '0x4787Ef084c1d57ED87D58a716d991F8A9CD3828C'
-const stkWarAddress = '0xA86c53AF3aadF20bE5d7a8136ACfdbC4B074758A'
-
 const cvx: Token = {
   chain: 'ethereum',
   address: '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
@@ -50,36 +45,73 @@ const aura: Token = {
   symbol: 'AURA',
 }
 
+const warAuraLocker: Contract = {
+  chain: 'ethereum',
+  address: '0x7B90e043aaC79AdeA0Dbb0690E3c832757207a3B',
+}
+const warCvxLocker: Contract = {
+  chain: 'ethereum',
+  address: '0x700d6d24A55512c6AEC08820B49da4e4193105B3',
+}
+const warRedeemer: Contract = {
+  chain: 'ethereum',
+  address: '0x4787Ef084c1d57ED87D58a716d991F8A9CD3828C',
+}
+const stkWAR: Contract = {
+  chain: 'ethereum',
+  address: '0xA86c53AF3aadF20bE5d7a8136ACfdbC4B074758A',
+  decimals: 18,
+  symbol: 'stkWAR',
+}
+
 export async function getWarlordVault(ctx: BalancesContext, vault: Contract): Promise<Balance> {
-  const tWarBalance = await call({ ctx, target: vault.address, abi: erc20Abi.balanceOf, params: [ctx.address] })
-  const tWarTotalSupply = await call({ ctx, target: vault.address, abi: erc20Abi.totalSupply })
-  const warBalance = await call({ ctx, target: stkWarAddress, abi: erc20Abi.balanceOf, params: [vault.address] })
-  const warTotalSupply = await call({ ctx, target: stkWarAddress, abi: erc20Abi.totalSupply })
-  const cvxLocked = await call({
+  const [tWarBalance, warBalance] = await multicall({
     ctx,
-    target: warCvxLocker,
+    abi: erc20Abi.balanceOf,
+    calls: [{
+      target: vault.address,
+      params: [ctx.address],
+    }, {
+      target: stkWAR.address,
+      params: [vault.address],
+    }],
+  })
+  const [tWarTotalSupply, warTotalSupply] = await multicall({
+    ctx,
+    abi: erc20Abi.totalSupply,
+    calls: [vault.address, (vault!.underlyings![0] as BaseContract).address].map((target) => ({
+      target,
+    }) as const),
+  })
+  const [cvxLocked, auraLocked] = await multicall({
+    ctx,
     abi: abi.getCurrentLockedTokens,
+    calls: [warCvxLocker.address, warAuraLocker.address].map((target) => ({
+      target,
+    }) as const),
   })
-  const auraLocked = await call({
+  const [auraQueued, cvxQueued] = await multicall({
     ctx,
-    target: warAuraLocker,
-    abi: abi.getCurrentLockedTokens,
-  })
-  const auraQueued = await call({
-    ctx,
-    target: warRedeemerAddress,
     abi: abi.queuedForWithdrawal,
-    params: [aura.address],
-  })
-  const cvxQueued = await call({
-    ctx,
-    target: warRedeemerAddress,
-    abi: abi.queuedForWithdrawal,
-    params: [cvx.address],
+    calls: [aura.address, cvx.address].map((token) => ({
+      target: warRedeemer.address,
+      params: [token],
+    }) as const),
   })
 
+  let cvxUserBalanceAmount: bigint = 0n;
+  let auraUserBalanceAmount: bigint = 0n;
+  if (warBalance.success && warTotalSupply.success && tWarBalance.success && tWarTotalSupply.success) {
+    if (cvxLocked.success && cvxQueued.success) {
+      cvxUserBalanceAmount = ((((cvxLocked.output - cvxQueued.output) * warBalance.output) / warTotalSupply.output) * tWarBalance.output) / tWarTotalSupply.output;
+    }
+    if (auraLocked.success && auraQueued.success) {
+      auraUserBalanceAmount = ((((auraLocked.output - auraQueued.output) * warBalance.output) / warTotalSupply.output) * tWarBalance.output) / tWarTotalSupply.output;
+    }
+  }
+
   const cvxUserBalance: BaseBalance = {
-    amount: ((((cvxLocked - cvxQueued) * warBalance) / warTotalSupply) * tWarBalance) / tWarTotalSupply,
+    amount: cvxUserBalanceAmount,
     token: cvx.address,
     chain: ctx.chain,
     address: cvx.address,
@@ -87,7 +119,7 @@ export async function getWarlordVault(ctx: BalancesContext, vault: Contract): Pr
     decimals: cvx.decimals,
   }
   const auraUserBalance: BaseBalance = {
-    amount: ((((auraLocked - auraQueued) * warBalance) / warTotalSupply) * tWarBalance) / tWarTotalSupply,
+    amount: auraUserBalanceAmount,
     token: aura.address,
     chain: ctx.chain,
     address: aura.address,
@@ -96,7 +128,7 @@ export async function getWarlordVault(ctx: BalancesContext, vault: Contract): Pr
   }
 
   return {
-    amount: tWarBalance,
+    amount: tWarBalance.success ? tWarBalance.output : 0n,
     underlyings: [cvxUserBalance, auraUserBalance],
     category: 'stake',
     chain: ctx.chain,
