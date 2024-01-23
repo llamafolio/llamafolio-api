@@ -27,7 +27,7 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.398.0",
-    "@clickhouse/client": "^0.2.6",
+    "@clickhouse/client": "^0.2.9",
     "@llamafolio/tokens": "^0.1.104",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",

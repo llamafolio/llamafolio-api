@@ -9,8 +9,8 @@ dependencies:
     specifier: ^3.398.0
     version: 3.398.0
   '@clickhouse/client':
-    specifier: ^0.2.6
-    version: 0.2.6
+    specifier: ^0.2.9
+    version: 0.2.9
   '@llamafolio/tokens':
     specifier: ^0.1.104
     version: 0.1.104
@@ -538,15 +538,15 @@ packages:
     dependencies:
       tslib: 2.6.2
 
-  /@clickhouse/client-common@0.2.6:
-    resolution: {integrity: sha512-T2HwPCKi98vGGtPxcV1q5YH/tET5f1FhdKYxo3AqOdawIMPoymQGzfsxsAL5UpMsfdBYrko6Sjy3RJxt7/gYyg==}
+  /@clickhouse/client-common@0.2.9:
+    resolution: {integrity: sha512-ecXcegMbT4HYNWtGcfyidW6lNVRqPogbFMY5kfjJmz4IXJ4WZbQMwj2IQgemwFwE7jyia2OEwPIVfw1sNfDHRA==}
     dev: false
 
-  /@clickhouse/client@0.2.6:
-    resolution: {integrity: sha512-vvy101CNKRHr/M7eML19fIOOSELNpE2kwvBMdqag9ImosK2Lx5e4X8D7jt84EUD1V1JC1Dp2cG36/1JJb8ZC9g==}
+  /@clickhouse/client@0.2.9:
+    resolution: {integrity: sha512-KqQlO9vZNSLyhMWG9+0/VXqcUZrNk1Hybr9icgI/nLCoX8RD19BJsakZJj38IQvQxNUTxvcItm/kyu/gD/9LXA==}
     engines: {node: '>=16'}
     dependencies:
-      '@clickhouse/client-common': 0.2.6
+      '@clickhouse/client-common': 0.2.9
     dev: false
 
   /@esbuild-kit/cjs-loader@2.4.2:
