@@ -105,6 +105,7 @@ export async function getMarketsContracts(ctx: BaseContext, options: GetMarketsC
         address: cToken.input.params[0],
         collateralFactor,
         underlyings: [underlying],
+        type: 'market',
       }
     })
     .filter(isNotNullish)

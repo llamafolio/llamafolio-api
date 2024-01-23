@@ -20,6 +20,7 @@ const abi = {
 const comptroller: Contract = {
   chain: 'polygon',
   address: '0x8849f1a0cb6b5d6076ab150546eddee193754f1c',
+  type: 'comptroller',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
@@ -45,7 +46,7 @@ export const getContracts = async (ctx: BaseContext) => {
   })
 
   return {
-    contracts: { markets },
+    contracts: { comptroller, markets },
     revalidate: 60 * 60,
   }
 }
