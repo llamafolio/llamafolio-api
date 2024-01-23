@@ -47,6 +47,22 @@ const vsCodeLaunchTemplate = (adapters: string[], chains: string[]) =>
       {
         type: 'node',
         request: 'launch',
+        name: 'Run update adapter balances',
+        skipFiles: ['<node_internals>/**'],
+        runtimeExecutable: 'npm',
+        runtimeArgs: ['run', 'update-adapter-balances', '${input:adapter}', '${input:chain}'],
+      },
+      {
+        type: 'node',
+        request: 'launch',
+        name: 'Run update adapter balances prices',
+        skipFiles: ['<node_internals>/**'],
+        runtimeExecutable: 'npm',
+        runtimeArgs: ['run', 'update-adapter-balances-prices', '${input:adapter}', '${input:chain}'],
+      },
+      {
+        type: 'node',
+        request: 'launch',
         name: 'Run update balances',
         skipFiles: ['<node_internals>/**'],
         runtimeExecutable: 'npm',

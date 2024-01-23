@@ -6,14 +6,14 @@ import { parseAddress, unixFromDate } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenPrice } from '@lib/price'
 import type { Token } from '@lib/token'
-import type { TUnixTimestamp } from '@lib/type'
+import type { UnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 type Window = 'd' | 'w' | 'm'
 const WINDOWS: Window[] = ['d', 'w', 'm']
 
 export interface TokenTransfer {
-  timestamp: TUnixTimestamp
+  timestamp: UnixTimestamp
   transactionHash: string
   logIndex: number
   balanceUSD?: number
@@ -23,7 +23,7 @@ export interface TokenTransfer {
 }
 
 export interface LatestTokensTransfersResponse {
-  updatedAt: TUnixTimestamp
+  updatedAt: UnixTimestamp
   data: TokenTransfer[]
   count: number
 }

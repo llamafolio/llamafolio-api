@@ -4,7 +4,7 @@ import { sliceIntoChunks } from '@lib/array'
 import { type Chain, toDefiLlamaChain } from '@lib/chains'
 import { mulPrice, sum } from '@lib/math'
 import type { Token } from '@lib/token'
-import { isNotNullish } from '@lib/type'
+import { isNotNullish, type UnixTimestamp } from '@lib/type'
 
 // Defillama prices API requires a prefix to know where the token comes from
 export function getTokenKey(contract: { chain: Chain; address: string; token?: string }) {
@@ -50,6 +50,28 @@ export async function fetchTokenPrices(keys: string[]): Promise<PricesResponse> 
   }
 }
 
+export async function fetchHistoricalTokenPrices(keys: string[], timestamp: UnixTimestamp): Promise<PricesResponse> {
+  try {
+    // sort to increase cache hits
+    const coinsParam = keys.sort().join(',')
+    const endpoint = environment.DEFILLAMA_PRICE_API_KEY
+      ? `https://coins.llama.fi/prices/historical/${timestamp}/${coinsParam}?apikey=${environment.DEFILLAMA_PRICE_API_KEY}&searchWidth=4h`
+      : `https://coins.llama.fi/prices/historical/${timestamp}/${coinsParam}?searchWidth=4h`
+    const pricesRes = await fetch(endpoint, { method: 'GET' })
+
+    if (!pricesRes.ok) {
+      throw new Error(`bad response for coins ${coinsParam}`)
+    }
+
+    return pricesRes.json()
+  } catch (error) {
+    console.error('Failed to get DefiLlama historical prices', error)
+    return {
+      coins: {},
+    }
+  }
+}
+
 export async function getTokenPrices(tokens: Token[]): Promise<PricesResponse> {
   const keys = new Set(tokens.map(getTokenKey).filter(isNotNullish))
 
@@ -65,6 +87,29 @@ export async function getTokenPrice(token: Token) {
   const tokenPricesRes = await fetchTokenPrices([tokenKey])
 
   return tokenPricesRes.coins?.[tokenKey] ?? null
+}
+
+export async function getHistoricalTokenPrices<T extends Token>(
+  tokens: T[],
+  timestamp: UnixTimestamp,
+): Promise<(T & { price?: number })[]> {
+  const keys = new Set(tokens.map(getTokenKey).filter(isNotNullish))
+
+  const pricesResponse = await fetchHistoricalTokenPrices(Array.from(keys), timestamp)
+
+  return tokens.map((token) => {
+    const key = getTokenKey(token)
+    if (!key) {
+      return { ...token }
+    }
+
+    const maybePrice = pricesResponse.coins[key]
+
+    return {
+      ...token,
+      price: maybePrice?.price,
+    }
+  })
 }
 
 export async function getPricedBalances(balances: Balance[]): Promise<(Balance | PricedBalance)[]> {

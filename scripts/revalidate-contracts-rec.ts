@@ -4,7 +4,7 @@ import url from 'node:url'
 import { selectAdapter } from '@db/adapters'
 import { client } from '@db/clickhouse'
 import { type Adapter, revalidateAdapterContracts } from '@lib/adapter'
-import { type Chain, chainById } from '@lib/chains'
+import { chainByChainId, getChainId } from '@lib/chains'
 import { fetchProtocolToParentMapping } from '@lib/protocols'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -26,7 +26,13 @@ async function main() {
     return help()
   }
 
-  const chain = process.argv[3] as Chain
+  const chainId = getChainId(process.argv[3])
+  if (chainId == null) {
+    console.error(`Missing chain ${process.argv[3]}`)
+    return
+  }
+  const chain = chainByChainId[chainId]?.id
+
   const module = await import(path.join(__dirname, '..', 'src', 'adapters', process.argv[2]))
   const adapter = module.default as Adapter
   if (!adapter) {
@@ -35,11 +41,6 @@ async function main() {
   }
   if (!adapter[chain]) {
     console.error(`Could not find chain ${chain} for adapter ${adapter}`)
-    return
-  }
-  const chainId = chainById[chain]?.chainId
-  if (chainId == null) {
-    console.error(`Missing chain ${chain}`)
     return
   }
 

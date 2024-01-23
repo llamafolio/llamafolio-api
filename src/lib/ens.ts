@@ -1,5 +1,5 @@
 import { toStartOfDay, unixFromDate } from '@lib/fmt'
-import type { TUnixTimestamp } from '@lib/type'
+import type { UnixTimestamp } from '@lib/type'
 import { GraphQLClient } from 'graphql-request'
 
 export const DOMAINS_QUERY = `
@@ -50,8 +50,8 @@ export interface ENSRegistration {
   domainName: string
   owner: string
   registrant: string
-  expiryDate: TUnixTimestamp
-  registrationDate: TUnixTimestamp
+  expiryDate: UnixTimestamp
+  registrationDate: UnixTimestamp
 }
 
 const endpoint = 'https://api.thegraph.com/subgraphs/name/ensdomains/ens'

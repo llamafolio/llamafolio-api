@@ -7,7 +7,7 @@ import type { Category } from '@lib/category'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
 import { shortAddress, toDateTime, unixFromDateTime } from '@lib/fmt'
 import { sum, sumBI } from '@lib/math'
-import type { TUnixTimestamp } from '@lib/type'
+import type { UnixTimestamp } from '@lib/type'
 
 export interface Yield {
   apy?: number
@@ -354,7 +354,7 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
     }[]
   }
 
-  const updatedAtByFromAddress: { [key: string]: TUnixTimestamp | undefined } = {}
+  const updatedAtByFromAddress: { [key: string]: UnixTimestamp | undefined } = {}
 
   const balancesByChain = groupBy(res.data, 'chain')
 

@@ -1,4 +1,5 @@
 import { isHex } from '@lib/contract'
+import type { UnixTimestamp } from '@lib/type'
 import dayjs from 'dayjs'
 import utc from 'dayjs/plugin/utc'
 
@@ -87,6 +88,26 @@ export function toStartOfMonth(date: Date) {
 
 export function toStartOfNextMonth(date: Date) {
   return dayjs(date).utc().startOf('month').add(1, 'month').toDate()
+}
+
+/**
+ * format timestamp to Clickhouse compatible Date
+ */
+export function unixToYYYYMMDD(ts: UnixTimestamp) {
+  return dayjs(new Date(ts * 1000))
+    .utc()
+    .format('YYYY-MM-DD')
+}
+
+/**
+ * format Date to Clickhouse compatible Date
+ */
+export function toYYYYMMDD(date: Date | string | number) {
+  return dayjs(date).utc().format('YYYY-MM-DD')
+}
+
+export function unixFromYYYYMMDD(date: string) {
+  return dayjs.utc(date, 'YYYY-MM-DD').unix()
 }
 
 /**

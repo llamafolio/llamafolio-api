@@ -1,12 +1,20 @@
 import type { ClickHouseClient } from '@clickhouse/client'
-import { type Adapter as DBAdapter, insertAdapters, selectNonDuplicateAdaptersContracts } from '@db/adapters'
+import {
+  type Adapter as DBAdapter,
+  insertAdapters,
+  selectAdapter,
+  selectNonDuplicateAdaptersContracts,
+} from '@db/adapters'
 import { flattenContracts, insertAdaptersContracts } from '@db/contracts'
+import type { Cache } from '@lib/cache'
 import type { Category } from '@lib/category'
 import { type Chain, chainById } from '@lib/chains'
+import { fetchProtocolToParentMapping } from '@lib/protocols'
 import { resolveContractsTokens } from '@lib/token'
 import isEqual from 'lodash/isEqual'
 
 export interface BaseContext {
+  cache?: Cache<string, any>
   chain: Chain
   adapterId: string
   blockNumber?: number
@@ -207,6 +215,14 @@ export interface Adapter extends Partial<Record<Chain, AdapterHandler>> {
   id: string
 }
 
+/**
+ * @param client
+ * @param adapter
+ * @param chain
+ * @param prevDbAdapter
+ * @param protocolToParent
+ * @return null if no more contracts to insert
+ */
 export async function revalidateAdapterContracts(
   client: ClickHouseClient,
   adapter: Adapter,
@@ -216,7 +232,7 @@ export async function revalidateAdapterContracts(
 ) {
   const chainId = chainById[chain]?.chainId
   if (!chainId) {
-    return
+    return null
   }
 
   const now = new Date()
@@ -231,7 +247,7 @@ export async function revalidateAdapterContracts(
     prevDbAdapter?.contractsRevalidateProps &&
     isEqual(config.revalidateProps, prevDbAdapter?.contractsRevalidateProps)
   ) {
-    return
+    return null
   }
 
   const contracts = await resolveContractsTokens(ctx, config.contracts || {})
@@ -286,9 +302,36 @@ export async function revalidateAdapterContracts(
 
   console.log(`Skipped ${adapterContracts.length - nonDuplicateAdaptersContracts.length} already existing contracts`)
 
+  if (nonDuplicateAdaptersContracts.length === 0) {
+    // already stored, stop recursion
+    return null
+  }
+
   console.log(`Inserting ${nonDuplicateAdaptersContracts.length} new contracts`)
 
   await insertAdaptersContracts(client, nonDuplicateAdaptersContracts)
 
   return newAdapter
+}
+
+/**
+ * Recursively revalidate contracts of a chain for a given adapter until completion
+ */
+export async function revalidateAllContracts(client: ClickHouseClient, adapter: Adapter, chain: Chain) {
+  const chainId = chainById[chain]?.chainId
+  if (chainId == null) {
+    console.error(`Missing chain ${chain}`)
+    return
+  }
+
+  let prevDbAdapter = await selectAdapter(client, adapter.id, chainId)
+
+  const protocolToParent = await fetchProtocolToParentMapping()
+
+  for (let i = 0; ; i++) {
+    prevDbAdapter = await revalidateAdapterContracts(client, adapter, chain, prevDbAdapter, protocolToParent)
+    if (!prevDbAdapter) {
+      return console.log('Done')
+    }
+  }
 }

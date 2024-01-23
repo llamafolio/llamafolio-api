@@ -165,11 +165,8 @@ export const chains = [
     client: createPublicClient({
       chain: viemChains.mainnet,
       transport: fallback([
-        http('https://rpc.ankr.com/eth', { batch: { wait: 0, batchSize: 5_000 } }),
-        http('https://eth-mainnet.gateway.pokt.network/v1/5f3453978e354ab992c4da79', {
-          batch: { wait: 10, batchSize: 1_000 },
-        }),
-        http('https://cloudflare-eth.com', { batch: { batchSize: 1_000, wait: 10 } }),
+        http('https://rpc.ankr.com/eth', { batch: { wait: 50, batchSize: 5_000 } }),
+        http('https://cloudflare-eth.com', { batch: { wait: 50, batchSize: 5_000 } }),
       ]),
     }),
     nativeCurrency: {

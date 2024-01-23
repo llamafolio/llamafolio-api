@@ -207,6 +207,124 @@ export async function getContractsInteractions(
   return fromStorage(res.data)
 }
 
+/**
+ * Active users are "cumulative", meaning a user that deposited in the past is still an active user in the upcoming days
+ * (until his position goes to 0)
+ */
+export async function getDailyContractsInteractions(
+  client: ClickHouseClient,
+  adapterId: string,
+  chainId: number,
+  day: string,
+) {
+  const queryRes = await client.query({
+    query: `
+      WITH "protocol_contracts" AS (
+        SELECT
+          "address",
+          "token",
+          argMax("category", "created_at") AS "category",
+          argMax("data", "created_at") AS "data"
+        FROM ${environment.NS_LF}.adapters_contracts
+        WHERE
+          "chain" = {chainId: UInt64} AND
+          "adapter_id" = {adapterId: String}
+        GROUP BY "address", "token"
+        HAVING sum("sign") > 0
+      ),
+      "daily_transactions" AS (
+        SELECT
+          "to_address" AS "address",
+          "from_address" AS "holder"
+        FROM evm_indexer2.transactions_to_mv
+        WHERE
+          ("to_short", "to_address") IN (
+            SELECT
+              substring("address",1,10),
+              "address"
+            FROM "protocol_contracts"
+          ) AND
+          toDate("timestamp") = toDate({day: String}) AND
+          chain = {chainId: UInt64}
+      ),
+      "daily_token_transfers" AS (
+        SELECT
+          "address",
+          "to_address" AS "holder"
+        FROM evm_indexer2.token_transfers
+        WHERE
+          chain = {chainId: UInt64} AND
+          toDate("timestamp") = toDate({day: String}) AND
+          ("address_short", "address") IN (
+            SELECT
+              substring("address",1,10),
+              "address"
+            FROM "protocol_contracts"
+          )
+      ),
+      "daily_interactions" AS (
+        SELECT
+          groupUniqArray("holder") AS "holders",
+          "address"
+        FROM (
+          (SELECT * FROM "daily_transactions")
+            UNION DISTINCT
+          (SELECT * FROM "daily_token_transfers")
+        )
+        GROUP BY "address"
+      )
+      SELECT
+        "holders",
+        "address",
+        "token",
+        "category",
+        "data"
+      FROM "daily_interactions" AS "t"
+      LEFT JOIN "protocol_contracts" AS "c" ON (t."address" = c."address");
+    `,
+    query_params: {
+      adapterId,
+      chainId,
+      day,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: (ContractStorage & { holders: `0x${string}`[] })[]
+  }
+
+  const contractsByHolder: { [key: string]: Contract[] } = {}
+
+  for (const contractStorage of res.data) {
+    const data = JSON.parse(contractStorage.data || '{}')
+
+    const contract = {
+      ...data,
+      decimals: data?.decimals ? parseInt(data.decimals) : undefined,
+      standard: contractStorage.standard,
+      name: contractStorage.name,
+      chain: chainByChainId[parseInt(contractStorage.chain)]?.id,
+      address: contractStorage.address,
+      token: contractStorage.token,
+      category: contractStorage.category,
+      adapterId: contractStorage.adapter_id,
+      underlyings: data?.underlyings?.map((underlying: any) => ({
+        ...underlying,
+        decimals: parseInt(underlying.decimals),
+      })),
+    }
+
+    for (const holder of contractStorage.holders) {
+      if (!contractsByHolder[holder]) {
+        contractsByHolder[holder] = []
+      }
+      contractsByHolder[holder].push(contract)
+    }
+  }
+
+  return contractsByHolder
+}
+
 export async function getWalletInteractions(client: ClickHouseClient, address: string) {
   const queryRes = await client.query({
     query: `

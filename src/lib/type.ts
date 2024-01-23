@@ -6,7 +6,7 @@ export function isNotNullish<T>(param: T | undefined | null): param is T {
   return param != null
 }
 
-export type TUnixTimestamp = number
+export type UnixTimestamp = number
 
 /**
  * `undefined, null, false, '', 0, 0n` are all falsy values
@@ -16,3 +16,5 @@ export const isNotFalsy = <T>(param: T | undefined | null | false | '' | 0 | 0n)
 
 // extract the value type from a Map
 export type MapValueType<A> = A extends Map<any, infer V> ? V : never
+
+export type MaybePromise<T> = Promise<T> | T

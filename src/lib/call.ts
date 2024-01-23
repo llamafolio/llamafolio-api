@@ -1,8 +1,26 @@
 import type { BaseContext } from '@lib/adapter'
 import { chainById } from '@lib/chains'
 import type { Abi } from 'abitype'
-import type { DecodeFunctionResultParameters, DecodeFunctionResultReturnType } from 'viem'
+import {
+  type AbiFunction,
+  type DecodeFunctionResultParameters,
+  type DecodeFunctionResultReturnType,
+  getFunctionSelector,
+} from 'viem'
 
+export function toCacheKey(ctx: BaseContext, target: string, abi: AbiFunction, args?: any[]) {
+  const selector = getFunctionSelector(abi)
+  const chainId = chainById[ctx.chain].chainId
+  const blockNumber = ctx.blockNumber || ''
+  const params = args == null ? '' : JSON.stringify(args)
+
+  return `${target}#${selector}#${chainId}#${blockNumber}#${params}`
+}
+
+/**
+ * NOTE: Cache calls results if the context contains has a valid `blockNumber` and `cache`
+ * @param options
+ */
 export async function call<TAbi extends Abi[number] | readonly unknown[]>(options: {
   ctx: BaseContext
   target: `0x${string}`
