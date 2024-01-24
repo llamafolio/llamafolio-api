@@ -1,4 +1,5 @@
 import type { ClickHouseClient } from '@clickhouse/client'
+import environment from '@environment'
 import { type Chain, chainById } from '@lib/chains'
 import { shortAddress } from '@lib/fmt'
 
@@ -110,6 +111,45 @@ export async function selectUndecodedChainAddresses(
   return res.data
 }
 
+export async function selectUndecodedProtocolsTokens(client: ClickHouseClient) {
+  const queryRes = await client.query({
+    query: `
+      SELECT * FROM (
+        (
+          SELECT "chain", "address" FROM lf.adapters_contracts
+        )
+          UNION DISTINCT
+        (
+          SELECT "chain", "token" AS "address" FROM lf.adapters_contracts WHERE "token" <> ''
+        )
+          UNION DISTINCT
+        (
+          SELECT "chain", "address" FROM lf.adapters_contracts
+          ARRAY JOIN "underlyings" AS "address"
+        )
+          UNION DISTINCT
+        (
+          SELECT "chain", "address" FROM lf.adapters_contracts
+          ARRAY JOIN "rewards" AS "address"
+        )
+      )
+      WHERE
+        ("chain", "address") NOT IN (
+          SELECT "chain", "address" FROM evm_indexer2.tokens WHERE type = 'erc20' GROUP BY "chain", "address"
+        ) AND ("chain", "address") NOT IN (
+          SELECT "chain", "address" FROM ${environment.NS_LF}.tokens_decode_errors WHERE type = 'erc20' GROUP BY "chain", "address"
+        )
+      GROUP BY "chain", "address";
+    `,
+  })
+
+  const res = (await queryRes.json()) as {
+    data: { chain: string; address: `0x${string}` }[]
+  }
+
+  return res.data
+}
+
 export async function insertERC20Tokens(client: ClickHouseClient, tokens: Token[]) {
   const values = toTokenStorage(tokens)
 
@@ -119,6 +159,33 @@ export async function insertERC20Tokens(client: ClickHouseClient, tokens: Token[
 
   await client.insert({
     table: 'evm_indexer2.tokens',
+    values,
+    format: 'JSONEachRow',
+  })
+}
+
+export async function insertERC20TokensDecodeErrors(client: ClickHouseClient, tokens: Partial<Token>[]) {
+  const values: { chain: number; address: string; type: 'erc20'; sign: number }[] = []
+
+  for (const token of tokens) {
+    if (token.chain == null || token.address == null) {
+      continue
+    }
+
+    const chainId = chainById[token.chain]?.chainId
+    if (chainId == null) {
+      continue
+    }
+
+    values.push({ chain: chainId, address: token.address, type: 'erc20', sign: 1 })
+  }
+
+  if (values.length === 0) {
+    return
+  }
+
+  await client.insert({
+    table: `${environment.NS_LF}.tokens_decode_errors`,
     values,
     format: 'JSONEachRow',
   })
