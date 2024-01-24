@@ -8,7 +8,6 @@ type LambdaFunctionName =
   | 'updateCoingeckoCoins'
   | 'updateGovernanceProposals'
   | 'updateProtocols'
-  | 'updateProtocolsTokens'
   | 'updateYields'
 
 type InvocationType = 'RequestResponse' | 'Event' | 'DryRun'
@@ -18,7 +17,6 @@ const lambdaFunctionNames: { [key in LambdaFunctionName]: string } = {
   updateCoingeckoCoins: `llamafolio-api-${STAGE}-updateCoingeckoCoins`,
   updateGovernanceProposals: `llamafolio-api-${STAGE}-updateGovernanceProposals`,
   updateProtocols: `llamafolio-api-${STAGE}-updateProtocols`,
-  updateProtocolsTokens: `llamafolio-api-${STAGE}-updateProtocolsTokens`,
   updateYields: `llamafolio-api-${STAGE}-updateYields`,
 }
 

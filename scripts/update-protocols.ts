@@ -1,5 +1,6 @@
 import { client } from '@db/clickhouse'
 import environment from '@environment'
+import { handleUpdateProtocolsTokens } from '@handlers/updateProtocolsTokens'
 import { toDateTime } from '@lib/fmt'
 
 import { insertProtocols } from '../src/db/protocols'
@@ -32,6 +33,8 @@ async function main() {
     }
 
     await insertProtocols(client, protocols)
+
+    await handleUpdateProtocolsTokens()
 
     console.log(`Inserted ${protocols.length} protocols`)
   } catch (e) {

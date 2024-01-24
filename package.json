@@ -17,6 +17,7 @@
     "revalidate-all-contracts": "tsx scripts/revalidate-all-contracts.ts",
     "revalidate-contracts-rec": "tsx scripts/revalidate-contracts-rec.ts",
     "update-protocols": "tsx scripts/update-protocols.ts",
+    "update-protocols-tokens": "tsx scripts/update-protocols-tokens.ts",
     "update-yields": "tsx scripts/update-yields.ts",
     "nft-floors": "tsx --require='dotenv/config' scripts/nft-floors.ts",
     "lint": "eslint --fix . --ext js,cjs,mjs,ts,d.ts,json,md --cache",

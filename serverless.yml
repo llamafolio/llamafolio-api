@@ -315,13 +315,6 @@ functions:
       # every new hour
       - schedule: cron(0 * * * ? *)
 
-  scheduledUpdateProtocolsTokens:
-    handler: src/handlers/updateProtocolsTokens.scheduledUpdateProtocolsTokens
-    description: Scheduled update protocols tokens
-    events:
-      # every new hour
-      - schedule: cron(0 * * * ? *)
-
   scheduledUpdateYields:
     handler: src/handlers/updateYields.scheduledUpdateYields
     description: Scheduled update yields
@@ -356,11 +349,6 @@ functions:
   updateProtocols:
     handler: src/handlers/updateProtocols.handler
     description: Update protocols
-    timeout: 300
-
-  updateProtocolsTokens:
-    handler: src/handlers/updateProtocolsTokens.handler
-    description: Update protocols tokens
     timeout: 300
 
   updateYields:
