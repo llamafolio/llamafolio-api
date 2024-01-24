@@ -245,6 +245,7 @@ import reserve from '@adapters/reserve'
 import retro from '@adapters/retro'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
+import rocketswapBase from '@adapters/rocketswap-base'
 import rook from '@adapters/rook'
 import rubicon from '@adapters/rubicon'
 import scream from '@adapters/scream'
@@ -311,6 +312,7 @@ import tokemak from '@adapters/tokemak'
 import tokenlon from '@adapters/tokenlon'
 import tonpound from '@adapters/tonpound'
 import tornadoCash from '@adapters/tornado-cash'
+import toupeeTech from '@adapters/toupee.tech'
 import tprotocol from '@adapters/tprotocol'
 import traderJoe from '@adapters/trader-joe'
 import treasuredao from '@adapters/treasuredao'
@@ -597,6 +599,7 @@ export const adapters: Adapter[] = [
   retro,
   ribbonFinance,
   rocketPool,
+  rocketswapBase,
   rook,
   rubicon,
   scream,
@@ -663,6 +666,7 @@ export const adapters: Adapter[] = [
   tokenlon,
   tonpound,
   tornadoCash,
+  toupeeTech,
   tprotocol,
   traderJoe,
   treasuredao,
