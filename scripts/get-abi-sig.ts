@@ -1,119 +1,32 @@
-import '../environment'
-
 import { shortAddress } from '@lib/fmt'
+import { promises as fs } from 'fs'
+import path from 'path'
 import { getEventSelector, getEventSignature, getFunctionSelector, getFunctionSignature } from 'viem'
 
-const ABI = [
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: true, internalType: 'address', name: 'owner', type: 'address' },
-      { indexed: true, internalType: 'address', name: 'spender', type: 'address' },
-      { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
-    ],
-    name: 'Approval',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      { indexed: true, internalType: 'address', name: 'from', type: 'address' },
-      { indexed: true, internalType: 'address', name: 'to', type: 'address' },
-      { indexed: false, internalType: 'uint256', name: 'value', type: 'uint256' },
-    ],
-    name: 'Transfer',
-    type: 'event',
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'spender', type: 'address' },
-      { internalType: 'uint256', name: 'amount', type: 'uint256' },
-    ],
-    name: 'approve',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
-    name: 'balanceOf',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [{ internalType: 'bytes4', name: 'interfaceId', type: 'bytes4' }],
-    name: 'supportsInterface',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'symbol',
-    outputs: [{ internalType: 'string', name: '', type: 'string' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'token',
-    outputs: [{ internalType: 'address', name: '', type: 'address' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'totalSupply',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'recipient', type: 'address' },
-      { internalType: 'uint256', name: 'amount', type: 'uint256' },
-    ],
-    name: 'transfer',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: 'sender', type: 'address' },
-      { internalType: 'address', name: 'recipient', type: 'address' },
-      { internalType: 'uint256', name: 'amount', type: 'uint256' },
-    ],
-    name: 'transferFrom',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-] as const
-
-function help() {
-  console.log('pnpm run get-abi-sig')
+async function help() {
+  console.log('Usage: npm run get-abi-sig -- abiName')
 }
 
 async function main() {
   // argv[0]: node_modules/.bin/tsx
   // argv[1]: get-abi-sig.ts
-  if (process.argv.length < 2) {
+  // argv[2]: abi
+  if (process.argv.length < 3) {
     console.error('Missing arguments')
     return help()
   }
 
-  try {
-    const sigs: {
-      name: string
-      type: 'event' | 'function'
-      signature: string
-      selector: string
-      short_selector?: string
-    }[] = []
+  const abiName = process.argv[2]
+  const abiPath = path.join(__dirname, 'abis', `${abiName}.json`)
 
-    for (const functionOrEvent of ABI) {
+  try {
+    // eslint-disable-next-line security/detect-non-literal-fs-filename
+    const abiContent = await fs.readFile(abiPath, 'utf8')
+    let abis = JSON.parse(abiContent)
+    abis = normalizeAbi(abis)
+    const sigs = []
+
+    for (const functionOrEvent of abis) {
       const type = functionOrEvent.type
       if (type === 'event') {
         const signature = getEventSignature(functionOrEvent)
@@ -130,7 +43,15 @@ async function main() {
 
     console.table(sigs)
   } catch (e) {
-    console.log('Failed to get contract sigs', e)
+    console.error('Failed to get contract sigs', e)
+  }
+}
+
+function normalizeAbi(abi: any) {
+  if (abi.length > 0 && typeof abi[0] === 'object' && !abi[0].inputs) {
+    return abi.map((obj: any) => Object.values(obj)[0])
+  } else {
+    return abi
   }
 }
 
