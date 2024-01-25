@@ -1,8 +1,8 @@
 import type { Adapter } from '@lib/adapter'
 
 import * as avalanche from './avalanche'
-import * as ethereum from './ethereum'
 import * as base from './base'
+import * as ethereum from './ethereum'
 
 const adapter: Adapter = {
   id: 'poolside',
