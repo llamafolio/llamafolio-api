@@ -68,9 +68,19 @@ const uBAL: Contract = {
   provider: 'convex',
 }
 
+const uPRISMA: Contract = {
+  chain: 'ethereum',
+  name: 'Unionized Convex Prisma',
+  address: '0x9bfd08d7b3cc40129132a17b4d5b9ea3351464bd',
+  underlyings: ['0x34635280737b5bfe6c7dc2fc3065d60d66e78185'],
+  symbol: 'ucvxPrisma',
+  decimals: 18,
+  provider: 'convex',
+}
+
 export const getContracts = () => {
   return {
-    contracts: { farmers: [uCRV1, uCRV2, uCRV3, uFXS1, uFXS2, uCVX, uBAL] },
+    contracts: { farmers: [uCRV1, uCRV2, uCRV3, uFXS1, uFXS2, uCVX, uBAL, uPRISMA] },
   }
 }
 

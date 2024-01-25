@@ -2,7 +2,8 @@ import path from 'node:path'
 import url from 'node:url'
 
 import type { Adapter, BalancesContext } from '@lib/adapter'
-import type { Chain } from '@lib/chains'
+import { chainByChainId, getChainId } from '@lib/chains'
+import { parseAddress } from '@lib/fmt'
 import { resolveContractsTokens } from '@lib/token'
 import { printBalancesConfig } from 'scripts/utils/balances'
 
@@ -26,8 +27,16 @@ async function main() {
   const startTime = Date.now()
 
   const adapterId = process.argv[2]
-  const chain = process.argv[3] as Chain
-  const address = process.argv[4].toLowerCase() as `0x${string}`
+  const chain = chainByChainId[getChainId(process.argv[3])]?.id
+  if (chain == null) {
+    console.error(`Chain not found ${process.argv[3]}`)
+    return
+  }
+  const address = parseAddress(process.argv[4])
+  if (address == null) {
+    console.error(`Could not parse address ${process.argv[4]}`)
+    return
+  }
 
   const ctx: BalancesContext = { address, chain, adapterId }
 
