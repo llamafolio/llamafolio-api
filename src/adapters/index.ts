@@ -309,6 +309,7 @@ import thales from '@adapters/thales'
 import theIdols from '@adapters/the-idols'
 import theOpenDaoSos from '@adapters/the-open-dao-sos'
 import thena from '@adapters/thena'
+import tholgar from '@adapters/tholgar'
 import timewarp from '@adapters/timewarp'
 import tokemak from '@adapters/tokemak'
 import tokenlon from '@adapters/tokenlon'
@@ -665,6 +666,7 @@ export const adapters: Adapter[] = [
   theIdols,
   theOpenDaoSos,
   thena,
+  tholgar,
   timewarp,
   tokemak,
   tokenlon,
