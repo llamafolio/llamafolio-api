@@ -203,6 +203,7 @@ import originDollar from '@adapters/origin-dollar'
 import overnightFinance from '@adapters/overnight-finance'
 import paalAi from '@adapters/paal-ai'
 import paladinFinance from '@adapters/paladin-finance'
+import paladinWarlord from '@adapters/paladin-warlord'
 import pancakeswap from '@adapters/pancakeswap'
 import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
@@ -547,6 +548,7 @@ export const adapters: Adapter[] = [
   overnightFinance,
   paalAi,
   paladinFinance,
+  paladinWarlord,
   pancakeswap,
   pandora,
   pangolin,
