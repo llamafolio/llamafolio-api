@@ -18,6 +18,17 @@ const warlordVault: Contract = {
   underlyings: [war],
 }
 
+const warAuraLocker: Contract = {
+  chain: 'ethereum',
+  address: '0x7B90e043aaC79AdeA0Dbb0690E3c832757207a3B',
+  token: '0xC0c293ce456fF0ED870ADd98a0828Dd4d2903DBF',
+}
+const warCvxLocker: Contract = {
+  chain: 'ethereum',
+  address: '0x700d6d24A55512c6AEC08820B49da4e4193105B3',
+  token: '0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B',
+}
+
 export const getContracts = () => {
   return {
     contracts: { warlordVault },
@@ -27,7 +38,7 @@ export const getContracts = () => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    warlordVault: getWarlordVault,
+    warlordVault: (...args) => getWarlordVault(...args, [warAuraLocker, warCvxLocker]),
   })
 
   return {
