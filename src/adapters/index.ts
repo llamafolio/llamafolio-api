@@ -331,6 +331,7 @@ import unsheth from '@adapters/unsheth'
 import usdfiLending from '@adapters/usdfi-lending'
 import uwuLend from '@adapters/uwu-lend'
 import valasFinance from '@adapters/valas-finance'
+import vapordex from '@adapters/vapordex'
 import vaultTech from '@adapters/vault-tech'
 import vectorFinance from '@adapters/vector-finance'
 import velodromeV1 from '@adapters/velodrome-v1'
@@ -689,6 +690,7 @@ export const adapters: Adapter[] = [
   usdfiLending,
   uwuLend,
   valasFinance,
+  vapordex,
   vaultTech,
   vectorFinance,
   velodromeV1,
