@@ -224,6 +224,7 @@ import pikaProtocol from '@adapters/pika-protocol'
 import platypusFinance from '@adapters/platypus-finance'
 import pods from '@adapters/pods'
 import polkastarter from '@adapters/polkastarter'
+import poolside from '@adapters/poolside'
 import popsicleFinance from '@adapters/popsicle-finance'
 import preonFinance from '@adapters/preon-finance'
 import prismaFinance from '@adapters/prisma-finance'
@@ -581,6 +582,7 @@ export const adapters: Adapter[] = [
   platypusFinance,
   pods,
   polkastarter,
+  poolside,
   popsicleFinance,
   preonFinance,
   prismaFinance,
