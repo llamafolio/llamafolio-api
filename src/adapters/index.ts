@@ -147,6 +147,7 @@ import inverseFinance from '@adapters/inverse-finance'
 import ipor from '@adapters/ipor'
 import ironBank from '@adapters/iron-bank'
 import izumiFinance from '@adapters/izumi-finance'
+import jonesDao from '@adapters/jones-dao'
 import keep3rNetwork from '@adapters/keep3r-network'
 import kelpDao from '@adapters/kelp-dao'
 import keomProtocol from '@adapters/keom-protocol'
@@ -511,6 +512,7 @@ export const adapters: Adapter[] = [
   ipor,
   ironBank,
   izumiFinance,
+  jonesDao,
   keep3rNetwork,
   kelpDao,
   keomProtocol,
