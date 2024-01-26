@@ -23,8 +23,14 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return badRequest('Invalid chain parameter')
   }
 
-  const offset = parseInt(event.queryStringParameters?.offset || '') || 0
-  const limit = parseInt(event.queryStringParameters?.limit || '') || 25
+  const offset = event.queryStringParameters?.offset != null ? parseInt(event.queryStringParameters?.offset) : undefined
+  if (offset != null && isNaN(offset)) {
+    return badRequest('Invalid offset parameter')
+  }
+  const limit = event.queryStringParameters?.limit != null ? parseInt(event.queryStringParameters?.limit) : undefined
+  if (limit != null && isNaN(limit)) {
+    return badRequest('Invalid limit parameter')
+  }
 
   try {
     const { updatedAt, data, count } = await selectTokenYields(client, chainId, address, limit, offset)
