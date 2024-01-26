@@ -107,8 +107,8 @@ export async function selectTokenYields(
   client: ClickHouseClient,
   chainId: number,
   address: `0x${string}`,
-  limit = 25,
-  offset = 0,
+  limit?: number,
+  offset?: number,
 ) {
   const queryRes = await client.query({
     query: `
@@ -160,8 +160,8 @@ export async function selectTokenYields(
         GROUP BY "address", "symbol", "name"
       ) AS "t" ON y.underlying = t.address
       GROUP BY chain, adapter_id, address, pool, apy, apy_base, apy_reward, apy_mean_30d, il_risk
-      LIMIT {limit: UInt8}
-      OFFSET {offset: UInt32};
+      ${limit != null ? 'LIMIT {limit: UInt8}' : ''}
+      ${offset != null ? 'OFFSET {offset: UInt32}' : ''};
     `,
     query_params: {
       address,
