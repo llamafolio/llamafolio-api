@@ -110,6 +110,7 @@ import fraxFinance from '@adapters/frax-finance'
 import fraxlend from '@adapters/fraxlend'
 import fxProtocol from '@adapters/fx-protocol'
 import gainsNetwork from '@adapters/gains-network'
+import gambitTrade from '@adapters/gambit-trade'
 import gamma from '@adapters/gamma'
 import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
@@ -469,6 +470,7 @@ export const adapters: Adapter[] = [
   fraxlend,
   fxProtocol,
   gainsNetwork,
+  gambitTrade,
   gamma,
   gearbox,
   geist,
