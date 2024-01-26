@@ -7,6 +7,7 @@ export const get_xLP_UnderlyingsBalances = async (
   ctx: BalancesContext,
   balances: Balance[],
   vault: Contract,
+  params = { getAddress: (contract: Contract) => contract.address },
 ): Promise<Balance[]> => {
   const fmtBalances: Balance[] = []
 
@@ -17,7 +18,7 @@ export const get_xLP_UnderlyingsBalances = async (
     }
 
     const [totalSupply, underlyingsBalancesOfsRes] = await Promise.all([
-      call({ ctx, target: balance.address, abi: erc20Abi.totalSupply }),
+      call({ ctx, target: params.getAddress(balance) || balance.address, abi: erc20Abi.totalSupply }),
       multicall({
         ctx,
         calls: underlyings.map(
