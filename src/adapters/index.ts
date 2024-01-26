@@ -118,6 +118,7 @@ import gensokishi from '@adapters/gensokishi'
 import getProtocol from '@adapters/get-protocol'
 import gitcoin from '@adapters/gitcoin'
 import giveth from '@adapters/giveth'
+import gloriFinance from '@adapters/glori-finance'
 import gmx from '@adapters/gmx'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
 import gogopool from '@adapters/gogopool'
@@ -312,6 +313,7 @@ import theIdols from '@adapters/the-idols'
 import theOpenDaoSos from '@adapters/the-open-dao-sos'
 import thena from '@adapters/thena'
 import tholgar from '@adapters/tholgar'
+import tigris from '@adapters/tigris'
 import timewarp from '@adapters/timewarp'
 import tokemak from '@adapters/tokemak'
 import tokenlon from '@adapters/tokenlon'
@@ -478,6 +480,7 @@ export const adapters: Adapter[] = [
   getProtocol,
   gitcoin,
   giveth,
+  gloriFinance,
   gmx,
   gnosisProtocolV1,
   gogopool,
@@ -672,6 +675,7 @@ export const adapters: Adapter[] = [
   theOpenDaoSos,
   thena,
   tholgar,
+  tigris,
   timewarp,
   tokemak,
   tokenlon,
