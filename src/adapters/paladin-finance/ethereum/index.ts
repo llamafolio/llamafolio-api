@@ -1,9 +1,9 @@
 import { getLendContracts, getPaladinPodsBalances } from '@adapters/paladin-finance/ethereum/lend'
 import { getPaladinContracts } from '@adapters/paladin-finance/ethereum/pool'
 import {
+  gethPalBalances,
   getPaladinStakeBalances,
   getPaladinStakeBalancesFromdstkAave,
-  gethPalBalances,
 } from '@adapters/paladin-finance/ethereum/stake'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'

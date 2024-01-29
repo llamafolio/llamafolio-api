@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { abi as erc20Abi } from '@lib/erc20'
-import { multicall, type Call } from '@lib/multicall'
+import { type Call, multicall } from '@lib/multicall'
 
 const abi = {
   dividendVestedWINRStakes: {
