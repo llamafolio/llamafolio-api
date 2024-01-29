@@ -1,5 +1,5 @@
 import { getBifrostBalances } from '@adapters/bifrost-liquid-staking/ethereum/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const vETH1: Contract = {
@@ -33,4 +33,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1673827200,
 }

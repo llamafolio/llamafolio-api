@@ -1,5 +1,5 @@
 import { getSDCollateralBalance } from '@adapters/stader/ethereum/stake'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalance } from '@lib/stake'
 
@@ -31,4 +31,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1660176000,
 }

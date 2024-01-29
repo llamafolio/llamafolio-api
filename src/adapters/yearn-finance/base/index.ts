@@ -1,6 +1,6 @@
 import { getYearnBalances } from '@adapters/yearn-finance/common/balance'
 import { getYearnVaults } from '@adapters/yearn-finance/common/vault'
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 
@@ -21,4 +21,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1695168000,
 }

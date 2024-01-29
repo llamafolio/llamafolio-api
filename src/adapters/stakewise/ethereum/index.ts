@@ -1,6 +1,6 @@
 import { getStakewiseBalances } from '@adapters/stakewise/common/balance'
 import { getStakeWiseLendBalances, getStakeWiseLendContracts } from '@adapters/stakewise/common/lend'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const poolAddresses: `0x${string}`[] = [
@@ -61,4 +61,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [...balancesGroups, { balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1611702000,
 }

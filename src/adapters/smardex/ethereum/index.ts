@@ -1,7 +1,7 @@
 import { getUserPendingSDEX } from '@adapters/smardex/common/farm'
 import { getSmardexMasterChefPoolsContracts } from '@adapters/smardex/common/pool'
 import { getSmarDexStakeBalances } from '@adapters/smardex/ethereum/stake'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
@@ -91,4 +91,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1678492800,
 }

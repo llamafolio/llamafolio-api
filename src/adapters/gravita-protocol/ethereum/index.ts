@@ -1,7 +1,7 @@
 import { getGravitaLendBalances } from '@adapters/gravita-protocol/common/lend'
 import { getGravitaStakeBalance } from '@adapters/gravita-protocol/common/stake'
 import { getCollateralVessel } from '@adapters/gravita-protocol/common/vessel'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const stabilityPool: Contract = {
@@ -39,4 +39,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [...vaultsBalancesGroups, { balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1684281600,
 }

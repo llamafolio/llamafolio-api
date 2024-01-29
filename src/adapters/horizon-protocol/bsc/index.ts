@@ -1,5 +1,5 @@
 import { getHorizonFarmBalances } from '@adapters/horizon-protocol/bsc/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const farmers: Contract[] = [
@@ -61,4 +61,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1636761600,
 }

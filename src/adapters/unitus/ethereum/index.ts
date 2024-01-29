@@ -2,7 +2,7 @@ import { getAllUnitusMarkets, getUnitusMarketsInfos } from '@adapters/unitus/com
 import { getUnitusStakers, getUnitusStakersBalances } from '@adapters/unitus/common/staker'
 import { getUnitusLockerBalance } from '@adapters/unitus/ethereum/lock'
 import { getUnitusEthStakersBalances } from '@adapters/unitus/ethereum/stake'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
 
@@ -53,4 +53,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1702944000,
 }

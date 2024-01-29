@@ -1,4 +1,4 @@
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getBalancesOf } from '@lib/erc20'
 
@@ -25,4 +25,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     // Lock end is an universal timestamp for all users who have lock on gnosis-protocol-v1, and which corresponds to the deposit deadline (1644944444) + 1 year of lock duration (31536000)
     groups: [{ balances: balances.map((balance) => ({ ...balance, category: 'lock', unlockAt: 1676480444 })) }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1615762800,
 }

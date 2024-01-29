@@ -2,7 +2,7 @@ import { getKwentaStakeBalances } from '@adapters/kwenta/optimism/balance'
 import { getKwentaDepositBalances } from '@adapters/kwenta/optimism/deposit'
 import { getContractsFromPerpsProxies } from '@adapters/kwenta/optimism/vault'
 import { getKwentaVotingEscrowedBalance, getKwentaVotingEscrowedV2Balance } from '@adapters/kwenta/optimism/vest'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const perpsV2Proxies: `0x${string}`[] = [
@@ -82,4 +82,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1684195200,
 }

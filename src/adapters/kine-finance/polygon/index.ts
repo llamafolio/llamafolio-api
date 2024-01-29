@@ -1,6 +1,6 @@
 import { getKineFarmingBalances, getKineFarmingPools } from '@adapters/kine-finance/common/farm'
 import { getKineLpBalances, getKineLpPools } from '@adapters/kine-finance/common/lp'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 // https://kine.gitbook.io/kine-docs-portal/whitepaper/contract-address
@@ -48,4 +48,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1644537600,
 }

@@ -1,7 +1,7 @@
 import { getIporFarmBalances } from '@adapters/ipor/ethereum/farm'
 import { getIporLpBalances } from '@adapters/ipor/ethereum/lp'
 import { getIporStakeBalance } from '@adapters/ipor/ethereum/stake'
-import type { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const assets: Contract[] = [
@@ -58,4 +58,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1660694400,
 }

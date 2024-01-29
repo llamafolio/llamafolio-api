@@ -6,7 +6,7 @@ import {
 } from '@adapters/prisma-finance/ethereum/balance'
 import { getPrismaCRVContracts, getPrismaCVXContracts } from '@adapters/prisma-finance/ethereum/contract'
 import { getPrismaLockerBalance } from '@adapters/prisma-finance/ethereum/locker'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const farmer: Contract = {
@@ -91,4 +91,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [...vaultsBalancesGroups, { balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1693440000,
 }

@@ -1,6 +1,6 @@
 import { getLockerBalances } from '@adapters/curve-dex/ethereum/locker'
 import { getVesterBalances } from '@adapters/curve-dex/ethereum/vester'
-import type { Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getGaugesBalances } from '@lib/curve/gauge'
 import { getCurvePoolBalances } from '@lib/curve/lp'
@@ -49,4 +49,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1610755200,
 }

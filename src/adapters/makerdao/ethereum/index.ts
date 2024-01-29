@@ -1,4 +1,4 @@
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import type { Token } from '@lib/token'
 
 import { getProxiesBalances } from './balances'
@@ -72,4 +72,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx) 
   return {
     groups: [...balancesGroups],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1546560000,
 }

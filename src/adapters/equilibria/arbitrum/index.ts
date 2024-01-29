@@ -1,7 +1,7 @@
 import { getEqPoolBalances, getSingleEqBalance } from '@adapters/equilibria/common/balance'
 import { getEqLockerBalance, getxEqbLockerBalances } from '@adapters/equilibria/common/lock'
 import { getEqPoolsContracts } from '@adapters/equilibria/common/pool'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const ePendle: Contract = {
@@ -54,4 +54,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1686182400,
 }

@@ -2,7 +2,7 @@ import { getEllipsisContracts } from '@adapters/ellipsis-finance/bsc/contract'
 import { getEllipsisFarmingBalances } from '@adapters/ellipsis-finance/bsc/farm'
 import { getEllipsisLockerBalance } from '@adapters/ellipsis-finance/bsc/locker'
 import { getEllipsisLpBalances } from '@adapters/ellipsis-finance/bsc/lp'
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const masterChef: Contract = {
@@ -38,4 +38,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1634601600,
 }

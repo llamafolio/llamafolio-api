@@ -1,7 +1,7 @@
 import { getVelodromeBalances } from '@adapters/velodrome-v2/optimism/balance'
 import { getLockerFeesBribesBalances } from '@adapters/velodrome-v2/optimism/locker'
 import { getVelodromePairsContracts } from '@adapters/velodrome-v2/optimism/pair'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import type { Token } from '@lib/token'
 
@@ -47,4 +47,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1693267200,
 }

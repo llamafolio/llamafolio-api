@@ -1,5 +1,5 @@
 import { getKokonutBalances, getKokonutPools } from '@adapters/kokonut-swap/base/pool'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalance } from '@lib/stake'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
@@ -49,4 +49,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1690848000,
 }

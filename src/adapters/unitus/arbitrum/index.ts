@@ -1,6 +1,6 @@
 import { getAllUnitusMarkets, getUnitusMarketsInfos } from '@adapters/unitus/common/lend'
 import { getUnitusStakers, getUnitusStakersBalances } from '@adapters/unitus/common/staker'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
 
@@ -40,4 +40,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1702944000,
 }

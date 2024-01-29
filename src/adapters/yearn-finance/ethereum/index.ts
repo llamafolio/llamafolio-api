@@ -6,7 +6,7 @@ import {
   getYearnFarmCurveBalances,
   getYearnFarmCurveContracts,
 } from '@adapters/yearn-finance/ethereum/farm'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleLockerBalance } from '@lib/lock'
 import { getSingleStakeBalance } from '@lib/stake'
@@ -86,4 +86,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1581548400,
 }

@@ -1,6 +1,6 @@
 import { getMorphoBalances } from '@adapters/morpho-blue/ethereum/balance'
 import { getMorphoContracts } from '@adapters/morpho-blue/ethereum/contract'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const bbUSDC: Contract = {
@@ -34,4 +34,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1705190400,
 }

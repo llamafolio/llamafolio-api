@@ -1,6 +1,6 @@
 import { getExactlyBalances, getExactlyIncentive } from '@adapters/exactly/common/balance'
 import { getExactlyMarkets } from '@adapters/exactly/common/market'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const lendingPool: Contract = { chain: 'optimism', address: '0xaeb62e6f27bc103702e7bc879ae98bcea56f027e' }
@@ -28,4 +28,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1678233600,
 }

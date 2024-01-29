@@ -1,6 +1,6 @@
 import { getAmbienStakeBalances, getAmbientLpBalances } from '@adapters/ambient/ethereum/balance'
 import { getAmbientPoolTokens } from '@adapters/ambient/ethereum/pool'
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const vault: Contract = {
@@ -34,4 +34,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1686614400,
 }

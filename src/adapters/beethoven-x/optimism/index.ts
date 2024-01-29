@@ -1,6 +1,6 @@
 import { getBalancerBalances } from '@adapters/balancer/common/balance'
 import { getBalancerPools } from '@adapters/balancer/common/pool'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const url = 'https://api.thegraph.com/subgraphs/name/beethovenxfi/beethovenx-optimism'
@@ -27,4 +27,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1654732800,
 }

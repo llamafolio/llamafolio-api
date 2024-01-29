@@ -1,7 +1,7 @@
 import { getParallelLendBalances } from '@adapters/parallel-protocol/common/lend'
 import { getParallelMimoRewardsBalances, getParallelParStakeBalance } from '@adapters/parallel-protocol/common/stake'
 import { getVaultWithAssets } from '@adapters/parallel-protocol/common/vault'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleLockerBalance } from '@lib/lock'
 import type { Token } from '@lib/token'
@@ -81,4 +81,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [...vaultsBalancesGroups, { balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1643414400,
 }

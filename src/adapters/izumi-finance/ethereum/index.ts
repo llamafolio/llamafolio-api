@@ -1,5 +1,4 @@
-import { factory } from '@adapters/uniswap-v3/ethereum'
-import { nonFungiblePositionManager } from '@adapters/uniswap-v3/ethereum'
+import { factory, nonFungiblePositionManager } from '@adapters/uniswap-v3/ethereum'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getNFTLockerBalances } from '@lib/lock'
