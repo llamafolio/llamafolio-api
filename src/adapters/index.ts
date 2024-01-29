@@ -111,6 +111,7 @@ import fractionalArt from '@adapters/fractional-art'
 import fraxFinance from '@adapters/frax-finance'
 import fraxlend from '@adapters/fraxlend'
 import fxProtocol from '@adapters/fx-protocol'
+import fydeProtocol from '@adapters/fyde-protocol'
 import gainsNetwork from '@adapters/gains-network'
 import gambitTrade from '@adapters/gambit-trade'
 import gamma from '@adapters/gamma'
@@ -477,6 +478,7 @@ export const adapters: Adapter[] = [
   fraxFinance,
   fraxlend,
   fxProtocol,
+  fydeProtocol,
   gainsNetwork,
   gambitTrade,
   gamma,
