@@ -1,4 +1,4 @@
-import { getIntegralStakeBalances } from '@adapters/integral/ethereum/stake'
+import type { AdapterConfig } from "@lib/adapter";import { getIntegralStakeBalances } from '@adapters/integral/ethereum/stake'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
@@ -43,3 +43,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1616716800,
+                  }
+                  

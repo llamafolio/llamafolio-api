@@ -1,4 +1,4 @@
-import { getElephantFarmBalances } from '@adapters/elephant-money/bsc/farmer'
+import type { AdapterConfig } from "@lib/adapter";import { getElephantFarmBalances } from '@adapters/elephant-money/bsc/farmer'
 import {
   getElephantStakeBalances,
   getElephantTrumpetBalance,
@@ -88,3 +88,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1634428800,
+                  }
+                  

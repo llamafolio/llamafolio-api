@@ -1,4 +1,4 @@
-import { getLiquidDriverShadowBalances } from '@adapters/liquid-driver/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getLiquidDriverShadowBalances } from '@adapters/liquid-driver/common/balance'
 import {
   getLQDRPoolsInfos,
   getResolvedLiquidUnderlyings,
@@ -107,3 +107,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1630454400,
+                  }
+                  

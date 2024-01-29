@@ -1,4 +1,4 @@
-// https://docs.equalizer.exchange/overview/contract-addresses/
+import type { AdapterConfig } from "@lib/adapter";// https://docs.equalizer.exchange/overview/contract-addresses/
 
 import { getSolidlyBalances } from '@adapters/solidly-v2/ethereum/balance'
 import { getThenaContracts } from '@adapters/thena/bsc/pair'
@@ -45,3 +45,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1670112000,
+                  }
+                  

@@ -1,4 +1,4 @@
-import {
+import type { AdapterConfig } from "@lib/adapter";import {
   getParallelBPT_v1FarmBalances,
   getParallelBPT_v2FarmBalances,
 } from '@adapters/parallel-protocol/common/bptFarm'
@@ -169,3 +169,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [...vaultsBalancesGroups, { balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1617141600,
+                  }
+                  

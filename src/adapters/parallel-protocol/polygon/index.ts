@@ -1,4 +1,4 @@
-import { getParallelBPT_v2FarmBalances } from '@adapters/parallel-protocol/common/bptFarm'
+import type { AdapterConfig } from "@lib/adapter";import { getParallelBPT_v2FarmBalances } from '@adapters/parallel-protocol/common/bptFarm'
 import { getParallelLendBalances } from '@adapters/parallel-protocol/common/lend'
 import { getParallelLpFarmBalances } from '@adapters/parallel-protocol/common/lpFarm'
 import { getParallelMimoRewardsBalances, getParallelParStakeBalance } from '@adapters/parallel-protocol/common/stake'
@@ -125,3 +125,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [...vaultsBalancesGroups, { balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1643414400,
+                  }
+                  

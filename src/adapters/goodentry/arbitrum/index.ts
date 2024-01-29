@@ -1,4 +1,4 @@
-import { getGoodEntryLPs } from '@adapters/goodentry/arbitrum/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getGoodEntryLPs } from '@adapters/goodentry/arbitrum/balance'
 import { getGoodEntryContracts } from '@adapters/goodentry/arbitrum/pool'
 import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -31,3 +31,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1683072000,
+                  }
+                  

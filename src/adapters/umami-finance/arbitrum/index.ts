@@ -1,4 +1,4 @@
-import {
+import type { AdapterConfig } from "@lib/adapter";import {
   getcUmamiFarmBalance,
   getUmamiBoostedFarmBalances,
   getUmamiFarmBalances,
@@ -60,3 +60,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1635811200,
+                  }
+                  

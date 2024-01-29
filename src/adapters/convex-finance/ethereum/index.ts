@@ -1,4 +1,4 @@
-import { cvxCRVStaker, stkCvxCrvStaker } from '@adapters/convex-finance/ethereum/cvx'
+import type { AdapterConfig } from "@lib/adapter";import { cvxCRVStaker, stkCvxCrvStaker } from '@adapters/convex-finance/ethereum/cvx'
 import {
   cvxFpisStaking,
   cvxFxsStaking,
@@ -89,3 +89,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1642118400,
+                  }
+                  

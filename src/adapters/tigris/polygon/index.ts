@@ -1,4 +1,4 @@
-import { getTigrisStakeBalance } from '@adapters/tigris/common/stake'
+import type { AdapterConfig } from "@lib/adapter";import { getTigrisStakeBalance } from '@adapters/tigris/common/stake'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -24,3 +24,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1687132800,
+                  }
+                  

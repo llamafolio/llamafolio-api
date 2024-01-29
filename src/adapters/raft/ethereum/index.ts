@@ -1,4 +1,4 @@
-import { getRaftBalances } from '@adapters/raft/ethereum/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getRaftBalances } from '@adapters/raft/ethereum/balance'
 import { getRaftContracts } from '@adapters/raft/ethereum/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -61,3 +61,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [...balancesGroups, { balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1697241600,
+                  }
+                  

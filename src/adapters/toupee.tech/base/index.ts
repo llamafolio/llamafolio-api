@@ -1,4 +1,4 @@
-import { getToupeeFarmBalances } from '@adapters/toupee.tech/base/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getToupeeFarmBalances } from '@adapters/toupee.tech/base/balance'
 import { getToupeeContracts } from '@adapters/toupee.tech/base/contract'
 import { getToupeeLendBalances } from '@adapters/toupee.tech/base/lend'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -39,3 +39,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1700352000,
+                  }
+                  

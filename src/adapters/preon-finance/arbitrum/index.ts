@@ -1,4 +1,4 @@
-import { getPreonBalances } from '@adapters/preon-finance/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getPreonBalances } from '@adapters/preon-finance/common/balance'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import type { Token } from '@lib/token'
@@ -36,3 +36,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1691280000,
+                  }
+                  

@@ -1,4 +1,4 @@
-import { getPoolSideStakeBalance } from '@adapters/poolside/base/stake'
+import type { AdapterConfig } from "@lib/adapter";import { getPoolSideStakeBalance } from '@adapters/poolside/base/stake'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
@@ -44,3 +44,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1697673600,
+                  }
+                  

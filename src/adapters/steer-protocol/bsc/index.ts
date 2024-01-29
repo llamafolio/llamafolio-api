@@ -1,4 +1,4 @@
-import { getSteerBalances } from '@adapters/steer-protocol/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getSteerBalances } from '@adapters/steer-protocol/common/balance'
 import { getSteerPools } from '@adapters/steer-protocol/common/pool'
 import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -21,3 +21,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1687824000,
+                  }
+                  

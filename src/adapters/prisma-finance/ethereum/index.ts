@@ -1,4 +1,4 @@
-import {
+import type { AdapterConfig } from "@lib/adapter";import {
   getPrismaFarmBalance,
   getPrismaFarmBalancesFromConvex,
   getPrismaFarmBalancesFromCurve,
@@ -92,3 +92,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [...vaultsBalancesGroups, { balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1693440000,
+                  }
+                  

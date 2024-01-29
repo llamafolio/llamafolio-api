@@ -1,4 +1,4 @@
-import { getLendBorrowBalancesAaveV3, getUserHealthFactorV3 } from '@adapters/morpho-aavev3/ethereum/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getLendBorrowBalancesAaveV3, getUserHealthFactorV3 } from '@adapters/morpho-aavev3/ethereum/balance'
 import { getMarketsContractsMorphoAaveV3 } from '@adapters/morpho-aavev3/ethereum/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -29,3 +29,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances, healthFactor }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1683072000,
+                  }
+                  

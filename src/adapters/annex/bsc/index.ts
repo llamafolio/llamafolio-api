@@ -1,4 +1,4 @@
-import { getAnnexV1Rewards, getAnnexV2Rewards } from '@adapters/annex/bsc/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getAnnexV1Rewards, getAnnexV2Rewards } from '@adapters/annex/bsc/balance'
 import { getAnnexContracts } from '@adapters/annex/bsc/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -73,3 +73,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1630454400,
+                  }
+                  

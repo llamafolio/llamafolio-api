@@ -1,4 +1,4 @@
-import { getEigenlayerBalances } from '@adapters/eigenlayer/ethereum/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getEigenlayerBalances } from '@adapters/eigenlayer/ethereum/balance'
 import { getEigenlayerPools } from '@adapters/eigenlayer/ethereum/pool'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -37,3 +37,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1686700800,
+                  }
+                  

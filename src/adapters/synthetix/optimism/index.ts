@@ -1,4 +1,4 @@
-import { getSNXBalances } from '@adapters/synthetix/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getSNXBalances } from '@adapters/synthetix/common/balance'
 import { getSNXFarmBalances } from '@adapters/synthetix/common/farm'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -46,3 +46,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
 
   return { groups }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1626220800,
+                  }
+                  

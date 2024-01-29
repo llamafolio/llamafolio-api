@@ -1,4 +1,4 @@
-import { getjGLPYieldBalances, getjUSDCYieldBalance } from '@adapters/jones-dao/arbitrum/balances'
+import type { AdapterConfig } from "@lib/adapter";import { getjGLPYieldBalances, getjUSDCYieldBalance } from '@adapters/jones-dao/arbitrum/balances'
 import { getJPools, getJPoolsBalances } from '@adapters/jones-dao/arbitrum/jpool'
 import {
   getJonesJonesMasterChefPendingRewards,
@@ -96,3 +96,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1645228800,
+                  }
+                  

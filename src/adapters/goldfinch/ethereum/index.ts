@@ -1,4 +1,4 @@
-import {
+import type { AdapterConfig } from "@lib/adapter";import {
   getGFIBalances,
   getGoldFinchDepositBalances,
   getGoldFinchNFTFarmBalances,
@@ -62,3 +62,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1629936000,
+                  }
+                  

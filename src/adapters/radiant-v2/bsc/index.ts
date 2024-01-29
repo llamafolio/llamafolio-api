@@ -1,4 +1,4 @@
-import { getLendingPoolBalances } from '@adapters/radiant-v2/arbitrum/lendingPool'
+import type { AdapterConfig } from "@lib/adapter";import { getLendingPoolBalances } from '@adapters/radiant-v2/arbitrum/lendingPool'
 import { getMultiFeeDistributionContracts } from '@adapters/radiant-v2/arbitrum/multifee'
 import { getMultiFeeDistributionBalancesBSC } from '@adapters/radiant-v2/bsc/multifee'
 import {
@@ -73,3 +73,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances, healthFactor }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1680048000,
+                  }
+                  

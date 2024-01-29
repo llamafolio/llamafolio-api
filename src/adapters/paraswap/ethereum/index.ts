@@ -1,4 +1,4 @@
-import {
+import type { AdapterConfig } from "@lib/adapter";import {
   getParaspaceBPTFarmBalances,
   getParaspaceBPTStakeBalances,
   getParaSpaceStakeBalances,
@@ -86,3 +86,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1637020800,
+                  }
+                  

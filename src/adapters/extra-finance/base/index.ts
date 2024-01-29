@@ -1,4 +1,4 @@
-import { getExtraPoolsBalances } from '@adapters/extra-finance/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getExtraPoolsBalances } from '@adapters/extra-finance/common/balance'
 import { getExtraPools } from '@adapters/extra-finance/common/pool'
 import { getExtraVaults } from '@adapters/extra-finance/common/vault'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -34,3 +34,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1693785600,
+                  }
+                  

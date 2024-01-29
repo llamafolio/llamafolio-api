@@ -1,4 +1,4 @@
-import { getPearlFarmBalances, getPearlFarmContracts } from '@adapters/pearlfi/polygon/farm'
+import type { AdapterConfig } from "@lib/adapter";import { getPearlFarmBalances, getPearlFarmContracts } from '@adapters/pearlfi/polygon/farm'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getNFTLockerBalances } from '@lib/lock'
@@ -96,3 +96,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1686960000,
+                  }
+                  

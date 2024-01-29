@@ -1,4 +1,4 @@
-import { getAcrossContracts } from '@adapters/across/ethereum/v1/contract'
+import type { AdapterConfig } from "@lib/adapter";import { getAcrossContracts } from '@adapters/across/ethereum/v1/contract'
 import { getAcrossBalances } from '@adapters/across/ethereum/v2/balance'
 import { getAcrossV2Contracts } from '@adapters/across/ethereum/v2/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -45,3 +45,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1641513600,
+                  }
+                  

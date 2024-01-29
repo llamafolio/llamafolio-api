@@ -1,4 +1,4 @@
-import { getArbisPairsBalances } from '@adapters/arbis-finance/arbitrum/pair'
+import type { AdapterConfig } from "@lib/adapter";import { getArbisPairsBalances } from '@adapters/arbis-finance/arbitrum/pair'
 import { getArbisVaults } from '@adapters/arbis-finance/arbitrum/vault'
 import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -28,3 +28,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1655596800,
+                  }
+                  

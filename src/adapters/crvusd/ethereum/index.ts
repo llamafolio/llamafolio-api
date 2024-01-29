@@ -1,4 +1,4 @@
-import { getControllersBalances } from '@adapters/crvusd/ethereum/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getControllersBalances } from '@adapters/crvusd/ethereum/balance'
 import { getControllers } from '@adapters/crvusd/ethereum/contract'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 
@@ -32,3 +32,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups,
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1684368000,
+                  }
+                  

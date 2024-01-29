@@ -1,4 +1,4 @@
-import { getSushiPoolInfos } from '@adapters/sushiswap/common/contract'
+import type { AdapterConfig } from "@lib/adapter";import { getSushiPoolInfos } from '@adapters/sushiswap/common/contract'
 import { getUserPendingSushi } from '@adapters/sushiswap/common/reward'
 import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -66,3 +66,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1614556800,
+                  }
+                  

@@ -1,4 +1,4 @@
-import { getEllipsisContracts } from '@adapters/ellipsis-finance/bsc/contract'
+import type { AdapterConfig } from "@lib/adapter";import { getEllipsisContracts } from '@adapters/ellipsis-finance/bsc/contract'
 import { getEllipsisFarmingBalances } from '@adapters/ellipsis-finance/bsc/farm'
 import { getEllipsisLockerBalance } from '@adapters/ellipsis-finance/bsc/locker'
 import { getEllipsisLpBalances } from '@adapters/ellipsis-finance/bsc/lp'
@@ -39,3 +39,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1634601600,
+                  }
+                  

@@ -1,4 +1,4 @@
-import { getPieDaoFarmBalances } from '@adapters/piedao/ethereum/farm'
+import type { AdapterConfig } from "@lib/adapter";import { getPieDaoFarmBalances } from '@adapters/piedao/ethereum/farm'
 import { getPieDaoLockerBalances } from '@adapters/piedao/ethereum/lock'
 import { getPieDaoStakeBalances } from '@adapters/piedao/ethereum/stake'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
@@ -118,3 +118,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1618272000,
+                  }
+                  

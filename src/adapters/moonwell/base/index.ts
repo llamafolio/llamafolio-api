@@ -1,4 +1,4 @@
-import { getMoonwellMarketsBalances } from '@adapters/moonwell/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getMoonwellMarketsBalances } from '@adapters/moonwell/common/balance'
 import { getMarketsContracts } from '@adapters/moonwell/common/market'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -47,3 +47,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1691625600,
+                  }
+                  

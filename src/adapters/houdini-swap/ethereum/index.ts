@@ -1,4 +1,4 @@
-import { getPOOFBalances } from '@adapters/houdini-swap/ethereum/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getPOOFBalances } from '@adapters/houdini-swap/ethereum/balance'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -45,3 +45,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1675123200,
+                  }
+                  

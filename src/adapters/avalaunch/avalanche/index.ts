@@ -1,4 +1,4 @@
-import { getAvalaunchRewards } from '@adapters/avalaunch/avalanche/masterChef'
+import type { AdapterConfig } from "@lib/adapter";import { getAvalaunchRewards } from '@adapters/avalaunch/avalanche/masterChef'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
@@ -37,3 +37,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1629504000,
+                  }
+                  

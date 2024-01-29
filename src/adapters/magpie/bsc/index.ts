@@ -1,4 +1,4 @@
-import { getMasterBalances } from '@adapters/magpie/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getMasterBalances } from '@adapters/magpie/common/balance'
 import { getMagpiePools, getMasterMagpieBalances } from '@adapters/magpie/common/magpie'
 import { getPenpiePools } from '@adapters/magpie/common/penpie'
 import { getRadpiePools } from '@adapters/magpie/common/radpie'
@@ -80,3 +80,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1677369600,
+                  }
+                  

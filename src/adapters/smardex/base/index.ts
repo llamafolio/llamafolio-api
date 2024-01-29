@@ -1,4 +1,4 @@
-import { getUserPendingSDEX } from '@adapters/smardex/common/farm'
+import type { AdapterConfig } from "@lib/adapter";import { getUserPendingSDEX } from '@adapters/smardex/common/farm'
 import { getSmardexMasterChefPoolsContracts } from '@adapters/smardex/common/pool'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -59,3 +59,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1692921600,
+                  }
+                  

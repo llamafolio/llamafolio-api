@@ -1,4 +1,4 @@
-import { getDyadNFTBalances } from '@adapters/dyad/ethereum/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getDyadNFTBalances } from '@adapters/dyad/ethereum/balance'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 
 const dNFT: Contract = {
@@ -20,3 +20,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx) 
     groups: [...vaultsBalancesGroups],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1690070400,
+                  }
+                  

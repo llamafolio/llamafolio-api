@@ -1,4 +1,4 @@
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig } from "@lib/adapter";import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getBalancesOf } from '@lib/erc20'
 
@@ -26,3 +26,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances: balances.map((balance) => ({ ...balance, category: 'lock', unlockAt: 1676480444 })) }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1615762800,
+                  }
+                  

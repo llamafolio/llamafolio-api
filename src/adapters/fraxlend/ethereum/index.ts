@@ -1,4 +1,4 @@
-import { getLendBorrowBalances } from '@adapters/fraxlend/ethereum/lend'
+import type { AdapterConfig } from "@lib/adapter";import { getLendBorrowBalances } from '@adapters/fraxlend/ethereum/lend'
 import type { BalancesContext, BaseContext, GetBalancesHandler } from '@lib/adapter'
 
 import { getPairsContracts } from './registry'
@@ -21,3 +21,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: 
     groups: [...vaultsBalancesGroups],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1687219200,
+                  }
+                  

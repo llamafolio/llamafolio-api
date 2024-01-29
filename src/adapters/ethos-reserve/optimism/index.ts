@@ -1,4 +1,4 @@
-import {
+import type { AdapterConfig } from "@lib/adapter";import {
   getEthosFarmBalance,
   getEthosLendBalances,
   getEthosStakeBalance,
@@ -50,3 +50,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1680134400,
+                  }
+                  

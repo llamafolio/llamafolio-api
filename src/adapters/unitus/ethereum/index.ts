@@ -1,4 +1,4 @@
-import { getAllUnitusMarkets, getUnitusMarketsInfos } from '@adapters/unitus/common/lend'
+import type { AdapterConfig } from "@lib/adapter";import { getAllUnitusMarkets, getUnitusMarketsInfos } from '@adapters/unitus/common/lend'
 import { getUnitusStakers, getUnitusStakersBalances } from '@adapters/unitus/common/staker'
 import { getUnitusLockerBalance } from '@adapters/unitus/ethereum/lock'
 import { getUnitusEthStakersBalances } from '@adapters/unitus/ethereum/stake'
@@ -54,3 +54,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1702944000,
+                  }
+                  

@@ -1,4 +1,4 @@
-import { getBridgeTreasureBalances, getTreasureBalances } from '@adapters/treasuredao/arbitrum/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getBridgeTreasureBalances, getTreasureBalances } from '@adapters/treasuredao/arbitrum/balance'
 import { getTreasureLockerBalances } from '@adapters/treasuredao/arbitrum/locker'
 import { getTreasurePools } from '@adapters/treasuredao/arbitrum/pool'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -41,3 +41,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1643760000,
+                  }
+                  

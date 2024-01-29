@@ -1,4 +1,4 @@
-import {
+import type { AdapterConfig } from "@lib/adapter";import {
   getLendingPoolContracts as getAaveLendingPoolContracts,
   getLendingPoolHealthFactor,
 } from '@lib/aave/v2/lending'
@@ -75,3 +75,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances, healthFactor }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1679184000,
+                  }
+                  

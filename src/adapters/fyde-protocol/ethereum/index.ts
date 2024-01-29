@@ -1,4 +1,4 @@
-import { getFydeFarmBalance } from '@adapters/fyde-protocol/ethereum/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getFydeFarmBalance } from '@adapters/fyde-protocol/ethereum/balance'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalance } from '@lib/stake'
@@ -30,3 +30,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1706054400,
+                  }
+                  

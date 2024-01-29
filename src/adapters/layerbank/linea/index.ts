@@ -1,4 +1,4 @@
-import { getLayerBankMarketsBalances } from '@adapters/layerbank/linea/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getLayerBankMarketsBalances } from '@adapters/layerbank/linea/balance'
 import {
   getCollateralFactor,
   getLayerBankAllMarkets,
@@ -38,3 +38,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1689724800,
+                  }
+                  

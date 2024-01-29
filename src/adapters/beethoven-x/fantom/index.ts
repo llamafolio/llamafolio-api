@@ -1,4 +1,4 @@
-import { getReliquaryBalances, getReliquaryContracts } from '@adapters/beethoven-x/common/fBeets'
+import type { AdapterConfig } from "@lib/adapter";import { getReliquaryBalances, getReliquaryContracts } from '@adapters/beethoven-x/common/fBeets'
 import {
   getBeethovenLpBalances,
   getBeethovenPools,
@@ -70,3 +70,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1633737600,
+                  }
+                  

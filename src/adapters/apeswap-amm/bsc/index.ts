@@ -1,4 +1,4 @@
-import { getUserPendingBananaV1, getUserPendingBananaV2 } from '@adapters/apeswap-amm/bsc/reward'
+import type { AdapterConfig } from "@lib/adapter";import { getUserPendingBananaV1, getUserPendingBananaV2 } from '@adapters/apeswap-amm/bsc/reward'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
@@ -68,3 +68,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1638489600,
+                  }
+                  

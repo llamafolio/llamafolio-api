@@ -1,4 +1,4 @@
-import { getLybraFarmBalances } from '@adapters/lybra-v1/ethereum/farm'
+import type { AdapterConfig } from "@lib/adapter";import { getLybraFarmBalances } from '@adapters/lybra-v1/ethereum/farm'
 import { getLybraLendingBalances } from '@adapters/lybra-v1/ethereum/lend'
 import { getLybraVestBalance } from '@adapters/lybra-v1/ethereum/vest'
 import type { Contract, GetBalancesHandler } from '@lib/adapter'
@@ -61,3 +61,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1682380800,
+                  }
+                  

@@ -1,4 +1,4 @@
-import { getAllUnitusMarkets, getUnitusMarketsInfos } from '@adapters/unitus/common/lend'
+import type { AdapterConfig } from "@lib/adapter";import { getAllUnitusMarkets, getUnitusMarketsInfos } from '@adapters/unitus/common/lend'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
@@ -30,3 +30,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1702944000,
+                  }
+                  

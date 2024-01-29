@@ -1,4 +1,4 @@
-import { getHopFarmBalances, getHopLpBalances } from '@adapters/hop-protocol/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getHopFarmBalances, getHopLpBalances } from '@adapters/hop-protocol/common/balance'
 import { getHopPools } from '@adapters/hop-protocol/common/pool'
 import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -22,3 +22,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1693440000,
+                  }
+                  

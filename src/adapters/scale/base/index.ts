@@ -1,4 +1,4 @@
-import { getScaleFarmBalances } from '@adapters/scale/base/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getScaleFarmBalances } from '@adapters/scale/base/balance'
 import { getScaleContracts } from '@adapters/scale/base/contract'
 import { getScaleLockBalances } from '@adapters/scale/base/locker'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -114,3 +114,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1695945600,
+                  }
+                  

@@ -1,4 +1,4 @@
-import { getsDaiBalances } from '@adapters/mu-exchange/gnosis/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getsDaiBalances } from '@adapters/mu-exchange/gnosis/balance'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
@@ -24,3 +24,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1699488000,
+                  }
+                  

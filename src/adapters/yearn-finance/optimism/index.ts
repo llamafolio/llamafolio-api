@@ -1,4 +1,4 @@
-import { getYearnBalances } from '@adapters/yearn-finance/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getYearnBalances } from '@adapters/yearn-finance/common/balance'
 import { getYearnOptimisticVault } from '@adapters/yearn-finance/common/vault'
 import { getOptimisticYearnFarmContracts, getYearnFarmBalances } from '@adapters/yearn-finance/optimism/farm'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -37,3 +37,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1665100800,
+                  }
+                  

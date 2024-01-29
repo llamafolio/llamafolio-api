@@ -1,4 +1,4 @@
-import { getBPDPendingRewards } from '@adapters/big-data-protocol/ethereum/masterChef'
+import type { AdapterConfig } from "@lib/adapter";import { getBPDPendingRewards } from '@adapters/big-data-protocol/ethereum/masterChef'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
@@ -64,3 +64,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1614902400,
+                  }
+                  

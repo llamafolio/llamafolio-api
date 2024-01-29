@@ -1,4 +1,4 @@
-import { getIporFarmBalances } from '@adapters/ipor/ethereum/farm'
+import type { AdapterConfig } from "@lib/adapter";import { getIporFarmBalances } from '@adapters/ipor/ethereum/farm'
 import { getIporLpBalances } from '@adapters/ipor/ethereum/lp'
 import { getIporStakeBalance } from '@adapters/ipor/ethereum/stake'
 import type { BalancesContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -59,3 +59,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1660694400,
+                  }
+                  

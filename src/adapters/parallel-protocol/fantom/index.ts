@@ -1,4 +1,4 @@
-import { getParallelLendBalances } from '@adapters/parallel-protocol/common/lend'
+import type { AdapterConfig } from "@lib/adapter";import { getParallelLendBalances } from '@adapters/parallel-protocol/common/lend'
 import { getParallelMimoRewardsBalances, getParallelParStakeBalance } from '@adapters/parallel-protocol/common/stake'
 import { getVaultWithAssets } from '@adapters/parallel-protocol/common/vault'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -82,3 +82,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [...vaultsBalancesGroups, { balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1643414400,
+                  }
+                  

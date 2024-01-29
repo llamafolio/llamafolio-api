@@ -1,4 +1,4 @@
-// https://solidlizard.gitbook.io/solidlizard/security/contracts
+import type { AdapterConfig } from "@lib/adapter";// https://solidlizard.gitbook.io/solidlizard/security/contracts
 
 import { getSolidlizardContracts } from '@adapters/solidlizard/arbitrum/pair'
 import { getSolidlyBalances } from '@adapters/solidly-v2/ethereum/balance'
@@ -48,3 +48,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1676160000,
+                  }
+                  

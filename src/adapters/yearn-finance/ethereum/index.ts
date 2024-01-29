@@ -1,4 +1,4 @@
-import { getVeYearnBalance, getYearnBalances, getYearnStakeBalance } from '@adapters/yearn-finance/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getVeYearnBalance, getYearnBalances, getYearnStakeBalance } from '@adapters/yearn-finance/common/balance'
 import { getYearnVaults } from '@adapters/yearn-finance/common/vault'
 import {
   getYearnFarmClassicBalances,
@@ -87,3 +87,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1581548400,
+                  }
+                  

@@ -1,4 +1,4 @@
-import { getBalancerBalances } from '@adapters/balancer/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getBalancerBalances } from '@adapters/balancer/common/balance'
 import { getBalancerPools } from '@adapters/balancer/common/pool'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -28,3 +28,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1654732800,
+                  }
+                  

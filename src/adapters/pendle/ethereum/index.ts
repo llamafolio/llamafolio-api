@@ -1,4 +1,4 @@
-import { getPendleBalances } from '@adapters/pendle/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getPendleBalances } from '@adapters/pendle/common/balance'
 import { getPendleLockerBalance } from '@adapters/pendle/common/locker'
 import { getPendlePools } from '@adapters/pendle/common/pool'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -29,3 +29,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1636416000,
+                  }
+                  

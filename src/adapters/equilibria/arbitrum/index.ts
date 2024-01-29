@@ -1,4 +1,4 @@
-import { getEqPoolBalances, getSingleEqBalance } from '@adapters/equilibria/common/balance'
+import type { AdapterConfig } from "@lib/adapter";import { getEqPoolBalances, getSingleEqBalance } from '@adapters/equilibria/common/balance'
 import { getEqLockerBalance, getxEqbLockerBalances } from '@adapters/equilibria/common/lock'
 import { getEqPoolsContracts } from '@adapters/equilibria/common/pool'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
@@ -55,3 +55,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1686182400,
+                  }
+                  

@@ -1,4 +1,4 @@
-import { getFortLockerBalances } from '@adapters/citadelswap/base/locker'
+import type { AdapterConfig } from "@lib/adapter";import { getFortLockerBalances } from '@adapters/citadelswap/base/locker'
 import { getUserPendingFORT } from '@adapters/citadelswap/base/reward'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -64,3 +64,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     groups: [{ balances }],
   }
 }
+
+                  export const config: AdapterConfig = {
+                    startDate: 1700611200,
+                  }
+                  
