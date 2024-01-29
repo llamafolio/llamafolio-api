@@ -1,7 +1,7 @@
-import type { AdapterConfig } from "@lib/adapter";import { getBeefyFarmBalances } from '@adapters/beefy/common/balance'
+import { getBeefyFarmBalances } from '@adapters/beefy/common/balance'
 import { getBoostBeefyBalances } from '@adapters/beefy/common/boost'
 import { getBeefyPools } from '@adapters/beefy/common/pool'
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 export const getContracts = async (ctx: BaseContext) => {
@@ -27,7 +27,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1699833600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1699833600,
+}

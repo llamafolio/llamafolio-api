@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getReaperFarmBalances } from '@adapters/reaper-farm/common/balance'
+import { getReaperFarmBalances } from '@adapters/reaper-farm/common/balance'
 import { getReaperPools } from '@adapters/reaper-farm/common/pool'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const beethovenVault: Contract = {
@@ -26,7 +26,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1658448000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1658448000,
+}

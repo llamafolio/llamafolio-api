@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getSushiPoolInfos } from '@adapters/sushiswap/common/contract'
+import { getSushiPoolInfos } from '@adapters/sushiswap/common/contract'
 import { getUserPendingSushi } from '@adapters/sushiswap/common/reward'
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
 import { getMasterChefPoolsContracts } from '@lib/masterchef/masterChefContract'
@@ -67,7 +67,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx: 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1614556800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1614556800,
+}

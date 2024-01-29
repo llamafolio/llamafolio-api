@@ -1,9 +1,9 @@
-import type { AdapterConfig } from "@lib/adapter";import {
+import {
   getParaspaceBPTFarmBalances,
   getParaspaceBPTStakeBalances,
   getParaSpaceStakeBalances,
 } from '@adapters/paraswap/ethereum/stake'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const bptParaStake: Contract = {
@@ -87,7 +87,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1637020800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1637020800,
+}

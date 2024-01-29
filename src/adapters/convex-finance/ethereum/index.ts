@@ -1,4 +1,4 @@
-import type { AdapterConfig } from "@lib/adapter";import { cvxCRVStaker, stkCvxCrvStaker } from '@adapters/convex-finance/ethereum/cvx'
+import { cvxCRVStaker, stkCvxCrvStaker } from '@adapters/convex-finance/ethereum/cvx'
 import {
   cvxFpisStaking,
   cvxFxsStaking,
@@ -12,7 +12,7 @@ import { getConvexLockerBalances } from '@adapters/convex-finance/ethereum/locke
 import { getConvexGaugesBalances, getConvexPoolsContracts } from '@adapters/convex-finance/ethereum/pool'
 import { cvxPrismaStaking } from '@adapters/convex-finance/ethereum/prisma'
 import { getCvxCrvStakeBalance, getCvxStakeBalance, getStkCvxCrvBalance } from '@adapters/convex-finance/ethereum/stake'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const cvxRewardPool: Contract = {
@@ -90,7 +90,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1642118400,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1642118400,
+}

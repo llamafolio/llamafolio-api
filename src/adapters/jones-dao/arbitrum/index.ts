@@ -1,11 +1,11 @@
-import type { AdapterConfig } from "@lib/adapter";import { getjGLPYieldBalances, getjUSDCYieldBalance } from '@adapters/jones-dao/arbitrum/balances'
+import { getjGLPYieldBalances, getjUSDCYieldBalance } from '@adapters/jones-dao/arbitrum/balances'
 import { getJPools, getJPoolsBalances } from '@adapters/jones-dao/arbitrum/jpool'
 import {
   getJonesJonesMasterChefPendingRewards,
   getJonesMasterChefPoolInfos,
 } from '@adapters/jones-dao/arbitrum/masterChef'
 import { getJonesPendingRewards, getJonesPoolInfos } from '@adapters/jones-dao/arbitrum/miniChef'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getVaultTokens } from '@lib/gmx/vault'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
@@ -97,7 +97,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1645228800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1645228800,
+}

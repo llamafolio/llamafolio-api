@@ -1,7 +1,7 @@
-import type { AdapterConfig } from "@lib/adapter";import { getdHedgeBalances } from '@adapters/dhedge/common/balance'
+import { getdHedgeBalances } from '@adapters/dhedge/common/balance'
 import { getdHedgePools } from '@adapters/dhedge/common/pool'
 import { getDHTStakeBalances } from '@adapters/dhedge/optimism/balance'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const sUSD: Contract = {
@@ -54,7 +54,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1686355200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1686355200,
+}

@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getEqPoolBalances } from '@adapters/equilibria/common/balance'
+import { getEqPoolBalances } from '@adapters/equilibria/common/balance'
 import { getEqPoolsContracts } from '@adapters/equilibria/common/pool'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const masterChef: Contract = {
@@ -26,7 +26,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1694390400,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1694390400,
+}

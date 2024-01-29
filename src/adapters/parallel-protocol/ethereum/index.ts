@@ -1,4 +1,4 @@
-import type { AdapterConfig } from "@lib/adapter";import {
+import {
   getParallelBPT_v1FarmBalances,
   getParallelBPT_v2FarmBalances,
 } from '@adapters/parallel-protocol/common/bptFarm'
@@ -6,7 +6,7 @@ import { getParallelLendBalances } from '@adapters/parallel-protocol/common/lend
 import { getParallelLpFarmBalances } from '@adapters/parallel-protocol/common/lpFarm'
 import { getParallelMimoRewardsBalances, getParallelParStakeBalance } from '@adapters/parallel-protocol/common/stake'
 import { getVaultWithAssets } from '@adapters/parallel-protocol/common/vault'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleLockerBalance } from '@lib/lock'
 import type { Token } from '@lib/token'
@@ -170,7 +170,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1617141600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1617141600,
+}

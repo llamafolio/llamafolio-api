@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getOUSGStakeBalance } from '@adapters/ondo-finance/ethereum/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getOUSGStakeBalance } from '@adapters/ondo-finance/ethereum/balance'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const OUSG: Contract = {
@@ -29,7 +29,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1674777600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1674777600,
+}

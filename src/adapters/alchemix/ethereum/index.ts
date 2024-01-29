@@ -1,9 +1,9 @@
-import type { AdapterConfig } from "@lib/adapter";import type { getStakerContractsParams } from '@adapters/alchemix/common/stake'
+import type { getStakerContractsParams } from '@adapters/alchemix/common/stake'
 import { getStakerBalances, getStakerContracts } from '@adapters/alchemix/common/stake'
 import type { getTransmutationContractsParams } from '@adapters/alchemix/common/transmuter'
 import { getTransmutationBalances } from '@adapters/alchemix/common/transmuter'
 import { getTransmutationBalances as getTransmutationBalancesV2 } from '@adapters/alchemix/common/transmuter-v2'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import type { Token } from '@lib/token'
 
@@ -176,7 +176,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1637193600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1637193600,
+}

@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getdHedgeBalances } from '@adapters/dhedge/ethereum/balance'
+import { getdHedgeBalances } from '@adapters/dhedge/ethereum/balance'
 import { getdHedgePools } from '@adapters/dhedge/ethereum/pool'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleLockerBalance } from '@lib/lock'
 
@@ -48,7 +48,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1652745600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1652745600,
+}

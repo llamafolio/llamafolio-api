@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getAssetsContracts } from '@adapters/compound-v3/common/asset'
+import { getAssetsContracts } from '@adapters/compound-v3/common/asset'
 import { getCompLendBalances } from '@adapters/compound-v3/common/balance'
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalances } from '@lib/stake'
 import type { Token } from '@lib/token'
@@ -46,7 +46,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1678147200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1678147200,
+}

@@ -1,10 +1,10 @@
-import type { AdapterConfig } from "@lib/adapter";import { getLayerBankMarketsBalances } from '@adapters/layerbank/linea/balance'
+import { getLayerBankMarketsBalances } from '@adapters/layerbank/linea/balance'
 import {
   getCollateralFactor,
   getLayerBankAllMarkets,
   getLayerBankMarketsInfos,
 } from '@adapters/layerbank/linea/contract'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsContracts } from '@lib/compound/v2/market'
 
@@ -39,7 +39,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1689724800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1689724800,
+}

@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getVesperStakeBalances } from '@adapters/vesper/common/balance'
+import { getVesperStakeBalances } from '@adapters/vesper/common/balance'
 import { getVesperStakeContracts } from '@adapters/vesper/common/pool'
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const STAKING_URL = 'https://api-optimism.vesper.finance/pools'
@@ -24,7 +24,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1684800000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1684800000,
+}

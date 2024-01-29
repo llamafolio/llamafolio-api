@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getFydeFarmBalance } from '@adapters/fyde-protocol/ethereum/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getFydeFarmBalance } from '@adapters/fyde-protocol/ethereum/balance'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalance } from '@lib/stake'
 
@@ -31,7 +31,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1706054400,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1706054400,
+}

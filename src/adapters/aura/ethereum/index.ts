@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getAuraBalStakerBalance, getAuraFarmBalances, getAuraYieldBalance } from '@adapters/aura/ethereum/balance'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getAuraBalStakerBalance, getAuraFarmBalances, getAuraYieldBalance } from '@adapters/aura/ethereum/balance'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMultipleLockerBalances } from '@lib/lock'
 import type { Token } from '@lib/token'
@@ -75,7 +75,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1667779200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1667779200,
+}

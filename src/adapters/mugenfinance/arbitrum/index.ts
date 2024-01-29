@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getMugenAutoCompoundStakeBalances, getMugenStakeBalance } from '@adapters/mugenfinance/arbitrum/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getMugenAutoCompoundStakeBalances, getMugenStakeBalance } from '@adapters/mugenfinance/arbitrum/balance'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const sMGN: Contract = {
@@ -39,7 +39,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1677024000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1677024000,
+}

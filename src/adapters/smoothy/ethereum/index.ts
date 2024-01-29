@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getSmoothyStakeBalances } from '@adapters/smoothy/common/stake'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getSmoothyStakeBalances } from '@adapters/smoothy/common/stake'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const tokens: string[] = [
@@ -37,7 +37,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1615762800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1615762800,
+}

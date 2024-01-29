@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getThalesStakingBalance, getVeThalesBalance } from '@adapters/thales/common/stake'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getThalesStakingBalance, getVeThalesBalance } from '@adapters/thales/common/stake'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const thalesStaking: Contract = {
@@ -32,7 +32,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1697673600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1697673600,
+}

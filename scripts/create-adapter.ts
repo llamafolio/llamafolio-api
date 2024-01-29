@@ -6,10 +6,8 @@ import url from 'node:url'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
-import { chainById, fromDefiLlamaChain } from '@lib/chains'
+import { fromDefiLlamaChain } from '@lib/chains'
 import { slugify } from '@lib/fmt'
-import { fetchProtocolsLite } from '@lib/protocols'
-import { isNotNullish } from '@lib/type'
 
 const adapterTemplate = (slug: string, chains: string[]) => `
 import type { Adapter } from '@lib/adapter';
@@ -25,8 +23,8 @@ export default adapter;
 
 `
 
-const chainTemplate = `
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+const chainTemplate = (startDate?: number) => `
+import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 export const getContracts = async (ctx: BaseContext) => {
@@ -49,6 +47,10 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: ${startDate},
 }
 
 `
@@ -76,8 +78,8 @@ async function main() {
     return
   }
 
-  const protocols = await fetchProtocolsLite([slug])
-  const protocol = protocols[0]
+  const protocolRes = await fetch(`https://api.llama.fi/protocol/${slug}`)
+  const protocol = await protocolRes.json()
 
   if (!protocol) {
     console.error(`Failed to create adapter: ${slug} doesn't exist on DefiLlama`)
@@ -86,14 +88,35 @@ async function main() {
     return
   }
 
-  const chains = protocol.chains.map((chain) => chainById[fromDefiLlamaChain[chain]]?.id).filter(isNotNullish)
+  const chainConfigs: { [key: string]: { startDate?: number } } = {}
+
+  if (protocol.chainTvls) {
+    // Check TVLs on different chains
+    for (const key in protocol.chainTvls) {
+      if (protocol.chains) {
+        for (const chain of protocol.chains) {
+          if (key.startsWith(chain)) {
+            const _chain = fromDefiLlamaChain[chain]
+            const startDate = protocol.chainTvls[key].tvl?.[0]?.date
+            if (_chain != null) {
+              chainConfigs[_chain] = {
+                startDate: Math.min(chainConfigs[_chain]?.startDate || Infinity, startDate),
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  const chains = Object.keys(chainConfigs)
 
   fs.mkdirSync(dst)
   fs.writeFileSync(path.join(dst, 'index.ts'), adapterTemplate(slug, chains))
 
   for (const chain of chains) {
     fs.mkdirSync(path.join(dst, chain))
-    fs.writeFileSync(path.join(dst, chain, 'index.ts'), chainTemplate)
+    fs.writeFileSync(path.join(dst, chain, 'index.ts'), chainTemplate(chainConfigs[chain]!.startDate))
   }
 
   // format

@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getUnstakeLidoBalances } from '@adapters/lido/ethereum/unstake'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getUnstakeLidoBalances } from '@adapters/lido/ethereum/unstake'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalances } from '@lib/stake'
 
@@ -58,7 +58,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1608418800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1608418800,
+}

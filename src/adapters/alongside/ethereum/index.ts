@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getAMKTBalance } from '@adapters/alongside/ethereum/balance'
+import { getAMKTBalance } from '@adapters/alongside/ethereum/balance'
 import { getAMKTStaker } from '@adapters/alongside/ethereum/contract'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const vault: Contract = {
@@ -32,7 +32,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1673568000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1673568000,
+}

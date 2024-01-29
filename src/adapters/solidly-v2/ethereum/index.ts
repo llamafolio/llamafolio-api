@@ -1,8 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";// https://docs.solidly.com/resources/contract-addresses
-
 import { getSolidlyBalances } from '@adapters/solidly-v2/ethereum/balance'
 import { getThenaContracts } from '@adapters/thena/bsc/pair'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter' // https://docs.solidly.com/resources/contract-addresses
 import { resolveBalances } from '@lib/balance'
 import { getNFTLockerBalances } from '@lib/lock'
 import type { Token } from '@lib/token'
@@ -46,7 +44,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1672531200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1672531200,
+}

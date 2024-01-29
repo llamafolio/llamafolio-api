@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getGloriPendingRewards } from '@adapters/glori-finance/arbitrum/masterChef'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getGloriPendingRewards } from '@adapters/glori-finance/arbitrum/masterChef'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
@@ -56,7 +56,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1702252800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1702252800,
+}

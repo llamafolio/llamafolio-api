@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getDefiStakers, getDefiStakersBalances } from '@adapters/defi-swap/ethereum/stake'
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { getDefiStakers, getDefiStakersBalances } from '@adapters/defi-swap/ethereum/stake'
+import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPairsContracts } from '@lib/uniswap/v2/factory'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
@@ -49,7 +49,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1616194800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1616194800,
+}

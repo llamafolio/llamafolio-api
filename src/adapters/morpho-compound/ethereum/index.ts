@@ -1,4 +1,4 @@
-import type { AdapterConfig } from "@lib/adapter";import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getMorphoMarketsBalances } from './balance'
@@ -38,7 +38,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1660867200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1660867200,
+}

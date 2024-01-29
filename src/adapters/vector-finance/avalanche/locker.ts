@@ -1,8 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
-import { getERC20Details } from '@lib/erc20'
+import { abi as erc20Abi, getERC20Details } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 

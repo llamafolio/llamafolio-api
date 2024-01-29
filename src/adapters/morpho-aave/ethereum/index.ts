@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getMarketsContracts } from '@adapters/morpho-aave/ethereum/contract'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getMarketsContracts } from '@adapters/morpho-aave/ethereum/contract'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getLendBorrowBalances, getUserHealthFactor } from './balances'
@@ -31,7 +31,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1665187200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1665187200,
+}

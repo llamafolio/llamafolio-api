@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getUserPendingARC } from '@adapters/arc-swap/ethereum/reward'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getUserPendingARC } from '@adapters/arc-swap/ethereum/reward'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
 import { getMasterChefPoolsContracts } from '@lib/masterchef/masterChefContract'
@@ -39,7 +39,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1679097600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1679097600,
+}

@@ -1,4 +1,4 @@
-import type { AdapterConfig } from "@lib/adapter";import type { GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, GetBalancesHandler } from '@lib/adapter'
 
 import { getPayeeStreams } from '../common/streams'
 
@@ -17,7 +17,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx) 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1650326400,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1650326400,
+}

@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getSherlockBalances } from '@adapters/sherlock/ethereum/farm'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getSherlockBalances } from '@adapters/sherlock/ethereum/farm'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const sherlockPos: Contract = {
@@ -23,7 +23,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1632787200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1632787200,
+}

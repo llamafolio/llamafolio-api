@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getVaultTechBalances, getVaultTechContracts } from '@adapters/vault-tech/ethereum/vault'
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { getVaultTechBalances, getVaultTechContracts } from '@adapters/vault-tech/ethereum/vault'
+import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const vaultAddresses: `0x${string}`[] = [
@@ -26,7 +26,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1702425600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1702425600,
+}

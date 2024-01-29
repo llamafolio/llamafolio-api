@@ -180,9 +180,14 @@ export type GetBalancesHandler<C extends GetContractsHandler> = (
   contracts: ExcludeRawContract<Partial<Awaited<ReturnType<C>>['contracts']>>,
 ) => BalancesConfig | Promise<BalancesConfig>
 
+export interface AdapterConfig {
+  startDate?: number
+}
+
 export interface AdapterHandler {
   getContracts: GetContractsHandler
   getBalances: GetBalancesHandler<GetContractsHandler>
+  config: AdapterConfig
 }
 
 export interface Adapter extends Partial<Record<Chain, AdapterHandler>> {

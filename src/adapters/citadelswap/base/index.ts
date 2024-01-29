@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getFortLockerBalances } from '@adapters/citadelswap/base/locker'
+import { getFortLockerBalances } from '@adapters/citadelswap/base/locker'
 import { getUserPendingFORT } from '@adapters/citadelswap/base/reward'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
 import { getMasterChefPoolsContracts } from '@lib/masterchef/masterChefContract'
@@ -65,7 +65,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1700611200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1700611200,
+}

@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getOldWLPBalance, getvWINRBalances, getWLPBalance } from '@adapters/winr-protocol/arbitrum/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getOldWLPBalance, getvWINRBalances, getWLPBalance } from '@adapters/winr-protocol/arbitrum/balance'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const vWINR: Contract = {
@@ -50,7 +50,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1684281600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1684281600,
+}

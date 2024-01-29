@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getHoprBalances } from '@adapters/hopr/gnosis/balance'
+import { getHoprBalances } from '@adapters/hopr/gnosis/balance'
 import { getHoprContracts } from '@adapters/hopr/gnosis/contract'
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const stakersAddresses: `0x${string}`[] = [
@@ -31,7 +31,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1699488000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1699488000,
+}

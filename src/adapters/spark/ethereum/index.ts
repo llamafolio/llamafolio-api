@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getLendingPoolContracts } from '@adapters/spark/common/contract'
+import { getLendingPoolContracts } from '@adapters/spark/common/contract'
 import { getLendingPoolBalances, getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const lendingPool: Contract = {
@@ -33,7 +33,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1683072000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1683072000,
+}

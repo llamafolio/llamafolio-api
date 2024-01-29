@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getAmphorBalances } from '@adapters/amphor/ethereum/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getAmphorBalances } from '@adapters/amphor/ethereum/balance'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const ampr_LP_ETH: Contract = {
@@ -30,7 +30,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1696723200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1696723200,
+}

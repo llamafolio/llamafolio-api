@@ -2,8 +2,8 @@ import { getPendlePools } from '@adapters/pendle/common/pool'
 import type { BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter, rangeBI } from '@lib/array'
 import {
-  type GetLpTokenParams,
   getMasterChefPoolsContracts,
+  type GetLpTokenParams,
   type GetPoolsInfosParams,
 } from '@lib/masterchef/masterChefContract'
 import { multicall } from '@lib/multicall'

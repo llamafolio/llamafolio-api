@@ -1,7 +1,7 @@
-import type { AdapterConfig } from "@lib/adapter";import { getFarmContracts, getSommelierFarmBalances } from '@adapters/sommelier/ethereum/farm'
+import { getFarmContracts, getSommelierFarmBalances } from '@adapters/sommelier/ethereum/farm'
 import { getLockerContracts, getSommelierLockBalances } from '@adapters/sommelier/ethereum/locker'
 import { getSommelierStakeBalances, getStakeContracts } from '@adapters/sommelier/ethereum/stake'
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const stakeAddresses: `0x${string}`[] = [
@@ -82,7 +82,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1664496000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1664496000,
+}

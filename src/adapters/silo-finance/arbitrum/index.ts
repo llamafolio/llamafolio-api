@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getSiloBalances } from '@adapters/silo-finance/common/balance'
+import { getSiloBalances } from '@adapters/silo-finance/common/balance'
 import { getSiloPools } from '@adapters/silo-finance/common/pool'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 
 const siloVaults: `0x${string}`[] = [
   '0xa8897b4552c075e884bdb8e7b704eb10db29bf0d',
@@ -54,7 +54,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1668211200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1668211200,
+}

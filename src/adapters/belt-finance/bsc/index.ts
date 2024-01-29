@@ -1,8 +1,8 @@
-import type { AdapterConfig } from "@lib/adapter";import { getBeltContracts } from '@adapters/belt-finance/bsc/contract'
+import { getBeltContracts } from '@adapters/belt-finance/bsc/contract'
 import { getFarmBeltBalances } from '@adapters/belt-finance/bsc/farm'
 import { getBeltLpBalances } from '@adapters/belt-finance/bsc/lp'
 import { getBeltStakeBalance } from '@adapters/belt-finance/bsc/stake'
-import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const sBELT: Contract = {
@@ -70,7 +70,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1652140800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1652140800,
+}

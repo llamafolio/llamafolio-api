@@ -1,11 +1,11 @@
-import type { AdapterConfig } from "@lib/adapter";import { getLiquidDriverShadowBalances } from '@adapters/liquid-driver/common/balance'
+import { getLiquidDriverShadowBalances } from '@adapters/liquid-driver/common/balance'
 import {
   getLQDRPoolsInfos,
   getResolvedLiquidUnderlyings,
   getUserPendingLQDR,
 } from '@adapters/liquid-driver/common/masterchef'
 import { getShadowChefContracts } from '@adapters/liquid-driver/common/shadowFarm'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleLockerBalance } from '@lib/lock'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
@@ -108,7 +108,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1630454400,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1630454400,
+}

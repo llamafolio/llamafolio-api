@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getReserveFarmBalances } from '@adapters/reserve/common/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getReserveFarmBalances } from '@adapters/reserve/common/balance'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const farmers: Contract[] = [
@@ -26,7 +26,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1697846400,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1697846400,
+}

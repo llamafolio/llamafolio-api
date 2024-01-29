@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getReflexerFarmBalancesWithProxies } from '@adapters/reflexer/ethereum/farm'
+import { getReflexerFarmBalancesWithProxies } from '@adapters/reflexer/ethereum/farm'
 import { getReflexerStakeBalances } from '@adapters/reflexer/ethereum/stake'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const RAI: Contract = {
@@ -34,7 +34,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1613606400,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1613606400,
+}

@@ -1,11 +1,11 @@
-import type { AdapterConfig } from "@lib/adapter";import {
+import {
   getGFIBalances,
   getGoldFinchDepositBalances,
   getGoldFinchNFTFarmBalances,
   getGoldFinchNFTStakeBalances,
   getGoldFinchStakeBalances,
 } from '@adapters/goldfinch/ethereum/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const FIDU: Contract = {
@@ -63,7 +63,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1629936000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1629936000,
+}

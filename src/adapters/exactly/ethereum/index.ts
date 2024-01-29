@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getExactlyBalances } from '@adapters/exactly/common/balance'
+import { getExactlyBalances } from '@adapters/exactly/common/balance'
 import { getExactlyMarkets } from '@adapters/exactly/common/market'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const lendingPool: Contract = { chain: 'ethereum', address: '0x310a2694521f75c7b2b64b5937c16ce65c3efe01' }
@@ -24,7 +24,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1667260800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1667260800,
+}

@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getFireBotFarmBalances, getFireBotLPBalance, getFireBotStakeBalance } from '@adapters/firebot/polygon/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getFireBotFarmBalances, getFireBotLPBalance, getFireBotStakeBalance } from '@adapters/firebot/polygon/balance'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const EP: Contract = {
@@ -43,7 +43,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1685059200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1685059200,
+}

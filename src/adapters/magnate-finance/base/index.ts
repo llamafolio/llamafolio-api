@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getMagnateMarketsBalances } from '@adapters/magnate-finance/base/balance'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getMagnateMarketsBalances } from '@adapters/magnate-finance/base/balance'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsContracts } from '@lib/compound/v2/market'
 
@@ -33,7 +33,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1691107200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1691107200,
+}

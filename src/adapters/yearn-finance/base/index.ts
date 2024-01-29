@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getYearnBalances } from '@adapters/yearn-finance/common/balance'
+import { getYearnBalances } from '@adapters/yearn-finance/common/balance'
 import { getYearnVaults } from '@adapters/yearn-finance/common/vault'
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
 
@@ -23,7 +23,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1695168000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1695168000,
+}

@@ -1,7 +1,7 @@
-import type { AdapterConfig } from "@lib/adapter";import { getCVaultContracts } from '@adapters/cvault-finance/ethereum/contract'
+import { getCVaultContracts } from '@adapters/cvault-finance/ethereum/contract'
 import { getCVaultFarmBalances } from '@adapters/cvault-finance/ethereum/farm'
 import { getCVaultLendBalances } from '@adapters/cvault-finance/ethereum/lend'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const lendingPool: Contract = {
@@ -34,7 +34,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1660176000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1660176000,
+}

@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getAnnexV1Rewards, getAnnexV2Rewards } from '@adapters/annex/bsc/balance'
+import { getAnnexV1Rewards, getAnnexV2Rewards } from '@adapters/annex/bsc/balance'
 import { getAnnexContracts } from '@adapters/annex/bsc/contract'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getMarketsBalances, getMarketsContracts } from '@lib/compound/v2/market'
 import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
@@ -74,7 +74,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1630454400,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1630454400,
+}

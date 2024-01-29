@@ -1,4 +1,4 @@
-import type { AdapterConfig } from "@lib/adapter";import type { BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 import { getLeverageFarming } from './leverage'
@@ -29,7 +29,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1640217600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1640217600,
+}

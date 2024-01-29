@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
 import { getMultiFeeDistributionContracts } from '@lib/geist/stake'
@@ -75,7 +75,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1673395200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1673395200,
+}

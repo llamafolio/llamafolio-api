@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getsARPABalance } from '@adapters/arpa-staking/ethereum/balance'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getsARPABalance } from '@adapters/arpa-staking/ethereum/balance'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const sARPA: Contract = {
@@ -24,7 +24,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1688428800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1688428800,
+}

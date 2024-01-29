@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getsafETHBalance } from '@adapters/asymmetry-finance/ethereum/stake'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getsafETHBalance } from '@adapters/asymmetry-finance/ethereum/stake'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const safETH: Contract = {
@@ -24,7 +24,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1683849600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1683849600,
+}

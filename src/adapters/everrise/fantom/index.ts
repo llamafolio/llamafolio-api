@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getEverriseBalances } from '@adapters/everrise/common/stake'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getEverriseBalances } from '@adapters/everrise/common/stake'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const nftStaker: Contract = {
@@ -26,7 +26,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1643155200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1643155200,
+}

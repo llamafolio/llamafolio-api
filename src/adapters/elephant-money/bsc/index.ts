@@ -1,10 +1,10 @@
-import type { AdapterConfig } from "@lib/adapter";import { getElephantFarmBalances } from '@adapters/elephant-money/bsc/farmer'
+import { getElephantFarmBalances } from '@adapters/elephant-money/bsc/farmer'
 import {
   getElephantStakeBalances,
   getElephantTrumpetBalance,
   getElephantTrunkBalance,
 } from '@adapters/elephant-money/bsc/stake'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const trunkStaker: Contract = {
@@ -89,7 +89,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1634428800,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1634428800,
+}

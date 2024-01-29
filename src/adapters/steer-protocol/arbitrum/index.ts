@@ -1,6 +1,6 @@
-import type { AdapterConfig } from "@lib/adapter";import { getSteerBalances } from '@adapters/steer-protocol/common/balance'
+import { getSteerBalances } from '@adapters/steer-protocol/common/balance'
 import { getSteerPools } from '@adapters/steer-protocol/common/pool'
-import type { BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const graph_url = 'https://api.thegraph.com/subgraphs/name/steerprotocol/steer-protocol-arbitrum'
@@ -22,7 +22,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1698710400,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1698710400,
+}

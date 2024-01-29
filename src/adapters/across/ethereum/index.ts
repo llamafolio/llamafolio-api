@@ -1,7 +1,7 @@
-import type { AdapterConfig } from "@lib/adapter";import { getAcrossContracts } from '@adapters/across/ethereum/v1/contract'
+import { getAcrossContracts } from '@adapters/across/ethereum/v1/contract'
 import { getAcrossBalances } from '@adapters/across/ethereum/v2/balance'
 import { getAcrossV2Contracts } from '@adapters/across/ethereum/v2/contract'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
@@ -46,7 +46,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1641513600,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1641513600,
+}

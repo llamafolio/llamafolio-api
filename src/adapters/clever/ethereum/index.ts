@@ -1,8 +1,8 @@
-import type { AdapterConfig } from "@lib/adapter";import { getCleCVXLendBalances, getCleLendBalances } from '@adapters/clever/ethereum/balance'
+import { getCleCVXLendBalances, getCleLendBalances } from '@adapters/clever/ethereum/balance'
 import { getCleFarmContracts, getCleLendContracts } from '@adapters/clever/ethereum/contract'
 import { getCleFarmBalances } from '@adapters/clever/ethereum/farm'
 import { getCleStakeBalance } from '@adapters/clever/ethereum/stake'
-import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleLockerBalance } from '@lib/lock'
 
@@ -71,7 +71,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1651104000,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1651104000,
+}

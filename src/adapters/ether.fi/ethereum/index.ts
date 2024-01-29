@@ -1,5 +1,5 @@
-import type { AdapterConfig } from "@lib/adapter";import { getNodeEtherFiBalances } from '@adapters/ether.fi/ethereum/node'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import { getNodeEtherFiBalances } from '@adapters/ether.fi/ethereum/node'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalance } from '@lib/stake'
 
@@ -52,7 +52,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   }
 }
 
-                  export const config: AdapterConfig = {
-                    startDate: 1677715200,
-                  }
-                  
+export const config: AdapterConfig = {
+  startDate: 1677715200,
+}
