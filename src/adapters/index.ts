@@ -83,6 +83,7 @@ import crvusd from '@adapters/crvusd'
 import curveDex from '@adapters/curve-dex'
 import cvaultFinance from '@adapters/cvault-finance'
 import cyclone from '@adapters/cyclone'
+import defiSwap from '@adapters/defi-swap'
 import definix from '@adapters/definix'
 import deltaprime from '@adapters/deltaprime'
 import dhedge from '@adapters/dhedge'
@@ -450,6 +451,7 @@ export const adapters: Adapter[] = [
   curveDex,
   cvaultFinance,
   cyclone,
+  defiSwap,
   definix,
   deltaprime,
   dhedge,
