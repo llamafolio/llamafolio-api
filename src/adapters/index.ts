@@ -193,6 +193,7 @@ import morpheusSwap from '@adapters/morpheus-swap'
 import morphex from '@adapters/morphex'
 import morphoAave from '@adapters/morpho-aave'
 import morphoAavev3 from '@adapters/morpho-aavev3'
+import morphoBlue from '@adapters/morpho-blue'
 import morphoCompound from '@adapters/morpho-compound'
 import mountainProtocol from '@adapters/mountain-protocol'
 import mstable from '@adapters/mstable'
@@ -558,6 +559,7 @@ export const adapters: Adapter[] = [
   morphex,
   morphoAave,
   morphoAavev3,
+  morphoBlue,
   morphoCompound,
   mountainProtocol,
   mstable,
