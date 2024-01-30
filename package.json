@@ -9,6 +9,7 @@
     "deploy:dev": "pnpm build && sls deploy --stage dev",
     "deploy:prod": "pnpm build && NODE_ENV='production' sls deploy --stage prod",
     "create-adapter": "tsx scripts/create-adapter.ts",
+    "borrow": "tsx scripts/run-borrow.ts",
     "delete-adapter": "tsx scripts/delete-adapter.ts",
     "adapter-balances": "tsx scripts/run-adapter-balances.ts",
     "get-contract-info": "tsx scripts/get-contract-info.ts",
