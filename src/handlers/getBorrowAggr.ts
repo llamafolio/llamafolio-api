@@ -20,7 +20,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
       fetch('https://yields.llama.fi/lendBorrow').then((res) => res.json()),
     ])
 
-    const adapterIds = adapterIdsRes.map((obj) => obj.id)
     const tokens = llamaDatas
       .map((llamaData) => {
         const matchingRawData = defillamaDatas.find((rawData: any) => rawData.pool === llamaData.pool)
@@ -28,10 +27,10 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
       })
       .filter(isNotNullish)
       .map(mergeToken)
-      .filter((token) => adapterIds.includes(token.adapter_id))
+      .filter((token) => adapterIdsRes.map(({ id }) => id).includes(token.adapter_id))
 
-    const lendTokens = tokens.filter((token) => token.lend === true)
-    const borrowTokens = tokens.filter((token) => token.borrow === true)
+    const lendTokens = tokens.filter((token) => token.lend)
+    const borrowTokens = tokens.filter((token) => token.borrow)
 
     const borrowStrategies = simulateBestStrategies(
       lendTokens,
