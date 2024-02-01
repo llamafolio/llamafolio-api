@@ -1,5 +1,5 @@
 import { selectDistinctAdaptersIds } from '@db/adapters'
-import { selectLatestTokensYields, simulateBestStrategies, type BorrowStrategy } from '@db/borrowAggr'
+import { type BorrowStrategy, selectLatestTokensYields, simulateBestStrategies } from '@db/borrowAggr'
 import { client } from '@db/clickhouse'
 import { serverError, success } from '@handlers/response'
 import { getChainId } from '@lib/chains'
