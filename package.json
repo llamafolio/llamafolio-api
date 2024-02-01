@@ -21,6 +21,7 @@
     "update-protocols-tokens": "tsx scripts/update-protocols-tokens.ts",
     "update-yields": "tsx scripts/update-yields.ts",
     "nft-floors": "tsx --require='dotenv/config' scripts/nft-floors.ts",
+    "optimizer": "tsx scripts/run-optimizer.ts",
     "lint": "eslint --fix . --ext js,cjs,mjs,ts,d.ts,json,md --cache",
     "format": "prettier --write '**/*.{md,json,js,cjs,mjs,ts,d.ts,sh}' --ignore-path='./.eslintignore' --ignore-unknown --cache",
     "typecheck": "tsc --noEmit --skipLibCheck",

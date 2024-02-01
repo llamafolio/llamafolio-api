@@ -241,6 +241,15 @@ functions:
           path: /tokens_transfers/{chain}/{address}/latest
     timeout: 10
 
+  getBorrowAggr:
+    handler: src/handlers/getBorrowAggr.handler
+    description: Get borrow aggr
+    events:
+      - httpApi:
+          method: get
+          path: /borrow
+    timeout: 10
+
   getSyncStatus:
     handler: src/handlers/getSyncStatus.handler
     description: Get sync status
