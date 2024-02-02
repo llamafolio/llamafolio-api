@@ -114,3 +114,7 @@ export function unixFromDateTime(date: string) {
 export function unixFromDate(date: Date) {
   return Math.floor(date.getTime() / 1000)
 }
+
+export function isDateTimeNullish(dateTime: string) {
+  return dateTime === '1970-01-01 00:00:00'
+}

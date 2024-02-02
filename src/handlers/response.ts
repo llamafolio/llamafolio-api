@@ -94,3 +94,7 @@ export function serverError(message: string, params?: { [key: string]: any }) {
     body: { message, ...params },
   })
 }
+
+export enum Message {
+  NotSupportedYet = 'not_supported_yet',
+}
