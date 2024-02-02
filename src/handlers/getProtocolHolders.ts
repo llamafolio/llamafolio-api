@@ -2,6 +2,8 @@ import { client } from '@db/clickhouse'
 import { selectProtocolBalancesSnapshotsStatus, selectProtocolHoldersBalances } from '@db/protocols'
 import { badRequest, Message, serverError, success } from '@handlers/response'
 import { getChainId } from '@lib/chains'
+import { unixFromDateTime } from '@lib/fmt'
+import type { TUnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface Holder {
@@ -12,7 +14,8 @@ interface Holder {
 }
 
 interface ProtocolHoldersResponse {
-  holders: Holder[]
+  updatedAt?: TUnixTimestamp
+  data: Holder[]
   count: number
   next: number
   message?: string
@@ -39,10 +42,12 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     ])
 
     let count = 0
+    let updatedAt: TUnixTimestamp | undefined = undefined
     const holders: Holder[] = []
 
     for (const row of protocolHoldersBalances) {
       count = parseInt(row.count)
+      updatedAt = unixFromDateTime(row.updatedAt)
 
       holders.push({
         address: row.holder,
@@ -53,7 +58,8 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     }
 
     const response: ProtocolHoldersResponse = {
-      holders,
+      updatedAt,
+      data: holders,
       count,
       next: Math.min(offset + limit, count),
       message: balancesSnapshotsStatus == null ? Message.NotSupportedYet : undefined,

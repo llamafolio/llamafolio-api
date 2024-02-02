@@ -192,12 +192,13 @@ export async function selectProtocolHoldersBalances(
         sum("balanceUSD") AS "totalBalanceUSD",
         sum("debtUSD") AS "totalDebtUSD",
         "totalBalanceUSD" - "totalDebtUSD" AS "netBalanceUSD",
-        count() over() AS "count"
+        count() over() AS "count",
+        toStartOfDay("timestamp") AS "updatedAt"
       FROM lf.adapters_balances_snapshots
       WHERE
         "chain" = {chainId: UInt64} AND
         "adapterId" = {adapterId: String} AND
-        (toStartOfDay("timestamp"), "version") = (
+        ("updatedAt", "version") = (
           SELECT
             argMax("timestamp", "version"),
             max("version")
@@ -206,7 +207,7 @@ export async function selectProtocolHoldersBalances(
             "chain" = {chainId: UInt64} AND
             "adapterId" = {adapterId: String}
         )
-      GROUP BY "holder"
+      GROUP BY "chain", "adapterId", "holder", "updatedAt", "version"
       HAVING "netBalanceUSD" > 0
       ORDER BY "netBalanceUSD" DESC
       LIMIT {limit: UInt8}
@@ -227,6 +228,7 @@ export async function selectProtocolHoldersBalances(
       totalDebtUSD: string
       netBalanceUSD: string
       count: string
+      updatedAt: string
     }[]
   }
 
