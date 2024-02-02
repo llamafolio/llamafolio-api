@@ -1,6 +1,7 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import environment from '@environment'
 import type { Category } from '@lib/category'
+import { isDateTimeNullish, unixFromDateTime } from '@lib/fmt'
 import type { IProtocol } from '@lib/protocols'
 
 export interface ProtocolStorage {
@@ -132,6 +133,99 @@ export async function selectProtocolContracts(
       decimals: string
       underlyings: [string, string, string][]
       rewards: [string, string, string][]
+      count: string
+    }[]
+  }
+
+  return res.data
+}
+
+export async function selectProtocolBalancesSnapshotsStatus(
+  client: ClickHouseClient,
+  adapterId: string,
+  chainId: number,
+) {
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        argMax("timestamp", "version") AS "latest_timestamp",
+        max("version") AS "latest_version"
+      FROM lf.adapters_balances_snapshots_status
+      WHERE
+        "chain" = {chainId: UInt64} AND
+        "adapterId" = {adapterId: String}
+    `,
+    query_params: {
+      chainId,
+      adapterId,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: {
+      latest_timestamp: string
+      latest_version: string
+    }[]
+  }
+
+  if (res.data.length === 0 || isDateTimeNullish(res.data[0].latest_timestamp)) {
+    return null
+  }
+
+  return {
+    timestamp: unixFromDateTime(res.data[0].latest_timestamp),
+    version: parseInt(res.data[0].latest_version),
+  }
+}
+
+export async function selectProtocolHoldersBalances(
+  client: ClickHouseClient,
+  adapterId: string,
+  chainId: number,
+  limit: number,
+  offset: number,
+) {
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        "holder",
+        sum("balanceUSD") AS "totalBalanceUSD",
+        sum("debtUSD") AS "totalDebtUSD",
+        "totalBalanceUSD" - "totalDebtUSD" AS "netBalanceUSD",
+        count() over() AS "count"
+      FROM lf.adapters_balances_snapshots
+      WHERE
+        "chain" = {chainId: UInt64} AND
+        "adapterId" = {adapterId: String} AND
+        (toStartOfDay("timestamp"), "version") = (
+          SELECT
+            argMax("timestamp", "version"),
+            max("version")
+          FROM lf.adapters_balances_snapshots_status
+          WHERE
+            "chain" = {chainId: UInt64} AND
+            "adapterId" = {adapterId: String}
+        )
+      GROUP BY "holder"
+      HAVING "netBalanceUSD" > 0
+      ORDER BY "netBalanceUSD" DESC
+      LIMIT {limit: UInt8}
+      OFFSET {offset: UInt32};
+    `,
+    query_params: {
+      adapterId,
+      chainId,
+      limit,
+      offset,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: {
+      holder: string
+      totalBalanceUSD: string
+      totalDebtUSD: string
+      netBalanceUSD: string
       count: string
     }[]
   }
