@@ -38,7 +38,7 @@ const vault: Contract = {
   address: '0x4f9e850b5179ab8bbaa23de10c54ea4a2c31f4b5',
 }
 
-const config: Contract = {
+const parameter: Contract = {
   chain: 'fantom',
   address: '0x6283bec3cd438fffeec7a13e741ce201ed4ed053',
 }
@@ -70,7 +70,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [vaultsBalancesGroups, balances] = await Promise.all([
-    getParallelLendBalances(ctx, contracts.vaultWithAssets!, config),
+    getParallelLendBalances(ctx, contracts.vaultWithAssets!, parameter),
     resolveBalances<typeof getContracts>(ctx, contracts, {
       locker: (...args) => getSingleLockerBalance(...args, MIMO, 'locked'),
       staker_PAR: getParallelParStakeBalance,
