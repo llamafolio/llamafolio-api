@@ -239,6 +239,7 @@ import prismaFinance from '@adapters/prisma-finance'
 import protectorateProtocol from '@adapters/protectorate-protocol'
 import proxy from '@adapters/proxy'
 import pstakeFinance from '@adapters/pstake-finance'
+import pufferFinance from '@adapters/puffer-finance'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
 import radiantV2 from '@adapters/radiant-v2'
@@ -607,6 +608,7 @@ export const adapters: Adapter[] = [
   protectorateProtocol,
   proxy,
   pstakeFinance,
+  pufferFinance,
   quickswapDex,
   radiantV1,
   radiantV2,
