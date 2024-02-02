@@ -1,10 +1,12 @@
-import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContext, Contract, RewardBalance } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
+import type { Category } from '@lib/category'
 import { abi as erc20Abi } from '@lib/erc20'
 import { sumBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   UNDERLYING_ASSET_ADDRESS: {
@@ -140,7 +142,7 @@ export async function getMultiFeeDistributionContracts(
     ...stakingToken,
     address: multiFeeDistribution.address,
     token: stakingToken.address,
-    rewards: mapSuccessFilter(underlyingsTokensRes, (token) => token.output),
+    rewards: mapSuccessFilter(underlyingsTokensRes as any, (token) => token.output),
   }
 }
 
@@ -175,7 +177,7 @@ export async function getMultiFeeDistributionBalances(
     params: [ctx.address],
     abi: abi.viewPendingRewards,
   })
-  const [_tokens, amts] = pendingRewards
+  const [tokens, amts] = pendingRewards
 
   const underlyingBalances = (underlyings: Contract[], vaultBalances: any, amount: bigint, supply: bigint) => {
     return underlyings.map((underlying: Contract, index: number) => ({
@@ -236,21 +238,13 @@ export async function getMultiFeeDistributionBalances(
     })
   }
 
-  for (let rewardIdx = 0; rewardIdx < rewards.length; rewardIdx++) {
-    const reward = rewards[rewardIdx]
-    const pendingReward = amts[rewardIdx]
-
-    balances.push({
-      chain: ctx.chain,
-      address: reward.address,
-      symbol: reward.symbol,
-      decimals: reward.decimals,
-      underlyings: undefined,
-      rewards: undefined,
-      amount: pendingReward,
-      category: 'reward',
+  const rewardBalances: Balance[] = tokens
+    .map((token, idx) => {
+      const reward = rewards.find((reward) => reward.address.toLowerCase() === token.toLowerCase())
+      if (!reward) return null
+      return { ...(reward as RewardBalance), amount: amts[idx], category: 'reward' as Category }
     })
-  }
+    .filter(isNotNullish)
 
-  return balances
+  return [...balances, ...rewardBalances]
 }
