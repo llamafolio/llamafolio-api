@@ -1,7 +1,9 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { call } from '@lib/call'
+import type { Category } from '@lib/category'
 import { abi as erc20Abi } from '@lib/erc20'
+import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 import { parseEther } from 'viem'
 
 const abi = {
@@ -21,21 +23,32 @@ const WETH: Token = {
   symbol: 'WETH',
 }
 
-export async function getSwellBalances(ctx: BalancesContext, contract: Contract): Promise<Balance> {
-  const balanceOf = await call({
-    ctx,
-    target: contract.address,
-    params: [ctx.address],
-    abi: erc20Abi.balanceOf,
-  })
+export async function getSwellBalances(ctx: BalancesContext, contracts: Contract[]): Promise<Balance[]> {
+  const [balanceOfs, rates] = await Promise.all([
+    multicall({
+      ctx,
+      calls: contracts.map((contract) => ({ target: contract.address, params: [ctx.address] }) as const),
+      abi: erc20Abi.balanceOf,
+    }),
+    multicall({
+      ctx,
+      calls: contracts.map((contract) => ({ target: contract.address }) as const),
+      abi: abi.getRate,
+    }),
+  ])
 
-  const rate = await call({ ctx, target: contract.address, abi: abi.getRate })
+  return balanceOfs
+    .map((balanceOf, index) => {
+      const rate = rates[index]
+      if (!rate.success || !balanceOf.success) return null
 
-  return {
-    ...contract,
-    amount: balanceOf,
-    underlyings: [{ ...WETH, amount: (balanceOf * rate) / parseEther('1.0') }],
-    rewards: undefined,
-    category: 'farm',
-  }
+      return {
+        ...contracts[index],
+        amount: balanceOf.output,
+        underlyings: [{ ...WETH, amount: (balanceOf.output * rate.output) / parseEther('1.0') }],
+        rewards: undefined,
+        category: 'farm' as Category,
+      }
+    })
+    .filter(isNotNullish)
 }
