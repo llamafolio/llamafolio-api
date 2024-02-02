@@ -10,15 +10,22 @@ const swETH: Contract = {
   symbol: 'swETH',
 }
 
+const rswETH: Contract = {
+  chain: 'ethereum',
+  address: '0xfae103dc9cf190ed75350761e95403b7b8afa6c0',
+  decimals: 18,
+  symbol: 'rswETH',
+}
+
 export const getContracts = () => {
   return {
-    contracts: { swETH },
+    contracts: { LSTs: [swETH, rswETH] },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    swETH: getSwellBalances,
+    LSTs: getSwellBalances,
   })
 
   return {
