@@ -309,7 +309,8 @@ const Q256 = 2n ** 256n
 const Q96 = 2n ** 96n
 
 export function getTickAtSqrtRatio(sqrtPriceX96: bigint) {
-  return Math.floor(Math.log(Number((sqrtPriceX96 / Q96) ** 2n)) / Math.log(1.0001))
+  const ratio = Number(sqrtPriceX96 * sqrtPriceX96) / Number(Q96 * Q96)
+  return Math.floor(Math.log(ratio) / Math.log(1.0001))
 }
 
 export function getUnderlyingAmounts(liquidity: bigint, sqrtPriceX96: bigint, tickLow: number, tickHigh: number) {
@@ -317,7 +318,7 @@ export function getUnderlyingAmounts(liquidity: bigint, sqrtPriceX96: bigint, ti
   const sqrtRatioB = Math.sqrt(1.0001 ** tickHigh)
 
   const currentTick = getTickAtSqrtRatio(sqrtPriceX96)
-  const sqrtPrice = Number(sqrtPriceX96 / Q96)
+  const sqrtPrice = Number(sqrtPriceX96 * sqrtPriceX96) / Number(Q96 * Q96)
 
   let amount0 = 0
   let amount1 = 0
@@ -326,8 +327,10 @@ export function getUnderlyingAmounts(liquidity: bigint, sqrtPriceX96: bigint, ti
   } else if (currentTick > tickHigh) {
     amount1 = Math.floor(Number(liquidity) * (sqrtRatioB - sqrtRatioA))
   } else if (currentTick >= tickLow && currentTick < tickHigh) {
-    amount0 = Math.floor(Number(liquidity) * ((sqrtRatioB - sqrtPrice) / (sqrtPrice * sqrtRatioB)))
-    amount1 = Math.floor(Number(liquidity) * (sqrtPrice - sqrtRatioA))
+    amount0 = Math.floor(
+      Number(liquidity) * ((sqrtRatioB - Math.sqrt(sqrtPrice)) / (Math.sqrt(sqrtPrice) * sqrtRatioB)),
+    )
+    amount1 = Math.floor(Number(liquidity) * (Math.sqrt(sqrtPrice) - sqrtRatioA))
   }
 
   return [BigInt(amount0), BigInt(amount1)]
