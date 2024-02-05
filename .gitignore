@@ -60,3 +60,4 @@ docs/swagger/*.html
 
 _
 swagger.json
+/internal

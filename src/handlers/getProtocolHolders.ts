@@ -8,14 +8,16 @@ import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface Holder {
   address: string
-  balanceUSD?: number
-  debtUSD?: number
-  netBalanceUSD?: number
+  netBalanceUSD: number
+  share: number
+  balanceUSD: number
+  debtUSD: number
 }
 
 interface ProtocolHoldersResponse {
   updatedAt?: TUnixTimestamp
   data: Holder[]
+  totalNetBalanceUSD: number
   count: number
   next: number
   message?: string
@@ -42,24 +44,28 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     ])
 
     let count = 0
+    let totalNetBalanceUSD = 0
     let updatedAt: TUnixTimestamp | undefined = undefined
     const holders: Holder[] = []
 
     for (const row of protocolHoldersBalances) {
       count = parseInt(row.count)
+      totalNetBalanceUSD = parseFloat(row.totalNetBalanceUSD)
       updatedAt = unixFromDateTime(row.updatedAt)
 
       holders.push({
         address: row.holder,
+        netBalanceUSD: parseFloat(row.netBalanceUSD),
+        share: parseFloat(row.share),
         balanceUSD: parseFloat(row.totalBalanceUSD),
         debtUSD: parseFloat(row.totalDebtUSD),
-        netBalanceUSD: parseFloat(row.netBalanceUSD),
       })
     }
 
     const response: ProtocolHoldersResponse = {
       updatedAt,
       data: holders,
+      totalNetBalanceUSD,
       count,
       next: Math.min(offset + limit, count),
       message: balancesSnapshotsStatus == null ? Message.NotSupportedYet : undefined,
