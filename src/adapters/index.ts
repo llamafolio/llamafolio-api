@@ -243,6 +243,7 @@ import pufferFinance from '@adapters/puffer-finance'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
 import radiantV2 from '@adapters/radiant-v2'
+import radioshack from '@adapters/radioshack'
 import raft from '@adapters/raft'
 import rageTrade from '@adapters/rage-trade'
 import railgun from '@adapters/railgun'
@@ -612,6 +613,7 @@ export const adapters: Adapter[] = [
   quickswapDex,
   radiantV1,
   radiantV2,
+  radioshack,
   raft,
   rageTrade,
   railgun,
