@@ -224,6 +224,7 @@ import pandora from '@adapters/pandora'
 import pangolin from '@adapters/pangolin'
 import parallelProtocol from '@adapters/parallel-protocol'
 import paraswap from '@adapters/paraswap'
+import peapodsFinance from '@adapters/peapods-finance'
 import pearlfi from '@adapters/pearlfi'
 import pendle from '@adapters/pendle'
 import perennial from '@adapters/perennial'
@@ -595,6 +596,7 @@ export const adapters: Adapter[] = [
   pangolin,
   parallelProtocol,
   paraswap,
+  peapodsFinance,
   pearlfi,
   pendle,
   perennial,
