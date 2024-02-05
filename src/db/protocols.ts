@@ -187,26 +187,46 @@ export async function selectProtocolHoldersBalances(
 ) {
   const queryRes = await client.query({
     query: `
+      WITH (
+        SELECT
+          sum("balanceUSD") - sum("debtUSD") AS "netBalanceUSD"
+        FROM lf.adapters_balances_snapshots
+        WHERE
+          "chain" = {chainId: UInt64} AND
+          "adapterId" = {adapterId: String} AND
+          (toStartOfDay("timestamp"), "version") = (
+            SELECT
+              argMax("timestamp", "version"),
+              max("version")
+              FROM lf.adapters_balances_snapshots_status
+              WHERE
+                "chain" = {chainId: UInt64} AND
+                "adapterId" = {adapterId: String}
+          )
+        GROUP BY "chain", "adapterId"
+      ) AS "totalNetBalanceUSD"
       SELECT
         "holder",
         sum("balanceUSD") AS "totalBalanceUSD",
         sum("debtUSD") AS "totalDebtUSD",
         "totalBalanceUSD" - "totalDebtUSD" AS "netBalanceUSD",
+        "totalNetBalanceUSD",
+        "netBalanceUSD" / "totalNetBalanceUSD" AS "share",
         count() over() AS "count",
         toStartOfDay("timestamp") AS "updatedAt"
       FROM lf.adapters_balances_snapshots
       WHERE
         "chain" = {chainId: UInt64} AND
         "adapterId" = {adapterId: String} AND
-        ("updatedAt", "version") = (
-          SELECT
-            argMax("timestamp", "version"),
-            max("version")
+      ("updatedAt", "version") = (
+        SELECT
+          argMax("timestamp", "version"),
+          max("version")
           FROM lf.adapters_balances_snapshots_status
           WHERE
             "chain" = {chainId: UInt64} AND
             "adapterId" = {adapterId: String}
-        )
+      )
       GROUP BY "chain", "adapterId", "holder", "updatedAt", "version"
       HAVING "netBalanceUSD" > 0
       ORDER BY "netBalanceUSD" DESC
@@ -227,6 +247,8 @@ export async function selectProtocolHoldersBalances(
       totalBalanceUSD: string
       totalDebtUSD: string
       netBalanceUSD: string
+      totalNetBalanceUSD: string
+      share: string
       count: string
       updatedAt: string
     }[]
