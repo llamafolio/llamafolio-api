@@ -120,6 +120,7 @@ import gambitTrade from '@adapters/gambit-trade'
 import gamma from '@adapters/gamma'
 import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
+import genesisLrt from '@adapters/genesis-lrt'
 import gensokishi from '@adapters/gensokishi'
 import getProtocol from '@adapters/get-protocol'
 import gitcoin from '@adapters/gitcoin'
@@ -493,6 +494,7 @@ export const adapters: Adapter[] = [
   gamma,
   gearbox,
   geist,
+  genesisLrt,
   gensokishi,
   getProtocol,
   gitcoin,
