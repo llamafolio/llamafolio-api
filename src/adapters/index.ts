@@ -43,6 +43,7 @@ import balancer from '@adapters/balancer'
 import bancorV3 from '@adapters/bancor-v3'
 import basedmarkets from '@adapters/basedmarkets'
 import baseswap from '@adapters/baseswap'
+import bedrockUnieth from '@adapters/bedrock-unieth'
 import beefy from '@adapters/beefy'
 import beethovenX from '@adapters/beethoven-x'
 import bellaProtocol from '@adapters/bella-protocol'
@@ -415,6 +416,7 @@ export const adapters: Adapter[] = [
   bancorV3,
   basedmarkets,
   baseswap,
+  bedrockUnieth,
   beefy,
   beethovenX,
   bellaProtocol,
