@@ -71,7 +71,7 @@ import clever from '@adapters/clever'
 import coinbaseWrappedStakedEth from '@adapters/coinbase-wrapped-staked-eth'
 import coinwind from '@adapters/coinwind'
 import colony from '@adapters/colony'
-import compound from '@adapters/compound'
+import compoundV2 from '@adapters/compound-v2'
 import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
 import conicFinance from '@adapters/conic-finance'
@@ -445,7 +445,7 @@ export const adapters: Adapter[] = [
   coinbaseWrappedStakedEth,
   coinwind,
   colony,
-  compound,
+  compoundV2,
   compoundV3,
   concentrator,
   conicFinance,
