@@ -133,6 +133,10 @@ async function main() {
   console.log(`npm run adapter ${slug} ethereum 0x0000000000000000000000000000000000000000`)
 }
 
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 main()
   .then(() => {
     process.exit(0)
