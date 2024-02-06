@@ -1,13 +1,26 @@
 /* eslint-disable security/detect-non-literal-fs-filename */
-import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
+import { execSync } from 'node:child_process'
+
 import { fromDefiLlamaChain } from '@lib/chains'
 import { slugify } from '@lib/fmt'
+
+interface ChainTvl {
+  tvl: Array<{ date: number }>
+}
+
+interface Protocol {
+  chainTvls: { [key: string]: ChainTvl }
+}
+
+interface ChainConfig {
+  [key: string]: { startDate?: number }
+}
 
 const adapterTemplate = (slug: string, chains: string[]) => `
 import type { Adapter } from '@lib/adapter';
@@ -79,7 +92,7 @@ async function main() {
   }
 
   const protocolRes = await fetch(`https://api.llama.fi/protocol/${slug}`)
-  const protocol = await protocolRes.json()
+  const protocol: Protocol = await protocolRes.json()
 
   if (!protocol) {
     console.error(`Failed to create adapter: ${slug} doesn't exist on DefiLlama`)
@@ -88,26 +101,17 @@ async function main() {
     return
   }
 
-  const chainConfigs: { [key: string]: { startDate?: number } } = {}
+  const chainConfigs: ChainConfig = {}
 
-  if (protocol.chainTvls) {
-    // Check TVLs on different chains
-    for (const key in protocol.chainTvls) {
-      if (protocol.chains) {
-        for (const chain of protocol.chains) {
-          if (key.startsWith(chain)) {
-            const _chain = fromDefiLlamaChain[chain]
-            const startDate = protocol.chainTvls[key].tvl?.[0]?.date
-            if (_chain != null) {
-              chainConfigs[_chain] = {
-                startDate: Math.min(chainConfigs[_chain]?.startDate || Infinity, startDate),
-              }
-            }
-          }
-        }
-      }
+  Object.entries(protocol.chainTvls).forEach(([key, { tvl }]) => {
+    if (!fromDefiLlamaChain[key]) return
+
+    const startDate = tvl?.[0]?.date
+
+    chainConfigs[fromDefiLlamaChain[key]] = {
+      startDate: (Math.min(startDate) || Infinity, startDate),
     }
-  }
+  })
 
   const chains = Object.keys(chainConfigs)
 
