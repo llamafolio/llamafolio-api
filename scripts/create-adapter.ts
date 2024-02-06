@@ -1,10 +1,11 @@
 /* eslint-disable security/detect-non-literal-fs-filename */
-import { execSync } from 'node:child_process'
 import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
+
+import { execSync } from 'node:child_process'
 
 import { fromDefiLlamaChain } from '@lib/chains'
 import { slugify } from '@lib/fmt'
@@ -92,18 +93,16 @@ async function main() {
 
   if (protocol.chainTvls) {
     // Check TVLs on different chains
+
     for (const key in protocol.chainTvls) {
-      if (protocol.chains) {
-        for (const chain of protocol.chains) {
-          if (key.startsWith(chain)) {
-            const _chain = fromDefiLlamaChain[chain]
-            const startDate = protocol.chainTvls[key].tvl?.[0]?.date
-            if (_chain != null) {
-              chainConfigs[_chain] = {
-                startDate: Math.min(chainConfigs[_chain]?.startDate || Infinity, startDate),
-              }
-            }
-          }
+      const _chain = fromDefiLlamaChain[key]
+
+      if (_chain) {
+        const _chainCapitalized = capitalizeFirstLetter(_chain)
+        const startDate = protocol.chainTvls[_chainCapitalized].tvl?.[0]?.date
+
+        chainConfigs[_chain] = {
+          startDate: Math.min(chainConfigs[_chain]?.startDate || Infinity, startDate),
         }
       }
     }
@@ -127,6 +126,10 @@ async function main() {
   console.log(`Successfully created adapter. To try it out run:`)
   console.log('')
   console.log(`npm run adapter ${slug} ethereum 0x0000000000000000000000000000000000000000`)
+}
+
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 main()
