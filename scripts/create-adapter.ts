@@ -10,6 +10,18 @@ import { execSync } from 'node:child_process'
 import { fromDefiLlamaChain } from '@lib/chains'
 import { slugify } from '@lib/fmt'
 
+interface ChainTvl {
+  tvl: Array<{ date: number }>
+}
+
+interface Protocol {
+  chainTvls: { [key: string]: ChainTvl }
+}
+
+interface ChainConfig {
+  [key: string]: { startDate?: number }
+}
+
 const adapterTemplate = (slug: string, chains: string[]) => `
 import type { Adapter } from '@lib/adapter';
 
@@ -80,7 +92,7 @@ async function main() {
   }
 
   const protocolRes = await fetch(`https://api.llama.fi/protocol/${slug}`)
-  const protocol = await protocolRes.json()
+  const protocol: Protocol = await protocolRes.json()
 
   if (!protocol) {
     console.error(`Failed to create adapter: ${slug} doesn't exist on DefiLlama`)
@@ -89,24 +101,17 @@ async function main() {
     return
   }
 
-  const chainConfigs: { [key: string]: { startDate?: number } } = {}
+  const chainConfigs: ChainConfig = {}
 
-  if (protocol.chainTvls) {
-    // Check TVLs on different chains
+  Object.entries(protocol.chainTvls).forEach(([key, { tvl }]) => {
+    if (!fromDefiLlamaChain[key]) return
 
-    for (const key in protocol.chainTvls) {
-      const _chain = fromDefiLlamaChain[key]
+    const startDate = tvl?.[0]?.date
 
-      if (_chain) {
-        const _chainCapitalized = capitalizeFirstLetter(_chain)
-        const startDate = protocol.chainTvls[_chainCapitalized].tvl?.[0]?.date
-
-        chainConfigs[_chain] = {
-          startDate: Math.min(chainConfigs[_chain]?.startDate || Infinity, startDate),
-        }
-      }
+    chainConfigs[fromDefiLlamaChain[key]] = {
+      startDate: (Math.min(startDate) || Infinity, startDate),
     }
-  }
+  })
 
   const chains = Object.keys(chainConfigs)
 
