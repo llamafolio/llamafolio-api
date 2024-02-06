@@ -15,6 +15,8 @@ export interface ContractStorage {
   adapter_id: string
   data?: string
   created_at?: string
+  version: number
+  sign: number
 }
 
 export function fromStorage(contractsStorage: ContractStorage[]) {
@@ -37,6 +39,8 @@ export function fromStorage(contractsStorage: ContractStorage[]) {
         ...underlying,
         decimals: parseInt(underlying.decimals),
       })),
+      version: contractStorage.version,
+      sign: contractStorage.sign,
     }
 
     contracts.push(contract)
@@ -49,7 +53,7 @@ export function toStorage(contracts: Contract[]) {
   const contractsStorage: ContractStorage[] = []
 
   for (const contract of contracts) {
-    const { standard, name, chain, address, token, category, adapterId, timestamp, ...data } = contract
+    const { standard, name, chain, address, token, category, adapterId, timestamp, version, sign, ...data } = contract
 
     const chainId = chainById[chain]?.chainId
     if (chainId == null) {
@@ -69,6 +73,8 @@ export function toStorage(contracts: Contract[]) {
       rewards: (data?.rewards || []).map((reward) => (reward as Contract).address.toLowerCase()).sort(),
       underlyings: (data?.underlyings || []).map((underlying) => (underlying as Contract).address.toLowerCase()).sort(),
       created_at: toDateTime(timestamp),
+      version,
+      sign,
     }
 
     contractsStorage.push(contractStorage)
@@ -91,7 +97,7 @@ export async function selectContracts(client: ClickHouseClient, chainId: number,
             "adapter_id",
             "data"
           FROM ${environment.NS_LF}.adapters_contracts
-          WHERE "chain" = {chainId: UInt8} AND "address" IN {addresses: Array(String)};
+          WHERE "chain" = {chainId: UInt64} AND "address" IN {addresses: Array(String)};
         `,
         query_params: {
           chainId,

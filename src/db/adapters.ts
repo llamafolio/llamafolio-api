@@ -1,5 +1,6 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import environment from '@environment'
+import type { Contract } from '@lib/adapter'
 import { type Chain, chainByChainId, chainById } from '@lib/chains'
 import { fromDateTime, toDateTime } from '@lib/fmt'
 import { isNotFalsy, isNotNullish } from '@lib/type'
@@ -13,6 +14,8 @@ export interface Adapter {
   contractsProps?: { [key: string]: any }
   createdAt: Date
   updatedAt: Date
+  version: number
+  sign: number
 }
 
 export interface AdapterStorage {
@@ -24,6 +27,8 @@ export interface AdapterStorage {
   contracts_props: { [key: string]: any } | null
   created_at: string
   updated_at: string
+  version: number
+  sign: number
 }
 
 export interface AdapterStorable {
@@ -35,6 +40,8 @@ export interface AdapterStorable {
   contracts_props?: string
   created_at?: string
   updated_at?: string
+  version: number
+  sign: number
 }
 
 export function fromStorage(adaptersStorage: AdapterStorage[]) {
@@ -57,6 +64,8 @@ export function fromStorage(adaptersStorage: AdapterStorage[]) {
       contractsProps: adapterStorage.contracts_props || {},
       createdAt: fromDateTime(adapterStorage.created_at),
       updatedAt: fromDateTime(adapterStorage.updated_at),
+      version: adapterStorage.version,
+      sign: adapterStorage.sign,
     }
 
     adapters.push(adapter)
@@ -69,8 +78,18 @@ export function toStorage(adapters: Adapter[]) {
   const adaptersStorable: AdapterStorable[] = []
 
   for (const adapter of adapters) {
-    const { id, parentId, chain, contractsExpireAt, contractsRevalidateProps, contractsProps, createdAt, updatedAt } =
-      adapter
+    const {
+      id,
+      parentId,
+      chain,
+      contractsExpireAt,
+      contractsRevalidateProps,
+      contractsProps,
+      createdAt,
+      updatedAt,
+      version,
+      sign,
+    } = adapter
 
     const chainId = chainById[chain]?.chainId
     if (chainId == null) {
@@ -87,6 +106,8 @@ export function toStorage(adapters: Adapter[]) {
       contracts_props: contractsProps ? JSON.stringify(contractsProps) : undefined,
       created_at: toDateTime(createdAt),
       updated_at: toDateTime(updatedAt),
+      version,
+      sign,
     }
 
     adaptersStorable.push(adapterStorable)
@@ -118,19 +139,6 @@ export async function selectAdapter(client: ClickHouseClient, chainId: number, a
   }
 
   return res.data.length === 1 ? fromStorage(res.data)[0] : null
-}
-
-export async function selectAdapters(client: ClickHouseClient, chainIds: number[], adapterId: string) {
-  const queryRes = await client.query({
-    query: `SELECT * FROM ${environment.NS_LF}.adapters FINAL WHERE "chain" IN {chainIds: Array(UInt64)} AND "id" = {adapterId: String};`,
-    query_params: { chainIds, adapterId },
-  })
-
-  const res = (await queryRes.json()) as {
-    data: AdapterStorage[]
-  }
-
-  return fromStorage(res.data)
 }
 
 export async function selectDistinctAdaptersIds(client: ClickHouseClient) {
@@ -226,12 +234,61 @@ export async function selectLatestCreatedAdapters(client: ClickHouseClient, limi
   }))
 }
 
+export async function selectNonDuplicateAdaptersContracts(
+  client: ClickHouseClient,
+  adapterId: string,
+  chainId: number,
+  adaptersContracts: Contract[],
+) {
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        "address",
+        "token"
+      FROM ${environment.NS_LF}.adapters_contracts
+      WHERE
+        "chain" = {chainId: UInt64} AND
+        "adapter_id" = {adapterId: String} AND
+        ("address", "token") IN (
+          SELECT
+              x[1] AS "address",
+              x[2] AS "token"
+          FROM (
+              SELECT arrayJoin({values: Array(Array(String))}) AS "x"
+          )
+      )
+    `,
+    query_params: {
+      chainId,
+      adapterId,
+      values: adaptersContracts.map((contract) => [
+        contract.address.toLowerCase(),
+        (contract.token || '').toLowerCase(),
+      ]),
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: { address: string; token: string }[]
+  }
+
+  // Return filtered contracts containing only NEW values (not already inserted)
+  return adaptersContracts.filter(
+    (contract) =>
+      !res.data.some(
+        (c) => contract.address.toLowerCase() === c.address && (contract.token || '').toLowerCase() === c.token,
+      ),
+  )
+}
+
 export async function insertAdapters(client: ClickHouseClient, adapters: Adapter[]) {
   const values = toStorage(adapters)
 
   if (values.length === 0) {
     return
   }
+
+  console.log(values)
 
   return client.insert({
     table: `${environment.NS_LF}.adapters`,

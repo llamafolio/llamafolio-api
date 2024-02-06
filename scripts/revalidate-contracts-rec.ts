@@ -1,16 +1,11 @@
 import path from 'node:path'
 import url from 'node:url'
 
+import { selectAdapter } from '@db/adapters'
+import { client } from '@db/clickhouse'
+import { type Adapter, revalidateAdapterContracts } from '@lib/adapter'
+import { type Chain, chainById } from '@lib/chains'
 import { fetchProtocolToParentMapping } from '@lib/protocols'
-import isEqual from 'lodash/isEqual'
-
-import type { Adapter as DBAdapter } from '../src/db/adapters'
-import { insertAdapters, selectAdapter } from '../src/db/adapters'
-import { client } from '../src/db/clickhouse'
-import { flattenContracts, insertAdaptersContracts } from '../src/db/contracts'
-import type { Adapter, BaseContext } from '../src/lib/adapter'
-import { type Chain, chainById } from '../src/lib/chains'
-import { resolveContractsTokens } from '../src/lib/token'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
@@ -50,60 +45,12 @@ async function main() {
 
   let prevDbAdapter = await selectAdapter(client, chainId, adapter.id)
 
-  const now = new Date()
-
   const protocolToParent = await fetchProtocolToParentMapping()
 
   for (let i = 0; ; i++) {
-    try {
-      console.log(`revalidate props`, prevDbAdapter?.contractsRevalidateProps)
-
-      const ctx: BaseContext = { chain, adapterId: adapter.id }
-
-      const config = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
-
-      // Don't look further if revalidateProps are identical (reached the end)
-      if (
-        config.revalidateProps &&
-        prevDbAdapter?.contractsRevalidateProps &&
-        isEqual(config.revalidateProps, prevDbAdapter?.contractsRevalidateProps)
-      ) {
-        break
-      }
-
-      const contracts = await resolveContractsTokens(ctx, config.contracts || {})
-
-      let expire_at: Date | undefined = undefined
-      if (config.revalidate) {
-        expire_at = new Date()
-        expire_at.setSeconds(expire_at.getSeconds() + config.revalidate)
-      }
-
-      const dbAdapter: DBAdapter = {
-        id: adapter.id,
-        parentId: protocolToParent[adapter.id] || '',
-        chain,
-        contractsExpireAt: expire_at,
-        contractsRevalidateProps: config.revalidateProps,
-        createdAt: now,
-      }
-
-      prevDbAdapter = dbAdapter
-
-      await insertAdapters(client, [dbAdapter])
-
-      // Insert new contracts
-      // add context to contracts
-      const adapterContracts = flattenContracts(contracts).map((contract) => ({
-        chain,
-        adapterId: adapter.id,
-        timestamp: now,
-        ...contract,
-      }))
-      await insertAdaptersContracts(client, adapterContracts)
-    } catch (e) {
-      console.log('Failed to revalidate adapter contracts', e)
-      break
+    prevDbAdapter = await revalidateAdapterContracts(client, adapter, chain, prevDbAdapter, protocolToParent)
+    if (!prevDbAdapter) {
+      return console.log('Done')
     }
   }
 }
