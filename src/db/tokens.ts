@@ -116,20 +116,20 @@ export async function selectUndecodedProtocolsTokens(client: ClickHouseClient) {
     query: `
       SELECT * FROM (
         (
-          SELECT "chain", "address" FROM lf.adapters_contracts
+          SELECT "chain", "address" FROM ${environment.NS_LF}.adapters_contracts
         )
           UNION DISTINCT
         (
-          SELECT "chain", "token" AS "address" FROM lf.adapters_contracts WHERE "token" <> ''
+          SELECT "chain", "token" AS "address" FROM ${environment.NS_LF}.adapters_contracts WHERE "token" <> ''
         )
           UNION DISTINCT
         (
-          SELECT "chain", "address" FROM lf.adapters_contracts
+          SELECT "chain", "address" FROM ${environment.NS_LF}.adapters_contracts
           ARRAY JOIN "underlyings" AS "address"
         )
           UNION DISTINCT
         (
-          SELECT "chain", "address" FROM lf.adapters_contracts
+          SELECT "chain", "address" FROM ${environment.NS_LF}.adapters_contracts
           ARRAY JOIN "rewards" AS "address"
         )
       )

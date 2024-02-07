@@ -18,7 +18,6 @@ export interface ProtocolStorage {
   twitter: string | null
   description: string | null
   address: string | null
-  color: string | null
 }
 
 export function fromRowStorage(protocolStorage: ProtocolStorage) {
@@ -36,7 +35,6 @@ export function fromRowStorage(protocolStorage: ProtocolStorage) {
     twitter: protocolStorage.twitter || undefined,
     description: protocolStorage.description || undefined,
     address: protocolStorage.address || undefined,
-    color: protocolStorage.color || undefined,
   }
 
   return protocol
@@ -44,17 +42,6 @@ export function fromRowStorage(protocolStorage: ProtocolStorage) {
 
 export function fromStorage(protocolsStorage: ProtocolStorage[]) {
   return protocolsStorage.map(fromRowStorage)
-}
-
-export function deleteProtocol(client: ClickHouseClient, slug: string) {
-  return client.command({
-    query: `DELETE FROM ${environment.NS_LF}.protocols WHERE slug = {slug: String};`,
-    query_params: { slug },
-    clickhouse_settings: {
-      enable_lightweight_delete: 1,
-      mutations_sync: '2',
-    },
-  })
 }
 
 export async function selectProtocols(client: ClickHouseClient) {
@@ -102,7 +89,8 @@ export async function selectProtocolContracts(
           ${chainId ? '"chain" = {chainId: UInt64} AND' : ''}
           "adapter_id" = {adapterId: String}
           ${category ? ' AND "category" = {category: String}' : ''}
-        LIMIT 1 BY "chain", "address", "token"
+        GROUP BY "chain", "address", "name", "token", "symbol", "decimals", "underlyings", "rewards"
+        HAVING sum("sign") > 0
       ),
       (
         SELECT count() AS "count" FROM "contracts"

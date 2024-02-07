@@ -1,5 +1,10 @@
+import type { ClickHouseClient } from '@clickhouse/client'
+import { type Adapter as DBAdapter, insertAdapters, selectNonDuplicateAdaptersContracts } from '@db/adapters'
+import { flattenContracts, insertAdaptersContracts } from '@db/contracts'
 import type { Category } from '@lib/category'
-import type { Chain } from '@lib/chains'
+import { type Chain, chainById } from '@lib/chains'
+import { resolveContractsTokens } from '@lib/token'
+import isEqual from 'lodash/isEqual'
 
 export interface BaseContext {
   chain: Chain
@@ -181,6 +186,10 @@ export type GetBalancesHandler<C extends GetContractsHandler> = (
 ) => BalancesConfig | Promise<BalancesConfig>
 
 export interface AdapterConfig {
+  /**
+   * Version to manage adapter implementation breaking changes
+   */
+  version?: number
   startDate?: number
 }
 
@@ -196,4 +205,90 @@ export interface Adapter extends Partial<Record<Chain, AdapterHandler>> {
    * @see https://docs.llama.fi/list-your-project/submit-a-project to submit your adapter on DefiLlama.
    */
   id: string
+}
+
+export async function revalidateAdapterContracts(
+  client: ClickHouseClient,
+  adapter: Adapter,
+  chain: Chain,
+  prevDbAdapter: DBAdapter | null,
+  protocolToParent: { [key: string]: string },
+) {
+  const chainId = chainById[chain]?.chainId
+  if (!chainId) {
+    return
+  }
+
+  const now = new Date()
+
+  const ctx: BaseContext = { chain, adapterId: adapter.id }
+
+  const config = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
+
+  // Don't look further if revalidateProps are identical (reached the end)
+  if (
+    config.revalidateProps &&
+    prevDbAdapter?.contractsRevalidateProps &&
+    isEqual(config.revalidateProps, prevDbAdapter?.contractsRevalidateProps)
+  ) {
+    return
+  }
+
+  const contracts = await resolveContractsTokens(ctx, config.contracts || {})
+
+  let expire_at: Date | undefined = undefined
+  if (config.revalidate) {
+    expire_at = new Date(now)
+    expire_at.setSeconds(expire_at.getSeconds() + config.revalidate)
+  }
+
+  const adaptersValues: DBAdapter[] = []
+  // Collapse previous state
+  if (prevDbAdapter != null) {
+    adaptersValues.push({ ...prevDbAdapter, sign: -1 })
+  }
+
+  const newAdapter = {
+    id: adapter.id,
+    parentId: protocolToParent[adapter.id] || '',
+    chain,
+    contractsExpireAt: expire_at,
+    contractsRevalidateProps: config.revalidateProps,
+    createdAt: prevDbAdapter?.createdAt || now,
+    updatedAt: now,
+    version: adapter[chain]!.config.version || 0,
+    sign: 1,
+  } as DBAdapter
+
+  // State
+  adaptersValues.push(newAdapter)
+
+  await insertAdapters(client, adaptersValues)
+
+  // Insert new contracts
+  // add context to contracts
+  const adapterContracts = flattenContracts(contracts).map((contract) => ({
+    chain,
+    adapterId: adapter.id,
+    timestamp: now,
+    version: adapter[chain]?.config.version || 0,
+    sign: 1,
+    ...contract,
+  }))
+
+  // prevent duplicates (contracts table is append-only)
+  const nonDuplicateAdaptersContracts = await selectNonDuplicateAdaptersContracts(
+    client,
+    adapter.id,
+    chainId,
+    adapterContracts,
+  )
+
+  console.log(`Skipped ${adapterContracts.length - nonDuplicateAdaptersContracts.length} already existing contracts`)
+
+  console.log(`Inserting ${nonDuplicateAdaptersContracts.length} new contracts`)
+
+  await insertAdaptersContracts(client, nonDuplicateAdaptersContracts)
+
+  return newAdapter
 }

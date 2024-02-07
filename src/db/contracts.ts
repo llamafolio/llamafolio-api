@@ -15,6 +15,8 @@ export interface ContractStorage {
   adapter_id: string
   data?: string
   created_at?: string
+  version: number
+  sign: number
 }
 
 export function fromStorage(contractsStorage: ContractStorage[]) {
@@ -37,6 +39,8 @@ export function fromStorage(contractsStorage: ContractStorage[]) {
         ...underlying,
         decimals: parseInt(underlying.decimals),
       })),
+      version: contractStorage.version,
+      sign: contractStorage.sign,
     }
 
     contracts.push(contract)
@@ -49,7 +53,7 @@ export function toStorage(contracts: Contract[]) {
   const contractsStorage: ContractStorage[] = []
 
   for (const contract of contracts) {
-    const { standard, name, chain, address, token, category, adapterId, timestamp, ...data } = contract
+    const { standard, name, chain, address, token, category, adapterId, timestamp, version, sign, ...data } = contract
 
     const chainId = chainById[chain]?.chainId
     if (chainId == null) {
@@ -69,6 +73,8 @@ export function toStorage(contracts: Contract[]) {
       rewards: (data?.rewards || []).map((reward) => (reward as Contract).address.toLowerCase()).sort(),
       underlyings: (data?.underlyings || []).map((underlying) => (underlying as Contract).address.toLowerCase()).sort(),
       created_at: toDateTime(timestamp),
+      version,
+      sign,
     }
 
     contractsStorage.push(contractStorage)
@@ -91,7 +97,11 @@ export async function selectContracts(client: ClickHouseClient, chainId: number,
             "adapter_id",
             "data"
           FROM ${environment.NS_LF}.adapters_contracts
-          WHERE "chain" = {chainId: UInt8} AND "address" IN {addresses: Array(String)};
+          WHERE
+            "chain" = {chainId: UInt64} AND
+            "address" IN {addresses: Array(String)}
+          GROUP BY "chain", "address", "adapter_id", "data"
+          HAVING sum("sign") > 0;
         `,
         query_params: {
           chainId,
@@ -179,7 +189,8 @@ export async function getContractsInteractions(
             )
           )
         )
-      LIMIT 1 BY "chain", "address", "adapter_id";
+      GROUP BY "chain", "address", "token", "category", "adapter_id", "data"
+      HAVING sum("sign") > 0;
     `,
     query_params: {
       addressShort: shortAddress(address),
@@ -216,7 +227,9 @@ export async function getWalletInteractions(client: ClickHouseClient, address: s
             "type" = 'erc20'
           GROUP BY "chain", "holder_short", "holder", "address_short", "address", "id", "type"
           LIMIT 1 BY "chain", "address"
-        );
+        )
+      GROUP BY "chain", "address", "symbol", "decimals"
+      HAVING sum("sign") > 0;
     `,
     query_params: {
       address,
@@ -372,14 +385,36 @@ export async function selectTrendingContracts(client: ClickHouseClient, window: 
   return contracts
 }
 
-export function deleteContractsByAdapterId(client: ClickHouseClient, adapterId: string) {
-  return client.command({
-    query: `DELETE FROM ${environment.NS_LF}.adapters_contracts WHERE adapter_id = {adapterId: String};`,
-    query_params: { adapterId },
-    clickhouse_settings: {
-      enable_lightweight_delete: 1,
-      mutations_sync: '2',
+export async function deleteContractsByAdapterId(client: ClickHouseClient, adapterId: string, chainId: number) {
+  // Fetch previous state
+  const queryRes = await client.query({
+    query: `
+      SELECT * FROM ${environment.NS_LF}.adapters_contracts FINAL
+      WHERE
+        "adapter_id" = {adapterId: String} AND
+        "chain" = {chainId: UInt64};
+    `,
+    query_params: {
+      adapterId,
+      chainId,
     },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: any[]
+  }
+
+  if (res.data.length === 0) {
+    return
+  }
+
+  // Cancel previous state
+  const values = res.data.map((row) => ({ ...row, sign: -1 }))
+
+  return client.insert({
+    table: `${environment.NS_LF}.adapters_contracts`,
+    values,
+    format: 'JSONEachRow',
   })
 }
 

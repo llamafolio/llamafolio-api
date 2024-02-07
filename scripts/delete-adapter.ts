@@ -1,29 +1,33 @@
 import { deleteAdapterById } from '@db/adapters'
 import { client } from '@db/clickhouse'
 import { deleteContractsByAdapterId } from '@db/contracts'
-import { deleteProtocol } from '@db/protocols'
+import { getChainId } from '@lib/chains'
 
 function help() {
-  console.log('pnpm run delete-adapter {adapter}')
+  console.log('pnpm run delete-adapter {adapter} {chain}')
 }
 
 async function main() {
   // argv[0]: node_modules/.bin/tsx
   // argv[1]: delete-adapter.ts
   // argv[2]: adapter
-  if (process.argv.length < 3) {
+  // argv[3]: chain
+  if (process.argv.length < 4) {
     console.error('Missing arguments')
     return help()
   }
 
   const adapterId = process.argv[2]
+  const chainId = getChainId(process.argv[3])
+  if (chainId == null) {
+    console.error(`Chain not found ${process.argv[3]}`)
+    return
+  }
 
   try {
-    await deleteAdapterById(client, adapterId)
+    await deleteAdapterById(client, adapterId, chainId)
 
-    await deleteProtocol(client, adapterId)
-
-    await deleteContractsByAdapterId(client, adapterId)
+    await deleteContractsByAdapterId(client, adapterId, chainId)
   } catch (e) {
     console.log('Failed to delete adapter', e)
   }
