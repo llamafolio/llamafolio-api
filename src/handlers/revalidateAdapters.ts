@@ -1,18 +1,15 @@
 import { adapters } from '@adapters/index'
-import type { Adapter as DBAdapter } from '@db/adapters'
-import { insertAdapters, selectAdapter, selectAdaptersContractsExpired, selectDistinctAdaptersIds } from '@db/adapters'
+import { selectAdapter, selectAdaptersContractsExpired, selectDistinctAdaptersIds } from '@db/adapters'
 import { client } from '@db/clickhouse'
-import { flattenContracts, insertAdaptersContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
-import type { BaseContext } from '@lib/adapter'
+import { revalidateAdapterContracts } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
 import { chainById, chains } from '@lib/chains'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { fetchProtocolToParentMapping } from '@lib/protocols'
-import { resolveContractsTokens } from '@lib/token'
 import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 
-const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, _context) => {
+const revalidateAdaptersContractsHandler: APIGatewayProxyHandler = async (_event, _context) => {
   try {
     const [expiredAdaptersRes, adapterIdsRes] = await Promise.all([
       selectAdaptersContractsExpired(client),
@@ -55,9 +52,9 @@ const revalidateAdaptersContracts: APIGatewayProxyHandler = async (_event, _cont
   }
 }
 
-export const scheduledRevalidateAdaptersContracts = wrapScheduledLambda(revalidateAdaptersContracts)
+export const scheduledRevalidateAdaptersContracts = wrapScheduledLambda(revalidateAdaptersContractsHandler)
 
-export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, _context) => {
+export const revalidateAdapterContractsHandler: APIGatewayProxyHandler = async (event, _context) => {
   const { adapterId, chain } = event as APIGatewayProxyEvent & { adapterId?: string; chain?: Chain }
 
   if (!adapterId) {
@@ -87,49 +84,12 @@ export const revalidateAdapterContracts: APIGatewayProxyHandler = async (event, 
   }
 
   try {
-    const prevDbAdapter = await selectAdapter(client, chainId, adapter.id)
-
-    const ctx: BaseContext = { chain, adapterId: adapter.id }
-
-    const config = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
-
-    const [contracts, props] = await Promise.all([
-      resolveContractsTokens(ctx, config.contracts || {}),
-      config.props ? resolveContractsTokens(ctx, config.props) : undefined,
+    const [prevDbAdapter, protocolToParent] = await Promise.all([
+      selectAdapter(client, adapter.id, chainId),
+      fetchProtocolToParentMapping(),
     ])
 
-    const now = new Date()
-
-    const protocolToParent = await fetchProtocolToParentMapping()
-
-    let expire_at: Date | undefined = undefined
-    if (config.revalidate) {
-      expire_at = new Date(now)
-      expire_at.setSeconds(expire_at.getSeconds() + config.revalidate)
-    }
-
-    const dbAdapter: DBAdapter = {
-      id: adapterId,
-      parentId: protocolToParent[adapterId] || '',
-      chain,
-      contractsExpireAt: expire_at,
-      contractsRevalidateProps: config.revalidateProps,
-      contractsProps: props,
-      createdAt: prevDbAdapter?.createdAt || now,
-      updatedAt: now,
-    }
-
-    await insertAdapters(client, [dbAdapter])
-
-    // Insert new contracts
-    // add context to contracts
-    const adapterContracts = flattenContracts(contracts).map((contract) => ({
-      chain,
-      adapterId: adapter.id,
-      timestamp: now,
-      ...contract,
-    }))
-    await insertAdaptersContracts(client, adapterContracts)
+    await revalidateAdapterContracts(client, adapter, chain, prevDbAdapter, protocolToParent)
 
     return success({})
   } catch (e) {

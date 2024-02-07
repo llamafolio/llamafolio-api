@@ -11,7 +11,6 @@ export interface Adapter {
   chain: Chain
   contractsExpireAt?: Date
   contractsRevalidateProps?: { [key: string]: any }
-  contractsProps?: { [key: string]: any }
   createdAt: Date
   updatedAt: Date
   version: number
@@ -23,8 +22,7 @@ export interface AdapterStorage {
   parent_id: string
   chain: string
   contracts_expire_at: string | null
-  contracts_revalidate_props: { [key: string]: any } | null
-  contracts_props: { [key: string]: any } | null
+  contracts_revalidate_props: string | null
   created_at: string
   updated_at: string
   version: number
@@ -37,7 +35,6 @@ export interface AdapterStorable {
   chain: number
   contracts_expire_at?: string
   contracts_revalidate_props?: string
-  contracts_props?: string
   created_at?: string
   updated_at?: string
   version: number
@@ -60,8 +57,9 @@ export function fromStorage(adaptersStorage: AdapterStorage[]) {
       contractsExpireAt: adapterStorage.contracts_expire_at
         ? fromDateTime(adapterStorage.contracts_expire_at)
         : undefined,
-      contractsRevalidateProps: adapterStorage.contracts_revalidate_props || {},
-      contractsProps: adapterStorage.contracts_props || {},
+      contractsRevalidateProps: adapterStorage.contracts_revalidate_props
+        ? JSON.parse(adapterStorage.contracts_revalidate_props)
+        : undefined,
       createdAt: fromDateTime(adapterStorage.created_at),
       updatedAt: fromDateTime(adapterStorage.updated_at),
       version: adapterStorage.version,
@@ -78,18 +76,8 @@ export function toStorage(adapters: Adapter[]) {
   const adaptersStorable: AdapterStorable[] = []
 
   for (const adapter of adapters) {
-    const {
-      id,
-      parentId,
-      chain,
-      contractsExpireAt,
-      contractsRevalidateProps,
-      contractsProps,
-      createdAt,
-      updatedAt,
-      version,
-      sign,
-    } = adapter
+    const { id, parentId, chain, contractsExpireAt, contractsRevalidateProps, createdAt, updatedAt, version, sign } =
+      adapter
 
     const chainId = chainById[chain]?.chainId
     if (chainId == null) {
@@ -103,7 +91,6 @@ export function toStorage(adapters: Adapter[]) {
       chain: chainId,
       contracts_expire_at: contractsExpireAt ? toDateTime(contractsExpireAt) : undefined,
       contracts_revalidate_props: contractsRevalidateProps ? JSON.stringify(contractsRevalidateProps) : undefined,
-      contracts_props: contractsProps ? JSON.stringify(contractsProps) : undefined,
       created_at: toDateTime(createdAt),
       updated_at: toDateTime(updatedAt),
       version,
@@ -118,7 +105,15 @@ export function toStorage(adapters: Adapter[]) {
 
 export async function countAdapters(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: 'SELECT count() AS "count" FROM (SELECT id FROM lf.adapters GROUP BY id);',
+    query: `
+      SELECT
+        count() AS "count"
+      FROM (
+        SELECT "id" FROM ${environment.NS_LF}.adapters
+        GROUP BY "id"
+        HAVING sum("sign") > 0
+      );
+    `,
   })
 
   const res = (await queryRes.json()) as {
@@ -128,7 +123,7 @@ export async function countAdapters(client: ClickHouseClient) {
   return parseInt(res.data[0].count)
 }
 
-export async function selectAdapter(client: ClickHouseClient, chainId: number, adapterId: string) {
+export async function selectAdapter(client: ClickHouseClient, adapterId: string, chainId: number) {
   const queryRes = await client.query({
     query: `SELECT * FROM ${environment.NS_LF}.adapters FINAL WHERE "chain" = {chainId: UInt64} AND "id" = {adapterId: String};`,
     query_params: { chainId, adapterId },
@@ -143,7 +138,11 @@ export async function selectAdapter(client: ClickHouseClient, chainId: number, a
 
 export async function selectDistinctAdaptersIds(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: `SELECT id FROM ${environment.NS_LF}.adapters GROUP BY id;`,
+    query: `
+      SELECT "id" FROM ${environment.NS_LF}.adapters
+      GROUP BY "id"
+      HAVING sum("sign") > 0;
+    `,
   })
 
   const res = (await queryRes.json()) as {
@@ -158,7 +157,15 @@ export async function selectDistinctAdaptersChains(client: ClickHouseClient) {
   const adapters: { [key: string]: Chain[] } = {}
 
   const queryRes = await client.query({
-    query: `SELECT "id", "parent_id", groupUniqArray("chain") AS "chains" FROM ${environment.NS_LF}.adapters GROUP BY "id", "parent_id"`,
+    query: `
+      SELECT
+        "id",
+        "parent_id",
+        groupUniqArray("chain") AS "chains"
+      FROM ${environment.NS_LF}.adapters
+      GROUP BY "id", "parent_id"
+      HAVING sum("sign") > 0
+    `,
   })
 
   const res = (await queryRes.json()) as {
@@ -190,7 +197,12 @@ export async function selectDistinctAdaptersChains(client: ClickHouseClient) {
 
 export async function selectAdaptersContractsExpired(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: `SELECT * FROM ${environment.NS_LF}.adapters WHERE contracts_expire_at <= now();`,
+    query: `
+      SELECT "id", "chain"
+      FROM ${environment.NS_LF}.adapters
+      WHERE contracts_expire_at <= now()
+      GROUP BY "id", "chain"
+      HAVING sum("sign") > 0;`,
   })
 
   const res = (await queryRes.json()) as {
@@ -215,6 +227,7 @@ export async function selectLatestCreatedAdapters(client: ClickHouseClient, limi
         SELECT "slug" FROM lf.protocols GROUP BY "slug"
       )
       GROUP BY "id"
+      HAVING sum("sign") > 0
       ORDER BY "created_at" DESC
       LIMIT {limit: UInt8};
     `,
@@ -257,6 +270,8 @@ export async function selectNonDuplicateAdaptersContracts(
               SELECT arrayJoin({values: Array(Array(String))}) AS "x"
           )
       )
+      GROUP BY "address", "token"
+      HAVING sum("sign") > 0;
     `,
     query_params: {
       chainId,
@@ -288,8 +303,6 @@ export async function insertAdapters(client: ClickHouseClient, adapters: Adapter
     return
   }
 
-  console.log(values)
-
   return client.insert({
     table: `${environment.NS_LF}.adapters`,
     values,
@@ -297,13 +310,12 @@ export async function insertAdapters(client: ClickHouseClient, adapters: Adapter
   })
 }
 
-export function deleteAdapterById(client: ClickHouseClient, adapterId: string) {
-  return client.command({
-    query: `DELETE FROM ${environment.NS_LF}.adapters WHERE "id" = {adapterId: String};`,
-    query_params: { adapterId },
-    clickhouse_settings: {
-      enable_lightweight_delete: 1,
-      mutations_sync: '2',
-    },
-  })
+export async function deleteAdapterById(client: ClickHouseClient, adapterId: string, chainId: number) {
+  const adapter = await selectAdapter(client, adapterId, chainId)
+  if (adapter == null) {
+    return
+  }
+
+  // Cancel previous state
+  return insertAdapters(client, [{ ...adapter, sign: -1 }])
 }

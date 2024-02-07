@@ -43,7 +43,7 @@ async function main() {
     return
   }
 
-  let prevDbAdapter = await selectAdapter(client, chainId, adapter.id)
+  let prevDbAdapter = await selectAdapter(client, adapter.id, chainId)
 
   const protocolToParent = await fetchProtocolToParentMapping()
 

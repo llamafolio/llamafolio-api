@@ -332,7 +332,7 @@ functions:
       - schedule: cron(0 * * * ? *)
 
   revalidateAdapterContracts:
-    handler: src/handlers/revalidateAdapters.revalidateAdapterContracts
+    handler: src/handlers/revalidateAdapters.revalidateAdapterContractsHandler
     description: Revalidate adapter contracts
 
   updateGovernanceProposals:

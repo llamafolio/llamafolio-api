@@ -46,7 +46,7 @@ async function main() {
 
   const protocolToParent = await fetchProtocolToParentMapping()
 
-  const prevDbAdapter = await selectAdapter(client, chainId, adapter.id)
+  const prevDbAdapter = await selectAdapter(client, adapter.id, chainId)
 
   await revalidateAdapterContracts(client, adapter, chain, prevDbAdapter, protocolToParent)
 
