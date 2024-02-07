@@ -1,8 +1,9 @@
 import type { BaseContext } from '@lib/adapter'
+import { toCacheKey } from '@lib/call'
 import { chainById } from '@lib/chains'
 import { isNotNullish } from '@lib/type'
 import type { Abi } from 'abitype'
-import type { DecodeFunctionResultParameters, DecodeFunctionResultReturnType } from 'viem'
+import type { AbiFunction, DecodeFunctionResultParameters, DecodeFunctionResultReturnType } from 'viem'
 
 export interface Call<TAbi extends Abi[number] | readonly unknown[]> {
   target: `0x${string}`
@@ -50,7 +51,23 @@ export async function multicall<
   // Allow nullish input calls but don't pass them to the underlying multicall function.
   // Nullish calls results are automatically unsuccessful.
   // This allows us to "chain" multicall responses while preserving input indices
-  const calls = options.calls.filter((call): call is Call => isNotNullish(call) && call.enabled !== false)
+  const calls = options.calls.filter(
+    (call): call is Call =>
+      isNotNullish(call) &&
+      call.target != null &&
+      call.enabled !== false &&
+      (!options.ctx.cache ||
+        options.ctx.cache.get(
+          toCacheKey(
+            options.ctx,
+            call.target,
+            options.abi as unknown as AbiFunction,
+            call.params == null ? [] : Array.isArray(call.params) ? call.params : [call.params],
+          ),
+        ) === null),
+  )
+
+  // TODO: revert to single `call`s if Multicall contract is not deployed at given ctx.blockNumber
 
   const multicallRes = await chainById[options.ctx.chain].client.multicall({
     // @ts-ignore
@@ -59,7 +76,7 @@ export async function multicall<
       abi: [options.abi],
       // @ts-ignore
       functionName: options.abi.name,
-      args: call.params,
+      args: call.params == null ? [] : Array.isArray(call.params) ? call.params : [call.params],
     })),
     blockNumber: options.ctx.blockNumber != null ? BigInt(options.ctx.blockNumber) : undefined,
     allowFailure,
@@ -69,11 +86,32 @@ export async function multicall<
   let callIdx = 0
   // @ts-ignore
   return options.calls.map((input, idx) => {
-    if (input == null || input.enabled === false) {
+    if (input == null || input.enabled === false || input.target == null) {
       return { input: options.calls[idx], success: false, output: null }
     }
 
     const response = multicallRes[callIdx++] as any
+
+    // Try to read cache
+    if (options.ctx.cache != null) {
+      const cacheKey = toCacheKey(
+        options.ctx,
+        input.target,
+        options.abi as unknown as AbiFunction,
+        input.params == null ? [] : Array.isArray(input.params) ? input.params : [input.params],
+      )
+      const cacheResult = options.ctx.cache.get(cacheKey)
+
+      if (cacheResult != null) {
+        return {
+          input: options.calls[idx],
+          success: true,
+          output: cacheResult,
+        }
+      }
+
+      options.ctx.cache.set(cacheKey, response.result)
+    }
 
     if (allowFailure) {
       return {

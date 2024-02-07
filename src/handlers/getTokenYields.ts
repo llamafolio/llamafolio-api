@@ -3,11 +3,11 @@ import { selectTokenYields, type TokenYield } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
 import { getChainId } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
-import type { TUnixTimestamp } from '@lib/type'
+import type { UnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface TokenYieldsResponse {
-  updatedAt: TUnixTimestamp
+  updatedAt: UnixTimestamp
   data: TokenYield[]
   count: number
 }

@@ -4,7 +4,7 @@ import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@
 
 const crvUSD: Contract = {
   chain: 'ethereum',
-  address: '0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E',
+  address: '0xf939e0a03fb07f59a73314e73794be0e57ac1b4e',
   symbol: 'crvUSD',
   decimals: 18,
   stable: true,
@@ -20,7 +20,7 @@ export const getContracts = async (ctx: BaseContext) => {
   const controllers = await getControllers(ctx, factory)
 
   return {
-    contracts: { controllers, crvUSD },
+    contracts: { controllers },
     revalidate: 60 * 60,
   }
 }

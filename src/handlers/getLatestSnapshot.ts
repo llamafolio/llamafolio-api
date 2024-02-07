@@ -3,7 +3,7 @@ import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { Chain } from '@lib/chains'
 import { parseAddresses } from '@lib/fmt'
-import type { TUnixTimestamp } from '@lib/type'
+import type { UnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 export interface SnapshotChainResponse {
@@ -18,7 +18,7 @@ export interface LatestSnapshotResponse {
   debtUSD: number
   rewardUSD: number
   chains: SnapshotChainResponse[]
-  updatedAt?: TUnixTimestamp
+  updatedAt?: UnixTimestamp
 }
 
 export const handler: APIGatewayProxyHandler = async (event, _context) => {

@@ -24,5 +24,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
 }
 
 export const config: AdapterConfig = {
+  version: 0,
   startDate: 1700611200,
 }
