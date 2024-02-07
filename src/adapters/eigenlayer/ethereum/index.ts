@@ -18,6 +18,9 @@ const poolAddresses: `0x${string}`[] = [
   '0xa4c637e0f704745d182e4d38cab7e7485321d059',
   '0x7ca911e83dabf90c90dd3de5411a10f1a6112184',
   '0x13760f50a9d7377e4f20cb8cf9e4c26586c658ff',
+  '0x298afb19a105d59e74658c4c334ff360bade6dd2',
+  '0x8ca7a5d6f3acd3a7a8bc468a8cd0fb14b6bd28b6',
+  '0xae60d8180437b5c34bb956822ac2710972584473',
 ]
 
 export const getContracts = async (ctx: BaseContext) => {
