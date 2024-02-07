@@ -1,6 +1,6 @@
 import { getStakeBalance } from '@adapters/ankr/common/balance'
 import { getAnkrETHStakeBalance, getAnkrETHv2StakeBalance, getAnkrStakeBalance } from '@adapters/ankr/ethereum/balance'
-import type { Contract, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const ankrStaker: Contract = {
@@ -47,4 +47,8 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   return {
     groups: [{ balances }],
   }
+}
+
+export const config: AdapterConfig = {
+  startDate: 1605913200,
 }
