@@ -287,7 +287,7 @@ export async function revalidateAdapterContracts(
     chain,
     adapterId: adapter.id,
     timestamp: now,
-    version: adapter[chain]?.config.version || 0,
+    version: adapter[chain]?.config?.version || 0,
     sign: 1,
     ...contract,
   }))
