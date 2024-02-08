@@ -312,6 +312,7 @@ import sudoswap from '@adapters/sudoswap'
 import summerFi from '@adapters/summer.fi'
 import superfarm from '@adapters/superfarm'
 import sushiswap from '@adapters/sushiswap'
+import swaap from '@adapters/swaap'
 import swapbased from '@adapters/swapbased'
 import swapr from '@adapters/swapr'
 import swell from '@adapters/swell'
@@ -690,6 +691,7 @@ export const adapters: Adapter[] = [
   summerFi,
   superfarm,
   sushiswap,
+  swaap,
   swapbased,
   swapr,
   swell,
