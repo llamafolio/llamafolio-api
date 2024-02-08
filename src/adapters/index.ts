@@ -251,6 +251,7 @@ import radioshack from '@adapters/radioshack'
 import raft from '@adapters/raft'
 import rageTrade from '@adapters/rage-trade'
 import railgun from '@adapters/railgun'
+import ramsesExchange from '@adapters/ramses-exchange'
 import rangeProtocol from '@adapters/range-protocol'
 import realt from '@adapters/realt'
 import reaperFarm from '@adapters/reaper-farm'
@@ -625,6 +626,7 @@ export const adapters: Adapter[] = [
   raft,
   rageTrade,
   railgun,
+  ramsesExchange,
   rangeProtocol,
   realt,
   reaperFarm,
