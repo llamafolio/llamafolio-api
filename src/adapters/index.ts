@@ -357,6 +357,7 @@ import velodromeV2 from '@adapters/velodrome-v2'
 import venus from '@adapters/venus'
 import verse from '@adapters/verse'
 import vesper from '@adapters/vesper'
+import virtuswap from '@adapters/virtuswap'
 import voltaClub from '@adapters/volta-club'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
@@ -734,6 +735,7 @@ export const adapters: Adapter[] = [
   venus,
   verse,
   vesper,
+  virtuswap,
   voltaClub,
   wallet,
   wepiggy,
