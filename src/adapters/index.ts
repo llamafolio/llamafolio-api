@@ -161,6 +161,7 @@ import kineFinance from '@adapters/kine-finance'
 import kinzaFinance from '@adapters/kinza-finance'
 import klimaDao from '@adapters/klima-dao'
 import kokonutSwap from '@adapters/kokonut-swap'
+import kommunitas from '@adapters/kommunitas'
 import kwenta from '@adapters/kwenta'
 import layerbank from '@adapters/layerbank'
 import leonicornswap from '@adapters/leonicornswap'
@@ -537,6 +538,7 @@ export const adapters: Adapter[] = [
   kinzaFinance,
   klimaDao,
   kokonutSwap,
+  kommunitas,
   kwenta,
   layerbank,
   leonicornswap,
