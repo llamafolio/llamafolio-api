@@ -272,7 +272,7 @@ export async function revalidateAdapterContracts(
     contractsRevalidateProps: config.revalidateProps,
     createdAt: prevDbAdapter?.createdAt || now,
     updatedAt: now,
-    version: adapter[chain]!.config.version || 0,
+    version: adapter[chain]?.config?.version || 0,
     sign: 1,
   } as DBAdapter
 
