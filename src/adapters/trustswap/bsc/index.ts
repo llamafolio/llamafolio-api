@@ -4,9 +4,9 @@ import { resolveBalances } from '@lib/balance'
 import { getTrustLockBalances } from '../common/lock'
 
 const locker: Contract = {
-  chain: 'ethereum',
+  chain: 'bsc',
   address: '0x56968bb1168b0e9314dca1eb3d1e7aaf0d32263e',
-  token: '0xCC4304A31d09258b0029eA7FE63d032f52e44EFe',
+  token: '0x82443A77684A7Da92FdCB639c8d2Bd068a596245',
 }
 
 export const getContracts = () => {
