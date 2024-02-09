@@ -31,7 +31,7 @@ export async function call<TAbi extends Abi[number] | readonly unknown[]>(option
   const args = options.params == null ? [] : Array.isArray(options.params) ? options.params : [options.params]
 
   // @ts-ignore
-  const output = await ctx.client.readContract({
+  const output = await options.ctx.client.readContract({
     address: options.target,
     abi: [options.abi],
     // @ts-ignore
