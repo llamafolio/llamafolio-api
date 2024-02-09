@@ -1,5 +1,5 @@
 import type { BaseContext } from '@lib/adapter'
-import { toCacheKey } from '@lib/call'
+import { call, toCacheKey } from '@lib/call'
 import { chainById } from '@lib/chains'
 import { isNotNullish } from '@lib/type'
 import type { Abi } from 'abitype'
@@ -46,6 +46,13 @@ export async function multicall<
             output: null
           })[]
 > {
+  const multicall3BlockCreated = chainById[options.ctx.chain]?.client?.chain?.contracts?.multicall3?.blockCreated
+  // Multicall3 not deployed yet, fallback to eth_call
+  const fallbackEthCall =
+    options.ctx.blockNumber != null &&
+    multicall3BlockCreated != null &&
+    options.ctx.blockNumber < multicall3BlockCreated
+
   const allowFailure = options.allowFailure != null ? options.allowFailure : true
 
   // Allow nullish input calls but don't pass them to the underlying multicall function.
@@ -67,20 +74,41 @@ export async function multicall<
         ) === null),
   )
 
-  // TODO: revert to single `call`s if Multicall contract is not deployed at given ctx.blockNumber
-
-  const multicallRes = await chainById[options.ctx.chain].client.multicall({
-    // @ts-ignore
-    contracts: calls.map((call) => ({
-      address: call.target,
-      abi: [options.abi],
-      // @ts-ignore
-      functionName: options.abi.name,
-      args: call.params == null ? [] : Array.isArray(call.params) ? call.params : [call.params],
-    })),
-    blockNumber: options.ctx.blockNumber != null ? BigInt(options.ctx.blockNumber) : undefined,
-    allowFailure,
-  })
+  const multicallRes = fallbackEthCall
+    ? await Promise.all(
+        calls.map(async (_call) => {
+          try {
+            const result = await call({
+              ctx: options.ctx,
+              abi: options.abi,
+              target: _call.target!,
+              enabled: _call.enabled,
+              params: _call.params,
+            })
+            return {
+              status: 'success',
+              result,
+            }
+          } catch {
+            return {
+              status: 'failure',
+              result: null,
+            }
+          }
+        }),
+      )
+    : await chainById[options.ctx.chain].client.multicall({
+        // @ts-ignore
+        contracts: calls.map((call) => ({
+          address: call.target,
+          abi: [options.abi],
+          // @ts-ignore
+          functionName: options.abi.name,
+          args: call.params == null ? [] : Array.isArray(call.params) ? call.params : [call.params],
+        })),
+        blockNumber: options.ctx.blockNumber != null ? BigInt(options.ctx.blockNumber) : undefined,
+        allowFailure,
+      })
 
   // Build output by adding back nullish input calls
   let callIdx = 0
