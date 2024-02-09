@@ -1,10 +1,8 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
-import type { Chain } from '@lib/chains'
 import { type Call, multicall } from '@lib/multicall'
 import { retrieveToken, type Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
-import type { Address } from 'viem'
 
 export const abi = {
   balanceOf: {
@@ -72,15 +70,6 @@ export const abi = {
     type: 'function',
   },
 } as const
-
-export interface TokenBalance {
-  chain: Chain
-  address: Address
-  name: string
-  symbol: string
-  decimals: number
-  amount: bigint
-}
 
 /**
  * @description Returns given contracts with their ERC20 token balances
