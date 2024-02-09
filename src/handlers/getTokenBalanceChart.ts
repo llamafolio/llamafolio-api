@@ -4,7 +4,7 @@ import type { Window } from '@db/gas'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
-import { chainByChainId, getChainId } from '@lib/chains'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { abi as erc20Abi } from '@lib/erc20'
 import { parseAddress, parseAddresses, unixFromDate } from '@lib/fmt'
 import { sumBI } from '@lib/math'
@@ -39,7 +39,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return badRequest(`Unsupported window ${event.queryStringParameters?.w}`)
   }
 
-  const ctx: BaseContext = { chain, adapterId: '' }
+  const ctx: BaseContext = { chain, adapterId: '', client: getRPCClient({ chain }) }
 
   try {
     const [chartData, balancesRes] = await Promise.all([

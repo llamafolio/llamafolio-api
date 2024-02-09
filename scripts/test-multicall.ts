@@ -2,13 +2,15 @@ import '../environment'
 
 import type { BaseContext } from '@lib/adapter'
 import { call } from '@lib/call'
+import { getRPCClient } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 
 async function main() {
-  const ctx: BaseContext = { chain: 'ethereum', adapterId: '' }
+  const client = getRPCClient({ chain: 'ethereum' })
+  const ctx: BaseContext = { chain: 'ethereum', adapterId: '', client }
   // NOTE: Multicall3 deployed at 14_353_601
-  const beforeMulticall3Ctx: BaseContext = { chain: 'ethereum', adapterId: '', blockNumber: 14_353_600 }
+  const beforeMulticall3Ctx: BaseContext = { chain: 'ethereum', adapterId: '', blockNumber: 14_353_600, client }
 
   const [symbol0A] = await multicall({
     ctx: beforeMulticall3Ctx,

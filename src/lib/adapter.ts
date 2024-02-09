@@ -8,13 +8,15 @@ import {
 import { flattenContracts, insertAdaptersContracts } from '@db/contracts'
 import type { Cache } from '@lib/cache'
 import type { Category } from '@lib/category'
-import { type Chain, chainById } from '@lib/chains'
+import { type Chain, chainById, getRPCClient } from '@lib/chains'
 import { fetchProtocolToParentMapping } from '@lib/protocols'
 import { resolveContractsTokens } from '@lib/token'
 import isEqual from 'lodash/isEqual'
+import type { PublicClient } from 'viem'
 
 export interface BaseContext {
   cache?: Cache<string, any>
+  client: PublicClient
   chain: Chain
   adapterId: string
   blockNumber?: number
@@ -237,7 +239,7 @@ export async function revalidateAdapterContracts(
 
   const now = new Date()
 
-  const ctx: BaseContext = { chain, adapterId: adapter.id }
+  const ctx: BaseContext = { chain, adapterId: adapter.id, client: getRPCClient({ chain }) }
 
   const config = await adapter[chain]!.getContracts(ctx, prevDbAdapter?.contractsRevalidateProps || {})
 

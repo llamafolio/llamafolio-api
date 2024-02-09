@@ -363,25 +363,27 @@ export async function balancesOf({
 }
 
 export async function userBalances({
-  chain,
-  walletAddress,
+  ctx,
   tokens,
   chunkSize = 750,
 }: {
-  chain: Chain
-  walletAddress: Address
+  ctx: BalancesContext
   tokens: Array<Token>
   chunkSize?: number
 }): Promise<Array<TokenBalance>> {
   const chunks = sliceIntoChunks(
-    tokens.map((item) => Object.assign({}, item, { address: getAddress(item.address), chain })),
+    tokens.map((item) => Object.assign({}, item, { address: getAddress(item.address), chain: ctx.chain })),
     chunkSize,
   )
-  const client = chainById[chain].client
 
   const balancesResults = await Promise.allSettled(
     chunks.map(async (chunk) => {
-      const result = await balancesOf({ client, chain, walletAddress, tokens: chunk })
+      const result = await balancesOf({
+        client: ctx.client,
+        chain: ctx.chain,
+        walletAddress: ctx.address,
+        tokens: chunk,
+      })
       sleep(1)
       return result
     }),

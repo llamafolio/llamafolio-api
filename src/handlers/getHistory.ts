@@ -2,7 +2,7 @@ import { client } from '@db/clickhouse'
 import { selectHistory } from '@db/history'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
-import { type Chain, chainByChainId } from '@lib/chains'
+import { type Chain, chainByChainId, getRPCClient } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getTokenDetails } from '@lib/erc20'
 import { parseAddresses, toDateTime, toStartOfMonth, toStartOfNextMonth, unixFromDateTime } from '@lib/fmt'
@@ -170,7 +170,11 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     // Fetch tokens info
     await Promise.all(
       Object.keys(tokensByChain).map(async (chain) => {
-        const ctx: BaseContext = { chain: chain as Chain, adapterId: '' }
+        const ctx: BaseContext = {
+          chain: chain as Chain,
+          adapterId: '',
+          client: getRPCClient({ chain: chain as Chain }),
+        }
         const tokens = await getTokenDetails(ctx, tokensByChain[chain] as `0x${string}`[])
 
         for (const token of tokens) {

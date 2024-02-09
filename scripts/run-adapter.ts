@@ -2,7 +2,7 @@ import path from 'node:path'
 import url from 'node:url'
 
 import type { Adapter, BalancesContext } from '@lib/adapter'
-import { chainByChainId, getChainId } from '@lib/chains'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
 import { resolveContractsTokens } from '@lib/token'
 import { printBalancesConfig } from 'scripts/utils/balances'
@@ -38,7 +38,7 @@ async function main() {
     return
   }
 
-  const ctx: BalancesContext = { address, chain, adapterId }
+  const ctx: BalancesContext = { address, chain, adapterId, client: getRPCClient({ chain }) }
 
   try {
     const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))

@@ -3,7 +3,7 @@ import { selectToken } from '@db/tokens'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { call } from '@lib/call'
-import { chainByChainId, getChainId } from '@lib/chains'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { abi as erc20Abi } from '@lib/erc20'
 import { parseAddress } from '@lib/fmt'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -35,7 +35,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
   const chain = chainByChainId[chainId].id
 
-  const ctx: BaseContext = { chain, adapterId: '' }
+  const ctx: BaseContext = { chain, adapterId: '', client: getRPCClient({ chain }) }
 
   try {
     const [token, totalSupply] = await Promise.all([

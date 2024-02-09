@@ -3,6 +3,7 @@ import '../environment'
 import fs from 'node:fs'
 
 import type { BaseContext } from '@lib/adapter'
+import { getRPCClient } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { type Call, multicall } from '@lib/multicall'
 
@@ -20,7 +21,7 @@ async function main() {
     return help()
   }
 
-  const ctx: BaseContext = { chain: 'ethereum', adapterId: '' }
+  const ctx: BaseContext = { chain: 'ethereum', adapterId: '', client: getRPCClient({ chain: 'ethereum' }) }
 
   const calls: Call<typeof abi.symbol>[] = addresses.map((address) => ({ target: address }))
 

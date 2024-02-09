@@ -1,6 +1,5 @@
 import type { BaseContext } from '@lib/adapter'
 import { call, toCacheKey } from '@lib/call'
-import { chainById } from '@lib/chains'
 import { isNotNullish } from '@lib/type'
 import type { Abi } from 'abitype'
 import type { AbiFunction, DecodeFunctionResultParameters, DecodeFunctionResultReturnType } from 'viem'
@@ -46,7 +45,7 @@ export async function multicall<
             output: null
           })[]
 > {
-  const multicall3BlockCreated = chainById[options.ctx.chain]?.client?.chain?.contracts?.multicall3?.blockCreated
+  const multicall3BlockCreated = options.ctx.client?.chain?.contracts?.multicall3?.blockCreated
   // Multicall3 not deployed yet, fallback to eth_call
   const fallbackEthCall =
     options.ctx.blockNumber != null &&
@@ -97,7 +96,7 @@ export async function multicall<
           }
         }),
       )
-    : await chainById[options.ctx.chain].client.multicall({
+    : await options.ctx.client.multicall({
         // @ts-ignore
         contracts: calls.map((call) => ({
           address: call.target,
