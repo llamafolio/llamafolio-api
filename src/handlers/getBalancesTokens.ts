@@ -95,7 +95,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
               hrend[1] / 1000000,
             )
 
-            return balancesConfig.groups[0].balances
+            return balancesConfig.groups[0].balances.map((balance) => ({ ...balance, chain: ctx.chain }))
           } catch (error) {
             console.error(`[${walletAdapter.id}][${chain}]: Failed to getBalances`, error)
             return
@@ -131,6 +131,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     const balancesResponse: BalancesErc20Response = {
       updatedAt: now.toISOString(),
       chains: Object.keys(pricedBalancesByChain)
+        .filter((chain) => chainById[chain])
         .map((chain) => {
           const chainInfo = chainById[chain]
           const balances = pricedBalancesByChain[chain] as PricedBalance[]

@@ -8,6 +8,7 @@ import type {
   PricedBalance,
 } from '@lib/adapter'
 import type { Category } from '@lib/category'
+import { chainById } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getBalancesOf } from '@lib/erc20'
 import { unixFromDate } from '@lib/fmt'
@@ -22,6 +23,14 @@ import { isNotNullish } from '@lib/type'
  */
 export const MIN_BALANCE_USD = 0.00001
 export const MAX_BALANCE_USD = 10_000_000_000
+
+export async function getCoinBalance(ctx: BalancesContext) {
+  const amount = await ctx.client.getBalance({
+    address: ctx.address,
+    blockNumber: ctx.blockNumber ? BigInt(ctx.blockNumber) : undefined,
+  })
+  return { ...chainById[ctx.chain].nativeCurrency, chain: ctx.chain, amount }
+}
 
 export async function getBalances(ctx: BalancesContext, contracts: BaseContract[]) {
   const coins: Token[] = []
