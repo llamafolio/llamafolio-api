@@ -3,7 +3,7 @@ import '../environment'
 import { client } from '@db/clickhouse'
 import { insertERC20Tokens, selectUndecodedChainAddresses } from '@db/tokens'
 import type { BaseContext } from '@lib/adapter'
-import { chainByChainId, getChainId } from '@lib/chains'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { getTokenDetails } from '@lib/erc20'
 
 const types = ['erc20', 'erc721', 'erc1155'] as const
@@ -26,13 +26,14 @@ async function main() {
   if (chainId == null) {
     return console.error(`Invalid chain ${process.argv[2]}`)
   }
+  const chain = chainByChainId[chainId].id
 
   const type = (process.argv[3] as 'erc20' | 'erc721' | 'erc1155') || 'erc20'
   if (!types.includes(type)) {
     return console.error(`Invalid type ${process.argv[3]}`)
   }
 
-  const ctx: BaseContext = { chain: chainByChainId[chainId].id, adapterId: '' }
+  const ctx: BaseContext = { chain, adapterId: '', client: getRPCClient({ chain }) }
 
   try {
     const limit = 100

@@ -7,7 +7,7 @@ import {
 } from '@db/tokens'
 import type { BaseContext } from '@lib/adapter'
 import { groupBy, sliceIntoChunks } from '@lib/array'
-import { chainByChainId } from '@lib/chains'
+import { chainByChainId, getRPCClient } from '@lib/chains'
 import { getTokenDetails } from '@lib/erc20'
 
 export const handleUpdateProtocolsTokens = async () => {
@@ -24,7 +24,7 @@ export const handleUpdateProtocolsTokens = async () => {
       continue
     }
 
-    const ctx: BaseContext = { chain, adapterId: '' }
+    const ctx: BaseContext = { chain, adapterId: '', client: getRPCClient({ chain }) }
 
     const addresses = rowsByChainId[chainId].map((row) => row.address)
 

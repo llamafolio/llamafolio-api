@@ -1,7 +1,5 @@
-import { chainById } from '@lib/chains'
+import { getRPCClient } from '@lib/chains'
 
 export function fetchENSName(address: `0x${string}`) {
-  const client = chainById.ethereum.client
-
-  return client.getEnsName({ address })
+  return getRPCClient({ chain: 'ethereum' }).getEnsName({ address })
 }

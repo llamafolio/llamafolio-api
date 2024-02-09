@@ -16,7 +16,7 @@ import {
 } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
 import { InMemoryCache } from '@lib/cache'
-import { chainByChainId, getChainId } from '@lib/chains'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { toYYYYMMDD, unixFromDateTime, unixToYYYYMMDD } from '@lib/fmt'
 
 import {
@@ -292,6 +292,7 @@ async function main() {
               chain: chainInfo.id,
               adapterId,
               blockNumber: dailyBlock.block_number,
+              client: getRPCClient({ chain: chainInfo.id }),
             }
 
             const balancesConfig = await chainAdapter.getBalances(ctx, groupContracts(allContractsInteractions) || [])

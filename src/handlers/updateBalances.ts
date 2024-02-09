@@ -13,7 +13,7 @@ import {
   sanitizeBalances,
   sanitizePricedBalances,
 } from '@lib/balance'
-import { type Chain, chains } from '@lib/chains'
+import { type Chain, chains, getRPCClient } from '@lib/chains'
 import { parseAddresses, unixFromDate } from '@lib/fmt'
 import { getPricedBalances } from '@lib/price'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -75,7 +75,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
         const contracts = groupContracts(contractsByAdapterIdChain[adapterId][chain]) || []
 
-        const ctx: BalancesContext = { address, chain, adapterId }
+        const ctx: BalancesContext = { address, chain, adapterId, client: getRPCClient({ chain }) }
 
         const balancesConfig = await handler.getBalances(ctx, contracts)
 

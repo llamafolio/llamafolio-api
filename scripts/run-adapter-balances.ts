@@ -4,7 +4,7 @@ import url from 'node:url'
 import { client } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import type { Adapter, BalancesContext } from '@lib/adapter'
-import { type Chain, chainById } from '@lib/chains'
+import { type Chain, chainById, getRPCClient } from '@lib/chains'
 import { printBalancesConfig } from 'scripts/utils/balances'
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -35,7 +35,7 @@ async function main() {
     return console.error(`Missing chain ${chain}`)
   }
 
-  const ctx: BalancesContext = { address, chain, adapterId }
+  const ctx: BalancesContext = { address, chain, adapterId, client: getRPCClient({ chain }) }
 
   try {
     const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))

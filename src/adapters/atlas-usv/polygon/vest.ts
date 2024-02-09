@@ -1,5 +1,4 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { chainById } from '@lib/chains'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 
@@ -37,7 +36,6 @@ export async function getVestingBalances(ctx: BalancesContext, vesters: Contract
   for (let vesterIdx = 0; vesterIdx < vesters.length; vesterIdx++) {
     const vester = vesters[vesterIdx]
     const pendingPayoutBalanceRes = pendingPayoutBalancesRes[vesterIdx]
-    const client = chainById[ctx.chain].client
 
     if (!pendingPayoutBalanceRes.success) {
       continue
@@ -45,7 +43,7 @@ export async function getVestingBalances(ctx: BalancesContext, vesters: Contract
 
     const [payout, _vesting, lastBlock] = pendingPayoutBalanceRes.output
 
-    const unlockAt = Number((await client.getBlock({ blockNumber: lastBlock })).timestamp)
+    const unlockAt = Number((await ctx.client.getBlock({ blockNumber: lastBlock })).timestamp)
 
     balances.push({
       ...vester,

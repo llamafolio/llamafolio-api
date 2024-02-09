@@ -19,8 +19,7 @@ const getChainHandlers = (chain: Chain) => {
   const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
     // Note: use all balances from llamafolio-tokens directory instead of relying on Transfer interactions
     const tokenBalances = await userBalances({
-      chain,
-      walletAddress: ctx.address,
+      ctx,
       tokens: (chainById[chain]?.indexed ? contracts.erc20 : tokensByChain[chain]) || [],
     })
     const balances: Balance[] = tokenBalances.map((tokenBalance) => ({ ...tokenBalance, category: 'wallet' }))

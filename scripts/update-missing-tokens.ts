@@ -2,7 +2,7 @@ import '../environment'
 
 import { client } from '@db/clickhouse'
 import type { BaseContext } from '@lib/adapter'
-import { chainById } from '@lib/chains'
+import { chainById, getRPCClient } from '@lib/chains'
 import { abi } from '@lib/erc20'
 import { type Call, multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
@@ -26,7 +26,7 @@ async function main() {
     return process.exit(1)
   }
 
-  const ctx: BaseContext = { chain: chain.id, adapterId: '' }
+  const ctx: BaseContext = { chain: chain.id, adapterId: '', client: getRPCClient({ chain: chain.id }) }
 
   let prevTokensKey = ''
 

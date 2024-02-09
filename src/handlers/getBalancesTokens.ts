@@ -9,7 +9,7 @@ import type { BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { sanitizeBalances, sanitizePricedBalances, sortBalances, sumBalances } from '@lib/balance'
 import type { Chain } from '@lib/chains'
-import { chainById, chains as allChains } from '@lib/chains'
+import { chainById, chains as allChains, getRPCClient } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
 import { getPricedBalances } from '@lib/price'
 import { isNotNullish } from '@lib/type'
@@ -76,7 +76,12 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
             const contracts = { erc20: tokensByChain[chain] }
 
-            const ctx: BalancesContext = { address, chain: chain as Chain, adapterId: walletAdapter.id }
+            const ctx: BalancesContext = {
+              address,
+              chain: chain as Chain,
+              adapterId: walletAdapter.id,
+              client: getRPCClient({ chain: chain as Chain }),
+            }
 
             console.log(`[${walletAdapter.id}][${chain}] getBalances ${tokensByChain[chain].length} contracts`)
 
