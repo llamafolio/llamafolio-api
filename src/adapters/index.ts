@@ -57,6 +57,7 @@ import binanceStakedEth from '@adapters/binance-staked-eth'
 import biswap from '@adapters/biswap'
 import blast from '@adapters/blast'
 import bloom from '@adapters/bloom'
+import blueberryLend from '@adapters/blueberry-lend'
 import blur from '@adapters/blur'
 import capFinance from '@adapters/cap-finance'
 import catInABox from '@adapters/cat-in-a-box'
@@ -436,6 +437,7 @@ export const adapters: Adapter[] = [
   biswap,
   blast,
   bloom,
+  blueberryLend,
   blur,
   capFinance,
   catInABox,
