@@ -1,6 +1,6 @@
 import type { Balance, BalancesContext, BaseContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter, sliceIntoChunks } from '@lib/array'
-import { type Chain, chainById } from '@lib/chains'
+import { chainById, type Chain } from '@lib/chains'
 import type { Call } from '@lib/multicall'
 import { multicall } from '@lib/multicall'
 import { sleep } from '@lib/promise'
@@ -403,14 +403,23 @@ export async function userBalances({
     if (nativeBalance) natives.push(nativeBalance)
   }
 
-  const retry = await Promise.all(rejected.map((token) => balanceOf({ client, chain, walletAddress, token })))
+  const retry = await Promise.all(
+    rejected.map((token) =>
+      balanceOf({
+        client: ctx.client,
+        chain: ctx.chain,
+        walletAddress: ctx.address,
+        token,
+      }),
+    ),
+  )
   const filteredRetry = retry.filter((token) => isNotFalsy(token.amount))
 
   if (natives.length === 0) {
     return [
-      Object.assign({}, chainById[chain].nativeCurrency, {
-        chain,
-        amount: await client.getBalance({ address: walletAddress }),
+      Object.assign({}, chainById[ctx.chain].nativeCurrency, {
+        chain: ctx.chain,
+        amount: await ctx.client.getBalance({ address: ctx.address }),
       }),
       ...balances,
       ...filteredRetry,
