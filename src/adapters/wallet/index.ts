@@ -1,7 +1,8 @@
 import type { Adapter, Balance, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getCoinBalance } from '@lib/balance'
 import type { Chain } from '@lib/chains'
 import { chainById, chains } from '@lib/chains'
-import { userBalances } from '@lib/erc20'
+import { getBalancesOf } from '@lib/erc20'
 import { chains as tokensByChain } from '@llamafolio/tokens'
 
 const getChainHandlers = (chain: Chain) => {
@@ -18,11 +19,14 @@ const getChainHandlers = (chain: Chain) => {
 
   const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
     // Note: use all balances from llamafolio-tokens directory instead of relying on Transfer interactions
-    const tokenBalances = await userBalances({
-      ctx,
-      tokens: (chainById[chain]?.indexed ? contracts.erc20 : tokensByChain[chain]) || [],
-    })
-    const balances: Balance[] = tokenBalances.map((tokenBalance) => ({ ...tokenBalance, category: 'wallet' }))
+    const tokens = ((chainById[chain]?.indexed ? contracts.erc20 : tokensByChain[chain]) || []) as Contract[]
+
+    const [coinBalance, erc20Balances] = await Promise.all([getCoinBalance(ctx), getBalancesOf(ctx, tokens)])
+
+    const balances: Balance[] = [coinBalance, ...erc20Balances].map((tokenBalance) => ({
+      ...tokenBalance,
+      category: 'wallet',
+    }))
 
     return {
       groups: [{ balances }],
