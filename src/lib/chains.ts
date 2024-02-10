@@ -1,33 +1,30 @@
 import { ADDRESS_ZERO } from '@lib/contract'
-import type { Address, PublicClient } from 'viem'
+import type { Address, HttpTransportConfig, PublicClient } from 'viem'
 import { createPublicClient, fallback, http } from 'viem'
 import * as viemChains from 'viem/chains'
 
 /**
  * Supported chains
  */
-export const chainsNames = [
-  'arbitrum',
-  'arbitrum-nova',
-  'avalanche',
-  'bsc',
-  'base',
-  'celo',
-  'ethereum',
-  'fantom',
-  'gnosis',
-  'harmony',
-  'linea',
-  'moonbeam',
-  'opbnb',
-  'optimism',
-  'polygon',
-  'polygon-zkevm',
-  'zksync-era',
-  'linea',
-] as const
-
-export type Chain = (typeof chainsNames)[number]
+export type Chain =
+  | 'arbitrum'
+  | 'arbitrum-nova'
+  | 'avalanche'
+  | 'bsc'
+  | 'base'
+  | 'celo'
+  | 'ethereum'
+  | 'fantom'
+  | 'gnosis'
+  | 'harmony'
+  | 'linea'
+  | 'moonbeam'
+  | 'opbnb'
+  | 'optimism'
+  | 'polygon'
+  | 'polygon-zkevm'
+  | 'zksync-era'
+  | 'linea'
 
 export interface IChainInfo {
   id: Chain
@@ -310,55 +307,61 @@ export function getChainId(chain: string) {
 
 interface RPCClientOptions {
   chain: Chain
-  /**
-   * @default false
-   */
-  retry?: boolean
+  httpTransportConfig?: HttpTransportConfig
+  batchConfig?: {
+    multicall?: boolean | { wait?: number; batchSize?: number } | undefined
+  }
 }
 
 export function getRPCClient(options: RPCClientOptions): PublicClient {
+  const httpTransportConfig = options.httpTransportConfig || { batch: { batchSize: 1000, wait: 10 } }
+  const batch = options.batchConfig || { multicall: { wait: 10, batchSize: 1000 } }
+
   switch (options.chain) {
     case 'arbitrum':
       return createPublicClient({
         chain: viemChains.arbitrum,
         transport: fallback([
-          http('https://rpc.ankr.com/arbitrum', { batch: { wait: 10, batchSize: 5_000 } }),
-          http('https://arb1.arbitrum.io/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://rpc.ankr.com/arbitrum', httpTransportConfig),
+          http('https://arb1.arbitrum.io/rpc', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'arbitrum-nova':
       return createPublicClient({
         chain: viemChains.arbitrumNova,
-        transport: fallback([http('https://nova.arbitrum.io/rpc', { batch: { wait: 0, batchSize: 5_000 } })]),
+        transport: fallback([http('https://nova.arbitrum.io/rpc', httpTransportConfig)]),
       })
 
     case 'avalanche':
       return createPublicClient({
         chain: viemChains.avalanche,
         transport: fallback([
-          http('https://rpc.ankr.com/avalanche', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://avalanche.public-rpc.com', { batch: { batchSize: 1_000, wait: 10 } }),
-          http('https://api.avax.network/ext/bc/C/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
-          http('https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://rpc.ankr.com/avalanche', httpTransportConfig),
+          http('https://avalanche.public-rpc.com', httpTransportConfig),
+          http('https://api.avax.network/ext/bc/C/rpc', httpTransportConfig),
+          http('https://ava-mainnet.public.blastapi.io/ext/bc/C/rpc', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'base':
       return createPublicClient({
         chain: viemChains.base,
         transport: fallback([
-          http('https://base-mainnet.public.blastapi.io', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://mainnet.base.org', { batch: { wait: 0, batchSize: 1_000 } }),
+          http('https://base-mainnet.public.blastapi.io', httpTransportConfig),
+          http('https://mainnet.base.org', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'bsc':
       return createPublicClient({
         chain: viemChains.bsc,
         transport: fallback([
-          http('https://bsc-dataseed.binance.org/', { batch: { batchSize: 1_000, wait: 10 } }),
-          http('https://bsc-dataseed1.ninicoin.io/', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://bsc-dataseed.binance.org/', httpTransportConfig),
+          http('https://bsc-dataseed1.ninicoin.io/', httpTransportConfig),
         ]),
       })
 
@@ -366,43 +369,40 @@ export function getRPCClient(options: RPCClientOptions): PublicClient {
       return createPublicClient({
         chain: viemChains.celo,
         transport: fallback([
-          http('https://rpc.ankr.com/celo', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://forno.celo.org', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://rpc.ankr.com/celo', httpTransportConfig),
+          http('https://forno.celo.org', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'ethereum':
       return createPublicClient({
         chain: viemChains.mainnet,
         transport: fallback([
-          http('https://rpc.ankr.com/eth', { batch: { wait: 32, batchSize: 1000 } }),
-          http('https://cloudflare-eth.com', { batch: { wait: 32, batchSize: 1000 } }),
+          http('https://rpc.ankr.com/eth', httpTransportConfig),
+          http('https://cloudflare-eth.com', httpTransportConfig),
         ]),
-        batch: {
-          multicall: {
-            wait: 32,
-            batchSize: 1000,
-          },
-        },
+        batch,
       })
 
     case 'fantom':
       return createPublicClient({
         chain: viemChains.fantom,
         transport: fallback([
-          http('https://rpc.ankr.com/fantom', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://rpc.ftm.tools/', { batch: { batchSize: 1_000, wait: 10 } }),
-          http('https://rpcapi.fantom.network', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://rpc.ankr.com/fantom', httpTransportConfig),
+          http('https://rpc.ftm.tools/', httpTransportConfig),
+          http('https://rpcapi.fantom.network', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'gnosis':
       return createPublicClient({
         chain: viemChains.gnosis,
         transport: fallback([
-          http('https://rpc.ankr.com/gnosis', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://rpc.gnosischain.com', { batch: { batchSize: 1_000, wait: 10 } }),
-          http('https://xdai-archive.blockscout.com', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://rpc.ankr.com/gnosis', httpTransportConfig),
+          http('https://rpc.gnosischain.com', httpTransportConfig),
+          http('https://xdai-archive.blockscout.com', httpTransportConfig),
         ]),
       })
 
@@ -410,75 +410,86 @@ export function getRPCClient(options: RPCClientOptions): PublicClient {
       return createPublicClient({
         chain: viemChains.harmonyOne,
         transport: fallback([
-          http('https://rpc.ankr.com/harmony', { batch: { wait: 0, batchSize: 5_000 } }),
-          http(`https://api.harmony.one`, { batch: { batchSize: 1_000, wait: 10 } }),
-          http('https://harmony-0-rpc.gateway.pokt.network', { batch: { batchSize: 1_000, wait: 10 } }),
-          http('https://api.s0.t.hmny.io', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://rpc.ankr.com/harmony', httpTransportConfig),
+          http(`https://api.harmony.one`, httpTransportConfig),
+          http('https://harmony-0-rpc.gateway.pokt.network', httpTransportConfig),
+          http('https://api.s0.t.hmny.io', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'linea':
       return createPublicClient({
         chain: viemChains.linea,
         transport: fallback([
-          http('https://linea.blockpi.network/v1/rpc/public', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://rpc.linea.build', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://1rpc.io/linea', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://linea.blockpi.network/v1/rpc/public', httpTransportConfig),
+          http('https://rpc.linea.build', httpTransportConfig),
+          http('https://1rpc.io/linea', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'moonbeam':
       return createPublicClient({
         chain: viemChains.moonbeam,
         transport: fallback([
-          http('https://rpc.ankr.com/moonbeam', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://rpc.api.moonbeam.network', { batch: { batchSize: 1_000, wait: 10 } }),
-          http('https://rpc.ankr.com/moonbeam', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://rpc.ankr.com/moonbeam', httpTransportConfig),
+          http('https://rpc.api.moonbeam.network', httpTransportConfig),
+          http('https://rpc.ankr.com/moonbeam', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'opbnb':
       return createPublicClient({
         chain: viemChains.opBNB,
-        transport: fallback([http('https://opbnb.publicnode.com'), http('https://opbnb-mainnet-rpc.bnbchain.org')]),
+        transport: fallback([
+          http('https://opbnb.publicnode.com', httpTransportConfig),
+          http('https://opbnb-mainnet-rpc.bnbchain.org', httpTransportConfig),
+        ]),
+        batch,
       })
 
     case 'optimism':
       return createPublicClient({
         chain: viemChains.optimism,
         transport: fallback([
-          http('https://rpc.ankr.com/optimism', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://mainnet.optimism.io', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://rpc.ankr.com/optimism', httpTransportConfig),
+          http('https://mainnet.optimism.io', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'polygon':
       return createPublicClient({
         chain: viemChains.polygon,
         transport: fallback([
-          http('https://rpc.ankr.com/polygon', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://polygon-rpc.com/', { batch: { batchSize: 1_000, wait: 10 } }),
-          http('https://rpc-mainnet.maticvigil.com/', { batch: { batchSize: 1_000, wait: 10 } }),
+          http('https://rpc.ankr.com/polygon', httpTransportConfig),
+          http('https://polygon-rpc.com/', httpTransportConfig),
+          http('https://rpc-mainnet.maticvigil.com/', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'polygon-zkevm':
       return createPublicClient({
         chain: viemChains.polygonZkEvm,
         transport: fallback([
-          http('https://zkevm-rpc.com', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://rpc.ankr.com/polygon_zkevm', { batch: { wait: 0, batchSize: 5_000 } }),
+          http('https://zkevm-rpc.com', httpTransportConfig),
+          http('https://rpc.ankr.com/polygon_zkevm', httpTransportConfig),
         ]),
+        batch,
       })
 
     case 'zksync-era':
       return createPublicClient({
         chain: viemChains.zkSync,
         transport: fallback([
-          http('https://mainnet.era.zksync.io', { batch: { wait: 0, batchSize: 5_000 } }),
-          http('https://zksync-era.blockpi.network/v1/rpc/public', { batch: { wait: 0, batchSize: 1_000 } }),
-          http('https://zksync.drpc.org', { batch: { wait: 0, batchSize: 1_000 } }),
+          http('https://mainnet.era.zksync.io', httpTransportConfig),
+          http('https://zksync-era.blockpi.network/v1/rpc/public', httpTransportConfig),
+          http('https://zksync.drpc.org', httpTransportConfig),
         ]),
+        batch,
       })
   }
 }

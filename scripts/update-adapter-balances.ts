@@ -292,7 +292,10 @@ async function main() {
               chain: chainInfo.id,
               adapterId,
               blockNumber: dailyBlock.block_number,
-              client: getRPCClient({ chain: chainInfo.id }),
+              client: getRPCClient({
+                chain: chainInfo.id,
+                httpTransportConfig: { batch: { batchSize: 1000, wait: 10 }, retryCount: 5, retryDelay: 15_000 },
+              }),
             }
 
             const balancesConfig = await chainAdapter.getBalances(ctx, groupContracts(allContractsInteractions) || [])
