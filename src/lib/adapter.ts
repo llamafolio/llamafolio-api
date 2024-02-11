@@ -12,9 +12,12 @@ import { type Chain, chainById, getRPCClient } from '@lib/chains'
 import { fetchProtocolToParentMapping } from '@lib/protocols'
 import { resolveContractsTokens } from '@lib/token'
 import isEqual from 'lodash/isEqual'
+import type { Logger } from 'pino'
 import type { PublicClient } from 'viem'
 
 export interface BaseContext {
+  logger?: Logger
+  module?: string
   cache?: Cache<string, any>
   client: PublicClient
   chain: Chain

@@ -32,6 +32,9 @@ export const environmentSchema = z.object({
   ELEMENT_API_KEY: z.string().optional(),
   // Explorers
   ETHERSCAN_API_KEY: z.string().optional(),
+  // Slack
+  SLACK_TOKEN: z.string().optional(),
+  SLACK_CHANNEL_ID: z.string().optional(),
 })
 
 export type Environment = z.infer<typeof environmentSchema>
