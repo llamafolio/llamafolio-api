@@ -5,11 +5,11 @@ import {
   type AbiFunction,
   type DecodeFunctionResultParameters,
   type DecodeFunctionResultReturnType,
-  getFunctionSelector,
+  toFunctionSelector,
 } from 'viem'
 
 export function toCacheKey(ctx: BaseContext, target: string, abi: AbiFunction, args?: any[]) {
-  const selector = getFunctionSelector(abi)
+  const selector = toFunctionSelector(abi)
   const chainId = chainById[ctx.chain].chainId
   const blockNumber = ctx.blockNumber || ''
   const params = args == null ? '' : JSON.stringify(args)
@@ -29,6 +29,15 @@ export async function call<TAbi extends Abi[number] | readonly unknown[]>(option
   enabled?: boolean
 }): Promise<DecodeFunctionResultReturnType<TAbi[]>> {
   const args = options.params == null ? [] : Array.isArray(options.params) ? options.params : [options.params]
+
+  // Maybe cache
+  if (options.ctx.cache) {
+    const cacheKey = toCacheKey(options.ctx, options.target, options.abi as unknown as AbiFunction, args)
+
+    if (options.ctx.cache.has(cacheKey)) {
+      return options.ctx.cache.get(cacheKey) as any
+    }
+  }
 
   // @ts-ignore
   const output = await options.ctx.client.readContract({

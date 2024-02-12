@@ -57,21 +57,26 @@ export async function multicall<
   // Allow nullish input calls but don't pass them to the underlying multicall function.
   // Nullish calls results are automatically unsuccessful.
   // This allows us to "chain" multicall responses while preserving input indices
-  const calls = options.calls.filter(
-    (call): call is Call =>
-      isNotNullish(call) &&
-      call.target != null &&
-      call.enabled !== false &&
-      (!options.ctx.cache ||
-        options.ctx.cache.get(
-          toCacheKey(
-            options.ctx,
-            call.target,
-            options.abi as unknown as AbiFunction,
-            call.params == null ? [] : Array.isArray(call.params) ? call.params : [call.params],
-          ),
-        ) === null),
-  )
+  const calls: Call[] = []
+  for (const call of options.calls) {
+    if (isNotNullish(call) && call.target != null && call.enabled !== false) {
+      // Maybe cached
+      if (options.ctx.cache) {
+        call.__cache_key = toCacheKey(
+          options.ctx,
+          call.target!,
+          options.abi as unknown as AbiFunction,
+          call.params == null ? [] : Array.isArray(call.params) ? call.params : [call.params],
+        )
+
+        if (!options.ctx.cache.has(call.__cache_key)) {
+          calls.push(call)
+        }
+      } else {
+        calls.push(call)
+      }
+    }
+  }
 
   const multicallRes = fallbackEthCall
     ? await Promise.all(
@@ -121,23 +126,15 @@ export async function multicall<
 
     // Try to read cache
     if (options.ctx.cache != null) {
-      const cacheKey = toCacheKey(
-        options.ctx,
-        input.target,
-        options.abi as unknown as AbiFunction,
-        input.params == null ? [] : Array.isArray(input.params) ? input.params : [input.params],
-      )
-      const cacheResult = options.ctx.cache.get(cacheKey)
-
-      if (cacheResult != null) {
+      if (options.ctx.cache.has(options.calls[idx].__cache_key)) {
         return {
           input: options.calls[idx],
           success: true,
-          output: cacheResult,
+          output: options.ctx.cache.get(options.calls[idx].__cache_key),
         }
       }
 
-      options.ctx.cache.set(cacheKey, response.result)
+      options.ctx.cache.set(options.calls[idx].__cache_key, response.result)
     }
 
     if (allowFailure) {

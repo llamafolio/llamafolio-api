@@ -20,7 +20,6 @@ import {
   revalidateAllContracts,
 } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { InMemoryCache } from '@lib/cache'
 import { chainByChainId, chains, getRPCClient, type IChainInfo } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { toYYYYMMDD, unixFromDateTime, unixToYYYYMMDD } from '@lib/fmt'
@@ -36,7 +35,7 @@ import {
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 function help() {
-  console.log('pnpm run update-adapter-balances {adapter} {chain}')
+  console.log('npx tsx scripts/snapshot-adapters-balances.ts')
 }
 
 /**
@@ -229,7 +228,7 @@ async function processAdapter({
         return console.log('Done')
       }
 
-      ctx.cache = new InMemoryCache<string, any>()
+      ctx.cache = new Map<string, any>()
       ctx.blockNumber = dailyBlock.block_number
 
       const previousSnapshot = await getBalancesSnapshotStatus(adapter.id, chain.chainId, jobStatus.prevDate)
@@ -370,7 +369,7 @@ async function processAdapter({
     console.error('Failed')
     await sendSlackMessage(ctx, {
       level: 'error',
-      title: 'Failed to run update-adapter-balances',
+      title: 'Failed to run snapshot-adapters-balances',
       header: { Date: today },
       message: (error as any).message,
     })
@@ -380,7 +379,7 @@ async function processAdapter({
 
 async function main() {
   // argv[0]: node_modules/.bin/tsx
-  // argv[1]: update-adapter-balances.ts
+  // argv[1]: snapshot-adapters-balances.ts
   if (process.argv.length < 2) {
     console.error('Missing arguments')
     return help()

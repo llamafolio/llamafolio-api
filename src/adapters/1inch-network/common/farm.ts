@@ -68,7 +68,9 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
       multicall({
         ctx,
         calls: pools.flatMap((pool) =>
-          pool.underlyings!.map((_, idx) => ({ target: pool.address, params: [BigInt(idx), ctx.address] }) as const),
+          (pool.underlyings || []).map(
+            (_, idx) => ({ target: pool.address, params: [BigInt(idx), ctx.address] }) as const,
+          ),
         ),
         abi: abi.earned,
       }),
@@ -80,7 +82,7 @@ export async function getInchBalances(ctx: BalancesContext, pools: Contract[]): 
       multicall({
         ctx,
         calls: pools.flatMap((pool) =>
-          pool.underlyings!.map(
+          (pool.underlyings || []).map(
             (underlying) => ({ target: pool.token, params: [(underlying as Contract).address] }) as const,
           ),
         ),
