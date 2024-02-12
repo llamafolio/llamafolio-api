@@ -5,25 +5,11 @@ import { multicall } from '@lib/multicall'
 const abi = {
   farmed: {
     inputs: [
-      {
-        internalType: 'contract IERC20',
-        name: 'rewardsToken',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
+      { internalType: 'contract IERC20', name: 'rewardsToken', type: 'address' },
+      { internalType: 'address', name: 'account', type: 'address' },
     ],
     name: 'farmed',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
   },

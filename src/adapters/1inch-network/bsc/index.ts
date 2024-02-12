@@ -1,14 +1,13 @@
+import { getInchBalances } from '@adapters/1inch-network/common/farm'
+import { get1InchLpBalances } from '@adapters/1inch-network/common/lp'
+import { get1InchFarmPools, get1InchPools } from '@adapters/1inch-network/common/pool'
+import { getInchStakingBalances } from '@adapters/1inch-network/common/stake'
 import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-import { getInchFarmingPools, getInchPools } from '../common/contract'
-import { getInchBalances } from '../common/farm'
-import { getLpInchBalances } from '../common/lp'
-import { getInchStakingBalances } from '../common/stake'
-
 const farmingPoolsAddresses: `0x${string}`[] = ['0x5d0ec1f843c1233d304b96dbde0cab9ec04d71ef']
 
-const poolDeployer: Contract = {
+const factory: Contract = {
   chain: 'bsc',
   address: '0xd41b24bba51fac0e4827b6f94c0d6ddeb183cd64',
 }
@@ -23,8 +22,8 @@ const staker: Contract = {
 
 export const getContracts = async (ctx: BaseContext) => {
   const [pools, farmingPools] = await Promise.all([
-    getInchPools(ctx, poolDeployer),
-    getInchFarmingPools(ctx, farmingPoolsAddresses),
+    get1InchPools(ctx, factory),
+    get1InchFarmPools(ctx, farmingPoolsAddresses),
   ])
 
   return {
@@ -35,7 +34,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: getLpInchBalances,
+    pools: get1InchLpBalances,
     farmingPools: getInchBalances,
     staker: getInchStakingBalances,
   })
