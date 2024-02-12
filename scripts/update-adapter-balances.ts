@@ -15,7 +15,6 @@ import {
   revalidateAllContracts,
 } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { InMemoryCache } from '@lib/cache'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { toYYYYMMDD, unixFromDateTime, unixToYYYYMMDD } from '@lib/fmt'
 
@@ -217,7 +216,7 @@ async function main() {
       return console.log('Done')
     }
 
-    const cache = new InMemoryCache<string, any>()
+    const cache = new Map<string, any>()
 
     const previousSnapshot = await getBalancesSnapshotStatus(adapterId, chainId, jobStatus.prevDate)
 

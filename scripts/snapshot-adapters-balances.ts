@@ -20,7 +20,6 @@ import {
   revalidateAllContracts,
 } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { InMemoryCache } from '@lib/cache'
 import { chainByChainId, chains, getRPCClient, type IChainInfo } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { toYYYYMMDD, unixFromDateTime, unixToYYYYMMDD } from '@lib/fmt'
@@ -229,7 +228,7 @@ async function processAdapter({
         return console.log('Done')
       }
 
-      ctx.cache = new InMemoryCache<string, any>()
+      ctx.cache = new Map<string, any>()
       ctx.blockNumber = dailyBlock.block_number
 
       const previousSnapshot = await getBalancesSnapshotStatus(adapter.id, chain.chainId, jobStatus.prevDate)
