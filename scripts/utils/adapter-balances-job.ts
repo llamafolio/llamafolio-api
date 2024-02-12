@@ -11,6 +11,7 @@ export interface JobStatus {
   // YYYY-MM-DD
   date: string
   version?: number
+  error?: string
 }
 
 /**

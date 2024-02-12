@@ -253,14 +253,15 @@ export async function getDailyContractsInteractions(
           "to_address" AS "holder"
         FROM evm_indexer2.token_transfers
         WHERE
-          chain = {chainId: UInt64} AND
+          "chain" = {chainId: UInt64} AND
           toDate("timestamp") = toDate({day: String}) AND
           ("address_short", "address") IN (
             SELECT
               substring("address",1,10),
               "address"
             FROM "protocol_contracts"
-          )
+          ) AND
+          "holder" <> '0x0000000000000000000000000000000000000000'
       ),
       "daily_interactions" AS (
         SELECT
