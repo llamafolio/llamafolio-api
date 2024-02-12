@@ -18,6 +18,7 @@ import type { PublicClient } from 'viem'
 export interface BaseContext {
   logger?: Logger
   module?: string
+  failThrough?: boolean
   cache?: Cache<string, any>
   client: PublicClient
   chain: Chain

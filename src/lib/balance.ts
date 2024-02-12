@@ -207,6 +207,9 @@ export async function resolveBalances<C extends GetContractsHandler>(
           const balances = await resolver(ctx, contracts[contractKey]!)
           return balances
         } catch (error) {
+          if (ctx.failThrough) {
+            throw error
+          }
           // Catch execution errors in adapters getBalances
           console.error(`[${ctx.adapterId}][${ctx.chain}] resolver ${contractKey} failed`, error)
           return null
