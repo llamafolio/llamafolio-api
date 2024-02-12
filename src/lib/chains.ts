@@ -360,6 +360,7 @@ export function getRPCClient(options: RPCClientOptions): PublicClient {
       return createPublicClient({
         chain: viemChains.bsc,
         transport: fallback([
+          http('https://bsc-pokt.nodies.app', httpTransportConfig),
           http('https://bsc-dataseed.binance.org/', httpTransportConfig),
           http('https://bsc-dataseed1.ninicoin.io/', httpTransportConfig),
         ]),

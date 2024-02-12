@@ -1,11 +1,11 @@
+import { get1InchFarmPools, get1InchPools } from '@adapters/1inch-network/common/pool'
 import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import type { Token } from '@lib/token'
 
-import { getInchFarmingPools, getInchPools } from '../common/contract'
 import { getInchBalances } from '../common/farm'
 import { getInchLockerBalances } from '../common/locker'
-import { getLpInchBalances } from '../common/lp'
+import { get1InchLpBalances } from '../common/lp'
 import { getInchStakingBalances } from '../common/stake'
 
 const Inch: Token = {
@@ -76,8 +76,8 @@ const locker: Contract = {
 
 export const getContracts = async (ctx: BaseContext) => {
   const [pools, farmingPools] = await Promise.all([
-    getInchPools(ctx, poolDeployer),
-    getInchFarmingPools(ctx, farmingPoolsAddresses),
+    get1InchPools(ctx, poolDeployer),
+    get1InchFarmPools(ctx, farmingPoolsAddresses),
   ])
 
   return {
@@ -88,7 +88,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: getLpInchBalances,
+    pools: get1InchLpBalances,
     farmingPools: getInchBalances,
     staker: getInchStakingBalances,
     locker: (...args) => getInchLockerBalances(...args, rewarders),

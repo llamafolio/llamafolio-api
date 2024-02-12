@@ -1,7 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
-import { ADDRESS_ZERO } from '@lib/contract'
+import { mapMultiSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   getBalanceForAddition: {
@@ -25,15 +26,10 @@ const abi = {
   },
 } as const
 
-const ADDRESS: { [key: string]: `0x${string}` } = {
-  ethereum: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-  bsc: '0x55f5af28075f37e6e02d0c741e268e462215ca33',
-}
+export async function get1InchLpBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
+  console.log(pools)
 
-export async function getLpInchBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
-  const balances: Balance[] = []
-
-  const [balanceOfsRes, totalSuppliesRes, getUnderlyingsBalancesRes] = await Promise.all([
+  const [shareBalances, totalSupplies, underlying0Balances, underlying1Balances] = await Promise.all([
     multicall({
       ctx,
       calls: pools.map((pool) => ({ target: pool.address, params: [ctx.address] }) as const),
@@ -42,51 +38,44 @@ export async function getLpInchBalances(ctx: BalancesContext, pools: Contract[])
     multicall({ ctx, calls: pools.map((pool) => ({ target: pool.address })), abi: erc20Abi.totalSupply }),
     multicall({
       ctx,
-      calls: pools.flatMap((pool) =>
-        pool.underlyings!.map(
-          (underlying) => ({ target: pool.address, params: [(underlying as Contract).address] }) as const,
-        ),
+      calls: pools.map(
+        (pool) => ({ target: pool.address, params: [(pool.underlyings![0] as Contract).address] }) as const,
+      ),
+      abi: abi.getBalanceForAddition,
+    }),
+    multicall({
+      ctx,
+      calls: pools.map(
+        (pool) => ({ target: pool.address, params: [(pool.underlyings![1] as Contract).address] }) as const,
       ),
       abi: abi.getBalanceForAddition,
     }),
   ])
 
-  pools.forEach((pool, poolIdx) => {
-    const balanceOfRes = balanceOfsRes[poolIdx]
-    const totalSupplyRes = totalSuppliesRes[poolIdx]
-    const underlyings = pool.underlyings as Contract[]
+  return mapMultiSuccessFilter(
+    shareBalances.map((_, i) => [shareBalances[i], totalSupplies[i], underlying0Balances[i], underlying1Balances[i]]),
 
-    if (!underlyings || !balanceOfRes.success || !totalSupplyRes.success || totalSupplyRes.output === 0n) {
-      return
-    }
+    (res, index) => {
+      const pool = pools[index]
+      const rawUderlyings = pool.underlyings as Contract[]
 
-    const balance: Balance = {
-      ...pool,
-      amount: balanceOfRes.output,
-      underlyings: [],
-      rewards: undefined,
-      category: 'lp',
-    }
+      const [{ output: amount }, { output: supply }, { output: token0 }, { output: token1 }] = res.inputOutputPairs
+      if (supply === 0n) return null
 
-    underlyings.forEach((underlying, underlyingIdx) => {
-      const getUnderlyingsBalanceRes = getUnderlyingsBalancesRes[underlyingIdx]
+      const tokens = [token0, token1]
 
-      // replace native token alias
-      const underlyingAddress = underlying.address === ADDRESS_ZERO ? ADDRESS[ctx.chain] : underlying.address
-
-      const underlyingBalance =
-        getUnderlyingsBalanceRes.success && balanceOfRes.success && totalSupplyRes.success
-          ? (getUnderlyingsBalanceRes.output * balanceOfRes.output) / totalSupplyRes.output
-          : 0n
-
-      balance.underlyings!.push({
-        ...underlying,
-        address: underlyingAddress,
-        amount: underlyingBalance,
+      const underlyings = rawUderlyings.map((underlying, index) => {
+        const balance = (amount * tokens[index]) / supply
+        return { ...underlying, amount: balance }
       })
-    })
-    balances.push(balance)
-  })
 
-  return balances
+      return {
+        ...pool,
+        amount,
+        underlyings,
+        rewards: undefined,
+        category: 'lp',
+      }
+    },
+  ).filter(isNotNullish)
 }
