@@ -23,6 +23,7 @@ import { InMemoryCache } from '@lib/cache'
 import { chainByChainId, chains, getRPCClient } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { toYYYYMMDD, unixFromDateTime, unixToYYYYMMDD } from '@lib/fmt'
+import { sendSlackMessage } from '@lib/slack'
 
 import {
   getBalancesJobStatus,
@@ -351,6 +352,12 @@ async function processAdapter({ adapter, today }: { adapter: Adapter; today: str
     } catch (error) {
       jobStatus.error = (error as any).message
       await saveBalancesJobStatus(adapter.id, chain.chainId, jobStatus)
+      console.error('Failed')
+      await sendSlackMessage(ctx, {
+        level: 'error',
+        title: 'Failed to run update-adapter-balances',
+        message: (error as any).message,
+      })
       return
     }
   }
