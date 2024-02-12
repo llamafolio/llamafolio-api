@@ -356,6 +356,7 @@ async function processAdapter({ adapter, today }: { adapter: Adapter; today: str
       await sendSlackMessage(ctx, {
         level: 'error',
         title: 'Failed to run update-adapter-balances',
+        header: { Date: today },
         message: (error as any).message,
       })
       return
