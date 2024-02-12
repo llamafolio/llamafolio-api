@@ -43,7 +43,7 @@ export async function getLpInchBalances(ctx: BalancesContext, pools: Contract[])
     multicall({
       ctx,
       calls: pools.flatMap((pool) =>
-        pool.underlyings!.map(
+        (pool.underlyings || []).map(
           (underlying) => ({ target: pool.address, params: [(underlying as Contract).address] }) as const,
         ),
       ),
