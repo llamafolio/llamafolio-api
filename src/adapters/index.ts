@@ -173,6 +173,7 @@ import linearFinance from '@adapters/linear-finance'
 import liqee from '@adapters/liqee'
 import liquidCollective from '@adapters/liquid-collective'
 import liquidDriver from '@adapters/liquid-driver'
+import liquidFinance from '@adapters/liquid-finance'
 import liquity from '@adapters/liquity'
 import llamaAirforce from '@adapters/llama-airforce'
 import llamapay from '@adapters/llamapay'
@@ -556,6 +557,7 @@ export const adapters: Adapter[] = [
   liqee,
   liquidCollective,
   liquidDriver,
+  liquidFinance,
   liquity,
   llamaAirforce,
   llamapay,
