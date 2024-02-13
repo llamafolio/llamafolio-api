@@ -361,6 +361,7 @@ import verse from '@adapters/verse'
 import vesper from '@adapters/vesper'
 import virtuswap from '@adapters/virtuswap'
 import voltaClub from '@adapters/volta-club'
+import wagmi from '@adapters/wagmi'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
 import whiteheart from '@adapters/whiteheart'
@@ -741,6 +742,7 @@ export const adapters: Adapter[] = [
   vesper,
   virtuswap,
   voltaClub,
+  wagmi,
   wallet,
   wepiggy,
   whiteheart,
