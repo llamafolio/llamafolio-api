@@ -344,6 +344,7 @@ import truefi from '@adapters/truefi'
 import trufinProtocol from '@adapters/trufin-protocol'
 import trustswap from '@adapters/trustswap'
 import umamiFinance from '@adapters/umami-finance'
+import unicly from '@adapters/unicly'
 import uniswapV2 from '@adapters/uniswap-v2'
 import uniswapV3 from '@adapters/uniswap-v3'
 import unitus from '@adapters/unitus'
@@ -725,6 +726,7 @@ export const adapters: Adapter[] = [
   trufinProtocol,
   trustswap,
   umamiFinance,
+  unicly,
   uniswapV2,
   uniswapV3,
   unitus,
