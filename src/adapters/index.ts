@@ -1,5 +1,6 @@
 import _0vix from '@adapters/0vix'
 import _1inchNetwork from '@adapters/1inch-network'
+import _9inch from '@adapters/9inch'
 import aaveV2 from '@adapters/aave-v2'
 import aaveV3 from '@adapters/aave-v3'
 import abracadabra from '@adapters/abracadabra'
@@ -385,6 +386,7 @@ import type { Adapter } from '@lib/adapter'
 export const adapters: Adapter[] = [
   _0vix,
   _1inchNetwork,
+  _9inch,
   aaveV2,
   aaveV3,
   abracadabra,
