@@ -119,6 +119,7 @@ import fydeProtocol from '@adapters/fyde-protocol'
 import gainsNetwork from '@adapters/gains-network'
 import gambitTrade from '@adapters/gambit-trade'
 import gamma from '@adapters/gamma'
+import gammaswap from '@adapters/gammaswap'
 import gearbox from '@adapters/gearbox'
 import geist from '@adapters/geist'
 import genesisLrt from '@adapters/genesis-lrt'
@@ -503,6 +504,7 @@ export const adapters: Adapter[] = [
   gainsNetwork,
   gambitTrade,
   gamma,
+  gammaswap,
   gearbox,
   geist,
   genesisLrt,
