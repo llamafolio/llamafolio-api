@@ -194,6 +194,7 @@ import meanFinance from '@adapters/mean-finance'
 import mendiFinance from '@adapters/mendi-finance'
 import meritCircle from '@adapters/merit-circle'
 import mesher from '@adapters/mesher'
+import metaPool from '@adapters/meta-pool'
 import metronome from '@adapters/metronome'
 import mevProtocol from '@adapters/mev-protocol'
 import moonwell from '@adapters/moonwell'
@@ -576,6 +577,7 @@ export const adapters: Adapter[] = [
   mendiFinance,
   meritCircle,
   mesher,
+  metaPool,
   metronome,
   mevProtocol,
   moonwell,
