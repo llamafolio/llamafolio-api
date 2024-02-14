@@ -295,6 +295,15 @@ functions:
           path: /tokens/{chain}/{address}/yields
     timeout: 15
 
+  getLendBorrowMarkets:
+    handler: src/handlers/getLendBorrowMarkets.handler
+    description: Get lend & borrow markets
+    events:
+      - httpApi:
+          method: get
+          path: /tokens/{chain}/{address}/markets
+    timeout: 15
+
   scheduledRevalidateAdaptersContracts:
     handler: src/handlers/revalidateAdapters.scheduledRevalidateAdaptersContracts
     description: Revalidate expired adapters contracts
