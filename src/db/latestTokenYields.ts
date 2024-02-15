@@ -1,6 +1,6 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 
-export interface LendBorrowToken {
+export interface LatestTokenYields {
   chain: number
   adapter_id: string
   address: string
@@ -43,7 +43,7 @@ export async function selectLatestTokensYields(client: ClickHouseClient) {
   })
 
   const { data } = (await queryRes.json()) as {
-    data: LendBorrowToken[]
+    data: LatestTokenYields[]
   }
 
   return data
