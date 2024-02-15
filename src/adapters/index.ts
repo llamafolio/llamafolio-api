@@ -246,6 +246,7 @@ import polkastarter from '@adapters/polkastarter'
 import poolside from '@adapters/poolside'
 import popsicleFinance from '@adapters/popsicle-finance'
 import preonFinance from '@adapters/preon-finance'
+import primeStakedEth from '@adapters/prime-staked-eth'
 import prismaFinance from '@adapters/prisma-finance'
 import protectorateProtocol from '@adapters/protectorate-protocol'
 import proxy from '@adapters/proxy'
@@ -634,6 +635,7 @@ export const adapters: Adapter[] = [
   poolside,
   popsicleFinance,
   preonFinance,
+  primeStakedEth,
   prismaFinance,
   protectorateProtocol,
   proxy,
