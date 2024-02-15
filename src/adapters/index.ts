@@ -267,6 +267,7 @@ import reflexer from '@adapters/reflexer'
 import renzo from '@adapters/renzo'
 import reserve from '@adapters/reserve'
 import retro from '@adapters/retro'
+import rhinoFi from '@adapters/rhino.fi'
 import ribbonFinance from '@adapters/ribbon-finance'
 import rocketPool from '@adapters/rocket-pool'
 import rocketswapBase from '@adapters/rocketswap-base'
@@ -654,6 +655,7 @@ export const adapters: Adapter[] = [
   renzo,
   reserve,
   retro,
+  rhinoFi,
   ribbonFinance,
   rocketPool,
   rocketswapBase,
