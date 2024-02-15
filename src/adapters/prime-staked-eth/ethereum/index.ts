@@ -6,6 +6,7 @@ const primeETH: Contract = {
   chain: 'ethereum',
   address: '0x6ef3D766Dfe02Dc4bF04aAe9122EB9A0Ded25615',
   token: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
+  symbol: 'primeETH',
   category: 'stake',
 }
 
