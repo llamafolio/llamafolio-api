@@ -359,6 +359,7 @@ import valasFinance from '@adapters/valas-finance'
 import vapordex from '@adapters/vapordex'
 import vaultTech from '@adapters/vault-tech'
 import vectorFinance from '@adapters/vector-finance'
+import vectorReserve from '@adapters/vector-reserve'
 import velodromeV1 from '@adapters/velodrome-v1'
 import velodromeV2 from '@adapters/velodrome-v2'
 import venus from '@adapters/venus'
@@ -745,6 +746,7 @@ export const adapters: Adapter[] = [
   vapordex,
   vaultTech,
   vectorFinance,
+  vectorReserve,
   velodromeV1,
   velodromeV2,
   venus,
