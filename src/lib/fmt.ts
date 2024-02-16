@@ -72,6 +72,32 @@ export function parseAddresses(str: string) {
     .sort()
 }
 
+export function safeParseInt(data?: string | null, defaultValue = undefined) {
+  if (data == null) {
+    return defaultValue
+  }
+
+  const parsed = parseInt(data)
+  if (isNaN(parsed)) {
+    return defaultValue
+  }
+
+  return parsed
+}
+
+export function safeParseFloat(data?: string | null, defaultValue = undefined) {
+  if (data == null) {
+    return defaultValue
+  }
+
+  const parsed = parseFloat(data)
+  if (isNaN(parsed)) {
+    return defaultValue
+  }
+
+  return parsed
+}
+
 export function toStartOfDay(date: Date | string | number) {
   return dayjs(date).utc().startOf('day').toDate()
 }

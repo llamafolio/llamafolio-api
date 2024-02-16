@@ -295,13 +295,13 @@ functions:
           path: /tokens/{chain}/{address}/yields
     timeout: 15
 
-  getLendBorrowMarkets:
-    handler: src/handlers/getLendBorrowMarkets.handler
-    description: Get lend & borrow markets
+  getLendBorrow:
+    handler: src/handlers/getLendBorrow.handler
+    description: Get lend & borrow pools
     events:
       - httpApi:
           method: get
-          path: /tokens/{chain}/{address}/markets
+          path: /tokens/{chain}/{address}/lendBorrow
     timeout: 15
 
   scheduledRevalidateAdaptersContracts:
@@ -322,6 +322,13 @@ functions:
   scheduledUpdateGovernanceProposals:
     handler: src/handlers/updateGovernanceProposals.scheduledUpdateGovernanceProposals
     description: Scheduled update governance proposals
+    events:
+      # every new hour
+      - schedule: cron(0 * * * ? *)
+
+  scheduledUpdateLendBorrow:
+    handler: src/handlers/updateLendBorrow.scheduledUpdateLendBorrow
+    description: Scheduled update lend borrow
     events:
       # every new hour
       - schedule: cron(0 * * * ? *)
@@ -362,6 +369,11 @@ functions:
   updateCoingeckoCoins:
     handler: src/handlers/updateCoingeckoCoins.handler
     description: Update Coingecko coins
+    timeout: 300
+
+  updateLendBorrow:
+    handler: src/handlers/updateLendBorrow.handler
+    description: Update lend borrow
     timeout: 300
 
   updateProtocols:
