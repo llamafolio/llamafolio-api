@@ -7,6 +7,7 @@ type LambdaFunctionName =
   | 'revalidateAdapterContracts'
   | 'updateCoingeckoCoins'
   | 'updateGovernanceProposals'
+  | 'updateLendBorrow'
   | 'updateProtocols'
   | 'updateYields'
 
@@ -16,6 +17,7 @@ const lambdaFunctionNames: { [key in LambdaFunctionName]: string } = {
   revalidateAdapterContracts: `llamafolio-api-${STAGE}-revalidateAdapterContracts`,
   updateCoingeckoCoins: `llamafolio-api-${STAGE}-updateCoingeckoCoins`,
   updateGovernanceProposals: `llamafolio-api-${STAGE}-updateGovernanceProposals`,
+  updateLendBorrow: `llamafolio-api-${STAGE}-updateLendBorrow`,
   updateProtocols: `llamafolio-api-${STAGE}-updateProtocols`,
   updateYields: `llamafolio-api-${STAGE}-updateYields`,
 }
