@@ -166,6 +166,7 @@ import klimaDao from '@adapters/klima-dao'
 import kokonutSwap from '@adapters/kokonut-swap'
 import kommunitas from '@adapters/kommunitas'
 import kwenta from '@adapters/kwenta'
+import kyberswap from '@adapters/kyberswap'
 import layerbank from '@adapters/layerbank'
 import leonicornswap from '@adapters/leonicornswap'
 import levinswap from '@adapters/levinswap'
@@ -555,6 +556,7 @@ export const adapters: Adapter[] = [
   kokonutSwap,
   kommunitas,
   kwenta,
+  kyberswap,
   layerbank,
   leonicornswap,
   levinswap,
