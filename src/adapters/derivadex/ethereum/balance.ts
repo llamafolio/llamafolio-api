@@ -1,7 +1,7 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
-import { multicall, type Call } from '@lib/multicall'
+import { type Call, multicall } from '@lib/multicall'
 
 const abi = {
   getCurrentStakeByCollateralNameAndStaker: {
