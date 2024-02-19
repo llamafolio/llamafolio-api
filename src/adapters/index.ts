@@ -239,6 +239,7 @@ import peapodsFinance from '@adapters/peapods-finance'
 import pearlfi from '@adapters/pearlfi'
 import pendle from '@adapters/pendle'
 import perennial from '@adapters/perennial'
+import perion from '@adapters/perion'
 import perpetualProtocol from '@adapters/perpetual-protocol'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
@@ -630,6 +631,7 @@ export const adapters: Adapter[] = [
   pearlfi,
   pendle,
   perennial,
+  perion,
   perpetualProtocol,
   piedao,
   pikaProtocol,
