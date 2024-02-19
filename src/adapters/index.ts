@@ -90,6 +90,7 @@ import defiSwap from '@adapters/defi-swap'
 import definix from '@adapters/definix'
 import defiplaza from '@adapters/defiplaza'
 import deltaprime from '@adapters/deltaprime'
+import derivadex from '@adapters/derivadex'
 import dhedge from '@adapters/dhedge'
 import dineroPirexeth from '@adapters/dinero-pirexeth'
 import dyad from '@adapters/dyad'
@@ -480,6 +481,7 @@ export const adapters: Adapter[] = [
   definix,
   defiplaza,
   deltaprime,
+  derivadex,
   dhedge,
   dineroPirexeth,
   dyad,
