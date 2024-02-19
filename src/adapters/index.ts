@@ -382,6 +382,7 @@ import wombatExchange from '@adapters/wombat-exchange'
 import woofi from '@adapters/woofi'
 import x2y2 from '@adapters/x2y2'
 import yamaFinance from '@adapters/yama-finance'
+import yamatoProtocol from '@adapters/yamato-protocol'
 import yearnFinance from '@adapters/yearn-finance'
 import yieldflow from '@adapters/yieldflow'
 import yoshiExchange from '@adapters/yoshi-exchange'
@@ -774,6 +775,7 @@ export const adapters: Adapter[] = [
   woofi,
   x2y2,
   yamaFinance,
+  yamatoProtocol,
   yearnFinance,
   yieldflow,
   yoshiExchange,

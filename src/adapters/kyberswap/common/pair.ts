@@ -2,7 +2,7 @@ import type { Contract } from '@lib/adapter'
 import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { getPairsDetails, type Pair, type getPairsContractsParams } from '@lib/uniswap/v2/factory'
+import { type getPairsContractsParams, getPairsDetails, type Pair } from '@lib/uniswap/v2/factory'
 
 const abi = {
   allPools: {
