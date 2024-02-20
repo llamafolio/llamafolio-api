@@ -1,7 +1,8 @@
-import type { Balance, BalancesContext, Contract, LockBalance } from '@lib/adapter'
+import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter, rangeBI } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
+import { getSingleStakeBalance } from '@lib/stake'
 
 const abi = {
   earned: {
@@ -79,13 +80,16 @@ export async function getEqLockerBalance(ctx: BalancesContext, locker: Contract)
   }
 }
 
-export async function getxEqbLockerBalances(ctx: BalancesContext, locker: Contract): Promise<LockBalance[]> {
-  const userRedeemsLength = await call({
-    ctx,
-    target: locker.address,
-    params: [ctx.address],
-    abi: abi.getUserRedeemsLength,
-  })
+export async function getxEqbLockerBalances(ctx: BalancesContext, locker: Contract): Promise<Balance[]> {
+  const [userStakexEQB, userRedeemsLength] = await Promise.all([
+    getSingleStakeBalance(ctx, locker),
+    call({
+      ctx,
+      target: locker.address,
+      params: [ctx.address],
+      abi: abi.getUserRedeemsLength,
+    }),
+  ])
 
   const userRedeem = await multicall({
     ctx,
@@ -93,7 +97,7 @@ export async function getxEqbLockerBalances(ctx: BalancesContext, locker: Contra
     abi: abi.userRedeems,
   })
 
-  return mapSuccessFilter(userRedeem, (res) => {
+  const lockBalances: Balance[] = mapSuccessFilter(userRedeem, (res) => {
     const [eqbAmount, xEqbAmount, endTime] = res.output
     const unlockAt = Number(endTime)
     const now = Date.now() / 1000
@@ -108,4 +112,6 @@ export async function getxEqbLockerBalances(ctx: BalancesContext, locker: Contra
       category: 'lock',
     }
   })
+
+  return [userStakexEQB, ...lockBalances]
 }
