@@ -59,6 +59,7 @@ import biswap from '@adapters/biswap'
 import blast from '@adapters/blast'
 import bloom from '@adapters/bloom'
 import blueberryLend from '@adapters/blueberry-lend'
+import blueprint from '@adapters/blueprint'
 import blur from '@adapters/blur'
 import capFinance from '@adapters/cap-finance'
 import catInABox from '@adapters/cat-in-a-box'
@@ -452,6 +453,7 @@ export const adapters: Adapter[] = [
   blast,
   bloom,
   blueberryLend,
+  blueprint,
   blur,
   capFinance,
   catInABox,
