@@ -12,14 +12,24 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  claimedMPendle: {
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'claimedMPendle',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 export async function getMagpieStaker(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [deposited] = await call({ ctx, target: staker.address, params: [ctx.address], abi: abi.userInfos })
+  const [[deposited], mPendle] = await Promise.all([
+    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.userInfos }),
+    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.claimedMPendle }),
+  ])
 
   return {
     ...staker,
-    amount: deposited,
+    amount: deposited - mPendle,
     underlyings: undefined,
     rewards: undefined,
     category: 'stake',
