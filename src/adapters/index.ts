@@ -244,6 +244,7 @@ import perion from '@adapters/perion'
 import perpetualProtocol from '@adapters/perpetual-protocol'
 import piedao from '@adapters/piedao'
 import pikaProtocol from '@adapters/pika-protocol'
+import pinguExchange from '@adapters/pingu-exchange'
 import platypusFinance from '@adapters/platypus-finance'
 import pods from '@adapters/pods'
 import polkastarter from '@adapters/polkastarter'
@@ -638,6 +639,7 @@ export const adapters: Adapter[] = [
   perpetualProtocol,
   piedao,
   pikaProtocol,
+  pinguExchange,
   platypusFinance,
   pods,
   polkastarter,
