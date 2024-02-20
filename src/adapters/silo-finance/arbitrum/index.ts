@@ -26,6 +26,10 @@ const siloVaults: `0x${string}`[] = [
   '0xd713ef310351055af26c6d3e20c4e629090c39a5',
   '0xe60bb5f4795c829f0a917b2f847e21a748d0e36c',
   '0xf60b7c2d1fb0ba86fe20baf86d04df738acfe577',
+  '0x6036beb05ff71215d1257fc1db1586c87746464f',
+  '0xe5741b993dbee7b433c1cfd0c885bab901dd406d',
+  '0x5c2b80214c1961db06f69dd4128bcffc6423d44f',
+  '0x30c4aa967f68705ab5677ebe17b3affd0c59e71c',
 ]
 
 const rawRouters: Contract[] = [{ chain: 'arbitrum', address: '0x9992f660137979C1ca7f8b119Cd16361594E3681' }]
