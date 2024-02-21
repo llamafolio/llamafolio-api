@@ -142,6 +142,7 @@ import gro from '@adapters/gro'
 import gyro from '@adapters/gyro'
 import hectorNetwork from '@adapters/hector-network'
 import hex from '@adapters/hex'
+import hmx from '@adapters/hmx'
 import homoraV2 from '@adapters/homora-v2'
 import honeyswap from '@adapters/honeyswap'
 import hopProtocol from '@adapters/hop-protocol'
@@ -537,6 +538,7 @@ export const adapters: Adapter[] = [
   gyro,
   hectorNetwork,
   hex,
+  hmx,
   homoraV2,
   honeyswap,
   hopProtocol,
