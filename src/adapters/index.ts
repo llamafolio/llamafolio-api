@@ -296,6 +296,7 @@ import siloFinance from '@adapters/silo-finance'
 import smardex from '@adapters/smardex'
 import smoothy from '@adapters/smoothy'
 import snowbank from '@adapters/snowbank'
+import solidWorld from '@adapters/solid-world'
 import solidlizard from '@adapters/solidlizard'
 import solidlyV2 from '@adapters/solidly-v2'
 import solvProtocol from '@adapters/solv-protocol'
@@ -693,6 +694,7 @@ export const adapters: Adapter[] = [
   smardex,
   smoothy,
   snowbank,
+  solidWorld,
   solidlizard,
   solidlyV2,
   solvProtocol,
