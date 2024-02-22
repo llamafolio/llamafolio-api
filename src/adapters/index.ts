@@ -258,6 +258,7 @@ import protectorateProtocol from '@adapters/protectorate-protocol'
 import proxy from '@adapters/proxy'
 import pstakeFinance from '@adapters/pstake-finance'
 import pufferFinance from '@adapters/puffer-finance'
+import qidao from '@adapters/qidao'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
 import radiantV2 from '@adapters/radiant-v2'
@@ -654,6 +655,7 @@ export const adapters: Adapter[] = [
   proxy,
   pstakeFinance,
   pufferFinance,
+  qidao,
   quickswapDex,
   radiantV1,
   radiantV2,
