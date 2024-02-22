@@ -1,6 +1,3 @@
-import { client } from '@db/clickhouse'
-import { selectContracts } from '@db/contracts'
-import environment from '@environment'
 import type { BaseContext, BaseContract, Contract, RawContract } from '@lib/adapter'
 import { keyBy } from '@lib/array'
 import { type Chain, chainById } from '@lib/chains'
@@ -91,27 +88,8 @@ export async function resolveContractsTokens(
     }
   }
 
-  let tokenByAddress: { [address: string]: Contract } = {}
-
-  if (environment.CLICKHOUSE_HOST) {
-    // cross-reference contracts defined by other adapters to build up a tree of underlyings
-    const tokens = await selectContracts(client, chainById[ctx.chain].chainId, [...tokenAddresses])
-    tokenByAddress = keyBy(tokens, 'address', { lowercase: true })
-  }
-
-  // fetch missing ERC20 on-chain (won't get extra data but will be able to move forward)
-  // NOTE: could be fetched using our tokens indexer
-  const missingTokenAddresses = new Set<`0x${string}`>()
-  for (const token of tokenAddresses) {
-    if (tokenByAddress[token] == null) {
-      missingTokenAddresses.add(token)
-    }
-  }
-
-  const missingTokens = await getERC20Details(ctx, [...missingTokenAddresses])
-  for (const missingToken of missingTokens) {
-    tokenByAddress[missingToken.address.toLowerCase()] = missingToken as Contract
-  }
+  const tokens = (await getERC20Details(ctx, [...tokenAddresses])) as Contract[]
+  const tokenByAddress = keyBy(tokens, 'address', { lowercase: true })
 
   // map back and filter entries if missing tokens
   // NOTE: there shouldn't be missing underlyings or rewards, that means we failed somewhere
