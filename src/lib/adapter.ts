@@ -6,6 +6,7 @@ import {
   selectNonDuplicateAdaptersContracts,
 } from '@db/adapters'
 import { flattenContracts, insertAdaptersContracts } from '@db/contracts'
+import { sliceIntoChunks } from '@lib/array'
 import type { Cache } from '@lib/cache'
 import type { Category } from '@lib/category'
 import { type Chain, chainById, getRPCClient } from '@lib/chains'
@@ -298,24 +299,27 @@ export async function revalidateAdapterContracts(
     ...contract,
   }))
 
-  // prevent duplicates (contracts table is append-only)
-  const nonDuplicateAdaptersContracts = await selectNonDuplicateAdaptersContracts(
-    client,
-    adapter.id,
-    chainId,
-    adapterContracts,
-  )
+  const adapterContractsSlices = sliceIntoChunks(adapterContracts, 1_000)
 
-  console.log(`Skipped ${adapterContracts.length - nonDuplicateAdaptersContracts.length} already existing contracts`)
+  let newInsertedCount = 0
 
-  if (nonDuplicateAdaptersContracts.length === 0) {
+  for (const slice of adapterContractsSlices) {
+    // prevent duplicates (contracts table is append-only)
+    const nonDuplicateAdaptersContracts = await selectNonDuplicateAdaptersContracts(client, adapter.id, chainId, slice)
+
+    newInsertedCount += nonDuplicateAdaptersContracts.length
+
+    await insertAdaptersContracts(client, nonDuplicateAdaptersContracts)
+  }
+
+  console.log(`Skipped ${adapterContracts.length - newInsertedCount} already existing contracts`)
+
+  console.log(`Inserting ${newInsertedCount} new contracts`)
+
+  if (newInsertedCount === 0) {
     // already stored, stop recursion
     return null
   }
-
-  console.log(`Inserting ${nonDuplicateAdaptersContracts.length} new contracts`)
-
-  await insertAdaptersContracts(client, nonDuplicateAdaptersContracts)
 
   return newAdapter
 }
