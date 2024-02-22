@@ -30,8 +30,8 @@ dependencies:
     specifier: ^4.17.21
     version: 4.17.21
   viem:
-    specifier: ^2.7.8
-    version: 2.7.8(typescript@5.2.2)(zod@3.22.2)
+    specifier: ^2.7.12
+    version: 2.7.12(typescript@5.2.2)(zod@3.22.2)
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -6720,8 +6720,8 @@ packages:
       - supports-color
     dev: true
 
-  /viem@2.7.8(typescript@5.2.2)(zod@3.22.2):
-    resolution: {integrity: sha512-5r5pkBDBmihCvMx4b3MqtP0FoZCRWE2ML1DssU80+vhJQur0PKd4yHdLbbvoiGGVD6bYiA394juhfdSvXIGgFA==}
+  /viem@2.7.12(typescript@5.2.2)(zod@3.22.2):
+    resolution: {integrity: sha512-NbV+Bycw0I4X8y6A04mgJ6+Imt7xXwflgnqisR3JXoJRNc77YSaQCscFN/dmwGLESTkgegJvi+j4nZY32GTpwQ==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
