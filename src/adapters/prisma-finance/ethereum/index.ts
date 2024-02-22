@@ -2,19 +2,28 @@ import {
   getPrismaFarmBalance,
   getPrismaFarmBalancesFromConvex,
   getPrismaFarmBalancesFromCurve,
-  getPrismaLendBalances,
+  getPrismaLendMkusdBalances,
+  getPrismaLendUltraBalances,
 } from '@adapters/prisma-finance/ethereum/balance'
 import { getPrismaCRVContracts, getPrismaCVXContracts } from '@adapters/prisma-finance/ethereum/contract'
 import { getPrismaLockerBalance } from '@adapters/prisma-finance/ethereum/locker'
 import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
-const farmer: Contract = {
-  chain: 'ethereum',
-  address: '0xed8b26d99834540c5013701bb3715fafd39993ba',
-  token: '0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28',
-  rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c'],
-}
+const singleFarmers: Contract[] = [
+  {
+    chain: 'ethereum',
+    address: '0xed8b26d99834540c5013701bb3715fafd39993ba',
+    token: '0x4591DBfF62656E7859Afe5e45f6f47D3669fBB28',
+    rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c'],
+  },
+  {
+    chain: 'ethereum',
+    address: '0x6953504f2f4537d7a7b4024508f321f7816bb6ed',
+    token: '0x35282d87011f87508D457F08252Bc5bFa52E10A0',
+    rewards: ['0xda47862a83dac0c112ba89c6abc2159b95afd71c'],
+  },
+]
 
 const locker: Contract = {
   chain: 'ethereum',
@@ -41,9 +50,10 @@ const farmersFromCurveAddresses: `0x${string}`[] = [
   '0x49cd193227a896f867afdb6a5edfb53a3ee7fb49',
   '0xa9aa35b5481a7b7936d1680911d478f7a639fe48',
   '0xbced0f33bedd1d325f069d5481c7076a5d0709a4',
+  '0xee4bd0e161d302c943b40b0a7efa0bcab4a4100f', //
 ]
 
-const vaults: Contract[] = [
+const mkusd_vaults: Contract[] = [
   {
     chain: 'ethereum',
     address: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
@@ -64,6 +74,24 @@ const vaults: Contract[] = [
     address: '0xac3E018457B222d93114458476f3E3416Abbe38F',
     troves: '0xf69282a7e7ba5428f92F610E7AFa1C0ceDC4E483',
   },
+  {
+    chain: 'ethereum',
+    address: '0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0',
+    troves: '0x1cc79f3f47bfc060b6f761fcd1afc6d399a968b6',
+  },
+  {
+    chain: 'ethereum',
+    address: '0xac3E018457B222d93114458476f3E3416Abbe38F',
+    troves: '0xc2545c68a71f6803264bde885870fd72d361fb9e',
+  },
+]
+
+const ultra_vaults: Contract[] = [
+  {
+    chain: 'ethereum',
+    address: '0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee',
+    troves: '0xf1c45c7b1f798302d29390d90d4dac38137352b1',
+  },
 ]
 
 export const getContracts = async (ctx: BaseContext) => {
@@ -73,15 +101,16 @@ export const getContracts = async (ctx: BaseContext) => {
   ])
 
   return {
-    contracts: { vaults, farmer, farmersFromConvex, farmersFromCurve, locker },
+    contracts: { mkusd_vaults, ultra_vaults, singleFarmers, farmersFromConvex, farmersFromCurve, locker },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  const [vaultsBalancesGroups, balances] = await Promise.all([
-    getPrismaLendBalances(ctx, contracts.vaults || []),
+  const [mkusdVaultsBalancesGroups, ultraVaultsBalancesGroups, balances] = await Promise.all([
+    getPrismaLendMkusdBalances(ctx, contracts.mkusd_vaults || []),
+    getPrismaLendUltraBalances(ctx, contracts.ultra_vaults || []),
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      farmer: getPrismaFarmBalance,
+      singleFarmers: getPrismaFarmBalance,
       locker: getPrismaLockerBalance,
       farmersFromCurve: getPrismaFarmBalancesFromCurve,
       farmersFromConvex: getPrismaFarmBalancesFromConvex,
@@ -89,7 +118,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   ])
 
   return {
-    groups: [...vaultsBalancesGroups, { balances }],
+    groups: [...mkusdVaultsBalancesGroups, ...ultraVaultsBalancesGroups, { balances }],
   }
 }
 

@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, BorrowBalance, Contract, LendBalance, RewardBalance } from '@lib/adapter'
 import { mapMultiSuccessFilter, mapSuccessFilter } from '@lib/array'
-import { call } from '@lib/call'
 import type { Category } from '@lib/category'
 import { getCurveUnderlyingsBalances } from '@lib/curve/helper'
 import { abi as erc20Abi } from '@lib/erc20'
@@ -78,6 +77,13 @@ const mkUSD: Token = {
   decimals: 18,
 }
 
+const ULTRA: Token = {
+  chain: 'ethereum',
+  address: '0x35282d87011f87508d457f08252bc5bfa52e10a0',
+  symbol: 'ULTRA',
+  decimals: 18,
+}
+
 const PRISMA: Token = {
   chain: 'ethereum',
   address: '0xda47862a83dac0c112ba89c6abc2159b95afd71c',
@@ -85,7 +91,7 @@ const PRISMA: Token = {
   decimals: 18,
 }
 
-export async function getPrismaLendBalances(ctx: BalancesContext, vaults: Contract[]) {
+export async function getPrismaLendMkusdBalances(ctx: BalancesContext, vaults: Contract[]) {
   const [userBalances, MCRs, pendingPrismasRes] = await Promise.all([
     multicall({
       ctx,
@@ -142,19 +148,93 @@ export async function getPrismaLendBalances(ctx: BalancesContext, vaults: Contra
   return balances
 }
 
-export async function getPrismaFarmBalance(ctx: BalancesContext, farmer: Contract): Promise<Balance> {
-  const [userBalance, pendingPrisma] = await Promise.all([
-    call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.accountDeposits }),
-    call({ ctx, target: farmer.address, params: [ctx.address], abi: abi.claimablePrisma }),
+export async function getPrismaLendUltraBalances(ctx: BalancesContext, vaults: Contract[]) {
+  const [userBalances, MCRs, pendingPrismasRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: vaults.map((vault) => ({ target: vault.troves, params: [ctx.address] }) as const),
+      abi: abi.Troves,
+    }),
+    multicall({
+      ctx,
+      calls: vaults.map((vault) => ({ target: vault.troves })),
+      abi: abi.MCR,
+    }),
+    multicall({
+      ctx,
+      calls: vaults.map((vault) => ({ target: vault.troves, params: [ctx.address] }) as const),
+      abi: abi.claimablePrisma,
+    }),
   ])
 
-  return {
-    ...farmer,
-    amount: userBalance[0],
-    underlyings: undefined,
-    rewards: [{ ...PRISMA, amount: pendingPrisma }],
-    category: 'farm',
-  }
+  const balances = mapSuccessFilter(userBalances, (res, idx) => {
+    const [debt, coll, _stake, _status, _arrayIndex, _activeInterestIndex] = res.output
+    const pendingPrisma = pendingPrismasRes[idx].success ? pendingPrismasRes[idx].output : 0n
+    const MCR = MCRs[idx]
+
+    const lendBalance: LendBalance = {
+      ...vaults[idx],
+      amount: coll,
+      underlyings: undefined,
+      rewards: undefined,
+      category: 'lend',
+      MCR: MCR.output != null ? parseFloatBI(MCR.output, 18) : undefined,
+    }
+
+    const borrowBalance: BorrowBalance = {
+      ...ULTRA,
+      amount: debt,
+      underlyings: undefined,
+      rewards: undefined,
+      category: 'borrow',
+    }
+
+    const rewardBalance: RewardBalance = {
+      ...PRISMA,
+      amount: pendingPrisma!,
+      underlyings: undefined,
+      rewards: undefined,
+      category: 'reward',
+    }
+
+    return {
+      balances: [lendBalance, borrowBalance, rewardBalance],
+    }
+  })
+
+  return balances
+}
+
+export async function getPrismaFarmBalance(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
+  const [userBalances, pendingPrismas] = await Promise.all([
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: abi.accountDeposits,
+    }),
+    multicall({
+      ctx,
+      calls: farmers.map((farmer) => ({ target: farmer.address, params: [ctx.address] }) as const),
+      abi: abi.claimablePrisma,
+    }),
+  ])
+
+  return mapMultiSuccessFilter(
+    userBalances.map((_, i) => [userBalances[i], pendingPrismas[i]]),
+
+    (res, index) => {
+      const farmer = farmers[index]
+      const [{ output: balance }, { output: pendingPrisma }] = res.inputOutputPairs
+
+      return {
+        ...farmer,
+        amount: balance[0],
+        underlyings: undefined,
+        rewards: [{ ...PRISMA, amount: pendingPrisma }],
+        category: 'farm',
+      }
+    },
+  )
 }
 
 export async function getPrismaFarmBalancesFromConvex(ctx: BalancesContext, farmers: Contract[]): Promise<Balance[]> {
