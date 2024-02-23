@@ -27,6 +27,11 @@ const poolIds: `0x${string}`[] = [
   '0x9337a95dcb09d10abb33fdb955dd27b46e345f5510d54d9403f570f8f37b5983',
 ]
 
+const router: Contract = {
+  chain: 'ethereum',
+  address: '0xa7995f71aa11525db02fc2473c37dee5dbf55107',
+}
+
 const rawComptroller: Contract = {
   chain: 'ethereum',
   address: '0xbbbbbbbbbb9cc5e90e3b3af64bdaf62c37eeffcb',
@@ -74,21 +79,23 @@ export const getContracts = async (ctx: BaseContext) => {
     getMorphoAssets(ctx, rawComptroller, poolIds),
   ])
 
+  router.comptroller = comptroller
+
   return {
-    contracts: { pools, comptroller },
+    contracts: { pools, router },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balancesGroups, balances] = await Promise.all([
-    getMorphoLendBalances(ctx, contracts.comptroller!),
+    getMorphoLendBalances(ctx, contracts.router || undefined),
     resolveBalances<typeof getContracts>(ctx, contracts, {
       pools: getMorphoBalances,
     }),
   ])
 
   return {
-    groups: [...balancesGroups, { balances }],
+    groups: balancesGroups ? [...balancesGroups, { balances }] : [{ balances }],
   }
 }
 
