@@ -34,7 +34,12 @@ const abi = {
   },
 } as const
 
-export async function getMorphoLendBalances(ctx: BalancesContext, comptroller: Contract): Promise<Balance[]> {
+export async function getMorphoLendBalances(ctx: BalancesContext, router?: Contract): Promise<Balance[] | undefined> {
+  if (!router) return
+
+  const comptroller = router.comptroller
+  if (!comptroller) return
+
   const assets = groupBy(comptroller.assets, 'id')
 
   const [userPositions, positionsParams] = await Promise.all([
