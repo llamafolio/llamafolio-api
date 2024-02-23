@@ -1,8 +1,10 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import environment from '@environment'
 import type { Category } from '@lib/category'
+import { chainByChainId } from '@lib/chains'
 import { isDateTimeNullish, unixFromDateTime } from '@lib/fmt'
 import type { IProtocol } from '@lib/protocols'
+import { isNotNullish } from '@lib/type'
 
 export interface ProtocolStorage {
   name: string
@@ -28,8 +30,7 @@ export function fromRowStorage(protocolStorage: ProtocolStorage) {
     category: protocolStorage.category,
     slug: protocolStorage.slug,
     parent_slug: protocolStorage.parent_slug,
-    chain: protocolStorage.chain,
-    chains: protocolStorage.chains,
+    chains: protocolStorage.chains.map((chainId) => chainByChainId[parseInt(chainId)]?.id).filter(isNotNullish),
     symbol: protocolStorage.symbol || undefined,
     tvl: protocolStorage.tvl != null ? parseFloat(protocolStorage.tvl) : 0,
     twitter: protocolStorage.twitter || undefined,
@@ -46,7 +47,30 @@ export function fromStorage(protocolsStorage: ProtocolStorage[]) {
 
 export async function selectProtocols(client: ClickHouseClient) {
   const queryRes = await client.query({
-    query: 'SELECT * FROM lf.protocols FINAL;',
+    query: `
+      SELECT
+        p.name AS "name",
+        p.description AS "description",
+        p.url AS "url",
+        p.logo AS "logo",
+        p.category AS "category",
+        p.slug AS "slug",
+        p.symbol AS "symbol",
+        p.address AS "address",
+        p.tvl AS "tvl",
+        p.twitter AS "twitter",
+        a.chains AS "chains"
+      FROM (
+        SELECT * FROM ${environment.NS_LF}.protocols FINAL
+      ) AS "p"
+      LEFT JOIN (
+        SELECT
+          "id",
+          groupArray(chain) AS "chains"
+        FROM ${environment.NS_LF}.adapters
+        GROUP BY "id"
+      ) AS "a" ON p.slug = a.id;
+    `,
   })
 
   const res = (await queryRes.json()) as {
