@@ -84,8 +84,11 @@ export async function getSommelierLockBalances(ctx: BalancesContext, pools: Cont
     return responses.output
       .filter((res) => res.amount > 0n)
       .map((res) => {
+        const { amount, unbondTimestamp } = res
+        const unlockAt = Number(unbondTimestamp)
+
         const matchingPool = pools.find((pool) => pool.address === responses.input.target)
-        return matchingPool ? { ...matchingPool, amount: res.amount } : null
+        return matchingPool ? { ...matchingPool, unlockAt, amount } : null
       })
   })
     .filter(isNotNullish)
