@@ -1,5 +1,5 @@
 import { keyBy } from '@lib/array'
-import { chainById } from '@lib/chains'
+import { chainById, parseDefiLlamaChainAddress } from '@lib/chains'
 import { sum } from '@lib/math'
 import { isNotNullish } from '@lib/type'
 
@@ -121,7 +121,8 @@ async function fetchProtocolsConfig(adapterIds: string[]) {
       symbol: protocol.symbol,
       twitter: protocol.twitter,
       description: protocol.description,
-      address: protocol.address,
+      // maybe `chain:address`
+      address: parseDefiLlamaChainAddress(protocol.address).address,
       slug: getProtocolSlug(protocol.name),
     }))
 

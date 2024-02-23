@@ -300,6 +300,24 @@ export const fromDefiLlamaChain: { [key: string]: Chain } = {
   'zkSync Era': 'zksync-era',
 }
 
+/**
+ * @param address ex: 'base:0x000', '0x000'
+ */
+export const parseDefiLlamaChainAddress = (address?: string) => {
+  const parts = (address || '').split(':')
+
+  if (parts.length === 1) {
+    return { address: parts[0]?.toLowerCase(), chain: 'ethereum' }
+  }
+
+  const chainId = getChainId(parts[0].toLowerCase())
+  if (chainId != null) {
+    return { address: parts[1]?.toLowerCase(), chain: chainByChainId[chainId].id }
+  }
+
+  return { address: parts[1]?.toLowerCase(), chain: undefined }
+}
+
 export function getChainId(chain: string) {
   return (chainById[chain] || chainById[fromDefiLlamaChain[chain]] || chainByChainId[chain as unknown as number])
     ?.chainId
