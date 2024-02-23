@@ -76,7 +76,6 @@ export interface IProtocol {
   category: string
   slug: string
   parent_slug?: string
-  chain: string
   chains: string[]
   symbol?: string
   tvl: number
