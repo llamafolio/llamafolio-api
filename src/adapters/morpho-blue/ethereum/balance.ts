@@ -28,7 +28,7 @@ export async function getMorphoBalances(ctx: BalancesContext, morphos: Contract[
   return mapSuccessFilter(assetBalances, (res, index) => {
     const morpho = morphos[index]
     const underlying = morpho.underlyings![0] as Contract
-    const amount = res.input.params[0]
+    const amount = res.input.params![0]
 
     return {
       ...morpho,
