@@ -1,8 +1,12 @@
 /* eslint-disable security/detect-non-literal-fs-filename */
+/**
+ * TODO: Handle Proxy contracts implementations changes
+ */
 import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
 
+import { adapters } from '@adapters'
 import type { ClickHouseClient } from '@clickhouse/client'
 import { client } from '@db/clickhouse'
 import { getDailyContractsInteractions, groupContracts } from '@db/contracts'
@@ -15,8 +19,10 @@ import {
   revalidateAllContracts,
 } from '@lib/adapter'
 import { sliceIntoChunks } from '@lib/array'
-import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
+import { chainByChainId, chains, getRPCClient, type IChainInfo } from '@lib/chains'
+import { ADDRESS_ZERO } from '@lib/contract'
 import { toYYYYMMDD, unixFromDateTime, unixToYYYYMMDD } from '@lib/fmt'
+import { sendSlackMessage } from '@lib/slack'
 
 import {
   getBalancesJobStatus,
@@ -46,7 +52,6 @@ export interface BalancesSnapshotStatus {
   usersInflows: string[]
   // Users who were active before and fully exited their position
   usersOutflows: string[]
-  errors: string[]
 }
 
 export interface BalancesSnapshot {
@@ -153,38 +158,27 @@ function hasNonEmptyBalance(balancesConfig: BalancesConfig) {
   return false
 }
 
-async function main() {
-  // argv[0]: node_modules/.bin/tsx
-  // argv[1]: update-adapter-balances.ts
-  // argv[2]: adapter
-  // argv[3]: chain
-  if (process.argv.length < 4) {
-    console.error('Missing arguments')
-    return help()
+async function processAdapter({ adapter, today, chain }: { adapter: Adapter; today: string; chain: IChainInfo }) {
+  const chainAdapter = adapter[chain.id]
+  if (!chainAdapter) {
+    return
   }
 
   const startTime = Date.now()
-  // end of day today. "today" snapshot will be processed tomorrow
-  const today = toYYYYMMDD(new Date())
 
-  const adapterId = process.argv[2]
-  const chainId = getChainId(process.argv[3])
-  const chainInfo = chainByChainId[chainId]
-  if (chainInfo == null) {
-    return console.error(`Missing chain ${process.argv[3]}`)
+  console.log(`Start ${adapter.id} on ${chain.id}`)
+
+  const ctx: BalancesContext = {
+    chain: chain.id,
+    adapterId: adapter.id,
+    failThrough: true,
+    client: getRPCClient({
+      chain: chain.id,
+      httpTransportConfig: { batch: { batchSize: 1000, wait: 10 }, retryCount: 5, retryDelay: 15_000 },
+    }),
   }
 
-  const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
-  const adapter = module.default as Adapter
-
-  const chainAdapter = adapter[chainInfo.id]
-  if (!chainAdapter) {
-    return console.error(
-      `Chain ${chainInfo.id} not supported for adapter ${adapterId}. \nMaybe you forgot to add this chain to src/adapters/${adapterId}/index.ts ?`,
-    )
-  }
-
-  let jobStatus = await getBalancesJobStatus(adapterId, chainId)
+  let jobStatus = await getBalancesJobStatus(adapter.id, chain.chainId)
   if (jobStatus == null) {
     if (!chainAdapter.config.startDate) {
       return console.error(`Protocol "startDate" missing in adapter config`)
@@ -197,104 +191,113 @@ async function main() {
     }
   }
 
+  // Stop processing adapter if there's an uncaught error
+  if (jobStatus.error) {
+    return
+  }
+
   if (jobStatus.date === today) {
     return console.log('Done')
   }
 
-  // Update contracts
-  // NOTE: contracts are time independent (deployed anytime) but it's ok as
-  // past contracts interactions only occur for deployed contracts
-  await revalidateAllContracts(client, adapter, chainInfo.id)
+  try {
+    // Update contracts
+    // NOTE: contracts are time independent (deployed anytime) but it's ok as
+    // past contracts interactions only occur for deployed contracts
+    await revalidateAllContracts(client, adapter, chain.id)
 
-  // Daily tasks left inclusive [jobStatus.date, today[
-  const dailyBlocks = await getJobBlocksRange(client, adapterId, chainId, jobStatus.date)
+    // Daily tasks left inclusive [jobStatus.date, today[
+    const dailyBlocks = await getJobBlocksRange(client, adapter.id, chain.chainId, jobStatus.date)
 
-  for (let i = 0; i < dailyBlocks.length; i++) {
-    const dailyBlock = dailyBlocks[i]
-    // Snapshots are taken at "end of day" (last block minted yesterday)
-    if (dailyBlock.date === today) {
-      return console.log('Done')
-    }
+    for (let i = 0; i < dailyBlocks.length; i++) {
+      const dailyBlock = dailyBlocks[i]
+      // Snapshots are taken at "end of day" (last block minted yesterday)
+      if (dailyBlock.date === today) {
+        return console.log('Done')
+      }
 
-    const cache = new Map<string, any>()
+      ctx.cache = new Map<string, any>()
+      ctx.blockNumber = dailyBlock.block_number
 
-    const previousSnapshot = await getBalancesSnapshotStatus(adapterId, chainId, jobStatus.prevDate)
+      const previousSnapshot = await getBalancesSnapshotStatus(adapter.id, chain.chainId, jobStatus.prevDate)
 
-    console.log(`Date: ${dailyBlock.date}`)
-    const outputDir = path.join(
-      __dirname,
-      '..',
-      'internal',
-      'balances_snapshots',
-      adapter.id,
-      chainInfo.id,
-      dailyBlock.date,
-    )
-    if (!fs.existsSync(outputDir)) {
-      fs.mkdirSync(outputDir, { recursive: true })
-    }
+      console.log(`Date: ${dailyBlock.date}`)
+      const outputDir = path.join(
+        __dirname,
+        '..',
+        'internal',
+        'balances_snapshots',
+        adapter.id,
+        chain.id,
+        dailyBlock.date,
+      )
+      if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true })
+      }
 
-    // "active users" (users to revalidate) are users who previously used the protocol
-    // + users who interacted with the protocol during that day
-    const previousActiveUsers = new Set(previousSnapshot?.activeUsers || [])
-    const usersInflows = new Set<string>()
-    const usersOutflows = new Set<string>()
+      // "active users" (users to revalidate) are users who previously used the protocol
+      // + users who interacted with the protocol during that day
+      const previousActiveUsers = new Set(previousSnapshot?.activeUsers || [])
+      const usersInflows = new Set<string>()
+      const usersOutflows = new Set<string>()
 
-    console.log(`Prev active users: ${previousActiveUsers.size}`)
+      console.log(`Prev active users: ${previousActiveUsers.size}`)
 
-    const dailyContractsInteractions = await getDailyContractsInteractions(client, adapterId, chainId, jobStatus.date)
+      const dailyContractsInteractions = await getDailyContractsInteractions(
+        client,
+        adapter.id,
+        chain.chainId,
+        jobStatus.date,
+      )
 
-    const activeUsers = new Set(previousActiveUsers)
-    for (const user in dailyContractsInteractions) {
-      activeUsers.add(user)
-    }
+      const activeUsers = new Set(previousActiveUsers)
+      for (const user in dailyContractsInteractions) {
+        activeUsers.add(user)
+      }
 
-    const users = Array.from(activeUsers)
-    console.log(`Updating users: ${users.length}`)
+      const users = Array.from(activeUsers)
+      console.log(`Updating users: ${users.length}`)
 
-    const usersChunks = sliceIntoChunks(users, 500)
+      const usersChunks = sliceIntoChunks(users, 100)
 
-    const errors = new Set<string>()
+      for (const users of usersChunks) {
+        await Promise.all(
+          users.map(async (user) => {
+            // skip address zero
+            if (user === ADDRESS_ZERO) {
+              return
+            }
 
-    for (const users of usersChunks) {
-      await Promise.all(
-        users.map(async (user) => {
-          const previousBalancesSnapshot = await getBalancesSnapshot(adapterId, chainId, jobStatus!.prevDate, user)
+            ctx.address = user
 
-          const allContractsInteractions = previousBalancesSnapshot?.contracts || []
-          const contractsInteractions = dailyContractsInteractions[user] || []
+            const previousBalancesSnapshot = await getBalancesSnapshot(
+              adapter.id,
+              chain.chainId,
+              jobStatus!.prevDate,
+              user,
+            )
 
-          // "merge" new daily contracts interactions with past contracts interactions
-          for (const contract of contractsInteractions) {
-            // prevent duplicate contracts
-            let has_contract = false
-            for (const prevContract of allContractsInteractions) {
-              if (
-                prevContract.__key === contract.__key &&
-                prevContract.address === contract.address &&
-                prevContract.token === contract.token
-              ) {
-                has_contract = true
-                break
+            const allContractsInteractions = previousBalancesSnapshot?.contracts || []
+            const contractsInteractions = dailyContractsInteractions[user] || []
+
+            // "merge" new daily contracts interactions with past contracts interactions
+            for (const contract of contractsInteractions) {
+              // prevent duplicate contracts
+              let hasContract = false
+              for (const prevContract of allContractsInteractions) {
+                if (
+                  prevContract.__key === contract.__key &&
+                  prevContract.address === contract.address &&
+                  prevContract.token === contract.token
+                ) {
+                  hasContract = true
+                  break
+                }
               }
-            }
 
-            if (!has_contract) {
-              allContractsInteractions.push(contract)
-            }
-          }
-
-          try {
-            const ctx: BalancesContext = {
-              cache,
-              address: user as `0x${string}`,
-              chain: chainInfo.id,
-              adapterId,
-              blockNumber: dailyBlock.block_number,
-              client: getRPCClient({
-                chain: chainInfo.id,
-                httpTransportConfig: { batch: { batchSize: 1000, wait: 10 }, retryCount: 5, retryDelay: 15_000 },
-              }),
+              if (!hasContract) {
+                allContractsInteractions.push(contract)
+              }
             }
 
             const balancesConfig = await chainAdapter.getBalances(ctx, groupContracts(allContractsInteractions) || [])
@@ -309,7 +312,7 @@ async function main() {
               }
             } else {
               // Store balances snapshot
-              await saveBalancesSnapshot(adapterId, chainId, jobStatus!.date, user, {
+              await saveBalancesSnapshot(adapter.id, chain.chainId, jobStatus!.date, user, {
                 contracts: allContractsInteractions,
                 balancesConfig,
               })
@@ -319,39 +322,59 @@ async function main() {
                 usersInflows.add(user)
               }
             }
-          } catch (error) {
-            errors.add(user)
-          }
-        }),
-      )
+          }),
+        )
+      }
+
+      console.log(`Active users: ${activeUsers.size}`)
+      console.log(`Users inflows: ${usersInflows.size}`)
+      console.log(`Users outflows: ${usersOutflows.size}`)
+
+      await saveBalancesSnapshotStatus(adapter.id, chain.chainId, dailyBlock.date, {
+        activeUsers: Array.from(activeUsers),
+        usersInflows: Array.from(usersInflows),
+        usersOutflows: Array.from(usersOutflows),
+        date: dailyBlock.date,
+        prevDate: jobStatus.prevDate,
+      })
+
+      jobStatus.prevDate = jobStatus.date
+      jobStatus.date = i < dailyBlocks.length - 1 ? dailyBlocks[i + 1].date : today
+      jobStatus.error = undefined
+
+      await saveBalancesJobStatus(adapter.id, chain.chainId, jobStatus)
+
+      const endTime = Date.now()
+      console.log(`Completed in ${endTime - startTime}ms`)
     }
-
-    // TODO: errors retries
-    // TODO: should probably throw earlier on errors, and just fix them as it'll mess up with the rest of the process
-    if (errors.size > 0) {
-      console.error(`Errors: ${errors.size}`)
-    }
-
-    console.log(`Active users: ${activeUsers.size}`)
-    console.log(`Users inflows: ${usersInflows.size}`)
-    console.log(`Users outflows: ${usersOutflows.size}`)
-
-    await saveBalancesSnapshotStatus(adapterId, chainId, dailyBlock.date, {
-      activeUsers: Array.from(activeUsers),
-      usersInflows: Array.from(usersInflows),
-      usersOutflows: Array.from(usersOutflows),
-      date: dailyBlock.date,
-      errors: Array.from(errors),
-      prevDate: jobStatus.prevDate,
+  } catch (error) {
+    jobStatus.error = (error as any).message
+    await saveBalancesJobStatus(adapter.id, chain.chainId, jobStatus)
+    console.error('Failed')
+    await sendSlackMessage(ctx, {
+      level: 'error',
+      title: 'Failed to run update-adapter-balances',
+      message: (error as any).message,
     })
+    return
+  }
+}
 
-    jobStatus.prevDate = jobStatus.date
-    jobStatus.date = i < dailyBlocks.length - 1 ? dailyBlocks[i + 1].date : today
+async function main() {
+  // argv[0]: node_modules/.bin/tsx
+  // argv[1]: update-adapter-balances.ts
+  if (process.argv.length < 2) {
+    console.error('Missing arguments')
+    return help()
+  }
 
-    await saveBalancesJobStatus(adapterId, chainId, jobStatus)
+  // end of day today. "today" snapshot will be processed tomorrow
+  const today = toYYYYMMDD(new Date())
 
-    const endTime = Date.now()
-    console.log(`Completed in ${endTime - startTime}ms`)
+  for (const adapter of adapters) {
+    for (const chain of chains) {
+      await processAdapter({ adapter, today, chain })
+    }
   }
 }
 
