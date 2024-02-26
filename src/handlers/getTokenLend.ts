@@ -1,5 +1,5 @@
 import { client } from '@db/clickhouse'
-import { type LendBorrowPool, selectTokenLendPools } from '@db/lendBorrow'
+import { type LendPoolStorage, selectTokenLendPools } from '@db/lendBorrow'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { keyBy } from '@lib/array'
@@ -9,8 +9,26 @@ import { parseAddress } from '@lib/fmt'
 import { isNotNullish, type UnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
+interface LendPool extends Omit<LendPoolStorage, 'underlyings' | 'rewards'> {
+  symbol?: string
+  decimals?: number
+  name?: string
+  underlyings: {
+    address: string
+    decimals?: number
+    symbol?: string
+    name?: string
+  }[]
+  rewards: {
+    address: string
+    decimals?: number
+    symbol?: string
+    name?: string
+  }[]
+}
+
 interface LendPoolResponse {
-  data: LendBorrowPool[]
+  data: LendPool[]
   count: number
   updatedAt?: UnixTimestamp
 }
@@ -96,8 +114,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       count: data.length,
     }
 
-    return success(response)
-    // return success(response, { maxAge: 60 * 60, swr: 60 })
+    return success(response, { maxAge: 60 * 60, swr: 60 })
   } catch (error) {
     console.error('Failed to find token lend pools', error)
     return serverError('Failed to find token lend pools', { error })
