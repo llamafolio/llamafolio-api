@@ -1,4 +1,3 @@
-import { getBenqiLockerBalances } from '@adapters/benqi-staked-avax/avalanche/locker'
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
@@ -74,7 +73,7 @@ export async function getBenqiBalances(ctx: BalancesContext, contract: Contract)
     category: 'stake',
   }
 
-  const rawLockBalances: Balance[] = lockInfos.map((infos) => {
+  const rawLockBalances: Balance[] = (lockInfos || []).map((infos) => {
     const now = Date.now() / 1000
     const { startedAt, shareAmount } = infos
     const unlockAt = Number(startedAt + cooldown)
@@ -106,6 +105,7 @@ export async function getBenqiBalances(ctx: BalancesContext, contract: Contract)
 
 async function getBenqiLockerBalances(ctx: BalancesContext, contract: Contract) {
   const positionLength = await call({ ctx, target: contract.address, params: [ctx.address], abi: abi.getRequestCount })
+  if (positionLength === 0n) return []
 
   return await call({
     ctx,
