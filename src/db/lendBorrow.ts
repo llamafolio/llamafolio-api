@@ -41,14 +41,14 @@ export async function fetchLendBorrowPools() {
   return json
 }
 
-export interface LendBorrowPool {
+export interface LendPoolStorage {
   chain: string
   chainId: number
   address: string
   pool: string
   adapterId: string
-  apyBaseBorrow?: number
-  apyRewardBorrow?: number
+  apyBaseLend?: number
+  apyRewardLend?: number
   totalSupplyUsd?: number
   totalBorrowUsd?: number
   debtCeilingUsd?: number
@@ -57,8 +57,8 @@ export interface LendBorrowPool {
   borrowable?: boolean
   symbol?: string
   decimals?: number
-  underlyings?: { address: string; symbol: string; decimals?: number }[]
-  rewards?: { address: string; symbol: string; decimals?: number }[]
+  underlyings?: string[]
+  rewards?: string[]
 }
 
 export interface BorrowPoolStorage {
@@ -148,13 +148,13 @@ export async function selectTokenLendPools(client: ClickHouseClient, chainId: nu
       borrowable: boolean | null
       symbol: string | null
       decimals: string | null
-      underlyings: [string, string, string][] | null
-      rewards: [string, string, string][] | null
+      underlyings: string[] | null
+      rewards: string[] | null
       updatedAt: string
     }[]
   }
 
-  const data: LendBorrowPool[] = []
+  const data: LendPoolStorage[] = []
   let updatedAt: UnixTimestamp | undefined
 
   for (const row of res.data) {
@@ -179,10 +179,9 @@ export async function selectTokenLendPools(client: ClickHouseClient, chainId: nu
       debtCeilingUsd: safeParseFloat(row.debtCeilingUsd),
       borrowFactor: safeParseFloat(row.borrowFactor),
       ltv: safeParseFloat(row.ltv),
-      symbol: row.symbol || undefined,
       decimals: safeParseInt(row.decimals),
-      underlyings: row.underlyings,
-      rewards: row.rewards,
+      underlyings: row.underlyings || undefined,
+      rewards: row.rewards || undefined,
     })
   }
 
@@ -269,8 +268,8 @@ export async function selectTokenBorrowPools(client: ClickHouseClient, chainId: 
       debtCeilingUsd: safeParseFloat(row.debtCeilingUsd),
       borrowFactor: safeParseFloat(row.borrowFactor),
       ltv: safeParseFloat(row.ltv),
-      underlyings: row.underlyings,
-      rewards: row.rewards,
+      underlyings: row.underlyings || undefined,
+      rewards: row.rewards || undefined,
     })
   }
 
