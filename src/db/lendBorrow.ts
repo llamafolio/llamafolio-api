@@ -1,7 +1,7 @@
 import type { ClickHouseClient } from '@clickhouse/client'
 import environment from '@environment'
 import { chainByChainId } from '@lib/chains'
-import { boolean, safeParseFloat, safeParseInt, unixFromDateTime } from '@lib/fmt'
+import { safeParseFloat, safeParseInt, unixFromDateTime } from '@lib/fmt'
 import type { UnixTimestamp } from '@lib/type'
 
 export interface LendBorrowPoolStorable
@@ -61,7 +61,27 @@ export interface LendBorrowPool {
   rewards?: { address: string; symbol: string; decimals?: number }[]
 }
 
-export async function selectLendBorrowPools(client: ClickHouseClient, chainId: number, token: string) {
+export interface BorrowPoolStorage {
+  chain: string
+  chainId: number
+  address: string
+  pool: string
+  adapterId: string
+  apyBaseBorrow?: number
+  apyRewardBorrow?: number
+  totalSupplyUsd?: number
+  totalBorrowUsd?: number
+  debtCeilingUsd?: number
+  borrowFactor?: number
+  ltv?: number
+  borrowable?: boolean
+  symbol?: string
+  decimals?: number
+  underlyings?: string[]
+  rewards?: string[]
+}
+
+export async function selectTokenLendPools(client: ClickHouseClient, chainId: number, token: string) {
   const queryRes = await client.query({
     query: `
       WITH "pools" AS (
@@ -69,113 +89,42 @@ export async function selectLendBorrowPools(client: ClickHouseClient, chainId: n
           "chain",
           "address",
           "pool",
-          argMax("adapterId", "timestamp") AS "lastAdapterId",
-          argMax("apyBaseBorrow", "timestamp") AS "lastApyBaseBorrow",
-          argMax("apyRewardBorrow", "timestamp") AS "lastApyRewardBorrow",
-          argMax("totalSupplyUsd", "timestamp") AS "lastTotalSupplyUsd",
-          argMax("totalBorrowUsd", "timestamp") AS "lastTotalBorrowUsd",
-          argMax("debtCeilingUsd", "timestamp") AS "lastDebtCeilingUsd",
-          argMax("borrowFactor", "timestamp") AS "lastBorrowFactor",
-          argMax("ltv", "timestamp") AS "lastLTV",
-          argMax("borrowable", "timestamp") AS "lastBorrowable",
-          argMax("underlyings", "timestamp") AS "lastUnderlyings",
-          argMax("rewards", "timestamp") AS "lastRewards",
+          argMax("adapterId", "timestamp") AS "adapterId",
+          argMax("totalSupplyUsd", "timestamp") AS "totalSupplyUsd",
+          argMax("totalBorrowUsd", "timestamp") AS "totalBorrowUsd",
+          argMax("debtCeilingUsd", "timestamp") AS "debtCeilingUsd",
+          argMax("borrowFactor", "timestamp") AS "borrowFactor",
+          argMax("ltv", "timestamp") AS "ltv",
+          argMax("underlyings", "timestamp") AS "underlyings",
+          argMax("rewards", "timestamp") AS "rewards",
           max("timestamp") AS "lastTimestamp"
         FROM ${environment.NS_LF}.lend_borrow
-        WHERE
-          "chain" = {chainId: UInt64} AND
-          has("underlyings", {token: String})
         GROUP BY "chain", "address", "pool"
-      ),
-      -- JOIN underlyings + rewards + address
-      "pools_underlying" AS (
-        SELECT *, "underlying" FROM "pools"
-        LEFT ARRAY JOIN "lastUnderlyings" AS "underlying"
-      ),
-      "pools_underlying_reward" AS (
-        SELECT *, "reward" FROM "pools_underlying"
-        LEFT ARRAY JOIN "lastRewards" AS "reward"
+        HAVING
+          "chain" = 1 AND
+          (
+            "address" = {token: String} OR
+            length("underlyings") = 1 AND "underlyings"[1] = {token: String}
+          ) AND
+          ("borrowable" IS NULL OR NOT "borrowable")
       )
       SELECT
-        p.chain AS "chain",
-        p.address AS "address",
-        p.pool AS "pool",
-        p.lastAdapterId AS "adapterId",
-        p.lastApyBaseBorrow AS "apyBaseBorrow",
-        p.lastApyRewardBorrow AS "apyRewardBorrow",
-        p.lastTotalSupplyUsd AS "totalSupplyUsd",
-        p.lastTotalBorrowUsd AS "totalBorrowUsd",
-        p.lastDebtCeilingUsd AS "debtCeilingUsd",
-        p.lastBorrowFactor AS "borrowFactor",
-        p.lastLTV AS "ltv",
-        p.lastBorrowable AS "borrowable",
-        p.lastTimestamp AS "updatedAt",
-        t.symbol AS "symbol",
-        t.decimals AS "decimals",
-        groupArray((p.underlying, u.symbol, u.decimals)) as "underlyings",
-        groupArray((p.reward, r.symbol, r.decimals)) as "rewards"
-      FROM "pools_underlying_reward" AS "p"
-      LEFT JOIN (
+        p.*,
+        y.apyBaseLend,
+        y.apyRewardLend
+      FROM "pools" AS "p"
+      INNER JOIN (
         SELECT
           "chain",
-          "address",
-          "symbol",
-          "decimals"
-        FROM evm_indexer2.tokens
-        WHERE ("chain", "address") IN (
-          SELECT "chain", "address"
-          FROM "pools_underlying_reward"
-          GROUP BY "chain", "address"
+          "pool",
+          argMax("apy_base", "timestamp") AS "apyBaseLend",
+          argMax("apy_reward", "timestamp") AS "apyRewardLend"
+        FROM ${environment.NS_LF}.yields
+        WHERE ("chain", "pool") IN (
+          SELECT "chain", "pool" FROM "pools" GROUP BY "chain", "pool"
         )
-        GROUP BY "chain", "address", "symbol", "decimals"
-      ) AS "t"
-      ON (p."chain", p."address") = (t."chain", t."address")
-      LEFT JOIN (
-        SELECT
-          "chain",
-          "address",
-          "symbol",
-          "decimals"
-        FROM evm_indexer2.tokens
-        WHERE ("chain", "address") IN (
-          SELECT "chain", "underlying"
-          FROM "pools_underlying_reward"
-          GROUP BY "chain", "underlying"
-        )
-        GROUP BY "chain", "address", "symbol", "decimals"
-      ) AS "u"
-      ON (p."chain", p."underlying") = (u."chain", u."address")
-      LEFT JOIN (
-        SELECT
-          "chain",
-          "address",
-          "symbol",
-          "decimals"
-        FROM evm_indexer2.tokens
-        WHERE ("chain", "address") IN (
-          SELECT "chain", "reward"
-          FROM "pools_underlying_reward"
-          GROUP BY "chain", "reward"
-        )
-        GROUP BY "chain", "address", "symbol", "decimals"
-      ) AS "r"
-      ON (p."chain", p."reward") = (r."chain", r."address")
-      GROUP BY
-        p.chain,
-        p.address,
-        p.pool,
-        p.lastAdapterId,
-        p.lastApyBaseBorrow,
-        p.lastApyRewardBorrow,
-        p.lastTotalSupplyUsd,
-        p.lastTotalBorrowUsd,
-        p.lastDebtCeilingUsd,
-        p.lastBorrowFactor,
-        p.lastLTV,
-        p.lastBorrowable,
-        p.lastTimestamp,
-        t.symbol,
-        t.decimals
+        GROUP BY "chain", "pool"
+      ) AS "y" ON (p.chain, p.pool) = (y.chain, y.pool)
     `,
     query_params: {
       chainId,
@@ -189,8 +138,8 @@ export async function selectLendBorrowPools(client: ClickHouseClient, chainId: n
       address: string
       pool: string
       adapterId: string
-      apyBaseBorrow: string | null
-      apyRewardBorrow: string | null
+      apyBaseLend: string | null
+      apyRewardLend: string | null
       totalSupplyUsd: string | null
       totalBorrowUsd: string | null
       debtCeilingUsd: string | null
@@ -223,6 +172,96 @@ export async function selectLendBorrowPools(client: ClickHouseClient, chainId: n
       address: row.address,
       pool: row.pool,
       adapterId: row.adapterId,
+      apyBaseLend: safeParseFloat(row.apyBaseLend),
+      apyRewardLend: safeParseFloat(row.apyRewardLend),
+      totalSupplyUsd: safeParseFloat(row.totalSupplyUsd),
+      totalBorrowUsd: safeParseFloat(row.totalBorrowUsd),
+      debtCeilingUsd: safeParseFloat(row.debtCeilingUsd),
+      borrowFactor: safeParseFloat(row.borrowFactor),
+      ltv: safeParseFloat(row.ltv),
+      symbol: row.symbol || undefined,
+      decimals: safeParseInt(row.decimals),
+      underlyings: row.underlyings,
+      rewards: row.rewards,
+    })
+  }
+
+  return { updatedAt, data }
+}
+
+export async function selectTokenBorrowPools(client: ClickHouseClient, chainId: number, token: string) {
+  const queryRes = await client.query({
+    query: `
+      SELECT
+        "chain",
+        "address",
+        "pool",
+        argMax("adapterId", "timestamp") AS "adapterId",
+        argMax("apyBaseBorrow", "timestamp") AS "apyBaseBorrow",
+        argMax("apyRewardBorrow", "timestamp") AS "apyRewardBorrow",
+        argMax("totalSupplyUsd", "timestamp") AS "totalSupplyUsd",
+        argMax("totalBorrowUsd", "timestamp") AS "totalBorrowUsd",
+        argMax("debtCeilingUsd", "timestamp") AS "debtCeilingUsd",
+        argMax("borrowFactor", "timestamp") AS "borrowFactor",
+        argMax("ltv", "timestamp") AS "ltv",
+        argMax("underlyings", "timestamp") AS "underlyings",
+        argMax("rewards", "timestamp") AS "rewards",
+        max("timestamp") AS "lastTimestamp"
+      FROM ${environment.NS_LF}.lend_borrow
+      GROUP BY "chain", "address", "pool"
+      HAVING
+        "chain" = {chainId: UInt64} AND
+        (
+          "address" = {token: String} OR
+          length("underlyings") = 1 AND "underlyings"[1] = {token: String}
+        ) AND
+        "borrowable"
+    `,
+    query_params: {
+      chainId,
+      token,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: {
+      chain: string
+      address: string
+      pool: string
+      adapterId: string
+      apyBaseBorrow: string | null
+      apyRewardBorrow: string | null
+      totalSupplyUsd: string | null
+      totalBorrowUsd: string | null
+      debtCeilingUsd: string | null
+      borrowFactor: string | null
+      ltv: string | null
+      symbol: string | null
+      decimals: string | null
+      underlyings: string[] | null
+      rewards: string[] | null
+      updatedAt: string
+    }[]
+  }
+
+  const data: BorrowPoolStorage[] = []
+  let updatedAt: UnixTimestamp | undefined
+
+  for (const row of res.data) {
+    const chainId = parseInt(row.chain)
+    const chain = chainByChainId[chainId]
+    if (!chain) {
+      continue
+    }
+
+    updatedAt = unixFromDateTime(row.updatedAt)
+
+    data.push({
+      chain: chain.id,
+      chainId,
+      address: row.address,
+      pool: row.pool,
+      adapterId: row.adapterId,
       apyBaseBorrow: safeParseFloat(row.apyBaseBorrow),
       apyRewardBorrow: safeParseFloat(row.apyRewardBorrow),
       totalSupplyUsd: safeParseFloat(row.totalSupplyUsd),
@@ -230,23 +269,8 @@ export async function selectLendBorrowPools(client: ClickHouseClient, chainId: n
       debtCeilingUsd: safeParseFloat(row.debtCeilingUsd),
       borrowFactor: safeParseFloat(row.borrowFactor),
       ltv: safeParseFloat(row.ltv),
-      borrowable: boolean(row.borrowable),
-      symbol: row.symbol || undefined,
-      decimals: safeParseInt(row.decimals),
-      underlyings: row.underlyings
-        ?.map(([address, symbol, decimals]) => ({
-          address,
-          symbol,
-          decimals: safeParseInt(decimals),
-        }))
-        ?.filter((underlying) => underlying.address),
-      rewards: row.rewards
-        ?.map(([address, symbol, decimals]) => ({
-          address,
-          symbol,
-          decimals: safeParseInt(decimals),
-        }))
-        ?.filter((reward) => reward.address),
+      underlyings: row.underlyings,
+      rewards: row.rewards,
     })
   }
 

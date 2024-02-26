@@ -295,13 +295,22 @@ functions:
           path: /tokens/{chain}/{address}/yields
     timeout: 15
 
-  getLendBorrow:
-    handler: src/handlers/getLendBorrow.handler
-    description: Get lend & borrow pools
+  getTokenLend:
+    handler: src/handlers/getTokenLend.handler
+    description: Get token lend pools
     events:
       - httpApi:
           method: get
-          path: /tokens/{chain}/{address}/lendBorrow
+          path: /tokens/{chain}/{address}/lend
+    timeout: 15
+
+  getTokenBorrow:
+    handler: src/handlers/getTokenBorrow.handler
+    description: Get token borrow pools
+    events:
+      - httpApi:
+          method: get
+          path: /tokens/{chain}/{address}/borrow
     timeout: 15
 
   scheduledRevalidateAdaptersContracts:
