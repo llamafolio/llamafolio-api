@@ -1,8 +1,10 @@
 import { selectLatestBalancesSnapshotByFromAddresses } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
-import type { Chain } from '@lib/chains'
+import type { BalancesContext } from '@lib/adapter'
+import { getRPCClient, type Chain } from '@lib/chains'
 import { parseAddresses } from '@lib/fmt'
+import { sendSlackMessage } from '@lib/slack'
 import type { UnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -33,6 +35,24 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     return success(lastBalancesGroups, { maxAge: 5 * 60, swr: 60 })
   } catch (error) {
     console.error('Failed to retrieve latest snapshot', error)
+
+    await Promise.all(
+      addresses.map(async (address) => {
+        const balancesContext: BalancesContext = {
+          chain: 'ethereum',
+          adapterId: '',
+          client: getRPCClient({ chain: 'ethereum' }),
+          address,
+        }
+
+        await sendSlackMessage(balancesContext, {
+          level: 'error',
+          title: 'Failed to retrieve latest snapshot',
+          message: (error as any).message,
+        })
+      }),
+    )
+
     return serverError('Failed to retrieve latest snapshot', { error })
   }
 }

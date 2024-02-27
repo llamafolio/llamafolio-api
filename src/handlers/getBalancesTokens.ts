@@ -9,9 +9,10 @@ import type { BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { sanitizeBalances, sanitizePricedBalances, sortBalances, sumBalances } from '@lib/balance'
 import type { Chain } from '@lib/chains'
-import { chainById, chains as allChains, getRPCClient } from '@lib/chains'
+import { chains as allChains, chainById, getRPCClient } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
 import { getPricedBalances } from '@lib/price'
+import { sendSlackMessage } from '@lib/slack'
 import { isNotNullish } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -52,6 +53,13 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     return badRequest('Invalid address parameter')
   }
 
+  const balancesContext: BalancesContext = {
+    chain: 'ethereum',
+    adapterId: '',
+    client: getRPCClient({ chain: 'ethereum' }),
+    address,
+  }
+
   try {
     const tokensByChain = await getWalletInteractions(client, address)
 
@@ -71,17 +79,17 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
         .map(async (chain) => {
           const handler = walletAdapter[chain as Chain]!
 
+          const ctx: BalancesContext = {
+            address,
+            chain: chain as Chain,
+            adapterId: walletAdapter.id,
+            client: getRPCClient({ chain: chain as Chain }),
+          }
+
           try {
             const hrstart = process.hrtime()
 
             const contracts = { erc20: tokensByChain[chain] }
-
-            const ctx: BalancesContext = {
-              address,
-              chain: chain as Chain,
-              adapterId: walletAdapter.id,
-              client: getRPCClient({ chain: chain as Chain }),
-            }
 
             console.log(`[${walletAdapter.id}][${chain}] getBalances ${tokensByChain[chain].length} contracts`)
 
@@ -98,6 +106,11 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
             return balancesConfig.groups[0].balances.map((balance) => ({ ...balance, chain: ctx.chain }))
           } catch (error) {
             console.error(`[${walletAdapter.id}][${chain}]: Failed to getBalances`, error)
+            await sendSlackMessage(ctx, {
+              level: 'error',
+              title: `[${walletAdapter.id}][${chain}]: Failed to getBalances`,
+              message: (error as any).message,
+            })
             return
           }
         }),
@@ -114,7 +127,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     const pricedBalances = await getPricedBalances(sanitizedBalances)
 
-    const sanitizedPricedBalances = sanitizePricedBalances(pricedBalances)
+    const sanitizedPricedBalances = sanitizePricedBalances(pricedBalances as PricedBalance[])
 
     const hrend = process.hrtime(hrstart)
 
@@ -148,6 +161,11 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     return success(balancesResponse, { maxAge: 20 })
   } catch (error) {
     console.error('Failed to retrieve balances', { error, address })
+    await sendSlackMessage(balancesContext, {
+      level: 'error',
+      title: 'Failed to retrieve balances',
+      message: (error as any).message,
+    })
     return serverError('Failed to retrieve balances', { error })
   }
 }

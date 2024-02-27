@@ -1,8 +1,10 @@
 import { client } from '@db/clickhouse'
 import { selectProtocolBalancesSnapshotsStatus, selectProtocolHoldersBalances } from '@db/protocols'
-import { badRequest, Message, serverError, success } from '@handlers/response'
-import { getChainId } from '@lib/chains'
+import { Message, badRequest, serverError, success } from '@handlers/response'
+import type { BaseContext } from '@lib/adapter'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { unixFromDateTime } from '@lib/fmt'
+import { sendSlackMessage } from '@lib/slack'
 import type { TUnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -35,6 +37,12 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const chainId = getChainId(event.queryStringParameters?.chain || 'ethereum')
   if (chainId == null) {
     return badRequest(`Unknown chain ${event.queryStringParameters?.chain}`)
+  }
+
+  const baseContext: BaseContext = {
+    chain: chainByChainId[chainId].id,
+    adapterId: '',
+    client: getRPCClient({ chain: chainByChainId[chainId].id }),
   }
 
   try {
@@ -72,8 +80,13 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     }
 
     return success(response, { maxAge: 30 * 60 })
-  } catch (e) {
-    console.error('Failed to retrieve protocol holders', e)
+  } catch (error) {
+    console.error('Failed to retrieve protocol holders', error)
+    await sendSlackMessage(baseContext, {
+      level: 'error',
+      title: 'Failed to retrieve protocol holders',
+      message: (error as any).message,
+    })
     return serverError('Failed to retrieve protocol holders')
   }
 }

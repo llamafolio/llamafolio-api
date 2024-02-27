@@ -1,10 +1,12 @@
 import { client } from '@db/clickhouse'
 import { selectLatestTokensTransfers } from '@db/tokensTransfers'
 import { badRequest, serverError, success } from '@handlers/response'
-import { chainByChainId, getChainId } from '@lib/chains'
+import type { BalancesContext } from '@lib/adapter'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { parseAddress, unixFromDate } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenPrice } from '@lib/price'
+import { sendSlackMessage } from '@lib/slack'
 import type { Token } from '@lib/token'
 import type { UnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -47,6 +49,13 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const offset = parseInt(event.queryStringParameters?.offset || '') || 0
   const limit = parseInt(event.queryStringParameters?.limit || '') || 25
 
+  const balancesContext: BalancesContext = {
+    chain: chainByChainId[chainId].id,
+    adapterId: '',
+    client: getRPCClient({ chain: chainByChainId[chainId].id }),
+    address,
+  }
+
   try {
     const [latestTokensTransfers, tokenPrice] = await Promise.all([
       selectLatestTokensTransfers(client, chainId, address, limit, offset, window),
@@ -79,6 +88,12 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     return success(response, { maxAge: 3 * 60, swr: 60 })
   } catch (error) {
     console.error('Failed to retrieve latest tokens transfers', error)
+    await sendSlackMessage(balancesContext, {
+      level: 'error',
+      title: 'Failed to retrieve latest tokens transfers',
+      message: (error as any).message,
+    })
+
     return serverError('Failed to retrieve latest tokens transfers', { error })
   }
 }

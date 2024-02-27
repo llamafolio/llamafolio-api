@@ -2,13 +2,14 @@ import { selectTokenBalanceChart } from '@db/balances'
 import { client } from '@db/clickhouse'
 import type { Window } from '@db/gas'
 import { badRequest, serverError, success } from '@handlers/response'
-import type { BaseContext } from '@lib/adapter'
+import type { BalancesContext, BaseContext } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { abi as erc20Abi } from '@lib/erc20'
 import { parseAddress, parseAddresses, unixFromDate } from '@lib/fmt'
 import { sumBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
+import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 const WINDOWS: Window[] = ['D', 'W', 'M', 'Y']
@@ -69,6 +70,24 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return success(response, { maxAge: 10 * 60 })
   } catch (error) {
     console.error('Failed to get gas token balance chart', { error })
+
+    await Promise.all(
+      addresses.map(async (address) => {
+        const balancesContext: BalancesContext = {
+          chain: 'ethereum',
+          adapterId: '',
+          client: getRPCClient({ chain: 'ethereum' }),
+          address,
+        }
+
+        await sendSlackMessage(balancesContext, {
+          level: 'error',
+          title: 'Failed to get gas token balance chart',
+          message: (error as any).message,
+        })
+      }),
+    )
+
     return serverError('Failed to get token balance chart')
   }
 }

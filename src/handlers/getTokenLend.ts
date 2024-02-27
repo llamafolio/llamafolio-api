@@ -1,11 +1,12 @@
 import { client } from '@db/clickhouse'
-import { type LendPoolStorage, selectTokenLendPools } from '@db/lendBorrow'
+import { selectTokenLendPools, type LendPoolStorage } from '@db/lendBorrow'
 import { badRequest, serverError, success } from '@handlers/response'
-import type { BaseContext } from '@lib/adapter'
+import type { BalancesContext, BaseContext } from '@lib/adapter'
 import { keyBy } from '@lib/array'
-import { getChainId, getRPCClient } from '@lib/chains'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { getTokenDetails } from '@lib/erc20'
 import { parseAddress } from '@lib/fmt'
+import { sendSlackMessage } from '@lib/slack'
 import { isNotNullish, type UnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -45,6 +46,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   const ctx: BaseContext = { chain: 'ethereum', adapterId: '', client: getRPCClient({ chain: 'ethereum' }) }
+
+  const balancesContext: BalancesContext = {
+    chain: chainByChainId[chainId].id,
+    adapterId: '',
+    client: getRPCClient({ chain: chainByChainId[chainId].id }),
+    address,
+  }
 
   try {
     const { data, updatedAt } = await selectTokenLendPools(client, chainId, address)
@@ -117,6 +125,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return success(response, { maxAge: 60 * 60, swr: 60 })
   } catch (error) {
     console.error('Failed to find token lend pools', error)
+    await sendSlackMessage(balancesContext, {
+      level: 'error',
+      title: 'Failed to find token lend pools',
+      message: (error as any).message,
+    })
     return serverError('Failed to find token lend pools', { error })
   }
 }

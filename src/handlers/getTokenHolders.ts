@@ -1,10 +1,12 @@
 import { selectTokenHoldersBalances } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
-import { chainByChainId, getChainId } from '@lib/chains'
+import type { BalancesContext } from '@lib/adapter'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenPrice } from '@lib/price'
+import { sendSlackMessage } from '@lib/slack'
 import type { Token } from '@lib/token'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -33,6 +35,13 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
   const chainId = getChainId(event.queryStringParameters?.chain || 'ethereum')
   if (chainId == null) {
     return badRequest(`Unknown chain ${event.queryStringParameters?.chain}`)
+  }
+
+  const balancesContext: BalancesContext = {
+    chain: chainByChainId[chainId].id,
+    adapterId: '',
+    client: getRPCClient({ chain: chainByChainId[chainId].id }),
+    address,
   }
 
   try {
@@ -64,8 +73,13 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     }
 
     return success(response, { maxAge: 10 * 60 })
-  } catch (e) {
-    console.error('Failed to retrieve token holders', e)
+  } catch (error) {
+    console.error('Failed to retrieve token holders', error)
+    await sendSlackMessage(balancesContext, {
+      level: 'error',
+      title: 'Failed to retrieve token holders',
+      message: (error as any).message,
+    })
     return serverError('Failed to retrieve token holders')
   }
 }

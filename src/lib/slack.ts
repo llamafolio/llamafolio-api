@@ -1,6 +1,6 @@
 import environment from '@environment'
 import type { BalancesContext, BaseContext } from '@lib/adapter'
-import { type Block, type KnownBlock, WebClient } from '@slack/web-api'
+import { WebClient, type Block, type KnownBlock } from '@slack/web-api'
 
 const web = new WebClient(process.env.SLACK_TOKEN, {})
 
@@ -29,10 +29,13 @@ export function sendSlackMessage(
     return
   }
 
+  const isBalancesContext = 'address' in ctx
+
   const header: { [key: string]: string } = {
     Adapter: ctx.adapterId,
     Chain: ctx.chain,
     ...options.header,
+    ...(isBalancesContext ? { Address: ctx.address } : {}),
   }
 
   const blocks: (Block | KnownBlock)[] = []

@@ -1,8 +1,10 @@
 import { client } from '@db/clickhouse'
 import { selectTokenYields, type TokenYield } from '@db/yields'
 import { badRequest, serverError, success } from '@handlers/response'
-import { getChainId } from '@lib/chains'
+import type { BalancesContext } from '@lib/adapter'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
+import { sendSlackMessage } from '@lib/slack'
 import type { UnixTimestamp } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -21,6 +23,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const chainId = getChainId(event.pathParameters?.chain || '')
   if (!chainId) {
     return badRequest('Invalid chain parameter')
+  }
+
+  const balancesContext: BalancesContext = {
+    chain: chainByChainId[chainId].id,
+    adapterId: '',
+    client: getRPCClient({ chain: chainByChainId[chainId].id }),
+    address,
   }
 
   const offset = event.queryStringParameters?.offset != null ? parseInt(event.queryStringParameters?.offset) : undefined
@@ -44,6 +53,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return success(response, { maxAge: 30 * 60, swr: 10 * 60 })
   } catch (error) {
     console.error('Failed to retrieve token yields', { error, address })
+    await sendSlackMessage(balancesContext, {
+      level: 'error',
+      title: 'Failed to retrieve token yields',
+      message: (error as any).message,
+    })
     return serverError('Failed to retrieve token yields', { error, address })
   }
 }

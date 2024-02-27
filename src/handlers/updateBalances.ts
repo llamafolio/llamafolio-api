@@ -4,7 +4,7 @@ import { formatBalance, insertBalances } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
-import type { Balance, BalancesContext } from '@lib/adapter'
+import type { Balance, BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
 import {
   BALANCE_UPDATE_THRESHOLD_SEC,
@@ -13,9 +13,10 @@ import {
   sanitizeBalances,
   sanitizePricedBalances,
 } from '@lib/balance'
-import { type Chain, chains, getRPCClient } from '@lib/chains'
+import { chains, getRPCClient, type Chain } from '@lib/chains'
 import { parseAddresses, unixFromDate } from '@lib/fmt'
 import { getPricedBalances } from '@lib/price'
+import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 type AdapterBalance = Balance & {
@@ -70,12 +71,12 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
         return
       }
 
+      const ctx: BalancesContext = { address, chain, adapterId, client: getRPCClient({ chain }) }
+
       try {
         const hrstart = process.hrtime()
 
         const contracts = groupContracts(contractsByAdapterIdChain[adapterId][chain]) || []
-
-        const ctx: BalancesContext = { address, chain, adapterId, client: getRPCClient({ chain }) }
 
         const balancesConfig = await handler.getBalances(ctx, contracts)
 
@@ -108,6 +109,11 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
         )
       } catch (error) {
         console.error(`[${adapterId}][${chain}]: Failed to getBalances`, error)
+        await sendSlackMessage(ctx, {
+          level: 'error',
+          title: `[${adapterId}][${chain}]: Failed to getBalances`,
+          message: (error as any).message,
+        })
       }
     }),
   )
@@ -118,7 +124,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
   const pricedBalances = await getPricedBalances(sanitizedBalances)
 
-  const sanitizedPricedBalances = sanitizePricedBalances(pricedBalances)
+  const sanitizedPricedBalances = sanitizePricedBalances(pricedBalances as PricedBalance[])
 
   const hrend = process.hrtime(hrstart)
 
@@ -175,8 +181,26 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       updatedAt,
       nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
     })
-  } catch (e) {
-    console.error('Failed to update balances', e)
+  } catch (error) {
+    console.error('Failed to update balances', error)
+
+    await Promise.all(
+      addresses.map(async (address) => {
+        const balancesContext: BalancesContext = {
+          chain: 'ethereum',
+          adapterId: '',
+          client: getRPCClient({ chain: 'ethereum' }),
+          address,
+        }
+
+        await sendSlackMessage(balancesContext, {
+          level: 'error',
+          title: 'Failed to update balances',
+          message: (error as any).message,
+        })
+      }),
+    )
+
     return serverError('Failed to update balances')
   }
 }

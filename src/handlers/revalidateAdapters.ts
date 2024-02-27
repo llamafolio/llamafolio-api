@@ -2,14 +2,21 @@ import { adapters } from '@adapters/index'
 import { selectAdapter, selectAdaptersContractsExpired, selectDistinctAdaptersIds } from '@db/adapters'
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
-import { revalidateAdapterContracts } from '@lib/adapter'
+import { revalidateAdapterContracts, type BaseContext } from '@lib/adapter'
 import type { Chain } from '@lib/chains'
-import { chainById, chains } from '@lib/chains'
+import { chainById, chains, getRPCClient } from '@lib/chains'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { fetchProtocolToParentMapping } from '@lib/protocols'
+import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyEvent, APIGatewayProxyHandler } from 'aws-lambda'
 
 const revalidateAdaptersContractsHandler: APIGatewayProxyHandler = async (_event, _context) => {
+  const baseContext: BaseContext = {
+    chain: 'ethereum',
+    adapterId: '',
+    client: getRPCClient({ chain: 'ethereum' }),
+  }
+
   try {
     const [expiredAdaptersRes, adapterIdsRes] = await Promise.all([
       selectAdaptersContractsExpired(client),
@@ -46,8 +53,13 @@ const revalidateAdaptersContractsHandler: APIGatewayProxyHandler = async (_event
     return success({
       data: adaptersToRevalidate,
     })
-  } catch (e) {
-    console.error('Failed to revalidate adapters contracts', e)
+  } catch (error) {
+    console.error('Failed to revalidate adapters contracts', error)
+    await sendSlackMessage(baseContext, {
+      level: 'error',
+      title: 'Failed to revalidate adapters contracts',
+      message: (error as any).message,
+    })
     return serverError('Failed to revalidate adapters contracts')
   }
 }
@@ -83,6 +95,12 @@ export const revalidateAdapterContractsHandler: APIGatewayProxyHandler = async (
     return serverError(`Failed to revalidate adapter contracts, chain ${chain} is missing`)
   }
 
+  const baseContext: BaseContext = {
+    chain,
+    adapterId,
+    client: getRPCClient({ chain }),
+  }
+
   try {
     const [prevDbAdapter, protocolToParent] = await Promise.all([
       selectAdapter(client, adapter.id, chainId),
@@ -92,8 +110,13 @@ export const revalidateAdapterContractsHandler: APIGatewayProxyHandler = async (
     await revalidateAdapterContracts(client, adapter, chain, prevDbAdapter, protocolToParent)
 
     return success({})
-  } catch (e) {
-    console.error('Failed to revalidate adapter contracts', e)
+  } catch (error) {
+    console.error('Failed to revalidate adapter contracts', error)
+    await sendSlackMessage(baseContext, {
+      level: 'error',
+      title: 'Failed to revalidate adapter contracts',
+      message: (error as any).message,
+    })
     return serverError('Failed to revalidate adapter contracts')
   }
 }

@@ -1,8 +1,10 @@
 import { client } from '@db/clickhouse'
 import { selectGasUsed } from '@db/gas'
 import { badRequest, serverError, success } from '@handlers/response'
-import { getChainId } from '@lib/chains'
+import type { BalancesContext } from '@lib/adapter'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
+import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface GasUsedResponse {
@@ -23,6 +25,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return badRequest(`Unknown chain ${event.queryStringParameters?.chain}`)
   }
 
+  const baseContext: BalancesContext = {
+    chain: chainByChainId[chainId].id,
+    adapterId: '',
+    client: getRPCClient({ chain: chainByChainId[chainId].id }),
+    address,
+  }
+
   try {
     const data = await selectGasUsed(client, chainId, address)
 
@@ -31,6 +40,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return success(response, { maxAge: 10 * 60 })
   } catch (error) {
     console.error('Failed to gas used', { error })
+    await sendSlackMessage(baseContext, {
+      level: 'error',
+      title: 'Failed to gas used',
+      message: (error as any).message,
+    })
     return serverError('Failed to get gas used')
   }
 }
