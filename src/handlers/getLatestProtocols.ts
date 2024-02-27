@@ -2,7 +2,7 @@ import { selectLatestCreatedAdapters } from '@db/adapters'
 import { client } from '@db/clickhouse'
 import { serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
-import { getRPCClient, type Chain } from '@lib/chains'
+import { type Chain, getRPCClient } from '@lib/chains'
 import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 

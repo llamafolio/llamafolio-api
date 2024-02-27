@@ -13,7 +13,7 @@ import {
   sanitizeBalances,
   sanitizePricedBalances,
 } from '@lib/balance'
-import { chains, getRPCClient, type Chain } from '@lib/chains'
+import { type Chain, chains, getRPCClient } from '@lib/chains'
 import { parseAddresses, unixFromDate } from '@lib/fmt'
 import { getPricedBalances } from '@lib/price'
 import { sendSlackMessage } from '@lib/slack'

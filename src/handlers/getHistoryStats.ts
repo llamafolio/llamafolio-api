@@ -1,5 +1,5 @@
 import { client } from '@db/clickhouse'
-import { selectHistoryStats, type HistoryStat } from '@db/history'
+import { type HistoryStat, selectHistoryStats } from '@db/history'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext } from '@lib/adapter'
 import { getRPCClient } from '@lib/chains'

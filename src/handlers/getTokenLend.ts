@@ -1,5 +1,5 @@
 import { client } from '@db/clickhouse'
-import { selectTokenLendPools, type LendPoolStorage } from '@db/lendBorrow'
+import { type LendPoolStorage, selectTokenLendPools } from '@db/lendBorrow'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext, BaseContext } from '@lib/adapter'
 import { keyBy } from '@lib/array'

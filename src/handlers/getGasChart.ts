@@ -1,5 +1,5 @@
 import { client } from '@db/clickhouse'
-import { selectChainGasChart, type GasChart, type Window } from '@db/gas'
+import { type GasChart, selectChainGasChart, type Window } from '@db/gas'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'

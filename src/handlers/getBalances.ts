@@ -1,4 +1,4 @@
-import { selectLatestProtocolsBalancesByFromAddresses, type LatestProtocolBalances } from '@db/balances'
+import { type LatestProtocolBalances, selectLatestProtocolsBalancesByFromAddresses } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext } from '@lib/adapter'

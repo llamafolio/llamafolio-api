@@ -1,6 +1,6 @@
 import { client } from '@db/clickhouse'
 import { selectProtocolBalancesSnapshotsStatus, selectProtocolHoldersBalances } from '@db/protocols'
-import { Message, badRequest, serverError, success } from '@handlers/response'
+import { badRequest, Message, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { unixFromDateTime } from '@lib/fmt'
