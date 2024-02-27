@@ -1,7 +1,9 @@
 import { selectLatestCreatedAdapters } from '@db/adapters'
 import { client } from '@db/clickhouse'
 import { serverError, success } from '@handlers/response'
-import type { Chain } from '@lib/chains'
+import type { BaseContext } from '@lib/adapter'
+import { type Chain, getRPCClient } from '@lib/chains'
+import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface ProtocolResponse {
@@ -15,6 +17,8 @@ interface LatestProtocolsResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
+  const baseContext: BaseContext = { chain: 'ethereum', adapterId: '', client: getRPCClient({ chain: 'ethereum' }) }
+
   try {
     const limit = event.queryStringParameters?.limit ? parseInt(event.queryStringParameters?.limit) : undefined
 
@@ -31,6 +35,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return success(response, { maxAge: 10 * 60 })
   } catch (error) {
     console.error('Failed to retrieve latest protocols', error)
+    await sendSlackMessage(baseContext, {
+      level: 'error',
+      title: 'Failed to retrieve latest protocols',
+      message: (error as any).message,
+    })
     return serverError('Failed to retrieve latest protocols', { error })
   }
 }

@@ -29,10 +29,13 @@ export function sendSlackMessage(
     return
   }
 
+  const isBalancesContext = 'address' in ctx
+
   const header: { [key: string]: string } = {
     Adapter: ctx.adapterId,
     Chain: ctx.chain,
     ...options.header,
+    ...(isBalancesContext ? { Address: ctx.address } : {}),
   }
 
   const blocks: (Block | KnownBlock)[] = []

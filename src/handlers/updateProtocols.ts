@@ -2,9 +2,12 @@ import { client } from '@db/clickhouse'
 import { insertProtocols } from '@db/protocols'
 import environment from '@environment'
 import { serverError, success } from '@handlers/response'
+import type { BaseContext } from '@lib/adapter'
+import { getRPCClient } from '@lib/chains'
 import { toDateTime } from '@lib/fmt'
 import { invokeLambda, wrapScheduledLambda } from '@lib/lambda'
 import { fetchProtocols } from '@lib/protocols'
+import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 const updateProtocols: APIGatewayProxyHandler = async () => {
@@ -16,6 +19,12 @@ const updateProtocols: APIGatewayProxyHandler = async () => {
 export const scheduledUpdateProtocols = wrapScheduledLambda(updateProtocols)
 
 export const handler: APIGatewayProxyHandler = async () => {
+  const baseContext: BaseContext = {
+    chain: 'ethereum',
+    adapterId: '',
+    client: getRPCClient({ chain: 'ethereum' }),
+  }
+
   try {
     const queryRes = await client.query({
       query: `
@@ -46,8 +55,13 @@ export const handler: APIGatewayProxyHandler = async () => {
     console.log(`Inserted ${protocols.length} protocols`)
 
     return success({})
-  } catch (e) {
-    console.log('Failed to update protocols', e)
+  } catch (error) {
+    console.log('Failed to update protocols', error)
+    await sendSlackMessage(baseContext, {
+      level: 'error',
+      title: 'Failed to update protocols',
+      message: (error as any).message,
+    })
     return serverError('Failed to update protocols')
   }
 }

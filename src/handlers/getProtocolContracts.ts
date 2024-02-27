@@ -1,8 +1,10 @@
 import { client } from '@db/clickhouse'
 import { selectProtocolContracts } from '@db/protocols'
 import { badRequest, serverError, success } from '@handlers/response'
+import type { BaseContext } from '@lib/adapter'
 import { Categories, type Category } from '@lib/category'
-import { chainByChainId, getChainId } from '@lib/chains'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
+import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface Contract {
@@ -40,6 +42,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const chainId = getChainId(chain)
   if (chain !== '' && chainId == null) {
     return badRequest(`Unknown chain ${event.queryStringParameters?.chain}`)
+  }
+
+  const baseContext: BaseContext = {
+    chain: chainByChainId[chainId].id,
+    adapterId: '',
+    client: getRPCClient({ chain: chainByChainId[chainId].id }),
   }
 
   try {
@@ -88,8 +96,14 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     }
 
     return success(response, { maxAge: 10 * 60 })
-  } catch (e) {
-    console.error('Failed to retrieve protocol contracts', e)
+  } catch (error) {
+    console.error('Failed to retrieve protocol contracts', error)
+    await sendSlackMessage(baseContext, {
+      level: 'error',
+      title: 'Failed to retrieve protocol contracts',
+      message: (error as any).message,
+    })
+
     return serverError('Failed to retrieve protocol contracts')
   }
 }

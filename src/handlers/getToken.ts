@@ -6,6 +6,7 @@ import { call } from '@lib/call'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { abi as erc20Abi } from '@lib/erc20'
 import { parseAddress } from '@lib/fmt'
+import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 interface TokenResponse {
@@ -36,6 +37,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const chain = chainByChainId[chainId].id
 
   const ctx: BaseContext = { chain, adapterId: '', client: getRPCClient({ chain }) }
+  const balancesContext = { chain, adapterId: '', client: getRPCClient({ chain }), address }
 
   try {
     const [token, totalSupply] = await Promise.all([
@@ -63,8 +65,13 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     }
 
     return success(response, { maxAge: 60 * 60 })
-  } catch (e) {
-    console.error('Failed to retrieve token', e)
+  } catch (error) {
+    console.error('Failed to retrieve token', error)
+    await sendSlackMessage(balancesContext, {
+      level: 'error',
+      title: 'Failed to retrieve token',
+      message: (error as any).message,
+    })
     return serverError('Failed to retrieve token')
   }
 }

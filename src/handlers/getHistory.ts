@@ -1,13 +1,14 @@
 import { client } from '@db/clickhouse'
 import { selectHistory } from '@db/history'
 import { badRequest, serverError, success } from '@handlers/response'
-import type { BaseContext } from '@lib/adapter'
+import type { BalancesContext, BaseContext } from '@lib/adapter'
 import { type Chain, chainByChainId, getRPCClient } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
 import { getTokenDetails } from '@lib/erc20'
 import { parseAddresses, toDateTime, toStartOfMonth, toStartOfNextMonth, unixFromDateTime } from '@lib/fmt'
 import { mulPrice } from '@lib/math'
 import { getTokenKey, getTokenPrices } from '@lib/price'
+import { sendSlackMessage } from '@lib/slack'
 import type { Token } from '@lib/token'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
@@ -239,8 +240,26 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     }
 
     return success(response, { maxAge: 5 * 60 })
-  } catch (e) {
-    console.error('Failed to retrieve history', e)
+  } catch (error) {
+    console.error('Failed to retrieve history', error)
+
+    await Promise.all(
+      addresses.map(async (address) => {
+        const balancesContext: BalancesContext = {
+          chain: 'ethereum',
+          adapterId: '',
+          client: getRPCClient({ chain: 'ethereum' }),
+          address,
+        }
+
+        await sendSlackMessage(balancesContext, {
+          level: 'error',
+          title: 'Failed to retrieve history',
+          message: (error as any).message,
+        })
+      }),
+    )
+
     return serverError('Failed to retrieve history')
   }
 }

@@ -1,7 +1,9 @@
 import { client } from '@db/clickhouse'
 import { selectTrendingContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
-import { getChainId } from '@lib/chains'
+import type { BaseContext } from '@lib/adapter'
+import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
+import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 
 const WINDOWS = ['D', 'W', 'M']
@@ -23,6 +25,12 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return badRequest(`Unsupported window ${event.queryStringParameters?.w}`)
   }
 
+  const baseContext: BaseContext = {
+    chain: chainByChainId[chainId].id,
+    adapterId: '',
+    client: getRPCClient({ chain: chainByChainId[chainId].id }),
+  }
+
   try {
     const data = await selectTrendingContracts(client, window, chainId)
 
@@ -31,6 +39,11 @@ export const handler: APIGatewayProxyHandler = async (event) => {
     return success(response, { maxAge: 20 * 60, swr: 10 * 60 })
   } catch (error) {
     console.error('Failed to get trending contracts', { error })
+    await sendSlackMessage(baseContext, {
+      level: 'error',
+      title: 'Failed to get trending contracts',
+      message: (error as any).message,
+    })
     return serverError('Failed to get trending contracts')
   }
 }
