@@ -27,8 +27,6 @@ const abi = {
 } as const
 
 export async function get1InchLpBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
-  console.log(pools)
-
   const [shareBalances, totalSupplies, underlying0Balances, underlying1Balances] = await Promise.all([
     multicall({
       ctx,
