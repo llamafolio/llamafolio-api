@@ -1,16 +1,12 @@
 lockfileVersion: '6.0'
 
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
-
 dependencies:
   '@aws-sdk/client-lambda':
     specifier: ^3.398.0
     version: 3.398.0
   '@clickhouse/client':
-    specifier: ^0.2.9
-    version: 0.2.9
+    specifier: ^0.2.10
+    version: 0.2.10
   '@llamafolio/tokens':
     specifier: ^0.1.106
     version: 0.1.106
@@ -544,15 +540,15 @@ packages:
     dependencies:
       tslib: 2.6.2
 
-  /@clickhouse/client-common@0.2.9:
-    resolution: {integrity: sha512-ecXcegMbT4HYNWtGcfyidW6lNVRqPogbFMY5kfjJmz4IXJ4WZbQMwj2IQgemwFwE7jyia2OEwPIVfw1sNfDHRA==}
+  /@clickhouse/client-common@0.2.10:
+    resolution: {integrity: sha512-BvTY0IXS96y9RUeNCpKL4HUzHmY80L0lDcGN0lmUD6zjOqYMn78+xyHYJ/AIAX7JQsc+/KwFt2soZutQTKxoGQ==}
     dev: false
 
-  /@clickhouse/client@0.2.9:
-    resolution: {integrity: sha512-KqQlO9vZNSLyhMWG9+0/VXqcUZrNk1Hybr9icgI/nLCoX8RD19BJsakZJj38IQvQxNUTxvcItm/kyu/gD/9LXA==}
+  /@clickhouse/client@0.2.10:
+    resolution: {integrity: sha512-ZwBgzjEAFN/ogS0ym5KHVbR7Hx/oYCX01qGp2baEyfN2HM73kf/7Vp3GvMHWRy+zUXISONEtFv7UTViOXnmFrg==}
     engines: {node: '>=16'}
     dependencies:
-      '@clickhouse/client-common': 0.2.9
+      '@clickhouse/client-common': 0.2.10
     dev: false
 
   /@esbuild-kit/cjs-loader@2.4.2:
@@ -7147,3 +7143,7 @@ packages:
 
   /zod@3.22.2:
     resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false

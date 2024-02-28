@@ -26,4 +26,6 @@ export const client = createClient({
     wait_for_async_insert: 1,
     enable_lightweight_delete: 1,
   },
+  // To make sure inserts happen on the same connection
+  max_open_connections: 1,
 })
