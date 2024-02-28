@@ -1,4 +1,3 @@
-import { getNodeEtherFiBalances } from '@adapters/ether.fi/ethereum/node'
 import type { AdapterConfig, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 import { getSingleStakeBalance } from '@lib/stake'
@@ -10,7 +9,7 @@ const manager: Contract = {
   address: '0x3d320286E014C3e1ce99Af6d6B00f0C1D63E3000',
 }
 
-const nodeStaker: Contract = {
+const _nodeStaker: Contract = {
   chain: 'ethereum',
   address: '0xb49e4420ea6e35f98060cd133842dbea9c27e479',
   token: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
@@ -41,7 +40,8 @@ export const getContracts = () => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    manager: (...args) => getNodeEtherFiBalances(...args, nodeStaker),
+    // TODO: find the way to get user's tokenIds maybe from logs?
+    // manager: (...args) => getNodeEtherFiBalances(...args, nodeStaker),
     staker: getEtherBalances,
     weETH: getWeETHBalance,
     eETH: getSingleStakeBalance,
