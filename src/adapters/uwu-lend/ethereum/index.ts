@@ -1,7 +1,7 @@
+import { getUWULendingPoolBalances, getUWULendingPoolContracts } from '@adapters/uwu-lend/ethereum/lending'
 import { getLendingPoolHealthFactor } from '@lib/aave/v2/lending'
 import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getLendingPoolBalances, getLendingPoolContracts } from '@lib/geist/lending'
 import { getMultiFeeDistributionContracts } from '@lib/geist/stake'
 import type { Token } from '@lib/token'
 
@@ -25,7 +25,7 @@ const chefIncentivesControllerContract: Contract = {
   name: 'ChefIncentivesController',
   displayName: 'UwU incentives controller',
   chain: 'ethereum',
-  address: '0x21953192664867e19F85E96E1D1Dd79dc31cCcdB',
+  address: '0xDB5C23ae97f76dacC907f5F13bDa54131C8e9e5a',
 }
 
 const UwU: Token = {
@@ -46,7 +46,7 @@ const UWU_WETH: Contract = {
 
 export const getContracts = async (ctx: BaseContext) => {
   const [pools, fmtMultiFeeDistributionContracts] = await Promise.all([
-    getLendingPoolContracts(ctx, lendingPoolContract, chefIncentivesControllerContract, UwU),
+    getUWULendingPoolContracts(ctx, lendingPoolContract, chefIncentivesControllerContract, UwU),
     getMultiFeeDistributionContracts(ctx, multiFeeDistributionContract, UWU_WETH),
   ])
 
@@ -59,7 +59,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const [balances, healthFactor] = await Promise.all([
     resolveBalances<typeof getContracts>(ctx, contracts, {
-      pools: (...args) => getLendingPoolBalances(...args, chefIncentivesControllerContract),
+      pools: (...args) => getUWULendingPoolBalances(...args, chefIncentivesControllerContract),
       fmtMultiFeeDistributionContracts: (...args) =>
         getUWUMultiFeeDistributionBalances(...args, {
           multiFeeDistribution: multiFeeDistributionContract,
