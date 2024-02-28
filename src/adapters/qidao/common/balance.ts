@@ -84,32 +84,38 @@ export async function getQidaoVaultsBalances(ctx: BalancesContext, vaults: Contr
   return mapMultiSuccessFilter(
     colls.map((_, i) => [colls[i], debts[i], checkHealths[i]]),
 
-    (res, index) => {
-      const vault = vaults[index]
-      const [collateralToken, debtToken] = vault.underlyings as Contract[]
-      if (!collateralToken || !debtToken) return null
+    (res) => {
+      const [coll, { output: debt }, { output: health }] = res.inputOutputPairs
+      const { input, output } = coll
 
-      const [{ output: coll }, { output: debt }, { output: health }] = res.inputOutputPairs
+      const balances = vaults.reduce((acc, vault) => {
+        if (vault.address.toLowerCase() === input.target.toLowerCase()) {
+          const [collateralToken, debtToken] = vault.underlyings
 
-      const lendBalance: Balance = {
-        ...collateralToken,
-        amount: coll,
-        underlyings: undefined,
-        rewards: undefined,
-        category: 'lend',
-      }
+          const lendBalance: Balance = {
+            ...collateralToken,
+            amount: output,
+            underlyings: undefined,
+            rewards: undefined,
+            category: 'lend',
+          }
 
-      const debtBalance: Balance = {
-        ...debtToken,
-        amount: debt,
-        underlyings: undefined,
-        rewards: undefined,
-        category: 'borrow',
-      }
+          const debtBalance: Balance = {
+            ...debtToken,
+            amount: debt,
+            underlyings: undefined,
+            rewards: undefined,
+            category: 'borrow',
+          }
 
-      return { balances: [lendBalance, debtBalance], healthFactor: parseFloatBI(health, 2) }
+          acc.push(lendBalance, debtBalance)
+        }
+        return acc
+      }, [])
+
+      return { balances, healthFactor: parseFloatBI(health, 2) }
     },
-  ).filter(isNotNullish)
+  )
 }
 
 export async function getQidaoYieldsBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {

@@ -18,6 +18,7 @@ const vaultsAddresses: `0x${string}`[] = [
 
 export const getContracts = async (ctx: BaseContext) => {
   const vaults = await getQidaoVaults(ctx, vaultsAddresses)
+
   return {
     contracts: { vaults },
   }
