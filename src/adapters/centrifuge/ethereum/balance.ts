@@ -3,7 +3,7 @@ import { isNotNullish } from '@lib/type'
 import request, { gql } from 'graphql-request'
 
 export async function getCentrifugeBalances(ctx: BalancesContext, DAI: Contract): Promise<Balance[]> {
-  const GRAPH_URL = 'https://graph.centrifuge.io/tinlake/subgraphs/name/allow-null-maturity-date'
+  const GRAPH_URL = 'https://api.goldsky.com/api/public/project_clhi43ef5g4rw49zwftsvd2ks/subgraphs/main/prod/gn'
 
   const query = gql`
     query tokenBalances($address: String!) {
