@@ -266,7 +266,7 @@ functions:
       - httpApi:
           method: get
           path: /tokens/{chain}/{address}
-    timeout: 10
+    timeout: 20
 
   getTokenBalanceChart:
     handler: src/handlers/getTokenBalanceChart.handler
