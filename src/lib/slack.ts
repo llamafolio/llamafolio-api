@@ -25,7 +25,7 @@ export function sendSlackMessage(
   },
 ) {
   const channel = environment.SLACK_CHANNEL_ID
-  if (!channel /*|| environment.NODE_ENV !== 'production'*/) {
+  if (!channel || environment.NODE_ENV !== 'production') {
     return
   }
 
