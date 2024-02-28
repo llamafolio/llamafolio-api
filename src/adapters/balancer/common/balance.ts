@@ -8,7 +8,13 @@ export async function getBalancerBalances(ctx: BalancesContext, pools: Contract[
       ...poolBalance,
       category: 'lp',
     })),
-    (await getBalancesOf(ctx, pools, { getAddress: (contract) => contract.gauge })).map((poolBalance) => ({
+    (
+      await getBalancesOf(
+        ctx,
+        pools.filter((pool) => pool.gauge),
+        { getAddress: (contract) => contract.gauge },
+      )
+    ).map((poolBalance) => ({
       ...poolBalance,
       category: 'farm',
     })),
