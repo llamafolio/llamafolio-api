@@ -1,7 +1,6 @@
 import type { Balance, BalancesContext, Contract, RewardBalance } from '@lib/adapter'
 import { keyBy } from '@lib/array'
 import { call } from '@lib/call'
-import { abi as erc20Abi } from '@lib/erc20'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
 import { getUnderlyingBalances } from '@lib/uniswap/v2/pair'
@@ -90,6 +89,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  totalLockedSupply: {
+    inputs: [],
+    name: 'totalLockedSupply',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
 export interface GetMultiFeeDistributionBalancesParams {
@@ -137,7 +143,7 @@ export async function getUWUMultiFeeDistributionBalances(
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.claimableRewards }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.lockedBalances }),
     call({ ctx, target: params.multiFeeDistribution.address, params: [ctx.address], abi: abi.earnedBalances }),
-    call({ ctx, target: params.multiFeeDistribution.address, abi: erc20Abi.totalSupply }),
+    call({ ctx, target: params.multiFeeDistribution.address, abi: abi.totalLockedSupply }),
     multicall({
       ctx,
       calls: rewards.map((token) => ({ target: contract.address, params: [token.address] }) as const),
