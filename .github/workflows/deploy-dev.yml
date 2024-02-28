@@ -36,6 +36,8 @@ jobs:
       DEFILLAMA_PRICE_API_KEY: ${{ secrets.DEFILLAMA_PRICE_API_KEY }}
       SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
       CLOUDFLARE_R2_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_PUBLIC_URL }}
+      SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
+      SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
       #
       ANKR_API_KEY: ${{ secrets.ANKR_API_KEY }}
       NFTPORT_API_KEY: ${{ secrets.NFTPORT_API_KEY }}
