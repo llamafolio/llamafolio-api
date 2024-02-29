@@ -74,7 +74,3 @@ export async function getlpTokensContracts(ctx: BaseContext, controller: Contrac
 
   return contracts
 }
-
-export async function getOmniContracts(ctx: BaseContext, controller: Contract): Promise<Contract[]> {
-  console.log(controller)
-}
