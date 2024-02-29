@@ -1,5 +1,6 @@
 import type { Balance, BalancesContext, BorrowBalance, LendBalance } from '@lib/adapter'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 import request, { gql } from 'graphql-request'
 
 const WETH: Token = {
@@ -28,7 +29,7 @@ interface ReflexerBorrowBalancesParams extends BorrowBalance {
 
 const url = 'https://api.thegraph.com/subgraphs/name/reflexer-labs/rai-mainnet'
 
-export async function getReflexerFarmBalancesWithProxies(ctx: BalancesContext): Promise<Balance[]> {
+export async function getReflexerFarmBalancesWithProxies(ctx: BalancesContext): Promise<Balance[] | undefined> {
   const query = gql`
     query proxies {
       user(id: "${ctx.address}") {
@@ -46,35 +47,34 @@ export async function getReflexerFarmBalancesWithProxies(ctx: BalancesContext): 
     }
   `
 
-  const res: any = await request(url, query)
+  const { user }: any = await request(url, query)
+  if (isNotNullish(user)) {
+    return user.safes.flatMap((safe: any) => {
+      const { safeHandler, safeId, collateral, debt } = safe
 
-  const balances: Balance[] = res.user.safes.flatMap((safe: any) => {
-    const { safeHandler, safeId, collateral, debt } = safe
+      const lend: ReflexerLendBalancesParams = {
+        chain: 'ethereum',
+        address: WETH.address,
+        proxy: user.proxies[0].id,
+        safe: { safeHandler, safeId },
+        amount: BigInt(Math.round(collateral * Math.pow(10, WETH.decimals))),
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'lend',
+      }
 
-    const lend: ReflexerLendBalancesParams = {
-      chain: 'ethereum',
-      address: WETH.address,
-      proxy: res.user.proxies[0].id,
-      safe: { safeHandler, safeId },
-      amount: BigInt(Math.round(collateral * Math.pow(10, WETH.decimals))),
-      underlyings: undefined,
-      rewards: undefined,
-      category: 'lend',
-    }
+      const borrow: ReflexerBorrowBalancesParams = {
+        chain: 'ethereum',
+        address: RAI.address,
+        proxy: user.proxies[0].id,
+        safe: { safeHandler, safeId },
+        amount: BigInt(Math.round(debt * Math.pow(10, RAI.decimals))),
+        underlyings: undefined,
+        rewards: undefined,
+        category: 'borrow',
+      }
 
-    const borrow: ReflexerBorrowBalancesParams = {
-      chain: 'ethereum',
-      address: RAI.address,
-      proxy: res.user.proxies[0].id,
-      safe: { safeHandler, safeId },
-      amount: BigInt(Math.round(debt * Math.pow(10, RAI.decimals))),
-      underlyings: undefined,
-      rewards: undefined,
-      category: 'borrow',
-    }
-
-    return [lend, borrow]
-  })
-
-  return balances
+      return [lend, borrow]
+    })
+  }
 }
