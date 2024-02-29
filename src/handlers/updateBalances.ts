@@ -18,6 +18,7 @@ import { parseAddresses, unixFromDate } from '@lib/fmt'
 import { getPricedBalances } from '@lib/price'
 import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
+import type { PublicClient } from 'viem'
 
 type AdapterBalance = Balance & {
   groupIdx: number
@@ -36,8 +37,12 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
   const contractsByAdapterIdChain = groupBy2(contracts, 'adapterId', 'chain')
 
+  const rpcClients: { [key: string]: PublicClient } = {}
+
   // add wallet adapter on each chain to force run wallet adapter (for non-indexed chains and gas tokens)
   for (const chain of chains) {
+    rpcClients[chain.id] = getRPCClient({ chain: chain.id })
+
     if (!contractsByAdapterIdChain.wallet) {
       contractsByAdapterIdChain.wallet = {}
     }
@@ -71,7 +76,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
         return
       }
 
-      const ctx: BalancesContext = { address, chain, adapterId, client: getRPCClient({ chain }) }
+      const ctx: BalancesContext = { address, chain, adapterId, client: rpcClients[chain] }
 
       try {
         const hrstart = process.hrtime()
