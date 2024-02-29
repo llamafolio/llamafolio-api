@@ -1,6 +1,5 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
-import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -39,23 +38,6 @@ const abi = {
     type: 'function',
   },
 } as const
-
-export async function getThalesAMMv2Balance(ctx: BalancesContext, market: Contract): Promise<Balance> {
-  const userBalanceOf = await call({
-    ctx,
-    target: market.address,
-    params: [ctx.address],
-    abi: abi.getNeededStakedThalesToWithdrawForUser,
-  })
-
-  return {
-    ...market,
-    amount: userBalanceOf,
-    underlyings: undefined,
-    rewards: undefined,
-    category: 'farm',
-  }
-}
 
 export async function getThalesAMMVaultBalances(ctx: BalancesContext, markets: Contract[]): Promise<Balance[]> {
   const currentRound = await multicall({

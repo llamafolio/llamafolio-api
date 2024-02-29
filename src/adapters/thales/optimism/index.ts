@@ -1,4 +1,4 @@
-import { getThalesAMMv2Balance, getThalesAMMVaultBalances } from '@adapters/thales/common/market'
+import { getThalesAMMVaultBalances } from '@adapters/thales/common/market'
 import { getThalesLPStakerBalance, getThalesStakingBalance, getVeThalesBalance } from '@adapters/thales/common/stake'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -24,13 +24,12 @@ const veThales: Contract = {
   token: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11',
 }
 
-const thalesAMM_v2: Contract = {
-  chain: 'optimism',
-  address: '0xc10a0a6ff6496e0bd896f9f6da5a7b640b85ea40',
-  token: '0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9',
-}
-
 const marketsAddresses: Contract[] = [
+  {
+    chain: 'optimism',
+    address: '0xc10a0a6ff6496e0bd896f9f6da5a7b640b85ea40',
+    token: '0x8c6f28f2F1A3C87F0f938b96d27520d9751ec8d9',
+  },
   {
     chain: 'optimism',
     address: '0x6c7fd4321183b542e81bcc7de4dfb88f9dbca29f',
@@ -52,7 +51,7 @@ export const getContracts = async (ctx: BaseContext) => {
   const lPStakings = await getPairsDetails(ctx, [lPStaking], { getAddress: (contract) => contract.token! })
 
   return {
-    contracts: { thalesStaking, lPStakings, veThales, thalesAMM_v2, marketsAddresses },
+    contracts: { thalesStaking, lPStakings, veThales, marketsAddresses },
     revalidate: 60 * 60,
   }
 }
@@ -62,7 +61,6 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
     thalesStaking: getThalesStakingBalance,
     lPStakings: getThalesLPStakerBalance,
     veThales: getVeThalesBalance,
-    thalesAMM_v2: getThalesAMMv2Balance,
     marketsAddresses: getThalesAMMVaultBalances,
   })
 
