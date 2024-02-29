@@ -1,5 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapSuccessFilter } from '@lib/array'
+import { mapSuccessFilter, sliceIntoChunks } from '@lib/array'
 import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 import { getPairsDetails } from '@lib/uniswap/v2/factory'
@@ -27,7 +27,16 @@ export async function get1InchPools(ctx: BaseContext, factory: Contract): Promis
     address: output,
   }))
 
-  return getPairsDetails(ctx, rawPools)
+  const batchSize = Math.ceil(rawPools.length / 2)
+  const batches = sliceIntoChunks(rawPools, batchSize)
+
+  let allDetails: Contract[] = []
+  for (const batch of batches) {
+    const details = await getPairsDetails(ctx, batch)
+    allDetails = allDetails.concat(details)
+  }
+
+  return allDetails
 }
 
 export async function get1InchFarmPools(ctx: BaseContext, boosters: `0x${string}`[]): Promise<Contract[]> {
