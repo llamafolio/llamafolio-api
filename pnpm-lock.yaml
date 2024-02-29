@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@aws-sdk/client-lambda':
     specifier: ^3.398.0
@@ -26,8 +30,8 @@ dependencies:
     specifier: ^4.17.21
     version: 4.17.21
   viem:
-    specifier: ^2.7.12
-    version: 2.7.12(typescript@5.2.2)(zod@3.22.2)
+    specifier: ^2.7.16
+    version: 2.7.16(typescript@5.2.2)(zod@3.22.2)
   zod:
     specifier: ^3.22.2
     version: 3.22.2
@@ -6716,8 +6720,8 @@ packages:
       - supports-color
     dev: true
 
-  /viem@2.7.12(typescript@5.2.2)(zod@3.22.2):
-    resolution: {integrity: sha512-NbV+Bycw0I4X8y6A04mgJ6+Imt7xXwflgnqisR3JXoJRNc77YSaQCscFN/dmwGLESTkgegJvi+j4nZY32GTpwQ==}
+  /viem@2.7.16(typescript@5.2.2)(zod@3.22.2):
+    resolution: {integrity: sha512-yOPa9yaoJUm44m0Qe3ugHnkHol3QQlFxN3jT+bq+lQip7X7cWdPfmguyfLWX2viCXcmYZUDiQdeFbkPW9lw11Q==}
     peerDependencies:
       typescript: '>=5.0.4'
     peerDependenciesMeta:
@@ -7143,7 +7147,3 @@ packages:
 
   /zod@3.22.2:
     resolution: {integrity: sha512-wvWkphh5WQsJbVk1tbx1l1Ly4yg+XecD+Mq280uBGt9wa5BKSWf4Mhp6GmrkPixhMxmabYY7RbzlwVP32pbGCg==}
-
-settings:
-  autoInstallPeers: true
-  excludeLinksFromLockfile: false
