@@ -46,24 +46,16 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  pendingRewardTokens: {
+    inputs: [{ internalType: 'address', name: '_staker', type: 'address' }],
+    name: 'pendingRewardTokens',
+    outputs: [{ internalType: 'uint128[]', name: 'pendingTokens', type: 'uint128[]' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 } as const
 
-const DAI: { [key: string]: Contract } = {
-  polygon: {
-    chain: 'polygon',
-    address: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
-    decimals: 18,
-    symbol: 'DAI',
-  },
-  arbitrum: {
-    chain: 'arbitrum',
-    address: '0xda10009cbd5d07dd0cecc66161fc93d7c9000da1',
-    decimals: 18,
-    symbol: 'DAI',
-  },
-}
-
-export async function getsgDAIBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
+export async function getGainsNetworkStakeBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
   const stakeBalance = await call({
     ctx,
     target: staker.address,
@@ -80,8 +72,8 @@ export async function getsgDAIBalances(ctx: BalancesContext, staker: Contract): 
   }
 }
 
-export async function getsgGNSBalances(ctx: BalancesContext, staker: Contract): Promise<Balance> {
-  const [stakeBalance, pendingRewards, pendingUnlockRewards] = await Promise.all([
+export async function getsgGNSBalance(ctx: BalancesContext, staker: Contract): Promise<Balance> {
+  const [stakeBalance, pendingRewardTokens] = await Promise.all([
     call({
       ctx,
       target: staker.address,
@@ -92,21 +84,19 @@ export async function getsgGNSBalances(ctx: BalancesContext, staker: Contract): 
       ctx,
       target: staker.address,
       params: [ctx.address],
-      abi: abi.pendingRewardDai,
-    }),
-    call({
-      ctx,
-      target: staker.address,
-      params: [ctx.address],
-      abi: abi.pendingRewardDaiFromUnlocks,
+      abi: abi.pendingRewardTokens,
     }),
   ])
+
+  const rewards = (staker.rewards as Contract[]).map((reward, rewardIdx) => {
+    return { ...reward, amount: pendingRewardTokens[rewardIdx] }
+  })
 
   return {
     ...staker,
     amount: stakeBalance,
     underlyings: undefined,
-    rewards: [{ ...DAI[ctx.chain], amount: pendingRewards + pendingUnlockRewards }],
+    rewards,
     category: 'stake',
   }
 }
