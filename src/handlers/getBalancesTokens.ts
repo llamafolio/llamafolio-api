@@ -163,6 +163,7 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     console.error('Failed to retrieve balances', { error, address })
     await sendSlackMessage(balancesContext, {
       level: 'error',
+      header: { Service: 'getBalancesTokens' },
       title: 'Failed to retrieve balances',
       message: (error as any).message,
     })
