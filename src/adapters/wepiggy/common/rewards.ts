@@ -37,7 +37,5 @@ export async function getMarketsRewards(ctx: BalancesContext, piggyDistribution:
     category: 'reward',
   }
 
-  console.log(reward)
-
   return reward
 }
