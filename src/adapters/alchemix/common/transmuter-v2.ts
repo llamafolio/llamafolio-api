@@ -45,7 +45,7 @@ export async function getTransmutationBalances(
     reactivesDetailsByAddress[reactive.address.toLowerCase()] = reactive
   }
 
-  for (let idx = 1; idx < transmuters.length; idx++) {
+  for (let idx = 0; idx < transmuters.length; idx++) {
     const transmuter = transmuters[idx]
     const borrow = transmuter.underlyings?.[0]
     const accountRes = accountsRes[idx]
