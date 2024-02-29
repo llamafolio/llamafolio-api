@@ -45,22 +45,18 @@ export async function getTransmutationBalances(
     reactivesDetailsByAddress[reactive.address.toLowerCase()] = reactive
   }
 
-  for (let idx = 0; idx < transmuters.length; idx++) {
+  for (let idx = 1; idx < transmuters.length; idx++) {
     const transmuter = transmuters[idx]
     const borrow = transmuter.underlyings?.[0]
     const accountRes = accountsRes[idx]
     const totalValueRes = totalValuesRes[idx]
 
-    if (!accountRes.success) {
-      continue
-    }
+    if (!accountRes.success) continue
 
-    const [debt, depositedTokens] = accountRes.output
-    const reactiveToken = depositedTokens[0].toLowerCase()
+    const [debt, [depositedTokens]] = accountRes.output
+    const reactiveToken = depositedTokens.toLowerCase()
 
-    if (!reactiveToken) {
-      continue
-    }
+    if (!reactiveToken) continue
 
     const synthetic: Balance = {
       ...(borrow as Contract),
