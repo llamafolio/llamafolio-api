@@ -11,7 +11,7 @@ const WPC: Token = {
 }
 
 export async function getMarketsRewards(ctx: BalancesContext, piggyDistribution: Contract): Promise<Balance> {
-  const pendingWPCRewardsRes = await call({
+  const pendingWPCRewards = await call({
     ctx,
     target: piggyDistribution.address,
     params: [ctx.address, true, true],
@@ -28,14 +28,12 @@ export async function getMarketsRewards(ctx: BalancesContext, piggyDistribution:
     },
   })
 
-  const pendingWPCRewards = pendingWPCRewardsRes * Math.pow(10, 3)
-
   const reward: Balance = {
     chain: ctx.chain,
     address: WPC.address,
     decimals: WPC.decimals,
     symbol: WPC.symbol,
-    amount: pendingWPCRewards,
+    amount: pendingWPCRewards * 10n ** 3n,
     category: 'reward',
   }
 
