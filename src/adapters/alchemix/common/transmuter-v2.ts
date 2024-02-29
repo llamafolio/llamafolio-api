@@ -51,16 +51,12 @@ export async function getTransmutationBalances(
     const accountRes = accountsRes[idx]
     const totalValueRes = totalValuesRes[idx]
 
-    if (!accountRes.success) {
-      continue
-    }
+    if (!accountRes.success) continue
 
-    const [debt, depositedTokens] = accountRes.output
-    const reactiveToken = depositedTokens[0].toLowerCase()
+    const [debt, [depositedTokens]] = accountRes.output
+    const reactiveToken = depositedTokens.toLowerCase()
 
-    if (!reactiveToken) {
-      continue
-    }
+    if (!reactiveToken) continue
 
     const synthetic: Balance = {
       ...(borrow as Contract),
