@@ -341,18 +341,15 @@ export async function getWalletInteractions(client: ClickHouseClient, address: s
           SELECT "chain", "address"
           FROM evm_indexer2.tokens_balances_mv
           WHERE
-            "holder_short" = {addressShort: String} AND
+            "holder_short" = substring({address: String},1,10) AND
             "holder" = {address: String} AND
             "type" = 'erc20'
-          GROUP BY "chain", "holder_short", "holder", "address_short", "address", "id", "type"
-          LIMIT 1 BY "chain", "address"
         )
       GROUP BY "chain", "address", "symbol", "decimals"
       HAVING sum("sign") > 0;
     `,
     query_params: {
       address,
-      addressShort: shortAddress(address),
     },
   })
 
