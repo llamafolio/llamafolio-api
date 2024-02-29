@@ -167,9 +167,7 @@ export async function getCNCLockerBalances(ctx: BalancesContext, lockers: Contra
   for (const [lockIdx, locker] of lockers.entries()) {
     const lockedBalanceRes = lockedBalancesRes[lockIdx]
 
-    if (!lockedBalanceRes.success) {
-      continue
-    }
+    if (!lockedBalanceRes.success || (lockedBalanceRes.success && lockedBalanceRes.output.length === 0)) continue
 
     const now = Date.now() / 1000
     const { amount, unlockTime } = lockedBalanceRes.output[0]
