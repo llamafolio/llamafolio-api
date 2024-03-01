@@ -101,15 +101,3 @@ async function getBeefyUnderlyings(ctx: BaseContext, pools: Contract[]): Promise
 
   return pools
 }
-
-// 'uniswap-gamma-arb-usdc.e': {
-//   chain: 'arbitrum',
-//   address: '0xf6D58e0CC337556b14aE0eC4170eDDE4577A1D44',
-//   symbol: 'ARB-USDC.e uLP',
-//   decimals: 18,
-//   lpToken: '0x5F4cED6237BBB278b693a2b46d3ef1f45ba27ea9',
-//   underlyings: [ 'ARB', 'arbUSDCe' ],
-//   strategy: '0x04299f84E8880eeEAC39769FA7d688b5d2b8a811',
-//   beefyKey: 'uniswap-gamma-arb-usdc.e',
-//   provider: 'uniswap'
-// },
