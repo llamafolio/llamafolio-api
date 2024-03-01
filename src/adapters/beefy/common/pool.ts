@@ -75,7 +75,7 @@ export async function getBeefyPools(ctx: BaseContext): Promise<Contract[]> {
     })
     .filter(isNotNullish)
 
-  return getBeefyUnderlyings(ctx, Object.values(fmtBoosts))
+  return getBeefyUnderlyings(ctx, [...Object.values(fmtBoosts), ...Object.values(pools)])
 }
 
 async function getBeefyUnderlyings(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
