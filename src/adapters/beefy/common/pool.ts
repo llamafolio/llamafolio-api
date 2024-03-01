@@ -67,7 +67,7 @@ export async function getBeefyPools(ctx: BaseContext): Promise<Contract[]> {
       if (!pools[poolId]) return null
 
       return {
-        ...pools[poolId.toLowerCase()],
+        ...pools[poolId],
         earnContractAddress,
         boostStatus: boosterContract.boostStatus,
         rewards: boosterContract.rewards,
