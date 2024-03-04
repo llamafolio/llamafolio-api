@@ -54,6 +54,9 @@ export async function getTransmutationBalances(
     if (!accountRes.success) continue
 
     const [debt, [depositedTokens]] = accountRes.output
+
+    if (!depositedTokens) continue
+
     const reactiveToken = depositedTokens.toLowerCase()
 
     if (!reactiveToken) continue
