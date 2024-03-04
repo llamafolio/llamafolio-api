@@ -332,7 +332,18 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
         FROM ${environment.NS_LF}.yields
         WHERE "timestamp" = (SELECT max("timestamp") AS "timestamp" FROM lf.yields)
       ) AS y ON
-        (ab.chain = y.chain AND ab.adapter_id = y.adapter_id AND ab.address = y.address);
+        (ab.chain = y.chain AND ab.adapter_id = y.adapter_id AND ab.address = y.address)
+      GROUP BY
+        ab.chain,
+        ab.adapter_id,
+        ab.timestamp,
+        ab.balance,
+        ab.from_address,
+        y.apy,
+        y.apy_base,
+        y.apy_reward,
+        y.apy_mean_30d,
+        y.il_risk as il_risk;
     `,
     query_params: {
       fromAddresses: fromAddresses.map((address) => address.toLowerCase()),
