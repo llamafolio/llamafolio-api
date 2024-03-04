@@ -64,7 +64,7 @@ export async function getCollContracts(ctx: BaseContext, compounder: Contract): 
   return {
     ...compounder,
     underlyings: mapSuccessFilter(assetsInfoRes, (res) => {
-      return res.output.asset
+      return { chain: ctx.chain, address: res.output.asset, collateralFactor: res.output.borrowCollateralFactor }
     }),
   }
 }
