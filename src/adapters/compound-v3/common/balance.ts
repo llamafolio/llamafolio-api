@@ -1,7 +1,8 @@
 import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
+import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
-import { isNotNullish } from '@lib/type'
+import { getSingleStakeBalance } from '@lib/stake'
 
 const abi = {
   borrowBalanceOf: {
@@ -53,61 +54,52 @@ const COMP: { [key: string]: `0x${string}` } = {
   polygon: '0x8505b9d2254A7Ae468c0E9dd10Ccea3A837aef5c',
 }
 
-export async function getCompLendBalances(
+export async function getCompoundBalances(
   ctx: BalancesContext,
-  compounders: Contract[],
+  compounder: Contract,
+  debt: Contract,
   rewarder: Contract,
 ): Promise<Balance[]> {
-  const assets = compounders.flatMap((compounder) => compounder.assets)
+  const assets = compounder.underlyings as Contract[]
+  if (!assets) return []
 
-  const [userLendBalances, userBorrowBalances, pendingCompRewards] = await Promise.all([
+  const [userStakeBalance, userLendBalances, userBorrowBalance, pendingCompRewards] = await Promise.all([
+    getSingleStakeBalance(ctx, compounder),
     multicall({
       ctx,
-      calls: assets.map((asset) => ({ target: asset.compounder, params: [ctx.address, asset.address] }) as const),
+      calls: assets.map((asset) => ({ target: compounder.address, params: [ctx.address, asset.address] }) as const),
       abi: abi.userCollateral,
     }),
-    multicall({
+    call({
       ctx,
-      calls: compounders.map((compounder) => ({ target: compounder.address, params: [ctx.address] }) as const),
+      target: compounder.address,
+      params: [ctx.address],
       abi: abi.borrowBalanceOf,
     }),
-    multicall({
+    call({
       ctx,
-      calls: compounders.map(
-        (contract) => ({ target: rewarder.address, params: [contract.address, ctx.address] }) as const,
-      ),
+      target: rewarder.address,
+      params: [compounder.address, ctx.address],
       abi: abi.getRewardOwed,
     }),
   ])
 
-  const supplyBalance: Balance[] = mapSuccessFilter(userLendBalances, (res, index) => {
-    const asset = assets[index] as Balance
-    const [balance, _reserved] = res.output
-    return {
-      ...asset,
-      amount: balance,
-      category: 'lend',
-    }
+  const supplyBalances = mapSuccessFilter(userLendBalances, (res, index) => {
+    const asset = assets[index]
+
+    return { ...asset, amount: res.output[0], category: 'lend' }
   })
 
-  const borrowBalance: Balance[] = mapSuccessFilter(userBorrowBalances, (res, index) => {
-    const underlying = compounders[index].underlyings?.[0] as Contract
-    if (!underlying) return null
-    return {
-      ...underlying,
-      amount: res.output,
-      category: 'borrow',
-    }
-  }).filter(isNotNullish) as Balance[]
+  const borrowBalance: Balance = { ...debt, amount: userBorrowBalance, category: 'borrow' }
 
-  const rewardBalance: Balance[] = mapSuccessFilter(pendingCompRewards, (res) => ({
+  const rewardBalance: Balance = {
     chain: ctx.chain,
     address: COMP[ctx.chain],
     decimals: 18,
     symbol: 'COMP',
-    amount: res.output.owed,
+    amount: pendingCompRewards.owed,
     category: 'reward',
-  }))
+  }
 
-  return [...supplyBalance, ...borrowBalance, ...rewardBalance]
+  return [userStakeBalance, ...supplyBalances, borrowBalance, rewardBalance]
 }

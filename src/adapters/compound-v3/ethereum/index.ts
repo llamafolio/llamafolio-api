@@ -1,8 +1,7 @@
-import { getAssetsContracts } from '@adapters/compound-v3/common/asset'
-import { getCompLendBalances } from '@adapters/compound-v3/common/balance'
-import type { AdapterConfig, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getCollContracts } from '@adapters/compound-v3/common/asset'
+import { getCompoundBalances } from '@adapters/compound-v3/common/balance'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getSingleStakeBalances } from '@lib/stake'
 import type { Token } from '@lib/token'
 
 const USDC: Token = {
@@ -22,13 +21,11 @@ const WETH: Token = {
 const cUSDCv3: Contract = {
   chain: 'ethereum',
   address: '0xc3d688B66703497DAA19211EEdff47f25384cdc3',
-  underlyings: [USDC],
 }
 
 const cWETHv3: Contract = {
   chain: 'ethereum',
   address: '0xa17581a9e3356d9a858b789d68b4d866e593ae94',
-  underlyings: [WETH],
 }
 
 const rewarder: Contract = {
@@ -37,21 +34,21 @@ const rewarder: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const compounders = await getAssetsContracts(ctx, [cUSDCv3, cWETHv3])
+  const [usdcCompounder, ethCompounder] = await Promise.all([
+    getCollContracts(ctx, cUSDCv3),
+    getCollContracts(ctx, cWETHv3),
+  ])
 
   return {
-    contracts: { compounders },
+    contracts: { usdcCompounder, ethCompounder },
     revalidate: 60 * 60,
   }
 }
 
-const compoundBalances = async (ctx: BalancesContext, compounders: Contract[], rewarder: Contract) => {
-  return Promise.all([getSingleStakeBalances(ctx, compounders), getCompLendBalances(ctx, compounders, rewarder)])
-}
-
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    compounders: (...args) => compoundBalances(...args, rewarder),
+    usdcCompounder: (...args) => getCompoundBalances(...args, USDC, rewarder),
+    ethCompounder: (...args) => getCompoundBalances(...args, WETH, rewarder),
   })
 
   return {
