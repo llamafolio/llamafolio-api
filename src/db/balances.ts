@@ -4,7 +4,7 @@ import type { Balance, ContractStandard } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
 import { areBalancesStale } from '@lib/balance'
 import type { Category } from '@lib/category'
-import { type Chain, chainByChainId, chainById } from '@lib/chains'
+import { chainByChainId, chainById, type Chain } from '@lib/chains'
 import { shortAddress, toDateTime, unixFromDateTime } from '@lib/fmt'
 import { sum, sumBI } from '@lib/math'
 import type { UnixTimestamp } from '@lib/type'
@@ -436,7 +436,7 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
           const balancesByGroupIdx = groupBy(balancesByFromAddress[fromAddress], 'group_idx')
 
           for (const groupIdx in balancesByGroupIdx) {
-            const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
+            const groupBalances = removeDuplicates(balancesByGroupIdx[groupIdx].map(formatBalance))
 
             protocolBalances.groups.push({
               fromAddress,
@@ -475,6 +475,16 @@ export async function selectLatestProtocolsBalancesByFromAddresses(client: Click
   )
 
   return { updatedAt, protocolsBalances, staleAddresses }
+}
+
+function removeDuplicates(groupBalances: any) {
+  const uniqueJSONSet = new Set()
+  groupBalances.forEach((balance: any) => {
+    const balanceJSON = JSON.stringify(balance)
+    uniqueJSONSet.add(balanceJSON)
+  })
+
+  return Array.from(uniqueJSONSet).map((unique: any) => JSON.parse(unique))
 }
 
 export async function selectTokenHoldersBalances(
