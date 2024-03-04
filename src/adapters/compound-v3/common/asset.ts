@@ -1,6 +1,6 @@
 import type { BaseContext, Contract } from '@lib/adapter'
-import { mapMultiSuccessFilter, mapSuccessFilter, range } from '@lib/array'
-import { abi as erc20Abi } from '@lib/erc20'
+import { mapSuccessFilter, range } from '@lib/array'
+import { call } from '@lib/call'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -48,51 +48,23 @@ const abi = {
   },
 } as const
 
-export async function getAssetsContracts(ctx: BaseContext, compounders: Contract[]): Promise<Contract[]> {
-  const numberOfAssets = await multicall({
+export async function getCollContracts(ctx: BaseContext, compounder: Contract): Promise<Contract> {
+  const collNumbers = await call({
     ctx,
-    calls: compounders.map((contract) => ({ target: contract.address })),
+    target: compounder.address,
     abi: abi.numAssets,
   })
 
   const assetsInfoRes = await multicall({
     ctx,
-    calls: mapSuccessFilter(numberOfAssets, (responses) =>
-      range(0, responses.output).map((res) => ({ target: responses.input.target, params: [res] }) as const),
-    ).flat(),
+    calls: range(0, collNumbers).map((i) => ({ target: compounder.address, params: [i] }) as const),
     abi: abi.getAssetInfo,
   })
 
-  const rawAssets = mapSuccessFilter(assetsInfoRes, (res) => ({
-    chain: ctx.chain,
-    address: res.output.asset,
-    compounder: res.input.target,
-    collateralFactor: res.output.borrowCollateralFactor,
-  }))
-
-  const [symbolRes, decimalsRes] = await Promise.all([
-    multicall({ ctx, calls: rawAssets.map((asset) => ({ target: asset.address }) as const), abi: erc20Abi.symbol }),
-    multicall({ ctx, calls: rawAssets.map((asset) => ({ target: asset.address }) as const), abi: erc20Abi.decimals }),
-  ])
-
-  const assets: Contract[] = mapMultiSuccessFilter(
-    symbolRes.map((_, i) => [symbolRes[i], decimalsRes[i]]),
-
-    (res, index) => {
-      const rawAsset = rawAssets[index]
-      const [{ output: symbol }, { output: decimals }] = res.inputOutputPairs
-
-      return {
-        ...rawAsset,
-        decimals,
-        symbol,
-      }
-    },
-  )
-
-  compounders.forEach((compounder) => {
-    compounder.assets = assets.filter((asset) => asset.compounder === compounder.address)
-  })
-
-  return compounders
+  return {
+    ...compounder,
+    underlyings: mapSuccessFilter(assetsInfoRes, (res) => {
+      return res.output.asset
+    }),
+  }
 }

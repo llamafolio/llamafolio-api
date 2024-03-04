@@ -1,8 +1,7 @@
-import { getAssetsContracts } from '@adapters/compound-v3/common/asset'
-import { getCompLendBalances } from '@adapters/compound-v3/common/balance'
-import type { AdapterConfig, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getCollContracts } from '@adapters/compound-v3/common/asset'
+import { getCompoundBalances } from '@adapters/compound-v3/common/balance'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getSingleStakeBalances } from '@lib/stake'
 import type { Token } from '@lib/token'
 
 const USDC: Token = {
@@ -15,7 +14,6 @@ const USDC: Token = {
 const cUSDCv3: Contract = {
   chain: 'polygon',
   address: '0xF25212E676D1F7F89Cd72fFEe66158f541246445',
-  underlyings: [USDC],
 }
 
 const rewarder: Contract = {
@@ -24,21 +22,17 @@ const rewarder: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const compounders = await getAssetsContracts(ctx, [cUSDCv3])
+  const usdcCompounder = await getCollContracts(ctx, cUSDCv3)
 
   return {
-    contracts: { compounders },
+    contracts: { usdcCompounder },
     revalidate: 60 * 60,
   }
 }
 
-const compoundBalances = async (ctx: BalancesContext, compounders: Contract[], rewarder: Contract) => {
-  return Promise.all([getSingleStakeBalances(ctx, compounders), getCompLendBalances(ctx, compounders, rewarder)])
-}
-
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    compounders: (...args) => compoundBalances(...args, rewarder),
+    usdcCompounder: (...args) => getCompoundBalances(...args, USDC, rewarder),
   })
 
   return {
