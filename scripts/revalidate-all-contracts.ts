@@ -3,17 +3,34 @@ import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
 
+interface Adapter {
+  adapter: string
+  chains: string[]
+}
+
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
 
 function getAdapters() {
   const src = path.join(__dirname, '..', 'src', 'adapters')
 
-  const adapters: string[] = []
+  const adapters: Adapter[] = []
 
   fs.readdirSync(src).forEach(function (child) {
+    const childPath = path.join(src, child)
+
     // eslint-disable-next-line security/detect-non-literal-fs-filename
-    if (fs.existsSync(path.join(src, child, 'index.ts'))) {
-      adapters.push(child)
+    if (fs.existsSync(path.join(childPath, 'index.ts'))) {
+      // eslint-disable-next-line security/detect-non-literal-fs-filename
+      const subFolders = fs
+        .readdirSync(childPath, { withFileTypes: true })
+        .filter((dirent) => dirent.isDirectory() && dirent.name !== 'common')
+        .map((dirent) => dirent.name)
+
+      const adapter: Adapter = {
+        adapter: child,
+        chains: subFolders,
+      }
+      adapters.push(adapter)
     }
   })
 
@@ -30,13 +47,16 @@ async function main() {
   const adapters = getAdapters()
 
   // TODO: spawn child processes
-  for (const adapter of adapters) {
-    console.log(`Revalidate contracts ${adapter}`)
-    try {
-      const stdout = execSync(`pnpm run revalidate-contracts ${adapter}`, {})
-      console.log(stdout.toString())
-    } catch (err) {
-      console.error(err)
+  for (const { adapter, chains } of adapters) {
+    for (const chain of chains) {
+      console.log(`Revalidate contracts ${adapter} ${chain}`)
+
+      try {
+        const stdout = execSync(`pnpm run revalidate-contracts ${adapter} ${chain}`, {})
+        console.log(stdout.toString())
+      } catch (err) {
+        console.error(err)
+      }
     }
   }
 }
