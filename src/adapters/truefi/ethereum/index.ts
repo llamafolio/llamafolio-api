@@ -1,67 +1,49 @@
-import type { AdapterConfig, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
+import { getTruefiBalances, getTruefiFarmBalance, getTRUStakeBalance } from '@adapters/truefi/ethereum/balance'
+import { getTruefiPoolsContracts } from '@adapters/truefi/ethereum/pools'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import type { Token } from '@lib/token'
 
-import { getFarmBalances } from './farm'
-import { getPoolsContracts, getPoolsSupplies } from './pools'
-import { getTRUStakeBalances, getTUSDStakeBalances } from './stake'
-
-const TRU: Token = {
-  chain: 'ethereum',
-  address: '0x4c19596f5aaff459fa38b0f7ed92f11ae6543784',
-  symbol: 'TRU',
-  decimals: 8,
-}
-
-const TrueUSD: Token = {
-  chain: 'ethereum',
-  address: '0x0000000000085d4780B73119b644AE5ecd22b376',
-  symbol: 'TUSD',
-  decimals: 18,
-}
+const stakersAddresses: `0x${string}`[] = [
+  '0x1ed460d149d48fa7d91703bf4890f97220c09437', // BUSD
+  '0xa991356d261fbaf194463af6df8f0464f8f1c742', // USDC
+  '0x6002b1dcb26e7b1aa797a17551c6f487923299d7', // USDT
+  '0x97ce06c3e3d027715b2d6c22e67d5096000072e5', // TUSD
+  '0xa1e72267084192db7387c8cc1328fade470e4149', // Legacy TUSD
+]
 
 const stkTRU: Contract = {
   chain: 'ethereum',
   address: '0x23696914ca9737466d8553a2d619948f548ee424',
+  underlyings: ['0x4c19596f5aaff459fa38b0f7ed92f11ae6543784'],
+  rewards: ['0x4c19596f5aaff459fa38b0f7ed92f11ae6543784'],
   symbol: 'stkTRU',
-  underlyings: [TRU],
-  rewards: [TRU],
   decimals: 8,
 }
 
-const TUSD: Contract = {
+const tfddeltai_III_USDC: Contract = {
   chain: 'ethereum',
-  name: 'Legacy TrueFi TrueUSD',
-  address: '0xa1e72267084192Db7387c8CC1328fadE470e4149',
-  symbol: 'Legacy tfTUSD',
-  underlyings: [TrueUSD],
-  decimals: 18,
+  address: '0x044e3e0a83453d6f673170953fda6ed725adb286',
+  underlyings: ['0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48'],
 }
 
-const trueMultiFarm: Contract = {
+const trueFarm: Contract = {
   chain: 'ethereum',
   address: '0xec6c3fd795d6e6f202825ddb56e01b3c128b0b10',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const pools = await getPoolsContracts(ctx)
-
+  const stakers = await getTruefiPoolsContracts(ctx, stakersAddresses)
   return {
-    contracts: { pools, stkTRU, TUSD },
+    contracts: { stakers, stkTRU, tfddeltai_III_USDC },
     revalidate: 60 * 60,
   }
 }
 
-async function getAllBalances(ctx: BalancesContext, pools: Contract[]) {
-  const poolsSupplies = await getPoolsSupplies(ctx, pools)
-  return getFarmBalances(ctx, poolsSupplies, trueMultiFarm)
-}
-
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: getAllBalances,
-    stkTRU: getTRUStakeBalances,
-    TUSD: getTUSDStakeBalances,
+    stkTRU: getTRUStakeBalance,
+    tfddeltai_III_USDC: getTruefiFarmBalance,
+    stakers: (...args) => getTruefiBalances(...args, trueFarm),
   })
 
   return {
