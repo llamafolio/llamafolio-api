@@ -1,4 +1,5 @@
 import { getMasterBalances } from '@adapters/magpie/common/balance'
+import { getCakepieBalances, getCakepiePools } from '@adapters/magpie/common/cakepie'
 import { getMagpiePools, getMasterMagpieBalances } from '@adapters/magpie/common/magpie'
 import { getPenpiePools } from '@adapters/magpie/common/penpie'
 import { getRadpiePools } from '@adapters/magpie/common/radpie'
@@ -20,6 +21,12 @@ const masterRadpie: Contract = {
   chain: 'bsc',
   address: '0x1b80eec9b25472c6119ead3b880976fa62e58453',
   rewards: ['0xf7de7e8a6bd59ed41a4b5fe50278b3b7f31384df'],
+}
+
+const masterCakepie: Contract = {
+  chain: 'bsc',
+  address: '0x74165b89fd8e9b91a109a4e71662f27eeba61e98',
+  rewards: ['0x2B5D9ADea07B590b638FFc165792b2C610EdA649'],
 }
 
 const vlMGP: Contract = {
@@ -52,9 +59,10 @@ const mWOMsv: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const [{ masterChefMagpieWithPools, magpiePools }, penpiePools, radpiePools] = await Promise.all([
+  const [{ masterChefMagpieWithPools, magpiePools }, penpiePools, cakepiePools, radpiePools] = await Promise.all([
     getMagpiePools(ctx, masterMagpie, [vlMGP, mWOMsv]),
     getPenpiePools(ctx, masterPenpie),
+    getCakepiePools(ctx, masterCakepie),
     getRadpiePools(ctx, masterRadpie),
   ])
 
@@ -62,6 +70,7 @@ export const getContracts = async (ctx: BaseContext) => {
     contracts: {
       masterChefMagpieWithPools,
       magpiePools,
+      cakepiePools,
       penpiePools,
       radpiePools,
     },
@@ -72,6 +81,7 @@ export const getContracts = async (ctx: BaseContext) => {
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     masterChefMagpieWithPools: getMasterMagpieBalances,
+    cakepiePools: (...args) => getCakepieBalances(...args, masterCakepie),
     penpiePools: (...args) => getMasterBalances(...args, masterPenpie),
     radpiePools: (...args) => getMasterBalances(...args, masterRadpie),
   })
