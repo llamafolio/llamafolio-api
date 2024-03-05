@@ -2,12 +2,11 @@ import { getControllersBalances } from '@adapters/crvusd/ethereum/balance'
 import { getControllers } from '@adapters/crvusd/ethereum/contract'
 import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 
-const crvUSD: Contract = {
+const crvController: Contract = {
   chain: 'ethereum',
-  address: '0xf939e0a03fb07f59a73314e73794be0e57ac1b4e',
-  symbol: 'crvUSD',
-  decimals: 18,
-  stable: true,
+  name: 'crvUSD Controller',
+  address: '0x7443944962d04720f8c220c0d25f56f869d6efd4',
+  token: '0xd533a949740bb3306d119cc777fa900ba034cd52',
 }
 
 const factory: Contract = {
@@ -17,10 +16,10 @@ const factory: Contract = {
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const controllers = await getControllers(ctx, factory)
+  const crvUSDController = await getControllers(ctx, factory)
 
   return {
-    contracts: { controllers },
+    contracts: { controllers: [...crvUSDController, crvController] },
     revalidate: 60 * 60,
   }
 }
