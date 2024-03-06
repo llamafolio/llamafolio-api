@@ -24,6 +24,15 @@ npm install --global pnpm
 pnpm add --global pnpm@latest
 ```
 
+## Installation
+
+The API is using Node.js and TypeScript.    
+Install dependencies:
+
+```bash
+pnpm install
+```
+
 ## Adapters
 
 An adapter specifies how to resolve the balances of an address for your protocol.
