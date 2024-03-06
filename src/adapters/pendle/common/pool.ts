@@ -1,6 +1,5 @@
 import type { BaseContext, Contract } from '@lib/adapter'
 import { groupBy, mapSuccessFilter } from '@lib/array'
-import { ADDRESS_ZERO } from '@lib/contract'
 import { multicall } from '@lib/multicall'
 
 const abi = {
@@ -40,6 +39,13 @@ const abi = {
     stateMutability: 'view',
     type: 'function',
   },
+  yieldToken: {
+    inputs: [],
+    name: 'yieldToken',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
   rewardToken: {
     inputs: [],
     name: 'rewardToken',
@@ -55,14 +61,6 @@ const chainId: { [key: string]: number } = {
   avalanche: 43114,
   optimism: 10,
   bsc: 56,
-}
-
-const NATIVE: { [key: string]: `0x${string}` } = {
-  ethereum: '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2',
-  arbitrum: '0x82af49447d8a07e3bd95bd0d56f35241523fbab1',
-  avalanche: '0xb31f66aa3c1e785363f0875a1b74e27b85fd66c7',
-  optimism: '0x4200000000000000000000000000000000000006',
-  bsc: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
 }
 
 export async function getPendlePools(ctx: BaseContext): Promise<Contract[]> {
@@ -87,13 +85,7 @@ export async function getPendlePools(ctx: BaseContext): Promise<Contract[]> {
   }
 
   const { PT, YT, SY, PENDLE_LP } = groupBy(pools, 'baseType')
-
-  const formattedPools = await Promise.all([
-    getPendle_LPUnderlyings(ctx, PENDLE_LP),
-    getPendleUnderlyings(ctx, [...PT, ...YT, ...SY]),
-  ])
-
-  return formattedPools.flat()
+  return [...(await getPendle_LPUnderlyings(ctx, PENDLE_LP)), ...PT, ...YT, ...SY]
 }
 
 function transformData(ctx: BaseContext, data: any) {
@@ -110,17 +102,6 @@ async function getPendle_LPUnderlyings(ctx: BaseContext, pools: Contract[]): Pro
 
   return mapSuccessFilter(tokensRes, (res, index) => {
     const [SY, PT, _] = res.output
-    return { ...pools[index], underlyings: [SY, PT] }
-  })
-}
-
-async function getPendleUnderlyings(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
-  const tokensRes = await multicall({ ctx, calls: pools.map((pool) => ({ target: pool.SY })), abi: abi.assetInfo })
-
-  return mapSuccessFilter(tokensRes, (res, index) => {
-    const [_, rawAddress, __]: any = res.output
-    const address = rawAddress === ADDRESS_ZERO ? NATIVE[ctx.chain] : rawAddress
-
-    return { ...pools[index], underlyings: [address as `0x${string}`] }
+    return { ...pools[index], SY: SY, underlyings: [SY, PT] }
   })
 }
