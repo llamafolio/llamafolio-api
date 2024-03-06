@@ -2,9 +2,9 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { mapMultiSuccessFilter } from '@lib/array'
 import type { Category } from '@lib/category'
 import { abi as erc20Abi } from '@lib/erc20'
-import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
+import { parseEther } from 'viem'
 
 const abi = {
   tokenPrice: {
@@ -40,12 +40,11 @@ export async function getdHedgeBalances(
     (res, index) => {
       const pool = pools[index]
       const underlying = pool.underlyings?.[0] as Contract
-      const [{ output: userBalance }, { output: pricePerFullShareRes }] = res.inputOutputPairs as any
+      const [{ output: userBalance }, { output: pricePerFullShare }] = res.inputOutputPairs as any
 
       if (userBalance === 0n) return null
 
-      const pricePerFullShare = parseFloatBI(pricePerFullShareRes, 18)
-      const underlyingBalance = Number(userBalance) * pricePerFullShare
+      const underlyingBalance = (userBalance * pricePerFullShare) / parseEther('1.0')
 
       return {
         ...pool,
