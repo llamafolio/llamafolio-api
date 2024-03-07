@@ -31,14 +31,14 @@ export const getContracts = async (ctx: BaseContext) => {
   ])
 
   return {
-    contracts: { pairs, pools, manager },
+    contracts: { pairs, pools },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pairs: getPairsBalances,
-    pools: (...args) => getAcrossBalances(...args, manager, masterChef),
+    pools: (...args) => getAcrossBalances(...args, masterChef),
   })
 
   return {
