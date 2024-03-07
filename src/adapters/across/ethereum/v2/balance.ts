@@ -143,6 +143,7 @@ async function getAcrossUnderlyingsBalances(ctx: BalancesContext, pools: Contrac
       const pool = pools[index]
       const amount = pool.amount
       const rawUnderlying = pool.underlyings?.[0] as Contract
+      const reward = pool.rewards?.[0] as Contract
 
       const [{ output: totalSupply }, { output: tokenBalance }] = res.inputOutputPairs
       const [_lpToken, _isEnabled, _lastLpFeeUpdate, utilizedReserves, liquidReserves] = tokenBalance
@@ -154,7 +155,7 @@ async function getAcrossUnderlyingsBalances(ctx: BalancesContext, pools: Contrac
         ...pool,
         amount,
         underlyings,
-        rewards: undefined,
+        rewards: [reward],
         category: 'lp',
       }
     },
@@ -216,7 +217,6 @@ async function getUserPendingRewards(
   return mapSuccessFilter(userPendingRewards, (res: any, index) => {
     const pool = pools[index]
     const reward = rewardToken || (pool.rewards?.[0] as Contract)
-
     return [{ ...reward, amount: res.output }]
   })
 }
