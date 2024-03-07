@@ -66,7 +66,7 @@ export async function selectProtocols(client: ClickHouseClient) {
       LEFT JOIN (
         SELECT
           "id",
-          groupArray(chain) AS "chains"
+          groupUniqArray(chain) AS "chains"
         FROM ${environment.NS_LF}.adapters
         GROUP BY "id"
       ) AS "a" ON p.slug = a.id;
