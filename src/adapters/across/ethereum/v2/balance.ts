@@ -156,7 +156,7 @@ async function getAcrossUnderlyingsBalances(ctx: BalancesContext, pools: Contrac
         amount,
         underlyings,
         rewards: [reward],
-        category: 'lp',
+        category: 'farm',
       }
     },
   ).filter(isNotNullish)
