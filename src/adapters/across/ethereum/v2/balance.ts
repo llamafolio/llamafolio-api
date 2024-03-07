@@ -3,11 +3,13 @@ import { mapMultiSuccessFilter, mapSuccessFilter } from '@lib/array'
 import { abi as erc20Abi } from '@lib/erc20'
 import {
   getMasterChefPoolsBalances,
+  type GetResolvedUnderlyingsParams,
   type GetUserBalanceParams,
   type GetUsersInfosParams,
 } from '@lib/masterchef/masterChefBalance'
 import { multicall } from '@lib/multicall'
 import type { Token } from '@lib/token'
+import { isNotNullish } from '@lib/type'
 
 const abi = {
   pooledTokens: {
@@ -58,6 +60,11 @@ const abi = {
   },
 } as const
 
+const manager: Contract = {
+  chain: 'ethereum',
+  address: '0xc186fA914353c44b2E33eBE05f21846F1048bEda',
+}
+
 const ACX: Token = {
   chain: 'ethereum',
   address: '0x44108f0223A3C3028F5Fe7AEC7f9bb2E66beF82F',
@@ -65,16 +72,11 @@ const ACX: Token = {
   symbol: 'ACX',
 }
 
-export async function getAcrossBalances(
-  ctx: BalancesContext,
-  pools: Contract[],
-  manager: Contract,
-  masterChef: Contract,
-) {
-  return Promise.all([getAcrossLPBalances(ctx, pools, manager), getAcrossFarmBalances(ctx, pools, masterChef)])
+export async function getAcrossBalances(ctx: BalancesContext, pools: Contract[], masterChef: Contract) {
+  return Promise.all([getAcrossLPBalances(ctx, pools), getAcrossFarmBalances(ctx, pools, masterChef)])
 }
 
-async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[], manager: Contract): Promise<Balance[]> {
+async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
   const [userBalancesOfsRes, totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
     multicall({
       ctx,
@@ -118,6 +120,47 @@ async function getAcrossLPBalances(ctx: BalancesContext, pools: Contract[], mana
   )
 }
 
+async function getAcrossUnderlyingsBalances(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
+  const [totalSuppliesRes, underlyingsBalancesRes] = await Promise.all([
+    multicall({
+      ctx,
+      calls: pools.map(({ address }) => ({ target: address })),
+      abi: erc20Abi.totalSupply,
+    }),
+    multicall({
+      ctx,
+      calls: pools.map(
+        (pool) => ({ target: manager.address, params: [(pool.underlyings![0] as Contract).address] }) as const,
+      ),
+      abi: abi.pooledTokens,
+    }),
+  ])
+
+  return mapMultiSuccessFilter(
+    totalSuppliesRes.map((_, i) => [totalSuppliesRes[i], underlyingsBalancesRes[i]]),
+
+    (res, index) => {
+      const pool = pools[index]
+      const amount = pool.amount
+      const rawUnderlying = pool.underlyings?.[0] as Contract
+
+      const [{ output: totalSupply }, { output: tokenBalance }] = res.inputOutputPairs
+      const [_lpToken, _isEnabled, _lastLpFeeUpdate, utilizedReserves, liquidReserves] = tokenBalance
+
+      if (!rawUnderlying || totalSupply === 0n) return null
+      const underlyings = [{ ...rawUnderlying, amount: (amount * (utilizedReserves + liquidReserves)) / totalSupply }]
+
+      return {
+        ...pool,
+        amount,
+        underlyings,
+        rewards: undefined,
+        category: 'lp',
+      }
+    },
+  ).filter(isNotNullish)
+}
+
 async function getAcrossFarmBalances(
   ctx: BalancesContext,
   pools: Contract[],
@@ -127,10 +170,9 @@ async function getAcrossFarmBalances(
     masterChefAddress: masterChef.address,
     rewardToken: ACX,
     getUserBalance,
-    getUserInfos: (ctx, { masterChefAddress, pools, getUserBalance }) =>
-      getUserInfos(ctx, { masterChefAddress, pools, getUserBalance }),
-    getUserPendingRewards: async (ctx, { masterChefAddress, pools, rewardToken }) =>
-      getUserPendingRewards(ctx, { masterChefAddress, pools, rewardToken }),
+    getUserInfos,
+    getUserPendingRewards,
+    getResolvedUnderlyings,
   })
 }
 
@@ -167,7 +209,7 @@ async function getUserPendingRewards(
 ) {
   const userPendingRewards = await multicall({
     ctx,
-    calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.pid, ctx.address] }) as const),
+    calls: pools.map((pool) => ({ target: masterChefAddress, params: [pool.address, ctx.address] }) as const),
     abi: abi.getOutstandingRewards,
   })
 
@@ -177,4 +219,11 @@ async function getUserPendingRewards(
 
     return [{ ...reward, amount: res.output }]
   })
+}
+
+async function getResolvedUnderlyings(
+  ctx: BalancesContext,
+  { pools }: GetResolvedUnderlyingsParams,
+): Promise<Contract[]> {
+  return getAcrossUnderlyingsBalances(ctx, pools)
 }
