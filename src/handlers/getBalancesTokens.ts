@@ -53,13 +53,6 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
     return badRequest('Invalid address parameter')
   }
 
-  const balancesContext: BalancesContext = {
-    chain: 'ethereum',
-    adapterId: '',
-    client: getRPCClient({ chain: 'ethereum' }),
-    address,
-  }
-
   try {
     const tokensByChain = await getWalletInteractions(client, address)
 
