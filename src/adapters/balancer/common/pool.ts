@@ -40,7 +40,36 @@ const abi = {
     inputs: [],
     outputs: [{ name: '', type: 'address' }],
   },
+  bal_token: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'bal_token',
+    inputs: [],
+    outputs: [{ name: '', type: 'address' }],
+  },
+  reward_count: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'reward_count',
+    inputs: [],
+    outputs: [{ name: '', type: 'uint256' }],
+  },
+  reward_tokens: {
+    stateMutability: 'view',
+    type: 'function',
+    name: 'reward_tokens',
+    inputs: [{ name: 'arg0', type: 'uint256' }],
+    outputs: [{ name: '', type: 'address' }],
+  },
 } as const
+
+const BAL: { [key: string]: `0x${string}` } = {
+  arbitrum: '0x040d1edc9569d4bab2d15287dc5a4f10f56a56b8',
+  avalanche: '0xA2A035Dd93b0e963864FA14A240401d6CeAc5558',
+  ethereum: '0xba100000625a3754423978a60c9317c58a424e3d',
+  gnosis: '0x7ef541e2a22058048904fe5744f9c7e4c57af717',
+  polygon: '0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3',
+}
 
 export async function getBalancerPools(ctx: BaseContext, url: string, gaugeController?: Contract): Promise<Contract[]> {
   const contracts: Contract[] = []
@@ -77,9 +106,11 @@ export async function getBalancerPools(ctx: BaseContext, url: string, gaugeContr
   }
 
   if (ctx.chain === 'ethereum' && gaugeController) {
-    return getBalancerEthGauges(ctx, gaugeController, contracts)
+    const balancerEthGauges = await getBalancerEthGauges(ctx, gaugeController, contracts)
+    return getBalancerRewards(ctx, balancerEthGauges)
   } else {
-    return getBalancerChildGauges(ctx, contracts)
+    const balancerChildGauges = await getBalancerChildGauges(ctx, contracts)
+    return getBalancerRewards(ctx, balancerChildGauges)
   }
 }
 
@@ -159,4 +190,47 @@ async function getBalancerChildGauges(ctx: BaseContext, pools: Contract[]): Prom
   })
 
   return mergedPools
+}
+
+async function getBalancerRewards(ctx: BaseContext, pools: Contract[]): Promise<Contract[]> {
+  const poolsWithoutGauges = pools.filter((pool) => pool.gauge === undefined)
+  const poolsWithGauges = pools.filter((pool) => pool.gauge !== undefined)
+
+  const rewardsLengths = await multicall({
+    ctx,
+    calls: poolsWithGauges.map((pool) => ({ target: pool.gauge }) as const),
+    abi: abi.reward_count,
+  })
+
+  const rewardsTokensCalls = rewardsLengths
+    .map((res, poolIndex) => {
+      return {
+        pool: poolsWithGauges[poolIndex],
+        calls: rangeBI(0n, res.output as bigint).map(
+          (i) =>
+            ({
+              target: res.input.target,
+              params: [i],
+              poolIndex,
+            }) as const,
+        ),
+      }
+    })
+    .flat()
+
+  const rewardsTokens = await multicall({
+    ctx,
+    calls: rewardsTokensCalls.map((c) => c.calls).flat(),
+    abi: abi.reward_tokens,
+  })
+
+  const poolWithRewards: Contract[] = poolsWithGauges.map((pool, index) => {
+    const tokensForThisPool = rewardsTokens
+      .filter((token) => token.input.poolIndex === index)
+      .map((token) => token.output)
+
+    return { ...pool, rewards: [BAL[ctx.chain], ...tokensForThisPool] as `0x${string}`[] }
+  })
+
+  return [...poolsWithoutGauges, ...poolWithRewards]
 }

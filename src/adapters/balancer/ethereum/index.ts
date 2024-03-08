@@ -1,4 +1,4 @@
-import { getBalancerBalances } from '@adapters/balancer/common/balance'
+import { getAllBalancerBalances } from '@adapters/balancer/common/balance'
 import { getLockerBalances } from '@adapters/balancer/ethereum/locker'
 import type { BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -66,7 +66,7 @@ export const getContracts = async (ctx: BaseContext) => {
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    pools: (...args) => getBalancerBalances(...args, vault),
+    pools: (...args) => getAllBalancerBalances(...args, vault),
     oldPools: (ctx, oldPools) => getPoolsBalances(ctx, oldPools, { getPoolAddress: (pool) => pool.address }),
     votingEscrow: (...args) => getLockerBalances(...args, vault),
   })
