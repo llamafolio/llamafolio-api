@@ -55,7 +55,7 @@ export async function getBalancerBalances(ctx: BalancesContext, pools: Contract[
 }
 
 async function getBalancerRewards(ctx: BalancesContext, pools: Contract[]): Promise<Balance[]> {
-  const rewardCalls: Call<typeof abi.claimable_reward>[] = pools.flatMap(
+  const rewardCalls: Call<typeof abi.claimable_reward>[] = (pools || []).flatMap(
     (pool, poolIndex) =>
       pool.rewards?.map(
         (rewardToken, rewardTokenIndex) =>
@@ -70,7 +70,7 @@ async function getBalancerRewards(ctx: BalancesContext, pools: Contract[]): Prom
   const [pendingBals, extraRewardsBalances] = await Promise.all([
     multicall({
       ctx,
-      calls: pools.map((pool) => ({ target: pool.gauge, params: [ctx.address] }) as const),
+      calls: (pools || []).map((pool) => ({ target: pool.gauge, params: [ctx.address] }) as const),
       abi: abi.claimable_tokens,
     }),
     multicall({
