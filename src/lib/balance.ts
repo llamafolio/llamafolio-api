@@ -14,7 +14,6 @@ import { getBalancesOf } from '@lib/erc20'
 import { unixFromDate } from '@lib/fmt'
 import { parseFloatBI } from '@lib/math'
 import { multicall } from '@lib/multicall'
-import { sendSlackMessage } from '@lib/slack'
 import type { Token } from '@lib/token'
 import { isNotNullish } from '@lib/type'
 
@@ -212,11 +211,11 @@ export async function resolveBalances<C extends GetContractsHandler>(
             throw error
           }
 
-          await sendSlackMessage(ctx, {
-            level: 'error',
-            title: `[${ctx.adapterId}][${ctx.chain}] resolver ${contractKey} failed`,
-            message: (error as any).message,
-          })
+          // await sendSlackMessage(ctx, {
+          //   level: 'error',
+          //   title: `[${ctx.adapterId}][${ctx.chain}] resolver ${contractKey} failed`,
+          //   message: (error as any).message,
+          // })
 
           // Catch execution errors in adapters getBalances
           console.error(`[${ctx.adapterId}][${ctx.chain}] resolver ${contractKey} failed`, error)
