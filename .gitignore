@@ -55,9 +55,6 @@ test/coverage/*
 test/reports
 test/fixtures/*.json
 test/reports/*.json
-docs/swagger/*.json
-docs/swagger/*.html
 
 _
-swagger.json
 /internal
