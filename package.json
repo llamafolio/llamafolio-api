@@ -14,6 +14,7 @@
     "adapter-balances": "tsx scripts/run-adapter-balances.ts",
     "update-adapter-balances": "tsx scripts/update-adapter-balances.ts",
     "update-adapter-balances-prices": "tsx scripts/update-adapter-balances-prices.ts",
+    "update-swagger": "tsx scripts/update-swagger.ts",
     "get-contract-info": "tsx scripts/get-contract-info.ts",
     "update-balances": "tsx scripts/update-balances.ts",
     "revalidate-contracts": "tsx scripts/revalidate-contracts.ts",

@@ -1,10 +1,14 @@
 #!/usr/bin/env bun
 
+import '@environment'
+
 import childProcess from 'node:child_process'
 import fs from 'node:fs'
 import process from 'node:process'
 
-function main(STAGE: 'dev' | 'prod' = (process.argv[2] as 'dev' | 'prod') || 'dev') {
+const outputPath = './docs/swagger/swagger.json'
+
+function main(STAGE: 'dev' | 'prod' = 'prod') {
   const environmentVariable = `AWS_GATEWAY_API_ID_${STAGE.toUpperCase()}`
   const apigatewayCommand = [
     'aws',
@@ -13,10 +17,10 @@ function main(STAGE: 'dev' | 'prod' = (process.argv[2] as 'dev' | 'prod') || 'de
     `--api-id='${process.env[environmentVariable]}'`,
     `--output-type='JSON'`,
     `--specification='OAS30'`,
-    `'./swagger.json'`,
+    `'${outputPath}'`,
     '&&',
     'cat',
-    `'swagger.json'`,
+    `'${outputPath}'`,
   ]
   const buffer = childProcess.execSync(apigatewayCommand.join(' '))
   const swaggerJSON = buffer.toString()
@@ -56,12 +60,13 @@ function cleanSwaggerJSON(jsonData: any) {
     ],
     paths: sanitizedPaths,
   }
-  fs.writeFileSync('./swagger.json', JSON.stringify(jsonSwagger, undefined, 2))
+  fs.writeFileSync(outputPath, JSON.stringify(jsonSwagger, undefined, 2))
 }
 
 ;(() => {
   try {
-    main()
+    const stage = process.argv[2] as 'dev' | 'prod'
+    main(stage)
   } catch {
     console.log('ops')
     process.exit(1)
