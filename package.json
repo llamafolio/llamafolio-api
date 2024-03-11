@@ -10,6 +10,7 @@
     "deploy:prod": "pnpm build && NODE_ENV='production' sls deploy --stage prod",
     "create-adapter": "tsx scripts/create-adapter.ts",
     "delete-adapter": "tsx scripts/delete-adapter.ts",
+    "update-adapter": "tsx scripts/update-adapter.ts",
     "adapter-balances": "tsx scripts/run-adapter-balances.ts",
     "update-adapter-balances": "tsx scripts/update-adapter-balances.ts",
     "update-adapter-balances-prices": "tsx scripts/update-adapter-balances-prices.ts",
