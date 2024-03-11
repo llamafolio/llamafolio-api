@@ -47,6 +47,18 @@ const fxVRSW: Contract = {
   symbol: 'fxVRSW',
 }
 
+const VRSW: Contract = {
+  chain: 'arbitrum',
+  address: '0xd1E094CabC5aCB9D3b0599C3F76f2D01fF8d3563',
+  decimals: 18,
+  symbol: 'VRSW',
+}
+
+const token: { [key: string]: Contract } = {
+  polygon: fxVRSW,
+  arbitrum: VRSW,
+}
+
 export async function getVirtuFarmBalances(
   ctx: BalancesContext,
   farmer: Contract,
@@ -64,7 +76,7 @@ export async function getVirtuFarmBalances(
     const [lpToken, amount] = res.output
 
     if (lpToken === ADDRESS_ZERO) {
-      return { ...fxVRSW, amount, category: 'farm' }
+      return { ...token[ctx.chain], amount, category: 'farm' }
     }
 
     const matchingPair = pairs.find((pair) => pair.address.toLowerCase() === lpToken.toLowerCase())
@@ -76,14 +88,14 @@ export async function getVirtuFarmBalances(
   const pendingRewards = await multicall({
     ctx,
     calls: poolBalances.map(
-      (pool) => ({ target: farmer.address, params: [ctx.address, pool.address, fxVRSW.address] }) as const,
+      (pool) => ({ target: farmer.address, params: [ctx.address, pool.address, token[ctx.chain].address] }) as const,
     ),
     abi: abi.viewRewards,
   })
 
   const poolBalancesWithRewards = mapSuccessFilter(pendingRewards, (res, index) => ({
     ...poolBalances[index],
-    rewards: [{ ...fxVRSW, amount: res.output }],
+    rewards: [{ ...token[ctx.chain], amount: res.output }],
   }))
 
   return getUnderlyingBalances(ctx, poolBalancesWithRewards)

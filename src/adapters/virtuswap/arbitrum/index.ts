@@ -1,22 +1,42 @@
-import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
+import { getVirtuFarmBalances } from '@adapters/virtuswap/common/balance'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
+import { getPairsContracts } from '@lib/uniswap/v2/factory'
+import { getPairsBalances } from '@lib/uniswap/v2/pair'
 
-export const getContracts = async (ctx: BaseContext) => {
+const farmer: Contract = {
+  chain: 'arbitrum',
+  address: '0x68748818983cd5b4cd569e92634b8505cfc41fe8',
+}
+
+export const getContracts = async (ctx: BaseContext, props: any) => {
+  const offset = props.pairOffset || 0
+  const limit = 200
+
+  const { pairs, allPairsLength } = await getPairsContracts({
+    ctx,
+    factoryAddress: '0x389DB0B69e74A816f1367aC081FdF24B5C7C2433',
+    offset,
+    limit,
+  })
+
   return {
-    // Contracts grouped by keys. They will be passed to getBalances, filtered by user interaction
-    contracts: {},
-    // Optional revalidate time (in seconds).
-    // Contracts returned by the adapter are cached by default and can be updated by interval with this parameter.
-    // This is mostly used for Factory contracts, where the number of contracts deployed increases over time
-    // revalidate: 60 * 60,
+    contracts: {
+      pairs,
+      farmer,
+    },
+    revalidate: 60 * 60,
+    revalidateProps: {
+      pairOffset: Math.min(offset + limit, allPairsLength),
+    },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
-  // Any method to check the contracts retrieved above (based on user interaction).
-  // This function will be run each time a user queries his balances.
-  // As static contracts info is filled in getContracts, this should ideally only fetch the current amount of each contract (+ underlyings and rewards)
-  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {})
+  const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
+    pairs: getPairsBalances,
+    farmer: (...args) => getVirtuFarmBalances(...args, contracts.pairs || []),
+  })
 
   return {
     groups: [{ balances }],
@@ -24,5 +44,5 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
 }
 
 export const config: AdapterConfig = {
-  startDate: 1709683200,
+  startDate: 1694649600,
 }
