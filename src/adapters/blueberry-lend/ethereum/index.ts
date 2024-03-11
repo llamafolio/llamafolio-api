@@ -1,6 +1,6 @@
-import { getBlueBerryBalances } from '@adapters/blueberry-lend/ethereum/balance'
+import { getBlueBerryBalances, getBlueBerryFarmBalances } from '@adapters/blueberry-lend/ethereum/balance'
 import { getBlueBerryPools } from '@adapters/blueberry-lend/ethereum/pool'
-import type { AdapterConfig, BaseContext, GetBalancesHandler } from '@lib/adapter'
+import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
 
 const poolAddresses: `0x${string}`[] = [
@@ -17,16 +17,22 @@ const poolAddresses: `0x${string}`[] = [
   '0x0BA5761092727502b48575288B4A2B8f2FB724AE',
 ]
 
+const farmer: Contract = {
+  chain: 'ethereum',
+  address: '0xd1e8ddecf0b8d478ec6fa2a2747d424218e2ac2b',
+}
+
 export const getContracts = async (ctx: BaseContext) => {
   const pools = await getBlueBerryPools(ctx, poolAddresses)
   return {
-    contracts: { pools },
+    contracts: { pools, farmer },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     pools: getBlueBerryBalances,
+    farmer: (...args) => getBlueBerryFarmBalances(...args, contracts.pools || []),
   })
 
   return {
