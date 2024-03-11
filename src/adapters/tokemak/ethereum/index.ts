@@ -1,14 +1,14 @@
 import type { AdapterConfig, Balance, BalancesContext, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
-import { getSingleStakeBalances } from '@lib/stake'
+import { getSingleStakeBalance, getSingleStakeBalances } from '@lib/stake'
 
 import { getTokemakContracts } from './contract'
 import { getTokemakLockerBalances } from './locker'
-import { getTokemakStakeBalances } from './stake'
 
 const staker: Contract = {
   chain: 'ethereum',
   address: '0x96f98ed74639689c3a11daf38ef86e59f43417d3',
+  token: '0x2e9d63788249371f1DFC918a52f8d799F4a38C94',
   underlyings: ['0x2e9d63788249371f1DFC918a52f8d799F4a38C94'],
 }
 
@@ -41,7 +41,7 @@ const getTokemakFarmBalances = async (ctx: BalancesContext, pools: Contract[]): 
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
-    staker: getTokemakStakeBalances,
+    staker: getSingleStakeBalance,
     pools: getTokemakFarmBalances,
     locker: getTokemakLockerBalances,
   })
