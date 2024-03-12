@@ -88,7 +88,7 @@ export function printBalances(balances: PricedBalance[]) {
         }
 
         if (balance.category === 'perpetual') {
-          d.margin = balance.margin ? parseFloatBI(balance.margin, decimals).toLocaleString() : undefinedA
+          d.margin = balance.margin ? parseFloatBI(balance.margin, decimals).toLocaleString() : undefined
           d.entryPrice = balance.entryPrice ? parseFloatBI(balance.entryPrice, decimals).toLocaleString() : undefined
           d.marketPrice = balance.marketPrice ? parseFloatBI(balance.marketPrice, decimals).toLocaleString() : undefined
           d.leverage = balance.leverage ? parseFloatBI(balance.leverage, decimals).toLocaleString() : undefined

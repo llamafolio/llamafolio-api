@@ -4,9 +4,11 @@ import * as arbitrum from './arbitrum'
 import * as avalanche from './avalanche'
 
 const adapter: Adapter = {
-  id: 'gmx',
-  arbitrum,
-  avalanche,
+  id: 'gmx-v2',
+  avalanche: avalanche,
+  arbitrum: arbitrum,
 }
+
+// TODO: Perps logic
 
 export default adapter
