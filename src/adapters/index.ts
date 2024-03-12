@@ -131,7 +131,7 @@ import getProtocol from '@adapters/get-protocol'
 import gitcoin from '@adapters/gitcoin'
 import giveth from '@adapters/giveth'
 import gloriFinance from '@adapters/glori-finance'
-import gmx from '@adapters/gmx'
+import gmxV1 from '@adapters/gmx-v1'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
 import gogopool from '@adapters/gogopool'
 import goldfinch from '@adapters/goldfinch'
@@ -529,7 +529,7 @@ export const adapters: Adapter[] = [
   gitcoin,
   giveth,
   gloriFinance,
-  gmx,
+  gmxV1,
   gnosisProtocolV1,
   gogopool,
   goldfinch,
