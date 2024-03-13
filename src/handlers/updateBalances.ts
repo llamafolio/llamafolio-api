@@ -126,6 +126,7 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
     adapterIdsChains.map(([adapterId, chain]) =>
       timeout(runAdapter(adapterId, chain), GET_BALANCES_TIMEOUT).catch(() => {
         console.error(`[${adapterId}][${chain}] getBalances timeout`)
+        return null
       }),
     ),
   )
