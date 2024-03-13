@@ -12,6 +12,7 @@ import type { Chain } from '@lib/chains'
 import { chainById, chains as allChains, getRPCClient } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
 import { getPricedBalances } from '@lib/price'
+import { timeout } from '@lib/promise'
 import { sendSlackMessage } from '@lib/slack'
 import { isNotNullish } from '@lib/type'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
@@ -66,47 +67,54 @@ export const handler: APIGatewayProxyHandler = async (event, _context) => {
 
     const chains = Object.keys(tokensByChain)
 
+    const runAdapter = async (chain) => {
+      const handler = walletAdapter[chain as Chain]!
+
+      const ctx: BalancesContext = {
+        address,
+        chain: chain as Chain,
+        adapterId: walletAdapter.id,
+        client: getRPCClient({ chain: chain as Chain }),
+      }
+
+      try {
+        const hrstart = process.hrtime()
+
+        const contracts = { erc20: tokensByChain[chain] }
+
+        console.log(`[${walletAdapter.id}][${chain}] getBalances ${tokensByChain[chain].length} contracts`)
+
+        const balancesConfig = await handler.getBalances(ctx, contracts)
+
+        const hrend = process.hrtime(hrstart)
+
+        console.log(
+          `[${walletAdapter.id}][${chain}] found ${balancesConfig.groups[0].balances.length} balances in %ds %dms`,
+          hrend[0],
+          hrend[1] / 1000000,
+        )
+
+        return balancesConfig.groups[0].balances.map((balance) => ({ ...balance, chain: ctx.chain }))
+      } catch (error) {
+        console.error(`[${walletAdapter.id}][${chain}]: Failed to getBalances`, error)
+        await sendSlackMessage(ctx, {
+          level: 'error',
+          title: `[${walletAdapter.id}][${chain}]: Failed to getBalances`,
+          message: (error as any).message,
+        })
+        return
+      }
+    }
+
     const chainsBalances = await Promise.all(
       chains
         .filter((chain) => walletAdapter[chain as Chain])
-        .map(async (chain) => {
-          const handler = walletAdapter[chain as Chain]!
-
-          const ctx: BalancesContext = {
-            address,
-            chain: chain as Chain,
-            adapterId: walletAdapter.id,
-            client: getRPCClient({ chain: chain as Chain }),
-          }
-
-          try {
-            const hrstart = process.hrtime()
-
-            const contracts = { erc20: tokensByChain[chain] }
-
-            console.log(`[${walletAdapter.id}][${chain}] getBalances ${tokensByChain[chain].length} contracts`)
-
-            const balancesConfig = await handler.getBalances(ctx, contracts)
-
-            const hrend = process.hrtime(hrstart)
-
-            console.log(
-              `[${walletAdapter.id}][${chain}] found ${balancesConfig.groups[0].balances.length} balances in %ds %dms`,
-              hrend[0],
-              hrend[1] / 1000000,
-            )
-
-            return balancesConfig.groups[0].balances.map((balance) => ({ ...balance, chain: ctx.chain }))
-          } catch (error) {
-            console.error(`[${walletAdapter.id}][${chain}]: Failed to getBalances`, error)
-            await sendSlackMessage(ctx, {
-              level: 'error',
-              title: `[${walletAdapter.id}][${chain}]: Failed to getBalances`,
-              message: (error as any).message,
-            })
-            return
-          }
-        }),
+        .map((chain) =>
+          timeout(runAdapter(chain), 10_000).catch(() => {
+            console.error(`[${walletAdapter}][${chain}] getBalancesTokens timeout`)
+            return null
+          }),
+        ),
     )
 
     const walletBalances = chainsBalances.filter(isNotNullish)
