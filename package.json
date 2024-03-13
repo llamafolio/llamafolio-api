@@ -33,6 +33,7 @@
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.398.0",
     "@clickhouse/client": "^0.2.10",
+    "@slack/web-api": "^7.0.1",
     "@llamafolio/tokens": "^0.1.106",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
@@ -43,7 +44,6 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@slack/web-api": "^7.0.1",
     "@types/aws-lambda": "^8.10.119",
     "@types/eslint": "^8.44.2",
     "@types/node": "^20.5.7",
