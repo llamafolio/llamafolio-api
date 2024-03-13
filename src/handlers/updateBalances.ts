@@ -4,7 +4,7 @@ import { formatBalance, insertBalances } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
-import type { Balance, BalancesContext, PricedBalance } from '@lib/adapter'
+import { type Balance, type BalancesContext, GET_BALANCES_TIMEOUT, type PricedBalance } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
 import {
   BALANCE_UPDATE_THRESHOLD_SEC,
@@ -16,6 +16,7 @@ import {
 import { type Chain, chains, getRPCClient } from '@lib/chains'
 import { parseAddresses, unixFromDate } from '@lib/fmt'
 import { getPricedBalances } from '@lib/price'
+import { timeout } from '@lib/promise'
 import { sendSlackMessage } from '@lib/slack'
 import type { APIGatewayProxyHandler } from 'aws-lambda'
 import type { PublicClient } from 'viem'
@@ -62,65 +63,71 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
   const now = new Date()
   const balances: AdapterBalance[] = []
 
+  const runAdapter = async (adapterId: string, chain: Chain) => {
+    const adapter = adapterById[adapterId]
+    if (!adapter) {
+      console.error(`Could not find adapter with id`, adapterId)
+      return
+    }
+    const handler = adapter[chain]
+    if (!handler) {
+      console.error(`Could not find chain handler for`, [adapterId, chain])
+      return
+    }
+
+    const ctx: BalancesContext = { address, chain, adapterId, client: rpcClients[chain] }
+
+    try {
+      const hrstart = process.hrtime()
+
+      const contracts = groupContracts(contractsByAdapterIdChain[adapterId][chain]) || []
+
+      const balancesConfig = await handler.getBalances(ctx, contracts)
+
+      const hrend = process.hrtime(hrstart)
+
+      let balancesLength = 0
+
+      for (let groupIdx = 0; groupIdx < balancesConfig.groups.length; groupIdx++) {
+        const group = balancesConfig.groups[groupIdx]
+        for (const balance of group.balances) {
+          balancesLength++
+
+          // use token when available
+          balance.address = (balance.token || balance.address).toLowerCase()
+          // metadata
+          balance.groupIdx = groupIdx
+          balance.adapterId = adapterId
+          balance.timestamp = now
+          balance.healthFactor = group.healthFactor
+          balance.fromAddress = address
+
+          balances.push(balance)
+        }
+      }
+
+      console.log(
+        `[${adapterId}][${chain}] getBalances ${contractsByAdapterIdChain[adapterId][chain].length} contracts, found ${balancesLength} balances in %ds %dms`,
+        hrend[0],
+        hrend[1] / 1000000,
+      )
+    } catch (error) {
+      console.error(`[${adapterId}][${chain}]: Failed to getBalances`, error)
+      await sendSlackMessage(ctx, {
+        level: 'error',
+        title: `[${adapterId}][${chain}]: Failed to getBalances`,
+        message: (error as any).message,
+      })
+    }
+  }
+
   // Run adapters `getBalances` only with the contracts the user interacted with
   await Promise.all(
-    adapterIdsChains.map(async ([adapterId, chain]) => {
-      const adapter = adapterById[adapterId]
-      if (!adapter) {
-        console.error(`Could not find adapter with id`, adapterId)
-        return
-      }
-      const handler = adapter[chain]
-      if (!handler) {
-        console.error(`Could not find chain handler for`, [adapterId, chain])
-        return
-      }
-
-      const ctx: BalancesContext = { address, chain, adapterId, client: rpcClients[chain] }
-
-      try {
-        const hrstart = process.hrtime()
-
-        const contracts = groupContracts(contractsByAdapterIdChain[adapterId][chain]) || []
-
-        const balancesConfig = await handler.getBalances(ctx, contracts)
-
-        const hrend = process.hrtime(hrstart)
-
-        let balancesLength = 0
-
-        for (let groupIdx = 0; groupIdx < balancesConfig.groups.length; groupIdx++) {
-          const group = balancesConfig.groups[groupIdx]
-          for (const balance of group.balances) {
-            balancesLength++
-
-            // use token when available
-            balance.address = (balance.token || balance.address).toLowerCase()
-            // metadata
-            balance.groupIdx = groupIdx
-            balance.adapterId = adapterId
-            balance.timestamp = now
-            balance.healthFactor = group.healthFactor
-            balance.fromAddress = address
-
-            balances.push(balance)
-          }
-        }
-
-        console.log(
-          `[${adapterId}][${chain}] getBalances ${contractsByAdapterIdChain[adapterId][chain].length} contracts, found ${balancesLength} balances in %ds %dms`,
-          hrend[0],
-          hrend[1] / 1000000,
-        )
-      } catch (error) {
-        console.error(`[${adapterId}][${chain}]: Failed to getBalances`, error)
-        await sendSlackMessage(ctx, {
-          level: 'error',
-          title: `[${adapterId}][${chain}]: Failed to getBalances`,
-          message: (error as any).message,
-        })
-      }
-    }),
+    adapterIdsChains.map(([adapterId, chain]) =>
+      timeout(runAdapter(adapterId, chain), GET_BALANCES_TIMEOUT).catch(() => {
+        console.error(`[${adapterId}][${chain}] getBalances timeout`)
+      }),
+    ),
   )
 
   const sanitizedBalances = sanitizeBalances(balances)
