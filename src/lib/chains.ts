@@ -368,9 +368,8 @@ export function getRPCClient(options: RPCClientOptions): PublicClient {
       return createPublicClient({
         chain: viemChains.base,
         transport: fallback([
-          http('https://base.llamarpc.com', httpTransportConfig),
-          // http('https://base-mainnet.public.blastapi.io', httpTransportConfig),
-          // http('https://mainnet.base.org', httpTransportConfig),
+          http('https://base-mainnet.public.blastapi.io', httpTransportConfig),
+          http('https://mainnet.base.org', httpTransportConfig),
         ]),
         batch,
       })
