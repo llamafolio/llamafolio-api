@@ -95,23 +95,6 @@ async function main() {
     )
   }
 
-  // let jobStatus = await getBalancesJobStatus(adapterId, chainId)
-  // if (jobStatus == null) {
-  //   if (!chainAdapter.config.startDate) {
-  //     return console.error(`Protocol "startDate" missing in adapter config`)
-  //   }
-
-  //   jobStatus = {
-  //     prevDate: unixToYYYYMMDD(chainAdapter.config.startDate - 86400),
-  //     date: unixToYYYYMMDD(chainAdapter.config.startDate),
-  //     version: 0,
-  //   }
-  // }
-
-  // if (jobStatus.date === today) {
-  //   return console.log('Done')
-  // }
-
   const dailyBlocks = await getJobBlocksRange(client, chainId, 'w')
 
   const enrichedBlocks = []
