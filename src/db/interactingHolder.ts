@@ -9,7 +9,7 @@ interface TokenHolder {
   address: string
 }
 
-interface TokenHoldersMap {
+export interface TokenHoldersMap {
   [address: string]: TokenHolder
 }
 

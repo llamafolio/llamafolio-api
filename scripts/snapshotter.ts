@@ -8,6 +8,29 @@ import type { Adapter } from '@lib/adapter'
 import { chainByChainId, getChainId } from '@lib/chains'
 import { toYYYYMMDD, unixFromDateTime } from '@lib/fmt'
 
+interface ContractFlows {
+  holders: string[]
+  inflow: string[]
+  outflow: string[]
+}
+
+interface DailyBlock {
+  date: string
+  timestamp: number
+  block_number: number
+  contracts: { [contractAddress: string]: string[] }
+}
+
+interface DailyBlockFlow {
+  date: string
+  timestamp: number
+  block_number: number
+  contracts: { [contractAddress: string]: ContractFlows }
+}
+
+type DailyBlockFlows = DailyBlockFlow[]
+type EnrichedBlocks = DailyBlock[]
+
 const second = 1000
 const minute = second * 60
 const hour = minute * 60
@@ -76,8 +99,6 @@ async function main() {
     return help()
   }
 
-  const today = toYYYYMMDD(new Date())
-
   const adapterId = process.argv[2]
   const chainId = getChainId(process.argv[3])
   const chainInfo = chainByChainId[chainId]
@@ -96,8 +117,7 @@ async function main() {
   }
 
   const dailyBlocks = await getJobBlocksRange(client, chainId, 'w')
-
-  const enrichedBlocks = []
+  const enrichedBlocks: DailyBlock[] = []
 
   for (let i = 0; i < dailyBlocks.length; i++) {
     const dailyBlock = dailyBlocks[i]
@@ -112,10 +132,55 @@ async function main() {
       endTimestamp,
     )
 
-    enrichedBlocks.push({ ...dailyBlock, contracts: interactingHolders })
-
-    console.log(enrichedBlocks)
+    enrichedBlocks.push({
+      ...dailyBlock,
+      contracts: Object.fromEntries(
+        Object.entries(interactingHolders).map(([contractAddress, tokenHolder]) => [
+          contractAddress,
+          tokenHolder.holders,
+        ]),
+      ),
+    })
   }
+
+  const enrichedBlocksWithFlows: DailyBlockFlows = processDailyInflowOutflow(enrichedBlocks)
+
+  console.log(enrichedBlocksWithFlows[0])
+}
+
+function processDailyInflowOutflow(enrichedBlocks: EnrichedBlocks): DailyBlockFlows {
+  const results: DailyBlockFlows = []
+
+  for (let i = 1; i < enrichedBlocks.length; i++) {
+    const currentBlock = enrichedBlocks[i]
+    const previousBlock = enrichedBlocks[i - 1]
+    const analysisResult: DailyBlockFlow = {
+      date: currentBlock.date,
+      timestamp: currentBlock.timestamp,
+      block_number: currentBlock.block_number,
+      contracts: {},
+    }
+
+    const contractAddresses = new Set([...Object.keys(currentBlock.contracts), ...Object.keys(previousBlock.contracts)])
+
+    contractAddresses.forEach((contractAddress) => {
+      const currentHolders = currentBlock.contracts[contractAddress] || []
+      const previousHolders = previousBlock.contracts[contractAddress] || []
+
+      const inflow = currentHolders.filter((holder) => !previousHolders.includes(holder))
+      const outflow = previousHolders.filter((holder) => !currentHolders.includes(holder))
+
+      analysisResult.contracts[contractAddress] = {
+        holders: currentHolders,
+        inflow,
+        outflow,
+      }
+    })
+
+    results.push(analysisResult)
+  }
+
+  return results
 }
 
 main()
