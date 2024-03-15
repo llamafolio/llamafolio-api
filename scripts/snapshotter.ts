@@ -6,8 +6,7 @@ import { client } from '@db/clickhouse'
 import { selectInteractingTokenHolders } from '@db/interactingHolder'
 import type { Adapter } from '@lib/adapter'
 import { chainByChainId, getChainId } from '@lib/chains'
-import { toYYYYMMDD, unixFromDateTime, unixToYYYYMMDD } from '@lib/fmt'
-import { getBalancesJobStatus } from 'scripts/utils/adapter-balances-job'
+import { toYYYYMMDD, unixFromDateTime } from '@lib/fmt'
 
 const second = 1000
 const minute = second * 60
@@ -96,22 +95,22 @@ async function main() {
     )
   }
 
-  let jobStatus = await getBalancesJobStatus(adapterId, chainId)
-  if (jobStatus == null) {
-    if (!chainAdapter.config.startDate) {
-      return console.error(`Protocol "startDate" missing in adapter config`)
-    }
+  // let jobStatus = await getBalancesJobStatus(adapterId, chainId)
+  // if (jobStatus == null) {
+  //   if (!chainAdapter.config.startDate) {
+  //     return console.error(`Protocol "startDate" missing in adapter config`)
+  //   }
 
-    jobStatus = {
-      prevDate: unixToYYYYMMDD(chainAdapter.config.startDate - 86400),
-      date: unixToYYYYMMDD(chainAdapter.config.startDate),
-      version: 0,
-    }
-  }
+  //   jobStatus = {
+  //     prevDate: unixToYYYYMMDD(chainAdapter.config.startDate - 86400),
+  //     date: unixToYYYYMMDD(chainAdapter.config.startDate),
+  //     version: 0,
+  //   }
+  // }
 
-  if (jobStatus.date === today) {
-    return console.log('Done')
-  }
+  // if (jobStatus.date === today) {
+  //   return console.log('Done')
+  // }
 
   const dailyBlocks = await getJobBlocksRange(client, chainId, 'w')
 
