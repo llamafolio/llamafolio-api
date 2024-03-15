@@ -13,6 +13,7 @@
     "update-adapter": "tsx scripts/update-adapter.ts",
     "adapter-balances": "tsx scripts/run-adapter-balances.ts",
     "update-adapter-balances": "tsx scripts/update-adapter-balances.ts",
+    "snapshotter": "tsx scripts/snapshotter.ts",
     "update-adapter-balances-prices": "tsx scripts/update-adapter-balances-prices.ts",
     "update-swagger": "tsx scripts/update-swagger.ts",
     "get-contract-info": "tsx scripts/get-contract-info.ts",
