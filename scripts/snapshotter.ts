@@ -1,12 +1,15 @@
+/* eslint-disable security/detect-non-literal-fs-filename */
+import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
 
 import type { ClickHouseClient } from '@clickhouse/client'
 import { client } from '@db/clickhouse'
 import { selectInteractingTokenHolders } from '@db/interactingHolder'
-import type { Adapter } from '@lib/adapter'
+import type { Adapter, AdapterHandler } from '@lib/adapter'
 import { chainByChainId, getChainId } from '@lib/chains'
-import { toYYYYMMDD, unixFromDateTime } from '@lib/fmt'
+import { toYYYYMMDD, unixFromDateTime, unixToYYYYMMDD } from '@lib/fmt'
+import { getBalancesJobStatus, getBalancesSnapshotStatus } from 'scripts/utils/adapter-balances-job'
 
 interface ContractFlows {
   holders: string[]
@@ -19,10 +22,14 @@ interface DailyBlock {
   timestamp: number
   block_number: number
   contracts: { [contractAddress: string]: string[] }
+  chain: string
+  adapterId: string
 }
 
 interface DailyBlockFlow {
   date: string
+  chain: string
+  adapterId: string
   timestamp: number
   block_number: number
   contracts: { [contractAddress: string]: ContractFlows }
@@ -38,10 +45,13 @@ const day = hour * 24
 const week = day * 7
 const month = day * 30
 
-const period: { [key in 'd' | 'w' | 'm']: string } = {
+const period: { [key in 'd' | 'prevD' | 'w' | 'prevW' | 'm' | 'prevM']: string } = {
   d: toYYYYMMDD(new Date(Date.now() - day)),
+  prevD: toYYYYMMDD(new Date(Date.now() - (day + day))),
   w: toYYYYMMDD(new Date(Date.now() - week)),
+  prevW: toYYYYMMDD(new Date(Date.now() - (week + day))),
   m: toYYYYMMDD(new Date(Date.now() - month)),
+  prevM: toYYYYMMDD(new Date(Date.now() - (month + day))),
 }
 
 const __dirname = path.dirname(url.fileURLToPath(import.meta.url))
@@ -121,6 +131,7 @@ async function main() {
 
   for (let i = 0; i < dailyBlocks.length; i++) {
     const dailyBlock = dailyBlocks[i]
+
     const startTimestamp = i === 0 ? dailyBlock.timestamp - 86400 : dailyBlocks[i - 1].timestamp
     const endTimestamp = dailyBlock.timestamp
 
@@ -134,6 +145,8 @@ async function main() {
 
     enrichedBlocks.push({
       ...dailyBlock,
+      chain: chainByChainId[chainId].id,
+      adapterId,
       contracts: Object.fromEntries(
         Object.entries(interactingHolders).map(([contractAddress, tokenHolder]) => [
           contractAddress,
@@ -144,8 +157,52 @@ async function main() {
   }
 
   const enrichedBlocksWithFlows: DailyBlockFlows = processDailyInflowOutflow(enrichedBlocks)
+  await processHolders(enrichedBlocksWithFlows, chainAdapter)
+}
 
-  console.log(enrichedBlocksWithFlows[0])
+async function processHolders(blocksWithFlows: DailyBlockFlow[], chainAdapter: AdapterHandler) {
+  const today = toYYYYMMDD(new Date())
+
+  for (const blocksWithFlow of blocksWithFlows) {
+    const cache = new Map<string, any>()
+
+    let jobStatus = await getBalancesJobStatus(blocksWithFlow.adapterId, getChainId(blocksWithFlow.chain))
+    if (jobStatus == null) {
+      if (!chainAdapter.config.startDate) {
+        return console.error(`Protocol "startDate" missing in adapter config`)
+      }
+
+      jobStatus = {
+        prevDate: unixToYYYYMMDD(chainAdapter.config.startDate - 86400),
+        date: unixToYYYYMMDD(chainAdapter.config.startDate),
+        version: 0,
+      }
+    }
+
+    if (jobStatus.date === today) {
+      return console.log('Done')
+    }
+
+    const previousSnapshot = await getBalancesSnapshotStatus(
+      blocksWithFlow.adapterId,
+      getChainId(blocksWithFlow.chain),
+      period['prevW'],
+    )
+
+    console.log(`Date: ${blocksWithFlow.date}`)
+    const outputDir = path.join(
+      __dirname,
+      '..',
+      'internal',
+      'balances_snapshots',
+      blocksWithFlow.adapterId,
+      blocksWithFlow.chain,
+      blocksWithFlow.date,
+    )
+    if (!fs.existsSync(outputDir)) {
+      fs.mkdirSync(outputDir, { recursive: true })
+    }
+  }
 }
 
 function processDailyInflowOutflow(enrichedBlocks: EnrichedBlocks): DailyBlockFlows {
@@ -158,6 +215,8 @@ function processDailyInflowOutflow(enrichedBlocks: EnrichedBlocks): DailyBlockFl
       date: currentBlock.date,
       timestamp: currentBlock.timestamp,
       block_number: currentBlock.block_number,
+      chain: currentBlock.chain,
+      adapterId: currentBlock.adapterId,
       contracts: {},
     }
 
