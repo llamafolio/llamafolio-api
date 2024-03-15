@@ -112,10 +112,9 @@ async function main() {
       endTimestamp,
     )
 
-    dailyBlock.holders = interactingHolders
-    enrichedBlocks.push(dailyBlock)
+    enrichedBlocks.push({ ...dailyBlock, contracts: interactingHolders })
 
-    console.log(dailyBlock)
+    console.log(enrichedBlocks)
   }
 }
 
