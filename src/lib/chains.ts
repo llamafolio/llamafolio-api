@@ -277,8 +277,8 @@ export const toDefiLlamaChain: { [key in Chain]: string } = {
   optimism: 'optimism',
   polygon: 'polygon',
   linea: 'linea',
-  'polygon-zkevm': 'polygon zkevm',
-  'zksync-era': 'zksync era',
+  'polygon-zkevm': 'polygonzkevm',
+  'zksync-era': 'zksync',
 }
 
 export const fromDefiLlamaChain: { [key: string]: Chain } = {
