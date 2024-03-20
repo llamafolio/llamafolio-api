@@ -20,7 +20,7 @@ import { toYYYYMMDD, unixFromDateTime, unixToYYYYMMDD } from '@lib/fmt'
 
 import {
   getBalancesJobStatus,
-  getBalancesSnapshot,
+  getBalancesSnapshots,
   getBalancesSnapshotStatus,
   type JobStatus,
 } from './utils/adapter-balances-job'
@@ -60,26 +60,20 @@ function saveBalancesJobStatus(adapterId: string, chainId: number, data: JobStat
   return fs.writeFileSync(src, JSON.stringify(data, null, 2), 'utf8')
 }
 
-async function saveBalancesSnapshotStatus(
-  adapterId: string,
-  chainId: number,
-  date: string,
-  data: BalancesSnapshotStatus,
-) {
+function saveBalancesSnapshotStatus(adapterId: string, chainId: number, date: string, data: BalancesSnapshotStatus) {
   const chain = chainByChainId[chainId]?.id
   const src = path.join(__dirname, '..', 'internal', 'balances_snapshots', adapterId, chain, date, 'status.json')
   return fs.writeFileSync(src, JSON.stringify(data, null, 2), 'utf8')
 }
 
-async function saveBalancesSnapshot(
+function saveBalancesSnapshots(
   adapterId: string,
   chainId: number,
   date: string,
-  address: string,
-  data: BalancesSnapshot,
+  data: { [address: string]: BalancesSnapshot },
 ) {
   const chain = chainByChainId[chainId]?.id
-  const src = path.join(__dirname, '..', 'internal', 'balances_snapshots', adapterId, chain, date, `${address}.json`)
+  const src = path.join(__dirname, '..', 'internal', 'balances_snapshots', adapterId, chain, date, 'balances.json')
   return fs.writeFileSync(src, JSON.stringify(data, null, 2), 'utf8')
 }
 
@@ -174,6 +168,17 @@ async function main() {
     return console.error(`Missing chain ${process.argv[3]}`)
   }
 
+  const rpcClient = getRPCClient({
+    chain: chainInfo.id,
+    httpTransportConfig: { batch: { batchSize: 1000, wait: 10 } },
+    batchConfig: {
+      multicall: {
+        batchSize: 1000,
+        wait: 10,
+      },
+    },
+  })
+
   const module = await import(path.join(__dirname, '..', 'src', 'adapters', adapterId))
   const adapter = module.default as Adapter
 
@@ -252,15 +257,18 @@ async function main() {
     const users = Array.from(activeUsers)
     console.log(`Updating users: ${users.length}`)
 
-    const usersChunks = sliceIntoChunks(users, 500)
+    const usersChunks = sliceIntoChunks(users, 1000)
+
+    const previousBalancesSnapshots = await getBalancesSnapshots(adapterId, chainId, jobStatus!.prevDate)
+
+    const nextBalancesSnapshots: { [address: string]: BalancesSnapshot } = {}
 
     const errors = new Set<string>()
 
     for (const users of usersChunks) {
       await Promise.all(
         users.map(async (user) => {
-          const previousBalancesSnapshot = await getBalancesSnapshot(adapterId, chainId, jobStatus!.prevDate, user)
-
+          const previousBalancesSnapshot = previousBalancesSnapshots?.[user]
           const allContractsInteractions = previousBalancesSnapshot?.contracts || []
           const contractsInteractions = dailyContractsInteractions[user] || []
 
@@ -291,10 +299,7 @@ async function main() {
               chain: chainInfo.id,
               adapterId,
               blockNumber: dailyBlock.block_number,
-              client: getRPCClient({
-                chain: chainInfo.id,
-                httpTransportConfig: { batch: { batchSize: 1000, wait: 10 }, retryCount: 5, retryDelay: 15_000 },
-              }),
+              client: rpcClient,
             }
 
             const balancesConfig = await chainAdapter.getBalances(ctx, groupContracts(allContractsInteractions) || [])
@@ -308,11 +313,10 @@ async function main() {
                 usersOutflows.add(user)
               }
             } else {
-              // Store balances snapshot
-              await saveBalancesSnapshot(adapterId, chainId, jobStatus!.date, user, {
+              nextBalancesSnapshots[user] = {
                 contracts: allContractsInteractions,
                 balancesConfig,
-              })
+              }
 
               // New user entered a position
               if (!previousActiveUsers.has(user)) {
@@ -326,6 +330,9 @@ async function main() {
       )
     }
 
+    // Store balances snapshot
+    saveBalancesSnapshots(adapterId, chainId, jobStatus!.date, nextBalancesSnapshots)
+
     // TODO: errors retries
     // TODO: should probably throw earlier on errors, and just fix them as it'll mess up with the rest of the process
     if (errors.size > 0) {
@@ -336,7 +343,7 @@ async function main() {
     console.log(`Users inflows: ${usersInflows.size}`)
     console.log(`Users outflows: ${usersOutflows.size}`)
 
-    await saveBalancesSnapshotStatus(adapterId, chainId, dailyBlock.date, {
+    saveBalancesSnapshotStatus(adapterId, chainId, dailyBlock.date, {
       activeUsers: Array.from(activeUsers),
       usersInflows: Array.from(usersInflows),
       usersOutflows: Array.from(usersOutflows),
@@ -348,7 +355,7 @@ async function main() {
     jobStatus.prevDate = jobStatus.date
     jobStatus.date = i < dailyBlocks.length - 1 ? dailyBlocks[i + 1].date : today
 
-    await saveBalancesJobStatus(adapterId, chainId, jobStatus)
+    saveBalancesJobStatus(adapterId, chainId, jobStatus)
 
     const endTime = Date.now()
     console.log(`Completed in ${endTime - startTime}ms`)

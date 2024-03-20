@@ -12,6 +12,7 @@
     "delete-adapter": "tsx scripts/delete-adapter.ts",
     "update-adapter": "tsx scripts/update-adapter.ts",
     "adapter-balances": "tsx scripts/run-adapter-balances.ts",
+    "snapshot-current-adapters-balances": "tsx scripts/snapshot-current-adapters-balances.ts",
     "update-adapter-balances": "tsx scripts/update-adapter-balances.ts",
     "update-adapter-balances-prices": "tsx scripts/update-adapter-balances-prices.ts",
     "update-swagger": "tsx scripts/update-swagger.ts",

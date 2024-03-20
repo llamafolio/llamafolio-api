@@ -46,7 +46,7 @@ function deserializeBalance(key: string, value: any) {
   return value
 }
 
-export async function getBalancesSnapshot(adapterId: string, chainId: number, date: string, address: string) {
+export async function getBalancesSnapshots(adapterId: string, chainId: number, date: string) {
   try {
     const chain = chainByChainId[chainId]?.id
     const src = path.join(
@@ -58,10 +58,10 @@ export async function getBalancesSnapshot(adapterId: string, chainId: number, da
       adapterId,
       chain,
       date,
-      `${address}.json`,
+      'balances.json',
     )
     const buff = fs.readFileSync(src, 'utf8')
-    return JSON.parse(buff, deserializeBalance) as BalancesSnapshot
+    return JSON.parse(buff, deserializeBalance) as { [address: string]: BalancesSnapshot }
   } catch (error) {
     return null
   }

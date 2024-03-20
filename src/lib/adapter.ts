@@ -343,7 +343,7 @@ export async function revalidateAllContracts(client: ClickHouseClient, adapter: 
   for (let i = 0; ; i++) {
     prevDbAdapter = await revalidateAdapterContracts(client, adapter, chain, prevDbAdapter, protocolToParent)
     if (!prevDbAdapter) {
-      return console.log('Done')
+      return
     }
   }
 }

@@ -208,6 +208,115 @@ export async function getContractsInteractions(
 }
 
 /**
+ * Get all users contracts interactions (includes non active users)
+ * @param client
+ * @param adapterId
+ * @param chainId
+ */
+export async function getAllContractsInteractions(client: ClickHouseClient, adapterId: string, chainId: number) {
+  const queryRes = await client.query({
+    query: `
+      WITH "protocol_contracts" AS (
+        SELECT
+          "address",
+          "token",
+          argMax("category", "created_at") AS "category",
+          argMax("data", "created_at") AS "data"
+        FROM ${environment.NS_LF}.adapters_contracts
+        WHERE
+          "chain" = {chainId: UInt64} AND
+          "adapter_id" = {adapterId: String}
+        GROUP BY "address", "token"
+        HAVING sum("sign") > 0
+      ),
+      "transactions" AS (
+        SELECT
+          "from_address" AS "holder",
+          "to_address" AS "address"
+        FROM evm_indexer2.transactions_from_to_agg
+        WHERE
+          chain = {chainId: UInt64} AND
+          "to_address" IN (
+              SELECT "address"
+              FROM "protocol_contracts"
+          )
+      ),
+      "token_transfers" AS (
+        SELECT
+          "holder",
+          "address"
+        FROM evm_indexer2.tokens_balances_mv
+        WHERE
+          "type" = 'erc20' AND
+          "chain" = {chainId: UInt64} AND
+          ("address_short", "address") IN (
+              SELECT substring("address",1,10), "address"
+              FROM "protocol_contracts"
+          )
+      ),
+      "interactions" AS (
+        SELECT
+          groupUniqArray("holder") AS "holders",
+          "address"
+        FROM (
+          (SELECT "holder", "address" FROM "transactions")
+              UNION DISTINCT
+          (SELECT "holder", "address" FROM "token_transfers")
+        )
+        GROUP BY "address"
+      )
+      SELECT
+        "holders",
+        "address",
+        "token",
+        "category",
+        "data"
+      FROM "interactions" AS "i"
+      LEFT JOIN "protocol_contracts" AS "c" ON (i."address" = c."address");
+    `,
+    query_params: {
+      adapterId,
+      chainId,
+    },
+  })
+
+  const res = (await queryRes.json()) as {
+    data: (ContractStorage & { holders: `0x${string}`[] })[]
+  }
+
+  const contractsByHolder: { [key: string]: Contract[] } = {}
+
+  for (const contractStorage of res.data) {
+    const data = JSON.parse(contractStorage.data || '{}')
+
+    const contract = {
+      ...data,
+      decimals: data?.decimals ? parseInt(data.decimals) : undefined,
+      standard: contractStorage.standard,
+      name: contractStorage.name,
+      chain: chainByChainId[parseInt(contractStorage.chain)]?.id,
+      address: contractStorage.address,
+      token: contractStorage.token,
+      category: contractStorage.category,
+      adapterId: contractStorage.adapter_id,
+      underlyings: data?.underlyings?.map((underlying: any) => ({
+        ...underlying,
+        decimals: parseInt(underlying.decimals),
+      })),
+    }
+
+    for (const holder of contractStorage.holders) {
+      if (!contractsByHolder[holder]) {
+        contractsByHolder[holder] = []
+      }
+      contractsByHolder[holder].push(contract)
+    }
+  }
+
+  return contractsByHolder
+}
+
+/**
  * Active users are "cumulative", meaning a user that deposited in the past is still an active user in the upcoming days
  * (until his position goes to 0)
  */

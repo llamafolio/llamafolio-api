@@ -20,6 +20,14 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "Run snapshot current adapters balances",
+      "skipFiles": ["<node_internals>/**"],
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "snapshot-current-adapters-balances"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "Run update adapter balances",
       "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "npm",

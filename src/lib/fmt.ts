@@ -98,6 +98,12 @@ export function safeParseFloat(data?: string | null, defaultValue = undefined) {
   return parsed
 }
 
+export function toPrevDay(date: Date | string | number) {
+  const newDate = new Date(date)
+  newDate.setDate(newDate.getDate() - 1)
+  return newDate
+}
+
 export function toStartOfDay(date: Date | string | number) {
   return dayjs(date).utc().startOf('day').toDate()
 }
