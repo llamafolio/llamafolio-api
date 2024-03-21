@@ -276,6 +276,7 @@ import redacted from '@adapters/redacted'
 import reflexer from '@adapters/reflexer'
 import renzo from '@adapters/renzo'
 import reserve from '@adapters/reserve'
+import restakeFinance from '@adapters/restake-finance'
 import retro from '@adapters/retro'
 import rhinoFi from '@adapters/rhino.fi'
 import ribbonFinance from '@adapters/ribbon-finance'
@@ -677,6 +678,7 @@ export const adapters: Adapter[] = [
   reflexer,
   renzo,
   reserve,
+  restakeFinance,
   retro,
   rhinoFi,
   ribbonFinance,
