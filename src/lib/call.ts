@@ -8,13 +8,13 @@ import {
   toFunctionSelector,
 } from 'viem'
 
-export function toCacheKey(ctx: BaseContext, target: string, abi: AbiFunction, args?: any[]) {
+export function toCacheKey(ctx: BaseContext, target: string, abi: AbiFunction, args?: any) {
   const selector = toFunctionSelector(abi)
   const chainId = chainById[ctx.chain].chainId
   const blockNumber = ctx.blockNumber || ''
   const params = args == null ? '' : JSON.stringify(args)
 
-  return `${target}#${selector}#${chainId}#${blockNumber}#${params}`
+  return `${ctx.adapterId}#${chainId}#${target.toLowerCase()}#${selector.toLowerCase()}#${blockNumber}#${params}`
 }
 
 /**

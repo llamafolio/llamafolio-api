@@ -47,7 +47,7 @@ export async function multicall<
 > {
   const multicall3BlockCreated = options.ctx.client?.chain?.contracts?.multicall3?.blockCreated
   // Multicall3 not deployed yet, fallback to eth_call
-  const fallbackEthCall =
+  const shouldFallbackEthCall =
     options.ctx.blockNumber != null &&
     multicall3BlockCreated != null &&
     options.ctx.blockNumber < multicall3BlockCreated
@@ -62,14 +62,9 @@ export async function multicall<
     if (isNotNullish(call) && call.target != null && call.enabled !== false) {
       // Maybe cached
       if (options.ctx.cache) {
-        call.__cache_key = toCacheKey(
-          options.ctx,
-          call.target!,
-          options.abi as unknown as AbiFunction,
-          call.params == null ? [] : Array.isArray(call.params) ? call.params : [call.params],
-        )
+        const cacheKey = toCacheKey(options.ctx, call.target!, options.abi as unknown as AbiFunction, call.params)
 
-        if (!options.ctx.cache.has(call.__cache_key)) {
+        if (!options.ctx.cache.has(cacheKey)) {
           calls.push(call)
         }
       } else {
@@ -78,7 +73,7 @@ export async function multicall<
     }
   }
 
-  const multicallRes = fallbackEthCall
+  const multicallRes = shouldFallbackEthCall
     ? await Promise.all(
         calls.map(async (_call) => {
           try {
@@ -117,29 +112,33 @@ export async function multicall<
   // Build output by adding back nullish input calls
   let callIdx = 0
   // @ts-ignore
-  return options.calls.map((input, idx) => {
-    if (input == null || input.enabled === false || input.target == null) {
-      return { input: options.calls[idx], success: false, output: null }
+  return options.calls.map((call) => {
+    if (call == null || call.enabled === false || call.target == null) {
+      return { input: call, success: false, output: null }
     }
 
     const response = multicallRes[callIdx++] as any
 
     // Try to read cache
     if (options.ctx.cache != null) {
-      if (options.ctx.cache.has(options.calls[idx].__cache_key)) {
+      const cacheKey = toCacheKey(options.ctx, call.target!, options.abi as unknown as AbiFunction, call.params)
+
+      if (options.ctx.cache.has(cacheKey)) {
         return {
-          input: options.calls[idx],
+          input: call,
           success: true,
-          output: options.ctx.cache.get(options.calls[idx].__cache_key),
+          output: options.ctx.cache.get(cacheKey),
         }
       }
 
-      options.ctx.cache.set(options.calls[idx].__cache_key, response.result)
+      if (response.success) {
+        options.ctx.cache.set(cacheKey, response.result)
+      }
     }
 
     if (allowFailure) {
       return {
-        input: options.calls[idx],
+        input: call,
         success: response.status === 'success',
         output: response.result,
       }

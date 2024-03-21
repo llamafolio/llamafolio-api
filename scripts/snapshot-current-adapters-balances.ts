@@ -1,12 +1,13 @@
-/* eslint-disable security/detect-non-literal-fs-filename */
 import fs from 'node:fs'
 import path from 'node:path'
 import url from 'node:url'
 
 import { adapterById, adapters } from '@adapters'
-import { formatBalance, insertDailyBalances } from '@db/balances'
+import type { ClickHouseClient } from '@clickhouse/client'
+import { formatBalance } from '@db/balances'
 import { client } from '@db/clickhouse'
 import { getAllContractsInteractions, groupContracts } from '@db/contracts'
+import environment from '@environment'
 import {
   type Adapter,
   type AdapterHandler,
@@ -20,7 +21,8 @@ import { groupBy, sliceIntoChunks } from '@lib/array'
 import { fmtBalanceBreakdown, resolveHealthFactor, sanitizeBalances, sanitizePricedBalances } from '@lib/balance'
 import { type Chain, chainById, chains, getRPCClient, type IChainInfo } from '@lib/chains'
 import { ADDRESS_ZERO } from '@lib/contract'
-import { toYYYYMMDD } from '@lib/fmt'
+import { toYYYYMMDD, unixFromYYYYMMDD, unixToDateTime } from '@lib/fmt'
+import logger from '@lib/logger'
 import { getPricedBalances } from '@lib/price'
 import { sleep, timeout } from '@lib/promise'
 
@@ -64,6 +66,26 @@ export function getSnapshotJobStatus() {
   }
 }
 
+async function saveDBBalancesSnapshots(
+  client: ClickHouseClient,
+  chainId: number,
+  adapterId: string,
+  date: string,
+  version: number,
+  balances: any[],
+) {
+  if (balances.length > 0) {
+    const _logger = logger.child({ chain: chainId, adapterId })
+    _logger.info(`Storing ${balances.length} balances in DB`)
+
+    await client.insert({
+      table: `${environment.NS_LF}.adapters_balances_snapshots`,
+      values: balances,
+      format: 'JSONEachRow',
+    })
+  }
+}
+
 async function processAdapter({
   adapter,
   chainAdapter,
@@ -79,14 +101,15 @@ async function processAdapter({
 }) {
   const startTime = Date.now()
 
-  console.log(`Start ${adapter.id} on ${chain.id}`)
+  const _logger = logger.child({ chain: chain.chainId, adapterId: adapter.id })
+  _logger.info(`Start ${adapter.id} on ${chain.id}`)
 
   const rpcClient = getRPCClient({
     chain: chain.id,
-    httpTransportConfig: { batch: { batchSize: 2000, wait: 10 } },
+    httpTransportConfig: { batch: { batchSize: 1000, wait: 10 } },
     batchConfig: {
       multicall: {
-        batchSize: 2000,
+        batchSize: 1000,
         wait: 10,
       },
     },
@@ -100,11 +123,7 @@ async function processAdapter({
   // Wait for async insert to be processed
   await sleep(5_000)
 
-  console.log(`Date: ${today}`)
-  const outputDir = path.join(__dirname, '..', 'internal', 'balances_snapshots', adapter.id, chain.id, today)
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true })
-  }
+  _logger.info(`Date: ${today}`)
 
   const allContractsInteractions = await getAllContractsInteractions(client, adapter.id, chain.chainId)
 
@@ -113,10 +132,10 @@ async function processAdapter({
     users.push(user)
   }
 
-  console.log(`Updating users: ${users.length}`)
+  _logger.info(`Updating users: ${users.length}`)
 
   const balances: AdapterBalance[] = []
-  const usersChunks = sliceIntoChunks(users, 250)
+  const usersChunks = sliceIntoChunks(users, 100)
 
   const runAdapter = async (address: `0x${string}`, contracts: Contract[]) => {
     const ctx: BalancesContext = {
@@ -148,11 +167,13 @@ async function processAdapter({
     }
   }
 
-  for (let i = 0; i < usersChunks.length; i++) {
-    const users = usersChunks[i]
+  let chunkIdx = 0
 
-    console.log(`Batch ${i} / ${usersChunks.length}`)
+  // Process users by chunks
+  for await (const users of usersChunks) {
+    _logger.info(`Batch ${chunkIdx} / ${usersChunks.length}`)
 
+    // Get users balances
     await Promise.all(
       users.map((user) => {
         // skip address zero
@@ -166,9 +187,11 @@ async function processAdapter({
         return timeout(runAdapter(user as `0x${string}`, contractsInteractions), 60 * 1000)
       }),
     )
+
+    chunkIdx++
   }
 
-  console.log(`Active users: ${balances.length}`)
+  _logger.info(`Active users: ${balances.length}`)
 
   const sanitizedBalances = sanitizeBalances(balances)
 
@@ -182,23 +205,35 @@ async function processAdapter({
   const balancesByUser = groupBy(sanitizedPricedBalances, 'fromAddress')
 
   for (const user in balancesByUser) {
-    const userBalances = balancesByUser[user].map(fmtBalanceBreakdown)
-    const balancesByGroupIdx = groupBy(userBalances, 'groupIdx')
+    const balancesByGroupIdx = groupBy(balancesByUser[user], 'groupIdx')
 
     for (const groupIdx in balancesByGroupIdx) {
-      const groupBalances = balancesByGroupIdx[groupIdx].map(formatBalance)
-      const healthFactor = balancesByGroupIdx[groupIdx]?.[0]?.healthFactor || resolveHealthFactor(groupBalances)
+      const balancesWithBreakdown = balancesByGroupIdx[groupIdx].map(fmtBalanceBreakdown)
+      const formattedBalances = balancesWithBreakdown.map(formatBalance)
+      const healthFactor = balancesByGroupIdx[groupIdx]?.[0]?.healthFactor || resolveHealthFactor(formattedBalances)
 
-      for (const balance of balancesByGroupIdx[groupIdx]) {
-        dbBalances.push({ ...balance, healthFactor })
+      for (let idx = 0; idx < formattedBalances.length; idx++) {
+        const balance = formattedBalances[idx]
+        dbBalances.push({
+          ...balance,
+          chain: chain.chainId,
+          holder: user.toLowerCase(),
+          adapterId: adapter.id,
+          timestamp: unixToDateTime(unixFromYYYYMMDD(today)),
+          healthFactor,
+          groupIdx,
+          idx,
+          version: chainAdapter.config?.version || 0,
+          sign: 1,
+        })
       }
     }
   }
 
-  await insertDailyBalances(client, dbBalances)
+  await saveDBBalancesSnapshots(client, chain.chainId, adapter.id, today, chainAdapter.config?.version || 0, dbBalances)
 
   const endTime = Date.now()
-  console.log(`Completed in ${endTime - startTime}ms`)
+  _logger.info(`Completed in ${endTime - startTime}ms`)
 }
 
 async function main() {
@@ -208,6 +243,7 @@ async function main() {
 
   const adapterJobs: AdapterJob[] = []
 
+  // Default status: do all adapters
   for (const adapter of adapters) {
     for (const chain of chains) {
       if (adapter[chain.id]) {
@@ -220,7 +256,12 @@ async function main() {
     }
   }
 
-  // Start where left if process fails
+  const outputDir = path.join(__dirname, '..', 'internal', 'current_balances_snapshots')
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true })
+  }
+
+  // Start where process left
   const snapshotJobStatus = getSnapshotJobStatus()
   // Merge status
   if (snapshotJobStatus != null) {
@@ -229,11 +270,14 @@ async function main() {
     }
   }
 
-  for (let i = 0; i < adapterJobs.length; i++) {
-    const adapterJob = adapterJobs[i]
+  for await (const adapterJob of adapterJobs) {
+    if (adapterJob.status !== 'pending') {
+      continue
+    }
+
     const adapter = adapterById[adapterJob.id]
     const chainAdapter = adapter?.[adapterJob.chain]
-    if (adapter && chainAdapter) {
+    if (adapter && chainAdapter && adapter.id !== 'wallet') {
       try {
         await processAdapter({ adapter, chainAdapter, chain: chainById[adapterJob.chain], today, now })
 
@@ -256,6 +300,6 @@ main()
     process.exit(0)
   })
   .catch((e) => {
-    console.error(e)
+    logger.error(e)
     process.exit(1)
   })

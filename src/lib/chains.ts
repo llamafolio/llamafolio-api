@@ -483,6 +483,7 @@ export function getRPCClient(options: RPCClientOptions): PublicClient {
       return createPublicClient({
         chain: viemChains.polygon,
         transport: fallback([
+          http('https://polygon.llamarpc.com', httpTransportConfig),
           http('https://rpc.ankr.com/polygon', httpTransportConfig),
           http('https://polygon-rpc.com/', httpTransportConfig),
           http('https://rpc-mainnet.maticvigil.com/', httpTransportConfig),
