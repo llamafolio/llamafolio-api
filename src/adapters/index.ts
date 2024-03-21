@@ -201,6 +201,7 @@ import mdex from '@adapters/mdex'
 import meanFinance from '@adapters/mean-finance'
 import mendiFinance from '@adapters/mendi-finance'
 import meritCircle from '@adapters/merit-circle'
+import merlinsSeal from '@adapters/merlins-seal'
 import mesher from '@adapters/mesher'
 import metaPool from '@adapters/meta-pool'
 import metronome from '@adapters/metronome'
@@ -601,6 +602,7 @@ export const adapters: Adapter[] = [
   meanFinance,
   mendiFinance,
   meritCircle,
+  merlinsSeal,
   mesher,
   metaPool,
   metronome,
