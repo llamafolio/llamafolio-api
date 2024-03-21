@@ -397,6 +397,7 @@ export function getRPCClient(options: RPCClientOptions): PublicClient {
       return createPublicClient({
         chain: viemChains.mainnet,
         transport: fallback([
+          http('https://eth.llamarpc.com', httpTransportConfig),
           http('https://rpc.ankr.com/eth', httpTransportConfig),
           http('https://cloudflare-eth.com', httpTransportConfig),
         ]),

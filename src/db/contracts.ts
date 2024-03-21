@@ -289,26 +289,28 @@ export async function getAllContractsInteractions(client: ClickHouseClient, adap
   for (const contractStorage of res.data) {
     const data = JSON.parse(contractStorage.data || '{}')
 
-    const contract = {
-      ...data,
-      decimals: data?.decimals ? parseInt(data.decimals) : undefined,
-      standard: contractStorage.standard,
-      name: contractStorage.name,
-      chain: chainByChainId[parseInt(contractStorage.chain)]?.id,
-      address: contractStorage.address,
-      token: contractStorage.token,
-      category: contractStorage.category,
-      adapterId: contractStorage.adapter_id,
-      underlyings: data?.underlyings?.map((underlying: any) => ({
-        ...underlying,
-        decimals: parseInt(underlying.decimals),
-      })),
-    }
-
     for (const holder of contractStorage.holders) {
       if (!contractsByHolder[holder]) {
         contractsByHolder[holder] = []
       }
+
+      // NOTE: create new object reference as adapters enhance data on contract instances
+      const contract = {
+        ...data,
+        decimals: data?.decimals ? parseInt(data.decimals) : undefined,
+        standard: contractStorage.standard,
+        name: contractStorage.name,
+        chain: chainByChainId[parseInt(contractStorage.chain)]?.id,
+        address: contractStorage.address,
+        token: contractStorage.token,
+        category: contractStorage.category,
+        adapterId: contractStorage.adapter_id,
+        underlyings: data?.underlyings?.map((underlying: any) => ({
+          ...underlying,
+          decimals: parseInt(underlying.decimals),
+        })),
+      }
+
       contractsByHolder[holder].push(contract)
     }
   }

@@ -146,70 +146,74 @@ export interface AdapterBalancesStorable {
 export function toStorage(balances: Balance[]) {
   const adaptersBalancesStorable: AdapterBalancesStorable[] = []
 
-  const balancesByChainByAdapterId = groupBy2(balances, 'chain', 'adapterId')
+  const balancesByFromAddress = groupBy(balances, 'fromAddress')
 
-  for (const chain in balancesByChainByAdapterId) {
-    const chainId = chainById[chain]?.chainId
-    if (chainId == null) {
-      console.error(`Missing chain ${chain}`)
-      continue
-    }
+  for (const fromAddress in balancesByFromAddress) {
+    const balancesByChainByAdapterId = groupBy2(balancesByFromAddress[fromAddress], 'chain', 'adapterId')
 
-    for (const adapterId in balancesByChainByAdapterId[chain]) {
-      let balance_usd = 0
-      let debt_usd = 0
-      let reward_usd = 0
-
-      const balances = balancesByChainByAdapterId[chain][adapterId].map((balance) => {
-        const {
-          __key,
-          __key_is_array,
-          chain: _chain,
-          adapterId: _adapterId,
-          fromAddress: _fromAddress,
-          address,
-          category,
-          groupIdx,
-          amount,
-          price,
-          balanceUSD,
-          rewardUSD,
-          debtUSD,
-          healthFactor,
-          timestamp: _timestamp,
-          ...data
-        } = balance
-
-        balance_usd += balanceUSD || 0
-        debt_usd += debtUSD || 0
-        reward_usd += rewardUSD || 0
-
-        return JSON.stringify({
-          ...data,
-          address,
-          category,
-          group_idx: groupIdx,
-          amount,
-          price,
-          balance_usd: balanceUSD,
-          reward_usd: rewardUSD,
-          debt_usd: debtUSD,
-          health_factor: healthFactor,
-        })
-      })
-
-      const adapterBalancesStorable: AdapterBalancesStorable = {
-        adapter_id: adapterId,
-        chain: chainId,
-        from_address: balancesByChainByAdapterId[chain][adapterId][0].fromAddress,
-        timestamp: toDateTime(balancesByChainByAdapterId[chain][adapterId][0].timestamp),
-        balance_usd,
-        debt_usd,
-        reward_usd,
-        balances,
+    for (const chain in balancesByChainByAdapterId) {
+      const chainId = chainById[chain]?.chainId
+      if (chainId == null) {
+        console.error(`Missing chain ${chain}`)
+        continue
       }
 
-      adaptersBalancesStorable.push(adapterBalancesStorable)
+      for (const adapterId in balancesByChainByAdapterId[chain]) {
+        let balance_usd = 0
+        let debt_usd = 0
+        let reward_usd = 0
+
+        const balances = balancesByChainByAdapterId[chain][adapterId].map((balance) => {
+          const {
+            __key,
+            __key_is_array,
+            chain: _chain,
+            adapterId: _adapterId,
+            fromAddress: _fromAddress,
+            address,
+            category,
+            groupIdx,
+            amount,
+            price,
+            balanceUSD,
+            rewardUSD,
+            debtUSD,
+            healthFactor,
+            timestamp: _timestamp,
+            ...data
+          } = balance
+
+          balance_usd += balanceUSD || 0
+          debt_usd += debtUSD || 0
+          reward_usd += rewardUSD || 0
+
+          return JSON.stringify({
+            ...data,
+            address,
+            category,
+            group_idx: groupIdx,
+            amount,
+            price,
+            balance_usd: balanceUSD,
+            reward_usd: rewardUSD,
+            debt_usd: debtUSD,
+            health_factor: healthFactor,
+          })
+        })
+
+        const adapterBalancesStorable: AdapterBalancesStorable = {
+          adapter_id: adapterId,
+          chain: chainId,
+          from_address: balancesByChainByAdapterId[chain][adapterId][0].fromAddress,
+          timestamp: toDateTime(balancesByChainByAdapterId[chain][adapterId][0].timestamp),
+          balance_usd,
+          debt_usd,
+          reward_usd,
+          balances,
+        }
+
+        adaptersBalancesStorable.push(adapterBalancesStorable)
+      }
     }
   }
 
@@ -636,6 +640,20 @@ export function insertBalances(client: ClickHouseClient, balances: Balance[]) {
 
   return client.insert({
     table: `${environment.NS_LF}.adapters_balances`,
+    values,
+    format: 'JSONEachRow',
+  })
+}
+
+export function insertDailyBalances(client: ClickHouseClient, balances: Balance[]) {
+  const values = toStorage(balances)
+
+  if (values.length === 0) {
+    return
+  }
+
+  return client.insert({
+    table: `${environment.NS_LF}.daily_adapters_balances`,
     values,
     format: 'JSONEachRow',
   })
