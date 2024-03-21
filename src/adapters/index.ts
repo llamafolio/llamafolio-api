@@ -56,6 +56,7 @@ import bifrostLiquidStaking from '@adapters/bifrost-liquid-staking'
 import bigDataProtocol from '@adapters/big-data-protocol'
 import binanceStakedEth from '@adapters/binance-staked-eth'
 import biswap from '@adapters/biswap'
+import blackrockfund from '@adapters/blackrockfund'
 import blast from '@adapters/blast'
 import bloom from '@adapters/bloom'
 import blueberryLend from '@adapters/blueberry-lend'
@@ -458,6 +459,7 @@ export const adapters: Adapter[] = [
   bigDataProtocol,
   binanceStakedEth,
   biswap,
+  blackrockfund,
   blast,
   bloom,
   blueberryLend,
