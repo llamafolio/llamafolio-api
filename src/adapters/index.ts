@@ -342,6 +342,7 @@ import synthetix from '@adapters/synthetix'
 import tangible from '@adapters/tangible'
 import templedao from '@adapters/templedao'
 import tenderFinance from '@adapters/tender-finance'
+import tensorplex from '@adapters/tensorplex'
 import tetu from '@adapters/tetu'
 import thales from '@adapters/thales'
 import theIdols from '@adapters/the-idols'
@@ -745,6 +746,7 @@ export const adapters: Adapter[] = [
   tangible,
   templedao,
   tenderFinance,
+  tensorplex,
   tetu,
   thales,
   theIdols,
