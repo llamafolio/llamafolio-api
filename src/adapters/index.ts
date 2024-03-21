@@ -132,6 +132,7 @@ import gitcoin from '@adapters/gitcoin'
 import giveth from '@adapters/giveth'
 import gloriFinance from '@adapters/glori-finance'
 import gmxV1 from '@adapters/gmx-v1'
+import gmxV2 from '@adapters/gmx-v2'
 import gnosisProtocolV1 from '@adapters/gnosis-protocol-v1'
 import gogopool from '@adapters/gogopool'
 import goldfinch from '@adapters/goldfinch'
@@ -392,6 +393,7 @@ import yearnFinance from '@adapters/yearn-finance'
 import yieldflow from '@adapters/yieldflow'
 import yoshiExchange from '@adapters/yoshi-exchange'
 import zerolend from '@adapters/zerolend'
+import zircuitStaking from '@adapters/zircuit-staking'
 import zyberswap from '@adapters/zyberswap'
 import type { Adapter } from '@lib/adapter'
 
@@ -530,6 +532,7 @@ export const adapters: Adapter[] = [
   giveth,
   gloriFinance,
   gmxV1,
+  gmxV2,
   gnosisProtocolV1,
   gogopool,
   goldfinch,
@@ -790,6 +793,7 @@ export const adapters: Adapter[] = [
   yieldflow,
   yoshiExchange,
   zerolend,
+  zircuitStaking,
   zyberswap,
 ]
 

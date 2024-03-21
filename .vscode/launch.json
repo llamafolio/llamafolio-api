@@ -222,7 +222,8 @@
         "gitcoin",
         "giveth",
         "glori-finance",
-        "gmx",
+        "gmx-v1",
+        "gmx-v2",
         "gnosis-protocol-v1",
         "gogopool",
         "goldfinch",
@@ -483,6 +484,7 @@
         "yieldflow",
         "yoshi-exchange",
         "zerolend",
+        "zircuit-staking",
         "zyberswap"
       ],
       "default": "curve"
