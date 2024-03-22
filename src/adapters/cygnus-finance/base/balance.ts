@@ -35,7 +35,10 @@ export async function getCygnusBalances(ctx: BalancesContext, pools: Contract[])
 
   const userAssets = await multicall({
     ctx,
-    calls: poolBalances.map((pool) => ({ target: pool.token ?? pool.address, params: [pool.amount] }) as const),
+    calls: poolBalances.map((pool) => {
+      const target = pool.token && pool.token != '' ? pool.token : pool.address
+      return { target, params: [pool.amount] } as const
+    }),
     abi: abi.convertToAssets,
   })
 
