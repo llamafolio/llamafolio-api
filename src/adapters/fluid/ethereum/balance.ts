@@ -78,7 +78,10 @@ export async function getFluidFarmBalances(ctx: BalancesContext, pools: Contract
 async function getProcessUnderlyings(ctx: BalancesContext, poolBalances: Balance[]): Promise<Balance[]> {
   const userAssets = await multicall({
     ctx,
-    calls: poolBalances.map((pool) => ({ target: pool.token ?? pool.address, params: [pool.amount] }) as const),
+    calls: poolBalances.map((pool) => {
+      const target = pool.token && pool.token !== '' ? pool.token : pool.address
+      return { target, params: [pool.amount] } as const
+    }),
     abi: abi.convertToAssets,
   })
 

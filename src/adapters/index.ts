@@ -88,6 +88,7 @@ import crvusd from '@adapters/crvusd'
 import curveDex from '@adapters/curve-dex'
 import cvaultFinance from '@adapters/cvault-finance'
 import cyclone from '@adapters/cyclone'
+import cygnusFinance from '@adapters/cygnus-finance'
 import defiSwap from '@adapters/defi-swap'
 import definix from '@adapters/definix'
 import defiplaza from '@adapters/defiplaza'
@@ -113,6 +114,7 @@ import firebot from '@adapters/firebot'
 import flamincome from '@adapters/flamincome'
 import floorDao from '@adapters/floor-dao'
 import florenceFinance from '@adapters/florence-finance'
+import fluid from '@adapters/fluid'
 import fluxFinance from '@adapters/flux-finance'
 import fortressLoans from '@adapters/fortress-loans'
 import fractionalArt from '@adapters/fractional-art'
@@ -492,6 +494,7 @@ export const adapters: Adapter[] = [
   curveDex,
   cvaultFinance,
   cyclone,
+  cygnusFinance,
   defiSwap,
   definix,
   defiplaza,
@@ -517,6 +520,7 @@ export const adapters: Adapter[] = [
   flamincome,
   floorDao,
   florenceFinance,
+  fluid,
   fluxFinance,
   fortressLoans,
   fractionalArt,
