@@ -29,7 +29,7 @@ export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, 
   })
 
   return {
-    groups: [{ balances: balances.map((balance) => ({ ...balance, category: 'farm' })) }],
+    groups: [{ balances }],
   }
 }
 
