@@ -74,13 +74,16 @@ provider:
   httpApi:
     metrics: true
     cors:
-      allowedOrigins: '*'
+      allowedOrigins:
+        - https://llamafolio.com
+        - https://swap.defillama.com
       allowedHeaders:
         - Content-Type
         - Authorization
       allowedMethods:
         - OPTIONS
         - GET
+        - POST
       maxAge: 31536000
 
 functions:
