@@ -121,6 +121,7 @@ import fortressLoans from '@adapters/fortress-loans'
 import fractionalArt from '@adapters/fractional-art'
 import fraxFinance from '@adapters/frax-finance'
 import fraxlend from '@adapters/fraxlend'
+import ft33Dao from '@adapters/ft33-dao'
 import fxProtocol from '@adapters/fx-protocol'
 import fydeProtocol from '@adapters/fyde-protocol'
 import gainsNetwork from '@adapters/gains-network'
@@ -528,6 +529,7 @@ export const adapters: Adapter[] = [
   fractionalArt,
   fraxFinance,
   fraxlend,
+  ft33Dao,
   fxProtocol,
   fydeProtocol,
   gainsNetwork,
