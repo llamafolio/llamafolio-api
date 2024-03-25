@@ -1,6 +1,7 @@
 import { adapterById } from '@adapters/index'
 import type { ClickHouseClient } from '@clickhouse/client'
-import { formatBalance, insertBalances } from '@db/balances'
+import { formatBalance } from '@db/balances'
+import { insertBalancesDDB } from '@db/balances-ddb'
 import { client } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
 import { badRequest, serverError, success } from '@handlers/response'
@@ -172,9 +173,11 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
     }
   }
 
-  await insertBalances(client, dbBalances)
+  const updatedAt = unixFromDate(new Date())
 
-  return { updatedAt: unixFromDate(new Date()) }
+  await insertBalancesDDB({ address, updatedAt, balances: dbBalances })
+
+  return { updatedAt }
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {

@@ -1,5 +1,5 @@
-import { type LatestProtocolBalances, selectLatestProtocolsBalancesByFromAddresses } from '@db/balances'
-import { client } from '@db/clickhouse'
+import type { LatestProtocolBalances } from '@db/balances'
+import { getBatchBalancesDDB } from '@db/balances-ddb'
 import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext } from '@lib/adapter'
 import { BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
@@ -25,10 +25,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   }
 
   try {
-    const { updatedAt, protocolsBalances, staleAddresses } = await selectLatestProtocolsBalancesByFromAddresses(
-      client,
-      addresses,
-    )
+    const { updatedAt, protocolsBalances, staleAddresses } = await getBatchBalancesDDB({ addresses })
 
     const status: Status = updatedAt === undefined || staleAddresses.length > 0 ? 'stale' : 'success'
 
@@ -41,7 +38,7 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     return success(balancesResponse, { cacheControl: 'max-age=0, no-store' })
   } catch (error) {
-    console.error('Failed to retrieve balances', { error, addresses })
+    console.error('Failed to retrieve balances', { error: (error as any).message, addresses })
 
     await Promise.all(
       addresses.map(async (address) => {
@@ -61,6 +58,6 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       }),
     )
 
-    return serverError('Failed to retrieve balances', { error, addresses })
+    return serverError('Failed to retrieve balances', { error: (error as any).message, addresses })
   }
 }

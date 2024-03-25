@@ -31,10 +31,12 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.540.0",
     "@aws-sdk/client-lambda": "^3.398.0",
+    "@aws-sdk/lib-dynamodb": "^3.540.0",
     "@clickhouse/client": "^0.2.10",
-    "@slack/web-api": "^7.0.1",
     "@llamafolio/tokens": "^0.1.107",
+    "@slack/web-api": "^7.0.1",
     "dayjs": "^1.11.9",
     "dotenv": "^16.3.1",
     "graphql": "^16.8.1",
@@ -81,5 +83,11 @@
     "yarn": "------>PLEASE USE PNPM<------",
     "npm": "------>PLEASE USE PNPM<------"
   },
-  "keywords": ["LlamaFolio", "API", "OSS", "Portfolio", "Tracker"]
+  "keywords": [
+    "LlamaFolio",
+    "API",
+    "OSS",
+    "Portfolio",
+    "Tracker"
+  ]
 }
