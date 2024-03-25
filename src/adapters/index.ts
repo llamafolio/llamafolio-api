@@ -203,6 +203,7 @@ import makerdao from '@adapters/makerdao'
 import mantisswap from '@adapters/mantisswap'
 import mantleStakedEth from '@adapters/mantle-staked-eth'
 import maple from '@adapters/maple'
+import matrixFarm from '@adapters/matrix-farm'
 import mdex from '@adapters/mdex'
 import meanFinance from '@adapters/mean-finance'
 import mendiFinance from '@adapters/mendi-finance'
@@ -224,6 +225,7 @@ import mstable from '@adapters/mstable'
 import muExchange from '@adapters/mu-exchange'
 import mugenfinance from '@adapters/mugenfinance'
 import multichain from '@adapters/multichain'
+import nasdex from '@adapters/nasdex'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
 import nf3Ape from '@adapters/nf3-ape'
@@ -266,6 +268,7 @@ import protectorateProtocol from '@adapters/protectorate-protocol'
 import proxy from '@adapters/proxy'
 import pstakeFinance from '@adapters/pstake-finance'
 import pufferFinance from '@adapters/puffer-finance'
+import purpleBridgeDex from '@adapters/purple-bridge-dex'
 import qidao from '@adapters/qidao'
 import quickswapDex from '@adapters/quickswap-dex'
 import radiantV1 from '@adapters/radiant-v1'
@@ -612,6 +615,7 @@ export const adapters: Adapter[] = [
   mantisswap,
   mantleStakedEth,
   maple,
+  matrixFarm,
   mdex,
   meanFinance,
   mendiFinance,
@@ -633,6 +637,7 @@ export const adapters: Adapter[] = [
   muExchange,
   mugenfinance,
   multichain,
+  nasdex,
   nemesisDao,
   nexusMutual,
   nf3Ape,
@@ -675,6 +680,7 @@ export const adapters: Adapter[] = [
   proxy,
   pstakeFinance,
   pufferFinance,
+  purpleBridgeDex,
   qidao,
   quickswapDex,
   radiantV1,
