@@ -35,6 +35,17 @@ provider:
           Action:
             - 'lambda:InvokeFunction'
           Resource: '*'
+        - Effect: 'Allow'
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+            - dynamodb:BatchGetItem
+          Resource:
+            - 'arn:aws:dynamodb:eu-central-1:610755237132:table/prod-llamafolio-table'
 
   environment:
     CLICKHOUSE_HOST: ${env:CLICKHOUSE_HOST}
