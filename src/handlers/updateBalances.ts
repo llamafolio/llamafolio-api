@@ -192,11 +192,16 @@ export const handler: APIGatewayProxyHandler = async (event) => {
 
     const updatedAt = unixFromDate(new Date())
 
-    return success({
-      status: 'success',
-      updatedAt,
-      nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
-    })
+    return success(
+      {
+        status: 'success',
+        updatedAt,
+        nextUpdateAt: updatedAt + BALANCE_UPDATE_THRESHOLD_SEC,
+      },
+      {
+        noCORS: true,
+      },
+    )
   } catch (error) {
     console.error('Failed to update balances', error)
 

@@ -11,6 +11,7 @@ export interface ResponseOptions {
   eTag?: string
   replacer?: (key: string, value: any) => any
   cacheControl?: string
+  noCORS?: boolean
 }
 
 export interface Response {
@@ -34,18 +35,22 @@ export function response({
   eTag,
   replacer = defaultReplacer,
   cacheControl,
+  noCORS = false,
 }: ResponseOptions) {
   const response: Response = {
     statusCode,
     headers: {
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Credentials': true,
-      'Access-Control-Allow-Headers': 'Content-Type,Authorization',
-      'Access-Control-Allow-Methods': 'OPTIONS,GET,POST',
       ...headers,
     },
     body: JSON.stringify(body, replacer),
+  }
+
+  if (!noCORS) {
+    response.headers['Access-Control-Allow-Origin'] = '*'
+    response.headers['Access-Control-Allow-Credentials'] = true
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
+    response.headers['Access-Control-Allow-Methods'] = 'OPTIONS,GET,POST'
   }
 
   if (cacheControl) {
