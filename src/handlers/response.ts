@@ -48,6 +48,7 @@ export function response({
 
   if (noCORS) {
     response.headers['Access-Control-Allow-Origin'] = 'https://llamafolio.com'
+    response.headers['Vary'] = 'Origin'
   } else {
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Credentials'] = true
