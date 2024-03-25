@@ -46,7 +46,9 @@ export function response({
     body: JSON.stringify(body, replacer),
   }
 
-  if (!noCORS) {
+  if (noCORS) {
+    response.headers['Access-Control-Allow-Origin'] = 'https://llamafolio.com'
+  } else {
     response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Credentials'] = true
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
