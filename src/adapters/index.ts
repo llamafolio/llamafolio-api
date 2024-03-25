@@ -55,6 +55,7 @@ import benqiStakedAvax from '@adapters/benqi-staked-avax'
 import bifrostLiquidStaking from '@adapters/bifrost-liquid-staking'
 import bigDataProtocol from '@adapters/big-data-protocol'
 import binanceStakedEth from '@adapters/binance-staked-eth'
+import binaryxPlatform from '@adapters/binaryx-platform'
 import biswap from '@adapters/biswap'
 import blackrockfund from '@adapters/blackrockfund'
 import blast from '@adapters/blast'
@@ -467,6 +468,7 @@ export const adapters: Adapter[] = [
   bifrostLiquidStaking,
   bigDataProtocol,
   binanceStakedEth,
+  binaryxPlatform,
   biswap,
   blackrockfund,
   blast,
