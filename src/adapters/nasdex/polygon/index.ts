@@ -5,13 +5,13 @@ import { getMasterChefPoolsBalances } from '@lib/masterchef/masterChefBalance'
 import { getMasterChefPoolsContracts } from '@lib/masterchef/masterChefContract'
 
 const masterChef: Contract = {
-  chain: 'ethereum',
+  chain: 'polygon',
   address: '0x35cA0e02C4c16c94c4cC8B67D13d660b78414f95',
 }
 
 const NSDX: Contract = {
-  chain: 'ethereum',
-  address: '0x35cA0e02C4c16c94c4cC8B67D13d660b78414f95',
+  chain: 'polygon',
+  address: '0xE8d17b127BA8b9899a160D9a07b69bCa8E08bfc6',
   decimals: 18,
   symbol: 'NSDX',
 }
