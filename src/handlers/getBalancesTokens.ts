@@ -4,7 +4,7 @@
 import walletAdapter from '@adapters/wallet'
 import { client } from '@db/clickhouse'
 import { getWalletInteractions } from '@db/contracts'
-import { badRequest, serverError, success } from '@handlers/response'
+import { badRequest, forbidden, serverError, success } from '@handlers/response'
 import type { BalancesContext, PricedBalance } from '@lib/adapter'
 import { groupBy } from '@lib/array'
 import { sanitizeBalances, sanitizePricedBalances, sortBalances, sumBalances } from '@lib/balance'
@@ -48,6 +48,10 @@ export interface BalancesErc20Response {
   chains: BalancesErc20ChainResponse[]
 }
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
+  if (!['https://llamafolio.com', 'https://swap.defillama.com'].includes(event.headers.origin)) {
+    return forbidden('Forbidden')
+  }
+
   const address = parseAddress(event.pathParameters?.address || '')
   console.log(`Get balances tokens`, address)
   if (!address) {

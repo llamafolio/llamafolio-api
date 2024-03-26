@@ -1,6 +1,6 @@
 import { client } from '@db/clickhouse'
 import { selectProtocolBalancesSnapshotsStatus, selectProtocolHoldersBalances } from '@db/protocols'
-import { badRequest, Message, serverError, success } from '@handlers/response'
+import { badRequest, forbidden, Message, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { unixFromDateTime } from '@lib/fmt'
@@ -26,6 +26,10 @@ interface ProtocolHoldersResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
+  if (event.headers.origin !== 'https://llamafolio.com') {
+    return forbidden('Forbidden')
+  }
+
   const protocol = event.pathParameters?.protocol || ''
   if (!protocol) {
     return badRequest('Invalid protocol parameter')

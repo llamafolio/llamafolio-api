@@ -1,6 +1,6 @@
 import { client } from '@db/clickhouse'
 import { type HistoryStat, selectHistoryStats } from '@db/history'
-import { badRequest, serverError, success } from '@handlers/response'
+import { badRequest, forbidden, serverError, success } from '@handlers/response'
 import type { BalancesContext } from '@lib/adapter'
 import { getRPCClient } from '@lib/chains'
 import { parseAddresses } from '@lib/fmt'
@@ -12,6 +12,10 @@ interface HistoryStatsResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
+  if (event.headers.origin !== 'https://llamafolio.com') {
+    return forbidden('Forbidden')
+  }
+
   const addresses = parseAddresses(event.pathParameters?.address || '')
   if (addresses.length === 0) {
     return badRequest('Invalid address parameter')

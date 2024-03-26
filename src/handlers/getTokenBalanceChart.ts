@@ -1,7 +1,7 @@
 import { selectTokenBalanceChart } from '@db/balances'
 import { client } from '@db/clickhouse'
 import type { Window } from '@db/gas'
-import { badRequest, serverError, success } from '@handlers/response'
+import { badRequest, forbidden, serverError, success } from '@handlers/response'
 import type { BalancesContext, BaseContext } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
@@ -19,6 +19,10 @@ interface TokenBalanceChartResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
+  if (event.headers.origin !== 'https://llamafolio.com') {
+    return forbidden('Forbidden')
+  }
+
   const addresses = parseAddresses(event.pathParameters?.address || '')
   if (addresses.length === 0) {
     return badRequest('Invalid address parameter')

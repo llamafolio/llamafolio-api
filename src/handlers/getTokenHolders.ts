@@ -1,6 +1,6 @@
 import { selectTokenHoldersBalances } from '@db/balances'
 import { client } from '@db/clickhouse'
-import { badRequest, serverError, success } from '@handlers/response'
+import { badRequest, forbidden, serverError, success } from '@handlers/response'
 import type { BalancesContext } from '@lib/adapter'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
@@ -23,6 +23,10 @@ interface TokenHoldersResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
+  if (event.headers.origin !== 'https://llamafolio.com') {
+    return forbidden('Forbidden')
+  }
+
   // Token address
   const address = parseAddress(event.pathParameters?.address || '')
   if (!address) {

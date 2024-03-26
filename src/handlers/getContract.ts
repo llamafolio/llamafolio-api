@@ -1,6 +1,6 @@
 import { client } from '@db/clickhouse'
 import { getContract } from '@db/contracts'
-import { badRequest, notFound, serverError, success } from '@handlers/response'
+import { badRequest, forbidden, notFound, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { chainById, getRPCClient } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
@@ -19,6 +19,10 @@ export interface IContract {
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
+  if (event.headers.origin !== 'https://llamafolio.com') {
+    return forbidden('Forbidden')
+  }
+
   const address = parseAddress(event.pathParameters?.address || '')
   if (!address) {
     return badRequest('Invalid address parameter')
