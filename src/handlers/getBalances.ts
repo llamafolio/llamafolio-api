@@ -1,6 +1,6 @@
 import type { LatestProtocolBalances } from '@db/balances'
 import { getBatchBalancesDDB } from '@db/balances-ddb'
-import { badRequest, serverError, success } from '@handlers/response'
+import { badRequest, forbidden, serverError, success } from '@handlers/response'
 import type { BalancesContext } from '@lib/adapter'
 import { BALANCE_UPDATE_THRESHOLD_SEC } from '@lib/balance'
 import { getRPCClient } from '@lib/chains'
@@ -18,6 +18,10 @@ interface BalancesResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
+  if (event.headers.origin !== 'https://llamafolio.com') {
+    return forbidden('Forbidden')
+  }
+
   const addresses = parseAddresses(event.pathParameters?.address || '')
   console.log('Get balances', addresses)
   if (addresses.length === 0) {
