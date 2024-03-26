@@ -1,6 +1,6 @@
 import environment from '@environment'
 import type { BalancesContext, BaseContext } from '@lib/adapter'
-import { WebClient, type Block, type KnownBlock } from '@slack/web-api'
+import { type Block, type KnownBlock, WebClient } from '@slack/web-api'
 
 const web = new WebClient(process.env.SLACK_TOKEN, {})
 
@@ -24,6 +24,7 @@ export function sendSlackMessage(
     title: string
   },
 ) {
+  return
   const channel = environment.SLACK_CHANNEL_ID
   if (!channel /*|| environment.NODE_ENV !== 'production'*/) {
     return
