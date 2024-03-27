@@ -91,6 +91,7 @@ import cvaultFinance from '@adapters/cvault-finance'
 import cyclone from '@adapters/cyclone'
 import cygnusFinance from '@adapters/cygnus-finance'
 import defiSwap from '@adapters/defi-swap'
+import definitiveFi from '@adapters/definitive.fi'
 import definix from '@adapters/definix'
 import defiplaza from '@adapters/defiplaza'
 import deltaprime from '@adapters/deltaprime'
@@ -504,6 +505,7 @@ export const adapters: Adapter[] = [
   cyclone,
   cygnusFinance,
   defiSwap,
+  definitiveFi,
   definix,
   defiplaza,
   deltaprime,
