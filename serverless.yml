@@ -44,7 +44,7 @@ provider:
         - dynamodb:DeleteItem
         - dynamodb:BatchGetItem
       Resource:
-        - 'arn:aws:dynamodb:eu-central-1:610755237132:table/prod-llamafolio-table'
+        - 'arn:aws:dynamodb:eu-central-1:610755237132:table/${self:custom.tableName}'
 
   environment:
     CLICKHOUSE_HOST: ${env:CLICKHOUSE_HOST}
@@ -422,8 +422,6 @@ custom:
 resources:
   # CORS for api gateway errors
   - ${file(resources/api-gateway-errors.yml)}
-  # DynamoDB
-  - ${file(resources/dynamodb-table.yml)}
 
 plugins:
   - serverless-esbuild
