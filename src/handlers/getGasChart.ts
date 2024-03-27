@@ -1,6 +1,6 @@
 import { client } from '@db/clickhouse'
 import { type GasChart, selectChainGasChart, type Window } from '@db/gas'
-import { badRequest, forbidden, serverError, success } from '@handlers/response'
+import { badRequest, serverError, success } from '@handlers/response'
 import type { BaseContext } from '@lib/adapter'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { sendSlackMessage } from '@lib/slack'
@@ -13,10 +13,6 @@ interface GasChartResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  if (event.headers.origin !== 'https://llamafolio.com') {
-    return forbidden('Forbidden')
-  }
-
   const chainId = getChainId(event.queryStringParameters?.chain || 'ethereum')
   if (chainId == null) {
     return badRequest(`Unknown chain ${event.queryStringParameters?.chain}`)

@@ -1,6 +1,6 @@
 import { client } from '@db/clickhouse'
 import { selectGasUsed } from '@db/gas'
-import { badRequest, forbidden, serverError, success } from '@handlers/response'
+import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext } from '@lib/adapter'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { parseAddress } from '@lib/fmt'
@@ -15,10 +15,6 @@ interface GasUsedResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  if (event.headers.origin !== 'https://llamafolio.com') {
-    return forbidden('Forbidden')
-  }
-
   const address = parseAddress(event.pathParameters?.address || '')
   if (!address) {
     return badRequest('Invalid address parameter')

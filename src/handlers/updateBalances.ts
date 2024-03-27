@@ -4,7 +4,7 @@ import { formatBalance } from '@db/balances'
 import { insertBalancesDDB } from '@db/balances-ddb'
 import { client } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
-import { badRequest, forbidden, serverError, success } from '@handlers/response'
+import { badRequest, serverError, success } from '@handlers/response'
 import { type Balance, type BalancesContext, GET_BALANCES_TIMEOUT, type PricedBalance } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
 import {
@@ -181,10 +181,6 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 }
 
 export const handler: APIGatewayProxyHandler = async (event) => {
-  if (event.headers.origin !== 'https://llamafolio.com') {
-    return forbidden('Forbidden')
-  }
-
   const addresses = parseAddresses(event.pathParameters?.address || '')
   console.log('Get balances', addresses)
   if (addresses.length === 0) {

@@ -1,6 +1,6 @@
 import { client } from '@db/clickhouse'
 import { selectLatestTokensTransfers } from '@db/tokensTransfers'
-import { badRequest, forbidden, serverError, success } from '@handlers/response'
+import { badRequest, serverError, success } from '@handlers/response'
 import type { BalancesContext } from '@lib/adapter'
 import { chainByChainId, getChainId, getRPCClient } from '@lib/chains'
 import { parseAddress, unixFromDate } from '@lib/fmt'
@@ -31,10 +31,6 @@ export interface LatestTokensTransfersResponse {
 }
 
 export const handler: APIGatewayProxyHandler = async (event, _context) => {
-  if (event.headers.origin !== 'https://llamafolio.com') {
-    return forbidden('Forbidden')
-  }
-
   const address = parseAddress(event.pathParameters?.address || '')
   if (address == null) {
     return badRequest('Missing address parameter')
