@@ -69,6 +69,7 @@ provider:
     QUICKNODE_API_KEY: ${env:QUICKNODE_API_KEY}
     QUICKNODE_HTTP_URL: ${env:QUICKNODE_HTTP_URL}
     RESERVOIR_API_KEY: ${env:RESERVOIR_API_KEY}
+    tableName: ${self:custom.tableName}
 
 functions:
   fallback:
@@ -411,6 +412,7 @@ functions:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
+  tableName: ${self:custom.stage}-llamafolio-table
   esbuild:
     config: './esbuild.config.cjs'
   prune:
@@ -420,6 +422,8 @@ custom:
 resources:
   # CORS for api gateway errors
   - ${file(resources/api-gateway-errors.yml)}
+  # DynamoDB
+  - ${file(resources/dynamodb-table.yml)}
 
 plugins:
   - serverless-esbuild
