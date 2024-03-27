@@ -236,6 +236,7 @@ import notional from '@adapters/notional'
 import olympusDao from '@adapters/olympus-dao'
 import ondoFinance from '@adapters/ondo-finance'
 import onyxProtocol from '@adapters/onyx-protocol'
+import openxswap from '@adapters/openxswap'
 import opium from '@adapters/opium'
 import opynSqueeth from '@adapters/opyn-squeeth'
 import originDefi from '@adapters/origin-defi'
@@ -650,6 +651,7 @@ export const adapters: Adapter[] = [
   olympusDao,
   ondoFinance,
   onyxProtocol,
+  openxswap,
   opium,
   opynSqueeth,
   originDefi,
