@@ -19,34 +19,32 @@ provider:
     apiGateway: true
     lambda: true
   memorySize: 256
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - xray:PutTraceSegments
-            - xray:PutTelemetryRecords
-          Resource: '*'
-        - Effect: 'Allow'
-          Action:
-            - 's3:ListBucket'
-            - 's3:*Object*'
-          Resource: '*'
-        - Effect: 'Allow'
-          Action:
-            - 'lambda:InvokeFunction'
-          Resource: '*'
-        - Effect: 'Allow'
-          Action:
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:GetItem
-            - dynamodb:PutItem
-            - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
-            - dynamodb:BatchGetItem
-          Resource:
-            - 'arn:aws:dynamodb:eu-central-1:610755237132:table/prod-llamafolio-table'
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - xray:PutTraceSegments
+        - xray:PutTelemetryRecords
+      Resource: '*'
+    - Effect: 'Allow'
+      Action:
+        - 's3:ListBucket'
+        - 's3:*Object*'
+      Resource: '*'
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:InvokeFunction'
+      Resource: '*'
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchGetItem
+      Resource:
+        - 'arn:aws:dynamodb:eu-central-1:610755237132:table/prod-llamafolio-table'
 
   environment:
     CLICKHOUSE_HOST: ${env:CLICKHOUSE_HOST}
