@@ -81,6 +81,7 @@ import compoundV3 from '@adapters/compound-v3'
 import concentrator from '@adapters/concentrator'
 import conicFinance from '@adapters/conic-finance'
 import convexFinance from '@adapters/convex-finance'
+import copraFinance from '@adapters/copra-finance'
 import cowSwap from '@adapters/cow-swap'
 import cozyFinance from '@adapters/cozy-finance'
 import creamFinance from '@adapters/cream-finance'
@@ -238,6 +239,7 @@ import ondoFinance from '@adapters/ondo-finance'
 import onyxProtocol from '@adapters/onyx-protocol'
 import openxswap from '@adapters/openxswap'
 import opium from '@adapters/opium'
+import opxFinance from '@adapters/opx-finance'
 import opynSqueeth from '@adapters/opyn-squeeth'
 import originDefi from '@adapters/origin-defi'
 import originDollar from '@adapters/origin-dollar'
@@ -496,6 +498,7 @@ export const adapters: Adapter[] = [
   concentrator,
   conicFinance,
   convexFinance,
+  copraFinance,
   cowSwap,
   cozyFinance,
   creamFinance,
@@ -653,6 +656,7 @@ export const adapters: Adapter[] = [
   onyxProtocol,
   openxswap,
   opium,
+  opxFinance,
   opynSqueeth,
   originDefi,
   originDollar,
