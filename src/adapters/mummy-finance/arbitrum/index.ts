@@ -1,4 +1,4 @@
-import { getMMYStakeBalance } from '@adapters/mummy-finance/common/balance'
+import { getMMXStakerBalances, getMMYStakeBalance } from '@adapters/mummy-finance/common/balance'
 import { getMMYLPContract, getMMYXContract } from '@adapters/mummy-finance/common/contract'
 import type { AdapterConfig, BaseContext, Contract, GetBalancesHandler } from '@lib/adapter'
 import { resolveBalances } from '@lib/balance'
@@ -13,25 +13,22 @@ const fMMY: Contract = {
   address: '0xad96d9736484e35985773bdf7dba5750dc830042',
 }
 
-const sbfMMY: Contract = {
+const sMMY: Contract = {
   chain: 'arbitrum',
-  address: '0xA30b1C3c8EDE3841dE05F9CdD4D0e097aC4C6D92',
+  address: '0x52cC60893d3Bd8508baAB835620CbF9ddfA0A13C',
 }
 
 export const getContracts = async (ctx: BaseContext) => {
-  const mmylp = await getMMYLPContract(ctx, fMMY, vault)
-  const mmyx = await getMMYXContract(ctx, sbfMMY)
-
-  console.log(mmyx)
-
+  const [mmylp, mmyx] = await Promise.all([getMMYLPContract(ctx, fMMY, vault), getMMYXContract(ctx, sMMY)])
   return {
-    contracts: { mmylp },
+    contracts: { mmylp, mmyx },
   }
 }
 
 export const getBalances: GetBalancesHandler<typeof getContracts> = async (ctx, contracts) => {
   const balances = await resolveBalances<typeof getContracts>(ctx, contracts, {
     mmylp: (...args) => getMMYStakeBalance(...args, vault),
+    mmyx: getMMXStakerBalances,
   })
 
   return {

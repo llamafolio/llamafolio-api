@@ -1,4 +1,4 @@
-import type { Balance, BalancesContext, Contract } from '@lib/adapter'
+import type { Balance, BalancesContext, BaseContract, Contract } from '@lib/adapter'
 import { mapSuccessFilter } from '@lib/array'
 import { call } from '@lib/call'
 import { ADDRESS_ZERO } from '@lib/contract'
@@ -30,6 +30,16 @@ const abi = {
   getRedemptionCollateral: {
     inputs: [{ internalType: 'address', name: '_token', type: 'address' }],
     name: 'getRedemptionCollateral',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  depositBalances: {
+    inputs: [
+      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'address', name: '', type: 'address' },
+    ],
+    name: 'depositBalances',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
     type: 'function',
@@ -103,4 +113,31 @@ export async function getUnderlyingsBalances(
   })
 
   return { ...glpBalance, underlyings }
+}
+
+export async function getMMXStakerBalances(ctx: BalancesContext, staker: Contract): Promise<Balance[]> {
+  const [sbfMMY, mmy] = staker.underlyings as BaseContract[]
+
+  const [stakeGMX, stakeEsGMX, pendingesGMXRewards, pendingETHRewards] = await Promise.all([
+    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.stakedAmounts }),
+    call({ ctx, target: staker.address, params: [ctx.address, esMMY[ctx.chain].address], abi: abi.depositBalances }),
+    call({ ctx, target: staker.address, params: [ctx.address], abi: abi.claimable }),
+    call({ ctx, target: sbfMMY.address, params: [ctx.address], abi: abi.claimable }),
+  ])
+
+  const rewards = [
+    { ...esMMY[ctx.chain], amount: pendingesGMXRewards },
+    { ...native[ctx.chain], amount: pendingETHRewards },
+  ]
+
+  return [
+    {
+      ...staker,
+      amount: stakeGMX - stakeEsGMX,
+      underlyings: [{ ...mmy, amount: stakeGMX - stakeEsGMX }],
+      rewards,
+      category: 'stake',
+    },
+    { ...esMMY[ctx.chain], category: 'stake', amount: stakeEsGMX, underlyings: undefined, rewards: undefined },
+  ]
 }
