@@ -228,6 +228,7 @@ import mstable from '@adapters/mstable'
 import muExchange from '@adapters/mu-exchange'
 import mugenfinance from '@adapters/mugenfinance'
 import multichain from '@adapters/multichain'
+import mummyFinance from '@adapters/mummy-finance'
 import nasdex from '@adapters/nasdex'
 import nemesisDao from '@adapters/nemesis-dao'
 import nexusMutual from '@adapters/nexus-mutual'
@@ -645,6 +646,7 @@ export const adapters: Adapter[] = [
   muExchange,
   mugenfinance,
   multichain,
+  mummyFinance,
   nasdex,
   nemesisDao,
   nexusMutual,
