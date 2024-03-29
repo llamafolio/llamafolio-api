@@ -36,7 +36,6 @@ jobs:
       CLOUDFLARE_R2_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_PUBLIC_URL }}
       SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
       SLACK_CHANNEL_ID: ${{ secrets.SLACK_CHANNEL_ID }}
-      #
       ANKR_API_KEY: ${{ secrets.ANKR_API_KEY }}
       NFTPORT_API_KEY: ${{ secrets.NFTPORT_API_KEY }}
       OPENSEA_API_KEY: ${{ secrets.OPENSEA_API_KEY }}
@@ -46,6 +45,7 @@ jobs:
       QUICKNODE_API_KEY: ${{ secrets.QUICKNODE_API_KEY }}
       QUICKNODE_HTTP_URL: ${{ secrets.QUICKNODE_HTTP_URL }}
       RESERVOIR_API_KEY: ${{ secrets.RESERVOIR_API_KEY }}
+      BALANCES_DDB: ${{ secrets.BALANCES_DDB }}
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3

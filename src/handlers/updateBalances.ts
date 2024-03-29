@@ -1,9 +1,10 @@
 import { adapterById } from '@adapters/index'
 import type { ClickHouseClient } from '@clickhouse/client'
-import { formatBalance } from '@db/balances'
+import { formatBalance, insertBalances } from '@db/balances'
 import { insertBalancesDDB } from '@db/balances-ddb'
 import { client } from '@db/clickhouse'
 import { getContractsInteractions, groupContracts } from '@db/contracts'
+import environment from '@environment'
 import { badRequest, serverError, success } from '@handlers/response'
 import { type Balance, type BalancesContext, GET_BALANCES_TIMEOUT, type PricedBalance } from '@lib/adapter'
 import { groupBy, groupBy2 } from '@lib/array'
@@ -175,7 +176,11 @@ export async function updateBalances(client: ClickHouseClient, address: `0x${str
 
   const updatedAt = unixFromDate(new Date())
 
-  await insertBalancesDDB({ address, updatedAt, balances: dbBalances })
+  if (environment.BALANCES_DDB) {
+    await insertBalancesDDB({ address, updatedAt, balances: dbBalances })
+  } else {
+    await insertBalances(client, dbBalances)
+  }
 
   return { updatedAt }
 }
