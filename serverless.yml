@@ -14,27 +14,37 @@ provider:
   runtime: nodejs18.x
   stage: dev
   region: eu-central-1
+  endpointType: REGIONAL # Set to regional because the api gateway will be behind a cloudfront distribution
   tracing:
     apiGateway: true
     lambda: true
   memorySize: 256
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - xray:PutTraceSegments
-            - xray:PutTelemetryRecords
-          Resource: '*'
-        - Effect: 'Allow'
-          Action:
-            - 's3:ListBucket'
-            - 's3:*Object*'
-          Resource: '*'
-        - Effect: 'Allow'
-          Action:
-            - 'lambda:InvokeFunction'
-          Resource: '*'
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - xray:PutTraceSegments
+        - xray:PutTelemetryRecords
+      Resource: '*'
+    - Effect: 'Allow'
+      Action:
+        - 's3:ListBucket'
+        - 's3:*Object*'
+      Resource: '*'
+    - Effect: 'Allow'
+      Action:
+        - 'lambda:InvokeFunction'
+      Resource: '*'
+    - Effect: 'Allow'
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+        - dynamodb:BatchGetItem
+      Resource:
+        - 'arn:aws:dynamodb:eu-central-1:610755237132:table/${self:custom.tableName}'
 
   environment:
     CLICKHOUSE_HOST: ${env:CLICKHOUSE_HOST}
@@ -59,25 +69,28 @@ provider:
     QUICKNODE_API_KEY: ${env:QUICKNODE_API_KEY}
     QUICKNODE_HTTP_URL: ${env:QUICKNODE_HTTP_URL}
     RESERVOIR_API_KEY: ${env:RESERVOIR_API_KEY}
-
-  httpApi:
-    metrics: true
-    cors:
-      allowedOrigins: '*'
-      allowedHeaders:
-        - Content-Type
-        - Authorization
-      allowedMethods:
-        - OPTIONS
-        - GET
-      maxAge: 31536000
+    tableName: ${self:custom.tableName}
 
 functions:
+  fallback:
+    handler: src/handlers/fallback.handler
+    events:
+      - http:
+          path: /{params+}
+          method: any
+
+  corsPreflight:
+    handler: src/handlers/corsPreflight.handler
+    events:
+      - http:
+          path: /{params+}
+          method: options
+
   getNFTs:
     handler: src/handlers/getNFTs.handler
     description: Get address nfts
     events:
-      - httpApi:
+      - http:
           method: get
           path: /nfts/{address}
     timeout: 29
@@ -87,7 +100,7 @@ functions:
     handler: src/handlers/getNFTsHistory.handler
     description: Get nfts activity history
     events:
-      - httpApi:
+      - http:
           method: get
           path: /nfts/history/{address}
     timeout: 29
@@ -97,7 +110,7 @@ functions:
     handler: src/handlers/getBalances.handler
     description: Get address balances
     events:
-      - httpApi:
+      - http:
           method: get
           path: /balances/{address}
     timeout: 10
@@ -106,7 +119,7 @@ functions:
     handler: src/handlers/getBalancesTokens.handler
     description: Get address erc20 balances
     events:
-      - httpApi:
+      - http:
           method: get
           path: /balances/{address}/tokens
     timeout: 15
@@ -116,7 +129,7 @@ functions:
     handler: src/handlers/getCalendar.handler
     description: Get calendar
     events:
-      - httpApi:
+      - http:
           method: get
           path: /calendar/{address}
     timeout: 10
@@ -125,7 +138,7 @@ functions:
     handler: src/handlers/getContract.handler
     description: Get contract info
     events:
-      - httpApi:
+      - http:
           method: get
           path: /contracts/{chain}/{address}
     timeout: 15
@@ -134,7 +147,7 @@ functions:
     handler: src/handlers/getTrendingContracts.handler
     description: Get trending contracts
     events:
-      - httpApi:
+      - http:
           method: get
           path: /contracts/trending
     timeout: 29
@@ -143,7 +156,7 @@ functions:
     handler: src/handlers/getGasUsed.handler
     description: Get gas used
     events:
-      - httpApi:
+      - http:
           method: get
           path: /gas_used/{address}
 
@@ -151,7 +164,7 @@ functions:
     handler: src/handlers/getGasChart.handler
     description: Get gas chart
     events:
-      - httpApi:
+      - http:
           method: get
           path: /gas/chart
     timeout: 15
@@ -160,7 +173,7 @@ functions:
     handler: src/handlers/getHistory.handler
     description: Get address history
     events:
-      - httpApi:
+      - http:
           method: get
           path: /history/{address}
     timeout: 29
@@ -169,7 +182,7 @@ functions:
     handler: src/handlers/getHistoryStats.handler
     description: Get address history stats
     events:
-      - httpApi:
+      - http:
           method: get
           path: /history/{address}/stats
     timeout: 15
@@ -178,7 +191,7 @@ functions:
     handler: src/handlers/getInfoStats.handler
     description: Get stats on supported protocols, chains and tokens
     events:
-      - httpApi:
+      - http:
           method: get
           path: /info/stats
 
@@ -186,7 +199,7 @@ functions:
     handler: src/handlers/getInfoAddress.handler
     description: Get address info
     events:
-      - httpApi:
+      - http:
           method: get
           path: /info/{address}
     timeout: 15
@@ -195,7 +208,7 @@ functions:
     handler: src/handlers/getLabels.handler
     description: Get labels
     events:
-      - httpApi:
+      - http:
           method: get
           path: /labels/{address}
 
@@ -203,7 +216,7 @@ functions:
     handler: src/handlers/getProtocols.handler
     description: Get protocols
     events:
-      - httpApi:
+      - http:
           method: get
           path: /protocols
 
@@ -211,7 +224,7 @@ functions:
     handler: src/handlers/getProtocolContracts.handler
     description: Get protocol contracts
     events:
-      - httpApi:
+      - http:
           method: get
           path: /protocols/{protocol}/contracts
     timeout: 10
@@ -220,7 +233,7 @@ functions:
     handler: src/handlers/getProtocolHolders.handler
     description: Get protocol holders
     events:
-      - httpApi:
+      - http:
           method: get
           path: /protocols/{protocol}/holders
     timeout: 15
@@ -229,7 +242,7 @@ functions:
     handler: src/handlers/getLatestProtocols.handler
     description: Get latest protocols
     events:
-      - httpApi:
+      - http:
           method: get
           path: /protocols/latest
     timeout: 15
@@ -238,7 +251,7 @@ functions:
     handler: src/handlers/getLatestSnapshot.handler
     description: Get latest snapshot
     events:
-      - httpApi:
+      - http:
           method: get
           path: /snapshots/{address}/latest
     timeout: 10
@@ -247,7 +260,7 @@ functions:
     handler: src/handlers/getLatestTokensTransfers.handler
     description: Get latest tokens transfers
     events:
-      - httpApi:
+      - http:
           method: get
           path: /tokens_transfers/{chain}/{address}/latest
     timeout: 10
@@ -256,7 +269,7 @@ functions:
     handler: src/handlers/getSyncStatus.handler
     description: Get sync status
     events:
-      - httpApi:
+      - http:
           method: get
           path: /sync_status
     timeout: 10
@@ -265,7 +278,7 @@ functions:
     handler: src/handlers/getToken.handler
     description: Get token
     events:
-      - httpApi:
+      - http:
           method: get
           path: /tokens/{chain}/{address}
     timeout: 20
@@ -274,7 +287,7 @@ functions:
     handler: src/handlers/getTokenBalanceChart.handler
     description: Get token balance chart
     events:
-      - httpApi:
+      - http:
           method: get
           path: /balances/{address}/tokens/{token}/chart
     timeout: 10
@@ -283,7 +296,7 @@ functions:
     handler: src/handlers/getTokenHolders.handler
     description: Get the holders data for a token
     events:
-      - httpApi:
+      - http:
           method: get
           path: /holders/{address}
     timeout: 15
@@ -292,7 +305,7 @@ functions:
     handler: src/handlers/getTokenYields.handler
     description: Get token yields
     events:
-      - httpApi:
+      - http:
           method: get
           path: /tokens/{chain}/{address}/yields
     timeout: 15
@@ -301,7 +314,7 @@ functions:
     handler: src/handlers/getTokenLend.handler
     description: Get token lend pools
     events:
-      - httpApi:
+      - http:
           method: get
           path: /tokens/{chain}/{address}/lend
     timeout: 15
@@ -310,7 +323,7 @@ functions:
     handler: src/handlers/getTokenBorrow.handler
     description: Get token borrow pools
     events:
-      - httpApi:
+      - http:
           method: get
           path: /tokens/{chain}/{address}/borrow
     timeout: 15
@@ -371,7 +384,7 @@ functions:
     handler: src/handlers/updateBalances.handler
     description: Update balances
     events:
-      - httpApi:
+      - http:
           method: post
           path: /balances/{address}
     timeout: 29
@@ -399,11 +412,16 @@ functions:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
+  tableName: ${self:custom.stage}-llamafolio-table
   esbuild:
     config: './esbuild.config.cjs'
   prune:
     automatic: true
     number: 5 # Number of versions to keep
+
+resources:
+  # CORS for api gateway errors
+  - ${file(resources/api-gateway-errors.yml)}
 
 plugins:
   - serverless-esbuild

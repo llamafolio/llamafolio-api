@@ -80,6 +80,13 @@ export function badRequest(message: string) {
   })
 }
 
+export function forbidden(message: string) {
+  return response({
+    statusCode: 403,
+    body: { message },
+  })
+}
+
 export function notFound(message?: string, options?: Partial<ResponseOptions>) {
   return response({
     ...options,
