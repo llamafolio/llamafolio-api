@@ -35,6 +35,7 @@ export const environmentSchema = z.object({
   // Slack
   SLACK_TOKEN: z.string().optional(),
   SLACK_CHANNEL_ID: z.string().optional(),
+  BALANCES_DDB: z.boolean().optional().default(false),
 })
 
 export type Environment = z.infer<typeof environmentSchema>

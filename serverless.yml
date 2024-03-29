@@ -59,7 +59,6 @@ provider:
     CLOUDFLARE_R2_PUBLIC_URL: ${env:CLOUDFLARE_R2_PUBLIC_URL}
     SLACK_TOKEN: ${env:SLACK_TOKEN}
     SLACK_CHANNEL_ID: ${env:SLACK_CHANNEL_ID}
-    #
     ANKR_API_KEY: ${env:ANKR_API_KEY}
     NFTPORT_API_KEY: ${env:NFTPORT_API_KEY}
     OPENSEA_API_KEY: ${env:OPENSEA_API_KEY}
@@ -69,6 +68,7 @@ provider:
     QUICKNODE_API_KEY: ${env:QUICKNODE_API_KEY}
     QUICKNODE_HTTP_URL: ${env:QUICKNODE_HTTP_URL}
     RESERVOIR_API_KEY: ${env:RESERVOIR_API_KEY}
+    BALANCES_DDB: ${env:BALANCES_DDB}
     tableName: ${self:custom.tableName}
 
 functions:
