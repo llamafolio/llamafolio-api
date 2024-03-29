@@ -2,7 +2,7 @@ import type { Balance, BalancesContext, Contract } from '@lib/adapter'
 import { groupBy, mapSuccess } from '@lib/array'
 import { getUnderlyingsBalancesFromBalancer, type IBalancerBalance } from '@lib/balancer/underlying'
 import { getBalancesOf } from '@lib/erc20'
-import { multicall, type Call } from '@lib/multicall'
+import { type Call, multicall } from '@lib/multicall'
 import { isNotNullish } from '@lib/type'
 
 const abi = {

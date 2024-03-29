@@ -13,7 +13,7 @@ export const environmentSchema = z.object({
   DEFILLAMA_LABELS_API_KEY: z.string().optional(),
   DEFILLAMA_PRICE_API_KEY: z.string().optional(),
   ANKR_API_KEY: z.string().optional().default(''),
-  IS_OFFLINE: z.literal('true').or(z.literal('false')).optional(),
+  IS_OFFLINE: z.enum(['true', 'false']).transform((value) => value === 'true'),
   API_URL: z.string().optional(),
   AWS_GATEWAY_API_ID_DEV: z.string().optional(),
   AWS_GATEWAY_API_ID_PROD: z.string().optional(),
@@ -35,7 +35,7 @@ export const environmentSchema = z.object({
   // Slack
   SLACK_TOKEN: z.string().optional(),
   SLACK_CHANNEL_ID: z.string().optional(),
-  BALANCES_DDB: z.boolean().optional().default(false),
+  BALANCES_DDB: z.enum(['true', 'false']).transform((value) => value === 'true'),
 })
 
 export type Environment = z.infer<typeof environmentSchema>
