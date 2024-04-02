@@ -34,6 +34,7 @@ import asymetrixProtocol from '@adapters/asymetrix-protocol'
 import asymmetryFinance from '@adapters/asymmetry-finance'
 import atlantisLoans from '@adapters/atlantis-loans'
 import atlasUsv from '@adapters/atlas-usv'
+import auguryFinance from '@adapters/augury-finance'
 import aura from '@adapters/aura'
 import avalaunch from '@adapters/avalaunch'
 import azuro from '@adapters/azuro'
@@ -453,6 +454,7 @@ export const adapters: Adapter[] = [
   asymmetryFinance,
   atlantisLoans,
   atlasUsv,
+  auguryFinance,
   aura,
   avalaunch,
   azuro,
