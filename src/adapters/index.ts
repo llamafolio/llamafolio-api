@@ -398,6 +398,7 @@ import verse from '@adapters/verse'
 import vesper from '@adapters/vesper'
 import virtuswap from '@adapters/virtuswap'
 import voltaClub from '@adapters/volta-club'
+import vulcandex from '@adapters/vulcandex'
 import wagmi from '@adapters/wagmi'
 import wallet from '@adapters/wallet'
 import wepiggy from '@adapters/wepiggy'
@@ -414,6 +415,7 @@ import yieldflow from '@adapters/yieldflow'
 import yoshiExchange from '@adapters/yoshi-exchange'
 import zerolend from '@adapters/zerolend'
 import zircuitStaking from '@adapters/zircuit-staking'
+import zoodao from '@adapters/zoodao'
 import zyberswap from '@adapters/zyberswap'
 import type { Adapter } from '@lib/adapter'
 
@@ -818,6 +820,7 @@ export const adapters: Adapter[] = [
   vesper,
   virtuswap,
   voltaClub,
+  vulcandex,
   wagmi,
   wallet,
   wepiggy,
@@ -834,6 +837,7 @@ export const adapters: Adapter[] = [
   yoshiExchange,
   zerolend,
   zircuitStaking,
+  zoodao,
   zyberswap,
 ]
 

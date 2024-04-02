@@ -489,6 +489,7 @@
         "vesper",
         "virtuswap",
         "volta-club",
+        "vulcandex",
         "wagmi",
         "wallet",
         "wepiggy",
@@ -505,6 +506,7 @@
         "yoshi-exchange",
         "zerolend",
         "zircuit-staking",
+        "zoodao",
         "zyberswap"
       ],
       "default": "curve"
