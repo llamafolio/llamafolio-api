@@ -231,6 +231,7 @@ import multichain from '@adapters/multichain'
 import mummyFinance from '@adapters/mummy-finance'
 import nasdex from '@adapters/nasdex'
 import nemesisDao from '@adapters/nemesis-dao'
+import neopinPool from '@adapters/neopin-pool'
 import nexusMutual from '@adapters/nexus-mutual'
 import nf3Ape from '@adapters/nf3-ape'
 import nodedao from '@adapters/nodedao'
@@ -649,6 +650,7 @@ export const adapters: Adapter[] = [
   mummyFinance,
   nasdex,
   nemesisDao,
+  neopinPool,
   nexusMutual,
   nf3Ape,
   nodedao,
