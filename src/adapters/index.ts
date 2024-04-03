@@ -301,6 +301,7 @@ import rocketPool from '@adapters/rocket-pool'
 import rocketswapBase from '@adapters/rocketswap-base'
 import rook from '@adapters/rook'
 import rubicon from '@adapters/rubicon'
+import sakeperp from '@adapters/sakeperp'
 import scale from '@adapters/scale'
 import scream from '@adapters/scream'
 import sdai from '@adapters/sdai'
@@ -723,6 +724,7 @@ export const adapters: Adapter[] = [
   rocketswapBase,
   rook,
   rubicon,
+  sakeperp,
   scale,
   scream,
   sdai,
