@@ -226,6 +226,7 @@ import morphoAavev3 from '@adapters/morpho-aavev3'
 import morphoBlue from '@adapters/morpho-blue'
 import morphoCompound from '@adapters/morpho-compound'
 import mountainProtocol from '@adapters/mountain-protocol'
+import mover from '@adapters/mover'
 import mstable from '@adapters/mstable'
 import muExchange from '@adapters/mu-exchange'
 import mugenfinance from '@adapters/mugenfinance'
@@ -650,6 +651,7 @@ export const adapters: Adapter[] = [
   morphoBlue,
   morphoCompound,
   mountainProtocol,
+  mover,
   mstable,
   muExchange,
   mugenfinance,
