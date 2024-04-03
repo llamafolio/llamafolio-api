@@ -93,6 +93,7 @@ import curveDex from '@adapters/curve-dex'
 import cvaultFinance from '@adapters/cvault-finance'
 import cyclone from '@adapters/cyclone'
 import cygnusFinance from '@adapters/cygnus-finance'
+import davosProtocol from '@adapters/davos-protocol'
 import defiSwap from '@adapters/defi-swap'
 import definitiveFi from '@adapters/definitive.fi'
 import definix from '@adapters/definix'
@@ -518,6 +519,7 @@ export const adapters: Adapter[] = [
   cvaultFinance,
   cyclone,
   cygnusFinance,
+  davosProtocol,
   defiSwap,
   definitiveFi,
   definix,
