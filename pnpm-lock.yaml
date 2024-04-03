@@ -18,8 +18,8 @@ dependencies:
     specifier: ^0.2.10
     version: 0.2.10
   '@llamafolio/tokens':
-    specifier: ^0.1.107
-    version: 0.1.107
+    specifier: ^0.1.108
+    version: 0.1.108
   '@slack/web-api':
     specifier: ^7.0.1
     version: 7.0.1
@@ -1767,8 +1767,8 @@ packages:
     resolution: {integrity: sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==}
     dev: true
 
-  /@llamafolio/tokens@0.1.107:
-    resolution: {integrity: sha512-Lm2+8K6/yJJBjB37s8jojrc95IPgSBWpgmYrZMkAOSCXi/7cWXZgk24KnBxb4eRPrijvFsEOzXPjqS9O27WT/w==}
+  /@llamafolio/tokens@0.1.108:
+    resolution: {integrity: sha512-tYKbjEQjQnw5K7OBgdOrUBkKNyJtcSDEIUcvEBaRMgDvPU2GmTk96oNZGO3lll8/yPQC9PcUuxfT0PfKSXvY3g==}
     engines: {node: '>=18', npm: '------>PLEASE USE PNPM<------', pnpm: '>=8.0.0', yarn: '------>PLEASE USE PNPM<------'}
     dev: false
 
