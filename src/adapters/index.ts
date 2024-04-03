@@ -71,6 +71,7 @@ import centrifuge from '@adapters/centrifuge'
 import chainlink from '@adapters/chainlink'
 import channelsFinance from '@adapters/channels-finance'
 import charmFinance from '@adapters/charm-finance'
+import citadao from '@adapters/citadao'
 import citadelswap from '@adapters/citadelswap'
 import clearpool from '@adapters/clearpool'
 import clever from '@adapters/clever'
@@ -494,6 +495,7 @@ export const adapters: Adapter[] = [
   chainlink,
   channelsFinance,
   charmFinance,
+  citadao,
   citadelswap,
   clearpool,
   clever,
