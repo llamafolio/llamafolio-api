@@ -418,6 +418,7 @@ import yearnFinance from '@adapters/yearn-finance'
 import yieldflow from '@adapters/yieldflow'
 import yoshiExchange from '@adapters/yoshi-exchange'
 import zerolend from '@adapters/zerolend'
+import zharta from '@adapters/zharta'
 import zircuitStaking from '@adapters/zircuit-staking'
 import zoodao from '@adapters/zoodao'
 import zyberswap from '@adapters/zyberswap'
@@ -844,6 +845,7 @@ export const adapters: Adapter[] = [
   yieldflow,
   yoshiExchange,
   zerolend,
+  zharta,
   zircuitStaking,
   zoodao,
   zyberswap,
