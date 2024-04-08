@@ -39,9 +39,10 @@ export async function getZhartaStakersContracts(
   return mapMultiSuccessFilter(
     tokens.map((_, i) => [tokens[i], pools[i]]),
 
-    (res) => {
-      const [{ output: token }, { output: address }] = res.inputOutputPairs
-      return { chain: ctx.chain, address, token }
+    (res, index) => {
+      const address = stakersAddresses[index]
+      const [{ output: token }, { output: staker }] = res.inputOutputPairs
+      return { chain: ctx.chain, address, token, staker }
     },
   )
 }

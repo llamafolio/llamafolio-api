@@ -15,7 +15,7 @@ const abi = {
 export async function getZhartaStakeBalances(ctx: BalancesContext, stakers: Contract[]): Promise<Balance[]> {
   const computeWithdrawableAmount = await multicall({
     ctx,
-    calls: stakers.map((staker) => ({ target: staker.address, params: [ctx.address] as const })),
+    calls: stakers.map(({ staker }) => ({ target: staker, params: [ctx.address] as const })),
     abi: abi.computeWithdrawableAmount,
   })
 
