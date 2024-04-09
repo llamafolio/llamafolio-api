@@ -64,6 +64,7 @@ import bloom from '@adapters/bloom'
 import blueberryLend from '@adapters/blueberry-lend'
 import blueprint from '@adapters/blueprint'
 import blur from '@adapters/blur'
+import bobFusion from '@adapters/bob-fusion'
 import capFinance from '@adapters/cap-finance'
 import catInABox from '@adapters/cat-in-a-box'
 import cega from '@adapters/cega'
@@ -492,6 +493,7 @@ export const adapters: Adapter[] = [
   blueberryLend,
   blueprint,
   blur,
+  bobFusion,
   capFinance,
   catInABox,
   cega,
