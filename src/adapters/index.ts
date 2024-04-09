@@ -114,6 +114,7 @@ import equilibria from '@adapters/equilibria'
 import ethena from '@adapters/ethena'
 import etherFi from '@adapters/ether.fi'
 import ethosReserve from '@adapters/ethos-reserve'
+import euclidFinance from '@adapters/euclid-finance'
 import euler from '@adapters/euler'
 import everrise from '@adapters/everrise'
 import exactly from '@adapters/exactly'
@@ -544,6 +545,7 @@ export const adapters: Adapter[] = [
   ethena,
   etherFi,
   ethosReserve,
+  euclidFinance,
   euler,
   everrise,
   exactly,
