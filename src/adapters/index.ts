@@ -177,6 +177,7 @@ import ironBank from '@adapters/iron-bank'
 import izumiFinance from '@adapters/izumi-finance'
 import jaypeggers from '@adapters/jaypeggers'
 import jonesDao from '@adapters/jones-dao'
+import karak from '@adapters/karak'
 import keep3rNetwork from '@adapters/keep3r-network'
 import kelpDao from '@adapters/kelp-dao'
 import keomProtocol from '@adapters/keom-protocol'
@@ -608,6 +609,7 @@ export const adapters: Adapter[] = [
   izumiFinance,
   jaypeggers,
   jonesDao,
+  karak,
   keep3rNetwork,
   kelpDao,
   keomProtocol,
