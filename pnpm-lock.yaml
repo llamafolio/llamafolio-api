@@ -15,8 +15,8 @@ dependencies:
     specifier: ^3.540.0
     version: 3.540.0(@aws-sdk/client-dynamodb@3.540.0)
   '@clickhouse/client':
-    specifier: ^0.2.10
-    version: 0.2.10
+    specifier: ^1.0.1
+    version: 1.0.1
   '@llamafolio/tokens':
     specifier: ^0.1.108
     version: 0.1.108
@@ -1016,15 +1016,15 @@ packages:
     dependencies:
       tslib: 2.6.2
 
-  /@clickhouse/client-common@0.2.10:
-    resolution: {integrity: sha512-BvTY0IXS96y9RUeNCpKL4HUzHmY80L0lDcGN0lmUD6zjOqYMn78+xyHYJ/AIAX7JQsc+/KwFt2soZutQTKxoGQ==}
+  /@clickhouse/client-common@1.0.1:
+    resolution: {integrity: sha512-3L6e0foP6VOktScoi6XWMjJyOpKCWgLUYgPVxP2c7gm6Kotq+iRmmmXtXTSg7B7uozcLZycTtPfIw2d80SYsYw==}
     dev: false
 
-  /@clickhouse/client@0.2.10:
-    resolution: {integrity: sha512-ZwBgzjEAFN/ogS0ym5KHVbR7Hx/oYCX01qGp2baEyfN2HM73kf/7Vp3GvMHWRy+zUXISONEtFv7UTViOXnmFrg==}
+  /@clickhouse/client@1.0.1:
+    resolution: {integrity: sha512-fluUNnE2R7COJ6rn6DorYfi4D+AQn3t2qeBtEq37bQV3pD4EbKrBfKAwJ13e1lmMWdQ2B9bJUTMqGsRIDdWhJw==}
     engines: {node: '>=16'}
     dependencies:
-      '@clickhouse/client-common': 0.2.10
+      '@clickhouse/client-common': 1.0.1
     dev: false
 
   /@esbuild-kit/cjs-loader@2.4.2:
