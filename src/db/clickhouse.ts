@@ -5,13 +5,12 @@ import environment from '@environment'
 
 // Initialize client outside of Lambda handlers to reuse TCP/IP connection
 export const client = createClient({
-  host: environment.CLICKHOUSE_HOST || 'http://localhost:8123',
+  url: environment.CLICKHOUSE_HOST || 'http://localhost:8123',
   username: environment.CLICKHOUSE_USER || 'default',
   password: environment.CLICKHOUSE_PASSWORD || '',
   keep_alive: {
     enabled: true,
-    socket_ttl: 2500,
-    retry_on_expired_socket: true,
+    idle_socket_ttl: 2500,
   },
   clickhouse_settings: {
     max_threads: 16,
