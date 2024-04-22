@@ -42,7 +42,7 @@
     "graphql": "^16.8.1",
     "graphql-request": "^6.1.0",
     "lodash": "^4.17.21",
-    "viem": "^2.9.19",
+    "viem": "^2.9.25",
     "zod": "^3.22.2"
   },
   "devDependencies": {
