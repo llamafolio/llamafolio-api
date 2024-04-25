@@ -66,6 +66,7 @@ export async function getMorphoLendBalances(ctx: BalancesContext, router?: Contr
       const [_supplyShares, borrowShares, collateral] = positions.output
 
       const [_, __, totalBorrowAssets, totalBorrowShares] = params
+      const nonZeroTotalBorrowShares = totalBorrowShares === 0n ? 1n : totalBorrowShares
 
       const lender: Contract = {
         ...coll,
@@ -75,7 +76,7 @@ export async function getMorphoLendBalances(ctx: BalancesContext, router?: Contr
 
       const borrower: Contract = {
         ...debt,
-        amount: (borrowShares * totalBorrowAssets) / totalBorrowShares,
+        amount: (borrowShares * totalBorrowAssets) / nonZeroTotalBorrowShares,
       }
 
       return { balances: [lender, borrower] }
