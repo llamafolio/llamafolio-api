@@ -368,6 +368,9 @@ export function getRPCClient(options: RPCClientOptions): PublicClient {
       return createPublicClient({
         chain: viemChains.base,
         transport: fallback([
+          http('https://base-rpc.publicnode.com', httpTransportConfig),
+          http('https://base-pokt.nodies.app', httpTransportConfig),
+          http('https://base.drpc.org', httpTransportConfig),
           http('https://base-mainnet.public.blastapi.io', httpTransportConfig),
           http('https://mainnet.base.org', httpTransportConfig),
         ]),
